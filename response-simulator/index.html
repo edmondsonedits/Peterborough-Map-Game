@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peterborough Fire & Emergency Dispatch Simulator</title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+    
+    <style>
+        html, body, #map {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #1a1a1a;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        #dispatch-hud {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1200;
+            width: 580px;
+            max-width: 90vw;
+            background: rgba(20, 20, 20, 0.96);
+            color: #fff;
+            border-left: 5px solid #d9534f;
+            padding: 15px 20px;
+            border-radius: 4px;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: border-color 0.3s, background 0.3s;
+        }
+        #dispatch-hud.incident-active {
+            border-left-color: #f0ad4e;
+            background: rgba(25, 22, 15, 0.97);
+        }
+        #dispatch-hud.incident-success {
+            border-left-color: #5cb85c;
+            background: rgba(15, 25, 15, 0.97);
+        }
+        .hud-main { flex-grow: 1; }
+        .hud-title { font-size: 11px; text-transform: uppercase; letter-spacing: 1.2px; color: #b0b0b0; margin-bottom: 3px; font-weight: 700; }
+        .hud-address { font-size: 16px; font-weight: 800; color: #fff; margin: 0; line-height: 1.3; }
+        .hud-meta { font-size: 12px; color: #ccc; margin-top: 4px; }
+        .hud-timer-block { text-align: right; margin-left: 20px; min-width: 100px; }
+        .hud-clock-display { font-family: "SFMono-Regular", Consolas, monospace; font-size: 26px; font-weight: bold; color: #ffcc00; line-height: 1; margin-bottom: 5px; }
+        .hud-btn { background: #d9534f; color: white; border: none; padding: 8px 14px; border-radius: 4px; font-weight: bold; font-size: 12px; cursor: pointer; width: 100%; transition: background 0.15s; }
+        .hud-btn:hover { background: #c9302c; }
+        .hud-btn.success-btn { background: #5cb85c; }
+        .hud-btn.success-btn:hover { background: #4cae4c; }
+
+        #menu-toggle { position: absolute; top: 15px; right: 15px; z-index: 1100; background: #222; color: white; border: 1px solid #444; padding: 12px 18px; border-radius: 6px; font-weight: bold; font-size: 13px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.4); transition: background 0.2s; }
+        #menu-toggle:hover { background: #333; }
+
+        #control-panel { position: absolute; top: 0; right: 0; width: 350px; height: 100%; background: rgba(255, 255, 255, 0.98); z-index: 1050; box-shadow: -8px 0 30px rgba(0,0,0,0.3); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); display: flex; flex-direction: column; }
+        #control-panel.minimized { transform: translateX(100%); }
+        .panel-scroll { padding: 80px 22px 40px 22px; overflow-y: auto; flex-grow: 1; }
+
+        h2 { margin: 0 0 4px 0; font-size: 19px; color: #111; }
+        .subtitle { font-size: 12px; color: #666; margin-bottom: 20px; }
+        .section-title { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #777; border-bottom: 1px solid #ddd; padding-bottom: 4px; margin: 20px 0 10px 0; font-weight: 700; }
+        .control-row { margin-bottom: 14px; }
+        .control-row label { display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; color: #444; margin-bottom: 4px; }
+        .control-row input[type="range"], .control-row select { width: 100%; box-sizing: border-box; padding: 7px; border-radius: 4px; border: 1px solid #ccc; background: #fff; }
+        .checkbox-row { display: flex; align-items: center; margin-bottom: 8px; font-size: 12px; font-weight: 600; color: #444; cursor: pointer; }
+        .checkbox-row input { margin-right: 8px; width: 16px; height: 16px; cursor: pointer; }
+        .sub-cat-group { padding-left: 12px; margin-bottom: 12px; border-left: 2px solid #eee; }
+        .station-spawn-box { display: block; width: 100%; background: #222; border: 1px solid #444; color: #fff; padding: 10px 12px; margin-bottom: 8px; border-radius: 4px; cursor: pointer; text-align: left; font-size: 12px; font-weight: bold; box-sizing: border-box; transition: background 0.15s, border-color 0.15s; }
+        .station-spawn-box:hover { background: #333; border-color: #d9534f; }
+        .telemetry-box { background: #1e1e1e; color: #00ff00; font-family: "SFMono-Regular", Consolas, monospace; padding: 12px; border-radius: 4px; font-size: 11px; line-height: 1.5; box-shadow: inset 0 2px 6px rgba(0,0,0,0.5); }
+        
+        #game-home { position: absolute; top: 15px; left: 15px; z-index: 1300; padding: 10px 13px; color: #fff; border: 1px solid #444; border-radius: 6px; background: #222; box-shadow: 0 4px 12px rgba(0,0,0,.4); font-size: 12px; font-weight: 700; text-decoration: none; }
+        #game-home:hover, #game-home:focus-visible { background: #333; }
+
+        .truck-container { background: none; border: none; }
+        .truck-rotation-wrapper { width: 100%; height: 100%; }
+
+        @keyframes strobe-blue { 0%, 100% { fill: #0022ff; filter: drop-shadow(0 0 2px #0022ff); } 50% { fill: #00d5ff; filter: drop-shadow(0 0 12px #00d5ff); } }
+        @keyframes strobe-red { 0%, 100% { fill: #ff0000; filter: drop-shadow(0 0 12px #ff0000); } 50% { fill: #a00000; filter: drop-shadow(0 0 2px #a00000); } }
+        .siren-active .svg-light-blue { animation: strobe-blue 0.12s infinite alternate; }
+        .siren-active .svg-light-red { animation: strobe-red 0.12s infinite alternate; }
+        .leaflet-container { outline: 0; }
+        .leaflet-popup-content-wrapper { background: #222; color: #fff; border-radius: 4px; border: 1px solid #444; }
+        .leaflet-popup-tip { background: #222; border: 1px solid #444; }
+        
+        /* Draggable Dot Styling */
+        .drag-dot-icon { border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 5px rgba(0,0,0,0.8); cursor: grab; }
+        .drag-dot-icon:active { cursor: grabbing; box-shadow: 0 0 10px #fff; }
+    </style>
+</head>
+<body>
+    <a id="game-home" href="../" aria-label="Return to the game selection page">â† All Games</a>
+
+    <div id="dispatch-hud">
+        <div class="hud-main" id="hud-content">
+            <div class="hud-title">System Readiness</div>
+            <p class="hud-address">Simulation Ready</p>
+            <div class="hud-meta">Configure alarm criteria matrices in options menu, then initialize dispatch.</div>
+        </div>
+        <div class="hud-timer-block">
+            <div class="hud-clock-display" id="hud-clock">00:00.0</div>
+            <button class="hud-btn" id="hud-action-btn" onclick="triggerDispatchWorkflow()">Start Call</button>
+        </div>
+    </div>
+
+    <button id="menu-toggle" onclick="togglePanel()">Options Menu</button>
+
+    <div id="control-panel" class="minimized">
+        <div class="panel-scroll">
+            <h2>Simulation Config</h2>
+            <div class="subtitle">Peterborough Run Controls & Filtration</div>
+
+            <div class="section-title">Filter Dispatch Incident Pool</div>
+            <div style="font-size: 11px; font-weight: bold; color: #c62828; margin-bottom: 6px; text-transform: uppercase;">Primary: Fire & Rescue</div>
+            <div class="sub-cat-group">
+                <label class="checkbox-row"><input type="checkbox" class="filter-chk" data-sub="Water & Ice Rescue" checked> Water & Ice Rescue</label>
+                <label class="checkbox-row"><input type="checkbox" class="filter-chk" data-sub="Structure Fire" checked> Structure Fire</label>
+                <label class="checkbox-row"><input type="checkbox" class="filter-chk" data-sub="Motor Vehicle Collision" checked> Motor Vehicle Collision</label>
+                <label class="checkbox-row"><input type="checkbox" class="filter-chk" data-sub="Auto Alarm / Vehicle Fire" checked> Auto Alarm / Vehicle Fire</label>
+                <label class="checkbox-row"><input type="checkbox" class="filter-chk" data-sub="Burning Complaint" checked> Burning Complaint</label>
+                <label class="checkbox-row"><input type="checkbox" class="filter-chk" data-sub="Alarms No Apparent Problem" checked> Alarms (No Apparent Problem)</label>
+            </div>
+
+            <div style="font-size: 11px; font-weight: bold; color: #2e7d32; margin-bottom: 6px; text-transform: uppercase;">Primary: Medical Emergencies</div>
+            <div class="sub-cat-group">
+                <label class="checkbox-row"><input type="checkbox" class="filter-chk" data-sub="Chest Pain / Cardiac Emergency" checked> Chest Pain / Cardiac</label>
+                <label class="checkbox-row"><input type="checkbox" class="filter-chk" data-sub="Difficulty Breathing" checked> Difficulty Breathing</label>
+                <label class="checkbox-row"><input type="checkbox" class="filter-chk" data-sub="Unconscious Patient / Substance Overdose" checked> Unconscious / Overdose</label>
+                <label class="checkbox-row"><input type="checkbox" class="filter-chk" data-sub="Rectal Bleed / Gastrointestinal Emergency" checked> Gastrointestinal / Bleed</label>
+                <label class="checkbox-row"><input type="checkbox" class="filter-chk" data-sub="Lift Assist / Public Service" checked> Lift Assist Service</label>
+                <label class="checkbox-row"><input type="checkbox" class="filter-chk" data-sub="Request for Access / Wellness Check" checked> Wellness Check / Access</label>
+            </div>
+
+            <div class="section-title">Station Deploy Spawns</div>
+            <button class="station-spawn-box" onclick="teleportToStation(44.300871, -78.322206)">Station 1 â€” 210 Sherbrooke St</button>
+            <button class="station-spawn-box" onclick="teleportToStation(44.335266, -78.316657)">Station 2 â€” 100 Marina Blvd</button>
+            <button class="station-spawn-box" onclick="teleportToStation(44.284867, -78.350902)">Station 3 â€” 839 Clonsilla Ave</button>
+
+            <div class="section-title">Custom Dispatch Logging</div>
+            <button class="station-spawn-box" style="border-color: #f0ad4e;" onclick="recordCurrentLocation()">Record Current Position</button>
+            <button class="station-spawn-box" style="border-color: #00bcd4;" onclick="exportUpdatedDatabase()">Export Master Dispatch Database</button>
+
+            <div class="section-title">Vehicle Calibration</div>
+            <div class="control-row">
+                <label><span>Chassis Base Scale (Height)</span><span id="lbl-size">10px</span></label>
+                <input type="range" id="sld-size" min="2" max="70" value="10" oninput="updateVehicleChassis()">
+            </div>
+            <div class="control-row">
+                <label><span>Max Speed Handling</span><span id="lbl-speed">5</span></label>
+                <input type="range" id="sld-speed" min="1" max="50" value="5" oninput="updateVehiclePhysics()">
+            </div>
+
+            <div class="section-title">Driving Modifiers</div>
+            <label class="checkbox-row"><input type="checkbox" id="chk-siren" onchange="updateVehicleChassis()" checked> Emergency Flashing Matrix</label>
+            <label class="checkbox-row"><input type="checkbox" id="chk-camera" checked> Lock Camera Focus to Chassis</label>
+
+            <div class="section-title">Map Layers & Overlays</div>
+            <div class="control-row">
+                <select id="layer-select" onchange="changeBasemap()">
+                    <option value="positron">CartoDB Positron (Clean Layout)</option>
+                    <option value="dark">CartoDB Dark Matter (Night Simulation)</option>
+                    <option value="osm" selected>OpenStreetMap Standard</option>
+                </select>
+            </div>
+            <button class="station-spawn-box" id="btn-toggle-locations" style="border-color: #5bc0de; margin-top: 5px;" onclick="toggleAllLocations()">Show All Dispatch Locations</button>
+
+            <div class="section-title">Telemetry & System Stats</div>
+            <div class="telemetry-box">
+                LAT: <span id="tel-lat">44.300871</span><br>
+                LNG: <span id="tel-lng">-78.322206</span><br>
+                HEADING: <span id="tel-hdg">180Â°</span><br>
+                DIST TO RUN: <span id="tel-dist">--</span><br>
+                COMPLETED RUNS: <span id="tel-total-calls">0</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet-edgebuffer@1.0.6/src/leaflet.edgebuffer.js"></script>
+    <script src="https://unpkg.com/leaflet-rotatedmarker@0.2.0/leaflet.rotatedMarker.js"></script>
+    
+    <script>
+        const dispatchDatabase = [
+            { main:"Fire", sub:"Water & Ice Rescue", name:"Beavermead Park Beach", addr:"2015 Ashburnham Dr", lat:44.295749, lng:-78.303611 },
+            { main:"Fire", sub:"Water & Ice Rescue", name:"Peterborough Lift Lock Canal", addr:"353 Hunter St E", lat:44.3075, lng:-78.300833 },
+            { main:"Fire", sub:"Water & Ice Rescue", name:"Trent University Faryon Bridge", addr:"1600 West Bank Dr", lat:44.358278, lng:-78.289915 },
+            { main:"Fire", sub:"Water & Ice Rescue", name:"Del Crary Park Marina", addr:"100 George St N", lat:44.2965, lng:-78.3175 },
+            { main:"Fire", sub:"Water & Ice Rescue", name:"Little Lake Cemetery", addr:"915 Haggart St", lat:44.292889, lng:-78.310833 },
+            { main:"Fire", sub:"Water & Ice Rescue", name:"Millennium Park Dock", addr:"130 King St", lat:44.301577, lng:-78.317682 },
+            { main:"Fire", sub:"Structure Fire", name:"Lansdowne Place Mall", addr:"645 Lansdowne St W", lat:44.283653, lng:-78.33179 },
+            { main:"Fire", sub:"Structure Fire", name:"Quaker Oats", addr:"34 Hunter St W", lat:44.307436, lng:-78.314576 },
+            { main:"Fire", sub:"Structure Fire", name:"Holiday Inn Waterfront", addr:"150 George St N", lat:44.298368, lng:-78.319323 },
+            { main:"Fire", sub:"Structure Fire", name:"Parkway Park Apartments", addr:"1195 Talbot St", lat:44.2889, lng:-78.3412 },
+            { main:"Fire", sub:"Structure Fire", name:"Charlotte Towers High-Rise", addr:"315 Charlotte St", lat:44.30296, lng:-78.327171 },
+            { main:"Fire", sub:"Structure Fire", name:"General Electric Building", addr:"107 Park St N", lat:44.29697, lng:-78.327413 },
+            { main:"Fire", sub:"Structure Fire", name:"Peterborough Public Library", addr:"345 Aylmer St N", lat:44.303992, lng:-78.323357 },
+            { main:"Fire", sub:"Structure Fire", name:"Market Plaza Strip Mall", addr:"91 George St N", lat:44.296314, lng:-78.320879 },
+            { main:"Fire", sub:"Structure Fire", name:"East City Commercial Block", addr:"138 Hunter St E", lat:44.305804, lng:-78.311588 },
+            { main:"Fire", sub:"Structure Fire", name:"Gzowski College Student Residence", addr:"2151 East Bank Dr", lat:44.356705, lng:-78.286986 },
+            { main:"Fire", sub:"Structure Fire", name:"Brock Mission Emergency Shelter", addr:"217 Murray St", lat:44.308223, lng:-78.322778 },
+            { main:"Fire", sub:"Structure Fire", name:"Residential Triplex conversions", addr:"465 Wellington St", lat:44.314737, lng:-78.336425 },
+            { main:"Fire", sub:"Motor Vehicle Collision", name:"Intersection", addr:"Lansdowne St W & Monaghan Rd", lat:44.285888, lng:-78.329751 },
+            { main:"Fire", sub:"Motor Vehicle Collision", name:"Intersection", addr:"Chemong Rd & Towerhill Rd", lat:44.327102, lng:-78.339193 },
+            { main:"Fire", sub:"Motor Vehicle Collision", name:"Intersection", addr:"The Parkway & Clonsilla Ave", lat:44.291, lng:-78.349 },
+            { main:"Fire", sub:"Motor Vehicle Collision", name:"Intersection", addr:"George St N & Rink St", lat:44.295884, lng:-78.319339 },
+            { main:"Fire", sub:"Motor Vehicle Collision", name:"Hwy 115 Off-Ramp", addr:"Hwy 115 & Bensfort Rd", lat:44.274828, lng:-78.310268 },
+            { main:"Fire", sub:"Motor Vehicle Collision", name:"Intersection", addr:"Parkhill Rd E & Television Rd", lat:44.322374, lng:-78.293209 },
+            { main:"Fire", sub:"Motor Vehicle Collision", name:"Intersection", addr:"Water St & Nassau Mills Rd", lat:44.352992, lng:-78.298016 },
+            { main:"Fire", sub:"Motor Vehicle Collision", name:"Intersection", addr:"Ashburnham Dr & Maria St", lat:44.301032, lng:-78.302307 },
+            { main:"Fire", sub:"Motor Vehicle Collision", name:"Intersection", addr:"Sherbrooke St & Medical Dr", lat:44.296348, lng:-78.34269 },
+            { main:"Fire", sub:"Motor Vehicle Collision", name:"Intersection", addr:"Borden Ave & High St", lat:44.282801, lng:-78.333727 },
+            { main:"Fire", sub:"Auto Alarm / Vehicle Fire", name:"Costco Wholesale Parking Lot", addr:"485 The Parkway", lat:44.2855, lng:-78.3533 },
+            { main:"Fire", sub:"Auto Alarm / Vehicle Fire", name:"Peterborough Memorial Centre", addr:"151 Lansdowne St W", lat:44.288392, lng:-78.316276 },
+            { main:"Fire", sub:"Auto Alarm / Vehicle Fire", name:"Real Canadian Superstore Lot", addr:"769 Borden Ave", lat:44.281718, lng:-78.333796 },
+            { main:"Fire", sub:"Auto Alarm / Vehicle Fire", name:"King Street Parking Garage", addr:"202 King St", lat:44.3021, lng:-78.320986 },
+            { main:"Fire", sub:"Auto Alarm / Vehicle Fire", name:"Trent Athletics Centre", addr:"1650 W Bank Dr", lat:44.355785, lng:-78.293198 },
+            { main:"Fire", sub:"Auto Alarm / Vehicle Fire", name:"Lansdowne Car Dealership", addr:"2212 Lansdowne St W", lat:44.271202, lng:-78.390541 },
+            { main:"Fire", sub:"Burning Complaint", name:"Residential Backyard Subdivision", addr:"812 George St N", lat:44.3162, lng:-78.3218 },
+            { main:"Fire", sub:"Burning Complaint", name:"West End Suburban Property", addr:"1422 Woodglade Blvd", lat:44.2985, lng:-78.3642 },
+            { main:"Fire", sub:"Burning Complaint", name:"Ashburnham Residential Lot", addr:"512 Rogers St", lat:44.307409, lng:-78.304753 },
+            { main:"Fire", sub:"Burning Complaint", name:"Central Urban Grid Property", addr:"275 Mcdonnel St", lat:44.309286, lng:-78.325664 },
+            { main:"Fire", sub:"Burning Complaint", name:"North End Residential Fringe", addr:"1815 Chemong Rd", lat:44.347591, lng:-78.360565 },
+            { main:"Fire", sub:"Burning Complaint", name:"Clonsilla Residential Corridor", addr:"1205 Clonsilla Ave", lat:44.2922, lng:-78.3458 },
+            { main:"Fire", sub:"Alarms No Apparent Problem", name:"Empress Gardens Senior Living", addr:"131 Charlotte St", lat:44.303109, lng:-78.319098 },
+            { main:"Fire", sub:"Alarms No Apparent Problem", name:"Applewood Retirement Residence", addr:"1500 Lansdowne St W", lat:44.2782, lng:-78.362373 },
+            { main:"Fire", sub:"Alarms No Apparent Problem", name:"Brock Towers High-Rise Housing", addr:"221 Brock St", lat:44.307159, lng:-78.322413 },
+            { main:"Fire", sub:"Alarms No Apparent Problem", name:"Liftlock Manor Apartments", addr:"815 Dutton Rd", lat:44.326807, lng:-78.317091 },
+            { main:"Fire", sub:"Alarms No Apparent Problem", name:"Sunrise Seniors Living Facility", addr:"1165 Chemong Rd", lat:44.3298, lng:-78.3262 },
+            { main:"Fire", sub:"Alarms No Apparent Problem", name:"Hillmar Apartments", addr:"181 Marina Blvd", lat:44.332819, lng:-78.322544 },
+            { main:"Fire", sub:"Alarms No Apparent Problem", name:"Monaghan Multi-Unit Complex", addr:"610 Monaghan Rd", lat:44.278292, lng:-78.3259 },
+            { main:"Fire", sub:"Alarms No Apparent Problem", name:"Commercial Office Infrastructure", addr:"360 George St N", lat:44.293599, lng:-78.31898 },
+            { main:"Fire", sub:"Alarms No Apparent Problem", name:"Towerhill Townhouse Complex", addr:"1000 Towerhill Rd", lat:44.322451, lng:-78.351102 },
+            { main:"Medical", sub:"Chest Pain / Cardiac Emergency", name:"YMCA Community Gym Facility", addr:"123 Aylmer St S", lat:44.289709, lng:-78.322166 },
+            { main:"Medical", sub:"Chest Pain / Cardiac Emergency", name:"Peterborough Sport & Wellness Centre", addr:"775 Brealey Dr", lat:44.273814, lng:-78.372903 },
+            { main:"Medical", sub:"Chest Pain / Cardiac Emergency", name:"Peterborough Golf & Country Club", addr:"1030 Water St", lat:44.332383, lng:-78.307543 },
+            { main:"Medical", sub:"Chest Pain / Cardiac Emergency", name:"Shoppers Drug Mart Pharmacy", addr:"971 Lansdowne St W", lat:44.2842, lng:-78.3411 },
+            { main:"Medical", sub:"Chest Pain / Cardiac Emergency", name:"Galaxy Cinemas Theater Complex", addr:"320 Water St", lat:44.303816, lng:-78.318701 },
+            { main:"Medical", sub:"Chest Pain / Cardiac Emergency", name:"Kawartha Heights Residential Bungalow", addr:"1400 Kawartha Heights Blvd", lat:44.285735, lng:-78.365993 },
+            { main:"Medical", sub:"Chest Pain / Cardiac Emergency", name:"South End Suburban Residence", addr:"625 Spillsbury Dr", lat:44.270115, lng:-78.361938 },
+            { main:"Medical", sub:"Chest Pain / Cardiac Emergency", name:"Scotiabank Downtown Branch", addr:"374 George St N", lat:44.305033, lng:-78.319892 },
+            { main:"Medical", sub:"Difficulty Breathing", name:"St. Joseph's at Fleming Long-Term Care", addr:"359 Brealey Dr", lat:44.269112, lng:-78.370135 },
+            { main:"Medical", sub:"Difficulty Breathing", name:"Fairhaven Senior Care Facility", addr:"881 Dutton Rd", lat:44.32721, lng:-78.318277 },
+            { main:"Medical", sub:"Difficulty Breathing", name:"Riverview Manor Nursing Home", addr:"1155 Water St", lat:44.336097, lng:-78.314667 },
+            { main:"Medical", sub:"Difficulty Breathing", name:"The Peterborough Clinic Medical Hub", addr:"26 Hospital Dr", lat:44.301048, lng:-78.345609 },
+            { main:"Medical", sub:"Difficulty Breathing", name:"Mcdonnel Street Apartment Suite", addr:"435 Mcdonnel St", lat:44.3055, lng:-78.3298 },
+            { main:"Medical", sub:"Difficulty Breathing", name:"Stewart Homes Residential Facility", addr:"521 Mcdonnel St", lat:44.308169, lng:-78.336741 },
+            { main:"Medical", sub:"Difficulty Breathing", name:"West End Detached Residence", addr:"1555 Parkhill Rd W", lat:44.299128, lng:-78.390648 },
+            { main:"Medical", sub:"Difficulty Breathing", name:"Otonabee District Detached Residence", addr:"491 Wylie St", lat:44.2782, lng:-78.3092 },
+            { main:"Medical", sub:"Unconscious Patient / Substance Overdose", name:"Peterborough Downtown Transit Terminal", addr:"190 Simcoe St", lat:44.30471, lng:-78.321887 },
+            { main:"Medical", sub:"Unconscious Patient / Substance Overdose", name:"Commercial Motel Corridor Unit", addr:"1112 Lansdowne St W", lat:44.2818, lng:-78.3482 },
+            { main:"Medical", sub:"Unconscious Patient / Substance Overdose", name:"Victoria Park Public Greenspace", addr:"212 Water St", lat:44.300414, lng:-78.3184 },
+            { main:"Medical", sub:"Unconscious Patient / Substance Overdose", name:"George Street Alleyway", addr:"383 George St N", lat:44.305524, lng:-78.320149 },
+            { main:"Medical", sub:"Unconscious Patient / Substance Overdose", name:"Hunter Street Cafe Restroom", addr:"130 Hunter St W", lat:44.306027, lng:-78.319173 },
+            { main:"Medical", sub:"Unconscious Patient / Substance Overdose", name:"Bethune Housing Unit", addr:"580 Bethune St", lat:44.311309, lng:-78.324838 },
+            { main:"Medical", sub:"Unconscious Patient / Substance Overdose", name:"Industrial Rail Corridor Interface", addr:"640 Rink St", lat:44.295626, lng:-78.324548 },
+            { main:"Medical", sub:"Unconscious Patient / Substance Overdose", name:"Del Crary Park Public Pavilion", addr:"2 Romaine St", lat:44.295354, lng:-78.318669 },
+            { main:"Medical", sub:"Rectal Bleed / Gastrointestinal Emergency", name:"Boston Pizza Dining Facility", addr:"1164 Chemong Rd", lat:44.3303, lng:-78.3255 },
+            { main:"Medical", sub:"Rectal Bleed / Gastrointestinal Emergency", name:"Tim Hortons Commercial Unit", addr:"898 Monaghan Rd", lat:44.2862, lng:-78.3452 },
+            { main:"Medical", sub:"Rectal Bleed / Gastrointestinal Emergency", name:"High Street Residential Bungalow", addr:"1235 High St", lat:44.288131, lng:-78.335052 },
+            { main:"Medical", sub:"Rectal Bleed / Gastrointestinal Emergency", name:"Charlotte Street Mid-Rise Suite", addr:"250 Charlotte St", lat:44.303378, lng:-78.32391 },
+            { main:"Medical", sub:"Rectal Bleed / Gastrointestinal Emergency", name:"Downtown Diner Property", addr:"172 Charlotte St", lat:44.303543, lng:-78.320739 },
+            { main:"Medical", sub:"Rectal Bleed / Gastrointestinal Emergency", name:"Armour Road Residential Home", addr:"995 Armour Rd", lat:44.329267, lng:-78.309603 },
+            { main:"Medical", sub:"Lift Assist / Public Service", name:"Parkhill West Single-Family Residence", addr:"1180 Parkhill Rd W", lat:44.304779, lng:-78.368719 },
+            { main:"Medical", sub:"Lift Assist / Public Service", name:"Cherryhill Suburban Residence", addr:"745 Cherryhill Rd", lat:44.282747, lng:-78.363939 },
+            { main:"Medical", sub:"Lift Assist / Public Service", name:"Cumberland Avenue Residential Home", addr:"1925 Cumberland Ave", lat:44.341683, lng:-78.325031 },
+            { main:"Medical", sub:"Lift Assist / Public Service", name:"Hamilton Street Residential Lot", addr:"540 Hamilton St", lat:44.280619, lng:-78.32473 },
+            { main:"Medical", sub:"Lift Assist / Public Service", name:"Otonabee Drive Single-Family Residence", addr:"812 Otonabee Dr", lat:44.277221, lng:-78.307258 },
+            { main:"Medical", sub:"Lift Assist / Public Service", name:"Ravenwood Development Detached Home", addr:"1540 Ravenwood Dr", lat:44.297669, lng:-78.36476 },
+            { main:"Medical", sub:"Lift Assist / Public Service", name:"Weller Street Residential Area", addr:"910 Weller St", lat:44.300955, lng:-78.351445 },
+            { main:"Medical", sub:"Lift Assist / Public Service", name:"Spillsbury Drive Subdivision Home", addr:"715 Spillsbury Dr", lat:44.268943, lng:-78.361359 },
+            { main:"Medical", sub:"Request for Access / Wellness Check", name:"George Street High-Density Housing", addr:"545 George St N", lat:44.310361, lng:-78.32023 },
+            { main:"Medical", sub:"Request for Access / Wellness Check", name:"Central City Residential Structure", addr:"612 Stewart St", lat:44.312334, lng:-78.325953 },
+            { main:"Medical", sub:"Request for Access / Wellness Check", name:"Glenforest Boulevard Split-Level Home", addr:"1385 Glenforest Blvd", lat:44.2932, lng:-78.3615 },
+            { main:"Medical", sub:"Request for Access / Wellness Check", name:"Talbot Street Multi-Unit Residence", addr:"1180 Talbot St", lat:44.2882, lng:-78.3415 },
+            { main:"Medical", sub:"Request for Access / Wellness Check", name:"Park Street North Residential Home", addr:"472 Park St N", lat:44.3052, lng:-78.3292 },
+            { main:"Medical", sub:"Request for Access / Wellness Check", name:"Hedonics Road Industrial Edge Unit", addr:"315 Hedonics Rd", lat:44.309006, lng:-78.343409 },
+            { main:"Medical", sub:"Request for Access / Wellness Check", name:"Hilliard Street Multi-Family Triplex", addr:"884 Hilliard St", lat:44.326101, lng:-78.321099 },
+            { main:"Medical", sub:"Request for Access / Wellness Check", name:"Aylmer Street Core Apartment", addr:"502 Aylmer St N", lat:44.308875, lng:-78.323448 },
+            { main:"Medical", sub:"Request for Access / Wellness Check", name:"Reid Street Residential Unit", addr:"650 Reid St", lat:44.313309, lng:-78.328539 },
+            { main:"Medical", sub:"Request for Access / Wellness Check", name:"Bonaccord High-Density Block", addr:"555 Bonaccord St", lat:44.309297, lng:-78.337229 }
+        ];
+
+
+        const STATES = { INACTIVE: 0, ENROUTE: 1, ONSCENE: 2, INSERVICE: 3 };
+        let simulationState = STATES.INACTIVE;
+
+        let simLat = 44.300871; 
+        let simLng = -78.322206;
+        
+        let velocity = 0;
+        let currentHeading = 180;
+        const keys = { ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false, w: false, a: false, s: false, d: false };
+        let lastTimestamp = 0;
+
+        let mapInstance = null;
+        let vehicleMarker = null;
+        let tileLayerInstance = null;
+        let incidentCircleMarker = null;
+        
+        let activeIncident = null;
+        let stopwatchInterval = null;
+        let elapsedMilliseconds = 0;
+
+        let totalTrackedCalls = parseInt(localStorage.getItem("simTotalCalls")) || 0;
+
+        let customLocations = [];
+        let allLocationsLayerGroup = null;
+        let allLocationsVisible = false;
+
+        const tileProvidersConfig = {
+            positron: { url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', subdomains: 'abcd' },
+            dark: { url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', subdomains: 'abcd' },
+            osm: { url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', subdomains: 'abc' }
+        };
+
+        function initializeSimulator() {
+            document.getElementById('tel-total-calls').innerText = totalTrackedCalls;
+
+            mapInstance = L.map('map', {
+                center: [simLat, simLng],
+                zoom: 15,
+                minZoom: 10,
+                maxZoom: 19,
+                zoomControl: true,
+                preferCanvas: true, 
+                keyboard: false,    
+                maxBounds: L.latLngBounds([44.20, -78.45], [44.45, -78.20]), 
+                maxBoundsViscosity: 1.0
+            });
+            mapInstance.zoomControl.setPosition('bottomright');
+            
+            changeBasemap();
+
+            L.control.scale({ metric: true, imperial: false, position: 'bottomleft' }).addTo(mapInstance);
+            
+            updateVehicleChassis();
+
+            requestAnimationFrame(simulationLoop);
+
+            setTimeout(() => { if (mapInstance) mapInstance.invalidateSize(); }, 100);
+        }
+
+        function togglePanel() {
+            document.getElementById('control-panel').classList.toggle('minimized');
+            document.getElementById('menu-toggle').innerText = document.getElementById('control-panel').classList.contains('minimized') ? "Options Menu" : "Close Options";
+            setTimeout(() => { if (mapInstance) mapInstance.invalidateSize(); }, 320);
+        }
+
+        function changeBasemap() {
+            const electedStyleKey = document.getElementById('layer-select').value;
+            if (tileLayerInstance) mapInstance.removeLayer(tileLayerInstance);
+            
+            const provider = tileProvidersConfig[electedStyleKey];
+            tileLayerInstance = L.tileLayer(provider.url, {
+                attribution: '&copy; OpenStreetMap',
+                subdomains: provider.subdomains,
+                updateWhenIdle: false, 
+                keepBuffer: 4,         
+                edgeBufferTiles: 2,
+                maxNativeZoom: 19
+            }).addTo(mapInstance);
+        }
+
+        function toggleAllLocations() {
+            const btn = document.getElementById('btn-toggle-locations');
+            
+            if (allLocationsVisible) {
+                if (allLocationsLayerGroup && mapInstance) {
+                    mapInstance.removeLayer(allLocationsLayerGroup);
+                }
+                btn.innerText = "Show All Dispatch Locations";
+                btn.style.backgroundColor = "#222";
+                allLocationsVisible = false;
+            } else {
+                if (allLocationsLayerGroup) {
+                    allLocationsLayerGroup.clearLayers();
+                } else {
+                    allLocationsLayerGroup = L.layerGroup();
+                }
+                
+                dispatchDatabase.forEach((loc, index) => {
+                    const isFire = loc.main === "Fire";
+                    const dotColor = isFire ? '#d9534f' : '#2e7d32';
+                    
+                    const customDotIcon = L.divIcon({
+                        className: 'drag-dot-icon',
+                        html: `<div style="background-color: ${dotColor}; width: 100%; height: 100%; border-radius: 50%;"></div>`,
+                        iconSize: [14, 14],
+                        iconAnchor: [7, 7],
+                        popupAnchor: [0, -7]
+                    });
+
+                    const marker = L.marker([loc.lat, loc.lng], {
+                        draggable: true,
+                        icon: customDotIcon
+                    }).bindPopup(`<b>${loc.name}</b><br>${loc.sub}<br>${loc.addr}`);
+
+                    marker.on('dragend', function(e) {
+                        const newPos = e.target.getLatLng();
+                        dispatchDatabase[index].lat = parseFloat(newPos.lat.toFixed(6));
+                        dispatchDatabase[index].lng = parseFloat(newPos.lng.toFixed(6));
+                    });
+
+                    marker.addTo(allLocationsLayerGroup);
+                });
+
+                if (mapInstance) {
+                    allLocationsLayerGroup.addTo(mapInstance);
+                }
+                btn.innerText = "Hide All Dispatch Locations";
+                btn.style.backgroundColor = "#444";
+                allLocationsVisible = true;
+            }
+        }
+
+        function updateVehiclePhysics() {
+            document.getElementById('lbl-speed').innerText = document.getElementById('sld-speed').value;
+        }
+
+        function teleportToStation(targetLat, targetLng) {
+            simLat = targetLat;
+            simLng = targetLng;
+            velocity = 0;
+            if (vehicleMarker) {
+                vehicleMarker.setLatLng([simLat, simLng]);
+            }
+            if (mapInstance) {
+                mapInstance.setView([simLat, simLng], mapInstance.getZoom());
+                mapInstance.invalidateSize();
+            }
+            if (simulationState === STATES.ENROUTE) evaluateDistanceToTarget();
+        }
+
+        function recordCurrentLocation() {
+            const mainType = prompt("Enter Main Category (e.g., Fire, Medical):", "Fire");
+            if (!mainType) return;
+            
+            const subType = prompt("Enter Sub-Category (e.g., Structure Fire, Motor Vehicle Collision):", "Structure Fire");
+            if (!subType) return;
+
+            const locName = prompt("Enter Location Name (e.g., Lansdowne Place Mall):", "New Custom Location");
+            if (!locName) return;
+
+            const locAddress = prompt("Enter Location Address:", "Unknown Address");
+            if (!locAddress) return;
+
+            const newDispatch = {
+                main: mainType,
+                sub: subType,
+                name: locName,
+                addr: locAddress,
+                lat: parseFloat(simLat.toFixed(6)),
+                lng: parseFloat(simLng.toFixed(6))
+            };
+
+            dispatchDatabase.push(newDispatch);
+            
+            if (allLocationsVisible && allLocationsLayerGroup) {
+                const index = dispatchDatabase.length - 1;
+                const isFire = mainType === "Fire";
+                const dotColor = isFire ? '#d9534f' : '#2e7d32';
+                
+                const customDotIcon = L.divIcon({
+                    className: 'drag-dot-icon',
+                    html: `<div style="background-color: ${dotColor}; width: 100%; height: 100%; border-radius: 50%;"></div>`,
+                    iconSize: [14, 14],
+                    iconAnchor: [7, 7],
+                    popupAnchor: [0, -7]
+                });
+
+                const marker = L.marker([newDispatch.lat, newDispatch.lng], { draggable: true, icon: customDotIcon })
+                    .bindPopup(`<b>${newDispatch.name}</b><br>${newDispatch.sub}<br>${newDispatch.addr}`);
+
+                marker.on('dragend', function(e) {
+                    const newPos = e.target.getLatLng();
+                    dispatchDatabase[index].lat = parseFloat(newPos.lat.toFixed(6));
+                    dispatchDatabase[index].lng = parseFloat(newPos.lng.toFixed(6));
+                });
+                marker.addTo(allLocationsLayerGroup);
+            }
+            
+            alert(`Location saved: ${locName} at ${newDispatch.lat}, ${newDispatch.lng}`);
+        }
+
+        function exportUpdatedDatabase() {
+            let exportString = "const dispatchDatabase = [\n";
+            
+            dispatchDatabase.forEach((loc, index) => {
+                const isLast = index === dispatchDatabase.length - 1;
+                exportString += `            { main:"${loc.main}", sub:"${loc.sub}", name:"${loc.name}", addr:"${loc.addr}", lat:${loc.lat}, lng:${loc.lng} }${isLast ? '' : ','}\n`;
+            });
+            
+            exportString += "        ];\n";
+
+            displayExportModal(exportString);
+        }
+
+        function displayExportModal(text) {
+            const existingModal = document.getElementById('export-modal');
+            if (existingModal) existingModal.remove();
+
+            const modal = document.createElement('div');
+            modal.id = 'export-modal';
+            modal.style.position = 'absolute';
+            modal.style.top = '5%';
+            modal.style.left = '50%';
+            modal.style.transform = 'translateX(-50%)';
+            modal.style.width = '85%';
+            modal.style.height = '85%';
+            modal.style.backgroundColor = '#1a1a1a';
+            modal.style.zIndex = '9999';
+            modal.style.border = '2px solid #00bcd4';
+            modal.style.padding = '20px';
+            modal.style.display = 'flex';
+            modal.style.flexDirection = 'column';
+            modal.style.boxShadow = '0 10px 50px rgba(0,0,0,0.8)';
+
+            const title = document.createElement('h3');
+            title.innerText = "Master Dispatch Database Export";
+            title.style.color = '#fff';
+            title.style.marginTop = '0';
+            title.style.marginBottom = '5px';
+            
+            const instruction = document.createElement('p');
+            instruction.innerText = "Copy the code below and completely replace your existing 'const dispatchDatabase = [...]' block in your HTML file to permanently save all dragged coordinate changes.";
+            instruction.style.color = '#aaa';
+            instruction.style.fontSize = '12px';
+            instruction.style.marginTop = '0';
+
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.flexGrow = '1';
+            textArea.style.fontFamily = 'Consolas, monospace';
+            textArea.style.fontSize = '11px';
+            textArea.style.backgroundColor = '#111';
+            textArea.style.color = '#00bcd4';
+            textArea.style.border = '1px solid #444';
+            textArea.style.padding = '10px';
+            textArea.style.whiteSpace = 'pre';
+
+            const closeBtn = document.createElement('button');
+            closeBtn.innerText = "Close Window";
+            closeBtn.className = "hud-btn";
+            closeBtn.style.marginTop = '15px';
+            closeBtn.style.backgroundColor = '#444';
+            closeBtn.onclick = () => modal.remove();
+
+            modal.appendChild(title);
+            modal.appendChild(instruction);
+            modal.appendChild(textArea);
+            modal.appendChild(closeBtn);
+            document.body.appendChild(modal);
+        }
+
+        function updateVehicleChassis() {
+            const baseHeight = parseInt(document.getElementById('sld-size').value);
+            const baseWidth = baseHeight * 3.333; 
+            document.getElementById('lbl-size').innerText = baseHeight + 'px';
+
+            const sirenIsActive = document.getElementById('chk-siren').checked;
+            const operationalClassString = sirenIsActive ? 'truck-container siren-active' : 'truck-container';
+
+            const inlineSvgHtml = `
+                <div class="truck-rotation-wrapper" style="width: ${baseWidth}px; height: ${baseHeight}px;">
+                    <svg width="100%" height="100%" viewBox="0 0 100 30" preserveAspectRatio="none" style="display: block;">
+                        <rect x="2" y="3" width="96" height="24" rx="4" fill="#d9534f" stroke="#992222" stroke-width="1"/>
+                        <rect x="72" y="4" width="26" height="22" rx="2" fill="#c9302c"/>
+                        <rect x="89" y="5" width="4" height="20" rx="1" fill="#e0f7fa" opacity="0.9"/>
+                        <rect x="78" y="3.5" width="7" height="1.5" fill="#e0f7fa" opacity="0.9"/>
+                        <rect x="78" y="25" width="7" height="1.5" fill="#e0f7fa" opacity="0.9"/>
+                        <rect class="svg-light-blue" x="75" y="2" width="3" height="11" fill="#0022ff"/>
+                        <rect class="svg-light-red" x="75" y="17" width="3" height="11" fill="#ff0000"/>
+                        <rect x="30" y="5" width="38" height="20" fill="#666666" rx="1"/>
+                        <line x1="40" y1="5" x2="40" y2="25" stroke="#444" stroke-width="2"/>
+                        <line x1="50" y1="5" x2="50" y2="25" stroke="#444" stroke-width="2"/>
+                        <line x1="60" y1="5" x2="60" y2="25" stroke="#444" stroke-width="2"/>
+                        <rect x="4" y="4.5" width="22" height="6" fill="none" stroke="#dddddd" stroke-width="1.5"/>
+                        <line x1="9" y1="4.5" x2="9" y2="10.5" stroke="#dddddd"/>
+                        <line x1="14" y1="4.5" x2="14" y2="10.5" stroke="#dddddd"/>
+                        <line x1="19" y1="4.5" x2="19" y2="10.5" stroke="#dddddd"/>
+                        <rect x="4" y="19.5" width="22" height="6" fill="none" stroke="#dddddd" stroke-width="1.5"/>
+                        <line x1="9" y1="19.5" x2="9" y2="25.5" stroke="#dddddd"/>
+                        <line x1="14" y1="19.5" x2="14" y2="25.5" stroke="#dddddd"/>
+                        <line x1="19" y1="19.5" x2="19" y2="25.5" stroke="#dddddd"/>
+                    </svg>
+                </div>
+            `;
+
+            const dynamicDivIcon = L.divIcon({
+                html: inlineSvgHtml,
+                className: operationalClassString,
+                iconSize: [baseWidth, baseHeight],
+                iconAnchor: [baseWidth / 2, baseHeight / 2]
+            });
+
+            if (!vehicleMarker) {
+                vehicleMarker = L.marker([simLat, simLng], { 
+                    icon: dynamicDivIcon,
+                    rotationOrigin: 'center center',
+                    rotationAngle: currentHeading - 90 
+                }).addTo(mapInstance);
+            } else {
+                vehicleMarker.setIcon(dynamicDivIcon);
+                vehicleMarker.setRotationOrigin('center center');
+            }
+        }
+
+        function simulationLoop(timestamp) {
+            if (!lastTimestamp) lastTimestamp = timestamp;
+            const dt = timestamp - lastTimestamp;
+            lastTimestamp = timestamp;
+
+            const speedSetting = parseInt(document.getElementById('sld-speed').value);
+            const maxSpeed = 0.0000015 * speedSetting;
+            const acceleration = 0.00000005 * speedSetting; 
+            const friction = 0.96;
+            const baseTurnRate = 1.2;
+
+            // Motor Input
+            if (keys['ArrowUp'] || keys['w']) velocity += acceleration;
+            if (keys['ArrowDown'] || keys['s']) velocity -= acceleration * 1.5; // Stronger braking
+            
+            // Drag Application
+            velocity *= friction;
+            if (Math.abs(velocity) < 0.00000001) velocity = 0;
+
+            // Arcade Steering Logic
+            let activeTurnRate = 0;
+            let isTurning = false;
+
+            if (velocity !== 0) {
+                const driveDirection = velocity > 0 ? 1 : -1;
+                // Steering efficiency tied to movement speed
+                const velocityFactor = Math.min(Math.abs(velocity) / (maxSpeed * 0.2), 1.0);
+                activeTurnRate = baseTurnRate * Math.max(velocityFactor, 0.3) * driveDirection;
+            } else {
+                // Static spinning in place
+                activeTurnRate = baseTurnRate * 0.7;
+            }
+
+            if (keys['ArrowLeft'] || keys['a']) { currentHeading -= activeTurnRate; isTurning = true; }
+            if (keys['ArrowRight'] || keys['d']) { currentHeading += activeTurnRate; isTurning = true; }
+            
+            if (isTurning) {
+                currentHeading = (currentHeading + 360) % 360;
+            }
+
+            // Geographic Projection Math
+            const rad = currentHeading * (Math.PI / 180);
+            const latCorrection = Math.cos(simLat * (Math.PI / 180));
+
+            // 0 Degrees is mapped to True North via cosine/sine matrix
+            simLat += Math.cos(rad) * velocity;
+            simLng += (Math.sin(rad) * velocity) / latCorrection;
+
+            if (vehicleMarker) {
+                vehicleMarker.setRotationOrigin('center center');
+                vehicleMarker.setRotationAngle(currentHeading - 90);
+            }
+
+            // Update UI/Map if the vehicle moved OR spun
+            if (velocity !== 0 || isTurning) {
+                vehicleMarker.setLatLng([simLat, simLng]);
+                
+                // Only lock/pan camera if actually moving forward/backward
+                if (document.getElementById('chk-camera').checked && mapInstance && velocity !== 0) {
+                    mapInstance.setView([simLat, simLng], mapInstance.getZoom(), { animate: false });
+                }
+
+                if (simulationState === STATES.ENROUTE && velocity !== 0) evaluateDistanceToTarget();
+
+                document.getElementById('tel-lat').innerText = simLat.toFixed(6);
+                document.getElementById('tel-lng').innerText = simLng.toFixed(6);
+                document.getElementById('tel-hdg').innerText = Math.round(currentHeading) + "Â°"; 
+            }
+
+            requestAnimationFrame(simulationLoop);
+        }
+
+        window.addEventListener("keydown", e => {
+            if (keys.hasOwnProperty(e.key)) { e.preventDefault(); keys[e.key] = true; }
+        });
+        window.addEventListener("keyup", e => {
+            if (keys.hasOwnProperty(e.key)) { e.preventDefault(); keys[e.key] = false; }
+        });
+
+        function playDispatchAudioText(phraseText) {
+            try {
+                if (window.speechSynthesis) {
+                    window.speechSynthesis.cancel();
+                    const utteranceNode = new SpeechSynthesisUtterance(phraseText);
+                    utteranceNode.rate = 1.0;
+                    utteranceNode.pitch = 0.95;
+                    window.speechSynthesis.speak(utteranceNode);
+                }
+            } catch (err) { console.warn("TTS engine failure:", err); }
+        }
+
+        function triggerDispatchWorkflow() {
+            if (simulationState === STATES.INACTIVE || simulationState === STATES.INSERVICE) {
+                fireRandomIncidentDispatch();
+            }
+        }
+
+        function fireRandomIncidentDispatch() {
+            const checkedBoxes = document.querySelectorAll('.filter-chk:checked');
+            const activeSubCategories = Array.from(checkedBoxes).map(cb => cb.getAttribute('data-sub'));
+
+            if (activeSubCategories.length === 0) {
+                alert("Filter Error: You must check at least one operation response profile inside the options panel.");
+                return;
+            }
+
+            const filteredPool = dispatchDatabase.filter(item => activeSubCategories.includes(item.sub));
+            if (filteredPool.length === 0) return;
+
+            if (incidentCircleMarker) mapInstance.removeLayer(incidentCircleMarker);
+
+            activeIncident = filteredPool[Math.floor(Math.random() * filteredPool.length)];
+
+            incidentCircleMarker = L.circle([activeIncident.lat, activeIncident.lng], {
+                color: activeIncident.main === "Fire" ? '#d9534f' : '#2e7d32',
+                fillColor: activeIncident.main === "Fire" ? '#f0ad4e' : '#4cae4c',
+                fillOpacity: 0.35,
+                radius: 40 
+            }).addTo(mapInstance);
+
+            simulationState = STATES.ENROUTE;
+            elapsedMilliseconds = 0;
+
+            const hud = document.getElementById('dispatch-hud');
+            hud.className = "incident-active";
+
+            const currentHour = new Date().getHours();
+            let environmentConditionString = currentHour < 6 ? "Night operations active." : (currentHour < 12 ? "Morning route patterns forming." : "Standard daytime operations grid.");
+
+            document.getElementById('hud-content').innerHTML = `
+                <div class="hud-title">ðŸš¨ ACTIVE ENROUTE DISPATCH: ${activeIncident.sub.toUpperCase()}</div>
+                <p class="hud-address">${activeIncident.name}</p>
+                <div class="hud-meta">Location Matrix: ${activeIncident.addr} | ${environmentConditionString}</div>
+            `;
+
+            const actionBtn = document.getElementById('hud-action-btn');
+            actionBtn.innerText = "Responding...";
+            actionBtn.disabled = true;
+            actionBtn.style.opacity = "0.5";
+
+            clearInterval(stopwatchInterval);
+            stopwatchInterval = setInterval(() => {
+                elapsedMilliseconds += 100;
+                const secs = (elapsedMilliseconds / 1000).toFixed(1);
+                document.getElementById("hud-clock").innerText = secs;
+            }, 100);
+
+            playDispatchAudioText(`Attention station company. Respond emergency to ${activeIncident.name}, at ${activeIncident.addr}, for a reported ${activeIncident.sub}.`);
+        }
+
+        function executeIncidentArrivalProcedures() {
+            clearInterval(stopwatchInterval);
+            simulationState = STATES.ONSCENE;
+
+            const hud = document.getElementById('dispatch-hud');
+            hud.className = "incident-success";
+
+            document.getElementById('hud-content').innerHTML = `
+                <div class="hud-title" style="color: #5cb85c;">âœ“ ON SCENE AS REPORTED</div>
+                <p class="hud-address">Arrived at ${activeIncident.name}</p>
+                <div class="hud-meta">Staging layout completed. Responding crew evaluating conditions on scene.</div>
+            `;
+
+            if (incidentCircleMarker) {
+                incidentCircleMarker.setStyle({ color: '#5cb85c', fillColor: '#5cb85c' });
+            }
+
+            setTimeout(() => {
+                simulationState = STATES.INSERVICE;
+                totalTrackedCalls++;
+                localStorage.setItem("simTotalCalls", totalTrackedCalls);
+                document.getElementById('tel-total-calls').innerText = totalTrackedCalls;
+
+                document.getElementById('hud-content').innerHTML = `
+                    <div class="hud-title">IN SERVICE / AVAILABLE</div>
+                    <p class="hud-address">Assignment Completed</p>
+                    <div class="hud-meta">Company clear of sector and logging availability parameters.</div>
+                `;
+
+                const actionBtn = document.getElementById('hud-action-btn');
+                actionBtn.innerText = "Next Call";
+                actionBtn.className = "hud-btn success-btn";
+                actionBtn.disabled = false;
+                actionBtn.style.opacity = "1";
+            }, 4000);
+        }
+
+        function evaluateDistanceToTarget() {
+            if (!activeIncident || !mapInstance) return;
+            const d = mapInstance.distance([simLat, simLng], [activeIncident.lat, activeIncident.lng]);
+            document.getElementById('tel-dist').innerText = Math.round(d) + " m";
+            if (d <= 40 && simulationState === STATES.ENROUTE) {
+                executeIncidentArrivalProcedures();
+            }
+        }
+
+        window.onload = initializeSimulator;
+    </script>
+</body>
+</html>
+
