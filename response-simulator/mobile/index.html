@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#111827">
   <title>Peterborough Dispatch Simulator — Mobile</title>
   <style>
@@ -77,6 +77,13 @@
 
     .top-button:active,
     .utility-button:active { transform: scale(0.94); }
+
+    .top-button:focus-visible,
+    .utility-button:focus-visible,
+    .pedal:focus-visible {
+      outline: 3px solid #38bdf8;
+      outline-offset: 3px;
+    }
 
     .top-button[aria-pressed="true"] {
       border-color: rgba(56, 189, 248, .7);
