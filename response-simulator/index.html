@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -96,7 +96,7 @@
     </style>
 </head>
 <body>
-    <a id="game-home" href="../" aria-label="Return to the game selection page">â† All Games</a>
+    <a id="game-home" href="../" aria-label="Return to the game selection page">Ã¢â€ Â All Games</a>
 
     <div id="dispatch-hud">
         <div class="hud-main" id="hud-content">
@@ -139,9 +139,9 @@
             </div>
 
             <div class="section-title">Station Deploy Spawns</div>
-            <button class="station-spawn-box" onclick="teleportToStation(44.300871, -78.322206)">Station 1 â€” 210 Sherbrooke St</button>
-            <button class="station-spawn-box" onclick="teleportToStation(44.335266, -78.316657)">Station 2 â€” 100 Marina Blvd</button>
-            <button class="station-spawn-box" onclick="teleportToStation(44.284867, -78.350902)">Station 3 â€” 839 Clonsilla Ave</button>
+            <button class="station-spawn-box" onclick="teleportToStation(44.300871, -78.322206)">Station 1 Ã¢â‚¬â€ 210 Sherbrooke St</button>
+            <button class="station-spawn-box" onclick="teleportToStation(44.335266, -78.316657)">Station 2 Ã¢â‚¬â€ 100 Marina Blvd</button>
+            <button class="station-spawn-box" onclick="teleportToStation(44.284867, -78.350902)">Station 3 Ã¢â‚¬â€ 839 Clonsilla Ave</button>
 
             <div class="section-title">Custom Dispatch Logging</div>
             <button class="station-spawn-box" style="border-color: #f0ad4e;" onclick="recordCurrentLocation()">Record Current Position</button>
@@ -175,7 +175,7 @@
             <div class="telemetry-box">
                 LAT: <span id="tel-lat">44.300871</span><br>
                 LNG: <span id="tel-lng">-78.322206</span><br>
-                HEADING: <span id="tel-hdg">180Â°</span><br>
+                HEADING: <span id="tel-hdg">180Ã‚Â°</span><br>
                 DIST TO RUN: <span id="tel-dist">--</span><br>
                 COMPLETED RUNS: <span id="tel-total-calls">0</span>
             </div>
@@ -185,109 +185,13 @@
     <div id="map"></div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    <script src="../shared/geography.js"></script>
+    <script src="../shared/storage.js"></script>
     <script src="https://unpkg.com/leaflet-edgebuffer@1.0.6/src/leaflet.edgebuffer.js"></script>
     <script src="https://unpkg.com/leaflet-rotatedmarker@0.2.0/leaflet.rotatedMarker.js"></script>
     
     <script>
-        const dispatchDatabase = [
-            { main:"Fire", sub:"Water & Ice Rescue", name:"Beavermead Park Beach", addr:"2015 Ashburnham Dr", lat:44.295749, lng:-78.303611 },
-            { main:"Fire", sub:"Water & Ice Rescue", name:"Peterborough Lift Lock Canal", addr:"353 Hunter St E", lat:44.3075, lng:-78.300833 },
-            { main:"Fire", sub:"Water & Ice Rescue", name:"Trent University Faryon Bridge", addr:"1600 West Bank Dr", lat:44.358278, lng:-78.289915 },
-            { main:"Fire", sub:"Water & Ice Rescue", name:"Del Crary Park Marina", addr:"100 George St N", lat:44.2965, lng:-78.3175 },
-            { main:"Fire", sub:"Water & Ice Rescue", name:"Little Lake Cemetery", addr:"915 Haggart St", lat:44.292889, lng:-78.310833 },
-            { main:"Fire", sub:"Water & Ice Rescue", name:"Millennium Park Dock", addr:"130 King St", lat:44.301577, lng:-78.317682 },
-            { main:"Fire", sub:"Structure Fire", name:"Lansdowne Place Mall", addr:"645 Lansdowne St W", lat:44.283653, lng:-78.33179 },
-            { main:"Fire", sub:"Structure Fire", name:"Quaker Oats", addr:"34 Hunter St W", lat:44.307436, lng:-78.314576 },
-            { main:"Fire", sub:"Structure Fire", name:"Holiday Inn Waterfront", addr:"150 George St N", lat:44.298368, lng:-78.319323 },
-            { main:"Fire", sub:"Structure Fire", name:"Parkway Park Apartments", addr:"1195 Talbot St", lat:44.2889, lng:-78.3412 },
-            { main:"Fire", sub:"Structure Fire", name:"Charlotte Towers High-Rise", addr:"315 Charlotte St", lat:44.30296, lng:-78.327171 },
-            { main:"Fire", sub:"Structure Fire", name:"General Electric Building", addr:"107 Park St N", lat:44.29697, lng:-78.327413 },
-            { main:"Fire", sub:"Structure Fire", name:"Peterborough Public Library", addr:"345 Aylmer St N", lat:44.303992, lng:-78.323357 },
-            { main:"Fire", sub:"Structure Fire", name:"Market Plaza Strip Mall", addr:"91 George St N", lat:44.296314, lng:-78.320879 },
-            { main:"Fire", sub:"Structure Fire", name:"East City Commercial Block", addr:"138 Hunter St E", lat:44.305804, lng:-78.311588 },
-            { main:"Fire", sub:"Structure Fire", name:"Gzowski College Student Residence", addr:"2151 East Bank Dr", lat:44.356705, lng:-78.286986 },
-            { main:"Fire", sub:"Structure Fire", name:"Brock Mission Emergency Shelter", addr:"217 Murray St", lat:44.308223, lng:-78.322778 },
-            { main:"Fire", sub:"Structure Fire", name:"Residential Triplex conversions", addr:"465 Wellington St", lat:44.314737, lng:-78.336425 },
-            { main:"Fire", sub:"Motor Vehicle Collision", name:"Intersection", addr:"Lansdowne St W & Monaghan Rd", lat:44.285888, lng:-78.329751 },
-            { main:"Fire", sub:"Motor Vehicle Collision", name:"Intersection", addr:"Chemong Rd & Towerhill Rd", lat:44.327102, lng:-78.339193 },
-            { main:"Fire", sub:"Motor Vehicle Collision", name:"Intersection", addr:"The Parkway & Clonsilla Ave", lat:44.291, lng:-78.349 },
-            { main:"Fire", sub:"Motor Vehicle Collision", name:"Intersection", addr:"George St N & Rink St", lat:44.295884, lng:-78.319339 },
-            { main:"Fire", sub:"Motor Vehicle Collision", name:"Hwy 115 Off-Ramp", addr:"Hwy 115 & Bensfort Rd", lat:44.274828, lng:-78.310268 },
-            { main:"Fire", sub:"Motor Vehicle Collision", name:"Intersection", addr:"Parkhill Rd E & Television Rd", lat:44.322374, lng:-78.293209 },
-            { main:"Fire", sub:"Motor Vehicle Collision", name:"Intersection", addr:"Water St & Nassau Mills Rd", lat:44.352992, lng:-78.298016 },
-            { main:"Fire", sub:"Motor Vehicle Collision", name:"Intersection", addr:"Ashburnham Dr & Maria St", lat:44.301032, lng:-78.302307 },
-            { main:"Fire", sub:"Motor Vehicle Collision", name:"Intersection", addr:"Sherbrooke St & Medical Dr", lat:44.296348, lng:-78.34269 },
-            { main:"Fire", sub:"Motor Vehicle Collision", name:"Intersection", addr:"Borden Ave & High St", lat:44.282801, lng:-78.333727 },
-            { main:"Fire", sub:"Auto Alarm / Vehicle Fire", name:"Costco Wholesale Parking Lot", addr:"485 The Parkway", lat:44.2855, lng:-78.3533 },
-            { main:"Fire", sub:"Auto Alarm / Vehicle Fire", name:"Peterborough Memorial Centre", addr:"151 Lansdowne St W", lat:44.288392, lng:-78.316276 },
-            { main:"Fire", sub:"Auto Alarm / Vehicle Fire", name:"Real Canadian Superstore Lot", addr:"769 Borden Ave", lat:44.281718, lng:-78.333796 },
-            { main:"Fire", sub:"Auto Alarm / Vehicle Fire", name:"King Street Parking Garage", addr:"202 King St", lat:44.3021, lng:-78.320986 },
-            { main:"Fire", sub:"Auto Alarm / Vehicle Fire", name:"Trent Athletics Centre", addr:"1650 W Bank Dr", lat:44.355785, lng:-78.293198 },
-            { main:"Fire", sub:"Auto Alarm / Vehicle Fire", name:"Lansdowne Car Dealership", addr:"2212 Lansdowne St W", lat:44.271202, lng:-78.390541 },
-            { main:"Fire", sub:"Burning Complaint", name:"Residential Backyard Subdivision", addr:"812 George St N", lat:44.3162, lng:-78.3218 },
-            { main:"Fire", sub:"Burning Complaint", name:"West End Suburban Property", addr:"1422 Woodglade Blvd", lat:44.2985, lng:-78.3642 },
-            { main:"Fire", sub:"Burning Complaint", name:"Ashburnham Residential Lot", addr:"512 Rogers St", lat:44.307409, lng:-78.304753 },
-            { main:"Fire", sub:"Burning Complaint", name:"Central Urban Grid Property", addr:"275 Mcdonnel St", lat:44.309286, lng:-78.325664 },
-            { main:"Fire", sub:"Burning Complaint", name:"North End Residential Fringe", addr:"1815 Chemong Rd", lat:44.347591, lng:-78.360565 },
-            { main:"Fire", sub:"Burning Complaint", name:"Clonsilla Residential Corridor", addr:"1205 Clonsilla Ave", lat:44.2922, lng:-78.3458 },
-            { main:"Fire", sub:"Alarms No Apparent Problem", name:"Empress Gardens Senior Living", addr:"131 Charlotte St", lat:44.303109, lng:-78.319098 },
-            { main:"Fire", sub:"Alarms No Apparent Problem", name:"Applewood Retirement Residence", addr:"1500 Lansdowne St W", lat:44.2782, lng:-78.362373 },
-            { main:"Fire", sub:"Alarms No Apparent Problem", name:"Brock Towers High-Rise Housing", addr:"221 Brock St", lat:44.307159, lng:-78.322413 },
-            { main:"Fire", sub:"Alarms No Apparent Problem", name:"Liftlock Manor Apartments", addr:"815 Dutton Rd", lat:44.326807, lng:-78.317091 },
-            { main:"Fire", sub:"Alarms No Apparent Problem", name:"Sunrise Seniors Living Facility", addr:"1165 Chemong Rd", lat:44.3298, lng:-78.3262 },
-            { main:"Fire", sub:"Alarms No Apparent Problem", name:"Hillmar Apartments", addr:"181 Marina Blvd", lat:44.332819, lng:-78.322544 },
-            { main:"Fire", sub:"Alarms No Apparent Problem", name:"Monaghan Multi-Unit Complex", addr:"610 Monaghan Rd", lat:44.278292, lng:-78.3259 },
-            { main:"Fire", sub:"Alarms No Apparent Problem", name:"Commercial Office Infrastructure", addr:"360 George St N", lat:44.293599, lng:-78.31898 },
-            { main:"Fire", sub:"Alarms No Apparent Problem", name:"Towerhill Townhouse Complex", addr:"1000 Towerhill Rd", lat:44.322451, lng:-78.351102 },
-            { main:"Medical", sub:"Chest Pain / Cardiac Emergency", name:"YMCA Community Gym Facility", addr:"123 Aylmer St S", lat:44.289709, lng:-78.322166 },
-            { main:"Medical", sub:"Chest Pain / Cardiac Emergency", name:"Peterborough Sport & Wellness Centre", addr:"775 Brealey Dr", lat:44.273814, lng:-78.372903 },
-            { main:"Medical", sub:"Chest Pain / Cardiac Emergency", name:"Peterborough Golf & Country Club", addr:"1030 Water St", lat:44.332383, lng:-78.307543 },
-            { main:"Medical", sub:"Chest Pain / Cardiac Emergency", name:"Shoppers Drug Mart Pharmacy", addr:"971 Lansdowne St W", lat:44.2842, lng:-78.3411 },
-            { main:"Medical", sub:"Chest Pain / Cardiac Emergency", name:"Galaxy Cinemas Theater Complex", addr:"320 Water St", lat:44.303816, lng:-78.318701 },
-            { main:"Medical", sub:"Chest Pain / Cardiac Emergency", name:"Kawartha Heights Residential Bungalow", addr:"1400 Kawartha Heights Blvd", lat:44.285735, lng:-78.365993 },
-            { main:"Medical", sub:"Chest Pain / Cardiac Emergency", name:"South End Suburban Residence", addr:"625 Spillsbury Dr", lat:44.270115, lng:-78.361938 },
-            { main:"Medical", sub:"Chest Pain / Cardiac Emergency", name:"Scotiabank Downtown Branch", addr:"374 George St N", lat:44.305033, lng:-78.319892 },
-            { main:"Medical", sub:"Difficulty Breathing", name:"St. Joseph's at Fleming Long-Term Care", addr:"359 Brealey Dr", lat:44.269112, lng:-78.370135 },
-            { main:"Medical", sub:"Difficulty Breathing", name:"Fairhaven Senior Care Facility", addr:"881 Dutton Rd", lat:44.32721, lng:-78.318277 },
-            { main:"Medical", sub:"Difficulty Breathing", name:"Riverview Manor Nursing Home", addr:"1155 Water St", lat:44.336097, lng:-78.314667 },
-            { main:"Medical", sub:"Difficulty Breathing", name:"The Peterborough Clinic Medical Hub", addr:"26 Hospital Dr", lat:44.301048, lng:-78.345609 },
-            { main:"Medical", sub:"Difficulty Breathing", name:"Mcdonnel Street Apartment Suite", addr:"435 Mcdonnel St", lat:44.3055, lng:-78.3298 },
-            { main:"Medical", sub:"Difficulty Breathing", name:"Stewart Homes Residential Facility", addr:"521 Mcdonnel St", lat:44.308169, lng:-78.336741 },
-            { main:"Medical", sub:"Difficulty Breathing", name:"West End Detached Residence", addr:"1555 Parkhill Rd W", lat:44.299128, lng:-78.390648 },
-            { main:"Medical", sub:"Difficulty Breathing", name:"Otonabee District Detached Residence", addr:"491 Wylie St", lat:44.2782, lng:-78.3092 },
-            { main:"Medical", sub:"Unconscious Patient / Substance Overdose", name:"Peterborough Downtown Transit Terminal", addr:"190 Simcoe St", lat:44.30471, lng:-78.321887 },
-            { main:"Medical", sub:"Unconscious Patient / Substance Overdose", name:"Commercial Motel Corridor Unit", addr:"1112 Lansdowne St W", lat:44.2818, lng:-78.3482 },
-            { main:"Medical", sub:"Unconscious Patient / Substance Overdose", name:"Victoria Park Public Greenspace", addr:"212 Water St", lat:44.300414, lng:-78.3184 },
-            { main:"Medical", sub:"Unconscious Patient / Substance Overdose", name:"George Street Alleyway", addr:"383 George St N", lat:44.305524, lng:-78.320149 },
-            { main:"Medical", sub:"Unconscious Patient / Substance Overdose", name:"Hunter Street Cafe Restroom", addr:"130 Hunter St W", lat:44.306027, lng:-78.319173 },
-            { main:"Medical", sub:"Unconscious Patient / Substance Overdose", name:"Bethune Housing Unit", addr:"580 Bethune St", lat:44.311309, lng:-78.324838 },
-            { main:"Medical", sub:"Unconscious Patient / Substance Overdose", name:"Industrial Rail Corridor Interface", addr:"640 Rink St", lat:44.295626, lng:-78.324548 },
-            { main:"Medical", sub:"Unconscious Patient / Substance Overdose", name:"Del Crary Park Public Pavilion", addr:"2 Romaine St", lat:44.295354, lng:-78.318669 },
-            { main:"Medical", sub:"Rectal Bleed / Gastrointestinal Emergency", name:"Boston Pizza Dining Facility", addr:"1164 Chemong Rd", lat:44.3303, lng:-78.3255 },
-            { main:"Medical", sub:"Rectal Bleed / Gastrointestinal Emergency", name:"Tim Hortons Commercial Unit", addr:"898 Monaghan Rd", lat:44.2862, lng:-78.3452 },
-            { main:"Medical", sub:"Rectal Bleed / Gastrointestinal Emergency", name:"High Street Residential Bungalow", addr:"1235 High St", lat:44.288131, lng:-78.335052 },
-            { main:"Medical", sub:"Rectal Bleed / Gastrointestinal Emergency", name:"Charlotte Street Mid-Rise Suite", addr:"250 Charlotte St", lat:44.303378, lng:-78.32391 },
-            { main:"Medical", sub:"Rectal Bleed / Gastrointestinal Emergency", name:"Downtown Diner Property", addr:"172 Charlotte St", lat:44.303543, lng:-78.320739 },
-            { main:"Medical", sub:"Rectal Bleed / Gastrointestinal Emergency", name:"Armour Road Residential Home", addr:"995 Armour Rd", lat:44.329267, lng:-78.309603 },
-            { main:"Medical", sub:"Lift Assist / Public Service", name:"Parkhill West Single-Family Residence", addr:"1180 Parkhill Rd W", lat:44.304779, lng:-78.368719 },
-            { main:"Medical", sub:"Lift Assist / Public Service", name:"Cherryhill Suburban Residence", addr:"745 Cherryhill Rd", lat:44.282747, lng:-78.363939 },
-            { main:"Medical", sub:"Lift Assist / Public Service", name:"Cumberland Avenue Residential Home", addr:"1925 Cumberland Ave", lat:44.341683, lng:-78.325031 },
-            { main:"Medical", sub:"Lift Assist / Public Service", name:"Hamilton Street Residential Lot", addr:"540 Hamilton St", lat:44.280619, lng:-78.32473 },
-            { main:"Medical", sub:"Lift Assist / Public Service", name:"Otonabee Drive Single-Family Residence", addr:"812 Otonabee Dr", lat:44.277221, lng:-78.307258 },
-            { main:"Medical", sub:"Lift Assist / Public Service", name:"Ravenwood Development Detached Home", addr:"1540 Ravenwood Dr", lat:44.297669, lng:-78.36476 },
-            { main:"Medical", sub:"Lift Assist / Public Service", name:"Weller Street Residential Area", addr:"910 Weller St", lat:44.300955, lng:-78.351445 },
-            { main:"Medical", sub:"Lift Assist / Public Service", name:"Spillsbury Drive Subdivision Home", addr:"715 Spillsbury Dr", lat:44.268943, lng:-78.361359 },
-            { main:"Medical", sub:"Request for Access / Wellness Check", name:"George Street High-Density Housing", addr:"545 George St N", lat:44.310361, lng:-78.32023 },
-            { main:"Medical", sub:"Request for Access / Wellness Check", name:"Central City Residential Structure", addr:"612 Stewart St", lat:44.312334, lng:-78.325953 },
-            { main:"Medical", sub:"Request for Access / Wellness Check", name:"Glenforest Boulevard Split-Level Home", addr:"1385 Glenforest Blvd", lat:44.2932, lng:-78.3615 },
-            { main:"Medical", sub:"Request for Access / Wellness Check", name:"Talbot Street Multi-Unit Residence", addr:"1180 Talbot St", lat:44.2882, lng:-78.3415 },
-            { main:"Medical", sub:"Request for Access / Wellness Check", name:"Park Street North Residential Home", addr:"472 Park St N", lat:44.3052, lng:-78.3292 },
-            { main:"Medical", sub:"Request for Access / Wellness Check", name:"Hedonics Road Industrial Edge Unit", addr:"315 Hedonics Rd", lat:44.309006, lng:-78.343409 },
-            { main:"Medical", sub:"Request for Access / Wellness Check", name:"Hilliard Street Multi-Family Triplex", addr:"884 Hilliard St", lat:44.326101, lng:-78.321099 },
-            { main:"Medical", sub:"Request for Access / Wellness Check", name:"Aylmer Street Core Apartment", addr:"502 Aylmer St N", lat:44.308875, lng:-78.323448 },
-            { main:"Medical", sub:"Request for Access / Wellness Check", name:"Reid Street Residential Unit", addr:"650 Reid St", lat:44.313309, lng:-78.328539 },
-            { main:"Medical", sub:"Request for Access / Wellness Check", name:"Bonaccord High-Density Block", addr:"555 Bonaccord St", lat:44.309297, lng:-78.337229 }
-        ];
+        const dispatchDatabase = PeterboroughGeography.locations.map(location => ({ ...location }));
 
 
         const STATES = { INACTIVE: 0, ENROUTE: 1, ONSCENE: 2, INSERVICE: 3 };
@@ -309,8 +213,10 @@
         let activeIncident = null;
         let stopwatchInterval = null;
         let elapsedMilliseconds = 0;
+        let dispatchStartedAtMs = null;
+        let dispatchClockFrameId = null;
 
-        let totalTrackedCalls = parseInt(localStorage.getItem("simTotalCalls")) || 0;
+        let totalTrackedCalls = PeterboroughStorage.read("sim-total-calls", 1, 0, value => Number.isInteger(value) && value >= 0);
 
         let customLocations = [];
         let allLocationsLayerGroup = null;
@@ -680,7 +586,7 @@
 
                 document.getElementById('tel-lat').innerText = simLat.toFixed(6);
                 document.getElementById('tel-lng').innerText = simLng.toFixed(6);
-                document.getElementById('tel-hdg').innerText = Math.round(currentHeading) + "Â°"; 
+                document.getElementById('tel-hdg').innerText = Math.round(currentHeading) + "Ã‚Â°"; 
             }
 
             requestAnimationFrame(simulationLoop);
@@ -692,6 +598,9 @@
         window.addEventListener("keyup", e => {
             if (keys.hasOwnProperty(e.key)) { e.preventDefault(); keys[e.key] = false; }
         });
+        function clearDrivingKeys() { Object.keys(keys).forEach(key => { keys[key] = false; }); }
+        window.addEventListener("blur", clearDrivingKeys);
+        document.addEventListener("visibilitychange", () => { if (document.hidden) clearDrivingKeys(); });
 
         function playDispatchAudioText(phraseText) {
             try {
@@ -744,35 +653,41 @@
             let environmentConditionString = currentHour < 6 ? "Night operations active." : (currentHour < 12 ? "Morning route patterns forming." : "Standard daytime operations grid.");
 
             document.getElementById('hud-content').innerHTML = `
-                <div class="hud-title">ðŸš¨ ACTIVE ENROUTE DISPATCH: ${activeIncident.sub.toUpperCase()}</div>
+                <div class="hud-title">Ã°Å¸Å¡Â¨ ACTIVE ENROUTE DISPATCH: ${activeIncident.sub.toUpperCase()}</div>
                 <p class="hud-address">${activeIncident.name}</p>
                 <div class="hud-meta">Location Matrix: ${activeIncident.addr} | ${environmentConditionString}</div>
             `;
 
             const actionBtn = document.getElementById('hud-action-btn');
+            actionBtn.className = "hud-btn";
             actionBtn.innerText = "Responding...";
             actionBtn.disabled = true;
             actionBtn.style.opacity = "0.5";
 
-            clearInterval(stopwatchInterval);
-            stopwatchInterval = setInterval(() => {
-                elapsedMilliseconds += 100;
-                const secs = (elapsedMilliseconds / 1000).toFixed(1);
-                document.getElementById("hud-clock").innerText = secs;
-            }, 100);
+            dispatchStartedAtMs = performance.now();
+            const renderDispatchClock = () => {
+                elapsedMilliseconds = Math.round(performance.now() - dispatchStartedAtMs);
+                document.getElementById("hud-clock").innerText = (elapsedMilliseconds / 1000).toFixed(1);
+                dispatchClockFrameId = requestAnimationFrame(renderDispatchClock);
+            };
+            if (dispatchClockFrameId !== null) cancelAnimationFrame(dispatchClockFrameId);
+            renderDispatchClock();
 
             playDispatchAudioText(`Attention station company. Respond emergency to ${activeIncident.name}, at ${activeIncident.addr}, for a reported ${activeIncident.sub}.`);
         }
 
         function executeIncidentArrivalProcedures() {
-            clearInterval(stopwatchInterval);
+            if (dispatchClockFrameId !== null) cancelAnimationFrame(dispatchClockFrameId);
+            dispatchClockFrameId = null;
+            if (dispatchStartedAtMs !== null) elapsedMilliseconds = Math.round(performance.now() - dispatchStartedAtMs);
+            dispatchStartedAtMs = null;
             simulationState = STATES.ONSCENE;
 
             const hud = document.getElementById('dispatch-hud');
             hud.className = "incident-success";
 
             document.getElementById('hud-content').innerHTML = `
-                <div class="hud-title" style="color: #5cb85c;">âœ“ ON SCENE AS REPORTED</div>
+                <div class="hud-title" style="color: #5cb85c;">Ã¢Å“â€œ ON SCENE AS REPORTED</div>
                 <p class="hud-address">Arrived at ${activeIncident.name}</p>
                 <div class="hud-meta">Staging layout completed. Responding crew evaluating conditions on scene.</div>
             `;
@@ -784,7 +699,7 @@
             setTimeout(() => {
                 simulationState = STATES.INSERVICE;
                 totalTrackedCalls++;
-                localStorage.setItem("simTotalCalls", totalTrackedCalls);
+                PeterboroughStorage.write("sim-total-calls", 1, totalTrackedCalls);
                 document.getElementById('tel-total-calls').innerText = totalTrackedCalls;
 
                 document.getElementById('hud-content').innerHTML = `
@@ -814,4 +729,5 @@
     </script>
 </body>
 </html>
+
 

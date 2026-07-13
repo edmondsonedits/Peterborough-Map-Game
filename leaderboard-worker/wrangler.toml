@@ -1,0 +1,13 @@
+name = "peterborough-map-games-leaderboard"
+main = "src/index.js"
+compatibility_date = "2026-07-12"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "peterborough-map-games"
+database_id = "20017c59-ec1b-4f46-a423-b1dfdcc43cca"
+
+[vars]
+ALLOWED_ORIGINS = "https://edmondsonedits.github.io,http://localhost:8787"
+GAME_VERSION = "1"
+SCORING_VERSION = "1"
