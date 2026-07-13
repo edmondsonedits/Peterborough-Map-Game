@@ -64,6 +64,7 @@
       radius: Math.max(10, Number(raw.radius ?? raw.targetRadiusMeters) || 50),
       district: [1, 2, 3].includes(Number(raw.district)) ? Number(raw.district) : undefined,
       cityTen: typeof raw.cityTen === 'boolean' ? raw.cityTen : cityTenNames.has(normalizeText(raw.name)),
+      confirmed: Boolean(raw.confirmed),
       sources: Array.isArray(raw.sources) ? [...new Set(raw.sources)] : [source].filter(Boolean),
       custom: Boolean(raw.custom)
     };
@@ -215,6 +216,7 @@
       const existing = union[existingIndex];
       existing.sources = [...new Set([...(existing.sources || []), source])];
       existing.cityTen = existing.cityTen || location.cityTen;
+      existing.confirmed = existing.confirmed || location.confirmed;
       if (source === 'geo-guesser') {
         existing.lat = location.lat;
         existing.lng = location.lng;
