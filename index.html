@@ -281,7 +281,7 @@
       </header>
 
       <section class="games" aria-label="Choose a game">
-        <a class="game-link dispatch" href="response-simulator/" aria-label="Open the Peterborough Dispatch Simulator">
+        <a id="dispatch-game-link" class="game-link dispatch" href="response-simulator/" aria-label="Open the Peterborough Dispatch Simulator">
           <span class="icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <path d="M3 11h11v7H3z"/>
@@ -325,5 +325,13 @@
 
       <footer>Unofficial fan-made project. Not affiliated with the City of Peterborough or Peterborough Fire Services.</footer>
     </main>
+
+    <script>
+      (() => {
+        const dispatchLink = document.getElementById('dispatch-game-link');
+        const touchMobile = window.innerWidth <= 900 && (matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window);
+        if (dispatchLink && touchMobile) dispatchLink.href = 'response-simulator/mobile/';
+      })();
+    </script>
   </body>
 </html>
