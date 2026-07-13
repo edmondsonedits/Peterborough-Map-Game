@@ -26,6 +26,12 @@ jobs:
           node-version: 24
       - name: Run syntax and unit checks
         run: npm run check
+      - name: Scan tracked source for obvious secrets
+        run: |
+          if rg -n --glob '!**/.dev.vars.example' --glob '!**/package-lock.json' '(ghp_|github_pat_|AKIA[0-9A-Z]{16}|BEGIN (RSA|OPENSSH) PRIVATE KEY)' .; then
+            echo "Potential secret found"
+            exit 1
+          fi
 
   deploy:
     needs: check

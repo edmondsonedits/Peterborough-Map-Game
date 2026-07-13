@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "serve": "node scripts/static-server.mjs",
     "check:syntax": "node --check shared/storage.js && node --check shared/game-utils.js && node --check shared/geography.js && node --check leaderboard-worker/src/index.js",
     "test": "node --test tests/*.test.mjs",
     "check": "npm run check:syntax && npm test"

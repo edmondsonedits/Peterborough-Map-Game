@@ -1,3 +1,2 @@
 IP_HASH_SALT=replace-with-a-random-secret-used-only-for-rate-limit-hashing
 ADMIN_TOKEN=replace-with-a-separate-admin-secret
-LOCATIONS_JSON=[]
