@@ -6,638 +6,79 @@
   <meta name="theme-color" content="#111827">
   <title>Peterborough Dispatch Simulator — Mobile</title>
   <style>
-    :root {
-      color-scheme: dark;
-      --panel: rgba(17, 24, 39, 0.92);
-      --panel-strong: rgba(8, 13, 24, 0.96);
-      --border: rgba(255, 255, 255, 0.2);
-      --red: #ef4444;
-      --red-dark: #b91c1c;
-      --ink: #f8fafc;
-      --muted: #cbd5e1;
-    }
-
-    * { box-sizing: border-box; }
-
-    html,
-    body {
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      overflow: hidden;
-      overscroll-behavior: none;
-      background: #111827;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      -webkit-user-select: none;
-      user-select: none;
-    }
-
-    #simulator {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-      background: #111827;
-    }
-
-    .mobile-topbar {
-      position: fixed;
-      top: calc(10px + env(safe-area-inset-top));
-      left: 10px;
-      right: 10px;
-      z-index: 5000;
-      display: flex;
-      justify-content: space-between;
-      pointer-events: none;
-    }
-
-    .top-actions {
-      display: flex;
-      gap: 8px;
-      pointer-events: auto;
-    }
-
-    .top-button,
-    .utility-button {
-      width: 46px;
-      height: 46px;
-      display: grid;
-      place-items: center;
-      padding: 0;
-      color: var(--ink);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: var(--panel-strong);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.38);
-      text-decoration: none;
-      touch-action: manipulation;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .top-button:active,
-    .utility-button:active { transform: scale(0.94); }
-
-    .top-button:focus-visible,
-    .utility-button:focus-visible,
-    .pedal:focus-visible {
-      outline: 3px solid #38bdf8;
-      outline-offset: 3px;
-    }
-
-    .top-button[aria-pressed="true"] {
-      border-color: rgba(56, 189, 248, .7);
-      background: rgba(3, 105, 161, .94);
-    }
-
-    .top-button svg,
-    .utility-button svg {
-      width: 23px;
-      height: 23px;
-      stroke: currentColor;
-    }
-
-    .mobile-controls {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 4900;
-      min-height: 174px;
-      padding: 12px max(14px, env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
-      display: grid;
-      grid-template-columns: minmax(132px, 1fr) auto minmax(132px, 1fr);
-      align-items: end;
-      gap: 10px;
-      pointer-events: none;
-      background: linear-gradient(to top, rgba(5, 10, 20, 0.82), rgba(5, 10, 20, 0));
-    }
-
-    .steering-zone,
-    .pedal-zone,
-    .utility-zone { pointer-events: auto; }
-
-    .steering-zone {
-      display: flex;
-      align-items: end;
-      justify-content: flex-start;
-    }
-
-    .joystick {
-      position: relative;
-      width: 132px;
-      height: 132px;
-      border: 1px solid var(--border);
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at center, rgba(255,255,255,.06) 0 35%, transparent 36%),
-        var(--panel);
-      box-shadow: inset 0 0 28px rgba(0,0,0,.36), 0 8px 24px rgba(0,0,0,.35);
-      touch-action: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .joystick::before {
-      position: absolute;
-      left: 16px;
-      right: 16px;
-      top: 50%;
-      height: 2px;
-      content: "";
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.2), transparent);
-    }
-
-    .joystick-label {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 13px;
-      color: rgba(255,255,255,.58);
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: .13em;
-      text-align: center;
-      text-transform: uppercase;
-      pointer-events: none;
-    }
-
-    .joystick-thumb {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 62px;
-      height: 62px;
-      display: grid;
-      place-items: center;
-      color: var(--ink);
-      border: 2px solid rgba(255,255,255,.45);
-      border-radius: 50%;
-      background: linear-gradient(145deg, #374151, #111827);
-      box-shadow: 0 7px 17px rgba(0,0,0,.45);
-      transform: translate(-50%, -50%);
-      transition: transform 90ms ease;
-      pointer-events: none;
-    }
-
-    .joystick.active .joystick-thumb { transition: none; }
-
-    .joystick-thumb svg {
-      width: 34px;
-      height: 34px;
-      stroke: currentColor;
-    }
-
-    .utility-zone {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 9px;
-      padding-bottom: 8px;
-    }
-
-    .utility-button {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: var(--panel);
-    }
-
-    .utility-button.active {
-      color: #fff;
-      border-color: rgba(239, 68, 68, 0.72);
-      background: rgba(185, 28, 28, 0.92);
-      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2), 0 7px 22px rgba(0,0,0,.36);
-    }
-
-    .pedal-zone {
-      display: flex;
-      align-items: flex-end;
-      justify-content: flex-end;
-      gap: 10px;
-      touch-action: none;
-    }
-
-    .pedal {
-      width: 76px;
-      height: 112px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 7px;
-      padding: 0;
-      color: #fff;
-      border: 1px solid rgba(255,255,255,.25);
-      border-radius: 24px;
-      box-shadow: 0 10px 25px rgba(0,0,0,.42), inset 0 1px rgba(255,255,255,.16);
-      font: inherit;
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      touch-action: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .pedal svg {
-      width: 29px;
-      height: 29px;
-      stroke: currentColor;
-    }
-
-    .pedal.brake {
-      height: 88px;
-      background: linear-gradient(180deg, #374151, #1f2937);
-    }
-
-    .pedal.accelerate {
-      background: linear-gradient(180deg, #dc2626, var(--red-dark));
-    }
-
-    .pedal.pressed {
-      transform: translateY(5px) scale(.97);
-      filter: brightness(1.18);
-      box-shadow: 0 4px 12px rgba(0,0,0,.4), inset 0 3px 10px rgba(0,0,0,.24);
-    }
-
-    .loading-cover {
-      position: fixed;
-      inset: 0;
-      z-index: 6000;
-      display: grid;
-      place-items: center;
-      padding: 24px;
-      color: var(--ink);
-      background: #111827;
-      text-align: center;
-      transition: opacity 180ms ease;
-    }
-
-    .loading-cover.hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .loading-cover strong { display: block; font-size: 1.15rem; }
-    .loading-cover span { display: block; margin-top: 6px; color: var(--muted); font-size: .9rem; }
-
-    @media (orientation: landscape) and (max-height: 560px) {
-      .mobile-controls {
-        min-height: 136px;
-        grid-template-columns: 120px 52px 176px;
-        justify-content: space-between;
-      }
-
-      .joystick { width: 112px; height: 112px; }
-      .joystick-thumb { width: 54px; height: 54px; }
-      .pedal { width: 70px; height: 98px; }
-      .pedal.brake { height: 78px; }
-      .utility-zone { flex-direction: row; padding-bottom: 0; }
-    }
-
-    @media (min-width: 901px) and (pointer: fine) {
-      body::before {
-        position: fixed;
-        inset: 0;
-        z-index: 7000;
-        display: grid;
-        place-items: center;
-        padding: 2rem;
-        color: #fff;
-        background: #111827;
-        content: "This page is the mobile control layout. Opening the desktop simulator…";
-        text-align: center;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { transition-duration: .01ms !important; }
-    }
+    :root { color-scheme: dark; --panel:rgba(17,24,39,.92); --panel-strong:rgba(8,13,24,.96); --border:rgba(255,255,255,.2); --red-dark:#b91c1c; --ink:#f8fafc; --muted:#cbd5e1; }
+    * { box-sizing:border-box; }
+    html,body { width:100%; height:100%; margin:0; overflow:hidden; overscroll-behavior:none; background:#111827; font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; -webkit-user-select:none; user-select:none; }
+    #simulator { position:fixed; inset:0; width:100%; height:100%; border:0; background:#111827; }
+    .mobile-topbar { position:fixed; top:calc(10px + env(safe-area-inset-top)); left:10px; right:10px; z-index:5000; display:flex; justify-content:space-between; pointer-events:none; }
+    .top-actions { display:flex; gap:8px; pointer-events:auto; }
+    .top-button,.utility-button { width:46px; height:46px; display:grid; place-items:center; padding:0; color:var(--ink); border:1px solid var(--border); border-radius:14px; background:var(--panel-strong); box-shadow:0 6px 20px rgba(0,0,0,.38); text-decoration:none; touch-action:manipulation; -webkit-tap-highlight-color:transparent; }
+    .top-button:active,.utility-button:active { transform:scale(.94); }
+    .top-button:focus-visible,.utility-button:focus-visible,.pedal:focus-visible { outline:3px solid #38bdf8; outline-offset:3px; }
+    .top-button[aria-pressed="true"] { border-color:rgba(56,189,248,.7); background:rgba(3,105,161,.94); }
+    .top-button svg,.utility-button svg { width:23px; height:23px; stroke:currentColor; }
+    .mobile-controls { position:fixed; left:0; right:0; bottom:0; z-index:4900; min-height:174px; padding:12px max(14px,env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left)); display:grid; grid-template-columns:minmax(132px,1fr) auto minmax(132px,1fr); align-items:end; gap:10px; pointer-events:none; background:linear-gradient(to top,rgba(5,10,20,.82),rgba(5,10,20,0)); }
+    .steering-zone,.pedal-zone,.utility-zone { pointer-events:auto; }
+    .steering-zone { display:flex; align-items:end; justify-content:flex-start; }
+    .joystick { position:relative; width:132px; height:132px; border:1px solid var(--border); border-radius:50%; background:radial-gradient(circle at center,rgba(255,255,255,.06) 0 35%,transparent 36%),var(--panel); box-shadow:inset 0 0 28px rgba(0,0,0,.36),0 8px 24px rgba(0,0,0,.35); touch-action:none; -webkit-tap-highlight-color:transparent; }
+    .joystick::before { position:absolute; left:16px; right:16px; top:50%; height:2px; content:""; background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent); }
+    .joystick-label { position:absolute; left:0; right:0; bottom:13px; color:rgba(255,255,255,.58); font-size:10px; font-weight:800; letter-spacing:.13em; text-align:center; text-transform:uppercase; pointer-events:none; }
+    .joystick-thumb { position:absolute; left:50%; top:50%; width:62px; height:62px; display:grid; place-items:center; color:var(--ink); border:2px solid rgba(255,255,255,.45); border-radius:50%; background:linear-gradient(145deg,#374151,#111827); box-shadow:0 7px 17px rgba(0,0,0,.45); transform:translate(-50%,-50%); transition:transform 90ms ease; pointer-events:none; }
+    .joystick.active .joystick-thumb { transition:none; }
+    .joystick-thumb svg { width:34px; height:34px; stroke:currentColor; }
+    .utility-zone { display:flex; flex-direction:column; align-items:center; gap:9px; padding-bottom:8px; }
+    .utility-button { width:48px; height:48px; border-radius:50%; background:var(--panel); }
+    .utility-button.active { color:#fff; border-color:rgba(239,68,68,.72); background:rgba(185,28,28,.92); box-shadow:0 0 0 3px rgba(239,68,68,.2),0 7px 22px rgba(0,0,0,.36); }
+    .pedal-zone { display:flex; align-items:flex-end; justify-content:flex-end; gap:10px; touch-action:none; }
+    .pedal { width:76px; height:112px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:7px; padding:0; color:#fff; border:1px solid rgba(255,255,255,.25); border-radius:24px; box-shadow:0 10px 25px rgba(0,0,0,.42),inset 0 1px rgba(255,255,255,.16); font:inherit; font-size:11px; font-weight:900; letter-spacing:.08em; text-transform:uppercase; touch-action:none; -webkit-tap-highlight-color:transparent; }
+    .pedal svg { width:29px; height:29px; stroke:currentColor; }
+    .pedal.brake { height:88px; background:linear-gradient(180deg,#374151,#1f2937); }
+    .pedal.accelerate { background:linear-gradient(180deg,#dc2626,var(--red-dark)); }
+    .pedal.pressed { transform:translateY(5px) scale(.97); filter:brightness(1.18); box-shadow:0 4px 12px rgba(0,0,0,.4),inset 0 3px 10px rgba(0,0,0,.24); }
+    .loading-cover { position:fixed; inset:0; z-index:6000; display:grid; place-items:center; padding:24px; color:var(--ink); background:#111827; text-align:center; transition:opacity 180ms ease; }
+    .loading-cover.hidden { opacity:0; pointer-events:none; }
+    .loading-cover strong { display:block; font-size:1.15rem; }
+    .loading-cover span { display:block; margin-top:6px; color:var(--muted); font-size:.9rem; }
+    .control-hint { position:fixed; left:50%; bottom:calc(184px + env(safe-area-inset-bottom)); z-index:4950; width:min(88vw,360px); padding:9px 12px; color:#e5e7eb; border:1px solid rgba(255,255,255,.15); border-radius:999px; background:rgba(8,13,24,.82); font-size:11px; font-weight:700; text-align:center; transform:translateX(-50%); pointer-events:none; animation:fade-hint 5s forwards; }
+    @keyframes fade-hint { 0%,68%{opacity:1} 100%{opacity:0;visibility:hidden} }
+    @media (orientation:landscape) and (max-height:560px) { .mobile-controls{min-height:136px;grid-template-columns:120px 52px 176px;justify-content:space-between}.joystick{width:112px;height:112px}.joystick-thumb{width:54px;height:54px}.pedal{width:70px;height:98px}.pedal.brake{height:78px}.utility-zone{flex-direction:row;padding-bottom:0}.control-hint{bottom:calc(142px + env(safe-area-inset-bottom))} }
+    @media (min-width:901px) and (pointer:fine) { body::before{position:fixed;inset:0;z-index:7000;display:grid;place-items:center;padding:2rem;color:#fff;background:#111827;content:"This page is the mobile control layout. Opening the desktop simulator…";text-align:center} }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}.control-hint{display:none} }
   </style>
 </head>
 <body>
   <iframe id="simulator" src="../index.html" title="Peterborough Fire and Emergency Dispatch Simulator"></iframe>
-
   <nav class="mobile-topbar" aria-label="Simulator navigation">
-    <div class="top-actions">
-      <a class="top-button" href="../../" aria-label="Return to all games">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="m15 18-6-6 6-6"/>
-        </svg>
-      </a>
-    </div>
-    <div class="top-actions">
-      <button class="top-button" id="options-button" type="button" aria-label="Open simulator options" aria-pressed="false">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M4 7h10"/><path d="M18 7h2"/><path d="M14 5v4"/>
-          <path d="M4 17h2"/><path d="M10 17h10"/><path d="M6 15v4"/>
-          <path d="M4 12h5"/><path d="M13 12h7"/><path d="M9 10v4"/>
-        </svg>
-      </button>
-    </div>
+    <div class="top-actions"><a class="top-button" href="../../" aria-label="Return to all games"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></a></div>
+    <div class="top-actions"><button class="top-button" id="options-button" type="button" aria-label="Open simulator options" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h10"/><path d="M18 7h2"/><path d="M14 5v4"/><path d="M4 17h2"/><path d="M10 17h10"/><path d="M6 15v4"/><path d="M4 12h5"/><path d="M13 12h7"/><path d="M9 10v4"/></svg></button></div>
   </nav>
-
   <section class="mobile-controls" aria-label="Mobile driving controls">
-    <div class="steering-zone">
-      <div class="joystick" id="steering" role="group" aria-label="Steering joystick">
-        <div class="joystick-thumb" id="steering-thumb" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="8"/>
-            <circle cx="12" cy="12" r="2"/>
-            <path d="M4.6 10h14.8M12 14v6"/>
-          </svg>
-        </div>
-        <span class="joystick-label">Steer</span>
-      </div>
-    </div>
-
-    <div class="utility-zone">
-      <button class="utility-button active" id="siren-button" type="button" aria-label="Toggle emergency lights" aria-pressed="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M7 14V9a5 5 0 0 1 10 0v5"/>
-          <path d="M5 18h14M8 14h8l1 4H7l1-4Z"/>
-          <path d="M4 7 2 6M20 7l2-1M12 3V1"/>
-        </svg>
-      </button>
-      <button class="utility-button" id="recenter-button" type="button" aria-label="Recenter map on the fire truck">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="3"/>
-          <circle cx="12" cy="12" r="8"/>
-          <path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
-        </svg>
-      </button>
-    </div>
-
-    <div class="pedal-zone">
-      <button class="pedal brake" id="brake-pedal" type="button" aria-label="Hold to brake or reverse">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="m8 10 4 4 4-4"/>
-        </svg>
-        Brake
-      </button>
-      <button class="pedal accelerate" id="gas-pedal" type="button" aria-label="Hold to accelerate">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="m8 14 4-4 4 4"/>
-        </svg>
-        Gas
-      </button>
-    </div>
+    <div class="steering-zone"><div class="joystick" id="steering" role="group" aria-label="Steering joystick"><div class="joystick-thumb" id="steering-thumb" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2"/><path d="M4.6 10h14.8M12 14v6"/></svg></div><span class="joystick-label">Steer</span></div></div>
+    <div class="utility-zone"><button class="utility-button active" id="siren-button" type="button" aria-label="Toggle emergency lights" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 14V9a5 5 0 0 1 10 0v5"/><path d="M5 18h14M8 14h8l1 4H7l1-4Z"/><path d="M4 7 2 6M20 7l2-1M12 3V1"/></svg></button><button class="utility-button" id="recenter-button" type="button" aria-label="Recenter map on the fire truck"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></button></div>
+    <div class="pedal-zone"><button class="pedal brake" id="brake-pedal" type="button" aria-label="Hold to brake or reverse"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 10 4 4 4-4"/></svg>Brake</button><button class="pedal accelerate" id="gas-pedal" type="button" aria-label="Hold to accelerate"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 14 4-4 4 4"/></svg>Gas</button></div>
   </section>
-
-  <div class="loading-cover" id="loading-cover" role="status">
-    <div><strong>Loading mobile simulator</strong><span>Preparing touch controls and map…</span></div>
-  </div>
-
+  <div class="control-hint" aria-hidden="true">Drag the wheel to steer · Hold Gas to drive · Brake becomes reverse</div>
+  <div class="loading-cover" id="loading-cover" role="status"><div><strong>Loading mobile simulator</strong><span>Preparing touch controls and map…</span></div></div>
   <script>
-    (() => {
-      const isTouchMobile = window.innerWidth <= 900 && (matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window);
-      if (!isTouchMobile && matchMedia('(pointer: fine)').matches) {
-        setTimeout(() => location.replace('../'), 850);
-        return;
-      }
-
-      const frame = document.getElementById('simulator');
-      const loadingCover = document.getElementById('loading-cover');
-      const steering = document.getElementById('steering');
-      const steeringThumb = document.getElementById('steering-thumb');
-      const gasPedal = document.getElementById('gas-pedal');
-      const brakePedal = document.getElementById('brake-pedal');
-      const sirenButton = document.getElementById('siren-button');
-      const recenterButton = document.getElementById('recenter-button');
-      const optionsButton = document.getElementById('options-button');
-
-      const keyNames = {
-        left: { key: 'ArrowLeft', code: 'ArrowLeft' },
-        right: { key: 'ArrowRight', code: 'ArrowRight' },
-        gas: { key: 'ArrowUp', code: 'ArrowUp' },
-        brake: { key: 'ArrowDown', code: 'ArrowDown' }
-      };
-
-      const pressed = new Set();
-      let steeringPointer = null;
-      let steeringDirection = null;
-
-      function simulatorWindow() {
-        return frame.contentWindow;
-      }
-
-      function sendKey(control, down) {
-        if (!simulatorWindow()) return;
-        if (down && pressed.has(control)) return;
-        if (!down && !pressed.has(control)) return;
-        down ? pressed.add(control) : pressed.delete(control);
-        const keyInfo = keyNames[control];
-        simulatorWindow().dispatchEvent(new KeyboardEvent(down ? 'keydown' : 'keyup', {
-          key: keyInfo.key,
-          code: keyInfo.code,
-          bubbles: true,
-          cancelable: true
-        }));
-      }
-
-      function releaseAll() {
-        [...pressed].forEach(control => sendKey(control, false));
-        steeringDirection = null;
-        steering.classList.remove('active');
-        steeringThumb.style.transform = 'translate(-50%, -50%)';
-        gasPedal.classList.remove('pressed');
-        brakePedal.classList.remove('pressed');
-      }
-
-      function haptic(duration = 8) {
-        if (navigator.vibrate) navigator.vibrate(duration);
-      }
-
-      function setSteering(nextDirection) {
-        if (steeringDirection === nextDirection) return;
-        if (steeringDirection) sendKey(steeringDirection, false);
-        steeringDirection = nextDirection;
-        if (steeringDirection) {
-          sendKey(steeringDirection, true);
-          haptic();
-        }
-      }
-
-      function updateSteering(clientX) {
-        const rect = steering.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const maximum = rect.width * 0.29;
-        const offset = Math.max(-maximum, Math.min(maximum, clientX - centerX));
-        const normalized = offset / maximum;
-        steeringThumb.style.transform = `translate(calc(-50% + ${offset}px), -50%)`;
-        if (normalized < -0.18) setSteering('left');
-        else if (normalized > 0.18) setSteering('right');
-        else setSteering(null);
-      }
-
-      steering.addEventListener('pointerdown', event => {
-        event.preventDefault();
-        steeringPointer = event.pointerId;
-        steering.setPointerCapture(event.pointerId);
-        steering.classList.add('active');
-        updateSteering(event.clientX);
-      });
-
-      steering.addEventListener('pointermove', event => {
-        if (event.pointerId !== steeringPointer) return;
-        event.preventDefault();
-        updateSteering(event.clientX);
-      });
-
-      function finishSteering(event) {
-        if (steeringPointer !== null && event.pointerId !== steeringPointer) return;
-        steeringPointer = null;
-        setSteering(null);
-        steering.classList.remove('active');
-        steeringThumb.style.transform = 'translate(-50%, -50%)';
-      }
-
-      steering.addEventListener('pointerup', finishSteering);
-      steering.addEventListener('pointercancel', finishSteering);
-      steering.addEventListener('lostpointercapture', finishSteering);
-
-      function bindPedal(button, control) {
-        let pointerId = null;
-        button.addEventListener('pointerdown', event => {
-          event.preventDefault();
-          pointerId = event.pointerId;
-          button.setPointerCapture(event.pointerId);
-          button.classList.add('pressed');
-          sendKey(control, true);
-          haptic(10);
-        });
-
-        const release = event => {
-          if (pointerId !== null && event.pointerId !== pointerId) return;
-          pointerId = null;
-          button.classList.remove('pressed');
-          sendKey(control, false);
-        };
-
-        button.addEventListener('pointerup', release);
-        button.addEventListener('pointercancel', release);
-        button.addEventListener('lostpointercapture', release);
-      }
-
-      bindPedal(gasPedal, 'gas');
-      bindPedal(brakePedal, 'brake');
-
-      optionsButton.addEventListener('click', () => {
-        const simulator = simulatorWindow();
-        if (simulator && typeof simulator.togglePanel === 'function') simulator.togglePanel();
-        const doc = frame.contentDocument;
-        const panel = doc && doc.getElementById('control-panel');
-        const isOpen = Boolean(panel && !panel.classList.contains('minimized'));
-        optionsButton.setAttribute('aria-pressed', String(isOpen));
-        optionsButton.setAttribute('aria-label', isOpen ? 'Close simulator options' : 'Open simulator options');
-        haptic();
-      });
-
-      sirenButton.addEventListener('click', () => {
-        const doc = frame.contentDocument;
-        const checkbox = doc && doc.getElementById('chk-siren');
-        if (!checkbox) return;
-        checkbox.checked = !checkbox.checked;
-        if (typeof simulatorWindow().updateVehicleChassis === 'function') simulatorWindow().updateVehicleChassis();
-        sirenButton.classList.toggle('active', checkbox.checked);
-        sirenButton.setAttribute('aria-pressed', String(checkbox.checked));
-        haptic(12);
-      });
-
-      recenterButton.addEventListener('click', () => {
-        if (typeof simulatorWindow().mobileRecenter === 'function') simulatorWindow().mobileRecenter();
-        haptic();
-      });
-
-      function repairText(root) {
-        const replacements = [
-          ['â†', '←'], ['â†’', '→'], ['â€”', '—'], ['Â°', '°'], ['Â©', '©'],
-          ['ðŸš¨', '🚨'], ['âœ“', '✓']
-        ];
-        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-        const nodes = [];
-        while (walker.nextNode()) nodes.push(walker.currentNode);
-        nodes.forEach(node => {
-          let value = node.nodeValue;
-          replacements.forEach(([bad, good]) => { value = value.split(bad).join(good); });
-          if (value !== node.nodeValue) node.nodeValue = value;
-        });
-      }
-
-      frame.addEventListener('load', () => {
-        const doc = frame.contentDocument;
-        if (!doc) return;
-
-        const style = doc.createElement('style');
-        style.textContent = `
-          #game-home, #menu-toggle { display: none !important; }
-          #dispatch-hud {
-            top: calc(66px + env(safe-area-inset-top)) !important;
-            left: 10px !important;
-            right: 10px !important;
-            width: auto !important;
-            max-width: none !important;
-            padding: 11px 12px 11px 14px !important;
-            transform: none !important;
-            border-left-width: 4px !important;
-            border-radius: 14px !important;
-            display: grid !important;
-            grid-template-columns: minmax(0, 1fr) 98px !important;
-            align-items: center !important;
-            gap: 10px !important;
-          }
-          .hud-main { min-width: 0 !important; }
-          .hud-title { font-size: 9px !important; letter-spacing: .85px !important; }
-          .hud-address { font-size: 15px !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; }
-          .hud-meta {
-            display: -webkit-box !important;
-            margin-top: 3px !important;
-            overflow: hidden !important;
-            font-size: 10px !important;
-            line-height: 1.3 !important;
-            -webkit-line-clamp: 2 !important;
-            -webkit-box-orient: vertical !important;
-          }
-          .hud-timer-block { min-width: 0 !important; margin-left: 0 !important; }
-          .hud-clock-display { font-size: 21px !important; margin-bottom: 5px !important; }
-          .hud-btn { min-height: 40px !important; padding: 7px 8px !important; border-radius: 10px !important; font-size: 12px !important; }
-          #control-panel { width: min(360px, 100vw) !important; z-index: 3000 !important; }
-          .panel-scroll { padding: calc(70px + env(safe-area-inset-top)) 18px calc(190px + env(safe-area-inset-bottom)) !important; }
-          .leaflet-bottom { bottom: calc(174px + env(safe-area-inset-bottom)) !important; }
-          .leaflet-control-attribution { max-width: 78vw !important; font-size: 9px !important; white-space: normal !important; }
-          .leaflet-control-scale { margin-left: 10px !important; }
-          @media (orientation: landscape) and (max-height: 560px) {
-            #dispatch-hud { top: calc(62px + env(safe-area-inset-top)) !important; }
-            .leaflet-bottom { bottom: calc(132px + env(safe-area-inset-bottom)) !important; }
-          }
-        `;
-        doc.head.appendChild(style);
-
-        const helper = doc.createElement('script');
-        helper.textContent = `
-          window.mobileRecenter = function () {
-            const cameraLock = document.getElementById('chk-camera');
-            if (cameraLock) cameraLock.checked = true;
-            if (mapInstance) mapInstance.setView([simLat, simLng], mapInstance.getZoom(), { animate: false });
-          };
-        `;
-        doc.body.appendChild(helper);
-
-        repairText(doc.body);
-        const observer = new MutationObserver(() => repairText(doc.body));
-        observer.observe(doc.body, { childList: true, subtree: true, characterData: true });
-
-        const siren = doc.getElementById('chk-siren');
-        sirenButton.classList.toggle('active', Boolean(siren && siren.checked));
-        sirenButton.setAttribute('aria-pressed', String(Boolean(siren && siren.checked)));
-
-        loadingCover.classList.add('hidden');
-        setTimeout(() => loadingCover.remove(), 250);
-      });
-
-      window.addEventListener('blur', releaseAll);
-      document.addEventListener('visibilitychange', () => { if (document.hidden) releaseAll(); });
-      window.addEventListener('pagehide', releaseAll);
+    (()=>{
+      const isTouchMobile=window.innerWidth<=900&&(matchMedia('(pointer: coarse)').matches||'ontouchstart'in window);if(!isTouchMobile&&matchMedia('(pointer: fine)').matches){setTimeout(()=>location.replace('../'),850);return}
+      const frame=document.getElementById('simulator'),loadingCover=document.getElementById('loading-cover'),steering=document.getElementById('steering'),steeringThumb=document.getElementById('steering-thumb'),gasPedal=document.getElementById('gas-pedal'),brakePedal=document.getElementById('brake-pedal'),sirenButton=document.getElementById('siren-button'),recenterButton=document.getElementById('recenter-button'),optionsButton=document.getElementById('options-button');
+      const keyNames={left:{key:'ArrowLeft',code:'ArrowLeft'},right:{key:'ArrowRight',code:'ArrowRight'},gas:{key:'ArrowUp',code:'ArrowUp'},brake:{key:'ArrowDown',code:'ArrowDown'}};const pressed=new Set();let steeringPointer=null,steeringDirection=null;
+      const simulatorWindow=()=>frame.contentWindow;
+      function sendKey(control,down){if(!simulatorWindow()||(down&&pressed.has(control))||(!down&&!pressed.has(control)))return;down?pressed.add(control):pressed.delete(control);const k=keyNames[control];simulatorWindow().dispatchEvent(new KeyboardEvent(down?'keydown':'keyup',{key:k.key,code:k.code,bubbles:true,cancelable:true}))}
+      function releaseAll(){[...pressed].forEach(c=>sendKey(c,false));steeringDirection=null;steering.classList.remove('active');steeringThumb.style.transform='translate(-50%, -50%)';gasPedal.classList.remove('pressed');brakePedal.classList.remove('pressed')}
+      const haptic=(d=8)=>{if(navigator.vibrate)navigator.vibrate(d)};
+      function setSteering(next){if(steeringDirection===next)return;if(steeringDirection)sendKey(steeringDirection,false);steeringDirection=next;if(next){sendKey(next,true);haptic()}}
+      function updateSteering(x){const r=steering.getBoundingClientRect(),c=r.left+r.width/2,m=r.width*.29,o=Math.max(-m,Math.min(m,x-c)),n=o/m;steeringThumb.style.transform=`translate(calc(-50% + ${o}px), -50%)`;n<-.18?setSteering('left'):n>.18?setSteering('right'):setSteering(null)}
+      steering.addEventListener('pointerdown',e=>{e.preventDefault();steeringPointer=e.pointerId;steering.setPointerCapture(e.pointerId);steering.classList.add('active');updateSteering(e.clientX)});steering.addEventListener('pointermove',e=>{if(e.pointerId!==steeringPointer)return;e.preventDefault();updateSteering(e.clientX)});
+      function finishSteering(e){if(steeringPointer!==null&&e.pointerId!==steeringPointer)return;steeringPointer=null;setSteering(null);steering.classList.remove('active');steeringThumb.style.transform='translate(-50%, -50%)'}steering.addEventListener('pointerup',finishSteering);steering.addEventListener('pointercancel',finishSteering);steering.addEventListener('lostpointercapture',finishSteering);
+      function bindPedal(button,control){let pointerId=null;button.addEventListener('pointerdown',e=>{e.preventDefault();pointerId=e.pointerId;button.setPointerCapture(e.pointerId);button.classList.add('pressed');sendKey(control,true);haptic(10)});const release=e=>{if(pointerId!==null&&e.pointerId!==pointerId)return;pointerId=null;button.classList.remove('pressed');sendKey(control,false)};button.addEventListener('pointerup',release);button.addEventListener('pointercancel',release);button.addEventListener('lostpointercapture',release)}bindPedal(gasPedal,'gas');bindPedal(brakePedal,'brake');
+      optionsButton.addEventListener('click',()=>{const sim=simulatorWindow();if(sim&&typeof sim.togglePanel==='function')sim.togglePanel();const panel=frame.contentDocument&&frame.contentDocument.getElementById('control-panel'),open=Boolean(panel&&!panel.classList.contains('minimized'));optionsButton.setAttribute('aria-pressed',String(open));optionsButton.setAttribute('aria-label',open?'Close simulator options':'Open simulator options');haptic()});
+      sirenButton.addEventListener('click',()=>{const checkbox=frame.contentDocument&&frame.contentDocument.getElementById('chk-siren');if(!checkbox)return;checkbox.checked=!checkbox.checked;if(typeof simulatorWindow().updateVehicleChassis==='function')simulatorWindow().updateVehicleChassis();sirenButton.classList.toggle('active',checkbox.checked);sirenButton.setAttribute('aria-pressed',String(checkbox.checked));haptic(12)});
+      recenterButton.addEventListener('click',()=>{if(typeof simulatorWindow().mobileRecenter==='function')simulatorWindow().mobileRecenter();haptic()});
+      function repairText(root){const replacements=[['â†','←'],['â†’','→'],['â€”','—'],['Â°','°'],['Â©','©'],['ðŸš¨','🚨'],['âœ“','✓']],walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);nodes.forEach(node=>{let value=node.nodeValue;replacements.forEach(([bad,good])=>{value=value.split(bad).join(good)});if(value!==node.nodeValue)node.nodeValue=value})}
+      frame.addEventListener('load',()=>{const doc=frame.contentDocument;if(!doc)return;const style=doc.createElement('style');style.textContent=`#game-home,#menu-toggle{display:none!important}#dispatch-hud{top:calc(66px + env(safe-area-inset-top))!important;left:10px!important;right:10px!important;width:auto!important;max-width:none!important;padding:11px 12px 11px 14px!important;transform:none!important;border-left-width:4px!important;border-radius:14px!important;display:grid!important;grid-template-columns:minmax(0,1fr) 98px!important;align-items:center!important;gap:10px!important}.hud-main{min-width:0!important}.hud-title{font-size:9px!important;letter-spacing:.85px!important}.hud-address{font-size:15px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}.hud-meta{display:-webkit-box!important;margin-top:3px!important;overflow:hidden!important;font-size:10px!important;line-height:1.3!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important}.hud-timer-block{min-width:0!important;margin-left:0!important}.hud-clock-display{font-size:21px!important;margin-bottom:5px!important}.hud-btn{min-height:40px!important;padding:7px 8px!important;border-radius:10px!important;font-size:12px!important}#control-panel{width:min(360px,100vw)!important;z-index:3000!important}.panel-scroll{padding:calc(70px + env(safe-area-inset-top)) 18px calc(190px + env(safe-area-inset-bottom))!important}.leaflet-bottom{bottom:calc(174px + env(safe-area-inset-bottom))!important}.leaflet-control-attribution{max-width:78vw!important;font-size:9px!important;white-space:normal!important}.leaflet-control-scale{margin-left:10px!important}@media (orientation:landscape) and (max-height:560px){#dispatch-hud{top:calc(62px + env(safe-area-inset-top))!important}.leaflet-bottom{bottom:calc(132px + env(safe-area-inset-bottom))!important}}`;doc.head.appendChild(style);const helper=doc.createElement('script');helper.textContent=`window.mobileRecenter=function(){const cameraLock=document.getElementById('chk-camera');if(cameraLock)cameraLock.checked=true;if(mapInstance)mapInstance.setView([simLat,simLng],mapInstance.getZoom(),{animate:false})};`;doc.body.appendChild(helper);repairText(doc.body);const observer=new MutationObserver(()=>repairText(doc.body));observer.observe(doc.body,{childList:true,subtree:true,characterData:true});const siren=doc.getElementById('chk-siren');sirenButton.classList.toggle('active',Boolean(siren&&siren.checked));sirenButton.setAttribute('aria-pressed',String(Boolean(siren&&siren.checked)));loadingCover.classList.add('hidden');setTimeout(()=>loadingCover.remove(),250)});
+      window.addEventListener('blur',releaseAll);document.addEventListener('visibilitychange',()=>{if(document.hidden)releaseAll()});window.addEventListener('pagehide',releaseAll);
     })();
   </script>
 </body>
