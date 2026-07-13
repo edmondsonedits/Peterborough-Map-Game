@@ -13,7 +13,7 @@
 <body>
   <iframe id="game-frame" src="../index.html" title="Peterborough Geo Guesser"></iframe>
   <nav class="mobile-toolbar" aria-label="Geo Guesser controls"><a class="toolbar-button icon-only" href="../../" aria-label="Return to all games"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></a><button class="toolbar-button end hidden" id="end-drill-button" type="button">End Drill</button></nav>
-  <div class="loading-cover" id="loading-cover" role="status"><div><strong>Loading Geo Guesser</strong><span>Combining dispatch databases and preparing the editor…</span></div></div>
+  <div class="loading-cover" id="loading-cover" role="status"><div><strong>Loading Geo Guesser</strong><span>Loading the shared dispatch database…</span></div></div>
   <script src="../../shared/stations.js"></script>
   <script src="../../shared/dispatch-locations.js"></script>
   <script>
@@ -26,12 +26,7 @@
         const replacements=[['â†','←'],['â†’','→'],['â€”','—'],['Â·','·'],['Â©','©'],['â€™','’'],['ðŸŒŠ','🌊'],['ðŸš—','🚗'],['âœš','✚'],['ðŸ”¥','🔥']];
         const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),nodes=[];
         while(walker.nextNode())nodes.push(walker.currentNode);
-        nodes.forEach(node=>{
-          const original=node.nodeValue;
-          let next=original;
-          replacements.forEach(([bad,good])=>{next=next.split(bad).join(good)});
-          if(next!==original)node.nodeValue=next;
-        });
+        nodes.forEach(node=>{const original=node.nodeValue;let next=original;replacements.forEach(([bad,good])=>{next=next.split(bad).join(good)});if(next!==original)node.nodeValue=next});
       }
       function toolbar(){const g=game(),d=frame.contentDocument;if(!g||!d)return;const s=typeof g.mobileGeoGetState==='function'?g.mobileGeoGetState():{};endBtn.classList.toggle('hidden',!(d.getElementById('game')&&!d.getElementById('game').classList.contains('hidden')&&s.gameMode==='open'&&!s.sessionEnded))}
       endBtn.onclick=()=>{const g=game();if(g&&typeof g.endOpenDrill==='function')g.endOpenDrill();toolbar()};
@@ -41,12 +36,12 @@
           await window.PTBO_DISPATCH_STORE.ready();
           const sharedLocations=window.PTBO_DISPATCH_STORE.getAll(),sharedStations=window.PTBO_STATIONS||[];
           const style=d.createElement('style');style.textContent=`html,body{width:100%!important;height:100%!important;overscroll-behavior:none!important}#game-home,#end-drill{display:none!important}#game.screen{padding:0!important;background:#121218!important}#game .map-container,#map{width:100vw!important;height:100dvh!important}#header{top:calc(66px + env(safe-area-inset-top))!important;left:10px!important;right:10px!important;width:auto!important;transform:none!important;padding:12px 14px!important;border-radius:15px!important;background:rgba(22,28,42,.94)!important;text-align:left!important;pointer-events:none!important}#call-type{font-size:11px!important}#call-name{margin:4px 0 2px!important;font-size:20px!important}#call-address{font-size:14px!important}#timer{margin-top:8px!important;padding-top:7px!important;font-size:12px!important}#dispatch-card{top:53%!important;left:16px!important;right:16px!important;bottom:auto!important;width:auto!important;max-width:390px!important;margin:0 auto!important;padding:20px 18px 18px!important;transform:translateY(-50%)!important;border-radius:18px!important;background:rgba(28,33,48,.96)!important}#dispatch-start{min-height:56px!important;border-radius:14px!important}#confirm{bottom:calc(20px + env(safe-area-inset-bottom))!important;width:min(76vw,330px)!important;min-height:58px!important;border-radius:999px!important}.leaflet-bottom{bottom:calc(86px + env(safe-area-inset-bottom))!important}.leaflet-control-attribution{max-width:88vw!important;font-size:9px!important;white-space:normal!important}`;d.head.appendChild(style);
+          const oldEditorButton=[...d.querySelectorAll('#settings .menu-btn')].find(button=>/Open Level Editor/i.test(button.textContent));if(oldEditorButton)oldEditorButton.remove();
           const helper=d.createElement('script');helper.textContent=`(()=>{
             const Z=${Z},SHARED=${JSON.stringify(sharedLocations)},STATIONS=${JSON.stringify(sharedStations)};
             locations=SHARED.map(x=>({...x}));
             if(Array.isArray(stations)&&STATIONS.length===3)STATIONS.forEach((s,i)=>Object.assign(stations[i],{name:s.name,address:s.address,lat:s.lat,lng:s.lng}));
             window.mobileGeoGetState=()=>({gameMode,sessionEnded});
-            const sync=()=>parent.PTBO_DISPATCH_STORE.replaceAll(locations);
             window.mobileGeoInstallZoomGuard=()=>{if(!map||map._mobileGeoZoomGuard)return;const original=map.setView.bind(map);map.setView=function(center,zoom,options){let next=zoom;const lat=Array.isArray(center)?+center[0]:+(center&&center.lat),lng=Array.isArray(center)?+center[1]:+(center&&(center.lng??center.lon));const atStation=station&&Number.isFinite(lat)&&Number.isFinite(lng)&&Math.abs(lat-station.lat)<1e-7&&Math.abs(lng-station.lng)<1e-7;if(atStation&&(next==null||next<Z))next=Z;return original(center,next,options)};map._mobileGeoZoomGuard=true};
             window.mobileGeoSetRoundZoom=()=>{if(!map||!station)return;window.mobileGeoInstallZoomGuard();map.setMaxZoom(19);map.setView([station.lat,station.lng],Z,{animate:false});if(!window.mobileGeoScale)window.mobileGeoScale=L.control.scale({metric:true,imperial:false,position:'bottomleft'}).addTo(map)};
             const enforce=()=>{window.mobileGeoInstallZoomGuard();window.mobileGeoSetRoundZoom()};
@@ -55,28 +50,11 @@
             const op=prepareDispatch;prepareDispatch=function(...a){const r=op.apply(this,a);setTimeout(enforce,0);return r};window.prepareDispatch=prepareDispatch;
             const ol=loadCall;loadCall=function(...a){const r=ol.apply(this,a);setTimeout(enforce,0);return r};window.loadCall=loadCall;
             const od=startDispatch;startDispatch=function(...a){const r=od.apply(this,a);requestAnimationFrame(enforce);setTimeout(enforce,80);return r};window.startDispatch=startDispatch;
-            const originalRenderEditor=renderEditor;renderEditor=function(...a){const r=originalRenderEditor.apply(this,a);editorMarkers.forEach(marker=>marker.on('dragend',sync));return r};window.renderEditor=renderEditor;
-            const originalApplyEdit=applyEdit;applyEdit=function(...a){const r=originalApplyEdit.apply(this,a);sync();return r};window.applyEdit=applyEdit;
-            const originalDeleteEdit=deleteEdit;deleteEdit=function(...a){const r=originalDeleteEdit.apply(this,a);sync();return r};window.deleteEdit=deleteEdit;
-            exportData=function(){sync();const data=parent.PTBO_DISPATCH_STORE.exportText();navigator.clipboard?.writeText(data);prompt('Shared dispatch database code:',data)};window.exportData=exportData;
-            window.addEventListener('ptbo-force-sync',sync);
             initializeDistricts();
           })();`;d.body.appendChild(helper);
           const stationButtons=[...d.querySelectorAll('#stations .menu-btn')].filter(b=>/Station\s+[123]/.test(b.textContent));sharedStations.forEach((s,i)=>{const b=stationButtons[i];if(!b)return;b.childNodes[0].nodeValue=s.name;const a=b.querySelector('.station-address');if(a)a.textContent=s.address});
           const dispatchStart=d.getElementById('dispatch-start');if(dispatchStart)dispatchStart.addEventListener('click',()=>{const keep=()=>game().mobileGeoSetRoundZoom?.();requestAnimationFrame(keep);setTimeout(keep,80)});
-          repair(d.body);
-          let repairQueued=false;
-          const observer=new MutationObserver(()=>{
-            if(repairQueued)return;
-            repairQueued=true;
-            requestAnimationFrame(()=>{
-              repairQueued=false;
-              repair(d.body);
-              toolbar();
-            });
-          });
-          observer.observe(d.body,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:['class']});
-          toolbar();cover.classList.add('hidden');setTimeout(()=>cover.remove(),250);
+          repair(d.body);let repairQueued=false;const observer=new MutationObserver(()=>{if(repairQueued)return;repairQueued=true;requestAnimationFrame(()=>{repairQueued=false;repair(d.body);toolbar()})});observer.observe(d.body,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:['class']});toolbar();cover.classList.add('hidden');setTimeout(()=>cover.remove(),250);
         }catch(error){console.error(error);cover.querySelector('strong').textContent='Could not load dispatch database';cover.querySelector('span').textContent=error.message}
       });
     })();
