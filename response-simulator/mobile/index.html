@@ -13,8 +13,6 @@
       --border: rgba(255, 255, 255, 0.2);
       --red: #ef4444;
       --red-dark: #b91c1c;
-      --blue: #38bdf8;
-      --green: #22c55e;
       --ink: #f8fafc;
       --muted: #cbd5e1;
     }
@@ -79,6 +77,11 @@
 
     .top-button:active,
     .utility-button:active { transform: scale(0.94); }
+
+    .top-button[aria-pressed="true"] {
+      border-color: rgba(56, 189, 248, .7);
+      background: rgba(3, 105, 161, .94);
+    }
 
     .top-button svg,
     .utility-button svg {
@@ -515,8 +518,11 @@
       optionsButton.addEventListener('click', () => {
         const simulator = simulatorWindow();
         if (simulator && typeof simulator.togglePanel === 'function') simulator.togglePanel();
-        const pressedState = optionsButton.getAttribute('aria-pressed') !== 'true';
-        optionsButton.setAttribute('aria-pressed', String(pressedState));
+        const doc = frame.contentDocument;
+        const panel = doc && doc.getElementById('control-panel');
+        const isOpen = Boolean(panel && !panel.classList.contains('minimized'));
+        optionsButton.setAttribute('aria-pressed', String(isOpen));
+        optionsButton.setAttribute('aria-label', isOpen ? 'Close simulator options' : 'Open simulator options');
         haptic();
       });
 
