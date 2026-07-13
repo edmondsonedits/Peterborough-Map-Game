@@ -20,7 +20,6 @@
       }
 
       * { box-sizing: border-box; }
-
       html { min-height: 100%; }
 
       body {
@@ -330,7 +329,10 @@
       (() => {
         const dispatchLink = document.getElementById('dispatch-game-link');
         const touchMobile = window.innerWidth <= 900 && (matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window);
-        if (dispatchLink && touchMobile) dispatchLink.href = 'response-simulator/mobile/';
+        if (dispatchLink && touchMobile) {
+          dispatchLink.href = 'response-simulator/mobile/';
+          dispatchLink.setAttribute('aria-label', 'Open the Peterborough Dispatch Simulator with mobile driving controls');
+        }
       })();
     </script>
   </body>
