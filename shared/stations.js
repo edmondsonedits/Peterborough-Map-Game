@@ -29,10 +29,26 @@
     });
   }
 
+  function removeLegacyEditorControls(doc) {
+    const panel = doc.querySelector('.panel-scroll');
+    if (!panel) return;
+    const titles = [...panel.querySelectorAll('.section-title')];
+    const customTitle = titles.find(title => title.textContent.trim() === 'Custom Dispatch Logging');
+    if (!customTitle) return;
+    let node = customTitle;
+    while (node) {
+      const next = node.nextElementSibling;
+      node.remove();
+      if (!next || next.classList.contains('section-title')) break;
+      node = next;
+    }
+  }
+
   function patchSimulator(frame, store) {
     const doc = frame.contentDocument;
     if (!doc || doc.documentElement.dataset.sharedDispatchPatched === 'true') return;
     doc.documentElement.dataset.sharedDispatchPatched = 'true';
+    removeLegacyEditorControls(doc);
 
     const apply = async () => {
       await store.ready();
@@ -50,23 +66,6 @@
           parent.PTBO_DISPATCH_STORE.replaceAll(dispatchDatabase);
         };
 
-        const originalRecord = recordCurrentLocation;
-        recordCurrentLocation = function(...args) {
-          const before = dispatchDatabase.length;
-          const result = originalRecord.apply(this, args);
-          if (dispatchDatabase.length > before) {
-            const item = dispatchDatabase[dispatchDatabase.length - 1];
-            item.id = parent.PTBO_DISPATCH_STORE.createId(item);
-            item.radius = 50;
-            item.cityTen = false;
-            item.custom = true;
-            item.sources = ['editor', 'driving-simulator'];
-            sync();
-          }
-          return result;
-        };
-        window.recordCurrentLocation = recordCurrentLocation;
-
         const originalToggle = toggleAllLocations;
         toggleAllLocations = function(...args) {
           const result = originalToggle.apply(this, args);
@@ -76,12 +75,6 @@
           return result;
         };
         window.toggleAllLocations = toggleAllLocations;
-
-        exportUpdatedDatabase = function() {
-          sync();
-          displayExportModal(parent.PTBO_DISPATCH_STORE.exportText());
-        };
-        window.exportUpdatedDatabase = exportUpdatedDatabase;
 
         window.addEventListener('ptbo-shared-dispatch-refresh', () => {
           const fresh = parent.PTBO_DISPATCH_STORE.getAll();
