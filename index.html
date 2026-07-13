@@ -18,10 +18,8 @@
         --blue: #38bdf8;
         --red: #fb7185;
       }
-
       * { box-sizing: border-box; }
       html { min-height: 100%; }
-
       body {
         min-height: 100vh;
         margin: 0;
@@ -33,7 +31,6 @@
           radial-gradient(circle at 90% 94%, rgba(251, 113, 133, 0.18), transparent 32rem),
           linear-gradient(180deg, #10233a 0%, var(--bg) 68%);
       }
-
       body::before {
         position: fixed;
         inset: 0;
@@ -45,19 +42,16 @@
         background-size: 34px 34px;
         mask-image: linear-gradient(to bottom, rgba(0,0,0,.6), transparent 72%);
       }
-
       main {
         position: relative;
         width: min(calc(100% - 2rem), 68rem);
         margin: 0 auto;
         padding: clamp(2.25rem, 7vw, 5rem) 0 calc(2rem + env(safe-area-inset-bottom));
       }
-
       header {
         max-width: 46rem;
         margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
       }
-
       .eyebrow {
         margin: 0 0 0.75rem;
         color: var(--blue);
@@ -66,7 +60,6 @@
         letter-spacing: 0.15em;
         text-transform: uppercase;
       }
-
       h1 {
         max-width: 12ch;
         margin: 0;
@@ -75,7 +68,6 @@
         letter-spacing: -0.055em;
         text-wrap: balance;
       }
-
       .intro {
         max-width: 38rem;
         margin: 1.1rem 0 0;
@@ -83,13 +75,11 @@
         font-size: clamp(1rem, 2vw, 1.16rem);
         line-height: 1.55;
       }
-
       .games {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 1rem;
       }
-
       .game-link {
         position: relative;
         min-height: 19rem;
@@ -106,7 +96,6 @@
         text-decoration: none;
         transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
       }
-
       .game-link::before {
         position: absolute;
         inset: 0 0 auto;
@@ -114,7 +103,6 @@
         content: "";
         background: var(--accent);
       }
-
       .game-link::after {
         position: absolute;
         width: 13rem;
@@ -127,34 +115,28 @@
         background: var(--accent-glow);
         filter: blur(2px);
       }
-
       .game-link:hover {
         transform: translateY(-4px);
         border-color: var(--accent-border);
         box-shadow: 0 1.45rem 4rem rgba(0, 0, 0, 0.32);
       }
-
       .game-link:active { transform: scale(0.988); }
-
       .game-link:focus-visible {
         outline: 3px solid var(--accent);
         outline-offset: 4px;
       }
-
       .dispatch {
         --accent: var(--red);
         --accent-soft: rgba(251, 113, 133, 0.16);
         --accent-glow: rgba(251, 113, 133, 0.18);
         --accent-border: rgba(251, 113, 133, 0.46);
       }
-
       .geoguesser {
         --accent: var(--blue);
         --accent-soft: rgba(56, 189, 248, 0.16);
         --accent-glow: rgba(56, 189, 248, 0.18);
         --accent-border: rgba(56, 189, 248, 0.46);
       }
-
       .icon {
         width: 3.45rem;
         height: 3.45rem;
@@ -166,13 +148,11 @@
         border-radius: 1rem;
         background: var(--accent-soft);
       }
-
       .icon svg {
         width: 1.9rem;
         height: 1.9rem;
         stroke: currentColor;
       }
-
       .game-type {
         margin-top: 1.1rem;
         color: var(--accent);
@@ -181,14 +161,12 @@
         letter-spacing: 0.12em;
         text-transform: uppercase;
       }
-
       h2 {
         margin: 0.45rem 0 0.65rem;
         font-size: clamp(1.55rem, 3vw, 1.85rem);
         line-height: 1.12;
         letter-spacing: -0.025em;
       }
-
       .game-link p {
         max-width: 34rem;
         margin: 0;
@@ -196,7 +174,6 @@
         font-size: 1rem;
         line-height: 1.55;
       }
-
       .cta {
         min-height: 3.1rem;
         margin-top: auto;
@@ -211,56 +188,45 @@
         font-size: 1rem;
         font-weight: 850;
       }
-
       .cta svg {
         width: 1rem;
         height: 1rem;
         stroke: currentColor;
         transition: transform 160ms ease;
       }
-
       .game-link:hover .cta svg { transform: translateX(3px); }
-
       footer {
         margin-top: 1.35rem;
         color: #94a3b8;
         font-size: 0.82rem;
         line-height: 1.5;
       }
-
       @media (max-width: 42rem) {
         main {
           width: min(calc(100% - 1.5rem), 68rem);
           padding-top: 2.1rem;
         }
-
         header { margin-bottom: 1.5rem; }
-
         h1 {
           max-width: none;
           font-size: clamp(3rem, 13vw, 3.65rem);
         }
-
         .intro {
           margin-top: 0.95rem;
           font-size: 1.03rem;
           line-height: 1.52;
         }
-
         .games { grid-template-columns: 1fr; }
-
         .game-link {
           min-height: 0;
           padding: 1.35rem;
           border-radius: 1.25rem;
         }
-
         .game-type { margin-top: 1rem; }
         h2 { font-size: 1.62rem; }
         .game-link p { font-size: 0.98rem; }
         .cta { margin-top: 1.45rem; }
       }
-
       @media (prefers-reduced-motion: reduce) {
         *, *::before, *::after {
           scroll-behavior: auto !important;
@@ -278,7 +244,6 @@
         <h1>Emergency Games</h1>
         <p class="intro">Test your city knowledge or take the wheel of a Peterborough fire truck.</p>
       </header>
-
       <section class="games" aria-label="Choose a game">
         <a id="dispatch-game-link" class="game-link dispatch" href="response-simulator/" aria-label="Open the Peterborough Dispatch Simulator">
           <span class="icon" aria-hidden="true">
@@ -297,12 +262,9 @@
           <p>Drive a fire truck through Peterborough and respond to emergency calls across the city.</p>
           <span class="cta">
             Drive now
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="m9 18 6-6-6-6"/>
-            </svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
           </span>
         </a>
-
         <a class="game-link geoguesser" href="geo-guesser/" aria-label="Play Peterborough Geo Guesser">
           <span class="icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -315,16 +277,12 @@
           <p>Read the dispatch, find the location on the map, and compete for the fastest time.</p>
           <span class="cta">
             Play Geo Guesser
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="m9 18 6-6-6-6"/>
-            </svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
           </span>
         </a>
       </section>
-
       <footer>Unofficial fan-made project. Not affiliated with the City of Peterborough or Peterborough Fire Services.</footer>
     </main>
-
     <script>
       (() => {
         const dispatchLink = document.getElementById('dispatch-game-link');
