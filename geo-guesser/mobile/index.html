@@ -22,7 +22,17 @@
       if(!isTouch&&matchMedia('(pointer:fine)').matches){setTimeout(()=>location.replace('../'),700);return}
       const frame=document.getElementById('game-frame'),cover=document.getElementById('loading-cover'),endBtn=document.getElementById('end-drill-button');
       const game=()=>frame.contentWindow;
-      function repair(root){const r=[['â†','←'],['â†’','→'],['â€”','—'],['Â·','·'],['Â©','©'],['â€™','’'],['ðŸŒŠ','🌊'],['ðŸš—','🚗'],['âœš','✚'],['ðŸ”¥','🔥']],w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),n=[];while(w.nextNode())n.push(w.currentNode);n.forEach(x=>{let v=x.nodeValue;r.forEach(([a,b])=>v=v.split(a).join(b));x.nodeValue=v})}
+      function repair(root){
+        const replacements=[['â†','←'],['â†’','→'],['â€”','—'],['Â·','·'],['Â©','©'],['â€™','’'],['ðŸŒŠ','🌊'],['ðŸš—','🚗'],['âœš','✚'],['ðŸ”¥','🔥']];
+        const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),nodes=[];
+        while(walker.nextNode())nodes.push(walker.currentNode);
+        nodes.forEach(node=>{
+          const original=node.nodeValue;
+          let next=original;
+          replacements.forEach(([bad,good])=>{next=next.split(bad).join(good)});
+          if(next!==original)node.nodeValue=next;
+        });
+      }
       function toolbar(){const g=game(),d=frame.contentDocument;if(!g||!d)return;const s=typeof g.mobileGeoGetState==='function'?g.mobileGeoGetState():{};endBtn.classList.toggle('hidden',!(d.getElementById('game')&&!d.getElementById('game').classList.contains('hidden')&&s.gameMode==='open'&&!s.sessionEnded))}
       endBtn.onclick=()=>{const g=game();if(g&&typeof g.endOpenDrill==='function')g.endOpenDrill();toolbar()};
       frame.addEventListener('load',async()=>{
@@ -45,16 +55,28 @@
             const op=prepareDispatch;prepareDispatch=function(...a){const r=op.apply(this,a);setTimeout(enforce,0);return r};window.prepareDispatch=prepareDispatch;
             const ol=loadCall;loadCall=function(...a){const r=ol.apply(this,a);setTimeout(enforce,0);return r};window.loadCall=loadCall;
             const od=startDispatch;startDispatch=function(...a){const r=od.apply(this,a);requestAnimationFrame(enforce);setTimeout(enforce,80);return r};window.startDispatch=startDispatch;
-            const or=renderEditor;renderEditor=function(...a){const r=or.apply(this,a);editorMarkers.forEach(marker=>marker.on('dragend',sync));return r};window.renderEditor=renderEditor;
-            const oa=applyEdit;applyEdit=function(...a){const r=oa.apply(this,a);sync();return r};window.applyEdit=applyEdit;
-            const ode=deleteEdit;deleteEdit=function(...a){const r=ode.apply(this,a);sync();return r};window.deleteEdit=deleteEdit;
+            const originalRenderEditor=renderEditor;renderEditor=function(...a){const r=originalRenderEditor.apply(this,a);editorMarkers.forEach(marker=>marker.on('dragend',sync));return r};window.renderEditor=renderEditor;
+            const originalApplyEdit=applyEdit;applyEdit=function(...a){const r=originalApplyEdit.apply(this,a);sync();return r};window.applyEdit=applyEdit;
+            const originalDeleteEdit=deleteEdit;deleteEdit=function(...a){const r=originalDeleteEdit.apply(this,a);sync();return r};window.deleteEdit=deleteEdit;
             exportData=function(){sync();const data=parent.PTBO_DISPATCH_STORE.exportText();navigator.clipboard?.writeText(data);prompt('Shared dispatch database code:',data)};window.exportData=exportData;
             window.addEventListener('ptbo-force-sync',sync);
             initializeDistricts();
           })();`;d.body.appendChild(helper);
           const stationButtons=[...d.querySelectorAll('#stations .menu-btn')].filter(b=>/Station\s+[123]/.test(b.textContent));sharedStations.forEach((s,i)=>{const b=stationButtons[i];if(!b)return;b.childNodes[0].nodeValue=s.name;const a=b.querySelector('.station-address');if(a)a.textContent=s.address});
           const dispatchStart=d.getElementById('dispatch-start');if(dispatchStart)dispatchStart.addEventListener('click',()=>{const keep=()=>game().mobileGeoSetRoundZoom?.();requestAnimationFrame(keep);setTimeout(keep,80)});
-          repair(d.body);new MutationObserver(()=>{repair(d.body);toolbar()}).observe(d.body,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:['class']});toolbar();cover.classList.add('hidden');setTimeout(()=>cover.remove(),250);
+          repair(d.body);
+          let repairQueued=false;
+          const observer=new MutationObserver(()=>{
+            if(repairQueued)return;
+            repairQueued=true;
+            requestAnimationFrame(()=>{
+              repairQueued=false;
+              repair(d.body);
+              toolbar();
+            });
+          });
+          observer.observe(d.body,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:['class']});
+          toolbar();cover.classList.add('hidden');setTimeout(()=>cover.remove(),250);
         }catch(error){console.error(error);cover.querySelector('strong').textContent='Could not load dispatch database';cover.querySelector('span').textContent=error.message}
       });
     })();
