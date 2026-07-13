@@ -77,11 +77,94 @@
     return list.map(location => ({ ...location, sources: [...(location.sources || [])] }));
   }
 
-  function extractArray(source, regex, label) {
-    const matches = [...source.matchAll(regex)];
-    if (!matches.length) throw new Error(`Could not find ${label} in its legacy game file.`);
-    const literal = matches[matches.length - 1][1];
-    return Function(`"use strict"; return (${literal});`)();
+  function findMatchingArrayEnd(source, startIndex) {
+    let depth = 0;
+    let quote = null;
+    let escaped = false;
+    let lineComment = false;
+    let blockComment = false;
+
+    for (let index = startIndex; index < source.length; index += 1) {
+      const char = source[index];
+      const next = source[index + 1];
+
+      if (lineComment) {
+        if (char === '\n') lineComment = false;
+        continue;
+      }
+
+      if (blockComment) {
+        if (char === '*' && next === '/') {
+          blockComment = false;
+          index += 1;
+        }
+        continue;
+      }
+
+      if (quote) {
+        if (escaped) {
+          escaped = false;
+          continue;
+        }
+        if (char === '\\') {
+          escaped = true;
+          continue;
+        }
+        if (char === quote) quote = null;
+        continue;
+      }
+
+      if (char === '/' && next === '/') {
+        lineComment = true;
+        index += 1;
+        continue;
+      }
+
+      if (char === '/' && next === '*') {
+        blockComment = true;
+        index += 1;
+        continue;
+      }
+
+      if (char === '\'' || char === '"' || char === '`') {
+        quote = char;
+        continue;
+      }
+
+      if (char === '[') depth += 1;
+      if (char === ']') {
+        depth -= 1;
+        if (depth === 0) return index;
+      }
+    }
+
+    return -1;
+  }
+
+  function extractLargestArray(source, assignmentPattern, label) {
+    const candidates = [];
+    const pattern = new RegExp(assignmentPattern.source, assignmentPattern.flags);
+    let match;
+
+    while ((match = pattern.exec(source))) {
+      const arrayStart = source.indexOf('[', match.index);
+      if (arrayStart < 0) continue;
+      const arrayEnd = findMatchingArrayEnd(source, arrayStart);
+      if (arrayEnd < 0) continue;
+
+      const literal = source.slice(arrayStart, arrayEnd + 1);
+      try {
+        const parsed = Function(`"use strict"; return (${literal});`)();
+        if (Array.isArray(parsed)) candidates.push(parsed);
+      } catch (error) {
+        console.warn(`Skipped malformed ${label} candidate.`, error);
+      }
+
+      pattern.lastIndex = arrayEnd + 1;
+    }
+
+    if (!candidates.length) throw new Error(`Could not find a valid ${label} array in its legacy game file.`);
+    return candidates.sort((a, b) => b.length - a.length)[0];
   }
 
   async function readLegacyLists() {
@@ -96,16 +179,18 @@
       })
     ]);
 
-    const simulator = extractArray(
+    const simulator = extractLargestArray(
       simulatorHtml,
-      /const\s+dispatchDatabase\s*=\s*(\[[\s\S]*?\]);/g,
+      /^[\t ]*const\s+dispatchDatabase\s*=\s*\[/gm,
       'dispatchDatabase'
     );
-    const geo = extractArray(
+
+    const geo = extractLargestArray(
       geoHtml,
-      /locations\s*=\s*(\[[\s\S]*?\]);/g,
+      /^[\t ]*(?:let\s+)?locations\s*=\s*\[/gm,
       'locations'
     );
+
     return { simulator, geo };
   }
 
@@ -199,6 +284,7 @@
     const legacy = await readLegacyLists();
     seed = buildUnion(legacy.simulator, legacy.geo);
     hydrate(readSaved());
+    console.info(`Shared dispatch database loaded: ${legacy.simulator.length} simulator calls, ${legacy.geo.length} Geo Guesser calls, ${items.length} combined calls.`);
     return clone(items);
   }
 
