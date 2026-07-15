@@ -52,12 +52,18 @@ jobs:
           --report city-explorer/ROAD-VALIDATION.md
 
       - name: Validate complete street network and official names
-        run: >-
-          python tools/geospatial/validate_peterborough_roads.py
-          --data-dir city-explorer/data
-          --report city-explorer/ROAD-VALIDATION.md
+        id: complete_validation
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -o pipefail
+          python tools/geospatial/validate_peterborough_roads.py \
+            --data-dir city-explorer/data \
+            --report city-explorer/ROAD-VALIDATION.md \
+            2>&1 | tee city-explorer/data/complete-validator.log
 
       - name: Validate generated JSON and JavaScript
+        if: steps.complete_validation.outcome == 'success'
         run: |
           python -m json.tool city-explorer/data/manifest.json >/dev/null
           python -m json.tool city-explorer/data/road-validation.json >/dev/null
@@ -66,6 +72,7 @@ jobs:
           node --check city-explorer/app.js
 
       - name: Upload generated map assets
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: peterborough-geospatial-assets
@@ -74,11 +81,16 @@ jobs:
             city-explorer/ROAD-VALIDATION.md
           retention-days: 14
 
+      - name: Fail when complete validation failed
+        if: steps.complete_validation.outcome != 'success'
+        run: exit 1
+
       - name: Commit refreshed deployment assets
         if: github.event_name != 'pull_request'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          rm -f city-explorer/data/complete-validator.log
           git add city-explorer/data city-explorer/ROAD-VALIDATION.md
           if git diff --cached --quiet; then
             echo 'Generated assets are already current.'
