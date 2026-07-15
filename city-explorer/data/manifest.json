@@ -1,0 +1,77 @@
+{
+  "bbox": {
+    "east": -78.245,
+    "north": 44.385,
+    "south": 44.245,
+    "west": -78.405
+  },
+  "center": {
+    "lat": 44.3091,
+    "lon": -78.3197
+  },
+  "city": "Peterborough, Ontario",
+  "generated_at": "2026-07-15T17:58:04+00:00",
+  "orn": {
+    "arcgis_item_id": "2fd52bccdb77479da0133c86545503f8",
+    "feature_count": 1943,
+    "file": "orn-roads.geojson",
+    "last_edit_date": null,
+    "layer_name": "ORN Road Net Element",
+    "layer_url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/0",
+    "owner": "OntarioProvincialMapping",
+    "service_url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/0",
+    "title": "Ontario Road Network (ORN) Road Net Element"
+  },
+  "osm": {
+    "drivable_road_count": 5945,
+    "element_count": 41978,
+    "file": "peterborough-osm.json",
+    "road_file": "osm-roads.geojson",
+    "source": "OpenStreetMap via Overpass API"
+  },
+  "road_validation": {
+    "file": "road-validation.json",
+    "orn_to_osm": {
+      "mean_m": 0.923,
+      "median_m": 0.583,
+      "p90_m": 2.067,
+      "p95_m": 2.877,
+      "p99_m": 5.249,
+      "samples": 30204,
+      "within_10m_pct": 99.66,
+      "within_20m_pct": 99.91,
+      "within_30m_pct": 99.96,
+      "within_5m_pct": 98.83
+    },
+    "osm_to_orn": {
+      "mean_m": 95.136,
+      "median_m": 25.611,
+      "p90_m": 229.101,
+      "p95_m": 402.435,
+      "p99_m": 1136.055,
+      "samples": 76192,
+      "within_10m_pct": 43.33,
+      "within_20m_pct": 48.01,
+      "within_30m_pct": 52.98,
+      "within_5m_pct": 42.0
+    },
+    "report": "../ROAD-VALIDATION.md",
+    "status": "review"
+  },
+  "schema_version": 1,
+  "terrain": {
+    "files": [
+      "terrain/12/1155/1483.png",
+      "terrain/12/1156/1483.png",
+      "terrain/12/1157/1483.png",
+      "terrain/12/1155/1484.png",
+      "terrain/12/1156/1484.png",
+      "terrain/12/1157/1484.png",
+      "terrain/12/1155/1485.png",
+      "terrain/12/1156/1485.png",
+      "terrain/12/1157/1485.png"
+    ],
+    "source": "Mapzen/Tilezen Terrarium",
+    "zoom": 12
+  }
+}
