@@ -1,0 +1,1 @@
+The pull request check executes the same deployment-time builder used by the scheduled asset refresh. Generated files are uploaded as a workflow artifact on pull requests and committed only from non-PR runs.
