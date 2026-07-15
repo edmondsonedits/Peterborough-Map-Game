@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#07131b">
+    <meta name="description" content="A live low-poly 3D exploration of Peterborough, Ontario, generated from OpenStreetMap data.">
+    <title>Peterborough 3D City Explorer</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="stylesheet" href="styles.css">
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="app" aria-label="Peterborough 3D City Explorer">
+      <canvas id="city-canvas" tabindex="0" aria-label="Interactive 3D view of Peterborough"></canvas>
+
+      <header class="brand-panel hud-panel">
+        <div class="brand-mark" aria-hidden="true">P</div>
+        <div>
+          <h1>Peterborough</h1>
+          <p>Voxel city / live exploration</p>
+        </div>
+      </header>
+
+      <nav class="control-panel" aria-label="Explorer controls">
+        <button id="fly-mode" class="hud-button is-active" type="button">Fly mode</button>
+        <button id="map-mode" class="hud-button" type="button">Map</button>
+        <button id="search-button" class="hud-button" type="button">Search</button>
+        <button id="landmarks-button" class="hud-button" type="button">Landmarks</button>
+        <button id="time-button" class="hud-button" type="button">Dusk</button>
+        <button id="sound-button" class="hud-button" type="button">Sound off</button>
+      </nav>
+
+      <section class="location-panel hud-panel" aria-live="polite">
+        <p class="location-kicker">Peterborough, Ontario</p>
+        <h2 id="location-name">Downtown Peterborough</h2>
+        <p id="coordinates">44.3091° N, 78.3197° W</p>
+        <div class="status-chip"><span id="status-dot"></span><span id="world-status">Loading live city data</span></div>
+      </section>
+
+      <section class="help-panel hud-panel">
+        <p id="mode-hint"><strong>Click the city to look around.</strong> WASD to move · Q/E down/up · Shift to boost.</p>
+      </section>
+
+      <footer class="stats-bar">
+        <div><strong>Official city + survey</strong><span>OpenStreetMap-generated prototype · not affiliated with the City of Peterborough</span></div>
+        <div class="stats-values"><span id="object-count">0 objects</span><span id="fps-counter">-- FPS</span><span id="altitude-counter">0 m</span></div>
+      </footer>
+
+      <div id="loading-screen" class="loading-screen" role="status" aria-live="polite">
+        <div class="loading-card">
+          <div class="loading-logo">P</div>
+          <p class="loading-title">Building Peterborough</p>
+          <div class="loading-track"><span id="loading-progress"></span></div>
+          <p id="loading-message">Requesting roads and building footprints…</p>
+        </div>
+      </div>
+
+      <dialog id="search-dialog" class="explorer-dialog">
+        <form method="dialog" class="dialog-shell" id="search-form">
+          <header><div><p>City navigation</p><h2>Search Peterborough</h2></div><button class="close-button" value="cancel" aria-label="Close search">×</button></header>
+          <label for="search-input">Address, landmark, park, or street</label>
+          <div class="search-row"><input id="search-input" type="search" autocomplete="off" placeholder="Try Peterborough Lift Lock"><button id="search-submit" value="default">Find</button></div>
+          <p id="search-note">Local landmarks are instant. Address search uses OpenStreetMap's Nominatim service.</p>
+          <div id="search-results" class="result-list" aria-live="polite"></div>
+        </form>
+      </dialog>
+
+      <dialog id="landmarks-dialog" class="explorer-dialog">
+        <form method="dialog" class="dialog-shell">
+          <header><div><p>Quick travel</p><h2>Peterborough landmarks</h2></div><button class="close-button" value="cancel" aria-label="Close landmarks">×</button></header>
+          <div id="landmark-list" class="result-list landmark-list"></div>
+        </form>
+      </dialog>
+
+      <div id="touch-controls" aria-label="Touch flight controls">
+        <div class="touch-pad movement-pad">
+          <button data-touch-key="KeyW" aria-label="Move forward">▲</button>
+          <button data-touch-key="KeyA" aria-label="Move left">◀</button>
+          <button data-touch-key="KeyS" aria-label="Move backward">▼</button>
+          <button data-touch-key="KeyD" aria-label="Move right">▶</button>
+        </div>
+        <div class="touch-pad altitude-pad">
+          <button data-touch-key="KeyE" aria-label="Move up">＋</button>
+          <button data-touch-key="KeyQ" aria-label="Move down">−</button>
+        </div>
+      </div>
+
+      <div id="toast" role="status" aria-live="polite"></div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
