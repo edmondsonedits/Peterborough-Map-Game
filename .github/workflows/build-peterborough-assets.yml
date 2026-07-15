@@ -60,6 +60,7 @@ jobs:
           python tools/geospatial/road_alignment.py \
             --data-dir city-explorer/data \
             --report city-explorer/ROAD-VALIDATION.md \
+            --strict \
             2>&1 | tee city-explorer/data/complete-validator.log
 
       - name: Validate generated JSON and JavaScript
