@@ -32,8 +32,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 35
     steps:
-      - name: Check out repository
+      - name: Check out source branch
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -87,7 +89,8 @@ jobs:
         run: exit 1
 
       - name: Commit refreshed deployment assets
-        if: github.event_name != 'pull_request'
+        if: steps.complete_validation.outcome == 'success'
+        shell: bash
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
@@ -96,6 +99,7 @@ jobs:
           if git diff --cached --quiet; then
             echo 'Generated assets are already current.'
           else
+            TARGET_BRANCH="${GITHUB_HEAD_REF:-$GITHUB_REF_NAME}"
             git commit -m 'Refresh Peterborough geospatial assets [skip ci]'
-            git push
+            git push origin "HEAD:${TARGET_BRANCH}"
           fi
