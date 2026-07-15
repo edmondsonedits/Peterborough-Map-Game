@@ -53,7 +53,7 @@
       <footer class="stats-bar">
         <div>
           <strong>Open geospatial city model</strong>
-          <span>© OpenStreetMap contributors · elevation via Mapzen/Tilezen Terrarium · unofficial project</span>
+          <span>© OpenStreetMap contributors · Ontario Road Network validation · elevation via Mapzen/Tilezen Terrarium · unofficial project</span>
         </div>
         <div class="stats-values"><span id="object-count">0 features</span><span id="fps-counter">-- FPS</span><span id="altitude-counter">0 m AGL</span></div>
       </footer>
@@ -63,7 +63,7 @@
           <div class="loading-logo">P</div>
           <p class="loading-title">Building Peterborough</p>
           <div class="loading-track"><span id="loading-progress"></span></div>
-          <p id="loading-message">Loading terrain and OpenStreetMap geometry…</p>
+          <p id="loading-message">Loading cached terrain and street geometry…</p>
         </div>
       </div>
 
@@ -100,6 +100,7 @@
       <div id="toast" role="status" aria-live="polite"></div>
     </div>
 
+    <script type="module" src="data-loader.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/osmtogeojson@3.0.0-beta.5/osmtogeojson.js"></script>
     <script type="module" src="app.js"></script>
   </body>
