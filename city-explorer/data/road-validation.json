@@ -664,6 +664,6 @@
     "Recent construction and private roads can be present in only one source.",
     "The test validates centrelines and names, not curbs, lanes, grades, turn rules or legal survey boundaries."
   ],
-  "generated_at": "2026-07-15T18:36:21+00:00",
+  "generated_at": "2026-07-15T18:39:00+00:00",
   "orn_named_feature_count": 3074
 }
