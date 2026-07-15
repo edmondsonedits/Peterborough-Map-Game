@@ -45,6 +45,19 @@ jobs:
       - name: Install geospatial dependencies
         run: python -m pip install --disable-pip-version-check -r tools/geospatial/requirements.txt
 
+      - name: Inspect ORN street-name tables
+        run: |
+          python - <<'PY'
+          import json, requests
+          root = 'https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer'
+          for table_id in (7, 14):
+              metadata = requests.get(f'{root}/{table_id}', params={'f':'json'}, timeout=60).json()
+              print(f'TABLE {table_id}: {metadata.get("name")}')
+              print('FIELDS:', [field.get('name') for field in metadata.get('fields', [])])
+              sample = requests.get(f'{root}/{table_id}/query', params={'f':'json','where':'1=1','outFields':'*','returnGeometry':'false','resultRecordCount':3}, timeout=60).json()
+              print('SAMPLE:', json.dumps(sample.get('features', []), indent=2)[:12000])
+          PY
+
       - name: Build cached city data and validate streets
         run: >-
           python tools/geospatial/build_peterborough_assets.py
