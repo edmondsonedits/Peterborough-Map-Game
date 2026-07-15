@@ -24,8 +24,8 @@ permissions:
   contents: write
 
 concurrency:
-  group: peterborough-geospatial-assets
-  cancel-in-progress: false
+  group: peterborough-geospatial-assets-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build-and-validate:
