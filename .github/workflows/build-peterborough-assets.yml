@@ -1,0 +1,81 @@
+name: Build Peterborough geospatial assets
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/build-peterborough-assets.yml'
+      - 'tools/geospatial/**'
+      - 'city-explorer/app.js'
+      - 'city-explorer/data-loader.js'
+      - 'city-explorer/index.html'
+  pull_request:
+    paths:
+      - '.github/workflows/build-peterborough-assets.yml'
+      - 'tools/geospatial/**'
+      - 'city-explorer/app.js'
+      - 'city-explorer/data-loader.js'
+      - 'city-explorer/index.html'
+  schedule:
+    - cron: '23 8 1 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: peterborough-geospatial-assets
+  cancel-in-progress: false
+
+jobs:
+  build-and-validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: tools/geospatial/requirements.txt
+
+      - name: Install geospatial dependencies
+        run: python -m pip install --disable-pip-version-check -r tools/geospatial/requirements.txt
+
+      - name: Build cached city data and validate streets
+        run: >-
+          python tools/geospatial/build_peterborough_assets.py
+          --output city-explorer/data
+          --report city-explorer/ROAD-VALIDATION.md
+
+      - name: Validate generated JSON and JavaScript
+        run: |
+          python -m json.tool city-explorer/data/manifest.json >/dev/null
+          python -m json.tool city-explorer/data/road-validation.json >/dev/null
+          node --check city-explorer/data-loader.js
+          node --check city-explorer/app.js
+
+      - name: Upload generated map assets
+        uses: actions/upload-artifact@v4
+        with:
+          name: peterborough-geospatial-assets
+          path: |
+            city-explorer/data
+            city-explorer/ROAD-VALIDATION.md
+          retention-days: 14
+
+      - name: Commit refreshed deployment assets
+        if: github.event_name != 'pull_request'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add city-explorer/data city-explorer/ROAD-VALIDATION.md
+          if git diff --cached --quiet; then
+            echo 'Generated assets are already current.'
+          else
+            git commit -m 'Refresh Peterborough geospatial assets [skip ci]'
+            git push
+          fi
