@@ -45,30 +45,23 @@ jobs:
       - name: Install geospatial dependencies
         run: python -m pip install --disable-pip-version-check -r tools/geospatial/requirements.txt
 
-      - name: Inspect ORN street-name tables
-        run: |
-          mkdir -p city-explorer/data
-          python - <<'PY'
-          import json, pathlib, requests
-          root = 'https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer'
-          output = {}
-          for table_id in (7, 14):
-              metadata = requests.get(f'{root}/{table_id}', params={'f':'json'}, timeout=60).json()
-              sample = requests.get(f'{root}/{table_id}/query', params={'f':'json','where':'1=1','outFields':'*','returnGeometry':'false','resultRecordCount':5}, timeout=60).json()
-              output[str(table_id)] = {'metadata': metadata, 'sample': sample}
-          pathlib.Path('city-explorer/data/orn-table-debug.json').write_text(json.dumps(output, indent=2), encoding='utf-8')
-          PY
-
-      - name: Build cached city data and validate streets
+      - name: Build cached Peterborough assets
         run: >-
           python tools/geospatial/build_peterborough_assets.py
           --output city-explorer/data
+          --report city-explorer/ROAD-VALIDATION.md
+
+      - name: Validate complete street network and official names
+        run: >-
+          python tools/geospatial/validate_peterborough_roads.py
+          --data-dir city-explorer/data
           --report city-explorer/ROAD-VALIDATION.md
 
       - name: Validate generated JSON and JavaScript
         run: |
           python -m json.tool city-explorer/data/manifest.json >/dev/null
           python -m json.tool city-explorer/data/road-validation.json >/dev/null
+          python -m json.tool city-explorer/data/orn-roads.geojson >/dev/null
           node --check city-explorer/data-loader.js
           node --check city-explorer/app.js
 
@@ -86,7 +79,6 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          rm -f city-explorer/data/orn-table-debug.json
           git add city-explorer/data city-explorer/ROAD-VALIDATION.md
           if git diff --cached --quiet; then
             echo 'Generated assets are already current.'
