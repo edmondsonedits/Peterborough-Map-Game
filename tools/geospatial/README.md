@@ -19,6 +19,20 @@ The deployment pipeline creates a browser-ready Peterborough map cache and indep
 
 Using object-ID pagination matters because ArcGIS can reach a geometry transfer limit before a response reaches its advertised record count. A single spatial page can therefore look complete while silently omitting roads.
 
+## Verified baseline
+
+The July 2026 strict validation passed with:
+
+- 2,765 public OpenStreetMap road features
+- 3,179 complete ORN road features
+- 0.64 m median public OSM → ORN offset
+- 98.72% of public OSM samples within 20 m of ORN
+- 0.63 m median ORN → public OSM offset
+- 98.01% of ORN samples within 20 m of public OSM
+- 95.32% normalized official street-name agreement
+
+These values are regenerated from current upstream data and can change over time. The machine-readable output and manual-review list are published with each asset refresh.
+
 ## Local build
 
 ```bash
