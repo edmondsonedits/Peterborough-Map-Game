@@ -1,74 +1,60 @@
 # Peterborough Road Alignment Validation
 
-Generated: 2026-07-15T17:58:04+00:00
+Generated: 2026-07-15T18:36:21+00:00
 
-**Result: REVIEW**
+**Result: PASS**
 
-The browser road geometry is built from the cached OpenStreetMap extract. This report compares those drivable road centrelines with Ontario's authoritative Ontario Road Network (ORN) Road Net Element layer.
+The explorer renders cached OpenStreetMap street geometry. Public drivable streets were independently compared with Ontario's authoritative Ontario Road Network (ORN) Road Net Element layer.
 
-## Source data
+## Completeness safeguard
 
-- OSM drivable road features: **5,945**
-- ORN road features in the same bounding box: **1,943**
-- ORN item: `Ontario Road Network (ORN) Road Net Element`
-- ORN owner: `OntarioProvincialMapping`
+ORN is downloaded through a spatial object-ID query followed by chunked object-ID requests. This avoids ArcGIS transfer limits silently omitting part of Peterborough's network.
+
+## Coverage
+
+- Public OSM roads checked: **2,765**
+- All rendered OSM drivable features: **5,945**
+- Complete ORN roads: **3,179**
 - ORN layer: `ORN Road Net Element`
 
-## Positional comparison
+## Centreline results
 
-| Direction | Median | 90th percentile | 95th percentile | Within 10 m | Within 20 m |
+| Comparison | Median | P90 | P95 | Within 10 m | Within 20 m |
 |---|---:|---:|---:|---:|---:|
-| OSM → ORN | 25.61 m | 229.10 m | 402.44 m | 43.33% | 48.01% |
-| ORN → OSM | 0.58 m | 2.07 m | 2.88 m | 99.66% | 99.91% |
+| Public OSM → ORN | 0.64 m | 2.34 m | 3.63 m | 98.43% | 98.72% |
+| ORN → public OSM | 0.63 m | 2.32 m | 3.57 m | 97.60% | 98.01% |
+| All rendered OSM → ORN | 1.23 m | 80.14 m | 134.32 m | 68.62% | 72.72% |
 
-The two-direction check catches both displaced OSM streets and authoritative ORN streets that may be absent from the game extract.
+## Street names
 
-## Street-name comparison
+- Comparable named segments: **2,628**
+- Normalized official-name agreement: **95.32%**
 
-- Segments with usable names in both sources: **1,571**
-- Normalized name agreement: **0.0%**
+## Streets requiring manual review
 
-## Streets flagged for manual review
-
-| Street | P90 offset | Within 10 m | Samples |
+| Street | P90 offset | Within 20 m | Samples |
 |---|---:|---:|---:|
-| HWY 7 | 2398.42 m | 41.30% | 494 |
-| SHERBROOKE ST WEST | 1666.03 m | 1.12% | 178 |
-| PARKHILL RD WEST | 1467.54 m | 39.22% | 640 |
-| JOPLING LN | 1467.44 m | 0.00% | 43 |
-| LILY LAKE RD | 1452.38 m | 28.41% | 352 |
-| DOURO SEVENTH LINE | 1441.95 m | 0.86% | 116 |
-| BENSFORT RD | 1299.13 m | 30.81% | 396 |
-| LINDSAY RD | 1157.81 m | 27.04% | 307 |
-| CREAMERY RD | 1103.54 m | 0.00% | 28 |
-| UNIVERSITY RD | 1054.94 m | 1.24% | 161 |
-| DRUMMOND LINE | 1018.44 m | 1.91% | 262 |
-| HILLIS RD | 937.89 m | 1.41% | 71 |
-| SIXTH LINE | 773.97 m | 72.94% | 303 |
-| MCNAMARA RD | 739.20 m | 0.86% | 116 |
-| BURNHAM LINE | 722.05 m | 56.71% | 395 |
-| FIFE S BAY RD | 709.14 m | 74.93% | 371 |
-| DILLON RD | 708.15 m | 51.35% | 185 |
-| ACKISON RD | 701.70 m | 1.00% | 100 |
-| KEENE RD | 648.69 m | 68.97% | 464 |
-| BROWN LINE | 648.25 m | 55.00% | 280 |
-| THIRD LINE | 646.16 m | 1.32% | 76 |
-| CHEMONG RD | 627.38 m | 48.59% | 743 |
-| MAHOOD RD | 570.38 m | 2.15% | 93 |
-| COUNTY RD 4 | 560.08 m | 7.05% | 454 |
-| LANSDOWNE ST WEST | 550.62 m | 33.58% | 801 |
-| JOHNSTON DR | 550.38 m | 14.16% | 233 |
-| MEADOWVALE RD | 545.94 m | 2.38% | 42 |
-| REDMOND RD | 531.20 m | 51.63% | 184 |
-| COUNTY RD 19 | 476.57 m | 1.27% | 79 |
-| LAKEFIELD RD | 439.27 m | 44.68% | 235 |
+| HWY 7 | 1712.46 m | 72.24% | 544 |
+| O TOOLE CRES | 254.18 m | 40.00% | 50 |
+| WRIGHT AVE | 242.56 m | 0.00% | 19 |
+| BOLSTER BLVD | 228.38 m | 10.53% | 19 |
+| DOLMAN ST | 187.68 m | 65.22% | 46 |
+| FIRE ROUTE 4A | 180.16 m | 48.28% | 58 |
+| NORTHCOTT AVE | 179.65 m | 63.86% | 83 |
+| LIGHTFOOT TER | 167.97 m | 0.00% | 10 |
+| BRISCO GDNS | 82.13 m | 0.00% | 10 |
+| MUSEUM DR | 77.36 m | 71.11% | 45 |
+| RAMSAY RD | 65.81 m | 75.00% | 24 |
+| DENNE LN | 44.06 m | 44.44% | 9 |
+| ALEXANDER AVE | 35.43 m | 84.62% | 26 |
+| GZOWSKI WAY | 33.80 m | 77.05% | 61 |
 
-## Method and limits
+## Interpretation
 
-Road centrelines were projected to NAD83 / UTM zone 17N and sampled every ~15 m. Each sample was measured to the nearest line in the comparison network in both directions.
+Pass criteria cover public drivable streets. Service roads, parking aisles, driveways, tracks and explicitly private roads remain rendered but are reported separately because ORN is not a complete reference for them.
 
-- Divided roads may use one centreline in one source and separate carriageways in the other.
-- New construction can appear in one source before the other is updated.
-- This validates centreline geometry, not curb edges, lane markings, grades, turn restrictions, or legal survey boundaries.
+Complete ORN object-ID pagination; NAD83 / UTM zone 17N; centreline samples about every 15 metres; nearest-line distance measured in both directions.
 
-A passing report means the road centrelines meet the project's automated alignment thresholds. It does not mean every curb, lane, bridge deck, driveway, or recent construction project has been field-surveyed.
+- Divided roads can be one centreline in one source and separate carriageways in the other.
+- Recent construction and private roads can be present in only one source.
+- The test validates centrelines and names, not curbs, lanes, grades, turn rules or legal survey boundaries.

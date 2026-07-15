@@ -1,1276 +1,669 @@
 {
+  "status": "pass",
   "criteria": {
-    "orn_to_osm_within_20m_min_pct": 85,
-    "osm_to_orn_median_max_m": 8,
-    "osm_to_orn_within_20m_min_pct": 90
+    "public_osm_to_orn_median_max_m": 5,
+    "public_osm_to_orn_within_20m_min_pct": 90,
+    "orn_to_public_osm_within_20m_min_pct": 95
   },
-  "limitations": [
-    "Divided roads may use one centreline in one source and separate carriageways in the other.",
-    "New construction can appear in one source before the other is updated.",
-    "This validates centreline geometry, not curb edges, lane markings, grades, turn restrictions, or legal survey boundaries."
-  ],
-  "method": "Road centrelines were projected to NAD83 / UTM zone 17N and sampled every ~15 m. Each sample was measured to the nearest line in the comparison network in both directions.",
-  "name_comparison": {
-    "checked_segments": 1571,
-    "match_pct": 0.0,
-    "matching_segments": 0,
+  "public_osm_feature_count": 2765,
+  "rendered_osm_feature_count": 5945,
+  "orn_feature_count": 3179,
+  "public_osm_to_orn": {
+    "samples": 49743,
+    "mean_m": 6.384,
+    "median_m": 0.639,
+    "p90_m": 2.343,
+    "p95_m": 3.63,
+    "p99_m": 53.819,
+    "within_5m_pct": 96.97,
+    "within_10m_pct": 98.43,
+    "within_20m_pct": 98.72,
+    "within_30m_pct": 98.83
+  },
+  "orn_to_public_osm": {
+    "samples": 50434,
+    "mean_m": 2.578,
+    "median_m": 0.628,
+    "p90_m": 2.318,
+    "p95_m": 3.574,
+    "p99_m": 61.844,
+    "within_5m_pct": 96.85,
+    "within_10m_pct": 97.6,
+    "within_20m_pct": 98.01,
+    "within_30m_pct": 98.27
+  },
+  "all_rendered_osm_to_orn": {
+    "samples": 76242,
+    "mean_m": 28.521,
+    "median_m": 1.234,
+    "p90_m": 80.142,
+    "p95_m": 134.321,
+    "p99_m": 334.315,
+    "within_5m_pct": 67.44,
+    "within_10m_pct": 68.62,
+    "within_20m_pct": 72.72,
+    "within_30m_pct": 77.69
+  },
+  "street_names": {
+    "checked_segments": 2628,
+    "matching_segments": 2505,
+    "match_pct": 95.32,
     "sample_mismatches": [
       {
-        "distance_m": 0.87,
-        "orn": "RD ELEMENT",
-        "osm": "HWY 7 115"
+        "osm": "ST PATRICK S ST",
+        "orn": [
+          "ST PATRICKS ST"
+        ],
+        "p90_offset_m": 2.38
       },
       {
-        "distance_m": 15.78,
-        "orn": "RD ELEMENT",
-        "osm": "HWY 7 115"
+        "osm": "ST ANNE S CRES",
+        "orn": [
+          "ST ANNES CRES"
+        ],
+        "p90_offset_m": 1.43
       },
       {
-        "distance_m": 0.79,
-        "orn": "RD ELEMENT",
-        "osm": "HWY 7 115"
+        "osm": "DOURO EIGHTH LINE",
+        "orn": [
+          "DOURO 8TH LINE"
+        ],
+        "p90_offset_m": 0.0
       },
       {
-        "distance_m": 1.56,
-        "orn": "RD ELEMENT",
-        "osm": "GUTHRIE DR"
+        "osm": "DOURO EIGHTH LINE",
+        "orn": [
+          "DOURO 8TH LINE"
+        ],
+        "p90_offset_m": 1.92
       },
       {
-        "distance_m": 1.22,
-        "orn": "RD ELEMENT",
-        "osm": "HWY 7 115"
+        "osm": "ALBERTUS AVE",
+        "orn": [
+          "SHERBROOKE ST"
+        ],
+        "p90_offset_m": 4.23
       },
       {
-        "distance_m": 3.22,
-        "orn": "RD ELEMENT",
-        "osm": "BREALEY DR"
+        "osm": "THIRD LINE",
+        "orn": [
+          "3RD LINE"
+        ],
+        "p90_offset_m": 0.28
       },
       {
-        "distance_m": 11.49,
-        "orn": "RD ELEMENT",
-        "osm": "HWY 7 115"
+        "osm": "SPENCLEY S LN",
+        "orn": [
+          "SPENCLEYS LN"
+        ],
+        "p90_offset_m": 0.41
       },
       {
-        "distance_m": 13.09,
-        "orn": "RD ELEMENT",
-        "osm": "HWY 7 115"
+        "osm": "DOURO NINTH LINE",
+        "orn": [
+          "DOURO 9TH LINE"
+        ],
+        "p90_offset_m": 1.29
       },
       {
-        "distance_m": 1.44,
-        "orn": "RD ELEMENT",
-        "osm": "THE PKWY"
+        "osm": "ERSKINE AVE",
+        "orn": [
+          "CRAWFORD DR"
+        ],
+        "p90_offset_m": 0.35
       },
       {
-        "distance_m": 0.43,
-        "orn": "RD ELEMENT",
-        "osm": "HWY 7 115"
+        "osm": "FIFE S BAY RD",
+        "orn": [
+          "FIFES BAY RD"
+        ],
+        "p90_offset_m": 1.02
       },
       {
-        "distance_m": 1.02,
-        "orn": "RD ELEMENT",
-        "osm": "HWY 7 115"
+        "osm": "PETERBORO AVE",
+        "orn": [
+          "PETERBOROUGH AVE"
+        ],
+        "p90_offset_m": 2.25
       },
       {
-        "distance_m": 0.71,
-        "orn": "RD ELEMENT",
-        "osm": "HWY 7 115"
+        "osm": "ST ANNE S CRES",
+        "orn": [
+          "GREENLAWN AVE",
+          "ST ANNES CRES"
+        ],
+        "p90_offset_m": 2.14
       },
       {
-        "distance_m": 0.62,
-        "orn": "RD ELEMENT",
-        "osm": "HWY 7 115"
+        "osm": "COMMUNICATION RD",
+        "orn": [
+          "MAITLAND ST"
+        ],
+        "p90_offset_m": 0.0
       },
       {
-        "distance_m": 0.66,
-        "orn": "RD ELEMENT",
-        "osm": "HWY 7 115"
+        "osm": "CLUXTON ST",
+        "orn": [
+          "CONGER ST"
+        ],
+        "p90_offset_m": 1.37
       },
       {
-        "distance_m": 2.35,
-        "orn": "RD ELEMENT",
-        "osm": "HWY 7 115"
+        "osm": "ST PATRICK S ST",
+        "orn": [
+          "ST PATRICKS ST"
+        ],
+        "p90_offset_m": 0.79
       },
       {
-        "distance_m": 1.57,
-        "orn": "RD ELEMENT",
-        "osm": "KENNEDY RD"
+        "osm": "VICTORY CRES",
+        "orn": [
+          "CLONSILLA AVE"
+        ],
+        "p90_offset_m": 1.11
       },
       {
-        "distance_m": 2.61,
-        "orn": "RD ELEMENT",
-        "osm": "SIMMONS AVE"
+        "osm": "LEAHY S LN",
+        "orn": [
+          "LEAHYS LN"
+        ],
+        "p90_offset_m": 0.46
       },
       {
-        "distance_m": 1.37,
-        "orn": "RD ELEMENT",
-        "osm": "HUNTINGTON CIRCLE"
+        "osm": "FIFE S BAY RD",
+        "orn": [
+          "FIFES BAY RD"
+        ],
+        "p90_offset_m": 0.0
       },
       {
-        "distance_m": 1.55,
-        "orn": "RD ELEMENT",
-        "osm": "AFTON RD"
+        "osm": "FIFTH LINE",
+        "orn": [
+          "5TH LINE"
+        ],
+        "p90_offset_m": 2.94
       },
       {
-        "distance_m": 1.38,
-        "orn": "RD ELEMENT",
-        "osm": "COTTONWOOD DR"
+        "osm": "SPENCLEY S LN",
+        "orn": [
+          "SPENCLEYS LN"
+        ],
+        "p90_offset_m": 1.27
       },
       {
-        "distance_m": 4.4,
-        "orn": "RD ELEMENT",
-        "osm": "BIRCHVIEW CRES"
+        "osm": "SENECA RD",
+        "orn": [
+          "ROYAL DR"
+        ],
+        "p90_offset_m": 1.68
       },
       {
-        "distance_m": 2.27,
-        "orn": "RD ELEMENT",
-        "osm": "MAPLEVIEW CRES"
+        "osm": "ST PAUL S ST",
+        "orn": [
+          "ST PAULS ST"
+        ],
+        "p90_offset_m": 1.44
       },
       {
-        "distance_m": 6.28,
-        "orn": "RD ELEMENT",
-        "osm": "RED PINE LN"
+        "osm": "FIFTH LINE",
+        "orn": [
+          "5TH LINE"
+        ],
+        "p90_offset_m": 4.69
       },
       {
-        "distance_m": 2.11,
-        "orn": "RD ELEMENT",
-        "osm": "RIDEAU CRES"
+        "osm": "SPENCLEY S LN",
+        "orn": [
+          "SPENCLEYS LN"
+        ],
+        "p90_offset_m": 2.08
       },
       {
-        "distance_m": 1.73,
-        "orn": "RD ELEMENT",
-        "osm": "GIFFORD DR"
+        "osm": "DOURO SEVENTH LINE",
+        "orn": [
+          "DOURO 7TH LINE"
+        ],
+        "p90_offset_m": 0.0
       },
       {
-        "distance_m": 2.03,
-        "orn": "RD ELEMENT",
-        "osm": "TALWOOD DR"
+        "osm": "PETERBORO AVE",
+        "orn": [
+          "PETERBOROUGH AVE"
+        ],
+        "p90_offset_m": 0.95
       },
       {
-        "distance_m": 1.67,
-        "orn": "RD ELEMENT",
-        "osm": "MURRAY ST"
+        "osm": "PETERBORO AVE",
+        "orn": [
+          "PETERBOROUGH AVE"
+        ],
+        "p90_offset_m": 2.7
       },
       {
-        "distance_m": 2.13,
-        "orn": "RD ELEMENT",
-        "osm": "CRES ST"
+        "osm": "PETERBORO AVE",
+        "orn": [
+          "PETERBOROUGH AVE"
+        ],
+        "p90_offset_m": 1.66
       },
       {
-        "distance_m": 0.64,
-        "orn": "RD ELEMENT",
-        "osm": "BARNARDO AVE"
+        "osm": "THE QUEENSWAY",
+        "orn": [
+          "ERSKINE AVE"
+        ],
+        "p90_offset_m": 3.39
       },
       {
-        "distance_m": 1.0,
-        "orn": "RD ELEMENT",
-        "osm": "MILFORD DR"
+        "osm": "FIFE S BAY RD",
+        "orn": [
+          "FIFES BAY RD"
+        ],
+        "p90_offset_m": 0.0
       },
       {
-        "distance_m": 0.79,
-        "orn": "RD ELEMENT",
-        "osm": "CLEARVIEW DR"
+        "osm": "SIXTH LINE",
+        "orn": [
+          "6TH LINE"
+        ],
+        "p90_offset_m": 0.0
       },
       {
-        "distance_m": 0.7,
-        "orn": "RD ELEMENT",
-        "osm": "HILLIARD ST"
+        "osm": "LEAHY S LN",
+        "orn": [
+          "LEAHYS LN"
+        ],
+        "p90_offset_m": 0.83
       },
       {
-        "distance_m": 0.74,
-        "orn": "RD ELEMENT",
-        "osm": "HEMLOCK ST"
+        "osm": "FIFTH LINE",
+        "orn": [
+          "5TH LINE"
+        ],
+        "p90_offset_m": 0.43
       },
       {
-        "distance_m": 0.99,
-        "orn": "RD ELEMENT",
-        "osm": "BARNARDO AVE"
+        "osm": "RIVER RD",
+        "orn": [
+          "COUNTY RD 32"
+        ],
+        "p90_offset_m": 1.3
       },
       {
-        "distance_m": 0.57,
-        "orn": "RD ELEMENT",
-        "osm": "GLENHOLME AVE"
+        "osm": "ST LUKE S AVE",
+        "orn": [
+          "ST LUKES AVE"
+        ],
+        "p90_offset_m": 1.59
       },
       {
-        "distance_m": 1.91,
-        "orn": "RD ELEMENT",
-        "osm": "MIDDLEFIELD RD"
+        "osm": "O BRIEN DR",
+        "orn": [
+          "O BRIEN RD"
+        ],
+        "p90_offset_m": 1.86
       },
       {
-        "distance_m": 0.9,
-        "orn": "RD ELEMENT",
-        "osm": "LINDEN LEE"
+        "osm": "HARPER RD",
+        "orn": [
+          "FISHER DR"
+        ],
+        "p90_offset_m": 0.87
       },
       {
-        "distance_m": 5.08,
-        "orn": "RD ELEMENT",
-        "osm": "SYDENHAM RD"
+        "osm": "MURRAY ST",
+        "orn": [
+          "RUBIDGE ST"
+        ],
+        "p90_offset_m": 1.8
       },
       {
-        "distance_m": 1.85,
-        "orn": "RD ELEMENT",
-        "osm": "COLLEGE PARK DR"
+        "osm": "BELLEVUE AVE",
+        "orn": [
+          "PETERBOROUGH AVE"
+        ],
+        "p90_offset_m": 1.43
       },
       {
-        "distance_m": 0.0,
-        "orn": "RD ELEMENT",
-        "osm": "DALEVIEW RD"
+        "osm": "DOURO NINTH LINE",
+        "orn": [
+          "DOURO 9TH LINE"
+        ],
+        "p90_offset_m": 0.0
       },
       {
-        "distance_m": 0.73,
-        "orn": "RD ELEMENT",
-        "osm": "LOCK ST"
+        "osm": "DOURO NINTH LINE",
+        "orn": [
+          "DOURO 9TH LINE"
+        ],
+        "p90_offset_m": 1.21
       },
       {
-        "distance_m": 1.23,
-        "orn": "RD ELEMENT",
-        "osm": "AIRPORT RD"
+        "osm": "FIFE S BAY RD",
+        "orn": [
+          "FIFES BAY RD"
+        ],
+        "p90_offset_m": 0.0
       },
       {
-        "distance_m": 0.0,
-        "orn": "RD ELEMENT",
-        "osm": "DOURO EIGHTH LINE"
+        "osm": "ST MARY S ST",
+        "orn": [
+          "MERVIN AVE",
+          "ST MARYS ST"
+        ],
+        "p90_offset_m": 0.96
       },
       {
-        "distance_m": 0.61,
-        "orn": "RD ELEMENT",
-        "osm": "QUEENSWAY CRT"
+        "osm": "APPLEWOOD CRES",
+        "orn": [
+          "APPLEWOOD CRT"
+        ],
+        "p90_offset_m": 2.21
       },
       {
-        "distance_m": 1.86,
-        "orn": "RD ELEMENT",
-        "osm": "RIDGEWOOD RD"
+        "osm": "LUNDY S LN",
+        "orn": [
+          "LUNDYS LN"
+        ],
+        "p90_offset_m": 1.93
       },
       {
-        "distance_m": 0.0,
-        "orn": "RD ELEMENT",
-        "osm": "LINDAN AVE"
+        "osm": "FIFE S BAY RD",
+        "orn": [
+          "FIFES BAY RD"
+        ],
+        "p90_offset_m": 0.0
       },
       {
-        "distance_m": 1.25,
-        "orn": "RD ELEMENT",
-        "osm": "EDGEWATER BLVD"
+        "osm": "SEVENTH LINE",
+        "orn": [
+          "7TH LINE"
+        ],
+        "p90_offset_m": 0.0
       },
       {
-        "distance_m": 0.28,
-        "orn": "RD ELEMENT",
-        "osm": "ALBERTUS AVE"
+        "osm": "FIFE S BAY RD",
+        "orn": [
+          "FIFES BAY RD"
+        ],
+        "p90_offset_m": 0.0
       },
       {
-        "distance_m": 2.72,
-        "orn": "RD ELEMENT",
-        "osm": "CHARLOTTE ST"
+        "osm": "COUNTY RD 4",
+        "orn": [
+          "TELEVISION RD"
+        ],
+        "p90_offset_m": 0.03
       },
       {
-        "distance_m": 1.2,
-        "orn": "RD ELEMENT",
-        "osm": "LINDAN AVE"
+        "osm": "DOURO EIGHTH LINE",
+        "orn": [
+          "DOURO 8TH LINE"
+        ],
+        "p90_offset_m": 0.0
+      },
+      {
+        "osm": "LINTON AVE",
+        "orn": [
+          "PETERBOROUGH AVE"
+        ],
+        "p90_offset_m": 0.93
+      },
+      {
+        "osm": "LUNDY S LN",
+        "orn": [
+          "LUNDYS LN"
+        ],
+        "p90_offset_m": 1.47
+      },
+      {
+        "osm": "WARSAW RD BRIDGE 27",
+        "orn": [
+          "PARKHILL RD EAST"
+        ],
+        "p90_offset_m": 1.62
+      },
+      {
+        "osm": "JOHNSTON RD",
+        "orn": [
+          "WILLOW RD"
+        ],
+        "p90_offset_m": 2.38
+      },
+      {
+        "osm": "FIFTH LINE",
+        "orn": [
+          "5TH LINE"
+        ],
+        "p90_offset_m": 8.65
+      },
+      {
+        "osm": "HILLSIDE ST",
+        "orn": [
+          "DELINE ST"
+        ],
+        "p90_offset_m": 0.91
+      },
+      {
+        "osm": "ST MARY S ST",
+        "orn": [
+          "ST MARYS ST"
+        ],
+        "p90_offset_m": 0.75
+      },
+      {
+        "osm": "ST PAUL S ST",
+        "orn": [
+          "ST PAULS ST"
+        ],
+        "p90_offset_m": 2.24
+      },
+      {
+        "osm": "SPRINGBROOK DR",
+        "orn": [
+          "DALEVIEW AVE"
+        ],
+        "p90_offset_m": 1.54
+      },
+      {
+        "osm": "THIRD AVE",
+        "orn": [
+          "3RD AVE"
+        ],
+        "p90_offset_m": 0.71
       }
     ]
   },
-  "orn_feature_count": 1943,
-  "orn_line_count": 1943,
-  "orn_to_osm": {
-    "mean_m": 0.923,
-    "median_m": 0.583,
-    "p90_m": 2.067,
-    "p95_m": 2.877,
-    "p99_m": 5.249,
-    "samples": 30204,
-    "within_10m_pct": 99.66,
-    "within_20m_pct": 99.91,
-    "within_30m_pct": 99.96,
-    "within_5m_pct": 98.83
-  },
-  "osm_feature_count": 5945,
-  "osm_line_count": 5945,
-  "osm_to_orn": {
-    "mean_m": 95.136,
-    "median_m": 25.611,
-    "p90_m": 229.101,
-    "p95_m": 402.435,
-    "p99_m": 1136.055,
-    "samples": 76192,
-    "within_10m_pct": 43.33,
-    "within_20m_pct": 48.01,
-    "within_30m_pct": 52.98,
-    "within_5m_pct": 42.0
-  },
-  "status": "review",
   "streets_requiring_review": [
     {
-      "mean_m": 712.349,
-      "median_m": 100.535,
       "name": "HWY 7",
-      "p90_m": 2398.421,
-      "p95_m": 2756.535,
-      "p99_m": 3128.7,
-      "samples": 494,
-      "within_10m_pct": 41.3,
-      "within_20m_pct": 43.72,
-      "within_30m_pct": 44.33,
-      "within_5m_pct": 33.6
+      "samples": 544,
+      "mean_m": 371.914,
+      "median_m": 3.398,
+      "p90_m": 1712.457,
+      "p95_m": 2211.147,
+      "p99_m": 2595.447,
+      "within_5m_pct": 60.29,
+      "within_10m_pct": 68.75,
+      "within_20m_pct": 72.24,
+      "within_30m_pct": 72.61
     },
     {
-      "mean_m": 777.199,
-      "median_m": 650.837,
-      "name": "SHERBROOKE ST WEST",
-      "p90_m": 1666.031,
-      "p95_m": 1793.949,
-      "p99_m": 1896.322,
-      "samples": 178,
-      "within_10m_pct": 1.12,
-      "within_20m_pct": 2.25,
-      "within_30m_pct": 2.81,
-      "within_5m_pct": 1.12
-    },
-    {
-      "mean_m": 421.643,
-      "median_m": 74.217,
-      "name": "PARKHILL RD WEST",
-      "p90_m": 1467.538,
-      "p95_m": 1850.332,
-      "p99_m": 2181.575,
-      "samples": 640,
-      "within_10m_pct": 39.22,
-      "within_20m_pct": 41.88,
-      "within_30m_pct": 44.06,
-      "within_5m_pct": 38.75
-    },
-    {
-      "mean_m": 1407.084,
-      "median_m": 1426.022,
-      "name": "JOPLING LN",
-      "p90_m": 1467.442,
-      "p95_m": 1484.032,
-      "p99_m": 1497.652,
-      "samples": 43,
-      "within_10m_pct": 0.0,
-      "within_20m_pct": 0.0,
-      "within_30m_pct": 0.0,
-      "within_5m_pct": 0.0
-    },
-    {
-      "mean_m": 518.269,
-      "median_m": 360.624,
-      "name": "LILY LAKE RD",
-      "p90_m": 1452.384,
-      "p95_m": 1715.388,
-      "p99_m": 1925.783,
-      "samples": 352,
-      "within_10m_pct": 28.41,
-      "within_20m_pct": 29.26,
-      "within_30m_pct": 29.83,
-      "within_5m_pct": 28.12
-    },
-    {
-      "mean_m": 819.784,
-      "median_m": 836.126,
-      "name": "DOURO SEVENTH LINE",
-      "p90_m": 1441.948,
-      "p95_m": 1442.366,
-      "p99_m": 1442.7,
-      "samples": 116,
-      "within_10m_pct": 0.86,
-      "within_20m_pct": 1.72,
-      "within_30m_pct": 2.59,
-      "within_5m_pct": 0.86
-    },
-    {
-      "mean_m": 542.227,
-      "median_m": 158.709,
-      "name": "BENSFORT RD",
-      "p90_m": 1299.132,
-      "p95_m": 1305.729,
-      "p99_m": 1313.136,
-      "samples": 396,
-      "within_10m_pct": 30.81,
-      "within_20m_pct": 32.58,
-      "within_30m_pct": 34.6,
-      "within_5m_pct": 29.55
-    },
-    {
-      "mean_m": 512.834,
-      "median_m": 432.936,
-      "name": "LINDSAY RD",
-      "p90_m": 1157.806,
-      "p95_m": 1191.244,
-      "p99_m": 1235.178,
-      "samples": 307,
-      "within_10m_pct": 27.04,
-      "within_20m_pct": 27.69,
-      "within_30m_pct": 28.99,
-      "within_5m_pct": 26.71
-    },
-    {
-      "mean_m": 1084.153,
-      "median_m": 1078.641,
-      "name": "CREAMERY RD",
-      "p90_m": 1103.542,
-      "p95_m": 1109.695,
-      "p99_m": 1113.379,
-      "samples": 28,
-      "within_10m_pct": 0.0,
-      "within_20m_pct": 0.0,
-      "within_30m_pct": 0.0,
-      "within_5m_pct": 0.0
-    },
-    {
-      "mean_m": 580.355,
-      "median_m": 581.138,
-      "name": "UNIVERSITY RD",
-      "p90_m": 1054.942,
-      "p95_m": 1081.113,
-      "p99_m": 1099.291,
-      "samples": 161,
-      "within_10m_pct": 1.24,
-      "within_20m_pct": 2.48,
-      "within_30m_pct": 3.73,
-      "within_5m_pct": 1.24
-    },
-    {
-      "mean_m": 474.121,
-      "median_m": 385.289,
-      "name": "DRUMMOND LINE",
-      "p90_m": 1018.439,
-      "p95_m": 1113.448,
-      "p99_m": 1187.2,
-      "samples": 262,
-      "within_10m_pct": 1.91,
-      "within_20m_pct": 3.82,
-      "within_30m_pct": 5.34,
-      "within_5m_pct": 1.91
-    },
-    {
-      "mean_m": 521.411,
-      "median_m": 521.813,
-      "name": "HILLIS RD",
-      "p90_m": 937.886,
-      "p95_m": 990.0,
-      "p99_m": 1031.687,
-      "samples": 71,
-      "within_10m_pct": 1.41,
-      "within_20m_pct": 2.82,
-      "within_30m_pct": 4.23,
-      "within_5m_pct": 1.41
-    },
-    {
-      "mean_m": 166.64,
-      "median_m": 0.0,
-      "name": "SIXTH LINE",
-      "p90_m": 773.965,
-      "p95_m": 983.929,
-      "p99_m": 1163.038,
-      "samples": 303,
-      "within_10m_pct": 72.94,
-      "within_20m_pct": 73.27,
-      "within_30m_pct": 73.6,
-      "within_5m_pct": 72.94
-    },
-    {
-      "mean_m": 421.205,
-      "median_m": 423.903,
-      "name": "MCNAMARA RD",
-      "p90_m": 739.203,
-      "p95_m": 774.522,
-      "p99_m": 802.589,
-      "samples": 116,
-      "within_10m_pct": 0.86,
-      "within_20m_pct": 1.72,
-      "within_30m_pct": 2.59,
-      "within_5m_pct": 0.86
-    },
-    {
-      "mean_m": 189.124,
-      "median_m": 0.763,
-      "name": "BURNHAM LINE",
-      "p90_m": 722.055,
-      "p95_m": 867.721,
-      "p99_m": 966.062,
-      "samples": 395,
-      "within_10m_pct": 56.71,
-      "within_20m_pct": 57.72,
-      "within_30m_pct": 58.73,
-      "within_5m_pct": 56.71
-    },
-    {
-      "mean_m": 148.296,
-      "median_m": 0.0,
-      "name": "FIFE S BAY RD",
-      "p90_m": 709.137,
-      "p95_m": 985.386,
-      "p99_m": 1206.349,
-      "samples": 371,
-      "within_10m_pct": 74.93,
-      "within_20m_pct": 75.2,
-      "within_30m_pct": 75.47,
-      "within_5m_pct": 74.93
-    },
-    {
-      "mean_m": 252.628,
-      "median_m": 1.799,
-      "name": "DILLON RD",
-      "p90_m": 708.154,
-      "p95_m": 754.316,
-      "p99_m": 795.1,
-      "samples": 185,
-      "within_10m_pct": 51.35,
-      "within_20m_pct": 51.89,
-      "within_30m_pct": 52.43,
-      "within_5m_pct": 51.35
-    },
-    {
-      "mean_m": 500.725,
-      "median_m": 603.108,
-      "name": "ACKISON RD",
-      "p90_m": 701.701,
-      "p95_m": 709.182,
-      "p99_m": 716.477,
-      "samples": 100,
-      "within_10m_pct": 1.0,
-      "within_20m_pct": 2.0,
-      "within_30m_pct": 3.0,
-      "within_5m_pct": 1.0
-    },
-    {
-      "mean_m": 153.603,
-      "median_m": 1.445,
-      "name": "KEENE RD",
-      "p90_m": 648.691,
-      "p95_m": 822.844,
-      "p99_m": 961.357,
-      "samples": 464,
-      "within_10m_pct": 68.97,
-      "within_20m_pct": 69.4,
-      "within_30m_pct": 69.83,
-      "within_5m_pct": 68.97
-    },
-    {
-      "mean_m": 180.306,
-      "median_m": 0.68,
-      "name": "BROWN LINE",
-      "p90_m": 648.245,
-      "p95_m": 714.653,
-      "p99_m": 763.775,
-      "samples": 280,
-      "within_10m_pct": 55.0,
-      "within_20m_pct": 56.79,
-      "within_30m_pct": 57.86,
-      "within_5m_pct": 55.0
-    },
-    {
-      "mean_m": 435.009,
-      "median_m": 530.021,
-      "name": "THIRD LINE",
-      "p90_m": 646.16,
-      "p95_m": 667.162,
-      "p99_m": 682.712,
-      "samples": 76,
-      "within_10m_pct": 1.32,
-      "within_20m_pct": 2.63,
-      "within_30m_pct": 3.95,
-      "within_5m_pct": 1.32
-    },
-    {
-      "mean_m": 183.923,
-      "median_m": 14.61,
-      "name": "CHEMONG RD",
-      "p90_m": 627.385,
-      "p95_m": 821.296,
-      "p99_m": 1023.783,
-      "samples": 743,
-      "within_10m_pct": 48.59,
-      "within_20m_pct": 51.68,
-      "within_30m_pct": 53.7,
-      "within_5m_pct": 36.61
-    },
-    {
-      "mean_m": 330.737,
-      "median_m": 341.631,
-      "name": "MAHOOD RD",
-      "p90_m": 570.375,
-      "p95_m": 592.321,
-      "p99_m": 604.58,
-      "samples": 93,
-      "within_10m_pct": 2.15,
-      "within_20m_pct": 4.3,
-      "within_30m_pct": 6.45,
-      "within_5m_pct": 2.15
-    },
-    {
-      "mean_m": 251.172,
-      "median_m": 202.352,
-      "name": "COUNTY RD 4",
-      "p90_m": 560.082,
-      "p95_m": 619.181,
-      "p99_m": 666.401,
-      "samples": 454,
-      "within_10m_pct": 7.05,
-      "within_20m_pct": 11.67,
-      "within_30m_pct": 15.2,
-      "within_5m_pct": 6.17
-    },
-    {
-      "mean_m": 167.655,
-      "median_m": 46.99,
-      "name": "LANSDOWNE ST WEST",
-      "p90_m": 550.624,
-      "p95_m": 1128.727,
-      "p99_m": 1305.566,
-      "samples": 801,
-      "within_10m_pct": 33.58,
-      "within_20m_pct": 37.83,
-      "within_30m_pct": 42.2,
-      "within_5m_pct": 27.59
-    },
-    {
-      "mean_m": 164.809,
-      "median_m": 30.69,
-      "name": "JOHNSTON DR",
-      "p90_m": 550.38,
-      "p95_m": 578.27,
-      "p99_m": 602.216,
-      "samples": 233,
-      "within_10m_pct": 14.16,
-      "within_20m_pct": 16.31,
-      "within_30m_pct": 27.47,
-      "within_5m_pct": 13.3
-    },
-    {
-      "mean_m": 303.201,
-      "median_m": 303.224,
-      "name": "MEADOWVALE RD",
-      "p90_m": 545.943,
-      "p95_m": 576.261,
-      "p99_m": 599.389,
-      "samples": 42,
-      "within_10m_pct": 2.38,
-      "within_20m_pct": 4.76,
-      "within_30m_pct": 7.14,
-      "within_5m_pct": 2.38
-    },
-    {
-      "mean_m": 164.104,
-      "median_m": 2.937,
-      "name": "REDMOND RD",
-      "p90_m": 531.2,
-      "p95_m": 596.54,
-      "p99_m": 653.838,
-      "samples": 184,
-      "within_10m_pct": 51.63,
-      "within_20m_pct": 52.72,
-      "within_30m_pct": 53.8,
-      "within_5m_pct": 51.63
-    },
-    {
-      "mean_m": 281.902,
-      "median_m": 258.903,
-      "name": "COUNTY RD 19",
-      "p90_m": 476.569,
-      "p95_m": 518.153,
-      "p99_m": 528.494,
-      "samples": 79,
-      "within_10m_pct": 1.27,
-      "within_20m_pct": 2.53,
-      "within_30m_pct": 3.8,
-      "within_5m_pct": 1.27
-    },
-    {
-      "mean_m": 148.287,
-      "median_m": 11.192,
-      "name": "LAKEFIELD RD",
-      "p90_m": 439.269,
-      "p95_m": 502.505,
-      "p99_m": 551.105,
-      "samples": 235,
-      "within_10m_pct": 44.68,
-      "within_20m_pct": 52.34,
-      "within_30m_pct": 52.77,
-      "within_5m_pct": 31.91
-    },
-    {
-      "mean_m": 183.698,
-      "median_m": 163.265,
-      "name": "PIONEER RD",
-      "p90_m": 425.879,
-      "p95_m": 461.374,
-      "p99_m": 484.838,
-      "samples": 101,
-      "within_10m_pct": 29.7,
-      "within_20m_pct": 31.68,
-      "within_30m_pct": 33.66,
-      "within_5m_pct": 29.7
-    },
-    {
-      "mean_m": 138.67,
-      "median_m": 74.245,
-      "name": "HILLIARD ST",
-      "p90_m": 420.266,
-      "p95_m": 496.283,
-      "p99_m": 613.785,
-      "samples": 492,
-      "within_10m_pct": 34.76,
-      "within_20m_pct": 37.6,
-      "within_30m_pct": 40.45,
-      "within_5m_pct": 33.74
-    },
-    {
-      "mean_m": 101.704,
-      "median_m": 0.0,
-      "name": "CROWLEY LINE",
-      "p90_m": 405.52,
-      "p95_m": 516.191,
-      "p99_m": 604.666,
-      "samples": 307,
-      "within_10m_pct": 67.1,
-      "within_20m_pct": 67.43,
-      "within_30m_pct": 67.75,
-      "within_5m_pct": 67.1
-    },
-    {
-      "mean_m": 198.85,
-      "median_m": 198.465,
-      "name": "HARPER RD",
-      "p90_m": 341.786,
-      "p95_m": 363.545,
-      "p99_m": 381.22,
-      "samples": 74,
-      "within_10m_pct": 4.05,
-      "within_20m_pct": 5.41,
-      "within_30m_pct": 8.11,
-      "within_5m_pct": 2.7
-    },
-    {
-      "mean_m": 257.215,
-      "median_m": 264.368,
-      "name": "HARGROVE TRL",
-      "p90_m": 335.25,
-      "p95_m": 343.458,
-      "p99_m": 350.977,
-      "samples": 25,
-      "within_10m_pct": 0.0,
-      "within_20m_pct": 0.0,
-      "within_30m_pct": 0.0,
-      "within_5m_pct": 0.0
-    },
-    {
-      "mean_m": 128.837,
-      "median_m": 102.509,
-      "name": "MARSDALE DR",
-      "p90_m": 333.747,
-      "p95_m": 362.911,
-      "p99_m": 388.815,
-      "samples": 116,
-      "within_10m_pct": 28.45,
-      "within_20m_pct": 34.48,
-      "within_30m_pct": 37.93,
-      "within_5m_pct": 28.45
-    },
-    {
-      "mean_m": 224.929,
-      "median_m": 269.254,
-      "name": "TECHNOLOGY DR",
-      "p90_m": 331.083,
-      "p95_m": 331.805,
-      "p99_m": 334.055,
-      "samples": 151,
-      "within_10m_pct": 1.32,
-      "within_20m_pct": 4.64,
-      "within_30m_pct": 7.95,
-      "within_5m_pct": 1.32
-    },
-    {
-      "mean_m": 181.227,
-      "median_m": 179.537,
-      "name": "PINE VALLEY CRT",
-      "p90_m": 326.864,
-      "p95_m": 344.568,
-      "p99_m": 357.814,
-      "samples": 26,
-      "within_10m_pct": 3.85,
-      "within_20m_pct": 7.69,
-      "within_30m_pct": 11.54,
-      "within_5m_pct": 3.85
-    },
-    {
-      "mean_m": 201.258,
-      "median_m": 192.16,
-      "name": "WEST BANK DR",
-      "p90_m": 314.553,
-      "p95_m": 345.392,
-      "p99_m": 372.589,
-      "samples": 108,
-      "within_10m_pct": 0.93,
-      "within_20m_pct": 1.85,
-      "within_30m_pct": 2.78,
-      "within_5m_pct": 0.93
-    },
-    {
-      "mean_m": 177.914,
-      "median_m": 182.653,
-      "name": "MAJOR BENNETT DR",
-      "p90_m": 304.817,
-      "p95_m": 314.488,
-      "p99_m": 320.83,
-      "samples": 26,
-      "within_10m_pct": 3.85,
-      "within_20m_pct": 7.69,
-      "within_30m_pct": 7.69,
-      "within_5m_pct": 3.85
-    },
-    {
-      "mean_m": 237.365,
-      "median_m": 281.226,
-      "name": "JAMESON DR",
-      "p90_m": 289.198,
-      "p95_m": 297.889,
-      "p99_m": 308.858,
-      "samples": 66,
-      "within_10m_pct": 1.52,
-      "within_20m_pct": 3.03,
-      "within_30m_pct": 4.55,
-      "within_5m_pct": 1.52
-    },
-    {
-      "mean_m": 157.693,
-      "median_m": 159.338,
-      "name": "AMERICREDIT WAY",
-      "p90_m": 283.84,
-      "p95_m": 289.897,
-      "p99_m": 297.927,
-      "samples": 23,
-      "within_10m_pct": 4.35,
-      "within_20m_pct": 8.7,
-      "within_30m_pct": 13.04,
-      "within_5m_pct": 4.35
-    },
-    {
-      "mean_m": 91.787,
-      "median_m": 5.62,
-      "name": "TELEVISION RD",
-      "p90_m": 282.427,
-      "p95_m": 446.223,
-      "p99_m": 541.817,
-      "samples": 336,
-      "within_10m_pct": 52.08,
-      "within_20m_pct": 54.76,
-      "within_30m_pct": 56.85,
-      "within_5m_pct": 49.4
-    },
-    {
-      "mean_m": 213.144,
-      "median_m": 217.718,
-      "name": "MUSEUM DR",
-      "p90_m": 281.129,
-      "p95_m": 290.506,
-      "p99_m": 294.055,
-      "samples": 45,
-      "within_10m_pct": 0.0,
-      "within_20m_pct": 0.0,
-      "within_30m_pct": 0.0,
-      "within_5m_pct": 0.0
-    },
-    {
-      "mean_m": 252.23,
-      "median_m": 264.717,
-      "name": "POWELL CRT",
-      "p90_m": 279.204,
-      "p95_m": 279.639,
-      "p99_m": 279.683,
-      "samples": 13,
-      "within_10m_pct": 0.0,
-      "within_20m_pct": 0.0,
-      "within_30m_pct": 0.0,
-      "within_5m_pct": 0.0
-    },
-    {
-      "mean_m": 159.73,
-      "median_m": 170.148,
-      "name": "DOBBIN RD",
-      "p90_m": 275.832,
-      "p95_m": 313.819,
-      "p99_m": 340.147,
-      "samples": 119,
-      "within_10m_pct": 5.04,
-      "within_20m_pct": 7.56,
-      "within_30m_pct": 9.24,
-      "within_5m_pct": 3.36
-    },
-    {
-      "mean_m": 258.723,
-      "median_m": 257.302,
-      "name": "PELL DR",
-      "p90_m": 264.568,
-      "p95_m": 265.73,
-      "p99_m": 266.659,
-      "samples": 7,
-      "within_10m_pct": 0.0,
-      "within_20m_pct": 0.0,
-      "within_30m_pct": 0.0,
-      "within_5m_pct": 0.0
-    },
-    {
-      "mean_m": 108.401,
-      "median_m": 64.55,
-      "name": "BREALEY DR",
-      "p90_m": 264.411,
-      "p95_m": 465.782,
-      "p99_m": 611.409,
-      "samples": 342,
-      "within_10m_pct": 38.3,
-      "within_20m_pct": 40.35,
-      "within_30m_pct": 41.52,
-      "within_5m_pct": 36.84
-    },
-    {
-      "mean_m": 86.549,
-      "median_m": 31.893,
-      "name": "NORTH MONAGHAN PKWY",
-      "p90_m": 259.715,
-      "p95_m": 304.45,
-      "p99_m": 359.662,
-      "samples": 242,
-      "within_10m_pct": 6.2,
-      "within_20m_pct": 10.33,
-      "within_30m_pct": 26.03,
-      "within_5m_pct": 3.31
-    },
-    {
-      "mean_m": 115.808,
-      "median_m": 91.531,
       "name": "O TOOLE CRES",
+      "samples": 50,
+      "mean_m": 115.783,
+      "median_m": 91.531,
       "p90_m": 254.176,
       "p95_m": 254.194,
       "p99_m": 254.207,
-      "samples": 50,
+      "within_5m_pct": 36.0,
       "within_10m_pct": 40.0,
       "within_20m_pct": 40.0,
-      "within_30m_pct": 42.0,
-      "within_5m_pct": 34.0
+      "within_30m_pct": 42.0
     },
     {
-      "mean_m": 63.33,
-      "median_m": 0.645,
-      "name": "WHITTINGTON DR",
-      "p90_m": 251.054,
-      "p95_m": 299.423,
-      "p99_m": 357.392,
-      "samples": 271,
-      "within_10m_pct": 65.31,
-      "within_20m_pct": 66.79,
-      "within_30m_pct": 67.53,
-      "within_5m_pct": 64.58
-    },
-    {
-      "mean_m": 123.977,
-      "median_m": 125.14,
-      "name": "FOXMEADOW RD",
-      "p90_m": 246.076,
-      "p95_m": 248.287,
-      "p99_m": 253.133,
-      "samples": 57,
-      "within_10m_pct": 33.33,
-      "within_20m_pct": 35.09,
-      "within_30m_pct": 36.84,
-      "within_5m_pct": 33.33
-    },
-    {
-      "mean_m": 158.262,
-      "median_m": 149.985,
       "name": "WRIGHT AVE",
+      "samples": 19,
+      "mean_m": 158.195,
+      "median_m": 149.985,
       "p90_m": 242.561,
       "p95_m": 254.692,
       "p99_m": 264.452,
-      "samples": 19,
+      "within_5m_pct": 0.0,
       "within_10m_pct": 0.0,
       "within_20m_pct": 0.0,
-      "within_30m_pct": 0.0,
-      "within_5m_pct": 0.0
+      "within_30m_pct": 0.0
     },
     {
-      "mean_m": 44.976,
-      "median_m": 1.54,
-      "name": "MARIA ST",
-      "p90_m": 239.184,
-      "p95_m": 263.016,
-      "p99_m": 268.885,
-      "samples": 152,
-      "within_10m_pct": 69.08,
-      "within_20m_pct": 72.37,
-      "within_30m_pct": 74.34,
-      "within_5m_pct": 68.42
-    },
-    {
-      "mean_m": 63.477,
-      "median_m": 1.151,
-      "name": "WOODLAND DR",
-      "p90_m": 233.609,
-      "p95_m": 338.139,
-      "p99_m": 423.296,
-      "samples": 299,
-      "within_10m_pct": 58.19,
-      "within_20m_pct": 60.54,
-      "within_30m_pct": 62.88,
-      "within_5m_pct": 57.53
-    },
-    {
-      "mean_m": 113.294,
-      "median_m": 94.835,
-      "name": "AUBURN ST",
-      "p90_m": 229.755,
-      "p95_m": 232.248,
-      "p99_m": 233.262,
-      "samples": 38,
-      "within_10m_pct": 15.79,
-      "within_20m_pct": 21.05,
-      "within_30m_pct": 26.32,
-      "within_5m_pct": 7.89
-    },
-    {
+      "name": "BOLSTER BLVD",
+      "samples": 19,
       "mean_m": 125.671,
       "median_m": 125.296,
-      "name": "BOLSTER BLVD",
       "p90_m": 228.385,
       "p95_m": 241.271,
       "p99_m": 251.58,
-      "samples": 19,
+      "within_5m_pct": 5.26,
       "within_10m_pct": 5.26,
       "within_20m_pct": 10.53,
-      "within_30m_pct": 15.79,
-      "within_5m_pct": 5.26
+      "within_30m_pct": 15.79
     },
     {
-      "mean_m": 209.036,
-      "median_m": 212.135,
-      "name": "PEACE CRES",
-      "p90_m": 227.873,
-      "p95_m": 230.074,
-      "p99_m": 231.834,
-      "samples": 10,
-      "within_10m_pct": 0.0,
-      "within_20m_pct": 0.0,
-      "within_30m_pct": 0.0,
-      "within_5m_pct": 0.0
+      "name": "DOLMAN ST",
+      "samples": 46,
+      "mean_m": 50.966,
+      "median_m": 1.809,
+      "p90_m": 187.678,
+      "p95_m": 220.887,
+      "p99_m": 247.454,
+      "within_5m_pct": 63.04,
+      "within_10m_pct": 63.04,
+      "within_20m_pct": 65.22,
+      "within_30m_pct": 65.22
     },
     {
-      "mean_m": 61.91,
-      "median_m": 14.961,
-      "name": "CARNEGIE AVE",
-      "p90_m": 225.455,
-      "p95_m": 262.856,
-      "p99_m": 267.203,
-      "samples": 126,
-      "within_10m_pct": 47.62,
-      "within_20m_pct": 57.14,
-      "within_30m_pct": 61.11,
-      "within_5m_pct": 46.03
+      "name": "FIRE ROUTE 4A",
+      "samples": 58,
+      "mean_m": 66.203,
+      "median_m": 31.425,
+      "p90_m": 180.158,
+      "p95_m": 184.682,
+      "p99_m": 189.943,
+      "within_5m_pct": 44.83,
+      "within_10m_pct": 44.83,
+      "within_20m_pct": 48.28,
+      "within_30m_pct": 50.0
     },
     {
-      "mean_m": 121.99,
-      "median_m": 117.574,
-      "name": "CAROLYN ST",
-      "p90_m": 224.044,
-      "p95_m": 237.945,
-      "p99_m": 249.067,
-      "samples": 20,
-      "within_10m_pct": 5.0,
-      "within_20m_pct": 10.0,
-      "within_30m_pct": 15.0,
-      "within_5m_pct": 5.0
-    },
-    {
-      "mean_m": 68.584,
-      "median_m": 16.607,
-      "name": "ARMOUR RD",
-      "p90_m": 222.629,
-      "p95_m": 276.165,
-      "p99_m": 324.545,
-      "samples": 482,
-      "within_10m_pct": 45.85,
-      "within_20m_pct": 51.04,
-      "within_30m_pct": 53.94,
-      "within_5m_pct": 45.02
-    },
-    {
-      "mean_m": 60.675,
-      "median_m": 2.253,
-      "name": "FISHER DR",
-      "p90_m": 218.825,
-      "p95_m": 278.349,
-      "p99_m": 325.766,
-      "samples": 168,
-      "within_10m_pct": 61.31,
-      "within_20m_pct": 62.5,
-      "within_30m_pct": 63.69,
-      "within_5m_pct": 59.52
-    },
-    {
-      "mean_m": 77.592,
-      "median_m": 46.634,
       "name": "NORTHCOTT AVE",
-      "p90_m": 216.85,
-      "p95_m": 246.512,
-      "p99_m": 275.534,
       "samples": 83,
-      "within_10m_pct": 28.92,
-      "within_20m_pct": 34.94,
-      "within_30m_pct": 40.96,
-      "within_5m_pct": 25.3
+      "mean_m": 49.737,
+      "median_m": 2.332,
+      "p90_m": 179.653,
+      "p95_m": 210.184,
+      "p99_m": 233.151,
+      "within_5m_pct": 61.45,
+      "within_10m_pct": 61.45,
+      "within_20m_pct": 63.86,
+      "within_30m_pct": 65.06
     },
     {
-      "mean_m": 119.53,
-      "median_m": 119.432,
-      "name": "PLASTICS RD",
-      "p90_m": 215.685,
-      "p95_m": 227.716,
-      "p99_m": 237.342,
-      "samples": 18,
-      "within_10m_pct": 5.56,
-      "within_20m_pct": 11.11,
-      "within_30m_pct": 16.67,
-      "within_5m_pct": 5.56
-    },
-    {
-      "mean_m": 168.162,
-      "median_m": 164.061,
-      "name": "BORDEN AVE",
-      "p90_m": 213.293,
-      "p95_m": 214.332,
-      "p99_m": 216.571,
-      "samples": 16,
+      "name": "LIGHTFOOT TER",
+      "samples": 10,
+      "mean_m": 167.261,
+      "median_m": 167.26,
+      "p90_m": 167.975,
+      "p95_m": 168.065,
+      "p99_m": 168.136,
+      "within_5m_pct": 0.0,
       "within_10m_pct": 0.0,
       "within_20m_pct": 0.0,
-      "within_30m_pct": 0.0,
-      "within_5m_pct": 0.0
+      "within_30m_pct": 0.0
     },
     {
-      "mean_m": 135.45,
-      "median_m": 150.145,
-      "name": "CORAL DR",
-      "p90_m": 210.883,
-      "p95_m": 218.137,
-      "p99_m": 225.745,
-      "samples": 25,
-      "within_10m_pct": 4.0,
-      "within_20m_pct": 8.0,
-      "within_30m_pct": 8.0,
-      "within_5m_pct": 4.0
-    },
-    {
-      "mean_m": 96.3,
-      "median_m": 96.728,
-      "name": "NEPTUNE ST",
-      "p90_m": 200.291,
-      "p95_m": 206.817,
-      "p99_m": 214.268,
-      "samples": 38,
-      "within_10m_pct": 28.95,
-      "within_20m_pct": 28.95,
-      "within_30m_pct": 31.58,
-      "within_5m_pct": 26.32
-    },
-    {
-      "mean_m": 117.287,
-      "median_m": 118.365,
-      "name": "EDMISON DR",
-      "p90_m": 199.58,
-      "p95_m": 220.223,
-      "p99_m": 232.865,
-      "samples": 56,
-      "within_10m_pct": 3.57,
-      "within_20m_pct": 8.93,
-      "within_30m_pct": 10.71,
-      "within_5m_pct": 3.57
-    },
-    {
-      "mean_m": 117.474,
-      "median_m": 128.082,
-      "name": "HEWITT DR",
-      "p90_m": 196.968,
-      "p95_m": 206.578,
-      "p99_m": 214.59,
-      "samples": 19,
-      "within_10m_pct": 5.26,
-      "within_20m_pct": 10.53,
-      "within_30m_pct": 15.79,
-      "within_5m_pct": 5.26
-    },
-    {
-      "mean_m": 160.304,
-      "median_m": 166.989,
-      "name": "HIGHLAND CRT",
-      "p90_m": 196.735,
-      "p95_m": 199.855,
-      "p99_m": 202.867,
-      "samples": 12,
+      "name": "BRISCO GDNS",
+      "samples": 10,
+      "mean_m": 81.844,
+      "median_m": 81.84,
+      "p90_m": 82.133,
+      "p95_m": 82.189,
+      "p99_m": 82.234,
+      "within_5m_pct": 0.0,
       "within_10m_pct": 0.0,
       "within_20m_pct": 0.0,
-      "within_30m_pct": 0.0,
-      "within_5m_pct": 0.0
+      "within_30m_pct": 0.0
     },
     {
-      "mean_m": 98.493,
-      "median_m": 102.356,
-      "name": "CAMPBELL AVE",
-      "p90_m": 196.464,
-      "p95_m": 203.011,
-      "p99_m": 219.585,
-      "samples": 70,
-      "within_10m_pct": 24.29,
-      "within_20m_pct": 25.71,
-      "within_30m_pct": 30.0,
-      "within_5m_pct": 21.43
+      "name": "MUSEUM DR",
+      "samples": 45,
+      "mean_m": 20.181,
+      "median_m": 2.201,
+      "p90_m": 77.359,
+      "p95_m": 93.367,
+      "p99_m": 101.087,
+      "within_5m_pct": 66.67,
+      "within_10m_pct": 66.67,
+      "within_20m_pct": 71.11,
+      "within_30m_pct": 75.56
     },
     {
-      "mean_m": 50.779,
-      "median_m": 0.658,
-      "name": "RYE ST",
-      "p90_m": 194.977,
-      "p95_m": 232.597,
-      "p99_m": 262.763,
-      "samples": 53,
-      "within_10m_pct": 64.15,
-      "within_20m_pct": 66.04,
-      "within_30m_pct": 67.92,
-      "within_5m_pct": 64.15
+      "name": "RAMSAY RD",
+      "samples": 24,
+      "mean_m": 17.825,
+      "median_m": 3.676,
+      "p90_m": 65.805,
+      "p95_m": 79.87,
+      "p99_m": 81.731,
+      "within_5m_pct": 70.83,
+      "within_10m_pct": 70.83,
+      "within_20m_pct": 75.0,
+      "within_30m_pct": 79.17
     },
     {
-      "mean_m": 151.657,
-      "median_m": 168.162,
-      "name": "LOGAN LN",
-      "p90_m": 193.104,
-      "p95_m": 196.638,
-      "p99_m": 199.793,
-      "samples": 15,
-      "within_10m_pct": 0.0,
-      "within_20m_pct": 0.0,
-      "within_30m_pct": 0.0,
-      "within_5m_pct": 0.0
+      "name": "DENNE LN",
+      "samples": 9,
+      "mean_m": 24.908,
+      "median_m": 27.866,
+      "p90_m": 44.056,
+      "p95_m": 47.323,
+      "p99_m": 49.936,
+      "within_5m_pct": 22.22,
+      "within_10m_pct": 22.22,
+      "within_20m_pct": 44.44,
+      "within_30m_pct": 66.67
     },
     {
-      "mean_m": 122.475,
-      "median_m": 111.452,
-      "name": "SAFE HARBOUR WAY",
-      "p90_m": 190.325,
-      "p95_m": 203.773,
-      "p99_m": 208.801,
-      "samples": 60,
-      "within_10m_pct": 0.0,
-      "within_20m_pct": 0.0,
-      "within_30m_pct": 0.0,
-      "within_5m_pct": 0.0
+      "name": "ALEXANDER AVE",
+      "samples": 26,
+      "mean_m": 8.286,
+      "median_m": 0.12,
+      "p90_m": 35.43,
+      "p95_m": 51.922,
+      "p99_m": 65.121,
+      "within_5m_pct": 80.77,
+      "within_10m_pct": 80.77,
+      "within_20m_pct": 84.62,
+      "within_30m_pct": 88.46
     },
     {
-      "mean_m": 125.651,
-      "median_m": 131.286,
-      "name": "LARCHWOOD AVE",
-      "p90_m": 189.767,
-      "p95_m": 198.903,
-      "p99_m": 206.755,
-      "samples": 29,
-      "within_10m_pct": 3.45,
-      "within_20m_pct": 6.9,
-      "within_30m_pct": 10.34,
-      "within_5m_pct": 3.45
+      "name": "GZOWSKI WAY",
+      "samples": 61,
+      "mean_m": 11.582,
+      "median_m": 2.146,
+      "p90_m": 33.799,
+      "p95_m": 34.678,
+      "p99_m": 35.334,
+      "within_5m_pct": 52.46,
+      "within_10m_pct": 52.46,
+      "within_20m_pct": 77.05,
+      "within_30m_pct": 81.97
     }
-  ]
+  ],
+  "scope": "Pass criteria cover public drivable streets. Service roads, parking aisles, driveways, tracks and explicitly private roads remain rendered but are reported separately because ORN is not a complete reference for them.",
+  "method": "Complete ORN object-ID pagination; NAD83 / UTM zone 17N; centreline samples about every 15 metres; nearest-line distance measured in both directions.",
+  "limitations": [
+    "Divided roads can be one centreline in one source and separate carriageways in the other.",
+    "Recent construction and private roads can be present in only one source.",
+    "The test validates centrelines and names, not curbs, lanes, grades, turn rules or legal survey boundaries."
+  ],
+  "generated_at": "2026-07-15T18:36:21+00:00",
+  "orn_named_feature_count": 3074
 }
