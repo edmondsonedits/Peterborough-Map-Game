@@ -24,8 +24,8 @@ permissions:
   contents: write
 
 concurrency:
-  group: peterborough-geospatial-assets
-  cancel-in-progress: false
+  group: peterborough-geospatial-assets-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build-and-validate:
@@ -45,20 +45,35 @@ jobs:
       - name: Install geospatial dependencies
         run: python -m pip install --disable-pip-version-check -r tools/geospatial/requirements.txt
 
-      - name: Build cached city data and validate streets
+      - name: Build cached Peterborough assets
         run: >-
           python tools/geospatial/build_peterborough_assets.py
           --output city-explorer/data
           --report city-explorer/ROAD-VALIDATION.md
 
+      - name: Validate complete street network and official names
+        id: complete_validation
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -o pipefail
+          python tools/geospatial/road_alignment.py \
+            --data-dir city-explorer/data \
+            --report city-explorer/ROAD-VALIDATION.md \
+            --strict \
+            2>&1 | tee city-explorer/data/complete-validator.log
+
       - name: Validate generated JSON and JavaScript
+        if: steps.complete_validation.outcome == 'success'
         run: |
           python -m json.tool city-explorer/data/manifest.json >/dev/null
           python -m json.tool city-explorer/data/road-validation.json >/dev/null
+          python -m json.tool city-explorer/data/orn-roads.geojson >/dev/null
           node --check city-explorer/data-loader.js
           node --check city-explorer/app.js
 
       - name: Upload generated map assets
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: peterborough-geospatial-assets
@@ -67,11 +82,16 @@ jobs:
             city-explorer/ROAD-VALIDATION.md
           retention-days: 14
 
+      - name: Fail when complete validation failed
+        if: steps.complete_validation.outcome != 'success'
+        run: exit 1
+
       - name: Commit refreshed deployment assets
         if: github.event_name != 'pull_request'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          rm -f city-explorer/data/complete-validator.log
           git add city-explorer/data city-explorer/ROAD-VALIDATION.md
           if git diff --cached --quiet; then
             echo 'Generated assets are already current.'
