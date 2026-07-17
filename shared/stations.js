@@ -44,11 +44,21 @@
     }
   }
 
+  function loadRoadCollision(doc) {
+    if (doc.querySelector('script[data-ptbo-road-collision]')) return;
+    const script = doc.createElement('script');
+    script.src = new URL('../response-simulator/road-collision.js', sourceUrl).href;
+    script.dataset.ptboRoadCollision = 'true';
+    script.onerror = () => console.error('Unable to load the Peterborough road boundary system.');
+    doc.body.appendChild(script);
+  }
+
   function patchSimulator(frame, store) {
     const doc = frame.contentDocument;
     if (!doc || doc.documentElement.dataset.sharedDispatchPatched === 'true') return;
     doc.documentElement.dataset.sharedDispatchPatched = 'true';
     removeLegacyEditorControls(doc);
+    loadRoadCollision(doc);
 
     const apply = async () => {
       await store.ready();
