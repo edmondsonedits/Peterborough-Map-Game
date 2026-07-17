@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#0b1220">
-    <meta name="description" content="Play unofficial Peterborough emergency games, explore the city in 3D, or manage their shared dispatch database.">
+    <meta name="description" content="Play unofficial Peterborough emergency games or manage their shared dispatch database.">
     <title>Peterborough Emergency Games</title>
     <style>
       :root { color-scheme:dark; --bg:#0b1220; --ink:#f8fafc; --muted:#cbd5e1; --surface:rgba(20,31,52,.92); --surface-strong:rgba(24,38,63,.98); --border:rgba(255,255,255,.18); --blue:#38bdf8; --red:#fb7185; --green:#34d399; --gold:#d6b86b; }
@@ -14,10 +14,11 @@
       body::before { position:fixed; inset:0; content:""; pointer-events:none; background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px); background-size:34px 34px; mask-image:linear-gradient(to bottom,rgba(0,0,0,.6),transparent 72%); }
       main { position:relative; width:min(calc(100% - 2rem),76rem); margin:0 auto; padding:clamp(2.25rem,7vw,5rem) 0 calc(2rem + env(safe-area-inset-bottom)); }
       header { max-width:52rem; margin-bottom:clamp(1.5rem,4vw,2.5rem); }
-      .eyebrow { margin:0 0 .75rem; color:var(--blue); font-size:.8rem; font-weight:850; letter-spacing:.15em; text-transform:uppercase; }
+      .eyebrow { margin:0 0 .75rem; color:var(--blue); font-size:.8rem; font-weight:850; letter-spacing:.15em; text-transform:uppercase; user-select:none; }
       h1 { max-width:12ch; margin:0; font-size:clamp(3rem,8vw,5.5rem); line-height:.98; letter-spacing:-.055em; text-wrap:balance; }
       .intro { max-width:46rem; margin:1.1rem 0 0; color:var(--muted); font-size:clamp(1rem,2vw,1.16rem); line-height:1.55; }
-      .games { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1rem; }
+      .games { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; }
+      body.developer-mode .games { grid-template-columns:repeat(4,minmax(0,1fr)); }
       .game-link { position:relative; min-height:19rem; padding:clamp(1.35rem,2.8vw,1.8rem); display:flex; flex-direction:column; overflow:hidden; isolation:isolate; color:inherit; border:1px solid var(--border); border-radius:1.4rem; background:linear-gradient(145deg,var(--surface-strong),var(--surface)); box-shadow:0 1.2rem 3.5rem rgba(0,0,0,.25); text-decoration:none; transition:transform 160ms ease,border-color 160ms ease,box-shadow 160ms ease; }
       .game-link::before { position:absolute; inset:0 0 auto; height:4px; content:""; background:var(--accent); }
       .game-link::after { position:absolute; width:13rem; height:13rem; right:-6rem; bottom:-7rem; z-index:-1; content:""; border-radius:50%; background:var(--accent-glow); filter:blur(2px); }
@@ -37,14 +38,14 @@
       .cta svg { width:1rem; height:1rem; stroke:currentColor; transition:transform 160ms ease; }
       .game-link:hover .cta svg { transform:translateX(3px); }
       footer { margin-top:1.35rem; color:#94a3b8; font-size:.82rem; line-height:1.5; }
-      @media (max-width:68rem) { .games{grid-template-columns:repeat(2,minmax(0,1fr))}.game-link{min-height:17rem} }
-      @media (max-width:42rem) { main{width:min(calc(100% - 1.5rem),72rem);padding-top:2.1rem}header{margin-bottom:1.5rem}h1{max-width:none;font-size:clamp(3rem,13vw,3.65rem)}.intro{margin-top:.95rem;font-size:1.03rem;line-height:1.52}.games{grid-template-columns:1fr}.game-link{grid-column:auto;min-height:0;padding:1.35rem;border-radius:1.25rem}.game-type{margin-top:1rem}h2{font-size:1.62rem}.game-link p{font-size:.98rem}.cta{margin-top:1.45rem} }
+      @media (max-width:68rem) { .games,body.developer-mode .games{grid-template-columns:repeat(2,minmax(0,1fr))}.game-link{min-height:17rem} }
+      @media (max-width:42rem) { main{width:min(calc(100% - 1.5rem),72rem);padding-top:2.1rem}header{margin-bottom:1.5rem}h1{max-width:none;font-size:clamp(3rem,13vw,3.65rem)}.intro{margin-top:.95rem;font-size:1.03rem;line-height:1.52}.games,body.developer-mode .games{grid-template-columns:1fr}.game-link{grid-column:auto;min-height:0;padding:1.35rem;border-radius:1.25rem}.game-type{margin-top:1rem}h2{font-size:1.62rem}.game-link p{font-size:.98rem}.cta{margin-top:1.45rem} }
       @media (prefers-reduced-motion:reduce) { *,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important} }
     </style>
   </head>
   <body>
     <main>
-      <header><p class="eyebrow">Peterborough, Ontario</p><h1>Emergency Games</h1><p class="intro">Drive emergency calls, test your city knowledge, explore Peterborough in 3D, or manage the shared dispatch database.</p></header>
+      <header><p id="developer-trigger" class="eyebrow">Peterborough, Ontario</p><h1>Emergency Games</h1><p class="intro">Drive emergency calls, test your city knowledge, or manage the shared dispatch database.</p></header>
       <section class="games" aria-label="Choose a game or editor">
         <a id="dispatch-game-link" class="game-link dispatch" href="response-simulator/play/" aria-label="Open the Peterborough Dispatch Simulator">
           <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h11v7H3z"/><path d="M14 13h3.5l2.5 2.5V18h-6z"/><path d="M6 11V7h5v4"/><path d="M7.5 7V4.5h2V7"/><path d="M5.5 18a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"/><path d="M17.5 18a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"/><path d="M3 14h11"/></svg></span>
@@ -54,9 +55,9 @@
           <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
           <span class="game-type">Timed map challenge</span><h2>Peterborough Geo Guesser</h2><p>Read the dispatch, find the location on the map, and compete for the fastest time.</p><span class="cta">Play Geo Guesser<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span>
         </a>
-        <a class="game-link explorer-card" href="city-explorer/" aria-label="Explore Peterborough in 3D">
+        <a id="city-explorer-link" class="game-link explorer-card" href="city-explorer/" aria-label="Explore Peterborough in 3D" hidden>
           <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 7 5-3 5 3 5-3 3 2v11l-5 3-5-3-5 3-3-2Z"/><path d="M8 4v13M13 7v13M18 4v13"/></svg></span>
-          <span class="game-type">Live 3D city</span><h2>Peterborough Explorer</h2><p>Fly across a low-poly Peterborough generated from real roads and building footprints.</p><span class="cta">Explore the city<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span>
+          <span class="game-type">Developer preview</span><h2>Peterborough Explorer</h2><p>Fly across a low-poly Peterborough generated from real roads and building footprints.</p><span class="cta">Explore the city<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span>
         </a>
         <a class="game-link editor-card" href="dispatch-editor/" aria-label="Open the shared dispatch editor">
           <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h7"/><path d="m15 17 4-4 2 2-4 4-3 1 1-3Z"/></svg></span>
@@ -67,6 +68,62 @@
     </main>
     <script>
       (()=>{
+        const developerKey='ptbo-emergency-developer-mode';
+        const accessHash='9a8a113169acfb3f513b8d10a08f089b2071b2b339bdba1934282e40bd186041';
+        const explorerLink=document.getElementById('city-explorer-link');
+        const developerTrigger=document.getElementById('developer-trigger');
+        const developerEnabled=()=>{try{return localStorage.getItem(developerKey)==='enabled'}catch{return false}};
+        const showDeveloperMode=()=>{document.body.classList.add('developer-mode');if(explorerLink)explorerLink.hidden=false};
+        const hideDeveloperMode=()=>{document.body.classList.remove('developer-mode');if(explorerLink)explorerLink.hidden=true};
+        const digest=async value=>{
+          const bytes=new TextEncoder().encode(value);
+          const result=await crypto.subtle.digest('SHA-256',bytes);
+          return Array.from(new Uint8Array(result),byte=>byte.toString(16).padStart(2,'0')).join('');
+        };
+        const openDeveloperGate=async()=>{
+          if(developerEnabled()){
+            if(confirm('Developer mode is active. Turn it off?')){
+              try{localStorage.removeItem(developerKey)}catch{}
+              hideDeveloperMode();
+            }
+            return;
+          }
+          const code=prompt('Developer access code:');
+          if(code===null)return;
+          try{
+            if(await digest(code.trim())===accessHash){
+              localStorage.setItem(developerKey,'enabled');
+              showDeveloperMode();
+            }else{
+              alert('Access denied.');
+            }
+          }catch{
+            alert('Developer access is unavailable in this browser.');
+          }
+        };
+
+        if(developerEnabled())showDeveloperMode();
+
+        addEventListener('keydown',event=>{
+          if(event.ctrlKey&&event.shiftKey&&event.altKey&&event.code==='KeyD'){
+            event.preventDefault();
+            openDeveloperGate();
+          }
+        });
+
+        let tapCount=0;
+        let tapTimer=0;
+        if(developerTrigger)developerTrigger.addEventListener('click',()=>{
+          tapCount+=1;
+          clearTimeout(tapTimer);
+          tapTimer=setTimeout(()=>{tapCount=0},3500);
+          if(tapCount>=7){
+            tapCount=0;
+            clearTimeout(tapTimer);
+            openDeveloperGate();
+          }
+        });
+
         const touchMobile=window.innerWidth<=900&&(matchMedia('(pointer: coarse)').matches||'ontouchstart'in window);
         if(!touchMobile)return;
         const dispatchLink=document.getElementById('dispatch-game-link');
