@@ -69,7 +69,9 @@
       (()=>{
         const touchMobile=window.innerWidth<=900&&(matchMedia('(pointer: coarse)').matches||'ontouchstart'in window);
         if(!touchMobile)return;
+        const dispatchLink=document.getElementById('dispatch-game-link');
         const geoLink=document.getElementById('geo-game-link');
+        if(dispatchLink){dispatchLink.href='response-simulator/mobile/';dispatchLink.setAttribute('aria-label','Open the Peterborough Dispatch Simulator with mobile driving controls')}
         if(geoLink){geoLink.href='geo-guesser/mobile/';geoLink.setAttribute('aria-label','Open Peterborough Geo Guesser with the mobile interface')}
       })();
     </script>
