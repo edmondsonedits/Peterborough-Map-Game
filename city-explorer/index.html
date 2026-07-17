@@ -4,8 +4,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#07131b">
-    <meta name="description" content="A live low-poly 3D exploration of Peterborough, Ontario, generated from open building, road, land-cover, and elevation data.">
+    <meta name="description" content="A developer-only low-poly 3D exploration of Peterborough, Ontario, generated from open building, road, land-cover, and elevation data.">
+    <meta name="robots" content="noindex,nofollow">
     <title>Peterborough 3D City Explorer</title>
+    <script>
+      (()=>{
+        try{
+          if(localStorage.getItem('ptbo-emergency-developer-mode')!=='enabled')location.replace('../');
+        }catch{
+          location.replace('../');
+        }
+      })();
+    </script>
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://s3.amazonaws.com">
     <link rel="stylesheet" href="styles.css">
