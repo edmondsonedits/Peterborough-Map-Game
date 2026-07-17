@@ -44,12 +44,12 @@
     }
   }
 
-  function loadRoadCollision(doc) {
-    if (doc.querySelector('script[data-ptbo-road-collision]')) return;
+  function loadSimulatorTool(doc, filename, dataAttribute, errorMessage) {
+    if (doc.querySelector(`script[${dataAttribute}]`)) return;
     const script = doc.createElement('script');
-    script.src = new URL('../response-simulator/road-collision.js', sourceUrl).href;
-    script.dataset.ptboRoadCollision = 'true';
-    script.onerror = () => console.error('Unable to load the Peterborough road boundary system.');
+    script.src = new URL(`../response-simulator/${filename}`, sourceUrl).href;
+    script.setAttribute(dataAttribute, 'true');
+    script.onerror = () => console.error(errorMessage);
     doc.body.appendChild(script);
   }
 
@@ -58,7 +58,8 @@
     if (!doc || doc.documentElement.dataset.sharedDispatchPatched === 'true') return;
     doc.documentElement.dataset.sharedDispatchPatched = 'true';
     removeLegacyEditorControls(doc);
-    loadRoadCollision(doc);
+    loadSimulatorTool(doc, 'road-collision.js', 'data-ptbo-road-collision', 'Unable to load the Peterborough road boundary system.');
+    loadSimulatorTool(doc, 'route-reveal.js', 'data-ptbo-route-reveal', 'Unable to load the Peterborough route answer system.');
 
     const apply = async () => {
       await store.ready();
