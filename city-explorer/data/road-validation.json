@@ -5,17 +5,17 @@
     "public_osm_to_orn_within_20m_min_pct": 90,
     "orn_to_public_osm_within_20m_min_pct": 95
   },
-  "public_osm_feature_count": 2765,
-  "rendered_osm_feature_count": 5945,
+  "public_osm_feature_count": 2766,
+  "rendered_osm_feature_count": 5946,
   "orn_feature_count": 3179,
   "public_osm_to_orn": {
-    "samples": 49743,
+    "samples": 49744,
     "mean_m": 6.384,
     "median_m": 0.639,
     "p90_m": 2.343,
     "p95_m": 3.63,
-    "p99_m": 53.819,
-    "within_5m_pct": 96.97,
+    "p99_m": 53.817,
+    "within_5m_pct": 96.98,
     "within_10m_pct": 98.43,
     "within_20m_pct": 98.72,
     "within_30m_pct": 98.83
@@ -33,20 +33,20 @@
     "within_30m_pct": 98.27
   },
   "all_rendered_osm_to_orn": {
-    "samples": 76242,
+    "samples": 76243,
     "mean_m": 28.521,
     "median_m": 1.234,
-    "p90_m": 80.142,
+    "p90_m": 80.141,
     "p95_m": 134.321,
-    "p99_m": 334.315,
-    "within_5m_pct": 67.44,
+    "p99_m": 334.314,
+    "within_5m_pct": 67.45,
     "within_10m_pct": 68.62,
     "within_20m_pct": 72.72,
     "within_30m_pct": 77.69
   },
   "street_names": {
-    "checked_segments": 2628,
-    "matching_segments": 2505,
+    "checked_segments": 2629,
+    "matching_segments": 2506,
     "match_pct": 95.32,
     "sample_mismatches": [
       {
@@ -477,13 +477,13 @@
     {
       "name": "HWY 7",
       "samples": 544,
-      "mean_m": 371.914,
+      "mean_m": 371.909,
       "median_m": 3.398,
       "p90_m": 1712.457,
       "p95_m": 2211.147,
       "p99_m": 2595.447,
       "within_5m_pct": 60.29,
-      "within_10m_pct": 68.75,
+      "within_10m_pct": 68.93,
       "within_20m_pct": 72.24,
       "within_30m_pct": 72.61
     },
@@ -664,6 +664,6 @@
     "Recent construction and private roads can be present in only one source.",
     "The test validates centrelines and names, not curbs, lanes, grades, turn rules or legal survey boundaries."
   ],
-  "generated_at": "2026-07-15T19:30:28+00:00",
+  "generated_at": "2026-07-17T22:05:05+00:00",
   "orn_named_feature_count": 3074
 }
