@@ -1,30 +1,10 @@
-import { initializeApp, getApps } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js';
-import {
-  addDoc,
-  collection,
-  getDocs,
-  getFirestore,
-  limit,
-  query,
-  serverTimestamp
-} from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js';
-
-if (!window.__geoFirebaseScoreboardInstalled) {
+(() => {
+  if (window.__geoFirebaseScoreboardInstalled) return;
   window.__geoFirebaseScoreboardInstalled = true;
 
-  const firebaseConfig = {
-    apiKey: 'AIzaSyA5_GrKYKporIPhwXF6FN0Gp0iP_k8wb0I',
-    authDomain: 'geo-guesser-scoreboard.firebaseapp.com',
-    projectId: 'geo-guesser-scoreboard',
-    storageBucket: 'geo-guesser-scoreboard.firebasestorage.app',
-    messagingSenderId: '178277330129',
-    appId: '1:178277330129:web:1ed67ca588885fdf3869f0'
-  };
-
-  const app = getApps().find(candidate => candidate.options.projectId === firebaseConfig.projectId)
-    || initializeApp(firebaseConfig, 'geo-guesser-scoreboard');
-  const db = getFirestore(app);
-  const scoresCollection = collection(db, 'scores');
+  const projectId = 'geo-guesser-scoreboard';
+  const apiKey = 'AIzaSyA5_GrKYKporIPhwXF6FN0Gp0iP_k8wb0I';
+  const collectionUrl = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/scores`;
   const byId = id => document.getElementById(id);
   const safeText = value => String(value ?? '');
   const formatTime = value => `${Number(value).toFixed(1)}s`;
@@ -44,9 +24,16 @@ if (!window.__geoFirebaseScoreboardInstalled) {
     return name.slice(0, 30);
   }
 
+  function escapeMarkup(value) {
+    const element = document.createElement('div');
+    element.textContent = safeText(value);
+    return element.innerHTML;
+  }
+
   function setListMessage(id, message) {
     const list = byId(id);
-    if (list) list.innerHTML = `<p class="muted" style="text-align:center">${safeText(message)}</p>`;
+    if (!list) return;
+    list.innerHTML = `<p class="muted" style="text-align:center">${escapeMarkup(message)}</p>`;
   }
 
   function renderRows(id, rows, extraLine) {
@@ -65,16 +52,69 @@ if (!window.__geoFirebaseScoreboardInstalled) {
     }).join('');
   }
 
-  function escapeMarkup(value) {
-    const element = document.createElement('div');
-    element.textContent = safeText(value);
-    return element.innerHTML;
+  function decodeValue(value = {}) {
+    if (Object.prototype.hasOwnProperty.call(value, 'stringValue')) return value.stringValue;
+    if (Object.prototype.hasOwnProperty.call(value, 'doubleValue')) return Number(value.doubleValue);
+    if (Object.prototype.hasOwnProperty.call(value, 'integerValue')) return Number(value.integerValue);
+    if (Object.prototype.hasOwnProperty.call(value, 'timestampValue')) return value.timestampValue;
+    if (Object.prototype.hasOwnProperty.call(value, 'booleanValue')) return Boolean(value.booleanValue);
+    return null;
+  }
+
+  function decodeDocument(documentValue) {
+    const decoded = { id: safeText(documentValue?.name).split('/').pop() };
+    Object.entries(documentValue?.fields || {}).forEach(([key, value]) => {
+      decoded[key] = decodeValue(value);
+    });
+    return decoded;
+  }
+
+  async function firestoreRequest(url, options = {}) {
+    const response = await fetch(url, {
+      cache: 'no-store',
+      ...options,
+      headers: {
+        Accept: 'application/json',
+        ...(options.body ? { 'Content-Type': 'application/json' } : {}),
+        ...(options.headers || {})
+      }
+    });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      const message = payload?.error?.message || `Firestore request failed (${response.status})`;
+      throw new Error(message);
+    }
+    return payload;
   }
 
   async function fetchScores() {
-    const snapshot = await getDocs(scoresCollection);
-    return snapshot.docs.map(documentSnapshot => ({ id: documentSnapshot.id, ...documentSnapshot.data() }))
-      .filter(score => Number.isFinite(Number(score.responseTimeSeconds)));
+    const scores = [];
+    let pageToken = '';
+    do {
+      const params = new URLSearchParams({ key: apiKey, pageSize: '100' });
+      if (pageToken) params.set('pageToken', pageToken);
+      const payload = await firestoreRequest(`${collectionUrl}?${params}`);
+      scores.push(...(payload.documents || []).map(decodeDocument));
+      pageToken = payload.nextPageToken || '';
+    } while (pageToken && scores.length < 1000);
+    return scores.filter(score => Number.isFinite(Number(score.responseTimeSeconds)));
+  }
+
+  async function createScore(score) {
+    const params = new URLSearchParams({ key: apiKey });
+    return firestoreRequest(`${collectionUrl}?${params}`, {
+      method: 'POST',
+      body: JSON.stringify({
+        fields: {
+          playerName: { stringValue: score.playerName },
+          station: { stringValue: score.station },
+          callType: { stringValue: score.callType },
+          responseTimeSeconds: { doubleValue: score.responseTimeSeconds },
+          score: { doubleValue: score.score },
+          createdAt: { timestampValue: new Date().toISOString() }
+        }
+      })
+    });
   }
 
   window.showPersonalScores = async stationName => {
@@ -90,7 +130,7 @@ if (!window.__geoFirebaseScoreboardInstalled) {
       renderRows('score-list', scores, score => score.callType);
     } catch (error) {
       console.error('Could not load Random Shift scoreboard:', error);
-      setListMessage('score-list', 'Could not connect to the online scoreboard. Check Firebase Rules and your internet connection.');
+      setListMessage('score-list', `Could not connect to the online scoreboard: ${error.message}`);
     }
   };
 
@@ -100,8 +140,7 @@ if (!window.__geoFirebaseScoreboardInstalled) {
     if (note) note.textContent = 'Each player’s fastest online City Ten result is shown once.';
     setListMessage('city-ten-list', 'Loading online scores…');
     try {
-      const cityScores = (await fetchScores())
-        .filter(score => score.callType === 'The City Ten');
+      const cityScores = (await fetchScores()).filter(score => score.callType === 'The City Ten');
       const bestByPlayer = new Map();
       cityScores.forEach(score => {
         const key = safeText(score.playerName || 'Anonymous').trim().toLocaleLowerCase();
@@ -115,7 +154,7 @@ if (!window.__geoFirebaseScoreboardInstalled) {
       renderRows('city-ten-list', best, score => score.station || 'Unknown Station');
     } catch (error) {
       console.error('Could not load City Ten scoreboard:', error);
-      setListMessage('city-ten-list', 'Could not connect to the online scoreboard. Check Firebase Rules and your internet connection.');
+      setListMessage('city-ten-list', `Could not connect to the online scoreboard: ${error.message}`);
     }
   };
 
@@ -139,13 +178,12 @@ if (!window.__geoFirebaseScoreboardInstalled) {
 
     try {
       const name = playerName();
-      await addDoc(scoresCollection, {
+      await createScore({
         playerName: name,
         station: scoreContext.station,
         callType: scoreContext.callType,
         responseTimeSeconds: scoreContext.responseTimeSeconds,
-        score: scoreContext.responseTimeSeconds,
-        createdAt: serverTimestamp()
+        score: scoreContext.responseTimeSeconds
       });
       try { localStorage.setItem('geoPlayerName', name); } catch {}
       if (scoreContext.callType === 'The City Ten') {
@@ -155,7 +193,7 @@ if (!window.__geoFirebaseScoreboardInstalled) {
       }
     } catch (error) {
       console.error('Could not save score:', error);
-      alert('The score could not be saved online. Check your connection and Firebase Rules, then try again.');
+      alert(`The score could not be saved online: ${error.message}`);
     } finally {
       if (saveButton) {
         saveButton.disabled = false;
@@ -175,10 +213,12 @@ if (!window.__geoFirebaseScoreboardInstalled) {
     });
   }
 
-  getDocs(query(scoresCollection, limit(1))).then(() => {
+  window.__geoScoreboardReady = true;
+  document.documentElement.dataset.scoreboard = 'connecting';
+  fetchScores().then(() => {
     document.documentElement.dataset.scoreboard = 'online';
   }).catch(error => {
     document.documentElement.dataset.scoreboard = 'offline';
-    console.error('Firebase scoreboard connection check failed:', error);
+    console.error('Firestore REST scoreboard connection check failed:', error);
   });
-}
+})();
