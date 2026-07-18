@@ -111,16 +111,27 @@
     bridge.textContent = `(() => {
       window.geoScoreContext=()=>({responseTimeSeconds:Number(elapsed.toFixed(1)),station:station&&station.name?station.name:'Unknown Station',callType:typeof modeName==='function'?modeName():'Random Shift'});
       const loadingMessage=id=>{show(id);const list=document.querySelector('#'+id+' .list');if(list)list.innerHTML='<p class="muted" style="text-align:center">Connecting to the online scoreboard…</p>'};
+      const failureMessage=id=>{show(id);const list=document.querySelector('#'+id+' .list');if(list)list.innerHTML='<p class="muted" style="text-align:center">The scoreboard code could not load. Refresh the game and try again.</p>'};
       window.showPersonalScores=()=>loadingMessage('scores');
       window.showCityTenScores=()=>loadingMessage('city-ten-scores');
       window.saveScore=()=>alert('The online scoreboard is still connecting. Please try Save again in a moment.');
+      window.geoScoreboardLoadFailed=()=>{
+        window.showPersonalScores=()=>failureMessage('scores');
+        window.showCityTenScores=()=>failureMessage('city-ten-scores');
+        window.saveScore=()=>alert('The scoreboard code could not load. Refresh the game and try again.');
+      };
     })();`;
     doc.body.appendChild(bridge);
 
     const scoreboard = doc.createElement('script');
-    scoreboard.type = 'module';
-    scoreboard.src = new URL('../geo-guesser/firebase-scoreboard.js?v=20260717-1', sourceUrl).href;
-    scoreboard.onerror = () => console.error('Unable to load the Firebase Geo Guesser scoreboard.');
+    scoreboard.src = new URL('../geo-guesser/firebase-scoreboard.js?v=20260718-2', sourceUrl).href;
+    scoreboard.onload = () => {
+      if (!frame.contentWindow?.__geoScoreboardReady) frame.contentWindow?.geoScoreboardLoadFailed?.();
+    };
+    scoreboard.onerror = () => {
+      frame.contentWindow?.geoScoreboardLoadFailed?.();
+      console.error('Unable to load the Geo Guesser scoreboard.');
+    };
     doc.body.appendChild(scoreboard);
   }
 
