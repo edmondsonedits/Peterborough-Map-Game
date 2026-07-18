@@ -1,108 +1,28 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#121218">
-  <title>Peterborough Geo Guesser — Mobile</title>
-  <style>
-    :root{color-scheme:dark;--panel:rgba(18,24,38,.94);--border:rgba(255,255,255,.2);--ink:#f8fafc}
-    *{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;overscroll-behavior:none;background:#121218;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}#game-frame{position:fixed;inset:0;width:100%;height:100%;border:0;background:#121218}.mobile-toolbar{position:fixed;top:calc(10px + env(safe-area-inset-top));left:10px;right:10px;z-index:6000;display:flex;justify-content:space-between;align-items:center;pointer-events:none}.toolbar-button{min-width:46px;height:46px;display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:0 14px;color:var(--ink);border:1px solid var(--border);border-radius:14px;background:var(--panel);box-shadow:0 7px 22px rgba(0,0,0,.4);font:inherit;font-size:12px;font-weight:850;text-decoration:none;pointer-events:auto;touch-action:manipulation;-webkit-tap-highlight-color:transparent}.toolbar-button.icon-only{width:46px;min-width:46px;padding:0}.toolbar-button:active{transform:scale(.95)}.toolbar-button:focus-visible{outline:3px solid #38bdf8;outline-offset:3px}.toolbar-button.end{background:rgba(127,29,29,.96);border-color:rgba(248,113,113,.62)}.toolbar-button svg{width:23px;height:23px;stroke:currentColor}.hidden{display:none!important}.loading-cover{position:fixed;inset:0;z-index:7000;display:grid;place-items:center;padding:24px;color:var(--ink);background:#121218;text-align:center;transition:opacity 180ms ease}.loading-cover.hidden{opacity:0;pointer-events:none}.loading-cover strong{display:block;font-size:1.12rem}.loading-cover span{display:block;margin-top:6px;color:#94a3b8;font-size:.88rem}@media(min-width:901px) and (pointer:fine){body:before{position:fixed;inset:0;z-index:8000;display:grid;place-items:center;padding:2rem;color:#fff;background:#121218;content:"Opening the desktop Geo Guesser…";text-align:center}}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#121218">
+<title>Peterborough Geo Guesser — Mobile</title>
+<style>
+html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#121218;font-family:system-ui,sans-serif}#game-frame{position:fixed;inset:0;width:100%;height:100%;border:0}.back{position:fixed;top:calc(10px + env(safe-area-inset-top));left:10px;z-index:7000;width:46px;height:46px;display:grid;place-items:center;border:1px solid #ffffff33;border-radius:14px;background:#121826ee;color:#fff;text-decoration:none;font-size:25px}.loading{position:fixed;inset:0;z-index:8000;display:grid;place-items:center;padding:24px;background:#121218;color:#fff;text-align:center;transition:opacity .18s}.loading.hidden{opacity:0;pointer-events:none}.loading span{display:block;margin-top:7px;color:#94a3b8;font-size:14px}
+</style>
 </head>
 <body>
-  <iframe id="game-frame" src="../index.html?v=20260718-6" title="Peterborough Geo Guesser"></iframe>
-  <nav class="mobile-toolbar" aria-label="Geo Guesser controls"><a class="toolbar-button icon-only" href="../../" aria-label="Return to all games"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></a><button class="toolbar-button end hidden" id="end-drill-button" type="button">End Drill</button></nav>
-  <div class="loading-cover" id="loading-cover" role="status"><div><strong>Loading Geo Guesser</strong><span>Loading the shared dispatch database and online scoreboard…</span></div></div>
-  <script>
-    window.PTBO_STATIONS=Object.freeze([
-      Object.freeze({id:'station-1',number:1,name:'Station 1',address:'210 Sherbrooke St',lat:44.300871,lng:-78.322206}),
-      Object.freeze({id:'station-2',number:2,name:'Station 2',address:'100 Marina Blvd',lat:44.335266,lng:-78.316657}),
-      Object.freeze({id:'station-3',number:3,name:'Station 3',address:'839 Clonsilla Ave',lat:44.284867,lng:-78.350902})
-    ]);
-  </script>
-  <script src="../../shared/dispatch-locations.js?v=20260718-6"></script>
-  <script>
-    (()=>{
-      const Z=18,isTouch=innerWidth<=900&&(matchMedia('(pointer:coarse)').matches||'ontouchstart'in window);
-      if(!isTouch&&matchMedia('(pointer:fine)').matches){setTimeout(()=>location.replace('../desktop/?v=20260718-6'),300);return}
-      const frame=document.getElementById('game-frame'),cover=document.getElementById('loading-cover'),endBtn=document.getElementById('end-drill-button');
-      const game=()=>frame.contentWindow;
-
-      function repair(root){
-        const replacements=[['â†','←'],['â†’','→'],['â€”','—'],['Â·','·'],['Â©','©'],['â€™','’'],['ðŸŒŠ','🌊'],['ðŸš—','🚗'],['âœš','✚'],['ðŸ”¥','🔥']];
-        const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),nodes=[];
-        while(walker.nextNode())nodes.push(walker.currentNode);
-        nodes.forEach(node=>{const original=node.nodeValue;let next=original;replacements.forEach(([bad,good])=>{next=next.split(bad).join(good)});if(next!==original)node.nodeValue=next});
-      }
-
-      function toolbar(){const g=game(),d=frame.contentDocument;if(!g||!d)return;const s=typeof g.mobileGeoGetState==='function'?g.mobileGeoGetState():{};endBtn.classList.toggle('hidden',!(d.getElementById('game')&&!d.getElementById('game').classList.contains('hidden')&&s.gameMode==='open'&&!s.sessionEnded))}
-      endBtn.onclick=()=>{const g=game();if(g&&typeof g.endOpenDrill==='function')g.endOpenDrill();toolbar()};
-
-      async function installOnlineScoreboard(){
-        const g=game(),d=frame.contentDocument;
-        if(!g||!d)throw new Error('The game frame is unavailable.');
-        const bridge=d.createElement('script');
-        bridge.textContent=`(()=>{
-          window.geoScoreContext=()=>({responseTimeSeconds:Number(elapsed.toFixed(1)),station:station&&station.name?station.name:'Unknown Station',callType:typeof modeName==='function'?modeName():'Random Shift'});
-          const message=(id,text)=>{show(id);const list=document.querySelector('#'+id+' .list');if(list)list.innerHTML='<p class="muted" style="text-align:center">'+text+'</p>'};
-          window.showPersonalScores=()=>message('scores','Connecting to the online scoreboard…');
-          window.showCityTenScores=()=>message('city-ten-scores','Connecting to the online scoreboard…');
-          window.saveScore=()=>alert('The online scoreboard is loading. Please try Save again in a moment.');
-          window.geoScoreboardFailure=error=>{
-            const text='Scoreboard error: '+(error&&error.message?error.message:String(error||'Unknown error'));
-            window.showPersonalScores=()=>message('scores',text);
-            window.showCityTenScores=()=>message('city-ten-scores',text);
-            window.saveScore=()=>alert(text);
-          };
-        })();`;
-        d.body.appendChild(bridge);
-        const scoreUrl=new URL('../firebase-scoreboard.js?v=20260718-6',location.href).href;
-        const response=await fetch(scoreUrl,{cache:'no-store'});
-        if(!response.ok)throw new Error('Scoreboard file could not be downloaded ('+response.status+').');
-        const code=await response.text();
-        delete g.__geoFirebaseScoreboardInstalled;
-        delete g.__geoScoreboardReady;
-        g.eval(code+'\n//# sourceURL=geo-guesser/firebase-scoreboard.js');
-        if(!g.__geoScoreboardReady)throw new Error('Scoreboard code did not finish loading.');
-      }
-
-      frame.addEventListener('load',async()=>{
-        const g=game(),d=frame.contentDocument;if(!g||!d)return;
-        try{
-          await window.PTBO_DISPATCH_STORE.ready();
-          const sharedLocations=window.PTBO_DISPATCH_STORE.getAll(),sharedStations=window.PTBO_STATIONS||[];
-          const style=d.createElement('style');style.textContent=`html,body{width:100%!important;height:100%!important;overscroll-behavior:none!important}#game-home,#end-drill{display:none!important}#game.screen{padding:0!important;background:#121218!important}#game .map-container,#map{width:100vw!important;height:100dvh!important}#header{top:calc(66px + env(safe-area-inset-top))!important;left:10px!important;right:10px!important;width:auto!important;transform:none!important;padding:12px 14px!important;border-radius:15px!important;background:rgba(22,28,42,.94)!important;text-align:left!important;pointer-events:none!important}#call-type{font-size:11px!important}#call-name{margin:4px 0 2px!important;font-size:20px!important}#call-address{font-size:14px!important}#timer{margin-top:8px!important;padding-top:7px!important;font-size:12px!important}#dispatch-card{top:53%!important;left:16px!important;right:16px!important;bottom:auto!important;width:auto!important;max-width:390px!important;margin:0 auto!important;padding:20px 18px 18px!important;transform:translateY(-50%)!important;border-radius:18px!important;background:rgba(28,33,48,.96)!important}#dispatch-start{min-height:56px!important;border-radius:14px!important}#confirm{bottom:calc(20px + env(safe-area-inset-bottom))!important;width:min(76vw,330px)!important;min-height:58px!important;border-radius:999px!important}.leaflet-bottom{bottom:calc(86px + env(safe-area-inset-bottom))!important}.leaflet-control-attribution{max-width:88vw!important;font-size:9px!important;white-space:normal!important}`;d.head.appendChild(style);
-          const oldEditorButton=[...d.querySelectorAll('#settings .menu-btn')].find(button=>/Open Level Editor/i.test(button.textContent));if(oldEditorButton)oldEditorButton.remove();
-          const helper=d.createElement('script');helper.textContent=`(()=>{
-            const Z=${Z},SHARED=${JSON.stringify(sharedLocations)},STATIONS=${JSON.stringify(sharedStations)};
-            locations=SHARED.map(x=>({...x}));
-            if(Array.isArray(stations)&&STATIONS.length===3)STATIONS.forEach((s,i)=>Object.assign(stations[i],{name:s.name,address:s.address,lat:s.lat,lng:s.lng}));
-            window.mobileGeoGetState=()=>({gameMode,sessionEnded});
-            window.mobileGeoInstallZoomGuard=()=>{if(!map||map._mobileGeoZoomGuard)return;const original=map.setView.bind(map);map.setView=function(center,zoom,options){let next=zoom;const lat=Array.isArray(center)?+center[0]:+(center&&center.lat),lng=Array.isArray(center)?+center[1]:+(center&&(center.lng??center.lon));const atStation=station&&Number.isFinite(lat)&&Number.isFinite(lng)&&Math.abs(lat-station.lat)<1e-7&&Math.abs(lng-station.lng)<1e-7;if(atStation&&(next==null||next<Z))next=Z;return original(center,next,options)};map._mobileGeoZoomGuard=true};
-            window.mobileGeoSetRoundZoom=()=>{if(!map||!station)return;window.mobileGeoInstallZoomGuard();map.setMaxZoom(19);map.setView([station.lat,station.lng],Z,{animate:false});if(!window.mobileGeoScale)window.mobileGeoScale=L.control.scale({metric:true,imperial:false,position:'bottomleft'}).addTo(map)};
-            const enforce=()=>{window.mobileGeoInstallZoomGuard();window.mobileGeoSetRoundZoom()};
-            callStyle=function(loc){if(loc.sub==='Water & Ice Rescue')return{key:'water',icon:'🌊'};if(loc.sub==='Motor Vehicle Collision')return{key:'mvc',icon:'🚗'};if(loc.main==='Medical')return{key:'medical',icon:'✚'};return{key:'fire',icon:'🔥'}};window.callStyle=callStyle;
-            const os=start;start=function(...a){const r=os.apply(this,a);setTimeout(enforce,0);setTimeout(enforce,100);return r};window.start=start;
-            const op=prepareDispatch;prepareDispatch=function(...a){const r=op.apply(this,a);setTimeout(enforce,0);return r};window.prepareDispatch=prepareDispatch;
-            const ol=loadCall;loadCall=function(...a){const r=ol.apply(this,a);setTimeout(enforce,0);return r};window.loadCall=loadCall;
-            const od=startDispatch;startDispatch=function(...a){const r=od.apply(this,a);requestAnimationFrame(enforce);setTimeout(enforce,80);return r};window.startDispatch=startDispatch;
-            initializeDistricts();
-          })();`;d.body.appendChild(helper);
-          const stationButtons=[...d.querySelectorAll('#stations .menu-btn')].filter(b=>/Station\s+[123]/.test(b.textContent));sharedStations.forEach((s,i)=>{const b=stationButtons[i];if(!b)return;b.childNodes[0].nodeValue=s.name;const a=b.querySelector('.station-address');if(a)a.textContent=s.address});
-          const dispatchStart=d.getElementById('dispatch-start');if(dispatchStart)dispatchStart.addEventListener('click',()=>{const keep=()=>game().mobileGeoSetRoundZoom?.();requestAnimationFrame(keep);setTimeout(keep,80)});
-          await installOnlineScoreboard();
-          repair(d.body);let repairQueued=false;const observer=new MutationObserver(()=>{if(repairQueued)return;repairQueued=true;requestAnimationFrame(()=>{repairQueued=false;repair(d.body);toolbar()})});observer.observe(d.body,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:['class']});toolbar();
-        }catch(error){
-          console.error(error);
-          game()?.geoScoreboardFailure?.(error);
-          cover.querySelector('strong').textContent='Game loaded with an error';
-          cover.querySelector('span').textContent=error.message;
-        }finally{
-          cover.classList.add('hidden');setTimeout(()=>cover.remove(),400);
-        }
-      });
-    })();
-  </script>
+<iframe id="game-frame" src="../index.html?v=20260718-8" title="Peterborough Geo Guesser"></iframe>
+<a class="back" href="../../" aria-label="Return to all games">‹</a>
+<div class="loading" id="loading"><div><strong>Loading Geo Guesser</strong><span>Preparing the game…</span></div></div>
+<script>
+(()=>{
+const VERSION='20260718-8',frame=document.getElementById('game-frame'),loading=document.getElementById('loading');
+const child=()=>frame.contentWindow;
+function addScript(src){return new Promise((resolve,reject)=>{const d=frame.contentDocument,s=d.createElement('script'),timer=setTimeout(()=>reject(new Error('Timed out loading '+src)),15000);s.src=src;s.onload=()=>{clearTimeout(timer);resolve()};s.onerror=()=>{clearTimeout(timer);reject(new Error('Could not load '+src))};d.head.appendChild(s)})}
+function installBridge(){const d=frame.contentDocument,s=d.createElement('script');s.textContent=`(()=>{window.geoScoreContext=()=>({responseTimeSeconds:Number(elapsed.toFixed(1)),station:station&&station.name?station.name:'Unknown Station',callType:typeof modeName==='function'?modeName():'Random Shift'});const msg=(id,text)=>{show(id);const list=document.querySelector('#'+id+' .list');if(list)list.innerHTML='<p class="muted" style="text-align:center">'+text+'</p>'};window.showPersonalScores=()=>msg('scores','Connecting to the online scoreboard…');window.showCityTenScores=()=>msg('city-ten-scores','Connecting to the online scoreboard…');window.saveScore=()=>alert('The online scoreboard is loading.');window.geoScoreboardFailure=e=>{const text='Scoreboard error: '+(e&&e.message?e.message:String(e));window.showPersonalScores=()=>msg('scores',text);window.showCityTenScores=()=>msg('city-ten-scores',text);window.saveScore=()=>alert(text)}})();`;d.body.appendChild(s)}
+function patchMobile(){const d=frame.contentDocument,s=d.createElement('style');s.textContent=`#game-home,#end-drill{display:none!important}#game.screen{padding:0!important}#game .map-container,#map{width:100vw!important;height:100dvh!important}#header{top:calc(66px + env(safe-area-inset-top))!important;left:10px!important;right:10px!important;width:auto!important;transform:none!important}#confirm{bottom:calc(20px + env(safe-area-inset-bottom))!important;width:min(76vw,330px)!important}`;d.head.appendChild(s);const editor=[...d.querySelectorAll('#settings .menu-btn')].find(b=>/Open Level Editor/i.test(b.textContent));editor?.remove()}
+async function installScoreboard(){const g=child();installBridge();if(!g.firebase?.initializeApp)await addScript('https://www.gstatic.com/firebasejs/12.16.0/firebase-app-compat.js');if(!g.firebase?.firestore)await addScript('https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore-compat.js');await addScript('../firebase-scoreboard-compat.js?v='+VERSION);if(!g.__geoScoreboardReady)throw new Error('Scoreboard client did not finish installing.')}
+frame.addEventListener('load',()=>{try{patchMobile()}catch(e){console.error(e)}loading.classList.add('hidden');setTimeout(()=>loading.remove(),250);installScoreboard().catch(e=>{console.error(e);child()?.geoScoreboardFailure?.(e)})});
+})();
+</script>
 </body>
 </html>
