@@ -8,20 +8,58 @@
   <style>
     html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#121218}
     #game-frame{position:fixed;inset:0;width:100%;height:100%;border:0;background:#121218}
-    #loading{position:fixed;inset:0;z-index:2;display:grid;place-items:center;color:#f8fafc;background:#121218;font-family:system-ui,sans-serif;transition:opacity .18s ease}
+    #loading{position:fixed;inset:0;z-index:2;display:grid;place-items:center;padding:24px;color:#f8fafc;background:#121218;font-family:system-ui,sans-serif;text-align:center;transition:opacity .18s ease}
     #loading.hidden{opacity:0;pointer-events:none}
   </style>
 </head>
 <body>
-  <iframe id="game-frame" src="../index.html" title="Peterborough Geo Guesser"></iframe>
+  <iframe id="game-frame" src="../index.html?v=20260718-6" title="Peterborough Geo Guesser"></iframe>
   <div id="loading">Loading Geo Guesser…</div>
-  <script src="../../shared/stations.js?v=20260718-2"></script>
   <script>
     const frame=document.getElementById('game-frame');
     const loading=document.getElementById('loading');
-    frame.addEventListener('load',()=>{
-      loading.classList.add('hidden');
-      setTimeout(()=>loading.remove(),250);
+
+    async function installOnlineScoreboard(){
+      const game=frame.contentWindow;
+      const doc=frame.contentDocument;
+      if(!game||!doc)throw new Error('The game frame is unavailable.');
+
+      const bridge=doc.createElement('script');
+      bridge.textContent=`(()=>{
+        window.geoScoreContext=()=>({responseTimeSeconds:Number(elapsed.toFixed(1)),station:station&&station.name?station.name:'Unknown Station',callType:typeof modeName==='function'?modeName():'Random Shift'});
+        const message=(id,text)=>{show(id);const list=document.querySelector('#'+id+' .list');if(list)list.innerHTML='<p class="muted" style="text-align:center">'+text+'</p>'};
+        window.showPersonalScores=()=>message('scores','Connecting to the online scoreboard…');
+        window.showCityTenScores=()=>message('city-ten-scores','Connecting to the online scoreboard…');
+        window.saveScore=()=>alert('The online scoreboard is loading. Please try Save again in a moment.');
+        window.geoScoreboardFailure=error=>{
+          const text='Scoreboard error: '+(error&&error.message?error.message:String(error||'Unknown error'));
+          window.showPersonalScores=()=>message('scores',text);
+          window.showCityTenScores=()=>message('city-ten-scores',text);
+          window.saveScore=()=>alert(text);
+        };
+      })();`;
+      doc.body.appendChild(bridge);
+
+      const scoreUrl=new URL('../firebase-scoreboard.js?v=20260718-6',location.href).href;
+      const response=await fetch(scoreUrl,{cache:'no-store'});
+      if(!response.ok)throw new Error('Scoreboard file could not be downloaded ('+response.status+').');
+      const code=await response.text();
+      delete game.__geoFirebaseScoreboardInstalled;
+      delete game.__geoScoreboardReady;
+      game.eval(code+'\n//# sourceURL=geo-guesser/firebase-scoreboard.js');
+      if(!game.__geoScoreboardReady)throw new Error('Scoreboard code did not finish loading.');
+    }
+
+    frame.addEventListener('load',async()=>{
+      try{
+        await installOnlineScoreboard();
+      }catch(error){
+        console.error(error);
+        frame.contentWindow?.geoScoreboardFailure?.(error);
+      }finally{
+        loading.classList.add('hidden');
+        setTimeout(()=>loading.remove(),250);
+      }
     });
   </script>
 </body>
