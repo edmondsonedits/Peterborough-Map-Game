@@ -1,0 +1,55 @@
+name: Apply simulator camera fix
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/apply-simulator-camera-fix.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  repair-camera:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate repair script
+        run: python -m py_compile tools/fix-simulator-camera.py
+
+      - name: Apply camera and frame-timing repair
+        run: python tools/fix-simulator-camera.py
+
+      - name: Validate inline JavaScript
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          html = Path('response-simulator/index.html').read_text(encoding='utf-8')
+          scripts = re.findall(r'<script(?:\s[^>]*)?>(.*?)</script>', html, re.S | re.I)
+          inline = '\n'.join(scripts)
+          Path('/tmp/simulator-inline.js').write_text(inline, encoding='utf-8')
+          required = [
+              'function syncCameraToTruck',
+              'mapInstance.panBy(correction',
+              'const frameScale = dtSeconds * 60',
+              'const stablePivot = mapInstance.containerPointToLayerPoint(viewportCenter)',
+          ]
+          for token in required:
+              assert token in html, token
+          PY
+          node --check /tmp/simulator-inline.js
+          git diff --check
+
+      - name: Commit repaired simulator
+        run: |
+          rm tools/fix-simulator-camera.py
+          rm .github/workflows/apply-simulator-camera-fix.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add response-simulator/index.html tools/fix-simulator-camera.py .github/workflows/apply-simulator-camera-fix.yml
+          git commit -m "Fix simulator camera follow and smooth motion"
+          git push
