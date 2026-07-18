@@ -53,3 +53,5 @@ jobs:
           git add response-simulator/index.html tools/fix-simulator-camera.py .github/workflows/apply-simulator-camera-fix.yml
           git commit -m "Fix simulator camera follow and smooth motion"
           git push
+
+# Existing workflow retriggered after registration on the default branch.
