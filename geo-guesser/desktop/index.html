@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#121218">
+  <title>Peterborough Geo Guesser</title>
+  <style>
+    html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#121218}
+    #game-frame{position:fixed;inset:0;width:100%;height:100%;border:0;background:#121218}
+    #loading{position:fixed;inset:0;z-index:2;display:grid;place-items:center;color:#f8fafc;background:#121218;font-family:system-ui,sans-serif;transition:opacity .18s ease}
+    #loading.hidden{opacity:0;pointer-events:none}
+  </style>
+</head>
+<body>
+  <iframe id="game-frame" src="../index.html" title="Peterborough Geo Guesser"></iframe>
+  <div id="loading">Loading Geo Guesser…</div>
+  <script src="../../shared/stations.js"></script>
+  <script>
+    const frame=document.getElementById('game-frame');
+    const loading=document.getElementById('loading');
+    frame.addEventListener('load',()=>{
+      loading.classList.add('hidden');
+      setTimeout(()=>loading.remove(),250);
+    });
+  </script>
+</body>
+</html>
