@@ -102,6 +102,22 @@
     apply().catch(error => console.error('Unable to apply shared dispatch locations to simulator.', error));
   }
 
+  function patchGeoScoreboard(frame) {
+    const doc = frame.contentDocument;
+    if (!doc || doc.documentElement.dataset.firebaseScoreboardPatched === 'true') return;
+    doc.documentElement.dataset.firebaseScoreboardPatched = 'true';
+
+    const bridge = doc.createElement('script');
+    bridge.textContent = `window.geoScoreContext=()=>({responseTimeSeconds:Number(elapsed.toFixed(1)),station:station&&station.name?station.name:'Unknown Station',callType:typeof modeName==='function'?modeName():'Random Shift'});`;
+    doc.body.appendChild(bridge);
+
+    const scoreboard = doc.createElement('script');
+    scoreboard.type = 'module';
+    scoreboard.src = new URL('../geo-guesser/firebase-scoreboard.js?v=20260717-1', sourceUrl).href;
+    scoreboard.onerror = () => console.error('Unable to load the Firebase Geo Guesser scoreboard.');
+    doc.body.appendChild(scoreboard);
+  }
+
   const simulatorFrame = document.getElementById('simulator');
   if (simulatorFrame) {
     loadDispatchStore()
@@ -110,5 +126,11 @@
         simulatorFrame.addEventListener('load', () => patchSimulator(simulatorFrame, store));
       })
       .catch(error => console.error('Unable to load shared dispatch store.', error));
+  }
+
+  const geoFrame = document.getElementById('game-frame');
+  if (geoFrame) {
+    if (geoFrame.contentDocument?.readyState === 'complete') patchGeoScoreboard(geoFrame);
+    geoFrame.addEventListener('load', () => patchGeoScoreboard(geoFrame));
   }
 })();
