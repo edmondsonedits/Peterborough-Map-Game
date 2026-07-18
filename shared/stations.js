@@ -108,7 +108,13 @@
     doc.documentElement.dataset.firebaseScoreboardPatched = 'true';
 
     const bridge = doc.createElement('script');
-    bridge.textContent = `window.geoScoreContext=()=>({responseTimeSeconds:Number(elapsed.toFixed(1)),station:station&&station.name?station.name:'Unknown Station',callType:typeof modeName==='function'?modeName():'Random Shift'});`;
+    bridge.textContent = `(() => {
+      window.geoScoreContext=()=>({responseTimeSeconds:Number(elapsed.toFixed(1)),station:station&&station.name?station.name:'Unknown Station',callType:typeof modeName==='function'?modeName():'Random Shift'});
+      const loadingMessage=id=>{show(id);const list=document.querySelector('#'+id+' .list');if(list)list.innerHTML='<p class="muted" style="text-align:center">Connecting to the online scoreboard…</p>'};
+      window.showPersonalScores=()=>loadingMessage('scores');
+      window.showCityTenScores=()=>loadingMessage('city-ten-scores');
+      window.saveScore=()=>alert('The online scoreboard is still connecting. Please try Save again in a moment.');
+    })();`;
     doc.body.appendChild(bridge);
 
     const scoreboard = doc.createElement('script');
