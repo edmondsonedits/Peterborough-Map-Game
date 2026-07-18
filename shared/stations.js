@@ -60,6 +60,7 @@
     removeLegacyEditorControls(doc);
     loadSimulatorTool(doc, 'road-collision.js', 'data-ptbo-road-collision', 'Unable to load the Peterborough road boundary system.');
     loadSimulatorTool(doc, 'speed-streak.js', 'data-ptbo-speed-streak', 'Unable to load the collision speed streak system.');
+    loadSimulatorTool(doc, 'vehicle-instruments.js?v=20260718-1', 'data-ptbo-vehicle-instruments', 'Unable to load the speedometer and analog steering system.');
     loadSimulatorTool(doc, 'route-reveal.js', 'data-ptbo-route-reveal', 'Unable to load the Peterborough route answer system.');
 
     const apply = async () => {
