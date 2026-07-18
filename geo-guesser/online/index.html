@@ -10,18 +10,18 @@ html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#121218;fon
 </style>
 </head>
 <body>
-<iframe id="game-frame" src="../index.html?v=online-1" title="Peterborough Geo Guesser"></iframe>
+<iframe id="game-frame" src="../index.html?v=online-2" title="Peterborough Geo Guesser"></iframe>
 <a class="back" href="../../" aria-label="Return to all games">‹</a>
 <div class="loading" id="loading"><div><strong>Loading Geo Guesser</strong><span>Preparing the game…</span></div></div>
 <script>
 (()=>{
-const VERSION='online-1',frame=document.getElementById('game-frame'),loading=document.getElementById('loading');
+const VERSION='online-2',frame=document.getElementById('game-frame'),loading=document.getElementById('loading');
 const child=()=>frame.contentWindow;
 function addScript(src){return new Promise((resolve,reject)=>{const d=frame.contentDocument,s=d.createElement('script'),timer=setTimeout(()=>{s.remove();reject(new Error('Timed out loading '+src))},15000);s.src=src;s.onload=()=>{clearTimeout(timer);resolve()};s.onerror=()=>{clearTimeout(timer);reject(new Error('Could not load '+src))};d.head.appendChild(s)})}
 function installBridge(){const d=frame.contentDocument,s=d.createElement('script');s.textContent=`(()=>{window.geoScoreContext=()=>({responseTimeSeconds:Number(elapsed.toFixed(1)),station:station&&station.name?station.name:'Unknown Station',callType:typeof modeName==='function'?modeName():'Random Shift'});const msg=(id,text)=>{show(id);const list=document.querySelector('#'+id+' .list');if(list)list.innerHTML='<p class="muted" style="text-align:center">'+text+'</p>'};window.showPersonalScores=()=>msg('scores','Connecting to the online scoreboard…');window.showCityTenScores=()=>msg('city-ten-scores','Connecting to the online scoreboard…');window.saveScore=()=>alert('The online scoreboard is loading.');window.geoScoreboardFailure=e=>{const text='Scoreboard error: '+(e&&e.message?e.message:String(e));window.showPersonalScores=()=>msg('scores',text);window.showCityTenScores=()=>msg('city-ten-scores',text);window.saveScore=()=>alert(text)}})();`;d.body.appendChild(s)}
 function patchMobile(){const d=frame.contentDocument,s=d.createElement('style');s.textContent=`#game-home,#end-drill{display:none!important}#game.screen{padding:0!important}#game .map-container,#map{width:100vw!important;height:100dvh!important}#header{top:calc(66px + env(safe-area-inset-top))!important;left:10px!important;right:10px!important;width:auto!important;transform:none!important}#confirm{bottom:calc(20px + env(safe-area-inset-bottom))!important;width:min(76vw,330px)!important}`;d.head.appendChild(s);const editor=[...d.querySelectorAll('#settings .menu-btn')].find(b=>/Open Level Editor/i.test(b.textContent));editor?.remove()}
-async function installScoreboard(){const g=child(),scoreboardUrl=new URL('../firebase-scoreboard-compat.js?v='+VERSION,location.href).href;installBridge();if(!g.firebase?.initializeApp)await addScript('https://www.gstatic.com/firebasejs/12.16.0/firebase-app-compat.js');if(!g.firebase?.firestore)await addScript('https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore-compat.js');await addScript(scoreboardUrl);if(!g.__geoScoreboardReady)throw new Error('Scoreboard client did not finish installing.')}
-frame.addEventListener('load',()=>{try{patchMobile()}catch(e){console.error(e)}loading.classList.add('hidden');setTimeout(()=>loading.remove(),250);installScoreboard().catch(e=>{console.error(e);child()?.geoScoreboardFailure?.(e)})});
+async function installClients(){const g=child(),base=location.href,textUrl=new URL('../text-fix.js?v='+VERSION,base).href,scoreboardUrl=new URL('../firebase-scoreboard-compat.js?v='+VERSION,base).href;await addScript(textUrl);installBridge();if(!g.firebase?.initializeApp)await addScript('https://www.gstatic.com/firebasejs/12.16.0/firebase-app-compat.js');if(!g.firebase?.firestore)await addScript('https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore-compat.js');await addScript(scoreboardUrl);if(!g.__geoScoreboardReady)throw new Error('Scoreboard client did not finish installing.')}
+frame.addEventListener('load',()=>{try{patchMobile()}catch(e){console.error(e)}loading.classList.add('hidden');setTimeout(()=>loading.remove(),250);installClients().catch(e=>{console.error(e);child()?.geoScoreboardFailure?.(e)})});
 })();
 </script>
 </body>
