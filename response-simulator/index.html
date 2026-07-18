@@ -93,6 +93,19 @@
         /* Draggable Dot Styling */
         .drag-dot-icon { border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 5px rgba(0,0,0,0.8); cursor: grab; }
         .drag-dot-icon:active { cursor: grabbing; box-shadow: 0 0 10px #fff; }
+
+        /* Heading-up map orientation and non-navigating attribution. */
+        .leaflet-map-pane { will-change:transform,rotate; }
+        .leaflet-control-attribution, .leaflet-control-attribution a { pointer-events:none!important; user-select:none; color:inherit; text-decoration:none; }
+        #map-orientation-controls { position:absolute; right:15px; bottom:92px; z-index:1250; display:flex; flex-direction:column; align-items:center; gap:7px; pointer-events:none; }
+        #orientation-toggle { pointer-events:auto; min-width:86px; padding:8px 10px; border:1px solid #555; border-radius:6px; background:rgba(25,25,25,.94); color:#fff; box-shadow:0 3px 12px rgba(0,0,0,.4); font-size:11px; font-weight:800; cursor:pointer; }
+        #orientation-toggle.active { border-color:#ffcc00; color:#ffdf55; background:rgba(35,31,16,.96); }
+        #compass { width:48px; height:48px; display:grid; place-items:center; border:1px solid #666; border-radius:50%; background:rgba(20,20,20,.92); box-shadow:0 3px 12px rgba(0,0,0,.45); overflow:hidden; }
+        #compass-needle { position:relative; width:5px; height:34px; transform-origin:50% 50%; }
+        #compass-needle::before { content:''; position:absolute; left:0; top:0; width:0; height:0; border-left:3px solid transparent; border-right:3px solid transparent; border-bottom:17px solid #ef4444; transform:translateX(-.5px); }
+        #compass-needle::after { content:''; position:absolute; left:1px; bottom:1px; width:4px; height:16px; background:#d6d6d6; clip-path:polygon(50% 100%,0 0,100% 0); }
+        #compass-n { position:absolute; top:2px; left:50%; transform:translateX(-50%); color:#fff; font-size:8px; font-weight:900; line-height:1; }
+        @media (max-width:600px) { #map-orientation-controls { right:10px; bottom:100px; } #orientation-toggle { min-width:78px; padding:7px 8px; } #compass { width:44px; height:44px; } }
     </style>
 </head>
 <body>
@@ -180,6 +193,11 @@
                 COMPLETED RUNS: <span id="tel-total-calls">0</span>
             </div>
         </div>
+    </div>
+
+    <div id="map-orientation-controls" aria-label="Map orientation controls">
+        <button id="orientation-toggle" type="button" aria-pressed="false" onclick="toggleHeadingUp()">North Up</button>
+        <div id="compass" aria-label="Compass pointing north"><div id="compass-needle"><span id="compass-n">N</span></div></div>
     </div>
 
     <div id="map"></div>
@@ -304,6 +322,7 @@
         let mapInstance = null;
         let vehicleMarker = null;
         let tileLayerInstance = null;
+        let headingUpMode = false;
         let incidentCircleMarker = null;
         
         let activeIncident = null;
@@ -337,6 +356,8 @@
                 maxBoundsViscosity: 1.0
             });
             mapInstance.zoomControl.setPosition('bottomright');
+            mapInstance.attributionControl.setPrefix(false);
+            mapInstance.on('move zoom resize', () => requestAnimationFrame(updateMapOrientation));
             
             changeBasemap();
 
@@ -347,6 +368,28 @@
             requestAnimationFrame(simulationLoop);
 
             setTimeout(() => { if (mapInstance) mapInstance.invalidateSize(); }, 100);
+        }
+
+        function toggleHeadingUp() {
+            headingUpMode = !headingUpMode;
+            const button = document.getElementById('orientation-toggle');
+            button.classList.toggle('active', headingUpMode);
+            button.setAttribute('aria-pressed', String(headingUpMode));
+            button.innerText = headingUpMode ? 'Heading Up' : 'North Up';
+            if (headingUpMode && mapInstance) mapInstance.setView([simLat, simLng], mapInstance.getZoom(), { animate: false });
+            updateMapOrientation();
+        }
+
+        function updateMapOrientation() {
+            if (!mapInstance) return;
+            const mapPane = mapInstance.getPane('mapPane');
+            if (!mapPane) return;
+            const rotation = headingUpMode ? -currentHeading : 0;
+            const truckPoint = mapInstance.latLngToLayerPoint([simLat, simLng]);
+            mapPane.style.transformOrigin = `${truckPoint.x}px ${truckPoint.y}px`;
+            mapPane.style.rotate = `${rotation}deg`;
+            const needle = document.getElementById('compass-needle');
+            if (needle) needle.style.transform = `rotate(${rotation}deg)`;
         }
 
         function togglePanel() {
@@ -436,6 +479,7 @@
             if (mapInstance) {
                 mapInstance.setView([simLat, simLng], mapInstance.getZoom());
                 mapInstance.invalidateSize();
+                updateMapOrientation();
             }
             if (simulationState === STATES.ENROUTE) evaluateDistanceToTarget();
         }
@@ -672,7 +716,7 @@
                 vehicleMarker.setLatLng([simLat, simLng]);
                 
                 // Only lock/pan camera if actually moving forward/backward
-                if (document.getElementById('chk-camera').checked && mapInstance && velocity !== 0) {
+                if (mapInstance && ((document.getElementById('chk-camera').checked && velocity !== 0) || headingUpMode)) {
                     mapInstance.setView([simLat, simLng], mapInstance.getZoom(), { animate: false });
                 }
 
@@ -681,6 +725,7 @@
                 document.getElementById('tel-lat').innerText = simLat.toFixed(6);
                 document.getElementById('tel-lng').innerText = simLng.toFixed(6);
                 document.getElementById('tel-hdg').innerText = Math.round(currentHeading) + "Â°"; 
+                updateMapOrientation();
             }
 
             requestAnimationFrame(simulationLoop);
