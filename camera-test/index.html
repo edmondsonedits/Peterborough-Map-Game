@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#0b1220">
-  <title>Heading Camera Prototype v1.4.10</title>
+  <title>Heading Camera Prototype v1.4.11</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet-src.js" crossorigin=""></script>
   <script src="https://unpkg.com/leaflet-rotate@0.2.8/dist/leaflet-rotate-src.js"></script>
@@ -15,10 +15,10 @@
     #title-row{display:flex;gap:10px;align-items:center}.title{min-width:0;flex:1}.title strong{display:block;font-size:17px}.title span{display:block;margin-top:3px;color:var(--muted);font-size:12px}.version{color:var(--blue)!important;font-weight:850}
     #pass{flex:0 0 auto;padding:7px 10px;border-radius:999px;background:#3f1d29;color:#fecdd3;font-size:11px;font-weight:900;letter-spacing:.05em}#pass.ok{background:#12372b;color:#a7f3d0}
     #buttons{display:grid;grid-template-columns:1fr 1fr .8fr;gap:9px;margin-top:11px}.mode,#pause,#recenter{min-height:46px;padding:0 10px;color:var(--text);border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.07);font-weight:850;cursor:pointer;touch-action:manipulation}.mode.active{color:#07111f;border-color:transparent;background:var(--blue)}#recenter{display:none;color:#052014;border-color:transparent;background:var(--green)}#recenter.show{display:block}
-    #truck{position:fixed;z-index:1600;left:50%;top:56%;width:62px;height:74px;transform:translate(-50%,-50%);pointer-events:none;filter:drop-shadow(0 8px 8px #0008)}#truck.hidden{display:none}#arrow{position:absolute;inset:0;transform-origin:50% 50%}#arrow::before{position:absolute;left:50%;top:4px;width:38px;height:60px;content:"";transform:translateX(-50%);background:linear-gradient(180deg,#fff 0 13%,#ef4444 13% 100%);clip-path:polygon(50% 0,100% 72%,68% 64%,61% 100%,39% 100%,32% 64%,0 72%)}#arrow::after{position:absolute;left:50%;top:22px;width:10px;height:33px;content:"";transform:translateX(-50%);border-radius:6px;background:#7f1d1d}.nose{position:absolute;left:50%;top:0;width:10px;height:10px;transform:translateX(-50%);border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold)}.halo{position:absolute;inset:8px;border:2px solid rgba(56,189,248,.7);border-radius:50%;animation:pulse 1.7s ease-out infinite}@keyframes pulse{0%{opacity:.8;transform:scale(.65)}80%,100%{opacity:0;transform:scale(1.5)}}
+    #truck{position:fixed;z-index:1600;left:50%;top:50%;width:62px;height:74px;transform:translate(-50%,-50%);pointer-events:none;filter:drop-shadow(0 8px 8px #0008)}#truck.hidden{display:none}#arrow{position:absolute;inset:0;transform-origin:50% 50%}#arrow::before{position:absolute;left:50%;top:4px;width:38px;height:60px;content:"";transform:translateX(-50%);background:linear-gradient(180deg,#fff 0 13%,#ef4444 13% 100%);clip-path:polygon(50% 0,100% 72%,68% 64%,61% 100%,39% 100%,32% 64%,0 72%)}#arrow::after{position:absolute;left:50%;top:22px;width:10px;height:33px;content:"";transform:translateX(-50%);border-radius:6px;background:#7f1d1d}.nose{position:absolute;left:50%;top:0;width:10px;height:10px;transform:translateX(-50%);border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold)}.halo{position:absolute;inset:8px;border:2px solid rgba(56,189,248,.7);border-radius:50%;animation:pulse 1.7s ease-out infinite}@keyframes pulse{0%{opacity:.8;transform:scale(.65)}80%,100%{opacity:0;transform:scale(1.5)}}
     #telemetry{position:fixed;z-index:2000;left:10px;bottom:max(10px,env(safe-area-inset-bottom));width:min(350px,calc(100% - 20px));padding:11px;color:var(--text);border:1px solid var(--line);border-radius:15px;background:var(--soft);box-shadow:0 10px 28px #0006;backdrop-filter:blur(12px)}#metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.metric{min-width:0;padding:8px;border:1px solid rgba(255,255,255,.1);border-radius:10px;background:rgba(255,255,255,.04)}.metric span{display:block;color:var(--muted);font-size:8px;font-weight:850;letter-spacing:.07em;text-transform:uppercase}.metric strong{display:block;margin-top:4px;font:850 13px/1.1 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:nowrap}.speed{display:grid;grid-template-columns:72px 1fr 54px;gap:8px;align-items:center;margin-top:10px;color:var(--muted);font-size:11px}.speed input{width:100%;accent-color:var(--blue)}
     #explanation{position:fixed;z-index:1900;right:10px;bottom:max(10px,env(safe-area-inset-bottom));max-width:290px;padding:11px 12px;color:var(--muted);border:1px solid var(--line);border-radius:14px;background:var(--soft);font-size:11px;line-height:1.4;box-shadow:0 10px 28px #0006}#explanation strong{display:block;margin-bottom:3px;color:var(--gold)}
-    @media(max-width:720px){#controls{padding:10px}.title strong{font-size:16px}.title span{font-size:11px}#buttons{gap:8px}.mode,#pause,#recenter{min-height:44px;font-size:13px}#truck{top:56%;width:56px;height:68px}#metrics{grid-template-columns:repeat(2,minmax(0,1fr))}#telemetry{width:min(330px,calc(100% - 20px))}#explanation{display:none}}
+    @media(max-width:720px){#controls{padding:10px}.title strong{font-size:16px}.title span{font-size:11px}#buttons{gap:8px}.mode,#pause,#recenter{min-height:44px;font-size:13px}#truck{top:50%;width:56px;height:68px}#metrics{grid-template-columns:repeat(2,minmax(0,1fr))}#telemetry{width:min(330px,calc(100% - 20px))}#explanation{display:none}}
     @media(prefers-reduced-motion:reduce){.halo{animation:none;opacity:.3}}
   </style>
 </head>
@@ -27,7 +27,7 @@
   <div id="map" aria-label="Map camera alignment test"></div>
   <div id="truck" aria-hidden="true"><div class="halo"></div><div id="arrow"><div class="nose"></div></div></div>
   <section id="controls">
-    <div id="title-row"><div class="title"><strong>Heading Camera Prototype <span class="version">v1.4.10</span></strong><span id="status">Heading Up: movement, route and truck nose all point toward the top.</span></div><div id="pass">CHECKING</div></div>
+    <div id="title-row"><div class="title"><strong>Heading Camera Prototype <span class="version">v1.4.11</span></strong><span id="status">Heading Up: movement, route and truck nose all point toward the top.</span></div><div id="pass">CHECKING</div></div>
     <div id="buttons"><button class="mode" id="north" type="button">North Up</button><button class="mode active" id="heading" type="button">Heading Up</button><button id="pause" type="button">Pause</button><button id="recenter" type="button">Re-center</button></div>
   </section>
   <aside id="telemetry">
@@ -44,7 +44,7 @@
 <script>
 (()=>{
   'use strict';
-  const VERSION='1.4.10';
+  const VERSION='1.4.11';
   const MODES={NORTH:'north',HEADING:'heading',FREE:'free'};
   const route=[
     [44.300871,-78.322206],[44.303000,-78.322180],[44.305450,-78.322110],
