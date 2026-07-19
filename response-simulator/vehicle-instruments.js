@@ -14,6 +14,6 @@
   };
 
   loadScript('vehicle-instruments-core.js', '20260719-directional-core-1', () => {
-    loadScript('directional-steering-tuning.js', '20260719-hold-heading-1');
+    loadScript('directional-steering-tuning.js', '20260719-hold-heading-2');
   });
 })();
