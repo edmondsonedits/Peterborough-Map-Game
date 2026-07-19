@@ -32,7 +32,7 @@
   </style>
 </head>
 <body>
-  <iframe id="simulator" src="../index.html?v=1.4.3" title="Peterborough Fire and Emergency Dispatch Simulator"></iframe>
+  <iframe id="simulator" src="../index.html?v=1.4.4" title="Peterborough Fire and Emergency Dispatch Simulator"></iframe>
   <nav class="mobile-topbar" aria-label="Simulator navigation, audio, and station spawns">
     <div class="top-actions"><a class="top-button" href="../../" aria-label="Return to all games"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></a></div>
     <div class="station-shortcuts">
@@ -53,12 +53,15 @@
   </section>
 
   <div class="control-hint">Drag the wheel to steer · Hold Gas to drive · Hold Reverse to back up</div>
-  <div class="loading-cover" id="loading-cover"><div><strong>Loading mobile simulator</strong><span>Preparing touch controls and map…</span></div></div>
+  <div class="loading-cover" id="loading-cover"><div><strong>Loading mobile simulator</strong><span>Preparing touch controls and updated calls…</span></div></div>
 
-  <script src="../../shared/stations.js?v=1.4.3"></script>
+  <script src="../../shared/dispatch-locations.js?v=1.4.4"></script>
+  <script src="../../shared/dispatch-data-1.4.4.js?v=1.4.4"></script>
+  <script src="../../shared/dispatch-override-1.4.4.js?v=1.4.4"></script>
+  <script src="../../shared/stations.js?v=1.4.4"></script>
   <script>
     (() => {
-      const VERSION = '1.4.3';
+      const VERSION = '1.4.4';
       const MOBILE_ZOOM = 18;
       const AUDIO_KEY = 'ptboDispatchVoiceEnabled';
       const frame = document.getElementById('simulator');
@@ -214,8 +217,12 @@
           setTimeout(window.mobileRecenter, 0);
         })();`;
         doc.body.appendChild(helper);
-        loading.classList.add('hidden');
-        setTimeout(() => loading.remove(), 250);
+        window.PTBO_DISPATCH_STORE.ready()
+          .catch(error => console.error('Unable to load v1.4.4 dispatch data.', error))
+          .finally(() => {
+            loading.classList.add('hidden');
+            setTimeout(() => loading.remove(), 250);
+          });
       });
 
       function releaseAll() {
