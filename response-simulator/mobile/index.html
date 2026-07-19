@@ -57,7 +57,7 @@
   </style>
 </head>
 <body>
-  <iframe id="simulator" src="../index.html?v=20260718-north-up-1" title="Peterborough Fire and Emergency Dispatch Simulator"></iframe>
+  <iframe id="simulator" src="../index.html?v=20260719-directional-1" title="Peterborough Fire and Emergency Dispatch Simulator"></iframe>
   <nav class="mobile-topbar" aria-label="Simulator navigation, audio, and station spawns">
     <div class="top-actions"><a class="top-button" href="../../" aria-label="Return to all games"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></a></div>
     <div class="station-shortcuts" aria-label="Choose station spawn">
@@ -70,47 +70,259 @@
       <button class="top-button" id="options-button" type="button" aria-label="Open simulator options" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h10"/><path d="M18 7h2"/><path d="M14 5v4"/><path d="M4 17h2"/><path d="M10 17h10"/><path d="M6 15v4"/><path d="M4 12h5"/><path d="M13 12h7"/><path d="M9 10v4"/></svg></button>
     </div>
   </nav>
+
   <section class="mobile-controls" aria-label="Mobile driving controls">
     <div class="steering-zone"><div class="joystick" id="steering" role="group" aria-label="Steering joystick"><div class="joystick-thumb" id="steering-thumb" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2"/><path d="M4.6 10h14.8M12 14v6"/></svg></div><span class="joystick-label">Steer</span></div></div>
     <div class="utility-zone"><button class="utility-button active" id="siren-button" type="button" aria-label="Toggle emergency lights" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 14V9a5 5 0 0 1 10 0v5"/><path d="M5 18h14M8 14h8l1 4H7l1-4Z"/><path d="M4 7 2 6M20 7l2-1M12 3V1"/></svg></button><button class="utility-button" id="recenter-button" type="button" aria-label="Recenter map on the fire truck"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></button></div>
     <div class="pedal-zone"><button class="pedal reverse" id="reverse-pedal" type="button" aria-label="Hold to reverse"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 10 4 4 4-4"/></svg>Reverse</button><button class="pedal accelerate" id="gas-pedal" type="button" aria-label="Hold to accelerate"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 14 4-4 4 4"/></svg>Gas</button></div>
   </section>
+
   <div class="control-hint" aria-hidden="true">Drag the wheel to steer · Hold Gas to drive · Hold Reverse to back up</div>
   <div class="loading-cover" id="loading-cover" role="status"><div><strong>Loading mobile simulator</strong><span>Preparing touch controls and map…</span></div></div>
-  <script src="../../shared/stations.js?v=20260718-north-up-1"></script>
+
+  <script src="../../shared/stations.js?v=20260719-directional-1"></script>
   <script>
-    (()=>{
-      const MOBILE_ZOOM=18,AUDIO_KEY='ptboDispatchVoiceEnabled';
-      const isTouchMobile=window.innerWidth<=900&&(matchMedia('(pointer: coarse)').matches||'ontouchstart'in window);if(!isTouchMobile&&matchMedia('(pointer: fine)').matches){setTimeout(()=>location.replace('../'),850);return}
-      const frame=document.getElementById('simulator'),loadingCover=document.getElementById('loading-cover'),steering=document.getElementById('steering'),steeringThumb=document.getElementById('steering-thumb'),gasPedal=document.getElementById('gas-pedal'),reversePedal=document.getElementById('reverse-pedal'),sirenButton=document.getElementById('siren-button'),recenterButton=document.getElementById('recenter-button'),optionsButton=document.getElementById('options-button'),audioButton=document.getElementById('audio-button'),stationButtons=[...document.querySelectorAll('.station-button')],sharedStations=window.PTBO_STATIONS||[];
-      let selectedStationNumber=1,voiceEnabled=localStorage.getItem(AUDIO_KEY)!=='false';
-      window.ptboDispatchVoiceEnabled=()=>voiceEnabled;
-      window.ptboGetSelectedStationNumber=()=>selectedStationNumber;
-      window.ptboSetSelectedStation=number=>{selectedStationNumber=Number(number)||1;stationButtons.forEach(button=>{const selected=Number(button.dataset.station)===selectedStationNumber;button.classList.toggle('active',selected);button.setAttribute('aria-pressed',String(selected))})};
-      function updateAudioButton(){audioButton.classList.toggle('muted',!voiceEnabled);audioButton.setAttribute('aria-pressed',String(voiceEnabled));audioButton.setAttribute('aria-label',voiceEnabled?'Mute dispatch voice':'Turn on dispatch voice')}
+    (() => {
+      const MOBILE_ZOOM = 18;
+      const AUDIO_KEY = 'ptboDispatchVoiceEnabled';
+      const isTouchMobile = window.innerWidth <= 900 && (matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window);
+      if (!isTouchMobile && matchMedia('(pointer: fine)').matches) {
+        setTimeout(() => location.replace('../'), 850);
+        return;
+      }
+
+      const frame = document.getElementById('simulator');
+      const loadingCover = document.getElementById('loading-cover');
+      const steering = document.getElementById('steering');
+      const steeringThumb = document.getElementById('steering-thumb');
+      const gasPedal = document.getElementById('gas-pedal');
+      const reversePedal = document.getElementById('reverse-pedal');
+      const sirenButton = document.getElementById('siren-button');
+      const recenterButton = document.getElementById('recenter-button');
+      const optionsButton = document.getElementById('options-button');
+      const audioButton = document.getElementById('audio-button');
+      const stationButtons = [...document.querySelectorAll('.station-button')];
+      const sharedStations = window.PTBO_STATIONS || [];
+
+      let selectedStationNumber = 1;
+      let voiceEnabled = localStorage.getItem(AUDIO_KEY) !== 'false';
+      const keyNames = {
+        left: { key:'ArrowLeft', code:'ArrowLeft' },
+        right: { key:'ArrowRight', code:'ArrowRight' },
+        gas: { key:'ArrowUp', code:'ArrowUp' },
+        reverse: { key:'ArrowDown', code:'ArrowDown' },
+      };
+      const pressed = new Set();
+      let steeringPointer = null;
+      let steeringDirection = null;
+
+      const simulatorWindow = () => frame.contentWindow;
+      const haptic = (duration = 8) => { if (navigator.vibrate) navigator.vibrate(duration); };
+
+      window.ptboDispatchVoiceEnabled = () => voiceEnabled;
+      window.ptboGetSelectedStationNumber = () => selectedStationNumber;
+      window.ptboSetSelectedStation = number => {
+        selectedStationNumber = Number(number) || 1;
+        stationButtons.forEach(button => {
+          const selected = Number(button.dataset.station) === selectedStationNumber;
+          button.classList.toggle('active', selected);
+          button.setAttribute('aria-pressed', String(selected));
+        });
+      };
+
+      function updateAudioButton() {
+        audioButton.classList.toggle('muted', !voiceEnabled);
+        audioButton.setAttribute('aria-pressed', String(voiceEnabled));
+        audioButton.setAttribute('aria-label', voiceEnabled ? 'Mute dispatch voice' : 'Turn on dispatch voice');
+      }
+
+      function sendKey(control, down) {
+        if (!simulatorWindow() || (down && pressed.has(control)) || (!down && !pressed.has(control))) return;
+        down ? pressed.add(control) : pressed.delete(control);
+        const key = keyNames[control];
+        simulatorWindow().dispatchEvent(new KeyboardEvent(down ? 'keydown' : 'keyup', {
+          key:key.key,
+          code:key.code,
+          bubbles:true,
+          cancelable:true,
+        }));
+      }
+
+      function releaseAll() {
+        [...pressed].forEach(control => sendKey(control, false));
+        steeringDirection = null;
+        steering.classList.remove('active');
+        steeringThumb.style.transform = 'translate(-50%, -50%)';
+        gasPedal.classList.remove('pressed');
+        reversePedal.classList.remove('pressed');
+      }
+
+      function setSteering(next) {
+        if (steeringDirection === next) return;
+        if (steeringDirection) sendKey(steeringDirection, false);
+        steeringDirection = next;
+        if (next) {
+          sendKey(next, true);
+          haptic();
+        }
+      }
+
+      function updateSteering(clientX) {
+        const rect = steering.getBoundingClientRect();
+        const center = rect.left + rect.width / 2;
+        const travel = rect.width * .25;
+        const offset = Math.max(-travel, Math.min(travel, clientX - center));
+        const normalized = offset / travel;
+        steeringThumb.style.transform = `translate(calc(-50% + ${offset}px), -50%)`;
+        normalized < -.12 ? setSteering('left') : normalized > .12 ? setSteering('right') : setSteering(null);
+      }
+
+      function finishSteering(event) {
+        if (steeringPointer !== null && event.pointerId !== steeringPointer) return;
+        steeringPointer = null;
+        setSteering(null);
+        steering.classList.remove('active');
+        steeringThumb.style.transform = 'translate(-50%, -50%)';
+      }
+
+      function bindPedal(button, control) {
+        let pointerId = null;
+        button.addEventListener('pointerdown', event => {
+          event.preventDefault();
+          pointerId = event.pointerId;
+          button.setPointerCapture(event.pointerId);
+          button.classList.add('pressed');
+          sendKey(control, true);
+          haptic(10);
+        });
+        const release = event => {
+          if (pointerId !== null && event.pointerId !== pointerId) return;
+          pointerId = null;
+          button.classList.remove('pressed');
+          sendKey(control, false);
+        };
+        button.addEventListener('pointerup', release);
+        button.addEventListener('pointercancel', release);
+        button.addEventListener('lostpointercapture', release);
+      }
+
       updateAudioButton();
-      audioButton.addEventListener('click',()=>{voiceEnabled=!voiceEnabled;localStorage.setItem(AUDIO_KEY,String(voiceEnabled));if(!voiceEnabled&&window.speechSynthesis)window.speechSynthesis.cancel();updateAudioButton();haptic(10)});
-      sharedStations.forEach((station,index)=>{const button=stationButtons[index];if(!button)return;button.dataset.lat=station.lat;button.dataset.lng=station.lng;button.textContent=station.name;button.setAttribute('aria-label',`Spawn at ${station.name}, ${station.address}`)});
-      const keyNames={left:{key:'ArrowLeft',code:'ArrowLeft'},right:{key:'ArrowRight',code:'ArrowRight'},gas:{key:'ArrowUp',code:'ArrowUp'},reverse:{key:'ArrowDown',code:'ArrowDown'}};const pressed=new Set();let steeringPointer=null,steeringDirection=null;
-      const simulatorWindow=()=>frame.contentWindow;
-      function sendKey(control,down){if(!simulatorWindow()||(down&&pressed.has(control))||(!down&&!pressed.has(control)))return;down?pressed.add(control):pressed.delete(control);const k=keyNames[control];simulatorWindow().dispatchEvent(new KeyboardEvent(down?'keydown':'keyup',{key:k.key,code:k.code,bubbles:true,cancelable:true}))}
-      function releaseAll(){[...pressed].forEach(c=>sendKey(c,false));steeringDirection=null;steering.classList.remove('active');steeringThumb.style.transform='translate(-50%, -50%)';gasPedal.classList.remove('pressed');reversePedal.classList.remove('pressed')}
-      const haptic=(d=8)=>{if(navigator.vibrate)navigator.vibrate(d)};
-      function setSteering(next){if(steeringDirection===next)return;if(steeringDirection)sendKey(steeringDirection,false);steeringDirection=next;if(next){sendKey(next,true);haptic()}}
-      function updateSteering(x){const r=steering.getBoundingClientRect(),c=r.left+r.width/2,m=r.width*.25,o=Math.max(-m,Math.min(m,x-c)),n=o/m;steeringThumb.style.transform=`translate(calc(-50% + ${o}px), -50%)`;n<-.12?setSteering('left'):n>.12?setSteering('right'):setSteering(null)}
-      steering.addEventListener('pointerdown',e=>{e.preventDefault();steeringPointer=e.pointerId;steering.setPointerCapture(e.pointerId);steering.classList.add('active');updateSteering(e.clientX)});steering.addEventListener('pointermove',e=>{if(e.pointerId!==steeringPointer)return;e.preventDefault();updateSteering(e.clientX)});
-      function finishSteering(e){if(steeringPointer!==null&&e.pointerId!==steeringPointer)return;steeringPointer=null;setSteering(null);steering.classList.remove('active');steeringThumb.style.transform='translate(-50%, -50%)'}steering.addEventListener('pointerup',finishSteering);steering.addEventListener('pointercancel',finishSteering);steering.addEventListener('lostpointercapture',finishSteering);
-      function bindPedal(button,control){let pointerId=null;button.addEventListener('pointerdown',e=>{e.preventDefault();pointerId=e.pointerId;button.setPointerCapture(e.pointerId);button.classList.add('pressed');sendKey(control,true);haptic(10)});const release=e=>{if(pointerId!==null&&e.pointerId!==pointerId)return;pointerId=null;button.classList.remove('pressed');sendKey(control,false)};button.addEventListener('pointerup',release);button.addEventListener('pointercancel',release);button.addEventListener('lostpointercapture',release)}bindPedal(gasPedal,'gas');bindPedal(reversePedal,'reverse');
-      stationButtons.forEach(button=>button.addEventListener('click',()=>{const sim=simulatorWindow(),lat=Number(button.dataset.lat),lng=Number(button.dataset.lng);window.ptboSetSelectedStation(button.dataset.station);if(sim&&typeof sim.teleportToStation==='function'){sim.teleportToStation(lat,lng);if(typeof sim.mobileRecenter==='function')sim.mobileRecenter()}haptic(12)}));
-      optionsButton.addEventListener('click',()=>{const sim=simulatorWindow();if(sim&&typeof sim.togglePanel==='function')sim.togglePanel();const panel=frame.contentDocument&&frame.contentDocument.getElementById('control-panel'),open=Boolean(panel&&!panel.classList.contains('minimized'));optionsButton.setAttribute('aria-pressed',String(open));optionsButton.setAttribute('aria-label',open?'Close simulator options':'Open simulator options');haptic()});
-      sirenButton.addEventListener('click',()=>{const checkbox=frame.contentDocument&&frame.contentDocument.getElementById('chk-siren');if(!checkbox)return;checkbox.checked=!checkbox.checked;if(typeof simulatorWindow().updateVehicleChassis==='function')simulatorWindow().updateVehicleChassis();sirenButton.classList.toggle('active',checkbox.checked);sirenButton.setAttribute('aria-pressed',String(checkbox.checked));haptic(12)});
-      recenterButton.addEventListener('click',()=>{if(typeof simulatorWindow().mobileRecenter==='function')simulatorWindow().mobileRecenter();haptic()});
-      function repairText(root){const replacements=[['â†','←'],['â†’','→'],['â€”','—'],['Â°','°'],['Â©','©'],['ðŸš¨','🚨'],['âœ“','✓']],walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);nodes.forEach(node=>{let value=node.nodeValue;replacements.forEach(([bad,good])=>{value=value.split(bad).join(good)});if(value!==node.nodeValue)node.nodeValue=value})}
-      function moveStationSpawnsToTop(doc){const panel=doc.querySelector('.panel-scroll');if(!panel)return;const titles=[...panel.querySelectorAll('.section-title')],stationTitle=titles.find(el=>el.textContent.trim()==='Station Deploy Spawns'),firstTitle=titles[0];if(!stationTitle||!firstTitle||stationTitle===firstTitle)return;const group=[stationTitle];let node=stationTitle.nextElementSibling;while(node&&!node.classList.contains('section-title')){group.push(node);node=node.nextElementSibling}group.forEach(el=>panel.insertBefore(el,firstTitle))}
-      frame.addEventListener('load',()=>{const doc=frame.contentDocument;if(!doc)return;const style=doc.createElement('style');style.textContent=`#game-home,#menu-toggle{display:none!important}#dispatch-hud{top:calc(66px + env(safe-area-inset-top))!important;left:10px!important;right:10px!important;width:auto!important;max-width:none!important;padding:11px 12px 11px 14px!important;transform:none!important;border-left-width:4px!important;border-radius:14px!important;display:grid!important;grid-template-columns:minmax(0,1fr) 98px!important;align-items:center!important;gap:10px!important}.hud-main{min-width:0!important}.hud-title{font-size:9px!important;letter-spacing:.85px!important}.hud-address{font-size:15px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}.hud-meta{display:-webkit-box!important;margin-top:3px!important;overflow:hidden!important;font-size:10px!important;line-height:1.3!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important}.hud-timer-block{min-width:0!important;margin-left:0!important}.hud-clock-display{font-size:21px!important;margin-bottom:5px!important}.hud-btn{min-height:40px!important;padding:7px 8px!important;border-radius:10px!important;font-size:12px!important}#control-panel{width:min(360px,100vw)!important;z-index:3000!important}.panel-scroll{padding:calc(70px + env(safe-area-inset-top)) 18px calc(190px + env(safe-area-inset-bottom))!important}.leaflet-bottom{bottom:calc(174px + env(safe-area-inset-bottom))!important}.leaflet-control-attribution{max-width:78vw!important;font-size:9px!important;white-space:normal!important}.leaflet-control-scale{margin-left:10px!important}@media (orientation:landscape) and (max-height:560px){#dispatch-hud{top:calc(62px + env(safe-area-inset-top))!important}.leaflet-bottom{bottom:calc(132px + env(safe-area-inset-bottom))!important}}`;doc.head.appendChild(style);
-        const helper=doc.createElement('script');helper.textContent=`(()=>{
-          const STATIONS=${JSON.stringify(sharedStations)};
-          const callNames={
+      audioButton.addEventListener('click', () => {
+        voiceEnabled = !voiceEnabled;
+        localStorage.setItem(AUDIO_KEY, String(voiceEnabled));
+        if (!voiceEnabled && window.speechSynthesis) window.speechSynthesis.cancel();
+        updateAudioButton();
+        haptic(10);
+      });
+
+      sharedStations.forEach((station, index) => {
+        const button = stationButtons[index];
+        if (!button) return;
+        button.dataset.lat = station.lat;
+        button.dataset.lng = station.lng;
+        button.textContent = station.name;
+        button.setAttribute('aria-label', `Spawn at ${station.name}, ${station.address}`);
+      });
+
+      steering.addEventListener('pointerdown', event => {
+        event.preventDefault();
+        steeringPointer = event.pointerId;
+        steering.setPointerCapture(event.pointerId);
+        steering.classList.add('active');
+        updateSteering(event.clientX);
+      });
+      steering.addEventListener('pointermove', event => {
+        if (event.pointerId !== steeringPointer) return;
+        event.preventDefault();
+        updateSteering(event.clientX);
+      });
+      steering.addEventListener('pointerup', finishSteering);
+      steering.addEventListener('pointercancel', finishSteering);
+      steering.addEventListener('lostpointercapture', finishSteering);
+
+      bindPedal(gasPedal, 'gas');
+      bindPedal(reversePedal, 'reverse');
+
+      stationButtons.forEach(button => button.addEventListener('click', () => {
+        const sim = simulatorWindow();
+        const lat = Number(button.dataset.lat);
+        const lng = Number(button.dataset.lng);
+        window.ptboSetSelectedStation(button.dataset.station);
+        if (sim && typeof sim.teleportToStation === 'function') {
+          sim.teleportToStation(lat, lng);
+          sim.mobileRecenter?.();
+        }
+        haptic(12);
+      }));
+
+      optionsButton.addEventListener('click', () => {
+        const sim = simulatorWindow();
+        sim?.togglePanel?.();
+        const panel = frame.contentDocument?.getElementById('control-panel');
+        const open = Boolean(panel && !panel.classList.contains('minimized'));
+        optionsButton.setAttribute('aria-pressed', String(open));
+        optionsButton.setAttribute('aria-label', open ? 'Close simulator options' : 'Open simulator options');
+        haptic();
+      });
+
+      sirenButton.addEventListener('click', () => {
+        const checkbox = frame.contentDocument?.getElementById('chk-siren');
+        if (!checkbox) return;
+        checkbox.checked = !checkbox.checked;
+        simulatorWindow()?.updateVehicleChassis?.();
+        sirenButton.classList.toggle('active', checkbox.checked);
+        sirenButton.setAttribute('aria-pressed', String(checkbox.checked));
+        haptic(12);
+      });
+
+      recenterButton.addEventListener('click', () => {
+        simulatorWindow()?.mobileRecenter?.();
+        haptic();
+      });
+
+      function repairText(root) {
+        const replacements = [
+          ['â†','←'], ['â†’','→'], ['â€”','—'], ['Â°','°'],
+          ['Â©','©'], ['ðŸš¨','🚨'], ['âœ“','✓']
+        ];
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+        const nodes = [];
+        while (walker.nextNode()) nodes.push(walker.currentNode);
+        nodes.forEach(node => {
+          let value = node.nodeValue;
+          replacements.forEach(([bad, good]) => { value = value.split(bad).join(good); });
+          if (value !== node.nodeValue) node.nodeValue = value;
+        });
+      }
+
+      function moveStationSpawnsToTop(doc) {
+        const panel = doc.querySelector('.panel-scroll');
+        if (!panel) return;
+        const titles = [...panel.querySelectorAll('.section-title')];
+        const stationTitle = titles.find(element => element.textContent.trim() === 'Station Deploy Spawns');
+        const firstTitle = titles[0];
+        if (!stationTitle || !firstTitle || stationTitle === firstTitle) return;
+        const group = [stationTitle];
+        let node = stationTitle.nextElementSibling;
+        while (node && !node.classList.contains('section-title')) {
+          group.push(node);
+          node = node.nextElementSibling;
+        }
+        group.forEach(element => panel.insertBefore(element, firstTitle));
+      }
+
+      frame.addEventListener('load', () => {
+        const doc = frame.contentDocument;
+        if (!doc) return;
+
+        const style = doc.createElement('style');
+        style.textContent = `#game-home,#menu-toggle{display:none!important}#dispatch-hud{top:calc(66px + env(safe-area-inset-top))!important;left:10px!important;right:10px!important;width:auto!important;max-width:none!important;padding:11px 12px 11px 14px!important;transform:none!important;border-left-width:4px!important;border-radius:14px!important;display:grid!important;grid-template-columns:minmax(0,1fr) 98px!important;align-items:center!important;gap:10px!important}.hud-main{min-width:0!important}.hud-title{font-size:9px!important;letter-spacing:.85px!important}.hud-address{font-size:15px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}.hud-meta{display:-webkit-box!important;margin-top:3px!important;overflow:hidden!important;font-size:10px!important;line-height:1.3!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important}.hud-timer-block{min-width:0!important;margin-left:0!important}.hud-clock-display{font-size:21px!important;margin-bottom:5px!important}.hud-btn{min-height:40px!important;padding:7px 8px!important;border-radius:10px!important;font-size:12px!important}#control-panel{width:min(360px,100vw)!important;z-index:3000!important}.panel-scroll{padding:calc(70px + env(safe-area-inset-top)) 18px calc(190px + env(safe-area-inset-bottom))!important}.leaflet-bottom{bottom:calc(174px + env(safe-area-inset-bottom))!important}.leaflet-control-attribution{max-width:78vw!important;font-size:9px!important;white-space:normal!important}.leaflet-control-scale{margin-left:10px!important}@media (orientation:landscape) and (max-height:560px){#dispatch-hud{top:calc(62px + env(safe-area-inset-top))!important}.leaflet-bottom{bottom:calc(132px + env(safe-area-inset-bottom))!important}}`;
+        doc.head.appendChild(style);
+
+        const helper = doc.createElement('script');
+        helper.textContent = `(() => {
+          const STATIONS = ${JSON.stringify(sharedStations)};
+          const callNames = {
             'Structure Fire':'a structure fire',
             'Water & Ice Rescue':'a water rescue',
             'Auto Alarm / Vehicle Fire':'an auto alarm',
@@ -123,39 +335,92 @@
             'Lift Assist / Public Service':'a lift assist',
             'Request for Access / Wellness Check':'a request for access or wellness check'
           };
-          const distance=(a,b)=>mapInstance&&mapInstance.distance?[mapInstance.distance([a.lat,a.lng],[b.lat,b.lng])]:[Math.hypot(a.lat-b.lat,a.lng-b.lng)];
-          function stationName(number){return (STATIONS.find(station=>station.number===Number(number))||{name:'Station 1'}).name}
-          function secondMvcStation(primaryNumber,incident){return STATIONS.filter(station=>station.number!==Number(primaryNumber)).sort((a,b)=>distance(a,incident)[0]-distance(b,incident)[0])[0]}
-          window.buildPeterboroughDispatchPhrase=function(incident){
-            if(!incident)return'';
-            const primary=Number(parent.ptboGetSelectedStationNumber?.()||1);
-            if(['Structure Fire','Water & Ice Rescue','Auto Alarm / Vehicle Fire'].includes(incident.sub))return 'All stations from Peterborough Control, you’re responding to '+callNames[incident.sub]+' at '+incident.name+', '+incident.addr+'.';
-            if(incident.sub==='Motor Vehicle Collision'){
-              const secondary=secondMvcStation(primary,incident);
-              return stationName(primary)+' and '+stationName(secondary?.number)+' from Peterborough Control, you’re responding to an M V C at the intersection '+incident.addr+'.';
+          const distance = (a,b) => mapInstance?.distance
+            ? mapInstance.distance([a.lat,a.lng],[b.lat,b.lng])
+            : Math.hypot(a.lat-b.lat,a.lng-b.lng);
+          const stationName = number => (STATIONS.find(station => station.number === Number(number)) || {name:'Station 1'}).name;
+          const secondMvcStation = (primaryNumber,incident) => STATIONS
+            .filter(station => station.number !== Number(primaryNumber))
+            .sort((a,b) => distance(a,incident) - distance(b,incident))[0];
+
+          window.buildPeterboroughDispatchPhrase = incident => {
+            if (!incident) return '';
+            const primary = Number(parent.ptboGetSelectedStationNumber?.() || 1);
+            if (['Structure Fire','Water & Ice Rescue','Auto Alarm / Vehicle Fire'].includes(incident.sub)) {
+              return 'All stations from Peterborough Control, you’re responding to ' + callNames[incident.sub] + ' at ' + incident.name + ', ' + incident.addr + '.';
             }
-            return stationName(primary)+' from Peterborough Control, you’re responding to '+(callNames[incident.sub]||incident.sub.toLowerCase())+' at the address '+incident.addr+'.';
+            if (incident.sub === 'Motor Vehicle Collision') {
+              const secondary = secondMvcStation(primary, incident);
+              return stationName(primary) + ' and ' + stationName(secondary?.number) + ' from Peterborough Control, you’re responding to an M V C at the intersection ' + incident.addr + '.';
+            }
+            return stationName(primary) + ' from Peterborough Control, you’re responding to ' + (callNames[incident.sub] || incident.sub.toLowerCase()) + ' at the address ' + incident.addr + '.';
           };
-          playDispatchAudioText=function(){
-            if(!parent.ptboDispatchVoiceEnabled?.())return;
-            try{
-              if(window.speechSynthesis){
+
+          playDispatchAudioText = () => {
+            if (!parent.ptboDispatchVoiceEnabled?.()) return;
+            try {
+              if (window.speechSynthesis) {
                 window.speechSynthesis.cancel();
-                const utteranceNode=new SpeechSynthesisUtterance(window.buildPeterboroughDispatchPhrase(activeIncident));
-                utteranceNode.rate=1.0;utteranceNode.pitch=.95;window.speechSynthesis.speak(utteranceNode);
+                const utterance = new SpeechSynthesisUtterance(window.buildPeterboroughDispatchPhrase(activeIncident));
+                utterance.rate = 1;
+                utterance.pitch = .95;
+                window.speechSynthesis.speak(utterance);
               }
-            }catch(err){console.warn('TTS engine failure:',err)}
+            } catch (error) {
+              console.warn('TTS engine failure:', error);
+            }
           };
-          window.playDispatchAudioText=playDispatchAudioText;
-          const originalTeleport=teleportToStation;
-          teleportToStation=function(lat,lng){const match=STATIONS.find(station=>Math.abs(station.lat-Number(lat))<.00001&&Math.abs(station.lng-Number(lng))<.00001);if(match)parent.ptboSetSelectedStation?.(match.number);return originalTeleport.apply(this,arguments)};
-          window.teleportToStation=teleportToStation;
-          window.configureMobileMap=function(){if(!mapInstance)return;mapInstance.setMaxZoom(${MOBILE_ZOOM});mapInstance.setView([simLat,simLng],${MOBILE_ZOOM},{animate:false})};
-          window.mobileRecenter=function(){const cameraLock=document.getElementById('chk-camera');if(cameraLock)cameraLock.checked=true;if(mapInstance)mapInstance.setView([simLat,simLng],${MOBILE_ZOOM},{animate:false})};
-          setTimeout(window.configureMobileMap,0);
-        })();`;doc.body.appendChild(helper);
-        const menuSpawnButtons=[...doc.querySelectorAll('.station-spawn-box')].filter(button=>/^Station\s+[123]/.test(button.textContent.trim()));sharedStations.forEach((station,index)=>{const button=menuSpawnButtons[index];if(!button)return;button.textContent=`${station.name} — ${station.address}`;button.onclick=()=>{window.ptboSetSelectedStation(station.number);simulatorWindow().teleportToStation(station.lat,station.lng)}});moveStationSpawnsToTop(doc);repairText(doc.body);const observer=new MutationObserver(()=>repairText(doc.body));observer.observe(doc.body,{childList:true,subtree:true,characterData:true});const siren=doc.getElementById('chk-siren');sirenButton.classList.toggle('active',Boolean(siren&&siren.checked));sirenButton.setAttribute('aria-pressed',String(Boolean(siren&&siren.checked)));loadingCover.classList.add('hidden');setTimeout(()=>loadingCover.remove(),250)});
-      window.addEventListener('blur',releaseAll);document.addEventListener('visibilitychange',()=>{if(document.hidden)releaseAll()});window.addEventListener('pagehide',releaseAll);
+          window.playDispatchAudioText = playDispatchAudioText;
+
+          const originalTeleport = teleportToStation;
+          teleportToStation = function(lat,lng) {
+            const match = STATIONS.find(station => Math.abs(station.lat-Number(lat)) < .00001 && Math.abs(station.lng-Number(lng)) < .00001);
+            if (match) parent.ptboSetSelectedStation?.(match.number);
+            return originalTeleport.apply(this, arguments);
+          };
+          window.teleportToStation = teleportToStation;
+
+          window.configureMobileMap = () => {
+            if (!mapInstance) return;
+            mapInstance.setMaxZoom(${MOBILE_ZOOM});
+            mapInstance.setView([simLat,simLng], ${MOBILE_ZOOM}, {animate:false});
+          };
+          window.mobileRecenter = () => {
+            const cameraLock = document.getElementById('chk-camera');
+            if (cameraLock) cameraLock.checked = true;
+            if (mapInstance) mapInstance.setView([simLat,simLng], ${MOBILE_ZOOM}, {animate:false});
+          };
+          setTimeout(window.configureMobileMap, 0);
+        })();`;
+        doc.body.appendChild(helper);
+
+        const menuSpawnButtons = [...doc.querySelectorAll('.station-spawn-box')]
+          .filter(button => /^Station\s+[123]/.test(button.textContent.trim()));
+        sharedStations.forEach((station,index) => {
+          const button = menuSpawnButtons[index];
+          if (!button) return;
+          button.textContent = `${station.name} — ${station.address}`;
+          button.onclick = () => {
+            window.ptboSetSelectedStation(station.number);
+            simulatorWindow().teleportToStation(station.lat,station.lng);
+          };
+        });
+        moveStationSpawnsToTop(doc);
+        repairText(doc.body);
+        const textObserver = new MutationObserver(() => repairText(doc.body));
+        textObserver.observe(doc.body, {childList:true, subtree:true, characterData:true});
+
+        const siren = doc.getElementById('chk-siren');
+        sirenButton.classList.toggle('active', Boolean(siren?.checked));
+        sirenButton.setAttribute('aria-pressed', String(Boolean(siren?.checked)));
+
+        loadingCover.classList.add('hidden');
+        setTimeout(() => loadingCover.remove(), 250);
+      });
+
+      window.addEventListener('blur', releaseAll);
+      document.addEventListener('visibilitychange', () => { if (document.hidden) releaseAll(); });
+      window.addEventListener('pagehide', releaseAll);
     })();
   </script>
 </body>
