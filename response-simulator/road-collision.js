@@ -16,4 +16,6 @@
   loadScript('road-collision-core.js', '20260719-road-core-1', () => {
     loadScript('road-intersection-softener.js', '20260719-rounded-intersections-1');
   });
+
+  loadScript('route-compare.js', '1.4.0');
 })();
