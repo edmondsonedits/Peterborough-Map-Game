@@ -43,7 +43,10 @@
 
   function suppressLegacyDirectionalTarget() {
     if (!directionalIsActive()) return;
-    const target = Number(instruments.state.directionalTargetHeading);
+    const rawTarget = instruments.state.directionalTargetHeading;
+    if (rawTarget === null || rawTarget === undefined || rawTarget === '') return;
+
+    const target = Number(rawTarget);
     if (Number.isFinite(target)) {
       tuningState.targetHeading = normalizeHeading(target);
       tuningState.stickMagnitude = clamp(
@@ -117,8 +120,8 @@
         || Math.abs(currentVelocity) <= CONFIG.movementThreshold;
       const maximumStep = calculateTurnRate(delta, speedKmh, isStationary) * deltaSeconds;
 
-      // Far-away targets use the higher rate above. Exponential easing becomes
-      // dominant near the target, creating a soft, controlled final alignment.
+      // Large direction changes receive a strong initial response. As the truck
+      // aligns, exponential easing takes over for a soft, controlled finish.
       const speedRatio = clamp(speedKmh / CONFIG.lowSpeedReferenceKmh, 0, 1);
       const responsePerSecond = CONFIG.headingResponsePerSecond * (1 - 0.48 * speedRatio);
       const easedStep = delta * (1 - Math.exp(-responsePerSecond * deltaSeconds));
@@ -163,16 +166,22 @@
 
   function install() {
     instruments = window.PTBO_VEHICLE_INSTRUMENTS;
+    if (!instruments) {
+      setTimeout(install, CONFIG.retryDelayMs);
+      return;
+    }
+
+    if (window.parent === window) return;
     try {
-      steeringElement = window.parent !== window
-        ? window.parent.document.getElementById('steering')
-        : null;
+      steeringElement = window.parent.document.getElementById('steering');
     } catch {
       steeringElement = null;
     }
 
-    if (!instruments || !steeringElement) {
-      setTimeout(install, CONFIG.retryDelayMs);
+    if (!steeringElement) {
+      if (window.parent.document.readyState === 'loading') {
+        setTimeout(install, CONFIG.retryDelayMs);
+      }
       return;
     }
 
