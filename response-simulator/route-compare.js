@@ -1,12 +1,508 @@
 (() => {
   'use strict';
-  const payload = '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';
-  const start = async () => {
-    if (typeof DecompressionStream !== 'function') throw new Error('This browser cannot unpack the route comparison module.');
-    const bytes = Uint8Array.from(atob(payload), character => character.charCodeAt(0));
-    const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
-    const source = await new Response(stream).text();
-    (0, eval)(source + '\n//# sourceURL=route-compare-core.js');
+
+  const VERSION = '1.4.1';
+  if (window.PTBO_ROUTE_COMPARE_VERSION === VERSION) return;
+  window.PTBO_ROUTE_COMPARE_VERSION = VERSION;
+
+  const COLORS = Object.freeze({
+    user: '#2563eb',
+    suggested: '#22c55e',
+    casing: '#ffffff',
+    dark: '#07111f',
+  });
+
+  const state = {
+    runKey: null,
+    recording: false,
+    completed: false,
+    reviewOpen: false,
+    start: null,
+    destination: null,
+    incident: null,
+    points: [],
+    suggestedRoute: null,
+    suggestedPromise: null,
+    elapsedMs: 0,
+    lastSampleAt: 0,
+    lastPoint: null,
+    playerDistance: 0,
+    previousCameraLock: null,
+    layers: [],
+    playerLine: null,
+    suggestedLine: null,
+    button: null,
+    legend: null,
+    statusTimer: null,
   };
-  start().catch(error => console.error('Unable to start the post-call route comparison system.', error));
+
+  function globalsReady() {
+    return typeof mapInstance !== 'undefined' && mapInstance &&
+      typeof simulationState !== 'undefined' && typeof STATES !== 'undefined';
+  }
+
+  function distanceMeters(a, b) {
+    if (!a || !b) return 0;
+    try {
+      if (mapInstance?.distance) return mapInstance.distance([a.lat, a.lng], [b.lat, b.lng]);
+    } catch (_) {}
+    const radius = 6371000;
+    const toRad = value => value * Math.PI / 180;
+    const p1 = toRad(a.lat);
+    const p2 = toRad(b.lat);
+    const dLat = p2 - p1;
+    const dLng = toRad(b.lng - a.lng);
+    const h = Math.sin(dLat / 2) ** 2 + Math.cos(p1) * Math.cos(p2) * Math.sin(dLng / 2) ** 2;
+    return 2 * radius * Math.atan2(Math.sqrt(h), Math.sqrt(1 - h));
+  }
+
+  function formatDistance(meters) {
+    if (!Number.isFinite(meters)) return 'Unavailable';
+    if (meters < 1000) return `${Math.round(meters)} m`;
+    return `${(meters / 1000).toFixed(meters < 10000 ? 1 : 0)} km`;
+  }
+
+  function formatTime(milliseconds) {
+    const total = Math.max(0, Number(milliseconds) || 0) / 1000;
+    const minutes = Math.floor(total / 60);
+    const seconds = total - minutes * 60;
+    return minutes ? `${minutes}:${seconds.toFixed(1).padStart(4, '0')}` : `${seconds.toFixed(1)} s`;
+  }
+
+  function incidentKey(incident) {
+    if (!incident) return null;
+    return incident.id || `${incident.name}|${incident.addr}|${incident.lat}|${incident.lng}`;
+  }
+
+  function installStyles() {
+    if (document.getElementById('ptbo-route-compare-styles')) return;
+    const style = document.createElement('style');
+    style.id = 'ptbo-route-compare-styles';
+    style.textContent = `
+      #ptbo-compare-route-btn{display:none;margin-top:6px;background:#1d4ed8;border:1px solid #60a5fa;color:#fff}
+      #ptbo-compare-route-btn:hover{background:#1e40af}
+      #ptbo-compare-route-btn.is-open{background:#374151;border-color:#9ca3af}
+      #ptbo-route-legend{position:absolute;left:15px;top:118px;z-index:1400;width:min(270px,calc(100vw - 30px));padding:12px;color:#f8fafc;border:1px solid rgba(255,255,255,.22);border-radius:11px;background:rgba(7,17,31,.94);box-shadow:0 8px 28px rgba(0,0,0,.42);backdrop-filter:blur(6px)}
+      #ptbo-route-legend.hidden{display:none}
+      #ptbo-route-legend .compare-title{font-size:11px;font-weight:900;letter-spacing:.11em;text-transform:uppercase}
+      #ptbo-route-legend .compare-subtitle{margin-top:3px;color:#cbd5e1;font-size:10px;line-height:1.35}
+      #ptbo-route-legend .compare-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:9px;font-size:11px;font-weight:800}
+      #ptbo-route-legend .compare-label{display:flex;align-items:center;gap:8px;min-width:0}
+      #ptbo-route-legend .compare-swatch{width:28px;height:5px;border:1px solid rgba(255,255,255,.9);border-radius:999px;box-shadow:0 1px 3px rgba(0,0,0,.5)}
+      #ptbo-route-legend button{padding:5px 7px;color:#fff;border:1px solid rgba(255,255,255,.22);border-radius:7px;background:rgba(255,255,255,.08);font:inherit;font-size:9px;font-weight:850;cursor:pointer}
+      #ptbo-route-legend button[aria-pressed="false"]{opacity:.48}
+      #ptbo-route-legend .compare-stats{margin-top:10px;padding-top:9px;border-top:1px solid rgba(255,255,255,.14);color:#dbeafe;font-size:10px;line-height:1.55}
+      #ptbo-route-legend .compare-status{margin-top:8px;color:#fbbf24;font-size:10px;line-height:1.35}
+      #ptbo-route-legend .compare-close{width:100%;margin-top:10px;padding:8px;background:#374151}
+      .ptbo-review-dimmed{opacity:.38!important;pointer-events:none!important}
+      #ptbo-version-badge{margin-top:18px;color:#9ca3af;font-size:8px;font-weight:700;letter-spacing:.08em;text-align:right;opacity:.58}
+      @media(max-width:900px),(pointer:coarse){
+        #ptbo-route-legend{top:calc(158px + env(safe-area-inset-top));left:10px;width:min(255px,calc(100vw - 20px));padding:10px}
+        #ptbo-compare-route-btn{min-height:36px!important;padding:6px 5px!important;font-size:10px!important}
+      }
+      @media(orientation:landscape) and (max-height:560px){
+        #ptbo-route-legend{top:calc(132px + env(safe-area-inset-top));max-height:calc(100vh - 155px);overflow:auto}
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  function installVersionBadge() {
+    const panel = document.querySelector('.panel-scroll');
+    if (!panel) return;
+    let badge = document.getElementById('ptbo-version-badge');
+    if (!badge) {
+      badge = document.createElement('div');
+      badge.id = 'ptbo-version-badge';
+      panel.appendChild(badge);
+    }
+    badge.textContent = `v${VERSION}`;
+  }
+
+  function installUi() {
+    installStyles();
+    installVersionBadge();
+    const timerBlock = document.querySelector('.hud-timer-block');
+    if (!timerBlock) return false;
+
+    let button = document.getElementById('ptbo-compare-route-btn');
+    if (!button) {
+      button = document.createElement('button');
+      button.id = 'ptbo-compare-route-btn';
+      button.className = 'hud-btn';
+      button.type = 'button';
+      button.textContent = 'Compare Route';
+      button.addEventListener('click', () => state.reviewOpen ? closeReview() : openReview());
+      timerBlock.appendChild(button);
+    }
+    state.button = button;
+
+    let legend = document.getElementById('ptbo-route-legend');
+    if (!legend) {
+      legend = document.createElement('section');
+      legend.id = 'ptbo-route-legend';
+      legend.className = 'hidden';
+      legend.setAttribute('aria-live', 'polite');
+      document.body.appendChild(legend);
+    }
+    state.legend = legend;
+    return true;
+  }
+
+  function setButtonVisible(visible) {
+    if (!state.button) return;
+    state.button.style.display = visible ? 'block' : 'none';
+    state.button.disabled = !visible;
+    state.button.classList.toggle('is-open', state.reviewOpen);
+    state.button.textContent = state.reviewOpen ? 'Close Comparison' : 'Compare Route';
+  }
+
+  function resetRun() {
+    closeReview({ silent: true });
+    state.runKey = null;
+    state.recording = false;
+    state.completed = false;
+    state.start = null;
+    state.destination = null;
+    state.incident = null;
+    state.points = [];
+    state.suggestedRoute = null;
+    state.suggestedPromise = null;
+    state.elapsedMs = 0;
+    state.lastSampleAt = 0;
+    state.lastPoint = null;
+    state.playerDistance = 0;
+    setButtonVisible(false);
+  }
+
+  function startRun() {
+    if (!activeIncident) return;
+    const key = incidentKey(activeIncident);
+    if (state.recording && state.runKey === key) return;
+    closeReview({ silent: true });
+    state.runKey = key;
+    state.recording = true;
+    state.completed = false;
+    state.start = { lat: Number(simLat), lng: Number(simLng) };
+    state.destination = { lat: Number(activeIncident.lat), lng: Number(activeIncident.lng) };
+    state.incident = { ...activeIncident };
+    state.points = [state.start];
+    state.lastPoint = state.start;
+    state.playerDistance = 0;
+    state.elapsedMs = 0;
+    state.lastSampleAt = performance.now();
+    state.suggestedRoute = null;
+    state.suggestedPromise = calculateSuggestedRoute();
+    setButtonVisible(false);
+  }
+
+  function sampleRun(now = performance.now()) {
+    if (!state.recording || simulationState !== STATES.ENROUTE) return;
+    const point = { lat: Number(simLat), lng: Number(simLng) };
+    if (!Number.isFinite(point.lat) || !Number.isFinite(point.lng)) return;
+    state.elapsedMs = Number(elapsedMilliseconds) || Math.max(0, now - state.lastSampleAt);
+    if (!state.lastPoint) {
+      state.lastPoint = point;
+      state.points.push(point);
+      return;
+    }
+    const moved = distanceMeters(state.lastPoint, point);
+    if (moved < 4) return;
+    state.playerDistance += moved;
+    state.points.push(point);
+    state.lastPoint = point;
+  }
+
+  function completeRun() {
+    if (!state.recording || state.completed) return;
+    const finalPoint = { lat: Number(simLat), lng: Number(simLng) };
+    if (state.lastPoint && Number.isFinite(finalPoint.lat) && distanceMeters(state.lastPoint, finalPoint) > 1) {
+      state.playerDistance += distanceMeters(state.lastPoint, finalPoint);
+      state.points.push(finalPoint);
+      state.lastPoint = finalPoint;
+    }
+    state.elapsedMs = Number(elapsedMilliseconds) || state.elapsedMs;
+    state.recording = false;
+    state.completed = true;
+  }
+
+  async function calculateSuggestedRoute() {
+    if (!state.start || !state.destination) return null;
+    const waitUntilReady = async () => {
+      for (let attempt = 0; attempt < 60; attempt += 1) {
+        if (window.PTBO_ROUTE_REVEAL?.calculateRoute) {
+          try { await window.PTBO_ROUTE_REVEAL.ready; } catch (_) {}
+          return window.PTBO_ROUTE_REVEAL;
+        }
+        await new Promise(resolve => setTimeout(resolve, 100));
+      }
+      return null;
+    };
+    const router = await waitUntilReady();
+    if (!router?.calculateRoute) return null;
+    try {
+      const route = router.calculateRoute(state.start.lat, state.start.lng, state.destination.lat, state.destination.lng);
+      state.suggestedRoute = route || null;
+      return state.suggestedRoute;
+    } catch (error) {
+      console.error('Suggested route comparison failed.', error);
+      return null;
+    }
+  }
+
+  function simplify(points, toleranceMeters = 2.5) {
+    if (!Array.isArray(points) || points.length < 3) return points || [];
+    const sqTolerance = toleranceMeters * toleranceMeters;
+    const project = point => {
+      const scale = 111320 * Math.cos((state.start?.lat || point.lat) * Math.PI / 180);
+      return { x: point.lng * scale, y: point.lat * 110540 };
+    };
+    const source = points.map((point, index) => ({ ...project(point), point, index }));
+    const keep = new Uint8Array(source.length);
+    keep[0] = keep[source.length - 1] = 1;
+    const stack = [[0, source.length - 1]];
+    while (stack.length) {
+      const [first, last] = stack.pop();
+      const a = source[first];
+      const b = source[last];
+      const dx = b.x - a.x;
+      const dy = b.y - a.y;
+      const lengthSq = dx * dx + dy * dy;
+      let maxSq = 0;
+      let maxIndex = -1;
+      for (let i = first + 1; i < last; i += 1) {
+        const p = source[i];
+        let t = lengthSq ? ((p.x - a.x) * dx + (p.y - a.y) * dy) / lengthSq : 0;
+        t = Math.max(0, Math.min(1, t));
+        const px = a.x + dx * t;
+        const py = a.y + dy * t;
+        const distSq = (p.x - px) ** 2 + (p.y - py) ** 2;
+        if (distSq > maxSq) { maxSq = distSq; maxIndex = i; }
+      }
+      if (maxIndex > 0 && maxSq > sqTolerance) {
+        keep[maxIndex] = 1;
+        stack.push([first, maxIndex], [maxIndex, last]);
+      }
+    }
+    return source.filter((_, index) => keep[index]).map(item => item.point);
+  }
+
+  function addLayer(layer) {
+    state.layers.push(layer);
+    return layer.addTo(mapInstance);
+  }
+
+  function clearLayers() {
+    if (mapInstance) state.layers.forEach(layer => {
+      try { mapInstance.removeLayer(layer); } catch (_) {}
+    });
+    state.layers = [];
+    state.playerLine = null;
+    state.suggestedLine = null;
+  }
+
+  function drawPolyline(points, color) {
+    const casing = addLayer(L.polyline(points, {
+      color: COLORS.casing,
+      weight: 10,
+      opacity: .88,
+      lineCap: 'round',
+      lineJoin: 'round',
+      interactive: false,
+    }));
+    const line = addLayer(L.polyline(points, {
+      color,
+      weight: 6,
+      opacity: .98,
+      lineCap: 'round',
+      lineJoin: 'round',
+      interactive: false,
+    }));
+    line._ptboCasing = casing;
+    return line;
+  }
+
+  function setLineVisible(line, visible) {
+    if (!line) return;
+    const opacity = visible ? .98 : 0;
+    line.setStyle({ opacity });
+    line._ptboCasing?.setStyle({ opacity: visible ? .88 : 0 });
+  }
+
+  function buildLegend() {
+    if (!state.legend) return;
+    const suggestedDistance = Number(state.suggestedRoute?.distance);
+    const difference = Number.isFinite(suggestedDistance) ? state.playerDistance - suggestedDistance : NaN;
+    const efficiency = Number.isFinite(suggestedDistance) && state.playerDistance > 0
+      ? Math.min(999, suggestedDistance / state.playerDistance * 100)
+      : NaN;
+    const suggestedStatus = state.suggestedRoute
+      ? ''
+      : '<div class="compare-status">Suggested route unavailable. Your completed route is still shown.</div>';
+    state.legend.innerHTML = `
+      <div class="compare-title">Route Comparison</div>
+      <div class="compare-subtitle">Move and zoom the map to review the completed response.</div>
+      <div class="compare-row">
+        <div class="compare-label"><span class="compare-swatch" style="background:${COLORS.user}"></span>Your Route</div>
+        <button type="button" data-toggle="player" aria-pressed="true">Hide</button>
+      </div>
+      <div class="compare-row">
+        <div class="compare-label"><span class="compare-swatch" style="background:${COLORS.suggested}"></span>Suggested Route</div>
+        <button type="button" data-toggle="suggested" aria-pressed="${state.suggestedRoute ? 'true' : 'false'}" ${state.suggestedRoute ? '' : 'disabled'}>Hide</button>
+      </div>
+      <div class="compare-stats">
+        Your distance: <strong>${formatDistance(state.playerDistance)}</strong><br>
+        Suggested distance: <strong>${formatDistance(suggestedDistance)}</strong><br>
+        Difference: <strong>${Number.isFinite(difference) ? `${difference >= 0 ? '+' : ''}${formatDistance(difference)}` : 'Unavailable'}</strong><br>
+        Efficiency: <strong>${Number.isFinite(efficiency) ? `${Math.round(efficiency)}%` : 'Unavailable'}</strong><br>
+        Response time: <strong>${formatTime(state.elapsedMs)}</strong>
+      </div>
+      ${suggestedStatus}
+      <button class="compare-close" type="button">Close Comparison</button>
+    `;
+    state.legend.querySelector('[data-toggle="player"]')?.addEventListener('click', event => {
+      const showing = event.currentTarget.getAttribute('aria-pressed') !== 'false';
+      setLineVisible(state.playerLine, !showing);
+      event.currentTarget.setAttribute('aria-pressed', String(!showing));
+      event.currentTarget.textContent = showing ? 'Show' : 'Hide';
+    });
+    state.legend.querySelector('[data-toggle="suggested"]')?.addEventListener('click', event => {
+      const showing = event.currentTarget.getAttribute('aria-pressed') !== 'false';
+      setLineVisible(state.suggestedLine, !showing);
+      event.currentTarget.setAttribute('aria-pressed', String(!showing));
+      event.currentTarget.textContent = showing ? 'Show' : 'Hide';
+    });
+    state.legend.querySelector('.compare-close')?.addEventListener('click', () => closeReview());
+  }
+
+  function setMobileControlsDisabled(disabled) {
+    try {
+      if (window.parent === window) return;
+      const parentDoc = window.parent.document;
+      const controls = parentDoc.querySelector('.mobile-controls');
+      const topbar = parentDoc.querySelector('.mobile-topbar');
+      controls?.classList.toggle('ptbo-review-dimmed', disabled);
+      if (controls) controls.style.pointerEvents = disabled ? 'none' : '';
+      topbar?.classList.toggle('ptbo-review-dimmed', disabled);
+    } catch (_) {}
+  }
+
+  function stopVehicleInput(event) {
+    if (!state.reviewOpen) return;
+    if (event.key?.startsWith('Arrow') || ['w','a','s','d','W','A','S','D'].includes(event.key)) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    }
+  }
+  window.addEventListener('keydown', stopVehicleInput, true);
+  window.addEventListener('keyup', stopVehicleInput, true);
+
+  function forceVehicleStopped() {
+    if (!state.reviewOpen) return;
+    try {
+      velocity = 0;
+      Object.keys(keys || {}).forEach(key => { keys[key] = false; });
+    } catch (_) {}
+  }
+
+  async function openReview() {
+    if (!state.completed || !state.start || state.points.length < 2 || !mapInstance) return;
+    state.reviewOpen = true;
+    setButtonVisible(true);
+    if (window.PTBO_ROUTE_REVEAL?.hideRoute) window.PTBO_ROUTE_REVEAL.hideRoute();
+    if (!state.suggestedRoute) {
+      state.suggestedPromise ||= calculateSuggestedRoute();
+      await Promise.race([state.suggestedPromise, new Promise(resolve => setTimeout(resolve, 1800))]);
+    }
+
+    clearLayers();
+    const playerPoints = simplify(state.points);
+    state.playerLine = drawPolyline(playerPoints, COLORS.user);
+    if (state.suggestedRoute?.coordinates?.length) {
+      state.suggestedLine = drawPolyline(state.suggestedRoute.coordinates, COLORS.suggested);
+    }
+    addLayer(L.circleMarker([state.start.lat, state.start.lng], {
+      radius: 7, color: '#fff', weight: 3, fillColor: '#0f172a', fillOpacity: 1,
+    }).bindTooltip('Dispatch Start', { permanent: false, direction: 'top' }));
+    addLayer(L.circleMarker([state.destination.lat, state.destination.lng], {
+      radius: 8, color: '#fff', weight: 3, fillColor: '#dc2626', fillOpacity: 1,
+    }).bindTooltip('Incident', { permanent: false, direction: 'top' }));
+
+    const camera = document.getElementById('chk-camera');
+    if (camera) {
+      state.previousCameraLock = camera.checked;
+      camera.checked = false;
+    }
+    try { headingUpMode = false; updateMapOrientation?.(); } catch (_) {}
+    setMobileControlsDisabled(true);
+    buildLegend();
+    state.legend?.classList.remove('hidden');
+
+    const group = L.featureGroup(state.layers);
+    if (group.getBounds().isValid()) mapInstance.fitBounds(group.getBounds(), { padding: [55, 55], maxZoom: 16, animate: true });
+  }
+
+  function closeReview({ silent = false } = {}) {
+    if (!state.reviewOpen && !state.layers.length) {
+      if (!silent) setButtonVisible(state.completed);
+      return;
+    }
+    state.reviewOpen = false;
+    clearLayers();
+    state.legend?.classList.add('hidden');
+    setMobileControlsDisabled(false);
+    const camera = document.getElementById('chk-camera');
+    if (camera && state.previousCameraLock !== null) camera.checked = state.previousCameraLock;
+    state.previousCameraLock = null;
+    if (!silent) {
+      setButtonVisible(state.completed);
+      if (mapInstance && Number.isFinite(Number(simLat))) mapInstance.setView([simLat, simLng], mapInstance.getZoom(), { animate: true });
+    }
+  }
+
+  function sync() {
+    if (!globalsReady()) return;
+    installUi();
+    forceVehicleStopped();
+
+    if (simulationState === STATES.ENROUTE && activeIncident) {
+      const key = incidentKey(activeIncident);
+      if (!state.recording || state.runKey !== key) startRun();
+      sampleRun();
+      return;
+    }
+
+    if (state.recording && (simulationState === STATES.ONSCENE || simulationState === STATES.INSERVICE)) {
+      completeRun();
+    }
+
+    const actionButton = document.getElementById('hud-action-btn');
+    const isFinished = state.completed && simulationState === STATES.INSERVICE;
+    const nextCallReady = actionButton && /next call/i.test(actionButton.textContent || '');
+    setButtonVisible(Boolean(isFinished && nextCallReady));
+
+    if (state.completed && simulationState === STATES.INACTIVE) resetRun();
+  }
+
+  function initialize() {
+    installStyles();
+    const observer = new MutationObserver(() => {
+      installUi();
+      installVersionBadge();
+    });
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+    state.statusTimer = setInterval(sync, 120);
+    sync();
+    window.dispatchEvent(new CustomEvent('ptbo-route-compare-ready', { detail: { version: VERSION } }));
+  }
+
+  window.PTBO_ROUTE_COMPARE = Object.freeze({
+    version: VERSION,
+    state,
+    open: openReview,
+    close: closeReview,
+    reset: resetRun,
+  });
+
+  initialize();
 })();
