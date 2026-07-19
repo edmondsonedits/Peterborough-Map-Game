@@ -25,14 +25,14 @@
     .joystick-thumb{position:absolute;left:50%;top:50%;width:62px;height:62px;display:grid;place-items:center;color:var(--ink);border:2px solid rgba(255,255,255,.45);border-radius:50%;background:linear-gradient(145deg,#374151,#111827);box-shadow:0 7px 17px rgba(0,0,0,.45);transform:translate(-50%,-50%);transition:transform 90ms ease;pointer-events:none}.joystick.active .joystick-thumb{transition:none}.joystick-thumb svg{width:34px;height:34px;stroke:currentColor}
     .utility-zone{display:flex;flex-direction:column;align-items:center;gap:9px;padding-bottom:8px}.utility-button{width:48px;height:48px;border-radius:50%;background:var(--panel)}.utility-button.active{color:#fff;border-color:rgba(239,68,68,.72);background:rgba(185,28,28,.94)}
     .pedal-zone{display:flex;align-items:flex-end;justify-content:flex-end;gap:10px;touch-action:none}.pedal{width:76px;height:112px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:0;color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:24px;box-shadow:0 10px 25px rgba(0,0,0,.42),inset 0 1px rgba(255,255,255,.16);font:inherit;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;touch-action:none}.pedal svg{width:29px;height:29px;stroke:currentColor}.pedal.reverse{height:88px;background:linear-gradient(180deg,#374151,#1f2937)}.pedal.accelerate{background:linear-gradient(180deg,#ef2929,#b91c1c)}.pedal.pressed{transform:translateY(5px) scale(.97);filter:brightness(1.18)}
-    .loading-cover{position:fixed;inset:0;z-index:6000;display:grid;place-items:center;padding:24px;color:var(--ink);background:#111827;text-align:center;transition:opacity .18s}.loading-cover.hidden{opacity:0;pointer-events:none}.loading-cover strong{display:block;font-size:1.15rem}.loading-cover span{display:block;margin-top:6px;color:var(--muted);font-size:.9rem}
+    .loading-cover{position:fixed;inset:0;z-index:6000;display:grid;place-items:center;padding:24px;color:var(--ink);background:#111827;text-align:center;transition:opacity .18s}.loading-cover.hidden{opacity:0;pointer-events:none}.loading-cover strong{display:block;font-size:1.15rem}.loading-cover span{display:block;margin-top:6px;color:var(--muted);font-size:.9rem;line-height:1.45}.loading-cover button{margin-top:16px;padding:11px 20px;color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:10px;background:#dc2626;font:inherit;font-weight:850;touch-action:manipulation}
     .control-hint{position:fixed;left:50%;bottom:calc(184px + env(safe-area-inset-bottom));z-index:4950;width:min(88vw,380px);padding:9px 12px;color:#e5e7eb;border:1px solid rgba(255,255,255,.15);border-radius:999px;background:rgba(8,13,24,.84);font-size:11px;font-weight:700;text-align:center;transform:translateX(-50%);pointer-events:none;animation:fade-hint 5s forwards;transition:opacity .15s,visibility .15s}@keyframes fade-hint{0%,68%{opacity:1}100%{opacity:0;visibility:hidden}}
     @media(max-width:390px){.mobile-topbar{left:7px;right:7px;gap:5px;grid-template-columns:44px minmax(0,1fr) 93px}.station-shortcuts{gap:4px}.station-button{height:38px;padding:0 3px;font-size:8.5px}.top-button{width:44px;height:44px}.top-actions{gap:5px}.mobile-controls{grid-template-columns:126px 48px 142px;gap:7px}.joystick{width:126px;height:126px}.pedal{width:68px}}
     @media(orientation:landscape) and (max-height:560px){.mobile-controls{min-height:136px;grid-template-columns:120px 52px 176px;justify-content:space-between}.joystick{width:112px;height:112px}.joystick-thumb{width:54px;height:54px}.pedal{width:70px;height:98px}.pedal.reverse{height:78px}.utility-zone{flex-direction:row;padding-bottom:0}.control-hint{bottom:calc(142px + env(safe-area-inset-bottom))}}
   </style>
 </head>
 <body>
-  <iframe id="simulator" src="../index.html?v=1.4.4" title="Peterborough Fire and Emergency Dispatch Simulator"></iframe>
+  <iframe id="simulator" src="../index.html?v=1.4.5" title="Peterborough Fire and Emergency Dispatch Simulator"></iframe>
   <nav class="mobile-topbar" aria-label="Simulator navigation, audio, and station spawns">
     <div class="top-actions"><a class="top-button" href="../../" aria-label="Return to all games"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></a></div>
     <div class="station-shortcuts">
@@ -53,19 +53,20 @@
   </section>
 
   <div class="control-hint">Drag the wheel to steer · Hold Gas to drive · Hold Reverse to back up</div>
-  <div class="loading-cover" id="loading-cover"><div><strong>Loading mobile simulator</strong><span>Preparing touch controls and updated calls…</span></div></div>
+  <div class="loading-cover" id="loading-cover"><div><strong>Loading mobile simulator</strong><span id="loading-status">Preparing steering, road boundaries, and updated calls…</span></div></div>
 
-  <script src="../../shared/dispatch-locations.js?v=1.4.4"></script>
-  <script src="../../shared/dispatch-data-1.4.4.js?v=1.4.4"></script>
-  <script src="../../shared/dispatch-override-1.4.4.js?v=1.4.4"></script>
-  <script src="../../shared/stations.js?v=1.4.4"></script>
+  <script src="../../shared/dispatch-locations.js?v=1.4.5"></script>
+  <script src="../../shared/dispatch-data-1.4.4.js?v=1.4.5"></script>
+  <script src="../../shared/dispatch-override-1.4.4.js?v=1.4.5"></script>
+  <script src="../../shared/stations.js?v=1.4.5"></script>
   <script>
     (() => {
-      const VERSION = '1.4.4';
+      const VERSION = '1.4.5';
       const MOBILE_ZOOM = 18;
       const AUDIO_KEY = 'ptboDispatchVoiceEnabled';
       const frame = document.getElementById('simulator');
       const loading = document.getElementById('loading-cover');
+      const loadingStatus = document.getElementById('loading-status');
       const steering = document.getElementById('steering');
       const thumb = document.getElementById('steering-thumb');
       const gas = document.getElementById('gas-pedal');
@@ -79,6 +80,7 @@
       let voiceEnabled = localStorage.getItem(AUDIO_KEY) !== 'false';
       let selectedStation = 1;
       let steeringPointer = null;
+      let fallbackSteeringKey = null;
       const pressed = new Set();
       const sim = () => frame.contentWindow;
       const haptic = (duration = 8) => navigator.vibrate?.(duration);
@@ -95,11 +97,22 @@
         audio.setAttribute('aria-label', voiceEnabled ? 'Mute dispatch voice' : 'Turn on dispatch voice');
       }
 
+      function dispatchKey(key, down) {
+        sim()?.dispatchEvent(new KeyboardEvent(down ? 'keydown' : 'keyup', { key, code:key, bubbles:true, cancelable:true }));
+      }
+
       function sendKey(name, down) {
         if ((down && pressed.has(name)) || (!down && !pressed.has(name))) return;
         down ? pressed.add(name) : pressed.delete(name);
-        const key = name === 'gas' ? 'ArrowUp' : 'ArrowDown';
-        sim()?.dispatchEvent(new KeyboardEvent(down ? 'keydown' : 'keyup', { key, code:key, bubbles:true, cancelable:true }));
+        dispatchKey(name === 'gas' ? 'ArrowUp' : 'ArrowDown', down);
+      }
+
+      function setFallbackSteering(value) {
+        const nextKey = value < -0.08 ? 'ArrowLeft' : value > 0.08 ? 'ArrowRight' : null;
+        if (fallbackSteeringKey === nextKey) return;
+        if (fallbackSteeringKey) dispatchKey(fallbackSteeringKey, false);
+        fallbackSteeringKey = nextKey;
+        if (fallbackSteeringKey) dispatchKey(fallbackSteeringKey, true);
       }
 
       function bindPedal(button, name) {
@@ -129,7 +142,13 @@
         const offset = Math.max(-travel, Math.min(travel, clientX - (rect.left + rect.width / 2)));
         const value = offset / Math.max(1, travel);
         thumb.style.transform = `translate(calc(-50% + ${offset}px), -50%)`;
-        sim()?.PTBO_VEHICLE_INSTRUMENTS?.setAnalogSteering?.(value);
+        const instruments = sim()?.PTBO_VEHICLE_INSTRUMENTS;
+        if (instruments?.setAnalogSteering) {
+          setFallbackSteering(0);
+          instruments.setAnalogSteering(value);
+        } else {
+          setFallbackSteering(value);
+        }
       }
 
       function releaseSteering(event) {
@@ -137,6 +156,7 @@
         steeringPointer = null;
         steering.classList.remove('active');
         thumb.style.transform = 'translate(-50%,-50%)';
+        setFallbackSteering(0);
         sim()?.PTBO_VEHICLE_INSTRUMENTS?.setAnalogSteering?.(0);
       }
 
@@ -190,22 +210,38 @@
       bindPedal(reverse, 'reverse');
 
       function injectScript(doc, filename, marker) {
-        if (doc.querySelector(`script[${marker}]`)) return;
-        const script = doc.createElement('script');
-        script.src = new URL(`../${filename}?v=${VERSION}`, location.href).href;
-        script.setAttribute(marker, 'true');
-        script.onerror = () => console.error(`Unable to load ${filename}.`);
-        doc.body.appendChild(script);
+        return new Promise((resolve, reject) => {
+          const existing = doc.querySelector(`script[${marker}]`);
+          if (existing) {
+            if (existing.dataset.ptboLoaded === 'true') return resolve(existing);
+            existing.addEventListener('load', () => resolve(existing), { once:true });
+            existing.addEventListener('error', () => reject(new Error(`Unable to load ${filename}.`)), { once:true });
+            return;
+          }
+          const script = doc.createElement('script');
+          script.src = new URL(`../${filename}?v=${VERSION}`, location.href).href;
+          script.setAttribute(marker, 'true');
+          script.onload = () => { script.dataset.ptboLoaded = 'true'; resolve(script); };
+          script.onerror = () => reject(new Error(`Unable to load ${filename}.`));
+          doc.body.appendChild(script);
+        });
+      }
+
+      function showStartupError(error) {
+        console.error('Mobile simulator startup failed.', error);
+        loading.innerHTML = '<div><strong>Simulator did not finish loading</strong><span>Steering or road boundaries could not initialize. Retry to load the protected driving mode.</span><button type="button" id="startup-retry">Retry</button></div>';
+        document.getElementById('startup-retry')?.addEventListener('click', () => location.reload());
       }
 
       frame.addEventListener('load', () => {
         const doc = frame.contentDocument;
-        if (!doc) return;
+        const game = frame.contentWindow;
+        if (!doc || !game) return;
         const style = doc.createElement('style');
         style.textContent = `#game-home,#menu-toggle{display:none!important}#dispatch-hud{top:calc(66px + env(safe-area-inset-top))!important;left:10px!important;right:10px!important;width:auto!important;max-width:none!important;padding:11px 12px 11px 14px!important;transform:none!important;border-left-width:4px!important;border-radius:14px!important;display:grid!important;grid-template-columns:minmax(0,1fr) 98px!important;align-items:center!important;gap:10px!important}.hud-main{min-width:0!important}.hud-title{font-size:9px!important}.hud-address{font-size:15px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}.hud-meta{font-size:10px!important;line-height:1.3!important}.hud-timer-block{min-width:0!important;margin-left:0!important}.hud-clock-display{font-size:21px!important}.hud-btn{min-height:40px!important;padding:7px 8px!important;border-radius:10px!important;font-size:12px!important}#control-panel{width:min(360px,100vw)!important;z-index:3000!important}.panel-scroll{padding:calc(70px + env(safe-area-inset-top)) 18px calc(190px + env(safe-area-inset-bottom))!important}.leaflet-bottom{bottom:calc(174px + env(safe-area-inset-bottom))!important}#map-orientation-controls{display:none!important}`;
         doc.head.appendChild(style);
-        injectScript(doc, 'route-compare-1.4.2.js', 'data-ptbo-route-compare-core');
-        injectScript(doc, 'route-review-ui-1.4.3.js', 'data-ptbo-route-review-ui');
+        injectScript(doc, 'route-compare-1.4.2.js', 'data-ptbo-route-compare-core').catch(console.error);
+        injectScript(doc, 'route-review-ui-1.4.3.js', 'data-ptbo-route-review-ui').catch(console.error);
 
         const helper = doc.createElement('script');
         helper.textContent = `(() => {
@@ -217,16 +253,24 @@
           setTimeout(window.mobileRecenter, 0);
         })();`;
         doc.body.appendChild(helper);
-        window.PTBO_DISPATCH_STORE.ready()
-          .catch(error => console.error('Unable to load v1.4.4 dispatch data.', error))
-          .finally(() => {
+
+        loadingStatus.textContent = 'Connecting touch steering and road boundaries…';
+        const simulatorReady = injectScript(doc, 'simulator-readiness-1.4.5.js', 'data-ptbo-simulator-readiness')
+          .then(() => game.PTBO_SIMULATOR_READY || Promise.reject(new Error('Startup verifier was not created.')));
+        const dispatchReady = window.PTBO_DISPATCH_STORE.ready();
+
+        Promise.all([dispatchReady, simulatorReady])
+          .then(() => {
+            loadingStatus.textContent = 'Simulator ready';
             loading.classList.add('hidden');
             setTimeout(() => loading.remove(), 250);
-          });
+          })
+          .catch(showStartupError);
       });
 
       function releaseAll() {
         [...pressed].forEach(name => sendKey(name, false));
+        setFallbackSteering(0);
         releaseSteering();
         gas.classList.remove('pressed');
         reverse.classList.remove('pressed');
