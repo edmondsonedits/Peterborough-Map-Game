@@ -1,5 +1,6 @@
 name: Fix response simulator desktop UI
 
+# Updating this file automatically runs the repair; no manual GitHub action is required.
 on:
   push:
     paths:
