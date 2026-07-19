@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Repair corrupted symbols and verify output
+      - name: Repair symbols and add version label
         run: |
           python3 - <<'PY'
           from pathlib import Path
@@ -24,11 +24,9 @@ jobs:
           path = Path('response-simulator/index.html')
           text = path.read_text(encoding='utf-8')
 
-          # Replace complete UI elements instead of depending on how a browser
-          # renders the corrupted byte sequences.
           text = re.sub(
               r'(<a id="game-home"[^>]*>).*?(</a>)',
-              r'\1&#8592; All Games\2',
+              r'\g<1>&#8592; All Games\g<2>',
               text,
               count=1,
               flags=re.S,
@@ -41,23 +39,53 @@ jobs:
           }
           for station, replacement in station_labels.items():
               pattern = rf'(<button class="station-spawn-box" onclick="teleportToStation\([^>]+>){station}.*?(</button>)'
-              text = re.sub(pattern, rf'\1{replacement}\2', text, count=1, flags=re.S)
+              text = re.sub(pattern, rf'\g<1>{replacement}\g<2>', text, count=1, flags=re.S)
 
-          # Fix both the initial telemetry value and the value produced while driving.
-          text = re.sub(r'(<span id="tel-hdg">).*?(</span>)', r'\1180&deg;\2', text, count=1, flags=re.S)
+          text = re.sub(
+              r'(<span id="tel-hdg">).*?(</span>)',
+              r'\g<1>180&deg;\g<2>',
+              text,
+              count=1,
+              flags=re.S,
+          )
           text = re.sub(
               r"document\.getElementById\('tel-hdg'\)\.innerText\s*=\s*Math\.round\(currentHeading\)\s*\+\s*[^;]+;",
               "document.getElementById('tel-hdg').innerText = Math.round(currentHeading) + '\\u00B0';",
               text,
           )
 
-          # Remove remaining damaged decorative prefixes from status headings.
-          text = re.sub(r'(<div class="hud-title"[^>]*>)[^A-Za-z<]*(ACTIVE ENROUTE DISPATCH:)', r'\1\2', text)
-          text = re.sub(r'(<div class="hud-title"[^>]*>)[^A-Za-z<]*(ON SCENE AS REPORTED)', r'\1\2', text)
+          text = re.sub(r'(<div class="hud-title"[^>]*>)[^A-Za-z<]*(ACTIVE ENROUTE DISPATCH:)', r'\g<1>\g<2>', text)
+          text = re.sub(r'(<div class="hud-title"[^>]*>)[^A-Za-z<]*(ON SCENE AS REPORTED)', r'\g<1>\g<2>', text)
+
+          version_css = '''
+        .sim-version {
+            margin-top: 18px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(0,0,0,.08);
+            color: #999;
+            font-size: 9px;
+            line-height: 1;
+            letter-spacing: .45px;
+            text-align: right;
+            user-select: none;
+        }
+'''
+          if '.sim-version {' not in text:
+              text = text.replace('    </style>', version_css + '    </style>', 1)
+
+          version_html = '            <div class="sim-version" aria-label="Simulator version 1.3.1">v1.3.1</div>\n'
+          if 'class="sim-version"' not in text:
+              panel_end = '        </div>\n    </div>\n\n    <div id="map-orientation-controls"'
+              replacement = version_html + '        </div>\n    </div>\n\n    <div id="map-orientation-controls"'
+              if panel_end not in text:
+                  raise SystemExit('Could not locate options panel footer')
+              text = text.replace(panel_end, replacement, 1)
+          else:
+              text = re.sub(r'(<div class="sim-version"[^>]*>).*?(</div>)', r'\g<1>v1.3.1\g<2>', text, count=1)
+              text = re.sub(r'aria-label="Simulator version [^"]+"', 'aria-label="Simulator version 1.3.1"', text, count=1)
 
           path.write_text(text, encoding='utf-8', newline='\n')
 
-          # Verification fails the workflow rather than publishing another partial fix.
           repaired = path.read_text(encoding='utf-8')
           required = [
               '&#8592; All Games',
@@ -66,12 +94,14 @@ jobs:
               'Station 3 &mdash; 839 Clonsilla Ave',
               '<span id="tel-hdg">180&deg;</span>',
               "Math.round(currentHeading) + '\\u00B0'",
+              'class="sim-version"',
+              '>v1.3.1</div>',
           ]
           missing = [item for item in required if item not in repaired]
           if missing:
               raise SystemExit('Verification failed; missing: ' + repr(missing))
 
-          forbidden = ['â€”', 'Â°']
+          forbidden = ['â€”', 'Â°', 'â†']
           remaining = [item for item in forbidden if item in repaired]
           if remaining:
               raise SystemExit('Verification failed; corrupted symbols remain: ' + repr(remaining))
@@ -86,5 +116,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add response-simulator/index.html
-          git commit -m "Fix response simulator corrupted symbols"
+          git commit -m "Add simulator version 1.3.1 and fix UI symbols"
           git push
