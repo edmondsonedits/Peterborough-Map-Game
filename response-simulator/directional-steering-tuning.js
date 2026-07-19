@@ -23,7 +23,9 @@
 
   const tuningState = {
     installed: false,
+    pointerActive: false,
     targetHeading: null,
+    heldHeading: null,
     stickMagnitude: 0,
     lastTimestamp: 0,
   };
@@ -41,14 +43,42 @@
     return instruments?.state?.steeringMode === DIRECTIONAL_MODE;
   }
 
+  function readCurrentHeading() {
+    try {
+      const heading = Number(currentHeading);
+      return Number.isFinite(heading) ? normalizeHeading(heading) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function clearResidualSteeringInput() {
+    if (instruments?.state) {
+      instruments.state.directionalTargetHeading = null;
+      instruments.state.directionalMagnitude = 0;
+      instruments.state.steeringRaw = 0;
+      instruments.state.steeringTarget = 0;
+      instruments.state.steeringApplied = 0;
+    }
+    try {
+      keys.ArrowLeft = false;
+      keys.ArrowRight = false;
+      keys.a = false;
+      keys.d = false;
+    } catch {
+      // Simulator key state may not be ready yet.
+    }
+  }
+
   function suppressLegacyDirectionalTarget() {
-    if (!directionalIsActive()) return;
+    if (!directionalIsActive() || !tuningState.pointerActive) return;
     const rawTarget = instruments.state.directionalTargetHeading;
     if (rawTarget === null || rawTarget === undefined || rawTarget === '') return;
 
     const target = Number(rawTarget);
     if (Number.isFinite(target)) {
       tuningState.targetHeading = normalizeHeading(target);
+      tuningState.heldHeading = null;
       tuningState.stickMagnitude = clamp(
         Number(instruments.state.directionalMagnitude) || 0,
         0,
@@ -59,14 +89,28 @@
   }
 
   function captureDirectionalTarget() {
+    if (!directionalIsActive()) return;
+    tuningState.pointerActive = true;
     queueMicrotask(suppressLegacyDirectionalTarget);
   }
 
   function releaseDirectionalTarget() {
     queueMicrotask(() => {
+      tuningState.heldHeading = readCurrentHeading();
+      tuningState.pointerActive = false;
       tuningState.targetHeading = null;
       tuningState.stickMagnitude = 0;
-      if (instruments?.state) instruments.state.directionalTargetHeading = null;
+      clearResidualSteeringInput();
+
+      if (tuningState.heldHeading !== null) {
+        try {
+          currentHeading = tuningState.heldHeading;
+          vehicleMarker?.setRotationOrigin?.('center center');
+          vehicleMarker?.setRotationAngle?.(tuningState.heldHeading - 90);
+        } catch {
+          // Vehicle globals may not be ready during page dismissal.
+        }
+      }
     });
   }
 
@@ -98,7 +142,12 @@
   }
 
   function applyAdaptiveDirectionalSteering(deltaSeconds) {
-    if (!directionalIsActive() || tuningState.targetHeading === null || deltaSeconds <= 0) return;
+    if (
+      !directionalIsActive()
+      || !tuningState.pointerActive
+      || tuningState.targetHeading === null
+      || deltaSeconds <= 0
+    ) return;
 
     let heading;
     let currentVelocity;
@@ -138,7 +187,7 @@
   function updateOptionsDescription() {
     const note = document.getElementById('ptbo-steering-mode-note');
     if (note) {
-      note.textContent = 'Directional mode turns quickly toward large heading changes, eases softly as the truck aligns, and reduces steering at higher speeds.';
+      note.textContent = 'Point the stick to steer. Releasing it immediately holds the truck’s current heading. Large changes turn faster, while higher speeds soften steering.';
     }
   }
 
@@ -195,8 +244,11 @@
     steeringElement.addEventListener('lostpointercapture', releaseDirectionalTarget, true);
 
     window.addEventListener('ptbo-steering-mode-change', event => {
+      tuningState.pointerActive = false;
       tuningState.targetHeading = null;
+      tuningState.heldHeading = readCurrentHeading();
       tuningState.stickMagnitude = 0;
+      clearResidualSteeringInput();
       if (event.detail?.mode === DIRECTIONAL_MODE) updateOptionsDescription();
     });
     window.parent.addEventListener('blur', releaseDirectionalTarget, true);
