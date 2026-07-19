@@ -32,6 +32,7 @@
 
   let instruments = null;
   let steeringElement = null;
+  let parentDocument = null;
 
   const clamp = (value, minimum, maximum) => Math.max(minimum, Math.min(maximum, value));
   const normalizeHeading = value => (Number(value) % 360 + 360) % 360;
@@ -95,9 +96,11 @@
   }
 
   function releaseDirectionalTarget() {
+    if (!tuningState.pointerActive && tuningState.targetHeading === null) return;
+    tuningState.pointerActive = false;
+
     queueMicrotask(() => {
       tuningState.heldHeading = readCurrentHeading();
-      tuningState.pointerActive = false;
       tuningState.targetHeading = null;
       tuningState.stickMagnitude = 0;
       clearResidualSteeringInput();
@@ -107,6 +110,8 @@
           currentHeading = tuningState.heldHeading;
           vehicleMarker?.setRotationOrigin?.('center center');
           vehicleMarker?.setRotationAngle?.(tuningState.heldHeading - 90);
+          const headingNode = document.getElementById('tel-hdg');
+          if (headingNode) headingNode.textContent = `${Math.round(tuningState.heldHeading)}°`;
         } catch {
           // Vehicle globals may not be ready during page dismissal.
         }
@@ -199,6 +204,15 @@
     }
   }
 
+  function eventBelongsToSteering(event) {
+    const target = event?.target;
+    return Boolean(
+      steeringElement
+      && target
+      && (target === steeringElement || steeringElement.contains(target))
+    );
+  }
+
   function animationTick(timestamp) {
     if (!tuningState.lastTimestamp) tuningState.lastTimestamp = timestamp;
     const deltaSeconds = Math.min(
@@ -222,12 +236,14 @@
 
     if (window.parent === window) return;
     try {
-      steeringElement = window.parent.document.getElementById('steering');
+      parentDocument = window.parent.document;
+      steeringElement = parentDocument.getElementById('steering');
     } catch {
+      parentDocument = null;
       steeringElement = null;
     }
 
-    if (!steeringElement) {
+    if (!steeringElement || !parentDocument) {
       if (window.parent.document.readyState === 'loading') {
         setTimeout(install, CONFIG.retryDelayMs);
       }
@@ -237,11 +253,23 @@
     makeDirectionalDefault();
     updateOptionsDescription();
 
-    steeringElement.addEventListener('pointerdown', captureDirectionalTarget, true);
-    steeringElement.addEventListener('pointermove', captureDirectionalTarget, true);
-    steeringElement.addEventListener('pointerup', releaseDirectionalTarget, true);
-    steeringElement.addEventListener('pointercancel', releaseDirectionalTarget, true);
-    steeringElement.addEventListener('lostpointercapture', releaseDirectionalTarget, true);
+    // Listen on the parent document so these handlers run before the older
+    // element-level steering code can stop propagation of the release event.
+    parentDocument.addEventListener('pointerdown', event => {
+      if (eventBelongsToSteering(event)) captureDirectionalTarget();
+    }, true);
+    parentDocument.addEventListener('pointermove', event => {
+      if (tuningState.pointerActive || eventBelongsToSteering(event)) captureDirectionalTarget();
+    }, true);
+    parentDocument.addEventListener('pointerup', event => {
+      if (tuningState.pointerActive || eventBelongsToSteering(event)) releaseDirectionalTarget();
+    }, true);
+    parentDocument.addEventListener('pointercancel', event => {
+      if (tuningState.pointerActive || eventBelongsToSteering(event)) releaseDirectionalTarget();
+    }, true);
+    parentDocument.addEventListener('lostpointercapture', event => {
+      if (tuningState.pointerActive || eventBelongsToSteering(event)) releaseDirectionalTarget();
+    }, true);
 
     window.addEventListener('ptbo-steering-mode-change', event => {
       tuningState.pointerActive = false;
@@ -252,8 +280,8 @@
       if (event.detail?.mode === DIRECTIONAL_MODE) updateOptionsDescription();
     });
     window.parent.addEventListener('blur', releaseDirectionalTarget, true);
-    window.parent.document.addEventListener('visibilitychange', () => {
-      if (window.parent.document.hidden) releaseDirectionalTarget();
+    parentDocument.addEventListener('visibilitychange', () => {
+      if (parentDocument.hidden) releaseDirectionalTarget();
     });
 
     tuningState.installed = true;
