@@ -1,88 +1,90 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#0b1220">
-  <title>Heading Camera Prototype v1.4.11</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet-src.js" crossorigin=""></script>
-  <script src="https://unpkg.com/leaflet-rotate@0.2.8/dist/leaflet-rotate-src.js"></script>
-  <style>
-    :root{color-scheme:dark;--panel:rgba(9,15,28,.95);--soft:rgba(15,23,42,.9);--line:rgba(255,255,255,.18);--text:#f8fafc;--muted:#cbd5e1;--blue:#38bdf8;--green:#34d399;--red:#fb7185;--gold:#facc15}
-    *{box-sizing:border-box}html,body,#app,#map{width:100%;height:100%;margin:0;overflow:hidden}body{background:#0b1220;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input{font:inherit}#app,#map{position:absolute;inset:0}#map{background:#dfe5e8}.leaflet-control-attribution{font-size:9px}
-    #controls{position:fixed;z-index:2000;top:max(10px,env(safe-area-inset-top));left:50%;width:min(calc(100% - 20px),720px);transform:translateX(-50%);padding:11px;color:var(--text);border:1px solid var(--line);border-radius:16px;background:var(--panel);box-shadow:0 12px 34px #0007;backdrop-filter:blur(14px)}
-    #title-row{display:flex;gap:10px;align-items:center}.title{min-width:0;flex:1}.title strong{display:block;font-size:17px}.title span{display:block;margin-top:3px;color:var(--muted);font-size:12px}.version{color:var(--blue)!important;font-weight:850}
-    #pass{flex:0 0 auto;padding:7px 10px;border-radius:999px;background:#3f1d29;color:#fecdd3;font-size:11px;font-weight:900;letter-spacing:.05em}#pass.ok{background:#12372b;color:#a7f3d0}
-    #buttons{display:grid;grid-template-columns:1fr 1fr .8fr;gap:9px;margin-top:11px}.mode,#pause,#recenter{min-height:46px;padding:0 10px;color:var(--text);border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.07);font-weight:850;cursor:pointer;touch-action:manipulation}.mode.active{color:#07111f;border-color:transparent;background:var(--blue)}#recenter{display:none;color:#052014;border-color:transparent;background:var(--green)}#recenter.show{display:block}
-    #truck{position:fixed;z-index:1600;left:50%;top:50%;width:62px;height:74px;transform:translate(-50%,-50%);pointer-events:none;filter:drop-shadow(0 8px 8px #0008)}#truck.hidden{display:none}#arrow{position:absolute;inset:0;transform-origin:50% 50%}#arrow::before{position:absolute;left:50%;top:4px;width:38px;height:60px;content:"";transform:translateX(-50%);background:linear-gradient(180deg,#fff 0 13%,#ef4444 13% 100%);clip-path:polygon(50% 0,100% 72%,68% 64%,61% 100%,39% 100%,32% 64%,0 72%)}#arrow::after{position:absolute;left:50%;top:22px;width:10px;height:33px;content:"";transform:translateX(-50%);border-radius:6px;background:#7f1d1d}.nose{position:absolute;left:50%;top:0;width:10px;height:10px;transform:translateX(-50%);border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold)}.halo{position:absolute;inset:8px;border:2px solid rgba(56,189,248,.7);border-radius:50%;animation:pulse 1.7s ease-out infinite}@keyframes pulse{0%{opacity:.8;transform:scale(.65)}80%,100%{opacity:0;transform:scale(1.5)}}
-    #telemetry{position:fixed;z-index:2000;left:10px;bottom:max(10px,env(safe-area-inset-bottom));width:min(350px,calc(100% - 20px));padding:11px;color:var(--text);border:1px solid var(--line);border-radius:15px;background:var(--soft);box-shadow:0 10px 28px #0006;backdrop-filter:blur(12px)}#metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.metric{min-width:0;padding:8px;border:1px solid rgba(255,255,255,.1);border-radius:10px;background:rgba(255,255,255,.04)}.metric span{display:block;color:var(--muted);font-size:8px;font-weight:850;letter-spacing:.07em;text-transform:uppercase}.metric strong{display:block;margin-top:4px;font:850 13px/1.1 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:nowrap}.speed{display:grid;grid-template-columns:72px 1fr 54px;gap:8px;align-items:center;margin-top:10px;color:var(--muted);font-size:11px}.speed input{width:100%;accent-color:var(--blue)}
-    #explanation{position:fixed;z-index:1900;right:10px;bottom:max(10px,env(safe-area-inset-bottom));max-width:290px;padding:11px 12px;color:var(--muted);border:1px solid var(--line);border-radius:14px;background:var(--soft);font-size:11px;line-height:1.4;box-shadow:0 10px 28px #0006}#explanation strong{display:block;margin-bottom:3px;color:var(--gold)}
-    @media(max-width:720px){#controls{padding:10px}.title strong{font-size:16px}.title span{font-size:11px}#buttons{gap:8px}.mode,#pause,#recenter{min-height:44px;font-size:13px}#truck{top:50%;width:56px;height:68px}#metrics{grid-template-columns:repeat(2,minmax(0,1fr))}#telemetry{width:min(330px,calc(100% - 20px))}#explanation{display:none}}
-    @media(prefers-reduced-motion:reduce){.halo{animation:none;opacity:.3}}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1220">
+<title>Heading Camera Prototype v1.4.13</title>
+<style>
+:root{color-scheme:dark;--panel:rgba(9,15,28,.96);--line:rgba(255,255,255,.18);--text:#f8fafc;--muted:#cbd5e1;--blue:#38bdf8;--green:#34d399;--red:#fb7185;--gold:#facc15}
+*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#dce5e8;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input{font:inherit}
+#app,#view{position:fixed;inset:0;width:100%;height:100%}#view{display:block;background:#e9eef0;touch-action:none}
+#controls{position:fixed;z-index:20;top:max(10px,env(safe-area-inset-top));left:50%;width:min(calc(100% - 20px),720px);transform:translateX(-50%);padding:11px;color:var(--text);border:1px solid var(--line);border-radius:16px;background:var(--panel);box-shadow:0 12px 34px #0007;backdrop-filter:blur(14px)}
+#title-row{display:flex;gap:10px;align-items:center}.title{min-width:0;flex:1}.title strong{display:block;font-size:17px}.title span{display:block;margin-top:3px;color:var(--muted);font-size:12px;line-height:1.3}.version{color:var(--blue)!important;font-weight:900}
+#health{flex:0 0 auto;padding:7px 10px;border-radius:999px;background:#12372b;color:#a7f3d0;font-size:11px;font-weight:900;letter-spacing:.05em}#health.error{background:#4b1725;color:#fecdd3}
+#buttons{display:grid;grid-template-columns:1fr 1fr .8fr;gap:9px;margin-top:11px}.mode,#pause{min-height:46px;padding:0 10px;color:var(--text);border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.07);font-weight:850;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}.mode.active{color:#07111f;border-color:transparent;background:var(--blue)}button:active{transform:scale(.98)}
+#telemetry{position:fixed;z-index:20;left:10px;bottom:max(10px,env(safe-area-inset-bottom));width:min(360px,calc(100% - 20px));padding:11px;color:var(--text);border:1px solid var(--line);border-radius:15px;background:rgba(15,23,42,.93);box-shadow:0 10px 28px #0006;backdrop-filter:blur(12px)}
+#metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.metric{min-width:0;padding:8px;border:1px solid rgba(255,255,255,.1);border-radius:10px;background:rgba(255,255,255,.04)}.metric span{display:block;color:var(--muted);font-size:8px;font-weight:850;letter-spacing:.07em;text-transform:uppercase}.metric strong{display:block;margin-top:4px;font:850 13px/1.1 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:nowrap}.speed{display:grid;grid-template-columns:72px 1fr 54px;gap:8px;align-items:center;margin-top:10px;color:var(--muted);font-size:11px}.speed input{width:100%;accent-color:var(--blue)}
+#hint{position:fixed;z-index:15;right:10px;bottom:max(10px,env(safe-area-inset-bottom));max-width:280px;padding:10px 12px;color:#334155;border:1px solid rgba(15,23,42,.2);border-radius:13px;background:rgba(255,255,255,.9);font-size:11px;line-height:1.4;box-shadow:0 8px 24px #0003}#hint strong{display:block;color:#0f172a}
+#error-box{display:none;position:fixed;z-index:100;inset:20px;padding:18px;color:#fff;border:2px solid #fb7185;border-radius:16px;background:#3f1420;overflow:auto;white-space:pre-wrap}#error-box.show{display:block}
+@media(max-width:720px){#controls{padding:10px}.title strong{font-size:16px}.title span{font-size:11px}.mode,#pause{min-height:44px;font-size:13px}#metrics{grid-template-columns:repeat(2,minmax(0,1fr))}#telemetry{width:min(340px,calc(100% - 20px))}#hint{display:none}}
+</style>
 </head>
 <body>
 <div id="app">
-  <div id="map" aria-label="Map camera alignment test"></div>
-  <div id="truck" aria-hidden="true"><div class="halo"></div><div id="arrow"><div class="nose"></div></div></div>
-  <section id="controls">
-    <div id="title-row"><div class="title"><strong>Heading Camera Prototype <span class="version">v1.4.11</span></strong><span id="status">Heading Up: movement, route and truck nose all point toward the top.</span></div><div id="pass">CHECKING</div></div>
-    <div id="buttons"><button class="mode" id="north" type="button">North Up</button><button class="mode active" id="heading" type="button">Heading Up</button><button id="pause" type="button">Pause</button><button id="recenter" type="button">Re-center</button></div>
-  </section>
-  <aside id="telemetry">
-    <div id="metrics">
-      <div class="metric"><span>Vehicle heading</span><strong id="vehicle-heading">0°</strong></div>
-      <div class="metric"><span>Map top</span><strong id="map-top">0°</strong></div>
-      <div class="metric"><span>Arrow screen</span><strong id="screen-heading">0°</strong></div>
-      <div class="metric"><span>Alignment error</span><strong id="error">0°</strong></div>
-    </div>
-    <label class="speed"><span>Drive speed</span><input id="speed" type="range" min="5" max="28" step="1" value="15"><output id="speed-value">15 m/s</output></label>
-  </aside>
-  <aside id="explanation"><strong>Visible verification</strong>The blue direction line shows the vehicle's real movement vector. In Heading Up it must extend straight upward beneath the truck nose. Dragging the map enters free camera mode.</aside>
+<canvas id="view" aria-label="Heading-up camera simulation"></canvas>
+<section id="controls">
+  <div id="title-row"><div class="title"><strong>Heading Camera Prototype <span class="version">v1.4.13</span></strong><span id="status">Heading Up: the road, movement and truck nose remain aligned toward the top.</span></div><div id="health">RUNNING</div></div>
+  <div id="buttons"><button class="mode" id="north" type="button">North Up</button><button class="mode active" id="heading" type="button">Heading Up</button><button id="pause" type="button">Pause</button></div>
+</section>
+<aside id="telemetry">
+  <div id="metrics">
+    <div class="metric"><span>Mode</span><strong id="mode-out">HEADING</strong></div>
+    <div class="metric"><span>Vehicle heading</span><strong id="vehicle-out">0°</strong></div>
+    <div class="metric"><span>Map top</span><strong id="map-out">0°</strong></div>
+    <div class="metric"><span>Screen arrow</span><strong id="screen-out">0°</strong></div>
+  </div>
+  <label class="speed"><span>Drive speed</span><input id="speed" type="range" min="20" max="160" step="5" value="80"><output id="speed-value">80</output></label>
+</aside>
+<aside id="hint"><strong>Self-contained camera test</strong>No map rotation plug-in is used. The truck is rendered in the same world transform as the route, so it cannot detach from the track.</aside>
+<pre id="error-box"></pre>
 </div>
 <script>
 (()=>{
-  'use strict';
-  const VERSION='1.4.11';
-  const MODES={NORTH:'north',HEADING:'heading',FREE:'free'};
-  const route=[
-    [44.300871,-78.322206],[44.303000,-78.322180],[44.305450,-78.322110],
-    [44.306300,-78.319200],[44.307150,-78.315350],[44.305700,-78.312600],
-    [44.303850,-78.309550],[44.300900,-78.309680],[44.297850,-78.309850],
-    [44.295300,-78.312900],[44.292650,-78.316250],[44.293300,-78.320700],
-    [44.294200,-78.325150],[44.296900,-78.326650],[44.299650,-78.328100],
-    [44.300350,-78.325400],[44.300871,-78.322206]
-  ];
-  const map=L.map('map',{center:route[0],zoom:16,minZoom:12,maxZoom:19,zoomControl:true,preferCanvas:true,rotate:true,bearing:0,rotateControl:false,touchRotate:false,shiftKeyRotate:false,trackContainerMutation:true});
-  map.zoomControl.setPosition('bottomright');
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{subdomains:'abcd',maxZoom:20,maxNativeZoom:20,updateWhenIdle:false,keepBuffer:5,attribution:'&copy; OpenStreetMap &copy; CARTO'}).addTo(map);
-  L.polyline(route,{color:'#2563eb',opacity:.72,weight:8,lineCap:'round',lineJoin:'round'}).addTo(map);
-  L.polyline(route,{color:'#fff',opacity:.45,weight:2,dashArray:'10 12',lineCap:'round'}).addTo(map);
-  const directionLine=L.polyline([route[0],route[1]],{color:'#06b6d4',opacity:.95,weight:6,lineCap:'round'}).addTo(map);
-  const dotIcon=L.divIcon({className:'',html:'<div style="width:18px;height:18px;border:3px solid white;border-radius:50%;background:#ef4444;box-shadow:0 3px 9px #0008"></div>',iconSize:[18,18],iconAnchor:[9,9]});
-  const freeMarker=L.marker(route[0],{icon:dotIcon,opacity:0}).addTo(map);
-
-  const northBtn=document.getElementById('north'),headingBtn=document.getElementById('heading'),pauseBtn=document.getElementById('pause'),recenterBtn=document.getElementById('recenter');
-  const truck=document.getElementById('truck'),arrow=document.getElementById('arrow'),status=document.getElementById('status'),pass=document.getElementById('pass');
-  const vehicleOut=document.getElementById('vehicle-heading'),mapTopOut=document.getElementById('map-top'),screenOut=document.getElementById('screen-heading'),errorOut=document.getElementById('error');
-  const speed=document.getElementById('speed'),speedValue=document.getElementById('speed-value');
-
-  let mode=MODES.HEADING,preferredMode=MODES.HEADING,paused=false,segmentIndex=0,segmentProgress=0,position=L.latLng(route[0]),vehicleHeading=headingBetween(route[0],route[1]),last=performance.now();
-  const wrap=a=>((a%360)+360)%360;
-  const signed=a=>((a+540)%360)-180;
-  const angleDelta=(a,b)=>signed(b-a);
-  function headingBetween(a,b){const lat1=a[0]*Math.PI/180,lat2=b[0]*Math.PI/180,dLon=(b[1]-a[1])*Math.PI/180;const y=Math.sin(dLon)*Math.cos(lat2),x=Math.cos(lat1)*Math.sin(lat2)-Math.sin(lat1)*Math.cos(lat2)*Math.cos(dLon);return wrap(Math.atan2(y,x)*180/Math.PI)}
-  function destination(origin,bearing,distance){const R=6371000,delta=distance/R,theta=bearing*Math.PI/180,phi1=origin.lat*Math.PI/180,lambda1=origin.lng*Math.PI/180;const phi2=Math.asin(Math.sin(phi1)*Math.cos(delta)+Math.cos(phi1)*Math.sin(delta)*Math.cos(theta));const lambda2=lambda1+Math.atan2(Math.sin(theta)*Math.sin(delta)*Math.cos(phi1),Math.cos(delta)-Math.sin(phi1)*Math.sin(phi2));return L.latLng(phi2*180/Math.PI,lambda2*180/Math.PI)}
-  function segment(){const start=route[segmentIndex],end=route[(segmentIndex+1)%route.length];return{start,end,length:map.distance(start,end)}}
-  function interpolate(a,b,t){return L.latLng(a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t)}
-  function advance(dt){const previous=position;let remaining=Number(speed.value)*dt;while(remaining>0){const s=segment(),available=Math.max(0,s.length-segmentProgress),travel=Math.min(available,remaining);segmentProgress+=travel;remaining-=travel;if(segmentProgress>=s.length-.001){segmentIndex=(segmentIndex+1)%(route.length-1);segmentProgress=0}else break}const s=segment(),ratio=s.length?segmentProgress/s.length:0;position=interpolate(s.start,s.end,ratio);if(map.distance(previous,position)>.01)vehicleHeading=headingBetween([previous.lat,previous.lng],[position.lat,position.lng])}
-  function setMode(next,reason=''){mode=next;if(next!==MODES.FREE)preferredMode=next;northBtn.classList.toggle('active',next===MODES.NORTH);headingBtn.classList.toggle('active',next===MODES.HEADING);recenterBtn.classList.toggle('show',next===MODES.FREE);truck.classList.toggle('hidden',next===MODES.FREE);freeMarker.setOpacity(next===MODES.FREE?1:0);if(next===MODES.NORTH)status.textContent='North Up: the map stays fixed and the truck nose follows its real travel direction.';else if(next===MODES.HEADING)status.textContent='Heading Up: movement, route and truck nose all point toward the top.';else status.textContent=reason||'Free camera. Press Re-center to follow the truck again.'}
-  function screenDirection(){const ahead=destination(position,vehicleHeading,70);directionLine.setLatLngs([position,ahead]);const p0=map.latLngToContainerPoint(position),p1=map.latLngToContainerPoint(ahead);return wrap(Math.atan2(p1.x-p0.x,-(p1.y-p0.y))*180/Math.PI)}
-  function updateCamera(){if(mode!==MODES.FREE){map.setView(position,map.getZoom(),{animate:false,reset:false});const pluginRotation=mode===MODES.HEADING?-vehicleHeading:0;map.setBearing(pluginRotation)}freeMarker.setLatLng(position);const actualRotation=wrap(map.getBearing?map.getBearing():0),mapTop=wrap(-actualRotation),screenHeading=screenDirection();if(mode!==MODES.FREE)arrow.style.transform=`rotate(${screenHeading}deg)`;let alignmentError=0;if(mode===MODES.HEADING)alignmentError=Math.max(Math.abs(angleDelta(mapTop,vehicleHeading)),Math.abs(signed(screenHeading)));else if(mode===MODES.NORTH)alignmentError=Math.max(Math.abs(signed(actualRotation)),Math.abs(angleDelta(screenHeading,vehicleHeading)));const okay=mode===MODES.FREE||alignmentError<2.5;pass.textContent=mode===MODES.FREE?'FREE CAMERA':okay?'ALIGNED':'MISALIGNED';pass.classList.toggle('ok',okay);vehicleOut.textContent=`${Math.round(vehicleHeading)}°`;mapTopOut.textContent=`${Math.round(mapTop)}°`;screenOut.textContent=`${Math.round(screenHeading)}°`;errorOut.textContent=`${alignmentError.toFixed(1)}°`;document.documentElement.dataset.cameraTest=okay?'pass':'fail';window.PTBO_CAMERA_TEST={version:VERSION,mode,vehicleHeading,mapTop,screenHeading,alignmentError,passed:okay}}
-  function frame(now){const dt=Math.min(.08,Math.max(0,(now-last)/1000));last=now;if(!paused)advance(dt);updateCamera();requestAnimationFrame(frame)}
-  northBtn.addEventListener('click',()=>setMode(MODES.NORTH));headingBtn.addEventListener('click',()=>setMode(MODES.HEADING));recenterBtn.addEventListener('click',()=>setMode(preferredMode));pauseBtn.addEventListener('click',()=>{paused=!paused;pauseBtn.textContent=paused?'Resume':'Pause'});speed.addEventListener('input',()=>{speedValue.value=`${speed.value} m/s`;speedValue.textContent=`${speed.value} m/s`});map.on('dragstart',()=>{if(mode!==MODES.FREE)setMode(MODES.FREE,'Map moved manually. Press Re-center to resume following.')});map.on('zoomend',()=>{if(mode!==MODES.FREE)map.setView(position,map.getZoom(),{animate:false,reset:false})});
-  map.setZoom(16);setMode(MODES.HEADING);requestAnimationFrame(frame);setTimeout(()=>map.invalidateSize(),100);
+'use strict';
+const VERSION='1.4.13';
+const canvas=document.getElementById('view');
+const ctx=canvas.getContext('2d');
+if(!ctx) throw new Error('Canvas 2D is unavailable.');
+const northBtn=document.getElementById('north');
+const headingBtn=document.getElementById('heading');
+const pauseBtn=document.getElementById('pause');
+const speedInput=document.getElementById('speed');
+const speedValue=document.getElementById('speed-value');
+const status=document.getElementById('status');
+const health=document.getElementById('health');
+const modeOut=document.getElementById('mode-out');
+const vehicleOut=document.getElementById('vehicle-out');
+const mapOut=document.getElementById('map-out');
+const screenOut=document.getElementById('screen-out');
+const errorBox=document.getElementById('error-box');
+const MODES={NORTH:'north',HEADING:'heading'};
+let mode=MODES.HEADING,paused=false,last=performance.now(),distanceOnRoute=0,frameCount=0,dpr=1,w=1,h=1;
+const route=[[-420,120],[-420,-230],[-250,-390],[40,-430],[300,-250],[390,20],[330,320],[80,430],[-220,360],[-390,190],[-420,120]];
+const roads=[
+  [[-620,-360],[620,-360]], [[-620,-180],[620,-180]], [[-620,0],[620,0]], [[-620,180],[620,180]], [[-620,360],[620,360]],
+  [[-500,-520],[-500,520]], [[-300,-520],[-300,520]], [[-100,-520],[-100,520]], [[100,-520],[100,520]], [[300,-520],[300,520]], [[500,-520],[500,520]],
+  [[-620,450],[-420,300],[-240,180],[-40,40],[180,-120],[430,-300],[620,-430]],
+  [[-620,-470],[-410,-300],[-190,-100],[30,120],[250,300],[520,500]]
+];
+const labels=[['GEORGE ST',-320,0,-Math.PI/2],['HUNTER ST',0,-180,0],['PARKHILL RD',80,180,0],['OTONABEE RIVER',260,40,-Math.PI/2],['PETERBOROUGH',0,-20,0]];
+const segments=[];let totalLength=0;
+for(let i=0;i<route.length-1;i++){const a=route[i],b=route[i+1],dx=b[0]-a[0],dy=b[1]-a[1],length=Math.hypot(dx,dy);segments.push({a,b,dx,dy,length,start:totalLength});totalLength+=length;}
+function resize(){dpr=Math.min(2,window.devicePixelRatio||1);w=Math.max(1,innerWidth);h=Math.max(1,innerHeight);canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);canvas.style.width=w+'px';canvas.style.height=h+'px';ctx.setTransform(dpr,0,0,dpr,0,0)}
+addEventListener('resize',resize,{passive:true});resize();
+function wrap360(a){return((a%360)+360)%360}
+function sampleRoute(distance){let d=((distance%totalLength)+totalLength)%totalLength;let segment=segments[segments.length-1];for(const candidate of segments){if(d<=candidate.start+candidate.length){segment=candidate;break}}const local=Math.max(0,Math.min(segment.length,d-segment.start));const t=segment.length?local/segment.length:0;const x=segment.a[0]+segment.dx*t,y=segment.a[1]+segment.dy*t;const heading=wrap360(Math.atan2(segment.dx,-segment.dy)*180/Math.PI);return{x,y,heading}}
+function line(points){ctx.beginPath();ctx.moveTo(points[0][0],points[0][1]);for(let i=1;i<points.length;i++)ctx.lineTo(points[i][0],points[i][1])}
+function drawBackground(){ctx.fillStyle='#e8edef';ctx.fillRect(-1200,-1200,2400,2400);ctx.fillStyle='#d7e7dc';ctx.fillRect(190,-580,230,1160);ctx.fillStyle='#bfd8e5';ctx.beginPath();ctx.ellipse(300,30,85,610,0,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#c5cdd2';ctx.lineWidth=28;ctx.lineCap='round';for(const road of roads){line(road);ctx.stroke()}ctx.strokeStyle='#fff';ctx.lineWidth=20;for(const road of roads){line(road);ctx.stroke()}ctx.strokeStyle='#d7dde1';ctx.lineWidth=2;for(const road of roads){line(road);ctx.stroke()}ctx.fillStyle='#94a3b8';ctx.textAlign='center';ctx.textBaseline='middle';for(const [text,x,y,rot] of labels){ctx.save();ctx.translate(x,y);ctx.rotate(rot);ctx.font=text==='PETERBOROUGH'?'700 48px system-ui':'600 18px system-ui';ctx.globalAlpha=text==='PETERBOROUGH'?.65:.8;ctx.fillText(text,0,0);ctx.restore()}ctx.globalAlpha=1}
+function drawRoute(){ctx.lineCap='round';ctx.lineJoin='round';line(route);ctx.strokeStyle='rgba(37,99,235,.76)';ctx.lineWidth=20;ctx.stroke();line(route);ctx.strokeStyle='rgba(255,255,255,.7)';ctx.lineWidth=4;ctx.setLineDash([18,18]);ctx.stroke();ctx.setLineDash([])}
+function drawTruck(x,y,heading){ctx.save();ctx.translate(x,y);ctx.rotate(heading*Math.PI/180);ctx.shadowColor='rgba(0,0,0,.45)';ctx.shadowBlur=12;ctx.shadowOffsetY=8;ctx.fillStyle='rgba(56,189,248,.16)';ctx.strokeStyle='rgba(56,189,248,.8)';ctx.lineWidth=3;ctx.beginPath();ctx.arc(0,0,37,0,Math.PI*2);ctx.fill();ctx.stroke();ctx.shadowColor='transparent';ctx.fillStyle='#ef4444';ctx.beginPath();ctx.moveTo(0,-44);ctx.lineTo(28,27);ctx.lineTo(10,17);ctx.lineTo(8,43);ctx.lineTo(-8,43);ctx.lineTo(-10,17);ctx.lineTo(-28,27);ctx.closePath();ctx.fill();ctx.fillStyle='#fff';ctx.beginPath();ctx.moveTo(0,-44);ctx.lineTo(9,-20);ctx.lineTo(-9,-20);ctx.closePath();ctx.fill();ctx.fillStyle='#7f1d1d';ctx.fillRect(-5,-17,10,43);ctx.fillStyle='#facc15';ctx.beginPath();ctx.arc(0,-47,5,0,Math.PI*2);ctx.fill();ctx.restore()}
+function draw(){const vehicle=sampleRoute(distanceOnRoute);const cameraBearing=mode===MODES.HEADING?vehicle.heading:0;const topReserve=Math.min(185,h*.23),bottomReserve=Math.min(185,h*.22);const usableTop=topReserve,usableBottom=h-bottomReserve;const cx=w/2,cy=(usableTop+usableBottom)/2;const scale=Math.max(.48,Math.min(1.05,Math.min(w/1100,(usableBottom-usableTop)/980)*1.35));ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);ctx.save();ctx.translate(cx,cy);ctx.rotate(-cameraBearing*Math.PI/180);ctx.scale(scale,scale);ctx.translate(-vehicle.x,-vehicle.y);drawBackground();drawRoute();drawTruck(vehicle.x,vehicle.y,vehicle.heading);ctx.restore();modeOut.textContent=mode.toUpperCase();vehicleOut.textContent=Math.round(vehicle.heading)+'°';mapOut.textContent=Math.round(cameraBearing)+'°';screenOut.textContent=Math.round(wrap360(vehicle.heading-cameraBearing))+'°';window.PTBO_CAMERA_TEST={version:VERSION,mode,paused,frameCount,vehicleHeading:vehicle.heading,mapTop:cameraBearing,screenArrow:wrap360(vehicle.heading-cameraBearing),position:{x:vehicle.x,y:vehicle.y},running:true};}
+function tick(now){const dt=Math.min(.08,Math.max(0,(now-last)/1000));last=now;if(!paused)distanceOnRoute+=Number(speedInput.value)*dt;frameCount++;draw();requestAnimationFrame(tick)}
+function setMode(next){mode=next;northBtn.classList.toggle('active',mode===MODES.NORTH);headingBtn.classList.toggle('active',mode===MODES.HEADING);status.textContent=mode===MODES.HEADING?'Heading Up: the road, movement and truck nose remain aligned toward the top.':'North Up: the map remains north-facing while the truck turns with the route.';draw()}
+northBtn.addEventListener('click',()=>setMode(MODES.NORTH));headingBtn.addEventListener('click',()=>setMode(MODES.HEADING));pauseBtn.addEventListener('click',()=>{paused=!paused;pauseBtn.textContent=paused?'Resume':'Pause';health.textContent=paused?'PAUSED':'RUNNING';draw()});speedInput.addEventListener('input',()=>{speedValue.value=speedInput.value;speedValue.textContent=speedInput.value});
+setMode(MODES.HEADING);requestAnimationFrame(tick);
+setTimeout(()=>{if(frameCount<5)throw new Error('Animation loop did not start.');health.textContent=paused?'PAUSED':'RUNNING'},500);
+addEventListener('error',event=>{health.textContent='ERROR';health.classList.add('error');errorBox.textContent=(event.error&&event.error.stack)||event.message||'Unknown error';errorBox.classList.add('show')});
 })();
 </script>
 </body>
