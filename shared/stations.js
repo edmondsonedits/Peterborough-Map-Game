@@ -121,11 +121,12 @@
     doc.documentElement.dataset.sharedDispatchPatched = 'true';
     removeLegacyEditorControls(doc);
     loadSimulatorTool(doc, 'camera-fix.js?v=20260718-north-up-1', 'data-ptbo-smooth-camera', 'Unable to load the stable north-up simulator camera.');
-    loadSimulatorTool(doc, 'road-collision.js', 'data-ptbo-road-collision', 'Unable to load the Peterborough road boundary system.');
+    loadSimulatorTool(doc, 'road-collision.js?v=1.4.1', 'data-ptbo-road-collision', 'Unable to load the Peterborough road boundary system.');
     loadSimulatorTool(doc, 'speed-streak.js', 'data-ptbo-speed-streak', 'Unable to load the collision speed streak system.');
     loadSimulatorTool(doc, 'vehicle-instruments.js?v=20260719-hold-heading-1', 'data-ptbo-vehicle-instruments', 'Unable to load the speedometer and mobile steering systems.');
     loadSimulatorTool(doc, 'max-speed.js?v=20260718-1', 'data-ptbo-max-speed', 'Unable to load the max speed tracker.');
-    loadSimulatorTool(doc, 'route-reveal.js', 'data-ptbo-route-reveal', 'Unable to load the Peterborough route answer system.');
+    loadSimulatorTool(doc, 'route-reveal.js?v=1.4.1', 'data-ptbo-route-reveal', 'Unable to load the Peterborough route answer system.');
+    loadSimulatorTool(doc, 'route-compare.js?v=1.4.1', 'data-ptbo-route-compare', 'Unable to load the post-call route comparison system.');
 
     const apply = async () => {
       await store.ready();
