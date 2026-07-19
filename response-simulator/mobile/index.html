@@ -57,7 +57,7 @@
   </style>
 </head>
 <body>
-  <iframe id="simulator" src="../index.html?v=20260719-directional-1" title="Peterborough Fire and Emergency Dispatch Simulator"></iframe>
+  <iframe id="simulator" src="../index.html?v=1.4.1" title="Peterborough Fire and Emergency Dispatch Simulator"></iframe>
   <nav class="mobile-topbar" aria-label="Simulator navigation, audio, and station spawns">
     <div class="top-actions"><a class="top-button" href="../../" aria-label="Return to all games"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></a></div>
     <div class="station-shortcuts" aria-label="Choose station spawn">
@@ -80,7 +80,7 @@
   <div class="control-hint" aria-hidden="true">Drag the wheel to steer · Hold Gas to drive · Hold Reverse to back up</div>
   <div class="loading-cover" id="loading-cover" role="status"><div><strong>Loading mobile simulator</strong><span>Preparing touch controls and map…</span></div></div>
 
-  <script src="../../shared/stations.js?v=20260719-directional-1"></script>
+  <script src="../../shared/stations.js?v=1.4.1"></script>
   <script>
     (() => {
       const MOBILE_ZOOM = 18;
@@ -318,6 +318,14 @@
         const style = doc.createElement('style');
         style.textContent = `#game-home,#menu-toggle{display:none!important}#dispatch-hud{top:calc(66px + env(safe-area-inset-top))!important;left:10px!important;right:10px!important;width:auto!important;max-width:none!important;padding:11px 12px 11px 14px!important;transform:none!important;border-left-width:4px!important;border-radius:14px!important;display:grid!important;grid-template-columns:minmax(0,1fr) 98px!important;align-items:center!important;gap:10px!important}.hud-main{min-width:0!important}.hud-title{font-size:9px!important;letter-spacing:.85px!important}.hud-address{font-size:15px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}.hud-meta{display:-webkit-box!important;margin-top:3px!important;overflow:hidden!important;font-size:10px!important;line-height:1.3!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important}.hud-timer-block{min-width:0!important;margin-left:0!important}.hud-clock-display{font-size:21px!important;margin-bottom:5px!important}.hud-btn{min-height:40px!important;padding:7px 8px!important;border-radius:10px!important;font-size:12px!important}#control-panel{width:min(360px,100vw)!important;z-index:3000!important}.panel-scroll{padding:calc(70px + env(safe-area-inset-top)) 18px calc(190px + env(safe-area-inset-bottom))!important}.leaflet-bottom{bottom:calc(174px + env(safe-area-inset-bottom))!important}.leaflet-control-attribution{max-width:78vw!important;font-size:9px!important;white-space:normal!important}.leaflet-control-scale{margin-left:10px!important}@media (orientation:landscape) and (max-height:560px){#dispatch-hud{top:calc(62px + env(safe-area-inset-top))!important}.leaflet-bottom{bottom:calc(132px + env(safe-area-inset-bottom))!important}}`;
         doc.head.appendChild(style);
+
+        if (!doc.querySelector('script[data-ptbo-route-compare]')) {
+          const routeCompare = doc.createElement('script');
+          routeCompare.src = new URL('../route-compare.js?v=1.4.1', location.href).href;
+          routeCompare.dataset.ptboRouteCompare = 'true';
+          routeCompare.onerror = () => console.error('Unable to load the post-call route comparison system.');
+          doc.body.appendChild(routeCompare);
+        }
 
         const helper = doc.createElement('script');
         helper.textContent = `(() => {
