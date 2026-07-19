@@ -1,6 +1,5 @@
 name: Fix response simulator desktop UI
 
-# Updating this file automatically runs the repair; no manual GitHub action is required.
 on:
   push:
     paths:
@@ -16,78 +15,69 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Repair encoding and desktop layout
+      - name: Repair corrupted symbols and verify output
         run: |
           python3 - <<'PY'
           from pathlib import Path
+          import re
 
           path = Path('response-simulator/index.html')
           text = path.read_text(encoding='utf-8')
 
-          replacements = {
-              'â†\x90': '←',
-              'â€”': '—',
-              'Â°': '°',
-              'â€²': '′',
-              'â€³': '″',
+          # Replace complete UI elements instead of depending on how a browser
+          # renders the corrupted byte sequences.
+          text = re.sub(
+              r'(<a id="game-home"[^>]*>).*?(</a>)',
+              r'\1&#8592; All Games\2',
+              text,
+              count=1,
+              flags=re.S,
+          )
+
+          station_labels = {
+              'Station 1': 'Station 1 &mdash; 210 Sherbrooke St',
+              'Station 2': 'Station 2 &mdash; 100 Marina Blvd',
+              'Station 3': 'Station 3 &mdash; 839 Clonsilla Ave',
           }
-          for broken, fixed in replacements.items():
-              text = text.replace(broken, fixed)
+          for station, replacement in station_labels.items():
+              pattern = rf'(<button class="station-spawn-box" onclick="teleportToStation\([^>]+>){station}.*?(</button>)'
+              text = re.sub(pattern, rf'\1{replacement}\2', text, count=1, flags=re.S)
 
-          desktop_css = r'''
+          # Fix both the initial telemetry value and the value produced while driving.
+          text = re.sub(r'(<span id="tel-hdg">).*?(</span>)', r'\1180&deg;\2', text, count=1, flags=re.S)
+          text = re.sub(
+              r"document\.getElementById\('tel-hdg'\)\.innerText\s*=\s*Math\.round\(currentHeading\)\s*\+\s*[^;]+;",
+              "document.getElementById('tel-hdg').innerText = Math.round(currentHeading) + '\\u00B0';",
+              text,
+          )
 
-        /* Desktop UI reliability fixes */
-        #control-panel {
-            width: min(360px, 30vw);
-            min-width: 320px;
-            max-width: 390px;
-        }
-        .panel-scroll {
-            box-sizing: border-box;
-            scrollbar-gutter: stable;
-            overscroll-behavior: contain;
-        }
-        .station-spawn-box,
-        .checkbox-row,
-        .control-row label,
-        .subtitle,
-        .hud-meta {
-            overflow-wrap: anywhere;
-        }
-        .control-row label > span:first-child {
-            min-width: 0;
-            padding-right: 12px;
-        }
-        .control-row label > span:last-child {
-            flex: 0 0 auto;
-        }
-        @media (min-width: 901px) {
-            body:has(#control-panel:not(.minimized)) #dispatch-hud {
-                left: calc((100% - min(360px, 30vw)) / 2);
-                max-width: calc(100vw - min(360px, 30vw) - 190px);
-            }
-            body:has(#control-panel:not(.minimized)) #map-orientation-controls {
-                right: calc(min(360px, 30vw) + 15px);
-            }
-        }
-        @media (max-width: 1100px) and (min-width: 601px) {
-            #dispatch-hud {
-                width: min(520px, calc(100vw - 210px));
-            }
-            #control-panel {
-                width: 340px;
-                min-width: 300px;
-            }
-        }
-'''
-          marker = '    </style>'
-          if '/* Desktop UI reliability fixes */' not in text:
-              text = text.replace(marker, desktop_css + '\n' + marker, 1)
+          # Remove remaining damaged decorative prefixes from status headings.
+          text = re.sub(r'(<div class="hud-title"[^>]*>)[^A-Za-z<]*(ACTIVE ENROUTE DISPATCH:)', r'\1\2', text)
+          text = re.sub(r'(<div class="hud-title"[^>]*>)[^A-Za-z<]*(ON SCENE AS REPORTED)', r'\1\2', text)
 
           path.write_text(text, encoding='utf-8', newline='\n')
+
+          # Verification fails the workflow rather than publishing another partial fix.
+          repaired = path.read_text(encoding='utf-8')
+          required = [
+              '&#8592; All Games',
+              'Station 1 &mdash; 210 Sherbrooke St',
+              'Station 2 &mdash; 100 Marina Blvd',
+              'Station 3 &mdash; 839 Clonsilla Ave',
+              '<span id="tel-hdg">180&deg;</span>',
+              "Math.round(currentHeading) + '\\u00B0'",
+          ]
+          missing = [item for item in required if item not in repaired]
+          if missing:
+              raise SystemExit('Verification failed; missing: ' + repr(missing))
+
+          forbidden = ['â€”', 'Â°']
+          remaining = [item for item in forbidden if item in repaired]
+          if remaining:
+              raise SystemExit('Verification failed; corrupted symbols remain: ' + repr(remaining))
           PY
 
-      - name: Commit repaired UI
+      - name: Commit verified repair
         run: |
           if git diff --quiet; then
             echo "No changes required"
@@ -96,5 +86,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add response-simulator/index.html
-          git commit -m "Fix response simulator desktop UI rendering"
+          git commit -m "Fix response simulator corrupted symbols"
           git push
