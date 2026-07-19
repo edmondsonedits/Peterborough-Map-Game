@@ -6,7 +6,6 @@
   const CONFIG = Object.freeze({
     maximumFrameGapMs: 50,
     rebaseDistancePx: 180,
-    headingResponsePerSecond: 22,
   });
 
   const state = {
@@ -15,14 +14,8 @@
     nativeSetView: null,
     rebasing: false,
     renderQueued: false,
-    visualHeading: 180,
-    lastCameraTimestamp: 0,
     markerPatched: false,
   };
-
-  function shortestAngleDelta(fromDegrees, toDegrees) {
-    return ((toDegrees - fromDegrees + 540) % 360) - 180;
-  }
 
   function globalsReady() {
     try {
@@ -34,9 +27,26 @@
 
   function cameraShouldFollow() {
     try {
-      return Boolean(headingUpMode || document.getElementById('chk-camera')?.checked);
+      return Boolean(document.getElementById('chk-camera')?.checked);
     } catch {
       return false;
+    }
+  }
+
+  function removeOrientationFeature() {
+    document.getElementById('map-orientation-controls')?.remove();
+    if (!document.getElementById('ptbo-disable-map-orientation')) {
+      const style = document.createElement('style');
+      style.id = 'ptbo-disable-map-orientation';
+      style.textContent = '#map-orientation-controls,#orientation-toggle,#compass{display:none!important}';
+      document.head.appendChild(style);
+    }
+    try {
+      headingUpMode = false;
+      toggleHeadingUp = function disabledHeadingUp() {};
+      window.toggleHeadingUp = toggleHeadingUp;
+    } catch {
+      // Legacy orientation globals may not be available yet.
     }
   }
 
@@ -66,8 +76,8 @@
     }
     if (mapPane.parentNode !== layer) layer.appendChild(mapPane);
 
-    // Leaflet still owns mapPane.style.transform. Camera motion belongs only
-    // to the outer layer so the two transform systems never overwrite each other.
+    // Leaflet owns the inner map pane. The outer camera layer only translates,
+    // keeping north permanently at the top of the screen.
     mapPane.style.rotate = '';
     mapPane.style.translate = '';
     mapPane.style.transformOrigin = '';
@@ -81,14 +91,12 @@
     return mapInstance.layerPointToContainerPoint(exactLayerPoint);
   }
 
-  function applyCameraMatrix() {
+  function applyCameraTranslation() {
     const layer = ensureCameraLayer();
     if (!layer || !mapInstance) return;
 
     if (!cameraShouldFollow()) {
       layer.style.transform = 'matrix(1,0,0,1,0,0)';
-      const needle = document.getElementById('compass-needle');
-      if (needle) needle.style.transform = 'rotate(0deg)';
       return;
     }
 
@@ -96,27 +104,17 @@
     if (!size.x || !size.y) return;
     const center = size.divideBy(2);
     const truck = rawTruckContainerPoint();
-    const rotationDegrees = headingUpMode ? -state.visualHeading : 0;
-    const radians = rotationDegrees * Math.PI / 180;
-    const cosine = Math.cos(radians);
-    const sine = Math.sin(radians);
-
-    // Exact 2D affine camera: rotate the map, then translate the truck's
-    // untransformed Leaflet point precisely onto the viewport centre.
-    const translateX = center.x - (cosine * truck.x - sine * truck.y);
-    const translateY = center.y - (sine * truck.x + cosine * truck.y);
-    layer.style.transform = `matrix(${cosine},${sine},${-sine},${cosine},${translateX},${translateY})`;
-
-    const needle = document.getElementById('compass-needle');
-    if (needle) needle.style.transform = `rotate(${rotationDegrees}deg)`;
+    const translateX = center.x - truck.x;
+    const translateY = center.y - truck.y;
+    layer.style.transform = `matrix(1,0,0,1,${translateX},${translateY})`;
   }
 
   function rebaseMapToTruck() {
-    if (!globalsReady() || state.rebasing || !cameraShouldFollow()) return;
+    if (!globalsReady() || state.rebasing || !cameraShouldFollow() || !state.nativeSetView) return;
     state.rebasing = true;
     try {
       state.nativeSetView.call(mapInstance, [simLat, simLng], mapInstance.getZoom(), { animate: false });
-      applyCameraMatrix();
+      applyCameraTranslation();
     } finally {
       state.rebasing = false;
     }
@@ -133,7 +131,7 @@
         return;
       }
     }
-    applyCameraMatrix();
+    applyCameraTranslation();
   }
 
   function scheduleCameraRender() {
@@ -148,7 +146,7 @@
   function patchSetView() {
     if (!mapInstance || state.nativeSetView) return;
     state.nativeSetView = mapInstance.setView;
-    mapInstance.setView = function smoothCameraSetView(center, zoom, options) {
+    mapInstance.setView = function northUpCameraSetView(center, zoom, options) {
       let requestedZoom = zoom;
       if (requestedZoom === undefined || requestedZoom === null) requestedZoom = this.getZoom();
       let targetsTruck = false;
@@ -158,8 +156,8 @@
         targetsTruck = false;
       }
 
-      // The legacy physics and road-boundary code attempted a full Leaflet
-      // view reset every frame. Absorb only those same-position recenter calls.
+      // Absorb legacy per-frame recenter calls. They caused camera judder and
+      // are unnecessary because the lightweight outer layer follows the truck.
       if (!state.rebasing && cameraShouldFollow() && targetsTruck && requestedZoom === this.getZoom()) {
         renderCamera(true);
         return this;
@@ -174,7 +172,7 @@
   function patchMarkerPositioning() {
     if (!vehicleMarker || state.markerPatched) return;
     const originalSetLatLng = vehicleMarker.setLatLng;
-    vehicleMarker.setLatLng = function smoothMarkerSetLatLng(latLng) {
+    vehicleMarker.setLatLng = function preciseMarkerSetLatLng(latLng) {
       const result = originalSetLatLng.call(this, latLng);
       try {
         const exactLatLng = L.latLng(latLng);
@@ -182,7 +180,7 @@
           .subtract(mapInstance.getPixelOrigin());
         if (typeof this._setPos === 'function') this._setPos(exactLayerPoint);
       } catch {
-        // Fall back to Leaflet's normal marker placement.
+        // Fall back to Leaflet's standard marker placement.
       }
       scheduleCameraRender();
       return result;
@@ -234,22 +232,12 @@
     simLat += Math.cos(headingRadians) * velocity * frameScale;
     simLng += Math.sin(headingRadians) * velocity * frameScale / longitudeCorrection;
 
-    const headingResponse = deltaSeconds > 0
-      ? 1 - Math.exp(-CONFIG.headingResponsePerSecond * deltaSeconds)
-      : 1;
-    state.visualHeading = (
-      state.visualHeading
-      + shortestAngleDelta(state.visualHeading, currentHeading) * headingResponse
-      + 360
-    ) % 360;
-
     if (vehicleMarker) {
       vehicleMarker.setRotationOrigin('center center');
-      vehicleMarker.setRotationAngle(state.visualHeading - 90);
+      vehicleMarker.setRotationAngle(currentHeading - 90);
     }
 
-    const headingStillSmoothing = Math.abs(shortestAngleDelta(state.visualHeading, currentHeading)) > 0.03;
-    if ((velocity !== 0 || isTurning || headingStillSmoothing) && vehicleMarker) {
+    if ((velocity !== 0 || isTurning) && vehicleMarker) {
       vehicleMarker.setLatLng([simLat, simLng]);
       if (simulationState === STATES.ENROUTE && velocity !== 0) evaluateDistanceToTarget();
 
@@ -279,42 +267,26 @@
     }
   }
 
-  function patchOrientationControls() {
-    updateMapOrientation = function smoothMapOrientation() {
+  function patchLegacyOrientationFunctions() {
+    updateMapOrientation = function northUpMapOrientation() {
+      try {
+        headingUpMode = false;
+      } catch {
+        // Legacy state may not exist yet.
+      }
+      const mapPane = mapInstance?.getPane?.('mapPane');
+      if (mapPane) {
+        mapPane.style.rotate = '';
+        mapPane.style.transformOrigin = '';
+      }
       renderCamera(true);
     };
     window.updateMapOrientation = updateMapOrientation;
-
-    toggleHeadingUp = function smoothToggleHeadingUp() {
-      headingUpMode = !headingUpMode;
-      const button = document.getElementById('orientation-toggle');
-      button?.classList.toggle('active', headingUpMode);
-      button?.setAttribute('aria-pressed', String(headingUpMode));
-      if (button) button.innerText = headingUpMode ? 'Heading Up' : 'North Up';
-      rebaseMapToTruck();
-      renderCamera(false);
-    };
-    window.toggleHeadingUp = toggleHeadingUp;
+    removeOrientationFeature();
   }
 
-  function cameraTick(timestamp) {
-    if (!state.lastCameraTimestamp) state.lastCameraTimestamp = timestamp;
-    const deltaSeconds = Math.min(0.05, Math.max(0, (timestamp - state.lastCameraTimestamp) / 1000));
-    state.lastCameraTimestamp = timestamp;
-
-    try {
-      const response = deltaSeconds > 0
-        ? 1 - Math.exp(-CONFIG.headingResponsePerSecond * deltaSeconds)
-        : 1;
-      state.visualHeading = (
-        state.visualHeading
-        + shortestAngleDelta(state.visualHeading, currentHeading) * response
-        + 360
-      ) % 360;
-    } catch {
-      // Simulator globals are not ready yet.
-    }
-
+  function cameraTick() {
+    removeOrientationFeature();
     installPhysicsLoop();
     patchMarkerPositioning();
     renderCamera(true);
@@ -322,16 +294,16 @@
   }
 
   function install() {
+    removeOrientationFeature();
     if (!globalsReady()) {
       requestAnimationFrame(install);
       return;
     }
 
-    state.visualHeading = Number(currentHeading) || 0;
     ensureCameraLayer();
     patchSetView();
     patchMarkerPositioning();
-    patchOrientationControls();
+    patchLegacyOrientationFunctions();
     installPhysicsLoop();
 
     mapInstance.on('move zoom resize', scheduleCameraRender);
