@@ -46,7 +46,7 @@
 
   function loadSimulatorTool(doc, filename, dataAttribute, errorMessage) {
     if (doc.querySelector(`script[${dataAttribute}]`)) return;
-    const script = document.createElement('script');
+    const script = doc.createElement('script');
     script.src = new URL(`../response-simulator/${filename}`, sourceUrl).href;
     script.setAttribute(dataAttribute, 'true');
     script.onerror = () => console.error(errorMessage);
@@ -123,7 +123,7 @@
     loadSimulatorTool(doc, 'camera-fix.js?v=20260718-north-up-1', 'data-ptbo-smooth-camera', 'Unable to load the stable north-up simulator camera.');
     loadSimulatorTool(doc, 'road-collision.js', 'data-ptbo-road-collision', 'Unable to load the Peterborough road boundary system.');
     loadSimulatorTool(doc, 'speed-streak.js', 'data-ptbo-speed-streak', 'Unable to load the collision speed streak system.');
-    loadSimulatorTool(doc, 'vehicle-instruments.js?v=20260719-directional-1', 'data-ptbo-vehicle-instruments', 'Unable to load the speedometer and mobile steering systems.');
+    loadSimulatorTool(doc, 'vehicle-instruments.js?v=20260719-hold-heading-1', 'data-ptbo-vehicle-instruments', 'Unable to load the speedometer and mobile steering systems.');
     loadSimulatorTool(doc, 'max-speed.js?v=20260718-1', 'data-ptbo-max-speed', 'Unable to load the max speed tracker.');
     loadSimulatorTool(doc, 'route-reveal.js', 'data-ptbo-route-reveal', 'Unable to load the Peterborough route answer system.');
 
