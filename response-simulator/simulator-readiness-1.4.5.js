@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.4.7';
+  const VERSION = '1.4.8';
   if (window.PTBO_SIMULATOR_READY_VERSION === VERSION && window.PTBO_SIMULATOR_READY) return;
   window.PTBO_SIMULATOR_READY_VERSION = VERSION;
 
@@ -25,10 +25,10 @@
     }
     badge.textContent = `v${VERSION}`;
 
-    let style = document.getElementById('ptbo-version-147-style');
+    let style = document.getElementById('ptbo-version-148-style');
     if (!style) {
       style = document.createElement('style');
-      style.id = 'ptbo-version-147-style';
+      style.id = 'ptbo-version-148-style';
       document.head.appendChild(style);
     }
     style.textContent = `
