@@ -17,5 +17,5 @@
     loadScript('road-intersection-softener.js', '20260719-rounded-intersections-1');
   });
 
-  loadScript('route-compare.js', '1.4.1');
+  loadScript('route-compare-1.4.2.js', '1.4.2');
 })();
