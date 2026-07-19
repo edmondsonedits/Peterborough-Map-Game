@@ -16,27 +16,93 @@
   </style>
 </head>
 <body>
-  <iframe id="simulator" src="../index.html?v=1.4.1" title="Peterborough Fire and Emergency Dispatch Simulator"></iframe>
+  <iframe id="simulator" src="../index.html?v=1.4.2" title="Peterborough Fire and Emergency Dispatch Simulator"></iframe>
   <button id="audio-button" type="button" aria-label="Mute dispatch voice" aria-pressed="true">
     <svg class="speaker-on" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15 9a4 4 0 0 1 0 6M17.5 6.5a7.5 7.5 0 0 1 0 11"/></svg>
     <svg class="speaker-off" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="m16 9 5 5M21 9l-5 5"/></svg>
   </button>
   <div id="loading"><div><strong>Loading Peterborough roads</strong><span>Preparing road boundaries and the shared dispatch database…</span></div></div>
-  <script src="../../shared/stations.js?v=1.4.1"></script>
+  <script src="../../shared/stations.js?v=1.4.2"></script>
   <script>
-    (()=>{
-      const AUDIO_KEY='ptboDispatchVoiceEnabled',CAMERA_VERSION='20260718-north-up-1',frame=document.getElementById('simulator'),audioButton=document.getElementById('audio-button'),loading=document.getElementById('loading'),stations=window.PTBO_STATIONS||[];
-      let voiceEnabled=localStorage.getItem(AUDIO_KEY)!=='false',selectedStationNumber=1;
-      window.ptboDispatchVoiceEnabled=()=>voiceEnabled;
-      window.ptboGetSelectedStationNumber=()=>selectedStationNumber;
-      window.ptboSetSelectedStation=number=>{selectedStationNumber=Number(number)||1};
-      function updateAudio(){audioButton.classList.toggle('muted',!voiceEnabled);audioButton.setAttribute('aria-pressed',String(voiceEnabled));audioButton.setAttribute('aria-label',voiceEnabled?'Mute dispatch voice':'Turn on dispatch voice')}
-      audioButton.onclick=()=>{voiceEnabled=!voiceEnabled;localStorage.setItem(AUDIO_KEY,String(voiceEnabled));if(!voiceEnabled&&frame.contentWindow?.speechSynthesis)frame.contentWindow.speechSynthesis.cancel();updateAudio()};updateAudio();
-      function finishLoading(){loading.classList.add('hidden');setTimeout(()=>loading.remove(),250)}
-      function installSmoothCamera(doc){if(doc.querySelector('script[data-ptbo-smooth-camera]'))return;const script=doc.createElement('script');script.src=new URL('../camera-fix.js?v='+CAMERA_VERSION,location.href).href;script.dataset.ptboSmoothCamera='true';script.onerror=()=>console.error('Unable to load the stable north-up simulator camera.');doc.body.appendChild(script)}
-      function installRouteCompare(doc){if(doc.querySelector('script[data-ptbo-route-compare]'))return;const script=doc.createElement('script');script.src=new URL('../route-compare.js?v=1.4.1',location.href).href;script.dataset.ptboRouteCompare='true';script.onerror=()=>console.error('Unable to load the post-call route comparison system.');doc.body.appendChild(script)}
-      function installDispatchVoice(doc){const helper=doc.createElement('script');helper.textContent=`(()=>{const STATIONS=${JSON.stringify(stations)},callNames={'Structure Fire':'a structure fire','Water & Ice Rescue':'a water rescue','Auto Alarm / Vehicle Fire':'an auto alarm','Burning Complaint':'a burning complaint','Alarms No Apparent Problem':'an alarm with no apparent problem','Chest Pain / Cardiac Emergency':'a cardiac emergency','Difficulty Breathing':'difficulty breathing','Unconscious Patient / Substance Overdose':'an unconscious patient or possible overdose','Rectal Bleed / Gastrointestinal Emergency':'a gastrointestinal emergency','Lift Assist / Public Service':'a lift assist','Request for Access / Wellness Check':'a request for access or wellness check'};function stationName(number){return(STATIONS.find(station=>station.number===Number(number))||{name:'Station 1'}).name}function secondMvcStation(primary,incident){return STATIONS.filter(station=>station.number!==Number(primary)).sort((a,b)=>mapInstance.distance([a.lat,a.lng],[incident.lat,incident.lng])-mapInstance.distance([b.lat,b.lng],[incident.lat,incident.lng]))[0]}window.buildPeterboroughDispatchPhrase=incident=>{if(!incident)return'';const primary=Number(parent.ptboGetSelectedStationNumber?.()||1);if(['Structure Fire','Water & Ice Rescue','Auto Alarm / Vehicle Fire'].includes(incident.sub))return'All stations from Peterborough Control, you’re responding to '+callNames[incident.sub]+' at '+incident.name+', '+incident.addr+'.';if(incident.sub==='Motor Vehicle Collision'){const secondary=secondMvcStation(primary,incident);return stationName(primary)+' and '+stationName(secondary?.number)+' from Peterborough Control, you’re responding to an M V C at the intersection '+incident.addr+'.'}return stationName(primary)+' from Peterborough Control, you’re responding to '+(callNames[incident.sub]||incident.sub.toLowerCase())+' at the address '+incident.addr+'.'};playDispatchAudioText=()=>{if(!parent.ptboDispatchVoiceEnabled?.())return;try{if(window.speechSynthesis){window.speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(window.buildPeterboroughDispatchPhrase(activeIncident));utterance.rate=1;utterance.pitch=.95;window.speechSynthesis.speak(utterance)}}catch(error){console.warn('TTS engine failure:',error)}};window.playDispatchAudioText=playDispatchAudioText;const originalTeleport=teleportToStation;teleportToStation=function(lat,lng){const match=STATIONS.find(station=>Math.abs(station.lat-Number(lat))<.00001&&Math.abs(station.lng-Number(lng))<.00001);if(match)parent.ptboSetSelectedStation?.(match.number);return originalTeleport.apply(this,arguments)};window.teleportToStation=teleportToStation})();`;doc.body.appendChild(helper)}
-      frame.addEventListener('load',()=>{const doc=frame.contentDocument,game=frame.contentWindow;if(!doc||!game)return;installDispatchVoice(doc);installSmoothCamera(doc);installRouteCompare(doc);const ready=()=>game.PTBO_ROAD_COLLISION?.ready?.then(finishLoading).catch(finishLoading);game.addEventListener('ptbo-road-collision-ready',finishLoading,{once:true});setTimeout(ready,0);setTimeout(()=>{if(document.body.contains(loading)){loading.querySelector('span').textContent='Road data is taking longer than expected; the simulator is still loading.'}},5000)});
+    (() => {
+      const VERSION = '1.4.2';
+      const AUDIO_KEY = 'ptboDispatchVoiceEnabled';
+      const frame = document.getElementById('simulator');
+      const audioButton = document.getElementById('audio-button');
+      const loading = document.getElementById('loading');
+      const stations = window.PTBO_STATIONS || [];
+      let voiceEnabled = localStorage.getItem(AUDIO_KEY) !== 'false';
+      let selectedStationNumber = 1;
+      window.ptboDispatchVoiceEnabled = () => voiceEnabled;
+      window.ptboGetSelectedStationNumber = () => selectedStationNumber;
+      window.ptboSetSelectedStation = number => { selectedStationNumber = Number(number) || 1; };
+
+      function updateAudio() {
+        audioButton.classList.toggle('muted', !voiceEnabled);
+        audioButton.setAttribute('aria-pressed', String(voiceEnabled));
+        audioButton.setAttribute('aria-label', voiceEnabled ? 'Mute dispatch voice' : 'Turn on dispatch voice');
+      }
+      audioButton.addEventListener('click', () => {
+        voiceEnabled = !voiceEnabled;
+        localStorage.setItem(AUDIO_KEY, String(voiceEnabled));
+        if (!voiceEnabled) frame.contentWindow?.speechSynthesis?.cancel?.();
+        updateAudio();
+      });
+      updateAudio();
+
+      function injectScript(doc, filename, marker) {
+        if (doc.querySelector(`script[${marker}]`)) return;
+        const script = doc.createElement('script');
+        script.src = new URL(`../${filename}?v=${VERSION}`, location.href).href;
+        script.setAttribute(marker, 'true');
+        script.onerror = () => console.error(`Unable to load ${filename}.`);
+        doc.body.appendChild(script);
+      }
+
+      function installDispatchVoice(doc) {
+        const helper = doc.createElement('script');
+        helper.textContent = `(() => {
+          const STATIONS = ${JSON.stringify(stations)};
+          const stationName = number => (STATIONS.find(station => station.number === Number(number)) || {name:'Station 1'}).name;
+          const callNames = {'Structure Fire':'a structure fire','Water & Ice Rescue':'a water rescue','Auto Alarm / Vehicle Fire':'an auto alarm','Burning Complaint':'a burning complaint','Alarms No Apparent Problem':'an alarm with no apparent problem','Chest Pain / Cardiac Emergency':'a cardiac emergency','Difficulty Breathing':'difficulty breathing','Unconscious Patient / Substance Overdose':'an unconscious patient or possible overdose','Rectal Bleed / Gastrointestinal Emergency':'a gastrointestinal emergency','Lift Assist / Public Service':'a lift assist','Request for Access / Wellness Check':'a request for access or wellness check'};
+          window.buildPeterboroughDispatchPhrase = incident => {
+            if (!incident) return '';
+            const primary = Number(parent.ptboGetSelectedStationNumber?.() || 1);
+            if (['Structure Fire','Water & Ice Rescue','Auto Alarm / Vehicle Fire'].includes(incident.sub)) return 'All stations from Peterborough Control, you’re responding to ' + callNames[incident.sub] + ' at ' + incident.name + ', ' + incident.addr + '.';
+            if (incident.sub === 'Motor Vehicle Collision') {
+              const secondary = STATIONS.filter(station => station.number !== primary).sort((a,b) => mapInstance.distance([a.lat,a.lng],[incident.lat,incident.lng]) - mapInstance.distance([b.lat,b.lng],[incident.lat,incident.lng]))[0];
+              return stationName(primary) + ' and ' + stationName(secondary?.number) + ' from Peterborough Control, you’re responding to an M V C at the intersection ' + incident.addr + '.';
+            }
+            return stationName(primary) + ' from Peterborough Control, you’re responding to ' + (callNames[incident.sub] || incident.sub.toLowerCase()) + ' at the address ' + incident.addr + '.';
+          };
+          playDispatchAudioText = () => {
+            if (!parent.ptboDispatchVoiceEnabled?.()) return;
+            try {
+              speechSynthesis.cancel();
+              const utterance = new SpeechSynthesisUtterance(window.buildPeterboroughDispatchPhrase(activeIncident));
+              utterance.rate = 1;
+              utterance.pitch = .95;
+              speechSynthesis.speak(utterance);
+            } catch (error) { console.warn('TTS engine failure:', error); }
+          };
+          window.playDispatchAudioText = playDispatchAudioText;
+        })();`;
+        doc.body.appendChild(helper);
+      }
+
+      frame.addEventListener('load', () => {
+        const doc = frame.contentDocument;
+        const game = frame.contentWindow;
+        if (!doc || !game) return;
+        installDispatchVoice(doc);
+        injectScript(doc, 'route-compare-1.4.2.js', 'data-ptbo-route-compare-142');
+        const finish = () => {
+          loading.classList.add('hidden');
+          setTimeout(() => loading.remove(), 250);
+        };
+        game.addEventListener('ptbo-road-collision-ready', finish, { once:true });
+        setTimeout(finish, 1600);
+      });
     })();
   </script>
 </body>
