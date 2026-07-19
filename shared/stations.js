@@ -96,31 +96,17 @@
       const childStyle = doc.createElement('style');
       childStyle.id = 'ptbo-mobile-map-polish';
       childStyle.textContent = `
+        #map-orientation-controls { display:none !important; }
         #ptbo-speedometer {
           top:calc(164px + env(safe-area-inset-top)) !important;
           left:10px !important;
           z-index:1260 !important;
         }
-        #map-orientation-controls {
-          right:14px !important;
-          bottom:calc(190px + env(safe-area-inset-bottom)) !important;
-          z-index:1265 !important;
-          gap:7px !important;
-        }
-        #compass { overflow:visible !important; }
         @media (max-width:350px) {
           #ptbo-speedometer { top:calc(160px + env(safe-area-inset-top)) !important; }
-          #map-orientation-controls {
-            right:10px !important;
-            bottom:calc(184px + env(safe-area-inset-bottom)) !important;
-          }
         }
         @media (orientation:landscape) and (max-height:560px) {
           #ptbo-speedometer { top:calc(137px + env(safe-area-inset-top)) !important; }
-          #map-orientation-controls {
-            right:12px !important;
-            bottom:calc(146px + env(safe-area-inset-bottom)) !important;
-          }
         }
       `;
       doc.head.appendChild(childStyle);
@@ -134,6 +120,7 @@
     if (doc.documentElement.dataset.sharedDispatchPatched === 'true') return;
     doc.documentElement.dataset.sharedDispatchPatched = 'true';
     removeLegacyEditorControls(doc);
+    loadSimulatorTool(doc, 'camera-fix.js?v=20260718-north-up-1', 'data-ptbo-smooth-camera', 'Unable to load the stable north-up simulator camera.');
     loadSimulatorTool(doc, 'road-collision.js', 'data-ptbo-road-collision', 'Unable to load the Peterborough road boundary system.');
     loadSimulatorTool(doc, 'speed-streak.js', 'data-ptbo-speed-streak', 'Unable to load the collision speed streak system.');
     loadSimulatorTool(doc, 'vehicle-instruments.js?v=20260718-1', 'data-ptbo-vehicle-instruments', 'Unable to load the speedometer and analog steering system.');
