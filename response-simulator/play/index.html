@@ -11,28 +11,29 @@
     #simulator{position:fixed;inset:0;width:100%;height:100%;border:0;background:#111827}
     #audio-button{position:fixed;top:15px;right:145px;z-index:5000;width:42px;height:42px;display:grid;place-items:center;padding:0;color:var(--ink);border:1px solid var(--border);border-radius:12px;background:var(--panel);box-shadow:0 6px 20px #0006;cursor:pointer}
     #audio-button svg{width:22px;height:22px;stroke:currentColor}.speaker-off{display:none}#audio-button.muted{color:#9ca3af}#audio-button.muted .speaker-on{display:none}#audio-button.muted .speaker-off{display:block}
-    #loading{position:fixed;inset:0;z-index:6000;display:grid;place-items:center;padding:24px;color:var(--ink);background:#111827;text-align:center;transition:opacity .18s ease}#loading.hidden{opacity:0;pointer-events:none}#loading strong{display:block;font-size:1.15rem}#loading span{display:block;margin-top:6px;color:var(--muted);font-size:.9rem}
+    #loading{position:fixed;inset:0;z-index:6000;display:grid;place-items:center;padding:24px;color:var(--ink);background:#111827;text-align:center;transition:opacity .18s ease}#loading.hidden{opacity:0;pointer-events:none}#loading strong{display:block;font-size:1.15rem}#loading span{display:block;margin-top:6px;color:var(--muted);font-size:.9rem;line-height:1.45}#loading button{margin-top:16px;padding:10px 18px;color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:9px;background:#dc2626;font:inherit;font-weight:800;cursor:pointer}
     @media(max-width:900px),(pointer:coarse){#audio-button{display:none}}
   </style>
 </head>
 <body>
-  <iframe id="simulator" src="../index.html?v=1.4.4" title="Peterborough Fire and Emergency Dispatch Simulator"></iframe>
+  <iframe id="simulator" src="../index.html?v=1.4.5" title="Peterborough Fire and Emergency Dispatch Simulator"></iframe>
   <button id="audio-button" type="button" aria-label="Mute dispatch voice" aria-pressed="true">
     <svg class="speaker-on" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15 9a4 4 0 0 1 0 6M17.5 6.5a7.5 7.5 0 0 1 0 11"/></svg>
     <svg class="speaker-off" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="m16 9 5 5M21 9l-5 5"/></svg>
   </button>
-  <div id="loading"><div><strong>Loading Peterborough roads</strong><span>Preparing road boundaries and the shared dispatch database…</span></div></div>
-  <script src="../../shared/dispatch-locations.js?v=1.4.4"></script>
-  <script src="../../shared/dispatch-data-1.4.4.js?v=1.4.4"></script>
-  <script src="../../shared/dispatch-override-1.4.4.js?v=1.4.4"></script>
-  <script src="../../shared/stations.js?v=1.4.4"></script>
+  <div id="loading"><div><strong>Loading Peterborough roads</strong><span id="loading-status">Preparing steering, road boundaries, and dispatch data…</span></div></div>
+  <script src="../../shared/dispatch-locations.js?v=1.4.5"></script>
+  <script src="../../shared/dispatch-data-1.4.4.js?v=1.4.5"></script>
+  <script src="../../shared/dispatch-override-1.4.4.js?v=1.4.5"></script>
+  <script src="../../shared/stations.js?v=1.4.5"></script>
   <script>
     (() => {
-      const VERSION = '1.4.4';
+      const VERSION = '1.4.5';
       const AUDIO_KEY = 'ptboDispatchVoiceEnabled';
       const frame = document.getElementById('simulator');
       const audioButton = document.getElementById('audio-button');
       const loading = document.getElementById('loading');
+      const loadingStatus = document.getElementById('loading-status');
       const stations = window.PTBO_STATIONS || [];
       let voiceEnabled = localStorage.getItem(AUDIO_KEY) !== 'false';
       let selectedStationNumber = 1;
@@ -54,12 +55,21 @@
       updateAudio();
 
       function injectScript(doc, filename, marker) {
-        if (doc.querySelector(`script[${marker}]`)) return;
-        const script = doc.createElement('script');
-        script.src = new URL(`../${filename}?v=${VERSION}`, location.href).href;
-        script.setAttribute(marker, 'true');
-        script.onerror = () => console.error(`Unable to load ${filename}.`);
-        doc.body.appendChild(script);
+        return new Promise((resolve, reject) => {
+          const existing = doc.querySelector(`script[${marker}]`);
+          if (existing) {
+            if (existing.dataset.ptboLoaded === 'true') return resolve(existing);
+            existing.addEventListener('load', () => resolve(existing), { once:true });
+            existing.addEventListener('error', () => reject(new Error(`Unable to load ${filename}.`)), { once:true });
+            return;
+          }
+          const script = doc.createElement('script');
+          script.src = new URL(`../${filename}?v=${VERSION}`, location.href).href;
+          script.setAttribute(marker, 'true');
+          script.onload = () => { script.dataset.ptboLoaded = 'true'; resolve(script); };
+          script.onerror = () => reject(new Error(`Unable to load ${filename}.`));
+          doc.body.appendChild(script);
+        });
       }
 
       function installDispatchVoice(doc) {
@@ -93,29 +103,32 @@
         doc.body.appendChild(helper);
       }
 
+      function showStartupError(error) {
+        console.error('Simulator startup failed.', error);
+        loading.innerHTML = '<div><strong>Simulator did not finish loading</strong><span>Steering or road boundaries could not initialize. Retry to load the protected driving mode.</span><button type="button" id="startup-retry">Retry</button></div>';
+        document.getElementById('startup-retry')?.addEventListener('click', () => location.reload());
+      }
+
       frame.addEventListener('load', () => {
         const doc = frame.contentDocument;
         const game = frame.contentWindow;
         if (!doc || !game) return;
         installDispatchVoice(doc);
-        injectScript(doc, 'route-compare-1.4.2.js', 'data-ptbo-route-compare-core');
-        injectScript(doc, 'route-review-ui-1.4.3.js', 'data-ptbo-route-review-ui');
-        let roadsReady = false;
-        let dataReady = false;
-        const finish = () => {
-          if (!roadsReady || !dataReady || !loading.isConnected) return;
-          loading.classList.add('hidden');
-          setTimeout(() => loading.remove(), 250);
-        };
-        window.PTBO_DISPATCH_STORE.ready()
-          .then(() => { dataReady = true; finish(); })
-          .catch(error => {
-            console.error('Unable to load v1.4.4 dispatch data.', error);
-            dataReady = true;
-            finish();
-          });
-        game.addEventListener('ptbo-road-collision-ready', () => { roadsReady = true; finish(); }, { once:true });
-        setTimeout(() => { roadsReady = true; finish(); }, 1600);
+        injectScript(doc, 'route-compare-1.4.2.js', 'data-ptbo-route-compare-core').catch(console.error);
+        injectScript(doc, 'route-review-ui-1.4.3.js', 'data-ptbo-route-review-ui').catch(console.error);
+        loadingStatus.textContent = 'Connecting vehicle controls and road boundaries…';
+
+        const simulatorReady = injectScript(doc, 'simulator-readiness-1.4.5.js', 'data-ptbo-simulator-readiness')
+          .then(() => game.PTBO_SIMULATOR_READY || Promise.reject(new Error('Startup verifier was not created.')));
+        const dispatchReady = window.PTBO_DISPATCH_STORE.ready();
+
+        Promise.all([dispatchReady, simulatorReady])
+          .then(() => {
+            loadingStatus.textContent = 'Simulator ready';
+            loading.classList.add('hidden');
+            setTimeout(() => loading.remove(), 250);
+          })
+          .catch(showStartupError);
       });
     })();
   </script>
