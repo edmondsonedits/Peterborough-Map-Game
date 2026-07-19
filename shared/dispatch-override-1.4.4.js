@@ -11,11 +11,13 @@
   }
 
   const readyPromise = Promise.all([baseStore.ready(), dataReady]).then(([, locations]) => {
-    baseStore.replaceAll(locations.map(location => ({
-      ...location,
-      sources: [...(location.sources || [])]
-    })));
-    console.info(`Dispatch database v${VERSION} loaded: ${locations.length} calls.`);
+    if (baseStore.dataVersion !== VERSION) {
+      baseStore.replaceAll(locations.map(location => ({
+        ...location,
+        sources: [...(location.sources || [])]
+      })));
+    }
+    console.info(`Dispatch database v${VERSION} loaded: ${baseStore.getAll().length} calls.`);
     return baseStore.getAll();
   });
 
