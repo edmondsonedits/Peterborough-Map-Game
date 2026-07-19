@@ -1,7 +1,9 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.4.3';
+  const VERSION = '1.4.4';
+  const ROUTE_OPACITY = .30;
+  const CASING_OPACITY = .38;
   if (window.PTBO_ROUTE_REVIEW_UI_VERSION === VERSION) return;
   window.PTBO_ROUTE_REVIEW_UI_VERSION = VERSION;
 
@@ -119,8 +121,8 @@
 
   function setLineVisible(line, visible) {
     if (!line?.setStyle) return;
-    line.setStyle({ opacity: visible ? .98 : 0 });
-    line._ptboCasing?.setStyle?.({ opacity: visible ? .86 : 0 });
+    line.setStyle({ opacity: visible ? ROUTE_OPACITY : 0 });
+    line._ptboCasing?.setStyle?.({ opacity: visible ? CASING_OPACITY : 0 });
   }
 
   function bindRouteChip(button, line) {
@@ -145,7 +147,14 @@
     if (!isMobileHost || !api?.state?.reviewOpen) return false;
     const legend = document.getElementById('ptbo-route-legend');
     if (!legend || legend.classList.contains('hidden')) return false;
-    if (legend.querySelector('.ptbo-mobile-compact')) return true;
+    if (legend.querySelector('.ptbo-mobile-compact')) {
+      const state = api.state;
+      const playerVisible = legend.querySelector('[data-route="player"]')?.getAttribute('aria-pressed') !== 'false';
+      const suggestedVisible = legend.querySelector('[data-route="suggested"]')?.getAttribute('aria-pressed') !== 'false';
+      setLineVisible(state.playerLine, playerVisible);
+      setLineVisible(state.suggestedLine, suggestedVisible);
+      return true;
+    }
 
     const state = api.state;
     const suggestedDistance = Number(state.suggestedRoute?.distance);
@@ -187,6 +196,8 @@
     legend.querySelector('.ptbo-compact-done')?.addEventListener('click', () => api.close?.());
     bindRouteChip(legend.querySelector('[data-route="player"]'), state.playerLine);
     bindRouteChip(legend.querySelector('[data-route="suggested"]'), state.suggestedLine);
+    setLineVisible(state.playerLine, true);
+    setLineVisible(state.suggestedLine, Boolean(state.suggestedLine));
 
     setTimeout(() => {
       try {
