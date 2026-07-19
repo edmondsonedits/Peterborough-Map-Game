@@ -2,530 +2,88 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#0b1220">
-  <title>Heading Camera Prototype v1.4.9</title>
-
+  <title>Heading Camera Prototype v1.4.10</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet-src.js" crossorigin=""></script>
   <script src="https://unpkg.com/leaflet-rotate@0.2.8/dist/leaflet-rotate-src.js"></script>
-
   <style>
-    :root {
-      color-scheme: dark;
-      --panel: rgba(9, 15, 28, .94);
-      --panel-soft: rgba(15, 23, 42, .88);
-      --border: rgba(255, 255, 255, .18);
-      --text: #f8fafc;
-      --muted: #cbd5e1;
-      --blue: #38bdf8;
-      --green: #34d399;
-      --gold: #facc15;
-      --red: #fb7185;
-    }
-
-    * { box-sizing: border-box; }
-    html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: #0b1220; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-    button, input { font: inherit; }
-
-    #app, #map { position: absolute; inset: 0; }
-    #map { background: #111827; }
-
-    .leaflet-control-attribution { font-size: 9px; }
-    .leaflet-control-attribution a { color: inherit; }
-
-    #topbar {
-      position: fixed;
-      top: max(12px, env(safe-area-inset-top));
-      left: 50%;
-      z-index: 2000;
-      width: min(calc(100% - 24px), 760px);
-      transform: translateX(-50%);
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      padding: 10px;
-      color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      background: var(--panel);
-      box-shadow: 0 12px 32px rgba(0, 0, 0, .36);
-      backdrop-filter: blur(14px);
-    }
-
-    #status {
-      min-width: 0;
-      flex: 1 1 auto;
-      padding: 0 4px;
-    }
-
-    #status strong { display: block; font-size: 14px; line-height: 1.2; }
-    #status span { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-    .mode-button, #recenter, #pause {
-      min-height: 42px;
-      padding: 0 13px;
-      color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: 11px;
-      background: rgba(255, 255, 255, .07);
-      font-weight: 800;
-      cursor: pointer;
-      touch-action: manipulation;
-    }
-
-    .mode-button.active { color: #07111f; border-color: transparent; background: var(--blue); }
-    #recenter { display: none; background: var(--green); color: #052014; border-color: transparent; }
-    #recenter.visible { display: inline-flex; align-items: center; }
-    #pause { min-width: 82px; }
-
-    #telemetry {
-      position: fixed;
-      left: 12px;
-      bottom: max(12px, env(safe-area-inset-bottom));
-      z-index: 2000;
-      width: min(300px, calc(100% - 24px));
-      padding: 13px;
-      color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      background: var(--panel-soft);
-      box-shadow: 0 10px 26px rgba(0, 0, 0, .32);
-      backdrop-filter: blur(12px);
-    }
-
-    #telemetry-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
-    }
-
-    .metric {
-      padding: 8px;
-      border: 1px solid rgba(255, 255, 255, .1);
-      border-radius: 10px;
-      background: rgba(255, 255, 255, .04);
-    }
-
-    .metric span { display: block; color: var(--muted); font-size: 9px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
-    .metric strong { display: block; margin-top: 3px; font: 800 14px/1.1 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-
-    .range-row { display: grid; grid-template-columns: 84px 1fr 46px; gap: 8px; align-items: center; margin-top: 10px; color: var(--muted); font-size: 11px; }
-    .range-row input { width: 100%; accent-color: var(--blue); }
-
-    #vehicle-puck {
-      position: fixed;
-      left: 50%;
-      top: 50%;
-      z-index: 1500;
-      width: 56px;
-      height: 56px;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      transition: opacity .15s ease;
-      filter: drop-shadow(0 7px 7px rgba(0, 0, 0, .55));
-    }
-
-    #vehicle-puck.hidden { opacity: 0; }
-
-    #vehicle-puck .halo {
-      position: absolute;
-      inset: 5px;
-      border: 2px solid rgba(56, 189, 248, .65);
-      border-radius: 50%;
-      background: rgba(56, 189, 248, .12);
-      animation: pulse 1.8s ease-out infinite;
-    }
-
-    #vehicle-arrow {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 28px;
-      height: 38px;
-      transform: translate(-50%, -50%) rotate(0deg);
-      transform-origin: 50% 50%;
-      transition: none;
-    }
-
-    #vehicle-arrow::before {
-      position: absolute;
-      inset: 0;
-      content: "";
-      background: linear-gradient(180deg, #ffffff 0 18%, #ef4444 18% 100%);
-      clip-path: polygon(50% 0, 100% 82%, 64% 70%, 50% 100%, 36% 70%, 0 82%);
-      border-radius: 7px;
-    }
-
-    #vehicle-arrow::after {
-      position: absolute;
-      left: 50%;
-      top: 14px;
-      width: 7px;
-      height: 15px;
-      content: "";
-      transform: translateX(-50%);
-      border-radius: 4px;
-      background: #7f1d1d;
-    }
-
-    .free-marker {
-      width: 22px;
-      height: 22px;
-      border: 3px solid #fff;
-      border-radius: 50%;
-      background: #ef4444;
-      box-shadow: 0 3px 10px rgba(0, 0, 0, .55);
-    }
-
-    #legend {
-      position: fixed;
-      right: 12px;
-      bottom: max(12px, env(safe-area-inset-bottom));
-      z-index: 2000;
-      max-width: 270px;
-      padding: 12px 13px;
-      color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: var(--panel-soft);
-      box-shadow: 0 10px 26px rgba(0, 0, 0, .32);
-      font-size: 11px;
-      line-height: 1.45;
-      backdrop-filter: blur(12px);
-    }
-
-    #legend strong { display: block; margin-bottom: 4px; color: var(--gold); font-size: 12px; }
-    #legend p { margin: 0; color: var(--muted); }
-
-    @keyframes pulse {
-      0% { opacity: .8; transform: scale(.72); }
-      75%, 100% { opacity: 0; transform: scale(1.35); }
-    }
-
-    @media (max-width: 720px) {
-      #topbar { align-items: stretch; flex-wrap: wrap; }
-      #status { flex-basis: 100%; order: -1; }
-      .mode-button, #recenter, #pause { flex: 1 1 0; min-width: 0; padding: 0 8px; font-size: 12px; }
-      #legend { display: none; }
-      #telemetry { width: min(320px, calc(100% - 24px)); }
-      #vehicle-puck { width: 50px; height: 50px; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      #vehicle-puck .halo { animation: none; opacity: .35; }
-    }
+    :root{color-scheme:dark;--panel:rgba(9,15,28,.95);--soft:rgba(15,23,42,.9);--line:rgba(255,255,255,.18);--text:#f8fafc;--muted:#cbd5e1;--blue:#38bdf8;--green:#34d399;--red:#fb7185;--gold:#facc15}
+    *{box-sizing:border-box}html,body,#app,#map{width:100%;height:100%;margin:0;overflow:hidden}body{background:#0b1220;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input{font:inherit}#app,#map{position:absolute;inset:0}#map{background:#dfe5e8}.leaflet-control-attribution{font-size:9px}
+    #controls{position:fixed;z-index:2000;top:max(10px,env(safe-area-inset-top));left:50%;width:min(calc(100% - 20px),720px);transform:translateX(-50%);padding:11px;color:var(--text);border:1px solid var(--line);border-radius:16px;background:var(--panel);box-shadow:0 12px 34px #0007;backdrop-filter:blur(14px)}
+    #title-row{display:flex;gap:10px;align-items:center}.title{min-width:0;flex:1}.title strong{display:block;font-size:17px}.title span{display:block;margin-top:3px;color:var(--muted);font-size:12px}.version{color:var(--blue)!important;font-weight:850}
+    #pass{flex:0 0 auto;padding:7px 10px;border-radius:999px;background:#3f1d29;color:#fecdd3;font-size:11px;font-weight:900;letter-spacing:.05em}#pass.ok{background:#12372b;color:#a7f3d0}
+    #buttons{display:grid;grid-template-columns:1fr 1fr .8fr;gap:9px;margin-top:11px}.mode,#pause,#recenter{min-height:46px;padding:0 10px;color:var(--text);border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.07);font-weight:850;cursor:pointer;touch-action:manipulation}.mode.active{color:#07111f;border-color:transparent;background:var(--blue)}#recenter{display:none;color:#052014;border-color:transparent;background:var(--green)}#recenter.show{display:block}
+    #truck{position:fixed;z-index:1600;left:50%;top:56%;width:62px;height:74px;transform:translate(-50%,-50%);pointer-events:none;filter:drop-shadow(0 8px 8px #0008)}#truck.hidden{display:none}#arrow{position:absolute;inset:0;transform-origin:50% 50%}#arrow::before{position:absolute;left:50%;top:4px;width:38px;height:60px;content:"";transform:translateX(-50%);background:linear-gradient(180deg,#fff 0 13%,#ef4444 13% 100%);clip-path:polygon(50% 0,100% 72%,68% 64%,61% 100%,39% 100%,32% 64%,0 72%)}#arrow::after{position:absolute;left:50%;top:22px;width:10px;height:33px;content:"";transform:translateX(-50%);border-radius:6px;background:#7f1d1d}.nose{position:absolute;left:50%;top:0;width:10px;height:10px;transform:translateX(-50%);border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold)}.halo{position:absolute;inset:8px;border:2px solid rgba(56,189,248,.7);border-radius:50%;animation:pulse 1.7s ease-out infinite}@keyframes pulse{0%{opacity:.8;transform:scale(.65)}80%,100%{opacity:0;transform:scale(1.5)}}
+    #telemetry{position:fixed;z-index:2000;left:10px;bottom:max(10px,env(safe-area-inset-bottom));width:min(350px,calc(100% - 20px));padding:11px;color:var(--text);border:1px solid var(--line);border-radius:15px;background:var(--soft);box-shadow:0 10px 28px #0006;backdrop-filter:blur(12px)}#metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.metric{min-width:0;padding:8px;border:1px solid rgba(255,255,255,.1);border-radius:10px;background:rgba(255,255,255,.04)}.metric span{display:block;color:var(--muted);font-size:8px;font-weight:850;letter-spacing:.07em;text-transform:uppercase}.metric strong{display:block;margin-top:4px;font:850 13px/1.1 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:nowrap}.speed{display:grid;grid-template-columns:72px 1fr 54px;gap:8px;align-items:center;margin-top:10px;color:var(--muted);font-size:11px}.speed input{width:100%;accent-color:var(--blue)}
+    #explanation{position:fixed;z-index:1900;right:10px;bottom:max(10px,env(safe-area-inset-bottom));max-width:290px;padding:11px 12px;color:var(--muted);border:1px solid var(--line);border-radius:14px;background:var(--soft);font-size:11px;line-height:1.4;box-shadow:0 10px 28px #0006}#explanation strong{display:block;margin-bottom:3px;color:var(--gold)}
+    @media(max-width:720px){#controls{padding:10px}.title strong{font-size:16px}.title span{font-size:11px}#buttons{gap:8px}.mode,#pause,#recenter{min-height:44px;font-size:13px}#truck{top:56%;width:56px;height:68px}#metrics{grid-template-columns:repeat(2,minmax(0,1fr))}#telemetry{width:min(330px,calc(100% - 20px))}#explanation{display:none}}
+    @media(prefers-reduced-motion:reduce){.halo{animation:none;opacity:.3}}
   </style>
 </head>
 <body>
-  <div id="app">
-    <div id="map" aria-label="Heading camera prototype map"></div>
-
-    <div id="vehicle-puck" aria-hidden="true">
-      <div class="halo"></div>
-      <div id="vehicle-arrow"></div>
+<div id="app">
+  <div id="map" aria-label="Map camera alignment test"></div>
+  <div id="truck" aria-hidden="true"><div class="halo"></div><div id="arrow"><div class="nose"></div></div></div>
+  <section id="controls">
+    <div id="title-row"><div class="title"><strong>Heading Camera Prototype <span class="version">v1.4.10</span></strong><span id="status">Heading Up: movement, route and truck nose all point toward the top.</span></div><div id="pass">CHECKING</div></div>
+    <div id="buttons"><button class="mode" id="north" type="button">North Up</button><button class="mode active" id="heading" type="button">Heading Up</button><button id="pause" type="button">Pause</button><button id="recenter" type="button">Re-center</button></div>
+  </section>
+  <aside id="telemetry">
+    <div id="metrics">
+      <div class="metric"><span>Vehicle heading</span><strong id="vehicle-heading">0°</strong></div>
+      <div class="metric"><span>Map top</span><strong id="map-top">0°</strong></div>
+      <div class="metric"><span>Arrow screen</span><strong id="screen-heading">0°</strong></div>
+      <div class="metric"><span>Alignment error</span><strong id="error">0°</strong></div>
     </div>
+    <label class="speed"><span>Drive speed</span><input id="speed" type="range" min="5" max="28" step="1" value="15"><output id="speed-value">15 m/s</output></label>
+  </aside>
+  <aside id="explanation"><strong>Visible verification</strong>The blue direction line shows the vehicle's real movement vector. In Heading Up it must extend straight upward beneath the truck nose. Dragging the map enters free camera mode.</aside>
+</div>
+<script>
+(()=>{
+  'use strict';
+  const VERSION='1.4.10';
+  const MODES={NORTH:'north',HEADING:'heading',FREE:'free'};
+  const route=[
+    [44.300871,-78.322206],[44.303000,-78.322180],[44.305450,-78.322110],
+    [44.306300,-78.319200],[44.307150,-78.315350],[44.305700,-78.312600],
+    [44.303850,-78.309550],[44.300900,-78.309680],[44.297850,-78.309850],
+    [44.295300,-78.312900],[44.292650,-78.316250],[44.293300,-78.320700],
+    [44.294200,-78.325150],[44.296900,-78.326650],[44.299650,-78.328100],
+    [44.300350,-78.325400],[44.300871,-78.322206]
+  ];
+  const map=L.map('map',{center:route[0],zoom:16,minZoom:12,maxZoom:19,zoomControl:true,preferCanvas:true,rotate:true,bearing:0,rotateControl:false,touchRotate:false,shiftKeyRotate:false,trackContainerMutation:true});
+  map.zoomControl.setPosition('bottomright');
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{subdomains:'abcd',maxZoom:20,maxNativeZoom:20,updateWhenIdle:false,keepBuffer:5,attribution:'&copy; OpenStreetMap &copy; CARTO'}).addTo(map);
+  L.polyline(route,{color:'#2563eb',opacity:.72,weight:8,lineCap:'round',lineJoin:'round'}).addTo(map);
+  L.polyline(route,{color:'#fff',opacity:.45,weight:2,dashArray:'10 12',lineCap:'round'}).addTo(map);
+  const directionLine=L.polyline([route[0],route[1]],{color:'#06b6d4',opacity:.95,weight:6,lineCap:'round'}).addTo(map);
+  const dotIcon=L.divIcon({className:'',html:'<div style="width:18px;height:18px;border:3px solid white;border-radius:50%;background:#ef4444;box-shadow:0 3px 9px #0008"></div>',iconSize:[18,18],iconAnchor:[9,9]});
+  const freeMarker=L.marker(route[0],{icon:dotIcon,opacity:0}).addTo(map);
 
-    <header id="topbar">
-      <div id="status">
-        <strong>Heading Camera Prototype <span style="color:#38bdf8">v1.4.9</span></strong>
-        <span id="status-detail">Following vehicle with north at the top.</span>
-      </div>
-      <button class="mode-button active" id="north-up" type="button">North Up</button>
-      <button class="mode-button" id="heading-up" type="button">Heading Up</button>
-      <button id="recenter" type="button">Re-center</button>
-      <button id="pause" type="button">Pause</button>
-    </header>
+  const northBtn=document.getElementById('north'),headingBtn=document.getElementById('heading'),pauseBtn=document.getElementById('pause'),recenterBtn=document.getElementById('recenter');
+  const truck=document.getElementById('truck'),arrow=document.getElementById('arrow'),status=document.getElementById('status'),pass=document.getElementById('pass');
+  const vehicleOut=document.getElementById('vehicle-heading'),mapTopOut=document.getElementById('map-top'),screenOut=document.getElementById('screen-heading'),errorOut=document.getElementById('error');
+  const speed=document.getElementById('speed'),speedValue=document.getElementById('speed-value');
 
-    <aside id="telemetry">
-      <div id="telemetry-grid">
-        <div class="metric"><span>Camera state</span><strong id="camera-state">NORTH</strong></div>
-        <div class="metric"><span>Vehicle heading</span><strong id="vehicle-heading">0°</strong></div>
-        <div class="metric"><span>Map bearing</span><strong id="map-bearing">0°</strong></div>
-        <div class="metric"><span>Difference</span><strong id="bearing-error">0°</strong></div>
-      </div>
-      <label class="range-row">
-        <span>Drive speed</span>
-        <input id="speed" type="range" min="6" max="30" step="1" value="15">
-        <output id="speed-value">15 m/s</output>
-      </label>
-      <label class="range-row">
-        <span>Camera smoothing</span>
-        <input id="smoothing" type="range" min="80" max="1200" step="20" value="420">
-        <output id="smoothing-value">420 ms</output>
-      </label>
-    </aside>
-
-    <aside id="legend">
-      <strong>How to test</strong>
-      <p>Switch to Heading Up and watch the map rotate beneath the fixed truck puck. Drag the map to enter Free mode, then use Re-center. The loop deliberately includes sharp turns and a 360° wrap.</p>
-    </aside>
-  </div>
-
-  <script>
-    (() => {
-      'use strict';
-
-      const MODES = Object.freeze({
-        NORTH: 'north',
-        HEADING: 'heading',
-        FREE: 'free'
-      });
-
-      const route = [
-        [44.300871, -78.322206],
-        [44.305450, -78.322110],
-        [44.307150, -78.315350],
-        [44.303850, -78.309550],
-        [44.297850, -78.309850],
-        [44.292650, -78.316250],
-        [44.294200, -78.325150],
-        [44.299650, -78.328100],
-        [44.300871, -78.322206]
-      ];
-
-      const map = L.map('map', {
-        center: route[0],
-        zoom: 16,
-        minZoom: 12,
-        maxZoom: 19,
-        zoomControl: true,
-        attributionControl: true,
-        preferCanvas: true,
-        rotate: true,
-        bearing: 0,
-        rotateControl: false,
-        touchRotate: false,
-        shiftKeyRotate: false,
-        trackContainerMutation: true
-      });
-
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        subdomains: 'abcd',
-        maxZoom: 20,
-        maxNativeZoom: 20,
-        updateWhenIdle: false,
-        keepBuffer: 5,
-        attribution: '&copy; OpenStreetMap &copy; CARTO'
-      }).addTo(map);
-
-      const routeLine = L.polyline(route, {
-        color: '#2563eb',
-        opacity: .72,
-        weight: 7,
-        lineCap: 'round',
-        lineJoin: 'round'
-      }).addTo(map);
-
-      L.polyline(route, {
-        color: '#ffffff',
-        opacity: .45,
-        weight: 2,
-        dashArray: '9 12',
-        lineCap: 'round'
-      }).addTo(map);
-
-      const startIcon = L.divIcon({
-        className: '',
-        html: '<div style="width:14px;height:14px;border:3px solid #fff;border-radius:50%;background:#34d399;box-shadow:0 3px 10px #0008"></div>',
-        iconSize: [14, 14],
-        iconAnchor: [7, 7]
-      });
-
-      L.marker(route[0], { icon: startIcon }).addTo(map).bindTooltip('Loop start');
-
-      const freeMarkerIcon = L.divIcon({
-        className: '',
-        html: '<div class="free-marker"></div>',
-        iconSize: [22, 22],
-        iconAnchor: [11, 11]
-      });
-
-      const freeMarker = L.marker(route[0], { icon: freeMarkerIcon, opacity: 0 }).addTo(map);
-
-      const northButton = document.getElementById('north-up');
-      const headingButton = document.getElementById('heading-up');
-      const recenterButton = document.getElementById('recenter');
-      const pauseButton = document.getElementById('pause');
-      const vehiclePuck = document.getElementById('vehicle-puck');
-      const vehicleArrow = document.getElementById('vehicle-arrow');
-      const statusDetail = document.getElementById('status-detail');
-      const cameraStateOutput = document.getElementById('camera-state');
-      const vehicleHeadingOutput = document.getElementById('vehicle-heading');
-      const mapBearingOutput = document.getElementById('map-bearing');
-      const bearingErrorOutput = document.getElementById('bearing-error');
-      const speedInput = document.getElementById('speed');
-      const speedOutput = document.getElementById('speed-value');
-      const smoothingInput = document.getElementById('smoothing');
-      const smoothingOutput = document.getElementById('smoothing-value');
-
-      let cameraMode = MODES.NORTH;
-      let preferredFollowMode = MODES.NORTH;
-      let paused = false;
-      let segmentIndex = 0;
-      let segmentProgressMetres = 0;
-      let vehiclePosition = L.latLng(route[0]);
-      let vehicleHeading = headingBetween(route[0], route[1]);
-      let cameraBearing = 0;
-      let lastFrame = performance.now();
-
-      function wrap360(angle) {
-        return ((angle % 360) + 360) % 360;
-      }
-
-      function shortestAngleDelta(from, to) {
-        return ((to - from + 540) % 360) - 180;
-      }
-
-      function smoothAngle(current, target, dtMs, timeConstantMs) {
-        const response = 1 - Math.exp(-dtMs / Math.max(1, timeConstantMs));
-        return wrap360(current + shortestAngleDelta(current, target) * response);
-      }
-
-      function headingBetween(from, to) {
-        const lat1 = from[0] * Math.PI / 180;
-        const lat2 = to[0] * Math.PI / 180;
-        const deltaLongitude = (to[1] - from[1]) * Math.PI / 180;
-        const y = Math.sin(deltaLongitude) * Math.cos(lat2);
-        const x = Math.cos(lat1) * Math.sin(lat2) -
-          Math.sin(lat1) * Math.cos(lat2) * Math.cos(deltaLongitude);
-        return wrap360(Math.atan2(y, x) * 180 / Math.PI);
-      }
-
-      function interpolateLatLng(from, to, ratio) {
-        return L.latLng(
-          from[0] + (to[0] - from[0]) * ratio,
-          from[1] + (to[1] - from[1]) * ratio
-        );
-      }
-
-      function currentSegment() {
-        const start = route[segmentIndex];
-        const end = route[(segmentIndex + 1) % route.length];
-        return {
-          start,
-          end,
-          lengthMetres: map.distance(start, end),
-          targetHeading: headingBetween(start, end)
-        };
-      }
-
-      function advanceVehicle(dtSeconds) {
-        let metresRemaining = Number(speedInput.value) * dtSeconds;
-
-        while (metresRemaining > 0) {
-          const segment = currentSegment();
-          const available = Math.max(0, segment.lengthMetres - segmentProgressMetres);
-          const travelled = Math.min(available, metresRemaining);
-
-          segmentProgressMetres += travelled;
-          metresRemaining -= travelled;
-
-          if (segmentProgressMetres >= segment.lengthMetres - .001) {
-            segmentIndex = (segmentIndex + 1) % (route.length - 1);
-            segmentProgressMetres = 0;
-          } else {
-            break;
-          }
-        }
-
-        const segment = currentSegment();
-        const ratio = segment.lengthMetres > 0 ? segmentProgressMetres / segment.lengthMetres : 0;
-        vehiclePosition = interpolateLatLng(segment.start, segment.end, ratio);
-        vehicleHeading = smoothAngle(vehicleHeading, segment.targetHeading, dtSeconds * 1000, 230);
-      }
-
-      function setCameraMode(nextMode, reason = '') {
-        cameraMode = nextMode;
-
-        if (nextMode !== MODES.FREE) preferredFollowMode = nextMode;
-
-        northButton.classList.toggle('active', nextMode === MODES.NORTH);
-        headingButton.classList.toggle('active', nextMode === MODES.HEADING);
-        recenterButton.classList.toggle('visible', nextMode === MODES.FREE);
-        vehiclePuck.classList.toggle('hidden', nextMode === MODES.FREE);
-        freeMarker.setOpacity(nextMode === MODES.FREE ? 1 : 0);
-
-        if (nextMode === MODES.NORTH) {
-          statusDetail.textContent = 'Following vehicle with north at the top.';
-          cameraStateOutput.textContent = 'NORTH';
-        } else if (nextMode === MODES.HEADING) {
-          statusDetail.textContent = 'Following vehicle with its direction of travel at the top.';
-          cameraStateOutput.textContent = 'HEADING';
-        } else {
-          statusDetail.textContent = reason || 'Free camera. Press Re-center to resume following.';
-          cameraStateOutput.textContent = 'FREE';
-        }
-      }
-
-      function updateCamera(dtMs) {
-        const targetBearing = cameraMode === MODES.HEADING ? vehicleHeading : 0;
-
-        if (cameraMode !== MODES.FREE) {
-          const smoothingMs = Number(smoothingInput.value);
-          cameraBearing = smoothAngle(cameraBearing, targetBearing, dtMs, smoothingMs);
-          map.setView(vehiclePosition, map.getZoom(), { animate: false, reset: false });
-          map.setBearing(cameraBearing);
-        } else {
-          cameraBearing = wrap360(map.getBearing ? map.getBearing() : cameraBearing);
-        }
-
-        const puckRelativeHeading = shortestAngleDelta(cameraBearing, vehicleHeading);
-        vehicleArrow.style.transform = `translate(-50%, -50%) rotate(${puckRelativeHeading}deg)`;
-        freeMarker.setLatLng(vehiclePosition);
-
-        vehicleHeadingOutput.textContent = `${Math.round(vehicleHeading)}°`;
-        mapBearingOutput.textContent = `${Math.round(cameraBearing)}°`;
-        bearingErrorOutput.textContent = `${Math.round(shortestAngleDelta(cameraBearing, vehicleHeading))}°`;
-      }
-
-      function frame(now) {
-        const dtMs = Math.min(80, Math.max(0, now - lastFrame));
-        lastFrame = now;
-
-        if (!paused) advanceVehicle(dtMs / 1000);
-        updateCamera(dtMs);
-        requestAnimationFrame(frame);
-      }
-
-      northButton.addEventListener('click', () => setCameraMode(MODES.NORTH));
-      headingButton.addEventListener('click', () => setCameraMode(MODES.HEADING));
-      recenterButton.addEventListener('click', () => setCameraMode(preferredFollowMode));
-      pauseButton.addEventListener('click', () => {
-        paused = !paused;
-        pauseButton.textContent = paused ? 'Resume' : 'Pause';
-      });
-
-      speedInput.addEventListener('input', () => {
-        speedOutput.value = `${speedInput.value} m/s`;
-        speedOutput.textContent = `${speedInput.value} m/s`;
-      });
-
-      smoothingInput.addEventListener('input', () => {
-        smoothingOutput.value = `${smoothingInput.value} ms`;
-        smoothingOutput.textContent = `${smoothingInput.value} ms`;
-      });
-
-      map.on('dragstart', () => {
-        if (cameraMode !== MODES.FREE) {
-          setCameraMode(MODES.FREE, 'Map moved manually. Press Re-center to resume following.');
-        }
-      });
-
-      map.on('zoomend', () => {
-        if (cameraMode !== MODES.FREE) {
-          map.setView(vehiclePosition, map.getZoom(), { animate: false, reset: false });
-        }
-      });
-
-      routeLine.bringToBack();
-      map.fitBounds(L.latLngBounds(route), { padding: [70, 70], animate: false });
-      map.setZoom(16);
-      setCameraMode(MODES.NORTH);
-      requestAnimationFrame(frame);
-
-      setTimeout(() => map.invalidateSize(), 100);
-    })();
-  </script>
+  let mode=MODES.HEADING,preferredMode=MODES.HEADING,paused=false,segmentIndex=0,segmentProgress=0,position=L.latLng(route[0]),vehicleHeading=headingBetween(route[0],route[1]),last=performance.now();
+  const wrap=a=>((a%360)+360)%360;
+  const signed=a=>((a+540)%360)-180;
+  const angleDelta=(a,b)=>signed(b-a);
+  function headingBetween(a,b){const lat1=a[0]*Math.PI/180,lat2=b[0]*Math.PI/180,dLon=(b[1]-a[1])*Math.PI/180;const y=Math.sin(dLon)*Math.cos(lat2),x=Math.cos(lat1)*Math.sin(lat2)-Math.sin(lat1)*Math.cos(lat2)*Math.cos(dLon);return wrap(Math.atan2(y,x)*180/Math.PI)}
+  function destination(origin,bearing,distance){const R=6371000,delta=distance/R,theta=bearing*Math.PI/180,phi1=origin.lat*Math.PI/180,lambda1=origin.lng*Math.PI/180;const phi2=Math.asin(Math.sin(phi1)*Math.cos(delta)+Math.cos(phi1)*Math.sin(delta)*Math.cos(theta));const lambda2=lambda1+Math.atan2(Math.sin(theta)*Math.sin(delta)*Math.cos(phi1),Math.cos(delta)-Math.sin(phi1)*Math.sin(phi2));return L.latLng(phi2*180/Math.PI,lambda2*180/Math.PI)}
+  function segment(){const start=route[segmentIndex],end=route[(segmentIndex+1)%route.length];return{start,end,length:map.distance(start,end)}}
+  function interpolate(a,b,t){return L.latLng(a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t)}
+  function advance(dt){const previous=position;let remaining=Number(speed.value)*dt;while(remaining>0){const s=segment(),available=Math.max(0,s.length-segmentProgress),travel=Math.min(available,remaining);segmentProgress+=travel;remaining-=travel;if(segmentProgress>=s.length-.001){segmentIndex=(segmentIndex+1)%(route.length-1);segmentProgress=0}else break}const s=segment(),ratio=s.length?segmentProgress/s.length:0;position=interpolate(s.start,s.end,ratio);if(map.distance(previous,position)>.01)vehicleHeading=headingBetween([previous.lat,previous.lng],[position.lat,position.lng])}
+  function setMode(next,reason=''){mode=next;if(next!==MODES.FREE)preferredMode=next;northBtn.classList.toggle('active',next===MODES.NORTH);headingBtn.classList.toggle('active',next===MODES.HEADING);recenterBtn.classList.toggle('show',next===MODES.FREE);truck.classList.toggle('hidden',next===MODES.FREE);freeMarker.setOpacity(next===MODES.FREE?1:0);if(next===MODES.NORTH)status.textContent='North Up: the map stays fixed and the truck nose follows its real travel direction.';else if(next===MODES.HEADING)status.textContent='Heading Up: movement, route and truck nose all point toward the top.';else status.textContent=reason||'Free camera. Press Re-center to follow the truck again.'}
+  function screenDirection(){const ahead=destination(position,vehicleHeading,70);directionLine.setLatLngs([position,ahead]);const p0=map.latLngToContainerPoint(position),p1=map.latLngToContainerPoint(ahead);return wrap(Math.atan2(p1.x-p0.x,-(p1.y-p0.y))*180/Math.PI)}
+  function updateCamera(){if(mode!==MODES.FREE){map.setView(position,map.getZoom(),{animate:false,reset:false});const pluginRotation=mode===MODES.HEADING?-vehicleHeading:0;map.setBearing(pluginRotation)}freeMarker.setLatLng(position);const actualRotation=wrap(map.getBearing?map.getBearing():0),mapTop=wrap(-actualRotation),screenHeading=screenDirection();if(mode!==MODES.FREE)arrow.style.transform=`rotate(${screenHeading}deg)`;let alignmentError=0;if(mode===MODES.HEADING)alignmentError=Math.max(Math.abs(angleDelta(mapTop,vehicleHeading)),Math.abs(signed(screenHeading)));else if(mode===MODES.NORTH)alignmentError=Math.max(Math.abs(signed(actualRotation)),Math.abs(angleDelta(screenHeading,vehicleHeading)));const okay=mode===MODES.FREE||alignmentError<2.5;pass.textContent=mode===MODES.FREE?'FREE CAMERA':okay?'ALIGNED':'MISALIGNED';pass.classList.toggle('ok',okay);vehicleOut.textContent=`${Math.round(vehicleHeading)}°`;mapTopOut.textContent=`${Math.round(mapTop)}°`;screenOut.textContent=`${Math.round(screenHeading)}°`;errorOut.textContent=`${alignmentError.toFixed(1)}°`;document.documentElement.dataset.cameraTest=okay?'pass':'fail';window.PTBO_CAMERA_TEST={version:VERSION,mode,vehicleHeading,mapTop,screenHeading,alignmentError,passed:okay}}
+  function frame(now){const dt=Math.min(.08,Math.max(0,(now-last)/1000));last=now;if(!paused)advance(dt);updateCamera();requestAnimationFrame(frame)}
+  northBtn.addEventListener('click',()=>setMode(MODES.NORTH));headingBtn.addEventListener('click',()=>setMode(MODES.HEADING));recenterBtn.addEventListener('click',()=>setMode(preferredMode));pauseBtn.addEventListener('click',()=>{paused=!paused;pauseBtn.textContent=paused?'Resume':'Pause'});speed.addEventListener('input',()=>{speedValue.value=`${speed.value} m/s`;speedValue.textContent=`${speed.value} m/s`});map.on('dragstart',()=>{if(mode!==MODES.FREE)setMode(MODES.FREE,'Map moved manually. Press Re-center to resume following.')});map.on('zoomend',()=>{if(mode!==MODES.FREE)map.setView(position,map.getZoom(),{animate:false,reset:false})});
+  map.setZoom(16);setMode(MODES.HEADING);requestAnimationFrame(frame);setTimeout(()=>map.invalidateSize(),100);
+})();
+</script>
 </body>
 </html>
