@@ -53,9 +53,85 @@
     doc.body.appendChild(script);
   }
 
+  function installMobileLayoutPolish(doc) {
+    if (!document.querySelector('.mobile-controls')) return;
+
+    if (!document.getElementById('ptbo-mobile-layout-polish')) {
+      const parentStyle = document.createElement('style');
+      parentStyle.id = 'ptbo-mobile-layout-polish';
+      parentStyle.textContent = `
+        @media (max-width:900px) and (orientation:portrait) {
+          .mobile-controls {
+            grid-template-columns:126px 48px 142px !important;
+            gap:7px !important;
+            padding-left:max(14px,env(safe-area-inset-left)) !important;
+            padding-right:max(14px,env(safe-area-inset-right)) !important;
+          }
+          .joystick { width:126px !important; height:126px !important; }
+          .joystick-thumb { width:59px !important; height:59px !important; }
+          .utility-zone { gap:8px !important; padding-bottom:6px !important; }
+          .pedal-zone { min-width:0 !important; gap:6px !important; padding-right:0 !important; transform:none !important; }
+          .pedal { width:68px !important; height:108px !important; border-radius:22px !important; }
+          .pedal.reverse { height:84px !important; }
+        }
+        @media (max-width:350px) and (orientation:portrait) {
+          .mobile-controls {
+            grid-template-columns:116px 44px 128px !important;
+            gap:5px !important;
+            padding-left:max(10px,env(safe-area-inset-left)) !important;
+            padding-right:max(10px,env(safe-area-inset-right)) !important;
+          }
+          .joystick { width:116px !important; height:116px !important; }
+          .joystick-thumb { width:54px !important; height:54px !important; }
+          .utility-button { width:44px !important; height:44px !important; }
+          .pedal-zone { gap:6px !important; }
+          .pedal { width:61px !important; height:102px !important; font-size:10px !important; }
+          .pedal.reverse { height:80px !important; }
+        }
+      `;
+      document.head.appendChild(parentStyle);
+    }
+
+    if (doc && !doc.getElementById('ptbo-mobile-map-polish')) {
+      const childStyle = doc.createElement('style');
+      childStyle.id = 'ptbo-mobile-map-polish';
+      childStyle.textContent = `
+        #ptbo-speedometer {
+          top:calc(164px + env(safe-area-inset-top)) !important;
+          left:10px !important;
+          z-index:1260 !important;
+        }
+        #map-orientation-controls {
+          right:14px !important;
+          bottom:calc(190px + env(safe-area-inset-bottom)) !important;
+          z-index:1265 !important;
+          gap:7px !important;
+        }
+        #compass { overflow:visible !important; }
+        @media (max-width:350px) {
+          #ptbo-speedometer { top:calc(160px + env(safe-area-inset-top)) !important; }
+          #map-orientation-controls {
+            right:10px !important;
+            bottom:calc(184px + env(safe-area-inset-bottom)) !important;
+          }
+        }
+        @media (orientation:landscape) and (max-height:560px) {
+          #ptbo-speedometer { top:calc(137px + env(safe-area-inset-top)) !important; }
+          #map-orientation-controls {
+            right:12px !important;
+            bottom:calc(146px + env(safe-area-inset-bottom)) !important;
+          }
+        }
+      `;
+      doc.head.appendChild(childStyle);
+    }
+  }
+
   function patchSimulator(frame, store) {
     const doc = frame.contentDocument;
-    if (!doc || doc.documentElement.dataset.sharedDispatchPatched === 'true') return;
+    if (!doc) return;
+    installMobileLayoutPolish(doc);
+    if (doc.documentElement.dataset.sharedDispatchPatched === 'true') return;
     doc.documentElement.dataset.sharedDispatchPatched = 'true';
     removeLegacyEditorControls(doc);
     loadSimulatorTool(doc, 'road-collision.js', 'data-ptbo-road-collision', 'Unable to load the Peterborough road boundary system.');
@@ -137,6 +213,8 @@
     };
     doc.body.appendChild(scoreboard);
   }
+
+  installMobileLayoutPolish(null);
 
   const simulatorFrame = document.getElementById('simulator');
   if (simulatorFrame) {
