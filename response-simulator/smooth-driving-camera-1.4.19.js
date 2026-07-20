@@ -4,6 +4,11 @@
   const VERSION = '1.4.19';
   const MODE = Object.freeze({ FIXED: 'fixed', DRIVING: 'driving' });
   const MODE_LABEL = Object.freeze({ [MODE.FIXED]: 'Fixed Map', [MODE.DRIVING]: 'Driving View' });
+  const MODE_STORAGE_KEY = 'ptboCameraMode';
+  const CAMERA_TEST = (() => {
+    if (document.currentScript?.hasAttribute('data-ptbo-driving-camera-test')) return true;
+    try { return new URL(parent.location.href).searchParams.has('cameraTest'); } catch (_) { return false; }
+  })();
   const sleep = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds));
   const clamp = (value, minimum, maximum) => Math.max(minimum, Math.min(maximum, value));
   const wrap360 = angle => ((angle % 360) + 360) % 360;
@@ -42,6 +47,15 @@
     }
   }
 
+  function initialMode() {
+    if (CAMERA_TEST) return MODE.DRIVING;
+    try {
+      return localStorage.getItem(MODE_STORAGE_KEY) === MODE.FIXED ? MODE.FIXED : MODE.DRIVING;
+    } catch (_) {
+      return MODE.DRIVING;
+    }
+  }
+
   async function initialize() {
     await waitFor(
       () => typeof mapInstance !== 'undefined' && mapInstance && typeof vehicleMarker !== 'undefined' && vehicleMarker?._icon,
@@ -52,15 +66,17 @@
     const mapPane = mapInstance.getPane('mapPane');
     if (!mapContainer || !mapPane) throw new Error('Leaflet map structure is unavailable.');
 
+    const mobileUi = isMobileWrapper();
+    const startingMode = initialMode();
     const errors = [];
     const state = {
       version: VERSION,
-      mode: MODE.DRIVING,
+      mode: startingMode,
       following: true,
       transitioning: false,
       rawHeading: wrap360(Number(currentHeading) || 0),
       visualHeading: wrap360(Number(currentHeading) || 0),
-      mapBearing: wrap360(Number(currentHeading) || 0),
+      mapBearing: startingMode === MODE.DRIVING ? wrap360(Number(currentHeading) || 0) : 0,
       latestLatLng: L.latLng(vehicleMarker.getLatLng()),
       frameCount: 0,
       positionSyncCount: 0,
@@ -87,7 +103,10 @@
     try { headingUpMode = false; } catch (_) {}
     try { updateMapOrientation = () => {}; } catch (_) { window.updateMapOrientation = () => {}; }
     const cameraLock = document.getElementById('chk-camera');
-    if (cameraLock) cameraLock.checked = false;
+    if (cameraLock) {
+      cameraLock.checked = false;
+      cameraLock.closest('.checkbox-row')?.remove();
+    }
     const legacyControls = document.getElementById('map-orientation-controls');
     if (legacyControls) legacyControls.style.display = 'none';
     mapPane.style.rotate = '';
@@ -154,22 +173,68 @@
       #ptbo-camera-recenter{grid-column:1/-1;display:none;min-height:36px;color:#052014;border:0;border-radius:9px;background:#34d399;font:850 10px/1 system-ui;cursor:pointer}#ptbo-camera-recenter.visible{display:block}
       #ptbo-camera-route-test{grid-column:1/-1;min-height:34px;color:#fff;border:1px solid #a78bfa;border-radius:9px;background:#5b21b6;font:850 9px/1 system-ui;cursor:pointer}
       #ptbo-camera-telemetry{display:none}
-      @media(max-width:900px),(pointer:coarse){#ptbo-camera-panel{right:10px;bottom:calc(184px + env(safe-area-inset-bottom));padding:6px;gap:5px}#ptbo-camera-panel-title{display:none}.ptbo-camera-mode{min-height:42px;padding:0 9px;font-size:10px}}
+      #ptbo-camera-settings{margin-bottom:8px}
+      #ptbo-camera-settings-toggle{width:100%;min-height:46px;padding:0 14px;color:#fff;border:1px solid #38bdf8;border-radius:10px;background:#0f4c68;font:850 12px/1 system-ui;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+      #ptbo-camera-settings-toggle[data-mode="fixed"]{color:#102033;border-color:#94a3b8;background:#e2e8f0}
+      #ptbo-camera-settings-toggle:active{transform:scale(.985)}
+      #ptbo-camera-settings-hint{margin-top:6px;color:#64748b;font:600 10px/1.35 system-ui;text-align:center}
+      @media(pointer:coarse){#ptbo-camera-panel{display:none!important}}
     `;
 
     document.getElementById('ptbo-smooth-camera-panel')?.remove();
     document.getElementById('ptbo-camera-panel')?.remove();
-    const panel = document.createElement('section');
-    panel.id = 'ptbo-camera-panel';
-    panel.setAttribute('aria-label', `Camera Test v${VERSION}`);
-    panel.innerHTML = `
-      <div id="ptbo-camera-panel-title">Camera Test v${VERSION}</div>
-      <button id="ptbo-camera-fixed" class="ptbo-camera-mode" type="button" aria-pressed="false">Fixed Map</button>
-      <button id="ptbo-camera-driving" class="ptbo-camera-mode active" type="button" aria-pressed="true">Driving View</button>
-      <button id="ptbo-camera-recenter" type="button">Re-centre</button>
-      <output id="ptbo-camera-telemetry" aria-label="Camera test telemetry"></output>
-    `;
-    if (isAutomationRun()) {
+    document.getElementById('ptbo-camera-settings-title')?.remove();
+    document.getElementById('ptbo-camera-settings')?.remove();
+
+    let panel = null;
+    let fixedButton = null;
+    let drivingButton = null;
+    let recenterButton = null;
+    let settingsToggle = null;
+    let settingsHint = null;
+
+    if (mobileUi) {
+      const settingsTitle = document.createElement('div');
+      settingsTitle.id = 'ptbo-camera-settings-title';
+      settingsTitle.className = 'section-title';
+      settingsTitle.textContent = 'Camera View';
+      const settings = document.createElement('div');
+      settings.id = 'ptbo-camera-settings';
+      settings.className = 'control-row';
+      settings.innerHTML = `
+        <button id="ptbo-camera-settings-toggle" type="button"></button>
+        <div id="ptbo-camera-settings-hint"></div>
+      `;
+      const panelScroll = document.querySelector('#control-panel .panel-scroll');
+      const mapLayersTitle = [...document.querySelectorAll('#control-panel .section-title')]
+        .find(node => node.textContent.trim() === 'Map Layers & Overlays');
+      const insertionPoint = mapLayersTitle || null;
+      panelScroll?.insertBefore(settingsTitle, insertionPoint);
+      panelScroll?.insertBefore(settings, insertionPoint);
+      settingsToggle = settings.querySelector('#ptbo-camera-settings-toggle');
+      settingsHint = settings.querySelector('#ptbo-camera-settings-hint');
+    } else {
+      panel = document.createElement('section');
+      panel.id = 'ptbo-camera-panel';
+      panel.setAttribute('aria-label', 'Camera view controls');
+      panel.innerHTML = `
+        <div id="ptbo-camera-panel-title">Camera View</div>
+        <button id="ptbo-camera-fixed" class="ptbo-camera-mode" type="button" aria-pressed="false">Fixed Map</button>
+        <button id="ptbo-camera-driving" class="ptbo-camera-mode" type="button" aria-pressed="false">Driving View</button>
+        <button id="ptbo-camera-recenter" type="button">Re-centre</button>
+      `;
+      document.body.appendChild(panel);
+      fixedButton = panel.querySelector('#ptbo-camera-fixed');
+      drivingButton = panel.querySelector('#ptbo-camera-driving');
+      recenterButton = panel.querySelector('#ptbo-camera-recenter');
+    }
+
+    const telemetryOutput = document.createElement('output');
+    telemetryOutput.id = 'ptbo-camera-telemetry';
+    telemetryOutput.setAttribute('aria-label', 'Camera telemetry');
+    document.body.appendChild(telemetryOutput);
+
+    if (CAMERA_TEST && isAutomationRun()) {
       const routeTestButton = document.createElement('button');
       routeTestButton.id = 'ptbo-camera-route-test';
       routeTestButton.type = 'button';
@@ -181,21 +246,24 @@
         vehicleMarker.setLatLng([simLat, simLng]);
         evaluateDistanceToTarget();
       });
-      panel.insertBefore(routeTestButton, panel.querySelector('#ptbo-camera-telemetry'));
+      (panel || document.getElementById('ptbo-camera-settings'))?.appendChild(routeTestButton);
     }
-    document.body.appendChild(panel);
-    const fixedButton = document.getElementById('ptbo-camera-fixed');
-    const drivingButton = document.getElementById('ptbo-camera-driving');
-    const recenterButton = document.getElementById('ptbo-camera-recenter');
-    const telemetryOutput = document.getElementById('ptbo-camera-telemetry');
 
     function updateUi() {
       const fixed = state.mode === MODE.FIXED;
-      fixedButton.classList.toggle('active', fixed);
-      drivingButton.classList.toggle('active', !fixed);
-      fixedButton.setAttribute('aria-pressed', String(fixed));
-      drivingButton.setAttribute('aria-pressed', String(!fixed));
-      recenterButton.classList.toggle('visible', !state.following);
+      fixedButton?.classList.toggle('active', fixed);
+      drivingButton?.classList.toggle('active', !fixed);
+      fixedButton?.setAttribute('aria-pressed', String(fixed));
+      drivingButton?.setAttribute('aria-pressed', String(!fixed));
+      recenterButton?.classList.toggle('visible', !state.following);
+      if (settingsToggle) {
+        const currentLabel = MODE_LABEL[state.mode];
+        const nextLabel = MODE_LABEL[fixed ? MODE.DRIVING : MODE.FIXED];
+        settingsToggle.textContent = currentLabel;
+        settingsToggle.dataset.mode = state.mode;
+        settingsToggle.setAttribute('aria-label', `Camera mode: ${currentLabel}. Tap to switch to ${nextLabel}.`);
+        settingsHint.textContent = `Tap to switch to ${nextLabel}`;
+      }
     }
 
     function cameraTransform(point, bearing) {
@@ -233,6 +301,9 @@
 
     function setMode(nextMode) {
       state.mode = nextMode === MODE.FIXED || nextMode === 'Fixed Map' ? MODE.FIXED : MODE.DRIVING;
+      if (!CAMERA_TEST) {
+        try { localStorage.setItem(MODE_STORAGE_KEY, state.mode); } catch (_) {}
+      }
       state.following = true;
       state.transitioning = true;
       centerOnTruck();
@@ -247,9 +318,10 @@
       updateUi();
     }
 
-    fixedButton.addEventListener('click', () => setMode(MODE.FIXED));
-    drivingButton.addEventListener('click', () => setMode(MODE.DRIVING));
-    recenterButton.addEventListener('click', recenter);
+    fixedButton?.addEventListener('click', () => setMode(MODE.FIXED));
+    drivingButton?.addEventListener('click', () => setMode(MODE.DRIVING));
+    recenterButton?.addEventListener('click', recenter);
+    settingsToggle?.addEventListener('click', () => setMode(state.mode === MODE.FIXED ? MODE.DRIVING : MODE.FIXED));
     mapInstance.on('dragstart', () => { state.following = false; updateUi(); });
     mapInstance.on('zoomend resize', () => state.following ? centerOnTruck() : applyCameraTransform());
     window.mobileRecenter = recenter;
@@ -423,7 +495,8 @@
       getTelemetry: () => ({ ...window.PTBO_CAMERA_TEST_TELEMETRY, javascriptErrors: errors.slice() }),
       runModeSwitchTest,
       setTestHeading,
-      isMobile: isMobileWrapper(),
+      isMobile: mobileUi,
+      isTest: CAMERA_TEST,
     });
     window.PTBO_DRIVING_CAMERA = api;
     window.dispatchEvent(new CustomEvent('ptbo-driving-camera-ready', { detail: { version: VERSION } }));

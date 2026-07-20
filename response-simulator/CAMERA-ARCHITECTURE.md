@@ -1,6 +1,6 @@
-# Driving camera test architecture (v1.4.19)
+# Driving camera architecture (v1.4.19)
 
-The v1.4.19 camera remains isolated to `response-simulator/camera-game-test/`. The normal simulator does not load the camera module.
+The v1.4.19 camera is shared by the production desktop and mobile simulator wrappers and by `response-simulator/camera-game-test/`. Desktop exposes the Fixed Map and Driving View controls over the map. Mobile keeps the map clear and places one mode-toggle button inside the existing Options panel.
 
 ## Root cause
 
@@ -21,6 +21,8 @@ At the truck point, `q = p`, so:
 The result is independent of camera bearing. Fixed Map and Driving View therefore use the same truck coordinate, the same Leaflet layer point, and the same road point. Camera rotation cannot introduce a truck-to-road offset because every geographic layer is transformed by the same matrix.
 
 The map is centred on the truck synchronously from the truck marker's `setLatLng` call. Vehicle-heading smoothing uses shortest-angle interpolation. Fixed Map converges to an exact zero-degree bearing; Driving View follows the smoothed vehicle heading.
+
+Production mode stores the selected camera mode in `localStorage` under `ptboCameraMode`. The test page always starts in Driving View so browser measurements remain deterministic. Manual map dragging temporarily suspends following; desktop presents a re-centre action and the existing mobile re-centre control calls the same camera API.
 
 ## Test telemetry
 
