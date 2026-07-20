@@ -2,8 +2,21 @@
   'use strict';
 
   const VERSION = '1.4.4';
+  const ANALYTICS_VERSION = '1.4.19';
   const baseStore = window.PTBO_DISPATCH_STORE;
   const dataReady = window.PTBO_DISPATCH_DATA_READY;
+  const currentScriptUrl = document.currentScript?.src || window.location.href;
+
+  function loadCloudflareAnalytics() {
+    if (window.top !== window.self || document.querySelector('script[data-ptbo-cloudflare-analytics]')) return;
+    const analytics = document.createElement('script');
+    analytics.defer = true;
+    analytics.src = new URL(`./cloudflare-web-analytics.js?v=${ANALYTICS_VERSION}`, currentScriptUrl).href;
+    analytics.dataset.ptboCloudflareAnalytics = ANALYTICS_VERSION;
+    document.head.appendChild(analytics);
+  }
+
+  loadCloudflareAnalytics();
 
   if (!baseStore || !dataReady) {
     console.error('The v1.4.4 dispatch data could not initialize.');
