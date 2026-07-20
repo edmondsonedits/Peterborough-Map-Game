@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#111827">
-  <title>Smooth Camera Game Test v1.4.15</title>
+  <title>Smooth Camera Game Test v1.4.16</title>
   <style>
     :root{color-scheme:dark;--ink:#f8fafc;--muted:#cbd5e1;--panel:#111827;--red:#dc2626}
     *{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--panel);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
@@ -16,11 +16,11 @@
 </head>
 <body>
   <iframe id="game-wrapper" title="Peterborough simulator smooth camera test"></iframe>
-  <div id="loading"><div><strong>Smooth Camera Game Test <span style="color:#38bdf8">v1.4.15</span></strong><span id="loading-status">Loading the real simulator, steering, road boundaries, and smooth heading camera…</span><button id="retry" type="button" hidden>Retry</button></div></div>
+  <div id="loading"><div><strong>Smooth Camera Game Test <span style="color:#38bdf8">v1.4.16</span></strong><span id="loading-status">Loading the real simulator, steering, road boundaries, and position-locked camera…</span><button id="retry" type="button" hidden>Retry</button></div></div>
   <script>
     (() => {
       'use strict';
-      const VERSION = '1.4.15';
+      const VERSION = '1.4.16';
       const wrapper = document.getElementById('game-wrapper');
       const loading = document.getElementById('loading');
       const loadingStatus = document.getElementById('loading-status');
@@ -52,7 +52,7 @@
         await waitFor(() => game.PTBO_SIMULATOR_READY, 'Simulator startup verifier');
         await game.PTBO_SIMULATOR_READY;
 
-        loadingStatus.textContent = 'Installing the smooth heading camera…';
+        loadingStatus.textContent = 'Installing the position-locked smooth camera…';
         let script = gameDocument.querySelector('script[data-ptbo-smooth-camera-test]');
         if (!script) {
           script = gameDocument.createElement('script');
@@ -73,7 +73,7 @@
 
         await waitFor(() => game.PTBO_SMOOTH_HEADING_CAMERA_READY, 'Smooth camera');
         await game.PTBO_SMOOTH_HEADING_CAMERA_READY;
-        loadingStatus.textContent = 'Smooth camera test ready';
+        loadingStatus.textContent = 'Position-locked smooth camera ready';
         loading.classList.add('hidden');
         setTimeout(() => loading.remove(), 250);
       }
