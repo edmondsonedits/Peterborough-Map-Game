@@ -62,6 +62,7 @@
   <script>
     (() => {
       const VERSION = '1.4.6';
+      const CAMERA_TEST = new URLSearchParams(location.search).get('cameraTest');
       const MOBILE_ZOOM = 18;
       const AUDIO_KEY = 'ptboDispatchVoiceEnabled';
       const frame = document.getElementById('simulator');
@@ -262,7 +263,7 @@
           window.mobileRecenter = () => {
             const lock = document.getElementById('chk-camera');
             if (lock) lock.checked = true;
-            if (mapInstance) mapInstance.setView([simLat,simLng], ${MOBILE_ZOOM}, {animate:false});
+            if (${CAMERA_TEST ? "typeof mapInstance !== 'undefined' && mapInstance" : 'mapInstance'}) mapInstance.setView([simLat,simLng], ${MOBILE_ZOOM}, {animate:false});
           };
           setTimeout(window.mobileRecenter, 0);
         })();`;
