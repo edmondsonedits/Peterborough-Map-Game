@@ -128,8 +128,13 @@
         const removeSimulatorArtifacts=()=>{
           document.querySelectorAll('#ptbo-speedometer,#ptbo-speedometer-value,#ptbo-speedometer-unit,[data-ptbo-speedometer]').forEach(node=>node.remove());
         };
-        removeSimulatorArtifacts();
-        new MutationObserver(removeSimulatorArtifacts).observe(document.body,{childList:true,subtree:true});
+        const observeSimulatorArtifacts=()=>{
+          if(!document.body)return;
+          removeSimulatorArtifacts();
+          new MutationObserver(removeSimulatorArtifacts).observe(document.body,{childList:true,subtree:true});
+        };
+        if(document.body)observeSimulatorArtifacts();
+        else addEventListener('DOMContentLoaded',observeSimulatorArtifacts,{once:true});
 
         const touchMobile=window.innerWidth<=900&&(matchMedia('(pointer: coarse)').matches||'ontouchstart'in window);
         if(!touchMobile)return;
