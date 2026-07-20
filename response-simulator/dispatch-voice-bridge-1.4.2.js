@@ -1,7 +1,7 @@
 (() => {
   'use strict';
-  if (window.PTBO_DISPATCH_VOICE_BRIDGE_VERSION === '1.4.2') return;
-  window.PTBO_DISPATCH_VOICE_BRIDGE_VERSION = '1.4.2';
+  if (window.PTBO_DISPATCH_VOICE_BRIDGE_VERSION === '1.4.20') return;
+  window.PTBO_DISPATCH_VOICE_BRIDGE_VERSION = '1.4.20';
 
   const stations = [
     { number:1, name:'Station 1', lat:44.300871, lng:-78.322206 },

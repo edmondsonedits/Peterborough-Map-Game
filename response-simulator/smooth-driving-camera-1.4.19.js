@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.4.19';
+  const VERSION = '1.4.20';
   const MODE = Object.freeze({ FIXED: 'fixed', DRIVING: 'driving' });
   const MODE_LABEL = Object.freeze({ [MODE.FIXED]: 'Fixed Map', [MODE.DRIVING]: 'Driving View' });
   const MODE_STORAGE_KEY = 'ptboCameraMode';
@@ -136,11 +136,6 @@
       }
     };
     moveGeographicPanesIntoWorld([...mapPane.children]);
-    const paneObserver = new MutationObserver(records => {
-      for (const record of records) moveGeographicPanesIntoWorld([...record.addedNodes]);
-    });
-    paneObserver.observe(mapPane, { childList: true });
-
     const originalCreatePane = mapInstance.createPane.bind(mapInstance);
     mapInstance.createPane = function cameraAwareCreatePane(name, container) {
       const pane = originalCreatePane(name, container);
@@ -208,7 +203,9 @@
       const panelScroll = document.querySelector('#control-panel .panel-scroll');
       const mapLayersTitle = [...document.querySelectorAll('#control-panel .section-title')]
         .find(node => node.textContent.trim() === 'Map Layers & Overlays');
-      const insertionPoint = mapLayersTitle || null;
+      const insertionPoint = mapLayersTitle?.previousElementSibling?.classList.contains('category-heading')
+        ? mapLayersTitle.previousElementSibling
+        : mapLayersTitle || null;
       panelScroll?.insertBefore(settingsTitle, insertionPoint);
       panelScroll?.insertBefore(settings, insertionPoint);
       settingsToggle = settings.querySelector('#ptbo-camera-settings-toggle');

@@ -8,18 +8,19 @@
 <style>html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#121218}#game-frame{position:fixed;inset:0;width:100%;height:100%;border:0}.loading{position:fixed;inset:0;z-index:2;display:grid;place-items:center;background:#121218;color:#fff;font-family:system-ui,sans-serif;transition:opacity .18s}.loading.hidden{opacity:0;pointer-events:none}</style>
 </head>
 <body>
-<iframe id="game-frame" src="../index.html?v=1.4.4" title="Peterborough Geo Guesser"></iframe>
+<iframe id="game-frame" src="../index.html?v=1.4.20" title="Peterborough Geo Guesser"></iframe>
 <div class="loading" id="loading">Loading Geo Guesser…</div>
-<script src="../../shared/dispatch-locations.js?v=1.4.4"></script>
-<script src="../../shared/dispatch-data-1.4.4.js?v=1.4.4"></script>
-<script src="../../shared/dispatch-override-1.4.4.js?v=1.4.4"></script>
+<script src="../../shared/test-build.js?v=1.4.20"></script>
+<script src="../../shared/dispatch-locations.js?v=1.4.20"></script>
+<script src="../../shared/dispatch-data-1.4.4.js?v=1.4.20"></script>
+<script src="../../shared/dispatch-override-1.4.4.js?v=1.4.20"></script>
 <script>
 (()=>{
-const VERSION='1.4.4',frame=document.getElementById('game-frame'),loading=document.getElementById('loading'),child=()=>frame.contentWindow;
+const VERSION='1.4.20',frame=document.getElementById('game-frame'),loading=document.getElementById('loading'),child=()=>frame.contentWindow;
 function addScript(src){return new Promise((resolve,reject)=>{const d=frame.contentDocument,s=d.createElement('script'),timer=setTimeout(()=>{s.remove();reject(new Error('Timed out loading '+src))},15000);s.src=src;s.onload=()=>{clearTimeout(timer);resolve()};s.onerror=()=>{clearTimeout(timer);reject(new Error('Could not load '+src))};d.head.appendChild(s)})}
 function installBridge(){const d=frame.contentDocument,s=d.createElement('script');s.textContent=`(()=>{window.geoScoreContext=()=>({responseTimeSeconds:Number(elapsed.toFixed(1)),station:station&&station.name?station.name:'Unknown Station',callType:typeof modeName==='function'?modeName():'Random Shift'});const msg=(id,text)=>{show(id);const list=document.querySelector('#'+id+' .list');if(list)list.innerHTML='<p class="muted" style="text-align:center">'+text+'</p>'};window.showPersonalScores=()=>msg('scores','Connecting to the online scoreboard…');window.showCityTenScores=()=>msg('city-ten-scores','Connecting to the online scoreboard…');window.saveScore=()=>alert('The online scoreboard is loading.');window.geoScoreboardFailure=e=>{const text='Scoreboard error: '+(e&&e.message?e.message:String(e));window.showPersonalScores=()=>msg('scores',text);window.showCityTenScores=()=>msg('city-ten-scores',text);window.saveScore=()=>alert(text)}})();`;d.body.appendChild(s)}
-async function installClients(){const g=child(),base=location.href,textUrl=new URL('../text-fix.js?v='+VERSION,base).href,scoreboardUrl=new URL('../firebase-scoreboard-compat.js?v='+VERSION,base).href;await addScript(textUrl);installBridge();if(!g.firebase?.initializeApp)await addScript('https://www.gstatic.com/firebasejs/12.16.0/firebase-app-compat.js');if(!g.firebase?.firestore)await addScript('https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore-compat.js');await addScript(scoreboardUrl);if(!g.__geoScoreboardReady)throw new Error('Scoreboard client did not finish installing.')}
-frame.addEventListener('load',async()=>{try{await window.PTBO_DISPATCH_STORE.ready()}catch(e){console.error('Unable to load v1.4.4 dispatch data.',e)}loading.classList.add('hidden');setTimeout(()=>loading.remove(),250);installClients().catch(e=>{console.error(e);child()?.geoScoreboardFailure?.(e)})});
+async function installClients(){const g=child(),base=location.href,scoreboardUrl=new URL('../firebase-scoreboard-compat.js?v='+VERSION,base).href;installBridge();if(!g.firebase?.initializeApp)await addScript('https://www.gstatic.com/firebasejs/12.16.0/firebase-app-compat.js');if(!g.firebase?.firestore)await addScript('https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore-compat.js');await addScript(scoreboardUrl);if(!g.__geoScoreboardReady)throw new Error('Scoreboard client did not finish installing.')}
+frame.addEventListener('load',async()=>{if(typeof child()?.show!=='function')return;try{await window.PTBO_DISPATCH_STORE.ready()}catch(e){console.error('Unable to load shared dispatch data.',e)}loading.classList.add('hidden');setTimeout(()=>loading.remove(),250);installClients().catch(e=>{console.error(e);child()?.geoScoreboardFailure?.(e)})});
 })();
 </script>
 </body>

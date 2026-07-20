@@ -1,11 +1,12 @@
 (() => {
   'use strict';
 
-  const DATA_VERSION = '1.4.4';
+  const DATA_FILE_VERSION = '1.4.4';
+  const DATA_VERSION = '1.4.20';
   const STORE_VERSION = 2;
   const STORAGE_KEY = 'ptboSharedDispatchLocationsV2';
   const scriptUrl = document.currentScript?.src || window.location.href;
-  const dataUrl = new URL(`./dispatch-data-${DATA_VERSION}.js?v=${DATA_VERSION}`, scriptUrl).href;
+  const dataUrl = new URL(`./dispatch-data-${DATA_FILE_VERSION}.js?v=${DATA_VERSION}`, scriptUrl).href;
 
   let seed = [];
   let items = [];

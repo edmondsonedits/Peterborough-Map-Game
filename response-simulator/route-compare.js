@@ -1,8 +1,8 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.4.2';
-  if (window.PTBO_ROUTE_COMPARE_BOOT_VERSION === VERSION || document.querySelector('script[data-ptbo-route-compare-core="1.4.2"]')) return;
+  const VERSION = '1.4.20';
+  if (window.PTBO_ROUTE_COMPARE_BOOT_VERSION === VERSION || document.querySelector('script[data-ptbo-route-compare-core]')) return;
 
   const current = document.currentScript;
   const script = document.createElement('script');

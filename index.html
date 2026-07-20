@@ -60,22 +60,23 @@
           <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 7 5-3 5 3 5-3 3 2v11l-5 3-5-3-5 3-3-2Z"/><path d="M8 4v13M13 7v13M18 4v13"/></svg></span>
           <span class="game-type">Developer preview</span><h2>Peterborough Explorer</h2><p>Fly across a low-poly Peterborough generated from real roads and building footprints.</p><span class="cta">Explore the city<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span>
         </a>
-        <a class="game-link editor-card" href="dispatch-editor/" aria-label="Open the shared dispatch editor">
+        <a id="dispatch-editor-link" class="game-link editor-card" href="dispatch-editor/" aria-label="Open the shared dispatch editor" hidden>
           <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h7"/><path d="m15 17 4-4 2 2-4 4-3 1 1-3Z"/></svg></span>
           <span class="game-type">Shared database</span><h2>Dispatch Editor</h2><p>Add, edit, move, or delete calls once. Every saved change is used by both games.</p><span class="cta">Manage Calls<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span>
         </a>
       </section>
       <footer>Unofficial fan-made project. Not affiliated with the City of Peterborough or Peterborough Fire Services.</footer>
     </main>
+    <script src="shared/test-build.js?v=1.4.20"></script>
     <script>
       (()=>{
         const developerKey='ptbo-emergency-developer-mode';
         const accessHash='9a8a113169acfb3f513b8d10a08f089b2071b2b339bdba1934282e40bd186041';
-        const explorerLink=document.getElementById('city-explorer-link');
+        const developerLinks=[document.getElementById('city-explorer-link'),document.getElementById('dispatch-editor-link')].filter(Boolean);
         const developerTrigger=document.getElementById('developer-trigger');
         const developerEnabled=()=>{try{return localStorage.getItem(developerKey)==='enabled'}catch{return false}};
-        const showDeveloperMode=()=>{document.body.classList.add('developer-mode');if(explorerLink)explorerLink.hidden=false};
-        const hideDeveloperMode=()=>{document.body.classList.remove('developer-mode');if(explorerLink)explorerLink.hidden=true};
+        const showDeveloperMode=()=>{document.body.classList.add('developer-mode');developerLinks.forEach(link=>link.hidden=false)};
+        const hideDeveloperMode=()=>{document.body.classList.remove('developer-mode');developerLinks.forEach(link=>link.hidden=true)};
         const digest=async value=>{
           const bytes=new TextEncoder().encode(value);
           const result=await crypto.subtle.digest('SHA-256',bytes);
@@ -124,17 +125,6 @@
             openDeveloperGate();
           }
         });
-
-        const removeSimulatorArtifacts=()=>{
-          document.querySelectorAll('#ptbo-speedometer,#ptbo-speedometer-value,#ptbo-speedometer-unit,[data-ptbo-speedometer]').forEach(node=>node.remove());
-        };
-        const observeSimulatorArtifacts=()=>{
-          if(!document.body)return;
-          removeSimulatorArtifacts();
-          new MutationObserver(removeSimulatorArtifacts).observe(document.body,{childList:true,subtree:true});
-        };
-        if(document.body)observeSimulatorArtifacts();
-        else addEventListener('DOMContentLoaded',observeSimulatorArtifacts,{once:true});
 
         const touchMobile=window.innerWidth<=900&&(matchMedia('(pointer: coarse)').matches||'ontouchstart'in window);
         if(!touchMobile)return;

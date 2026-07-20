@@ -11,7 +11,7 @@
     sweepStep: 1.35,
     shoulderTolerance: 1.35,
     spawnSnapDistance: 120,
-    defaultLaneAssist: 0.25,
+    defaultLaneAssist: 0.60,
     collisionVelocityRetention: 0.42,
   });
 
@@ -329,7 +329,7 @@
 
     const assistRow = document.createElement('div');
     assistRow.className = 'control-row';
-    assistRow.innerHTML = '<label><span>Lane Centering Assist</span><span id="road-assist-value">25%</span></label><input type="range" id="road-assist" min="0" max="60" value="25">';
+    assistRow.innerHTML = '<label><span>Lane Centering Assist</span><span id="road-assist-value">60%</span></label><input type="range" id="road-assist" min="0" max="60" value="60">';
 
     const debugLabel = document.createElement('label');
     debugLabel.className = 'checkbox-row';

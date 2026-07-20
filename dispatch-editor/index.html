@@ -4,7 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#07111f">
+  <meta name="robots" content="noindex,nofollow">
   <title>Peterborough Shared Dispatch Editor</title>
+  <script>
+    (()=>{try{if(localStorage.getItem('ptbo-emergency-developer-mode')!=='enabled')location.replace('../')}catch{location.replace('../')}})();
+  </script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <style>
     :root{color-scheme:dark;--bg:#07111f;--panel:rgba(15,25,42,.96);--panel2:#132139;--ink:#f8fafc;--muted:#aebdd1;--border:rgba(255,255,255,.14);--blue:#38bdf8;--green:#34d399;--red:#fb7185;--amber:#fbbf24}
@@ -56,9 +60,10 @@
       </section>
     </main>
   </div>
+  <script src="../shared/test-build.js?v=1.4.20"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="../shared/stations.js"></script>
-  <script src="../shared/dispatch-locations.js"></script>
+  <script src="../shared/stations.js?v=1.4.20"></script>
+  <script src="../shared/dispatch-locations.js?v=1.4.20"></script>
   <script>
     (()=>{
       const $=id=>document.getElementById(id),store=window.PTBO_DISPATCH_STORE,stations=window.PTBO_STATIONS||[];

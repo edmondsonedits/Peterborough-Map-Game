@@ -1,8 +1,8 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.4.4';
-  const ANALYTICS_VERSION = '1.4.19';
+  const VERSION = '1.4.20';
+  const ANALYTICS_VERSION = '1.4.20';
   const baseStore = window.PTBO_DISPATCH_STORE;
   const dataReady = window.PTBO_DISPATCH_DATA_READY;
   const currentScriptUrl = document.currentScript?.src || window.location.href;
@@ -19,7 +19,7 @@
   loadCloudflareAnalytics();
 
   if (!baseStore || !dataReady) {
-    console.error('The v1.4.4 dispatch data could not initialize.');
+    console.error('The v1.4.20 dispatch data could not initialize.');
     return;
   }
 
@@ -67,7 +67,7 @@
         }
       })();`;
       doc.body.appendChild(helper);
-    }).catch(error => console.error('Unable to apply v1.4.4 dispatch data to Geo Guesser.', error));
+    }).catch(error => console.error('Unable to apply v1.4.20 dispatch data to Geo Guesser.', error));
   }
 
   const frame = document.getElementById('game-frame');

@@ -1285,6 +1285,10 @@ function wireEvents() {
 
   els.searchForm.addEventListener('submit', (event) => {
     event.preventDefault();
+    if (event.submitter?.value === 'cancel') {
+      els.searchDialog.close();
+      return;
+    }
     const query = els.searchInput.value.trim();
     if (query) searchLocations(query);
   });

@@ -16,19 +16,20 @@
   </style>
 </head>
 <body>
-  <iframe id="simulator" src="../index.html?v=1.4.6" title="Peterborough Fire and Emergency Dispatch Simulator"></iframe>
+  <iframe id="simulator" src="../index.html?v=1.4.20" title="Peterborough Fire and Emergency Dispatch Simulator"></iframe>
   <button id="audio-button" type="button" aria-label="Mute dispatch voice" aria-pressed="true">
     <svg class="speaker-on" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15 9a4 4 0 0 1 0 6M17.5 6.5a7.5 7.5 0 0 1 0 11"/></svg>
     <svg class="speaker-off" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="m16 9 5 5M21 9l-5 5"/></svg>
   </button>
   <div id="loading"><div><strong>Loading Peterborough roads</strong><span id="loading-status">Preparing steering, road boundaries, and dispatch data…</span></div></div>
-  <script src="../../shared/dispatch-locations.js?v=1.4.6"></script>
-  <script src="../../shared/dispatch-data-1.4.4.js?v=1.4.6"></script>
-  <script src="../../shared/dispatch-override-1.4.4.js?v=1.4.6"></script>
-  <script src="../../shared/stations.js?v=1.4.6"></script>
+  <script src="../../shared/test-build.js?v=1.4.20"></script>
+  <script src="../../shared/dispatch-locations.js?v=1.4.20"></script>
+  <script src="../../shared/dispatch-data-1.4.4.js?v=1.4.20"></script>
+  <script src="../../shared/dispatch-override-1.4.4.js?v=1.4.20"></script>
+  <script src="../../shared/stations.js?v=1.4.20"></script>
   <script>
     (() => {
-      const VERSION = '1.4.6';
+      const VERSION = '1.4.20';
       const AUDIO_KEY = 'ptboDispatchVoiceEnabled';
       const frame = document.getElementById('simulator');
       const audioButton = document.getElementById('audio-button');
@@ -112,7 +113,7 @@
       frame.addEventListener('load', () => {
         const doc = frame.contentDocument;
         const game = frame.contentWindow;
-        if (!doc || !game) return;
+        if (!doc || !game || typeof game.initializeSimulator !== 'function') return;
         installDispatchVoice(doc);
         injectScript(doc, 'route-compare-1.4.2.js', 'data-ptbo-route-compare-core').catch(console.error);
         injectScript(doc, 'route-review-ui-1.4.3.js', 'data-ptbo-route-review-ui').catch(console.error);
