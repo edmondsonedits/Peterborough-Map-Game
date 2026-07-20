@@ -120,7 +120,8 @@
     if (doc.documentElement.dataset.sharedDispatchPatched === 'true') return;
     doc.documentElement.dataset.sharedDispatchPatched = 'true';
     removeLegacyEditorControls(doc);
-    loadSimulatorTool(doc, 'camera-fix.js?v=20260718-north-up-1', 'data-ptbo-smooth-camera', 'Unable to load the stable north-up simulator camera.');
+    loadSimulatorTool(doc, 'camera-fix.js?v=20260718-north-up-1', 'data-ptbo-smooth-camera', 'Unable to load the stable simulator camera base.');
+    loadSimulatorTool(doc, 'smooth-driving-camera-1.4.19.js?v=production-1', 'data-ptbo-driving-camera', 'Unable to load the Fixed Map and Driving View camera.');
     loadSimulatorTool(doc, 'road-collision.js?v=1.4.1', 'data-ptbo-road-collision', 'Unable to load the Peterborough road boundary system.');
     loadSimulatorTool(doc, 'speed-streak.js', 'data-ptbo-speed-streak', 'Unable to load the collision speed streak system.');
     loadSimulatorTool(doc, 'vehicle-instruments.js?v=20260719-hold-heading-1', 'data-ptbo-vehicle-instruments', 'Unable to load the speedometer and mobile steering systems.');

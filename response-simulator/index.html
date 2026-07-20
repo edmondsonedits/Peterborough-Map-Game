@@ -94,18 +94,9 @@
         .drag-dot-icon { border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 5px rgba(0,0,0,0.8); cursor: grab; }
         .drag-dot-icon:active { cursor: grabbing; box-shadow: 0 0 10px #fff; }
 
-        /* Heading-up map orientation and non-navigating attribution. */
+        /* Camera rendering and non-navigating attribution. */
         .leaflet-map-pane { will-change:transform,rotate; }
         .leaflet-control-attribution, .leaflet-control-attribution a { pointer-events:none!important; user-select:none; color:inherit; text-decoration:none; }
-        #map-orientation-controls { position:absolute; right:15px; bottom:92px; z-index:1250; display:flex; flex-direction:column; align-items:center; gap:7px; pointer-events:none; }
-        #orientation-toggle { pointer-events:auto; min-width:86px; padding:8px 10px; border:1px solid #555; border-radius:6px; background:rgba(25,25,25,.94); color:#fff; box-shadow:0 3px 12px rgba(0,0,0,.4); font-size:11px; font-weight:800; cursor:pointer; }
-        #orientation-toggle.active { border-color:#ffcc00; color:#ffdf55; background:rgba(35,31,16,.96); }
-        #compass { width:48px; height:48px; display:grid; place-items:center; border:1px solid #666; border-radius:50%; background:rgba(20,20,20,.92); box-shadow:0 3px 12px rgba(0,0,0,.45); overflow:hidden; }
-        #compass-needle { position:relative; width:5px; height:34px; transform-origin:50% 50%; }
-        #compass-needle::before { content:''; position:absolute; left:0; top:0; width:0; height:0; border-left:3px solid transparent; border-right:3px solid transparent; border-bottom:17px solid #ef4444; transform:translateX(-.5px); }
-        #compass-needle::after { content:''; position:absolute; left:1px; bottom:1px; width:4px; height:16px; background:#d6d6d6; clip-path:polygon(50% 100%,0 0,100% 0); }
-        #compass-n { position:absolute; top:2px; left:50%; transform:translateX(-50%); color:#fff; font-size:8px; font-weight:900; line-height:1; }
-        @media (max-width:600px) { #map-orientation-controls { right:10px; bottom:100px; } #orientation-toggle { min-width:78px; padding:7px 8px; } #compass { width:44px; height:44px; } }
     </style>
 </head>
 <body>
@@ -193,11 +184,6 @@
                 COMPLETED RUNS: <span id="tel-total-calls">0</span>
             </div>
         </div>
-    </div>
-
-    <div id="map-orientation-controls" aria-label="Map orientation controls">
-        <button id="orientation-toggle" type="button" aria-pressed="false" onclick="toggleHeadingUp()">North Up</button>
-        <div id="compass" aria-label="Compass pointing north"><div id="compass-needle"><span id="compass-n">N</span></div></div>
     </div>
 
     <div id="map"></div>
@@ -371,12 +357,7 @@
         }
 
         function toggleHeadingUp() {
-            headingUpMode = !headingUpMode;
-            const button = document.getElementById('orientation-toggle');
-            button.classList.toggle('active', headingUpMode);
-            button.setAttribute('aria-pressed', String(headingUpMode));
-            button.innerText = headingUpMode ? 'Heading Up' : 'North Up';
-            if (headingUpMode && mapInstance) mapInstance.setView([simLat, simLng], mapInstance.getZoom(), { animate: false });
+            headingUpMode = false;
             updateMapOrientation();
         }
 
