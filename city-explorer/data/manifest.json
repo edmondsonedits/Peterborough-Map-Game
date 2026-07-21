@@ -10,7 +10,7 @@
     "lon": -78.3197
   },
   "city": "Peterborough, Ontario",
-  "generated_at": "2026-07-21T00:33:09+00:00",
+  "generated_at": "2026-07-21T00:35:23+00:00",
   "orn": {
     "arcgis_item_id": "2fd52bccdb77479da0133c86545503f8",
     "feature_count": 3179,
@@ -24,26 +24,26 @@
     "named_feature_count": 3074
   },
   "osm": {
-    "drivable_road_count": 5946,
-    "element_count": 42002,
+    "drivable_road_count": 5942,
+    "element_count": 41894,
     "file": "peterborough-osm.json",
     "road_file": "osm-roads.geojson",
     "source": "OpenStreetMap via Overpass API",
     "public_road_file": "osm-public-roads.geojson",
-    "public_road_count": 2766
+    "public_road_count": 2762
   },
   "road_validation": {
     "file": "road-validation.json",
     "report": "../ROAD-VALIDATION.md",
     "status": "pass",
     "public_osm_to_orn": {
-      "samples": 49744,
-      "mean_m": 6.384,
-      "median_m": 0.639,
-      "p90_m": 2.343,
-      "p95_m": 3.63,
-      "p99_m": 53.817,
-      "within_5m_pct": 96.98,
+      "samples": 49740,
+      "mean_m": 6.385,
+      "median_m": 0.64,
+      "p90_m": 2.346,
+      "p95_m": 3.631,
+      "p99_m": 53.825,
+      "within_5m_pct": 96.97,
       "within_10m_pct": 98.43,
       "within_20m_pct": 98.72,
       "within_30m_pct": 98.83
@@ -51,8 +51,8 @@
     "orn_to_public_osm": {
       "samples": 50434,
       "mean_m": 2.578,
-      "median_m": 0.628,
-      "p90_m": 2.318,
+      "median_m": 0.629,
+      "p90_m": 2.32,
       "p95_m": 3.574,
       "p99_m": 61.844,
       "within_5m_pct": 96.85,
@@ -61,9 +61,9 @@
       "within_30m_pct": 98.27
     },
     "street_names": {
-      "checked_segments": 2629,
-      "matching_segments": 2506,
-      "match_pct": 95.32,
+      "checked_segments": 2625,
+      "matching_segments": 2502,
+      "match_pct": 95.31,
       "sample_mismatches": [
         {
           "osm": "ST PATRICK S ST",
