@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.4.20';
+  const VERSION = '1.5.0';
   if (window.PTBO_VEHICLE_INSTRUMENTS_READY) return;
 
   window.PTBO_VEHICLE_INSTRUMENTS_BOOTSTRAP = true;
