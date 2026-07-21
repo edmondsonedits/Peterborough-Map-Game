@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.4.5';
+  const VERSION = '1.4.20';
   if (window.PTBO_ROAD_COLLISION_BOOTSTRAP_READY) return;
 
   window.PTBO_ROAD_COLLISION_BOOTSTRAP = true;
@@ -23,6 +23,13 @@
       };
       document.body.appendChild(script);
     });
+  }
+
+  function ensureRouteComparison() {
+    if (window.PTBO_ROUTE_COMPARE || document.querySelector('script[data-ptbo-route-compare-core]')) {
+      return Promise.resolve();
+    }
+    return loadScript('route-compare-1.4.2.js', `${VERSION}-route-compare`);
   }
 
   async function waitForApi(timeoutMilliseconds = 5000) {
@@ -61,7 +68,7 @@
     Promise.allSettled([
       loadScript('road-intersection-softener.js', `${VERSION}-intersections`),
       loadScript('dispatch-voice-bridge-1.4.2.js', `${VERSION}-voice`),
-      loadScript('route-compare-1.4.2.js', `${VERSION}-route-compare`),
+      ensureRouteComparison(),
     ]).then(results => {
       results.forEach(result => {
         if (result.status === 'rejected') console.warn(result.reason);

@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.4.8';
+  const VERSION = '1.4.20';
   if (window.PTBO_SIMULATOR_READY_VERSION === VERSION && window.PTBO_SIMULATOR_READY) return;
   window.PTBO_SIMULATOR_READY_VERSION = VERSION;
 

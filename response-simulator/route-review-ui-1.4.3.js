@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.4.4';
+  const VERSION = '1.4.20';
   const ROUTE_OPACITY = .30;
   const CASING_OPACITY = .38;
   if (window.PTBO_ROUTE_REVIEW_UI_VERSION === VERSION) return;
@@ -193,7 +193,9 @@
       </div>
     `;
 
-    legend.querySelector('.ptbo-compact-done')?.addEventListener('click', () => api.close?.());
+    legend.querySelector('.ptbo-compact-done')?.addEventListener('click', () => {
+      window.dispatchEvent(new CustomEvent('ptbo-route-review-close'));
+    });
     bindRouteChip(legend.querySelector('[data-route="player"]'), state.playerLine);
     bindRouteChip(legend.querySelector('[data-route="suggested"]'), state.suggestedLine);
     setLineVisible(state.playerLine, true);

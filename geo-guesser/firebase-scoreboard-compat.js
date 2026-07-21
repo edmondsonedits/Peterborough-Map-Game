@@ -88,7 +88,8 @@
     try {
       db.settings({
         experimentalAutoDetectLongPolling: true,
-        ignoreUndefinedProperties: true
+        ignoreUndefinedProperties: true,
+        merge: true
       });
     } catch (error) {
       if (error?.code !== 'failed-precondition') console.warn('Firestore settings were not applied.', error);

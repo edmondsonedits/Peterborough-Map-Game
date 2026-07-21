@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.4.2';
+  const VERSION = '1.4.20';
   if (window.PTBO_ROUTE_COMPARE_BOOT_VERSION === VERSION) return;
   window.PTBO_ROUTE_COMPARE_BOOT_VERSION = VERSION;
 
@@ -492,6 +492,7 @@
 
   function initialize() {
     installUi();
+    window.addEventListener('ptbo-route-review-close', () => closeReview());
     window.addEventListener('keydown', stopVehicleInput, true);
     window.addEventListener('keyup', stopVehicleInput, true);
     state.timer = setInterval(sync, 150);

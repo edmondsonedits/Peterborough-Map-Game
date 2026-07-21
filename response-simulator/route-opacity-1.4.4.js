@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.4.4';
+  const VERSION = '1.4.20';
   const ROUTE_OPACITY = 0.30;
   const CASING_OPACITY = 0.38;
   if (window.PTBO_ROUTE_OPACITY_VERSION === VERSION) return;

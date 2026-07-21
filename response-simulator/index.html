@@ -66,6 +66,8 @@
         h2 { margin: 0 0 4px 0; font-size: 19px; color: #111; }
         .subtitle { font-size: 12px; color: #666; margin-bottom: 20px; }
         .section-title { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #777; border-bottom: 1px solid #ddd; padding-bottom: 4px; margin: 20px 0 10px 0; font-weight: 700; }
+        .category-heading { margin: 22px -8px 10px; padding: 9px 10px; color:#0f3d57; border-radius:8px; background:#dceef7; font-size:12px; font-weight:850; letter-spacing:.06em; text-transform:uppercase; }
+        .category-heading:first-of-type { margin-top:4px; }
         .control-row { margin-bottom: 14px; }
         .control-row label { display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; color: #444; margin-bottom: 4px; }
         .control-row input[type="range"], .control-row select { width: 100%; box-sizing: border-box; padding: 7px; border-radius: 4px; border: 1px solid #ccc; background: #fff; }
@@ -100,7 +102,7 @@
     </style>
 </head>
 <body>
-    <a id="game-home" href="../" aria-label="Return to the game selection page">â† All Games</a>
+    <a id="game-home" href="../" aria-label="Return to the game selection page">← All Games</a>
 
     <div id="dispatch-hud">
         <div class="hud-main" id="hud-content">
@@ -121,7 +123,8 @@
             <h2>Simulation Config</h2>
             <div class="subtitle">Peterborough Run Controls & Filtration</div>
 
-            <div class="section-title">Filter Dispatch Incident Pool</div>
+            <div class="category-heading">Calls &amp; Deployment</div>
+            <div class="section-title">Incident Types</div>
             <div style="font-size: 11px; font-weight: bold; color: #c62828; margin-bottom: 6px; text-transform: uppercase;">Primary: Fire & Rescue</div>
             <div class="sub-cat-group">
                 <label class="checkbox-row"><input type="checkbox" class="filter-chk" data-sub="Water & Ice Rescue" checked> Water & Ice Rescue</label>
@@ -143,14 +146,15 @@
             </div>
 
             <div class="section-title">Station Deploy Spawns</div>
-            <button class="station-spawn-box" onclick="teleportToStation(44.300871, -78.322206)">Station 1 â€” 210 Sherbrooke St</button>
-            <button class="station-spawn-box" onclick="teleportToStation(44.335266, -78.316657)">Station 2 â€” 100 Marina Blvd</button>
-            <button class="station-spawn-box" onclick="teleportToStation(44.284867, -78.350902)">Station 3 â€” 839 Clonsilla Ave</button>
+            <button class="station-spawn-box" onclick="teleportToStation(44.300871, -78.322206)">Station 1 — 210 Sherbrooke St</button>
+            <button class="station-spawn-box" onclick="teleportToStation(44.335266, -78.316657)">Station 2 — 100 Marina Blvd</button>
+            <button class="station-spawn-box" onclick="teleportToStation(44.284867, -78.350902)">Station 3 — 839 Clonsilla Ave</button>
 
             <div class="section-title">Custom Dispatch Logging</div>
             <button class="station-spawn-box" style="border-color: #f0ad4e;" onclick="recordCurrentLocation()">Record Current Position</button>
             <button class="station-spawn-box" style="border-color: #00bcd4;" onclick="exportUpdatedDatabase()">Export Master Dispatch Database</button>
 
+            <div class="category-heading">Vehicle &amp; Camera</div>
             <div class="section-title">Vehicle Calibration</div>
             <div class="control-row">
                 <label><span>Chassis Base Scale (Height)</span><span id="lbl-size">10px</span></label>
@@ -165,6 +169,7 @@
             <label class="checkbox-row"><input type="checkbox" id="chk-siren" onchange="updateVehicleChassis()" checked> Emergency Flashing Matrix</label>
             <label class="checkbox-row"><input type="checkbox" id="chk-camera" checked> Lock Camera Focus to Chassis</label>
 
+            <div class="category-heading">Map &amp; Diagnostics</div>
             <div class="section-title">Map Layers & Overlays</div>
             <div class="control-row">
                 <select id="layer-select" onchange="changeBasemap()">
@@ -179,7 +184,7 @@
             <div class="telemetry-box">
                 LAT: <span id="tel-lat">44.300871</span><br>
                 LNG: <span id="tel-lng">-78.322206</span><br>
-                HEADING: <span id="tel-hdg">180Â°</span><br>
+                HEADING: <span id="tel-hdg">180°</span><br>
                 DIST TO RUN: <span id="tel-dist">--</span><br>
                 COMPLETED RUNS: <span id="tel-total-calls">0</span>
             </div>
@@ -188,6 +193,7 @@
 
     <div id="map"></div>
 
+    <script src="../shared/test-build.js?v=1.4.20"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
     <script src="https://unpkg.com/leaflet-edgebuffer@1.0.6/src/leaflet.edgebuffer.js"></script>
     <script src="https://unpkg.com/leaflet-rotatedmarker@0.2.0/leaflet.rotatedMarker.js"></script>
@@ -314,6 +320,7 @@
         let activeIncident = null;
         let stopwatchInterval = null;
         let elapsedMilliseconds = 0;
+        let dispatchStartedAt = 0;
 
         let totalTrackedCalls = parseInt(localStorage.getItem("simTotalCalls")) || 0;
 
@@ -697,7 +704,7 @@
                 vehicleMarker.setLatLng([simLat, simLng]);
                 
                 // Only lock/pan camera if actually moving forward/backward
-                if (mapInstance && ((document.getElementById('chk-camera').checked && velocity !== 0) || headingUpMode)) {
+                if (mapInstance && ((document.getElementById('chk-camera')?.checked && velocity !== 0) || headingUpMode)) {
                     mapInstance.setView([simLat, simLng], mapInstance.getZoom(), { animate: false });
                 }
 
@@ -705,7 +712,7 @@
 
                 document.getElementById('tel-lat').innerText = simLat.toFixed(6);
                 document.getElementById('tel-lng').innerText = simLng.toFixed(6);
-                document.getElementById('tel-hdg').innerText = Math.round(currentHeading) + "Â°"; 
+                document.getElementById('tel-hdg').innerText = Math.round(currentHeading) + "°";
                 updateMapOrientation();
             }
 
@@ -718,6 +725,12 @@
         window.addEventListener("keyup", e => {
             if (keys.hasOwnProperty(e.key)) { e.preventDefault(); keys[e.key] = false; }
         });
+        function releaseDrivingInput() {
+            Object.keys(keys).forEach(key => { keys[key] = false; });
+            velocity = 0;
+        }
+        window.addEventListener('blur', releaseDrivingInput);
+        document.addEventListener('visibilitychange', () => { if (document.hidden) releaseDrivingInput(); });
 
         function playDispatchAudioText(phraseText) {
             try {
@@ -762,6 +775,7 @@
 
             simulationState = STATES.ENROUTE;
             elapsedMilliseconds = 0;
+            dispatchStartedAt = performance.now();
 
             const hud = document.getElementById('dispatch-hud');
             hud.className = "incident-active";
@@ -770,7 +784,7 @@
             let environmentConditionString = currentHour < 6 ? "Night operations active." : (currentHour < 12 ? "Morning route patterns forming." : "Standard daytime operations grid.");
 
             document.getElementById('hud-content').innerHTML = `
-                <div class="hud-title">ðŸš¨ ACTIVE ENROUTE DISPATCH: ${activeIncident.sub.toUpperCase()}</div>
+                <div class="hud-title">🚨 ACTIVE ENROUTE DISPATCH: ${activeIncident.sub.toUpperCase()}</div>
                 <p class="hud-address">${activeIncident.name}</p>
                 <div class="hud-meta">Location Matrix: ${activeIncident.addr} | ${environmentConditionString}</div>
             `;
@@ -782,7 +796,7 @@
 
             clearInterval(stopwatchInterval);
             stopwatchInterval = setInterval(() => {
-                elapsedMilliseconds += 100;
+                elapsedMilliseconds = performance.now() - dispatchStartedAt;
                 const secs = (elapsedMilliseconds / 1000).toFixed(1);
                 document.getElementById("hud-clock").innerText = secs;
             }, 100);
@@ -792,13 +806,15 @@
 
         function executeIncidentArrivalProcedures() {
             clearInterval(stopwatchInterval);
+            elapsedMilliseconds = performance.now() - dispatchStartedAt;
+            document.getElementById("hud-clock").innerText = (elapsedMilliseconds / 1000).toFixed(1);
             simulationState = STATES.ONSCENE;
 
             const hud = document.getElementById('dispatch-hud');
             hud.className = "incident-success";
 
             document.getElementById('hud-content').innerHTML = `
-                <div class="hud-title" style="color: #5cb85c;">âœ“ ON SCENE AS REPORTED</div>
+                <div class="hud-title" style="color: #5cb85c;">✓ ON SCENE AS REPORTED</div>
                 <p class="hud-address">Arrived at ${activeIncident.name}</p>
                 <div class="hud-meta">Staging layout completed. Responding crew evaluating conditions on scene.</div>
             `;

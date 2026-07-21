@@ -32,7 +32,7 @@
   </style>
 </head>
 <body>
-  <iframe id="simulator" src="../index.html?v=1.4.6" title="Peterborough Fire and Emergency Dispatch Simulator"></iframe>
+  <iframe id="simulator" src="../index.html?v=1.4.20" title="Peterborough Fire and Emergency Dispatch Simulator"></iframe>
   <nav class="mobile-topbar" aria-label="Simulator navigation, audio, and station spawns">
     <div class="top-actions"><a class="top-button" href="../../" aria-label="Return to all games"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></a></div>
     <div class="station-shortcuts">
@@ -55,13 +55,14 @@
   <div class="control-hint">Drag the wheel to steer · Hold Gas to drive · Hold Reverse to back up</div>
   <div class="loading-cover" id="loading-cover"><div><strong>Loading mobile simulator</strong><span id="loading-status">Preparing steering, road boundaries, and updated calls…</span><button type="button" id="loading-refresh">Refresh Page</button></div></div>
 
-  <script src="../../shared/dispatch-locations.js?v=1.4.6"></script>
-  <script src="../../shared/dispatch-data-1.4.4.js?v=1.4.6"></script>
-  <script src="../../shared/dispatch-override-1.4.4.js?v=1.4.6"></script>
-  <script src="../../shared/stations.js?v=1.4.6"></script>
+  <script src="../../shared/test-build.js?v=1.4.20"></script>
+  <script src="../../shared/dispatch-locations.js?v=1.4.20"></script>
+  <script src="../../shared/dispatch-data-1.4.4.js?v=1.4.20"></script>
+  <script src="../../shared/dispatch-override-1.4.4.js?v=1.4.20"></script>
+  <script src="../../shared/stations.js?v=1.4.20"></script>
   <script>
     (() => {
-      const VERSION = '1.4.6';
+      const VERSION = '1.4.20';
       const CAMERA_TEST = new URLSearchParams(location.search).get('cameraTest');
       const MOBILE_ZOOM = 18;
       const AUDIO_KEY = 'ptboDispatchVoiceEnabled';
@@ -250,7 +251,7 @@
       function initializeFrame() {
         const doc = frame.contentDocument;
         const game = frame.contentWindow;
-        if (!doc || !game || doc.documentElement.dataset.ptboMobileWrapperInitialized === VERSION) return;
+        if (!doc || !game || typeof game.initializeSimulator !== 'function' || doc.documentElement.dataset.ptboMobileWrapperInitialized === VERSION) return;
         doc.documentElement.dataset.ptboMobileWrapperInitialized = VERSION;
         const style = doc.createElement('style');
         style.textContent = `#game-home,#menu-toggle{display:none!important}#dispatch-hud{top:calc(66px + env(safe-area-inset-top))!important;left:10px!important;right:10px!important;width:auto!important;max-width:none!important;padding:11px 12px 11px 14px!important;transform:none!important;border-left-width:4px!important;border-radius:14px!important;display:grid!important;grid-template-columns:minmax(0,1fr) 98px!important;align-items:center!important;gap:10px!important}.hud-main{min-width:0!important}.hud-title{font-size:9px!important}.hud-address{font-size:15px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}.hud-meta{font-size:10px!important;line-height:1.3!important}.hud-timer-block{min-width:0!important;margin-left:0!important}.hud-clock-display{font-size:21px!important}.hud-btn{min-height:40px!important;padding:7px 8px!important;border-radius:10px!important;font-size:12px!important}#control-panel{width:min(360px,100vw)!important;z-index:3000!important}.panel-scroll{padding:calc(70px + env(safe-area-inset-top)) 18px calc(190px + env(safe-area-inset-bottom))!important}.leaflet-bottom{bottom:calc(174px + env(safe-area-inset-bottom))!important}#map-orientation-controls{display:none!important}`;

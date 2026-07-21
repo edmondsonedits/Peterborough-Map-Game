@@ -1,6 +1,6 @@
-# Driving camera architecture (v1.4.19)
+# Driving camera architecture (v1.4.20)
 
-The v1.4.19 camera is shared by the production desktop and mobile simulator wrappers and by `response-simulator/camera-game-test/`. Desktop exposes the Fixed Map and Driving View controls over the map. Mobile keeps the map clear and places one mode-toggle button inside the existing Options panel.
+The v1.4.20 camera is shared by the desktop and mobile simulator wrappers and by `response-simulator/camera-game-test/`. Desktop exposes the Fixed Map and Driving View controls over the map. Mobile keeps the map clear and places one mode-toggle button inside the existing Options panel.
 
 ## Root cause
 

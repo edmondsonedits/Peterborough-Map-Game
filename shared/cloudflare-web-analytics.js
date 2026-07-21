@@ -4,7 +4,7 @@
   // Cloudflare Web Analytics site token. This is public client configuration,
   // not a private API key. Paste the token issued for edmondsonedits.github.io.
   const SITE_TOKEN = '';
-  const APP_VERSION = '1.4.19';
+  const APP_VERSION = '1.4.20';
 
   if (window.top !== window.self || window.__PTBO_CLOUDFLARE_ANALYTICS__) return;
   window.__PTBO_CLOUDFLARE_ANALYTICS__ = true;
