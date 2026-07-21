@@ -1,6 +1,6 @@
 # Peterborough Road Alignment Validation
 
-Generated: 2026-07-21T00:36:53+00:00
+Generated: 2026-07-21T00:43:58+00:00
 
 **Result: PASS**
 
@@ -12,8 +12,8 @@ ORN is downloaded through a spatial object-ID query followed by chunked object-I
 
 ## Coverage
 
-- Public OSM roads checked: **2,762**
-- All rendered OSM drivable features: **5,942**
+- Public OSM roads checked: **2,766**
+- All rendered OSM drivable features: **5,946**
 - Complete ORN roads: **3,179**
 - ORN layer: `ORN Road Net Element`
 
@@ -21,14 +21,14 @@ ORN is downloaded through a spatial object-ID query followed by chunked object-I
 
 | Comparison | Median | P90 | P95 | Within 10 m | Within 20 m |
 |---|---:|---:|---:|---:|---:|
-| Public OSM → ORN | 0.64 m | 2.35 m | 3.63 m | 98.43% | 98.72% |
+| Public OSM → ORN | 0.64 m | 2.34 m | 3.63 m | 98.43% | 98.72% |
 | ORN → public OSM | 0.63 m | 2.32 m | 3.57 m | 97.60% | 98.01% |
-| All rendered OSM → ORN | 1.24 m | 80.16 m | 134.33 m | 68.62% | 72.72% |
+| All rendered OSM → ORN | 1.23 m | 80.14 m | 134.32 m | 68.62% | 72.72% |
 
 ## Street names
 
-- Comparable named segments: **2,625**
-- Normalized official-name agreement: **95.31%**
+- Comparable named segments: **2,629**
+- Normalized official-name agreement: **95.32%**
 
 ## Streets requiring manual review
 
