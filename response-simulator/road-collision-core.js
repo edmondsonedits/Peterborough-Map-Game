@@ -11,6 +11,9 @@
     sweepStep: 1.35,
     shoulderTolerance: 1.35,
     spawnSnapDistance: 120,
+    stationExitSearchDistance: 120,
+    stationExitCorridorHalfWidth: 8,
+    stationExitStartPadding: 4,
     defaultLaneAssist: 0.60,
     collisionVelocityRetention: 0.42,
   });
@@ -48,6 +51,7 @@
     originalLoop: null,
     originalEvaluateDistance: null,
     insidePhysicsStep: false,
+    stationExit: null,
   };
 
   let readyResolve;
@@ -237,9 +241,90 @@
     };
   }
 
+  function stationExitHeading(exit) {
+    return (Math.atan2(exit.dx, exit.dy) * 180 / Math.PI + 360) % 360;
+  }
+
+  function beginStationExit(lat = simLat, lng = simLng) {
+    if (state.status !== 'ready') return false;
+    const start = toXY(Number(lat), Number(lng));
+    if (![start.x, start.y].every(Number.isFinite)) return false;
+
+    const nearest = nearestRoadXY(start.x, start.y, CONFIG.stationExitSearchDistance);
+    if (!nearest || nearest.distance > CONFIG.stationExitSearchDistance) return false;
+    if (nearest.distance <= nearest.segment.allowed) {
+      state.stationExit = null;
+      return false;
+    }
+
+    const dx = nearest.x - start.x;
+    const dy = nearest.y - start.y;
+    const lengthSq = dx * dx + dy * dy;
+    if (lengthSq < 1) return false;
+
+    state.stationExit = {
+      ax: start.x,
+      ay: start.y,
+      bx: nearest.x,
+      by: nearest.y,
+      dx,
+      dy,
+      lengthSq,
+      length: Math.sqrt(lengthSq),
+      roadSegment: nearest.segment,
+    };
+
+    currentHeading = stationExitHeading(state.stationExit);
+    vehicleMarker?.setRotationOrigin?.('center center');
+    vehicleMarker?.setRotationAngle?.(currentHeading - 90);
+    const headingNode = document.getElementById('tel-hdg');
+    if (headingNode) headingNode.textContent = `${Math.round(currentHeading)}°`;
+    velocity = 0;
+    return true;
+  }
+
+  function resolveStationExitMovement(previous, candidate) {
+    const exit = state.stationExit;
+    if (!exit) return null;
+
+    const roadInfo = roadInfoAtXY(candidate.x, candidate.y, CONFIG.stationExitSearchDistance);
+    if (roadInfo.drivable) {
+      state.stationExit = null;
+      return {
+        ...toLatLng(candidate.x, candidate.y),
+        blocked: false,
+        snapped: false,
+        stationExitCompleted: true,
+        segment: roadInfo.nearest?.segment || exit.roadSegment,
+      };
+    }
+
+    const projection = projectPointToSegment(candidate.x, candidate.y, exit);
+    const distanceFromStart = Math.hypot(candidate.x - exit.ax, candidate.y - exit.ay);
+    const insideStartPad = distanceFromStart <= CONFIG.stationExitStartPadding;
+    const insideCorridor = projection.distance <= CONFIG.stationExitCorridorHalfWidth;
+    if (insideStartPad || insideCorridor) {
+      return {
+        ...toLatLng(candidate.x, candidate.y),
+        blocked: false,
+        snapped: false,
+        stationExitActive: true,
+      };
+    }
+
+    return {
+      ...toLatLng(previous.x, previous.y),
+      blocked: true,
+      snapped: false,
+      stationExitActive: true,
+    };
+  }
+
   function resolveMovement(previousLat, previousLng, candidateLat, candidateLng, speed) {
     const previous = toXY(previousLat, previousLng);
     const candidate = toXY(candidateLat, candidateLng);
+    const stationExitResult = resolveStationExitMovement(previous, candidate);
+    if (stationExitResult) return stationExitResult;
     const previousInfo = roadInfoAtXY(previous.x, previous.y, CONFIG.spawnSnapDistance);
 
     if (!previousInfo.drivable && previousInfo.nearest && previousInfo.nearest.distance <= CONFIG.spawnSnapDistance) {
@@ -378,6 +463,7 @@
 
   function snapVehicleToRoad(maxDistance = CONFIG.spawnSnapDistance) {
     if (state.status !== 'ready') return false;
+    state.stationExit = null;
     const point = toXY(simLat, simLng);
     const nearest = nearestRoadXY(point.x, point.y, maxDistance);
     if (!nearest || nearest.distance > maxDistance) return false;
@@ -443,8 +529,13 @@
     const originalTeleport = teleportToStation;
     teleportToStation = function roadSafeTeleport(...args) {
       const result = originalTeleport.apply(this, args);
-      if (state.status === 'ready') setTimeout(() => snapVehicleToRoad(CONFIG.spawnSnapDistance), 0);
-      else ready.then(() => snapVehicleToRoad(CONFIG.spawnSnapDistance)).catch(() => {});
+      const stationLat = Number(args[0]);
+      const stationLng = Number(args[1]);
+      if (state.status === 'ready') {
+        setTimeout(() => beginStationExit(stationLat, stationLng), 0);
+      } else {
+        ready.then(() => beginStationExit(stationLat, stationLng)).catch(() => {});
+      }
       return result;
     };
     teleportToStation._roadCollisionWrapped = true;
@@ -467,7 +558,7 @@
       buildRoadIndex(state.geojson);
       state.status = 'ready';
       updateStatusText();
-      snapVehicleToRoad(CONFIG.spawnSnapDistance);
+      beginStationExit(simLat, simLng);
       readyResolve({ segmentCount: state.segments.length });
       window.dispatchEvent(new CustomEvent('ptbo-road-collision-ready', { detail: { segmentCount: state.segments.length } }));
     } catch (error) {
@@ -485,6 +576,7 @@
     isPointDrivable,
     resolveMovement,
     snapVehicleToRoad,
+    beginStationExit,
     nearestRoad(lat, lng, searchRadius = 45) {
       const point = toXY(lat, lng);
       const nearest = nearestRoadXY(point.x, point.y, searchRadius);

@@ -17,6 +17,10 @@
     markerPatched: false,
   };
 
+  function drivingCameraOwnsMap() {
+    return document.documentElement.dataset.ptboDrivingCameraOwnsMap === 'true';
+  }
+
   function globalsReady() {
     try {
       return Boolean(mapInstance && vehicleMarker && typeof simulationLoop === 'function');
@@ -51,6 +55,7 @@
   }
 
   function ensureCameraLayer() {
+    if (drivingCameraOwnsMap()) return null;
     if (!globalsReady()) return null;
     const mapPane = mapInstance.getPane('mapPane');
     if (!mapPane) return null;
@@ -121,6 +126,7 @@
   }
 
   function renderCamera(allowRebase = true) {
+    if (drivingCameraOwnsMap()) return;
     if (!globalsReady()) return;
     if (allowRebase && cameraShouldFollow() && !state.rebasing) {
       const size = mapInstance.getSize();
@@ -212,9 +218,10 @@
     if (velocity !== 0) {
       const driveDirection = velocity > 0 ? 1 : -1;
       const velocityFactor = Math.min(Math.abs(velocity) / (maxSpeed * 0.2), 1);
-      activeTurnRate = baseTurnRate * Math.max(velocityFactor, 0.3) * driveDirection;
+      const lowSpeedMultiplier = 0.85 + velocityFactor * 0.15;
+      activeTurnRate = baseTurnRate * lowSpeedMultiplier * driveDirection;
     } else {
-      activeTurnRate = baseTurnRate * 0.7;
+      activeTurnRate = baseTurnRate;
     }
 
     if (keys.ArrowLeft || keys.a) {

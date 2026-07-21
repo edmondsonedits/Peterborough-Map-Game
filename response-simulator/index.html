@@ -397,7 +397,9 @@
                 updateWhenIdle: false, 
                 keepBuffer: 4,         
                 edgeBufferTiles: 2,
-                maxNativeZoom: 19
+                // Overzoom the complete level-18 tile set at the 20 m map scale.
+                // Some providers leave Leaflet's native level-19 container empty.
+                maxNativeZoom: 18
             }).addTo(mapInstance);
         }
 
@@ -461,6 +463,8 @@
             simLat = targetLat;
             simLng = targetLng;
             velocity = 0;
+            document.getElementById('tel-lat').innerText = simLat.toFixed(6);
+            document.getElementById('tel-lng').innerText = simLng.toFixed(6);
             if (vehicleMarker) {
                 vehicleMarker.setLatLng([simLat, simLng]);
             }
