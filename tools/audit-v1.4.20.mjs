@@ -25,7 +25,7 @@ const entryPoints = [
 
 for (const entry of entryPoints) {
   const source = read(entry);
-  if (!source.includes('test-build.js?v=1.4.20')) fail('test-build-label', `${entry} does not load the v1.4.20 test label.`);
+  if (!source.includes('build-version.js?v=1.4.20')) fail('build-version-label', `${entry} does not load the v1.4.20 production marker.`);
   const refs = [...source.matchAll(/\b(?:src|href)=["']([^"']+)["']/g)].map(match => match[1]);
   for (const ref of refs) {
     if (/^(?:https?:|data:|#|mailto:|javascript:)/i.test(ref)) continue;
@@ -35,7 +35,7 @@ for (const entry of entryPoints) {
     if (!fs.existsSync(resolved)) fail('local-reference', `${entry} references missing ${ref}.`);
   }
 }
-pass('entry-points', `${entryPoints.length} HTML entry points have local asset and test-label coverage.`);
+pass('entry-points', `${entryPoints.length} HTML entry points have local asset and production-version coverage.`);
 
 const sourceFiles = [];
 function walk(directory) {
