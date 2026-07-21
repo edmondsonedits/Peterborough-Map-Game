@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.4.20';
+  const VERSION = '1.5.0';
   const LABEL = `v${VERSION}`;
   if (window.PTBO_BUILD?.version === VERSION) return;
 

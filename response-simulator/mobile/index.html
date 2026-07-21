@@ -32,7 +32,7 @@
   </style>
 </head>
 <body>
-  <iframe id="simulator" src="../index.html?v=1.4.20" title="Peterborough Fire and Emergency Dispatch Simulator"></iframe>
+  <iframe id="simulator" src="../index.html?v=1.5.0" title="Peterborough Fire and Emergency Dispatch Simulator"></iframe>
   <nav class="mobile-topbar" aria-label="Simulator navigation, audio, and station spawns">
     <div class="top-actions"><a class="top-button" href="../../" aria-label="Return to all games"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></a></div>
     <div class="station-shortcuts">
@@ -55,14 +55,14 @@
   <div class="control-hint">Drag the wheel to steer · Hold Gas to drive · Hold Reverse to back up</div>
   <div class="loading-cover" id="loading-cover"><div><strong>Loading mobile simulator</strong><span id="loading-status">Preparing steering, road boundaries, and updated calls…</span><button type="button" id="loading-refresh">Refresh Page</button></div></div>
 
-  <script src="../../shared/build-version.js?v=1.4.20"></script>
+  <script src="../../shared/build-version.js?v=1.5.0"></script>
   <script src="../../shared/dispatch-locations.js?v=1.4.20"></script>
   <script src="../../shared/dispatch-data-1.4.4.js?v=1.4.20"></script>
   <script src="../../shared/dispatch-override-1.4.4.js?v=1.4.20"></script>
   <script src="../../shared/stations.js?v=1.4.20"></script>
   <script>
     (() => {
-      const VERSION = '1.4.20';
+      const VERSION = '1.5.0';
       const CAMERA_TEST = new URLSearchParams(location.search).get('cameraTest');
       const MOBILE_ZOOM = 18;
       const AUDIO_KEY = 'ptboDispatchVoiceEnabled';
