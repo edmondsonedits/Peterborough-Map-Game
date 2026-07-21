@@ -31,6 +31,7 @@
     playerLine: null,
     suggestedLine: null,
     previousCameraLock: null,
+    cameraReviewActive: false,
     timer: null,
   };
 
@@ -311,30 +312,21 @@
 
   function drawPolyline(points, color) {
     if (!Array.isArray(points) || points.length < 2) return null;
-    const casing = addLayer(L.polyline(points, {
-      color: COLORS.casing,
-      weight: 10,
-      opacity: .86,
-      lineCap: 'round',
-      lineJoin: 'round',
-      interactive: false,
-    }));
     const line = addLayer(L.polyline(points, {
       color,
-      weight: 6,
-      opacity: .98,
+      weight: 14,
+      opacity: .34,
       lineCap: 'round',
       lineJoin: 'round',
       interactive: false,
     }));
-    line._ptboCasing = casing;
+    line._ptboVisibleOpacity = .34;
     return line;
   }
 
   function setLineVisible(line, visible) {
     if (!line) return;
-    line.setStyle({ opacity: visible ? .98 : 0 });
-    line._ptboCasing?.setStyle({ opacity: visible ? .86 : 0 });
+    line.setStyle({ opacity: visible ? (line._ptboVisibleOpacity ?? .34) : 0 });
   }
 
   function buildLegend() {
@@ -346,7 +338,7 @@
       : NaN;
     state.legend.innerHTML = `
       <div class="compare-title">Route Comparison</div>
-      <div class="compare-subtitle">Move and zoom the map to review the completed response.</div>
+      <div class="compare-subtitle">Blue is your route · green is suggested · teal is shared. Street names remain visible beneath the highlights.</div>
       <div class="compare-row">
         <div class="compare-label"><span class="compare-swatch" style="background:${COLORS.player}"></span>Your Route</div>
         <button type="button" data-toggle="player" aria-pressed="true">Hide</button>
@@ -438,8 +430,12 @@
       fillOpacity: 1,
     }).bindTooltip('Incident', { direction: 'top' }));
 
+    const drivingCamera = window.PTBO_DRIVING_CAMERA;
+    if (drivingCamera?.setReviewMode) {
+      state.cameraReviewActive = Boolean(drivingCamera.setReviewMode(true));
+    }
     const camera = document.getElementById('chk-camera');
-    if (camera) {
+    if (!state.cameraReviewActive && camera) {
       state.previousCameraLock = camera.checked;
       camera.checked = false;
     }
@@ -450,7 +446,8 @@
 
     const group = L.featureGroup(state.layers);
     if (group.getBounds().isValid()) {
-      mapInstance.fitBounds(group.getBounds(), { padding: [55, 55], maxZoom: 16, animate: true });
+      mapInstance.invalidateSize({ pan: false });
+      mapInstance.fitBounds(group.getBounds(), { padding: [55, 55], maxZoom: 16, animate: false });
     }
   }
 
@@ -459,6 +456,10 @@
     clearLayers();
     state.legend?.classList.add('hidden');
     setMobileControlsDisabled(false);
+    if (state.cameraReviewActive) {
+      window.PTBO_DRIVING_CAMERA?.setReviewMode?.(false);
+      state.cameraReviewActive = false;
+    }
     const camera = document.getElementById('chk-camera');
     if (camera && state.previousCameraLock !== null) camera.checked = state.previousCameraLock;
     state.previousCameraLock = null;

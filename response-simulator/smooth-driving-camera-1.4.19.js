@@ -66,6 +66,21 @@
     const mapPane = mapInstance.getPane('mapPane');
     if (!mapContainer || !mapPane) throw new Error('Leaflet map structure is unavailable.');
 
+    // The production driving camera is the sole owner of Leaflet's geographic
+    // pane hierarchy. Retire the legacy translation wrapper before creating the
+    // unified world so tile-grid calculations retain Leaflet's native parent.
+    document.documentElement.dataset.ptboDrivingCameraOwnsMap = 'true';
+    const legacyCameraLayer = document.getElementById('ptbo-smooth-camera-layer');
+    if (legacyCameraLayer?.contains(mapPane)) {
+      legacyCameraLayer.parentNode?.insertBefore(mapPane, legacyCameraLayer);
+      legacyCameraLayer.remove();
+    }
+    const legacyCameraState = window.PTBO_SMOOTH_CAMERA?.state;
+    if (legacyCameraState?.nativeSetView) {
+      mapInstance.setView = legacyCameraState.nativeSetView;
+      legacyCameraState.nativeSetView = null;
+    }
+
     const mobileUi = isMobileWrapper();
     const startingMode = initialMode();
     const errors = [];
@@ -74,6 +89,8 @@
       mode: startingMode,
       following: true,
       transitioning: false,
+      reviewActive: false,
+      reviewSnapshot: null,
       rawHeading: wrap360(Number(currentHeading) || 0),
       visualHeading: wrap360(Number(currentHeading) || 0),
       mapBearing: startingMode === MODE.DRIVING ? wrap360(Number(currentHeading) || 0) : 0,
@@ -297,6 +314,7 @@
     };
 
     function setMode(nextMode) {
+      if (state.reviewActive) return MODE_LABEL[state.mode];
       state.mode = nextMode === MODE.FIXED || nextMode === 'Fixed Map' ? MODE.FIXED : MODE.DRIVING;
       if (!CAMERA_TEST) {
         try { localStorage.setItem(MODE_STORAGE_KEY, state.mode); } catch (_) {}
@@ -309,10 +327,41 @@
     }
 
     function recenter() {
+      if (state.reviewActive) return;
       state.following = true;
       state.latestLatLng = L.latLng(vehicleMarker.getLatLng());
       centerOnTruck();
       updateUi();
+    }
+
+    function setReviewMode(active) {
+      const nextActive = Boolean(active);
+      if (nextActive === state.reviewActive) return state.reviewActive;
+
+      if (nextActive) {
+        state.reviewSnapshot = { mode: state.mode, following: state.following };
+        state.reviewActive = true;
+        state.mode = MODE.FIXED;
+        state.following = false;
+        state.transitioning = false;
+        state.mapBearing = 0;
+        applyCameraTransform();
+        mapInstance.invalidateSize({ pan: false });
+        updateUi();
+        return true;
+      }
+
+      const snapshot = state.reviewSnapshot || { mode: MODE.DRIVING, following: true };
+      state.reviewActive = false;
+      state.reviewSnapshot = null;
+      state.mode = snapshot.mode;
+      state.following = snapshot.following;
+      state.transitioning = true;
+      state.latestLatLng = L.latLng(vehicleMarker.getLatLng());
+      if (state.following) centerOnTruck();
+      else applyCameraTransform();
+      updateUi();
+      return false;
     }
 
     fixedButton?.addEventListener('click', () => setMode(MODE.FIXED));
@@ -488,6 +537,7 @@
       version: VERSION,
       modes: MODE,
       setMode,
+      setReviewMode,
       recenter,
       getTelemetry: () => ({ ...window.PTBO_CAMERA_TEST_TELEMETRY, javascriptErrors: errors.slice() }),
       runModeSwitchTest,

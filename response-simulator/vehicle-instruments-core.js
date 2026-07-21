@@ -430,13 +430,13 @@
     } catch {
       return;
     }
-    if (!Number.isFinite(currentVelocity) || Math.abs(currentVelocity) <= CONFIG.movementThreshold) return;
+    if (!Number.isFinite(currentVelocity)) return;
 
     const speedRatio = Math.min(1, Math.max(0, state.speedKmh / CONFIG.steeringReferenceSpeedKmh));
     const degreesPerFrame = CONFIG.lowSpeedTurnDegreesPerFrame
       + (CONFIG.highSpeedTurnDegreesPerFrame - CONFIG.lowSpeedTurnDegreesPerFrame) * speedRatio;
     const frameScale = Math.min(3, deltaSeconds * 60);
-    const driveDirection = currentVelocity >= 0 ? 1 : -1;
+    const driveDirection = currentVelocity < -CONFIG.movementThreshold ? -1 : 1;
 
     try {
       currentHeading = normalizeHeading(

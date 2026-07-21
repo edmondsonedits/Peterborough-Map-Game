@@ -2,8 +2,7 @@
   'use strict';
 
   const VERSION = '1.4.20';
-  const ROUTE_OPACITY = .30;
-  const CASING_OPACITY = .38;
+  const ROUTE_OPACITY = .34;
   if (window.PTBO_ROUTE_REVIEW_UI_VERSION === VERSION) return;
   window.PTBO_ROUTE_REVIEW_UI_VERSION = VERSION;
 
@@ -121,8 +120,7 @@
 
   function setLineVisible(line, visible) {
     if (!line?.setStyle) return;
-    line.setStyle({ opacity: visible ? ROUTE_OPACITY : 0 });
-    line._ptboCasing?.setStyle?.({ opacity: visible ? CASING_OPACITY : 0 });
+    line.setStyle({ opacity: visible ? (line._ptboVisibleOpacity ?? ROUTE_OPACITY) : 0 });
   }
 
   function bindRouteChip(button, line) {
@@ -168,7 +166,7 @@
         <div class="ptbo-compact-head">
           <div class="ptbo-compact-heading">
             <div class="ptbo-compact-title">Route Comparison</div>
-            <div class="ptbo-compact-key">Blue is your route · Green is suggested</div>
+            <div class="ptbo-compact-key">Blue: yours · Green: suggested · Teal: shared</div>
           </div>
           <button class="ptbo-compact-done" type="button">Done</button>
         </div>
