@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#111827">
+  <title>Peterborough Dispatch Simulator — v1.5.1</title>
+  <style>
+    html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#111827}
+    #mobile-game{position:fixed;inset:0;width:100%;height:100%;border:0;background:#111827}
+    #version-badge{position:fixed;top:max(4px,env(safe-area-inset-top));left:50%;z-index:2147483647;padding:3px 8px;color:#e2e8f0;border:1px solid rgba(255,255,255,.28);border-radius:999px;background:rgba(15,23,42,.88);box-shadow:0 3px 10px rgba(0,0,0,.25);font:800 9px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.05em;white-space:nowrap;transform:translateX(-50%);pointer-events:none}
+    @media(max-width:420px){#version-badge{top:max(2px,env(safe-area-inset-top));padding:2px 6px;font-size:7px}}
+  </style>
+</head>
+<body>
+  <iframe id="mobile-game" src="../mobile/?build=1.5.1" title="Peterborough Fire and Emergency Dispatch Simulator v1.5.1"></iframe>
+  <div id="version-badge" role="status" aria-label="Production version 1.5.1">v1.5.1</div>
+  <script>
+    (() => {
+      'use strict';
+
+      const VERSION = '1.5.1';
+      const outerFrame = document.getElementById('mobile-game');
+      let retryTimer = 0;
+
+      function hideOldBadge(doc) {
+        const badge = doc?.getElementById?.('ptbo-build-badge');
+        if (badge) badge.style.display = 'none';
+      }
+
+      function installTurnResponse() {
+        let mobileDocument;
+        try {
+          mobileDocument = outerFrame.contentDocument;
+        } catch {
+          return false;
+        }
+        if (!mobileDocument) return false;
+
+        hideOldBadge(mobileDocument);
+        const simulatorFrame = mobileDocument.getElementById('simulator');
+        if (!simulatorFrame) return false;
+
+        const installInsideSimulator = () => {
+          let simulatorDocument;
+          try {
+            simulatorDocument = simulatorFrame.contentDocument;
+          } catch {
+            return false;
+          }
+          if (!simulatorDocument?.head) return false;
+
+          hideOldBadge(simulatorDocument);
+          if (simulatorDocument.querySelector('script[data-ptbo-mobile-turn-response="1.5.1"]')) {
+            return true;
+          }
+
+          const script = simulatorDocument.createElement('script');
+          script.src = `../mobile-turn-response-v1.5.1.js?v=${VERSION}`;
+          script.dataset.ptboMobileTurnResponse = VERSION;
+          script.async = true;
+          simulatorDocument.head.appendChild(script);
+          return true;
+        };
+
+        simulatorFrame.addEventListener('load', installInsideSimulator, { passive: true });
+        return installInsideSimulator();
+      }
+
+      function keepInstalled() {
+        installTurnResponse();
+        retryTimer = window.setTimeout(keepInstalled, 750);
+      }
+
+      outerFrame.addEventListener('load', installTurnResponse, { passive: true });
+      window.addEventListener('pagehide', () => window.clearTimeout(retryTimer), { once: true });
+      keepInstalled();
+    })();
+  </script>
+</body>
+</html>
