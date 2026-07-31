@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.4.20';
+  const VERSION = '1.5.1';
   if (window.PTBO_SIMULATOR_READY_VERSION === VERSION && window.PTBO_SIMULATOR_READY) return;
   window.PTBO_SIMULATOR_READY_VERSION = VERSION;
 
@@ -106,6 +106,12 @@
       throw new Error('Road boundaries are not attached to vehicle movement.');
     }
 
+    await waitForValue(
+      () => window.PTBO_ARCADE_HANDLING?.version === VERSION,
+      'Arcade handling system',
+      10000,
+    );
+
     if (isMobileWrapper) {
       await waitForValue(
         () => instruments.state?.mobileSteeringConnected,
@@ -121,6 +127,7 @@
       mobile: isMobileWrapper,
       roadSegments: roads.state.segments.length,
       steeringConnected: Boolean(instruments.state?.mobileSteeringConnected),
+      arcadeHandling: window.PTBO_ARCADE_HANDLING?.version || null,
     };
     window.dispatchEvent(new CustomEvent('ptbo-simulator-ready', { detail }));
     return detail;
