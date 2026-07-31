@@ -1,4 +1,22 @@
 <!doctype html>
+<!-- =========================================================
+     BEGINNER CODE GUIDE — DESKTOP RESPONSE-SIMULATOR WRAPPER
+
+     PURPOSE:
+     This page embeds the core response simulator, supplies the desktop dispatch-
+     voice rules, loads route review and protected driving modules, and keeps a
+     loading cover visible until shared data, steering, and road boundaries work.
+
+     WHAT THE PLAYER EXPERIENCES:
+     A desktop version of the driving simulator with keyboard controls, dispatch
+     voice, route comparison, and a clear startup/retry screen.
+
+     TECHNICAL TERM — WRAPPER:
+     A wrapper is a smaller page around another page. The inner iframe owns the
+     map and truck; this outer page adds startup and platform-specific features.
+
+     Comments are ignored by the browser and never appear inside the game.
+     ========================================================= -->
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -6,6 +24,7 @@
   <meta name="theme-color" content="#111827">
   <title>Peterborough Dispatch Simulator</title>
   <style>
+    /* The iframe fills the screen; the audio button and loading cover sit above it. */
     :root{color-scheme:dark;--panel:rgba(8,13,24,.96);--border:rgba(255,255,255,.2);--ink:#f8fafc;--muted:#cbd5e1}
     *{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#111827;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
     #simulator{position:fixed;inset:0;width:100%;height:100%;border:0;background:#111827}
@@ -16,37 +35,56 @@
   </style>
 </head>
 <body>
-  <iframe id="simulator" src="../index.html?v=1.5.0" title="Peterborough Fire and Emergency Dispatch Simulator"></iframe>
+  <!-- The versioned iframe URL prevents an older simulator HTML file from being reused. -->
+  <iframe id="simulator" src="../index.html?v=1.5.3" title="Peterborough Fire and Emergency Dispatch Simulator"></iframe>
   <button id="audio-button" type="button" aria-label="Mute dispatch voice" aria-pressed="true">
     <svg class="speaker-on" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15 9a4 4 0 0 1 0 6M17.5 6.5a7.5 7.5 0 0 1 0 11"/></svg>
     <svg class="speaker-off" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="m16 9 5 5M21 9l-5 5"/></svg>
   </button>
   <div id="loading"><div><strong>Loading Peterborough roads</strong><span id="loading-status">Preparing steering, road boundaries, and dispatch data…</span></div></div>
-  <script src="../../shared/build-version.js?v=1.5.0"></script>
+
+  <!-- Shared data keeps desktop, mobile, Geo Guesser, and the editor consistent. -->
+  <script src="../../shared/build-version.js?v=1.5.3"></script>
   <script src="../../shared/dispatch-locations.js?v=1.4.20"></script>
   <script src="../../shared/dispatch-data-1.4.4.js?v=1.4.20"></script>
   <script src="../../shared/dispatch-override-1.4.4.js?v=1.4.20"></script>
   <script src="../../shared/stations.js?v=1.4.20"></script>
   <script>
     (() => {
-      const VERSION = '1.5.0';
+      /*
+      IMPORTANT SETTINGS:
+      VERSION is used for module cache URLs and startup diagnostics.
+      AUDIO_KEY is the browser-storage name that remembers dispatch voice.
+      */
+      const VERSION = '1.5.3';
       const AUDIO_KEY = 'ptboDispatchVoiceEnabled';
+
       const frame = document.getElementById('simulator');
       const audioButton = document.getElementById('audio-button');
       const loading = document.getElementById('loading');
       const loadingStatus = document.getElementById('loading-status');
       const stations = window.PTBO_STATIONS || [];
+
+      /* LIVE WRAPPER STATE: voice preference and currently selected station. */
       let voiceEnabled = localStorage.getItem(AUDIO_KEY) !== 'false';
       let selectedStationNumber = 1;
+
+      /* Public bridge functions let scripts inside the iframe ask the parent for settings. */
       window.ptboDispatchVoiceEnabled = () => voiceEnabled;
       window.ptboGetSelectedStationNumber = () => selectedStationNumber;
       window.ptboSetSelectedStation = number => { selectedStationNumber = Number(number) || 1; };
 
+      /*
+      FUNCTION: updateAudio
+      Keeps the icon, pressed state, and accessible label synchronized with the
+      stored voice preference.
+      */
       function updateAudio() {
         audioButton.classList.toggle('muted', !voiceEnabled);
         audioButton.setAttribute('aria-pressed', String(voiceEnabled));
         audioButton.setAttribute('aria-label', voiceEnabled ? 'Mute dispatch voice' : 'Turn on dispatch voice');
       }
+
       audioButton.addEventListener('click', () => {
         voiceEnabled = !voiceEnabled;
         localStorage.setItem(AUDIO_KEY, String(voiceEnabled));
@@ -55,6 +93,17 @@
       });
       updateAudio();
 
+      /*
+      FUNCTION: injectScript
+
+      WHAT THE CODE DOES:
+      Adds one JavaScript module to the iframe, gives it a release-versioned URL,
+      prevents duplicate insertion with a marker attribute, and returns a Promise.
+
+      WHY IT EXISTS:
+      Route review and protected driving can start after the base simulator exists
+      instead of being permanently embedded in the large core HTML file.
+      */
       function injectScript(doc, filename, marker) {
         return new Promise((resolve, reject) => {
           const existing = doc.querySelector(`script[${marker}]`);
@@ -73,6 +122,19 @@
         });
       }
 
+      /*
+      FUNCTION: installDispatchVoice
+
+      WHAT THE CODE DOES:
+      Injects a helper directly into the iframe, where activeIncident and
+      mapInstance exist. The helper builds Peterborough-style station wording and
+      replaces the base speech function with one that respects the parent's mute.
+
+      DISPATCH RULES:
+      - Structure, water rescue, and auto alarm call all stations.
+      - MVC calls the selected station plus the closest other station.
+      - Other calls use the selected station only.
+      */
       function installDispatchVoice(doc) {
         const helper = doc.createElement('script');
         helper.textContent = `(() => {
@@ -104,16 +166,27 @@
         doc.body.appendChild(helper);
       }
 
+      /*
+      FUNCTION: showStartupError
+      Replaces the loading card with a readable failure and Retry button instead
+      of exposing a partly initialized driving game.
+      */
       function showStartupError(error) {
         console.error('Simulator startup failed.', error);
         loading.innerHTML = '<div><strong>Simulator did not finish loading</strong><span>Steering or road boundaries could not initialize. Retry to load the protected driving mode.</span><button type="button" id="startup-retry">Retry</button></div>';
         document.getElementById('startup-retry')?.addEventListener('click', () => location.reload());
       }
 
+      /*
+      IFRAME STARTUP FLOW:
+      After the inner page loads, install voice and route modules, start readiness,
+      wait for shared dispatch data plus simulator readiness, then remove loading.
+      */
       frame.addEventListener('load', () => {
         const doc = frame.contentDocument;
         const game = frame.contentWindow;
         if (!doc || !game || typeof game.initializeSimulator !== 'function') return;
+
         installDispatchVoice(doc);
         injectScript(doc, 'route-compare-1.4.2.js', 'data-ptbo-route-compare-core').catch(console.error);
         injectScript(doc, 'route-review-ui-1.4.3.js', 'data-ptbo-route-review-ui').catch(console.error);
