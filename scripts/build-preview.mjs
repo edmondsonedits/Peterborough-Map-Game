@@ -32,7 +32,7 @@ await writeFile(resolve(output, 'server/index.js'), `export default {
     }
 
     const sourceUrl = new URL(pathParts.map(encodeURIComponent).join('/'),
-      'https://raw.githubusercontent.com/edmondsonedits/Peterborough-Map-Game/a89832835e3c94e0f1d72fc0265f0263e554b591/');
+      'https://raw.githubusercontent.com/edmondsonedits/Peterborough-Map-Game/c69d0f2c2323cfd715767ceadbc4c1409225e1e5/');
     const sourceResponse = await fetch(sourceUrl);
     const extension = requestedPath.slice(requestedPath.lastIndexOf('.') + 1).toLowerCase();
     const contentTypes = {
