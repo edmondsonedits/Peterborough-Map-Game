@@ -338,7 +338,7 @@
     if (center) {
       map.setView(center, targetZoom, { animate: false });
     }
-    setTimeout(() => { state.programmaticZoom = false; }, immediate ? 60 : 420);
+    setTimeout(() => { state.programmaticZoom = false; }, 420);
   }
 
   /*
