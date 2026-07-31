@@ -60,6 +60,7 @@
     }
     try {
       await loadScript('arcade-handling-1.5.1.js', `${VERSION}-arcade`, 1);
+      await loadScript('arcade-camera-smoother-1.5.1.js', `${VERSION}-camera`, 1);
     } catch (error) {
       console.warn('Arcade handling controls did not load; base steering remains available.', error);
     }
