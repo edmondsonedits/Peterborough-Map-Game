@@ -1,4 +1,22 @@
 <!doctype html>
+<!-- =========================================================
+     BEGINNER CODE GUIDE — PETERBOROUGH 3D CITY EXPLORER SHELL
+
+     PURPOSE:
+     This HTML file creates the 3D explorer's canvas, heads-up display, dialogs,
+     loading screen, touch controls, and module-loading order. The larger Three.js
+     world logic lives in the JavaScript modules loaded near the bottom.
+
+     WHAT THE DEVELOPER EXPERIENCES:
+     A flyable low-poly Peterborough with map/search/landmark/time/sound controls,
+     current coordinates, loading progress, feature count, FPS, and altitude.
+
+     WHY THIS PAGE IS DEVELOPER-ONLY:
+     The early script checks a local developer-mode setting and returns ordinary
+     users to the launcher. This is an interface gate, not server-side security.
+
+     Comments are ignored by the browser and never appear in the explorer.
+     ========================================================= -->
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -7,6 +25,8 @@
     <meta name="description" content="A developer-only low-poly 3D exploration of Peterborough, Ontario, generated from open building, road, land-cover, and elevation data.">
     <meta name="robots" content="noindex,nofollow">
     <title>Peterborough 3D City Explorer</title>
+
+    <!-- Redirect immediately when the launcher has not enabled developer mode. -->
     <script>
       (()=>{
         try{
@@ -16,9 +36,17 @@
         }
       })();
     </script>
+
+    <!-- Preconnect starts network handshakes before Three.js or terrain needs them. -->
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://s3.amazonaws.com">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=1.5.3">
+
+    <!--
+    IMPORT MAP:
+    Lets module code write `import ... from "three"` while the browser translates
+    that short name to the selected CDN version and addons folder.
+    -->
     <script type="importmap">
       {
         "imports": {
@@ -30,6 +58,7 @@
   </head>
   <body>
     <div id="app" aria-label="Peterborough 3D City Explorer">
+      <!-- Three.js draws every 3D frame into this canvas. -->
       <canvas id="city-canvas" tabindex="0" aria-label="Interactive 3D view of Peterborough"></canvas>
 
       <header class="brand-panel hud-panel">
@@ -40,6 +69,7 @@
         </div>
       </header>
 
+      <!-- Buttons switch explorer modes or open dialogs; JavaScript owns behaviour. -->
       <nav class="control-panel" aria-label="Explorer controls">
         <button id="fly-mode" class="hud-button is-active" type="button">Fly mode</button>
         <button id="map-mode" class="hud-button" type="button">Map</button>
@@ -49,6 +79,7 @@
         <button id="sound-button" class="hud-button" type="button">Sound off</button>
       </nav>
 
+      <!-- Live location and loading/ready information. -->
       <section class="location-panel hud-panel" aria-live="polite">
         <p class="location-kicker">Peterborough, Ontario</p>
         <h2 id="location-name">Downtown Peterborough</h2>
@@ -60,6 +91,7 @@
         <p id="mode-hint"><strong>Click the city to look around.</strong> WASD to move · Q/E down/up · Shift to boost.</p>
       </section>
 
+      <!-- Runtime diagnostics make data/performance problems easier to identify. -->
       <footer class="stats-bar">
         <div>
           <strong>Open geospatial city model</strong>
@@ -68,6 +100,7 @@
         <div class="stats-values"><span id="object-count">0 features</span><span id="fps-counter">-- FPS</span><span id="altitude-counter">0 m AGL</span></div>
       </footer>
 
+      <!-- Blocks interaction until terrain and city geometry have been prepared. -->
       <div id="loading-screen" class="loading-screen" role="status" aria-live="polite">
         <div class="loading-card">
           <div class="loading-logo">P</div>
@@ -77,6 +110,7 @@
         </div>
       </div>
 
+      <!-- Search supports instant local landmarks and optional online geocoding. -->
       <dialog id="search-dialog" class="explorer-dialog">
         <form method="dialog" class="dialog-shell" id="search-form">
           <header><div><p>City navigation</p><h2>Search Peterborough</h2></div><button class="close-button" value="cancel" aria-label="Close search">×</button></header>
@@ -94,6 +128,7 @@
         </form>
       </dialog>
 
+      <!-- Touch buttons send the same key codes used by desktop movement. -->
       <div id="touch-controls" aria-label="Touch flight controls">
         <div class="touch-pad movement-pad">
           <button data-touch-key="KeyW" aria-label="Move forward">▲</button>
@@ -110,9 +145,16 @@
       <div id="toast" role="status" aria-live="polite"></div>
     </div>
 
-    <script src="../shared/build-version.js?v=1.4.20"></script>
-    <script type="module" src="data-loader.js?v=1.4.20"></script>
+    <!--
+    MODULE ORDER:
+    1. Shared build badge/error log.
+    2. Data loader intercepts prepared OSM/terrain requests before world code.
+    3. osmtogeojson converts OpenStreetMap response structures to GeoJSON.
+    4. Road-orientation/world module builds and runs the 3D scene.
+    -->
+    <script src="../shared/build-version.js?v=1.5.3"></script>
+    <script type="module" src="data-loader.js?v=1.5.3"></script>
     <script src="https://cdn.jsdelivr.net/npm/osmtogeojson@3.0.0-beta.5/osmtogeojson.js"></script>
-    <script type="module" src="road-orientation-fix.js?v=1.4.20"></script>
+    <script type="module" src="road-orientation-fix.js?v=1.5.3"></script>
   </body>
 </html>
