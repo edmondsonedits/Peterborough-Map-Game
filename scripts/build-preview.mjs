@@ -33,7 +33,32 @@ await writeFile(resolve(output, 'server/index.js'), `export default {
 
     const sourceUrl = new URL(pathParts.map(encodeURIComponent).join('/'),
       'https://raw.githubusercontent.com/edmondsonedits/Peterborough-Map-Game/a89832835e3c94e0f1d72fc0265f0263e554b591/');
-    return fetch(sourceUrl);
+    const sourceResponse = await fetch(sourceUrl);
+    const extension = requestedPath.slice(requestedPath.lastIndexOf('.') + 1).toLowerCase();
+    const contentTypes = {
+      html: 'text/html; charset=utf-8',
+      css: 'text/css; charset=utf-8',
+      js: 'text/javascript; charset=utf-8',
+      json: 'application/json; charset=utf-8',
+      geojson: 'application/geo+json; charset=utf-8',
+      svg: 'image/svg+xml',
+      png: 'image/png',
+      jpg: 'image/jpeg',
+      jpeg: 'image/jpeg',
+      webp: 'image/webp',
+      mp3: 'audio/mpeg',
+      wav: 'audio/wav',
+      webm: 'audio/webm'
+    };
+    const headers = new Headers(sourceResponse.headers);
+    if (contentTypes[extension]) {
+      headers.set('content-type', contentTypes[extension]);
+    }
+    return new Response(sourceResponse.body, {
+      status: sourceResponse.status,
+      statusText: sourceResponse.statusText,
+      headers
+    });
   }
 };
 `, 'utf8');
