@@ -56,6 +56,9 @@ await writeFile(resolve(output, 'server/index.js'), `export default {
     // safe response headers but drop that incompatible policy.
     headers.delete('content-security-policy');
     headers.delete('content-security-policy-report-only');
+    // A preview must never keep an earlier, incompatible revision in a
+    // player's phone cache while it is being tested.
+    headers.set('cache-control', 'no-store, max-age=0');
     if (contentTypes[extension]) {
       headers.set('content-type', contentTypes[extension]);
     }
