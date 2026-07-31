@@ -68,6 +68,17 @@
         .section-title { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #777; border-bottom: 1px solid #ddd; padding-bottom: 4px; margin: 20px 0 10px 0; font-weight: 700; }
         .category-heading { margin: 22px -8px 10px; padding: 9px 10px; color:#0f3d57; border-radius:8px; background:#dceef7; font-size:12px; font-weight:850; letter-spacing:.06em; text-transform:uppercase; }
         .category-heading:first-of-type { margin-top:4px; }
+        .settings-category { margin: 14px 0; border: 1px solid #cbd5e1; border-radius: 10px; background: #f8fafc; overflow: clip; }
+        .settings-category > summary { padding: 12px 14px; cursor: pointer; color: #0f3d57; background: #dceef7; font-size: 12px; font-weight: 850; letter-spacing: .06em; text-transform: uppercase; }
+        .settings-category > summary::marker, .settings-section > summary::marker { color: #2563eb; }
+        .settings-category-body { padding: 0 12px 12px; }
+        .settings-section { margin: 10px 0; border: 1px solid #d7dee8; border-radius: 8px; background: #fff; overflow: clip; }
+        .settings-section > summary { padding: 10px 11px; cursor: pointer; color: #334155; background: #f8fafc; font-size: 11px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+        .settings-section-body { padding: 11px; }
+        .settings-section .section-title { display: none; }
+        .settings-section-body > :first-child { margin-top: 0; }
+        .settings-reset { width: 100%; margin-top: 4px; padding: 9px 10px; color: #fff; border: 0; border-radius: 6px; background: #2563eb; font: inherit; font-size: 12px; font-weight: 750; cursor: pointer; }
+        .driving-help { margin: 0 0 12px; color: #64748b; font-size: 11px; line-height: 1.4; }
         .control-row { margin-bottom: 14px; }
         .control-row label { display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; color: #444; margin-bottom: 4px; }
         .control-row input[type="range"], .control-row select { width: 100%; box-sizing: border-box; padding: 7px; border-radius: 4px; border: 1px solid #ccc; background: #fff; }
@@ -164,6 +175,30 @@
                 <label><span>Max Speed Handling</span><span id="lbl-speed">5</span></label>
                 <input type="range" id="sld-speed" min="1" max="50" value="5" oninput="updateVehiclePhysics()">
             </div>
+
+            <div class="section-title">Driving Ease &amp; Steering</div>
+            <p class="driving-help">Sharper steering is used while slow for corners. As speed rises, steering progressively softens to keep the truck stable and easy to drive straight.</p>
+            <div class="control-row">
+                <label><span>Acceleration Response</span><span id="lbl-acceleration">100%</span></label>
+                <input type="range" id="sld-acceleration" min="50" max="160" value="100" step="5" oninput="updateVehiclePhysics()">
+            </div>
+            <div class="control-row">
+                <label><span>Low-Speed Cornering</span><span id="lbl-low-speed-steering">300°/s</span></label>
+                <input type="range" id="sld-low-speed-steering" min="120" max="420" value="300" step="10" oninput="updateVehiclePhysics()">
+            </div>
+            <div class="control-row">
+                <label><span>High-Speed Steering Impact</span><span id="lbl-high-speed-steering">18%</span></label>
+                <input type="range" id="sld-high-speed-steering" min="10" max="65" value="18" step="1" oninput="updateVehiclePhysics()">
+            </div>
+            <div class="control-row">
+                <label><span>Turn-In Response</span><span id="lbl-steering-response">14</span></label>
+                <input type="range" id="sld-steering-response" min="7" max="24" value="14" step="1" oninput="updateVehiclePhysics()">
+            </div>
+            <div class="control-row">
+                <label><span>Corner Turn Boost</span><span id="lbl-steering-curve">62%</span></label>
+                <input type="range" id="sld-steering-curve" min="40" max="120" value="62" step="1" oninput="updateVehiclePhysics()">
+            </div>
+            <button type="button" class="settings-reset" onclick="resetDrivingControls()">Reset Driving Controls</button>
 
             <div class="section-title">Driving Modifiers</div>
             <label class="checkbox-row"><input type="checkbox" id="chk-siren" onchange="updateVehicleChassis()" checked> Emergency Flashing Matrix</label>
@@ -335,6 +370,8 @@
         };
 
         function initializeSimulator() {
+            initializeSettingsAccordions();
+            updateVehiclePhysics();
             document.getElementById('tel-total-calls').innerText = totalTrackedCalls;
 
             mapInstance = L.map('map', {
@@ -384,6 +421,54 @@
             document.getElementById('control-panel').classList.toggle('minimized');
             document.getElementById('menu-toggle').innerText = document.getElementById('control-panel').classList.contains('minimized') ? "Options Menu" : "Close Options";
             setTimeout(() => { if (mapInstance) mapInstance.invalidateSize(); }, 320);
+        }
+
+        function initializeSettingsAccordions() {
+            const panel = document.querySelector('.panel-scroll');
+            if (!panel || panel.dataset.ptboAccordionsReady === 'true') return;
+
+            const headings = [...panel.children].filter(node => node.classList?.contains('category-heading'));
+            headings.forEach(heading => {
+                const category = document.createElement('details');
+                category.className = 'settings-category';
+                const summary = document.createElement('summary');
+                summary.textContent = heading.textContent;
+                const body = document.createElement('div');
+                body.className = 'settings-category-body';
+                category.append(summary, body);
+                panel.insertBefore(category, heading);
+
+                let node = heading.nextSibling;
+                heading.remove();
+                while (node && !(node.nodeType === 1 && node.classList.contains('category-heading'))) {
+                    const nextNode = node.nextSibling;
+                    body.appendChild(node);
+                    node = nextNode;
+                }
+            });
+
+            panel.querySelectorAll('.settings-category-body').forEach(body => {
+                const titles = [...body.children].filter(node => node.classList?.contains('section-title'));
+                titles.forEach(title => {
+                    const section = document.createElement('details');
+                    section.className = 'settings-section';
+                    const summary = document.createElement('summary');
+                    summary.textContent = title.textContent;
+                    const sectionBody = document.createElement('div');
+                    sectionBody.className = 'settings-section-body';
+                    section.append(summary, sectionBody);
+                    body.insertBefore(section, title);
+
+                    let node = title.nextSibling;
+                    title.remove();
+                    while (node && !(node.nodeType === 1 && node.classList.contains('section-title'))) {
+                        const nextNode = node.nextSibling;
+                        sectionBody.appendChild(node);
+                        node = nextNode;
+                    }
+                });
+            });
+            panel.dataset.ptboAccordionsReady = 'true';
         }
 
         function changeBasemap() {
@@ -456,7 +541,45 @@
         }
 
         function updateVehiclePhysics() {
-            document.getElementById('lbl-speed').innerText = document.getElementById('sld-speed').value;
+            const values = [
+                ['sld-speed', 'lbl-speed', value => value],
+                ['sld-acceleration', 'lbl-acceleration', value => `${value}%`],
+                ['sld-low-speed-steering', 'lbl-low-speed-steering', value => `${value}°/s`],
+                ['sld-high-speed-steering', 'lbl-high-speed-steering', value => `${value}%`],
+                ['sld-steering-response', 'lbl-steering-response', value => value],
+                ['sld-steering-curve', 'lbl-steering-curve', value => `${value}%`]
+            ];
+            values.forEach(([inputId, labelId, formatter]) => {
+                const input = document.getElementById(inputId);
+                const label = document.getElementById(labelId);
+                if (input && label) label.innerText = formatter(input.value);
+            });
+        }
+
+        function getDrivingControls() {
+            const number = (id, fallback) => Number(document.getElementById(id)?.value) || fallback;
+            return {
+                accelerationScale: number('sld-acceleration', 100) / 100,
+                lowSpeedTurnDegreesPerSecond: number('sld-low-speed-steering', 300),
+                highSpeedTurnMultiplier: number('sld-high-speed-steering', 18) / 100,
+                steeringResponsePerSecond: number('sld-steering-response', 14),
+                steeringCurve: number('sld-steering-curve', 62) / 100
+            };
+        }
+
+        function resetDrivingControls() {
+            const defaults = {
+                'sld-acceleration': 100,
+                'sld-low-speed-steering': 300,
+                'sld-high-speed-steering': 18,
+                'sld-steering-response': 14,
+                'sld-steering-curve': 62
+            };
+            Object.entries(defaults).forEach(([id, value]) => {
+                const input = document.getElementById(id);
+                if (input) input.value = value;
+            });
+            updateVehiclePhysics();
         }
 
         function teleportToStation(targetLat, targetLng) {
@@ -656,10 +779,10 @@
             lastTimestamp = timestamp;
 
             const speedSetting = parseInt(document.getElementById('sld-speed').value);
+            const drivingControls = getDrivingControls();
             const maxSpeed = 0.0000015 * speedSetting;
-            const acceleration = 0.00000005 * speedSetting; 
+            const acceleration = 0.00000005 * speedSetting * drivingControls.accelerationScale;
             const friction = 0.96;
-            const baseTurnRate = 1.2;
 
             // Motor Input
             if (keys['ArrowUp'] || keys['w']) velocity += acceleration;
@@ -675,12 +798,14 @@
 
             if (velocity !== 0) {
                 const driveDirection = velocity > 0 ? 1 : -1;
-                // Steering efficiency tied to movement speed
-                const velocityFactor = Math.min(Math.abs(velocity) / (maxSpeed * 0.2), 1.0);
-                activeTurnRate = baseTurnRate * Math.max(velocityFactor, 0.3) * driveDirection;
+                const speedRatio = Math.min(Math.abs(velocity) / Math.max(maxSpeed * 0.65, 0.00000001), 1);
+                const highSpeedTurnDegreesPerSecond = drivingControls.lowSpeedTurnDegreesPerSecond
+                    * drivingControls.highSpeedTurnMultiplier;
+                const turnDegreesPerSecond = drivingControls.lowSpeedTurnDegreesPerSecond
+                    + (highSpeedTurnDegreesPerSecond - drivingControls.lowSpeedTurnDegreesPerSecond) * speedRatio;
+                activeTurnRate = turnDegreesPerSecond * Math.min(dt, 50) / 1000 * driveDirection;
             } else {
-                // Static spinning in place
-                activeTurnRate = baseTurnRate * 0.7;
+                activeTurnRate = drivingControls.lowSpeedTurnDegreesPerSecond * 0.42 * Math.min(dt, 50) / 1000;
             }
 
             if (keys['ArrowLeft'] || keys['a']) { currentHeading -= activeTurnRate; isTurning = true; }

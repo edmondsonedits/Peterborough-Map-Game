@@ -119,25 +119,44 @@
     });
   }
 
+  function getDrivingControls() {
+    const fallback = {
+      lowSpeedTurnDegreesPerSecond: CONFIG.lowSpeedMaximumTurnDegreesPerSecond,
+      highSpeedTurnMultiplier: CONFIG.highSpeedTurnMultiplier,
+      steeringResponsePerSecond: CONFIG.headingResponsePerSecond,
+      steeringCurve: CONFIG.angleCurve,
+    };
+    try {
+      const controls = window.getDrivingControls?.();
+      return controls && Number.isFinite(controls.lowSpeedTurnDegreesPerSecond)
+        ? controls
+        : fallback;
+    } catch {
+      return fallback;
+    }
+  }
+
   function calculateTurnRate(angleDifference, speedKmh, isStationary) {
+    const controls = getDrivingControls();
     const angleRatio = clamp(
       Math.abs(angleDifference) / CONFIG.fullTurnAngleDegrees,
       0,
       1
     );
-    const angleInfluence = angleRatio ** CONFIG.angleCurve;
+    const angleInfluence = angleRatio ** controls.steeringCurve;
 
+    const minimumTurnDegreesPerSecond = Math.max(34, controls.lowSpeedTurnDegreesPerSecond * 0.17);
     const minimumRate = isStationary
-      ? CONFIG.stationaryMinimumTurnDegreesPerSecond
-      : CONFIG.lowSpeedMinimumTurnDegreesPerSecond;
+      ? Math.max(minimumTurnDegreesPerSecond, CONFIG.stationaryMinimumTurnDegreesPerSecond)
+      : minimumTurnDegreesPerSecond;
     const maximumRate = isStationary
-      ? CONFIG.stationaryMaximumTurnDegreesPerSecond
-      : CONFIG.lowSpeedMaximumTurnDegreesPerSecond;
+      ? controls.lowSpeedTurnDegreesPerSecond
+      : controls.lowSpeedTurnDegreesPerSecond;
     const angleBasedRate = minimumRate + (maximumRate - minimumRate) * angleInfluence;
 
     const speedRatio = clamp(speedKmh / CONFIG.lowSpeedReferenceKmh, 0, 1);
     const speedMultiplier = 1 - (
-      1 - CONFIG.highSpeedTurnMultiplier
+      1 - controls.highSpeedTurnMultiplier
     ) * (speedRatio ** 0.9);
     const stickMultiplier = CONFIG.minimumStickInfluence + (
       1 - CONFIG.minimumStickInfluence
@@ -177,7 +196,7 @@
       // Large direction changes receive a strong initial response. As the truck
       // aligns, exponential easing takes over for a soft, controlled finish.
       const speedRatio = clamp(speedKmh / CONFIG.lowSpeedReferenceKmh, 0, 1);
-      const responsePerSecond = CONFIG.headingResponsePerSecond * (1 - 0.48 * speedRatio);
+      const responsePerSecond = controls.steeringResponsePerSecond * (1 - 0.48 * speedRatio);
       const easedStep = delta * (1 - Math.exp(-responsePerSecond * deltaSeconds));
       const step = clamp(easedStep, -maximumStep, maximumStep);
       currentHeading = normalizeHeading(heading + step);

@@ -60,6 +60,22 @@
   let steeringSelect = null;
   let steeringModeLabel = null;
 
+  function getDrivingControls() {
+    const fallback = {
+      lowSpeedTurnDegreesPerSecond: CONFIG.lowSpeedTurnDegreesPerFrame * 60,
+      highSpeedTurnMultiplier: CONFIG.highSpeedTurnDegreesPerFrame / CONFIG.lowSpeedTurnDegreesPerFrame,
+      steeringResponsePerSecond: 1 / CONFIG.steeringResponseSeconds,
+    };
+    try {
+      const controls = window.getDrivingControls?.();
+      return controls && Number.isFinite(controls.lowSpeedTurnDegreesPerSecond)
+        ? controls
+        : fallback;
+    } catch {
+      return fallback;
+    }
+  }
+
   function normalizeHeading(value) {
     return (Number(value) % 360 + 360) % 360;
   }
@@ -162,16 +178,14 @@
     const panel = document.querySelector('.panel-scroll');
     if (!panel) return false;
 
-    if (!document.getElementById('ptbo-steering-mode-title')) {
-      const title = document.createElement('div');
-      title.id = 'ptbo-steering-mode-title';
-      title.className = 'section-title';
-      title.textContent = 'Mobile Steering';
-
-      const row = document.createElement('div');
-      row.id = 'ptbo-steering-mode-row';
-      row.className = 'control-row';
-      row.innerHTML = `
+    if (!document.getElementById('ptbo-steering-mode-section')) {
+      const section = document.createElement('details');
+      section.id = 'ptbo-steering-mode-section';
+      section.className = 'settings-section';
+      section.innerHTML = `
+        <summary>Mobile Steering</summary>
+        <div class="settings-section-body">
+          <div id="ptbo-steering-mode-row" class="control-row">
         <label>
           <span>Steering Mode</span>
           <span id="ptbo-steering-mode-label">Standard</span>
@@ -181,15 +195,16 @@
           <option value="${STEERING_MODES.DIRECTIONAL}">Directional Thumbstick</option>
         </select>
         <div id="ptbo-steering-mode-note">Directional mode points the truck's nose toward the stick angle. Releasing the stick keeps the current heading.</div>
+          </div>
+        </div>
       `;
 
-      const drivingTitle = [...panel.querySelectorAll('.section-title')]
-        .find(node => node.textContent.trim() === 'Driving Modifiers');
-      if (drivingTitle) {
-        panel.insertBefore(title, drivingTitle);
-        panel.insertBefore(row, drivingTitle);
+      const drivingSection = [...panel.querySelectorAll('.settings-section')]
+        .find(node => node.querySelector(':scope > summary')?.textContent.trim() === 'Driving Modifiers');
+      if (drivingSection?.parentElement) {
+        drivingSection.parentElement.insertBefore(section, drivingSection);
       } else {
-        panel.append(title, row);
+        panel.append(section);
       }
     }
 
@@ -414,9 +429,10 @@
   function applyAnalogSteering(deltaSeconds) {
     if (state.steeringMode !== STEERING_MODES.STANDARD) return;
 
+    const drivingControls = getDrivingControls();
     const responseSeconds = state.steeringTarget === 0
       ? CONFIG.steeringReturnSeconds
-      : CONFIG.steeringResponseSeconds;
+      : Math.max(0.04, 1 / drivingControls.steeringResponsePerSecond);
     const response = 1 - Math.exp(-deltaSeconds / responseSeconds);
     state.steeringApplied += (state.steeringTarget - state.steeringApplied) * response;
     if (Math.abs(state.steeringApplied) < 0.002 && state.steeringTarget === 0) {
@@ -433,8 +449,10 @@
     if (!Number.isFinite(currentVelocity)) return;
 
     const speedRatio = Math.min(1, Math.max(0, state.speedKmh / CONFIG.steeringReferenceSpeedKmh));
-    const degreesPerFrame = CONFIG.lowSpeedTurnDegreesPerFrame
-      + (CONFIG.highSpeedTurnDegreesPerFrame - CONFIG.lowSpeedTurnDegreesPerFrame) * speedRatio;
+    const lowSpeedTurnDegreesPerFrame = drivingControls.lowSpeedTurnDegreesPerSecond / 60;
+    const highSpeedTurnDegreesPerFrame = lowSpeedTurnDegreesPerFrame * drivingControls.highSpeedTurnMultiplier;
+    const degreesPerFrame = lowSpeedTurnDegreesPerFrame
+      + (highSpeedTurnDegreesPerFrame - lowSpeedTurnDegreesPerFrame) * speedRatio;
     const frameScale = Math.min(3, deltaSeconds * 60);
     const driveDirection = currentVelocity < -CONFIG.movementThreshold ? -1 : 1;
 
