@@ -60,9 +60,10 @@
     }
     try {
       await loadScript('arcade-handling-1.5.1.js', `${VERSION}-arcade`, 1);
-      await loadScript('arcade-camera-smoother-1.5.1.js', `${VERSION}-camera`, 1);
+      await loadScript('arcade-camera-stability-1.5.1.js', `${VERSION}-camera-stability-1`, 1);
+      await loadScript('compact-incident-types-1.5.1.js', `${VERSION}-compact-incidents-1`, 1);
     } catch (error) {
-      console.warn('Arcade handling controls did not load; base steering remains available.', error);
+      console.warn('Arcade handling or interface enhancements did not load; base controls remain available.', error);
     }
     window.dispatchEvent(new CustomEvent('ptbo-vehicle-instruments-ready', {
       detail: { version: VERSION, mobileConnected: Boolean(api.state?.mobileSteeringConnected) },
