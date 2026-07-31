@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.5.1';
+  const VERSION = '1.5.2';
   if (window.PTBO_SIMULATOR_READY_VERSION === VERSION && window.PTBO_SIMULATOR_READY) return;
   window.PTBO_SIMULATOR_READY_VERSION = VERSION;
 
@@ -87,6 +87,7 @@
     await Promise.all([
       injectScript('vehicle-instruments.js', 'data-ptbo-readiness-vehicle'),
       injectScript('road-collision.js', 'data-ptbo-readiness-road'),
+      injectScript('settings-menu-compact-1.5.2.js', 'data-ptbo-readiness-compact-settings'),
     ]);
 
     const instrumentsReady = window.PTBO_VEHICLE_INSTRUMENTS_READY
@@ -107,8 +108,13 @@
     }
 
     await waitForValue(
-      () => window.PTBO_ARCADE_HANDLING?.version === VERSION,
+      () => window.PTBO_ARCADE_HANDLING,
       'Arcade handling system',
+      10000,
+    );
+    await waitForValue(
+      () => window.PTBO_COMPACT_SETTINGS?.state?.installed,
+      'Compact settings menu',
       10000,
     );
 
@@ -116,6 +122,11 @@
       await waitForValue(
         () => instruments.state?.mobileSteeringConnected,
         'Mobile steering connection',
+        10000,
+      );
+      await waitForValue(
+        () => window.PTBO_STABLE_MOBILE_CAMERA?.state?.installed,
+        'Stable mobile camera',
         10000,
       );
     }
@@ -127,7 +138,9 @@
       mobile: isMobileWrapper,
       roadSegments: roads.state.segments.length,
       steeringConnected: Boolean(instruments.state?.mobileSteeringConnected),
-      arcadeHandling: window.PTBO_ARCADE_HANDLING?.version || null,
+      arcadeHandlingCore: window.PTBO_ARCADE_HANDLING?.version || null,
+      stableCamera: window.PTBO_STABLE_MOBILE_CAMERA?.version || null,
+      compactSettings: window.PTBO_COMPACT_SETTINGS?.version || null,
     };
     window.dispatchEvent(new CustomEvent('ptbo-simulator-ready', { detail }));
     return detail;
