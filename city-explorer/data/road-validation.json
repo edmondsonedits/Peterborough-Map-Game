@@ -5,16 +5,16 @@
     "public_osm_to_orn_within_20m_min_pct": 90,
     "orn_to_public_osm_within_20m_min_pct": 95
   },
-  "public_osm_feature_count": 2766,
-  "rendered_osm_feature_count": 5946,
+  "public_osm_feature_count": 2775,
+  "rendered_osm_feature_count": 5955,
   "orn_feature_count": 3179,
   "public_osm_to_orn": {
-    "samples": 49744,
-    "mean_m": 6.384,
+    "samples": 49756,
+    "mean_m": 6.382,
     "median_m": 0.639,
     "p90_m": 2.343,
-    "p95_m": 3.63,
-    "p99_m": 53.817,
+    "p95_m": 3.628,
+    "p99_m": 53.794,
     "within_5m_pct": 96.98,
     "within_10m_pct": 98.43,
     "within_20m_pct": 98.72,
@@ -33,21 +33,21 @@
     "within_30m_pct": 98.27
   },
   "all_rendered_osm_to_orn": {
-    "samples": 76243,
-    "mean_m": 28.521,
+    "samples": 76255,
+    "mean_m": 28.517,
     "median_m": 1.234,
-    "p90_m": 80.141,
-    "p95_m": 134.321,
-    "p99_m": 334.314,
+    "p90_m": 80.138,
+    "p95_m": 134.319,
+    "p99_m": 334.306,
     "within_5m_pct": 67.45,
     "within_10m_pct": 68.62,
     "within_20m_pct": 72.72,
-    "within_30m_pct": 77.69
+    "within_30m_pct": 77.7
   },
   "street_names": {
-    "checked_segments": 2629,
-    "matching_segments": 2506,
-    "match_pct": 95.32,
+    "checked_segments": 2638,
+    "matching_segments": 2512,
+    "match_pct": 95.22,
     "sample_mismatches": [
       {
         "osm": "ST PATRICK S ST",
@@ -117,7 +117,7 @@
         "orn": [
           "FIFES BAY RD"
         ],
-        "p90_offset_m": 1.02
+        "p90_offset_m": 0.01
       },
       {
         "osm": "PETERBORO AVE",
@@ -664,6 +664,6 @@
     "Recent construction and private roads can be present in only one source.",
     "The test validates centrelines and names, not curbs, lanes, grades, turn rules or legal survey boundaries."
   ],
-  "generated_at": "2026-07-21T00:45:17+00:00",
+  "generated_at": "2026-07-31T07:33:59+00:00",
   "orn_named_feature_count": 3074
 }
