@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.5.1';
+  const VERSION = '1.5.2';
   if (window.PTBO_VEHICLE_INSTRUMENTS_READY) return;
 
   window.PTBO_VEHICLE_INSTRUMENTS_BOOTSTRAP = true;
@@ -59,10 +59,10 @@
       console.warn('Directional steering tuning did not load; standard steering remains available.', error);
     }
     try {
-      await loadScript('arcade-handling-1.5.1.js', `${VERSION}-arcade`, 1);
-      await loadScript('arcade-camera-smoother-1.5.1.js', `${VERSION}-camera`, 1);
+      await loadScript('arcade-handling-1.5.1.js', `${VERSION}-arcade-core`, 1);
+      await loadScript('arcade-mobile-camera-1.5.2.js', `${VERSION}-stable-camera`, 1);
     } catch (error) {
-      console.warn('Arcade handling controls did not load; base steering remains available.', error);
+      console.warn('Arcade handling or stable camera controls did not load; base steering remains available.', error);
     }
     window.dispatchEvent(new CustomEvent('ptbo-vehicle-instruments-ready', {
       detail: { version: VERSION, mobileConnected: Boolean(api.state?.mobileSteeringConnected) },
