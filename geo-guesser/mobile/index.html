@@ -1,4 +1,18 @@
 <!doctype html>
+<!-- =========================================================
+     BEGINNER CODE GUIDE — MOBILE GEO GUESSER WRAPPER
+
+     PURPOSE:
+     This page embeds the shared Geo Guesser, adds a large mobile back button,
+     applies phone-specific layout adjustments, loads shared dispatch data, and
+     connects the optional online Firebase scoreboard.
+
+     WHAT THE PLAYER EXPERIENCES:
+     The same game logic as desktop, with more usable mobile spacing and a loading
+     cover while the updated dispatch database is prepared.
+
+     Comments are ignored by the browser and never appear inside the game.
+     ========================================================= -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -6,26 +20,142 @@
 <meta name="theme-color" content="#121218">
 <title>Peterborough Geo Guesser — Mobile</title>
 <style>
+/* The game iframe fills the phone; wrapper controls and loading sit above it. */
 html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#121218;font-family:system-ui,sans-serif}#game-frame{position:fixed;inset:0;width:100%;height:100%;border:0}.back{position:fixed;top:calc(19px + env(safe-area-inset-top));left:18px;z-index:7001;width:50px;height:50px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.3);border-radius:16px;background:linear-gradient(145deg,rgba(15,23,42,.98),rgba(30,41,59,.94));box-shadow:0 10px 24px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.13);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#fff;text-decoration:none;transition:transform .14s ease,box-shadow .14s ease,border-color .14s ease}.back svg{width:26px;height:26px;display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,.4))}.back:active{transform:scale(.94);box-shadow:0 5px 14px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.1)}.back:focus-visible{outline:3px solid #60a5fa;outline-offset:3px;border-color:#93c5fd}.loading{position:fixed;inset:0;z-index:8000;display:grid;place-items:center;padding:24px;background:#121218;color:#fff;text-align:center;transition:opacity .18s}.loading.hidden{opacity:0;pointer-events:none}.loading span{display:block;margin-top:7px;color:#94a3b8;font-size:14px}
 </style>
 </head>
 <body>
-<iframe id="game-frame" src="../index.html?v=1.4.20" title="Peterborough Geo Guesser"></iframe>
+<!-- v1.5.3 forces the mobile wrapper to embed the current shared game HTML. -->
+<iframe id="game-frame" src="../index.html?v=1.5.3" title="Peterborough Geo Guesser"></iframe>
 <a class="back" href="../../" aria-label="Return to all games"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></a>
 <div class="loading" id="loading"><div><strong>Loading Geo Guesser</strong><span>Preparing the updated call database…</span></div></div>
-<script src="../../shared/build-version.js?v=1.4.20"></script>
+<script src="../../shared/build-version.js?v=1.5.3"></script>
 <script src="../../shared/dispatch-locations.js?v=1.4.20"></script>
 <script src="../../shared/dispatch-data-1.4.4.js?v=1.4.20"></script>
 <script src="../../shared/dispatch-override-1.4.4.js?v=1.4.20"></script>
 <script>
 (()=>{
-const VERSION='1.4.20',frame=document.getElementById('game-frame'),loading=document.getElementById('loading');
+/* Release identity and frequently used wrapper elements. */
+const VERSION='1.5.3';
+const frame=document.getElementById('game-frame');
+const loading=document.getElementById('loading');
 const child=()=>frame.contentWindow;
-function addScript(src){return new Promise((resolve,reject)=>{const d=frame.contentDocument,s=d.createElement('script'),timer=setTimeout(()=>{s.remove();reject(new Error('Timed out loading '+src))},15000);s.src=src;s.onload=()=>{clearTimeout(timer);resolve()};s.onerror=()=>{clearTimeout(timer);reject(new Error('Could not load '+src))};d.head.appendChild(s)})}
-function installBridge(){const d=frame.contentDocument,s=d.createElement('script');s.textContent=`(()=>{window.geoScoreContext=()=>({responseTimeSeconds:Number(elapsed.toFixed(1)),station:station&&station.name?station.name:'Unknown Station',callType:typeof modeName==='function'?modeName():'Random Shift'});const msg=(id,text)=>{show(id);const list=document.querySelector('#'+id+' .list');if(list)list.innerHTML='<p class="muted" style="text-align:center">'+text+'</p>'};window.showPersonalScores=()=>msg('scores','Connecting to the online scoreboard…');window.showCityTenScores=()=>msg('city-ten-scores','Connecting to the online scoreboard…');window.saveScore=()=>alert('The online scoreboard is loading.');window.geoScoreboardFailure=e=>{const text='Scoreboard error: '+(e&&e.message?e.message:String(e));window.showPersonalScores=()=>msg('scores',text);window.showCityTenScores=()=>msg('city-ten-scores',text);window.saveScore=()=>alert(text)}})();`;d.body.appendChild(s)}
-function patchMobile(){const d=frame.contentDocument,s=d.createElement('style');s.textContent=`#game-home{display:none!important}#game.screen{padding:0!important}#game .map-container,#map{width:100vw!important;height:100dvh!important}#header{top:calc(10px + env(safe-area-inset-top))!important;left:10px!important;right:10px!important;width:auto!important;transform:none!important;padding:14px 18px 13px 68px!important;border-radius:20px!important;box-shadow:0 12px 30px rgba(0,0,0,.34)!important}#call-type{line-height:1.25!important}#confirm{bottom:calc(20px + env(safe-area-inset-bottom))!important;width:min(76vw,330px)!important}`;d.head.appendChild(s)}
-async function installClients(){const g=child(),base=location.href,scoreboardUrl=new URL('../firebase-scoreboard-compat.js?v='+VERSION,base).href;installBridge();if(!g.firebase?.initializeApp)await addScript('https://www.gstatic.com/firebasejs/12.16.0/firebase-app-compat.js');if(!g.firebase?.firestore)await addScript('https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore-compat.js');await addScript(scoreboardUrl);if(!g.__geoScoreboardReady)throw new Error('Scoreboard client did not finish installing.')}
-frame.addEventListener('load',async()=>{if(typeof child()?.show!=='function')return;try{patchMobile();await window.PTBO_DISPATCH_STORE.ready()}catch(e){console.error('Unable to load shared dispatch data.',e)}loading.classList.add('hidden');setTimeout(()=>loading.remove(),250);installClients().catch(e=>{console.error(e);child()?.geoScoreboardFailure?.(e)})});
+
+/*
+FUNCTION: addScript
+
+WHAT THE CODE DOES:
+Loads a script into the iframe and returns a Promise. The 15-second timeout keeps
+an unavailable online dependency from hanging forever.
+*/
+function addScript(src){
+  return new Promise((resolve,reject)=>{
+    const d=frame.contentDocument;
+    const s=d.createElement('script');
+    const timer=setTimeout(()=>{
+      s.remove();
+      reject(new Error('Timed out loading '+src));
+    },15000);
+    s.src=src;
+    s.onload=()=>{clearTimeout(timer);resolve()};
+    s.onerror=()=>{clearTimeout(timer);reject(new Error('Could not load '+src))};
+    d.head.appendChild(s);
+  });
+}
+
+/*
+FUNCTION: installBridge
+
+WHAT THE CODE DOES:
+Creates temporary scoreboard functions inside the game while Firebase loads. It
+also exposes time, station, and mode in the shape expected by the scoreboard.
+*/
+function installBridge(){
+  const d=frame.contentDocument;
+  const s=d.createElement('script');
+  s.textContent=`(()=>{
+    window.geoScoreContext=()=>({
+      responseTimeSeconds:Number(elapsed.toFixed(1)),
+      station:station&&station.name?station.name:'Unknown Station',
+      callType:typeof modeName==='function'?modeName():'Random Shift'
+    });
+    const msg=(id,text)=>{
+      show(id);
+      const list=document.querySelector('#'+id+' .list');
+      if(list)list.innerHTML='<p class="muted" style="text-align:center">'+text+'</p>';
+    };
+    window.showPersonalScores=()=>msg('scores','Connecting to the online scoreboard…');
+    window.showCityTenScores=()=>msg('city-ten-scores','Connecting to the online scoreboard…');
+    window.saveScore=()=>alert('The online scoreboard is loading.');
+    window.geoScoreboardFailure=e=>{
+      const text='Scoreboard error: '+(e&&e.message?e.message:String(e));
+      window.showPersonalScores=()=>msg('scores',text);
+      window.showCityTenScores=()=>msg('city-ten-scores',text);
+      window.saveScore=()=>alert(text);
+    };
+  })();`;
+  d.body.appendChild(s);
+}
+
+/*
+FUNCTION: patchMobile
+
+WHAT THE PLAYER EXPERIENCES:
+The inner game's own home button is hidden, the map uses the full dynamic phone
+height, the dispatch header leaves room for the wrapper Back button, and Confirm
+stays above the bottom safe area.
+
+WHAT THE CODE DOES:
+Injects mobile-only CSS into the iframe instead of duplicating Geo Guesser logic.
+*/
+function patchMobile(){
+  const d=frame.contentDocument;
+  const s=d.createElement('style');
+  s.textContent=`#game-home{display:none!important}#game.screen{padding:0!important}#game .map-container,#map{width:100vw!important;height:100dvh!important}#header{top:calc(10px + env(safe-area-inset-top))!important;left:10px!important;right:10px!important;width:auto!important;transform:none!important;padding:14px 18px 13px 68px!important;border-radius:20px!important;box-shadow:0 12px 30px rgba(0,0,0,.34)!important}#call-type{line-height:1.25!important}#confirm{bottom:calc(20px + env(safe-area-inset-bottom))!important;width:min(76vw,330px)!important}`;
+  d.head.appendChild(s);
+}
+
+/*
+FUNCTION: installClients
+
+WHAT THE CODE DOES:
+Installs the bridge, loads missing Firebase compatibility libraries, loads the
+versioned project scoreboard client, and confirms its ready flag.
+
+FALLBACK:
+Scoreboard failure is reported to the player, but the map game still works.
+*/
+async function installClients(){
+  const g=child();
+  const base=location.href;
+  const scoreboardUrl=new URL('../firebase-scoreboard-compat.js?v='+VERSION,base).href;
+  installBridge();
+  if(!g.firebase?.initializeApp)await addScript('https://www.gstatic.com/firebasejs/12.16.0/firebase-app-compat.js');
+  if(!g.firebase?.firestore)await addScript('https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore-compat.js');
+  await addScript(scoreboardUrl);
+  if(!g.__geoScoreboardReady)throw new Error('Scoreboard client did not finish installing.');
+}
+
+/*
+IFRAME STARTUP FLOW:
+Apply mobile CSS, wait for the shared dispatch store, remove loading, then connect
+the optional online scoreboard in the background.
+*/
+frame.addEventListener('load',async()=>{
+  if(typeof child()?.show!=='function')return;
+  try{
+    patchMobile();
+    await window.PTBO_DISPATCH_STORE.ready();
+  }catch(e){
+    console.error('Unable to load shared dispatch data.',e);
+  }
+  loading.classList.add('hidden');
+  setTimeout(()=>loading.remove(),250);
+  installClients().catch(e=>{
+    console.error(e);
+    child()?.geoScoreboardFailure?.(e);
+  });
+});
 })();
 </script>
 </body>
