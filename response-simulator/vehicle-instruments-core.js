@@ -162,16 +162,14 @@
     const panel = document.querySelector('.panel-scroll');
     if (!panel) return false;
 
-    if (!document.getElementById('ptbo-steering-mode-title')) {
-      const title = document.createElement('div');
-      title.id = 'ptbo-steering-mode-title';
-      title.className = 'section-title';
-      title.textContent = 'Mobile Steering';
-
-      const row = document.createElement('div');
-      row.id = 'ptbo-steering-mode-row';
-      row.className = 'control-row';
-      row.innerHTML = `
+    if (!document.getElementById('ptbo-steering-mode-section')) {
+      const section = document.createElement('details');
+      section.id = 'ptbo-steering-mode-section';
+      section.className = 'settings-section';
+      section.innerHTML = `
+        <summary>Mobile Steering</summary>
+        <div class="settings-section-body">
+          <div id="ptbo-steering-mode-row" class="control-row">
         <label>
           <span>Steering Mode</span>
           <span id="ptbo-steering-mode-label">Standard</span>
@@ -181,15 +179,16 @@
           <option value="${STEERING_MODES.DIRECTIONAL}">Directional Thumbstick</option>
         </select>
         <div id="ptbo-steering-mode-note">Directional mode points the truck's nose toward the stick angle. Releasing the stick keeps the current heading.</div>
+          </div>
+        </div>
       `;
 
-      const drivingTitle = [...panel.querySelectorAll('.section-title')]
-        .find(node => node.textContent.trim() === 'Driving Modifiers');
-      if (drivingTitle) {
-        panel.insertBefore(title, drivingTitle);
-        panel.insertBefore(row, drivingTitle);
+      const drivingSection = [...panel.querySelectorAll('.settings-section')]
+        .find(node => node.querySelector(':scope > summary')?.textContent.trim() === 'Driving Modifiers');
+      if (drivingSection?.parentElement) {
+        drivingSection.parentElement.insertBefore(section, drivingSection);
       } else {
-        panel.append(title, row);
+        panel.append(section);
       }
     }
 

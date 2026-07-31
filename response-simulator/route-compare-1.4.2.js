@@ -205,7 +205,8 @@
     state.recording = true;
     state.completed = false;
     state.start = start;
-    state.destination = { lat: Number(activeIncident.lat), lng: Number(activeIncident.lng) };
+    const drivingTarget = activeIncident.simulatorTarget || activeIncident;
+    state.destination = { lat: Number(drivingTarget.lat), lng: Number(drivingTarget.lng) };
     state.incident = { ...activeIncident };
     state.points = [start];
     state.lastPoint = start;

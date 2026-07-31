@@ -68,6 +68,15 @@
         .section-title { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #777; border-bottom: 1px solid #ddd; padding-bottom: 4px; margin: 20px 0 10px 0; font-weight: 700; }
         .category-heading { margin: 22px -8px 10px; padding: 9px 10px; color:#0f3d57; border-radius:8px; background:#dceef7; font-size:12px; font-weight:850; letter-spacing:.06em; text-transform:uppercase; }
         .category-heading:first-of-type { margin-top:4px; }
+        .settings-category { margin: 14px 0; border: 1px solid #cbd5e1; border-radius: 10px; background: #f8fafc; overflow: clip; }
+        .settings-category > summary { padding: 12px 14px; cursor: pointer; color: #0f3d57; background: #dceef7; font-size: 12px; font-weight: 850; letter-spacing: .06em; text-transform: uppercase; }
+        .settings-category > summary::marker, .settings-section > summary::marker { color: #2563eb; }
+        .settings-category-body { padding: 0 12px 12px; }
+        .settings-section { margin: 10px 0; border: 1px solid #d7dee8; border-radius: 8px; background: #fff; overflow: clip; }
+        .settings-section > summary { padding: 10px 11px; cursor: pointer; color: #334155; background: #f8fafc; font-size: 11px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+        .settings-section-body { padding: 11px; }
+        .settings-section .section-title { display: none; }
+        .settings-section-body > :first-child { margin-top: 0; }
         .control-row { margin-bottom: 14px; }
         .control-row label { display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; color: #444; margin-bottom: 4px; }
         .control-row input[type="range"], .control-row select { width: 100%; box-sizing: border-box; padding: 7px; border-radius: 4px; border: 1px solid #ccc; background: #fff; }
@@ -335,6 +344,8 @@
         };
 
         function initializeSimulator() {
+            initializeSettingsAccordions();
+            updateVehiclePhysics();
             document.getElementById('tel-total-calls').innerText = totalTrackedCalls;
 
             mapInstance = L.map('map', {
@@ -384,6 +395,54 @@
             document.getElementById('control-panel').classList.toggle('minimized');
             document.getElementById('menu-toggle').innerText = document.getElementById('control-panel').classList.contains('minimized') ? "Options Menu" : "Close Options";
             setTimeout(() => { if (mapInstance) mapInstance.invalidateSize(); }, 320);
+        }
+
+        function initializeSettingsAccordions() {
+            const panel = document.querySelector('.panel-scroll');
+            if (!panel || panel.dataset.ptboAccordionsReady === 'true') return;
+
+            const headings = [...panel.children].filter(node => node.classList?.contains('category-heading'));
+            headings.forEach(heading => {
+                const category = document.createElement('details');
+                category.className = 'settings-category';
+                const summary = document.createElement('summary');
+                summary.textContent = heading.textContent;
+                const body = document.createElement('div');
+                body.className = 'settings-category-body';
+                category.append(summary, body);
+                panel.insertBefore(category, heading);
+
+                let node = heading.nextSibling;
+                heading.remove();
+                while (node && !(node.nodeType === 1 && node.classList.contains('category-heading'))) {
+                    const nextNode = node.nextSibling;
+                    body.appendChild(node);
+                    node = nextNode;
+                }
+            });
+
+            panel.querySelectorAll('.settings-category-body').forEach(body => {
+                const titles = [...body.children].filter(node => node.classList?.contains('section-title'));
+                titles.forEach(title => {
+                    const section = document.createElement('details');
+                    section.className = 'settings-section';
+                    const summary = document.createElement('summary');
+                    summary.textContent = title.textContent;
+                    const sectionBody = document.createElement('div');
+                    sectionBody.className = 'settings-section-body';
+                    section.append(summary, sectionBody);
+                    body.insertBefore(section, title);
+
+                    let node = title.nextSibling;
+                    title.remove();
+                    while (node && !(node.nodeType === 1 && node.classList.contains('section-title'))) {
+                        const nextNode = node.nextSibling;
+                        sectionBody.appendChild(node);
+                        node = nextNode;
+                    }
+                });
+            });
+            panel.dataset.ptboAccordionsReady = 'true';
         }
 
         function changeBasemap() {
@@ -657,7 +716,7 @@
 
             const speedSetting = parseInt(document.getElementById('sld-speed').value);
             const maxSpeed = 0.0000015 * speedSetting;
-            const acceleration = 0.00000005 * speedSetting; 
+            const acceleration = 0.00000005 * speedSetting;
             const friction = 0.96;
             const baseTurnRate = 1.2;
 
@@ -675,11 +734,9 @@
 
             if (velocity !== 0) {
                 const driveDirection = velocity > 0 ? 1 : -1;
-                // Steering efficiency tied to movement speed
                 const velocityFactor = Math.min(Math.abs(velocity) / (maxSpeed * 0.2), 1.0);
                 activeTurnRate = baseTurnRate * Math.max(velocityFactor, 0.3) * driveDirection;
             } else {
-                // Static spinning in place
                 activeTurnRate = baseTurnRate * 0.7;
             }
 
@@ -769,12 +826,13 @@
             if (incidentCircleMarker) mapInstance.removeLayer(incidentCircleMarker);
 
             activeIncident = filteredPool[Math.floor(Math.random() * filteredPool.length)];
+            const drivingTarget = activeIncident.simulatorTarget || activeIncident;
 
-            incidentCircleMarker = L.circle([activeIncident.lat, activeIncident.lng], {
+            incidentCircleMarker = L.circle([drivingTarget.lat, drivingTarget.lng], {
                 color: activeIncident.main === "Fire" ? '#d9534f' : '#2e7d32',
                 fillColor: activeIncident.main === "Fire" ? '#f0ad4e' : '#4cae4c',
                 fillOpacity: 0.35,
-                radius: 40 
+                radius: Math.max(10, Number(drivingTarget.radius) || 40)
             }).addTo(mapInstance);
 
             simulationState = STATES.ENROUTE;
@@ -849,9 +907,10 @@
 
         function evaluateDistanceToTarget() {
             if (!activeIncident || !mapInstance) return;
-            const d = mapInstance.distance([simLat, simLng], [activeIncident.lat, activeIncident.lng]);
+            const drivingTarget = activeIncident.simulatorTarget || activeIncident;
+            const d = mapInstance.distance([simLat, simLng], [drivingTarget.lat, drivingTarget.lng]);
             document.getElementById('tel-dist').innerText = Math.round(d) + " m";
-            if (d <= 40 && simulationState === STATES.ENROUTE) {
+            if (d <= Math.max(10, Number(drivingTarget.radius) || 40) && simulationState === STATES.ENROUTE) {
                 executeIncidentArrivalProcedures();
             }
         }
