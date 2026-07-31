@@ -23,6 +23,7 @@
     lastChangeAt: 0,
     baseZoom: null,
     programmaticZoom: false,
+    lastMaintenanceAt: 0,
   };
 
   let arcade = null;
@@ -166,8 +167,11 @@
     // continues following the truck; this module only changes zoom at rare,
     // stable whole-number thresholds.
     arcade.state.lastCameraUpdate = Number.POSITIVE_INFINITY;
-    updateOptionsText();
-    optimizeTileLayer();
+    if (timestamp - state.lastMaintenanceAt >= 1000) {
+      updateOptionsText();
+      optimizeTileLayer();
+      state.lastMaintenanceAt = timestamp;
+    }
 
     const enabled = arcade.state.settings.speedZoomEnabled && cameraLockEnabled();
     const speedKmh = currentSpeedKmh();
