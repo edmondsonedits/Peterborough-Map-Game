@@ -51,6 +51,11 @@ await writeFile(resolve(output, 'server/index.js'), `export default {
       webm: 'audio/webm'
     };
     const headers = new Headers(sourceResponse.headers);
+    // GitHub Raw adds a restrictive document policy intended for source-file
+    // viewing. The preview serves these files as a real site, so retain the
+    // safe response headers but drop that incompatible policy.
+    headers.delete('content-security-policy');
+    headers.delete('content-security-policy-report-only');
     if (contentTypes[extension]) {
       headers.set('content-type', contentTypes[extension]);
     }
