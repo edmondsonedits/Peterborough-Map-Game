@@ -21,21 +21,19 @@ await mkdir(resolve(output, 'server'), { recursive: true });
 await mkdir(resolve(output, '.openai'), { recursive: true });
 await cp(resolve(root, '.openai/hosting.json'), resolve(output, '.openai/hosting.json'));
 await writeFile(resolve(output, 'server/index.js'), `export default {
-  async fetch(request, environment) {
-    const initialResponse = await environment.ASSETS.fetch(request);
-    if (initialResponse.status !== 404) {
-      return initialResponse;
-    }
-
+  async fetch(request) {
     const url = new URL(request.url);
-    if (!url.pathname.endsWith('/')) {
-      return initialResponse;
+    const requestedPath = url.pathname.endsWith('/')
+      ? url.pathname + 'index.html'
+      : url.pathname;
+    const pathParts = requestedPath.split('/').filter(Boolean);
+    if (pathParts.some((part) => part === '.' || part === '..')) {
+      return new Response('Invalid path.', { status: 400 });
     }
 
-    return environment.ASSETS.fetch(new Request(
-      new URL(url.pathname + 'index.html', request.url),
-      request
-    ));
+    const sourceUrl = new URL(pathParts.map(encodeURIComponent).join('/'),
+      'https://raw.githubusercontent.com/edmondsonedits/Peterborough-Map-Game/a89832835e3c94e0f1d72fc0265f0263e554b591/');
+    return fetch(sourceUrl);
   }
 };
 `, 'utf8');
