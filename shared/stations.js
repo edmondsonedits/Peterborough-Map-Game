@@ -1,12 +1,87 @@
 (() => {
-  const stations = Object.freeze([
-    Object.freeze({ id: 'station-1', number: 1, name: 'Station 1', address: '210 Sherbrooke St', lat: 44.300871, lng: -78.322206 }),
-    Object.freeze({ id: 'station-2', number: 2, name: 'Station 2', address: '100 Marina Blvd', lat: 44.335266, lng: -78.316657 }),
-    Object.freeze({ id: 'station-3', number: 3, name: 'Station 3', address: '839 Clonsilla Ave', lat: 44.284867, lng: -78.350902 })
-  ]);
+  const STATION_STORE_VERSION = 1;
+  const STATION_STORAGE_KEY = 'ptboSharedStationSpawnsV1';
+  const defaults = [
+    { id: 'station-1', number: 1, name: 'Station 1', address: '210 Sherbrooke St', lat: 44.300871, lng: -78.322206 },
+    { id: 'station-2', number: 2, name: 'Station 2', address: '100 Marina Blvd', lat: 44.335266, lng: -78.316657 },
+    { id: 'station-3', number: 3, name: 'Station 3', address: '839 Clonsilla Ave', lat: 44.284867, lng: -78.350902 }
+  ];
+  let stations = [];
 
-  window.PTBO_STATIONS = stations;
-  window.getPtboStation = number => stations.find(station => station.number === Number(number));
+  const clean = value => String(value ?? '').trim().replace(/\s+/g, ' ');
+  const cloneStations = list => list.map(station => ({ ...station }));
+  function normalizeStation(raw, index) {
+    const number = Number(raw?.number ?? index + 1);
+    const lat = Number(raw?.lat ?? raw?.latitude);
+    const lng = Number(raw?.lng ?? raw?.longitude);
+    if (![1, 2, 3].includes(number) || !Number.isFinite(lat) || !Number.isFinite(lng)) return null;
+    return {
+      id: clean(raw?.id) || `station-${number}`,
+      number,
+      name: clean(raw?.name) || `Station ${number}`,
+      address: clean(raw?.address ?? raw?.addr) || 'Address pending',
+      lat,
+      lng
+    };
+  }
+  function normalizeStations(list) {
+    const byNumber = new Map();
+    (Array.isArray(list) ? list : []).forEach((raw, index) => {
+      const station = normalizeStation(raw, index);
+      if (station && !byNumber.has(station.number)) byNumber.set(station.number, station);
+    });
+    return defaults.map((fallback, index) => byNumber.get(index + 1) || { ...fallback });
+  }
+  function publishStations() {
+    window.PTBO_STATIONS = cloneStations(stations);
+    window.dispatchEvent(new CustomEvent('ptbo-stations-updated', { detail: { count: stations.length } }));
+  }
+  function readSavedStations() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STATION_STORAGE_KEY) || 'null');
+      return saved?.version === STATION_STORE_VERSION && Array.isArray(saved.stations) ? normalizeStations(saved.stations) : null;
+    } catch (error) {
+      console.warn('Station spawns could not read saved edits.', error);
+      return null;
+    }
+  }
+  function persistStations() {
+    try {
+      localStorage.setItem(STATION_STORAGE_KEY, JSON.stringify({ version: STATION_STORE_VERSION, stations }));
+    } catch (error) {
+      console.warn('Station spawns could not save edits.', error);
+    }
+  }
+  function replaceAllStations(nextStations) {
+    stations = normalizeStations(nextStations);
+    persistStations();
+    publishStations();
+    return cloneStations(stations);
+  }
+  function upsertStation(raw) {
+    const normalized = normalizeStation(raw, Number(raw?.number) - 1);
+    if (!normalized) throw new Error('A station needs a number from 1 to 3 and valid latitude and longitude values.');
+    return replaceAllStations(stations.map(station => station.number === normalized.number ? normalized : station));
+  }
+  function resetStations() {
+    return replaceAllStations(defaults);
+  }
+
+  stations = readSavedStations() || normalizeStations(defaults);
+  publishStations();
+  window.getPtboStation = number => {
+    const station = stations.find(item => item.number === Number(number));
+    return station ? { ...station } : undefined;
+  };
+  window.PTBO_STATION_STORE = Object.freeze({
+    ready: () => Promise.resolve(cloneStations(stations)),
+    getAll: () => cloneStations(stations),
+    replaceAll: replaceAllStations,
+    upsert: upsertStation,
+    reset: resetStations,
+    exportText: () => `window.PTBO_STATIONS = ${JSON.stringify(stations, null, 2)};\n`,
+    storageKey: STATION_STORAGE_KEY
+  });
 
   const sourceUrl = document.currentScript?.src;
   if (!sourceUrl) return;
@@ -122,20 +197,22 @@
     doc.documentElement.dataset.sharedDispatchPatched = 'true';
     removeLegacyEditorControls(doc);
     loadSimulatorTool(doc, 'camera-fix.js?v=1.4.20', 'data-ptbo-smooth-camera', 'Unable to load the stable simulator camera base.');
-    loadSimulatorTool(doc, 'smooth-driving-camera-1.4.19.js?v=1.4.20', 'data-ptbo-driving-camera', 'Unable to load the Fixed Map and Driving View camera.');
+    loadSimulatorTool(doc, 'smooth-driving-camera-1.4.19.js?v=1.5.3', 'data-ptbo-driving-camera', 'Unable to load the Fixed Map and Driving View camera.');
     loadSimulatorTool(doc, 'road-collision.js?v=1.4.20', 'data-ptbo-road-collision', 'Unable to load the Peterborough road boundary system.');
     loadSimulatorTool(doc, 'speed-streak.js', 'data-ptbo-speed-streak', 'Unable to load the collision speed streak system.');
     loadSimulatorTool(doc, 'vehicle-instruments.js?v=1.5.0', 'data-ptbo-vehicle-instruments', 'Unable to load the speedometer and mobile steering systems.');
     loadSimulatorTool(doc, 'max-speed.js?v=1.4.20', 'data-ptbo-max-speed', 'Unable to load the max speed tracker.');
-    loadSimulatorTool(doc, 'route-reveal.js?v=1.4.20', 'data-ptbo-route-reveal', 'Unable to load the Peterborough route answer system.');
-    loadSimulatorTool(doc, 'route-compare.js?v=1.4.20', 'data-ptbo-route-compare', 'Unable to load the post-call route comparison system.');
+    loadSimulatorTool(doc, 'route-reveal.js?v=1.5.3', 'data-ptbo-route-reveal', 'Unable to load the Peterborough route answer system.');
+    loadSimulatorTool(doc, 'route-compare.js?v=1.5.3', 'data-ptbo-route-compare', 'Unable to load the post-call route comparison system.');
 
     const apply = async () => {
       await store.ready();
       const shared = store.getAll();
+      const sharedStations = cloneStations(stations);
       const helper = doc.createElement('script');
       helper.textContent = `(() => {
         const shared = ${JSON.stringify(shared)};
+        const sharedStations = ${JSON.stringify(sharedStations)};
         dispatchDatabase.splice(0, dispatchDatabase.length, ...shared.map(item => ({ ...item })));
         const sync = () => {
           dispatchDatabase.forEach(item => {
@@ -155,6 +232,24 @@
           return result;
         };
         window.toggleAllLocations = toggleAllLocations;
+
+        const legacyStationSpawns = [
+          { number: 1, lat: 44.300871, lng: -78.322206 },
+          { number: 2, lat: 44.335266, lng: -78.316657 },
+          { number: 3, lat: 44.284867, lng: -78.350902 }
+        ];
+        const originalTeleportToStation = teleportToStation;
+        teleportToStation = function(targetLat, targetLng) {
+          const nearestLegacy = legacyStationSpawns.reduce((best, station) => {
+            const distance = Math.hypot(Number(targetLat) - station.lat, Number(targetLng) - station.lng);
+            return distance < best.distance ? { station, distance } : best;
+          }, { station: legacyStationSpawns[0], distance: Infinity }).station;
+          const configured = sharedStations.find(station => station.number === nearestLegacy.number) || nearestLegacy;
+          return originalTeleportToStation.call(this, configured.lat, configured.lng);
+        };
+        window.teleportToStation = teleportToStation;
+        const initialStation = sharedStations.find(station => station.number === 1);
+        if (initialStation) teleportToStation(initialStation.lat, initialStation.lng);
 
         window.addEventListener('ptbo-shared-dispatch-refresh', () => {
           const fresh = parent.PTBO_DISPATCH_STORE.getAll();

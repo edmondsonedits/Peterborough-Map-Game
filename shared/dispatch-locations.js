@@ -3,14 +3,16 @@
 
   const DATA_FILE_VERSION = '1.4.4';
   const DATA_VERSION = '1.4.20';
-  const STORE_VERSION = 2;
+  const STORE_VERSION = 3;
   const STORAGE_KEY = 'ptboSharedDispatchLocationsV2';
   const scriptUrl = document.currentScript?.src || window.location.href;
   const dataUrl = new URL(`./dispatch-data-${DATA_FILE_VERSION}.js?v=${DATA_VERSION}`, scriptUrl).href;
+  const simulatorTargetsUrl = new URL(`./simulator-targets.js?v=${DATA_VERSION}`, scriptUrl).href;
 
   let seed = [];
   let items = [];
   let readyPromise;
+  let simulatorTargets = {};
 
   const normalizeText = value => String(value ?? '')
     .trim()
@@ -40,16 +42,31 @@
     return `call-${slug(location.name)}-${hash(identity)}`;
   }
 
+  function normalizeTarget(raw, fallback) {
+    const target = raw || fallback;
+    const lat = Number(target?.lat ?? target?.latitude);
+    const lng = Number(target?.lng ?? target?.longitude);
+    const radius = Math.max(10, Number(target?.radius ?? target?.radiusMeters ?? target?.targetRadiusMeters) || fallback.radius);
+    return Number.isFinite(lat) && Number.isFinite(lng) ? {
+      lat,
+      lng,
+      radius,
+      roadName: normalizeText(target?.roadName),
+      source: normalizeText(target?.source)
+    } : { ...fallback };
+  }
+
   function normalizeLocation(raw, source) {
+    const suppliedGeoTarget = raw?.geoTarget || raw?.geoGuesserTarget;
     const location = {
       id: normalizeText(raw?.id),
       main: normalizeText(raw?.main) || 'Fire',
       sub: normalizeText(raw?.sub) || 'Structure Fire',
       name: normalizeText(raw?.name) || 'Unnamed Location',
       addr: normalizeText(raw?.addr ?? raw?.address) || 'Unknown Address',
-      lat: Number(raw?.lat ?? raw?.latitude),
-      lng: Number(raw?.lng ?? raw?.longitude),
-      radius: Math.max(10, Number(raw?.radius ?? raw?.targetRadiusMeters) || 50),
+      lat: Number(suppliedGeoTarget?.lat ?? suppliedGeoTarget?.latitude ?? raw?.lat ?? raw?.latitude),
+      lng: Number(suppliedGeoTarget?.lng ?? suppliedGeoTarget?.longitude ?? raw?.lng ?? raw?.longitude),
+      radius: Math.max(10, Number(suppliedGeoTarget?.radius ?? suppliedGeoTarget?.radiusMeters ?? raw?.radius ?? raw?.targetRadiusMeters) || 50),
       district: [1, 2, 3].includes(Number(raw?.district)) ? Number(raw.district) : undefined,
       cityTen: Boolean(raw?.cityTen),
       confirmed: Boolean(raw?.confirmed),
@@ -59,11 +76,21 @@
 
     if (!Number.isFinite(location.lat) || !Number.isFinite(location.lng)) return null;
     if (!location.id) location.id = makeId(location);
+    location.geoTarget = { lat: location.lat, lng: location.lng, radius: location.radius };
+    location.simulatorTarget = normalizeTarget(
+      raw?.simulatorTarget || raw?.drivingTarget || simulatorTargets[location.id],
+      location.geoTarget
+    );
     return location;
   }
 
   function clone(list) {
-    return list.map(location => ({ ...location, sources: [...(location.sources || [])] }));
+    return list.map(location => ({
+      ...location,
+      sources: [...(location.sources || [])],
+      geoTarget: { ...(location.geoTarget || {}) },
+      simulatorTarget: { ...(location.simulatorTarget || {}) }
+    }));
   }
 
   function normalizeList(list, source) {
@@ -119,10 +146,36 @@
     });
   }
 
+  function loadSimulatorTargets() {
+    if (window.PTBO_SIMULATOR_TARGETS) return Promise.resolve(window.PTBO_SIMULATOR_TARGETS);
+
+    return new Promise((resolve, reject) => {
+      const existing = [...document.scripts].find(script => script.src && script.src.includes('simulator-targets.js'));
+      const finish = () => {
+        if (!window.PTBO_SIMULATOR_TARGETS) {
+          reject(new Error('Simulator target data did not initialize.'));
+          return;
+        }
+        resolve(window.PTBO_SIMULATOR_TARGETS);
+      };
+      if (existing) {
+        existing.addEventListener('load', finish, { once: true });
+        existing.addEventListener('error', () => reject(new Error('Unable to load simulator target data.')), { once: true });
+        return;
+      }
+      const script = document.createElement('script');
+      script.src = simulatorTargetsUrl;
+      script.dataset.ptboSimulatorTargets = DATA_VERSION;
+      script.onload = finish;
+      script.onerror = () => reject(new Error('Unable to load simulator target data.'));
+      document.head.appendChild(script);
+    });
+  }
+
   function readSaved() {
     try {
       const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
-      if (!parsed || parsed.version !== STORE_VERSION || parsed.dataVersion !== DATA_VERSION || !Array.isArray(parsed.items)) return null;
+      if (!parsed || ![2, STORE_VERSION].includes(parsed.version) || parsed.dataVersion !== DATA_VERSION || !Array.isArray(parsed.items)) return null;
       return normalizeList(parsed.items, 'saved');
     } catch (error) {
       console.warn('Shared dispatch database could not read saved edits.', error);
@@ -151,6 +204,12 @@
 
   async function initialize() {
     const supplied = await loadData();
+    try {
+      simulatorTargets = await loadSimulatorTargets();
+    } catch (error) {
+      console.warn('Simulator target data could not load; using Geo Guesser locations as a temporary fallback.', error);
+      simulatorTargets = {};
+    }
     seed = normalizeList(supplied, 'source');
     items = readSaved() || clone(seed);
     console.info(`Shared dispatch database v${DATA_VERSION} loaded: ${items.length} calls.`);

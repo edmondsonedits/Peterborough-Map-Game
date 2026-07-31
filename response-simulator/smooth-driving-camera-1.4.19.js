@@ -255,8 +255,9 @@
       routeTestButton.textContent = 'Set up route review test';
       routeTestButton.addEventListener('click', () => {
         if (!activeIncident) return;
-        simLat = activeIncident.lat;
-        simLng = activeIncident.lng;
+        const drivingTarget = activeIncident.simulatorTarget || activeIncident;
+        simLat = drivingTarget.lat;
+        simLng = drivingTarget.lng;
         vehicleMarker.setLatLng([simLat, simLng]);
         evaluateDistanceToTarget();
       });

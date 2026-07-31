@@ -62,10 +62,12 @@
   </div>
   <script src="../shared/build-version.js?v=1.4.20"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="../shared/stations.js?v=1.4.20"></script>
-  <script src="../shared/dispatch-locations.js?v=1.4.20"></script>
+  <script src="../shared/stations.js?v=1.5.3"></script>
+  <script src="../shared/dispatch-locations.js?v=1.5.3"></script>
   <script>
     (()=>{
+      // Replaced by editor-core.js. Kept temporarily so older cached pages still parse safely.
+      return;
       const $=id=>document.getElementById(id),store=window.PTBO_DISPATCH_STORE,stations=window.PTBO_STATIONS||[];
       let locations=[],markers=new Map(),selectedId=null,preview=null,placing=false,saveTimer;
       const map=L.map('map',{zoomControl:true,preferCanvas:true}).setView([44.302,-78.326],13);
@@ -92,5 +94,6 @@
       $('delete-call').onclick=()=>{const x=locations.find(item=>item.id===selectedId);if(!x||!confirm(`Delete ${x.name} from both games?`))return;locations=locations.filter(item=>item.id!==selectedId);commit('Call deleted from both games');closeEditor()};function downloadSource(){const blob=new Blob([store.exportText()],{type:'text/javascript;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='dispatch-data.js';a.click();setTimeout(()=>URL.revokeObjectURL(url),500);status('Permanent source file downloaded')}$('download-source').onclick=downloadSource;$('copy-source').onclick=async()=>{try{await navigator.clipboard.writeText(store.exportText());status('Permanent source copied')}catch{prompt('Copy the permanent shared database:',store.exportText())}};store.ready().then(()=>{locations=store.getAll().map(x=>({...x,confirmed:Boolean(x.confirmed),district:x.district||nearestDistrict(x.lat,x.lng)}));refreshFilters();render();status(`${locations.filter(x=>!x.confirmed).length} calls awaiting confirmation`);setTimeout(()=>$('fit-all').click(),100)}).catch(error=>{console.error(error);status(`Database error: ${error.message}`)});
     })();
   </script>
+  <script src="editor-core.js?v=1.5.3"></script>
 </body>
 </html>

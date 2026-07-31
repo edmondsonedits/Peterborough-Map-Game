@@ -467,7 +467,8 @@
     state.calculating = true;
     updateButton('Routing…');
     try {
-      const route = calculateRoute(simLat, simLng, activeIncident.lat, activeIncident.lng);
+      const drivingTarget = activeIncident.simulatorTarget || activeIncident;
+      const route = calculateRoute(simLat, simLng, drivingTarget.lat, drivingTarget.lng);
       if (!route) {
         state.routeVisible = false;
         if (state.card) {
