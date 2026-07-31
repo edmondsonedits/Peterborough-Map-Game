@@ -60,22 +60,6 @@
   let steeringSelect = null;
   let steeringModeLabel = null;
 
-  function getDrivingControls() {
-    const fallback = {
-      lowSpeedTurnDegreesPerSecond: CONFIG.lowSpeedTurnDegreesPerFrame * 60,
-      highSpeedTurnMultiplier: CONFIG.highSpeedTurnDegreesPerFrame / CONFIG.lowSpeedTurnDegreesPerFrame,
-      steeringResponsePerSecond: 1 / CONFIG.steeringResponseSeconds,
-    };
-    try {
-      const controls = window.getDrivingControls?.();
-      return controls && Number.isFinite(controls.lowSpeedTurnDegreesPerSecond)
-        ? controls
-        : fallback;
-    } catch {
-      return fallback;
-    }
-  }
-
   function normalizeHeading(value) {
     return (Number(value) % 360 + 360) % 360;
   }
@@ -429,10 +413,9 @@
   function applyAnalogSteering(deltaSeconds) {
     if (state.steeringMode !== STEERING_MODES.STANDARD) return;
 
-    const drivingControls = getDrivingControls();
     const responseSeconds = state.steeringTarget === 0
       ? CONFIG.steeringReturnSeconds
-      : Math.max(0.04, 1 / drivingControls.steeringResponsePerSecond);
+      : CONFIG.steeringResponseSeconds;
     const response = 1 - Math.exp(-deltaSeconds / responseSeconds);
     state.steeringApplied += (state.steeringTarget - state.steeringApplied) * response;
     if (Math.abs(state.steeringApplied) < 0.002 && state.steeringTarget === 0) {
@@ -449,10 +432,8 @@
     if (!Number.isFinite(currentVelocity)) return;
 
     const speedRatio = Math.min(1, Math.max(0, state.speedKmh / CONFIG.steeringReferenceSpeedKmh));
-    const lowSpeedTurnDegreesPerFrame = drivingControls.lowSpeedTurnDegreesPerSecond / 60;
-    const highSpeedTurnDegreesPerFrame = lowSpeedTurnDegreesPerFrame * drivingControls.highSpeedTurnMultiplier;
-    const degreesPerFrame = lowSpeedTurnDegreesPerFrame
-      + (highSpeedTurnDegreesPerFrame - lowSpeedTurnDegreesPerFrame) * speedRatio;
+    const degreesPerFrame = CONFIG.lowSpeedTurnDegreesPerFrame
+      + (CONFIG.highSpeedTurnDegreesPerFrame - CONFIG.lowSpeedTurnDegreesPerFrame) * speedRatio;
     const frameScale = Math.min(3, deltaSeconds * 60);
     const driveDirection = currentVelocity < -CONFIG.movementThreshold ? -1 : 1;
 

@@ -7,26 +7,15 @@ const simulatorHtml = await readFile(resolve(root, 'response-simulator/index.htm
 const directionalSteering = await readFile(resolve(root, 'response-simulator/directional-steering-tuning.js'), 'utf8');
 const standardSteering = await readFile(resolve(root, 'response-simulator/vehicle-instruments-core.js'), 'utf8');
 
-for (const id of [
-  'sld-acceleration',
-  'sld-low-speed-steering',
-  'sld-high-speed-steering',
-  'sld-steering-response',
-  'sld-steering-curve',
-]) {
-  assert.match(simulatorHtml, new RegExp(`id="${id}"`), `missing ${id}`);
+for (const selector of ['settings-category', 'settings-section', 'initializeSettingsAccordions']) {
+  assert.match(simulatorHtml, new RegExp(selector), `missing collapsible settings support: ${selector}`);
 }
 
-const lowSpeedTurnDegreesPerSecond = 300;
-const highSpeedTurnMultiplier = 0.18;
-assert.ok(
-  lowSpeedTurnDegreesPerSecond * highSpeedTurnMultiplier < lowSpeedTurnDegreesPerSecond,
-  'high-speed steering must be softer than low-speed steering',
-);
-
-assert.match(simulatorHtml, /turnDegreesPerSecond = drivingControls\.lowSpeedTurnDegreesPerSecond/);
-assert.match(directionalSteering, /controls\.highSpeedTurnMultiplier/);
-assert.match(standardSteering, /drivingControls\.lowSpeedTurnDegreesPerSecond/);
+assert.match(simulatorHtml, /const acceleration = 0\.00000005 \* speedSetting;/);
+assert.match(simulatorHtml, /const baseTurnRate = 1\.2;/);
+assert.match(simulatorHtml, /baseTurnRate \* Math\.max\(velocityFactor, 0\.3\) \* driveDirection/);
+assert.match(directionalSteering, /CONFIG\.highSpeedTurnMultiplier/);
+assert.match(standardSteering, /CONFIG\.lowSpeedTurnDegreesPerFrame/);
 assert.match(simulatorHtml, /initializeSettingsAccordions/);
 
-console.log('Driving control defaults and collapsible settings verified.');
+console.log('GitHub-equivalent driving behaviour and collapsible settings verified.');
