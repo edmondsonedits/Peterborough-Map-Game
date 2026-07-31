@@ -22,7 +22,20 @@ await mkdir(resolve(output, '.openai'), { recursive: true });
 await cp(resolve(root, '.openai/hosting.json'), resolve(output, '.openai/hosting.json'));
 await writeFile(resolve(output, 'server/index.js'), `export default {
   async fetch(request, environment) {
-    return environment.ASSETS.fetch(request);
+    const initialResponse = await environment.ASSETS.fetch(request);
+    if (initialResponse.status !== 404) {
+      return initialResponse;
+    }
+
+    const url = new URL(request.url);
+    if (!url.pathname.endsWith('/')) {
+      return initialResponse;
+    }
+
+    return environment.ASSETS.fetch(new Request(
+      new URL(url.pathname + 'index.html', request.url),
+      request
+    ));
   }
 };
 `, 'utf8');
