@@ -3,17 +3,19 @@
 
    PURPOSE:
    Every game page loads this small shared file. It identifies the production
-   release, records uncaught browser errors, and displays a tiny version badge.
+   release, records uncaught browser errors, displays a tiny version badge, and
+   loads small page-specific production enhancements when required.
 
    WHAT THE PLAYER EXPERIENCES:
-   A small “v1.5.3” label confirms which release is running. Normal gameplay is
-   unchanged unless an error occurs; errors are stored silently for debugging.
+   A small “v1.5.4” label confirms which release is running. On the mobile driving
+   simulator, this release also loads the compact dispatch-card behaviour.
 
    HOW TO READ THIS FILE:
    - VERSION and LABEL identify the release.
    - PTBO_BUILD exposes that information to other files.
    - Two event listeners capture different kinds of JavaScript errors.
    - install() creates the visible badge after the page body is ready.
+   - installPageEnhancements() loads features used only by matching pages.
 
    Comments are hidden from players and ignored by the browser.
    ========================================================= */
@@ -25,8 +27,9 @@
   Updating VERSION changes the label and shared build identity. The version is
   also used elsewhere as a cache value so browsers request current source files.
   */
-  const VERSION = '1.5.3';
+  const VERSION = '1.5.4';
   const LABEL = `v${VERSION}`;
+  const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
 
   // Do not install the same production marker twice on one page.
   if (window.PTBO_BUILD?.version === VERSION) return;
@@ -86,6 +89,24 @@
   document.documentElement.dataset.ptboChannel = 'production';
 
   /*
+  FUNCTION: installPageEnhancements
+
+  WHAT THE CODE DOES:
+  Detects the outer mobile response-simulator page and loads the v1.5.4 dispatch
+  card controller from a release-specific URL. Other pages do not download it.
+  */
+  function installPageEnhancements() {
+    const isMobileSimulator = /\/response-simulator\/mobile\/(?:index\.html)?$/.test(location.pathname);
+    if (!isMobileSimulator || document.getElementById('ptbo-mobile-dispatch-hud-loader')) return;
+
+    const script = document.createElement('script');
+    script.id = 'ptbo-mobile-dispatch-hud-loader';
+    script.src = new URL(`mobile-dispatch-hud-1.5.4.js?v=${VERSION}`, SCRIPT_URL).href;
+    script.async = true;
+    document.head.appendChild(script);
+  }
+
+  /*
   FUNCTION: install
 
   WHAT THE CODE DOES:
@@ -133,5 +154,6 @@
     install();
   }
 
+  installPageEnhancements();
   console.info(`Production build ${LABEL} initialized.`);
 })();
