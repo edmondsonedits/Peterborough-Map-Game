@@ -2,22 +2,23 @@
    BEGINNER CODE GUIDE — MOBILE DISPATCH CARD COLLAPSE
 
    PURPOSE:
-   On the mobile driving simulator, keep the full dispatch card visible long
-   enough to read, then reduce it to a small timer card so the road is clearer.
+   On the mobile driving simulator, keep the full dispatch card visible for five
+   seconds after a dispatch starts, then reduce it to a small timer card.
 
    WHAT THE PLAYER EXPERIENCES:
-   - A new call opens the full dispatch card.
-   - After five seconds, only the live timer and an upward arrow remain.
-   - Tapping the arrow restores the full dispatch card.
-   - Tapping the small X minimizes it again.
+   - Starting a call opens the full dispatch card.
+   - Exactly five seconds after the call enters Responding mode, it minimizes.
+   - The minimized card keeps the live response timer visible.
+   - Tapping the arrow restores the full card.
+   - Tapping the small X minimizes the restored card again.
 
-   This file runs in the outer mobile wrapper and safely controls the same-origin
-   simulator iframe. It does not change the desktop layout.
+   This file runs in the outer mobile wrapper and controls the same-origin
+   simulator iframe. Desktop gameplay and desktop layout are not changed.
    ========================================================= */
 (() => {
   'use strict';
 
-  const VERSION = '1.5.4';
+  const VERSION = '1.5.5';
   const AUTO_COLLAPSE_DELAY_MS = 5000;
   const frame = document.getElementById('simulator');
 
@@ -32,11 +33,16 @@
 
     const hud = doc.getElementById('dispatch-hud');
     const timerBlock = doc.querySelector('.hud-timer-block');
-    const hudContent = doc.getElementById('hud-content');
-    if (!hud || !timerBlock || !hudContent) return false;
+    if (!hud || !timerBlock) return false;
 
     if (doc.documentElement.dataset.ptboMobileDispatchHud === VERSION) return true;
     doc.documentElement.dataset.ptboMobileDispatchHud = VERSION;
+
+    /* Remove controls left by an older cached release before installing v1.5.5. */
+    doc.getElementById('ptbo-mobile-dispatch-hud-style')?.remove();
+    doc.getElementById('ptbo-mobile-dispatch-close')?.remove();
+    doc.getElementById('ptbo-mobile-dispatch-expand')?.remove();
+    hud.classList.remove('ptbo-mobile-dispatch-collapsed');
 
     const style = doc.createElement('style');
     style.id = 'ptbo-mobile-dispatch-hud-style';
@@ -53,7 +59,7 @@
         place-items:center;
         color:#fff;
         border:1px solid rgba(255,255,255,.28);
-        background:rgba(15,23,42,.9);
+        background:rgba(15,23,42,.92);
         box-shadow:0 4px 12px rgba(0,0,0,.32);
         font:900 18px/1 system-ui,-apple-system,"Segoe UI",sans-serif;
         touch-action:manipulation;
@@ -150,7 +156,7 @@
     hud.classList.add('ptbo-mobile-dispatch-ready');
 
     let collapseTimer = 0;
-    let lastIncidentSignature = '';
+    let wasDispatchActive = false;
 
     function clearCollapseTimer() {
       if (!collapseTimer) return;
@@ -163,34 +169,32 @@
       expandButton.setAttribute('aria-expanded', String(!collapsed));
     }
 
-    function currentIncidentSignature() {
-      if (!hud.classList.contains('incident-active')) return '';
-      return hudContent.textContent.trim();
-    }
-
     function scheduleAutoCollapse() {
       clearCollapseTimer();
       collapseTimer = window.setTimeout(() => {
         collapseTimer = 0;
+        /* Only minimize if the crew is still actively responding to this call. */
         if (hud.classList.contains('incident-active')) setCollapsed(true);
       }, AUTO_COLLAPSE_DELAY_MS);
     }
 
+    /*
+    The simulator marks a newly started dispatch by changing the HUD to the
+    incident-active class. Watching that exact state transition is more reliable
+    than watching changing text and starts one five-second timer per dispatch.
+    */
     function synchronizeHudState() {
-      const signature = currentIncidentSignature();
+      const dispatchActive = hud.classList.contains('incident-active');
 
-      if (!signature) {
-        clearCollapseTimer();
-        lastIncidentSignature = '';
-        setCollapsed(false);
-        return;
-      }
-
-      if (signature !== lastIncidentSignature) {
-        lastIncidentSignature = signature;
+      if (dispatchActive && !wasDispatchActive) {
         setCollapsed(false);
         scheduleAutoCollapse();
+      } else if (!dispatchActive && wasDispatchActive) {
+        clearCollapseTimer();
+        setCollapsed(false);
       }
+
+      wasDispatchActive = dispatchActive;
     }
 
     closeButton.addEventListener('click', event => {
@@ -208,7 +212,9 @@
     });
 
     const observer = new MutationObserver(synchronizeHudState);
-    observer.observe(hud, { attributes:true, attributeFilter:['class'], childList:true, subtree:true });
+    observer.observe(hud, { attributes:true, attributeFilter:['class'] });
+
+    /* If installation finishes during an active call, begin the five-second timer. */
     synchronizeHudState();
 
     frame.addEventListener('load', () => observer.disconnect(), { once:true });
