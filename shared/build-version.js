@@ -7,8 +7,9 @@
    loads small page-specific production enhancements when required.
 
    WHAT THE PLAYER EXPERIENCES:
-   A small “v1.5.4” label confirms which release is running. On the mobile driving
-   simulator, this release also loads the compact dispatch-card behaviour.
+   A small “v1.5.5” label confirms which release is running. On the mobile driving
+   simulator, the active dispatch card now reliably minimizes five seconds after
+   the call begins while leaving the live timer and expand arrow visible.
 
    HOW TO READ THIS FILE:
    - VERSION and LABEL identify the release.
@@ -27,7 +28,7 @@
   Updating VERSION changes the label and shared build identity. The version is
   also used elsewhere as a cache value so browsers request current source files.
   */
-  const VERSION = '1.5.4';
+  const VERSION = '1.5.5';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
 
@@ -92,7 +93,7 @@
   FUNCTION: installPageEnhancements
 
   WHAT THE CODE DOES:
-  Detects the outer mobile response-simulator page and loads the v1.5.4 dispatch
+  Detects the outer mobile response-simulator page and loads the v1.5.5 dispatch
   card controller from a release-specific URL. Other pages do not download it.
   */
   function installPageEnhancements() {
@@ -101,7 +102,7 @@
 
     const script = document.createElement('script');
     script.id = 'ptbo-mobile-dispatch-hud-loader';
-    script.src = new URL(`mobile-dispatch-hud-1.5.4.js?v=${VERSION}`, SCRIPT_URL).href;
+    script.src = new URL(`mobile-dispatch-hud-1.5.5.js?v=${VERSION}`, SCRIPT_URL).href;
     script.async = true;
     document.head.appendChild(script);
   }
