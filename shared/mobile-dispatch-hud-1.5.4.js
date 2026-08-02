@@ -63,7 +63,7 @@
       #ptbo-mobile-dispatch-close{
         position:absolute;
         top:5px;
-        right:5px;
+        right:116px;
         z-index:4;
         width:25px;
         height:25px;
@@ -90,6 +90,7 @@
       #ptbo-mobile-dispatch-close:active,
       #ptbo-mobile-dispatch-expand:active{transform:scale(.94)}
       #dispatch-hud:not(.incident-active) #ptbo-mobile-dispatch-close{display:none!important}
+      #dispatch-hud.incident-active:not(.ptbo-mobile-dispatch-collapsed) .hud-main{padding-right:28px!important}
 
       #dispatch-hud.ptbo-mobile-dispatch-collapsed{
         left:auto!important;
