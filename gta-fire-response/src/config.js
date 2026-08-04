@@ -1,4 +1,4 @@
-export const APP_VERSION = '0.6.0-phase3';
+export const APP_VERSION = '0.7.0-phase4';
 
 export const GAME_STATES = Object.freeze({
   START_SCREEN: 'START_SCREEN', AVAILABLE: 'AVAILABLE', DISPATCHED: 'DISPATCHED',
@@ -106,7 +106,7 @@ export const EQUIPMENT_CATALOG = Object.freeze({
 
 export const ENTITY_BUDGETS = Object.freeze({
   trafficMobile: 8, trafficDesktop: 14, pedestriansMobile: 10, pedestriansDesktop: 18,
-  bystanders: 6, crew: 3, supportVehicles: 2, supportPersonnel: 4, effects: 24
+  bystanders: 6, crew: 3, supportVehicles: 6, supportPersonnel: 8, effects: 24
 });
 
 export const DEFAULT_TUNING = Object.freeze({
@@ -144,6 +144,7 @@ export function readRuntimeOptions(search = globalThis.location?.search || '') {
     debug: params.get('debug') === '1', testMode: params.get('test') === '1', forcedCall,
     seed: Number.isFinite(Number(params.get('seed'))) ? Number(params.get('seed')) : 104729,
     disableTiles: params.get('tiles') === 'off' || params.get('test') === '1',
-    forcedTime: params.get('time') || null
+    forcedTime: params.get('time') || null,
+    unlockAll: params.get('unlock') === 'all'
   };
 }
