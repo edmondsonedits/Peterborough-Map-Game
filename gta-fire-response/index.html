@@ -7,87 +7,151 @@
   <title>Peterborough Fire Response: Street Shift</title>
   <link rel="preconnect" href="https://unpkg.com">
   <link rel="preconnect" href="https://server.arcgisonline.com">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
-  <link rel="stylesheet" href="styles.css?v=0.3.0">
-  <link rel="stylesheet" href="refinement-v0.3.css?v=0.3.0">
+  <script>if(new URLSearchParams(location.search).get("test")!=="1")document.write('<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">');</script>
+  <link rel="stylesheet" href="styles.css?v=0.4.0-phase1">
 </head>
-<body>
-  <div id="map" aria-label="Satellite map game world"></div>
+<body data-game-state="START_SCREEN">
+  <main id="map" aria-label="Peterborough satellite map game world" data-testid="game-map"></main>
+  <div id="tile-loading" class="tile-loading" role="status">Loading map tiles…</div>
 
-  <section class="hud top-left">
-    <div class="brand">
-      <div class="crest"><span>PFR</span></div>
-      <div class="brand-copy"><small>Peterborough Fire Services</small><strong>Street Shift</strong></div>
-    </div>
-    <div class="mission-card">
-      <div class="mission-kicker" id="mission-kicker">Station 1 · Available</div>
-      <div class="mission-title" id="mission-title">Start your shift and wait for dispatch.</div>
-      <div class="mission-address" id="mission-address">210 Sherbrooke Street, Peterborough</div>
-      <div class="mission-row">
-        <div class="mission-objective" id="mission-objective">Walk to the engine.</div>
-        <div class="timer" id="timer">00:00</div>
+  <header class="hud top-hud">
+    <section id="dispatch-card" class="dispatch-card" data-testid="dispatch-card">
+      <div class="dispatch-compact">
+        <div><small id="call-id">ENGINE 1</small><strong id="mission-title">Engine 1 available</strong></div>
+        <time id="timer">00:00</time>
       </div>
-      <div class="progress"><i id="task-progress"></i></div>
-    </div>
-  </section>
+      <div class="dispatch-details">
+        <div id="mission-address" class="mission-address">210 Sherbrooke Street, Peterborough</div>
+        <div id="dispatch-notes" class="dispatch-notes">Awaiting assignment.</div>
+        <div id="mission-objective" class="mission-objective">Start the shift when the road network is ready.</div>
+        <div class="dispatch-actions">
+          <button id="repeat-dispatch" type="button">Repeat dispatch</button>
+        </div>
+      </div>
+      <button id="dispatch-toggle" class="dispatch-toggle" type="button">Minimize</button>
+    </section>
 
-  <section class="hud top-right">
-    <div class="stats">
-      <div class="stat"><span>Speed</span><strong id="speed">0 km/h</strong></div>
-      <div class="stat"><span>Score</span><strong id="score">0000</strong></div>
-    </div>
-    <div class="road-lock loading" id="road-lock">Loading road geometry</div>
-  </section>
+    <section class="status-cluster" aria-label="Game status">
+      <div class="status-row">
+        <div class="status-box"><small>Speed</small><strong id="speed">ON FOOT</strong></div>
+        <div class="status-box"><small>Score</small><strong id="score">0000</strong></div>
+      </div>
+      <div class="status-row compact">
+        <span id="state-label">START SCREEN</span>
+        <span id="road-status" data-status="loading">LOADING ROADS</span>
+      </div>
+      <div class="status-row compact equipment-status">
+        <span id="lights-state">LIGHTS OFF</span>
+        <span id="siren-state">SIREN OFF</span>
+        <span id="tool-status">NO TOOL</span>
+        <span id="capacity-status"></span>
+        <span id="fire-status"></span>
+      </div>
+    </section>
+  </header>
 
-  <div class="hud bottom-center">
-    <div class="prompt hidden" id="prompt"><span class="key" id="prompt-key">E</span><span id="prompt-text">Enter fire engine</span></div>
+  <div id="direction-arrow" class="direction-arrow" aria-label="Direction to incident">▲</div>
+  <div id="feedback" class="feedback" aria-live="polite"></div>
+  <div id="toast" class="toast" aria-live="polite"></div>
+
+  <div id="prompt" class="prompt hidden" data-testid="interaction-prompt">
+    <span id="prompt-key" class="key">E</span><span id="prompt-text">Interact</span>
   </div>
-  <div class="toast" id="toast"></div>
 
-  <section class="controls" aria-label="Mobile controls">
-    <div class="joystick" id="joystick"><div class="stick" id="stick"></div><label id="joystick-label">Move</label></div>
-    <div class="mobile-actions">
-      <button class="mobile-btn" id="brake-btn" type="button">Brake</button>
-      <button class="mobile-btn boost" id="gas-btn" type="button">Boost</button>
-      <button class="mobile-btn action" id="action-btn" type="button">Interact</button>
+  <button id="pause-button" class="corner-button pause-button" type="button" aria-label="Pause game">Ⅱ</button>
+  <button id="settings-button" class="corner-button settings-button" type="button" aria-label="Open settings">⚙</button>
+
+  <section class="mobile-controls" aria-label="Mobile game controls">
+    <div id="joystick" class="joystick" data-testid="joystick">
+      <div id="stick" class="stick"></div><label id="joystick-label">Move / Aim</label>
+    </div>
+    <div class="mobile-action-grid">
+      <button id="lights-button" type="button">Lights</button>
+      <button id="siren-button" type="button">Siren</button>
+      <button id="siren-mode-button" type="button">Mode</button>
+      <button id="horn-button" type="button">Horn</button>
+      <button id="brake-button" class="hold" type="button">Brake / Reverse</button>
+      <button id="boost-button" class="hold boost" type="button">Boost</button>
+      <button id="action-button" class="action hold" type="button">Interact</button>
     </div>
   </section>
 
-  <div class="start-screen" id="start-screen">
+  <section id="tool-selector" class="tool-selector" aria-label="Select equipment">
+    <strong>Rear compartment</strong>
+    <button id="tool-hose" type="button"><span>〰</span>Attack hose</button>
+    <button id="tool-extinguisher" type="button"><span>▣</span>Extinguisher</button>
+  </section>
+
+  <section id="start-screen" class="start-screen">
     <div class="start-card">
-      <div class="eyebrow">A top-down emergency action game</div>
+      <div class="eyebrow">Phase 1 · movement foundation</div>
       <h1>Peterborough <em>Fire Response</em></h1>
-      <p>Begin directly on Station 1, enter the engine, respond across a realistic satellite map, then leave the truck and complete fire, rescue, or medical objectives on scene.</p>
-      <div class="features">
-        <div class="feature"><b>Top-Down Crew</b>A smaller firefighter begins directly on the station</div>
-        <div class="feature"><b>Compact Engine</b>The original simulator truck at a better game scale</div>
-        <div class="feature"><b>Smoother Roads</b>OSM road geometry beneath the satellite imagery</div>
+      <p>Start at Station 1, receive a dispatch, drive a road-constrained engine through a living satellite-map city, deploy equipment and control the fire.</p>
+      <div class="feature-grid">
+        <div><b>Direct-stick driving</b><span>Point where Engine 1 should travel.</span></div>
+        <div><b>Road footprint</b><span>The complete truck body stays on drivable space.</span></div>
+        <div><b>Active streets</b><span>Traffic yields to emergency lights and siren.</span></div>
       </div>
-      <div class="load-status" id="load-status">Building road geometry beneath the satellite map…</div>
-      <button class="start-button" id="start-button" type="button" disabled>Loading Roads…</button>
-      <div class="version">Prototype v0.3.0 · Scale and road-smoothing update</div>
+      <div id="load-status" class="load-status">Loading indexed Peterborough road geometry…</div>
+      <button id="start-button" class="start-button" type="button" disabled data-testid="start-shift">Loading Roads…</button>
+      <div class="start-help">Keyboard: WASD/Arrows · E/Space interact · L lights · Q siren · R mode · H horn · P pause</div>
+      <div id="version-text" class="version">Phase 1 build</div>
     </div>
-  </div>
+  </section>
 
-  <div class="end-screen" id="end-screen">
-    <div class="end-card">
-      <small>Incident complete</small>
-      <h2 id="end-title">Call Cleared</h2>
-      <p id="end-copy">The incident has been stabilized.</p>
-      <div class="score-grid">
-        <div><span>Response</span><strong id="end-time">00:00</strong></div>
-        <div><span>Score</span><strong id="end-score">0000</strong></div>
-        <div><span>Rank</span><strong id="end-rank">A</strong></div>
+  <section id="pause-panel" class="modal-panel" aria-label="Paused">
+    <div class="modal-card">
+      <small>Street Shift</small><h2>Paused</h2>
+      <button id="resume-button" type="button">Resume</button>
+      <button id="restart-call" type="button">Restart current call</button>
+      <button id="return-station" type="button">Return to Station 1</button>
+    </div>
+  </section>
+
+  <section id="result-panel" class="modal-panel" aria-label="Call result" data-testid="result-panel">
+    <div class="modal-card result-card">
+      <small>Incident complete</small><h2 id="result-title">Fire Control Confirmed</h2>
+      <p id="result-copy">The fire is under control.</p>
+      <div class="result-grid">
+        <div><small>Response</small><strong id="result-time">00:00</strong></div>
+        <div><small>Score</small><strong id="result-score">0000</strong></div>
+        <div><small>Rank</small><strong id="result-rank">A</strong></div>
       </div>
-      <button id="next-call" type="button">Return to Station</button>
+      <button id="result-return" type="button">Return to Station 1</button>
     </div>
-  </div>
+  </section>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-  <script src="game-core.js?v=0.3.0"></script>
-  <script src="road-system.js?v=0.3.0"></script>
-  <script src="gameplay.js?v=0.3.0"></script>
-  <script src="refinement-v0.3.js?v=0.3.0"></script>
-  <script src="controls.js?v=0.3.0"></script>
+  <aside id="settings-panel" class="settings-panel" aria-label="Settings">
+    <div class="settings-heading"><div><small>Development and accessibility</small><h2>Settings</h2></div><button id="settings-close" type="button">×</button></div>
+    <div class="settings-scroll">
+      <fieldset><legend>Accessibility and sound</legend>
+        <label class="toggle"><span>Mute</span><input data-setting="mute" type="checkbox"></label>
+        <label class="toggle"><span>Reduced flashing</span><input data-setting="reducedFlashing" type="checkbox"></label>
+        <label class="toggle"><span>Reduced motion</span><input data-setting="reducedMotion" type="checkbox"></label>
+        <label><span>Master volume <output data-output="masterVolume"></output></span><input data-setting="masterVolume" type="range" min="0" max="1" step="0.05"></label>
+        <label><span>Siren volume <output data-output="sirenVolume"></output></span><input data-setting="sirenVolume" type="range" min="0" max="1" step="0.05"></label>
+      </fieldset>
+      <fieldset><legend>Vehicle tuning</legend>
+        <label><span>Acceleration <output data-output="tuning.acceleration"></output></span><input data-setting="tuning.acceleration" type="range" min="8" max="30" step="0.5"></label>
+        <label><span>Coasting drag <output data-output="tuning.coastingDrag"></output></span><input data-setting="tuning.coastingDrag" type="range" min="2" max="18" step="0.5"></label>
+        <label><span>Braking strength <output data-output="tuning.brakingStrength"></output></span><input data-setting="tuning.brakingStrength" type="range" min="15" max="50" step="1"></label>
+        <label><span>Reverse speed <output data-output="tuning.reverseSpeed"></output></span><input data-setting="tuning.reverseSpeed" type="range" min="3" max="14" step="0.5"></label>
+        <label><span>Low-speed turn rate <output data-output="tuning.lowSpeedTurnRate"></output></span><input data-setting="tuning.lowSpeedTurnRate" type="range" min="120" max="520" step="10"></label>
+        <label><span>High-speed turn rate <output data-output="tuning.highSpeedTurnRate"></output></span><input data-setting="tuning.highSpeedTurnRate" type="range" min="40" max="180" step="5"></label>
+        <label><span>Steering damping <output data-output="tuning.steeringDamping"></output></span><input data-setting="tuning.steeringDamping" type="range" min="4" max="22" step="0.5"></label>
+        <label><span>Heading assist <output data-output="tuning.headingAssistStrength"></output></span><input data-setting="tuning.headingAssistStrength" type="range" min="0" max="0.5" step="0.01"></label>
+        <label><span>Lane assist <output data-output="tuning.laneAssistStrength"></output></span><input data-setting="tuning.laneAssistStrength" type="range" min="0" max="0.35" step="0.01"></label>
+        <label><span>Collision retention <output data-output="tuning.collisionSpeedRetention"></output></span><input data-setting="tuning.collisionSpeedRetention" type="range" min="0.1" max="0.8" step="0.02"></label>
+        <label><span>Maximum speed <output data-output="tuning.maxNormalSpeed"></output></span><input data-setting="tuning.maxNormalSpeed" type="range" min="12" max="32" step="0.5"></label>
+        <label><span>Boosted speed <output data-output="tuning.maxBoostedSpeed"></output></span><input data-setting="tuning.maxBoostedSpeed" type="range" min="18" max="38" step="0.5"></label>
+      </fieldset>
+    </div>
+  </aside>
+
+  <pre id="debug-overlay" class="debug-overlay" aria-label="Debug information"></pre>
+
+  <script>if(new URLSearchParams(location.search).get("test")!=="1")document.write('<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""><\/script>');</script>
+  <script src="leaflet-fallback.js?v=0.4.0-phase1"></script>
+  <script type="module" src="src/main.js?v=0.4.0-phase1"></script>
 </body>
 </html>
