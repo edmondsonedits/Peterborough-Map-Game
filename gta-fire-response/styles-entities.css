@@ -1,0 +1,57 @@
+.game-marker,.truck-marker,.traffic-marker { background:none!important; border:0!important; }
+.station-marker { width:42px; height:42px; display:grid; place-items:center; border:2px dashed rgba(255,255,255,.9); border-radius:50%; background:rgba(190,15,39,.22); box-shadow:0 0 18px rgba(225,29,46,.6); color:white; font-size:11px; font-weight:1000; }
+.firefighter-visual { position:absolute; left:50%; top:50%; width:19px; height:25px; transform:translate(-50%,-50%); transform-origin:50% 50%; filter:drop-shadow(0 3px 4px rgba(0,0,0,.9)); }
+.firefighter-visual span { position:absolute; display:block; }
+.ff-helmet { left:4px; top:0; width:11px; height:7px; border:1px solid #5b3a00; border-radius:50% 50% 35% 35%; background:#f5b51b; z-index:6; }
+.ff-head { left:6px; top:5px; width:7px; height:6px; border-radius:50%; background:#d9a275; z-index:4; }
+.ff-pack { left:5px; top:10px; width:9px; height:9px; border-radius:3px; background:#1b2632; border:1px solid #8190a0; z-index:1; }
+.ff-body { left:4px; top:9px; width:11px; height:10px; border-radius:3px; background:#d49a14; border:1px solid #2c2110; box-shadow:inset 0 -2px #ede7d6; z-index:3; }
+.ff-arm { top:10px; width:4px; height:10px; border-radius:3px; background:#c98710; transform-origin:top; z-index:2; }
+.ff-arm.left { left:1px; transform:rotate(14deg); }.ff-arm.right { right:1px; transform:rotate(-14deg); }
+.ff-leg { top:18px; width:5px; height:8px; border-radius:0 0 3px 3px; background:#1f2a35; border-bottom:2px solid #d7c59a; }
+.ff-leg.left { left:4px; }.ff-leg.right { right:4px; }
+.truck-visual { position:absolute; left:50%; top:50%; width:44px; height:13px; transform:translate(-50%,-50%); transform-origin:50% 50%; filter:drop-shadow(0 4px 5px rgba(0,0,0,.8)); will-change:transform; }
+.truck-visual svg { display:block; width:100%; height:100%; }
+.light-blue { fill:#1228d8; }.light-red { fill:#d20e26; }
+.lights-active .light-blue { fill:#2fbfff; filter:drop-shadow(0 0 5px #35d2ff); }.lights-active .light-red { fill:#ff2947; filter:drop-shadow(0 0 5px #ff2947); }
+@keyframes strobe-blue { 50% { fill:#b8f4ff; filter:drop-shadow(0 0 9px #42ddff); } }
+@keyframes strobe-red { 50% { fill:#7d0013; filter:none; } }
+.siren-active .light-blue { animation:strobe-blue .16s infinite alternate; }.siren-active .light-red { animation:strobe-red .16s infinite alternate; }
+.reduced-flashing .siren-active .light-blue,.reduced-flashing .siren-active .light-red { animation:none; }
+.traffic-visual { position:absolute; left:50%; top:50%; width:24px; height:10px; transform:translate(-50%,-50%); border:1px solid #111; border-radius:4px; background:hsl(var(--traffic-hue) 55% 52%); box-shadow:inset 5px 0 rgba(220,240,255,.55),0 3px 4px rgba(0,0,0,.65); transition:opacity .15s; }
+.traffic-visual::after { content:""; position:absolute; right:-2px; top:2px; width:3px; height:5px; border-radius:1px; background:#fff4b0; }
+.traffic-visual.yielding { opacity:.72; }
+.incident-marker { --fire-intensity:1; width:48px; height:48px; display:grid; place-items:center; border:3px solid white; border-radius:50%; background:#d71933; color:white; font-size:22px; box-shadow:0 0 calc(8px + 24px * var(--fire-intensity)) rgba(255,58,25,calc(.3 + .5 * var(--fire-intensity))); animation:incident-pulse 1.1s infinite; }
+.incident-marker.controlled { background:#246b4a; filter:grayscale(.7); animation:none; }
+@keyframes incident-pulse { 50% { transform:scale(calc(1 + .1 * var(--fire-intensity))); } }
+
+.direction-arrow { position:fixed; z-index:2150; left:50%; top:calc(88px + env(safe-area-inset-top)); width:42px; height:42px; display:none; place-items:center; border:2px solid rgba(255,255,255,.75); border-radius:50%; background:rgba(7,11,16,.78); color:var(--yellow); font-size:24px; line-height:1; transform-origin:50% 50%; filter:drop-shadow(0 4px 5px #000); pointer-events:none; }
+.direction-arrow.show { display:grid; }
+.prompt { position:fixed; z-index:2250; left:50%; bottom:calc(18px + env(safe-area-inset-bottom)); transform:translateX(-50%); display:flex; align-items:center; gap:9px; max-width:min(520px,90vw); padding:9px 13px; border:1px solid var(--line); border-radius:8px; background:rgba(5,8,12,.92); color:white; font-size:11px; font-weight:850; box-shadow:0 8px 24px rgba(0,0,0,.45); transition:.16s; }
+.prompt.hidden { opacity:0; visibility:hidden; transform:translate(-50%,8px); }
+.key { min-width:28px; padding:5px 7px; border:1px solid rgba(255,255,255,.3); border-bottom-width:3px; border-radius:5px; background:#26303b; font-size:9px; text-align:center; }
+.toast,.feedback { position:fixed; z-index:2600; left:50%; transform:translate(-50%,-10px); padding:10px 14px; border:1px solid var(--line); border-radius:8px; background:rgba(5,8,12,.94); color:white; font-size:12px; font-weight:900; text-align:center; opacity:0; visibility:hidden; transition:.18s; pointer-events:none; }
+.toast { top:22%; }.feedback { top:48%; color:#b8f3ff; }
+.toast.show,.feedback.show { opacity:1; visibility:visible; transform:translate(-50%,0); }
+.tile-loading { position:fixed; z-index:2050; left:50%; top:8px; transform:translateX(-50%); padding:5px 8px; border-radius:999px; background:rgba(5,8,12,.76); color:#dbe5ef; font-size:8px; font-weight:900; opacity:0; transition:.2s; pointer-events:none; }
+.tile-loading.show { opacity:1; }
+.corner-button { position:fixed; z-index:2400; top:calc(118px + env(safe-area-inset-top)); width:38px; height:38px; border:1px solid var(--line); border-radius:9px; background:var(--panel); color:white; font-weight:1000; box-shadow:0 5px 15px rgba(0,0,0,.35); }
+.pause-button { right:12px; }.settings-button { right:56px; }
+body[data-game-state="START_SCREEN"] .corner-button { display:none; }
+
+.mobile-controls { position:fixed; z-index:2300; left:0; right:0; bottom:0; display:none; justify-content:space-between; align-items:flex-end; padding:10px max(12px,env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left)); background:linear-gradient(transparent,rgba(2,5,9,.48)); pointer-events:none; }
+.joystick { position:relative; width:128px; height:128px; border:1px solid rgba(255,255,255,.22); border-radius:50%; background:radial-gradient(circle,rgba(255,255,255,.08) 0 34%,transparent 35%),rgba(8,12,18,.78); box-shadow:inset 0 0 28px rgba(0,0,0,.45),0 10px 25px rgba(0,0,0,.35); pointer-events:auto; touch-action:none; }
+.joystick::before,.joystick::after { content:""; position:absolute; background:rgba(255,255,255,.13); pointer-events:none; }
+.joystick::before { left:15px; right:15px; top:50%; height:1px; }.joystick::after { top:15px; bottom:15px; left:50%; width:1px; }
+.stick { position:absolute; left:50%; top:50%; width:58px; height:58px; border:2px solid rgba(255,255,255,.5); border-radius:50%; background:linear-gradient(145deg,#3c4856,#11161d); box-shadow:0 8px 18px rgba(0,0,0,.5); transform:translate(-50%,-50%); pointer-events:none; }
+.joystick label { position:absolute; left:0; right:0; bottom:10px; color:#bdc7d2; font-size:7px; font-weight:950; letter-spacing:.12em; text-align:center; text-transform:uppercase; }
+.mobile-action-grid { display:grid; grid-template-columns:repeat(4,54px); grid-template-rows:42px 48px 56px; gap:6px; pointer-events:auto; }
+.mobile-action-grid button { border:1px solid rgba(255,255,255,.24); border-radius:12px; background:linear-gradient(145deg,rgba(40,49,61,.97),rgba(11,16,22,.97)); color:white; font-size:8px; font-weight:950; text-transform:uppercase; touch-action:none; }
+.mobile-action-grid button.active,.mobile-action-grid button:active { transform:translateY(2px); filter:brightness(1.3); }
+#brake-button { grid-column:1/3; }#boost-button { grid-column:3/5; background:linear-gradient(145deg,#c61c32,#650a17); }
+#action-button { grid-column:1/5; background:linear-gradient(145deg,#d65c16,#6e2708); font-size:10px; }
+
+.tool-selector { position:fixed; z-index:2700; left:50%; bottom:calc(72px + env(safe-area-inset-bottom)); transform:translate(-50%,15px); display:flex; gap:8px; align-items:center; padding:10px; border:1px solid var(--line); border-radius:10px; background:rgba(7,11,16,.96); box-shadow:0 15px 40px #000; opacity:0; visibility:hidden; transition:.18s; }
+.tool-selector.show { opacity:1; visibility:visible; transform:translate(-50%,0); }
+.tool-selector strong { padding:0 4px; font-size:10px; text-transform:uppercase; }
+.tool-selector button { padding:9px 11px; border:1px solid rgba(255,255,255,.2); border-radius:7px; background:#263240; color:white; font-size:10px; font-weight:850; }
