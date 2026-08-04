@@ -12,6 +12,8 @@ import { Phase3Controller } from './phase3.js';
 import { installPhase3Polish } from './phase3-polish.js';
 import { Phase4Controller } from './phase4.js';
 import { installPhase4Polish } from './phase4-polish.js';
+import { Phase5Controller } from './phase5.js';
+import { installPhase5Polish } from './phase5-polish.js';
 
 const options = readRuntimeOptions();
 const ui = new UIController(options);
@@ -53,3 +55,9 @@ const phase4 = new Phase4Controller(game, phase2, phase3, { seed: options.seed }
 phase4.install();
 installPhase4Polish(phase4);
 window.__PFR_PHASE4__ = phase4;
+
+const phase5 = new Phase5Controller(game, phase2, phase3, phase4, { seed: options.seed });
+if (options.testMode) phase5.save.data.tutorialDismissed = true;
+phase5.install();
+installPhase5Polish(phase5);
+window.__PFR_PHASE5__ = phase5;

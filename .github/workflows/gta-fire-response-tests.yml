@@ -18,7 +18,7 @@ on:
 jobs:
   static-and-unit:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -27,12 +27,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Run Phase 1–4 checks
-        run: bash tests/gta-fire-response/run-phase4-checks.sh
+      - name: Run complete Phase 1–5 checks
+        run: bash tests/gta-fire-response/run-phase5-checks.sh
 
   chromium-browser:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 14
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -46,6 +46,6 @@ jobs:
         run: |
           npm install --no-audit --no-fund
           npx playwright install --with-deps chromium
-      - name: Run Phase 1–4 Chromium journeys
+      - name: Run complete Phase 1–5 Chromium journeys
         working-directory: tests/gta-fire-response
         run: npm run test:e2e
