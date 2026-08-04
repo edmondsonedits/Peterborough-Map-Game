@@ -7,9 +7,11 @@
    loads small page-specific production enhancements when required.
 
    WHAT THE PLAYER EXPERIENCES:
-   A small “v1.5.5” label confirms which release is running. On the mobile driving
-   simulator, the active dispatch card now reliably minimizes five seconds after
-   the call begins while leaving the live timer and expand arrow visible.
+   A small “v1.5.6” label confirms which release is running. The response
+   simulator now starts with Esri satellite imagery and hybrid labels, includes
+   a one-tap Normal Map / Satellite switch, and preloads upcoming zoom tiles to
+   reduce mobile flicker. The mobile dispatch card still minimizes five seconds
+   after a call begins while leaving its timer and expand control visible.
 
    HOW TO READ THIS FILE:
    - VERSION and LABEL identify the release.
@@ -28,7 +30,7 @@
   Updating VERSION changes the label and shared build identity. The version is
   also used elsewhere as a cache value so browsers request current source files.
   */
-  const VERSION = '1.5.5';
+  const VERSION = '1.5.6';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
 
@@ -90,21 +92,112 @@
   document.documentElement.dataset.ptboChannel = 'production';
 
   /*
+  FUNCTION: installResponseSimulatorSatellite
+
+  WHAT THE CODE DOES:
+  Detects the desktop or mobile response-simulator wrapper, adds a temporary map
+  loading cover, and injects the release-specific satellite module into the
+  simulator iframe as soon as its shared Leaflet page finishes loading.
+
+  WHY IT LIVES HERE:
+  Both wrappers already load build-version.js before their own startup scripts.
+  One shared loader therefore enables the same map on desktop and mobile without
+  duplicating the large simulator HTML file or touching vehicle physics.
+  */
+  function installResponseSimulatorSatellite() {
+    const isResponseWrapper = /\/response-simulator\/(?:play|mobile)\/(?:index\.html)?$/.test(location.pathname);
+    if (!isResponseWrapper) return;
+
+    const frame = document.getElementById('simulator');
+    if (!frame || frame.dataset.ptboSatelliteLoader === VERSION) return;
+    frame.dataset.ptboSatelliteLoader = VERSION;
+
+    const style = document.createElement('style');
+    style.id = 'ptbo-satellite-startup-style';
+    style.textContent = `
+      #ptbo-satellite-startup-cover{
+        position:fixed;inset:0;z-index:5950;display:grid;place-items:center;padding:24px;
+        color:#f8fafc;background:#111827;text-align:center;transition:opacity .2s ease;
+        font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      }
+      #ptbo-satellite-startup-cover.hidden{opacity:0;pointer-events:none}
+      #ptbo-satellite-startup-cover strong{display:block;font-size:1.15rem}
+      #ptbo-satellite-startup-cover span{display:block;margin-top:7px;color:#cbd5e1;font-size:.9rem;line-height:1.45}
+    `;
+
+    const cover = document.createElement('div');
+    cover.id = 'ptbo-satellite-startup-cover';
+    cover.innerHTML = '<div><strong>Loading satellite map</strong><span>Preparing Esri imagery, road labels, and smooth zoom tiles…</span></div>';
+    document.head.appendChild(style);
+    document.body.appendChild(cover);
+
+    let completed = false;
+    const finish = () => {
+      if (completed) return;
+      completed = true;
+      cover.classList.add('hidden');
+      setTimeout(() => {
+        cover.remove();
+        style.remove();
+      }, 240);
+    };
+
+    const failOpen = error => {
+      if (error) console.error('Satellite map enhancement did not finish; continuing with the normal map.', error);
+      finish();
+    };
+
+    const installInsideFrame = () => {
+      const doc = frame.contentDocument;
+      const game = frame.contentWindow;
+      if (!doc || !game) {
+        failOpen(new Error('Simulator frame was not accessible.'));
+        return;
+      }
+
+      const existing = doc.getElementById('ptbo-satellite-map-loader');
+      if (existing) {
+        Promise.resolve(game.PTBO_SATELLITE_MAP_READY).then(finish, failOpen);
+        return;
+      }
+
+      const script = doc.createElement('script');
+      script.id = 'ptbo-satellite-map-loader';
+      script.src = new URL(`../response-simulator/satellite-map-1.5.6.js?v=${VERSION}`, SCRIPT_URL).href;
+      script.onload = () => {
+        Promise.resolve(game.PTBO_SATELLITE_MAP_READY).then(finish, failOpen);
+      };
+      script.onerror = () => failOpen(new Error('Unable to load the satellite map module.'));
+      (doc.body || doc.documentElement).appendChild(script);
+    };
+
+    frame.addEventListener('load', installInsideFrame);
+    if (frame.contentDocument?.readyState === 'complete') installInsideFrame();
+
+    // A map-service outage must not permanently block access to the game.
+    setTimeout(() => failOpen(new Error('Satellite startup safety timeout reached.')), 12000);
+  }
+
+  /*
   FUNCTION: installPageEnhancements
 
   WHAT THE CODE DOES:
-  Detects the outer mobile response-simulator page and loads the v1.5.5 dispatch
-  card controller from a release-specific URL. Other pages do not download it.
+  Loads the existing mobile dispatch-card controller on the mobile response page
+  and installs the satellite map loader on both mobile and desktop wrappers.
+  Other game pages do not download these simulator-only modules.
   */
   function installPageEnhancements() {
     const isMobileSimulator = /\/response-simulator\/mobile\/(?:index\.html)?$/.test(location.pathname);
-    if (!isMobileSimulator || document.getElementById('ptbo-mobile-dispatch-hud-loader')) return;
 
-    const script = document.createElement('script');
-    script.id = 'ptbo-mobile-dispatch-hud-loader';
-    script.src = new URL(`mobile-dispatch-hud-1.5.5.js?v=${VERSION}`, SCRIPT_URL).href;
-    script.async = true;
-    document.head.appendChild(script);
+    if (isMobileSimulator && !document.getElementById('ptbo-mobile-dispatch-hud-loader')) {
+      const script = document.createElement('script');
+      script.id = 'ptbo-mobile-dispatch-hud-loader';
+      script.src = new URL(`mobile-dispatch-hud-1.5.5.js?v=${VERSION}`, SCRIPT_URL).href;
+      script.async = true;
+      document.head.appendChild(script);
+    }
+
+    installResponseSimulatorSatellite();
   }
 
   /*
