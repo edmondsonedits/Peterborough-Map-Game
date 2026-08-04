@@ -8,7 +8,8 @@
   <link rel="preconnect" href="https://unpkg.com">
   <link rel="preconnect" href="https://server.arcgisonline.com">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
-  <link rel="stylesheet" href="styles.css?v=0.2.0">
+  <link rel="stylesheet" href="styles.css?v=0.3.0">
+  <link rel="stylesheet" href="refinement-v0.3.css?v=0.3.0">
 </head>
 <body>
   <div id="map" aria-label="Satellite map game world"></div>
@@ -35,7 +36,7 @@
       <div class="stat"><span>Speed</span><strong id="speed">0 km/h</strong></div>
       <div class="stat"><span>Score</span><strong id="score">0000</strong></div>
     </div>
-    <div class="road-lock loading" id="road-lock">Loading road barriers</div>
+    <div class="road-lock loading" id="road-lock">Loading road geometry</div>
   </section>
 
   <div class="hud bottom-center">
@@ -56,15 +57,15 @@
     <div class="start-card">
       <div class="eyebrow">A top-down emergency action game</div>
       <h1>Peterborough <em>Fire Response</em></h1>
-      <p>Begin on foot at Station 1, enter the engine, respond through a realistic satellite map, then leave the truck and complete fire, rescue, or medical objectives on scene.</p>
+      <p>Begin directly on Station 1, enter the engine, respond across a realistic satellite map, then leave the truck and complete fire, rescue, or medical objectives on scene.</p>
       <div class="features">
-        <div class="feature"><b>On Foot</b>Run freely across the full map and work the scene</div>
-        <div class="feature"><b>Direct Drive</b>Point the thumbstick where the truck should travel</div>
-        <div class="feature"><b>Road Locked</b>The engine stays on Peterborough's drivable roads</div>
+        <div class="feature"><b>Top-Down Crew</b>A smaller firefighter begins directly on the station</div>
+        <div class="feature"><b>Compact Engine</b>The original simulator truck at a better game scale</div>
+        <div class="feature"><b>Smoother Roads</b>OSM road geometry beneath the satellite imagery</div>
       </div>
-      <div class="load-status" id="load-status">Loading Peterborough road barriers…</div>
+      <div class="load-status" id="load-status">Building road geometry beneath the satellite map…</div>
       <button class="start-button" id="start-button" type="button" disabled>Loading Roads…</button>
-      <div class="version">Prototype v0.2.0 · Road-boundary update</div>
+      <div class="version">Prototype v0.3.0 · Scale and road-smoothing update</div>
     </div>
   </div>
 
@@ -83,9 +84,10 @@
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-  <script src="game-core.js?v=0.2.0"></script>
-  <script src="road-system.js?v=0.2.0"></script>
-  <script src="gameplay.js?v=0.2.0"></script>
-  <script src="controls.js?v=0.2.0"></script>
+  <script src="game-core.js?v=0.3.0"></script>
+  <script src="road-system.js?v=0.3.0"></script>
+  <script src="gameplay.js?v=0.3.0"></script>
+  <script src="refinement-v0.3.js?v=0.3.0"></script>
+  <script src="controls.js?v=0.3.0"></script>
 </body>
 </html>
