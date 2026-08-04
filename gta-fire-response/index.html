@@ -4,11 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
   <meta name="theme-color" content="#090b0f">
-  <title>Peterborough Fire Response: Street Shift</title>
+  <meta name="description" content="Peterborough Fire Response: Street Shift — a complete browser fire-response game with tactical incidents, citywide deployment and persistent career progression.">
+  <title>Peterborough Fire Response: Street Shift — Complete Release</title>
   <link rel="preconnect" href="https://unpkg.com">
   <link rel="preconnect" href="https://server.arcgisonline.com">
   <script>if(new URLSearchParams(location.search).get("test")!=="1")document.write('<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">');</script>
-  <link rel="stylesheet" href="styles.css?v=0.7.0-phase4">
+  <link rel="stylesheet" href="styles.css?v=1.0.0-phase5">
 </head>
 <body data-game-state="START_SCREEN">
   <main id="map" aria-label="Peterborough satellite map game world" data-testid="game-map"></main>
@@ -23,7 +24,7 @@
       <div class="dispatch-details">
         <div id="mission-address" class="mission-address">210 Sherbrooke Street, Peterborough</div>
         <div id="dispatch-notes" class="dispatch-notes">Awaiting assignment.</div>
-        <div id="mission-objective" class="mission-objective">Choose your station and apparatus, then start the shift.</div>
+        <div id="mission-objective" class="mission-objective">Choose your station, apparatus and difficulty, then start the shift.</div>
         <div class="dispatch-actions"><button id="repeat-dispatch" type="button">Repeat dispatch</button></div>
       </div>
       <button id="dispatch-toggle" class="dispatch-toggle" type="button">Minimize</button>
@@ -61,18 +62,18 @@
 
   <section id="start-screen" class="start-screen">
     <div class="start-card">
-      <div class="eyebrow">Phase 4 · citywide deployment and career</div>
+      <div class="eyebrow">Complete release · Phase 5</div>
       <h1>Peterborough <em>Fire Response</em></h1>
-      <p>Choose a station and apparatus, protect coverage across Peterborough, manage fuel, water and repairs, complete rotating shift challenges, request additional alarms and build a citywide fire-service career.</p>
+      <p>A fully fleshed-out Peterborough fire-response game with 23 incident locations, randomized conditions, tactical operations, three stations, four apparatus, persistent career progression, medals, records, service management and adaptive mobile performance.</p>
       <div class="feature-grid">
-        <div><b>Three stations</b><span>Deploy from central, north-end or southwest quarters.</span></div>
-        <div><b>Apparatus readiness</b><span>Fuel, water, damage and service decisions carry between calls.</span></div>
-        <div><b>Citywide career</b><span>Coverage, credits, challenges, district reputation and larger alarms persist.</span></div>
+        <div><b>Complete incident roster</b><span>Fire, medical, rescue, collision and alarm calls with changing conditions.</span></div>
+        <div><b>Full career loop</b><span>Ranks, functional perks, medals, records, credits, apparatus service and shift challenges.</span></div>
+        <div><b>Release-grade polish</b><span>Guided onboarding, detailed debriefs, difficulty modes, accessibility, save tools and browser QA.</span></div>
       </div>
       <div id="load-status" class="load-status">Loading indexed Peterborough road geometry…</div>
       <button id="start-button" class="start-button" type="button" disabled data-testid="start-shift">Loading Roads…</button>
-      <div class="start-help">Open HQ to choose a station and unit · WASD/Arrows move · E/Space interact · L lights · Q siren · R mode · H horn · P pause</div>
-      <div id="version-text" class="version">Phase 4 build 0.7.0-phase4</div>
+      <div class="start-help">HQ: station and apparatus · OPS: difficulty, tutorial and career · WASD/Arrows move · E/Space interact · L lights · Q siren · R mode · H horn · P pause</div>
+      <div id="version-text" class="version">Complete release 1.0.0-phase5</div>
     </div>
   </section>
 
@@ -111,7 +112,7 @@
 
   <pre id="debug-overlay" class="debug-overlay" aria-label="Debug information"></pre>
   <script>if(new URLSearchParams(location.search).get("test")!=="1")document.write('<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""><\/script>');</script>
-  <script src="leaflet-fallback.js?v=0.7.0-phase4"></script>
-  <script type="module" src="src/main.js?v=0.7.0-phase4"></script>
+  <script src="leaflet-fallback.js?v=1.0.0-phase5"></script>
+  <script type="module" src="src/main.js?v=1.0.0-phase5"></script>
 </body>
 </html>
