@@ -28,4 +28,20 @@ export function installPhase5Polish(controller) {
     }
     return result;
   };
+
+  // Reset every persistent career layer, including the exact Phase 2 key.
+  // The earlier fallback key is retained for players who opened development builds.
+  controller.resetCareer = () => {
+    for (const key of [
+      'pfr-phase5-final-release',
+      'pfr-phase4-city-career',
+      'pfr-phase3-progression',
+      'pfr-street-shift-phase2',
+      'pfr-street-shift-save'
+    ]) {
+      try { localStorage.removeItem(key); } catch {}
+    }
+    game.ui.toast('CAREER RESET · RELOADING');
+    setTimeout(() => location.reload(), 450);
+  };
 }
