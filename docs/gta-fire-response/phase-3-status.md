@@ -16,11 +16,21 @@ Branch: `agent/gta-fire-phase-3-operations`
 - Four additional playable dispatch records.
 - Phase 3 pure tests covering objective dependencies, optional objectives, escalation, stamina/air, grading and persistence.
 
-## Validation required before release
+## Automated validation
 
-- Run syntax checks for all modules.
-- Run Phase 1, Phase 2 and Phase 3 pure tests.
-- Validate local assets and CSS imports.
-- Exercise one fire, medical, MVC, alarm and rescue call through completion.
-- Check mobile portrait and landscape operations-panel layout.
-- Confirm repeated reset removes Phase 3 state and starts the next operation cleanly.
+- GitHub Actions run `30932407316`: **success**.
+- Static HTML, local assets, CSS imports and Phase 3 controller boot: **pass**.
+- Phase 1–3 pure tests: **18 passed, 0 failed**.
+- JavaScript syntax checks across all runtime modules: **pass**.
+- Local HTTP delivery smoke: **pass**.
+- Branch scope: game, scoped documentation/tests and the scoped GitHub Actions workflow only.
+
+## Included but not counted as completed evidence
+
+- Playwright specifications cover Phase 3 operation boot and mobile command-panel containment, but Playwright browsers are not installed or executed by the current CI workflow.
+
+## Remaining manual QA
+
+- Complete natural, no-teleport journeys for fire, medical, MVC, alarm and rescue calls using real Peterborough road data.
+- Real Android portrait and landscape touch testing with Esri imagery.
+- Long repeated-call soak, progression migration and extensive real-intersection testing.
