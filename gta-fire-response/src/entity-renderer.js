@@ -1,3 +1,7 @@
+function supportVehicleLabel(kind) {
+  return ({ ambulance:'EMS', police:'POL', engine:'ENG', ladder:'LAD', rescue:'RES' })[kind] || String(kind || 'UNIT').slice(0,3).toUpperCase();
+}
+
 function markerMarkup(entity) {
   const kind = entity.kind || entity.type;
   if (entity.type === 'pedestrian') {
@@ -5,7 +9,7 @@ function markerMarkup(entity) {
     return `<div class="phase2-person ${entity.state || ''}" data-entity-id="${entity.id}"><span>${symbol}</span></div>`;
   }
   if (entity.type === 'crew') return `<div class="phase2-crew" style="--entity-color:${entity.color || '#f4c542'}" data-entity-id="${entity.id}"><span>${String(entity.role || 'FF').slice(0,1)}</span></div>`;
-  if (entity.type === 'supportVehicle') return `<div class="phase2-support-vehicle ${kind}" data-entity-id="${entity.id}"><span>${kind === 'ambulance' ? 'EMS' : 'POL'}</span></div>`;
+  if (entity.type === 'supportVehicle') return `<div class="phase2-support-vehicle ${kind}" data-entity-id="${entity.id}"><span>${entity.symbol || supportVehicleLabel(kind)}</span></div>`;
   if (entity.type === 'supportPerson') return `<div class="phase2-support-person ${kind}" data-entity-id="${entity.id}"><span>${kind === 'paramedic' ? '✚' : '◆'}</span></div>`;
   if (entity.type === 'hydrant') return `<div class="phase2-hydrant ${entity.state || ''}" data-entity-id="${entity.id}"><span>H</span></div>`;
   if (entity.type === 'patient') return `<div class="phase2-patient ${entity.state || ''}" data-entity-id="${entity.id}"><span>+</span></div>`;
@@ -35,7 +39,7 @@ export class EntityRenderer {
     const size = sizes[entity.type] || [24,24];
     marker = L.marker([entity.position.lat, entity.position.lng], {
       interactive: false,
-      zIndexOffset: entity.type === 'crew' ? 1250 : entity.type === 'pedestrian' ? 760 : 850,
+      zIndexOffset: entity.type === 'crew' ? 1250 : entity.type === 'pedestrian' ? 760 : entity.type === 'supportVehicle' ? 1100 : 850,
       icon: L.divIcon({ className: `phase2-marker phase2-${entity.type}`, html: markerMarkup(entity), iconSize: size, iconAnchor: [size[0]/2,size[1]/2] })
     }).addTo(this.map);
     this.markers.set(entity.id, marker);
@@ -50,7 +54,7 @@ export class EntityRenderer {
       marker.setLatLng([entity.position.lat, entity.position.lng]).setOpacity(entity.active === false ? 0 : 1);
       const element = marker.getElement()?.firstElementChild;
       if (element) {
-        element.className = element.className.split(' ').filter(name => !['walking','waiting','yielding','watching','fleeing','filming','arrived','connected','treated'].includes(name)).join(' ');
+        element.className = element.className.split(' ').filter(name => !['walking','waiting','yielding','watching','fleeing','filming','arrived','connected','treated','responding'].includes(name)).join(' ');
         if (entity.state) element.classList.add(entity.state);
         element.style.transform = `translate(-50%,-50%) rotate(${entity.heading || 0}deg)`;
       }
