@@ -38,4 +38,7 @@ for filename in required:
     assert (HTML.parent / 'src' / filename).exists(), f'Missing complete-release module: {filename}'
 phase5_data = (HTML.parent / 'src' / 'phase5-data.js').read_text(encoding='utf-8')
 assert phase5_data.count("id:'") >= 30, 'Phase 5 content roster appears incomplete'
+phase5_polish = (HTML.parent / 'src' / 'phase5-polish.js').read_text(encoding='utf-8')
+assert 'call || game.selectCall()' in phase5_polish, 'Automatic dispatch is not hardened'
+assert 'pfr-street-shift-phase2' in phase5_polish, 'Complete career reset does not clear Phase 2 data'
 print('Static HTML/assets/CSS/Phase5 complete-release boot: PASS')
