@@ -2,11 +2,7 @@ import { APP_VERSION, DEFAULT_SETTINGS, DEFAULT_TUNING, GAME_STATES } from './co
 import { bearing, formatTime } from './math.js';
 
 function deepMergeSettings(saved = {}) {
-  return {
-    ...DEFAULT_SETTINGS,
-    ...saved,
-    tuning: { ...DEFAULT_TUNING, ...(saved.tuning || {}) }
-  };
+  return { ...DEFAULT_SETTINGS, ...saved, tuning: { ...DEFAULT_TUNING, ...(saved.tuning || {}) } };
 }
 
 export class UIController {
@@ -23,9 +19,8 @@ export class UIController {
     this.setupDebugCapture();
     document.documentElement.classList.toggle('reduced-motion', this.settings.reducedMotion);
     document.documentElement.classList.toggle('reduced-flashing', this.settings.reducedFlashing);
-    this.elements['version-text'].textContent = `Phase 1 build ${APP_VERSION}`;
+    this.elements['version-text'].textContent = `Phase 2 build ${APP_VERSION}`;
   }
-
   loadSettings() {
     try { return deepMergeSettings(JSON.parse(localStorage.getItem('pfr-phase1-settings') || '{}')); }
     catch { return deepMergeSettings(); }
@@ -35,7 +30,6 @@ export class UIController {
     document.documentElement.classList.toggle('reduced-motion', this.settings.reducedMotion);
     document.documentElement.classList.toggle('reduced-flashing', this.settings.reducedFlashing);
   }
-
   setupPanels() {
     this.elements['dispatch-toggle']?.addEventListener('click', () => this.setDispatchExpanded(!this.dispatchExpanded));
     this.elements['repeat-dispatch']?.addEventListener('click', () => this.onRepeatDispatch?.());
@@ -48,7 +42,6 @@ export class UIController {
     this.elements['result-return']?.addEventListener('click', () => this.onReturn?.());
     this.elements['tool-hose']?.addEventListener('click', () => this.onTool?.('hose'));
     this.elements['tool-extinguisher']?.addEventListener('click', () => this.onTool?.('extinguisher'));
-
     for (const input of document.querySelectorAll('[data-setting]')) {
       const path = input.dataset.setting.split('.');
       const value = path.reduce((object, key) => object?.[key], this.settings);
@@ -57,7 +50,7 @@ export class UIController {
       input.addEventListener('input', () => {
         let object = this.settings;
         for (let index = 0; index < path.length - 1; index += 1) object = object[path[index]];
-        object[path.at(-1)] = input.type === 'checkbox' ? input.checked : Number(input.value);
+        object[path.at(-1)] = input.type === 'checkbox' ? input.checked : input.tagName === 'SELECT' ? input.value : Number(input.value);
         this.saveSettings();
         this.onSettings?.(this.settings);
         const output = document.querySelector(`[data-output="${input.dataset.setting}"]`);
@@ -67,12 +60,10 @@ export class UIController {
       if (output) output.textContent = input.type === 'range' ? Number(input.value).toFixed(2) : String(input.value);
     }
   }
-
   setupDebugCapture() {
     window.addEventListener('error', event => this.errorLog.push(`${event.message} @ ${event.filename}:${event.lineno}`));
     window.addEventListener('unhandledrejection', event => this.errorLog.push(`Promise: ${event.reason?.message || event.reason}`));
   }
-
   bindGame(game) {
     this.onPause = () => game.togglePause();
     this.onResume = () => game.resume();
@@ -82,17 +73,16 @@ export class UIController {
     this.onRepeatDispatch = () => game.repeatDispatch();
     this.onSettings = settings => game.applySettings(settings);
   }
-
   setRoadStatus(status, text) {
     const chip = this.elements['road-status'];
     chip.textContent = text;
     chip.dataset.status = status;
     const start = this.elements['start-button'];
-    start.disabled = status !== 'ready';
+    start.disabled = status === 'loading';
     start.textContent = status === 'ready' ? 'Start Shift' : status === 'failed' ? 'Retry Road Data' : 'Loading Roads…';
     this.elements['load-status'].textContent = text;
+    this.elements['load-status'].classList.toggle('failed', status === 'failed');
   }
-
   setState(state) { document.body.dataset.gameState = state; this.elements['state-label'].textContent = state.replaceAll('_', ' '); }
   setMission(call, objective) {
     if (!call) {
@@ -140,7 +130,7 @@ export class UIController {
     this.elements['feedback'].classList.add('show');
   }
   setTool(tool, capacity = null) {
-    this.elements['tool-status'].textContent = tool === 'none' ? 'NO TOOL' : tool.toUpperCase();
+    this.elements['tool-status'].textContent = !tool || tool === 'none' ? 'NO TOOL' : String(tool).toUpperCase();
     this.elements['capacity-status'].textContent = capacity == null ? '' : `${Math.round(capacity)}%`;
   }
   setFireStatus(intensity, capacity) {
@@ -165,13 +155,11 @@ export class UIController {
       this.elements['result-rank'].textContent = result.rank || 'B';
     }
   }
-
   update(dt, game) {
     this.dispatchTimer = Math.max(0, this.dispatchTimer - dt);
     this.feedbackTimer = Math.max(0, this.feedbackTimer - dt);
     if (!this.feedbackTimer) this.elements['feedback'].classList.remove('show');
     if (this.dispatchTimer === 0 && this.dispatchExpanded && game.state.current !== GAME_STATES.START_SCREEN) this.setDispatchExpanded(false);
-
     const now = performance.now();
     if (now - this.lastUiUpdate < 90) return;
     this.lastUiUpdate = now;
@@ -187,7 +175,6 @@ export class UIController {
     } else this.elements['direction-arrow'].classList.remove('show');
     if (this.options.debug) this.updateDebug(game);
   }
-
   updateDebug(game) {
     const road = game.roads.debugInfo(game.truck);
     const debug = this.elements['debug-overlay'];
