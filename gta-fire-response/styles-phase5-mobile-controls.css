@@ -1,0 +1,9 @@
+@media (pointer:coarse),(max-width:900px) {
+  /* Keep Operations Centre and Incident Command side by side above the
+     touch controls. Command owns the far-right position; OPS sits beside it. */
+  .phase5-open { right:65px; }
+}
+
+@media (orientation:landscape) and (max-height:620px) {
+  .phase5-open { right:65px; }
+}
