@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://unpkg.com">
   <link rel="preconnect" href="https://server.arcgisonline.com">
   <script>if(new URLSearchParams(location.search).get("test")!=="1")document.write('<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">');</script>
-  <link rel="stylesheet" href="styles.css?v=0.4.0-phase1">
+  <link rel="stylesheet" href="styles.css?v=0.5.0-phase2">
 </head>
 <body data-game-state="START_SCREEN">
   <main id="map" aria-label="Peterborough satellite map game world" data-testid="game-map"></main>
@@ -24,9 +24,7 @@
         <div id="mission-address" class="mission-address">210 Sherbrooke Street, Peterborough</div>
         <div id="dispatch-notes" class="dispatch-notes">Awaiting assignment.</div>
         <div id="mission-objective" class="mission-objective">Start the shift when the road network is ready.</div>
-        <div class="dispatch-actions">
-          <button id="repeat-dispatch" type="button">Repeat dispatch</button>
-        </div>
+        <div class="dispatch-actions"><button id="repeat-dispatch" type="button">Repeat dispatch</button></div>
       </div>
       <button id="dispatch-toggle" class="dispatch-toggle" type="button">Minimize</button>
     </section>
@@ -36,16 +34,9 @@
         <div class="status-box"><small>Speed</small><strong id="speed">ON FOOT</strong></div>
         <div class="status-box"><small>Score</small><strong id="score">0000</strong></div>
       </div>
-      <div class="status-row compact">
-        <span id="state-label">START SCREEN</span>
-        <span id="road-status" data-status="loading">LOADING ROADS</span>
-      </div>
+      <div class="status-row compact"><span id="state-label">START SCREEN</span><span id="road-status" data-status="loading">LOADING ROADS</span></div>
       <div class="status-row compact equipment-status">
-        <span id="lights-state">LIGHTS OFF</span>
-        <span id="siren-state">SIREN OFF</span>
-        <span id="tool-status">NO TOOL</span>
-        <span id="capacity-status"></span>
-        <span id="fire-status"></span>
+        <span id="lights-state">LIGHTS OFF</span><span id="siren-state">SIREN OFF</span><span id="tool-status">NO TOOL</span><span id="capacity-status"></span><span id="fire-status"></span>
       </div>
     </section>
   </header>
@@ -53,81 +44,51 @@
   <div id="direction-arrow" class="direction-arrow" aria-label="Direction to incident">▲</div>
   <div id="feedback" class="feedback" aria-live="polite"></div>
   <div id="toast" class="toast" aria-live="polite"></div>
-
-  <div id="prompt" class="prompt hidden" data-testid="interaction-prompt">
-    <span id="prompt-key" class="key">E</span><span id="prompt-text">Interact</span>
-  </div>
+  <div id="prompt" class="prompt hidden" data-testid="interaction-prompt"><span id="prompt-key" class="key">E</span><span id="prompt-text">Interact</span></div>
 
   <button id="pause-button" class="corner-button pause-button" type="button" aria-label="Pause game">Ⅱ</button>
   <button id="settings-button" class="corner-button settings-button" type="button" aria-label="Open settings">⚙</button>
 
   <section class="mobile-controls" aria-label="Mobile game controls">
-    <div id="joystick" class="joystick" data-testid="joystick">
-      <div id="stick" class="stick"></div><label id="joystick-label">Move / Aim</label>
-    </div>
+    <div id="joystick" class="joystick" data-testid="joystick"><div id="stick" class="stick"></div><label id="joystick-label">Move / Aim</label></div>
     <div class="mobile-action-grid">
-      <button id="lights-button" type="button">Lights</button>
-      <button id="siren-button" type="button">Siren</button>
-      <button id="siren-mode-button" type="button">Mode</button>
-      <button id="horn-button" type="button">Horn</button>
-      <button id="brake-button" class="hold" type="button">Brake / Reverse</button>
-      <button id="boost-button" class="hold boost" type="button">Boost</button>
-      <button id="action-button" class="action hold" type="button">Interact</button>
+      <button id="lights-button" type="button">Lights</button><button id="siren-button" type="button">Siren</button><button id="siren-mode-button" type="button">Mode</button><button id="horn-button" type="button">Horn</button>
+      <button id="brake-button" class="hold" type="button">Brake / Reverse</button><button id="boost-button" class="hold boost" type="button">Boost</button><button id="action-button" class="action hold" type="button">Interact</button>
     </div>
   </section>
 
-  <section id="tool-selector" class="tool-selector" aria-label="Select equipment">
-    <strong>Rear compartment</strong>
-    <button id="tool-hose" type="button"><span>〰</span>Attack hose</button>
-    <button id="tool-extinguisher" type="button"><span>▣</span>Extinguisher</button>
-  </section>
+  <section id="tool-selector" class="tool-selector" aria-label="Select equipment"><strong>Rear compartment</strong><button id="tool-hose" type="button"><span>〰</span>Attack hose</button><button id="tool-extinguisher" type="button"><span>▣</span>Extinguisher</button></section>
 
   <section id="start-screen" class="start-screen">
     <div class="start-card">
-      <div class="eyebrow">Phase 1 · movement foundation</div>
+      <div class="eyebrow">Phase 2 · living emergency city</div>
       <h1>Peterborough <em>Fire Response</em></h1>
-      <p>Start at Station 1, receive a dispatch, drive a road-constrained engine through a living satellite-map city, deploy equipment and control the fire.</p>
+      <p>Start at Station 1, respond through active streets, command your crew, retrieve apparatus equipment, establish water, work with police and paramedics, and build a complete shift record.</p>
       <div class="feature-grid">
-        <div><b>Direct-stick driving</b><span>Point where Engine 1 should travel.</span></div>
-        <div><b>Road footprint</b><span>The complete truck body stays on drivable space.</span></div>
-        <div><b>Active streets</b><span>Traffic yields to emergency lights and siren.</span></div>
+        <div><b>Living streets</b><span>Traffic and pedestrians react to emergency operations.</span></div>
+        <div><b>Working crew</b><span>Assign hose, water, patient and traffic-control tasks.</span></div>
+        <div><b>Complete shifts</b><span>Damage, hydrants, recurring calls and statistics persist.</span></div>
       </div>
       <div id="load-status" class="load-status">Loading indexed Peterborough road geometry…</div>
       <button id="start-button" class="start-button" type="button" disabled data-testid="start-shift">Loading Roads…</button>
       <div class="start-help">Keyboard: WASD/Arrows · E/Space interact · L lights · Q siren · R mode · H horn · P pause</div>
-      <div id="version-text" class="version">Phase 1 build</div>
+      <div id="version-text" class="version">Phase 2 build</div>
     </div>
   </section>
 
-  <section id="pause-panel" class="modal-panel" aria-label="Paused">
-    <div class="modal-card">
-      <small>Street Shift</small><h2>Paused</h2>
-      <button id="resume-button" type="button">Resume</button>
-      <button id="restart-call" type="button">Restart current call</button>
-      <button id="return-station" type="button">Return to Station 1</button>
-    </div>
-  </section>
+  <section id="pause-panel" class="modal-panel" aria-label="Paused"><div class="modal-card"><small>Street Shift</small><h2>Paused</h2><button id="resume-button" type="button">Resume</button><button id="restart-call" type="button">Restart current call</button><button id="return-station" type="button">Return to Station 1</button></div></section>
 
-  <section id="result-panel" class="modal-panel" aria-label="Call result" data-testid="result-panel">
-    <div class="modal-card result-card">
-      <small>Incident complete</small><h2 id="result-title">Fire Control Confirmed</h2>
-      <p id="result-copy">The fire is under control.</p>
-      <div class="result-grid">
-        <div><small>Response</small><strong id="result-time">00:00</strong></div>
-        <div><small>Score</small><strong id="result-score">0000</strong></div>
-        <div><small>Rank</small><strong id="result-rank">A</strong></div>
-      </div>
-      <button id="result-return" type="button">Return to Station 1</button>
-    </div>
-  </section>
+  <section id="result-panel" class="modal-panel" aria-label="Call result" data-testid="result-panel"><div class="modal-card result-card"><small>Incident complete</small><h2 id="result-title">Incident Objectives Complete</h2><p id="result-copy">The incident is under control.</p><div class="result-grid"><div><small>Response</small><strong id="result-time">00:00</strong></div><div><small>Score</small><strong id="result-score">0000</strong></div><div><small>Rank</small><strong id="result-rank">A</strong></div></div><button id="result-return" type="button">Return to Station 1</button></div></section>
 
   <aside id="settings-panel" class="settings-panel" aria-label="Settings">
     <div class="settings-heading"><div><small>Development and accessibility</small><h2>Settings</h2></div><button id="settings-close" type="button">×</button></div>
     <div class="settings-scroll">
-      <fieldset><legend>Accessibility and sound</legend>
+      <fieldset><legend>Accessibility and city</legend>
         <label class="toggle"><span>Mute</span><input data-setting="mute" type="checkbox"></label>
         <label class="toggle"><span>Reduced flashing</span><input data-setting="reducedFlashing" type="checkbox"></label>
         <label class="toggle"><span>Reduced motion</span><input data-setting="reducedMotion" type="checkbox"></label>
+        <label class="toggle"><span>Reduced crowds</span><input data-setting="reducedCrowds" type="checkbox"></label>
+        <label><span>Time of day</span><select data-setting="timeOfDay"><option value="auto">Automatic</option><option value="day">Day</option><option value="dusk">Dusk</option><option value="night">Night</option></select></label>
         <label><span>Master volume <output data-output="masterVolume"></output></span><input data-setting="masterVolume" type="range" min="0" max="1" step="0.05"></label>
         <label><span>Siren volume <output data-output="sirenVolume"></output></span><input data-setting="sirenVolume" type="range" min="0" max="1" step="0.05"></label>
       </fieldset>
@@ -149,9 +110,8 @@
   </aside>
 
   <pre id="debug-overlay" class="debug-overlay" aria-label="Debug information"></pre>
-
   <script>if(new URLSearchParams(location.search).get("test")!=="1")document.write('<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""><\/script>');</script>
-  <script src="leaflet-fallback.js?v=0.4.0-phase1"></script>
-  <script type="module" src="src/main.js?v=0.4.0-phase1"></script>
+  <script src="leaflet-fallback.js?v=0.5.0-phase2"></script>
+  <script type="module" src="src/main.js?v=0.5.0-phase2"></script>
 </body>
 </html>
