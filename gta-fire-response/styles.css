@@ -1,6 +1,8 @@
-@import url('./styles-base.css?v=0.6.0-phase3');
-@import url('./styles-entities.css?v=0.6.0-phase3');
-@import url('./styles-ui.css?v=0.6.0-phase3');
-@import url('./styles-responsive.css?v=0.6.0-phase3');
-@import url('./styles-phase2.css?v=0.6.0-phase3');
-@import url('./styles-phase3.css?v=0.6.0-phase3');
+@import url('./styles-base.css?v=0.7.0-phase4');
+@import url('./styles-entities.css?v=0.7.0-phase4');
+@import url('./styles-ui.css?v=0.7.0-phase4');
+@import url('./styles-responsive.css?v=0.7.0-phase4');
+@import url('./styles-phase2.css?v=0.7.0-phase4');
+@import url('./styles-phase3.css?v=0.7.0-phase4');
+@import url('./styles-phase4.css?v=0.7.0-phase4');
+@import url('./styles-phase4-start-screen.css?v=0.7.0-phase4');

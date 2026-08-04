@@ -8,6 +8,7 @@ test.describe('Peterborough Fire Response Phase 2', () => {
     await expect(page.getByTestId('start-shift')).toBeEnabled();
     await page.getByTestId('start-shift').click();
     await expect.poll(() => page.evaluate(() => Boolean(window.__PFR_PHASE2__))).toBe(true);
+    await expect.poll(() => page.evaluate(() => Boolean(window.__PFR_GAME__?.activeCall))).toBe(true);
     await expect(page.locator('#mobile-status-strip')).toBeVisible();
     await page.evaluate(() => {
       const game = window.__PFR_GAME__;
