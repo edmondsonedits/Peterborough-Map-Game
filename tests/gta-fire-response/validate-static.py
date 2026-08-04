@@ -27,11 +27,12 @@ for css_import in re.findall(r"@import url\(['\"]?([^'\")]+)", styles):
 main = (HTML.parent / 'src' / 'main.js').read_text(encoding='utf-8')
 for phase in ('Phase3Controller', 'Phase4Controller', 'Phase5Controller'):
     assert phase in main, f'{phase} is not booted'
+assert 'installPhase5Polish' in main, 'Phase 5 release hardening is not installed'
 for global_name in ('__PFR_PHASE3__', '__PFR_PHASE4__', '__PFR_PHASE5__'):
     assert global_name in main, f'{global_name} is not exposed for verification'
 required = [
     'operation-engine.js', 'phase4-save.js', 'phase4-data.js',
-    'phase5.js', 'phase5-data.js', 'phase5-math.js', 'phase5-save.js', 'phase5-ui.js'
+    'phase5.js', 'phase5-polish.js', 'phase5-data.js', 'phase5-math.js', 'phase5-save.js', 'phase5-ui.js'
 ]
 for filename in required:
     assert (HTML.parent / 'src' / filename).exists(), f'Missing complete-release module: {filename}'
