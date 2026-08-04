@@ -1,0 +1,93 @@
+.phase3-open {
+  position:fixed; z-index:2450; right:12px; top:calc(164px + env(safe-area-inset-top));
+  display:none; width:62px; min-height:48px; padding:6px 5px; border:1px solid rgba(255,255,255,.22);
+  border-radius:11px; background:linear-gradient(145deg,rgba(23,35,48,.96),rgba(8,13,19,.96));
+  color:white; box-shadow:0 8px 22px rgba(0,0,0,.45); text-transform:uppercase;
+}
+.phase3-open.show { display:grid; place-items:center; }
+.phase3-open span { font:1000 18px/1 ui-monospace,monospace; color:#ffd43b; }
+.phase3-open small { font-size:7px; font-weight:950; letter-spacing:.08em; }
+.phase3-open.active { border-color:#ffd43b; filter:brightness(1.15); }
+
+.phase3-panel {
+  position:fixed; z-index:4750; top:0; left:0; bottom:0; width:min(430px,100vw);
+  transform:translateX(-105%); border-right:1px solid rgba(255,255,255,.17);
+  background:linear-gradient(180deg,#0b131d,#0b1017 60%,#080c12); color:#f8fafc;
+  box-shadow:22px 0 60px rgba(0,0,0,.62); transition:transform .22s ease; overflow:hidden;
+}
+.phase3-panel.show { transform:translateX(0); }
+.phase3-header { height:78px; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:13px 15px; border-bottom:1px solid rgba(255,255,255,.13); background:linear-gradient(90deg,rgba(187,20,43,.18),transparent); }
+.phase3-header small { color:#ff9aa5; font-size:8px; font-weight:950; letter-spacing:.13em; text-transform:uppercase; }
+.phase3-header h2 { margin:3px 0 0; font-size:19px; }
+.phase3-header button { width:40px; height:40px; border:1px solid rgba(255,255,255,.17); border-radius:9px; background:#1a2632; color:white; font-size:25px; }
+.phase3-vitals { display:grid; grid-template-columns:repeat(4,1fr); gap:5px; padding:8px 10px; border-bottom:1px solid rgba(255,255,255,.1); background:#101a25; }
+.phase3-vitals span { min-width:0; padding:6px 4px; border-radius:7px; background:rgba(255,255,255,.04); color:#91a0b1; font-size:7px; font-weight:900; text-align:center; text-transform:uppercase; }
+.phase3-vitals strong { display:block; margin-top:3px; overflow:hidden; color:white; font:900 10px ui-monospace,monospace; text-overflow:ellipsis; white-space:nowrap; }
+.phase3-tabs { display:grid; grid-template-columns:repeat(3,1fr); padding:8px 10px 0; gap:5px; }
+.phase3-tabs button { padding:9px 6px; border:1px solid rgba(255,255,255,.13); border-radius:8px 8px 0 0; background:#121c27; color:#9faaba; font-size:8px; font-weight:950; text-transform:uppercase; }
+.phase3-tabs button.active { border-bottom-color:#1a2632; background:#1a2632; color:#fff; }
+.phase3-pane { display:none; height:calc(100vh - 174px); padding:10px 11px calc(20px + env(safe-area-inset-bottom)); overflow:auto; touch-action:pan-y; }
+.phase3-pane.active { display:block; }
+.phase3-objectives { display:grid; gap:7px; margin:0; padding:0; list-style:none; }
+.phase3-objectives li { position:relative; display:grid; grid-template-columns:30px 1fr; gap:8px; align-items:center; min-height:54px; padding:8px 9px; overflow:hidden; border:1px solid rgba(255,255,255,.11); border-radius:9px; background:#111a24; }
+.phase3-objectives li.locked { opacity:.48; }
+.phase3-objectives li.available { border-color:rgba(255,212,59,.42); }
+.phase3-objectives li.active { border-color:rgba(56,189,248,.58); background:#102331; }
+.phase3-objectives li.complete { border-color:rgba(59,212,127,.34); background:#10251c; }
+.phase3-objectives li.failed { border-color:rgba(239,68,68,.55); background:#2c1115; }
+.phase3-check { width:28px; height:28px; display:grid; place-items:center; border:1px solid rgba(255,255,255,.22); border-radius:50%; color:#dbe5ef; font:900 11px ui-monospace,monospace; }
+.complete .phase3-check { border-color:#3bd47f; background:#19603b; color:white; }
+.phase3-objectives strong,.phase3-objectives small { display:block; }
+.phase3-objectives strong { font-size:10px; line-height:1.25; }
+.phase3-objectives small { margin-top:3px; color:#8997a8; font-size:8px; text-transform:capitalize; }
+.phase3-objectives i { position:absolute; left:0; bottom:0; width:var(--progress); height:3px; background:#38bdf8; box-shadow:0 0 8px #38bdf8; }
+.phase3-objectives .empty { display:block; color:#8d99a8; text-align:center; }
+.phase3-action-grid { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
+.phase3-action-grid button,.phase3-utility-grid button { min-height:58px; padding:8px; border:1px solid rgba(255,255,255,.16); border-radius:9px; background:linear-gradient(145deg,#21303f,#101821); color:white; text-align:left; }
+.phase3-action-grid button:disabled { opacity:.4; }
+.phase3-action-grid strong,.phase3-action-grid small { display:block; }
+.phase3-action-grid strong { font-size:9px; text-transform:uppercase; }
+.phase3-action-grid small { margin-top:4px; color:#9eabb9; font-size:7px; line-height:1.3; }
+.phase3-utility-grid { display:grid; grid-template-columns:1fr 1fr; gap:7px; margin-top:9px; }
+.phase3-utility-grid button { min-height:44px; text-align:center; font-size:8px; font-weight:900; text-transform:uppercase; }
+.phase3-action-hint { padding:9px; border-radius:8px; background:rgba(255,255,255,.05); color:#aab6c3; font-size:9px; line-height:1.4; }
+.phase3-career-rank { padding:14px; border:1px solid rgba(255,212,59,.28); border-radius:10px; background:linear-gradient(145deg,rgba(255,212,59,.1),rgba(255,255,255,.03)); }
+.phase3-career-rank small,.phase3-career-rank strong,.phase3-career-rank span { display:block; }
+.phase3-career-rank small { color:#d5bd63; font-size:8px; text-transform:uppercase; }
+.phase3-career-rank strong { margin:4px 0; font-size:20px; }
+.phase3-career-rank span { color:#aab4c1; font-size:9px; }
+.phase3-career-grid { display:grid; grid-template-columns:1fr 1fr; gap:7px; margin:9px 0 14px; }
+.phase3-career-grid span { padding:10px; border-radius:8px; background:#15202b; color:#93a0ae; font-size:8px; text-transform:uppercase; }
+.phase3-career-grid strong { display:block; margin-top:4px; color:white; font:900 17px ui-monospace,monospace; }
+.phase3-career h3 { margin:13px 0 5px; font-size:10px; text-transform:uppercase; }
+.phase3-career p { margin:0; color:#a8b3bf; font-size:9px; line-height:1.5; }
+
+.phase3-hud { position:fixed; z-index:2180; left:50%; top:calc(138px + env(safe-area-inset-top)); transform:translateX(-50%); display:none; max-width:min(660px,calc(100vw - 180px)); gap:5px; pointer-events:none; }
+.phase3-hud.show { display:flex; }
+.phase3-hud span { padding:6px 8px; overflow:hidden; border:1px solid rgba(255,255,255,.17); border-radius:999px; background:rgba(5,10,16,.88); color:white; font-size:7px; font-weight:950; text-overflow:ellipsis; text-transform:uppercase; white-space:nowrap; }
+#phase3-hud-risk { color:#ffd43b; }
+.phase3-radio { position:fixed; z-index:2670; left:50%; bottom:calc(72px + env(safe-area-inset-bottom)); transform:translate(-50%,10px); max-width:min(680px,88vw); padding:9px 13px; border-left:3px solid #38bdf8; border-radius:7px; background:rgba(5,10,16,.94); color:#dff6ff; box-shadow:0 9px 28px rgba(0,0,0,.46); font-size:10px; font-weight:800; line-height:1.35; opacity:0; visibility:hidden; transition:.18s; pointer-events:none; }
+.phase3-radio.show { transform:translate(-50%,0); opacity:1; visibility:visible; }
+
+@media (pointer:coarse),(max-width:900px) {
+  .phase3-open { top:auto; right:9px; bottom:calc(199px + env(safe-area-inset-bottom)); width:48px; min-height:42px; }
+  .phase3-open span { font-size:14px; }.phase3-open small { font-size:6px; }
+  .phase3-panel { width:min(390px,100vw); }
+  .phase3-hud { top:calc(66px + env(safe-area-inset-top)); max-width:calc(100vw - 20px); }
+  .dispatch-expanded .phase3-hud { top:calc(190px + env(safe-area-inset-top)); }
+  .phase3-hud span:first-child { max-width:45vw; }
+  .phase3-radio { bottom:calc(158px + env(safe-area-inset-bottom)); font-size:9px; }
+}
+@media (max-width:430px) {
+  .phase3-vitals { grid-template-columns:repeat(2,1fr); }
+  .phase3-pane { height:calc(100vh - 220px); }
+  .phase3-action-grid { grid-template-columns:1fr; }
+  .phase3-hud span:nth-child(3) { display:none; }
+}
+@media (orientation:landscape) and (max-height:620px) {
+  .phase3-panel { width:min(420px,58vw); }
+  .phase3-header { height:58px; }.phase3-header h2 { font-size:15px; }
+  .phase3-pane { height:calc(100vh - 154px); }
+  .phase3-radio { bottom:8px; }
+  .phase3-open { bottom:8px; }
+}
