@@ -19,7 +19,7 @@ for match in re.findall(r'(?:src|href)="([^"]+)"', text):
     path = (HTML.parent / match.split('?')[0]).resolve()
     assert path.exists(), f'Missing local asset: {match}'
 styles = (HTML.parent / 'styles.css').read_text(encoding='utf-8')
-for phase in ('styles-phase3.css', 'styles-phase4.css', 'styles-phase5.css'):
+for phase in ('styles-phase3.css', 'styles-phase4.css', 'styles-phase5.css', 'styles-phase5-mobile-controls.css'):
     assert phase in styles, f'{phase} is not loaded'
 for css_import in re.findall(r"@import url\(['\"]?([^'\")]+)", styles):
     path = (HTML.parent / css_import.split('?')[0]).resolve()
@@ -41,4 +41,6 @@ assert phase5_data.count("id:'") >= 30, 'Phase 5 content roster appears incomple
 phase5_polish = (HTML.parent / 'src' / 'phase5-polish.js').read_text(encoding='utf-8')
 assert 'call || game.selectCall()' in phase5_polish, 'Automatic dispatch is not hardened'
 assert 'pfr-street-shift-phase2' in phase5_polish, 'Complete career reset does not clear Phase 2 data'
+mobile_controls = (HTML.parent / 'styles-phase5-mobile-controls.css').read_text(encoding='utf-8')
+assert '.phase5-open { right:65px; }' in mobile_controls, 'Mobile OPS and Command controls are not separated'
 print('Static HTML/assets/CSS/Phase5 complete-release boot: PASS')
