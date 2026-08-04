@@ -8,6 +8,7 @@ import { AudioManager } from './audio.js';
 import { UIController } from './ui.js';
 import { FireResponseGame } from './game.js';
 import { Phase2Controller } from './phase2.js';
+import { Phase3Controller } from './phase3.js';
 
 const options = readRuntimeOptions();
 const ui = new UIController(options);
@@ -35,6 +36,11 @@ const game = new FireResponseGame({ options, ui, input, roads, renderer, camera,
 window.__PFR_PHASE1_GAME__ = game;
 window.__PFR_GAME__ = game;
 game.init();
+
 const phase2 = new Phase2Controller(game, { seed: options.seed, forcedTime: options.forcedTime });
 phase2.install();
 window.__PFR_PHASE2__ = phase2;
+
+const phase3 = new Phase3Controller(game, phase2, { seed: options.seed });
+phase3.install();
+window.__PFR_PHASE3__ = phase3;
