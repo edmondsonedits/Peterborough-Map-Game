@@ -9,6 +9,7 @@ import { UIController } from './ui.js';
 import { FireResponseGame } from './game.js';
 import { Phase2Controller } from './phase2.js';
 import { Phase3Controller } from './phase3.js';
+import { installPhase3Polish } from './phase3-polish.js';
 
 const options = readRuntimeOptions();
 const ui = new UIController(options);
@@ -43,4 +44,5 @@ window.__PFR_PHASE2__ = phase2;
 
 const phase3 = new Phase3Controller(game, phase2, { seed: options.seed });
 phase3.install();
+installPhase3Polish(phase3);
 window.__PFR_PHASE3__ = phase3;
