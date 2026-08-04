@@ -1,0 +1,13 @@
+{
+  "name": "pfr-phase1-tests",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:unit": "node --test phase1-core.test.mjs",
+    "test:e2e": "playwright test --config=playwright.config.mjs",
+    "test:all": "bash run-phase1-checks.sh"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.57.0"
+  }
+}
