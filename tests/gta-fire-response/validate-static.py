@@ -11,23 +11,30 @@ class Parser(HTMLParser):
 
 text = HTML.read_text(encoding='utf-8')
 parser = Parser(); parser.feed(text); parser.close()
-assert '0.7.0-phase4' in text, 'Version is not current'
+assert '1.0.0-phase5' in text, 'Complete-release version is not current'
 assert 'wanted' not in text.lower(), 'Wanted-system text must not be present'
-assert 'src/main.js?v=0.7.0-phase4' in text, 'Phase 4 main cache key is missing'
+assert 'src/main.js?v=1.0.0-phase5' in text, 'Phase 5 main cache key is missing'
 for match in re.findall(r'(?:src|href)="([^"]+)"', text):
     if match.startswith(('http:', 'https:', '#')): continue
     path = (HTML.parent / match.split('?')[0]).resolve()
     assert path.exists(), f'Missing local asset: {match}'
 styles = (HTML.parent / 'styles.css').read_text(encoding='utf-8')
-assert 'styles-phase3.css' in styles, 'Phase 3 stylesheet is not loaded'
-assert 'styles-phase4.css' in styles, 'Phase 4 stylesheet is not loaded'
+for phase in ('styles-phase3.css', 'styles-phase4.css', 'styles-phase5.css'):
+    assert phase in styles, f'{phase} is not loaded'
 for css_import in re.findall(r"@import url\(['\"]?([^'\")]+)", styles):
     path = (HTML.parent / css_import.split('?')[0]).resolve()
     assert path.exists(), f'Missing CSS module: {css_import}'
 main = (HTML.parent / 'src' / 'main.js').read_text(encoding='utf-8')
-assert 'Phase3Controller' in main and '__PFR_PHASE3__' in main, 'Phase 3 controller is not booted'
-assert 'Phase4Controller' in main and '__PFR_PHASE4__' in main, 'Phase 4 controller is not booted'
-assert (HTML.parent / 'src' / 'operation-engine.js').exists(), 'Operation engine is missing'
-assert (HTML.parent / 'src' / 'phase4-save.js').exists(), 'Phase 4 save layer is missing'
-assert (HTML.parent / 'src' / 'phase4-data.js').exists(), 'Phase 4 city data is missing'
-print('Static HTML/assets/CSS/Phase4 boot: PASS')
+for phase in ('Phase3Controller', 'Phase4Controller', 'Phase5Controller'):
+    assert phase in main, f'{phase} is not booted'
+for global_name in ('__PFR_PHASE3__', '__PFR_PHASE4__', '__PFR_PHASE5__'):
+    assert global_name in main, f'{global_name} is not exposed for verification'
+required = [
+    'operation-engine.js', 'phase4-save.js', 'phase4-data.js',
+    'phase5.js', 'phase5-data.js', 'phase5-math.js', 'phase5-save.js', 'phase5-ui.js'
+]
+for filename in required:
+    assert (HTML.parent / 'src' / filename).exists(), f'Missing complete-release module: {filename}'
+phase5_data = (HTML.parent / 'src' / 'phase5-data.js').read_text(encoding='utf-8')
+assert phase5_data.count("id:'") >= 30, 'Phase 5 content roster appears incomplete'
+print('Static HTML/assets/CSS/Phase5 complete-release boot: PASS')
