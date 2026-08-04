@@ -1,0 +1,31 @@
+name: GTA Fire Response checks
+
+on:
+  pull_request:
+    paths:
+      - 'gta-fire-response/**'
+      - 'tests/gta-fire-response/**'
+      - 'docs/gta-fire-response/**'
+      - '.github/workflows/gta-fire-response-tests.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'gta-fire-response/**'
+      - 'tests/gta-fire-response/**'
+      - 'docs/gta-fire-response/**'
+      - '.github/workflows/gta-fire-response-tests.yml'
+
+jobs:
+  static-and-unit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run Phase 1–3 checks
+        run: bash tests/gta-fire-response/run-phase3-checks.sh
