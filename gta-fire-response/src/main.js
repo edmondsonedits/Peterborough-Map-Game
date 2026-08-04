@@ -56,5 +56,6 @@ installPhase4Polish(phase4);
 window.__PFR_PHASE4__ = phase4;
 
 const phase5 = new Phase5Controller(game, phase2, phase3, phase4, { seed: options.seed });
+if (options.testMode) phase5.save.data.tutorialDismissed = true;
 phase5.install();
 window.__PFR_PHASE5__ = phase5;
