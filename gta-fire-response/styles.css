@@ -1,4 +1,5 @@
-@import url('./styles-base.css?v=0.4.0-phase1');
-@import url('./styles-entities.css?v=0.4.0-phase1');
-@import url('./styles-ui.css?v=0.4.0-phase1');
-@import url('./styles-responsive.css?v=0.4.0-phase1');
+@import url('./styles-base.css?v=0.5.0-phase2');
+@import url('./styles-entities.css?v=0.5.0-phase2');
+@import url('./styles-ui.css?v=0.5.0-phase2');
+@import url('./styles-responsive.css?v=0.5.0-phase2');
+@import url('./styles-phase2.css?v=0.5.0-phase2');
