@@ -1,11 +1,11 @@
 {
-  "name": "pfr-phase4-tests",
+  "name": "pfr-complete-release-tests",
   "private": true,
   "type": "module",
   "scripts": {
-    "test:unit": "node --test phase1-core.test.mjs phase2-core.test.mjs phase3-core.test.mjs phase4-core.test.mjs",
+    "test:unit": "node --test phase1-core.test.mjs phase2-core.test.mjs phase3-core.test.mjs phase4-core.test.mjs phase5-core.test.mjs",
     "test:e2e": "playwright test --config=playwright.config.mjs",
-    "test:all": "bash run-phase4-checks.sh"
+    "test:all": "bash run-phase5-checks.sh"
   },
   "devDependencies": { "@playwright/test": "^1.57.0" }
 }
