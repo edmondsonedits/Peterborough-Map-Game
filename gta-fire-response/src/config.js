@@ -1,4 +1,4 @@
-export const APP_VERSION = '0.5.0-phase2';
+export const APP_VERSION = '0.6.0-phase3';
 
 export const GAME_STATES = Object.freeze({
   START_SCREEN: 'START_SCREEN', AVAILABLE: 'AVAILABLE', DISPATCHED: 'DISPATCHED',
@@ -31,11 +31,27 @@ export const CALLS = Object.freeze([
     recurringKey: 'restaurant', recommendedSupport: ['police'], hydrantId: 'hydrant-george'
   },
   {
+    id: 'vehicle-fire-parkway', type: 'vehicle-fire', label: 'VEHICLE FIRE',
+    title: 'Vehicle Fire', address: '485 The Parkway',
+    lat: 44.2855, lng: -78.3533, district: 'southwest',
+    notes: 'An unoccupied vehicle is burning in a parking area. Fuel involvement is unknown.',
+    task: 'Position safely, identify hazards and extinguish the vehicle fire.', icon: '🔥',
+    recommendedSupport: ['police'], hydrantId: 'hydrant-lansdowne'
+  },
+  {
     id: 'medical-hospital', type: 'medical', label: 'MEDICAL AID',
     title: 'Difficulty Breathing', address: '26 Hospital Drive',
     lat: 44.301048, lng: -78.345609, district: 'west',
     notes: 'Patient is conscious. Paramedics are requested.',
     task: 'Bring the medical bag, assist the patient and transfer care.', icon: '✚',
+    recommendedSupport: ['ambulance']
+  },
+  {
+    id: 'lift-assist-simcoe', type: 'rescue', label: 'PUBLIC ASSIST',
+    title: 'Lift Assist', address: '190 Simcoe Street',
+    lat: 44.30471, lng: -78.321887, district: 'central',
+    notes: 'An adult requires assistance from the floor. No reported injury.',
+    task: 'Assess hazards, complete the assist and reassess the resident.', icon: '◆',
     recommendedSupport: ['ambulance']
   },
   {
@@ -45,6 +61,22 @@ export const CALLS = Object.freeze([
     notes: 'Two vehicles are blocking one lane. One occupant requires assessment.',
     task: 'Protect the scene, deploy traffic control and assist the patient.', icon: '⚠',
     recommendedSupport: ['police', 'ambulance']
+  },
+  {
+    id: 'automatic-alarm-water', type: 'alarm', label: 'AUTOMATIC ALARM',
+    title: 'Commercial Fire Alarm', address: '470 Water Street',
+    lat: 44.30958, lng: -78.31862, district: 'central',
+    notes: 'Monitoring company reports a smoke detector activation. No caller on scene.',
+    task: 'Investigate the alarm zone, meter conditions and reset the system.', icon: '◉',
+    recommendedSupport: []
+  },
+  {
+    id: 'co-alarm-park', type: 'alarm', label: 'CO ALARM',
+    title: 'Carbon Monoxide Alarm', address: '610 Park Street North',
+    lat: 44.31765, lng: -78.33135, district: 'northwest',
+    notes: 'Occupants are outside. A detector has activated intermittently.',
+    task: 'Investigate, meter the residence and advise the occupants.', icon: '◉',
+    recommendedSupport: ['ambulance']
   }
 ]);
 
@@ -87,7 +119,7 @@ export const DEFAULT_TUNING = Object.freeze({
 export const DEFAULT_SETTINGS = Object.freeze({
   masterVolume: 0.72, sirenVolume: 0.72, dispatchVolume: 0.8, mute: false,
   reducedFlashing: false, reducedMotion: false, reducedCrowds: false,
-  sirenMode: 'wail', showRoute: true, timeOfDay: 'auto',
+  radioHumour: true, sirenMode: 'wail', showRoute: true, timeOfDay: 'auto',
   tuning: { ...DEFAULT_TUNING }
 });
 

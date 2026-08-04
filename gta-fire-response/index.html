@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://unpkg.com">
   <link rel="preconnect" href="https://server.arcgisonline.com">
   <script>if(new URLSearchParams(location.search).get("test")!=="1")document.write('<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">');</script>
-  <link rel="stylesheet" href="styles.css?v=0.5.0-phase2">
+  <link rel="stylesheet" href="styles.css?v=0.6.0-phase3">
 </head>
 <body data-game-state="START_SCREEN">
   <main id="map" aria-label="Peterborough satellite map game world" data-testid="game-map"></main>
@@ -61,18 +61,18 @@
 
   <section id="start-screen" class="start-screen">
     <div class="start-card">
-      <div class="eyebrow">Phase 2 · living emergency city</div>
+      <div class="eyebrow">Phase 3 · tactical operations and progression</div>
       <h1>Peterborough <em>Fire Response</em></h1>
-      <p>Start at Station 1, respond through active streets, command your crew, retrieve apparatus equipment, establish water, work with police and paramedics, and build a complete shift record.</p>
+      <p>Respond through a living Peterborough, manage incident command, complete ordered tactical objectives, control escalating hazards, protect your crew and build a persistent firefighter career.</p>
       <div class="feature-grid">
-        <div><b>Living streets</b><span>Traffic and pedestrians react to emergency operations.</span></div>
-        <div><b>Working crew</b><span>Assign hose, water, patient and traffic-control tasks.</span></div>
-        <div><b>Complete shifts</b><span>Damage, hydrants, recurring calls and statistics persist.</span></div>
+        <div><b>Tactical calls</b><span>Size-up, command, search, rescue, overhaul and investigation objectives.</span></div>
+        <div><b>Changing incidents</b><span>Delay and weak mitigation increase scene risk and complications.</span></div>
+        <div><b>Career progression</b><span>Earn XP, ranks, unlocks, streaks and first-responder achievements.</span></div>
       </div>
       <div id="load-status" class="load-status">Loading indexed Peterborough road geometry…</div>
       <button id="start-button" class="start-button" type="button" disabled data-testid="start-shift">Loading Roads…</button>
       <div class="start-help">Keyboard: WASD/Arrows · E/Space interact · L lights · Q siren · R mode · H horn · P pause</div>
-      <div id="version-text" class="version">Phase 2 build</div>
+      <div id="version-text" class="version">Phase 3 build 0.6.0-phase3</div>
     </div>
   </section>
 
@@ -111,7 +111,7 @@
 
   <pre id="debug-overlay" class="debug-overlay" aria-label="Debug information"></pre>
   <script>if(new URLSearchParams(location.search).get("test")!=="1")document.write('<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""><\/script>');</script>
-  <script src="leaflet-fallback.js?v=0.5.0-phase2"></script>
-  <script type="module" src="src/main.js?v=0.5.0-phase2"></script>
+  <script src="leaflet-fallback.js?v=0.6.0-phase3"></script>
+  <script type="module" src="src/main.js?v=0.6.0-phase3"></script>
 </body>
 </html>
