@@ -175,7 +175,9 @@
     if (frame.contentDocument?.readyState === 'complete') installInsideFrame();
 
     // A map-service outage must not permanently block access to the game.
-    setTimeout(() => failOpen(new Error('Satellite startup safety timeout reached.')), 12000);
+    setTimeout(() => {
+      if (!completed) failOpen(new Error('Satellite startup safety timeout reached.'));
+    }, 12000);
   }
 
   /*
