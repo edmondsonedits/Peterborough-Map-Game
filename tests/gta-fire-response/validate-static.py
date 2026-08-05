@@ -29,12 +29,13 @@ main = (HTML.parent / 'src' / 'main.js').read_text(encoding='utf-8')
 for phase in ('Phase3Controller', 'Phase4Controller', 'Phase5Controller'):
     assert phase in main, f'{phase} is not booted'
 assert 'installPhase5Polish' in main, 'Phase 5 release hardening is not installed'
+assert 'installPlayerBenefitRelease' in main, 'Player-benefit release identity is not installed last'
 for global_name in ('__PFR_PHASE3__', '__PFR_PHASE4__', '__PFR_PHASE5__'):
     assert global_name in main, f'{global_name} is not exposed for verification'
 required = [
     'operation-engine.js', 'phase4-save.js', 'phase4-data.js',
     'phase5.js', 'phase5-polish.js', 'phase5-data.js', 'phase5-math.js', 'phase5-save.js', 'phase5-ui.js',
-    'player-benefit-math.js'
+    'player-benefit-math.js', 'player-benefit-release.js'
 ]
 for filename in required:
     assert (HTML.parent / 'src' / filename).exists(), f'Missing player-benefit release module: {filename}'
