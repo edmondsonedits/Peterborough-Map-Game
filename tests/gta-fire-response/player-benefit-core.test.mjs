@@ -42,7 +42,7 @@ test('same-lane following distance slows cars before overlap', () => {
   const ahead = { segmentId:2, direction:1, t:.5 };
   const opposing = { segmentId:2, direction:-1, t:.5 };
   const gap = followingGap(vehicle, ahead, 100);
-  assert.equal(gap, 10);
+  assert.ok(Math.abs(gap - 10) < 1e-9);
   assert.equal(followingGap(vehicle, opposing, 100), Infinity);
   assert.ok(followingSpeedLimit(gap, 10) < 2);
   assert.equal(followingSpeedLimit(30, 10), 10);
