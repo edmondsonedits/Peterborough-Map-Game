@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
   <meta name="theme-color" content="#090b0f">
-  <meta name="description" content="Peterborough Fire Response: Street Shift — a complete browser fire-response game with precision mobile driving, improved emergency traffic, tactical incidents and persistent career progression.">
-  <title>Peterborough Fire Response: Street Shift — Player-Benefit Release</title>
+  <meta name="description" content="Peterborough Fire Response: Street Shift — a complete browser fire-response game with precision mobile driving, station-yard freedom, improved emergency traffic, tactical incidents and persistent career progression.">
+  <title>Peterborough Fire Response: Street Shift — Station-Yard Hotfix</title>
   <link rel="preconnect" href="https://unpkg.com">
   <link rel="preconnect" href="https://server.arcgisonline.com">
   <script>if(new URLSearchParams(location.search).get("test")!=="1")document.write('<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">');</script>
-  <link rel="stylesheet" href="styles.css?v=1.1.0-player-benefit">
+  <link rel="stylesheet" href="styles.css?v=1.1.1-station-yard">
 </head>
 <body data-game-state="START_SCREEN">
   <main id="map" aria-label="Peterborough satellite map game world" data-testid="game-map"></main>
@@ -62,18 +62,18 @@
 
   <section id="start-screen" class="start-screen">
     <div class="start-card">
-      <div class="eyebrow">Player-benefit audited release · v1.1</div>
+      <div class="eyebrow">Station-yard hotfix · v1.1.1</div>
       <h1>Peterborough <em>Fire Response</em></h1>
-      <p>A fully fleshed-out Peterborough fire-response game with precision mobile apparatus control, clearer emergency traffic, safer interactions, tactical operations, three stations, four apparatus and persistent career progression.</p>
+      <p>A fully fleshed-out Peterborough fire-response game with free apparatus movement around each hall, precision mobile control, clearer emergency traffic, tactical operations, three stations, four apparatus and persistent career progression.</p>
       <div class="feature-grid">
-        <div><b>More controllable response</b><span>Precision thumb-stick throttle and improved civilian lane behaviour.</span></div>
-        <div><b>Safer and clearer play</b><span>Blocked exits are refused and menus no longer trigger hidden controls.</span></div>
-        <div><b>Complete career loop</b><span>23 incidents, ranks, perks, medals, records, apparatus service and shift challenges.</span></div>
+        <div><b>Free hall movement</b><span>Turn, reverse and line up freely inside each station apron and driveway.</span></div>
+        <div><b>Safer road transition</b><span>A wide protected connector carries the apparatus cleanly from the hall to the mapped street.</span></div>
+        <div><b>Road rules preserved</b><span>Normal road barriers resume immediately outside the station zone.</span></div>
       </div>
       <div id="load-status" class="load-status">Loading indexed Peterborough road geometry…</div>
       <button id="start-button" class="start-button" type="button" disabled data-testid="start-shift">Loading Roads…</button>
       <div class="start-help">HQ: station and apparatus · OPS: difficulty, tutorial and career · WASD/Arrows move · E/Space interact · L lights · Q siren · R mode · H horn · P pause</div>
-      <div id="version-text" class="version">Player-benefit release 1.1.0</div>
+      <div id="version-text" class="version">Station-yard hotfix 1.1.1</div>
     </div>
   </section>
 
@@ -112,7 +112,7 @@
 
   <pre id="debug-overlay" class="debug-overlay" aria-label="Debug information"></pre>
   <script>if(new URLSearchParams(location.search).get("test")!=="1")document.write('<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""><\/script>');</script>
-  <script src="leaflet-fallback.js?v=1.1.0-player-benefit"></script>
-  <script type="module" src="src/main.js?v=1.1.0-player-benefit"></script>
+  <script src="leaflet-fallback.js?v=1.1.1-station-yard"></script>
+  <script type="module" src="src/main.js?v=1.1.1-station-yard"></script>
 </body>
 </html>
