@@ -1,5 +1,24 @@
 import { clamp, normalizeVector } from './math.js';
 
+const UI_BLOCKING_SELECTOR = [
+  '.settings-panel.show',
+  '.phase2-panel.show',
+  '.phase3-panel.show',
+  '.phase4-panel.show',
+  '.phase5-panel.show',
+  '.modal-panel.show',
+  '.phase5-tutorial.show'
+].join(',');
+
+export function isInteractiveTarget(target) {
+  if (!target || typeof target.closest !== 'function') return false;
+  return Boolean(target.closest('input, textarea, select, button, a[href], [contenteditable="true"], [role="button"]'));
+}
+
+export function gameplayInputBlocked(documentRef = globalThis.document) {
+  return Boolean(documentRef?.querySelector?.(UI_BLOCKING_SELECTOR));
+}
+
 export class InputController {
   constructor(elements) {
     this.elements = elements;
@@ -22,6 +41,20 @@ export class InputController {
     const signal = this.abortController.signal;
     window.addEventListener('keydown', event => {
       const key = event.key.toLowerCase();
+      const panelOpen = gameplayInputBlocked();
+
+      // Form fields and open management panels must own their keyboard input.
+      // Previously Space in the save text area could also trigger Interact,
+      // while arrows in a select could steer the apparatus behind the panel.
+      if (panelOpen || isInteractiveTarget(event.target)) {
+        if (key === 'escape' && panelOpen) {
+          event.preventDefault();
+          this.releaseAll();
+          window.dispatchEvent(new CustomEvent('pfr:close-top-ui'));
+        }
+        return;
+      }
+
       if (['arrowup', 'arrowdown', 'arrowleft', 'arrowright', ' ', 'control'].includes(key)) event.preventDefault();
       this.keys.add(key);
       if ((key === 'e' || key === ' ') && !event.repeat) {
@@ -119,8 +152,15 @@ export class InputController {
     return normalizeVector(this.analog.x + keyboardX, this.analog.y + keyboardY);
   }
 
-  consumeActionPressed() { const value = this.actionPressed; this.actionPressed = false; return value; }
-  consumeEvents() { return this.events.splice(0, this.events.length); }
+  consumeActionPressed() {
+    const value = this.actionPressed;
+    this.actionPressed = false;
+    return value;
+  }
+
+  consumeEvents() {
+    return this.events.splice(0, this.events.length);
+  }
 
   releaseAll() {
     this.keys.clear();
@@ -133,5 +173,8 @@ export class InputController {
     if (this.elements.stick) this.elements.stick.style.transform = 'translate(-50%, -50%)';
   }
 
-  destroy() { this.abortController.abort(); this.releaseAll(); }
+  destroy() {
+    this.abortController.abort();
+    this.releaseAll();
+  }
 }
