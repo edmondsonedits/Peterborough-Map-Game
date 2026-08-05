@@ -9,12 +9,13 @@ node --test \
   tests/gta-fire-response/phase2-core.test.mjs \
   tests/gta-fire-response/phase3-core.test.mjs \
   tests/gta-fire-response/phase4-core.test.mjs \
-  tests/gta-fire-response/phase5-core.test.mjs
-python -m http.server 4173 >/tmp/pfr-phase5-http.log 2>&1 &
+  tests/gta-fire-response/phase5-core.test.mjs \
+  tests/gta-fire-response/player-benefit-core.test.mjs
+python -m http.server 4173 >/tmp/pfr-player-benefit-http.log 2>&1 &
 server_pid=$!
 trap 'kill "$server_pid" 2>/dev/null || true' EXIT
 for attempt in {1..20}; do
-  if curl -fsS 'http://127.0.0.1:4173/gta-fire-response/?test=1&unlock=all&call=apartment-fire-bethune' | grep -q 'Complete release'; then break; fi
+  if curl -fsS 'http://127.0.0.1:4173/gta-fire-response/?test=1&unlock=all&call=apartment-fire-bethune' | grep -q '1.1.0-player-benefit'; then break; fi
   if [[ "$attempt" == 20 ]]; then echo 'HTTP smoke: FAIL' >&2; exit 1; fi
   sleep .15
 done
