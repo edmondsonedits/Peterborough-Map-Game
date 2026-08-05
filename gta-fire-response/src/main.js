@@ -15,6 +15,7 @@ import { installPhase4Polish } from './phase4-polish.js';
 import { Phase5Controller } from './phase5.js';
 import { installPhase5Polish } from './phase5-polish.js';
 import { installPlayerBenefitRelease } from './player-benefit-release.js';
+import { installStationYardSafeZone } from './station-yard-safe-zone.js';
 
 const options = readRuntimeOptions();
 const ui = new UIController(options);
@@ -62,4 +63,5 @@ if (options.testMode) phase5.save.data.tutorialDismissed = true;
 phase5.install();
 installPhase5Polish(phase5);
 installPlayerBenefitRelease(game);
+installStationYardSafeZone(game);
 window.__PFR_PHASE5__ = phase5;
