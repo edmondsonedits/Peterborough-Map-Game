@@ -39,4 +39,46 @@ test.describe('Peterborough Fire Response Phase 4', () => {
     expect(dimensions.pageHeight).toBeLessThanOrEqual(dimensions.viewportHeight);
     expect(dimensions.panelWidth).toBeLessThanOrEqual(dimensions.viewportWidth);
   });
+
+  test('all three station aprons allow free turning without disabling road barriers elsewhere', async ({ page }) => {
+    await page.goto(url);
+    await expect(page.getByTestId('start-shift')).toBeEnabled();
+    const results = await page.evaluate(() => {
+      const game = window.__PFR_GAME__;
+      const phase4 = window.__PFR_PHASE4__;
+      const roads = game.roads;
+      const output = [];
+      for (const stationId of ['station-1', 'station-2', 'station-3']) {
+        phase4.save.data.selectedStation = stationId;
+        phase4.applyDeployment(true);
+        const zone = roads.stationExit;
+        const candidate = roads.latLng(zone.ax + 24, zone.ay + 22);
+        const movement = roads.resolveMovement(
+          { lat:game.truck.lat, lng:game.truck.lng, heading:game.truck.heading },
+          { ...candidate, heading:(game.truck.heading + 105) % 360 },
+          2.2,
+          .35
+        );
+        output.push({
+          stationId,
+          zoneStation:zone.stationId,
+          radius:zone.yardRadius,
+          corridor:zone.corridorHalfWidth,
+          blocked:movement.blocked,
+          stillActive:roads.stationExit === zone,
+          inside:roads.insideStationExit({ ...candidate, heading:game.truck.heading })
+        });
+      }
+      return output;
+    });
+    expect(results).toHaveLength(3);
+    for (const result of results) {
+      expect(result.zoneStation).toBe(result.stationId);
+      expect(result.radius).toBeGreaterThanOrEqual(40);
+      expect(result.corridor).toBeGreaterThanOrEqual(12);
+      expect(result.blocked).toBe(false);
+      expect(result.stillActive).toBe(true);
+      expect(result.inside).toBe(true);
+    }
+  });
 });
