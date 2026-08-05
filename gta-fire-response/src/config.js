@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.0.0-phase5';
+export const APP_VERSION = '1.1.0-player-benefit';
 
 export const GAME_STATES = Object.freeze({
   START_SCREEN: 'START_SCREEN', AVAILABLE: 'AVAILABLE', DISPATCHED: 'DISPATCHED',
