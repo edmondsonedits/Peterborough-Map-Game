@@ -1,0 +1,30 @@
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+a[href]:focus-visible,
+[tabindex]:focus-visible {
+  outline:3px solid #71e6ff;
+  outline-offset:3px;
+  box-shadow:0 0 0 2px rgba(4,10,15,.92),0 0 0 5px rgba(113,230,255,.26);
+}
+
+.phase5-high-contrast button:focus-visible,
+.phase5-high-contrast input:focus-visible,
+.phase5-high-contrast select:focus-visible,
+.phase5-high-contrast textarea:focus-visible,
+.phase5-high-contrast a[href]:focus-visible,
+.phase5-high-contrast [tabindex]:focus-visible {
+  outline-color:#fff;
+  box-shadow:0 0 0 2px #000,0 0 0 6px #fff;
+}
+
+/* Panels receive focus internally, so hiding them from assistive technology
+   while closed keeps keyboard and screen-reader navigation aligned. */
+[role="dialog"][aria-hidden="true"] {
+  visibility:hidden;
+}
+
+[role="dialog"][aria-hidden="false"] {
+  visibility:visible;
+}
