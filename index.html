@@ -4,17 +4,17 @@
 
      PURPOSE:
      This is the first page of Peterborough Emergency Games. It presents links to
-     the driving simulator and Geo Guesser, reveals developer tools when developer
+     the driving simulator, Geo Guesser and 3D Simulator, reveals developer tools when developer
      mode is enabled, and sends touch devices to their mobile-specific wrappers.
 
      WHAT THE PLAYER EXPERIENCES:
-     A responsive set of game cards. Normal users see the two games; developer
-     mode also reveals the 3D City Explorer and Shared Dispatch Editor.
+     A responsive set of game cards. Normal users see all three player experiences;
+     developer mode also reveals the Shared Dispatch Editor.
 
      HOW TO READ THIS FILE:
      - <style> controls the layout and visual design.
      - <main> contains the game cards and project disclaimer.
-     - build-version.js adds the shared v1.5.3 badge and error recorder.
+     - build-version.js adds the shared v1.5.5 badge and error recorder.
      - the final script controls developer mode and mobile link routing.
 
      Comments are ignored by the browser and never shown inside the page.
@@ -63,6 +63,9 @@
       .cta svg { width:1rem; height:1rem; stroke:currentColor; transition:transform 160ms ease; }
       .game-link:hover .cta svg { transform:translateX(3px); }
       footer { margin-top:1.35rem; color:#94a3b8; font-size:.82rem; line-height:1.5; }
+      .launch-status { min-height:1.5rem; margin:.9rem 0 0; color:var(--muted); font-size:.86rem; }
+      .game-link.is-launching { border-color:var(--accent-border); box-shadow:0 0 0 2px var(--accent-soft),0 1.45rem 4rem rgba(0,0,0,.32); }
+      .game-link.is-launching .cta { color:#07111f; background:var(--accent); }
       #ptbo-speedometer,#ptbo-speedometer-value,#ptbo-speedometer-unit,[data-ptbo-speedometer] { display:none!important; visibility:hidden!important; }
 
       /* Responsive breakpoints move from four/three columns to two, then one. */
@@ -76,7 +79,7 @@
   <body>
     <main>
       <!-- The eyebrow doubles as the hidden seven-tap developer trigger. -->
-      <header><p id="developer-trigger" class="eyebrow">Peterborough, Ontario</p><h1>Emergency Games</h1><p class="intro">Drive emergency calls, test your city knowledge, or manage the shared dispatch database.</p></header>
+      <header><p id="developer-trigger" class="eyebrow">Peterborough, Ontario</p><h1>Emergency Games</h1><p class="intro">Drive emergency calls, test your city knowledge, or explore Peterborough in the full-city 3D simulator.</p></header>
       <section class="games" aria-label="Choose a game or editor">
         <a id="dispatch-game-link" class="game-link dispatch" href="response-simulator/play/" aria-label="Open the Peterborough Dispatch Simulator">
           <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h11v7H3z"/><path d="M14 13h3.5l2.5 2.5V18h-6z"/><path d="M6 11V7h5v4"/><path d="M7.5 7V4.5h2V7"/><path d="M5.5 18a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"/><path d="M17.5 18a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"/><path d="M3 14h11"/></svg></span>
@@ -87,21 +90,22 @@
           <span class="game-type">Timed map challenge</span><h2>Peterborough Geo Guesser</h2><p>Read the dispatch, find the location on the map, and compete for the fastest time.</p><span class="cta">Play Geo Guesser<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span>
         </a>
 
-        <!-- Developer-only cards start hidden and are revealed by JavaScript. -->
-        <a id="city-explorer-link" class="game-link explorer-card" href="city-explorer/" aria-label="Explore Peterborough in 3D" hidden>
+        <a id="city-explorer-link" class="game-link explorer-card" href="city-explorer/?release=v1.5.5&amp;drive=play2" aria-label="Play the Peterborough 3D Simulator">
           <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 7 5-3 5 3 5-3 3 2v11l-5 3-5-3-5 3-3-2Z"/><path d="M8 4v13M13 7v13M18 4v13"/></svg></span>
-          <span class="game-type">Developer preview</span><h2>Peterborough Explorer</h2><p>Fly across a low-poly Peterborough generated from real roads and building footprints.</p><span class="cta">Explore the city<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span>
+          <span class="game-type">Open-world city simulation</span><h2>Peterborough 3D Simulator</h2><p>Walk from Fire Station 1, enter the fire truck, drive the city, or freely explore recognizable streets and landmarks.</p><span class="cta">Play 3D Simulator<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span>
         </a>
+        <!-- Developer-only editor starts hidden and is revealed by JavaScript. -->
         <a id="dispatch-editor-link" class="game-link editor-card" href="dispatch-editor/" aria-label="Open the shared dispatch editor" hidden>
           <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h7"/><path d="m15 17 4-4 2 2-4 4-3 1 1-3Z"/></svg></span>
           <span class="game-type">Shared database</span><h2>Dispatch Editor</h2><p>Add, edit, move, or delete calls once. Every saved change is used by both games.</p><span class="cta">Manage Calls<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span>
         </a>
       </section>
+      <p id="launch-status" class="launch-status" role="status" aria-live="polite"></p>
       <footer>Unofficial fan-made project. Not affiliated with the City of Peterborough or Peterborough Fire Services.</footer>
     </main>
 
-    <!-- The v1.5.3 query helps browsers request the current shared version file. -->
-    <script src="shared/build-version.js?v=1.5.3"></script>
+    <!-- The v1.5.5 query helps browsers request the current shared version file. -->
+    <script src="shared/build-version.js?v=1.5.5"></script>
     <script>
       /* =========================================================
          DEVELOPER MODE AND MOBILE ROUTING
@@ -117,8 +121,8 @@
         secure server authentication.
         */
         const developerKey='ptbo-emergency-developer-mode';
-        const accessHash='9a8a113169acfb3f513b8d10a08f089b2071b2b339bdba1934282e40bd186041';
-        const developerLinks=[document.getElementById('city-explorer-link'),document.getElementById('dispatch-editor-link')].filter(Boolean);
+        const accessHash='435c554a2e9cd54d2d3431b8af2b5d7ba740c64f1dca92b7af8a76b05d484ef3';
+        const developerLinks=[document.getElementById('dispatch-editor-link')].filter(Boolean);
         const developerTrigger=document.getElementById('developer-trigger');
 
         /* Small helpers keep storage and developer-card visibility consistent. */
@@ -215,12 +219,31 @@
         tablets. Those devices receive the touch-specific simulator and Geo Guesser
         wrappers; desktop links remain unchanged.
         */
-        const touchMobile=window.innerWidth<=900&&(matchMedia('(pointer: coarse)').matches||'ontouchstart'in window);
-        if(!touchMobile)return;
+        const touchMobile=window.innerWidth<=900&&(
+          matchMedia('(pointer: coarse)').matches||
+          navigator.maxTouchPoints>0||
+          navigator.userAgentData?.mobile===true||
+          'ontouchstart'in window
+        );
         const dispatchLink=document.getElementById('dispatch-game-link');
         const geoLink=document.getElementById('geo-game-link');
-        if(dispatchLink){dispatchLink.href='response-simulator/mobile/';dispatchLink.setAttribute('aria-label','Open the Peterborough Dispatch Simulator with mobile driving controls')}
-        if(geoLink){geoLink.href='geo-guesser/mobile/';geoLink.setAttribute('aria-label','Open Peterborough Geo Guesser with the mobile interface')}
+        if(touchMobile){
+          if(dispatchLink){dispatchLink.href='response-simulator/mobile/';dispatchLink.setAttribute('aria-label','Open the Peterborough Dispatch Simulator with mobile driving controls')}
+          if(geoLink){geoLink.href='geo-guesser/mobile/';geoLink.setAttribute('aria-label','Open Peterborough Geo Guesser with the mobile interface')}
+        }
+
+        /* Give every launch immediate, accessible feedback while normal links
+           remain fully functional when JavaScript is unavailable. */
+        const launchStatus=document.getElementById('launch-status');
+        const playerLinks=[dispatchLink,geoLink,document.getElementById('city-explorer-link')].filter(Boolean);
+        playerLinks.forEach(link=>link.addEventListener('click',()=>{
+          playerLinks.forEach(item=>item.classList.toggle('is-launching',item===link));
+          if(launchStatus)launchStatus.textContent=`Opening ${link.querySelector('h2')?.textContent||'game'}…`;
+        }));
+        addEventListener('pageshow',()=>{
+          playerLinks.forEach(link=>link.classList.remove('is-launching'));
+          if(launchStatus)launchStatus.textContent='';
+        });
       })();
     </script>
   </body>

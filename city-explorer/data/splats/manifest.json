@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "name": "Peterborough licensed captured-detail pilots",
+  "updated": "2026-08-11",
+  "coordinateSystem": {
+    "geographic": "EPSG:4326",
+    "vertical": "CGVD2013 metres",
+    "cityLocal": "+X east, +Y up, +Z south",
+    "splatLocal": "SPZ RUB: +X right, +Y up, -Z forward",
+    "heading": "degrees clockwise from true north"
+  },
+  "runtime": {
+    "sparkVersion": "2.1.0",
+    "minimumThreeRevision": 180,
+    "maxSimultaneousPilots": 2,
+    "visibleSplatBudget": {
+      "desktop": 2200000,
+      "medium": 1400000,
+      "mobile": 750000
+    }
+  },
+  "pilots": [
+    {
+      "id": "peterborough-lift-lock",
+      "name": "Peterborough Lift Lock",
+      "asset": null,
+      "format": "spz",
+      "anchor": { "latitude": 44.307889, "longitude": -78.300583, "elevationMetresCGVD2013": null, "verticalOffset": 0 },
+      "transform": { "headingDeg": 0, "pitchDeg": 0, "rollDeg": 0, "scale": 1 },
+      "bounds": { "radius": 260 },
+      "streaming": { "activationRadius": 1300, "fadeInDistance": 700, "fadeOutDistance": 1180, "unloadRadius": 1550 },
+      "loadingPriority": 100,
+      "lod": { "scale": 1, "maximumDetail": 1 },
+      "enabled": true,
+      "attribution": "No captured asset installed; authoritative mesh fallback remains visible.",
+      "licence": { "status": "missing", "name": null, "url": null },
+      "capture": { "date": null, "source": null, "owner": null },
+      "processingNotes": "Future capture must exclude roads, ground, people, vehicles, sky, and distant background."
+    },
+    {
+      "id": "downtown-george-street",
+      "name": "Downtown George Street",
+      "asset": null,
+      "format": "rad",
+      "anchor": { "latitude": 44.3057, "longitude": -78.3196, "elevationMetresCGVD2013": null, "verticalOffset": 0 },
+      "transform": { "headingDeg": 0, "pitchDeg": 0, "rollDeg": 0, "scale": 1 },
+      "bounds": { "radius": 420 },
+      "streaming": { "activationRadius": 1450, "fadeInDistance": 780, "fadeOutDistance": 1300, "unloadRadius": 1750 },
+      "loadingPriority": 95,
+      "lod": { "scale": 0.9, "maximumDetail": 1 },
+      "enabled": true,
+      "attribution": "No captured asset installed; authoritative mesh fallback remains visible.",
+      "licence": { "status": "missing", "name": null, "url": null },
+      "capture": { "date": null, "source": null, "owner": null },
+      "processingNotes": "Use several legally captured blocks rather than a city-scale scene; preserve street and sidewalk meshes."
+    },
+    {
+      "id": "del-crary-little-lake",
+      "name": "Del Crary Park and Little Lake",
+      "asset": null,
+      "format": "rad",
+      "anchor": { "latitude": 44.2954357, "longitude": -78.3179812, "elevationMetresCGVD2013": null, "verticalOffset": 0 },
+      "transform": { "headingDeg": 0, "pitchDeg": 0, "rollDeg": 0, "scale": 1 },
+      "bounds": { "radius": 360 },
+      "streaming": { "activationRadius": 1500, "fadeInDistance": 760, "fadeOutDistance": 1320, "unloadRadius": 1800 },
+      "loadingPriority": 90,
+      "lod": { "scale": 0.9, "maximumDetail": 1 },
+      "enabled": true,
+      "attribution": "No captured asset installed; authoritative mesh and hydro fallback remain visible.",
+      "licence": { "status": "missing", "name": null, "url": null },
+      "capture": { "date": null, "source": null, "owner": null },
+      "processingNotes": "Mask all lake water and ground so lidar terrain and official hydro remain authoritative."
+    },
+    {
+      "id": "trent-university",
+      "name": "Trent University",
+      "asset": null,
+      "format": "rad",
+      "anchor": { "latitude": 44.357249, "longitude": -78.290394, "elevationMetresCGVD2013": null, "verticalOffset": 0 },
+      "transform": { "headingDeg": 0, "pitchDeg": 0, "rollDeg": 0, "scale": 1 },
+      "bounds": { "radius": 520 },
+      "streaming": { "activationRadius": 1700, "fadeInDistance": 900, "fadeOutDistance": 1500, "unloadRadius": 2050 },
+      "loadingPriority": 85,
+      "lod": { "scale": 0.82, "maximumDetail": 1 },
+      "enabled": true,
+      "attribution": "No captured asset installed; authoritative campus meshes remain visible.",
+      "licence": { "status": "missing", "name": null, "url": null },
+      "capture": { "date": null, "source": null, "owner": null },
+      "processingNotes": "Split owned/commissioned capture into campus landmarks; remove river, roads, people, vehicles, and sky."
+    },
+    {
+      "id": "canadian-canoe-museum",
+      "name": "Canadian Canoe Museum",
+      "asset": null,
+      "format": "spz",
+      "anchor": { "latitude": 44.2980688, "longitude": -78.3018158, "elevationMetresCGVD2013": null, "verticalOffset": 0 },
+      "transform": { "headingDeg": 0, "pitchDeg": 0, "rollDeg": 0, "scale": 1 },
+      "bounds": { "radius": 220 },
+      "streaming": { "activationRadius": 1200, "fadeInDistance": 620, "fadeOutDistance": 1080, "unloadRadius": 1450 },
+      "loadingPriority": 92,
+      "lod": { "scale": 1, "maximumDetail": 1 },
+      "enabled": true,
+      "attribution": "No captured asset installed; authoritative museum mesh remains visible.",
+      "licence": { "status": "missing", "name": null, "url": null },
+      "capture": { "date": null, "source": null, "owner": null },
+      "processingNotes": "Capture only with property/photography permission; preserve the georeferenced mesh beneath it."
+    }
+  ]
+}

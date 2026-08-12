@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "asset": "peterborough-dtm-2025-terrarium.png",
+  "generatedAtUtc": "2026-08-01T16:00:17.982203Z",
+  "encoding": {
+    "name": "Mapzen Terrarium RGB",
+    "formulaMetres": "R*256 + G + B/256 - 32768",
+    "verticalStepMetres": 0.00390625,
+    "pngColorType": "truecolour RGB",
+    "rowOrder": "north-to-south",
+    "pixelReference": "pixel area; bounds describe outer edges"
+  },
+  "dimensions": {
+    "width": 1536,
+    "height": 1878
+  },
+  "bounds": {
+    "wgs84Epsg4326": {
+      "west": -78.405,
+      "south": 44.245,
+      "east": -78.245,
+      "north": 44.385
+    },
+    "webMercatorEpsg3857": {
+      "xmin": -8728004.675646614,
+      "ymin": 5503435.110430013,
+      "xmax": -8710193.557119692,
+      "ymax": 5525216.417374323
+    }
+  },
+  "resolution": {
+    "exportWebMercatorMetresPerPixel": {
+      "x": 11.595780290965195,
+      "y": 11.59814001294448
+    },
+    "approximateLocalGroundMetresPerPixelAtCenterLatitude": {
+      "x": 8.296895184589424,
+      "y": 8.298583588943046
+    },
+    "officialCatalogNativeMetres": [
+      0.5
+    ],
+    "resampling": "ArcGIS bilinear interpolation from the official Float32 DTM"
+  },
+  "elevation": {
+    "minimumMetres": 187.92356872558594,
+    "maximumMetres": 311.2908630371094,
+    "meanMetres": 230.90875769272992,
+    "maximumQuantizationErrorMetres": 0.001953125,
+    "unit": "metre",
+    "verticalDatum": "CGVD2013 height",
+    "verticalCrsWkid": 6647
+  },
+  "source": {
+    "publisher": "Ontario Ministry of Natural Resources - Geospatial Ontario",
+    "dataset": "Ontario Digital Terrain Model (Lidar-Derived)",
+    "project": "DEDSFM Central East 2025",
+    "service": "https://ws.geoservices.lrc.gov.on.ca/arcgis5/rest/services/Elevation/Ontario_DTM_LidarDerived/ImageServer",
+    "arcgisItemId": "776819a7a0de42f3b75e40527cc36a0a",
+    "arcgisItemUrl": "https://www.arcgis.com/home/item.html?id=776819a7a0de42f3b75e40527cc36a0a",
+    "sourcePixelType": "F32",
+    "sourcePixelSizeMetres": 0.5,
+    "heightModelInfo": {
+      "heightModel": "gravity_related_height",
+      "vertCRS": "CGVD2013_height",
+      "heightUnit": "meter"
+    },
+    "catalog": {
+      "intersectingRasterCount": 235,
+      "selectionSha256": "f5e094e92e6663141fa46b43707279e20358efe224dbfe5ad37507ef54f9ea6e",
+      "acquisitionMethods": [
+        "Linear Mode Lidar"
+      ],
+      "startYears": [
+        2025
+      ],
+      "endYears": [
+        2025
+      ],
+      "horizontalAccuracyMetres": [
+        0.3
+      ],
+      "verticalAccuracyClassCentimetres": [
+        5
+      ]
+    },
+    "mosaicRule": {
+      "mosaicMethod": "esriMosaicNorthwest",
+      "where": "Project = 'DEDSFM Central East 2025'",
+      "ascending": true,
+      "mosaicOperation": "MT_FIRST"
+    },
+    "renderingRule": {
+      "rasterFunction": "None"
+    },
+    "sourceGeoTiffSha256": "51f781a02d2b0c7b8f080ebe526dec3092247b18d07bfa813e5767a306091ee7"
+  },
+  "integrity": {
+    "pngSha256": "398c7521d66bc5859071a02e962055aa923ee0a501a0300332e86b4228a3df10",
+    "pngBytes": 3981754
+  }
+}

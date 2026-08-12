@@ -9,6 +9,13 @@
   const STANDARD_MODE = 'standard';
   const DIRECTIONAL_MODE = 'directional';
   const MOVEMENT_THRESHOLD = 0.00000001;
+  const DESKTOP_MANUAL_MAP = (() => {
+    try {
+      return /\/response-simulator\/play\//.test(parent.location.pathname);
+    } catch {
+      return !matchMedia('(pointer: coarse)').matches;
+    }
+  })();
 
   const PRESETS = Object.freeze({
     classic: Object.freeze({
@@ -45,7 +52,7 @@
 
   const DEFAULT_SETTINGS = Object.freeze({
     preset: 'classic',
-    speedZoomEnabled: true,
+    speedZoomEnabled: !DESKTOP_MANUAL_MAP,
     ...PRESETS.classic,
   });
 
@@ -85,7 +92,7 @@
       preset: ['classic', 'tight', 'heavy', 'custom'].includes(settings.preset)
         ? settings.preset
         : 'classic',
-      speedZoomEnabled: settings.speedZoomEnabled !== false,
+      speedZoomEnabled: DESKTOP_MANUAL_MAP ? false : settings.speedZoomEnabled !== false,
       responseMs: clamp(Number(settings.responseMs) || DEFAULT_SETTINGS.responseMs, 20, 180),
       lowSpeedTurnRate: clamp(Number(settings.lowSpeedTurnRate) || DEFAULT_SETTINGS.lowSpeedTurnRate, 120, 360),
       highSpeedTurnRate: clamp(Number(settings.highSpeedTurnRate) || DEFAULT_SETTINGS.highSpeedTurnRate, 25, 130),
@@ -254,7 +261,22 @@
       createRangeControl('cameraLookAheadMeters', 'Camera Look-Ahead', 0, 70, 5),
     );
 
-    document.getElementById('ptbo-arcade-speed-zoom').addEventListener('change', event => {
+    const speedZoomToggle = document.getElementById('ptbo-arcade-speed-zoom');
+    if (DESKTOP_MANUAL_MAP) {
+      state.settings.speedZoomEnabled = false;
+      state.cameraZoom = null;
+      state.baseCameraZoom = null;
+      speedZoomToggle.checked = false;
+      speedZoomToggle.disabled = true;
+      speedZoomToggle.parentElement.lastChild.textContent = ' Desktop zoom is manual';
+      document.getElementById('ptbo-arcade-zoomOutLevels')?.closest('.ptbo-arcade-control')?.remove();
+      document.getElementById('ptbo-arcade-cameraLookAheadMeters')?.closest('.ptbo-arcade-control')?.remove();
+      document.getElementById('ptbo-arcade-note').textContent = 'Desktop map position and zoom are manual. Drag the map and use the mouse wheel or + / − controls; driving will not change your chosen view.';
+      saveSettings();
+    }
+
+    speedZoomToggle.addEventListener('change', event => {
+      if (DESKTOP_MANUAL_MAP) return;
       state.settings.speedZoomEnabled = event.target.checked;
       markCustom();
       saveSettings();
@@ -473,7 +495,7 @@
   }
 
   function applySpeedCamera(deltaSeconds, timestamp) {
-    if (!state.settings.speedZoomEnabled || !cameraLockEnabled() || timestamp - state.lastCameraUpdate < 45) return;
+    if (DESKTOP_MANUAL_MAP || !state.settings.speedZoomEnabled || !cameraLockEnabled() || timestamp - state.lastCameraUpdate < 45) return;
 
     let map;
     try {

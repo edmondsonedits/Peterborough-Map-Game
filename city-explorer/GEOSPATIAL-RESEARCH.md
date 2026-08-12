@@ -83,7 +83,18 @@ Potential next use:
 - export selected districts or landmarks to glTF/OBJ
 - study roof, barrier, bridge, vegetation, and street-furniture rules
 
-### Mapzen/Tilezen Joerd and Terrarium
+### Ontario Digital Terrain Model (Lidar-Derived)
+
+Official catalogue: <https://data.ontario.ca/dataset/ontario-digital-terrain-model-lidar-derived>
+
+Applied now:
+
+- explicit `DEDSFM Central East 2025` source selection from Ontario's Float32 ImageServer
+- city-bounds export in EPSG:3857 with CGVD2013 source heights and no vertical exaggeration
+- lossless browser-ready Terrarium encoding plus checksummed provenance metadata
+- approximately 8.30 m local-ground sampling in the packaged v1.5.5 asset
+
+### Mapzen/Tilezen Joerd and Terrarium fallback
 
 Repository: <https://github.com/tilezen/joerd>
 
@@ -91,11 +102,11 @@ Useful idea: encode elevation in RGB raster tiles that can be decoded directly i
 
 Applied now:
 
-- 3×3 Terrarium tile mosaic around downtown Peterborough
+- packaged 3×3 Terrarium tile mosaic retained only as a compatibility fallback
 - official Terrarium formula: `(red * 256 + green + blue / 256) - 32768`
 - displaced Three.js terrain
 - terrain sampling for buildings, roads, land polygons, trees, cameras, and landmarks
-- flat fallback if the tile service is unavailable
+- flat terrain only if both packaged terrain sources are unavailable
 
 ### VoxCity
 
@@ -181,17 +192,17 @@ The implementation is original integration code informed by these projects. No l
 
 ## Recommended authoritative-data workflow
 
-### Phase 1 — current browser prototype
+### Phase 1 — completed browser foundation
 
 - OSM/Overpass for city semantics
-- Terrarium elevation for immediate terrain
+- Ontario 2025 lidar-derived DTM with packaged Terrarium compatibility fallback
 - custom landmark models
 - aggressive batching and instancing
 
-### Phase 2 — deployment-time Peterborough build
+### Phase 2 — current deployment-time Peterborough build
 
 - download one bounded OSM extract
-- obtain the best available Canadian/Ontario DEM or LiDAR-derived terrain
+- regenerate and integrity-check the selected official Ontario lidar terrain and hydrographic breaklines
 - compare OSM, Microsoft, and Overture building footprints
 - retain OSM identity and tags while selectively filling missing fields
 - export optimized GeoJSON, binary geometry, or glTF chunks

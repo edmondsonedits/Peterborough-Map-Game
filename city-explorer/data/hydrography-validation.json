@@ -1,0 +1,29 @@
+{
+  "checks": {
+    "has_lidar_breaklines": true,
+    "has_ohn_waterbodies": true,
+    "has_ohn_watercourses": true,
+    "lock_controlled_stage_span": true,
+    "named_system_complete": true,
+    "plausible_elevations": true
+  },
+  "feature_count": 1312,
+  "lidar_stage_span_m": 76.86100000000002,
+  "lidar_surface_max_m_cgvd2013": 263.18,
+  "lidar_surface_min_m_cgvd2013": 186.319,
+  "missing_names": [],
+  "required_names": [
+    "otonabee river",
+    "little lake",
+    "jackson creek"
+  ],
+  "river_stage_span_m": 33.43100000000001,
+  "river_surface_max_m_cgvd2013": 219.75,
+  "river_surface_min_m_cgvd2013": 186.319,
+  "source_counts": {
+    "lidar_breakline": 17,
+    "ohn_waterbody": 533,
+    "ohn_watercourse": 762
+  },
+  "status": "pass"
+}
