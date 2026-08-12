@@ -6,16 +6,66 @@ on:
     paths:
       - '.github/workflows/build-peterborough-assets.yml'
       - 'tools/geospatial/**'
+      - 'tools/test_fly_controls.mjs'
+      - 'tools/test_land_surface.mjs'
+      - 'tools/test_land_cover_raster.mjs'
+      - 'tools/test_city_splat_layer.mjs'
+      - 'tools/test_landmark_placement.mjs'
+      - 'tools/test_city_detail_rules.mjs'
+      - 'tools/test_terrain_heightmap.mjs'
       - 'city-explorer/app.js'
+      - 'city-explorer/fly-controls.js'
       - 'city-explorer/data-loader.js'
+      - 'city-explorer/landmark-models.js'
+      - 'city-explorer/road-network.js'
+      - 'city-explorer/land-surface.js'
+      - 'city-explorer/land-cover-raster.js'
+      - 'city-explorer/city-splat-layer.js'
+      - 'city-explorer/city-detail-rules.js'
+      - 'city-explorer/terrain-heightmap.js'
+      - 'city-explorer/water-system.js'
+      - 'city-explorer/terrain-surface.js'
+      - 'city-explorer/data/terrain/peterborough-dtm-2025*'
+      - 'city-explorer/data/manifest.json'
+      - 'city-explorer/data/peterborough-hydrography.geojson'
+      - 'city-explorer/data/hydrography-validation.json'
+      - 'city-explorer/data/splats/manifest.json'
+      - 'city-explorer/road-orientation-fix.js'
+      - 'city-explorer/styles.css'
       - 'city-explorer/index.html'
+      - 'city-explorer/vendor/**'
   pull_request:
     paths:
       - '.github/workflows/build-peterborough-assets.yml'
       - 'tools/geospatial/**'
+      - 'tools/test_fly_controls.mjs'
+      - 'tools/test_land_surface.mjs'
+      - 'tools/test_land_cover_raster.mjs'
+      - 'tools/test_city_splat_layer.mjs'
+      - 'tools/test_landmark_placement.mjs'
+      - 'tools/test_city_detail_rules.mjs'
+      - 'tools/test_terrain_heightmap.mjs'
       - 'city-explorer/app.js'
+      - 'city-explorer/fly-controls.js'
       - 'city-explorer/data-loader.js'
+      - 'city-explorer/landmark-models.js'
+      - 'city-explorer/road-network.js'
+      - 'city-explorer/land-surface.js'
+      - 'city-explorer/land-cover-raster.js'
+      - 'city-explorer/city-splat-layer.js'
+      - 'city-explorer/city-detail-rules.js'
+      - 'city-explorer/terrain-heightmap.js'
+      - 'city-explorer/water-system.js'
+      - 'city-explorer/terrain-surface.js'
+      - 'city-explorer/data/terrain/peterborough-dtm-2025*'
+      - 'city-explorer/data/manifest.json'
+      - 'city-explorer/data/peterborough-hydrography.geojson'
+      - 'city-explorer/data/hydrography-validation.json'
+      - 'city-explorer/data/splats/manifest.json'
+      - 'city-explorer/road-orientation-fix.js'
+      - 'city-explorer/styles.css'
       - 'city-explorer/index.html'
+      - 'city-explorer/vendor/**'
   schedule:
     - cron: '23 8 1 * *'
   workflow_dispatch:
@@ -71,8 +121,48 @@ jobs:
           python -m json.tool city-explorer/data/manifest.json >/dev/null
           python -m json.tool city-explorer/data/road-validation.json >/dev/null
           python -m json.tool city-explorer/data/orn-roads.geojson >/dev/null
+          python -m json.tool city-explorer/data/peterborough-city-open-data.geojson >/dev/null
+          python -m json.tool city-explorer/data/peterborough-road-surfaces.geojson >/dev/null
+          python -m json.tool city-explorer/data/peterborough-hydrography.geojson >/dev/null
+          python -m json.tool city-explorer/data/hydrography-validation.json >/dev/null
+          python -m json.tool city-explorer/data/terrain/peterborough-dtm-2025.json >/dev/null
+          python -m json.tool city-explorer/data/splats/manifest.json >/dev/null
+          test -f city-explorer/data/terrain/peterborough-dtm-2025-terrarium.png
+          test -f city-explorer/vendor/three-r180/build/three.module.min.js
+          test -f city-explorer/vendor/three-r180/examples/jsm/utils/BufferGeometryUtils.js
+          test -f city-explorer/vendor/three-r180/examples/jsm/postprocessing/Pass.js
+          test -f city-explorer/vendor/spark-2.1.0/spark.module.min.js
+          test -f city-explorer/vendor/osmtogeojson-3.0.0-beta.5/osmtogeojson.js
+          echo 'e2b5ee6bccd38fd6d8a2428546b83c5f2426d84b152ef82be8055556e3b40eb6  city-explorer/vendor/three-r180/build/three.module.min.js' | sha256sum -c -
+          echo 'fda7e946b8e0b5ab39b779206589e7a1079a22eb24efb89d7223e03fdfb1f751  city-explorer/vendor/three-r180/examples/jsm/utils/BufferGeometryUtils.js' | sha256sum -c -
+          echo '444b409c235ead986893c472e720da1b779a56985c7d10b279c7944b52bd61c5  city-explorer/vendor/three-r180/examples/jsm/postprocessing/Pass.js' | sha256sum -c -
+          echo '8d26ea30315f4b17e6c980dd2e7319e5a238ff5fd0c73c60768df602fe9456fe  city-explorer/vendor/spark-2.1.0/spark.module.min.js' | sha256sum -c -
+          echo '663bb5bbae47d5d12bff9cf1c87b8f973e85fab4b1f83453810aae99add54592  city-explorer/vendor/osmtogeojson-3.0.0-beta.5/osmtogeojson.js' | sha256sum -c -
           node --check city-explorer/data-loader.js
           node --check city-explorer/app.js
+          node --check city-explorer/fly-controls.js
+          node --check city-explorer/landmark-models.js
+          node --check city-explorer/road-network.js
+          node --check city-explorer/land-surface.js
+          node --check city-explorer/land-cover-raster.js
+          node --check city-explorer/city-splat-layer.js
+          node --check city-explorer/city-detail-rules.js
+          node --check city-explorer/terrain-heightmap.js
+          node --check city-explorer/water-system.js
+          node --check city-explorer/terrain-surface.js
+          node --check city-explorer/road-orientation-fix.js
+          node tools/geospatial/test_road_network.mjs
+          node tools/geospatial/test_official_road_surfaces.mjs
+          node tools/geospatial/test_water_system.mjs
+          node tools/geospatial/test_road_terrain_clearance.mjs
+          node tools/test_land_surface.mjs
+          node tools/test_land_cover_raster.mjs
+          node tools/test_city_splat_layer.mjs
+          node tools/test_terrain_heightmap.mjs
+          node tools/test_fly_controls.mjs
+          node tools/test_landmark_placement.mjs
+          node tools/test_city_detail_rules.mjs
+          python tools/geospatial/test_official_lidar_terrain.py
 
       - name: Upload generated map assets
         if: always()

@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-08-12T17:22:00Z",
+  "city": "Peterborough, Ontario",
+  "source": "City of Peterborough Construction Notice Viewing Service",
+  "source_url": "https://citymaps.peterborough.ca/arcgis/rest/services/Construction_Notice_Viewing_Service/FeatureServer/0",
+  "public_current_notices": [
+    {
+      "contract": "RFQ-11-26",
+      "title": "Watermain Rehabilitation",
+      "location": "Cherryhill Road, Redwood Drive to Kawartha Heights Boulevard",
+      "status": "Not Complete",
+      "map_geometry_action": "none",
+      "reason": "The public record describes utility rehabilitation and does not establish a permanent street-centreline or pavement-footprint change."
+    }
+  ],
+  "geometry_policy": "Apply a permanent geometry edit only when an official as-built, road-surface, curb, subdivision, or other authoritative geometry source documents the completed change.",
+  "result": "No unsupported construction-driven road geometry was introduced. The refreshed City Basedata pavement and curb layers remain authoritative."
+}

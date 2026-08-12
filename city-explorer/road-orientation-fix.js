@@ -1,46 +1,45 @@
-import * as THREE from 'three';
+/*
+  Explorer module bootstrap.
 
-// The city renderer creates each road as a thin box whose local Z axis follows
-// the road segment. Quaternion.setFromUnitVectors() does not preserve a stable
-// "up" direction when the target points close to local -Z, so otherwise valid
-// OSM segments can roll 90/180 degrees and appear as tall black fins.
-//
-// Keep the road's local X axis horizontal and derive a terrain-following local
-// Y axis. The patch is intentionally limited to the app's +Z road alignment
-// call; all other Three.js quaternion behaviour remains unchanged.
-const originalSetFromUnitVectors = THREE.Quaternion.prototype.setFromUnitVectors;
-const localForwardAxis = new THREE.Vector3(0, 0, 1);
-const worldUp = new THREE.Vector3(0, 1, 0);
-const forward = new THREE.Vector3();
-const side = new THREE.Vector3();
-const surfaceNormal = new THREE.Vector3();
-const basis = new THREE.Matrix4();
+  Earlier builds patched THREE.Quaternion.prototype globally to stop road
+  meshes rolling on slopes. v1.5.5 keeps that tangent-frame calculation inside
+  app.js instead, so this file remains a harmless compatibility entry point for
+  existing links while no longer mutating Three.js behaviour for the page.
+*/
 
-THREE.Quaternion.prototype.setFromUnitVectors = function setFromUnitVectorsWithStableRoadUp(from, to) {
-  const isRoadForwardAxis = Math.abs(from.x) < 1e-7
-    && Math.abs(from.y) < 1e-7
-    && from.z > 0.999999;
+function showFatalError(error) {
+  console.error('Peterborough 3D Simulator could not start.', error);
+  const loading = document.querySelector('#loading-screen');
+  if (!loading) return;
+  loading.classList.remove('is-hidden');
+  loading.classList.add('has-error');
+  const card = document.createElement('div');
+  card.className = 'loading-card error-card';
+  const logo = document.createElement('div');
+  logo.className = 'loading-logo';
+  logo.textContent = '!';
+  const title = document.createElement('p');
+  title.className = 'loading-title';
+  title.textContent = 'Explorer could not start';
+  const explanation = document.createElement('p');
+  explanation.className = 'error-explanation';
+  explanation.textContent = 'The local 3D runtime or WebGL could not be initialized. Reload the page; if the problem remains, enable hardware acceleration or try a current browser.';
+  const details = document.createElement('pre');
+  details.className = 'error-details';
+  details.textContent = String(error?.message || error || 'Unknown startup error');
+  const retry = document.createElement('button');
+  retry.type = 'button';
+  retry.className = 'error-retry';
+  retry.textContent = 'Reload explorer';
+  retry.addEventListener('click', () => location.reload());
+  card.append(logo, title, explanation, details, retry);
+  loading.replaceChildren(card);
+}
 
-  if (isRoadForwardAxis && Number.isFinite(to.x) && Number.isFinite(to.y) && Number.isFinite(to.z)) {
-    forward.copy(to);
-    if (forward.lengthSq() > 1e-12) {
-      forward.normalize();
-      side.crossVectors(worldUp, forward);
+globalThis.showPeterboroughExplorerFatalError = showFatalError;
 
-      // A road segment should never be vertical, but retain Three.js's native
-      // fallback if malformed source data produces one.
-      if (side.lengthSq() > 1e-12) {
-        side.normalize();
-        surfaceNormal.crossVectors(forward, side).normalize();
-        basis.makeBasis(side, surfaceNormal, forward);
-        return this.setFromRotationMatrix(basis);
-      }
-    }
-  }
-
-  return originalSetFromUnitVectors.call(this, from, to);
-};
-
-// Confirm the module and app share the same Three.js instance before starting.
-if (localForwardAxis.z !== 1) throw new Error('Road orientation bootstrap failed');
-await import('./app.js');
+try {
+  await import('./app.js?v=1.5.5-drive2');
+} catch (error) {
+  showFatalError(error);
+}

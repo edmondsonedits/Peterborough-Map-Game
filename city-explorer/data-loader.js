@@ -34,14 +34,17 @@ This asynchronous task starts immediately and runs once.
 WHAT IT DOES:
 1. Requests data/manifest.json without accepting a stale manifest.
 2. Reads the prepared OSM filename from manifest.osm.file.
-3. Requests that OSM data with normal browser caching allowed.
+3. Requests that OSM data with the manifest generation value in its URL, so a
+   refreshed city cannot be mistaken for a same-named stale cache entry.
 4. Stores the manifest publicly for diagnostics.
-5. Returns the manifest and raw OSM text.
+5. Keeps the raw OSM text only until the explorer's first map request, then
+   releases the duplicate string after constructing the response body.
 
 FALLBACK:
 Any missing field, unsuccessful response, or thrown error returns null. The custom
 fetch below then lets the original live service handle the request.
 */
+let cachedOsmText = null;
 const cachedAssetPromise = (async () => {
   try {
     const manifestResponse = await nativeFetch(new URL('data/manifest.json', moduleBase), { cache: 'no-store' });
@@ -51,12 +54,14 @@ const cachedAssetPromise = (async () => {
     const osmFile = manifest?.osm?.file;
     if (!osmFile) return null;
 
-    const osmResponse = await nativeFetch(new URL(`data/${osmFile}`, moduleBase), { cache: 'force-cache' });
+    const osmUrl = new URL(`data/${osmFile}`, moduleBase);
+    osmUrl.searchParams.set('v', String(manifest.generated_at || 'current'));
+    const osmResponse = await nativeFetch(osmUrl, { cache: 'force-cache' });
     if (!osmResponse.ok) return null;
 
-    const osmText = await osmResponse.text();
+    cachedOsmText = await osmResponse.text();
     window.PETERBOROUGH_DATA_MANIFEST = manifest;
-    return { manifest, osmText };
+    return { manifest };
   } catch (error) {
     console.info('Deployment-time Peterborough assets are not available yet; live services will be used.', error);
     return null;
@@ -85,8 +90,13 @@ window.fetch = async (input, init = {}) => {
 
   if (method === 'POST' && rawUrl && /\/api\/interpreter(?:$|\?)/.test(rawUrl)) {
     const cached = await cachedAssetPromise;
-    if (cached?.osmText) {
-      return new Response(cached.osmText, {
+    if (cached && cachedOsmText) {
+      // A Response owns its body after construction, so release our duplicate
+      // ~25 MB JavaScript string immediately. This materially lowers city-load
+      // peak memory on laptops and mobile devices.
+      const responseText = cachedOsmText;
+      cachedOsmText = null;
+      return new Response(responseText, {
         status: 200,
         headers: {
           'Content-Type': 'application/json; charset=utf-8',

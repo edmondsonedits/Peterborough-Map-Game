@@ -64,14 +64,16 @@
   }
 
   function start() {
-    repairTree(document.documentElement);
+    const root = document.documentElement;
+    if (!root) return;
+    repairTree(root);
     const observer = new MutationObserver(records => {
       for (const record of records) {
         if (record.type === 'characterData') repairTree(record.target);
         for (const node of record.addedNodes) repairTree(node);
       }
     });
-    observer.observe(document.documentElement, {
+    observer.observe(root, {
       subtree: true,
       childList: true,
       characterData: true

@@ -36,7 +36,7 @@
 </head>
 <body>
   <!-- The versioned iframe URL prevents an older simulator HTML file from being reused. -->
-  <iframe id="simulator" src="../index.html?v=1.5.3" title="Peterborough Fire and Emergency Dispatch Simulator"></iframe>
+  <iframe id="simulator" src="../index.html?v=1.5.5-manual-map1" title="Peterborough Fire and Emergency Dispatch Simulator"></iframe>
   <button id="audio-button" type="button" aria-label="Mute dispatch voice" aria-pressed="true">
     <svg class="speaker-on" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15 9a4 4 0 0 1 0 6M17.5 6.5a7.5 7.5 0 0 1 0 11"/></svg>
     <svg class="speaker-off" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="m16 9 5 5M21 9l-5 5"/></svg>
@@ -44,7 +44,7 @@
   <div id="loading"><div><strong>Loading Peterborough roads</strong><span id="loading-status">Preparing steering, road boundaries, and dispatch data…</span></div></div>
 
   <!-- Shared data keeps desktop, mobile, Geo Guesser, and the editor consistent. -->
-  <script src="../../shared/build-version.js?v=1.5.3"></script>
+  <script src="../../shared/build-version.js?v=1.5.5"></script>
   <script src="../../shared/dispatch-locations.js?v=1.4.20"></script>
   <script src="../../shared/dispatch-data-1.4.4.js?v=1.4.20"></script>
   <script src="../../shared/dispatch-override-1.4.4.js?v=1.4.20"></script>
@@ -56,7 +56,7 @@
       VERSION is used for module cache URLs and startup diagnostics.
       AUDIO_KEY is the browser-storage name that remembers dispatch voice.
       */
-      const VERSION = '1.5.3';
+      const VERSION = '1.5.5-manual-map1';
       const AUDIO_KEY = 'ptboDispatchVoiceEnabled';
 
       const frame = document.getElementById('simulator');
@@ -166,6 +166,45 @@
         doc.body.appendChild(helper);
       }
 
+      /* Desktop owns the map view. This final guard runs after optional camera
+         modules finish, so saved settings or an older camera helper cannot
+         restart speed-based zooming. Mobile uses a separate wrapper and keeps
+         its stabilized follow camera. */
+      function installDesktopManualMap(doc) {
+        const helper = doc.createElement('script');
+        helper.textContent = `(() => {
+          document.documentElement.dataset.ptboDesktopManualMap = 'true';
+          const lock = document.getElementById('chk-camera');
+          if (lock) lock.checked = false;
+          const arcade = window.PTBO_ARCADE_HANDLING;
+          if (arcade?.state?.settings) {
+            arcade.state.settings.speedZoomEnabled = false;
+            arcade.state.cameraZoom = null;
+            arcade.state.baseCameraZoom = null;
+          }
+          const speedZoom = document.getElementById('ptbo-arcade-speed-zoom');
+          if (speedZoom) {
+            speedZoom.checked = false;
+            speedZoom.disabled = true;
+            if (speedZoom.parentElement) speedZoom.parentElement.lastChild.textContent = ' Desktop zoom is manual';
+          }
+          document.getElementById('ptbo-arcade-zoomOutLevels')?.closest('.ptbo-arcade-control')?.remove();
+          document.getElementById('ptbo-arcade-cameraLookAheadMeters')?.closest('.ptbo-arcade-control')?.remove();
+          const note = document.getElementById('ptbo-arcade-note');
+          if (note) note.textContent = 'Desktop map position and zoom are manual. Drag the map and use the mouse wheel or + / − controls.';
+          try {
+            mapInstance.options.zoomSnap = 1;
+            mapInstance.options.zoomDelta = 1;
+            window.PTBO_DRIVING_CAMERA?.setMode?.('Fixed Map');
+            mapInstance.fire('dragstart');
+          } catch (_) {}
+          document.getElementById('ptbo-camera-panel')?.remove();
+          document.getElementById('ptbo-camera-settings')?.remove();
+          document.getElementById('ptbo-camera-settings-title')?.remove();
+        })();`;
+        doc.body.appendChild(helper);
+      }
+
       /*
       FUNCTION: showStartupError
       Replaces the loading card with a readable failure and Retry button instead
@@ -198,6 +237,7 @@
 
         Promise.all([dispatchReady, simulatorReady])
           .then(() => {
+            installDesktopManualMap(doc);
             loadingStatus.textContent = 'Simulator ready';
             loading.classList.add('hidden');
             setTimeout(() => loading.remove(), 250);
