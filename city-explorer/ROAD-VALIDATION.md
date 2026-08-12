@@ -1,60 +1,60 @@
 # Peterborough Road Alignment Validation
 
-Generated: 2026-08-12T16:14:47+00:00
+Generated: 2026-08-12T19:33:52+00:00
 
 **Result: PASS**
 
-The browser road geometry is built from the cached OpenStreetMap extract. This report compares public OSM road centrelines with Ontario's authoritative Ontario Road Network (ORN) Road Net Element layer.
+The explorer renders cached OpenStreetMap street geometry. Public drivable streets were independently compared with Ontario's authoritative Ontario Road Network (ORN) Road Net Element layer.
 
-## Source data
+## Completeness safeguard
 
-- Public OSM road features used for validation: **2,701**
-- ORN road features in the same bounding box: **3,179**
-- ORN item: `Ontario Road Network (ORN) Road Net Element`
-- ORN owner: `OntarioProvincialMapping`
+ORN is downloaded through a spatial object-ID query followed by chunked object-ID requests. This avoids ArcGIS transfer limits silently omitting part of Peterborough's network.
+
+## Coverage
+
+- Public OSM roads checked: **2,775**
+- All rendered OSM drivable features: **5,956**
+- Complete ORN roads: **3,179**
 - ORN layer: `ORN Road Net Element`
 
-## Positional comparison
+## Centreline results
 
-| Direction | Median | 90th percentile | 95th percentile | Within 10 m | Within 20 m |
+| Comparison | Median | P90 | P95 | Within 10 m | Within 20 m |
 |---|---:|---:|---:|---:|---:|
-| OSM → ORN | 0.65 m | 2.29 m | 3.46 m | 98.75% | 99.01% |
-| ORN → OSM | 0.66 m | 2.55 m | 4.63 m | 96.55% | 97.38% |
+| Public OSM → ORN | 0.64 m | 2.34 m | 3.63 m | 98.43% | 98.72% |
+| ORN → public OSM | 0.63 m | 2.32 m | 3.57 m | 97.60% | 98.01% |
+| All rendered OSM → ORN | 1.24 m | 80.30 m | 134.55 m | 68.61% | 72.71% |
 
-The two-direction check catches both displaced OSM streets and authoritative ORN streets that may be absent from the game extract.
+## Street names
 
-## Street-name comparison
+- Comparable named segments: **2,638**
+- Normalized official-name agreement: **95.22%**
 
-- Segments with usable names in both sources: **0**
-- Normalized name agreement: **not available from this ORN layer**
+## Streets requiring manual review
 
-## Streets flagged for manual review
-
-| Street | P90 offset | Within 10 m | Samples |
+| Street | P90 offset | Within 20 m | Samples |
 |---|---:|---:|---:|
-| PELL DR | 264.57 m | 0.00% | 7 |
+| HWY 7 | 1712.46 m | 72.24% | 544 |
 | O TOOLE CRES | 254.18 m | 40.00% | 50 |
 | WRIGHT AVE | 242.56 m | 0.00% | 19 |
-| BOLSTER BLVD | 228.38 m | 5.26% | 19 |
-| DOLMAN ST | 187.68 m | 63.04% | 46 |
-| FIRE ROUTE 4A | 180.16 m | 44.83% | 58 |
-| NORTHCOTT AVE | 179.65 m | 61.45% | 83 |
-| LIGHTFOOT TERRACE | 167.97 m | 0.00% | 10 |
-| BRISCO GARDENS | 82.13 m | 0.00% | 10 |
-| MUSEUM DR | 77.36 m | 66.67% | 45 |
-| CHURCHILL DR | 70.98 m | 14.29% | 7 |
-| RAMSAY RD | 65.81 m | 70.83% | 24 |
-| ALEXANDER AVE | 35.43 m | 80.77% | 26 |
-| GZOWSKI WAY | 33.80 m | 52.46% | 61 |
-| WOODVIEW DR | 19.42 m | 46.15% | 13 |
-| CARRIAGE LN | 18.13 m | 85.51% | 69 |
+| BOLSTER BLVD | 228.38 m | 10.53% | 19 |
+| DOLMAN ST | 187.68 m | 65.22% | 46 |
+| FIRE ROUTE 4A | 180.16 m | 48.28% | 58 |
+| NORTHCOTT AVE | 179.65 m | 63.86% | 83 |
+| LIGHTFOOT TER | 167.97 m | 0.00% | 10 |
+| BRISCO GDNS | 82.13 m | 0.00% | 10 |
+| MUSEUM DR | 77.36 m | 71.11% | 45 |
+| RAMSAY RD | 65.81 m | 75.00% | 24 |
+| DENNE LN | 44.06 m | 44.44% | 9 |
+| ALEXANDER AVE | 35.43 m | 84.62% | 26 |
+| GZOWSKI WAY | 33.80 m | 77.05% | 61 |
 
-## Method and limits
+## Interpretation
 
-Road centrelines were projected to NAD83 / UTM zone 17N and sampled every ~15 m. Each sample was measured to the nearest line in the comparison network in both directions.
+Pass criteria cover public drivable streets. Service roads, parking aisles, driveways, tracks and explicitly private roads remain rendered but are reported separately because ORN is not a complete reference for them.
 
-- Divided roads may use one centreline in one source and separate carriageways in the other.
-- New construction can appear in one source before the other is updated.
-- This validates centreline geometry, not curb edges, lane markings, grades, turn restrictions, or legal survey boundaries.
+Complete ORN object-ID pagination; NAD83 / UTM zone 17N; centreline samples about every 15 metres; nearest-line distance measured in both directions.
 
-A passing report means the road centrelines meet the project's automated alignment thresholds. It does not mean every curb, lane, bridge deck, driveway, or recent construction project has been field-surveyed.
+- Divided roads can be one centreline in one source and separate carriageways in the other.
+- Recent construction and private roads can be present in only one source.
+- The test validates centrelines and names, not curbs, lanes, grades, turn rules or legal survey boundaries.
