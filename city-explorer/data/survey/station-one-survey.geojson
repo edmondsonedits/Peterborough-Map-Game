@@ -1,0 +1,52 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "schema_version": 1,
+    "id": "station-one-2023-orthophoto-survey",
+    "area": "Station 1 and central Peterborough accuracy district",
+    "capture_date": "2023",
+    "coordinate_reference": "EPSG:4326",
+    "source": {
+      "id": "ontario-oiwms-scoo-2023",
+      "name": "South Central Ontario Orthophotography 2023",
+      "licence": "Open Government Licence – Ontario",
+      "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_Imagery/Ontario_Imagery_Web_Map_Service/MapServer"
+    },
+    "reference_overlay": {
+      "file": "data/survey/station-one-district-orthophoto-2023.jpg",
+      "bounds": {
+        "west": -78.32727138067858,
+        "south": 44.29730615311119,
+        "east": -78.31705341932141,
+        "north": 44.30463132407905
+      },
+      "developer_only": true,
+      "attribution": "Contains information licensed under the Open Government Licence – Ontario."
+    },
+    "production_policy": {
+      "stable_features_only": true,
+      "excluded": ["moving people", "temporary vehicles", "temporary construction"],
+      "note": "Transient objects visible in one imagery capture are reference evidence, not permanent city inventory."
+    }
+  },
+  "features": [
+    {"type":"Feature","id":"station1-tree-front","geometry":{"type":"Point","coordinates":[-78.3218486,44.3008195]},"properties":{"id":"station1-tree-front","semantic_type":"tree","source_id":"ontario-oiwms-scoo-2023","confidence":0.92,"review_status":"verified","scale":1.0,"palette":"crimson"}},
+    {"type":"Feature","id":"station1-tree-nw-1","geometry":{"type":"Point","coordinates":[-78.3226394,44.3012582]},"properties":{"id":"station1-tree-nw-1","semantic_type":"tree","source_id":"ontario-oiwms-scoo-2023","confidence":0.82,"review_status":"verified","scale":0.92,"palette":"green"}},
+    {"type":"Feature","id":"station1-tree-nw-2","geometry":{"type":"Point","coordinates":[-78.3224762,44.3013849]},"properties":{"id":"station1-tree-nw-2","semantic_type":"tree","source_id":"ontario-oiwms-scoo-2023","confidence":0.82,"review_status":"verified","scale":1.08,"palette":"crimson"}},
+    {"type":"Feature","id":"station1-tree-n-1","geometry":{"type":"Point","coordinates":[-78.3219364,44.3013216]},"properties":{"id":"station1-tree-n-1","semantic_type":"tree","source_id":"ontario-oiwms-scoo-2023","confidence":0.78,"review_status":"verified","scale":0.88,"palette":"crimson"}},
+    {"type":"Feature","id":"station1-tree-n-2","geometry":{"type":"Point","coordinates":[-78.3217356,44.3012763]},"properties":{"id":"station1-tree-n-2","semantic_type":"tree","source_id":"ontario-oiwms-scoo-2023","confidence":0.8,"review_status":"verified","scale":1.0,"palette":"green"}},
+    {"type":"Feature","id":"station1-tree-east","geometry":{"type":"Point","coordinates":[-78.3215849,44.3010773]},"properties":{"id":"station1-tree-east","semantic_type":"tree","source_id":"ontario-oiwms-scoo-2023","confidence":0.86,"review_status":"verified","scale":0.9,"palette":"crimson"}},
+    {"type":"Feature","id":"station1-tree-sw","geometry":{"type":"Point","coordinates":[-78.3227901,44.3005978]},"properties":{"id":"station1-tree-sw","semantic_type":"tree","source_id":"ontario-oiwms-scoo-2023","confidence":0.76,"review_status":"verified","scale":1.05,"palette":"crimson"}},
+    {"type":"Feature","id":"station1-tree-s-1","geometry":{"type":"Point","coordinates":[-78.3225265,44.3003898]},"properties":{"id":"station1-tree-s-1","semantic_type":"tree","source_id":"ontario-oiwms-scoo-2023","confidence":0.74,"review_status":"verified","scale":0.88,"palette":"green"}},
+    {"type":"Feature","id":"station1-tree-s-2","geometry":{"type":"Point","coordinates":[-78.3222628,44.3003445]},"properties":{"id":"station1-tree-s-2","semantic_type":"tree","source_id":"ontario-oiwms-scoo-2023","confidence":0.74,"review_status":"verified","scale":1.12,"palette":"crimson"}},
+    {"type":"Feature","id":"station1-tree-s-3","geometry":{"type":"Point","coordinates":[-78.3219364,44.3003717]},"properties":{"id":"station1-tree-s-3","semantic_type":"tree","source_id":"ontario-oiwms-scoo-2023","confidence":0.78,"review_status":"verified","scale":0.95,"palette":"crimson"}},
+    {"type":"Feature","id":"station1-tree-se-1","geometry":{"type":"Point","coordinates":[-78.3216351,44.300435]},"properties":{"id":"station1-tree-se-1","semantic_type":"tree","source_id":"ontario-oiwms-scoo-2023","confidence":0.8,"review_status":"verified","scale":1.06,"palette":"green"}},
+    {"type":"Feature","id":"station1-tree-se-2","geometry":{"type":"Point","coordinates":[-78.3214845,44.3006431]},"properties":{"id":"station1-tree-se-2","semantic_type":"tree","source_id":"ontario-oiwms-scoo-2023","confidence":0.8,"review_status":"verified","scale":0.9,"palette":"crimson"}},
+    {"type":"Feature","id":"station1-building-footprint","geometry":{"type":"Polygon","coordinates":[[[-78.3220576,44.3008994],[-78.3220375,44.3008849],[-78.3220388,44.3008662],[-78.3220562,44.3008528],[-78.3221126,44.3008489],[-78.3221152,44.3008974],[-78.3224151,44.3008868],[-78.3224161,44.3009018],[-78.3224277,44.3010707],[-78.3220581,44.3010836],[-78.3219087,44.3010889],[-78.3218971,44.3009201],[-78.3220465,44.3009148],[-78.3220455,44.3008998],[-78.3220576,44.3008994]]]},"properties":{"id":"station1-building-footprint","semantic_type":"building","source_id":"openstreetmap-way-1009651229","confidence":0.99,"review_status":"verified","render_in_semantic_layer":false}},
+    {"type":"Feature","id":"station1-apparatus-facade","geometry":{"type":"LineString","coordinates":[[-78.3224151,44.3008868],[-78.3221152,44.3008974]]},"properties":{"id":"station1-apparatus-facade","semantic_type":"building_facade","source_id":"openstreetmap-way-1009651229","confidence":0.99,"review_status":"verified","facade_role":"apparatus-bays","bay_count":4}},
+    {"type":"Feature","id":"station1-entry-facade","geometry":{"type":"LineString","coordinates":[[-78.3221126,44.3008489],[-78.3220562,44.3008528]]},"properties":{"id":"station1-entry-facade","semantic_type":"building_facade","source_id":"openstreetmap-way-1009651229","confidence":0.99,"review_status":"verified","facade_role":"projecting-entry"}},
+    {"type":"Feature","id":"station1-office-facade","geometry":{"type":"LineString","coordinates":[[-78.3220465,44.3009148],[-78.3218971,44.3009201]]},"properties":{"id":"station1-office-facade","semantic_type":"building_facade","source_id":"openstreetmap-way-1009651229","confidence":0.99,"review_status":"verified","facade_role":"public-office"}},
+    {"type":"Feature","id":"station1-front-planting-bed","geometry":{"type":"Polygon","coordinates":[[[-78.322071,44.300781],[-78.321926,44.300786],[-78.321929,44.300815],[-78.322068,44.300810],[-78.322071,44.300781]]]},"properties":{"id":"station1-front-planting-bed","semantic_type":"planting_area","source_id":"ontario-oiwms-scoo-2023","confidence":0.91,"review_status":"verified","surface":"raised-flower-bed"}},
+    {"type":"Feature","id":"station1-front-flagpole","geometry":{"type":"Point","coordinates":[-78.321998,44.300809]},"properties":{"id":"station1-front-flagpole","semantic_type":"flagpole","source_id":"ontario-oiwms-scoo-2023","confidence":0.9,"review_status":"verified","height_m":12.5}}
+  ]
+}

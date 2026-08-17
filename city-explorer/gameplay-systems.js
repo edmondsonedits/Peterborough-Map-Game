@@ -284,25 +284,244 @@ export function createFireTruck(THREE) {
   return root;
 }
 
-export function createFireStationFacade(THREE) {
+function stationSurveyFeature(survey, id) {
+  return survey?.features?.find?.((feature) => String(feature.id || feature.properties?.id) === id) || null;
+}
+
+function surveyLineFrame(THREE, feature, project) {
+  if (feature?.geometry?.type !== 'LineString' || feature.geometry.coordinates.length < 2) return null;
+  const startGeo = feature.geometry.coordinates[0];
+  const endGeo = feature.geometry.coordinates.at(-1);
+  const start = project(Number(startGeo[1]), Number(startGeo[0]));
+  const end = project(Number(endGeo[1]), Number(endGeo[0]));
+  const dx = end.x - start.x;
+  const dz = end.y - start.y;
+  const length = Math.hypot(dx, dz);
+  if (length < 0.25) return null;
+  return {
+    start,
+    end,
+    length,
+    x: (start.x + end.x) / 2,
+    z: (start.y + end.y) / 2,
+    yaw: Math.atan2(-dz, dx),
+  };
+}
+
+function addSurveyAlignedPanel(THREE, root, frame, terrainHeightAtWorld, materials, options) {
+  const section = new THREE.Group();
+  const ground = terrainHeightAtWorld(frame.x, frame.z);
+  section.position.set(frame.x, ground, frame.z);
+  section.rotation.y = frame.yaw;
+  root.add(section);
+
+  const wallHeight = options.wallHeight || 5.55;
+  mesh(THREE, new THREE.BoxGeometry(frame.length, wallHeight, 0.18), materials.brick, section, 0, wallHeight / 2, 0.02);
+  mesh(THREE, new THREE.BoxGeometry(frame.length + 0.2, 0.32, 0.36), materials.roof, section, 0, wallHeight - 0.08, -0.01);
+
+  if (options.kind === 'apparatus') {
+    const bays = 4;
+    const margin = 0.55;
+    const bayWidth = (frame.length - margin * 2) / bays;
+    for (let index = 0; index < bays; index += 1) {
+      const x = -frame.length / 2 + margin + bayWidth * (index + 0.5);
+      const visibleWidth = bayWidth - 0.38;
+      mesh(THREE, new THREE.BoxGeometry(visibleWidth + 0.18, 4.45, 0.12), materials.frame, section, x, 2.35, 0.14);
+      mesh(THREE, new THREE.BoxGeometry(visibleWidth, 4.17, 0.08), materials.door, section, x, 2.31, 0.23);
+      for (let row = 1; row < 6; row += 1) {
+        mesh(THREE, new THREE.BoxGeometry(visibleWidth - 0.12, 0.025, 0.025), materials.frame, section, x, 0.62 + row * 0.62, 0.285);
+      }
+      const windows = 4;
+      for (let windowIndex = 0; windowIndex < windows; windowIndex += 1) {
+        const wx = x - visibleWidth * 0.36 + windowIndex * visibleWidth * 0.24;
+        mesh(THREE, new THREE.BoxGeometry(visibleWidth * 0.17, 0.34, 0.025), materials.glass, section, wx, 2.05, 0.305);
+      }
+    }
+  }
+
+  if (options.kind === 'office') {
+    mesh(THREE, new THREE.BoxGeometry(frame.length * 0.62, 0.82, 0.04), materials.glass, section, -frame.length * 0.08, 2.0, 0.225);
+    for (const fraction of [-0.28, -0.06, 0.16]) {
+      mesh(THREE, new THREE.BoxGeometry(0.07, 0.9, 0.04), materials.frame, section, frame.length * fraction, 2.0, 0.255);
+    }
+    mesh(THREE, new THREE.BoxGeometry(1.7, 2.7, 0.055), materials.glass, section, frame.length * 0.39, 1.43, 0.25);
+  }
+  if (options.kind === 'entry') {
+    mesh(THREE, new THREE.BoxGeometry(frame.length * 0.7, 0.72, 0.04), materials.glass, section, 0, 2.05, 0.225);
+    mesh(THREE, new THREE.BoxGeometry(0.075, 0.8, 0.04), materials.frame, section, 0, 2.05, 0.255);
+  }
+  return section;
+}
+
+/**
+ * Add only surveyed, footprint-attached visual detail to Station 1.
+ *
+ * The ordinary OSM/municipal building mesh remains the authoritative mass.
+ * This layer has no independent local origin: every panel is generated from a
+ * reviewed geographic line in the semantic survey, so it cannot drift away
+ * from the footprint when the city origin, terrain, or building data changes.
+ */
+export function createFireStationFacade(THREE, { project, terrainHeightAtWorld, survey } = {}) {
   const root = new THREE.Group();
-  root.name = 'Fire Station 1 facade detail';
-  const brick = standardMaterial(THREE, 0x883b2c, { roughness: 0.9 });
-  const stone = standardMaterial(THREE, 0xc5c0ae, { roughness: 0.82 });
-  const door = standardMaterial(THREE, 0xe2dfd2, { roughness: 0.64 });
-  const glass = standardMaterial(THREE, 0x183748, { roughness: 0.2, metalness: 0.12 });
-  const dark = standardMaterial(THREE, 0x20292b, { roughness: 0.72 });
-  mesh(THREE, new THREE.BoxGeometry(42.5, 0.55, 0.55), stone, root, 0, 5.65, 13.05);
-  mesh(THREE, new THREE.BoxGeometry(42.2, 0.42, 0.5), brick, root, 0, 0.3, 13.08);
-  const bayCenters = [-12.2, -4.25, 3.7];
-  bayCenters.forEach((x) => {
-    mesh(THREE, new THREE.BoxGeometry(6.55, 4.35, 0.16), dark, root, x, 2.72, 13.36);
-    mesh(THREE, new THREE.BoxGeometry(6.18, 4.02, 0.12), door, root, x, 2.66, 13.48);
-    for (let row = 1; row < 6; row += 1) mesh(THREE, new THREE.BoxGeometry(6.04, 0.035, 0.035), stone, root, x, 0.74 + row * 0.58, 13.56);
-    for (const windowX of [-1.95, 0, 1.95]) mesh(THREE, new THREE.BoxGeometry(1.48, 0.54, 0.04), glass, root, x + windowX, 2.82, 13.59);
+  root.name = 'Fire Station 1 surveyed facade detail';
+  root.userData = {
+    type: 'recognizable-city-site',
+    siteId: FIRE_STATION_ONE.id,
+    sourceNotes: 'Generated from reviewed geographic facade lines; no reference imagery is embedded.',
+    surveyFeatureIds: [],
+  };
+  if (typeof project !== 'function' || typeof terrainHeightAtWorld !== 'function' || !survey) {
+    root.userData.status = 'mesh-fallback';
+    return root;
+  }
+
+  const materials = {
+    brick: standardMaterial(THREE, 0x6f4538, { roughness: 0.94 }),
+    door: standardMaterial(THREE, 0xb93d3e, { roughness: 0.7, metalness: 0.05 }),
+    frame: standardMaterial(THREE, 0x575550, { roughness: 0.72, metalness: 0.12 }),
+    glass: standardMaterial(THREE, 0x203b46, { roughness: 0.22, metalness: 0.16 }),
+    roof: standardMaterial(THREE, 0x282b29, { roughness: 0.92 }),
+  };
+  const apparatusFeature = stationSurveyFeature(survey, 'station1-apparatus-facade');
+  const entryFeature = stationSurveyFeature(survey, 'station1-entry-facade');
+  const officeFeature = stationSurveyFeature(survey, 'station1-office-facade');
+  const apparatusFrame = surveyLineFrame(THREE, apparatusFeature, project);
+  const entryFrame = surveyLineFrame(THREE, entryFeature, project);
+  const officeFrame = surveyLineFrame(THREE, officeFeature, project);
+  if (apparatusFrame) {
+    addSurveyAlignedPanel(THREE, root, apparatusFrame, terrainHeightAtWorld, materials, { kind: 'apparatus', wallHeight: 5.55 });
+    root.userData.surveyFeatureIds.push(apparatusFeature.id);
+  }
+  if (entryFrame) {
+    addSurveyAlignedPanel(THREE, root, entryFrame, terrainHeightAtWorld, materials, { kind: 'entry', wallHeight: 4.7 });
+    root.userData.surveyFeatureIds.push(entryFeature.id);
+  }
+  if (officeFrame) {
+    const office = addSurveyAlignedPanel(THREE, root, officeFrame, terrainHeightAtWorld, materials, { kind: 'office', wallHeight: 4.65 });
+    root.userData.surveyFeatureIds.push(officeFeature.id);
+    if (typeof document !== 'undefined') {
+      const canvas = document.createElement('canvas');
+      canvas.width = 768;
+      canvas.height = 128;
+      const context = canvas.getContext('2d');
+      context.fillStyle = '#142027';
+      context.fillRect(0, 0, canvas.width, canvas.height);
+      context.fillStyle = '#f4eee0';
+      context.font = '700 27px system-ui, sans-serif';
+      context.textAlign = 'center';
+      context.textBaseline = 'middle';
+      context.fillText('PETERBOROUGH FIRE SERVICES  ·  STATION 1', 384, 64);
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.colorSpace = THREE.SRGBColorSpace;
+      const sign = mesh(THREE, new THREE.PlaneGeometry(Math.min(8.2, officeFrame.length * 0.67), 0.82), new THREE.MeshBasicMaterial({ map: texture }), office, 0, 4.13, 0.255);
+      sign.userData.texture = texture;
+      root.userData.texture = texture;
+    }
+  }
+  root.userData.status = root.userData.surveyFeatureIds.length === 3 ? 'survey-aligned' : 'partial-fallback';
+  return root;
+}
+
+function createLegacyFireStationFacade(THREE) {
+  const root = new THREE.Group();
+  root.name = 'Fire Station 1 precinct detail';
+  root.userData = {
+    type: 'recognizable-city-site',
+    siteId: FIRE_STATION_ONE.id,
+    sourceNotes: 'GIS-aligned model created from lawful visual comparison; no reference imagery is embedded.',
+  };
+
+  // The municipal/OSM footprint remains the authoritative building mass. This
+  // shallow additive layer supplies Station 1's recognizable street-level cues.
+  const brick = standardMaterial(THREE, 0x6f4538, { roughness: 0.94 });
+  const brickDark = standardMaterial(THREE, 0x3c332d, { roughness: 0.96 });
+  const concrete = standardMaterial(THREE, 0xb6ae9c, { roughness: 0.86 });
+  const doorRed = standardMaterial(THREE, 0xb93d3e, { roughness: 0.7, metalness: 0.05 });
+  const doorFrame = standardMaterial(THREE, 0x575550, { roughness: 0.72, metalness: 0.12 });
+  const glass = standardMaterial(THREE, 0x203b46, { roughness: 0.22, metalness: 0.16 });
+  const roof = standardMaterial(THREE, 0x282b29, { roughness: 0.92 });
+  const metal = standardMaterial(THREE, 0x818783, { roughness: 0.42, metalness: 0.58 });
+  const asphalt = standardMaterial(THREE, 0x363936, { roughness: 1 });
+  const marking = standardMaterial(THREE, 0xd8d3bd, { roughness: 0.78 });
+  const timber = standardMaterial(THREE, 0x77614a, { roughness: 0.94 });
+  const soil = standardMaterial(THREE, 0x49382d, { roughness: 1 });
+  const foliage = standardMaterial(THREE, 0x4b632f, { roughness: 0.96 });
+  const flower = standardMaterial(THREE, 0xc94143, { roughness: 0.82 });
+
+  mesh(THREE, new THREE.BoxGeometry(43.2, 5.8, 0.38), brick, root, 0, 3.0, 13.22);
+  mesh(THREE, new THREE.BoxGeometry(43.5, 0.52, 0.72), roof, root, 0, 5.83, 13.08);
+  mesh(THREE, new THREE.BoxGeometry(25.4, 0.4, 0.74), concrete, root, -8.65, 5.38, 13.2);
+
+  // Four south-facing red apparatus doors, with panel seams and the real small
+  // horizontal window rows, replace the former three generic pale doors.
+  const bayCenters = [-16.0, -9.65, -3.3, 3.05];
+  bayCenters.forEach((x, bayIndex) => {
+    mesh(THREE, new THREE.BoxGeometry(5.75, 4.5, 0.2), doorFrame, root, x, 2.72, 13.48);
+    mesh(THREE, new THREE.BoxGeometry(5.42, 4.22, 0.13), doorRed, root, x, 2.68, 13.61);
+    for (let row = 1; row < 6; row += 1) {
+      mesh(THREE, new THREE.BoxGeometry(5.28, 0.035, 0.035), doorFrame, root, x, 0.68 + row * 0.62, 13.7);
+    }
+    for (const windowX of [-1.82, -0.61, 0.61, 1.82]) {
+      mesh(THREE, new THREE.BoxGeometry(0.86, 0.38, 0.04), glass, root, x + windowX, 2.16, 13.71);
+    }
+    const canopy = mesh(THREE, new THREE.BoxGeometry(5.95, 0.14, 1.05), metal, root, x, 5.22, 13.76);
+    canopy.rotation.x = -0.08;
+    canopy.userData = { type: 'apparatus-bay-canopy', bay: bayIndex + 1 };
   });
-  mesh(THREE, new THREE.BoxGeometry(6.9, 4.9, 0.25), brick, root, 13.25, 2.75, 13.3);
-  mesh(THREE, new THREE.BoxGeometry(2.0, 2.8, 0.12), glass, root, 13.1, 1.82, 13.47);
+
+  // Stepped east office wing, ribbon window, and recessed public entrance.
+  mesh(THREE, new THREE.BoxGeometry(14.1, 4.65, 0.5), brickDark, root, 14.2, 2.52, 13.34);
+  mesh(THREE, new THREE.BoxGeometry(14.35, 0.42, 0.82), roof, root, 14.2, 4.83, 13.13);
+  mesh(THREE, new THREE.BoxGeometry(8.2, 0.95, 0.08), glass, root, 11.9, 2.05, 13.66);
+  for (const mullionX of [8.6, 10.8, 13.0, 15.2]) {
+    mesh(THREE, new THREE.BoxGeometry(0.09, 1.02, 0.05), doorFrame, root, mullionX, 2.05, 13.72);
+  }
+  mesh(THREE, new THREE.BoxGeometry(2.05, 2.82, 0.12), glass, root, 19.0, 1.52, 13.69);
+  mesh(THREE, new THREE.BoxGeometry(0.1, 2.88, 0.05), metal, root, 19.0, 1.52, 13.76);
+  mesh(THREE, new THREE.BoxGeometry(3.1, 0.16, 1.2), metal, root, 19.0, 3.08, 13.82);
+
+  // Rooftop service block, HVAC units, guard rail, and communications mast.
+  mesh(THREE, new THREE.BoxGeometry(18.4, 1.05, 7.6), roof, root, -2.6, 6.13, 3.0);
+  mesh(THREE, new THREE.BoxGeometry(4.1, 1.35, 3.0), metal, root, 5.4, 6.63, 2.1);
+  mesh(THREE, new THREE.BoxGeometry(3.2, 0.95, 2.5), metal, root, -8.4, 6.43, 0.4);
+  mesh(THREE, new THREE.CylinderGeometry(0.08, 0.11, 9.2, 8), metal, root, -1.5, 10.65, 1.3).userData = { type: 'communications-mast' };
+  for (const mastY of [9.1, 11.0, 12.6]) {
+    mesh(THREE, new THREE.BoxGeometry(2.0, 0.06, 0.06), metal, root, -1.5, mastY, 1.3);
+    mesh(THREE, new THREE.BoxGeometry(0.06, 0.06, 1.55), metal, root, -1.5, mastY, 1.3);
+  }
+  for (const x of [-10.2, -5.2, -0.2, 4.8, 9.8]) {
+    mesh(THREE, new THREE.CylinderGeometry(0.035, 0.035, 1.0, 6), metal, root, x, 6.55, -1.9);
+  }
+  mesh(THREE, new THREE.BoxGeometry(21.0, 0.06, 0.06), metal, root, -0.2, 7.02, -1.9);
+
+  // Official surfaces remain authoritative; these thin elements add only the
+  // observed apron tone, east parking stalls, and entrance landscaping.
+  mesh(THREE, new THREE.BoxGeometry(43.0, 0.045, 18.0), asphalt, root, 0, 0.05, 23.0);
+  for (const x of [25.0, 28.0, 31.0, 34.0, 37.0]) {
+    mesh(THREE, new THREE.BoxGeometry(0.09, 0.035, 5.2), marking, root, x, 0.09, 20.0);
+  }
+  mesh(THREE, new THREE.BoxGeometry(12.2, 0.035, 0.1), marking, root, 31.0, 0.09, 17.4);
+
+  // Flagpole, raised flower bed, shrubs, and mature crimson tree are placed in
+  // the same relative positions visible from Sherbrooke Street.
+  mesh(THREE, new THREE.BoxGeometry(13.0, 0.7, 3.0), timber, root, 8.0, 0.37, 25.0);
+  mesh(THREE, new THREE.BoxGeometry(12.2, 0.4, 2.35), soil, root, 8.0, 0.73, 25.0);
+  for (let index = 0; index < 22; index += 1) {
+    const x = 2.6 + (index % 11) * 1.05;
+    const z = 24.45 + Math.floor(index / 11) * 1.0;
+    mesh(THREE, new THREE.SphereGeometry(0.2, 6, 4), flower, root, x, 1.04, z);
+  }
+  mesh(THREE, new THREE.CylinderGeometry(0.09, 0.13, 13.0, 10), metal, root, 8.0, 6.75, 23.4);
+  const flagWhite = new THREE.MeshBasicMaterial({ color: 0xf0eee7, side: THREE.DoubleSide });
+  const flagRed = new THREE.MeshBasicMaterial({ color: 0xd3222a, side: THREE.DoubleSide });
+  mesh(THREE, new THREE.PlaneGeometry(2.5, 1.3), flagWhite, root, 9.28, 12.45, 23.4).userData = { type: 'station-flag' };
+  mesh(THREE, new THREE.PlaneGeometry(0.55, 1.3), flagRed, root, 8.305, 12.45, 23.41);
+  mesh(THREE, new THREE.PlaneGeometry(0.55, 1.3), flagRed, root, 10.255, 12.45, 23.41);
+  mesh(THREE, new THREE.CircleGeometry(0.25, 6), flagRed, root, 9.28, 12.45, 23.42);
+
+  for (const x of [10.8, 13.2, 15.6, 18.0, 20.4]) {
+    mesh(THREE, new THREE.SphereGeometry(0.75, 7, 5), foliage, root, x, 0.76, 14.6);
+  }
 
   const canvas = document.createElement('canvas');
   canvas.width = 768;
@@ -314,10 +533,10 @@ export function createFireStationFacade(THREE) {
   context.font = '700 27px system-ui, sans-serif';
   context.textAlign = 'center';
   context.textBaseline = 'middle';
-  context.fillText('PETERBOROUGH FIRE & RESCUE  ·  STATION 1', 384, 64);
+  context.fillText('PETERBOROUGH FIRE SERVICES  ·  STATION 1', 384, 64);
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
-  const sign = mesh(THREE, new THREE.PlaneGeometry(10.8, 1.8), new THREE.MeshBasicMaterial({ map: texture }), root, 8.5, 5.2, 13.4);
+  const sign = mesh(THREE, new THREE.PlaneGeometry(8.8, 0.95), new THREE.MeshBasicMaterial({ map: texture }), root, 14.0, 4.55, 13.72);
   sign.userData.texture = texture;
   root.userData.texture = texture;
   return root;
