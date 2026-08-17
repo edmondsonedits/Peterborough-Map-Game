@@ -19,11 +19,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#07131b">
     <meta name="description" content="A playable full-city 3D simulation of Peterborough, Ontario, generated from validated road, building, land-cover, and elevation data.">
-    <title>Peterborough 3D Simulator — v1.5.5</title>
+    <title>Peterborough 3D Simulator — v1.5.6</title>
 
     <!-- Terrain has an optional live fallback; the rendering runtime is shipped locally. -->
     <link rel="preconnect" href="https://s3.amazonaws.com">
-    <link rel="stylesheet" href="styles.css?v=1.5.5-drive3">
+    <link rel="stylesheet" href="styles.css?v=1.5.6-startup1">
 
     <!--
     IMPORT MAP:
@@ -150,6 +150,31 @@
 
       <div id="toast" role="status" aria-live="polite"></div>
       <aside id="splat-calibration" hidden aria-label="Captured landmark calibration diagnostics"></aside>
+      <aside id="survey-panel" hidden aria-label="Semantic city survey editor">
+        <header>
+          <div><strong>City truth survey</strong><span>10× central accuracy district</span></div>
+          <button id="survey-close" type="button" aria-label="Close semantic survey">×</button>
+        </header>
+        <p id="survey-status" role="status">Loading mapped features</p>
+        <label class="survey-toggle"><input id="survey-overlay-visible" type="checkbox" checked> Ontario orthophoto overlay</label>
+        <label>Reference opacity<input id="survey-overlay-opacity" type="range" min="0" max="0.9" value="0.58" step="0.02"></label>
+        <label>Feature type
+          <select id="survey-feature-type">
+            <option value="tree">Tree</option>
+            <option value="streetlight">Streetlight</option>
+            <option value="sign">Road sign</option>
+            <option value="hydrant">Hydrant</option>
+            <option value="landmark_anchor">Landmark anchor</option>
+          </select>
+        </label>
+        <div class="survey-actions">
+          <button id="survey-add-point" type="button">Place point</button>
+          <button id="survey-undo" type="button">Undo</button>
+          <button id="survey-export" type="button">Export GeoJSON</button>
+        </div>
+        <small>Developer-only alignment view. Cyan pins are verified records; yellow pins are local drafts. The orthophoto is a calibrated reference; ordinary gameplay renders semantic 3D objects.</small>
+        <small>Contains information licensed under the Open Government Licence – Ontario.</small>
+      </aside>
       <aside id="reference-panel" hidden aria-label="Lawful map reference tools">
         <strong>City reference mode</strong>
         <span id="reference-position">Current camera location</span>
@@ -167,9 +192,101 @@
     3. Local osmtogeojson converts OpenStreetMap response structures to GeoJSON.
     4. Road-orientation/world module builds and runs the 3D scene.
     -->
-    <script src="../shared/build-version.js?v=1.5.5"></script>
-    <script type="module" src="data-loader.js?v=1.5.5"></script>
+    <script>
+      (() => {
+        const boot = window.__PTBO_EXPLORER_BOOTSTRAP__ = {
+          startedAt: Date.now(),
+          lastActivityAt: Date.now(),
+          phase: 'page shell',
+          failed: false,
+          touch(phase) {
+            this.phase = String(phase || this.phase);
+            this.lastActivityAt = Date.now();
+            document.documentElement.dataset.explorerBootPhase = this.phase;
+          },
+          ready() {
+            this.phase = 'ready';
+            this.lastActivityAt = Date.now();
+            document.documentElement.dataset.explorerBootPhase = 'ready';
+          },
+          fail(reason) {
+            if (this.failed || this.phase === 'ready') return;
+            this.failed = true;
+            document.documentElement.dataset.explorerBootPhase = 'failed';
+            const loading = document.querySelector('#loading-screen');
+            if (!loading) return;
+            loading.classList.remove('is-hidden');
+            loading.classList.add('has-error');
+
+            const card = document.createElement('div');
+            card.className = 'loading-card error-card';
+            const logo = document.createElement('div');
+            logo.className = 'loading-logo';
+            logo.textContent = '!';
+            const title = document.createElement('p');
+            title.className = 'loading-title';
+            title.textContent = 'Simulator needs a restart';
+            const explanation = document.createElement('p');
+            explanation.className = 'error-explanation';
+            explanation.textContent = location.protocol === 'file:'
+              ? 'This 3D simulator cannot run by opening index.html directly. Open it from the GitHub Pages website or a local web server.'
+              : 'The city did not finish starting on this device. Retry normally, or use compatibility mode to load a lighter version of the same city.';
+            const details = document.createElement('pre');
+            details.className = 'error-details';
+            details.textContent = `${String(reason || 'Startup timed out')}\nLast completed stage: ${this.phase}`;
+            const actions = document.createElement('div');
+            actions.className = 'error-actions';
+            const retry = document.createElement('button');
+            retry.type = 'button';
+            retry.className = 'error-retry';
+            retry.textContent = 'Retry simulator';
+            retry.addEventListener('click', () => location.reload());
+            actions.append(retry);
+            if (location.protocol !== 'file:') {
+              const lite = document.createElement('button');
+              lite.type = 'button';
+              lite.className = 'error-retry';
+              lite.textContent = 'Compatibility mode';
+              lite.addEventListener('click', () => {
+                const url = new URL(location.href);
+                url.searchParams.set('lite', '1');
+                location.replace(url);
+              });
+              actions.append(lite);
+            }
+            card.append(logo, title, explanation, details, actions);
+            loading.replaceChildren(card);
+          },
+        };
+
+        window.addEventListener('error', (event) => {
+          const source = event.target?.src || event.filename || '';
+          if (source && /(?:road-orientation-fix|app|three\.module|data-loader)/.test(source)) {
+            boot.fail(event.message || `Required module failed: ${source}`);
+          }
+        }, true);
+        window.addEventListener('unhandledrejection', (event) => {
+          boot.fail(event.reason?.message || event.reason || 'A startup request failed');
+        });
+
+        const watchdog = window.setInterval(() => {
+          const loading = document.querySelector('#loading-screen');
+          if (!loading || loading.classList.contains('is-hidden') || boot.phase === 'ready') {
+            window.clearInterval(watchdog);
+            return;
+          }
+          const idleFor = Date.now() - boot.lastActivityAt;
+          const maximumIdle = boot.phase === 'page shell' ? 20000 : 75000;
+          if (idleFor >= maximumIdle) {
+            window.clearInterval(watchdog);
+            boot.fail('No loading progress was detected');
+          }
+        }, 2000);
+      })();
+    </script>
+    <script src="../shared/build-version.js?v=1.5.6"></script>
+    <script type="module" src="data-loader.js?v=1.5.6-accuracy1"></script>
     <script src="vendor/osmtogeojson-3.0.0-beta.5/osmtogeojson.js?v=1.5.5"></script>
-    <script type="module" src="road-orientation-fix.js?v=1.5.5-drive2"></script>
+    <script type="module" src="road-orientation-fix.js?v=1.5.6-opt4"></script>
   </body>
 </html>

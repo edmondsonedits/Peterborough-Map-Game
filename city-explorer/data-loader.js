@@ -24,6 +24,16 @@ the replacement a way to make ordinary requests without calling itself forever.
 */
 const nativeFetch = window.fetch.bind(window);
 
+async function nativeFetchWithTimeout(input, init = {}, timeoutMs = 60000) {
+  const controller = new AbortController();
+  const timer = window.setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await nativeFetch(input, { ...init, signal: controller.signal });
+  } finally {
+    window.clearTimeout(timer);
+  }
+}
+
 // import.meta.url is this module's full URL; './' becomes its folder.
 const moduleBase = new URL('./', import.meta.url);
 
@@ -47,7 +57,8 @@ fetch below then lets the original live service handle the request.
 let cachedOsmText = null;
 const cachedAssetPromise = (async () => {
   try {
-    const manifestResponse = await nativeFetch(new URL('data/manifest.json', moduleBase), { cache: 'no-store' });
+    window.__PTBO_EXPLORER_BOOTSTRAP__?.touch?.('checking packaged city data');
+    const manifestResponse = await nativeFetchWithTimeout(new URL('data/manifest.json', moduleBase), { cache: 'no-store' }, 15000);
     if (!manifestResponse.ok) return null;
 
     const manifest = await manifestResponse.json();
@@ -56,10 +67,12 @@ const cachedAssetPromise = (async () => {
 
     const osmUrl = new URL(`data/${osmFile}`, moduleBase);
     osmUrl.searchParams.set('v', String(manifest.generated_at || 'current'));
-    const osmResponse = await nativeFetch(osmUrl, { cache: 'force-cache' });
+    window.__PTBO_EXPLORER_BOOTSTRAP__?.touch?.('downloading packaged street and building geometry');
+    const osmResponse = await nativeFetchWithTimeout(osmUrl, { cache: 'force-cache' }, 60000);
     if (!osmResponse.ok) return null;
 
     cachedOsmText = await osmResponse.text();
+    window.__PTBO_EXPLORER_BOOTSTRAP__?.touch?.('packaged city geometry ready');
     window.PETERBOROUGH_DATA_MANIFEST = manifest;
     return { manifest };
   } catch (error) {

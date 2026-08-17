@@ -42,8 +42,18 @@ import {
   gameplayAxesFromKeys,
   headingFromDirection,
   stepFireTruckKinematics,
-} from './gameplay-systems.js?v=1.5.5-drive2';
+} from './gameplay-systems.js?v=1.5.6-station4';
+import {
+  SEMANTIC_POINT_TYPES,
+  createDraftPointFeature,
+  createOrthophotoOverlay,
+  createSemanticSurveyLayer,
+  semanticSurveySummary,
+  validateSemanticSurvey,
+} from './semantic-survey.js?v=1.5.6-survey3';
 
+// Render tiles preserve a useful balance between material batching and
+// camera-local culling. The semantic GIS features remain independent.
 const RENDER_TILE_SIZE = 1800;
 const ROAD_RENDER_TILE_SIZE = 3600;
 const explorerStartedAt = performance.now();
@@ -106,7 +116,30 @@ const els = {
   gameplayGear: document.querySelector('#gameplay-gear'),
   gameplayRoad: document.querySelector('#gameplay-road'),
   interactionPrompt: document.querySelector('#interaction-prompt'),
+  surveyPanel: document.querySelector('#survey-panel'),
+  surveyClose: document.querySelector('#survey-close'),
+  surveyStatus: document.querySelector('#survey-status'),
+  surveyFeatureType: document.querySelector('#survey-feature-type'),
+  surveyAddPoint: document.querySelector('#survey-add-point'),
+  surveyUndo: document.querySelector('#survey-undo'),
+  surveyExport: document.querySelector('#survey-export'),
+  surveyOverlayVisible: document.querySelector('#survey-overlay-visible'),
+  surveyOverlayOpacity: document.querySelector('#survey-overlay-opacity'),
 };
+
+// Source-ID keyed overrides are reserved for reviewed landmark footprints.
+// They replace scattered visual offsets with one auditable, data-oriented
+// record while the geographic footprint remains authoritative.
+const REVIEWED_BUILDING_STYLES = Object.freeze({
+  'way/1009651229': Object.freeze({
+    name: 'Peterborough Fire Station 1',
+    wallMaterial: 'civicBrick',
+    wallHeight: 5.75,
+    roofHeight: 0.28,
+    roofShape: 'flat',
+    customFacade: true,
+  }),
+});
 
 const state = {
   mode: 'onFoot',
@@ -203,7 +236,12 @@ const camera = new THREE.PerspectiveCamera(58, innerWidth / innerHeight, 0.5, 27
 camera.position.copy(state.lastFlyPosition);
 camera.rotation.order = 'YXZ';
 
-const lowPowerProfile = innerWidth < 760 || (Number(navigator.deviceMemory) > 0 && Number(navigator.deviceMemory) <= 4);
+const compatibilityMode = new URLSearchParams(location.search).get('lite') === '1';
+const lowPowerProfile = compatibilityMode
+  || innerWidth < 760
+  || (Number(navigator.deviceMemory) > 0 && Number(navigator.deviceMemory) <= 4)
+  || (Number(navigator.hardwareConcurrency) > 0 && Number(navigator.hardwareConcurrency) <= 4);
+document.documentElement.dataset.cityCompatibilityMode = compatibilityMode ? 'forced' : lowPowerProfile ? 'automatic' : 'full';
 const renderer = new THREE.WebGLRenderer({ canvas: els.canvas, antialias: !lowPowerProfile, powerPreference: 'high-performance' });
 renderer.setPixelRatio(Math.min(devicePixelRatio, lowPowerProfile ? 1.2 : 1.65));
 renderer.setSize(innerWidth, innerHeight, false);
@@ -247,9 +285,12 @@ const landmarkGroup = new THREE.Group();
 const gameplayGroup = new THREE.Group();
 const streetscapeGroup = new THREE.Group();
 const streetLabelGroup = new THREE.Group();
-world.add(terrainGroup, roadGroup, mapRoadGroup, buildingGroup, vegetationGroup, streetscapeGroup, landmarkGroup, gameplayGroup, streetLabelGroup);
+const semanticSurveyGroup = new THREE.Group();
+const surveyMarkerGroup = new THREE.Group();
+world.add(terrainGroup, roadGroup, mapRoadGroup, buildingGroup, vegetationGroup, streetscapeGroup, landmarkGroup, gameplayGroup, semanticSurveyGroup, surveyMarkerGroup, streetLabelGroup);
 mapRoadGroup.visible = false;
 streetLabelGroup.visible = false;
+surveyMarkerGroup.visible = false;
 const verticalSliceBounds = projectedVerticalSliceBounds(project, 0);
 const verticalSliceShadowBounds = projectedVerticalSliceBounds(project, 600);
 const verticalSliceDetails = { built: false, rooftopUnits: [] };
@@ -277,6 +318,13 @@ let citySplatLayer = null;
 let playerActor = null;
 let fireTruckActor = null;
 let fireStationDetail = null;
+let semanticSurveyCollection = null;
+let semanticSurveyOverlay = null;
+let semanticSurveyActive = false;
+let semanticSurveyPlacing = false;
+const semanticSurveyDrafts = [];
+const surveyRaycaster = new THREE.Raycaster();
+const surveyPointer = new THREE.Vector2();
 let playerHeading = Math.PI;
 let playerSpeed = 0;
 const playerVelocity = new THREE.Vector3();
@@ -445,6 +493,7 @@ document.documentElement.dataset.qualityShadows = sun.castShadow ? 'pcf-soft-204
 function setProgress(percent, message) {
   els.loadingProgress.style.width = `${Math.max(4, Math.min(percent, 100))}%`;
   if (message) els.loadingMessage.textContent = message;
+  globalThis.__PTBO_EXPLORER_BOOTSTRAP__?.touch?.(message || `loading ${percent}%`);
 }
 
 function nextFrame() {
@@ -922,6 +971,15 @@ function parseMeters(value) {
 }
 
 function buildingDimensions(tags = {}, featureId = '') {
+  const reviewedStyle = REVIEWED_BUILDING_STYLES[featureId];
+  if (reviewedStyle) {
+    return {
+      height: reviewedStyle.wallHeight,
+      minHeight: 0,
+      roofHeight: reviewedStyle.roofHeight,
+      roofShape: reviewedStyle.roofShape,
+    };
+  }
   const explicitHeight = parseMeters(tags.height);
   const landmarkBaseHeight = Number(LANDMARK_BUILDING_HEIGHT_OVERRIDES[featureId]);
   const levels = Number.parseFloat(tags['building:levels']);
@@ -964,6 +1022,7 @@ function buildingDimensions(tags = {}, featureId = '') {
 }
 
 function buildingMaterialKey(tags, totalHeight, featureId = '') {
+  if (REVIEWED_BUILDING_STYLES[featureId]?.wallMaterial) return REVIEWED_BUILDING_STYLES[featureId].wallMaterial;
   const type = String(tags.building || tags['building:part'] || '').toLowerCase();
   const amenity = String(tags.amenity || '').toLowerCase();
   const leisure = String(tags.leisure || '').toLowerCase();
@@ -1640,7 +1699,9 @@ function appendBufferedBuilding(rings, tags, featureId, batches) {
     // still retained, and the rest of the city continues to load.
     console.debug('Skipped invalid building roof triangulation', featureId, error);
   }
-  appendBuildingFacadeDetails(outer, tags, featureId, foundationTop, wallTop, dimensions, batches, anchor);
+  if (!REVIEWED_BUILDING_STYLES[featureId]?.customFacade) {
+    appendBuildingFacadeDetails(outer, tags, featureId, foundationTop, wallTop, dimensions, batches, anchor);
+  }
   return true;
 }
 
@@ -1652,7 +1713,7 @@ function buildBufferedBuildingBatches(batches) {
     geometry.computeVertexNormals();
     geometry.computeBoundingSphere();
     const mesh = new THREE.Mesh(geometry, materials[materialKey] || materials.residential);
-    mesh.userData = { type: 'building-batch', material: materialKey, tile, vertices: positions.length / 3 };
+    mesh.userData = { type: 'building-batch', material: materialKey, tile, tileSize: RENDER_TILE_SIZE, vertices: positions.length / 3 };
     mesh.receiveShadow = !lowPowerProfile;
     mesh.castShadow = !lowPowerProfile && worldPointInVerticalSlice(
       geometry.boundingSphere.center.x,
@@ -1991,7 +2052,7 @@ function buildBufferedRoadBatches(batches) {
     geometry.computeVertexNormals();
     geometry.computeBoundingSphere();
     const mesh = new THREE.Mesh(geometry, materials[materialKey] || materials.roadLocal);
-    mesh.userData = { type: `road-${kind}-batch`, material: materialKey, tile, segments, vertices: positions.length / 3 };
+    mesh.userData = { type: `road-${kind}-batch`, material: materialKey, tile, tileSize: ROAD_RENDER_TILE_SIZE, segments, vertices: positions.length / 3 };
     mesh.renderOrder = kind.startsWith('official-') ? 4 : kind === 'surface' ? 3 : 2;
     mesh.receiveShadow = !lowPowerProfile;
     roadGroup.add(mesh);
@@ -2140,7 +2201,7 @@ function buildInstancedLines(segments, bucket) {
     });
     mesh.instanceMatrix.needsUpdate = true;
     mesh.computeBoundingSphere();
-    mesh.userData = { type: bucket, tile, count: tileSegments.length };
+    mesh.userData = { type: bucket, tile, tileSize: RENDER_TILE_SIZE, count: tileSegments.length };
     mesh.renderOrder = bucket === 'curb' ? 5 : 0;
     roadGroup.add(mesh);
   });
@@ -2192,7 +2253,7 @@ function buildOfficialCurbRibbons(segments) {
     const mesh = new THREE.Mesh(geometry, materials.curbConcrete);
     mesh.renderOrder = 5;
     mesh.receiveShadow = !lowPowerProfile;
-    mesh.userData = { type: 'official-curb-ribbons', tile, segments: count, triangles: positions.length / 9 };
+    mesh.userData = { type: 'official-curb-ribbons', tile, tileSize: ROAD_RENDER_TILE_SIZE, segments: count, triangles: positions.length / 9 };
     streetscapeGroup.add(mesh);
   });
   state.objectCount += segments.length;
@@ -2275,7 +2336,7 @@ function buildRoadJunctions(segments) {
       mesh.instanceMatrix.needsUpdate = true;
       mesh.computeBoundingSphere();
       mesh.renderOrder = foundation ? 2 : 4;
-      mesh.userData = { type: foundation ? 'road-junction-foundations' : 'road-junction-surfaces', material: materialKey, tile, count: grouped.length };
+      mesh.userData = { type: foundation ? 'road-junction-foundations' : 'road-junction-surfaces', material: materialKey, tile, tileSize: ROAD_RENDER_TILE_SIZE, count: grouped.length };
       roadGroup.add(mesh);
     });
   };
@@ -2367,7 +2428,7 @@ function buildUrbanCurbs(segments) {
     geometry.computeBoundingSphere();
     const mesh = new THREE.Mesh(geometry, materials.curbConcrete);
     mesh.renderOrder = 5;
-    mesh.userData = { type: 'terrain-following-urban-curbs', tile, segments: tileSegments };
+    mesh.userData = { type: 'terrain-following-urban-curbs', tile, tileSize: ROAD_RENDER_TILE_SIZE, segments: tileSegments };
     streetscapeGroup.add(mesh);
   });
   document.documentElement.dataset.urbanCurbSegments = String(curbSegments);
@@ -2575,6 +2636,7 @@ function buildRoadMarkings(segments) {
           : kind === 'cycle-edge' ? 'mapped-cycle-lane-edges' : 'road-edge-lines',
       material: materialKey,
       tile,
+      tileSize: ROAD_RENDER_TILE_SIZE,
       count: markings.length,
     };
     streetscapeGroup.add(mesh);
@@ -2748,7 +2810,7 @@ function buildCrossings(crossings) {
       mesh.instanceMatrix.needsUpdate = true;
       mesh.computeBoundingSphere();
       mesh.renderOrder = 7;
-      mesh.userData = { type, tile, count: tileInstances.length };
+      mesh.userData = { type, tile, tileSize: ROAD_RENDER_TILE_SIZE, count: tileInstances.length };
       streetscapeGroup.add(mesh);
     });
   };
@@ -3176,6 +3238,11 @@ async function loadCityOpenData() {
 }
 
 async function loadOfficialRoadSurfaces() {
+  if (lowPowerProfile) {
+    state.officialRoadSurfacesAvailable = false;
+    document.documentElement.dataset.officialRoadDetail = 'osm-compatibility-fallback';
+    return null;
+  }
   const file = state.manifest?.city_road_surfaces?.file || 'peterborough-road-surfaces.geojson';
   const url = new URL(`data/${file}`, import.meta.url);
   if (state.manifest?.generated_at) url.searchParams.set('v', state.manifest.generated_at);
@@ -4082,12 +4149,15 @@ async function buildCity() {
   state.objectCount += landmarkSummary.objects;
   animatedFountain = landmarkGroup.children.find((child) => child.userData?.animatedWater) || null;
   buildLandmarkMapLabels();
+  await initializeSemanticSurvey();
   await initializeCapturedDetailLayer();
   initializeGameplay();
   cityVisualLod = '';
   updateCityVisualLod();
+  freezeStaticCityTransforms();
   setProgress(100, 'Peterborough is ready');
   setReadyStatus(summary);
+  globalThis.__PTBO_EXPLORER_BOOTSTRAP__?.ready?.();
   const qaParams = new URLSearchParams(location.search);
   if (qaParams.has('qaLat') && qaParams.has('qaLon')) {
     window.__PTBO_CITY_QA__?.setView({
@@ -4099,6 +4169,7 @@ async function buildCity() {
       pitch: Number(qaParams.get('qaPitch') || -0.14),
     });
   }
+  if (qaParams.get('survey') === '1') activateSemanticSurveyMode(true);
   setTimeout(() => els.loading.classList.add('is-hidden'), 420);
 }
 
@@ -4208,9 +4279,11 @@ function initializeGameplay() {
   fireTruckActor.rotation.y = truckState.heading;
   gameplayGroup.add(fireTruckActor);
 
-  fireStationDetail = createFireStationFacade(THREE);
-  const buildingSurface = gameplaySurfaceAt(buildingPoint.x, buildingPoint.y);
-  fireStationDetail.position.set(buildingPoint.x, buildingSurface.height, buildingPoint.y);
+  fireStationDetail = createFireStationFacade(THREE, {
+    project,
+    terrainHeightAtWorld,
+    survey: semanticSurveyCollection,
+  });
   gameplayGroup.add(fireStationDetail);
 
   gameplayReady = true;
@@ -4799,6 +4872,217 @@ function toggleReferencePanel(force) {
   showToast(visible ? 'Lawful city reference links visible' : 'City reference links hidden');
 }
 
+function updateSurveyStatus(message = '') {
+  if (!els.surveyStatus) return;
+  const sourceSummary = semanticSurveyCollection ? semanticSurveySummary(semanticSurveyCollection) : { total: 0, reviewed: 0, sourceAligned: 0 };
+  els.surveyStatus.textContent = message || `${sourceSummary.reviewed} reviewed details · ${sourceSummary.sourceAligned} authoritative inventory features · ${semanticSurveyDrafts.length} local drafts`;
+  document.documentElement.dataset.semanticSurveyFeatures = String(sourceSummary.total);
+  document.documentElement.dataset.semanticSurveyDrafts = String(semanticSurveyDrafts.length);
+}
+
+function createSurveyDraftMarker(feature) {
+  if (feature?.geometry?.type !== 'Point') return null;
+  const [lon, lat] = feature.geometry.coordinates.map(Number);
+  const point = project(lat, lon);
+  const ground = terrainHeightAtWorld(point.x, point.y);
+  const marker = new THREE.Group();
+  marker.position.set(point.x, ground, point.y);
+  const verified = feature.properties?.review_status === 'verified';
+  marker.userData = { type: verified ? 'semantic-survey-verified-marker' : 'semantic-survey-draft-marker', surveyFeatureId: feature.id };
+  const material = new THREE.MeshBasicMaterial({ color: verified ? 0x60e7c5 : 0xffd65a, depthTest: false, transparent: true, opacity: 0.95 });
+  const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 4.2, 7), material);
+  stem.position.y = 2.1;
+  stem.renderOrder = 10002;
+  const head = new THREE.Mesh(new THREE.SphereGeometry(0.72, 10, 7), material);
+  head.position.y = 4.45;
+  head.renderOrder = 10002;
+  marker.add(stem, head);
+  surveyMarkerGroup.add(marker);
+  return marker;
+}
+
+function persistSurveyDrafts() {
+  try { localStorage.setItem('ptbo-semantic-survey-drafts-v1', JSON.stringify(semanticSurveyDrafts)); } catch { /* Private browsing may disable storage. */ }
+  updateSurveyStatus();
+}
+
+function restoreSurveyDrafts() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem('ptbo-semantic-survey-drafts-v1') || '[]');
+    if (!Array.isArray(parsed)) return;
+    parsed.forEach((feature) => {
+      if (feature?.geometry?.type !== 'Point') return;
+      semanticSurveyDrafts.push(feature);
+      createSurveyDraftMarker(feature);
+    });
+  } catch { /* Invalid local drafts are ignored rather than blocking the city. */ }
+}
+
+async function initializeSemanticSurvey() {
+  try {
+    const [response, inventoryResponse] = await Promise.all([
+      fetch(new URL('data/survey/station-one-survey.geojson', import.meta.url), { cache: 'no-store' }),
+      fetch(new URL('data/survey/station-one-district-inventory.geojson', import.meta.url), { cache: 'no-store' }),
+    ]);
+    if (!response.ok) throw new Error(`Semantic survey returned ${response.status}`);
+    const siteCollection = await response.json();
+    const inventoryCollection = inventoryResponse.ok
+      ? await inventoryResponse.json()
+      : { metadata: { id: 'unavailable' }, features: [] };
+    const collection = {
+      ...siteCollection,
+      metadata: {
+        ...siteCollection.metadata,
+        district_inventory: {
+          id: inventoryCollection.metadata?.id,
+          generated_at: inventoryCollection.metadata?.generated_at,
+          coverage: inventoryCollection.metadata?.coverage,
+        },
+      },
+      features: [...siteCollection.features, ...(inventoryCollection.features || [])],
+    };
+    const validation = validateSemanticSurvey(collection);
+    if (!validation.valid) throw new Error(validation.errors.join(' '));
+    semanticSurveyCollection = collection;
+    const summary = createSemanticSurveyLayer({
+      THREE,
+      group: semanticSurveyGroup,
+      collection,
+      project,
+      terrainHeightAtWorld,
+      lowPower: lowPowerProfile,
+    });
+    semanticSurveyOverlay = createOrthophotoOverlay({
+      THREE,
+      definition: collection.metadata.reference_overlay,
+      project,
+      terrainHeightAtWorld,
+    });
+    if (semanticSurveyOverlay) world.add(semanticSurveyOverlay);
+    state.objectCount += summary.rendered;
+    collection.features.forEach((feature) => {
+      if (feature.properties?.review_status === 'verified') createSurveyDraftMarker(feature);
+    });
+    restoreSurveyDrafts();
+    updateSurveyStatus();
+    document.documentElement.dataset.semanticSurveyStatus = 'ready';
+    document.documentElement.dataset.accuracyDistrictFeatures = String(inventoryCollection.features?.length || 0);
+    document.documentElement.dataset.accuracyDistrictAreaM2 = String(inventoryCollection.metadata?.coverage?.target_area_m2 || 0);
+    globalThis.__PTBO_SEMANTIC_SURVEY__ = Object.freeze({
+      validation,
+      summary: () => ({ ...semanticSurveySummary(semanticSurveyCollection), drafts: semanticSurveyDrafts.length }),
+      source: { ...collection.metadata.source },
+    });
+    return summary;
+  } catch (error) {
+    console.warn('Semantic accuracy layer unavailable; the authoritative base city remains active.', error);
+    document.documentElement.dataset.semanticSurveyStatus = 'failed';
+    updateSurveyStatus('Survey layer unavailable');
+    return null;
+  }
+}
+
+function activateSemanticSurveyMode(force = true) {
+  if (!semanticSurveyCollection || !els.surveyPanel) return false;
+  semanticSurveyActive = force;
+  els.surveyPanel.hidden = !force;
+  surveyMarkerGroup.visible = force;
+  if (semanticSurveyOverlay) semanticSurveyOverlay.visible = force && Boolean(els.surveyOverlayVisible?.checked);
+  if (!force) {
+    semanticSurveyPlacing = false;
+    els.surveyAddPoint?.classList.remove('is-active');
+    showToast('Semantic survey mode closed');
+    return true;
+  }
+  setMode('map');
+  const station = project(FIRE_STATION_ONE.buildingLat, FIRE_STATION_ONE.buildingLon);
+  const ground = terrainHeightAtWorld(station.x, station.y);
+  const overlayBounds = semanticSurveyCollection.metadata.reference_overlay?.bounds;
+  const southwest = overlayBounds ? project(overlayBounds.south, overlayBounds.west) : null;
+  const northeast = overlayBounds ? project(overlayBounds.north, overlayBounds.east) : null;
+  const surveySpan = southwest && northeast ? Math.max(Math.abs(northeast.x - southwest.x), Math.abs(northeast.y - southwest.y)) : 260;
+  camera.position.set(station.x, ground + Math.max(265, surveySpan * 1.08), station.y);
+  camera.up.set(0, 0, -1);
+  camera.lookAt(station.x, ground, station.y);
+  streetLabelGroup.visible = false;
+  updateMapGuide();
+  updateSurveyStatus();
+  showToast('Semantic survey mode · Ontario orthophoto alignment');
+  return true;
+}
+
+function addSemanticSurveyPoint(event) {
+  if (!semanticSurveyActive || !semanticSurveyPlacing || state.mode !== 'map') return false;
+  const bounds = els.canvas.getBoundingClientRect();
+  surveyPointer.set(
+    ((event.clientX - bounds.left) / bounds.width) * 2 - 1,
+    -((event.clientY - bounds.top) / bounds.height) * 2 + 1,
+  );
+  surveyRaycaster.setFromCamera(surveyPointer, camera);
+  const hit = surveyRaycaster.intersectObjects(terrainGroup.children, true)[0];
+  if (!hit) {
+    showToast('No terrain found under this marker');
+    return false;
+  }
+  const geo = unproject(hit.point.x, hit.point.z);
+  const requestedType = els.surveyFeatureType?.value || 'tree';
+  const semanticType = SEMANTIC_POINT_TYPES.includes(requestedType) ? requestedType : 'tree';
+  const feature = createDraftPointFeature({
+    id: `draft-${semanticType}-${Date.now()}`,
+    semanticType,
+    lon: geo.lon,
+    lat: geo.lat,
+  });
+  semanticSurveyDrafts.push(feature);
+  createSurveyDraftMarker(feature);
+  persistSurveyDrafts();
+  semanticSurveyPlacing = false;
+  els.surveyAddPoint?.classList.remove('is-active');
+  showToast(`${semanticType.replaceAll('_', ' ')} point recorded`);
+  return true;
+}
+
+function undoSemanticSurveyPoint() {
+  if (!semanticSurveyDrafts.length) return false;
+  const removed = semanticSurveyDrafts.pop();
+  const marker = surveyMarkerGroup.children.find((child) => child.userData?.surveyFeatureId === removed.id);
+  if (marker) {
+    const materials = new Set();
+    marker.traverse((child) => {
+      child.geometry?.dispose?.();
+      if (Array.isArray(child.material)) child.material.forEach((material) => materials.add(material));
+      else if (child.material) materials.add(child.material);
+    });
+    materials.forEach((material) => material.dispose?.());
+    marker.removeFromParent();
+  }
+  persistSurveyDrafts();
+  showToast('Last survey point removed');
+  return true;
+}
+
+function exportSemanticSurveyDrafts() {
+  if (!semanticSurveyCollection) return false;
+  const output = {
+    type: 'FeatureCollection',
+    metadata: {
+      ...semanticSurveyCollection.metadata,
+      id: `${semanticSurveyCollection.metadata.id}-developer-draft`,
+      exported_at: new Date().toISOString(),
+      draft_only: true,
+    },
+    features: semanticSurveyDrafts,
+  };
+  const url = URL.createObjectURL(new Blob([JSON.stringify(output, null, 2)], { type: 'application/geo+json' }));
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'peterborough-semantic-survey-draft.geojson';
+  link.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  showToast('Survey draft exported as GeoJSON');
+  return true;
+}
+
 function updateFps() {
   frameCounter += 1;
   const now = performance.now();
@@ -4829,26 +5113,36 @@ const NEAR_STREETSCAPE_TYPES = new Set([
 ]);
 let cityVisualLod = '';
 
+function distanceToRenderTile(object) {
+  const tile = object.userData?.tile;
+  const tileSize = Number(object.userData?.tileSize);
+  if (!tile || !Number.isFinite(tileSize)) return 0;
+  const centerX = CITY.worldBounds.minX + (tile.x + 0.5) * tileSize;
+  const centerZ = CITY.worldBounds.minZ + (tile.z + 0.5) * tileSize;
+  return Math.hypot(camera.position.x - centerX, camera.position.z - centerZ);
+}
+
 function updateCityVisualLod() {
   const ground = terrainHeightAtWorld(camera.position.x, camera.position.z);
   const altitude = Math.max(0, camera.position.y - ground);
-  const nearDetail = altitude < 115 || state.mode === 'map';
-  const tier = nearDetail ? 'street' : 'overview';
+  const nearDetail = altitude < 115 && state.mode !== 'map';
+  const tier = state.mode === 'map' ? 'map' : nearDetail ? 'street' : 'overview';
   const lodKey = `${tier}:${Math.floor(camera.position.x / 600)}:${Math.floor(camera.position.z / 600)}`;
   if (lodKey === cityVisualLod) return;
   cityVisualLod = lodKey;
 
   buildingGroup.children.forEach((object) => {
+    if (state.mode === 'map') {
+      object.visible = false;
+      return;
+    }
     if (object.userData?.type === 'vertical-slice-rooftop-equipment') object.visible = nearDetail;
     else if (object.userData?.type === 'building-batch' && object.userData.tile) {
-      const tile = object.userData.tile;
-      const centerX = CITY.worldBounds.minX + (tile.x + 0.5) * RENDER_TILE_SIZE;
-      const centerZ = CITY.worldBounds.minZ + (tile.z + 0.5) * RENDER_TILE_SIZE;
-      const distance = Math.hypot(camera.position.x - centerX, camera.position.z - centerZ);
+      const distance = distanceToRenderTile(object);
       if (FAR_BUILDING_DETAIL_MATERIALS.has(object.userData.material)) {
         object.visible = nearDetail && distance < 2200;
       } else if (BUILDING_ROOF_MATERIALS.has(object.userData.material)) {
-        object.visible = distance < 9400;
+        object.visible = distance < (state.mode === 'map' ? 14000 : 9400);
       } else {
         // Full wall volumes are retained around the player. Far districts keep
         // their exact roof footprint as a much cheaper aerial silhouette.
@@ -4856,15 +5150,48 @@ function updateCityVisualLod() {
       }
     }
   });
+
+  // Authoritative road geometry remains loaded and queryable, but only tiles
+  // that can contribute visible pixels are submitted. Map mode keeps the
+  // complete network, while street and fly views use the atmospheric horizon.
+  const roadRadius = nearDetail ? 5600 : 9000;
+  roadGroup.children.forEach((object) => {
+    if (state.mode === 'map') {
+      object.visible = false;
+      return;
+    }
+    if (object.userData?.tile && object.userData?.tileSize) {
+      object.visible = distanceToRenderTile(object) < roadRadius;
+    }
+  });
+
   streetscapeGroup.children.forEach((object) => {
-    if (NEAR_STREETSCAPE_TYPES.has(object.userData?.type)) object.visible = nearDetail;
+    if (!NEAR_STREETSCAPE_TYPES.has(object.userData?.type)) return;
+    const tiled = object.userData?.tile && object.userData?.tileSize;
+    object.visible = nearDetail && (!tiled || distanceToRenderTile(object) < 3500);
   });
   vegetationGroup.children.forEach((object) => {
-    if (object.userData?.lodRole === 'near') object.visible = nearDetail;
+    if (state.mode === 'map') object.visible = false;
+    else if (object.userData?.lodRole === 'near') object.visible = nearDetail;
     else if (object.userData?.lodRole === 'far') object.visible = !nearDetail;
   });
+  gameplayGroup.visible = state.mode !== 'map';
+  landmarkGroup.visible = state.mode !== 'map';
+  semanticSurveyGroup.visible = state.mode !== 'map' || semanticSurveyActive;
   if (!lowPowerProfile) sun.castShadow = nearDetail;
   document.documentElement.dataset.cityDetailLod = tier;
+}
+
+function freezeStaticCityTransforms() {
+  [terrainGroup, roadGroup, mapRoadGroup, buildingGroup, vegetationGroup, streetscapeGroup, streetLabelGroup]
+    .forEach((group) => {
+      group.updateMatrixWorld(true);
+      group.traverse((object) => {
+        object.updateMatrix();
+        object.matrixAutoUpdate = false;
+      });
+    });
+  document.documentElement.dataset.staticTransformsFrozen = 'true';
 }
 
 function animate() {
@@ -4931,7 +5258,8 @@ function jumpTo(lat, lon, altitude = 105, name = 'Selected location') {
 }
 
 function exposeCityQualityQa() {
-  if (!new URLSearchParams(location.search).has('qa')) return;
+  const qualityParams = new URLSearchParams(location.search);
+  if (!qualityParams.has('qa') && !(qualityParams.has('qaLat') && qualityParams.has('qaLon'))) return;
   const setView = ({ lat, lon, altitude = 22, distance = 58, bearing = 145, pitch = -0.14 } = {}) => {
     if (![lat, lon, altitude, distance, bearing, pitch].every(Number.isFinite)) return false;
     const target = project(lat, lon);
@@ -5289,6 +5617,11 @@ function wireEvents() {
     });
   });
 
+  els.canvas.addEventListener('pointerdown', (event) => {
+    if (!addSemanticSurveyPoint(event)) return;
+    event.preventDefault();
+    event.stopPropagation();
+  }, { capture: true });
   els.canvas.addEventListener('pointerdown', beginCanvasLook);
   els.canvas.addEventListener('pointermove', updateCanvasDrag);
   els.canvas.addEventListener('pointerup', endCanvasLook);
@@ -5343,6 +5676,10 @@ function wireEvents() {
       toggleReferencePanel();
       event.preventDefault();
     }
+    if (!event.repeat && event.code === 'KeyS' && event.ctrlKey && event.altKey) {
+      activateSemanticSurveyMode(!semanticSurveyActive);
+      event.preventDefault();
+    }
     if (isFlyControlCode(event.code)) state.keys.add(event.code);
     if (isFlyControlCode(event.code) || ['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.code)) event.preventDefault();
   });
@@ -5366,6 +5703,21 @@ function wireEvents() {
     button.addEventListener('pointerup', end);
     button.addEventListener('pointercancel', end);
     button.addEventListener('pointerleave', end);
+  });
+
+  els.surveyAddPoint?.addEventListener('click', () => {
+    semanticSurveyPlacing = !semanticSurveyPlacing;
+    els.surveyAddPoint.classList.toggle('is-active', semanticSurveyPlacing);
+    updateSurveyStatus(semanticSurveyPlacing ? 'Click the orthophoto to record this feature' : 'Point placement cancelled');
+  });
+  els.surveyUndo?.addEventListener('click', undoSemanticSurveyPoint);
+  els.surveyExport?.addEventListener('click', exportSemanticSurveyDrafts);
+  els.surveyClose?.addEventListener('click', () => activateSemanticSurveyMode(false));
+  els.surveyOverlayVisible?.addEventListener('change', () => {
+    if (semanticSurveyOverlay) semanticSurveyOverlay.visible = semanticSurveyActive && els.surveyOverlayVisible.checked;
+  });
+  els.surveyOverlayOpacity?.addEventListener('input', () => {
+    if (semanticSurveyOverlay?.material) semanticSurveyOverlay.material.opacity = Number(els.surveyOverlayOpacity.value);
   });
 
   els.canvas.addEventListener('touchstart', (event) => {

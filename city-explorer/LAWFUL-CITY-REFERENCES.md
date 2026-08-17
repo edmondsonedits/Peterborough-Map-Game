@@ -1,6 +1,6 @@
 # Lawful city-reference workflow
 
-The shipped City Explorer contains no copied street-view or satellite pixels. Its authoritative layers remain Ontario/municipal/open geospatial data and OpenStreetMap geometry. Reference imagery is used to identify errors and decide how procedural materials, roofs, façades, curbs, parking areas, and vegetation should be represented.
+The player-facing City Explorer contains no street-view or satellite texture layer. Its authoritative layers remain Ontario/municipal/open geospatial data and OpenStreetMap geometry. A bounded, attributed Ontario 2023 orthophoto extract is included only in the developer semantic-survey view; it is used to identify errors and decide how procedural materials, roofs, facades, curbs, parking areas, and vegetation should be represented.
 
 ## Recommended sources
 
@@ -23,6 +23,10 @@ City eMaps and Google Maps/Street View can be consulted manually for lawful visu
 5. Record source URL, licence, attribution, imagery date, reviewer, and processing note for every manually authored landmark asset.
 6. Recheck at road level and from an elevated orthographic view. The mesh-only city must remain complete if reference imagery or optional splats are unavailable.
 
+The point/line/polygon process and Station 1 pilot are documented in [SEMANTIC-SURVEY-WORKFLOW.md](SEMANTIC-SURVEY-WORKFLOW.md).
+
 ## Developer controls
 
 Open City Explorer with `?referenceMode=1`, or press `Ctrl+Alt+R`, to display developer-only links centred on the current camera position. The ordinary player view remains unchanged. `Ctrl+Alt+G` continues to toggle the Gaussian-splat calibration overlay.
+
+Open with `?survey=1`, or press `Ctrl+Alt+S`, to compare the 662,695 m² central accuracy district against the calibrated Ontario orthophoto and place exportable semantic draft points.

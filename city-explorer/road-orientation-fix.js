@@ -9,6 +9,10 @@
 
 function showFatalError(error) {
   console.error('Peterborough 3D Simulator could not start.', error);
+  if (globalThis.__PTBO_EXPLORER_BOOTSTRAP__?.fail) {
+    globalThis.__PTBO_EXPLORER_BOOTSTRAP__.fail(error?.message || error || 'Unknown startup error');
+    return;
+  }
   const loading = document.querySelector('#loading-screen');
   if (!loading) return;
   loading.classList.remove('is-hidden');
@@ -39,7 +43,8 @@ function showFatalError(error) {
 globalThis.showPeterboroughExplorerFatalError = showFatalError;
 
 try {
-  await import('./app.js?v=1.5.5-drive2');
+  globalThis.__PTBO_EXPLORER_BOOTSTRAP__?.touch?.('loading 3D city module');
+  await import('./app.js?v=1.5.6-opt4');
 } catch (error) {
   showFatalError(error);
 }
