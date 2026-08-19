@@ -17,6 +17,16 @@
     lastTop: null,
   };
 
+  function parentControlsTop() {
+    try {
+      const controls = window.parent.document.querySelector('.mobile-controls');
+      const top = controls?.getBoundingClientRect?.().top;
+      return Number.isFinite(top) ? top : innerHeight - 185;
+    } catch {
+      return innerHeight - 185;
+    }
+  }
+
   function installStyle() {
     if (document.getElementById('ptbo-mobile-ui-layout-style')) return;
 
@@ -46,10 +56,6 @@
         white-space:nowrap!important;
       }
 
-      .leaflet-bottom.leaflet-left,
-      .leaflet-bottom.leaflet-right{
-        bottom:calc(190px + env(safe-area-inset-bottom))!important;
-      }
       .leaflet-control-scale{
         margin:0 0 0 8px!important;
         overflow:hidden!important;
@@ -73,10 +79,10 @@
         margin:0 8px 0 0!important;
         max-width:min(58vw,330px)!important;
         padding:3px 6px!important;
-        color:rgba(248,250,252,.72)!important;
+        color:rgba(248,250,252,.74)!important;
         border:1px solid rgba(255,255,255,.08)!important;
         border-radius:7px!important;
-        background:rgba(8,13,24,.48)!important;
+        background:rgba(8,13,24,.52)!important;
         box-shadow:0 3px 10px rgba(0,0,0,.16)!important;
         font-size:6.5px!important;
         line-height:1.18!important;
@@ -88,13 +94,7 @@
       @media(max-width:420px){
         #ptbo-speedometer{left:8px!important;}
         #ptbo-map-toggle{right:8px!important;max-width:min(45vw,172px)!important;}
-        .leaflet-bottom.leaflet-left,
-        .leaflet-bottom.leaflet-right{bottom:calc(184px + env(safe-area-inset-bottom))!important;}
         .leaflet-control-attribution{max-width:55vw!important;font-size:6px!important;}
-      }
-      @media(orientation:landscape) and (max-height:560px){
-        .leaflet-bottom.leaflet-left,
-        .leaflet-bottom.leaflet-right{bottom:calc(140px + env(safe-area-inset-bottom))!important;}
       }
     `;
     document.head.appendChild(style);
@@ -108,20 +108,33 @@
     return Math.ceil(rect.bottom);
   }
 
+  function placeLeafletFooter() {
+    const controlsTop = parentControlsTop();
+    const bottomOffset = Math.max(138, Math.ceil(innerHeight - controlsTop + 8));
+    document.querySelectorAll('.leaflet-bottom').forEach(corner => {
+      corner.style.setProperty('bottom', `${bottomOffset}px`, 'important');
+    });
+  }
+
   function placeMapButtons() {
     installStyle();
     const speed = document.getElementById('ptbo-speedometer');
     const mapToggle = document.getElementById('ptbo-map-toggle');
-    if (!speed && !mapToggle) return;
 
     const desiredTop = Math.max(118, safeDispatchBottom() + 12);
-    const maxTop = Math.max(118, innerHeight - 430);
-    const top = Math.min(desiredTop, maxTop);
+    const controlsTop = parentControlsTop();
+    const tallestControl = Math.max(
+      Number(speed?.getBoundingClientRect?.().height) || 72,
+      Number(mapToggle?.getBoundingClientRect?.().height) || 44,
+    );
+    const latestSafeTop = Math.max(118, Math.floor(controlsTop - tallestControl - 14));
+    const top = Math.min(desiredTop, latestSafeTop);
     state.lastTop = top;
 
     if (speed) {
       speed.style.setProperty('top', `${top}px`, 'important');
       speed.style.setProperty('bottom', 'auto', 'important');
+      speed.style.setProperty('left', matchMedia('(max-width:420px)').matches ? '8px' : '10px', 'important');
     }
     if (mapToggle) {
       mapToggle.style.setProperty('top', `${top}px`, 'important');
@@ -129,6 +142,8 @@
       mapToggle.style.setProperty('left', 'auto', 'important');
       mapToggle.style.setProperty('right', matchMedia('(max-width:420px)').matches ? '8px' : '10px', 'important');
     }
+
+    placeLeafletFooter();
   }
 
   function observeHud() {
@@ -146,8 +161,6 @@
       state.bodyObserver.observe(document.body, {
         childList: true,
         subtree: true,
-        attributes: true,
-        attributeFilter: ['class', 'style', 'hidden'],
       });
     }
   }
@@ -159,6 +172,7 @@
     observeHud();
     placeMapButtons();
     addEventListener('resize', placeMapButtons, { passive: true });
+    try { window.parent.addEventListener('resize', placeMapButtons, { passive: true }); } catch {}
     [100, 350, 900, 1800, 5200].forEach(delay => setTimeout(placeMapButtons, delay));
   }
 
