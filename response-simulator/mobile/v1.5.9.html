@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#111827">
+  <title>Peterborough Dispatch Simulator v1.5.9</title>
+  <style>
+    html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#111827}
+    #shell{position:fixed;inset:0;width:100%;height:100%;border:0;background:#111827}
+  </style>
+</head>
+<body>
+  <iframe id="shell" src="./index.html?release=1.5.9" title="Peterborough Dispatch Simulator v1.5.9"></iframe>
+  <script>
+    (() => {
+      'use strict';
+      const VERSION = '1.5.9';
+      const shell = document.getElementById('shell');
+
+      function addScript(doc, id, src) {
+        if (!doc || doc.getElementById(id)) return;
+        const script = doc.createElement('script');
+        script.id = id;
+        script.src = src;
+        (doc.body || doc.documentElement).appendChild(script);
+      }
+
+      function updateBadge(wrapperDoc) {
+        const badge = wrapperDoc?.getElementById('ptbo-build-badge');
+        if (badge) {
+          badge.textContent = `v${VERSION}`;
+          badge.setAttribute('aria-label', `Production version ${VERSION}`);
+        }
+        if (wrapperDoc?.documentElement) wrapperDoc.documentElement.dataset.ptboBuild = VERSION;
+      }
+
+      function installIntoSimulator(wrapperDoc) {
+        const simulator = wrapperDoc?.getElementById('simulator');
+        if (!simulator) return;
+
+        const install = () => {
+          const doc = simulator.contentDocument;
+          if (!doc) return;
+          addScript(
+            doc,
+            'ptbo-v159-directional-drive',
+            new URL('../directional-drive-zoom-1.5.8.js?v=1.5.9-entry', location.href).href,
+          );
+          addScript(
+            doc,
+            'ptbo-v159-mobile-layout',
+            new URL('../mobile-ui-layout-1.5.9.js?v=1.5.9-entry', location.href).href,
+          );
+          if (!simulator.contentWindow?.PTBO_SATELLITE_MAP) {
+            addScript(
+              doc,
+              'ptbo-v159-satellite',
+              new URL('../satellite-map-1.5.6.js?v=1.5.9-entry', location.href).href,
+            );
+          }
+        };
+
+        simulator.addEventListener('load', install);
+        if (simulator.contentDocument?.readyState === 'complete') install();
+      }
+
+      function initializeShell() {
+        const wrapperDoc = shell.contentDocument;
+        if (!wrapperDoc) return;
+        updateBadge(wrapperDoc);
+        installIntoSimulator(wrapperDoc);
+        [150, 600, 1600].forEach(delay => setTimeout(() => updateBadge(wrapperDoc), delay));
+      }
+
+      shell.addEventListener('load', initializeShell);
+      if (shell.contentDocument?.readyState === 'complete') initializeShell();
+    })();
+  </script>
+</body>
+</html>
