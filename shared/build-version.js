@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.5.7';
+  const VERSION = '1.5.8';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
 
@@ -122,7 +122,7 @@
       `;
       cover = document.createElement('div');
       cover.id = 'ptbo-satellite-startup-cover';
-      cover.innerHTML = '<div><strong>Loading satellite map</strong><span>Preparing Esri imagery, north-up camera, and driving controls…</span></div>';
+      cover.innerHTML = '<div><strong>Loading satellite map</strong><span>Preparing Esri imagery, north-up camera, and gear-based driving controls…</span></div>';
       document.head.appendChild(coverStyle);
       document.body.appendChild(cover);
     };
@@ -141,7 +141,7 @@
         injectIntoFrame(
           doc,
           'ptbo-directional-drive-zoom-loader',
-          `../response-simulator/directional-drive-zoom-1.5.7.js?v=${VERSION}`,
+          `../response-simulator/directional-drive-zoom-1.5.8.js?v=${VERSION}`,
         );
       }
 
