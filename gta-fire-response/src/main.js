@@ -7,6 +7,7 @@ import { TrafficSystem } from './traffic.js';
 import { AudioManager } from './audio.js';
 import { UIController } from './ui.js';
 import { FireResponseGame } from './game.js';
+import { DomainEventBus, installCoreDomainEventBridge } from './engine/domain-events.js';
 import { Phase2Controller } from './phase2.js';
 import { Phase3Controller } from './phase3.js';
 import { installPhase3Polish } from './phase3-polish.js';
@@ -40,6 +41,10 @@ ui.setRoadStatus(loaded ? 'ready' : 'failed', loaded
 const camera = new CameraController({ getZoom: () => 19 }, ui.settings);
 const traffic = new TrafficSystem(roads, renderer, options.seed);
 const game = new FireResponseGame({ options, ui, input, roads, renderer, camera, traffic, audio });
+const domainEvents = new DomainEventBus();
+installCoreDomainEventBridge(game, domainEvents);
+game.events = domainEvents;
+window.__PFR_EVENTS__ = domainEvents;
 window.__PFR_PHASE1_GAME__ = game;
 window.__PFR_GAME__ = game;
 game.init();
