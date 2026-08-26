@@ -11,9 +11,9 @@ class Parser(HTMLParser):
 
 text = HTML.read_text(encoding='utf-8')
 parser = Parser(); parser.feed(text); parser.close()
-assert '1.1.1-station-yard' in text, 'Station-yard hotfix version is not current'
+assert 'Architecture foundation · v1.1.2' in text, 'Architecture foundation version is not current'
 assert 'wanted' not in text.lower(), 'Wanted-system text must not be present'
-assert 'src/main.js?v=1.1.1-station-yard' in text, 'Station-yard main cache key is missing'
+assert 'src/main.js?v=1.1.2' in text, 'Architecture main cache key is missing'
 for match in re.findall(r'(?:src|href)="([^"]+)"', text):
     if match.startswith(('http:', 'https:', '#')): continue
     path = (HTML.parent / match.split('?')[0]).resolve()
@@ -27,12 +27,14 @@ for css_import in re.findall(r"@import url\(['\"]?([^'\")]+)", styles):
     assert path.exists(), f'Missing CSS module: {css_import}'
 main = (HTML.parent / 'src' / 'main.js').read_text(encoding='utf-8')
 for phase in ('Phase3Controller', 'Phase4Controller', 'Phase5Controller'):
-    assert phase in main, f'{phase} is not booted'
+    assert phase in main, f'{phase} is not booted during the strangler migration'
 assert 'installPhase5Polish' in main, 'Phase 5 release hardening is not installed'
-assert 'installPlayerBenefitRelease' in main, 'Player-benefit release identity is not installed'
-assert 'installStationYardSafeZone' in main, 'Station-yard safe zone is not installed after gameplay phases'
+assert 'installPlayerBenefitRelease' in main, 'Player-benefit behavior is not preserved during migration'
+assert 'installStationYardSafeZone' in main, 'Station-yard safe zone is not preserved during migration'
+for architecture_requirement in ('DomainEventBus', 'installCoreDomainEventBridge', '__PFR_EVENTS__', 'applyReleaseIdentity'):
+    assert architecture_requirement in main, f'Missing architecture foundation boot requirement: {architecture_requirement}'
 for global_name in ('__PFR_PHASE3__', '__PFR_PHASE4__', '__PFR_PHASE5__'):
-    assert global_name in main, f'{global_name} is not exposed for verification'
+    assert global_name in main, f'{global_name} is not exposed for legacy verification during migration'
 required = [
     'operation-engine.js', 'phase4-save.js', 'phase4-data.js',
     'phase5.js', 'phase5-polish.js', 'phase5-data.js', 'phase5-math.js', 'phase5-save.js', 'phase5-ui.js',
@@ -40,6 +42,8 @@ required = [
 ]
 for filename in required:
     assert (HTML.parent / 'src' / filename).exists(), f'Missing current release module: {filename}'
+for filename in ('domain-events.js', 'release.js'):
+    assert (HTML.parent / 'src' / 'engine' / filename).exists(), f'Missing architecture module: {filename}'
 phase5_data = (HTML.parent / 'src' / 'phase5-data.js').read_text(encoding='utf-8')
 assert phase5_data.count("id:'") >= 30, 'Phase 5 content roster appears incomplete'
 phase5_polish = (HTML.parent / 'src' / 'phase5-polish.js').read_text(encoding='utf-8')
@@ -56,4 +60,4 @@ progression = (HTML.parent / 'src' / 'progression.js').read_text(encoding='utf-8
 assert 'migrateProgression' in progression and 'derived from validated XP' in progression, 'Progression import validation is missing'
 mobile_controls = (HTML.parent / 'styles-phase5-mobile-controls.css').read_text(encoding='utf-8')
 assert '.phase5-open { right:65px; }' in mobile_controls, 'Mobile OPS and Command controls are not separated'
-print('Static HTML/assets/CSS/station-yard hotfix boot: PASS')
+print('Static HTML/assets/CSS/architecture foundation boot: PASS')
