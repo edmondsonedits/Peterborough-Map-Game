@@ -6,7 +6,7 @@
     "orn_to_public_osm_within_20m_min_pct": 95
   },
   "public_osm_feature_count": 2775,
-  "rendered_osm_feature_count": 5956,
+  "rendered_osm_feature_count": 5957,
   "orn_feature_count": 3179,
   "public_osm_to_orn": {
     "samples": 49756,
@@ -33,15 +33,15 @@
     "within_30m_pct": 98.27
   },
   "all_rendered_osm_to_orn": {
-    "samples": 76275,
-    "mean_m": 28.542,
+    "samples": 76276,
+    "mean_m": 28.544,
     "median_m": 1.235,
-    "p90_m": 80.3,
-    "p95_m": 134.55,
-    "p99_m": 334.292,
+    "p90_m": 80.305,
+    "p95_m": 134.559,
+    "p99_m": 334.291,
     "within_5m_pct": 67.43,
     "within_10m_pct": 68.61,
-    "within_20m_pct": 72.71,
+    "within_20m_pct": 72.7,
     "within_30m_pct": 77.68
   },
   "street_names": {
@@ -664,6 +664,6 @@
     "Recent construction and private roads can be present in only one source.",
     "The test validates centrelines and names, not curbs, lanes, grades, turn rules or legal survey boundaries."
   ],
-  "generated_at": "2026-08-17T19:10:39+00:00",
+  "generated_at": "2026-09-01T13:35:46+00:00",
   "orn_named_feature_count": 3074
 }
