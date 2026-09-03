@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.3';
+  const VERSION = '1.6.4';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
 
@@ -80,6 +80,31 @@
     script.src = new URL(relativeUrl, SCRIPT_URL).href;
     (doc.body || doc.documentElement).appendChild(script);
     return script;
+  }
+
+  function injectPageScript(id, relativeUrl) {
+    return new Promise((resolve, reject) => {
+      const existing = document.getElementById(id);
+      if (existing) {
+        if (existing.dataset.ptboLoaded === 'true') return resolve(existing);
+        existing.addEventListener('load', () => resolve(existing), { once:true });
+        existing.addEventListener('error', () => reject(new Error(`Unable to load ${relativeUrl}.`)), { once:true });
+        return;
+      }
+      const script = document.createElement('script');
+      script.id = id;
+      script.src = new URL(relativeUrl, SCRIPT_URL).href;
+      script.onload = () => { script.dataset.ptboLoaded = 'true'; resolve(script); };
+      script.onerror = () => reject(new Error(`Unable to load ${relativeUrl}.`));
+      document.head.appendChild(script);
+    });
+  }
+
+  function installCitySelector() {
+    if (!document.getElementById('dispatch-game-link')) return;
+    injectPageScript('ptbo-city-registry-loader', `../cities/city-registry.js?v=${VERSION}`)
+      .then(() => injectPageScript('ptbo-city-selector-loader', `city-selector.js?v=${VERSION}`))
+      .catch(error => console.error('City selector failed to initialize.', error));
   }
 
   function installResponseEnhancements() {
@@ -187,6 +212,7 @@
       script.async = true;
       document.head.appendChild(script);
     }
+    installCitySelector();
     installResponseEnhancements();
   }
 
