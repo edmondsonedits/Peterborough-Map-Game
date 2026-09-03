@@ -1,24 +1,28 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "peterborough",
   "name": "Peterborough",
   "province": "Ontario",
   "country": "Canada",
   "status": "playable",
   "playable": true,
-  "integration": "legacy-adapter",
-  "note": "Production city. Existing live data remains in its current paths during migration.",
+  "integration": "city-package",
+  "note": "Production city package. Peterborough-specific configuration is owned here and consumed through the shared city-aware simulator.",
+  "runtime": "./package.js",
   "map": {
     "defaultCenter": [44.300871, -78.322206],
+    "defaultHeading": 180,
     "defaultZoom": 15,
     "minZoom": 10,
-    "maxZoom": 19
+    "maxZoom": 19,
+    "bounds": [[44.20, -78.45], [44.45, -78.20]]
   },
   "data": {
-    "roads": "legacy-current-production-source",
-    "dispatchLocations": "../../shared/dispatch-locations.js",
-    "serviceConfig": "../../response-simulator/service-config.js",
-    "bases": "../../shared/base-locations.js",
-    "hospital": "../../response-simulator/service-config.js"
+    "dispatchDescriptor": "./dispatch-data.js",
+    "roads": "../../city-explorer/data/osm-public-roads.geojson",
+    "roadsOwnership": "shared-asset-referenced-by-city-package",
+    "services": "./package.js",
+    "bases": "./package.js",
+    "hospital": "./package.js"
   }
 }
