@@ -1,14 +1,36 @@
-/* Service selection owns vehicle, base and filter preferences. Dispatch phases
-   remain in the simulator so Fire and EMS use the same arrival/physics checks. */
+/* Shared Fire/EMS runtime. The active city package supplies bases, hospital,
+   map bounds and labels; dispatch phases remain shared simulator behaviour. */
 (() => {
   'use strict';
   const config = window.PTBO_SERVICE_CONFIG;
-  if (!config) throw new Error('Service configuration did not load.');
+  const city = window.PTBO_CITY_PACKAGE;
+  if (!config || !city) throw new Error('City package/service configuration did not load.');
+
   const state = {mode:'fire',selected:false,baseNumber:1};
   const savedFilters = new Map();
   const getProfile = () => config.profiles[state.mode];
   const getBases = () => window.PTBO_BASE_STORE?.getBases(state.mode) || getProfile().bases;
   const getBase = () => getBases().find(base => base.number === state.baseNumber) || getBases()[0];
+
+  function applyCityMap(recenter = false) {
+    try {
+      if (typeof mapInstance === 'undefined' || !mapInstance || !city.map) return false;
+      const map = city.map;
+      if (Number.isFinite(Number(map.minZoom))) mapInstance.options.minZoom = Number(map.minZoom);
+      if (Number.isFinite(Number(map.maxZoom))) mapInstance.options.maxZoom = Number(map.maxZoom);
+      if (Array.isArray(map.bounds) && map.bounds.length === 2) mapInstance.setMaxBounds(L.latLngBounds(map.bounds[0],map.bounds[1]));
+      if (recenter && Array.isArray(map.defaultCenter)) {
+        const zoom = Math.max(Number(map.minZoom)||10,Math.min(Number(map.maxZoom)||19,Number(map.defaultZoom)||15));
+        mapInstance.setView(map.defaultCenter,zoom,{animate:false});
+      }
+      document.documentElement.dataset.city = city.id;
+      document.title = `${city.name} Fire & EMS Dispatch Simulator`;
+      return true;
+    } catch (error) {
+      console.warn('Unable to apply city map settings.',error);
+      return false;
+    }
+  }
 
   function updateControls() {
     const select = document.getElementById('service-select');
@@ -22,30 +44,31 @@
         button.type = 'button';
         button.className = 'station-spawn-box';
         button.textContent = `${base.name} — ${base.address}`;
-        button.setAttribute('aria-pressed', String(base.number === state.baseNumber));
-        button.addEventListener('click', () => spawn(base.number));
+        button.setAttribute('aria-pressed',String(base.number === state.baseNumber));
+        button.addEventListener('click',() => spawn(base.number));
         return button;
       }));
     }
     try {
       parent.ptboSetSelectedStation?.(state.baseNumber);
       parent.document.documentElement.dataset.service = state.mode;
+      parent.document.documentElement.dataset.city = city.id;
       const shortcuts = parent.document.querySelector('.station-shortcuts');
       if (shortcuts) {
         shortcuts.style.gridTemplateColumns = `repeat(${getBases().length},minmax(65px,1fr))`;
         shortcuts.style.overflowX = 'auto';
         shortcuts.replaceChildren(...getBases().map(base => {
-        const button = parent.document.createElement('button');
-        button.type = 'button';
-        button.className = 'station-button';
-        button.classList.toggle('active',base.number === state.baseNumber);
-        button.dataset.station = base.number;
-        button.textContent = base.shortName;
-        button.title = `${getProfile().label}: ${base.name} — ${base.address}`;
-        button.setAttribute('aria-label', `${getProfile().label}: ${base.name}`);
-        button.setAttribute('aria-pressed', String(base.number === state.baseNumber));
-        button.addEventListener('click',() => {spawn(base.number);window.mobileRecenter?.();});
-        return button;
+          const button = parent.document.createElement('button');
+          button.type = 'button';
+          button.className = 'station-button';
+          button.classList.toggle('active',base.number === state.baseNumber);
+          button.dataset.station = base.number;
+          button.textContent = base.shortName;
+          button.title = `${getProfile().label}: ${base.name} — ${base.address}`;
+          button.setAttribute('aria-label',`${getProfile().label}: ${base.name}`);
+          button.setAttribute('aria-pressed',String(base.number === state.baseNumber));
+          button.addEventListener('click',() => {spawn(base.number);window.mobileRecenter?.();});
+          return button;
         }));
       }
     } catch (_) {}
@@ -55,15 +78,16 @@
 
   function showAvailable() {
     document.getElementById('hud-content').innerHTML = `
-      <div class="hud-title">${getProfile().label} / AVAILABLE</div>
+      <div class="hud-title">${getProfile().label} / AVAILABLE · ${city.name.toUpperCase()}</div>
       <p class="hud-address">${escapeDispatchText(getBase().name)}</p>
-      <div class="hud-meta">${state.mode === 'ems' ? 'Respond to the scene, then transport to hospital.' : 'Choose a station and respond to calls across the city.'}</div>`;
+      <div class="hud-meta">${state.mode === 'ems' ? 'Respond to the scene, then transport to hospital.' : `Choose a station and respond to calls across ${city.name}.`}</div>`;
   }
 
   function spawn(number) {
     if (!state.selected) return false;
     const base = getBases().find(item => item.number === Number(number));
     if (!base) return false;
+    applyCityMap(false);
     resetDispatchWorkflow();
     state.baseNumber = base.number;
     window.teleportToStation(base.lat,base.lng);
@@ -86,9 +110,10 @@
       box.dispatchEvent(new Event('change',{bubbles:true}));
     });
     document.documentElement.dataset.service = mode;
+    applyCityMap(false);
     updateVehicleChassis();
     spawn(getBases()[0].number);
-    window.dispatchEvent(new CustomEvent('ptbo-service-change',{detail:{mode}}));
+    window.dispatchEvent(new CustomEvent('ptbo-service-change',{detail:{cityId:city.id,mode}}));
     return true;
   }
 
@@ -112,7 +137,8 @@
       <path d="M94 7v4m0 8v4" stroke="#fef9c3" stroke-width="3"/>`;
   }
 
-  window.PTBO_SERVICE = Object.freeze({state,config,getProfile,getBases,getBase,select,spawn,updateControls,dispatchPhrase,ambulanceSvg});
+  window.PTBO_SERVICE = Object.freeze({state,city,config,getProfile,getBases,getBase,select,spawn,updateControls,applyCityMap,dispatchPhrase,ambulanceSvg});
+
   let yardLayer;
   function showBaseYards() {
     if (!window.PTBO_BASE_STORE || typeof mapInstance === 'undefined' || !mapInstance || !L.layerGroup) return;
@@ -120,7 +146,8 @@
     yardLayer = L.layerGroup(window.PTBO_BASE_STORE.getAll().map(base =>
       L.polygon(window.PTBO_BASE_STORE.corners(base),{color:base.service==='ems'?'#38bdf8':'#fb7185',weight:1.5,fillOpacity:0.08,interactive:false}))).addTo(mapInstance);
   }
+
   window.addEventListener('ptbo-road-collision-ready',showBaseYards);
   window.addEventListener('ptbo-bases-updated',() => {showBaseYards();updateControls();});
-  showBaseYards();
+  [0,100,500].forEach(delay => setTimeout(() => {applyCityMap(false);showBaseYards();},delay));
 })();
