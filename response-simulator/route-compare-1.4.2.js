@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.4.20';
+  const VERSION = '1.5.10';
   if (window.PTBO_ROUTE_COMPARE_BOOT_VERSION === VERSION) return;
   window.PTBO_ROUTE_COMPARE_BOOT_VERSION = VERSION;
 
@@ -205,7 +205,8 @@
     state.recording = true;
     state.completed = false;
     state.start = start;
-    state.destination = { lat: Number(activeIncident.lat), lng: Number(activeIncident.lng) };
+    const destination = activeArrivalPoint || activeIncident;
+    state.destination = { lat: Number(destination.lat), lng: Number(destination.lng) };
     state.incident = { ...activeIncident };
     state.points = [start];
     state.lastPoint = start;

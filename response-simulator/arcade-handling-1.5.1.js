@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.5.1';
+  const VERSION = '1.5.10';
   if (window.PTBO_ARCADE_HANDLING?.version === VERSION) return;
 
   const STORAGE_KEY = 'ptboArcadeHandlingV151';
@@ -109,7 +109,7 @@
   }
 
   function currentSpeedKmh() {
-    return Math.max(0, Number(instruments?.state?.speedKmh) || 0);
+    return window.PTBO_FIXED_STEP ? Math.abs(currentVelocityValue()) * 111195 * 60 * 3.6 : Math.max(0, Number(instruments?.state?.speedKmh) || 0);
   }
 
   function currentVelocityValue() {
@@ -355,7 +355,7 @@
       * deltaSeconds
       * driveDirection;
 
-    writeHeading(heading + desiredStep - estimatedCoreStep);
+    writeHeading(heading + desiredStep - (window.PTBO_FIXED_STEP ? 0 : estimatedCoreStep));
   }
 
   function desktopSteeringInput() {
@@ -388,7 +388,7 @@
     }
 
     const desiredStep = input * desiredTurnRate(speedKmh) * deltaSeconds * driveDirection;
-    writeHeading(heading + desiredStep - legacyStep);
+    writeHeading(heading + desiredStep - (window.PTBO_FIXED_STEP ? 0 : legacyStep));
   }
 
   function applyDirectionalArcadeSteering(deltaSeconds) {
@@ -404,7 +404,7 @@
       return;
     }
 
-    const startHeading = Number.isFinite(state.lastHeading) ? state.lastHeading : current;
+    const startHeading = window.PTBO_FIXED_STEP ? current : Number.isFinite(state.lastHeading) ? state.lastHeading : current;
     const delta = shortestAngleDelta(startHeading, normalizeHeading(target));
     const absoluteDelta = Math.abs(delta);
     if (absoluteDelta <= 0.35) {
@@ -534,16 +534,22 @@
     state.lastCameraUpdate = timestamp;
   }
 
+  function step(deltaSeconds) {
+    directionalTuning = window.PTBO_DIRECTIONAL_STEERING_TUNING || directionalTuning;
+    directionalTuning?.captureTarget?.();
+    applyMobileArcadeSteering(deltaSeconds);
+    applyDesktopArcadeSteering(deltaSeconds);
+    applyDirectionalArcadeSteering(deltaSeconds);
+    applyCorneringAssist(deltaSeconds);
+  }
+
   function animationTick(timestamp) {
     if (!state.lastTimestamp) state.lastTimestamp = timestamp;
     const deltaSeconds = Math.min(0.05, Math.max(0, (timestamp - state.lastTimestamp) / 1000));
     state.lastTimestamp = timestamp;
 
     installSettingsPanel();
-    applyMobileArcadeSteering(deltaSeconds);
-    applyDesktopArcadeSteering(deltaSeconds);
-    applyDirectionalArcadeSteering(deltaSeconds);
-    applyCorneringAssist(deltaSeconds);
+    if (!window.PTBO_FIXED_STEP) step(deltaSeconds);
     applySpeedCamera(deltaSeconds, timestamp);
     requestAnimationFrame(animationTick);
   }
@@ -570,6 +576,7 @@
     version: VERSION,
     state,
     presets: PRESETS,
+    step,
     applyPreset,
     reset() {
       state.settings = { ...DEFAULT_SETTINGS };

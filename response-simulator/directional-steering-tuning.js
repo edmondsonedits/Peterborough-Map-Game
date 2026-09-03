@@ -223,7 +223,7 @@
 
     // Prevent the earlier fixed-rate directional routine from also steering.
     suppressLegacyDirectionalTarget();
-    applyAdaptiveDirectionalSteering(deltaSeconds);
+    if (!window.PTBO_FIXED_STEP) applyAdaptiveDirectionalSteering(deltaSeconds);
     requestAnimationFrame(animationTick);
   }
 
@@ -291,6 +291,8 @@
   window.PTBO_DIRECTIONAL_STEERING_TUNING = Object.freeze({
     state: tuningState,
     config: CONFIG,
+    captureTarget: suppressLegacyDirectionalTarget,
+    step(seconds) { suppressLegacyDirectionalTarget(); applyAdaptiveDirectionalSteering(seconds); },
   });
 
   install();

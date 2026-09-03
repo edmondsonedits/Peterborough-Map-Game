@@ -194,86 +194,6 @@
     state.markerPatched = true;
   }
 
-  function smoothSimulationLoop(timestamp) {
-    if (!lastTimestamp) lastTimestamp = timestamp;
-    const elapsedMs = Math.min(CONFIG.maximumFrameGapMs, Math.max(0, timestamp - lastTimestamp));
-    const deltaSeconds = elapsedMs / 1000;
-    const frameScale = deltaSeconds * 60;
-    lastTimestamp = timestamp;
-
-    const speedSetting = parseInt(document.getElementById('sld-speed').value, 10);
-    const maxSpeed = 0.0000015 * speedSetting;
-    const acceleration = 0.00000005 * speedSetting;
-    const frictionPerSixtyHertzFrame = 0.96;
-    const baseTurnRate = 1.2;
-
-    if (keys.ArrowUp || keys.w) velocity += acceleration * frameScale;
-    if (keys.ArrowDown || keys.s) velocity -= acceleration * 1.5 * frameScale;
-
-    velocity *= Math.pow(frictionPerSixtyHertzFrame, frameScale);
-    if (Math.abs(velocity) < 0.00000001) velocity = 0;
-
-    let activeTurnRate = 0;
-    let isTurning = false;
-    if (velocity !== 0) {
-      const driveDirection = velocity > 0 ? 1 : -1;
-      const velocityFactor = Math.min(Math.abs(velocity) / (maxSpeed * 0.2), 1);
-      const lowSpeedMultiplier = 0.85 + velocityFactor * 0.15;
-      activeTurnRate = baseTurnRate * lowSpeedMultiplier * driveDirection;
-    } else {
-      activeTurnRate = baseTurnRate;
-    }
-
-    if (keys.ArrowLeft || keys.a) {
-      currentHeading -= activeTurnRate * frameScale;
-      isTurning = true;
-    }
-    if (keys.ArrowRight || keys.d) {
-      currentHeading += activeTurnRate * frameScale;
-      isTurning = true;
-    }
-    currentHeading = (currentHeading + 360) % 360;
-
-    const headingRadians = currentHeading * Math.PI / 180;
-    const longitudeCorrection = Math.cos(simLat * Math.PI / 180);
-    simLat += Math.cos(headingRadians) * velocity * frameScale;
-    simLng += Math.sin(headingRadians) * velocity * frameScale / longitudeCorrection;
-
-    if (vehicleMarker) {
-      vehicleMarker.setRotationOrigin('center center');
-      vehicleMarker.setRotationAngle(currentHeading - 90);
-    }
-
-    if ((velocity !== 0 || isTurning) && vehicleMarker) {
-      vehicleMarker.setLatLng([simLat, simLng]);
-      if (simulationState === STATES.ENROUTE && velocity !== 0) evaluateDistanceToTarget();
-
-      document.getElementById('tel-lat').innerText = simLat.toFixed(6);
-      document.getElementById('tel-lng').innerText = simLng.toFixed(6);
-      document.getElementById('tel-hdg').innerText = `${Math.round(currentHeading)}°`;
-      renderCamera(true);
-    }
-
-    requestAnimationFrame(simulationLoop);
-  }
-  smoothSimulationLoop.__ptboSmoothCameraLoop = true;
-
-  function installPhysicsLoop() {
-    try {
-      const roadState = window.PTBO_ROAD_COLLISION?.state;
-      if (roadState?.originalLoop) {
-        roadState.originalLoop = smoothSimulationLoop;
-        return;
-      }
-      if (simulationLoop !== smoothSimulationLoop) {
-        simulationLoop = smoothSimulationLoop;
-        window.simulationLoop = simulationLoop;
-      }
-    } catch {
-      // Globals are still being initialized; the installer retries below.
-    }
-  }
-
   function patchLegacyOrientationFunctions() {
     updateMapOrientation = function northUpMapOrientation() {
       try {
@@ -294,7 +214,6 @@
 
   function cameraTick() {
     removeOrientationFeature();
-    installPhysicsLoop();
     patchMarkerPositioning();
     renderCamera(true);
     requestAnimationFrame(cameraTick);
@@ -311,7 +230,6 @@
     patchSetView();
     patchMarkerPositioning();
     patchLegacyOrientationFunctions();
-    installPhysicsLoop();
 
     mapInstance.on('move zoom resize', scheduleCameraRender);
     document.getElementById('chk-camera')?.addEventListener('change', () => {
@@ -319,8 +237,7 @@
       renderCamera(false);
     });
     window.addEventListener('ptbo-road-collision-ready', () => {
-      installPhysicsLoop();
-      rebaseMapToTruck();
+        rebaseMapToTruck();
     });
 
     state.installed = true;

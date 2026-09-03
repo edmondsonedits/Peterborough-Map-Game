@@ -144,7 +144,7 @@
   WHAT THE CODE DOES:
   Converts one raw object into the exact record shape expected by all games.
   It accepts a few alternate field names, supplies defaults, converts numbers and
-  Booleans, clamps radius to at least 10 metres, validates district, removes
+  Booleans, clamps radius to 10–500 metres, validates district, removes
   duplicate source labels, validates coordinates, and creates a missing id.
 
   RETURN VALUE:
@@ -154,7 +154,7 @@
   main/sub = filtering and visual category.
   name/addr = HUD, dispatch, lists, and speech.
   lat/lng = map target and distance.
-  radius = Geo Guesser tolerance/visual circle.
+  radius = arrival and Geo Guesser tolerance/visual circle.
   district = station-local call selection.
   cityTen = featured ten-call mode.
   confirmed = editor verification workflow.
@@ -169,7 +169,7 @@
       addr: normalizeText(raw?.addr ?? raw?.address) || 'Unknown Address',
       lat: Number(raw?.lat ?? raw?.latitude),
       lng: Number(raw?.lng ?? raw?.longitude),
-      radius: Math.max(10, Number(raw?.radius ?? raw?.targetRadiusMeters) || 50),
+      radius: Math.max(10, Math.min(500, Number(raw?.radius ?? raw?.targetRadiusMeters) || 50)),
       district: [1, 2, 3].includes(Number(raw?.district)) ? Number(raw.district) : undefined,
       cityTen: Boolean(raw?.cityTen),
       confirmed: Boolean(raw?.confirmed),
@@ -179,7 +179,7 @@
       custom: Boolean(raw?.custom),
     };
 
-    if (!Number.isFinite(location.lat) || !Number.isFinite(location.lng)) return null;
+    if (!Number.isFinite(location.lat) || !Number.isFinite(location.lng) || Math.abs(location.lat) > 90 || Math.abs(location.lng) > 180) return null;
     if (!location.id) location.id = makeId(location);
     return location;
   }
@@ -252,7 +252,7 @@
 
     return new Promise((resolve, reject) => {
       const existing = [...document.scripts].find(script =>
-        script.src && script.src.includes(`dispatch-data-${DATA_VERSION}.js`)
+        script.src && script.src.includes(`dispatch-data-${DATA_FILE_VERSION}.js`)
       );
 
       const finish = () => {
@@ -313,20 +313,20 @@
   WHAT THE CODE DOES:
   Saves store/data versions, timestamp, and current items to localStorage.
 
-  FALLBACK:
-  Storage can fail due to privacy mode, full quota, or browser policy. The game
-  continues with in-memory data and logs a warning.
+  FAILURE:
+  Storage failures throw before live records change. The editor keeps its draft
+  available for retry or export and shows the error to the user.
   */
-  function persist() {
+  function persist(nextItems = items) {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({
         version: STORE_VERSION,
         dataVersion: DATA_VERSION,
         savedAt: new Date().toISOString(),
-        items,
+        items: nextItems,
       }));
     } catch (error) {
-      console.warn('Shared dispatch database could not save edits.', error);
+      throw new Error('Changes could not be saved on this device. Free browser storage and try again, or export your edits.', { cause: error });
     }
   }
 
@@ -389,8 +389,9 @@
   returns safe copies. The shared editor uses this as its central commit path.
   */
   function replaceAll(nextItems) {
-    items = normalizeList(nextItems, 'editor');
-    persist();
+    const next = normalizeList(nextItems, 'editor');
+    persist(next);
+    items = next;
     announce();
     return getAll();
   }
@@ -409,9 +410,11 @@
     const location = normalizeLocation(raw, 'editor');
     if (!location) throw new Error('A dispatch location needs valid latitude and longitude values.');
     const index = items.findIndex(item => item.id === location.id);
-    if (index >= 0) items[index] = location;
-    else items.push(location);
-    persist();
+    const next = clone(items);
+    if (index >= 0) next[index] = location;
+    else next.push(location);
+    persist(next);
+    items = next;
     announce();
     return { ...location, sources: [...location.sources] };
   }
@@ -423,8 +426,9 @@
   Keeps every item except the matching id, then saves and announces.
   */
   function remove(id) {
-    items = items.filter(item => item.id !== id);
-    persist();
+    const next = items.filter(item => item.id !== id);
+    persist(next);
+    items = next;
     announce();
     return getAll();
   }
@@ -452,16 +456,16 @@
   FUNCTION: reset
 
   WHAT THE CODE DOES:
-  Deletes saved edits, restores a clone of source seed, saves that restored copy,
+  Restores a clone of source seed, saves that restored copy,
   announces, and returns it.
 
   EDITING WARNING:
   This intentionally discards all local unexported edits on the device.
   */
   function reset() {
-    localStorage.removeItem(STORAGE_KEY);
-    items = clone(seed);
-    persist();
+    const next = clone(seed);
+    persist(next);
+    items = next;
     announce();
     return getAll();
   }
@@ -473,8 +477,9 @@
   Formats current items as a JavaScript assignment suitable for a source file.
   Pretty-print indentation improves human review in GitHub.
   */
-  function exportText() {
-    return `window.PTBO_DISPATCH_LOCATIONS = ${JSON.stringify(items, null, 2)};\n`;
+  function exportText(exportItems = items) {
+    const data = normalizeList(exportItems, 'editor');
+    return `window.PTBO_DISPATCH_DATA_VERSION = ${JSON.stringify(DATA_VERSION)};\nwindow.PTBO_DISPATCH_LOCATIONS = ${JSON.stringify(data, null, 2)};\nwindow.PTBO_DISPATCH_DATA_READY = Promise.resolve(window.PTBO_DISPATCH_LOCATIONS);\n`;
   }
 
   /*

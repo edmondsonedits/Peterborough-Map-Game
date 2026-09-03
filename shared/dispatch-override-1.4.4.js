@@ -55,7 +55,7 @@
     readyPromise.then(() => {
       const shared = window.PTBO_DISPATCH_STORE
         .getAll()
-        .filter(location => (location.sources || []).includes('geo-guesser'));
+        .filter(location => location.custom || (location.sources || []).some(source => ['geo-guesser', 'shared-editor', 'editor'].includes(source)));
 
       const helper = doc.createElement('script');
       helper.textContent = `(() => {

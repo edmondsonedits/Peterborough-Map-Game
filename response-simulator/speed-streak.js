@@ -99,21 +99,22 @@
     }
   }
 
-  function tick(timestamp) {
-    if (!state.lastTimestamp) state.lastTimestamp = timestamp;
-    const delta = Math.min(100, Math.max(0, timestamp - state.lastTimestamp));
-    state.lastTimestamp = timestamp;
-
+  function step(delta) {
     const collisionCount = getCollisionCount();
     if (collisionCount > state.lastCollisionCount) reset('collision');
     state.lastCollisionCount = collisionCount;
-
     if (isDrivingForward()) {
       state.driveMilliseconds += delta;
       updateMultiplier();
       applyAccelerationBoost();
     }
+  }
 
+  function tick(timestamp) {
+    if (!state.lastTimestamp) state.lastTimestamp = timestamp;
+    const delta = Math.min(100, Math.max(0, timestamp - state.lastTimestamp));
+    state.lastTimestamp = timestamp;
+    if (!window.PTBO_FIXED_STEP) step(delta);
     requestAnimationFrame(tick);
   }
 
@@ -145,6 +146,7 @@
 
   window.PTBO_SPEED_STREAK = Object.freeze({
     state,
+    step,
     reset,
     get bonusPercent() {
       return Math.round((state.multiplier - 1) * 100);

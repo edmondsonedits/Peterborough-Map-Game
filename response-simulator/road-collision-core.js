@@ -194,13 +194,16 @@
   }
 
   function roadInfoAtXY(x, y, searchRadius = 45) {
-    const nearest = nearestRoadXY(x, y, searchRadius);
-    if (!nearest) return { drivable: false, nearest: null, clearance: Infinity };
-    return {
-      drivable: nearest.distance <= nearest.segment.allowed,
-      nearest,
-      clearance: nearest.distance - nearest.segment.allowed,
-    };
+    let nearest = null;
+    let allowed = null;
+    for (const index of nearbySegmentIndexes(x, y, searchRadius)) {
+      const projection = projectPointToSegment(x, y, state.segments[index]);
+      if (!nearest || projection.distance < nearest.distance) nearest = projection;
+      if (projection.distance <= projection.segment.allowed && (!allowed || projection.distance < allowed.distance)) allowed = projection;
+    }
+    const selected = allowed || nearest;
+    return { drivable: Boolean(allowed), nearest: selected,
+      clearance: selected ? selected.distance - selected.segment.allowed : Infinity };
   }
 
   function isPointDrivable(lat, lng) {
@@ -486,17 +489,20 @@
   }
 
   function installLoopGuard() {
-    if (state.originalLoop || typeof simulationLoop !== 'function') return;
-    state.originalLoop = simulationLoop;
-    simulationLoop = function roadBoundSimulationLoop(timestamp) {
+    if (state.originalLoop || typeof simulationStep !== 'function') return;
+    state.originalLoop = simulationStep;
+    simulationStep = function roadBoundSimulationStep() {
       const previousLat = simLat;
       const previousLng = simLng;
       const previousVelocity = velocity;
       state.insidePhysicsStep = true;
-      state.originalLoop(timestamp);
-      state.insidePhysicsStep = false;
+      try { state.originalLoop(); }
+      finally { state.insidePhysicsStep = false; }
 
-      if (!state.enabled) return;
+      if (!state.enabled) {
+        if (simulationState === STATES.ENROUTE) state.originalEvaluateDistance?.();
+        return;
+      }
       if (state.status === 'loading') {
         velocity = 0;
         updateVehiclePosition(previousLat, previousLng, false);
@@ -517,11 +523,11 @@
         velocity *= CONFIG.collisionVelocityRetention;
         noteCollision();
       }
-      if (simulationState === STATES.ENROUTE && velocity !== 0 && state.originalEvaluateDistance) {
+      if (simulationState === STATES.ENROUTE && state.originalEvaluateDistance) {
         state.originalEvaluateDistance();
       }
     };
-    window.simulationLoop = simulationLoop;
+    window.simulationStep = simulationStep;
   }
 
   function installTeleportGuard() {

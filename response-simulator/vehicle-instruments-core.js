@@ -77,7 +77,7 @@
       style.textContent = `
         #ptbo-speedometer {
           position:absolute;
-          top:62px;
+          top:118px;
           left:15px;
           z-index:1240;
           min-width:66px;
@@ -621,8 +621,7 @@
     if (!state.mobileSteeringConnected) connectMobileSteering();
     installSteeringModeControl();
     sampleSpeed(deltaSeconds);
-    applyAnalogSteering(deltaSeconds);
-    applyDirectionalSteering(deltaSeconds);
+    if (!window.PTBO_FIXED_STEP) { applyAnalogSteering(deltaSeconds); applyDirectionalSteering(deltaSeconds); }
     requestAnimationFrame(tick);
   }
 
@@ -638,6 +637,7 @@
     setAnalogSteering: shapeSteering,
     setDirectionalSteering: setDirectionalVector,
     clearDirectionalSteering: releaseDirectionalPointer,
+    stepSteering(seconds) { applyAnalogSteering(seconds); applyDirectionalSteering(seconds); },
     resetSpeedometer() {
       state.previousLat = null;
       state.previousLng = null;

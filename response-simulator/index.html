@@ -102,13 +102,13 @@
     </style>
 </head>
 <body>
-    <a id="game-home" href="../" aria-label="Return to the game selection page">← All Games</a>
+    <a id="game-home" href="../" target="_top" aria-label="Return to the game selection page">← All Games</a>
 
     <div id="dispatch-hud">
         <div class="hud-main" id="hud-content">
             <div class="hud-title">System Readiness</div>
             <p class="hud-address">Simulation Ready</p>
-            <div class="hud-meta">Configure alarm criteria matrices in options menu, then initialize dispatch.</div>
+            <div class="hud-meta">Use arrow keys or WASD to drive. Choose a station in Options, then start a call.</div>
         </div>
         <div class="hud-timer-block">
             <div class="hud-clock-display" id="hud-clock">00:00.0</div>
@@ -116,12 +116,12 @@
         </div>
     </div>
 
-    <button id="menu-toggle" onclick="togglePanel()">Options Menu</button>
+    <button id="menu-toggle" aria-controls="control-panel" aria-expanded="false" onclick="togglePanel()">Options Menu</button>
 
-    <div id="control-panel" class="minimized">
+    <div id="control-panel" class="minimized" inert aria-hidden="true">
         <div class="panel-scroll">
             <h2>Simulation Config</h2>
-            <div class="subtitle">Peterborough Run Controls & Filtration</div>
+            <div class="subtitle">Driving and call settings</div>
 
             <div class="category-heading">Calls &amp; Deployment</div>
             <div class="section-title">Incident Types</div>
@@ -157,16 +157,16 @@
             <div class="category-heading">Vehicle &amp; Camera</div>
             <div class="section-title">Vehicle Calibration</div>
             <div class="control-row">
-                <label><span>Chassis Base Scale (Height)</span><span id="lbl-size">10px</span></label>
+                <label><span>Truck display size</span><span id="lbl-size">10px</span></label>
                 <input type="range" id="sld-size" min="2" max="70" value="10" oninput="updateVehicleChassis()">
             </div>
             <div class="control-row">
-                <label><span>Max Speed Handling</span><span id="lbl-speed">5</span></label>
+                <label><span>Acceleration setting</span><span id="lbl-speed">5</span></label>
                 <input type="range" id="sld-speed" min="1" max="50" value="5" oninput="updateVehiclePhysics()">
             </div>
 
             <div class="section-title">Driving Modifiers</div>
-            <label class="checkbox-row"><input type="checkbox" id="chk-siren" onchange="updateVehicleChassis()" checked> Emergency Flashing Matrix</label>
+            <label class="checkbox-row"><input type="checkbox" id="chk-siren" onchange="updateVehicleChassis()" checked> Emergency lights</label>
             <label class="checkbox-row"><input type="checkbox" id="chk-camera"> Follow Truck Automatically</label>
 
             <div class="category-heading">Map &amp; Diagnostics</div>
@@ -193,7 +193,7 @@
 
     <div id="map"></div>
 
-    <script src="../shared/build-version.js?v=1.5.0"></script>
+    <script src="../shared/build-version.js?v=1.5.10"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
     <script src="https://unpkg.com/leaflet-edgebuffer@1.0.6/src/leaflet.edgebuffer.js"></script>
     <script src="https://unpkg.com/leaflet-rotatedmarker@0.2.0/leaflet.rotatedMarker.js"></script>
@@ -309,7 +309,7 @@
         let velocity = 0;
         let currentHeading = 180;
         const keys = { ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false, w: false, a: false, s: false, d: false };
-        let lastTimestamp = 0;
+        let lastTimestamp = null;
 
         let mapInstance = null;
         let vehicleMarker = null;
@@ -318,11 +318,14 @@
         let incidentCircleMarker = null;
         
         let activeIncident = null;
+        let activeArrivalPoint = null;
+        let activeArrivalRadius = 40;
         let stopwatchInterval = null;
         let elapsedMilliseconds = 0;
         let dispatchStartedAt = 0;
 
-        let totalTrackedCalls = parseInt(localStorage.getItem("simTotalCalls")) || 0;
+        let totalTrackedCalls = 0;
+        try { totalTrackedCalls = parseInt(localStorage.getItem('simTotalCalls'), 10) || 0; } catch {}
 
         let customLocations = [];
         let allLocationsLayerGroup = null;
@@ -352,6 +355,10 @@
             mapInstance.attributionControl.setPrefix(false);
             mapInstance.on('move zoom resize', () => requestAnimationFrame(updateMapOrientation));
             
+            document.querySelectorAll('.control-row input, .control-row select').forEach(input => {
+                const label = input.closest('.control-row')?.querySelector('label');
+                if (label && input.id) label.htmlFor = input.id;
+            });
             changeBasemap();
 
             L.control.scale({ metric: true, imperial: false, position: 'bottomleft' }).addTo(mapInstance);
@@ -381,8 +388,16 @@
         }
 
         function togglePanel() {
-            document.getElementById('control-panel').classList.toggle('minimized');
-            document.getElementById('menu-toggle').innerText = document.getElementById('control-panel').classList.contains('minimized') ? "Options Menu" : "Close Options";
+            const panel = document.getElementById('control-panel');
+            const button = document.getElementById('menu-toggle');
+            const closed = panel.classList.toggle('minimized');
+            panel.inert = closed;
+            panel.setAttribute('aria-hidden', String(closed));
+            button.innerText = closed ? 'Options Menu' : 'Close Options';
+            button.setAttribute('aria-expanded', String(!closed));
+            if (closed) button.focus();
+            else panel.querySelector('input,select,button')?.focus();
+            releaseDrivingInput();
             setTimeout(() => { if (mapInstance) mapInstance.invalidateSize(); }, 320);
         }
 
@@ -650,80 +665,61 @@
             }
         }
 
-        function simulationLoop(timestamp) {
-            if (!lastTimestamp) lastTimestamp = timestamp;
-            const dt = timestamp - lastTimestamp;
-            lastTimestamp = timestamp;
+        // Physics owns movement. Camera and HUD modules only present its results.
+        const FIXED_STEP_MS = 1000 / 60;
+        let physicsAccumulator = 0;
+        window.PTBO_FIXED_STEP = FIXED_STEP_MS / 1000;
 
-            const speedSetting = parseInt(document.getElementById('sld-speed').value);
-            const maxSpeed = 0.0000015 * speedSetting;
-            const acceleration = 0.00000005 * speedSetting; 
-            const friction = 0.96;
-            const baseTurnRate = 1.2;
-
-            // Motor Input
-            if (keys['ArrowUp'] || keys['w']) velocity += acceleration;
-            if (keys['ArrowDown'] || keys['s']) velocity -= acceleration * 1.5; // Stronger braking
-            
-            // Drag Application
-            velocity *= friction;
+        function simulationStep() {
+            const seconds = FIXED_STEP_MS / 1000;
+            window.PTBO_DIRECTIONAL_DRIVE_ZOOM?.beforeStep?.();
+            window.PTBO_SPEED_STREAK?.step?.(FIXED_STEP_MS);
+            const speedSetting = Number(document.getElementById('sld-speed').value) || 5;
+            const acceleration = 0.00000005 * speedSetting;
+            if (keys.ArrowUp || keys.w) velocity += acceleration;
+            if (keys.ArrowDown || keys.s) velocity -= acceleration * 1.5;
+            velocity *= 0.96;
             if (Math.abs(velocity) < 0.00000001) velocity = 0;
 
-            // Arcade Steering Logic
-            let activeTurnRate = 0;
-            let isTurning = false;
-
-            if (velocity !== 0) {
-                const driveDirection = velocity > 0 ? 1 : -1;
-                // Steering efficiency tied to movement speed
-                const velocityFactor = Math.min(Math.abs(velocity) / (maxSpeed * 0.2), 1.0);
-                activeTurnRate = baseTurnRate * Math.max(velocityFactor, 0.3) * driveDirection;
-            } else {
-                // Static spinning in place
-                activeTurnRate = baseTurnRate * 0.7;
+            const arcade = window.PTBO_ARCADE_HANDLING;
+            if (arcade?.state?.installed) arcade.step(seconds);
+            else {
+                const steer = Number(Boolean(keys.ArrowRight || keys.d)) - Number(Boolean(keys.ArrowLeft || keys.a));
+                currentHeading += steer * 1.2 * (velocity < 0 ? -1 : 1);
+                window.PTBO_VEHICLE_INSTRUMENTS?.stepSteering?.(seconds);
+                window.PTBO_DIRECTIONAL_STEERING_TUNING?.step?.(seconds);
             }
-
-            if (keys['ArrowLeft'] || keys['a']) { currentHeading -= activeTurnRate; isTurning = true; }
-            if (keys['ArrowRight'] || keys['d']) { currentHeading += activeTurnRate; isTurning = true; }
-            
-            if (isTurning) {
-                currentHeading = (currentHeading + 360) % 360;
-            }
-
-            // Geographic Projection Math
-            const rad = currentHeading * (Math.PI / 180);
-            const latCorrection = Math.cos(simLat * (Math.PI / 180));
-
-            // 0 Degrees is mapped to True North via cosine/sine matrix
-            simLat += Math.cos(rad) * velocity;
-            simLng += (Math.sin(rad) * velocity) / latCorrection;
-
+            window.PTBO_DIRECTIONAL_DRIVE_ZOOM?.limitVelocity?.();
+            currentHeading = (currentHeading + 360) % 360;
+            const radians = currentHeading * Math.PI / 180;
+            simLat += Math.cos(radians) * velocity;
+            simLng += Math.sin(radians) * velocity / Math.cos(simLat * Math.PI / 180);
             if (vehicleMarker) {
                 vehicleMarker.setRotationOrigin('center center');
                 vehicleMarker.setRotationAngle(currentHeading - 90);
-            }
-
-            // Update UI/Map if the vehicle moved OR spun
-            if (velocity !== 0 || isTurning) {
                 vehicleMarker.setLatLng([simLat, simLng]);
-                
-                // Only lock/pan camera if actually moving forward/backward
-                if (mapInstance && ((document.getElementById('chk-camera')?.checked && velocity !== 0) || headingUpMode)) {
-                    mapInstance.setView([simLat, simLng], mapInstance.getZoom(), { animate: false });
-                }
-
-                if (simulationState === STATES.ENROUTE && velocity !== 0) evaluateDistanceToTarget();
-
-                document.getElementById('tel-lat').innerText = simLat.toFixed(6);
-                document.getElementById('tel-lng').innerText = simLng.toFixed(6);
-                document.getElementById('tel-hdg').innerText = Math.round(currentHeading) + "°";
-                updateMapOrientation();
             }
+            if (simulationState === STATES.ENROUTE) evaluateDistanceToTarget();
+        }
 
+        function simulationLoop(timestamp) {
+            if (lastTimestamp === null) lastTimestamp = timestamp;
+            physicsAccumulator += Math.min(100, Math.max(0, timestamp - lastTimestamp));
+            lastTimestamp = timestamp;
+            while (physicsAccumulator + 1e-7 >= FIXED_STEP_MS) {
+                simulationStep();
+                physicsAccumulator -= FIXED_STEP_MS;
+            }
+            document.getElementById('tel-lat').innerText = simLat.toFixed(6);
+            document.getElementById('tel-lng').innerText = simLng.toFixed(6);
+            document.getElementById('tel-hdg').innerText = Math.round(currentHeading) + '°';
+            updateMapOrientation();
             requestAnimationFrame(simulationLoop);
         }
 
         window.addEventListener("keydown", e => {
+            if (e.key === 'Escape' && !document.getElementById('control-panel').classList.contains('minimized')) { togglePanel(); return; }
+            if (e.target?.closest?.('input,textarea,select,[contenteditable="true"]')) return;
             if (keys.hasOwnProperty(e.key)) { e.preventDefault(); keys[e.key] = true; }
         });
         window.addEventListener("keyup", e => {
@@ -732,6 +728,8 @@
         function releaseDrivingInput() {
             Object.keys(keys).forEach(key => { keys[key] = false; });
             velocity = 0;
+            lastTimestamp = null;
+            physicsAccumulator = 0;
         }
         window.addEventListener('blur', releaseDrivingInput);
         document.addEventListener('visibilitychange', () => { if (document.hidden) releaseDrivingInput(); });
@@ -754,6 +752,24 @@
             }
         }
 
+        function resolveIncidentArrival(incident) {
+            const radius = Math.max(10, Math.min(500, Number(incident.radius) || 40));
+            const roads = window.PTBO_ROAD_COLLISION;
+            if (!roads) return { radius, lat: incident.lat, lng: incident.lng, accessPoint: false };
+            if (roads.state.status !== 'ready') return null;
+            const nearest = roads.nearestRoad(incident.lat, incident.lng, 500);
+            if (!nearest || nearest.distance > 500) return null;
+            const useAccessPoint = nearest.distance > radius - 5;
+            return { radius, lat: useAccessPoint ? nearest.lat : incident.lat,
+                lng: useAccessPoint ? nearest.lng : incident.lng, accessPoint: useAccessPoint };
+        }
+
+        function escapeDispatchText(value) {
+            const node = document.createElement('span');
+            node.textContent = String(value ?? '');
+            return node.innerHTML;
+        }
+
         function fireRandomIncidentDispatch() {
             const checkedBoxes = document.querySelectorAll('.filter-chk:checked');
             const activeSubCategories = Array.from(checkedBoxes).map(cb => cb.getAttribute('data-sub'));
@@ -763,18 +779,20 @@
                 return;
             }
 
-            const filteredPool = dispatchDatabase.filter(item => activeSubCategories.includes(item.sub));
-            if (filteredPool.length === 0) return;
+            const filteredPool = dispatchDatabase.filter(item => activeSubCategories.includes(item.sub) && resolveIncidentArrival(item));
+            if (filteredPool.length === 0) { alert('No reachable calls match these filters. Check road loading or select another call type.'); return; }
 
             if (incidentCircleMarker) mapInstance.removeLayer(incidentCircleMarker);
 
             activeIncident = filteredPool[Math.floor(Math.random() * filteredPool.length)];
 
-            incidentCircleMarker = L.circle([activeIncident.lat, activeIncident.lng], {
+            activeArrivalPoint = resolveIncidentArrival(activeIncident);
+            activeArrivalRadius = activeArrivalPoint.radius;
+            incidentCircleMarker = L.circle([activeArrivalPoint.lat, activeArrivalPoint.lng], {
                 color: activeIncident.main === "Fire" ? '#d9534f' : '#2e7d32',
                 fillColor: activeIncident.main === "Fire" ? '#f0ad4e' : '#4cae4c',
                 fillOpacity: 0.35,
-                radius: 40 
+                radius: activeArrivalRadius
             }).addTo(mapInstance);
 
             simulationState = STATES.ENROUTE;
@@ -788,9 +806,9 @@
             let environmentConditionString = currentHour < 6 ? "Night operations active." : (currentHour < 12 ? "Morning route patterns forming." : "Standard daytime operations grid.");
 
             document.getElementById('hud-content').innerHTML = `
-                <div class="hud-title">🚨 ACTIVE ENROUTE DISPATCH: ${activeIncident.sub.toUpperCase()}</div>
-                <p class="hud-address">${activeIncident.name}</p>
-                <div class="hud-meta">Location Matrix: ${activeIncident.addr} | ${environmentConditionString}</div>
+                <div class="hud-title">🚨 ACTIVE ENROUTE DISPATCH: ${escapeDispatchText(activeIncident.sub.toUpperCase())}</div>
+                <p class="hud-address">${escapeDispatchText(activeIncident.name)}</p>
+                <div class="hud-meta">Address: ${escapeDispatchText(activeIncident.addr)}${activeArrivalPoint.accessPoint ? " · Respond to the marked nearby road access point" : ""}</div>
             `;
 
             const actionBtn = document.getElementById('hud-action-btn');
@@ -819,7 +837,7 @@
 
             document.getElementById('hud-content').innerHTML = `
                 <div class="hud-title" style="color: #5cb85c;">✓ ON SCENE AS REPORTED</div>
-                <p class="hud-address">Arrived at ${activeIncident.name}</p>
+                <p class="hud-address">Arrived at ${escapeDispatchText(activeIncident.name)}</p>
                 <div class="hud-meta">Staging layout completed. Responding crew evaluating conditions on scene.</div>
             `;
 
@@ -830,7 +848,7 @@
             setTimeout(() => {
                 simulationState = STATES.INSERVICE;
                 totalTrackedCalls++;
-                localStorage.setItem("simTotalCalls", totalTrackedCalls);
+                try { localStorage.setItem("simTotalCalls", totalTrackedCalls); } catch {}
                 document.getElementById('tel-total-calls').innerText = totalTrackedCalls;
 
                 document.getElementById('hud-content').innerHTML = `
@@ -849,9 +867,10 @@
 
         function evaluateDistanceToTarget() {
             if (!activeIncident || !mapInstance) return;
-            const d = mapInstance.distance([simLat, simLng], [activeIncident.lat, activeIncident.lng]);
+            const point = activeArrivalPoint || activeIncident;
+            const d = mapInstance.distance([simLat, simLng], [point.lat, point.lng]);
             document.getElementById('tel-dist').innerText = Math.round(d) + " m";
-            if (d <= 40 && simulationState === STATES.ENROUTE) {
+            if (d <= activeArrivalRadius && simulationState === STATES.ENROUTE) {
                 executeIncidentArrivalProcedures();
             }
         }

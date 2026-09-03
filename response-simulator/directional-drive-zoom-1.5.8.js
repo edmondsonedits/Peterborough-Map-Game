@@ -333,11 +333,8 @@
   function enforceGearSpeedCap() {
     if (!isDirectional()) return;
     const capKmh = currentGearSpeed();
-    const rawKmh = Math.max(
-      0,
-      Number(instruments?.state?.rawSpeedKmh) || 0,
-      Number(instruments?.state?.speedKmh) || 0,
-    );
+    const rawKmh = window.PTBO_FIXED_STEP ? Math.abs(Number(velocity) || 0) * 111195 * 60 * 3.6 : Math.max(
+      0, Number(instruments?.state?.rawSpeedKmh) || 0, Number(instruments?.state?.speedKmh) || 0);
     if (rawKmh <= capKmh + 0.35) return;
 
     try {
@@ -410,8 +407,7 @@
 
   function tick(timestamp) {
     if (!state.installed) return;
-    enforceDirectionalDrive();
-    enforceGearSpeedCap();
+    if (!window.PTBO_FIXED_STEP) { enforceDirectionalDrive(); enforceGearSpeedCap(); }
     applyNorthUp();
 
     if (timestamp - state.lastMaintenanceAt > 750) {
@@ -484,6 +480,8 @@
     minimumZoom: MIN_ZOOM,
     zoomStep: ZOOM_STEP,
     shiftUp,
+    beforeStep() { if (state.installed) enforceDirectionalDrive(); },
+    limitVelocity() { if (state.installed) enforceGearSpeedCap(); },
     resetGear,
     resetView: setClosestView,
   });

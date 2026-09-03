@@ -121,14 +121,14 @@
     if (doc.documentElement.dataset.sharedDispatchPatched === 'true') return;
     doc.documentElement.dataset.sharedDispatchPatched = 'true';
     removeLegacyEditorControls(doc);
-    loadSimulatorTool(doc, 'camera-fix.js?v=1.4.20', 'data-ptbo-smooth-camera', 'Unable to load the stable simulator camera base.');
-    loadSimulatorTool(doc, 'smooth-driving-camera-1.4.19.js?v=1.4.20', 'data-ptbo-driving-camera', 'Unable to load the Fixed Map and Driving View camera.');
-    loadSimulatorTool(doc, 'road-collision.js?v=1.4.20', 'data-ptbo-road-collision', 'Unable to load the Peterborough road boundary system.');
-    loadSimulatorTool(doc, 'speed-streak.js', 'data-ptbo-speed-streak', 'Unable to load the collision speed streak system.');
-    loadSimulatorTool(doc, 'vehicle-instruments.js?v=1.5.0', 'data-ptbo-vehicle-instruments', 'Unable to load the speedometer and mobile steering systems.');
-    loadSimulatorTool(doc, 'max-speed.js?v=1.4.20', 'data-ptbo-max-speed', 'Unable to load the max speed tracker.');
-    loadSimulatorTool(doc, 'route-reveal.js?v=1.4.20', 'data-ptbo-route-reveal', 'Unable to load the Peterborough route answer system.');
-    loadSimulatorTool(doc, 'route-compare.js?v=1.4.20', 'data-ptbo-route-compare', 'Unable to load the post-call route comparison system.');
+    loadSimulatorTool(doc, 'camera-fix.js?v=1.5.10', 'data-ptbo-smooth-camera', 'Unable to load the stable simulator camera base.');
+    loadSimulatorTool(doc, 'smooth-driving-camera-1.4.19.js?v=1.5.10', 'data-ptbo-driving-camera', 'Unable to load the Fixed Map and Driving View camera.');
+    loadSimulatorTool(doc, 'road-collision.js?v=1.5.10', 'data-ptbo-road-collision', 'Unable to load the Peterborough road boundary system.');
+    loadSimulatorTool(doc, 'speed-streak.js?v=1.5.10', 'data-ptbo-speed-streak', 'Unable to load the collision speed streak system.');
+    loadSimulatorTool(doc, 'vehicle-instruments.js?v=1.5.10', 'data-ptbo-vehicle-instruments', 'Unable to load the speedometer and mobile steering systems.');
+    loadSimulatorTool(doc, 'max-speed.js?v=1.5.10', 'data-ptbo-max-speed', 'Unable to load the max speed tracker.');
+    loadSimulatorTool(doc, 'route-reveal.js?v=1.5.10', 'data-ptbo-route-reveal', 'Unable to load the Peterborough route answer system.');
+    loadSimulatorTool(doc, 'route-compare.js?v=1.5.10', 'data-ptbo-route-compare', 'Unable to load the post-call route comparison system.');
 
     const apply = async () => {
       await store.ready();
@@ -193,7 +193,7 @@
     doc.body.appendChild(bridge);
 
     const scoreboard = doc.createElement('script');
-    scoreboard.src = new URL('../geo-guesser/firebase-scoreboard.js?v=1.4.20', sourceUrl).href;
+    scoreboard.src = new URL('../geo-guesser/firebase-scoreboard.js?v=1.5.10', sourceUrl).href;
     scoreboard.onload = () => {
       if (!frame.contentWindow?.__geoScoreboardReady) frame.contentWindow?.geoScoreboardLoadFailed?.();
     };
