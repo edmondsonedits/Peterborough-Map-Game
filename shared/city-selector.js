@@ -1,7 +1,7 @@
-/* Dispatch launcher city selector. Disabled city packages remain visible as roadmap entries. */
+/* Dispatch launcher city selector. Preview cities can be used for Fire/EMS base training while calls are built. */
 (() => {
   'use strict';
-  const VERSION = '1.6.5';
+  const VERSION = '1.6.7';
   if (window.PTBO_CITY_SELECTOR?.version === VERSION) return;
 
   const dispatchLink = document.getElementById('dispatch-game-link');
@@ -9,10 +9,7 @@
   if (!dispatchLink || !cities.length) return;
 
   const touchMobile = window.innerWidth <= 900 && (
-    matchMedia('(pointer: coarse)').matches ||
-    navigator.maxTouchPoints > 0 ||
-    navigator.userAgentData?.mobile === true ||
-    'ontouchstart' in window
+    matchMedia('(pointer: coarse)').matches || navigator.maxTouchPoints > 0 || navigator.userAgentData?.mobile === true || 'ontouchstart' in window
   );
 
   const style = document.createElement('style');
@@ -25,13 +22,12 @@
     #ptbo-city-dialog .city-intro{margin:8px 0 20px;color:#cbd5e1;font-size:14px;line-height:1.5}
     #ptbo-city-dialog .city-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
     #ptbo-city-dialog .city-option{min-height:104px;padding:15px;text-align:left;border:1px solid rgba(255,255,255,.18);border-radius:15px;background:linear-gradient(145deg,#20334d,#172538);color:#f8fafc;font:inherit;cursor:pointer;transition:transform .12s,border-color .12s,background .12s}
-    #ptbo-city-dialog .city-option:not(:disabled):hover{transform:translateY(-2px);border-color:#7dd3fc;background:linear-gradient(145deg,#284461,#1a2d44)}
+    #ptbo-city-dialog .city-option:hover{transform:translateY(-2px);border-color:#7dd3fc;background:linear-gradient(145deg,#284461,#1a2d44)}
     #ptbo-city-dialog .city-option:focus-visible,#ptbo-city-dialog .city-close:focus-visible{outline:3px solid #7dd3fc;outline-offset:2px}
     #ptbo-city-dialog .city-option strong{display:block;font-size:18px;margin-bottom:3px}
     #ptbo-city-dialog .city-option .province{display:block;color:#94a3b8;font-size:11px;text-transform:uppercase;letter-spacing:.08em}
     #ptbo-city-dialog .city-option .status{display:block;margin-top:11px;color:#86efac;font-size:12px;font-weight:800}
-    #ptbo-city-dialog .city-option:disabled{opacity:.42;filter:saturate(.45);cursor:not-allowed;background:#111c2b}
-    #ptbo-city-dialog .city-option:disabled .status{color:#cbd5e1;font-weight:700}
+    #ptbo-city-dialog .city-option[data-status="base-training"] .status{color:#fde68a}
     #ptbo-city-dialog .city-foot{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,.11)}
     #ptbo-city-dialog .city-foot span{color:#94a3b8;font-size:12px;line-height:1.4}
     #ptbo-city-dialog .city-close{flex:0 0 auto;padding:9px 14px;border:1px solid rgba(255,255,255,.2);border-radius:10px;background:#243246;color:#f8fafc;font:inherit;font-weight:800;cursor:pointer}
@@ -43,22 +39,22 @@
   dialog.id = 'ptbo-city-dialog';
   dialog.setAttribute('aria-labelledby','ptbo-city-title');
   dialog.innerHTML = `
-    <p class="city-kicker">Dispatch Simulator</p>
+    <p class="city-kicker">Emergency Response Simulator</p>
     <h2 id="ptbo-city-title">Choose a city</h2>
-    <p class="city-intro">City packs keep the driving game shared while loading only the roads, bases, hospitals and calls for the city you choose.</p>
+    <p class="city-intro">Peterborough includes full dispatch calls. The other cities currently include Fire and EMS base spawning with free-driving practice while their call databases and road-boundary packages are being built.</p>
     <div class="city-grid"></div>
-    <div class="city-foot"><span>More cities will become selectable as their emergency-response data is completed and verified.</span><button class="city-close" type="button">Cancel</button></div>`;
+    <div class="city-foot"><span>“Calls unavailable” cities are still playable for station/base familiarization and driving practice.</span><button class="city-close" type="button">Cancel</button></div>`;
 
   const grid = dialog.querySelector('.city-grid');
   cities.forEach(city => {
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'city-option';
-    button.disabled = !city.playable;
     button.dataset.city = city.id;
-    button.setAttribute('aria-label', city.playable ? `Play Dispatch Simulator in ${city.name}` : `${city.name}, unavailable`);
-    button.innerHTML = `<strong>${city.name}</strong><span class="province">${city.province || ''}</span><span class="status">${city.note || (city.playable ? 'Available' : 'Unavailable')}</span>`;
-    if (city.playable) button.addEventListener('click', () => launch(city));
+    button.dataset.status = city.status || '';
+    button.setAttribute('aria-label', `Open ${city.name} ${city.status==='base-training'?'base training':'Dispatch Simulator'}`);
+    button.innerHTML = `<strong>${city.name}</strong><span class="province">${city.province || ''}</span><span class="status">${city.note || 'Available'}</span>`;
+    button.addEventListener('click', () => launch(city));
     grid.appendChild(button);
   });
 
@@ -86,9 +82,5 @@
     if (!dialog.open) dialog.showModal();
   }, true);
 
-  window.PTBO_CITY_SELECTOR = Object.freeze({
-    version: VERSION,
-    open: () => { if (!dialog.open) dialog.showModal(); },
-    cities,
-  });
+  window.PTBO_CITY_SELECTOR = Object.freeze({version: VERSION,open: () => { if (!dialog.open) dialog.showModal(); },cities});
 })();
