@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.2';
+  const VERSION = '1.6.5';
   if (window.PTBO_ROAD_COLLISION_BOOTSTRAP_READY) return;
 
   window.PTBO_ROAD_COLLISION_BOOTSTRAP = true;
@@ -26,18 +26,14 @@
   }
 
   function ensureRouteComparison() {
-    if (window.PTBO_ROUTE_COMPARE || document.querySelector('script[data-ptbo-route-compare-core]')) {
-      return Promise.resolve();
-    }
+    if (window.PTBO_ROUTE_COMPARE || document.querySelector('script[data-ptbo-route-compare-core]')) return Promise.resolve();
     return loadScript('route-compare-1.4.2.js', `${VERSION}-route-compare`);
   }
 
   async function waitForApi(timeoutMilliseconds = 5000) {
     const startedAt = performance.now();
     while (!window.PTBO_ROAD_COLLISION) {
-      if (performance.now() - startedAt > timeoutMilliseconds) {
-        throw new Error('Road-boundary API did not become ready.');
-      }
+      if (performance.now() - startedAt > timeoutMilliseconds) throw new Error('Road-boundary API did not become ready.');
       await sleep(50);
     }
     return window.PTBO_ROAD_COLLISION;
@@ -61,22 +57,16 @@
   const ready = (async () => {
     const api = await loadCoreWithRetry();
     await api.ready;
-    if (api.state?.status !== 'ready' || !api.state?.originalLoop) {
-      throw new Error('Road boundaries loaded without attaching to vehicle physics.');
-    }
+    if (api.state?.status !== 'ready' || !api.state?.originalLoop) throw new Error('Road boundaries loaded without attaching to vehicle physics.');
 
     Promise.allSettled([
       loadScript('road-intersection-softener.js', `${VERSION}-intersections`),
       loadScript('dispatch-voice-bridge-1.4.2.js', `${VERSION}-voice`),
       ensureRouteComparison(),
-    ]).then(results => {
-      results.forEach(result => {
-        if (result.status === 'rejected') console.warn(result.reason);
-      });
-    });
+    ]).then(results => results.forEach(result => {if(result.status==='rejected')console.warn(result.reason);}));
 
     window.dispatchEvent(new CustomEvent('ptbo-road-collision-bootstrap-ready', {
-      detail: { version: VERSION, segmentCount: api.state.segments.length },
+      detail:{version:VERSION,cityId:api.config?.cityId || window.PTBO_CITY_PACKAGE?.id || null,segmentCount:api.state.segments.length},
     }));
     return api;
   })();
