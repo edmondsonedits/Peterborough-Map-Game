@@ -9,7 +9,7 @@
 
      WHAT THE PLAYER EXPERIENCES:
      A desktop version of the driving simulator with keyboard controls, dispatch
-     voice, route comparison, and a clear startup/retry screen.
+     voice, route comparison, and a close truck-follow camera.
 
      TECHNICAL TERM — WRAPPER:
      A wrapper is a smaller page around another page. The inner iframe owns the
@@ -36,7 +36,7 @@
 </head>
 <body>
   <!-- The versioned iframe URL prevents an older simulator HTML file from being reused. -->
-  <iframe id="simulator" src="../index.html?v=1.6.0" title="Peterborough Fire and EMS Dispatch Simulator"></iframe>
+  <iframe id="simulator" src="../index.html?v=1.6.1" title="Peterborough Fire and EMS Dispatch Simulator"></iframe>
   <button id="audio-button" type="button" aria-label="Mute dispatch voice" aria-pressed="true">
     <svg class="speaker-on" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15 9a4 4 0 0 1 0 6M17.5 6.5a7.5 7.5 0 0 1 0 11"/></svg>
     <svg class="speaker-off" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="m16 9 5 5M21 9l-5 5"/></svg>
@@ -44,21 +44,23 @@
   <div id="loading"><div><strong>Loading Peterborough roads</strong><span id="loading-status">Preparing steering, road boundaries, and dispatch data…</span></div></div>
 
   <!-- Shared data keeps desktop, mobile, Geo Guesser, and the editor consistent. -->
-  <script src="../../shared/build-version.js?v=1.6.0"></script>
-  <script src="../../shared/dispatch-locations.js?v=1.6.0"></script>
-  <script src="../../shared/dispatch-data-1.4.4.js?v=1.6.0"></script>
-  <script src="../../shared/dispatch-override-1.4.4.js?v=1.6.0"></script>
-  <script src="../../shared/stations.js?v=1.6.0"></script>
-  <script src="../service-selection.js?v=1.6.0"></script>
+  <script src="../../shared/build-version.js?v=1.6.1"></script>
+  <script src="../../shared/dispatch-locations.js?v=1.6.1"></script>
+  <script src="../../shared/dispatch-data-1.4.4.js?v=1.6.1"></script>
+  <script src="../../shared/dispatch-override-1.4.4.js?v=1.6.1"></script>
+  <script src="../../shared/stations.js?v=1.6.1"></script>
+  <script src="../service-selection.js?v=1.6.1"></script>
   <script>
     (() => {
       /*
       IMPORTANT SETTINGS:
       VERSION is used for module cache URLs and startup diagnostics.
       AUDIO_KEY is the browser-storage name that remembers dispatch voice.
+      DESKTOP_ZOOM is the closest supported map view used when desktop starts.
       */
-      const VERSION = '1.6.0';
+      const VERSION = '1.6.1';
       const AUDIO_KEY = 'ptboDispatchVoiceEnabled';
+      const DESKTOP_ZOOM = 19;
 
       const frame = document.getElementById('simulator');
       const audioButton = document.getElementById('audio-button');
@@ -169,41 +171,81 @@
         doc.body.appendChild(helper);
       }
 
-      /* Desktop owns the map view. This final guard runs after optional camera
-         modules finish, so saved settings or an older camera helper cannot
-         restart speed-based zooming. Mobile uses a separate wrapper and keeps
-         its stabilized follow camera. */
-      function installDesktopManualMap(doc) {
+      /*
+      FUNCTION: installDesktopFollowMap
+
+      Desktop previously forced a manual map, which left the camera at the base
+      zoom and allowed the truck to drive out of frame. This helper restores a
+      GTA-style top-down follow view without changing mobile behaviour.
+
+      The camera starts at Leaflet zoom 19 (the simulator maximum) and follows the
+      truck at 30 FPS. The existing camera-lock checkbox still lets a player turn
+      following off temporarily if they want to inspect the map manually.
+      */
+      function installDesktopFollowMap(doc) {
         const helper = doc.createElement('script');
         helper.textContent = `(() => {
-          document.documentElement.dataset.ptboDesktopManualMap = 'true';
-          const lock = document.getElementById('chk-camera');
-          if (lock) lock.checked = false;
-          const arcade = window.PTBO_ARCADE_HANDLING;
-          if (arcade?.state?.settings) {
-            arcade.state.settings.speedZoomEnabled = false;
-            arcade.state.cameraZoom = null;
-            arcade.state.baseCameraZoom = null;
-          }
-          const speedZoom = document.getElementById('ptbo-arcade-speed-zoom');
-          if (speedZoom) {
-            speedZoom.checked = false;
-            speedZoom.disabled = true;
-            if (speedZoom.parentElement) speedZoom.parentElement.lastChild.textContent = ' Desktop zoom is manual';
-          }
-          document.getElementById('ptbo-arcade-zoomOutLevels')?.closest('.ptbo-arcade-control')?.remove();
-          document.getElementById('ptbo-arcade-cameraLookAheadMeters')?.closest('.ptbo-arcade-control')?.remove();
-          const note = document.getElementById('ptbo-arcade-note');
-          if (note) note.textContent = 'Desktop map position and zoom are manual. Drag the map and use the mouse wheel or + / − controls.';
+          if (window.PTBO_DESKTOP_FOLLOW_CAMERA?.version === '${VERSION}') return;
+          document.documentElement.dataset.ptboDesktopFollowMap = 'true';
+          const MAX_ZOOM = ${DESKTOP_ZOOM};
+          const FOLLOW_INTERVAL_MS = 1000 / 30;
+          let lastFollowAt = 0;
+          let lastUiSyncAt = 0;
+
+          const cameraLockEnabled = () => {
+            const lock = document.getElementById('chk-camera');
+            return !lock || lock.checked;
+          };
+
+          const syncDesktopCameraUi = () => {
+            const lock = document.getElementById('chk-camera');
+            if (lock && lock.dataset.ptboDesktopFollowInitialized !== 'true') {
+              lock.checked = true;
+              lock.dataset.ptboDesktopFollowInitialized = 'true';
+            }
+            const note = document.getElementById('ptbo-arcade-note');
+            if (note) note.textContent = 'Desktop camera follows the truck and starts at the closest map view. Turn Camera Lock off if you want to inspect the map manually.';
+          };
+
+          const recenter = (zoom = null) => {
+            try {
+              if (!mapInstance) return false;
+              const targetZoom = Number.isFinite(Number(zoom)) ? Number(zoom) : mapInstance.getZoom();
+              mapInstance.setView([simLat, simLng], targetZoom, { animate:false });
+              return true;
+            } catch (_) {
+              return false;
+            }
+          };
+
+          const tick = timestamp => {
+            if (timestamp - lastUiSyncAt >= 1000) {
+              syncDesktopCameraUi();
+              lastUiSyncAt = timestamp;
+            }
+
+            const routeReviewOpen = Boolean(window.PTBO_ROUTE_COMPARE?.state?.reviewOpen);
+            if (!routeReviewOpen && cameraLockEnabled() && timestamp - lastFollowAt >= FOLLOW_INTERVAL_MS) {
+              recenter();
+              lastFollowAt = timestamp;
+            }
+            requestAnimationFrame(tick);
+          };
+
           try {
             mapInstance.options.zoomSnap = 1;
             mapInstance.options.zoomDelta = 1;
-            window.PTBO_DRIVING_CAMERA?.setMode?.('Fixed Map');
-            mapInstance.fire('dragstart');
+            mapInstance.options.zoomAnimation = false;
+            syncDesktopCameraUi();
+            recenter(MAX_ZOOM);
           } catch (_) {}
-          document.getElementById('ptbo-camera-panel')?.remove();
-          document.getElementById('ptbo-camera-settings')?.remove();
-          document.getElementById('ptbo-camera-settings-title')?.remove();
+
+          window.PTBO_DESKTOP_FOLLOW_CAMERA = Object.freeze({
+            version: '${VERSION}',
+            maxZoom: MAX_ZOOM,
+            recenter: () => recenter(MAX_ZOOM),
+          });
+          requestAnimationFrame(tick);
         })();`;
         doc.body.appendChild(helper);
       }
@@ -240,7 +282,7 @@
 
         Promise.all([dispatchReady, simulatorReady, window.PTBO_SERVICE_SELECTION.ready(game)])
           .then(() => {
-            installDesktopManualMap(doc);
+            installDesktopFollowMap(doc);
             window.PTBO_SERVICE_SELECTION.open(game);
             loadingStatus.textContent = 'Simulator ready';
             loading.classList.add('hidden');
