@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.5';
+  const VERSION = '1.6.6';
   if (window.PTBO_ROAD_COLLISION_BOOTSTRAP_READY) return;
 
   window.PTBO_ROAD_COLLISION_BOOTSTRAP = true;
@@ -59,6 +59,12 @@
     await api.ready;
     if (api.state?.status !== 'ready' || !api.state?.originalLoop) throw new Error('Road boundaries loaded without attaching to vehicle physics.');
 
+    await loadScript('road-hard-boundary-1.6.6.js', `${VERSION}-hard-boundary`);
+    const hardBoundary = window.PTBO_HARD_ROAD_BOUNDARY;
+    if (!hardBoundary?.ready) throw new Error('Hard road-boundary guard did not initialize.');
+    await hardBoundary.ready;
+    if (!hardBoundary.state?.installed) throw new Error('Hard road-boundary guard did not attach to vehicle physics.');
+
     Promise.allSettled([
       loadScript('road-intersection-softener.js', `${VERSION}-intersections`),
       loadScript('dispatch-voice-bridge-1.4.2.js', `${VERSION}-voice`),
@@ -66,7 +72,7 @@
     ]).then(results => results.forEach(result => {if(result.status==='rejected')console.warn(result.reason);}));
 
     window.dispatchEvent(new CustomEvent('ptbo-road-collision-bootstrap-ready', {
-      detail:{version:VERSION,cityId:api.config?.cityId || window.PTBO_CITY_PACKAGE?.id || null,segmentCount:api.state.segments.length},
+      detail:{version:VERSION,cityId:api.config?.cityId || window.PTBO_CITY_PACKAGE?.id || null,segmentCount:api.state.segments.length,hardBoundary:true},
     }));
     return api;
   })();
