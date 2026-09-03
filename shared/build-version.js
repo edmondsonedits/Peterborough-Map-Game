@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.5';
+  const VERSION = '1.6.6';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
 
@@ -74,6 +74,7 @@
     const installInsideFrame=()=>{
       const doc=frame.contentDocument,game=frame.contentWindow;
       if(!doc||!game){finishSatelliteCover();return}
+      injectIntoFrame(doc,'ptbo-hard-road-boundary-loader',`../response-simulator/road-hard-boundary-1.6.6.js?v=${VERSION}`);
       if(isMobile){injectIntoFrame(doc,'ptbo-directional-drive-zoom-loader',`../response-simulator/directional-drive-zoom-1.5.8.js?v=${VERSION}`);injectIntoFrame(doc,'ptbo-mobile-ui-layout-loader',`../response-simulator/mobile-ui-layout-1.5.9.js?v=${VERSION}`)}
       let satellite=doc.getElementById('ptbo-satellite-map-loader');
       if(!satellite)satellite=injectIntoFrame(doc,'ptbo-satellite-map-loader',`../response-simulator/satellite-map-1.5.6.js?v=${VERSION}`);
