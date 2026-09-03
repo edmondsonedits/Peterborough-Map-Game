@@ -1,7 +1,7 @@
 /* Simulator readiness gate — shared across city packages. */
 (() => {
   'use strict';
-  const VERSION = '1.6.5';
+  const VERSION = '1.6.6';
   if (window.PTBO_SIMULATOR_READY_VERSION === VERSION && window.PTBO_SIMULATOR_READY) return;
   window.PTBO_SIMULATOR_READY_VERSION = VERSION;
 
@@ -75,6 +75,7 @@
     await Promise.all([
       injectScript('vehicle-instruments.js','data-ptbo-readiness-vehicle'),
       injectScript('road-collision.js','data-ptbo-readiness-road'),
+      injectScript('road-hard-boundary-1.6.6.js','data-ptbo-readiness-hard-road-boundary'),
       injectScript('settings-menu-compact-1.5.3.js','data-ptbo-readiness-compact-settings'),
     ]);
 
@@ -85,10 +86,16 @@
       await roadApi.ready;
       return roadApi;
     })();
+    const hardBoundaryReady = (async () => {
+      const hardBoundary = await waitForValue(() => window.PTBO_HARD_ROAD_BOUNDARY,'Hard road-boundary guard');
+      await hardBoundary.ready;
+      return hardBoundary;
+    })();
 
-    const [instruments,roads] = await Promise.all([instrumentsReady,roadsReady]);
+    const [instruments,roads,hardBoundary] = await Promise.all([instrumentsReady,roadsReady,hardBoundaryReady]);
     if (!instruments?.setAnalogSteering) throw new Error('Vehicle steering API is incomplete.');
     if (roads?.state?.status !== 'ready' || !roads?.state?.originalLoop) throw new Error('Road boundaries are not attached to vehicle movement.');
+    if (!hardBoundary?.state?.installed) throw new Error('Hard road-boundary guard is not attached to vehicle movement.');
     if (roads?.config?.cityId && roads.config.cityId !== city.id) throw new Error(`Road package mismatch: expected ${city.id}, received ${roads.config.cityId}.`);
 
     await waitForValue(() => window.PTBO_ARCADE_HANDLING,'Arcade handling system',10000);
@@ -108,6 +115,7 @@
       cityPackageVersion:city.version || null,
       mobile:isMobileWrapper,
       roadSegments:roads.state.segments.length,
+      hardRoadBoundary:Boolean(hardBoundary.state?.installed),
       steeringConnected:Boolean(instruments.state?.mobileSteeringConnected),
       arcadeHandlingCore:window.PTBO_ARCADE_HANDLING?.version || null,
       stableCamera:window.PTBO_STABLE_MOBILE_CAMERA?.version || null,
