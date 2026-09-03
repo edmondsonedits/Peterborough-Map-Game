@@ -3,19 +3,23 @@
 
   if (window.PTBO_ROAD_COLLISION) return;
 
+  const city = window.PTBO_CITY_PACKAGE;
+  const cityRoads = city?.roads || {};
+  const roadCenter = cityRoads.center || city?.map?.defaultCenter || [44.3091,-78.3197];
   const CONFIG = Object.freeze({
-    dataUrl: '../city-explorer/data/osm-public-roads.geojson',
-    centerLat: 44.3091,
-    centerLng: -78.3197,
-    gridSize: 80,
-    sweepStep: 1.35,
-    shoulderTolerance: 1.35,
-    spawnSnapDistance: 120,
-    stationExitSearchDistance: 120,
-    stationExitCorridorHalfWidth: 8,
-    stationExitStartPadding: 4,
-    defaultLaneAssist: 0.60,
-    collisionVelocityRetention: 0.42,
+    cityId: city?.id || 'peterborough',
+    dataUrl: cityRoads.dataUrl || '../city-explorer/data/osm-public-roads.geojson',
+    centerLat: Number(roadCenter[0]) || 44.3091,
+    centerLng: Number(roadCenter[1]) || -78.3197,
+    gridSize: Number(cityRoads.gridSize) || 80,
+    sweepStep: Number(cityRoads.sweepStep) || 1.35,
+    shoulderTolerance: Number(cityRoads.shoulderTolerance) || 1.35,
+    spawnSnapDistance: Number(cityRoads.spawnSnapDistance) || 120,
+    stationExitSearchDistance: Number(cityRoads.stationExitSearchDistance) || 120,
+    stationExitCorridorHalfWidth: Number(cityRoads.stationExitCorridorHalfWidth) || 8,
+    stationExitStartPadding: Number(cityRoads.stationExitStartPadding) || 4,
+    defaultLaneAssist: Number(cityRoads.defaultLaneAssist) || 0.60,
+    collisionVelocityRetention: Number(cityRoads.collisionVelocityRetention) || 0.42,
   });
 
   const METERS_PER_LAT = 110540;
@@ -139,9 +143,7 @@
 
   function addLine(coordinates, properties, featureIndex) {
     if (!Array.isArray(coordinates)) return;
-    for (let index = 1; index < coordinates.length; index += 1) {
-      addSegment(coordinates[index - 1], coordinates[index], properties, featureIndex);
-    }
+    for (let index = 1; index < coordinates.length; index += 1) addSegment(coordinates[index - 1], coordinates[index], properties, featureIndex);
   }
 
   function buildRoadIndex(geojson) {
@@ -152,9 +154,7 @@
       const geometry = feature?.geometry;
       const properties = feature?.properties || {};
       if (geometry?.type === 'LineString') addLine(geometry.coordinates, properties, featureIndex);
-      if (geometry?.type === 'MultiLineString') {
-        geometry.coordinates.forEach(line => addLine(line, properties, featureIndex));
-      }
+      if (geometry?.type === 'MultiLineString') geometry.coordinates.forEach(line => addLine(line, properties, featureIndex));
     });
     if (!state.segments.length) throw new Error('No drivable road segments were found.');
   }
@@ -165,15 +165,7 @@
     const py = segment.ay + segment.dy * t;
     const offsetX = x - px;
     const offsetY = y - py;
-    return {
-      x: px,
-      y: py,
-      t,
-      distance: Math.hypot(offsetX, offsetY),
-      offsetX,
-      offsetY,
-      segment,
-    };
+    return {x:px,y:py,t,distance:Math.hypot(offsetX,offsetY),offsetX,offsetY,segment};
   }
 
   function nearbySegmentIndexes(x, y, searchRadius = 45) {
@@ -210,8 +202,7 @@
       if (projection.distance <= projection.segment.allowed && (!allowed || projection.distance < allowed.distance)) allowed = projection;
     }
     const selected = allowed || nearest;
-    return { drivable: Boolean(allowed), nearest: selected,
-      clearance: selected ? selected.distance - selected.segment.allowed : Infinity };
+    return {drivable:Boolean(allowed),nearest:selected,clearance:selected ? selected.distance - selected.segment.allowed : Infinity};
   }
 
   function isPointDrivable(lat, lng) {
@@ -246,23 +237,15 @@
     if (!info.drivable || !info.nearest) return point;
     const normalizedOffset = Math.min(1, info.nearest.distance / Math.max(1, info.nearest.segment.allowed));
     const correction = state.laneAssist * 0.035 * normalizedOffset;
-    return {
-      x: point.x + (info.nearest.x - point.x) * correction,
-      y: point.y + (info.nearest.y - point.y) * correction,
-    };
+    return {x:point.x + (info.nearest.x - point.x) * correction,y:point.y + (info.nearest.y - point.y) * correction};
   }
 
-  function stationExitHeading(exit) {
-    return (Math.atan2(exit.dx, exit.dy) * 180 / Math.PI + 360) % 360;
-  }
+  function stationExitHeading(exit) { return (Math.atan2(exit.dx, exit.dy) * 180 / Math.PI + 360) % 360; }
 
   function beginStationExit(lat = simLat, lng = simLng) {
     if (state.status !== 'ready') return false;
     const start = toXY(Number(lat), Number(lng));
     if (![start.x, start.y].every(Number.isFinite)) return false;
-
-    // A base is a permanent drivable square, including on the return trip.
-    // Its boundary must meet a road; no invisible corridor overrides the yard.
     if (yardAtXY(start.x,start.y)) {
       state.stationExit = null;
       const road = nearestRoadXY(start.x,start.y,CONFIG.stationExitSearchDistance);
@@ -271,31 +254,14 @@
       velocity = 0;
       return true;
     }
-
-    const nearest = nearestRoadXY(start.x, start.y, CONFIG.stationExitSearchDistance);
+    const nearest = nearestRoadXY(start.x,start.y,CONFIG.stationExitSearchDistance);
     if (!nearest || nearest.distance > CONFIG.stationExitSearchDistance) return false;
-    if (nearest.distance <= nearest.segment.allowed) {
-      state.stationExit = null;
-      return false;
-    }
-
+    if (nearest.distance <= nearest.segment.allowed) {state.stationExit=null;return false;}
     const dx = nearest.x - start.x;
     const dy = nearest.y - start.y;
     const lengthSq = dx * dx + dy * dy;
     if (lengthSq < 1) return false;
-
-    state.stationExit = {
-      ax: start.x,
-      ay: start.y,
-      bx: nearest.x,
-      by: nearest.y,
-      dx,
-      dy,
-      lengthSq,
-      length: Math.sqrt(lengthSq),
-      roadSegment: nearest.segment,
-    };
-
+    state.stationExit = {ax:start.x,ay:start.y,bx:nearest.x,by:nearest.y,dx,dy,lengthSq,length:Math.sqrt(lengthSq),roadSegment:nearest.segment};
     currentHeading = stationExitHeading(state.stationExit);
     vehicleMarker?.setRotationOrigin?.('center center');
     vehicleMarker?.setRotationAngle?.(currentHeading - 90);
@@ -308,96 +274,59 @@
   function resolveStationExitMovement(previous, candidate) {
     const exit = state.stationExit;
     if (!exit) return null;
-
     const roadInfo = roadInfoAtXY(candidate.x, candidate.y, CONFIG.stationExitSearchDistance);
     if (roadInfo.drivable) {
       state.stationExit = null;
-      return {
-        ...toLatLng(candidate.x, candidate.y),
-        blocked: false,
-        snapped: false,
-        stationExitCompleted: true,
-        segment: roadInfo.nearest?.segment || exit.roadSegment,
-      };
+      return {...toLatLng(candidate.x,candidate.y),blocked:false,snapped:false,stationExitCompleted:true,segment:roadInfo.nearest?.segment || exit.roadSegment};
     }
-
-    const projection = projectPointToSegment(candidate.x, candidate.y, exit);
-    const distanceFromStart = Math.hypot(candidate.x - exit.ax, candidate.y - exit.ay);
+    const projection = projectPointToSegment(candidate.x,candidate.y,exit);
+    const distanceFromStart = Math.hypot(candidate.x-exit.ax,candidate.y-exit.ay);
     const insideStartPad = distanceFromStart <= CONFIG.stationExitStartPadding;
     const insideCorridor = projection.distance <= CONFIG.stationExitCorridorHalfWidth;
-    if (insideStartPad || insideCorridor) {
-      return {
-        ...toLatLng(candidate.x, candidate.y),
-        blocked: false,
-        snapped: false,
-        stationExitActive: true,
-      };
-    }
-
-    return {
-      ...toLatLng(previous.x, previous.y),
-      blocked: true,
-      snapped: false,
-      stationExitActive: true,
-    };
+    if (insideStartPad || insideCorridor) return {...toLatLng(candidate.x,candidate.y),blocked:false,snapped:false,stationExitActive:true};
+    return {...toLatLng(previous.x,previous.y),blocked:true,snapped:false,stationExitActive:true};
   }
 
   function resolveMovement(previousLat, previousLng, candidateLat, candidateLng, speed) {
     const previous = toXY(previousLat, previousLng);
     const candidate = toXY(candidateLat, candidateLng);
-    const stationExitResult = resolveStationExitMovement(previous, candidate);
+    const stationExitResult = resolveStationExitMovement(previous,candidate);
     if (stationExitResult) return stationExitResult;
-    const previousInfo = roadInfoAtXY(previous.x, previous.y, CONFIG.spawnSnapDistance);
-
+    const previousInfo = roadInfoAtXY(previous.x,previous.y,CONFIG.spawnSnapDistance);
     if (!previousInfo.drivable && previousInfo.nearest && previousInfo.nearest.distance <= CONFIG.spawnSnapDistance) {
-      const snapped = applyLaneAssist({ x: previousInfo.nearest.x, y: previousInfo.nearest.y }, speed);
-      return { ...toLatLng(snapped.x, snapped.y), blocked: false, snapped: true, segment: previousInfo.nearest.segment };
+      const snapped = applyLaneAssist({x:previousInfo.nearest.x,y:previousInfo.nearest.y},speed);
+      return {...toLatLng(snapped.x,snapped.y),blocked:false,snapped:true,segment:previousInfo.nearest.segment};
     }
-
-    if (isSweepDrivable(previous, candidate)) {
-      const assisted = applyLaneAssist(candidate, speed);
-      if (isSweepDrivable(previous, assisted)) {
-        return { ...toLatLng(assisted.x, assisted.y), blocked: false, snapped: false };
-      }
-      return { ...toLatLng(candidate.x, candidate.y), blocked: false, snapped: false };
+    if (isSweepDrivable(previous,candidate)) {
+      const assisted = applyLaneAssist(candidate,speed);
+      if (isSweepDrivable(previous,assisted)) return {...toLatLng(assisted.x,assisted.y),blocked:false,snapped:false};
+      return {...toLatLng(candidate.x,candidate.y),blocked:false,snapped:false};
     }
-
     const movementX = candidate.x - previous.x;
     const movementY = candidate.y - previous.y;
-    const reference = previousInfo.nearest || nearestRoadXY(candidate.x, candidate.y, 55);
+    const reference = previousInfo.nearest || nearestRoadXY(candidate.x,candidate.y,55);
     if (reference?.segment) {
       const tangentX = reference.segment.dx / reference.segment.length;
       const tangentY = reference.segment.dy / reference.segment.length;
-      const along = movementX * tangentX + movementY * tangentY;
-      const slide = {
-        x: previous.x + tangentX * along * 0.92,
-        y: previous.y + tangentY * along * 0.92,
-      };
-      const centeredSlide = applyLaneAssist(slide, speed);
-      if (isSweepDrivable(previous, centeredSlide)) {
-        return { ...toLatLng(centeredSlide.x, centeredSlide.y), blocked: true, slid: true, segment: reference.segment };
-      }
+      const along = movementX*tangentX + movementY*tangentY;
+      const slide = {x:previous.x+tangentX*along*0.92,y:previous.y+tangentY*along*0.92};
+      const centeredSlide = applyLaneAssist(slide,speed);
+      if (isSweepDrivable(previous,centeredSlide)) return {...toLatLng(centeredSlide.x,centeredSlide.y),blocked:true,slid:true,segment:reference.segment};
     }
-
-    const half = { x: previous.x + movementX * 0.35, y: previous.y + movementY * 0.35 };
-    if (isSweepDrivable(previous, half)) {
-      return { ...toLatLng(half.x, half.y), blocked: true, slid: false };
-    }
-
-    return { lat: previousLat, lng: previousLng, blocked: true, slid: false };
+    const half = {x:previous.x+movementX*0.35,y:previous.y+movementY*0.35};
+    if (isSweepDrivable(previous,half)) return {...toLatLng(half.x,half.y),blocked:true,slid:false};
+    return {lat:previousLat,lng:previousLng,blocked:true,slid:false};
   }
 
   function updateVehiclePosition(lat, lng, recenter = false) {
     simLat = lat;
     simLng = lng;
-    if (vehicleMarker) vehicleMarker.setLatLng([simLat, simLng]);
+    if (vehicleMarker) vehicleMarker.setLatLng([simLat,simLng]);
     const latNode = document.getElementById('tel-lat');
     const lngNode = document.getElementById('tel-lng');
     if (latNode) latNode.textContent = simLat.toFixed(6);
     if (lngNode) lngNode.textContent = simLng.toFixed(6);
-    if (recenter && mapInstance && document.getElementById('chk-camera')?.checked) {
-      mapInstance.setView([simLat, simLng], mapInstance.getZoom(), { animate: false });
-    }
+    if (recenter && mapInstance && document.getElementById('chk-camera')?.checked) mapInstance.setView([simLat,simLng],mapInstance.getZoom(),{animate:false});
   }
 
   function noteCollision() {
@@ -408,7 +337,7 @@
       statusNode.textContent = 'Boundary contact — sliding along road edge';
       statusNode.dataset.state = 'blocked';
       clearTimeout(noteCollision.timer);
-      noteCollision.timer = setTimeout(updateStatusText, 700);
+      noteCollision.timer = setTimeout(updateStatusText,700);
     }
   }
 
@@ -429,71 +358,47 @@
     const title = document.createElement('div');
     title.className = 'section-title';
     title.textContent = 'Road Boundaries';
-
     const enabledLabel = document.createElement('label');
     enabledLabel.className = 'checkbox-row';
     enabledLabel.innerHTML = '<input type="checkbox" id="road-lock-enabled" checked> Keep truck on drivable roads';
-
     const assistRow = document.createElement('div');
     assistRow.className = 'control-row';
     assistRow.innerHTML = '<label><span>Lane Centering Assist</span><span id="road-assist-value">60%</span></label><input type="range" id="road-assist" min="0" max="60" value="60">';
-
     const debugLabel = document.createElement('label');
     debugLabel.className = 'checkbox-row';
     debugLabel.innerHTML = '<input type="checkbox" id="road-debug-visible"> Show collision road network';
-
     const statusNode = document.createElement('div');
     statusNode.id = 'road-lock-status';
     statusNode.style.cssText = 'margin:8px 0 14px;padding:9px 10px;border-radius:4px;background:#eef7fa;color:#155e75;font-size:11px;font-weight:700;line-height:1.35;';
-
-    [title, enabledLabel, assistRow, debugLabel, statusNode].forEach(node => panel.insertBefore(node, firstTitle));
-
+    [title,enabledLabel,assistRow,debugLabel,statusNode].forEach(node => panel.insertBefore(node,firstTitle));
     const enabledInput = document.getElementById('road-lock-enabled');
     const assistInput = document.getElementById('road-assist');
     const debugInput = document.getElementById('road-debug-visible');
-    enabledInput.addEventListener('change', () => {
-      state.enabled = enabledInput.checked;
-      if (state.enabled) snapVehicleToRoad(CONFIG.spawnSnapDistance);
-      updateStatusText();
-    });
-    assistInput.addEventListener('input', () => {
-      state.laneAssist = Number(assistInput.value) / 100;
-      document.getElementById('road-assist-value').textContent = `${assistInput.value}%`;
-    });
-    debugInput.addEventListener('change', () => toggleDebugLayer(debugInput.checked));
+    enabledInput.addEventListener('change',() => {state.enabled=enabledInput.checked;if(state.enabled)snapVehicleToRoad(CONFIG.spawnSnapDistance);updateStatusText();});
+    assistInput.addEventListener('input',() => {state.laneAssist=Number(assistInput.value)/100;document.getElementById('road-assist-value').textContent=`${assistInput.value}%`;});
+    debugInput.addEventListener('change',() => toggleDebugLayer(debugInput.checked));
     updateStatusText();
   }
 
   function toggleDebugLayer(visible) {
     if (!mapInstance || !state.geojson) return;
-    if (!visible) {
-      if (state.debugLayer) mapInstance.removeLayer(state.debugLayer);
-      state.debugLayer = null;
-      return;
-    }
+    if (!visible) {if(state.debugLayer)mapInstance.removeLayer(state.debugLayer);state.debugLayer=null;return;}
     if (state.debugLayer) return;
-    state.debugLayer = L.geoJSON(state.geojson, {
-      interactive: false,
-      style: feature => ({
-        color: '#00bcd4',
-        opacity: 0.5,
-        weight: Math.max(2, roadWidth(feature?.properties) / 3.2),
-      }),
-    }).addTo(mapInstance);
+    state.debugLayer = L.geoJSON(state.geojson,{interactive:false,style:feature=>({color:'#00bcd4',opacity:0.5,weight:Math.max(2,roadWidth(feature?.properties)/3.2)})}).addTo(mapInstance);
     state.debugLayer.bringToBack?.();
   }
 
   function snapVehicleToRoad(maxDistance = CONFIG.spawnSnapDistance) {
     if (state.status !== 'ready') return false;
     state.stationExit = null;
-    const point = toXY(simLat, simLng);
+    const point = toXY(simLat,simLng);
     if (yardAtXY(point.x,point.y)) return false;
-    const nearest = nearestRoadXY(point.x, point.y, maxDistance);
+    const nearest = nearestRoadXY(point.x,point.y,maxDistance);
     if (!nearest || nearest.distance > maxDistance) return false;
-    const latLng = toLatLng(nearest.x, nearest.y);
-    updateVehiclePosition(latLng.lat, latLng.lng, true);
-    currentHeading = headingForSegment(nearest.segment, currentHeading);
-    if (vehicleMarker) vehicleMarker.setRotationAngle(currentHeading - 90);
+    const latLng = toLatLng(nearest.x,nearest.y);
+    updateVehiclePosition(latLng.lat,latLng.lng,true);
+    currentHeading = headingForSegment(nearest.segment,currentHeading);
+    if (vehicleMarker) vehicleMarker.setRotationAngle(currentHeading-90);
     velocity = 0;
     return true;
   }
@@ -503,7 +408,7 @@
     state.originalEvaluateDistance = evaluateDistanceToTarget;
     evaluateDistanceToTarget = function roadSafeEvaluateDistance(...args) {
       if (state.insidePhysicsStep) return;
-      return state.originalEvaluateDistance.apply(this, args);
+      return state.originalEvaluateDistance.apply(this,args);
     };
     window.evaluateDistanceToTarget = evaluateDistanceToTarget;
   }
@@ -516,36 +421,19 @@
       const previousLng = simLng;
       const previousVelocity = velocity;
       state.insidePhysicsStep = true;
-      try { state.originalLoop(); }
-      finally { state.insidePhysicsStep = false; }
-
+      try {state.originalLoop();} finally {state.insidePhysicsStep=false;}
       if (!state.enabled) {
-        if ((simulationState === STATES.ENROUTE || simulationState === STATES.TRANSPORTING)) state.originalEvaluateDistance?.();
+        if (simulationState===STATES.ENROUTE || simulationState===STATES.TRANSPORTING) state.originalEvaluateDistance?.();
         return;
       }
-      if (state.status === 'loading') {
-        velocity = 0;
-        updateVehiclePosition(previousLat, previousLng, false);
-        return;
-      }
-      if (state.status !== 'ready') return;
-
-      const result = resolveMovement(previousLat, previousLng, simLat, simLng, previousVelocity);
-      const positionChanged = Math.abs(result.lat - simLat) > 1e-11 || Math.abs(result.lng - simLng) > 1e-11;
-      if (positionChanged || result.blocked || result.snapped) {
-        updateVehiclePosition(result.lat, result.lng, true);
-      }
-      if (result.snapped && result.segment) {
-        currentHeading = headingForSegment(result.segment, currentHeading);
-        vehicleMarker?.setRotationAngle(currentHeading - 90);
-      }
-      if (result.blocked) {
-        velocity *= CONFIG.collisionVelocityRetention;
-        noteCollision();
-      }
-      if ((simulationState === STATES.ENROUTE || simulationState === STATES.TRANSPORTING) && state.originalEvaluateDistance) {
-        state.originalEvaluateDistance();
-      }
+      if (state.status==='loading') {velocity=0;updateVehiclePosition(previousLat,previousLng,false);return;}
+      if (state.status!=='ready') return;
+      const result = resolveMovement(previousLat,previousLng,simLat,simLng,previousVelocity);
+      const positionChanged = Math.abs(result.lat-simLat)>1e-11 || Math.abs(result.lng-simLng)>1e-11;
+      if (positionChanged || result.blocked || result.snapped) updateVehiclePosition(result.lat,result.lng,true);
+      if (result.snapped && result.segment) {currentHeading=headingForSegment(result.segment,currentHeading);vehicleMarker?.setRotationAngle(currentHeading-90);}
+      if (result.blocked) {velocity*=CONFIG.collisionVelocityRetention;noteCollision();}
+      if ((simulationState===STATES.ENROUTE || simulationState===STATES.TRANSPORTING) && state.originalEvaluateDistance) state.originalEvaluateDistance();
     };
     window.simulationStep = simulationStep;
   }
@@ -554,43 +442,35 @@
     if (typeof teleportToStation !== 'function' || teleportToStation._roadCollisionWrapped) return;
     const originalTeleport = teleportToStation;
     teleportToStation = function roadSafeTeleport(...args) {
-      const result = originalTeleport.apply(this, args);
+      const result = originalTeleport.apply(this,args);
       const stationLat = Number(args[0]);
       const stationLng = Number(args[1]);
-      if (state.status === 'ready') {
-        setTimeout(() => beginStationExit(stationLat, stationLng), 0);
-      } else {
-        ready.then(() => beginStationExit(stationLat, stationLng)).catch(() => {});
-      }
+      if (state.status==='ready') setTimeout(() => beginStationExit(stationLat,stationLng),0);
+      else ready.then(() => beginStationExit(stationLat,stationLng)).catch(() => {});
       return result;
     };
     teleportToStation._roadCollisionWrapped = true;
     window.teleportToStation = teleportToStation;
   }
 
-  function installRuntimeGuards() {
-    installControls();
-    installDistanceGuard();
-    installLoopGuard();
-    installTeleportGuard();
-  }
+  function installRuntimeGuards() {installControls();installDistanceGuard();installLoopGuard();installTeleportGuard();}
 
   async function initialize() {
     installRuntimeGuards();
     try {
-      const response = await fetch(CONFIG.dataUrl, { cache: 'force-cache' });
+      const response = await fetch(CONFIG.dataUrl,{cache:'force-cache'});
       if (!response.ok) throw new Error(`Road data request failed: ${response.status}`);
       state.geojson = await response.json();
       buildRoadIndex(state.geojson);
       state.status = 'ready';
       updateStatusText();
-      beginStationExit(simLat, simLng);
-      readyResolve({ segmentCount: state.segments.length });
-      window.dispatchEvent(new CustomEvent('ptbo-road-collision-ready', { detail: { segmentCount: state.segments.length } }));
+      beginStationExit(simLat,simLng);
+      readyResolve({cityId:CONFIG.cityId,segmentCount:state.segments.length});
+      window.dispatchEvent(new CustomEvent('ptbo-road-collision-ready',{detail:{cityId:CONFIG.cityId,segmentCount:state.segments.length}}));
     } catch (error) {
-      console.error('Road boundary system could not start.', error);
-      state.status = 'failed';
-      state.enabled = false;
+      console.error('Road boundary system could not start.',error);
+      state.status='failed';
+      state.enabled=false;
       updateStatusText();
       readyReject(error);
     }
@@ -599,16 +479,17 @@
   window.PTBO_ROAD_COLLISION = Object.freeze({
     ready,
     state,
+    config:CONFIG,
     isPointDrivable,
     resolveMovement,
     snapVehicleToRoad,
     beginStationExit,
-    nearestRoad(lat, lng, searchRadius = 45) {
-      const point = toXY(lat, lng);
-      const nearest = nearestRoadXY(point.x, point.y, searchRadius);
-      if (!nearest) return null;
-      const latLng = toLatLng(nearest.x, nearest.y);
-      return { ...latLng, distance: nearest.distance, road: nearest.segment.name, highway: nearest.segment.highway };
+    nearestRoad(lat,lng,searchRadius=45) {
+      const point=toXY(lat,lng);
+      const nearest=nearestRoadXY(point.x,point.y,searchRadius);
+      if(!nearest)return null;
+      const latLng=toLatLng(nearest.x,nearest.y);
+      return {...latLng,distance:nearest.distance,road:nearest.segment.name,highway:nearest.segment.highway};
     },
   });
 
