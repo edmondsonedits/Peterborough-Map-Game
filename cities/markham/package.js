@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const VERSION='1.6.7';
+  const VERSION='1.6.8';
   const sourceUrl=new URL(document.currentScript?.src || location.href,location.href);
   const config={
     id:'markham',name:'Markham',
@@ -35,5 +35,5 @@
     start();
     return;
   }
-  const script=document.createElement('script');script.src=factoryUrl;script.onload=start;script.onerror=()=>console.error('Unable to load preview city package factory.');document.head.appendChild(script);
+  const script=document.createElement('script');script.src=factoryUrl;script.onload=start;script.onerror=()=>console.error('Unable to load base-training city package factory.');document.head.appendChild(script);
 })();
