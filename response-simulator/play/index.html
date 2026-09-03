@@ -1,21 +1,10 @@
 <!doctype html>
 <!-- =========================================================
-     BEGINNER CODE GUIDE — DESKTOP RESPONSE-SIMULATOR WRAPPER
+     DESKTOP RESPONSE-SIMULATOR WRAPPER — v1.6.3
 
-     PURPOSE:
-     This page embeds the core response simulator, supplies the desktop dispatch-
-     voice rules, loads route review and protected driving modules, and keeps a
-     loading cover visible until shared data, steering, and road boundaries work.
-
-     WHAT THE PLAYER EXPERIENCES:
-     A desktop version of the driving simulator with keyboard controls, dispatch
-     voice, route comparison, and a close truck-follow camera.
-
-     TECHNICAL TERM — WRAPPER:
-     A wrapper is a smaller page around another page. The inner iframe owns the
-     map and truck; this outer page adds startup and platform-specific features.
-
-     Comments are ignored by the browser and never appear inside the game.
+     Adds desktop-specific dispatch voice, quick base shortcuts, emergency-light
+     and recenter controls, protected startup, route review, and a truck-follow
+     camera that starts at zoom 19 and steps out once at 500 km/h.
      ========================================================= -->
 <html lang="en">
 <head>
@@ -24,64 +13,83 @@
   <meta name="theme-color" content="#111827">
   <title>Peterborough Dispatch Simulator</title>
   <style>
-    /* The iframe fills the screen; the audio button and loading cover sit above it. */
     :root{color-scheme:dark;--panel:rgba(8,13,24,.96);--border:rgba(255,255,255,.2);--ink:#f8fafc;--muted:#cbd5e1}
     *{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#111827;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
     #simulator{position:fixed;inset:0;width:100%;height:100%;border:0;background:#111827}
-    #audio-button{position:fixed;top:15px;right:145px;z-index:5000;width:42px;height:42px;display:grid;place-items:center;padding:0;color:var(--ink);border:1px solid var(--border);border-radius:12px;background:var(--panel);box-shadow:0 6px 20px #0006;cursor:pointer}
-    #audio-button svg{width:22px;height:22px;stroke:currentColor}.speaker-off{display:none}#audio-button.muted{color:#9ca3af}#audio-button.muted .speaker-on{display:none}#audio-button.muted .speaker-off{display:block}
+
+    .desktop-action{position:fixed;z-index:5000;width:42px;height:42px;display:grid;place-items:center;padding:0;color:var(--ink);border:1px solid var(--border);border-radius:12px;background:var(--panel);box-shadow:0 6px 20px #0006;cursor:pointer;transition:transform .12s,background .12s,border-color .12s,color .12s}
+    .desktop-action:hover{background:rgba(30,41,59,.98);border-color:rgba(255,255,255,.34)}
+    .desktop-action:active{transform:scale(.94)}
+    .desktop-action:focus-visible,.station-button:focus-visible{outline:3px solid #7dd3fc;outline-offset:2px}
+    .desktop-action svg{width:22px;height:22px;stroke:currentColor}
+    #audio-button{top:15px;right:145px}
+    #siren-button{top:15px;right:195px}
+    #recenter-button{right:15px;bottom:128px}
+    .speaker-off{display:none}#audio-button.muted{color:#9ca3af}#audio-button.muted .speaker-on{display:none}#audio-button.muted .speaker-off{display:block}
+    #siren-button.active{color:#fff;border-color:rgba(239,68,68,.85);background:rgba(185,28,28,.96);box-shadow:0 0 0 1px rgba(239,68,68,.18),0 6px 20px #0007}
+
+    /* service-mode.js automatically fills this area with the current Fire/EMS bases. */
+    .station-shortcuts{position:fixed;top:68px;left:15px;z-index:5000;width:min(215px,calc(100vw - 30px));display:grid;grid-template-columns:repeat(3,minmax(65px,1fr));gap:6px;pointer-events:auto;scrollbar-width:none}
+    .station-shortcuts::-webkit-scrollbar{display:none}
+    .station-button{min-width:0;height:38px;padding:0 7px;color:#e5e7eb;border:1px solid var(--border);border-radius:10px;background:rgba(8,13,24,.94);box-shadow:0 5px 16px rgba(0,0,0,.34);font:inherit;font-size:10px;font-weight:850;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+    .station-button:hover{background:rgba(30,41,59,.98)}
+    .station-button.active{color:#fff;border-color:rgba(239,68,68,.8);background:rgba(185,28,28,.96)}
+    html[data-service=ems] .station-button.active{border-color:#38bdf8;background:#075985}
+
     #loading{position:fixed;inset:0;z-index:6000;display:grid;place-items:center;padding:24px;color:var(--ink);background:#111827;text-align:center;transition:opacity .18s ease}#loading.hidden{opacity:0;pointer-events:none}#loading strong{display:block;font-size:1.15rem}#loading span{display:block;margin-top:6px;color:var(--muted);font-size:.9rem;line-height:1.45}#loading button{margin-top:16px;padding:10px 18px;color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:9px;background:#dc2626;font:inherit;font-weight:800;cursor:pointer}
-    @media(max-width:900px),(pointer:coarse){#audio-button{display:none}}
+    @media(max-width:900px),(pointer:coarse){.desktop-action,.station-shortcuts{display:none!important}}
   </style>
 </head>
 <body>
-  <!-- The versioned iframe URL prevents an older simulator HTML file from being reused. -->
-  <iframe id="simulator" src="../index.html?v=1.6.2" title="Peterborough Fire and EMS Dispatch Simulator"></iframe>
-  <button id="audio-button" type="button" aria-label="Mute dispatch voice" aria-pressed="true">
+  <iframe id="simulator" src="../index.html?v=1.6.3" title="Peterborough Fire and EMS Dispatch Simulator"></iframe>
+
+  <div class="station-shortcuts" aria-label="Quick response bases"></div>
+
+  <button class="desktop-action" id="siren-button" type="button" aria-label="Toggle emergency lights" aria-pressed="true" title="Emergency lights">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 14V9a5 5 0 0 1 10 0v5M5 18h14M8 14h8l1 4H7l1-4ZM4 7 2 6M20 7l2-1M12 3V1"/></svg>
+  </button>
+
+  <button class="desktop-action" id="audio-button" type="button" aria-label="Mute dispatch voice" aria-pressed="true" title="Dispatch voice">
     <svg class="speaker-on" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15 9a4 4 0 0 1 0 6M17.5 6.5a7.5 7.5 0 0 1 0 11"/></svg>
     <svg class="speaker-off" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="m16 9 5 5M21 9l-5 5"/></svg>
   </button>
+
+  <button class="desktop-action" id="recenter-button" type="button" aria-label="Recenter on vehicle" title="Recenter on vehicle">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+  </button>
+
   <div id="loading"><div><strong>Loading Peterborough roads</strong><span id="loading-status">Preparing steering, road boundaries, and dispatch data…</span></div></div>
 
-  <!-- Shared data keeps desktop, mobile, Geo Guesser, and the editor consistent. -->
-  <script src="../../shared/build-version.js?v=1.6.2"></script>
-  <script src="../../shared/dispatch-locations.js?v=1.6.2"></script>
-  <script src="../../shared/dispatch-data-1.4.4.js?v=1.6.2"></script>
-  <script src="../../shared/dispatch-override-1.4.4.js?v=1.6.2"></script>
-  <script src="../../shared/stations.js?v=1.6.2"></script>
-  <script src="../service-selection.js?v=1.6.2"></script>
+  <script src="../../shared/build-version.js?v=1.6.3"></script>
+  <script src="../../shared/dispatch-locations.js?v=1.6.3"></script>
+  <script src="../../shared/dispatch-data-1.4.4.js?v=1.6.3"></script>
+  <script src="../../shared/dispatch-override-1.4.4.js?v=1.6.3"></script>
+  <script src="../../shared/stations.js?v=1.6.3"></script>
+  <script src="../service-selection.js?v=1.6.3"></script>
   <script>
     (() => {
-      /*
-      IMPORTANT SETTINGS:
-      VERSION is used for module cache URLs and startup diagnostics.
-      AUDIO_KEY is the browser-storage name that remembers dispatch voice.
-      DESKTOP_ZOOM is the closest supported map view used when desktop starts.
-      */
-      const VERSION = '1.6.2';
+      'use strict';
+      const VERSION = '1.6.3';
       const AUDIO_KEY = 'ptboDispatchVoiceEnabled';
       const DESKTOP_ZOOM = 19;
+      const HIGH_SPEED_ZOOM = 18;
+      const ZOOM_OUT_SPEED_KMH = 500;
+      const ZOOM_IN_SPEED_KMH = 450;
 
       const frame = document.getElementById('simulator');
       const audioButton = document.getElementById('audio-button');
+      const sirenButton = document.getElementById('siren-button');
+      const recenterButton = document.getElementById('recenter-button');
       const loading = document.getElementById('loading');
       const loadingStatus = document.getElementById('loading-status');
       const stations = window.PTBO_STATIONS || [];
-
-      /* LIVE WRAPPER STATE: voice preference and currently selected station. */
       let voiceEnabled = localStorage.getItem(AUDIO_KEY) !== 'false';
       let selectedStationNumber = 1;
 
-      /* Public bridge functions let scripts inside the iframe ask the parent for settings. */
       window.ptboDispatchVoiceEnabled = () => voiceEnabled;
       window.ptboGetSelectedStationNumber = () => selectedStationNumber;
       window.ptboSetSelectedStation = number => { selectedStationNumber = Number(number) || 1; };
 
-      /*
-      FUNCTION: updateAudio
-      Keeps the icon, pressed state, and accessible label synchronized with the
-      stored voice preference.
-      */
       function updateAudio() {
         audioButton.classList.toggle('muted', !voiceEnabled);
         audioButton.setAttribute('aria-pressed', String(voiceEnabled));
@@ -96,17 +104,35 @@
       });
       updateAudio();
 
-      /*
-      FUNCTION: injectScript
+      function syncSiren(game = frame.contentWindow) {
+        const siren = game?.document?.getElementById('chk-siren');
+        const active = siren ? siren.checked : true;
+        sirenButton.classList.toggle('active', active);
+        sirenButton.setAttribute('aria-pressed', String(active));
+        sirenButton.setAttribute('aria-label', active ? 'Turn emergency lights off' : 'Turn emergency lights on');
+      }
 
-      WHAT THE CODE DOES:
-      Adds one JavaScript module to the iframe, gives it a release-versioned URL,
-      prevents duplicate insertion with a marker attribute, and returns a Promise.
+      sirenButton.addEventListener('click', () => {
+        const game = frame.contentWindow;
+        const siren = game?.document?.getElementById('chk-siren');
+        if (!siren) return;
+        siren.checked = !siren.checked;
+        game.updateVehicleChassis?.();
+        siren.dispatchEvent(new Event('change', { bubbles:true }));
+        syncSiren(game);
+        frame.focus();
+      });
 
-      WHY IT EXISTS:
-      Route review and protected driving can start after the base simulator exists
-      instead of being permanently embedded in the large core HTML file.
-      */
+      recenterButton.addEventListener('click', () => {
+        const game = frame.contentWindow;
+        const lock = game?.document?.getElementById('chk-camera');
+        if (lock) lock.checked = true;
+        if (!game?.PTBO_DESKTOP_FOLLOW_CAMERA?.recenter?.()) {
+          try { game.mapInstance?.setView?.([game.simLat, game.simLng], game.mapInstance.getZoom(), { animate:false }); } catch (_) {}
+        }
+        frame.focus();
+      });
+
       function injectScript(doc, filename, marker) {
         return new Promise((resolve, reject) => {
           const existing = doc.querySelector(`script[${marker}]`);
@@ -125,19 +151,6 @@
         });
       }
 
-      /*
-      FUNCTION: installDispatchVoice
-
-      WHAT THE CODE DOES:
-      Injects a helper directly into the iframe, where activeIncident and
-      mapInstance exist. The helper builds Peterborough-style station wording and
-      replaces the base speech function with one that respects the parent's mute.
-
-      DISPATCH RULES:
-      - Structure, water rescue, and auto alarm call all stations.
-      - MVC calls the selected station plus the closest other station.
-      - Other calls use the selected station only.
-      */
       function installDispatchVoice(doc) {
         const helper = doc.createElement('script');
         helper.textContent = `(() => {
@@ -171,30 +184,30 @@
         doc.body.appendChild(helper);
       }
 
-      /*
-      FUNCTION: installDesktopFollowMap
-
-      Desktop previously forced a manual map, which left the camera at the base
-      zoom and allowed the truck to drive out of frame. This helper restores a
-      GTA-style top-down follow view without changing mobile behaviour.
-
-      The camera starts at Leaflet zoom 19 (the simulator maximum) and follows the
-      truck at 30 FPS. The existing camera-lock checkbox still lets a player turn
-      following off temporarily if they want to inspect the map manually.
-      */
       function installDesktopFollowMap(doc) {
         const helper = doc.createElement('script');
         helper.textContent = `(() => {
           if (window.PTBO_DESKTOP_FOLLOW_CAMERA?.version === '${VERSION}') return;
           document.documentElement.dataset.ptboDesktopFollowMap = 'true';
           const MAX_ZOOM = ${DESKTOP_ZOOM};
+          const HIGH_SPEED_ZOOM = ${HIGH_SPEED_ZOOM};
+          const ZOOM_OUT_SPEED_KMH = ${ZOOM_OUT_SPEED_KMH};
+          const ZOOM_IN_SPEED_KMH = ${ZOOM_IN_SPEED_KMH};
           const FOLLOW_INTERVAL_MS = 1000 / 30;
           let lastFollowAt = 0;
           let lastUiSyncAt = 0;
+          let automaticZoom = MAX_ZOOM;
 
           const cameraLockEnabled = () => {
             const lock = document.getElementById('chk-camera');
             return !lock || lock.checked;
+          };
+
+          const currentSpeedKmh = () => {
+            try {
+              const raw = Math.abs(Number(velocity) || 0);
+              return window.PTBO_FIXED_STEP ? raw * 111195 * 60 * 3.6 : 0;
+            } catch (_) { return 0; }
           };
 
           const syncDesktopCameraUi = () => {
@@ -204,7 +217,14 @@
               lock.dataset.ptboDesktopFollowInitialized = 'true';
             }
             const note = document.getElementById('ptbo-arcade-note');
-            if (note) note.textContent = 'Desktop camera follows the truck and starts at the closest map view. Turn Camera Lock off if you want to inspect the map manually.';
+            if (note) note.textContent = 'Desktop camera follows the truck at zoom 19 and steps out to zoom 18 at 500 km/h. Turn Camera Lock off to inspect the map manually.';
+          };
+
+          const updateAutomaticZoom = () => {
+            const speed = currentSpeedKmh();
+            if (automaticZoom === MAX_ZOOM && speed >= ZOOM_OUT_SPEED_KMH) automaticZoom = HIGH_SPEED_ZOOM;
+            else if (automaticZoom === HIGH_SPEED_ZOOM && speed < ZOOM_IN_SPEED_KMH) automaticZoom = MAX_ZOOM;
+            return automaticZoom;
           };
 
           const recenter = zoom => {
@@ -214,9 +234,7 @@
               const targetZoom = Number.isFinite(requestedZoom) ? requestedZoom : mapInstance.getZoom();
               mapInstance.setView([simLat, simLng], targetZoom, { animate:false });
               return true;
-            } catch (_) {
-              return false;
-            }
+            } catch (_) { return false; }
           };
 
           const tick = timestamp => {
@@ -224,10 +242,9 @@
               syncDesktopCameraUi();
               lastUiSyncAt = timestamp;
             }
-
             const routeReviewOpen = Boolean(window.PTBO_ROUTE_COMPARE?.state?.reviewOpen);
             if (!routeReviewOpen && cameraLockEnabled() && timestamp - lastFollowAt >= FOLLOW_INTERVAL_MS) {
-              recenter();
+              recenter(updateAutomaticZoom());
               lastFollowAt = timestamp;
             }
             requestAnimationFrame(tick);
@@ -244,34 +261,32 @@
           window.PTBO_DESKTOP_FOLLOW_CAMERA = Object.freeze({
             version: '${VERSION}',
             maxZoom: MAX_ZOOM,
-            recenter: () => recenter(MAX_ZOOM),
+            highSpeedZoom: HIGH_SPEED_ZOOM,
+            zoomOutSpeedKmh: ZOOM_OUT_SPEED_KMH,
+            recenter: () => recenter(updateAutomaticZoom()),
           });
           requestAnimationFrame(tick);
         })();`;
         doc.body.appendChild(helper);
       }
 
-      /*
-      FUNCTION: showStartupError
-      Replaces the loading card with a readable failure and Retry button instead
-      of exposing a partly initialized driving game.
-      */
       function showStartupError(error) {
         console.error('Simulator startup failed.', error);
         loading.innerHTML = '<div><strong>Simulator did not finish loading</strong><span>Steering or road boundaries could not initialize. Retry to load the protected driving mode.</span><button type="button" id="startup-retry">Retry</button></div>';
         document.getElementById('startup-retry')?.addEventListener('click', () => location.reload());
       }
 
-      /*
-      IFRAME STARTUP FLOW:
-      After the inner page loads, install voice and route modules, start readiness,
-      wait for shared dispatch data plus simulator readiness, then remove loading.
-      */
       frame.addEventListener('load', () => {
         const doc = frame.contentDocument;
         const game = frame.contentWindow;
         if (!doc || !game || typeof game.initializeSimulator !== 'function') return;
 
+        const siren = doc.getElementById('chk-siren');
+        if (siren && siren.dataset.ptboDesktopSync !== VERSION) {
+          siren.dataset.ptboDesktopSync = VERSION;
+          siren.addEventListener('change', () => syncSiren(game));
+        }
+        syncSiren(game);
         installDispatchVoice(doc);
         injectScript(doc, 'route-compare-1.4.2.js', 'data-ptbo-route-compare-core').catch(console.error);
         injectScript(doc, 'route-review-ui-1.4.3.js', 'data-ptbo-route-review-ui').catch(console.error);
