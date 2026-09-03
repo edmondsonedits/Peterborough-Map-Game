@@ -20,7 +20,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.5.6';
+  const VERSION = '1.5.12';
   if (window.PTBO_SATELLITE_MAP?.version === VERSION) return;
 
   const ESRI_IMAGERY_URL = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
@@ -430,6 +430,13 @@
     }, 180);
   }
 
+  function cancelPendingZoom(expectedZoom) {
+    if (!state.pendingZoom || state.pendingZoom.zoom !== expectedZoom) return false;
+    state.pendingZoom = null;
+    setButtonBusy(false);
+    return true;
+  }
+
   function queueZoom(center, zoom, perform) {
     const map = getMap();
     if (!map || state.bypassZoomGuard || state.mode !== 'satellite') {
@@ -562,6 +569,7 @@
     showSatellite,
     showNormal,
     preloadZoom,
+    cancelPendingZoom,
   });
   window.PTBO_SATELLITE_MAP_READY = ready;
 })();

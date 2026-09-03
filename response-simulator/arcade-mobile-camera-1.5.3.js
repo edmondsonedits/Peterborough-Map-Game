@@ -26,10 +26,10 @@
 
   /*
   RELEASE VERSION:
-  The loader uses this value to identify the v1.5.3 camera module and to avoid
+  The loader uses this value to identify the current camera module and to avoid
   installing the same module twice.
   */
-  const VERSION = '1.5.3';
+  const VERSION = '1.5.12';
   if (window.PTBO_STABLE_MOBILE_CAMERA?.version === VERSION) return;
 
   /* =========================================================
@@ -45,25 +45,21 @@
      the camera from bouncing between two zoom levels near a threshold.
 
      changeDelayMs:
-     How long speed must remain in a new band before zoom changes. Higher is
+     How long speed must remain in a lower band before zooming in. Higher is
      steadier but slower to respond. Lower is faster but can cause more zooms.
 
      minimumChangeIntervalMs:
      Minimum time between completed zoom changes. This is another safeguard
      against repeated tile loading.
 
-     stoppedSpeedKmh:
-     Below this speed, a manual zoom is accepted as the player's new base view.
-
      minimumZoom / maximumZoom:
      Hard limits that keep the map within useful Leaflet zoom levels.
      ========================================================= */
   const CONFIG = Object.freeze({
-    enterSpeedsKmh: [72, 132, 192],
-    exitSpeedsKmh: [50, 102, 158],
-    changeDelayMs: 700,
+    enterSpeedsKmh: Object.freeze([150, 300, 450, 600]),
+    exitSpeedsKmh: Object.freeze([135, 285, 435, 585]),
+    changeDelayMs: 350,
     minimumChangeIntervalMs: 1250,
-    stoppedSpeedKmh: 22,
     minimumZoom: 15,
     maximumZoom: 19,
   });
@@ -77,7 +73,6 @@
   candidateSince: when that possible step first became valid.
   lastChangeAt: when zoom last changed.
   baseZoom: close view from which speed levels subtract.
-  programmaticZoom: distinguishes code-created zooms from player zooms.
   lastMaintenanceAt: limits housekeeping work to once per second.
   */
   const state = {
@@ -88,7 +83,6 @@
     candidateSince: 0,
     lastChangeAt: 0,
     baseZoom: null,
-    programmaticZoom: false,
     lastMaintenanceAt: 0,
   };
 
@@ -123,46 +117,21 @@
   FUNCTION: currentSpeedKmh
 
   WHAT THE CODE DOES:
-  Reads the speed calculated by the vehicle-instruments module and converts
-  missing or invalid values to zero.
+  Reads the current physics speed, with instrument speed as a legacy fallback.
 
   PLAYER CONNECTION:
   This is the value that decides which map zoom band should be active.
   */
   function currentSpeedKmh() {
+    // Use current physics speed so a gear change or delayed HUD reading cannot zoom early.
+    if (window.PTBO_FIXED_STEP && window.PTBO_GEARBOX) {
+      try { return Math.abs(Number(velocity) || 0) * window.PTBO_GEARBOX.velocityToKmh; } catch {}
+    }
     return Math.max(0, Number(instruments?.state?.speedKmh) || 0);
   }
 
-  /*
-  FUNCTION: cameraLockEnabled
-
-  WHAT THE CODE DOES:
-  Reads the Options checkbox that tells the map to follow the truck.
-
-  WHY IT EXISTS:
-  Speed-controlled zoom should not take over when the player deliberately
-  unlocks the camera.
-  */
-  function cameraLockEnabled() {
-    const checkbox = document.getElementById('chk-camera');
-    return !checkbox || checkbox.checked;
-  }
-
-  /*
-  FUNCTION: maximumLevels
-
-  WHAT THE CODE DOES:
-  Converts the player's Maximum Zoom-Out setting into a whole number of
-  allowed mobile zoom steps, limited by the number of configured speed bands.
-
-  WHY WHOLE NUMBERS:
-  Leaflet can show fractional zooms, but raster tiles are stored at whole zoom
-  levels. Whole steps reduce repeated rescaling and tile-container flicker.
-  */
-  function maximumLevels() {
-    const requested = Number(arcade?.state?.settings?.zoomOutLevels) || 0;
-    return clamp(Math.round(requested), 0, CONFIG.enterSpeedsKmh.length);
-  }
+  // All four bands are required, regardless of saved handling-preset zoom settings.
+  function maximumLevels() { return CONFIG.enterSpeedsKmh.length; }
 
   /*
   FUNCTION: desiredLevel
@@ -173,13 +142,13 @@
   IMPORTANT LOGIC:
   The first while loop moves outward only after an enter threshold is crossed.
   The second moves inward only after the lower exit threshold is crossed. This
-  prevents a speed such as 72/71 km/h from making the camera change every frame.
+  prevents a speed such as 150/149 km/h from making the camera change every frame.
   */
   function desiredLevel(speedKmh) {
     const maximum = maximumLevels();
     let next = clamp(state.level, 0, maximum);
 
-    while (next < maximum && speedKmh >= CONFIG.enterSpeedsKmh[next]) next += 1;
+    while (next < maximum && speedKmh + 1e-6 >= CONFIG.enterSpeedsKmh[next]) next += 1;
     while (next > 0 && speedKmh <= CONFIG.exitSpeedsKmh[next - 1]) next -= 1;
     return next;
   }
@@ -262,7 +231,15 @@
 
     const zoomInput = document.getElementById('ptbo-arcade-zoomOutLevels');
     const zoomLabel = zoomInput?.closest('.control-row')?.querySelector('label span:first-child');
-    if (zoomLabel) zoomLabel.textContent = 'Mobile Zoom-Out Levels';
+    if (zoomLabel) zoomLabel.textContent = 'Speed-based zoom';
+    const zoomRow = zoomInput?.closest('.control-row');
+    if (zoomRow) zoomRow.style.display = 'none';
+    const toggle = document.getElementById('ptbo-arcade-speed-zoom');
+    if (toggle) {
+      toggle.checked = true;
+      toggle.disabled = true;
+      toggle.title = 'Zooms out at 150, 300, 450 and 600 km/h.';
+    }
 
     const lookAheadInput = document.getElementById('ptbo-arcade-cameraLookAheadMeters');
     const lookAheadRow = lookAheadInput?.closest('.control-row');
@@ -270,7 +247,7 @@
 
     const note = document.getElementById('ptbo-arcade-note');
     if (note) {
-      note.textContent = 'Mobile zoom uses stable whole-number speed bands. It waits for speed to settle before changing levels, preventing repeated tile reloads and black flicker while accelerating.';
+      note.textContent = 'Camera starts fully zoomed in. It zooms out one step at 150, 300, 450 and 600 km/h, then holds that view above 600. Slowing down brings the view closer, with a 15 km/h buffer to prevent flicker. Gear shifts alone do not change zoom.';
     }
   }
 
@@ -290,21 +267,8 @@
     return map;
   }
 
-  /*
-  FUNCTION: captureBaseZoom
-
-  WHAT THE CODE DOES:
-  Records the player's close/base zoom. The current speed level is added back
-  because the displayed map may already be zoomed out.
-
-  WHY IT EXISTS:
-  Every speed level is calculated relative to one stable starting view.
-  */
-  function captureBaseZoom() {
-    const current = Number(map?.getZoom?.());
-    if (!Number.isFinite(current)) return;
-    state.baseZoom = clamp(Math.round(current) + state.level, CONFIG.minimumZoom, CONFIG.maximumZoom);
-  }
+  // A fixed base prevents a saved/manual zoom from moving the speed thresholds.
+  function captureBaseZoom() { state.baseZoom = CONFIG.maximumZoom; }
 
   /*
   FUNCTION: applyLevel
@@ -314,48 +278,26 @@
 
   WHAT THE CODE DOES:
   Calculates the target zoom, records the new state, keeps the current map
-  centre, and performs a non-animated Leaflet setView.
-
-  IMPORTANT DETAIL:
-  programmaticZoom stays true briefly so handleZoomEnd knows this zoom came
-  from the game rather than from the player's fingers.
+  centre, and performs a non-animated Leaflet setZoom after satellite preloading.
   */
-  function applyLevel(level, timestamp, immediate = false) {
-    if (!map?.setView || state.baseZoom === null) return;
+  function applyLevel(level, timestamp) {
+    if (!map?.setZoom || state.baseZoom === null) return;
     const nextLevel = clamp(level, 0, maximumLevels());
     const targetZoom = clamp(state.baseZoom - nextLevel, CONFIG.minimumZoom, CONFIG.maximumZoom);
     const currentZoom = Number(map.getZoom());
+    const previousTarget = state.baseZoom - state.level;
+    if (targetZoom !== previousTarget) window.PTBO_SATELLITE_MAP?.cancelPendingZoom?.(previousTarget);
 
     state.level = nextLevel;
     state.candidateLevel = nextLevel;
     state.candidateSince = timestamp;
     state.lastChangeAt = timestamp;
 
-    if (!Number.isFinite(currentZoom) || Math.round(currentZoom) === targetZoom) return;
+    if (!Number.isFinite(currentZoom) || Math.abs(currentZoom - targetZoom) < 0.01) return;
 
-    state.programmaticZoom = true;
-    const center = map.getCenter?.();
-    if (center) {
-      map.setView(center, targetZoom, { animate: false });
-    }
-    setTimeout(() => { state.programmaticZoom = false; }, 420);
-  }
-
-  /*
-  FUNCTION: handleZoomEnd
-
-  WHAT THE CODE DOES:
-  When the truck is slow and the player manually changes zoom, this resets the
-  speed level and treats that view as the new base zoom.
-
-  WHY IT EXISTS:
-  Manual map choices should be respected instead of immediately overwritten.
-  */
-  function handleZoomEnd() {
-    if (state.programmaticZoom || currentSpeedKmh() > CONFIG.stoppedSpeedKmh) return;
-    state.level = 0;
-    state.candidateLevel = 0;
-    captureBaseZoom();
+    // The satellite guard preloads this zoom. setZoom uses the current centre when
+    // that request completes, so moving trucks do not jump back to an old position.
+    map.setZoom(targetZoom, { animate: false });
   }
 
   /*
@@ -363,8 +305,8 @@
 
   WHAT THE CODE DOES:
   Runs once per animation frame, but performs expensive housekeeping only once
-  per second. It checks whether speed zoom is enabled, finds a possible level,
-  waits for that level to remain stable, and then applies it.
+  per second. It applies upward speed thresholds and waits for lower bands
+  to settle before zooming back in. Route review keeps control of its own view.
 
   WHY IT EXISTS:
   This is the decision loop that connects changing vehicle speed to the camera
@@ -384,11 +326,12 @@
       state.lastMaintenanceAt = timestamp;
     }
 
-    const enabled = arcade.state.settings.speedZoomEnabled && cameraLockEnabled();
+    // The old arcade zoom flag and hidden camera-lock checkbox belong to retired
+    // camera passes. They must not disable this controller (both driving views follow).
+    const reviewing = window.PTBO_ROUTE_COMPARE?.state?.reviewOpen;
     const speedKmh = currentSpeedKmh();
 
-    if (!enabled) {
-      if (state.level !== 0) applyLevel(0, timestamp, false);
+    if (reviewing) {
       requestAnimationFrame(tick);
       return;
     }
@@ -407,8 +350,8 @@
 
     const stableLongEnough = timestamp - state.candidateSince >= CONFIG.changeDelayMs;
     const intervalPassed = timestamp - state.lastChangeAt >= CONFIG.minimumChangeIntervalMs;
-    if (next !== state.level && stableLongEnough && intervalPassed) {
-      applyLevel(next, timestamp, false);
+    if (next !== state.level && (next > state.level || stableLongEnough) && intervalPassed) {
+      applyLevel(next, timestamp);
     }
 
     requestAnimationFrame(tick);
@@ -449,6 +392,7 @@
     optimizeTileLayer();
     updateOptionsText();
     captureBaseZoom();
+    applyLevel(0, performance.now());
 
     // A layer change creates a new tile layer, so apply the optimizations again.
     document.getElementById('layer-select')?.addEventListener('change', () => {
@@ -456,7 +400,6 @@
       setTimeout(optimizeTileLayer, 50);
       setTimeout(optimizeTileLayer, 300);
     });
-    map.on?.('zoomend', handleZoomEnd);
 
     window.dispatchEvent(new CustomEvent('ptbo-stable-mobile-camera-ready', {
       detail: { version: VERSION, baseZoom: state.baseZoom },
@@ -467,14 +410,14 @@
   /*
   PUBLIC MODULE API:
   Other files can check version/state/config. resetZoom() is used by the mobile
-  Recenter button to return to the close base view immediately.
+  Recenter button to restore the current speed band (the closest view at rest).
   */
   window.PTBO_STABLE_MOBILE_CAMERA = Object.freeze({
     version: VERSION,
     state,
     config: CONFIG,
     resetZoom() {
-      if (map && state.baseZoom !== null) applyLevel(0, performance.now(), true);
+      if (map && state.baseZoom !== null) applyLevel(desiredLevel(currentSpeedKmh()), performance.now());
     },
   });
 

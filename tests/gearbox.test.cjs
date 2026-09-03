@@ -158,3 +158,9 @@ test('reaching top or bottom gear releases the pressed button even if disabled b
   s.gear(2);s.event('pointerdown',s.controls['gear-down'],{pointerId:3});
   assert.equal(s.api.state.currentGear,1);assert.equal(s.api.state.gasPointer,null);
 });
+
+test('shifting gears at rest does not change the map zoom',()=>{
+  const s=simulator();const zoom=s.c.mapInstance.getZoom();
+  s.gear(6);assert.equal(s.c.mapInstance.getZoom(),zoom);
+  s.gear(1);assert.equal(s.c.mapInstance.getZoom(),zoom);
+});

@@ -1,15 +1,14 @@
 /* =========================================================
-   RESPONSE SIMULATOR — DIRECTIONAL DRIVE + GEAR SPEED v1.5.11
+   RESPONSE SIMULATOR — DIRECTIONAL DRIVE + GEAR SPEED v1.5.12
 
    Mobile default behaviour:
    - Directional thumbstick points the truck AND supplies forward drive.
    - Releasing the thumbstick releases forward drive and keeps the current heading.
    - Separate up/down buttons select six gears (50–250, then 999 km/h).
    - Speed approaches the selected limit smoothly; gear 6 gains 12 km/h each second.
-   - Each successful up-shift raises the truck's speed cap and zooms the north-up
-     map out by 0.5 level.
+   - Gear shifts change speed limits; the stable mobile camera owns zoom.
    - The map starts at the closest useful satellite view (zoom 19).
-   - Speed-based automatic zoom is disabled.
+   - Camera zoom steps occur at 150, 300, 450 and 600 km/h.
    - Standard left/right steering remains selectable in Settings; in Standard
      mode the right button returns to normal Gas behaviour.
    - Mobile map controls are positioned so they do not cover the dispatch HUD,
@@ -18,14 +17,14 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.5.11';
+  const VERSION = '1.5.12';
   if (window.PTBO_DIRECTIONAL_DRIVE_ZOOM?.version === VERSION) return;
 
   const DIRECTIONAL_MODE = 'directional';
   const DEFAULT_MIGRATION_KEY = 'ptboDirectionalDriveZoomDefaultV158';
   const CLOSE_ZOOM = 19;
   const MIN_ZOOM = 15;
-  const ZOOM_STEP = 0.5;
+  const ZOOM_STEP = 1;
   const DRIVE_DEADZONE = 0.18;
   const gearbox = window.PTBO_GEARBOX;
   if (!gearbox) throw new Error('Gearbox speed controller did not load.');
@@ -92,7 +91,7 @@
     }
   }
 
-  function disableAutomaticZoom() {
+  function disableLegacySpeedZoom() {
     arcade = window.PTBO_ARCADE_HANDLING || arcade;
     if (arcade?.state?.settings) {
       arcade.state.settings.speedZoomEnabled = false;
@@ -100,13 +99,6 @@
       arcade.state.baseCameraZoom = null;
     }
 
-    const speedZoom = document.getElementById('ptbo-arcade-speed-zoom');
-    if (speedZoom) {
-      speedZoom.checked = false;
-      speedZoom.disabled = true;
-      const label = speedZoom.closest('label') || speedZoom.parentElement;
-      if (label) label.title = 'Automatic speed zoom is disabled. Directional mode widens the map only when you shift up.';
-    }
   }
 
   function installMobileUiFixes() {
@@ -168,22 +160,11 @@
     try {
       if (!mapInstance) return false;
       configureMap();
-      mapInstance.setView([simLat, simLng], CLOSE_ZOOM, { animate: false });
-      return true;
-    } catch {
-      return false;
-    }
-  }
-
-  function shiftView(direction) {
-    try {
-      if (!mapInstance) return false;
-      configureMap();
-      const current = Number(mapInstance.getZoom());
-      if (!Number.isFinite(current)) return false;
-      const target = Math.max(MIN_ZOOM, Math.min(CLOSE_ZOOM, current - direction * ZOOM_STEP));
-      if (Math.abs(target - current) < 0.01) return false;
-      mapInstance.setView([simLat, simLng], target, { animate: false });
+      const camera = window.PTBO_STABLE_MOBILE_CAMERA;
+      if (camera?.state?.installed) {
+        camera.resetZoom();
+        mapInstance.setView([simLat, simLng], mapInstance.getZoom(), { animate: false });
+      } else mapInstance.setView([simLat, simLng], CLOSE_ZOOM, { animate: false });
       return true;
     } catch {
       return false;
@@ -204,7 +185,6 @@
     if (next === state.currentGear) return false;
     state.currentGear = next;
     state.gearPresses += 1;
-    shiftView(direction);
     syncParentUi();
     return true;
   }
@@ -430,7 +410,7 @@
       window.PTBO_SPEED_STREAK?.reset?.('steering-mode');
       if (isDirectional()) resetGear({ resetView: true });
       syncParentUi();
-      disableAutomaticZoom();
+      disableLegacySpeedZoom();
       applyNorthUp();
     });
   }
@@ -439,7 +419,7 @@
     window.mobileZoomGear = shiftUp;
     window.mobileShiftDown = shiftDown;
     window.mobileRecenter = () => {
-      disableAutomaticZoom();
+      disableLegacySpeedZoom();
       applyNorthUp();
       setClosestView();
     };
@@ -454,7 +434,7 @@
 
     if (timestamp - state.lastMaintenanceAt > 750) {
       state.lastMaintenanceAt = timestamp;
-      disableAutomaticZoom();
+      disableLegacySpeedZoom();
       installMobileUiFixes();
       syncParentUi();
       wrapStationTeleport();
@@ -494,7 +474,7 @@
 
     makeDirectionalDefaultOnce();
     resetGear();
-    disableAutomaticZoom();
+    disableLegacySpeedZoom();
     configureMap();
     installMobileUiFixes();
     installEventBridges();
@@ -502,9 +482,9 @@
     wrapStationTeleport();
     syncParentUi();
 
-    // Run after wrapper recenter/startup helpers so v1.5.11 owns the initial view.
+    // Run after wrapper recenter/startup helpers so v1.5.12 owns the initial view.
     setTimeout(() => {
-      disableAutomaticZoom();
+      disableLegacySpeedZoom();
       applyNorthUp();
       setClosestView();
       installMobileUiFixes();
