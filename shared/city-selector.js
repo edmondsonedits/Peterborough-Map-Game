@@ -1,7 +1,7 @@
 /* Dispatch launcher city selector. Disabled city packages remain visible as roadmap entries. */
 (() => {
   'use strict';
-  const VERSION = '1.6.4';
+  const VERSION = '1.6.5';
   if (window.PTBO_CITY_SELECTOR?.version === VERSION) return;
 
   const dispatchLink = document.getElementById('dispatch-game-link');
