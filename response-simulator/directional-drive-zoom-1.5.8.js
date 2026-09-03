@@ -1,10 +1,11 @@
 /* =========================================================
-   RESPONSE SIMULATOR — DIRECTIONAL DRIVE + GEAR SPEED v1.5.8
+   RESPONSE SIMULATOR — DIRECTIONAL DRIVE + GEAR SPEED v1.5.11
 
    Mobile default behaviour:
    - Directional thumbstick points the truck AND supplies forward drive.
    - Releasing the thumbstick releases forward drive and keeps the current heading.
-   - The right button is an up-shift in directional mode.
+   - Separate up/down buttons select six gears (50–250, then 999 km/h).
+   - Speed approaches the selected limit smoothly; gear 6 gains 12 km/h each second.
    - Each successful up-shift raises the truck's speed cap and zooms the north-up
      map out by 0.5 level.
    - The map starts at the closest useful satellite view (zoom 19).
@@ -17,7 +18,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.5.8';
+  const VERSION = '1.5.11';
   if (window.PTBO_DIRECTIONAL_DRIVE_ZOOM?.version === VERSION) return;
 
   const DIRECTIONAL_MODE = 'directional';
@@ -26,7 +27,9 @@
   const MIN_ZOOM = 15;
   const ZOOM_STEP = 0.5;
   const DRIVE_DEADZONE = 0.18;
-  const GEAR_SPEEDS_KMH = Object.freeze([12, 22, 34, 48, 64, 82]);
+  const gearbox = window.PTBO_GEARBOX;
+  if (!gearbox) throw new Error('Gearbox speed controller did not load.');
+  const GEAR_SPEEDS_KMH = gearbox.gearSpeedsKmh;
 
   const state = {
     installed: false,
@@ -34,6 +37,8 @@
     steeringPointer: null,
     steeringMagnitude: 0,
     gasPointer: null,
+    gearButton: null,
+    lastPhysicsTimestamp: null,
     currentGear: 1,
     gearPresses: 0,
     lastMaintenanceAt: 0,
@@ -44,6 +49,8 @@
   let parentDoc = null;
   let steering = null;
   let gas = null;
+  let gearDown = null;
+  let gearLimit = null;
   let reverse = null;
   let hint = null;
 
@@ -168,13 +175,13 @@
     }
   }
 
-  function shiftViewOut() {
+  function shiftView(direction) {
     try {
       if (!mapInstance) return false;
       configureMap();
       const current = Number(mapInstance.getZoom());
       if (!Number.isFinite(current)) return false;
-      const target = Math.max(MIN_ZOOM, Math.min(CLOSE_ZOOM, current - ZOOM_STEP));
+      const target = Math.max(MIN_ZOOM, Math.min(CLOSE_ZOOM, current - direction * ZOOM_STEP));
       if (Math.abs(target - current) < 0.01) return false;
       mapInstance.setView([simLat, simLng], target, { animate: false });
       return true;
@@ -186,22 +193,24 @@
   function resetGear({ resetView = false } = {}) {
     state.currentGear = 1;
     state.gearPresses = 0;
+    releaseGearPress();
     if (resetView) setClosestView();
     syncParentUi();
   }
 
-  function shiftUp() {
+  function shiftGear(direction) {
     if (!isDirectional()) return false;
-    if (state.currentGear >= GEAR_SPEEDS_KMH.length) {
-      syncParentUi();
-      return false;
-    }
-    state.currentGear += 1;
+    const next = clamp(state.currentGear + direction, 1, GEAR_SPEEDS_KMH.length);
+    if (next === state.currentGear) return false;
+    state.currentGear = next;
     state.gearPresses += 1;
-    shiftViewOut();
+    shiftView(direction);
     syncParentUi();
     return true;
   }
+
+  function shiftUp() { return shiftGear(1); }
+  function shiftDown() { return shiftGear(-1); }
 
   function steeringMagnitudeFromEvent(event) {
     if (!steering) return 0;
@@ -243,6 +252,12 @@
       const atMax = state.currentGear >= GEAR_SPEEDS_KMH.length;
       const gearText = `Gear ${state.currentGear}`;
       setButtonWord(gas, directional ? gearText : 'Gas');
+      gas.classList.toggle('gear-up', directional);
+      gas.disabled = directional && atMax;
+      if (gearLimit) {
+        gearLimit.hidden = !directional;
+        gearLimit.textContent = `${currentGearSpeed()} km/h`;
+      }
       gas.setAttribute(
         'aria-label',
         directional
@@ -250,19 +265,31 @@
           : 'Gas'
       );
       gas.title = directional
-        ? `${gearText}: speed cap ${currentGearSpeed()} km/h.${atMax ? ' Top gear.' : ' Tap to shift up and widen the map.'}`
+        ? `${gearText}: ${currentGearSpeed()} km/h maximum.${atMax ? ' Speed builds steadily while driving.' : ' Shift up for more speed.'}`
         : 'Gas';
+    }
+    if (gearDown) {
+      gearDown.hidden = !directional;
+      gearDown.disabled = !directional || state.currentGear === 1;
+      gearDown.setAttribute('aria-label', state.currentGear === 1 ? 'Shift down. Already in gear 1.' : `Shift down to gear ${state.currentGear - 1}`);
     }
     if (hint) {
       hint.textContent = directional
-        ? `Point and hold to drive · Gear ${state.currentGear}: ${currentGearSpeed()} km/h · Shift up for more speed`
+        ? `Point and hold to drive · Gear ${state.currentGear}: ${currentGearSpeed()} km/h · Use Up / Down to shift`
         : 'Drag the wheel to steer · Hold Gas to drive · Hold Reverse to back up';
     }
 
+    const acceleration = document.getElementById('sld-speed');
+    if (acceleration) {
+      acceleration.disabled = directional;
+      acceleration.title = directional ? 'Acceleration is controlled by the selected gear.' : 'Adjust acceleration';
+    }
+    const speedLabel = document.getElementById('lbl-speed');
+    if (speedLabel) speedLabel.textContent = directional ? 'Gear control' : acceleration?.value || '5';
     const note = document.getElementById('ptbo-steering-mode-note');
     if (note) {
       note.textContent = directional
-        ? 'Directional Thumbstick is the default. Point and hold to steer and drive. Speed is limited by the current gear; each shift increases the speed cap and widens the fixed north-up map. Standard Left / Right remains available here.'
+        ? 'Directional Thumbstick is the default. Point and hold to steer and drive. Gears 1–5: 50, 100, 150, 200, 250 km/h. Gear 6 steadily builds toward 999 km/h. Shift up or down; speed changes smoothly. Standard Left / Right remains available here.'
         : 'Standard Left / Right uses the steering control plus the Gas pedal. Gear-limited speed applies only to Directional Thumbstick mode.';
     }
   }
@@ -297,29 +324,47 @@
   }
 
   function interceptDirectionalGear(event) {
-    if (!isDirectional() || !eventInside(gas, event)) return false;
+    if (!isDirectional() || (!eventInside(gas, event) && !eventInside(gearDown, event))) return false;
     event.preventDefault();
     event.stopImmediatePropagation();
     return true;
   }
 
+  function releaseGearPress() {
+    state.gearButton?.classList.remove('pressed');
+    state.gearButton = null;
+    state.gasPointer = null;
+  }
+
   function handleGearDown(event) {
     if (!interceptDirectionalGear(event)) return;
+    const button = eventInside(gearDown, event) ? gearDown : gas;
+    if (button.disabled || state.gasPointer !== null) return;
     state.gasPointer = event.pointerId;
-    gas?.setPointerCapture?.(event.pointerId);
-    gas?.classList.add('pressed');
-    shiftUp();
+    state.gearButton = button;
+    button.setPointerCapture?.(event.pointerId);
+    button.classList.add('pressed');
+    if (button === gearDown) shiftDown(); else shiftUp();
+    if (button.disabled) {
+      button.releasePointerCapture?.(event.pointerId);
+      releaseGearPress();
+    }
     try { window.parent.navigator.vibrate?.(10); } catch {}
   }
 
   function handleGearRelease(event) {
-    if (!isDirectional() || !eventInside(gas, event)) return;
-    if (state.gasPointer !== null && event?.pointerId !== undefined && event.pointerId !== state.gasPointer) return;
+    if (state.gasPointer === null || event.pointerId !== state.gasPointer) return;
     event.preventDefault();
     event.stopImmediatePropagation();
-    state.gasPointer = null;
-    gas?.classList.remove('pressed');
-    setKey('ArrowUp', state.directionalDriveActive && state.steeringMagnitude > DRIVE_DEADZONE);
+    releaseGearPress();
+  }
+
+  function handleGearClick(event) {
+    if (!interceptDirectionalGear(event)) return;
+    // Native Enter/Space and assistive-technology clicks have no pointer press.
+    // Pointer gestures already shifted on pointerdown, so never shift twice.
+    if (event.detail !== 0) return;
+    if (eventInside(gearDown, event)) shiftDown(); else shiftUp();
   }
 
   function enforceDirectionalDrive() {
@@ -330,21 +375,12 @@
     setKey('w', false);
   }
 
-  function enforceGearSpeedCap() {
-    if (!isDirectional()) return;
-    const capKmh = currentGearSpeed();
-    const rawKmh = window.PTBO_FIXED_STEP ? Math.abs(Number(velocity) || 0) * 111195 * 60 * 3.6 : Math.max(
-      0, Number(instruments?.state?.rawSpeedKmh) || 0, Number(instruments?.state?.speedKmh) || 0);
-    if (rawKmh <= capKmh + 0.35) return;
-
-    try {
-      const currentVelocity = Number(velocity);
-      if (!Number.isFinite(currentVelocity) || currentVelocity <= 0) return;
-      const ratio = clamp(capKmh / Math.max(rawKmh, 0.001), 0, 1);
-      velocity = currentVelocity * ratio;
-    } catch {
-      // Vehicle globals may be unavailable for a frame during reload/teleport.
-    }
+  function driveStep(seconds) {
+    if (!state.installed || !isDirectional()) return false;
+    const throttle = keys.ArrowDown || keys.s ? -1 : keys.ArrowUp || keys.w ? 1 : 0;
+    const speed = (Number(velocity) || 0) * gearbox.velocityToKmh;
+    velocity = gearbox.stepSpeed(speed, state.currentGear, throttle, seconds) / gearbox.velocityToKmh;
+    return true;
   }
 
   function wrapStationTeleport() {
@@ -369,6 +405,7 @@
       handleGearDown(event);
     }, true);
     parentDoc.addEventListener('pointermove', handleSteeringMove, true);
+    parentDoc.addEventListener('click', handleGearClick, true);
     parentDoc.addEventListener('pointerup', event => {
       if (eventInside(steering, event)) handleSteeringRelease(event);
       handleGearRelease(event);
@@ -382,13 +419,15 @@
       handleGearRelease(event);
     }, true);
 
-    window.parent.addEventListener('blur', releaseDirectionalDrive, true);
+    window.parent.addEventListener('blur', () => { releaseDirectionalDrive(); releaseGearPress(); }, true);
     parentDoc.addEventListener('visibilitychange', () => {
-      if (parentDoc.hidden) releaseDirectionalDrive();
+      if (parentDoc.hidden) { releaseDirectionalDrive(); releaseGearPress(); }
     });
 
     window.addEventListener('ptbo-steering-mode-change', () => {
       releaseDirectionalDrive();
+      releaseGearPress();
+      window.PTBO_SPEED_STREAK?.reset?.('steering-mode');
       if (isDirectional()) resetGear({ resetView: true });
       syncParentUi();
       disableAutomaticZoom();
@@ -398,6 +437,7 @@
 
   function installPublicApi() {
     window.mobileZoomGear = shiftUp;
+    window.mobileShiftDown = shiftDown;
     window.mobileRecenter = () => {
       disableAutomaticZoom();
       applyNorthUp();
@@ -407,7 +447,9 @@
 
   function tick(timestamp) {
     if (!state.installed) return;
-    if (!window.PTBO_FIXED_STEP) { enforceDirectionalDrive(); enforceGearSpeedCap(); }
+    const seconds = state.lastPhysicsTimestamp === null ? 0 : Math.min(0.1, (timestamp - state.lastPhysicsTimestamp) / 1000);
+    state.lastPhysicsTimestamp = timestamp;
+    if (!window.PTBO_FIXED_STEP) { enforceDirectionalDrive(); driveStep(seconds); }
     applyNorthUp();
 
     if (timestamp - state.lastMaintenanceAt > 750) {
@@ -433,6 +475,8 @@
       parentDoc = window.parent.document;
       steering = parentDoc.getElementById('steering');
       gas = parentDoc.getElementById('gas-pedal');
+      gearDown = parentDoc.getElementById('gear-down');
+      gearLimit = parentDoc.getElementById('gear-limit');
       reverse = parentDoc.getElementById('reverse-pedal');
       hint = parentDoc.querySelector('.control-hint');
     } catch {
@@ -458,7 +502,7 @@
     wrapStationTeleport();
     syncParentUi();
 
-    // Run after wrapper recenter/startup helpers so v1.5.8 owns the initial view.
+    // Run after wrapper recenter/startup helpers so v1.5.11 owns the initial view.
     setTimeout(() => {
       disableAutomaticZoom();
       applyNorthUp();
@@ -480,8 +524,9 @@
     minimumZoom: MIN_ZOOM,
     zoomStep: ZOOM_STEP,
     shiftUp,
+    shiftDown,
+    driveStep,
     beforeStep() { if (state.installed) enforceDirectionalDrive(); },
-    limitVelocity() { if (state.installed) enforceGearSpeedCap(); },
     resetGear,
     resetView: setClosestView,
   });
