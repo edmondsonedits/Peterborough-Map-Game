@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "id": "oshawa",
+  "name": "Oshawa",
+  "province": "Ontario",
+  "country": "Canada",
+  "status": "planned",
+  "playable": false,
+  "note": "Unavailable — city data has not been completed and verified yet.",
+  "map": { "defaultCenter": null, "defaultZoom": 15, "minZoom": 10, "maxZoom": 19 },
+  "data": { "boundaries": null, "roads": null, "dispatchLocations": null, "serviceConfig": null, "bases": null, "hospitals": null }
+}
