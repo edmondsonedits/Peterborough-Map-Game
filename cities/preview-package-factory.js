@@ -1,7 +1,7 @@
 /* Generic base-training city package factory for cities without dispatch calls yet. */
 (() => {
   'use strict';
-  const VERSION = '1.6.7';
+  const VERSION = '1.6.8';
   if (window.PTBO_PREVIEW_CITY_FACTORY?.version === VERSION) return;
 
   const normalizeText = value => String(value ?? '').trim().replace(/\s+/g,' ');
@@ -24,15 +24,22 @@
   }
 
   async function fetchJson(url, timeoutMs=14000) {
-    const controller = new AbortController();
-    const timer=setTimeout(()=>controller.abort(),timeoutMs);
-    try {
-      const response=await fetch(url,{signal:controller.signal,cache:'no-store',mode:'cors'});
-      if(!response.ok)throw new Error(`Request failed (${response.status}) for ${url}`);
-      const json=await response.json();
-      if(json?.error)throw new Error(json.error.message||'ArcGIS request failed.');
-      return json;
-    } finally { clearTimeout(timer); }
+    let lastError;
+    for (let attempt=1; attempt<=2; attempt+=1) {
+      const controller = new AbortController();
+      const timer=setTimeout(()=>controller.abort(),timeoutMs);
+      try {
+        const response=await fetch(url,{signal:controller.signal,cache:'no-store',mode:'cors'});
+        if(!response.ok)throw new Error(`Request failed (${response.status}) for ${url}`);
+        const json=await response.json();
+        if(json?.error)throw new Error(json.error.message||'ArcGIS request failed.');
+        return json;
+      } catch(error) {
+        lastError=error;
+        if(attempt<2) await new Promise(resolve=>setTimeout(resolve,350));
+      } finally { clearTimeout(timer); }
+    }
+    throw lastError || new Error(`Unable to load ${url}`);
   }
 
   async function queryArcGis(layerUrl, where='1=1', outFields='*') {
@@ -169,18 +176,20 @@
 
   function installPreviewSubsystemShims(cityId) {
     const roadState={status:'ready',enabled:false,originalLoop:true,segments:[],grid:new Map(),stationExit:null};
-    const roadApi=Object.freeze({
-      ready:Promise.resolve(null),state:roadState,config:Object.freeze({cityId,available:false}),
+    const roadApi={
+      state:roadState,config:Object.freeze({cityId,available:false,freeDrive:true}),
       isPointDrivable:()=>true,resolveMovement:(aLat,aLng,bLat,bLng)=>({lat:bLat,lng:bLng,blocked:false,snapped:false}),
       snapVehicleToRoad:()=>false,beginStationExit:()=>false,nearestRoad:()=>null,
-    });
-    window.PTBO_ROAD_COLLISION=roadApi;
-    window.PTBO_ROAD_COLLISION_BOOTSTRAP_READY=Promise.resolve(roadApi);
+    };
+    roadApi.ready=Promise.resolve(roadApi);
+    window.PTBO_ROAD_COLLISION=Object.freeze(roadApi);
+    window.PTBO_ROAD_COLLISION_BOOTSTRAP_READY=Promise.resolve(window.PTBO_ROAD_COLLISION);
     const hardState={installed:true,disabled:true};
-    const hard=Object.freeze({version:'1.6.6',state:hardState,ready:Promise.resolve(null)});
-    window.PTBO_HARD_ROAD_BOUNDARY=hard;
-    window.PTBO_ROUTE_REVEAL=Object.freeze({available:false,ready:Promise.resolve(null),state:Object.freeze({status:'disabled'}),hide:()=>{},calculateRoute:()=>null});
-    window.PTBO_ROUTE_COMPARE_BOOT_VERSION='1.6.2';
+    const hard={version:VERSION,state:hardState};
+    hard.ready=Promise.resolve(hard);
+    window.PTBO_HARD_ROAD_BOUNDARY=Object.freeze(hard);
+    window.PTBO_ROUTE_REVEAL=Object.freeze({available:false,ready:Promise.resolve(null),state:Object.freeze({status:'disabled'}),hide:()=>{},hideRoute:()=>{},calculateRoute:()=>null});
+    window.PTBO_ROUTE_COMPARE_BOOT_VERSION='preview';
     window.PTBO_ROUTE_COMPARE=Object.freeze({available:false,state:{reviewOpen:false},sync:()=>{},reset:()=>{},stop:()=>{}});
     const marker=document.createElement('script');
     marker.type='application/json';
