@@ -36,7 +36,7 @@
 </head>
 <body>
   <!-- The versioned iframe URL prevents an older simulator HTML file from being reused. -->
-  <iframe id="simulator" src="../index.html?v=1.5.13" title="Peterborough Fire and Emergency Dispatch Simulator"></iframe>
+  <iframe id="simulator" src="../index.html?v=1.6.0" title="Peterborough Fire and EMS Dispatch Simulator"></iframe>
   <button id="audio-button" type="button" aria-label="Mute dispatch voice" aria-pressed="true">
     <svg class="speaker-on" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15 9a4 4 0 0 1 0 6M17.5 6.5a7.5 7.5 0 0 1 0 11"/></svg>
     <svg class="speaker-off" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="m16 9 5 5M21 9l-5 5"/></svg>
@@ -44,11 +44,12 @@
   <div id="loading"><div><strong>Loading Peterborough roads</strong><span id="loading-status">Preparing steering, road boundaries, and dispatch data…</span></div></div>
 
   <!-- Shared data keeps desktop, mobile, Geo Guesser, and the editor consistent. -->
-  <script src="../../shared/build-version.js?v=1.5.13"></script>
-  <script src="../../shared/dispatch-locations.js?v=1.5.13"></script>
-  <script src="../../shared/dispatch-data-1.4.4.js?v=1.5.13"></script>
-  <script src="../../shared/dispatch-override-1.4.4.js?v=1.5.13"></script>
-  <script src="../../shared/stations.js?v=1.5.13"></script>
+  <script src="../../shared/build-version.js?v=1.6.0"></script>
+  <script src="../../shared/dispatch-locations.js?v=1.6.0"></script>
+  <script src="../../shared/dispatch-data-1.4.4.js?v=1.6.0"></script>
+  <script src="../../shared/dispatch-override-1.4.4.js?v=1.6.0"></script>
+  <script src="../../shared/stations.js?v=1.6.0"></script>
+  <script src="../service-selection.js?v=1.6.0"></script>
   <script>
     (() => {
       /*
@@ -56,7 +57,7 @@
       VERSION is used for module cache URLs and startup diagnostics.
       AUDIO_KEY is the browser-storage name that remembers dispatch voice.
       */
-      const VERSION = '1.5.13';
+      const VERSION = '1.6.0';
       const AUDIO_KEY = 'ptboDispatchVoiceEnabled';
 
       const frame = document.getElementById('simulator');
@@ -143,6 +144,8 @@
           const callNames = {'Structure Fire':'a structure fire','Water & Ice Rescue':'a water rescue','Auto Alarm / Vehicle Fire':'an auto alarm','Burning Complaint':'a burning complaint','Alarms No Apparent Problem':'an alarm with no apparent problem','Chest Pain / Cardiac Emergency':'a cardiac emergency','Difficulty Breathing':'difficulty breathing','Unconscious Patient / Substance Overdose':'an unconscious patient or possible overdose','Rectal Bleed / Gastrointestinal Emergency':'a gastrointestinal emergency','Lift Assist / Public Service':'a lift assist','Request for Access / Wellness Check':'a request for access or wellness check'};
           window.buildPeterboroughDispatchPhrase = incident => {
             if (!incident) return '';
+            const servicePhrase = window.PTBO_SERVICE?.dispatchPhrase(incident);
+            if (servicePhrase) return servicePhrase;
             const primary = Number(parent.ptboGetSelectedStationNumber?.() || 1);
             if (['Structure Fire','Water & Ice Rescue','Auto Alarm / Vehicle Fire'].includes(incident.sub)) return 'All stations from Peterborough Control, you’re responding to ' + callNames[incident.sub] + ' at ' + incident.name + ', ' + incident.addr + '.';
             if (incident.sub === 'Motor Vehicle Collision') {
@@ -235,9 +238,10 @@
           .then(() => game.PTBO_SIMULATOR_READY || Promise.reject(new Error('Startup verifier was not created.')));
         const dispatchReady = window.PTBO_DISPATCH_STORE.ready();
 
-        Promise.all([dispatchReady, simulatorReady])
+        Promise.all([dispatchReady, simulatorReady, window.PTBO_SERVICE_SELECTION.ready(game)])
           .then(() => {
             installDesktopManualMap(doc);
+            window.PTBO_SERVICE_SELECTION.open(game);
             loadingStatus.textContent = 'Simulator ready';
             loading.classList.add('hidden');
             setTimeout(() => loading.remove(), 250);

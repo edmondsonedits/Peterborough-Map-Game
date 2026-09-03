@@ -409,7 +409,7 @@
 
   function updateButton(message) {
     if (!state.button) return;
-    const active = simulationState === STATES.ENROUTE && activeIncident;
+    const active = (simulationState === STATES.ENROUTE || simulationState === STATES.TRANSPORTING) && activeIncident;
     state.button.disabled = !active || state.status !== 'ready' || state.calculating;
     state.button.classList.toggle('is-visible', state.routeVisible);
     state.button.textContent = message || (state.routeVisible ? 'Hide Route' : state.status === 'loading' ? 'Loading Route…' : 'Reveal Route');
@@ -463,7 +463,7 @@
   }
 
   function showRoute(fit = true) {
-    if (state.calculating || state.status !== 'ready' || !activeIncident || simulationState !== STATES.ENROUTE) return false;
+    if (state.calculating || state.status !== 'ready' || !activeIncident || (simulationState !== STATES.ENROUTE && simulationState !== STATES.TRANSPORTING)) return false;
     state.calculating = true;
     updateButton('Routing…');
     try {
@@ -509,7 +509,7 @@
   function startRerouting() {
     stopRerouting();
     state.rerouteTimer = setInterval(() => {
-      if (!state.routeVisible || !activeIncident || simulationState !== STATES.ENROUTE) {
+      if (!state.routeVisible || !activeIncident || (simulationState !== STATES.ENROUTE && simulationState !== STATES.TRANSPORTING)) {
         hideRoute();
         return;
       }
@@ -526,7 +526,7 @@
 
   function syncIncidentState() {
     installUi();
-    const key = simulationState === STATES.ENROUTE ? incidentKey(activeIncident) : null;
+    const key = (simulationState === STATES.ENROUTE || simulationState === STATES.TRANSPORTING) ? incidentKey(activeIncident) : null;
     if (key !== state.currentIncidentKey) {
       state.currentIncidentKey = key;
       hideRoute();

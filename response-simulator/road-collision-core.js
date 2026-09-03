@@ -500,7 +500,7 @@
       finally { state.insidePhysicsStep = false; }
 
       if (!state.enabled) {
-        if (simulationState === STATES.ENROUTE) state.originalEvaluateDistance?.();
+        if ((simulationState === STATES.ENROUTE || simulationState === STATES.TRANSPORTING)) state.originalEvaluateDistance?.();
         return;
       }
       if (state.status === 'loading') {
@@ -523,7 +523,7 @@
         velocity *= CONFIG.collisionVelocityRetention;
         noteCollision();
       }
-      if (simulationState === STATES.ENROUTE && state.originalEvaluateDistance) {
+      if ((simulationState === STATES.ENROUTE || simulationState === STATES.TRANSPORTING) && state.originalEvaluateDistance) {
         state.originalEvaluateDistance();
       }
     };

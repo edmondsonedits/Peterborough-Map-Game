@@ -1,7 +1,7 @@
 (() => {
   'use strict';
-  if (window.PTBO_DISPATCH_VOICE_BRIDGE_VERSION === '1.4.20') return;
-  window.PTBO_DISPATCH_VOICE_BRIDGE_VERSION = '1.4.20';
+  if (window.PTBO_DISPATCH_VOICE_BRIDGE_VERSION === '1.6.0') return;
+  window.PTBO_DISPATCH_VOICE_BRIDGE_VERSION = '1.6.0';
 
   const stations = [
     { number:1, name:'Station 1', lat:44.300871, lng:-78.322206 },
@@ -35,6 +35,8 @@
 
   window.buildPeterboroughDispatchPhrase = incident => {
     if (!incident) return '';
+    const servicePhrase = window.PTBO_SERVICE?.dispatchPhrase(incident);
+    if (servicePhrase) return servicePhrase;
     const primary = selectedStation();
     if (['Structure Fire', 'Water & Ice Rescue', 'Auto Alarm / Vehicle Fire'].includes(incident.sub)) {
       return `All stations from Peterborough Control, you’re responding to ${callNames[incident.sub]} at ${incident.name}, ${incident.addr}.`;

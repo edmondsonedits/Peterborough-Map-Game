@@ -32,7 +32,7 @@
   simulator-readiness-1.4.5.js for compatibility, but its internal release and
   cache identifiers advance with the production build.
   */
-  const VERSION = '1.5.10';
+  const VERSION = '1.6.0';
 
   // Reuse an existing Promise if this exact release was already started.
   if (window.PTBO_SIMULATOR_READY_VERSION === VERSION && window.PTBO_SIMULATOR_READY) return;

@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.5.10';
+  const VERSION = '1.6.0';
   if (window.PTBO_ROUTE_COMPARE_BOOT_VERSION === VERSION) return;
   window.PTBO_ROUTE_COMPARE_BOOT_VERSION = VERSION;
 
@@ -476,7 +476,7 @@
     installUi();
     forceVehicleStopped();
 
-    if (simulationState === STATES.ENROUTE && activeIncident) {
+    if ((simulationState === STATES.ENROUTE || simulationState === STATES.TRANSPORTING) && activeIncident) {
       const key = incidentKey(activeIncident);
       if (!state.recording || state.runKey !== key) startRun();
       sampleRun();

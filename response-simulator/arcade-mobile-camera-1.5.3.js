@@ -29,7 +29,7 @@
   The loader uses this value to identify the current camera module and to avoid
   installing the same module twice.
   */
-  const VERSION = '1.5.13';
+  const VERSION = '1.6.0';
   if (window.PTBO_STABLE_MOBILE_CAMERA?.version === VERSION) return;
 
   /* =========================================================

@@ -92,6 +92,9 @@
         .leaflet-popup-content-wrapper { background: #222; color: #fff; border-radius: 4px; border: 1px solid #444; }
         .leaflet-popup-tip { background: #222; border: 1px solid #444; }
         
+        .service-note{font-size:11px;line-height:1.5;color:#64748b;margin:0 0 16px}
+        .station-spawn-box[aria-pressed="true"]{border-color:#0284c7;background:#e0f2fe;color:#0c4a6e}
+
         /* Draggable Dot Styling */
         .drag-dot-icon { border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 5px rgba(0,0,0,0.8); cursor: grab; }
         .drag-dot-icon:active { cursor: grabbing; box-shadow: 0 0 10px #fff; }
@@ -124,6 +127,12 @@
             <div class="subtitle">Driving and call settings</div>
 
             <div class="category-heading">Calls &amp; Deployment</div>
+            <div class="section-title">Emergency Service</div>
+            <div class="control-row">
+                <label for="service-select">Service</label>
+                <select id="service-select" onchange="window.PTBO_SERVICE.select(this.value)"><option value="fire">Fire</option><option value="ems">EMS</option></select>
+            </div>
+            <p class="service-note">Changing service or base ends the current call and returns you to base.</p>
             <div class="section-title">Incident Types</div>
             <div style="font-size: 11px; font-weight: bold; color: #c62828; margin-bottom: 6px; text-transform: uppercase;">Primary: Fire & Rescue</div>
             <div class="sub-cat-group">
@@ -145,10 +154,8 @@
                 <label class="checkbox-row"><input type="checkbox" class="filter-chk" data-sub="Request for Access / Wellness Check" checked> Wellness Check / Access</label>
             </div>
 
-            <div class="section-title">Station Deploy Spawns</div>
-            <button class="station-spawn-box" onclick="teleportToStation(44.300871, -78.322206)">Station 1 — 210 Sherbrooke St</button>
-            <button class="station-spawn-box" onclick="teleportToStation(44.335266, -78.316657)">Station 2 — 100 Marina Blvd</button>
-            <button class="station-spawn-box" onclick="teleportToStation(44.284867, -78.350902)">Station 3 — 839 Clonsilla Ave</button>
+            <div class="section-title" id="service-spawns-title">Fire Stations</div>
+            <div id="service-spawns"></div>
 
             <div class="section-title">Custom Dispatch Logging</div>
             <button class="station-spawn-box" style="border-color: #f0ad4e;" onclick="recordCurrentLocation()">Record Current Position</button>
@@ -157,7 +164,7 @@
             <div class="category-heading">Vehicle &amp; Camera</div>
             <div class="section-title">Vehicle Calibration</div>
             <div class="control-row">
-                <label><span>Truck display size</span><span id="lbl-size">10px</span></label>
+                <label><span id="vehicle-size-label">Vehicle display size</span><span id="lbl-size">10px</span></label>
                 <input type="range" id="sld-size" min="2" max="70" value="10" oninput="updateVehicleChassis()">
             </div>
             <div class="control-row">
@@ -193,12 +200,14 @@
 
     <div id="map"></div>
 
-    <script src="../shared/build-version.js?v=1.5.13"></script>
+    <script src="../shared/build-version.js?v=1.6.0"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
     <script src="https://unpkg.com/leaflet-edgebuffer@1.0.6/src/leaflet.edgebuffer.js"></script>
     <script src="https://unpkg.com/leaflet-rotatedmarker@0.2.0/leaflet.rotatedMarker.js"></script>
     
-    <script src="gearbox-core.js?v=1.5.13"></script>
+    <script src="service-config.js?v=1.6.0"></script>
+    <script src="service-selection.js?v=1.6.0"></script>
+    <script src="gearbox-core.js?v=1.6.0"></script>
     <script>
         const dispatchDatabase = [
             { main:"Fire", sub:"Water & Ice Rescue", name:"Beavermead Park Beach", addr:"2015 Ashburnham Dr", lat:44.295749, lng:-78.303611 },
@@ -301,7 +310,7 @@
         ];
 
 
-        const STATES = { INACTIVE: 0, ENROUTE: 1, ONSCENE: 2, INSERVICE: 3 };
+        const STATES = Object.freeze({ INACTIVE: 0, ENROUTE: 1, ONSCENE: 2, INSERVICE: 3, TRANSPORTING: 4 });
         let simulationState = STATES.INACTIVE;
 
         let simLat = 44.300871; 
@@ -324,6 +333,9 @@
         let stopwatchInterval = null;
         let elapsedMilliseconds = 0;
         let dispatchStartedAt = 0;
+        let sceneTransitionTimer = null;
+        let missionGeneration = 0;
+        let mission = null;
 
         let totalTrackedCalls = 0;
         try { totalTrackedCalls = parseInt(localStorage.getItem('simTotalCalls'), 10) || 0; } catch {}
@@ -365,6 +377,8 @@
             L.control.scale({ metric: true, imperial: false, position: 'bottomleft' }).addTo(mapInstance);
             
             updateVehicleChassis();
+            window.PTBO_SERVICE?.updateControls();
+            if (parent === window) window.PTBO_SERVICE_SELECTION?.open(window);
 
             requestAnimationFrame(simulationLoop);
 
@@ -489,7 +503,7 @@
                 mapInstance.invalidateSize();
                 updateMapOrientation();
             }
-            if (simulationState === STATES.ENROUTE) evaluateDistanceToTarget();
+            if (simulationState === STATES.ENROUTE || simulationState === STATES.TRANSPORTING) evaluateDistanceToTarget();
         }
 
         function recordCurrentLocation() {
@@ -615,15 +629,17 @@
 
         function updateVehicleChassis() {
             const baseHeight = parseInt(document.getElementById('sld-size').value);
-            const baseWidth = baseHeight * 3.333; 
+            const ems = window.PTBO_SERVICE?.state.mode === 'ems';
+            const baseWidth = baseHeight * (ems ? 2.6 : 3.333);
             document.getElementById('lbl-size').innerText = baseHeight + 'px';
 
             const sirenIsActive = document.getElementById('chk-siren').checked;
-            const operationalClassString = sirenIsActive ? 'truck-container siren-active' : 'truck-container';
+            const operationalClassString = `truck-container ${ems ? 'ambulance-container' : 'fire-container'}${sirenIsActive ? ' siren-active' : ''}`;
 
             const inlineSvgHtml = `
                 <div class="truck-rotation-wrapper" style="width: ${baseWidth}px; height: ${baseHeight}px;">
                     <svg width="100%" height="100%" viewBox="0 0 100 30" preserveAspectRatio="none" style="display: block;">
+                        ${ems ? window.PTBO_SERVICE.ambulanceSvg() : `
                         <rect x="2" y="3" width="96" height="24" rx="4" fill="#d9534f" stroke="#992222" stroke-width="1"/>
                         <rect x="72" y="4" width="26" height="22" rx="2" fill="#c9302c"/>
                         <rect x="89" y="5" width="4" height="20" rx="1" fill="#e0f7fa" opacity="0.9"/>
@@ -643,6 +659,7 @@
                         <line x1="9" y1="19.5" x2="9" y2="25.5" stroke="#dddddd"/>
                         <line x1="14" y1="19.5" x2="14" y2="25.5" stroke="#dddddd"/>
                         <line x1="19" y1="19.5" x2="19" y2="25.5" stroke="#dddddd"/>
+                        `}
                     </svg>
                 </div>
             `;
@@ -672,6 +689,10 @@
         window.PTBO_FIXED_STEP = FIXED_STEP_MS / 1000;
 
         function simulationStep() {
+            if (window.PTBO_SERVICE?.state.selected === false || simulationState === STATES.ONSCENE) {
+                velocity = 0;
+                return;
+            }
             const seconds = FIXED_STEP_MS / 1000;
             const gears = window.PTBO_DIRECTIONAL_DRIVE_ZOOM;
             gears?.beforeStep?.();
@@ -702,7 +723,7 @@
                 vehicleMarker.setRotationAngle(currentHeading - 90);
                 vehicleMarker.setLatLng([simLat, simLng]);
             }
-            if (simulationState === STATES.ENROUTE) evaluateDistanceToTarget();
+            if (simulationState === STATES.ENROUTE || simulationState === STATES.TRANSPORTING) evaluateDistanceToTarget();
         }
 
         function simulationLoop(timestamp) {
@@ -730,6 +751,7 @@
         });
         function releaseDrivingInput() {
             Object.keys(keys).forEach(key => { keys[key] = false; });
+            window.PTBO_DIRECTIONAL_DRIVE_ZOOM?.releaseInput?.();
             velocity = 0;
             lastTimestamp = null;
             physicsAccumulator = 0;
@@ -749,7 +771,55 @@
             } catch (err) { console.warn("TTS engine failure:", err); }
         }
 
+        function resetDispatchWorkflow() {
+            missionGeneration++;
+            clearTimeout(sceneTransitionTimer);
+            sceneTransitionTimer = null;
+            clearInterval(stopwatchInterval);
+            window.speechSynthesis?.cancel();
+            window.PTBO_ROUTE_COMPARE?.reset();
+            window.PTBO_ROUTE_REVEAL?.hideRoute?.();
+            releaseDrivingInput();
+            if (incidentCircleMarker) mapInstance.removeLayer(incidentCircleMarker);
+            incidentCircleMarker = null;
+            activeIncident = null;
+            activeArrivalPoint = null;
+            mission = null;
+            simulationState = STATES.INACTIVE;
+            elapsedMilliseconds = 0;
+            document.getElementById('hud-clock').innerText = '0.0';
+            document.getElementById('tel-dist').innerText = '--';
+            document.getElementById('dispatch-hud').className = '';
+            setDispatchAction('Start Call',false);
+        }
+
+        function setDispatchAction(label,disabled) {
+            const button = document.getElementById('hud-action-btn');
+            button.innerText = label;
+            button.disabled = disabled;
+            button.className = 'hud-btn';
+            button.style.opacity = disabled ? '0.5' : '1';
+        }
+
+        function startDispatchClock() {
+            elapsedMilliseconds = 0;
+            dispatchStartedAt = performance.now();
+            document.getElementById('hud-clock').innerText = '0.0';
+            clearInterval(stopwatchInterval);
+            stopwatchInterval = setInterval(() => {
+                elapsedMilliseconds = performance.now() - dispatchStartedAt;
+                document.getElementById('hud-clock').innerText = (elapsedMilliseconds / 1000).toFixed(1);
+            },100);
+        }
+
+        function stopDispatchClock() {
+            clearInterval(stopwatchInterval);
+            elapsedMilliseconds = performance.now() - dispatchStartedAt;
+            document.getElementById('hud-clock').innerText = (elapsedMilliseconds / 1000).toFixed(1);
+        }
+
         function triggerDispatchWorkflow() {
+            if (window.PTBO_SERVICE?.state.selected === false) return;
             if (simulationState === STATES.INACTIVE || simulationState === STATES.INSERVICE) {
                 fireRandomIncidentDispatch();
             }
@@ -774,6 +844,8 @@
         }
 
         function fireRandomIncidentDispatch() {
+            if (window.PTBO_SERVICE?.state.selected === false ||
+                (simulationState !== STATES.INACTIVE && simulationState !== STATES.INSERVICE)) return;
             const checkedBoxes = document.querySelectorAll('.filter-chk:checked');
             const activeSubCategories = Array.from(checkedBoxes).map(cb => cb.getAttribute('data-sub'));
 
@@ -785,10 +857,14 @@
             const filteredPool = dispatchDatabase.filter(item => activeSubCategories.includes(item.sub) && resolveIncidentArrival(item));
             if (filteredPool.length === 0) { alert('No reachable calls match these filters. Check road loading or select another call type.'); return; }
 
-            if (incidentCircleMarker) mapInstance.removeLayer(incidentCircleMarker);
-
+            const ems = window.PTBO_SERVICE?.state.mode === 'ems';
+            const hospitalArrival = ems ? resolveIncidentArrival(window.PTBO_SERVICE_CONFIG.hospital) : null;
+            if (ems && !hospitalArrival) { alert('Hospital access is still loading. Please try again.'); return; }
+            resetDispatchWorkflow();
             activeIncident = filteredPool[Math.floor(Math.random() * filteredPool.length)];
 
+            mission = {generation:missionGeneration,service:ems ? 'ems' : 'fire',scene:{...activeIncident},
+                hospitalArrival,responseMs:0,transportMs:0,phase:'response'};
             activeArrivalPoint = resolveIncidentArrival(activeIncident);
             activeArrivalRadius = activeArrivalPoint.radius;
             incidentCircleMarker = L.circle([activeArrivalPoint.lat, activeArrivalPoint.lng], {
@@ -799,14 +875,10 @@
             }).addTo(mapInstance);
 
             simulationState = STATES.ENROUTE;
-            elapsedMilliseconds = 0;
-            dispatchStartedAt = performance.now();
+            startDispatchClock();
 
             const hud = document.getElementById('dispatch-hud');
             hud.className = "incident-active";
-
-            const currentHour = new Date().getHours();
-            let environmentConditionString = currentHour < 6 ? "Night operations active." : (currentHour < 12 ? "Morning route patterns forming." : "Standard daytime operations grid.");
 
             document.getElementById('hud-content').innerHTML = `
                 <div class="hud-title">🚨 ACTIVE ENROUTE DISPATCH: ${escapeDispatchText(activeIncident.sub.toUpperCase())}</div>
@@ -814,58 +886,73 @@
                 <div class="hud-meta">Address: ${escapeDispatchText(activeIncident.addr)}${activeArrivalPoint.accessPoint ? " · Respond to the marked nearby road access point" : ""}</div>
             `;
 
-            const actionBtn = document.getElementById('hud-action-btn');
-            actionBtn.innerText = "Responding...";
-            actionBtn.disabled = true;
-            actionBtn.style.opacity = "0.5";
-
-            clearInterval(stopwatchInterval);
-            stopwatchInterval = setInterval(() => {
-                elapsedMilliseconds = performance.now() - dispatchStartedAt;
-                const secs = (elapsedMilliseconds / 1000).toFixed(1);
-                document.getElementById("hud-clock").innerText = secs;
-            }, 100);
+            setDispatchAction('Responding…',true);
 
             playDispatchAudioText(`Attention station company. Respond emergency to ${activeIncident.name}, at ${activeIncident.addr}, for a reported ${activeIncident.sub}.`);
         }
 
-        function executeIncidentArrivalProcedures() {
-            clearInterval(stopwatchInterval);
-            elapsedMilliseconds = performance.now() - dispatchStartedAt;
-            document.getElementById("hud-clock").innerText = (elapsedMilliseconds / 1000).toFixed(1);
-            simulationState = STATES.ONSCENE;
-
-            const hud = document.getElementById('dispatch-hud');
-            hud.className = "incident-success";
-
+        function completeAssignment() {
+            if (!mission || simulationState !== STATES.ONSCENE || !['on-scene','handover'].includes(mission.phase)) return;
+            mission.phase = 'complete';
+            simulationState = STATES.INSERVICE;
+            totalTrackedCalls++;
+            try { localStorage.setItem('simTotalCalls',totalTrackedCalls); } catch (_) {}
+            document.getElementById('tel-total-calls').innerText = totalTrackedCalls;
+            const ems = mission.service === 'ems';
             document.getElementById('hud-content').innerHTML = `
-                <div class="hud-title" style="color: #5cb85c;">✓ ON SCENE AS REPORTED</div>
-                <p class="hud-address">Arrived at ${escapeDispatchText(activeIncident.name)}</p>
-                <div class="hud-meta">Staging layout completed. Responding crew evaluating conditions on scene.</div>
-            `;
+                <div class="hud-title">${ems ? 'EMS' : 'FIRE'} / AVAILABLE</div>
+                <p class="hud-address">${ems ? 'Patient delivered to PRHC' : 'Assignment completed'}</p>
+                <div class="hud-meta">Response: ${(mission.responseMs/1000).toFixed(1)} s${ems ? ` · Transport: ${(mission.transportMs/1000).toFixed(1)} s` : ''}</div>`;
+            setDispatchAction('Next Call',false);
+        }
 
-            if (incidentCircleMarker) {
-                incidentCircleMarker.setStyle({ color: '#5cb85c', fillColor: '#5cb85c' });
-            }
+        function beginHospitalTransport() {
+            if (!mission || mission.service !== 'ems' || mission.phase !== 'pickup') return;
+            mission.phase = 'transport';
+            releaseDrivingInput();
+            activeIncident = {...window.PTBO_SERVICE_CONFIG.hospital,id:`prhc-${mission.generation}`};
+            activeArrivalPoint = mission.hospitalArrival;
+            activeArrivalRadius = activeArrivalPoint.radius;
+            if (incidentCircleMarker) mapInstance.removeLayer(incidentCircleMarker);
+            incidentCircleMarker = L.circle([activeArrivalPoint.lat,activeArrivalPoint.lng],{
+                color:'#0284c7',fillColor:'#38bdf8',fillOpacity:0.35,radius:activeArrivalRadius
+            }).addTo(mapInstance);
+            simulationState = STATES.TRANSPORTING;
+            startDispatchClock();
+            document.getElementById('dispatch-hud').className = 'incident-active';
+            document.getElementById('hud-content').innerHTML = `
+                <div class="hud-title">EMS / TRANSPORT TO HOSPITAL</div>
+                <p class="hud-address">Peterborough Regional Health Centre</p>
+                <div class="hud-meta">1 Hospital Drive · Drive to the marked hospital arrival point.</div>`;
+            setDispatchAction('Transporting…',true);
+            playDispatchAudioText('Transport to Peterborough Regional Health Centre, 1 Hospital Drive.');
+            evaluateDistanceToTarget();
+        }
 
-            setTimeout(() => {
-                simulationState = STATES.INSERVICE;
-                totalTrackedCalls++;
-                try { localStorage.setItem("simTotalCalls", totalTrackedCalls); } catch {}
-                document.getElementById('tel-total-calls').innerText = totalTrackedCalls;
-
-                document.getElementById('hud-content').innerHTML = `
-                    <div class="hud-title">IN SERVICE / AVAILABLE</div>
-                    <p class="hud-address">Assignment Completed</p>
-                    <div class="hud-meta">Company clear of sector and logging availability parameters.</div>
-                `;
-
-                const actionBtn = document.getElementById('hud-action-btn');
-                actionBtn.innerText = "Next Call";
-                actionBtn.className = "hud-btn success-btn";
-                actionBtn.disabled = false;
-                actionBtn.style.opacity = "1";
-            }, 4000);
+        function executeIncidentArrivalProcedures() {
+            if (!mission || (simulationState !== STATES.ENROUTE && simulationState !== STATES.TRANSPORTING)) return;
+            const hospitalArrival = simulationState === STATES.TRANSPORTING;
+            stopDispatchClock();
+            if (hospitalArrival) mission.transportMs = elapsedMilliseconds;
+            else mission.responseMs = elapsedMilliseconds;
+            mission.phase = hospitalArrival ? 'handover' : mission.service === 'ems' ? 'pickup' : 'on-scene';
+            simulationState = STATES.ONSCENE;
+            releaseDrivingInput();
+            const hud = document.getElementById('dispatch-hud');
+            hud.className = 'incident-success';
+            document.getElementById('hud-content').innerHTML = `
+                <div class="hud-title">${hospitalArrival ? 'ARRIVED AT PRHC' : 'ON SCENE'}</div>
+                <p class="hud-address">${escapeDispatchText(activeIncident.name)}</p>
+                <div class="hud-meta">${hospitalArrival ? 'Patient handover in progress…' : mission.service === 'ems' ? 'Preparing patient for transport to PRHC…' : 'Crew evaluating conditions on scene…'}</div>`;
+            incidentCircleMarker?.setStyle({color:'#5cb85c',fillColor:'#5cb85c'});
+            setDispatchAction(hospitalArrival ? 'Patient handover…' : mission.service === 'ems' ? 'Patient pickup…' : 'On scene…',true);
+            const generation = missionGeneration;
+            clearTimeout(sceneTransitionTimer);
+            sceneTransitionTimer = setTimeout(() => {
+                if (generation !== missionGeneration || !mission || simulationState !== STATES.ONSCENE) return;
+                if (mission.phase === 'pickup') beginHospitalTransport();
+                else completeAssignment();
+            },4000);
         }
 
         function evaluateDistanceToTarget() {
@@ -873,13 +960,13 @@
             const point = activeArrivalPoint || activeIncident;
             const d = mapInstance.distance([simLat, simLng], [point.lat, point.lng]);
             document.getElementById('tel-dist').innerText = Math.round(d) + " m";
-            if (d <= activeArrivalRadius && simulationState === STATES.ENROUTE) {
+            if (d <= activeArrivalRadius && (simulationState === STATES.ENROUTE || simulationState === STATES.TRANSPORTING)) {
                 executeIncidentArrivalProcedures();
             }
         }
 
         window.onload = initializeSimulator;
     </script>
+    <script src="service-mode.js?v=1.6.0"></script>
 </body>
 </html>
-

@@ -28,7 +28,7 @@
   Added to script URLs as a cache value so v1.5.3 files are requested instead
   of an older browser copy. It is also included in the ready event.
   */
-  const VERSION = '1.5.13';
+  const VERSION = '1.6.0';
 
   // A page needs only one startup Promise. A second copy exits immediately.
   if (window.PTBO_VEHICLE_INSTRUMENTS_READY) return;

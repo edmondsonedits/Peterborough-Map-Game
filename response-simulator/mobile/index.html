@@ -85,7 +85,7 @@
 </head>
 <body>
   <!-- The release query creates a fresh iframe URL so mobile browsers do not reuse old HTML. -->
-  <iframe id="simulator" src="../index.html?v=1.5.13" title="Peterborough Fire and Emergency Dispatch Simulator"></iframe>
+  <iframe id="simulator" src="../index.html?v=1.6.0" title="Peterborough Fire and EMS Dispatch Simulator"></iframe>
 
   <nav class="mobile-topbar" aria-label="Simulator navigation, audio, and station spawns">
     <div class="top-actions"><a class="top-button" href="../../" aria-label="Return to all games"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></a></div>
@@ -110,11 +110,12 @@
   <div class="loading-cover" id="loading-cover"><div><strong>Loading mobile simulator</strong><span id="loading-status">Preparing steering, road boundaries, and updated calls…</span><button type="button" id="loading-refresh">Refresh Page</button></div></div>
 
   <!-- Shared data files keep desktop, mobile, Geo Guesser, and the editor consistent. -->
-  <script src="../../shared/build-version.js?v=1.5.13"></script>
-  <script src="../../shared/dispatch-locations.js?v=1.5.13"></script>
-  <script src="../../shared/dispatch-data-1.4.4.js?v=1.5.13"></script>
-  <script src="../../shared/dispatch-override-1.4.4.js?v=1.5.13"></script>
-  <script src="../../shared/stations.js?v=1.5.13"></script>
+  <script src="../../shared/build-version.js?v=1.6.0"></script>
+  <script src="../../shared/dispatch-locations.js?v=1.6.0"></script>
+  <script src="../../shared/dispatch-data-1.4.4.js?v=1.6.0"></script>
+  <script src="../../shared/dispatch-override-1.4.4.js?v=1.6.0"></script>
+  <script src="../../shared/stations.js?v=1.6.0"></script>
+  <script src="../service-selection.js?v=1.6.0"></script>
   <script>
     /* =========================================================
        MOBILE CONTROL BRIDGE
@@ -127,7 +128,7 @@
       MOBILE_ZOOM is the close view used by Recenter. Higher means closer.
       AUDIO_KEY is the browser-storage name used to remember voice preference.
       */
-      const VERSION = '1.5.13';
+      const VERSION = '1.6.0';
       const CAMERA_TEST = new URLSearchParams(location.search).get('cameraTest');
       const MOBILE_ZOOM = 19;
       const AUDIO_KEY = 'ptboDispatchVoiceEnabled';
@@ -318,8 +319,8 @@
         button.dataset.lat = station.lat;
         button.dataset.lng = station.lng;
         button.addEventListener('click', () => {
-          window.ptboSetSelectedStation(station.number);
-          sim()?.teleportToStation?.(station.lat, station.lng);
+          if (sim()?.PTBO_SERVICE) sim().PTBO_SERVICE.spawn(index + 1);
+          else { window.ptboSetSelectedStation(station.number); sim()?.teleportToStation?.(station.lat, station.lng); }
           sim()?.mobileRecenter?.();
           haptic(12);
         });
@@ -444,8 +445,9 @@
           .then(() => game.PTBO_SIMULATOR_READY || Promise.reject(new Error('Startup verifier was not created.')));
         const dispatchReady = window.PTBO_DISPATCH_STORE.ready();
 
-        Promise.all([dispatchReady, simulatorReady])
+        Promise.all([dispatchReady, simulatorReady, window.PTBO_SERVICE_SELECTION.ready(game)])
           .then(() => {
+            window.PTBO_SERVICE_SELECTION.open(game);
             loadingStatus.textContent = 'Simulator ready';
             loading.classList.add('hidden');
             setTimeout(() => loading.remove(), 250);
