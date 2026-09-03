@@ -1,5 +1,5 @@
-/* The wrapper's native modal blocks both the iframe and touch controls while
-   the satellite map remains visible. The core waits for a service selection. */
+/* Wrapper Fire/EMS chooser. City-specific service data is provided by the active
+   package inside the simulator iframe. */
 (() => {
   'use strict';
   let dialog = null;
@@ -20,6 +20,7 @@
   function open(game) {
     if (dialog?.open || game.PTBO_SERVICE?.state.selected) return;
     if (!game.PTBO_SERVICE) throw new Error('Fire / EMS controls did not load.');
+    const cityName = game.PTBO_CITY_PACKAGE?.name || window.PTBO_CITY_PACKAGE?.name || 'Selected City';
     const style = document.createElement('style');
     style.textContent = `
       #service-choice{box-sizing:border-box;width:min(600px,calc(100vw - 28px));max-height:calc(100dvh - 32px);overflow:auto;margin:auto;padding:28px;border:1px solid #ffffff2b;border-radius:22px;background:#101b2bf5;color:#f8fafc;box-shadow:0 28px 100px #0009;font-family:Inter,system-ui,sans-serif}
@@ -46,12 +47,12 @@
     dialog.id = 'service-choice';
     dialog.setAttribute('aria-labelledby','service-choice-title');
     dialog.setAttribute('aria-describedby','service-choice-description');
-    dialog.innerHTML = `<div class="service-eyebrow">Peterborough Dispatch Simulator</div>
+    dialog.innerHTML = `<div class="service-eyebrow">${cityName} Dispatch Simulator</div>
       <h1 id="service-choice-title">Choose your service</h1>
       <p id="service-choice-description">Your vehicle. Your base. Your next call.</p>
       <div class="service-choices">
-        <button type="button" data-service="fire" aria-label="Fire"><strong>Fire</strong><span>Fire truck · ${game.PTBO_BASE_STORE?.getBases('fire').length || 3} stations<br>Respond to the scene</span></button>
-        <button type="button" data-service="ems" aria-label="EMS"><strong>EMS</strong><span>Ambulance · ${game.PTBO_BASE_STORE?.getBases('ems').length || 2} bases<br>Scene → hospital</span></button>
+        <button type="button" data-service="fire" aria-label="Fire"><strong>Fire</strong><span>Fire truck · ${game.PTBO_BASE_STORE?.getBases('fire').length || game.PTBO_SERVICE.getBases?.().length || 0} stations<br>Respond to the scene</span></button>
+        <button type="button" data-service="ems" aria-label="EMS"><strong>EMS</strong><span>Ambulance · ${game.PTBO_BASE_STORE?.getBases('ems').length || 0} bases<br>Scene → hospital</span></button>
       </div><p class="service-footnote">You can change services in Options at any time.</p>`;
     dialog.addEventListener('cancel',event => event.preventDefault());
     dialog.querySelectorAll('[data-service]').forEach(button => button.addEventListener('click',() => {
