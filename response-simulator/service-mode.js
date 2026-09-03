@@ -16,10 +16,14 @@
     try {
       if (typeof mapInstance === 'undefined' || !mapInstance || !city.map) return false;
       const map = city.map;
-      if (Number.isFinite(Number(map.minZoom))) mapInstance.options.minZoom = Number(map.minZoom);
-      if (Number.isFinite(Number(map.maxZoom))) mapInstance.options.maxZoom = Number(map.maxZoom);
-      if (Array.isArray(map.bounds) && map.bounds.length === 2) mapInstance.setMaxBounds(L.latLngBounds(map.bounds[0],map.bounds[1]));
-      if (recenter && Array.isArray(map.defaultCenter)) {
+      if (mapInstance.options) {
+        if (Number.isFinite(Number(map.minZoom))) mapInstance.options.minZoom = Number(map.minZoom);
+        if (Number.isFinite(Number(map.maxZoom))) mapInstance.options.maxZoom = Number(map.maxZoom);
+      }
+      if (Array.isArray(map.bounds) && map.bounds.length === 2 && typeof mapInstance.setMaxBounds === 'function' && typeof L?.latLngBounds === 'function') {
+        mapInstance.setMaxBounds(L.latLngBounds(map.bounds[0],map.bounds[1]));
+      }
+      if (recenter && Array.isArray(map.defaultCenter) && typeof mapInstance.setView === 'function') {
         const zoom = Math.max(Number(map.minZoom)||10,Math.min(Number(map.maxZoom)||19,Number(map.defaultZoom)||15));
         mapInstance.setView(map.defaultCenter,zoom,{animate:false});
       }
@@ -149,5 +153,6 @@
 
   window.addEventListener('ptbo-road-collision-ready',showBaseYards);
   window.addEventListener('ptbo-bases-updated',() => {showBaseYards();updateControls();});
-  [0,100,500].forEach(delay => setTimeout(() => {applyCityMap(false);showBaseYards();},delay));
+  applyCityMap(false);
+  showBaseYards();
 })();
