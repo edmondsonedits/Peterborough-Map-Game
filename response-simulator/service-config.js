@@ -4,7 +4,7 @@
    external city package; normal browser startup replaces it with package.js. */
 (() => {
   'use strict';
-  const VERSION = '1.6.5';
+  const VERSION = '1.6.8';
 
   function peterboroughFallback() {
     const fireBases = [
@@ -27,7 +27,7 @@
       schemaVersion:2,version:VERSION,id:'peterborough',name:'Peterborough',province:'Ontario',country:'Canada',playable:true,status:'playable',
       map:{defaultCenter:[44.300871,-78.322206],defaultHeading:180,defaultZoom:15,minZoom:10,maxZoom:19,bounds:[[44.20,-78.45],[44.45,-78.20]]},
       roads:{dataUrl:'../city-explorer/data/osm-public-roads.geojson',center:[44.3091,-78.3197],gridSize:80,sweepStep:1.35,shoulderTolerance:1.35,spawnSnapDistance:120,stationExitSearchDistance:120,stationExitCorridorHalfWidth:8,stationExitStartPadding:4,defaultLaneAssist:0.60,collisionVelocityRetention:0.42},
-      dispatch:{controlName:'Peterborough Control',dataVersion:'1.4.20'},serviceConfig,
+      dispatch:{controlName:'Peterborough Control',dataVersion:'1.4.20',available:true},serviceConfig,
     };
     return {serviceConfig,cityPackage};
   }
