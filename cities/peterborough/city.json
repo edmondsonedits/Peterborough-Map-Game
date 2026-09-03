@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "peterborough",
+  "name": "Peterborough",
+  "province": "Ontario",
+  "country": "Canada",
+  "status": "playable",
+  "playable": true,
+  "integration": "legacy-adapter",
+  "note": "Production city. Existing live data remains in its current paths during migration.",
+  "map": {
+    "defaultCenter": [44.300871, -78.322206],
+    "defaultZoom": 15,
+    "minZoom": 10,
+    "maxZoom": 19
+  },
+  "data": {
+    "roads": "legacy-current-production-source",
+    "dispatchLocations": "../../shared/dispatch-locations.js",
+    "serviceConfig": "../../response-simulator/service-config.js",
+    "bases": "../../shared/base-locations.js",
+    "hospital": "../../response-simulator/service-config.js"
+  }
+}
