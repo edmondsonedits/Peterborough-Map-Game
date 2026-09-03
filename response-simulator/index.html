@@ -200,14 +200,16 @@
 
     <div id="map"></div>
 
-    <script src="../shared/build-version.js?v=1.6.0"></script>
+    <script src="../shared/build-version.js?v=1.6.2"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
     <script src="https://unpkg.com/leaflet-edgebuffer@1.0.6/src/leaflet.edgebuffer.js"></script>
     <script src="https://unpkg.com/leaflet-rotatedmarker@0.2.0/leaflet.rotatedMarker.js"></script>
     
-    <script src="service-config.js?v=1.6.0"></script>
-    <script src="service-selection.js?v=1.6.0"></script>
-    <script src="gearbox-core.js?v=1.6.0"></script>
+    <script src="service-config.js?v=1.6.2"></script>
+    <script src="../shared/location-changes.js?v=1.6.2"></script>
+    <script src="../shared/base-locations.js?v=1.6.2"></script>
+    <script src="service-selection.js?v=1.6.2"></script>
+    <script src="gearbox-core.js?v=1.6.2"></script>
     <script>
         const dispatchDatabase = [
             { main:"Fire", sub:"Water & Ice Rescue", name:"Beavermead Park Beach", addr:"2015 Ashburnham Dr", lat:44.295749, lng:-78.303611 },
@@ -858,13 +860,14 @@
             if (filteredPool.length === 0) { alert('No reachable calls match these filters. Check road loading or select another call type.'); return; }
 
             const ems = window.PTBO_SERVICE?.state.mode === 'ems';
-            const hospitalArrival = ems ? resolveIncidentArrival(window.PTBO_SERVICE_CONFIG.hospital) : null;
+            const hospital = window.PTBO_BASE_STORE?.getHospital() || window.PTBO_SERVICE_CONFIG.hospital;
+            const hospitalArrival = ems ? resolveIncidentArrival(hospital) : null;
             if (ems && !hospitalArrival) { alert('Hospital access is still loading. Please try again.'); return; }
             resetDispatchWorkflow();
             activeIncident = filteredPool[Math.floor(Math.random() * filteredPool.length)];
 
             mission = {generation:missionGeneration,service:ems ? 'ems' : 'fire',scene:{...activeIncident},
-                hospitalArrival,responseMs:0,transportMs:0,phase:'response'};
+                hospital:{...hospital},hospitalArrival,responseMs:0,transportMs:0,phase:'response'};
             activeArrivalPoint = resolveIncidentArrival(activeIncident);
             activeArrivalRadius = activeArrivalPoint.radius;
             incidentCircleMarker = L.circle([activeArrivalPoint.lat, activeArrivalPoint.lng], {
@@ -876,6 +879,7 @@
 
             simulationState = STATES.ENROUTE;
             startDispatchClock();
+            window.PTBO_ROUTE_COMPARE?.sync();
 
             const hud = document.getElementById('dispatch-hud');
             hud.className = "incident-active";
@@ -901,7 +905,7 @@
             const ems = mission.service === 'ems';
             document.getElementById('hud-content').innerHTML = `
                 <div class="hud-title">${ems ? 'EMS' : 'FIRE'} / AVAILABLE</div>
-                <p class="hud-address">${ems ? 'Patient delivered to PRHC' : 'Assignment completed'}</p>
+                <p class="hud-address">${ems ? `Patient delivered to ${escapeDispatchText(mission.hospital.name)}` : 'Assignment completed'}</p>
                 <div class="hud-meta">Response: ${(mission.responseMs/1000).toFixed(1)} s${ems ? ` · Transport: ${(mission.transportMs/1000).toFixed(1)} s` : ''}</div>`;
             setDispatchAction('Next Call',false);
         }
@@ -910,7 +914,7 @@
             if (!mission || mission.service !== 'ems' || mission.phase !== 'pickup') return;
             mission.phase = 'transport';
             releaseDrivingInput();
-            activeIncident = {...window.PTBO_SERVICE_CONFIG.hospital,id:`prhc-${mission.generation}`};
+            activeIncident = {...mission.hospital,id:`prhc-${mission.generation}`};
             activeArrivalPoint = mission.hospitalArrival;
             activeArrivalRadius = activeArrivalPoint.radius;
             if (incidentCircleMarker) mapInstance.removeLayer(incidentCircleMarker);
@@ -919,13 +923,14 @@
             }).addTo(mapInstance);
             simulationState = STATES.TRANSPORTING;
             startDispatchClock();
+            window.PTBO_ROUTE_COMPARE?.sync();
             document.getElementById('dispatch-hud').className = 'incident-active';
             document.getElementById('hud-content').innerHTML = `
                 <div class="hud-title">EMS / TRANSPORT TO HOSPITAL</div>
-                <p class="hud-address">Peterborough Regional Health Centre</p>
-                <div class="hud-meta">1 Hospital Drive · Drive to the marked hospital arrival point.</div>`;
+                <p class="hud-address">${escapeDispatchText(mission.hospital.name)}</p>
+                <div class="hud-meta">${escapeDispatchText(mission.hospital.addr)} · Drive to the marked hospital arrival point.</div>`;
             setDispatchAction('Transporting…',true);
-            playDispatchAudioText('Transport to Peterborough Regional Health Centre, 1 Hospital Drive.');
+            playDispatchAudioText(`Transport to ${mission.hospital.name}, ${mission.hospital.addr}.`);
             evaluateDistanceToTarget();
         }
 
@@ -937,13 +942,14 @@
             else mission.responseMs = elapsedMilliseconds;
             mission.phase = hospitalArrival ? 'handover' : mission.service === 'ems' ? 'pickup' : 'on-scene';
             simulationState = STATES.ONSCENE;
+            window.PTBO_ROUTE_COMPARE?.sync();
             releaseDrivingInput();
             const hud = document.getElementById('dispatch-hud');
             hud.className = 'incident-success';
             document.getElementById('hud-content').innerHTML = `
-                <div class="hud-title">${hospitalArrival ? 'ARRIVED AT PRHC' : 'ON SCENE'}</div>
+                <div class="hud-title">${hospitalArrival ? 'ARRIVED AT HOSPITAL' : 'ON SCENE'}</div>
                 <p class="hud-address">${escapeDispatchText(activeIncident.name)}</p>
-                <div class="hud-meta">${hospitalArrival ? 'Patient handover in progress…' : mission.service === 'ems' ? 'Preparing patient for transport to PRHC…' : 'Crew evaluating conditions on scene…'}</div>`;
+                <div class="hud-meta">${hospitalArrival ? 'Patient handover in progress…' : mission.service === 'ems' ? 'Preparing patient for hospital transport…' : 'Crew evaluating conditions on scene…'}</div>`;
             incidentCircleMarker?.setStyle({color:'#5cb85c',fillColor:'#5cb85c'});
             setDispatchAction(hospitalArrival ? 'Patient handover…' : mission.service === 'ems' ? 'Patient pickup…' : 'On scene…',true);
             const generation = missionGeneration;
@@ -967,6 +973,6 @@
 
         window.onload = initializeSimulator;
     </script>
-    <script src="service-mode.js?v=1.6.0"></script>
+    <script src="service-mode.js?v=1.6.2"></script>
 </body>
 </html>

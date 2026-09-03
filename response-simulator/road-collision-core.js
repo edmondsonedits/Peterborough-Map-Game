@@ -20,6 +20,12 @@
 
   const METERS_PER_LAT = 110540;
   const METERS_PER_LNG = 111320 * Math.cos(CONFIG.centerLat * Math.PI / 180);
+  let baseYards = window.PTBO_BASE_STORE?.getAll() || [];
+  window.addEventListener('ptbo-bases-updated',() => {baseYards=window.PTBO_BASE_STORE?.getAll() || [];state.stationExit=null;});
+  function yardAtXY(x,y) {
+    const point=toLatLng(x,y);
+    return baseYards.find(base=>window.PTBO_BASE_STORE.contains(base,point.lat,point.lng));
+  }
   const ROAD_WIDTHS = Object.freeze({
     motorway: 16,
     motorway_link: 10,
@@ -194,6 +200,8 @@
   }
 
   function roadInfoAtXY(x, y, searchRadius = 45) {
+    const yard = yardAtXY(x,y);
+    if (yard) return {drivable:true,nearest:null,clearance:0,yard};
     let nearest = null;
     let allowed = null;
     for (const index of nearbySegmentIndexes(x, y, searchRadius)) {
@@ -252,6 +260,17 @@
     if (state.status !== 'ready') return false;
     const start = toXY(Number(lat), Number(lng));
     if (![start.x, start.y].every(Number.isFinite)) return false;
+
+    // A base is a permanent drivable square, including on the return trip.
+    // Its boundary must meet a road; no invisible corridor overrides the yard.
+    if (yardAtXY(start.x,start.y)) {
+      state.stationExit = null;
+      const road = nearestRoadXY(start.x,start.y,CONFIG.stationExitSearchDistance);
+      if (road) currentHeading = (Math.atan2(road.x-start.x,road.y-start.y)*180/Math.PI+360)%360;
+      vehicleMarker?.setRotationAngle?.(currentHeading-90);
+      velocity = 0;
+      return true;
+    }
 
     const nearest = nearestRoadXY(start.x, start.y, CONFIG.stationExitSearchDistance);
     if (!nearest || nearest.distance > CONFIG.stationExitSearchDistance) return false;
@@ -468,6 +487,7 @@
     if (state.status !== 'ready') return false;
     state.stationExit = null;
     const point = toXY(simLat, simLng);
+    if (yardAtXY(point.x,point.y)) return false;
     const nearest = nearestRoadXY(point.x, point.y, maxDistance);
     if (!nearest || nearest.distance > maxDistance) return false;
     const latLng = toLatLng(nearest.x, nearest.y);

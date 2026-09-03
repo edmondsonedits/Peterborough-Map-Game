@@ -50,8 +50,8 @@
       <h1 id="service-choice-title">Choose your service</h1>
       <p id="service-choice-description">Your vehicle. Your base. Your next call.</p>
       <div class="service-choices">
-        <button type="button" data-service="fire" aria-label="Fire"><strong>Fire</strong><span>Fire truck · 3 stations<br>Respond to the scene</span></button>
-        <button type="button" data-service="ems" aria-label="EMS"><strong>EMS</strong><span>Ambulance · 2 city bases<br>Scene → hospital</span></button>
+        <button type="button" data-service="fire" aria-label="Fire"><strong>Fire</strong><span>Fire truck · ${game.PTBO_BASE_STORE?.getBases('fire').length || 3} stations<br>Respond to the scene</span></button>
+        <button type="button" data-service="ems" aria-label="EMS"><strong>EMS</strong><span>Ambulance · ${game.PTBO_BASE_STORE?.getBases('ems').length || 2} bases<br>Scene → hospital</span></button>
       </div><p class="service-footnote">You can change services in Options at any time.</p>`;
     dialog.addEventListener('cancel',event => event.preventDefault());
     dialog.querySelectorAll('[data-service]').forEach(button => button.addEventListener('click',() => {

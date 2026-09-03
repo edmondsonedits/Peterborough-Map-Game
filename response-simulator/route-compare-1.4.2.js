@@ -1,18 +1,23 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.0';
+  const VERSION = '1.6.2';
   if (window.PTBO_ROUTE_COMPARE_BOOT_VERSION === VERSION) return;
   window.PTBO_ROUTE_COMPARE_BOOT_VERSION = VERSION;
 
   const COLORS = Object.freeze({
     player: '#2563eb',
     suggested: '#22c55e',
+    hospitalPlayer: '#f97316',
+    hospitalSuggested: '#c084fc',
     casing: '#ffffff',
   });
 
   const state = {
     runKey: null,
+    responseLeg: null,
+    reviewGeneration: 0,
+    lineEntries: [],
     recording: false,
     completed: false,
     reviewOpen: false,
@@ -87,7 +92,7 @@
       #ptbo-compare-route-btn{display:none;margin-top:6px;background:#1d4ed8;border:1px solid #60a5fa;color:#fff}
       #ptbo-compare-route-btn:hover{background:#1e40af}
       #ptbo-compare-route-btn.is-open{background:#374151;border-color:#9ca3af}
-      #ptbo-route-legend{position:absolute;left:15px;top:118px;z-index:1400;width:min(280px,calc(100vw - 30px));padding:12px;color:#f8fafc;border:1px solid rgba(255,255,255,.24);border-radius:11px;background:rgba(7,17,31,.95);box-shadow:0 8px 28px rgba(0,0,0,.42);backdrop-filter:blur(6px)}
+      #ptbo-route-legend{position:absolute;left:15px;top:118px;z-index:1400;width:min(280px,calc(100vw - 30px));max-height:calc(100dvh - 210px);overflow:auto;padding:12px;color:#f8fafc;border:1px solid rgba(255,255,255,.24);border-radius:11px;background:rgba(7,17,31,.95);box-shadow:0 8px 28px rgba(0,0,0,.42);backdrop-filter:blur(6px)}
       #ptbo-route-legend.hidden{display:none}
       #ptbo-route-legend .compare-title{font-size:11px;font-weight:900;letter-spacing:.11em;text-transform:uppercase}
       #ptbo-route-legend .compare-subtitle{margin-top:3px;color:#cbd5e1;font-size:10px;line-height:1.35}
@@ -170,6 +175,7 @@
       });
     }
     state.layers = [];
+    state.lineEntries = [];
     state.playerLine = null;
     state.suggestedLine = null;
   }
@@ -182,6 +188,7 @@
   function resetRun() {
     closeReview({ silent: true });
     state.runKey = null;
+    state.responseLeg = null;
     state.recording = false;
     state.completed = false;
     state.start = null;
@@ -201,6 +208,10 @@
     const start = pointNow();
     if (!start) return;
     closeReview({ silent: true });
+    if (simulationState === STATES.TRANSPORTING && state.completed) {
+      state.responseLeg = {start:state.start,destination:state.destination,incident:state.incident,
+        points:[...state.points],playerDistance:state.playerDistance,elapsedMs:state.elapsedMs,suggestedRoute:null,routePromise:null};
+    } else if (simulationState === STATES.ENROUTE) state.responseLeg = null;
     state.runKey = incidentKey(activeIncident);
     state.recording = true;
     state.completed = false;
@@ -245,32 +256,19 @@
     state.completed = true;
   }
 
-  async function getSuggestedRoute() {
-    if (state.suggestedRoute) return state.suggestedRoute;
-    if (state.routePromise) return state.routePromise;
-    state.routePromise = (async () => {
-      for (let attempt = 0; attempt < 80; attempt += 1) {
-        const router = window.PTBO_ROUTE_REVEAL;
-        if (router?.calculateRoute) {
-          try { await router.ready; } catch (_) {}
-          try {
-            state.suggestedRoute = router.calculateRoute(
-              state.start.lat,
-              state.start.lng,
-              state.destination.lat,
-              state.destination.lng,
-            ) || null;
-          } catch (error) {
-            console.error('Suggested route comparison failed.', error);
-            state.suggestedRoute = null;
-          }
-          return state.suggestedRoute;
-        }
-        await new Promise(resolve => setTimeout(resolve, 100));
-      }
-      return null;
+  async function getSuggestedRoute(leg) {
+    if (leg.suggestedRoute) return leg.suggestedRoute;
+    if (leg.routePromise) return leg.routePromise;
+    leg.routePromise = (async () => {
+      const router=window.PTBO_ROUTE_REVEAL;
+      if (!router?.calculateRoute) return null;
+      try {
+        await router.ready;
+        leg.suggestedRoute=router.calculateRoute(leg.start.lat,leg.start.lng,leg.destination.lat,leg.destination.lng)||null;
+      } catch(error) { console.warn('Suggested route unavailable.',error); }
+      return leg.suggestedRoute;
     })();
-    return state.routePromise;
+    return leg.routePromise;
   }
 
   function simplify(points, toleranceMeters = 2.5) {
@@ -330,47 +328,33 @@
     line.setStyle({ opacity: visible ? (line._ptboVisibleOpacity ?? .34) : 0 });
   }
 
+  function reviewLegs() {
+    return state.responseLeg ? [
+      {leg:state.responseLeg,label:'Start → Call',player:COLORS.player,suggested:COLORS.suggested},
+      {leg:state,label:'Call → Hospital',player:COLORS.hospitalPlayer,suggested:COLORS.hospitalSuggested}
+    ] : [{leg:state,label:'Start → Call',player:COLORS.player,suggested:COLORS.suggested}];
+  }
+
   function buildLegend() {
     if (!state.legend) return;
-    const suggestedDistance = Number(state.suggestedRoute?.distance);
-    const difference = Number.isFinite(suggestedDistance) ? state.playerDistance - suggestedDistance : NaN;
-    const efficiency = Number.isFinite(suggestedDistance) && state.playerDistance > 0
-      ? Math.min(999, suggestedDistance / state.playerDistance * 100)
-      : NaN;
     state.legend.innerHTML = `
-      <div class="compare-title">Route Comparison</div>
-      <div class="compare-subtitle">Blue is your route · green is suggested · teal is shared. Street names remain visible beneath the highlights.</div>
-      <div class="compare-row">
-        <div class="compare-label"><span class="compare-swatch" style="background:${COLORS.player}"></span>Your Route</div>
-        <button type="button" data-toggle="player" aria-pressed="true">Hide</button>
-      </div>
-      <div class="compare-row">
-        <div class="compare-label"><span class="compare-swatch" style="background:${COLORS.suggested}"></span>Suggested Route</div>
-        <button type="button" data-toggle="suggested" aria-pressed="${state.suggestedRoute ? 'true' : 'false'}" ${state.suggestedRoute ? '' : 'disabled'}>Hide</button>
-      </div>
-      <div class="compare-stats">
-        Your distance: <strong>${formatDistance(state.playerDistance)}</strong><br>
-        Suggested distance: <strong>${formatDistance(suggestedDistance)}</strong><br>
-        Difference: <strong>${Number.isFinite(difference) ? `${difference >= 0 ? '+' : ''}${formatDistance(difference)}` : 'Unavailable'}</strong><br>
-        Efficiency: <strong>${Number.isFinite(efficiency) ? `${Math.round(efficiency)}%` : 'Unavailable'}</strong><br>
-        Response time: <strong>${formatTime(state.elapsedMs)}</strong>
-      </div>
-      ${state.suggestedRoute ? '' : '<div class="compare-status">Suggested route unavailable. Your completed route is still shown.</div>'}
-      <button class="compare-close" type="button">Close Comparison</button>
-    `;
-    state.legend.querySelector('[data-toggle="player"]')?.addEventListener('click', event => {
-      const showing = event.currentTarget.getAttribute('aria-pressed') !== 'false';
-      setLineVisible(state.playerLine, !showing);
-      event.currentTarget.setAttribute('aria-pressed', String(!showing));
-      event.currentTarget.textContent = showing ? 'Show' : 'Hide';
-    });
-    state.legend.querySelector('[data-toggle="suggested"]')?.addEventListener('click', event => {
-      const showing = event.currentTarget.getAttribute('aria-pressed') !== 'false';
-      setLineVisible(state.suggestedLine, !showing);
-      event.currentTarget.setAttribute('aria-pressed', String(!showing));
-      event.currentTarget.textContent = showing ? 'Show' : 'Hide';
-    });
-    state.legend.querySelector('.compare-close')?.addEventListener('click', () => closeReview());
+      <div class="compare-title">${state.responseLeg?'EMS · Both Legs':'Route Comparison'}</div>
+      <div class="compare-subtitle">Hide individual routes to inspect overlapping sections.</div>
+      ${reviewLegs().map(({leg,label},index)=>`
+        <div class="compare-stats"><strong>${label}</strong> · ${formatTime(leg.elapsedMs)}</div>
+        ${state.lineEntries.filter(entry=>entry.index===index).map((entry)=>`
+          <div class="compare-row"><div class="compare-label"><span class="compare-swatch" style="background:${entry.color}"></span>${entry.suggested?'Recommended':'Your drive'}</div>
+          <button type="button" data-line="${entry.key}" aria-label="Toggle ${label} ${entry.suggested?'recommended route':'your drive'}" aria-pressed="${Boolean(entry.line)}" ${entry.line?'':'disabled'}>${entry.line?'Hide':'Unavailable'}</button></div>`).join('')}
+        <div class="compare-subtitle">Your drive: ${formatDistance(leg.playerDistance)} · Recommended: ${formatDistance(leg.suggestedRoute?.distance)}</div>
+        ${leg.suggestedRoute?'':'<div class="compare-status">Recommended route unavailable for this leg. Your drive is still shown.</div>'}
+      `).join('')}
+      <button class="compare-close" type="button">Close Comparison</button>`;
+    state.legend.querySelectorAll('[data-line]').forEach(button=>button.addEventListener('click',()=>{
+      const entry=state.lineEntries.find(item=>item.key===button.dataset.line);
+      const visible=button.getAttribute('aria-pressed')!=='false';
+      setLineVisible(entry?.line,!visible);button.setAttribute('aria-pressed',String(!visible));button.textContent=visible?'Show':'Hide';
+    }));
+    state.legend.querySelector('.compare-close')?.addEventListener('click',()=>closeReview());
   }
 
   function setMobileControlsDisabled(disabled) {
@@ -408,28 +392,27 @@
     state.reviewOpen = true;
     setButtonVisible(true, 'Loading…');
     try { window.PTBO_ROUTE_REVEAL?.hideRoute?.(); } catch (_) {}
-    await Promise.race([getSuggestedRoute(), new Promise(resolve => setTimeout(resolve, 2200))]);
-
+    const generation=++state.reviewGeneration;
+    const key=state.runKey;
+    // Capture each leg independently. An old route promise may finish after reset.
+    const legs=reviewLegs().map(entry=>({...entry,leg:{...entry.leg,routePromise:null}}));
+    await Promise.race([Promise.all(legs.map(entry=>getSuggestedRoute(entry.leg))),new Promise(resolve=>setTimeout(resolve,2200))]);
+    if (!state.reviewOpen || state.reviewGeneration!==generation || state.runKey!==key) return;
+    legs.forEach(({leg},index)=>{const target=state.responseLeg&&index===0?state.responseLeg:state;target.suggestedRoute=leg.suggestedRoute;});
     clearLayers();
-    const playerPoints = simplify(state.points);
-    state.playerLine = drawPolyline(playerPoints, COLORS.player);
-    if (state.suggestedRoute?.coordinates?.length) {
-      state.suggestedLine = drawPolyline(state.suggestedRoute.coordinates, COLORS.suggested);
-    }
-    addLayer(L.circleMarker([state.start.lat, state.start.lng], {
-      radius: 7,
-      color: '#fff',
-      weight: 3,
-      fillColor: '#0f172a',
-      fillOpacity: 1,
-    }).bindTooltip('Dispatch Start', { direction: 'top' }));
-    addLayer(L.circleMarker([state.destination.lat, state.destination.lng], {
-      radius: 8,
-      color: '#fff',
-      weight: 3,
-      fillColor: '#dc2626',
-      fillOpacity: 1,
-    }).bindTooltip('Incident', { direction: 'top' }));
+    reviewLegs().forEach(({leg,player,suggested},index)=>{
+      const playerLine=drawPolyline(simplify(leg.points),player);
+      const suggestedLine=drawPolyline(leg.suggestedRoute?.coordinates,suggested);
+      state.lineEntries.push({key:`${index}-player`,index,line:playerLine,color:player,suggested:false},
+        {key:`${index}-suggested`,index,line:suggestedLine,color:suggested,suggested:true});
+    });
+    const start=state.responseLeg?.start||state.start;
+    const markers=[{point:start,label:'Dispatch Start',color:'#0f172a'},
+      {point:state.responseLeg?.destination||state.destination,label:'Call',color:'#dc2626'}];
+    if(state.responseLeg)markers.push({point:state.destination,label:'Hospital Drop-off',color:COLORS.hospitalPlayer});
+    for(const {point,label,color} of markers)addLayer(L.circleMarker([point.lat,point.lng],{
+      radius:7,color:'#fff',weight:3,fillColor:color,fillOpacity:1
+    }).bindTooltip(label,{direction:'top'}));
 
     const drivingCamera = window.PTBO_DRIVING_CAMERA;
     if (drivingCamera?.setReviewMode) {
@@ -454,6 +437,7 @@
 
   function closeReview({ silent = false } = {}) {
     state.reviewOpen = false;
+    state.reviewGeneration++;
     clearLayers();
     state.legend?.classList.add('hidden');
     setMobileControlsDisabled(false);
@@ -505,6 +489,7 @@
       open: openReview,
       close: closeReview,
       reset: resetRun,
+      sync,
     });
     window.dispatchEvent(new CustomEvent('ptbo-route-compare-ready', { detail: { version: VERSION } }));
   }

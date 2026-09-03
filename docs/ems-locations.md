@@ -51,7 +51,45 @@ hospital building centroid is deliberately not used as an unreachable target.
   Pickup and handover each take four seconds. This is the requested game rule;
   it is not a model of actual clinical transport decisions or treatment times.
 - Only completed assignments increment the call count. Response and transport
-  times are displayed separately. Route reveal and comparison support the hospital
-  leg; the final comparison displays that leg.
+  times are displayed separately. Route reveal supports the active leg; the final
+  comparison preserves both the response and hospital legs.
 - Cancelling increments an assignment generation and clears its timers so a late
   callback cannot finish a different call.
+
+
+## v1.6.2 editor and route update
+
+The Call & Base Editor has Calls, Bases and Hospital tabs. All existing Fire/EMS
+bases can be edited; additional bases receive stable IDs and service-specific
+numbers. Base centre coordinates are also the spawn point. A square side length
+(10–400 metres) and rotation (0–359 degrees) define a permanent drivable area,
+including return trips. Initial squares are 160 metres per side, gameplay areas
+rather than surveyed property boundaries. The editor requires the square to
+intersect the shipped road centreline network before saving.
+
+The hospital tab edits the drop-off name, address, coordinates and arrival radius.
+Its arrival circle must reach a mapped road. Hospital settings are captured at
+dispatch, so editing the destination during a call cannot move that call's target.
+
+Save on This Device persists edits locally for simulator testing. Export Changes
+is also available on mobile. The JSON format `ptbo-location-changes`, schema 1,
+contains separate `calls`, `bases` and `hospital` deltas against published data.
+Each delta contains `added` records, `updated` entries with stable `id`, `before`
+and field-only `changes`, and `deleted` IDs. Unchanged records are omitted.
+Exporting does not publish changes or clear them; send the file back for review
+and application to the source files. A source version is included. Existing
+call changes saved on the device are included, not just edits since page load.
+
+Base source values remain in `response-simulator/service-config.js` (optional
+`yardSize` / `yardRotation` override the defaults). `shared/base-locations.js`
+serves the editor and simulator, using `shared/location-changes.js` for deltas.
+Apply an exported patch by checking `before` values against current source, then
+changing only the supplied fields; never replace a database with the delta.
+The hospital record is in the same service configuration. Call records live in
+the compressed payload in `shared/dispatch-data-1.4.4.js`.
+
+EMS completion comparison now preserves both legs: blue for the player's drive
+to the call, green for its recommended route, orange for the player's hospital
+drive, and purple for its recommended route. Each route has its own hide/show
+control. Each leg reports its own elapsed time and distances. Fire retains two
+route colours. Recommended routes still come from the existing road graph.

@@ -38,6 +38,8 @@ function game() {
   });
   c.window=c;
   vm.runInContext(read('response-simulator/service-config.js'),c);
+  vm.runInContext(read('shared/location-changes.js'),c);
+  vm.runInContext(read('shared/base-locations.js'),c);
   for(const match of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi))if(!/\bsrc=/.test(match[1]))vm.runInContext(match[2],c);
   c.map={getZoom:()=>19,setView(){},invalidateSize(){},removeLayer(){},
     distance:(a,b)=>Math.hypot((a[0]-b[0])*110540,(a[1]-b[1])*111320*Math.cos(a[0]*Math.PI/180))};
@@ -157,4 +159,107 @@ test('route guidance can calculate a connected hospital trip from each EMS base'
     assert.ok(route&&route.coordinates.length>2,base.name);
     assert.ok(route.distance>500,base.name);
   }
+});
+
+test('square yards allow all corners and return trips, stop off-yard shortcuts, and avoid road snapping',async()=>{
+  const g=game();vm.runInContext(read('response-simulator/road-collision-core.js'),g.c);await g.c.PTBO_ROAD_COLLISION.ready;
+  const store=g.c.PTBO_BASE_STORE,collision=g.c.PTBO_ROAD_COLLISION;
+  for(const base of store.getAll()) {
+    assert.ok(store.roadAccess(base,roads),`${base.name} square must meet the road`);
+    for(const [lat,lng] of store.corners(base))assert.equal(collision.isPointDrivable(lat,lng),true);
+    collision.beginStationExit(base.lat,base.lng);
+    assert.equal(collision.state.stationExit,null,'square does not use a temporary exit corridor');
+    const [lat,lng]=store.corners({...base,yardSize:base.yardSize-2})[0];
+    const move=collision.resolveMovement(base.lat,base.lng,lat,lng,.00001);
+    assert.equal(move.blocked,false);assert.equal(move.snapped,false);
+    const back=collision.resolveMovement(lat,lng,base.lat,base.lng,.00001);
+    assert.equal(back.blocked,false);
+  }
+  const base=store.getAll()[0];
+  g.run(`simLat=${base.lat};simLng=${base.lng};`);
+  assert.equal(collision.snapVehicleToRoad(),false);
+  const far=collision.resolveMovement(base.lat,base.lng,base.lat+.01,base.lng,.00001);
+  assert.equal(far.blocked,true,'sweep must not tunnel through terrain beyond the square');
+});
+
+test('rotated yard corners use the same geometry for drawing and collision',()=>{
+  const g=game(),store=g.c.PTBO_BASE_STORE,base={...store.getAll()[0],yardSize:40,yardRotation:45};
+  for(const [lat,lng] of store.corners(base))assert.equal(store.contains(base,lat,lng),true);
+  assert.equal(store.contains(base,base.lat+30/110540,base.lng),false);
+  assert.equal(store.contains(base,base.lat+20/110540,base.lng),true);
+});
+
+test('base edits and additions persist as changes only and spawn through the service API',()=>{
+  const g=game(),saved=new Map();g.c.localStorage.getItem=key=>saved.get(key)||null;g.c.localStorage.setItem=(key,value)=>saved.set(key,value);
+  const store=g.c.PTBO_BASE_STORE,list=store.getAll();list[0].name='Edited Station';
+  list.push({...list[0],id:'new-ems-base',service:'ems',number:7,name:'Additional EMS Base'});store.replaceAll(list);
+  const delta=JSON.parse(saved.get(store.storageKey));
+  assert.deepEqual(delta.updated[0].changes,{name:'Edited Station'});assert.equal(delta.added.length,1);
+  vm.runInContext(read('shared/base-locations.js'),g.c);
+  g.service.select('ems');assert.equal(g.service.spawn(7),true);assert.equal(g.service.getBase().id,'new-ems-base');
+  assert.equal(g.c.PTBO_BASE_STORE.getAll()[0].name,'Edited Station');
+  const before=g.c.PTBO_BASE_STORE.getAll();g.c.localStorage.setItem=()=>{throw Error('Full');};
+  assert.throws(()=>g.c.PTBO_BASE_STORE.replaceAll([...before,{...before[0],id:'another',number:9}]),/could not be saved/);
+  assert.equal(g.c.PTBO_BASE_STORE.getAll().length,before.length);
+});
+
+test('changed hospital location and name are used for the entire EMS assignment',()=>{
+  const g=game(),store=g.c.PTBO_BASE_STORE;
+  store.saveHospital({...store.getHospital(),name:'Edited Hospital Drop-off',addr:'Edited Access Road',lat:44.301,lng:-78.3462,radius:45});
+  g.service.select('ems');g.run('triggerDispatchWorkflow()');
+  // A later editor change applies to the next call, not an active assignment.
+  store.saveHospital({...store.getHospital(),name:'Later edit',lat:44.302});
+  g.arrive();g.transition();
+  assert.equal(g.run('activeIncident.name'),'Edited Hospital Drop-off');
+  assert.equal(g.run('activeArrivalPoint.lat'),44.301);assert.equal(g.run('activeArrivalRadius'),45);
+  assert.match(g.element('hud-content').innerHTML,/Edited Access Road/);
+  assert.match(g.service.dispatchPhrase(g.run('activeIncident')),/Edited Hospital Drop-off, Edited Access Road/);
+});
+
+test('change exports omit untouched records, record fields/deletions, and remove reverted edits',()=>{
+  const {diff,count}=require('../shared/location-changes.js');
+  const baseline=[{id:'a',name:'A',lat:1},{id:'b',name:'B',lat:2}];
+  assert.equal(count(diff(baseline,baseline)),0);
+  const delta=diff(baseline,[{...baseline[0],lat:3},{id:'c',name:'C',lat:4}]);
+  assert.deepEqual(delta.updated,[{id:'a',before:{lat:1},changes:{lat:3}}]);
+  assert.deepEqual(delta.deleted,[{id:'b'}]);assert.equal(delta.added.length,1);
+  assert.equal(count(diff(baseline,[{...baseline[0]}, {...baseline[1]}])),0);
+});
+
+function comparisonGame() {
+  const g=game();
+  g.c.document.querySelector=selector=>selector==='.hud-timer-block'?g.element('timer-block'):null;
+  for(const id of ['ptbo-route-legend','ptbo-compare-route-btn']){g.element(id).isConnected=true;g.element(id).querySelectorAll=()=>[];}
+  const line=(points,options)=>({points,options,addTo(){return this;},setStyle(style){Object.assign(this.options,style);},bindTooltip(){return this;}});
+  Object.assign(g.c.L,{polyline:line,circleMarker:line,featureGroup:()=>({getBounds:()=>({isValid:()=>true})})});
+  g.c.map.fitBounds=()=>{};
+  g.c.PTBO_ROUTE_REVEAL={ready:Promise.resolve(),hideRoute(){},calculateRoute:(a,b,c,d)=>({coordinates:[[a,b],[c,d]],distance:100})};
+  vm.runInContext(read('response-simulator/route-compare-1.4.2.js'),g.c);
+  return g;
+}
+
+test('EMS comparison retains both actual drives and both recommended routes with four colours',async()=>{
+  const g=comparisonGame(),compare=g.c.PTBO_ROUTE_COMPARE;
+  g.service.select('ems');g.run('triggerDispatchWorkflow()');g.advance(9000);g.arrive();
+  const sceneEnd=compare.state.destination;g.transition();
+  assert.ok(compare.state.responseLeg);assert.equal(compare.state.responseLeg.elapsedMs,9000);
+  assert.deepEqual(compare.state.responseLeg.destination,sceneEnd);
+  g.advance(15000);g.arrive();g.transition();compare.sync();await compare.open();
+  assert.equal(compare.state.lineEntries.length,4);
+  assert.equal(new Set(compare.state.lineEntries.map(x=>x.color)).size,4);
+  for(const entry of compare.state.lineEntries)assert.ok(entry.line);
+  assert.match(g.element('ptbo-route-legend').innerHTML,/Start → Call/);
+  assert.match(g.element('ptbo-route-legend').innerHTML,/Call → Hospital/);
+  assert.equal(compare.state.elapsedMs,15000);
+  g.service.spawn(1);assert.equal(compare.state.responseLeg,null);assert.equal(compare.state.layers.length,0);
+});
+
+test('Fire comparison remains two routes and stale asynchronous reviews cannot reopen after reset',async()=>{
+  const g=comparisonGame(),compare=g.c.PTBO_ROUTE_COMPARE;
+  g.service.select('fire');g.run('triggerDispatchWorkflow()');g.arrive();g.transition();compare.sync();await compare.open();
+  assert.equal(compare.state.lineEntries.length,2);compare.close();
+  let resolve;g.c.PTBO_ROUTE_REVEAL.ready=new Promise(done=>resolve=done);
+  compare.state.suggestedRoute=null;
+  const review=compare.open();compare.reset();resolve();await review;
+  assert.equal(compare.state.reviewOpen,false);assert.equal(compare.state.layers.length,0);
 });

@@ -33,7 +33,7 @@ test('all production HTML inline scripts and changed gameplay modules parse', ()
       if (!/\bsrc=/.test(match[1]) && !/type="module"/.test(match[1])) new vm.Script(match[2], { filename: file });
     }
   }
-  for (const folder of ['shared','response-simulator']) {
+  for (const folder of ['shared','response-simulator','dispatch-editor']) {
     for (const name of fs.readdirSync(path.join(root, folder)).filter(n => n.endsWith('.js'))) {
       const source = read(`${folder}/${name}`);
       if (!/^\s*(import |export )/m.test(source)) new vm.Script(source, { filename: name });

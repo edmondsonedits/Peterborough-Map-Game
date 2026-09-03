@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.0';
+  const VERSION = '1.6.2';
   if (window.PTBO_ROAD_COLLISION_BOOTSTRAP_READY) return;
 
   window.PTBO_ROAD_COLLISION_BOOTSTRAP = true;

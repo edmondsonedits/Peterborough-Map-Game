@@ -7,7 +7,7 @@
   const state = {mode:'fire',selected:false,baseNumber:1};
   const savedFilters = new Map();
   const getProfile = () => config.profiles[state.mode];
-  const getBases = () => getProfile().bases;
+  const getBases = () => window.PTBO_BASE_STORE?.getBases(state.mode) || getProfile().bases;
   const getBase = () => getBases().find(base => base.number === state.baseNumber) || getBases()[0];
 
   function updateControls() {
@@ -31,16 +31,23 @@
       parent.ptboSetSelectedStation?.(state.baseNumber);
       parent.document.documentElement.dataset.service = state.mode;
       const shortcuts = parent.document.querySelector('.station-shortcuts');
-      if (shortcuts) shortcuts.style.gridTemplateColumns = `repeat(${getBases().length},minmax(0,1fr))`;
-      parent.document.querySelectorAll('.station-button').forEach((button,index) => {
-        const base = getBases()[index];
-        button.hidden = !base;
-        if (!base) return;
+      if (shortcuts) {
+        shortcuts.style.gridTemplateColumns = `repeat(${getBases().length},minmax(65px,1fr))`;
+        shortcuts.style.overflowX = 'auto';
+        shortcuts.replaceChildren(...getBases().map(base => {
+        const button = parent.document.createElement('button');
+        button.type = 'button';
+        button.className = 'station-button';
+        button.classList.toggle('active',base.number === state.baseNumber);
+        button.dataset.station = base.number;
         button.textContent = base.shortName;
         button.title = `${getProfile().label}: ${base.name} — ${base.address}`;
         button.setAttribute('aria-label', `${getProfile().label}: ${base.name}`);
         button.setAttribute('aria-pressed', String(base.number === state.baseNumber));
-      });
+        button.addEventListener('click',() => {spawn(base.number);window.mobileRecenter?.();});
+        return button;
+        }));
+      }
     } catch (_) {}
     const label = document.getElementById('vehicle-size-label');
     if (label) label.textContent = `${getProfile().vehicle} display size`;
@@ -50,7 +57,7 @@
     document.getElementById('hud-content').innerHTML = `
       <div class="hud-title">${getProfile().label} / AVAILABLE</div>
       <p class="hud-address">${escapeDispatchText(getBase().name)}</p>
-      <div class="hud-meta">${state.mode === 'ems' ? 'Respond to the scene, then transport to PRHC.' : 'Choose a station and respond to calls across the city.'}</div>`;
+      <div class="hud-meta">${state.mode === 'ems' ? 'Respond to the scene, then transport to hospital.' : 'Choose a station and respond to calls across the city.'}</div>`;
   }
 
   function spawn(number) {
@@ -80,14 +87,14 @@
     });
     document.documentElement.dataset.service = mode;
     updateVehicleChassis();
-    spawn(1);
+    spawn(getBases()[0].number);
     window.dispatchEvent(new CustomEvent('ptbo-service-change',{detail:{mode}}));
     return true;
   }
 
   function dispatchPhrase(incident) {
     if (state.mode !== 'ems' || !incident) return null;
-    if (incident.sub === 'Hospital Transport') return 'Ambulance crew, patient ready for transport. Proceed to Peterborough Regional Health Centre, 1 Hospital Drive.';
+    if (incident.sub === 'Hospital Transport') return `Ambulance crew, patient ready for transport. Proceed to ${incident.name}, ${incident.addr}.`;
     return `Ambulance crew from ${getBase().name}, respond to ${incident.name}, ${incident.addr}, for ${incident.sub}.`;
   }
 
@@ -106,4 +113,14 @@
   }
 
   window.PTBO_SERVICE = Object.freeze({state,config,getProfile,getBases,getBase,select,spawn,updateControls,dispatchPhrase,ambulanceSvg});
+  let yardLayer;
+  function showBaseYards() {
+    if (!window.PTBO_BASE_STORE || typeof mapInstance === 'undefined' || !mapInstance || !L.layerGroup) return;
+    if (yardLayer) mapInstance.removeLayer(yardLayer);
+    yardLayer = L.layerGroup(window.PTBO_BASE_STORE.getAll().map(base =>
+      L.polygon(window.PTBO_BASE_STORE.corners(base),{color:base.service==='ems'?'#38bdf8':'#fb7185',weight:1.5,fillOpacity:0.08,interactive:false}))).addTo(mapInstance);
+  }
+  window.addEventListener('ptbo-road-collision-ready',showBaseYards);
+  window.addEventListener('ptbo-bases-updated',() => {showBaseYards();updateControls();});
+  showBaseYards();
 })();

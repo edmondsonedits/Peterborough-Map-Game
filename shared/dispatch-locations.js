@@ -490,6 +490,7 @@
   window.PTBO_DISPATCH_STORE = Object.freeze({
     ready,
     getAll,
+    getSeed: () => clone(seed),
     replaceAll,
     upsert,
     remove,

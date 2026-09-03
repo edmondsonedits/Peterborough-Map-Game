@@ -123,12 +123,12 @@
     removeLegacyEditorControls(doc);
     loadSimulatorTool(doc, 'camera-fix.js?v=1.5.10', 'data-ptbo-smooth-camera', 'Unable to load the stable simulator camera base.');
     loadSimulatorTool(doc, 'smooth-driving-camera-1.4.19.js?v=1.5.10', 'data-ptbo-driving-camera', 'Unable to load the Fixed Map and Driving View camera.');
-    loadSimulatorTool(doc, 'road-collision.js?v=1.6.0', 'data-ptbo-road-collision', 'Unable to load the Peterborough road boundary system.');
+    loadSimulatorTool(doc, 'road-collision.js?v=1.6.2', 'data-ptbo-road-collision', 'Unable to load the Peterborough road boundary system.');
     loadSimulatorTool(doc, 'speed-streak.js?v=1.5.10', 'data-ptbo-speed-streak', 'Unable to load the collision speed streak system.');
-    loadSimulatorTool(doc, 'vehicle-instruments.js?v=1.6.0', 'data-ptbo-vehicle-instruments', 'Unable to load the speedometer and mobile steering systems.');
+    loadSimulatorTool(doc, 'vehicle-instruments.js?v=1.6.2', 'data-ptbo-vehicle-instruments', 'Unable to load the speedometer and mobile steering systems.');
     loadSimulatorTool(doc, 'max-speed.js?v=1.5.10', 'data-ptbo-max-speed', 'Unable to load the max speed tracker.');
-    loadSimulatorTool(doc, 'route-reveal.js?v=1.6.0', 'data-ptbo-route-reveal', 'Unable to load the Peterborough route answer system.');
-    loadSimulatorTool(doc, 'route-compare.js?v=1.6.0', 'data-ptbo-route-compare', 'Unable to load the post-call route comparison system.');
+    loadSimulatorTool(doc, 'route-reveal.js?v=1.6.2', 'data-ptbo-route-reveal', 'Unable to load the Peterborough route answer system.');
+    loadSimulatorTool(doc, 'route-compare.js?v=1.6.2', 'data-ptbo-route-compare', 'Unable to load the post-call route comparison system.');
 
     const apply = async () => {
       await store.ready();
