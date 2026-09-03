@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.5.12';
+  const VERSION = '1.5.13';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
 

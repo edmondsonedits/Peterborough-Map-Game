@@ -32,18 +32,18 @@ test('mobile starts at maximum zoom; desktop camera is untouched',()=>{
   const desktop=camera({mobile:false});assert.equal(desktop.map.zoom,17);assert.equal(desktop.api.state.installed,false);
 });
 
-test('exact speed thresholds yield 19 → 18 → 17 → 16 → 15, including the gear-three cap',()=>{
+test('exact speed thresholds yield 19 → 18 → 17 → 16, including the gear-three cap',()=>{
   const s=camera();let time=2000;
-  for(const [speed,zoom] of [[149.999,19],[150,18],[299.999,18],[300,17],[449.999,17],[450,16],[599.999,16],[600,15],[999,15]]) {
+  for(const [speed,zoom] of [[149.999,19],[150,18],[299.999,18],[300,17],[449.999,17],[450,16],[599.999,16],[600,16],[999,16]]) {
     s.frame(speed,time);time+=2000;assert.equal(s.map.zoom,zoom,`${speed} km/h`);
   }
-  assert.deepEqual(s.changes,[19,18,17,16,15]);
+  assert.deepEqual(s.changes,[19,18,17,16]);
 });
 
 test('zoom follows actual physics speed despite stale instrument values and old disabled flags',()=>{
   const s=camera();s.frame(0,2000);assert.equal(s.map.zoom,19);
   s.c.PTBO_VEHICLE_INSTRUMENTS.state.speedKmh=0;
-  s.frame(600,4000);assert.equal(s.map.zoom,15);
+  s.frame(600,4000);assert.equal(s.map.zoom,16);
 });
 
 test('15 km/h hysteresis and a short settling delay prevent threshold flicker',()=>{
@@ -56,14 +56,14 @@ test('15 km/h hysteresis and a short settling delay prevent threshold flicker',(
 });
 
 test('recenter retains the speed-appropriate view and returns to maximum zoom at rest',()=>{
-  const s=camera();s.frame(600,2000);s.api.resetZoom();assert.equal(s.map.zoom,15);
+  const s=camera();s.frame(600,2000);s.api.resetZoom();assert.equal(s.map.zoom,16);
   s.c.velocity=0;s.api.resetZoom();assert.equal(s.map.zoom,19);
 });
 
 test('route review is not overwritten by the speed camera',()=>{
   const s=camera();s.c.PTBO_ROUTE_COMPARE.state.reviewOpen=true;s.map.zoom=13;
   s.frame(600,2000);assert.equal(s.map.zoom,13);
-  s.c.PTBO_ROUTE_COMPARE.state.reviewOpen=false;s.frame(600,4000);assert.equal(s.map.zoom,15);
+  s.c.PTBO_ROUTE_COMPARE.state.reviewOpen=false;s.frame(600,4000);assert.equal(s.map.zoom,16);
 });
 
 test('slowing before imagery finishes cancels the outdated zoom-out request',()=>{

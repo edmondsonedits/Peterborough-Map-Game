@@ -29,7 +29,7 @@
   The loader uses this value to identify the current camera module and to avoid
   installing the same module twice.
   */
-  const VERSION = '1.5.12';
+  const VERSION = '1.5.13';
   if (window.PTBO_STABLE_MOBILE_CAMERA?.version === VERSION) return;
 
   /* =========================================================
@@ -56,11 +56,11 @@
      Hard limits that keep the map within useful Leaflet zoom levels.
      ========================================================= */
   const CONFIG = Object.freeze({
-    enterSpeedsKmh: Object.freeze([150, 300, 450, 600]),
-    exitSpeedsKmh: Object.freeze([135, 285, 435, 585]),
+    enterSpeedsKmh: Object.freeze([150, 300, 450]),
+    exitSpeedsKmh: Object.freeze([135, 285, 435]),
     changeDelayMs: 350,
     minimumChangeIntervalMs: 1250,
-    minimumZoom: 15,
+    minimumZoom: 16,
     maximumZoom: 19,
   });
 
@@ -130,7 +130,7 @@
     return Math.max(0, Number(instruments?.state?.speedKmh) || 0);
   }
 
-  // All four bands are required, regardless of saved handling-preset zoom settings.
+  // All three bands are required, regardless of saved handling-preset zoom settings.
   function maximumLevels() { return CONFIG.enterSpeedsKmh.length; }
 
   /*
@@ -238,7 +238,7 @@
     if (toggle) {
       toggle.checked = true;
       toggle.disabled = true;
-      toggle.title = 'Zooms out at 150, 300, 450 and 600 km/h.';
+      toggle.title = 'Zooms out at 150, 300 and 450 km/h.';
     }
 
     const lookAheadInput = document.getElementById('ptbo-arcade-cameraLookAheadMeters');
@@ -247,7 +247,7 @@
 
     const note = document.getElementById('ptbo-arcade-note');
     if (note) {
-      note.textContent = 'Camera starts fully zoomed in. It zooms out one step at 150, 300, 450 and 600 km/h, then holds that view above 600. Slowing down brings the view closer, with a 15 km/h buffer to prevent flicker. Gear shifts alone do not change zoom.';
+      note.textContent = 'Camera starts fully zoomed in. It zooms out one step at 150, 300 and 450 km/h, then holds that view above 450. Slowing down brings the view closer, with a 15 km/h buffer to prevent flicker. Gear shifts alone do not change zoom.';
     }
   }
 

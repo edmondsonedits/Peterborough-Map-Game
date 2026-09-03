@@ -20,7 +20,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.5.12';
+  const VERSION = '1.5.13';
   if (window.PTBO_SATELLITE_MAP?.version === VERSION) return;
 
   const ESRI_IMAGERY_URL = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';

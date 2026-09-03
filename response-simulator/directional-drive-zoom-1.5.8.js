@@ -1,5 +1,5 @@
 /* =========================================================
-   RESPONSE SIMULATOR — DIRECTIONAL DRIVE + GEAR SPEED v1.5.12
+   RESPONSE SIMULATOR — DIRECTIONAL DRIVE + GEAR SPEED v1.5.13
 
    Mobile default behaviour:
    - Directional thumbstick points the truck AND supplies forward drive.
@@ -17,7 +17,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.5.12';
+  const VERSION = '1.5.13';
   if (window.PTBO_DIRECTIONAL_DRIVE_ZOOM?.version === VERSION) return;
 
   const DIRECTIONAL_MODE = 'directional';
@@ -482,7 +482,7 @@
     wrapStationTeleport();
     syncParentUi();
 
-    // Run after wrapper recenter/startup helpers so v1.5.12 owns the initial view.
+    // Run after wrapper recenter/startup helpers so v1.5.13 owns the initial view.
     setTimeout(() => {
       disableLegacySpeedZoom();
       applyNorthUp();
