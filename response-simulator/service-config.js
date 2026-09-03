@@ -1,7 +1,7 @@
 /* Generic service-config compatibility loader.
-   Production city data lives under cities/<id>/. The small Peterborough fallback
-   below exists only for Node tests/standalone legacy embeds that cannot load an
-   external city package; normal browser startup replaces it with package.js. */
+   Production city data lives under cities/<id>/. Peterborough is fully synchronous;
+   base-training cities preload their shared package factory before their city file
+   so the rest of the simulator always sees a city/service config during parsing. */
 (() => {
   'use strict';
   const VERSION = '1.6.8';
@@ -24,10 +24,11 @@
     };
     const serviceConfig = {profiles,hospital,alarmCategories};
     const cityPackage = {
-      schemaVersion:2,version:VERSION,id:'peterborough',name:'Peterborough',province:'Ontario',country:'Canada',playable:true,status:'playable',
+      schemaVersion:3,version:VERSION,id:'peterborough',name:'Peterborough',province:'Ontario',country:'Canada',playable:true,status:'playable',
+      features:{baseTraining:false,dispatch:true,roadBoundaries:true,routeGuidance:true,hospitalTransport:true},
       map:{defaultCenter:[44.300871,-78.322206],defaultHeading:180,defaultZoom:15,minZoom:10,maxZoom:19,bounds:[[44.20,-78.45],[44.45,-78.20]]},
-      roads:{dataUrl:'../city-explorer/data/osm-public-roads.geojson',center:[44.3091,-78.3197],gridSize:80,sweepStep:1.35,shoulderTolerance:1.35,spawnSnapDistance:120,stationExitSearchDistance:120,stationExitCorridorHalfWidth:8,stationExitStartPadding:4,defaultLaneAssist:0.60,collisionVelocityRetention:0.42},
-      dispatch:{controlName:'Peterborough Control',dataVersion:'1.4.20',available:true},serviceConfig,
+      roads:{available:true,dataUrl:'../city-explorer/data/osm-public-roads.geojson',center:[44.3091,-78.3197],gridSize:80,sweepStep:1.35,shoulderTolerance:1.35,spawnSnapDistance:120,stationExitSearchDistance:120,stationExitCorridorHalfWidth:8,stationExitStartPadding:4,defaultLaneAssist:0.60,collisionVelocityRetention:0.42},
+      dispatch:{available:true,controlName:'Peterborough Control',dataVersion:'1.4.20'},serviceConfig,
     };
     return {serviceConfig,cityPackage};
   }
@@ -56,16 +57,46 @@
   const cityId = /^[a-z0-9-]+$/.test(requested) ? requested : 'peterborough';
   const sourceUrl = new URL(document.currentScript.src, location.href);
   const packageUrl = new URL(`../cities/${cityId}/package.js?v=${VERSION}`, sourceUrl).href;
+  const previewFactoryUrl = new URL(`../cities/preview-package-factory.js?v=${VERSION}`, sourceUrl).href;
   window.PTBO_REQUESTED_CITY = cityId;
 
+  const scriptTag = url => `<script src="${url.replace(/&/g,'&amp;')}"><\/script>`;
   if (document.readyState === 'loading' && typeof document.write === 'function') {
-    document.write(`<script src="${packageUrl.replace(/&/g,'&amp;')}"><\/script>`);
+    // The original HTML loads base-locations immediately after this file. Writing
+    // both tags here guarantees factory -> selected package -> base store order.
+    if (cityId !== 'peterborough') document.write(scriptTag(previewFactoryUrl));
+    document.write(scriptTag(packageUrl));
     return;
   }
 
-  const script = document.createElement('script');
-  script.src = packageUrl;
-  script.dataset.ptboCityPackage = cityId;
-  script.onerror = () => console.error(`Unable to load city package: ${cityId}`);
-  document.head.appendChild(script);
+  function load(url, marker) {
+    return new Promise((resolve,reject) => {
+      const existing = document.querySelector(`script[${marker}]`);
+      if (existing) {
+        if (existing.dataset.ptboLoaded === 'true') return resolve(existing);
+        existing.addEventListener('load',()=>resolve(existing),{once:true});
+        existing.addEventListener('error',()=>reject(new Error(`Unable to load ${url}.`)),{once:true});
+        return;
+      }
+      const script = document.createElement('script');
+      script.src = url;
+      script.setAttribute(marker,'true');
+      script.onload = () => { script.dataset.ptboLoaded='true'; resolve(script); };
+      script.onerror = () => reject(new Error(`Unable to load ${url}.`));
+      document.head.appendChild(script);
+    });
+  }
+
+  (async () => {
+    try {
+      if (cityId !== 'peterborough' && window.PTBO_PREVIEW_CITY_FACTORY?.version !== VERSION) {
+        await load(previewFactoryUrl,'data-ptbo-preview-factory');
+      }
+      await load(packageUrl,'data-ptbo-city-package');
+    } catch (error) {
+      window.PTBO_CITY_PACKAGE_LOAD_ERROR = error;
+      console.error(`Unable to load city package: ${cityId}`, error);
+      window.dispatchEvent(new CustomEvent('ptbo-city-package-error',{detail:{id:cityId,version:VERSION,error}}));
+    }
+  })();
 })();
