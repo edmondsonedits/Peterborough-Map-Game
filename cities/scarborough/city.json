@@ -1,12 +1,13 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "scarborough",
   "name": "Scarborough",
   "province": "Ontario",
   "country": "Canada",
-  "status": "planned",
-  "playable": false,
-  "note": "Unavailable — city data has not been completed and verified yet.",
-  "map": { "defaultCenter": null, "defaultZoom": 15, "minZoom": 10, "maxZoom": 19 },
-  "data": { "boundaries": null, "roads": null, "dispatchLocations": null, "serviceConfig": null, "bases": null, "hospitals": null }
+  "status": "base-training",
+  "playable": true,
+  "note": "Fire and EMS base training available. Dispatch calls unavailable.",
+  "map": { "defaultCenter": [43.7764, -79.2318], "defaultZoom": 14, "minZoom": 10, "maxZoom": 19 },
+  "features": { "baseTraining": true, "dispatch": false, "roadBoundaries": false, "routeGuidance": false },
+  "data": { "boundaries": null, "roads": null, "dispatchLocations": "dispatch-data.js", "serviceConfig": "package.js", "bases": "package.js", "hospitals": null }
 }
