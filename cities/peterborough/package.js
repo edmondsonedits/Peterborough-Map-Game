@@ -1,7 +1,7 @@
 /* Peterborough city package — authoritative geographic/service configuration. */
 (() => {
   'use strict';
-  const VERSION = '1.6.5';
+  const VERSION = '1.6.8';
   if (window.PTBO_CITY_PACKAGE?.id === 'peterborough' && window.PTBO_CITY_PACKAGE?.version === VERSION) return;
 
   const sourceUrl = new URL(document.currentScript?.src || location.href, location.href);
@@ -40,6 +40,7 @@
   });
 
   const roads = Object.freeze({
+    available:true,
     dataUrl:new URL('../../city-explorer/data/osm-public-roads.geojson', sourceUrl).href,
     sourceAsset:'city-explorer/data/osm-public-roads.geojson',
     center:Object.freeze([44.3091,-78.3197]),
@@ -55,15 +56,17 @@
   });
 
   const dispatch = Object.freeze({
+    available:true,
     controlName:'Peterborough Control',
     dataVersion:'1.4.20',
     descriptorUrl:new URL('./dispatch-data.js', sourceUrl).href,
     legacyAsset:'shared/dispatch-data-1.4.4.js',
   });
 
+  const features = Object.freeze({baseTraining:false,dispatch:true,roadBoundaries:true,routeGuidance:true,hospitalTransport:true});
   const serviceConfig = Object.freeze({ profiles, hospital, alarmCategories });
   const cityPackage = Object.freeze({
-    schemaVersion:2,
+    schemaVersion:3,
     version:VERSION,
     id:'peterborough',
     name:'Peterborough',
@@ -71,6 +74,7 @@
     country:'Canada',
     playable:true,
     status:'playable',
+    features,
     map,
     roads,
     dispatch,
@@ -84,5 +88,6 @@
   window.getPtboStation = number => fireBases.find(station => station.number === Number(number));
   document.documentElement.dataset.city = cityPackage.id;
   document.documentElement.dataset.cityPackageVersion = VERSION;
+  document.documentElement.dataset.dispatchAvailable = 'true';
   window.dispatchEvent(new CustomEvent('ptbo-city-package-ready', { detail:{ id:cityPackage.id, version:VERSION } }));
 })();
