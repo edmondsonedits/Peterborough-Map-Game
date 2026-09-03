@@ -1,311 +1,101 @@
 <!doctype html>
-<!-- =========================================================
-     DESKTOP RESPONSE-SIMULATOR WRAPPER — v1.6.3
-
-     Adds desktop-specific dispatch voice, quick base shortcuts, emergency-light
-     and recenter controls, protected startup, route review, and a truck-follow
-     camera that starts at zoom 19 and steps out once at 500 km/h.
-     ========================================================= -->
+<!-- DESKTOP RESPONSE-SIMULATOR WRAPPER — city-package runtime v1.6.5 -->
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#111827">
-  <title>Peterborough Dispatch Simulator</title>
+  <title>Emergency Dispatch Simulator</title>
   <style>
     :root{color-scheme:dark;--panel:rgba(8,13,24,.96);--border:rgba(255,255,255,.2);--ink:#f8fafc;--muted:#cbd5e1}
     *{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#111827;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
     #simulator{position:fixed;inset:0;width:100%;height:100%;border:0;background:#111827}
-
     .desktop-action{position:fixed;z-index:5000;width:42px;height:42px;display:grid;place-items:center;padding:0;color:var(--ink);border:1px solid var(--border);border-radius:12px;background:var(--panel);box-shadow:0 6px 20px #0006;cursor:pointer;transition:transform .12s,background .12s,border-color .12s,color .12s}
-    .desktop-action:hover{background:rgba(30,41,59,.98);border-color:rgba(255,255,255,.34)}
-    .desktop-action:active{transform:scale(.94)}
-    .desktop-action:focus-visible,.station-button:focus-visible{outline:3px solid #7dd3fc;outline-offset:2px}
-    .desktop-action svg{width:22px;height:22px;stroke:currentColor}
-    #audio-button{top:15px;right:145px}
-    #siren-button{top:15px;right:195px}
-    #recenter-button{right:15px;bottom:128px}
+    .desktop-action:hover{background:rgba(30,41,59,.98);border-color:rgba(255,255,255,.34)}.desktop-action:active{transform:scale(.94)}
+    .desktop-action:focus-visible,.station-button:focus-visible{outline:3px solid #7dd3fc;outline-offset:2px}.desktop-action svg{width:22px;height:22px;stroke:currentColor}
+    #audio-button{top:15px;right:145px}#siren-button{top:15px;right:195px}#recenter-button{right:15px;bottom:128px}
     .speaker-off{display:none}#audio-button.muted{color:#9ca3af}#audio-button.muted .speaker-on{display:none}#audio-button.muted .speaker-off{display:block}
     #siren-button.active{color:#fff;border-color:rgba(239,68,68,.85);background:rgba(185,28,28,.96);box-shadow:0 0 0 1px rgba(239,68,68,.18),0 6px 20px #0007}
-
-    /* service-mode.js automatically fills this area with the current Fire/EMS bases. */
-    .station-shortcuts{position:fixed;top:68px;left:15px;z-index:5000;width:min(215px,calc(100vw - 30px));display:grid;grid-template-columns:repeat(3,minmax(65px,1fr));gap:6px;pointer-events:auto;scrollbar-width:none}
-    .station-shortcuts::-webkit-scrollbar{display:none}
-    .station-button{min-width:0;height:38px;padding:0 7px;color:#e5e7eb;border:1px solid var(--border);border-radius:10px;background:rgba(8,13,24,.94);box-shadow:0 5px 16px rgba(0,0,0,.34);font:inherit;font-size:10px;font-weight:850;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
-    .station-button:hover{background:rgba(30,41,59,.98)}
-    .station-button.active{color:#fff;border-color:rgba(239,68,68,.8);background:rgba(185,28,28,.96)}
-    html[data-service=ems] .station-button.active{border-color:#38bdf8;background:#075985}
-
+    .station-shortcuts{position:fixed;top:68px;left:15px;z-index:5000;width:min(215px,calc(100vw - 30px));display:grid;grid-template-columns:repeat(3,minmax(65px,1fr));gap:6px;pointer-events:auto;scrollbar-width:none}.station-shortcuts::-webkit-scrollbar{display:none}
+    .station-button{min-width:0;height:38px;padding:0 7px;color:#e5e7eb;border:1px solid var(--border);border-radius:10px;background:rgba(8,13,24,.94);box-shadow:0 5px 16px rgba(0,0,0,.34);font:inherit;font-size:10px;font-weight:850;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}.station-button:hover{background:rgba(30,41,59,.98)}.station-button.active{color:#fff;border-color:rgba(239,68,68,.8);background:rgba(185,28,28,.96)}html[data-service=ems] .station-button.active{border-color:#38bdf8;background:#075985}
     #loading{position:fixed;inset:0;z-index:6000;display:grid;place-items:center;padding:24px;color:var(--ink);background:#111827;text-align:center;transition:opacity .18s ease}#loading.hidden{opacity:0;pointer-events:none}#loading strong{display:block;font-size:1.15rem}#loading span{display:block;margin-top:6px;color:var(--muted);font-size:.9rem;line-height:1.45}#loading button{margin-top:16px;padding:10px 18px;color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:9px;background:#dc2626;font:inherit;font-weight:800;cursor:pointer}
     @media(max-width:900px),(pointer:coarse){.desktop-action,.station-shortcuts{display:none!important}}
   </style>
 </head>
 <body>
-  <iframe id="simulator" src="../index.html?v=1.6.3" title="Peterborough Fire and EMS Dispatch Simulator"></iframe>
-
+  <iframe id="simulator" title="Fire and EMS Dispatch Simulator"></iframe>
   <div class="station-shortcuts" aria-label="Quick response bases"></div>
+  <button class="desktop-action" id="siren-button" type="button" aria-label="Toggle emergency lights" aria-pressed="true" title="Emergency lights"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 14V9a5 5 0 0 1 10 0v5M5 18h14M8 14h8l1 4H7l1-4ZM4 7 2 6M20 7l2-1M12 3V1"/></svg></button>
+  <button class="desktop-action" id="audio-button" type="button" aria-label="Mute dispatch voice" aria-pressed="true" title="Dispatch voice"><svg class="speaker-on" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15 9a4 4 0 0 1 0 6M17.5 6.5a7.5 7.5 0 0 1 0 11"/></svg><svg class="speaker-off" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="m16 9 5 5M21 9l-5 5"/></svg></button>
+  <button class="desktop-action" id="recenter-button" type="button" aria-label="Recenter on vehicle" title="Recenter on vehicle"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></button>
+  <div id="loading"><div><strong id="loading-title">Loading city roads</strong><span id="loading-status">Preparing steering, road boundaries, and dispatch data…</span></div></div>
 
-  <button class="desktop-action" id="siren-button" type="button" aria-label="Toggle emergency lights" aria-pressed="true" title="Emergency lights">
-    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 14V9a5 5 0 0 1 10 0v5M5 18h14M8 14h8l1 4H7l1-4ZM4 7 2 6M20 7l2-1M12 3V1"/></svg>
-  </button>
-
-  <button class="desktop-action" id="audio-button" type="button" aria-label="Mute dispatch voice" aria-pressed="true" title="Dispatch voice">
-    <svg class="speaker-on" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15 9a4 4 0 0 1 0 6M17.5 6.5a7.5 7.5 0 0 1 0 11"/></svg>
-    <svg class="speaker-off" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="m16 9 5 5M21 9l-5 5"/></svg>
-  </button>
-
-  <button class="desktop-action" id="recenter-button" type="button" aria-label="Recenter on vehicle" title="Recenter on vehicle">
-    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
-  </button>
-
-  <div id="loading"><div><strong>Loading Peterborough roads</strong><span id="loading-status">Preparing steering, road boundaries, and dispatch data…</span></div></div>
-
-  <script src="../../shared/build-version.js?v=1.6.3"></script>
-  <script src="../../shared/dispatch-locations.js?v=1.6.3"></script>
-  <script src="../../shared/dispatch-data-1.4.4.js?v=1.6.3"></script>
-  <script src="../../shared/dispatch-override-1.4.4.js?v=1.6.3"></script>
-  <script src="../../shared/stations.js?v=1.6.3"></script>
-  <script src="../service-selection.js?v=1.6.3"></script>
+  <script src="../../shared/build-version.js?v=1.6.5"></script>
+  <script src="../../shared/dispatch-locations.js?v=1.6.5"></script>
+  <script src="../../shared/dispatch-data-1.4.4.js?v=1.6.5"></script>
+  <script src="../../shared/dispatch-override-1.4.4.js?v=1.6.5"></script>
+  <script src="../../shared/stations.js?v=1.6.5"></script>
+  <script src="../service-selection.js?v=1.6.5"></script>
   <script>
     (() => {
       'use strict';
-      const VERSION = '1.6.3';
-      const AUDIO_KEY = 'ptboDispatchVoiceEnabled';
-      const DESKTOP_ZOOM = 19;
-      const HIGH_SPEED_ZOOM = 18;
-      const ZOOM_OUT_SPEED_KMH = 500;
-      const ZOOM_IN_SPEED_KMH = 450;
+      const VERSION='1.6.5';
+      const AUDIO_KEY='ptboDispatchVoiceEnabled';
+      const params=new URLSearchParams(location.search);
+      const stored=(()=>{try{return localStorage.getItem('ptboSelectedCity')}catch(_){return null}})();
+      const requested=String(params.get('city')||stored||'peterborough').toLowerCase();
+      const cityId=/^[a-z0-9-]+$/.test(requested)?requested:'peterborough';
+      const city=window.PTBO_CITY_PACKAGE;
+      const cityName=city?.name||cityId.replace(/(^|-)([a-z])/g,(_,dash,letter)=>`${dash?' ':''}${letter.toUpperCase()}`);
+      const maxZoom=Number(city?.map?.maxZoom)||19;
+      const highSpeedZoom=Math.max(Number(city?.map?.minZoom)||10,maxZoom-1);
+      const frame=document.getElementById('simulator');
+      const audioButton=document.getElementById('audio-button');
+      const sirenButton=document.getElementById('siren-button');
+      const recenterButton=document.getElementById('recenter-button');
+      const loading=document.getElementById('loading');
+      const loadingStatus=document.getElementById('loading-status');
+      document.getElementById('loading-title').textContent=`Loading ${cityName} roads`;
+      document.title=`${cityName} Dispatch Simulator`;
+      frame.title=`${cityName} Fire and EMS Dispatch Simulator`;
+      frame.src=`../index.html?city=${encodeURIComponent(cityId)}&v=${VERSION}`;
 
-      const frame = document.getElementById('simulator');
-      const audioButton = document.getElementById('audio-button');
-      const sirenButton = document.getElementById('siren-button');
-      const recenterButton = document.getElementById('recenter-button');
-      const loading = document.getElementById('loading');
-      const loadingStatus = document.getElementById('loading-status');
-      const stations = window.PTBO_STATIONS || [];
-      let voiceEnabled = localStorage.getItem(AUDIO_KEY) !== 'false';
-      let selectedStationNumber = 1;
+      let voiceEnabled=localStorage.getItem(AUDIO_KEY)!=='false';
+      let selectedStationNumber=1;
+      window.ptboDispatchVoiceEnabled=()=>voiceEnabled;
+      window.ptboGetSelectedStationNumber=()=>selectedStationNumber;
+      window.ptboSetSelectedStation=number=>{selectedStationNumber=Number(number)||1};
 
-      window.ptboDispatchVoiceEnabled = () => voiceEnabled;
-      window.ptboGetSelectedStationNumber = () => selectedStationNumber;
-      window.ptboSetSelectedStation = number => { selectedStationNumber = Number(number) || 1; };
+      function updateAudio(){audioButton.classList.toggle('muted',!voiceEnabled);audioButton.setAttribute('aria-pressed',String(voiceEnabled));audioButton.setAttribute('aria-label',voiceEnabled?'Mute dispatch voice':'Turn on dispatch voice')}
+      audioButton.addEventListener('click',()=>{voiceEnabled=!voiceEnabled;localStorage.setItem(AUDIO_KEY,String(voiceEnabled));if(!voiceEnabled)frame.contentWindow?.speechSynthesis?.cancel?.();updateAudio()});updateAudio();
 
-      function updateAudio() {
-        audioButton.classList.toggle('muted', !voiceEnabled);
-        audioButton.setAttribute('aria-pressed', String(voiceEnabled));
-        audioButton.setAttribute('aria-label', voiceEnabled ? 'Mute dispatch voice' : 'Turn on dispatch voice');
-      }
+      function syncSiren(game=frame.contentWindow){const siren=game?.document?.getElementById('chk-siren');const active=siren?siren.checked:true;sirenButton.classList.toggle('active',active);sirenButton.setAttribute('aria-pressed',String(active));sirenButton.setAttribute('aria-label',active?'Turn emergency lights off':'Turn emergency lights on')}
+      sirenButton.addEventListener('click',()=>{const game=frame.contentWindow;const siren=game?.document?.getElementById('chk-siren');if(!siren)return;siren.checked=!siren.checked;game.updateVehicleChassis?.();siren.dispatchEvent(new Event('change',{bubbles:true}));syncSiren(game);frame.focus()});
+      recenterButton.addEventListener('click',()=>{const game=frame.contentWindow;const lock=game?.document?.getElementById('chk-camera');if(lock)lock.checked=true;game?.PTBO_DESKTOP_FOLLOW_CAMERA?.recenter?.();frame.focus()});
 
-      audioButton.addEventListener('click', () => {
-        voiceEnabled = !voiceEnabled;
-        localStorage.setItem(AUDIO_KEY, String(voiceEnabled));
-        if (!voiceEnabled) frame.contentWindow?.speechSynthesis?.cancel?.();
-        updateAudio();
-      });
-      updateAudio();
+      function injectScript(doc,filename,marker){return new Promise((resolve,reject)=>{const existing=doc.querySelector(`script[${marker}]`);if(existing){if(existing.dataset.ptboLoaded==='true')return resolve(existing);existing.addEventListener('load',()=>resolve(existing),{once:true});existing.addEventListener('error',()=>reject(new Error(`Unable to load ${filename}.`)),{once:true});return}const script=doc.createElement('script');script.src=new URL(`../${filename}?v=${VERSION}`,location.href).href;script.setAttribute(marker,'true');script.onload=()=>{script.dataset.ptboLoaded='true';resolve(script)};script.onerror=()=>reject(new Error(`Unable to load ${filename}.`));doc.body.appendChild(script)})}
 
-      function syncSiren(game = frame.contentWindow) {
-        const siren = game?.document?.getElementById('chk-siren');
-        const active = siren ? siren.checked : true;
-        sirenButton.classList.toggle('active', active);
-        sirenButton.setAttribute('aria-pressed', String(active));
-        sirenButton.setAttribute('aria-label', active ? 'Turn emergency lights off' : 'Turn emergency lights on');
-      }
+      function installDesktopFollowMap(doc){const helper=doc.createElement('script');helper.textContent=`(() => {
+        if(window.PTBO_DESKTOP_FOLLOW_CAMERA?.version==='${VERSION}')return;
+        document.documentElement.dataset.ptboDesktopFollowMap='true';
+        const MAX_ZOOM=${maxZoom},HIGH_SPEED_ZOOM=${highSpeedZoom},ZOOM_OUT_SPEED_KMH=500,ZOOM_IN_SPEED_KMH=450,FOLLOW_INTERVAL_MS=1000/30;
+        let lastFollowAt=0,lastUiSyncAt=0,automaticZoom=MAX_ZOOM;
+        const cameraLockEnabled=()=>{const lock=document.getElementById('chk-camera');return !lock||lock.checked};
+        const currentSpeedKmh=()=>{try{const raw=Math.abs(Number(velocity)||0);return window.PTBO_FIXED_STEP?raw*111195*60*3.6:0}catch(_){return 0}};
+        const syncUi=()=>{const lock=document.getElementById('chk-camera');if(lock&&lock.dataset.ptboDesktopFollowInitialized!=='true'){lock.checked=true;lock.dataset.ptboDesktopFollowInitialized='true'}const note=document.getElementById('ptbo-arcade-note');if(note)note.textContent='Desktop camera follows the vehicle at the closest map view and steps out one level at 500 km/h. Turn Camera Lock off to inspect the map manually.'};
+        const automatic=()=>{const speed=currentSpeedKmh();if(automaticZoom===MAX_ZOOM&&speed>=ZOOM_OUT_SPEED_KMH)automaticZoom=HIGH_SPEED_ZOOM;else if(automaticZoom===HIGH_SPEED_ZOOM&&speed<ZOOM_IN_SPEED_KMH)automaticZoom=MAX_ZOOM;return automaticZoom};
+        const recenter=zoom=>{try{if(!mapInstance)return false;const requested=zoom==null?mapInstance.getZoom():Number(zoom);const target=Number.isFinite(requested)?requested:mapInstance.getZoom();mapInstance.setView([simLat,simLng],target,{animate:false});return true}catch(_){return false}};
+        const tick=timestamp=>{if(timestamp-lastUiSyncAt>=1000){syncUi();lastUiSyncAt=timestamp}const review=Boolean(window.PTBO_ROUTE_COMPARE?.state?.reviewOpen);if(!review&&cameraLockEnabled()&&timestamp-lastFollowAt>=FOLLOW_INTERVAL_MS){recenter(automatic());lastFollowAt=timestamp}requestAnimationFrame(tick)};
+        try{mapInstance.options.zoomSnap=1;mapInstance.options.zoomDelta=1;mapInstance.options.zoomAnimation=false;syncUi();recenter(MAX_ZOOM)}catch(_){}
+        window.PTBO_DESKTOP_FOLLOW_CAMERA=Object.freeze({version:'${VERSION}',maxZoom:MAX_ZOOM,highSpeedZoom:HIGH_SPEED_ZOOM,zoomOutSpeedKmh:ZOOM_OUT_SPEED_KMH,recenter:()=>recenter(automatic())});requestAnimationFrame(tick);
+      })();`;doc.body.appendChild(helper)}
 
-      sirenButton.addEventListener('click', () => {
-        const game = frame.contentWindow;
-        const siren = game?.document?.getElementById('chk-siren');
-        if (!siren) return;
-        siren.checked = !siren.checked;
-        game.updateVehicleChassis?.();
-        siren.dispatchEvent(new Event('change', { bubbles:true }));
-        syncSiren(game);
-        frame.focus();
-      });
+      function showStartupError(error){console.error('Simulator startup failed.',error);loading.innerHTML='<div><strong>Simulator did not finish loading</strong><span>The selected city package, steering, or road boundaries could not initialize.</span><button type="button" id="startup-retry">Retry</button></div>';document.getElementById('startup-retry')?.addEventListener('click',()=>location.reload())}
 
-      recenterButton.addEventListener('click', () => {
-        const game = frame.contentWindow;
-        const lock = game?.document?.getElementById('chk-camera');
-        if (lock) lock.checked = true;
-        if (!game?.PTBO_DESKTOP_FOLLOW_CAMERA?.recenter?.()) {
-          try { game.mapInstance?.setView?.([game.simLat, game.simLng], game.mapInstance.getZoom(), { animate:false }); } catch (_) {}
-        }
-        frame.focus();
-      });
-
-      function injectScript(doc, filename, marker) {
-        return new Promise((resolve, reject) => {
-          const existing = doc.querySelector(`script[${marker}]`);
-          if (existing) {
-            if (existing.dataset.ptboLoaded === 'true') return resolve(existing);
-            existing.addEventListener('load', () => resolve(existing), { once:true });
-            existing.addEventListener('error', () => reject(new Error(`Unable to load ${filename}.`)), { once:true });
-            return;
-          }
-          const script = doc.createElement('script');
-          script.src = new URL(`../${filename}?v=${VERSION}`, location.href).href;
-          script.setAttribute(marker, 'true');
-          script.onload = () => { script.dataset.ptboLoaded = 'true'; resolve(script); };
-          script.onerror = () => reject(new Error(`Unable to load ${filename}.`));
-          doc.body.appendChild(script);
-        });
-      }
-
-      function installDispatchVoice(doc) {
-        const helper = doc.createElement('script');
-        helper.textContent = `(() => {
-          const STATIONS = ${JSON.stringify(stations)};
-          const stationName = number => (STATIONS.find(station => station.number === Number(number)) || {name:'Station 1'}).name;
-          const callNames = {'Structure Fire':'a structure fire','Water & Ice Rescue':'a water rescue','Auto Alarm / Vehicle Fire':'an auto alarm','Burning Complaint':'a burning complaint','Alarms No Apparent Problem':'an alarm with no apparent problem','Chest Pain / Cardiac Emergency':'a cardiac emergency','Difficulty Breathing':'difficulty breathing','Unconscious Patient / Substance Overdose':'an unconscious patient or possible overdose','Rectal Bleed / Gastrointestinal Emergency':'a gastrointestinal emergency','Lift Assist / Public Service':'a lift assist','Request for Access / Wellness Check':'a request for access or wellness check'};
-          window.buildPeterboroughDispatchPhrase = incident => {
-            if (!incident) return '';
-            const servicePhrase = window.PTBO_SERVICE?.dispatchPhrase(incident);
-            if (servicePhrase) return servicePhrase;
-            const primary = Number(parent.ptboGetSelectedStationNumber?.() || 1);
-            if (['Structure Fire','Water & Ice Rescue','Auto Alarm / Vehicle Fire'].includes(incident.sub)) return 'All stations from Peterborough Control, you’re responding to ' + callNames[incident.sub] + ' at ' + incident.name + ', ' + incident.addr + '.';
-            if (incident.sub === 'Motor Vehicle Collision') {
-              const secondary = STATIONS.filter(station => station.number !== primary).sort((a,b) => mapInstance.distance([a.lat,a.lng],[incident.lat,incident.lng]) - mapInstance.distance([b.lat,b.lng],[incident.lat,incident.lng]))[0];
-              return stationName(primary) + ' and ' + stationName(secondary?.number) + ' from Peterborough Control, you’re responding to an M V C at the intersection ' + incident.addr + '.';
-            }
-            return stationName(primary) + ' from Peterborough Control, you’re responding to ' + (callNames[incident.sub] || incident.sub.toLowerCase()) + ' at the address ' + incident.addr + '.';
-          };
-          playDispatchAudioText = () => {
-            if (!parent.ptboDispatchVoiceEnabled?.()) return;
-            try {
-              speechSynthesis.cancel();
-              const utterance = new SpeechSynthesisUtterance(window.buildPeterboroughDispatchPhrase(activeIncident));
-              utterance.rate = 1;
-              utterance.pitch = .95;
-              speechSynthesis.speak(utterance);
-            } catch (error) { console.warn('TTS engine failure:', error); }
-          };
-          window.playDispatchAudioText = playDispatchAudioText;
-        })();`;
-        doc.body.appendChild(helper);
-      }
-
-      function installDesktopFollowMap(doc) {
-        const helper = doc.createElement('script');
-        helper.textContent = `(() => {
-          if (window.PTBO_DESKTOP_FOLLOW_CAMERA?.version === '${VERSION}') return;
-          document.documentElement.dataset.ptboDesktopFollowMap = 'true';
-          const MAX_ZOOM = ${DESKTOP_ZOOM};
-          const HIGH_SPEED_ZOOM = ${HIGH_SPEED_ZOOM};
-          const ZOOM_OUT_SPEED_KMH = ${ZOOM_OUT_SPEED_KMH};
-          const ZOOM_IN_SPEED_KMH = ${ZOOM_IN_SPEED_KMH};
-          const FOLLOW_INTERVAL_MS = 1000 / 30;
-          let lastFollowAt = 0;
-          let lastUiSyncAt = 0;
-          let automaticZoom = MAX_ZOOM;
-
-          const cameraLockEnabled = () => {
-            const lock = document.getElementById('chk-camera');
-            return !lock || lock.checked;
-          };
-
-          const currentSpeedKmh = () => {
-            try {
-              const raw = Math.abs(Number(velocity) || 0);
-              return window.PTBO_FIXED_STEP ? raw * 111195 * 60 * 3.6 : 0;
-            } catch (_) { return 0; }
-          };
-
-          const syncDesktopCameraUi = () => {
-            const lock = document.getElementById('chk-camera');
-            if (lock && lock.dataset.ptboDesktopFollowInitialized !== 'true') {
-              lock.checked = true;
-              lock.dataset.ptboDesktopFollowInitialized = 'true';
-            }
-            const note = document.getElementById('ptbo-arcade-note');
-            if (note) note.textContent = 'Desktop camera follows the truck at zoom 19 and steps out to zoom 18 at 500 km/h. Turn Camera Lock off to inspect the map manually.';
-          };
-
-          const updateAutomaticZoom = () => {
-            const speed = currentSpeedKmh();
-            if (automaticZoom === MAX_ZOOM && speed >= ZOOM_OUT_SPEED_KMH) automaticZoom = HIGH_SPEED_ZOOM;
-            else if (automaticZoom === HIGH_SPEED_ZOOM && speed < ZOOM_IN_SPEED_KMH) automaticZoom = MAX_ZOOM;
-            return automaticZoom;
-          };
-
-          const recenter = zoom => {
-            try {
-              if (!mapInstance) return false;
-              const requestedZoom = zoom == null ? mapInstance.getZoom() : Number(zoom);
-              const targetZoom = Number.isFinite(requestedZoom) ? requestedZoom : mapInstance.getZoom();
-              mapInstance.setView([simLat, simLng], targetZoom, { animate:false });
-              return true;
-            } catch (_) { return false; }
-          };
-
-          const tick = timestamp => {
-            if (timestamp - lastUiSyncAt >= 1000) {
-              syncDesktopCameraUi();
-              lastUiSyncAt = timestamp;
-            }
-            const routeReviewOpen = Boolean(window.PTBO_ROUTE_COMPARE?.state?.reviewOpen);
-            if (!routeReviewOpen && cameraLockEnabled() && timestamp - lastFollowAt >= FOLLOW_INTERVAL_MS) {
-              recenter(updateAutomaticZoom());
-              lastFollowAt = timestamp;
-            }
-            requestAnimationFrame(tick);
-          };
-
-          try {
-            mapInstance.options.zoomSnap = 1;
-            mapInstance.options.zoomDelta = 1;
-            mapInstance.options.zoomAnimation = false;
-            syncDesktopCameraUi();
-            recenter(MAX_ZOOM);
-          } catch (_) {}
-
-          window.PTBO_DESKTOP_FOLLOW_CAMERA = Object.freeze({
-            version: '${VERSION}',
-            maxZoom: MAX_ZOOM,
-            highSpeedZoom: HIGH_SPEED_ZOOM,
-            zoomOutSpeedKmh: ZOOM_OUT_SPEED_KMH,
-            recenter: () => recenter(updateAutomaticZoom()),
-          });
-          requestAnimationFrame(tick);
-        })();`;
-        doc.body.appendChild(helper);
-      }
-
-      function showStartupError(error) {
-        console.error('Simulator startup failed.', error);
-        loading.innerHTML = '<div><strong>Simulator did not finish loading</strong><span>Steering or road boundaries could not initialize. Retry to load the protected driving mode.</span><button type="button" id="startup-retry">Retry</button></div>';
-        document.getElementById('startup-retry')?.addEventListener('click', () => location.reload());
-      }
-
-      frame.addEventListener('load', () => {
-        const doc = frame.contentDocument;
-        const game = frame.contentWindow;
-        if (!doc || !game || typeof game.initializeSimulator !== 'function') return;
-
-        const siren = doc.getElementById('chk-siren');
-        if (siren && siren.dataset.ptboDesktopSync !== VERSION) {
-          siren.dataset.ptboDesktopSync = VERSION;
-          siren.addEventListener('change', () => syncSiren(game));
-        }
-        syncSiren(game);
-        installDispatchVoice(doc);
-        injectScript(doc, 'route-compare-1.4.2.js', 'data-ptbo-route-compare-core').catch(console.error);
-        injectScript(doc, 'route-review-ui-1.4.3.js', 'data-ptbo-route-review-ui').catch(console.error);
-        loadingStatus.textContent = 'Connecting vehicle controls and road boundaries…';
-
-        const simulatorReady = injectScript(doc, 'simulator-readiness-1.4.5.js', 'data-ptbo-simulator-readiness')
-          .then(() => game.PTBO_SIMULATOR_READY || Promise.reject(new Error('Startup verifier was not created.')));
-        const dispatchReady = window.PTBO_DISPATCH_STORE.ready();
-
-        Promise.all([dispatchReady, simulatorReady, window.PTBO_SERVICE_SELECTION.ready(game)])
-          .then(() => {
-            installDesktopFollowMap(doc);
-            window.PTBO_SERVICE_SELECTION.open(game);
-            loadingStatus.textContent = 'Simulator ready';
-            loading.classList.add('hidden');
-            setTimeout(() => loading.remove(), 250);
-          })
-          .catch(showStartupError);
-      });
+      let initializedDocument=null;
+      function onFrameLoad(){const doc=frame.contentDocument;const game=frame.contentWindow;if(!doc||!game||doc===initializedDocument||typeof game.initializeSimulator!=='function')return;initializedDocument=doc;const siren=doc.getElementById('chk-siren');if(siren){siren.addEventListener('change',()=>syncSiren(game));syncSiren(game)}injectScript(doc,'route-compare-1.4.2.js','data-ptbo-route-compare-core').catch(console.error);injectScript(doc,'route-review-ui-1.4.3.js','data-ptbo-route-review-ui').catch(console.error);loadingStatus.textContent='Connecting city package, vehicle controls and road boundaries…';const simulatorReady=injectScript(doc,'simulator-readiness-1.4.5.js','data-ptbo-simulator-readiness').then(()=>game.PTBO_SIMULATOR_READY||Promise.reject(new Error('Startup verifier was not created.')));const dispatchReady=window.PTBO_DISPATCH_STORE.ready();Promise.all([dispatchReady,simulatorReady,window.PTBO_SERVICE_SELECTION.ready(game)]).then(()=>{installDesktopFollowMap(doc);window.PTBO_SERVICE_SELECTION.open(game);loadingStatus.textContent='Simulator ready';loading.classList.add('hidden');setTimeout(()=>loading.remove(),250)}).catch(showStartupError)}
+      frame.addEventListener('load',onFrameLoad);
+      if(frame.contentDocument?.readyState==='complete')setTimeout(onFrameLoad,0);
     })();
   </script>
 </body>
