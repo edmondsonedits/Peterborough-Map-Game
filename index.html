@@ -7,14 +7,14 @@
      the driving simulator, Geo Guesser and 3D Simulator, reveals developer tools
      when developer mode is enabled, and sends touch devices to mobile wrappers.
 
-     Dispatch Simulator now opens a city selector before Fire/EMS selection.
+     Dispatch Simulator opens a city selector before Fire/EMS selection.
      ========================================================= -->
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#0b1220">
-    <meta name="description" content="Play unofficial Peterborough emergency games or manage their shared dispatch database.">
+    <meta name="description" content="Play unofficial emergency-response training games and city-driving simulators.">
     <title>Peterborough Emergency Games</title>
     <style>
       :root { color-scheme:dark; --bg:#0b1220; --ink:#f8fafc; --muted:#cbd5e1; --surface:rgba(20,31,52,.92); --surface-strong:rgba(24,38,63,.98); --border:rgba(255,255,255,.18); --blue:#38bdf8; --red:#fb7185; --green:#34d399; --gold:#d6b86b; }
@@ -60,11 +60,11 @@
   </head>
   <body>
     <main>
-      <header><p id="developer-trigger" class="eyebrow">Peterborough, Ontario</p><h1>Emergency Games</h1><p class="intro">Drive emergency calls, test your city knowledge, or explore Peterborough in the full-city 3D simulator.</p></header>
+      <header><p id="developer-trigger" class="eyebrow">Ontario Emergency Training</p><h1>Emergency Games</h1><p class="intro">Drive full Peterborough dispatch calls or practise Fire and EMS base familiarization in the additional supported cities.</p></header>
       <section class="games" aria-label="Choose a game or editor">
-        <a id="dispatch-game-link" class="game-link dispatch" href="response-simulator/play/" aria-label="Open the Dispatch Simulator and choose a city">
+        <a id="dispatch-game-link" class="game-link dispatch" href="response-simulator/play/" aria-label="Open the Emergency Response Simulator and choose a city">
           <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h11v7H3z"/><path d="M14 13h3.5l2.5 2.5V18h-6z"/><path d="M6 11V7h5v4"/><path d="M7.5 7V4.5h2V7"/><path d="M5.5 18a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"/><path d="M17.5 18a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"/><path d="M3 14h11"/></svg></span>
-          <span class="game-type">Driving simulator</span><h2>Dispatch Simulator</h2><p>Choose a city, then choose Fire or EMS and respond in a fire truck or ambulance.</p><span class="cta">Choose city<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span>
+          <span class="game-type">Driving simulator</span><h2>Emergency Response Simulator</h2><p>Choose a city and Fire or EMS. Peterborough has dispatch calls; the other cities currently offer base spawning and free-driving practice.</p><span class="cta">Choose city<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span>
         </a>
         <a id="geo-game-link" class="game-link geoguesser" href="geo-guesser/desktop/" aria-label="Play Peterborough Geo Guesser">
           <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
@@ -80,10 +80,10 @@
         </a>
       </section>
       <p id="launch-status" class="launch-status" role="status" aria-live="polite"></p>
-      <footer>Unofficial fan-made project. Not affiliated with the City of Peterborough or Peterborough Fire Services.</footer>
+      <footer>Unofficial fan-made project. Not affiliated with any municipal fire or paramedic service.</footer>
     </main>
 
-    <script src="shared/build-version.js?v=1.6.4"></script>
+    <script src="shared/build-version.js?v=1.6.8"></script>
     <script>
       (()=>{
         const developerKey='ptbo-emergency-developer-mode';
