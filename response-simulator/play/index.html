@@ -207,10 +207,11 @@
             if (note) note.textContent = 'Desktop camera follows the truck and starts at the closest map view. Turn Camera Lock off if you want to inspect the map manually.';
           };
 
-          const recenter = (zoom = null) => {
+          const recenter = zoom => {
             try {
               if (!mapInstance) return false;
-              const targetZoom = Number.isFinite(Number(zoom)) ? Number(zoom) : mapInstance.getZoom();
+              const requestedZoom = zoom == null ? mapInstance.getZoom() : Number(zoom);
+              const targetZoom = Number.isFinite(requestedZoom) ? requestedZoom : mapInstance.getZoom();
               mapInstance.setView([simLat, simLng], targetZoom, { animate:false });
               return true;
             } catch (_) {
