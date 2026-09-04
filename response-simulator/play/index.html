@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- DESKTOP RESPONSE-SIMULATOR WRAPPER — city-package runtime v1.6.13 -->
+<!-- DESKTOP RESPONSE-SIMULATOR WRAPPER — city-package runtime v1.6.14 -->
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -17,7 +17,7 @@
 <body>
   <iframe id="simulator" title="Fire and EMS Emergency Response Simulator"></iframe>
   <script>
-    (()=>{const VERSION='1.6.13',params=new URLSearchParams(location.search);let stored=null;try{stored=localStorage.getItem('ptboSelectedCity')}catch(_){}const requested=String(params.get('city')||stored||'peterborough').toLowerCase(),city=/^[a-z0-9-]+$/.test(requested)?requested:'peterborough';try{localStorage.setItem('ptboSelectedCity',city)}catch(_){}const url=new URL('../index.html',location.href);url.searchParams.set('city',city);url.searchParams.set('v',VERSION);url.searchParams.set('fresh',params.get('fresh')||String(Date.now()));const frame=document.getElementById('simulator');frame.dataset.ptboCity=city;frame.dataset.ptboCityUrlVersion=VERSION;frame.src=url.href})();
+    (()=>{const VERSION='1.6.14',params=new URLSearchParams(location.search);let stored=null;try{stored=localStorage.getItem('ptboSelectedCity')}catch(_){}const requested=String(params.get('city')||stored||'peterborough').toLowerCase(),city=/^[a-z0-9-]+$/.test(requested)?requested:'peterborough';try{localStorage.setItem('ptboSelectedCity',city)}catch(_){}const url=new URL('../index.html',location.href);url.searchParams.set('city',city);url.searchParams.set('v',VERSION);url.searchParams.set('fresh',params.get('fresh')||String(Date.now()));const frame=document.getElementById('simulator');frame.dataset.ptboCity=city;frame.dataset.ptboCityUrlVersion=VERSION;frame.src=url.href})();
   </script>
   <div class="station-shortcuts" aria-label="Quick response bases"></div>
   <button class="desktop-action" id="siren-button" type="button" aria-label="Toggle emergency lights" aria-pressed="true" title="Emergency lights"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 14V9a5 5 0 0 1 10 0v5M5 18h14M8 14h8l1 4H7l1-4ZM4 7 2 6M20 7l2-1M12 3V1"/></svg></button>
@@ -25,16 +25,16 @@
   <button class="desktop-action" id="recenter-button" type="button" aria-label="Recenter on vehicle" title="Recenter on vehicle"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></button>
   <div id="loading"><div><strong id="loading-title">Loading simulator</strong><span id="loading-status">Preparing city package, vehicle controls, and map…</span></div></div>
 
-  <script src="../../shared/build-version.js?v=1.6.13"></script>
-  <script src="../../shared/dispatch-locations.js?v=1.6.13"></script>
-  <script src="../../shared/dispatch-data-1.4.4.js?v=1.6.13"></script>
-  <script src="../../shared/dispatch-override-1.4.4.js?v=1.6.13"></script>
-  <script src="../../shared/stations.js?v=1.6.13"></script>
-  <script src="../service-selection.js?v=1.6.13"></script>
+  <script src="../../shared/build-version.js?v=1.6.14"></script>
+  <script src="../../shared/dispatch-locations.js?v=1.6.14"></script>
+  <script src="../../shared/dispatch-data-1.4.4.js?v=1.6.14"></script>
+  <script src="../../shared/dispatch-override-1.4.4.js?v=1.6.14"></script>
+  <script src="../../shared/stations.js?v=1.6.14"></script>
+  <script src="../service-selection.js?v=1.6.14"></script>
   <script>
     (()=>{
       'use strict';
-      const VERSION='1.6.13',AUDIO_KEY='ptboDispatchVoiceEnabled',params=new URLSearchParams(location.search),frame=document.getElementById('simulator'),audioButton=document.getElementById('audio-button'),sirenButton=document.getElementById('siren-button'),recenterButton=document.getElementById('recenter-button'),loading=document.getElementById('loading'),loadingStatus=document.getElementById('loading-status');
+      const VERSION='1.6.14',AUDIO_KEY='ptboDispatchVoiceEnabled',params=new URLSearchParams(location.search),frame=document.getElementById('simulator'),audioButton=document.getElementById('audio-button'),sirenButton=document.getElementById('siren-button'),recenterButton=document.getElementById('recenter-button'),loading=document.getElementById('loading'),loadingStatus=document.getElementById('loading-status');
       const cityId=frame.dataset.ptboCity||'peterborough',cityName=cityId.replace(/(^|-)([a-z])/g,(_,dash,letter)=>`${dash?' ':''}${letter.toUpperCase()}`);document.getElementById('loading-title').textContent=`Loading ${cityName}`;document.title=`${cityName} Emergency Response Simulator`;frame.title=`${cityName} Fire and EMS Emergency Response Simulator`;
       let voiceEnabled=localStorage.getItem(AUDIO_KEY)!=='false',selectedStationNumber=1,frameGeneration=0;window.ptboDispatchVoiceEnabled=()=>voiceEnabled;window.ptboGetSelectedStationNumber=()=>selectedStationNumber;window.ptboSetSelectedStation=number=>{selectedStationNumber=Number(number)||1};
       function updateAudio(){audioButton.classList.toggle('muted',!voiceEnabled);audioButton.setAttribute('aria-pressed',String(voiceEnabled));audioButton.setAttribute('aria-label',voiceEnabled?'Mute dispatch voice':'Turn on dispatch voice')}audioButton.addEventListener('click',()=>{voiceEnabled=!voiceEnabled;localStorage.setItem(AUDIO_KEY,String(voiceEnabled));if(!voiceEnabled)frame.contentWindow?.speechSynthesis?.cancel?.();updateAudio()});updateAudio();

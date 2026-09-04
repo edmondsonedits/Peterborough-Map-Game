@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.13';
+  const VERSION = '1.6.14';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
   if (window.PTBO_BUILD?.version === VERSION) return;
@@ -118,7 +118,6 @@
 
     normalizeSimulatorFrameUrl(frame);
     setBaseTrainingLoadingCopy();
-    injectPageScript('ptbo-current-service-selection',`../response-simulator/service-selection.js?v=${VERSION}`).catch(console.error);
 
     if(frame.dataset.ptboEnhancementLoader===VERSION)return;
     frame.dataset.ptboEnhancementLoader=VERSION;
@@ -141,14 +140,13 @@
       if(!doc||!game)return;
       try{
         game.PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION=VERSION;
-        await injectIntoFrame(doc,'ptbo-city-runtime-bootstrap',`../response-simulator/city-runtime-bootstrap-1.6.10.js?v=${VERSION}`);
+        await injectIntoFrame(doc,'ptbo-city-runtime-bootstrap',`../response-simulator/city-runtime-bootstrap-1.6.14.js?v=${VERSION}`);
         await game.PTBO_CITY_RUNTIME_READY;
         if(generation!==frameGeneration)return;
 
         const city=game.PTBO_CITY_PACKAGE;
-        const baseTraining=Boolean(city?.features?.baseTraining || city?.dispatch?.available===false || selectedCityId()!=='peterborough');
+        const baseTraining=Boolean(city?.features?.baseTraining || city?.dispatch?.available===false);
         if(baseTraining)await injectIntoFrame(doc,'ptbo-base-training-mode',`../response-simulator/base-training-mode-1.6.8.js?v=${VERSION}`);
-        else await injectIntoFrame(doc,'ptbo-hard-road-boundary-loader',`../response-simulator/road-hard-boundary-1.6.6.js?v=${VERSION}`);
 
         if(isMobile){
           await injectIntoFrame(doc,'ptbo-directional-drive-zoom-loader',`../response-simulator/directional-drive-zoom-1.5.8.js?v=${VERSION}`);

@@ -123,21 +123,21 @@ test('base-training mode permanently blocks every dispatch entry point', () => {
   const source=read('response-simulator/base-training-mode-1.6.8.js');for(const name of ['triggerDispatchWorkflow','fireRandomIncidentDispatch','toggleAllLocations','recordCurrentLocation','exportUpdatedDatabase'])assert.match(source,new RegExp(`window\\.${name}=blockedDispatch`),name);assert.match(source,/Calls Unavailable/);assert.match(source,/Dispatch calls unavailable/);assert.match(source,/const VERSION = '1\.6\.13'/);
 });
 
-test('v1.6.13 wrapper bootstrap repairs stale inner simulator modules before readiness', () => {
-  const build=read('shared/build-version.js'),runtime=read('response-simulator/city-runtime-bootstrap-1.6.10.js'),service=read('response-simulator/service-selection.js');
-  assert.match(build,/city-runtime-bootstrap-1\.6\.10\.js/);assert.match(build,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION/);assert.match(runtime,/PTBO_CITY_RUNTIME_READY_VERSION/);assert.match(runtime,/shared\/base-locations\.js/);assert.match(runtime,/response-simulator\/service-mode\.js/);assert.match(service,/runtimeReady\(game\)/);assert.match(service,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION/);assert.match(service,/const VERSION = '1\.6\.13'/);
+test('v1.6.14 wrapper runtime validates the already-loaded city package without reloading core modules', () => {
+  const build=read('shared/build-version.js'),runtime=read('response-simulator/city-runtime-bootstrap-1.6.14.js'),service=read('response-simulator/service-selection.js');
+  assert.match(build,/city-runtime-bootstrap-1\.6\.14\.js/);assert.match(build,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION/);assert.match(runtime,/PTBO_CITY_RUNTIME_READY_VERSION/);assert.match(runtime,/PTBO_BASE_STORE/);assert.match(runtime,/PTBO_SERVICE/);assert.doesNotMatch(runtime,/function loadScript|loadScript\(/);assert.match(runtime,/loader:\s*'service-config'/);assert.match(service,/runtimeReady\(game\)/);assert.match(service,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION/);assert.match(service,/const VERSION = '1\.6\.13'/);
 });
 
 test('desktop and mobile construct the selected city iframe before shared startup and show real diagnostics', () => {
-  for(const file of ['response-simulator/play/index.html','response-simulator/mobile/index.html']){const source=read(file);assert.match(source,/1\.6\.13/,file);assert.match(source,/url\.searchParams\.set\('city',city\)/,file);assert.match(source,/url\.searchParams\.set\('fresh'/,file);assert.match(source,/shared\/build-version\.js\?v=1\.6\.13/,file);assert.match(source,/simulator-readiness-1\.4\.5\.js/,file);assert.match(source,/diagnostic/,file);assert.match(source,/startupPoll/,file)}
+  for(const file of ['response-simulator/play/index.html','response-simulator/mobile/index.html']){const source=read(file);assert.match(source,/1\.6\.14/,file);assert.match(source,/url\.searchParams\.set\('city',city\)/,file);assert.match(source,/url\.searchParams\.set\('fresh'/,file);assert.match(source,/shared\/build-version\.js\?v=1\.6\.14/,file);assert.match(source,/simulator-readiness-1\.4\.5\.js/,file);assert.match(source,/diagnostic/,file);assert.match(source,/startupPoll/,file)}
 });
 
 test('city selector launches with a fresh URL so mobile caches cannot replay an old wrapper', () => {
   const source=read('shared/city-selector.js');assert.match(source,/const VERSION = '1\.6\.13'/);assert.match(source,/url\.searchParams\.set\('fresh', String\(Date\.now\(\)\)\)/);
 });
 
-test('production build marker, base store and launch screen all use v1.6.13', () => {
-  assert.match(read('shared/build-version.js'),/const VERSION = '1\.6\.13'/);assert.match(read('shared/base-locations.js'),/const VERSION = '1\.6\.13'/);assert.match(read('index.html'),/shared\/build-version\.js\?v=1\.6\.13/);assert.match(read('cities/preview-package-factory.js'),/const VERSION = '1\.6\.13'/);assert.match(read('cities/peterborough/package.js'),/const VERSION = '1\.6\.13'/);
+test('production wrapper build is v1.6.14 while packaged inner assets remain compatible with v1.6.13', () => {
+  assert.match(read('shared/build-version.js'),/const VERSION = '1\.6\.14'/);assert.match(read('shared/base-locations.js'),/const VERSION = '1\.6\.13'/);assert.match(read('index.html'),/shared\/build-version\.js\?v=1\.6\.13/);assert.match(read('cities/preview-package-factory.js'),/const VERSION = '1\.6\.13'/);assert.match(read('cities/peterborough/package.js'),/const VERSION = '1\.6\.13'/);assert.match(read('response-simulator/vehicle-instruments.js'),/const VERSION = '1\.6\.14'/);
 });
 
 test('inner simulator initialization is idempotent for wrapper polling', () => {
