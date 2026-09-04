@@ -28,7 +28,7 @@
 </head>
 <body>
   <iframe id="simulator" title="Fire and EMS base training simulator"></iframe>
-  <div class="version">v1.6.18</div>
+  <div class="version">v1.6.19</div>
   <nav class="topbar" aria-label="Base training controls">
     <a class="action" href="../../" aria-label="Return to all games">←</a>
     <div class="station-shortcuts" aria-label="Response bases"></div>
@@ -43,7 +43,7 @@
     <div class="center-mobile"><button class="action" id="mobile-recenter" type="button" aria-label="Recenter vehicle">◎</button></div>
     <div class="pedals"><button class="pedal reverse" id="reverse" type="button">Reverse</button><button class="pedal gas" id="gas" type="button">Gas</button></div>
   </section>
-  <div id="loading"><div class="loading-shell"><h1 id="loading-title">Loading base training</h1><p id="loading-status">Starting the selected city directly…</p><section id="trace"><div class="trace-head"><span>Base Training Startup</span><span>v1.6.18</span></div><div class="trace-current" id="trace-current">Starting…</div><pre class="trace-log" id="trace-log"></pre></section><button id="retry" type="button">Refresh Page</button></div></div>
+  <div id="loading"><div class="loading-shell"><h1 id="loading-title">Loading base training</h1><p id="loading-status">Starting the selected city directly…</p><section id="trace"><div class="trace-head"><span>Base Training Startup</span><span>v1.6.19</span></div><div class="trace-current" id="trace-current">Starting…</div><pre class="trace-log" id="trace-log"></pre></section><button id="retry" type="button">Refresh Page</button></div></div>
 
   <script>
     (()=>{
@@ -52,14 +52,14 @@
       const text=value=>value instanceof Error?value.message:String(value??'');
       function add(message,level='info',detail=''){const line=`[+${((performance.now()-start)/1000).toFixed(2)}s] ${message}${detail?` — ${text(detail)}`:''}`;const span=document.createElement('span');span.className=level;span.textContent=line+'\n';log.appendChild(span);log.scrollTop=log.scrollHeight;entries.push({message,level,detail:text(detail)});return line}
       function set(message,level=''){current.className=`trace-current ${level}`;current.textContent=message}
-      window.PTBO_STARTUP_TRACE=Object.freeze({version:'1.6.18',entries,mark:(m,d)=>add(m,'info',d),ok:(m,d)=>add(m,'ok',d),warn:(m,d)=>add(m,'warn',d),fail:(m,d)=>{add(m,'error',d);set(`ERROR: ${m}${d?` — ${text(d)}`:''}`,'error')},setCurrent:set});
+      window.PTBO_STARTUP_TRACE=Object.freeze({version:'1.6.19',entries,mark:(m,d)=>add(m,'info',d),ok:(m,d)=>add(m,'ok',d),warn:(m,d)=>add(m,'warn',d),fail:(m,d)=>{add(m,'error',d);set(`ERROR: ${m}${d?` — ${text(d)}`:''}`,'error')},setCurrent:set});
     })();
   </script>
-  <script src="../service-selection.js?v=1.6.18"></script>
+  <script src="../service-selection.js?v=1.6.19"></script>
   <script>
     (()=>{
       'use strict';
-      const VERSION='1.6.18',trace=window.PTBO_STARTUP_TRACE,frame=document.getElementById('simulator'),loading=document.getElementById('loading'),status=document.getElementById('loading-status'),retry=document.getElementById('retry');
+      const VERSION='1.6.19',trace=window.PTBO_STARTUP_TRACE,frame=document.getElementById('simulator'),loading=document.getElementById('loading'),status=document.getElementById('loading-status'),retry=document.getElementById('retry');
       const params=new URLSearchParams(location.search);let stored=null;try{stored=localStorage.getItem('ptboSelectedCity')}catch(_){}
       const requested=String(params.get('city')||stored||'oshawa').toLowerCase(),cityId=/^[a-z0-9-]+$/.test(requested)&&requested!=='peterborough'?requested:'oshawa';
       try{localStorage.setItem('ptboSelectedCity',cityId)}catch(_){}
@@ -95,7 +95,8 @@
         if(!fire.length||!ems.length)throw new Error(`${city.name} base data is incomplete (${fire.length} Fire / ${ems.length} EMS).`);
         trace.ok('Core base-training data ready',`${fire.length} Fire / ${ems.length} EMS`);
         installInnerShell(doc,game);service.applyCityMap?.(true);
-        try{await loadInner(doc,'base-training-mode-1.6.8.js','ptbo-base-training-mode',3000);trace.ok('Dispatch disabled for base training')}catch(error){trace.warn('Base-training UI module skipped; core driving continues',error)}
+        trace.setCurrent('STARTING: base-training safety controls.');
+        loadInner(doc,'base-training-mode-1.6.8.js','ptbo-base-training-mode',3000).then(()=>trace.ok('Dispatch disabled for base training')).catch(error=>trace.warn('Base-training UI module skipped; core driving continues',error));
         backgroundEnhancements(doc);
         trace.setCurrent('OPENING: Fire / EMS service chooser.');
         await window.PTBO_SERVICE_SELECTION.ready(game);
