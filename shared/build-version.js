@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.9';
+  const VERSION = '1.6.10';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
   if (window.PTBO_BUILD?.version === VERSION) return;
@@ -116,9 +116,6 @@
     if(!isDesktop&&!isMobile)return;
     const frame=document.getElementById('simulator');if(!frame)return;
 
-    // This runs as soon as build-version.js is parsed, not at DOMContentLoaded.
-    // It prevents the mobile iframe from finishing a first boot with stale/default
-    // city parameters and then starting a second competing boot.
     normalizeSimulatorFrameUrl(frame);
     setBaseTrainingLoadingCopy();
     injectPageScript('ptbo-current-service-selection',`../response-simulator/service-selection.js?v=${VERSION}`).catch(console.error);
@@ -143,10 +140,8 @@
       const doc=frame.contentDocument,game=frame.contentWindow;
       if(!doc||!game)return;
       try{
-        // Synchronous sentinel lets the wrapper readiness code know that the
-        // authoritative city bootstrap must finish before it inspects city data.
         game.PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION=VERSION;
-        await injectIntoFrame(doc,'ptbo-city-runtime-bootstrap',`../response-simulator/city-runtime-bootstrap-1.6.9.js?v=${VERSION}`);
+        await injectIntoFrame(doc,'ptbo-city-runtime-bootstrap',`../response-simulator/city-runtime-bootstrap-1.6.10.js?v=${VERSION}`);
         await game.PTBO_CITY_RUNTIME_READY;
         if(generation!==frameGeneration)return;
 
@@ -165,8 +160,6 @@
         if(generation===frameGeneration)finishCover();
       }catch(error){
         console.error('Response enhancement bootstrap failed.',error);
-        // The wrapper readiness screen owns player-facing errors; this cover must
-        // never hide that diagnostic screen indefinitely.
         if(generation===frameGeneration)finishCover();
       }
     };
@@ -187,9 +180,6 @@
     installResponseEnhancements();
   }
 
-  // Run immediately when possible so iframe URL normalization happens before the
-  // iframe can complete a stale/default-city boot. DOMContentLoaded is retained as
-  // an idempotent fallback for pages that load this file unusually early.
   if(document.body)installPageEnhancements();
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',installPageEnhancements,{once:true});
   else if(!document.body)installPageEnhancements();
