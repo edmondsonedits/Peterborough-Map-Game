@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
   <meta name="theme-color" content="#090b0f">
   <meta name="description" content="Peterborough Fire Response: Street Shift — a complete browser fire-response game with precision mobile driving, station-yard freedom, improved emergency traffic, tactical incidents and persistent career progression.">
-  <title>Peterborough Fire Response: Street Shift — Station-Yard Hotfix</title>
+  <title>Peterborough Fire Response: Street Shift — Architecture Foundation</title>
   <link rel="preconnect" href="https://unpkg.com">
   <link rel="preconnect" href="https://server.arcgisonline.com">
   <script>if(new URLSearchParams(location.search).get("test")!=="1")document.write('<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">');</script>
-  <link rel="stylesheet" href="styles.css?v=1.1.1-station-yard">
+  <link rel="stylesheet" href="styles.css?v=1.1.2">
 </head>
 <body data-game-state="START_SCREEN">
   <main id="map" aria-label="Peterborough satellite map game world" data-testid="game-map"></main>
@@ -62,7 +62,7 @@
 
   <section id="start-screen" class="start-screen">
     <div class="start-card">
-      <div class="eyebrow">Station-yard hotfix · v1.1.1</div>
+      <div class="eyebrow">Architecture foundation · v1.1.2</div>
       <h1>Peterborough <em>Fire Response</em></h1>
       <p>A fully fleshed-out Peterborough fire-response game with free apparatus movement around each hall, precision mobile control, clearer emergency traffic, tactical operations, three stations, four apparatus and persistent career progression.</p>
       <div class="feature-grid">
@@ -73,7 +73,7 @@
       <div id="load-status" class="load-status">Loading indexed Peterborough road geometry…</div>
       <button id="start-button" class="start-button" type="button" disabled data-testid="start-shift">Loading Roads…</button>
       <div class="start-help">HQ: station and apparatus · OPS: difficulty, tutorial and career · WASD/Arrows move · E/Space interact · L lights · Q siren · R mode · H horn · P pause</div>
-      <div id="version-text" class="version">Station-yard hotfix 1.1.1</div>
+      <div id="version-text" class="version">Architecture foundation 1.1.2</div>
     </div>
   </section>
 
@@ -112,7 +112,7 @@
 
   <pre id="debug-overlay" class="debug-overlay" aria-label="Debug information"></pre>
   <script>if(new URLSearchParams(location.search).get("test")!=="1")document.write('<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""><\/script>');</script>
-  <script src="leaflet-fallback.js?v=1.1.1-station-yard"></script>
-  <script type="module" src="src/main.js?v=1.1.1-station-yard"></script>
+  <script src="leaflet-fallback.js?v=1.1.2"></script>
+  <script type="module" src="src/main.js?v=1.1.2"></script>
 </body>
 </html>
