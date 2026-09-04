@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.21';
+  const VERSION = '1.6.22';
   const CITY_RUNTIME_VERSION = '1.6.17';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
@@ -151,6 +151,48 @@
     return /^[a-z0-9-]+$/.test(requested) ? requested : 'peterborough';
   }
 
+  function prefersMobileSurface() {
+    const ua = String(navigator?.userAgent || '');
+    const touchPoints = Number(navigator?.maxTouchPoints || 0);
+    const uaDataMobile = navigator?.userAgentData?.mobile === true;
+    const mobileUa = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i.test(ua);
+    const iPadDesktopUa = /Macintosh/i.test(ua) && touchPoints > 1;
+    let coarsePointer = false;
+    try { coarsePointer = window.matchMedia?.('(pointer: coarse)').matches === true; } catch (_) {}
+    const screenWidth = typeof screen !== 'undefined' ? Number(screen.width) || Infinity : Infinity;
+    const screenHeight = typeof screen !== 'undefined' ? Number(screen.height) || Infinity : Infinity;
+    const compactTouchDevice = coarsePointer && touchPoints > 0 && Math.min(screenWidth, screenHeight) <= 900;
+    return uaDataMobile || mobileUa || iPadDesktopUa || compactTouchDevice;
+  }
+
+  function installDeviceSurfaceApi() {
+    if (window.PTBO_DEVICE_SURFACE?.version === VERSION) return window.PTBO_DEVICE_SURFACE;
+    window.PTBO_DEVICE_SURFACE = Object.freeze({
+      version:VERSION,
+      isMobile:prefersMobileSurface,
+      preferred:() => prefersMobileSurface() ? 'mobile' : 'desktop',
+    });
+    return window.PTBO_DEVICE_SURFACE;
+  }
+
+  function redirectWrongSimulatorSurface() {
+    const isDesktop = /\/response-simulator\/play\/(?:index\.html)?$/.test(location.pathname);
+    const isMobile = /\/response-simulator\/mobile\/(?:index\.html)?$/.test(location.pathname);
+    if (!isDesktop && !isMobile) return false;
+
+    const wantsMobile = prefersMobileSurface();
+    if ((wantsMobile && isMobile) || (!wantsMobile && isDesktop)) return false;
+
+    const target = new URL(wantsMobile ? '../mobile/' : '../play/', location.href);
+    target.search = location.search;
+    target.searchParams.set('city', selectedCityId());
+    target.searchParams.set('v', VERSION);
+    target.searchParams.set('fresh', String(Date.now()));
+    enhancementStage('redirecting-simulator-surface', `${isDesktop ? 'desktop' : 'mobile'} → ${wantsMobile ? 'mobile' : 'desktop'}`);
+    location.replace(target.href);
+    return true;
+  }
+
   function installCitySelector() {
     if (!document.getElementById('dispatch-game-link')) return;
     injectPageScript('ptbo-city-registry-loader', `../cities/city-registry.js?v=${VERSION}`)
@@ -191,6 +233,7 @@
     const isDesktop = /\/response-simulator\/play\/(?:index\.html)?$/.test(location.pathname);
     const isMobile = /\/response-simulator\/mobile\/(?:index\.html)?$/.test(location.pathname);
     if (!isDesktop && !isMobile) return;
+    if (redirectWrongSimulatorSurface()) return;
 
     const frame = document.getElementById('simulator');
     if (!frame) return;
@@ -308,6 +351,7 @@
   }
 
   function installPageEnhancements() {
+    installDeviceSurfaceApi();
     installBadge();
     const isMobile = /\/response-simulator\/mobile\/(?:index\.html)?$/.test(location.pathname);
     if (isMobile && !document.getElementById('ptbo-mobile-dispatch-hud-loader')) {
