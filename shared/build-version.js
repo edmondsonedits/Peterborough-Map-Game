@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.14';
+  const VERSION = '1.6.15';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
   if (window.PTBO_BUILD?.version === VERSION) return;
@@ -11,6 +11,10 @@
   window.PTBO_BUILD_ERRORS = window.PTBO_BUILD_ERRORS || [];
   document.documentElement.dataset.ptboBuild = VERSION;
   document.documentElement.dataset.ptboChannel = 'production';
+  const trace = (message, detail = '') => window.PTBO_STARTUP_TRACE?.mark?.(message, detail);
+  const traceOk = (message, detail = '') => window.PTBO_STARTUP_TRACE?.ok?.(message, detail);
+  const traceWarn = (message, detail = '') => window.PTBO_STARTUP_TRACE?.warn?.(message, detail);
+  trace('Production enhancement loader started', LABEL);
 
   if (!document.documentElement.dataset.ptboBuildErrorListeners) {
     document.documentElement.dataset.ptboBuildErrorListeners = 'true';
@@ -56,19 +60,20 @@
   }
 
   function injectIntoFrame(doc,id,relativeUrl,marker) {
+    trace('Enhancement loader: injecting inner module', relativeUrl);
     return new Promise((resolve,reject) => {
       const expected=new URL(relativeUrl,SCRIPT_URL).href;
       const existing=doc.getElementById(id);
       if(existing && existing.src===expected){
-        if(existing.dataset.ptboLoaded==='true')return resolve(existing);
-        existing.addEventListener('load',()=>resolve(existing),{once:true});
+        if(existing.dataset.ptboLoaded==='true'){traceOk('Enhancement loader: inner module already loaded',relativeUrl);return resolve(existing);}
+        existing.addEventListener('load',()=>{traceOk('Enhancement loader: inner module loaded',relativeUrl);resolve(existing);},{once:true});
         existing.addEventListener('error',()=>reject(new Error(`Unable to load ${relativeUrl}.`)),{once:true});
         return;
       }
       existing?.remove();
       const script=doc.createElement('script');script.id=id;script.src=expected;script.dataset.ptboVersion=VERSION;
       if(marker)script.setAttribute(marker,'true');
-      script.onload=()=>{script.dataset.ptboLoaded='true';resolve(script);};
+      script.onload=()=>{script.dataset.ptboLoaded='true';traceOk('Enhancement loader: inner module loaded',relativeUrl);resolve(script);};
       script.onerror=()=>reject(new Error(`Unable to load ${relativeUrl}.`));
       (doc.body||doc.documentElement).appendChild(script);
     });
@@ -98,8 +103,8 @@
       const changed=url.searchParams.get('city')!==cityId || url.searchParams.get('v')!==VERSION;
       url.searchParams.set('city',cityId);url.searchParams.set('v',VERSION);
       frame.dataset.ptboCityUrlVersion=VERSION;frame.dataset.ptboCity=cityId;
-      if(changed)frame.src=url.href;
-    }catch(error){console.warn('Unable to normalize simulator city URL.',error);}
+      if(changed){trace('Enhancement loader: normalizing iframe URL',url.href);frame.src=url.href;}
+    }catch(error){traceWarn('Enhancement loader: iframe URL normalization failed',error);console.warn('Unable to normalize simulator city URL.',error);}
   }
 
   function setBaseTrainingLoadingCopy() {
@@ -116,6 +121,7 @@
     if(!isDesktop&&!isMobile)return;
     const frame=document.getElementById('simulator');if(!frame)return;
 
+    trace('Enhancement loader: response simulator detected',isMobile?'mobile':'desktop');
     normalizeSimulatorFrameUrl(frame);
     setBaseTrainingLoadingCopy();
 
@@ -139,13 +145,16 @@
       const doc=frame.contentDocument,game=frame.contentWindow;
       if(!doc||!game)return;
       try{
+        trace('Enhancement loader: iframe generation attached',String(generation));
         game.PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION=VERSION;
-        await injectIntoFrame(doc,'ptbo-city-runtime-bootstrap',`../response-simulator/city-runtime-bootstrap-1.6.14.js?v=${VERSION}`);
+        await injectIntoFrame(doc,'ptbo-city-runtime-bootstrap',`../response-simulator/city-runtime-bootstrap-1.6.15.js?v=${VERSION}`);
+        trace('Enhancement loader: awaiting PTBO_CITY_RUNTIME_READY');
         await game.PTBO_CITY_RUNTIME_READY;
         if(generation!==frameGeneration)return;
 
         const city=game.PTBO_CITY_PACKAGE;
         const baseTraining=Boolean(city?.features?.baseTraining || city?.dispatch?.available===false);
+        traceOk('Enhancement loader: city runtime accepted',city?.name||selectedCityId());
         if(baseTraining)await injectIntoFrame(doc,'ptbo-base-training-mode',`../response-simulator/base-training-mode-1.6.8.js?v=${VERSION}`);
 
         if(isMobile){
@@ -154,9 +163,11 @@
         }
 
         await injectIntoFrame(doc,'ptbo-satellite-map-loader',`../response-simulator/satellite-map-1.5.6.js?v=${VERSION}`);
-        if(game.PTBO_SATELLITE_MAP_READY)await Promise.resolve(game.PTBO_SATELLITE_MAP_READY).catch(()=>{});
-        if(generation===frameGeneration)finishCover();
+        trace('Enhancement loader: awaiting satellite map readiness');
+        if(game.PTBO_SATELLITE_MAP_READY)await Promise.resolve(game.PTBO_SATELLITE_MAP_READY).catch(error=>traceWarn('Satellite map readiness rejected',error));
+        if(generation===frameGeneration){traceOk('Enhancement loader complete');finishCover();}
       }catch(error){
+        traceWarn('Response enhancement bootstrap failed',error);
         console.error('Response enhancement bootstrap failed.',error);
         if(generation===frameGeneration)finishCover();
       }
