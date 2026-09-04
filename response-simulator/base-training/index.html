@@ -63,7 +63,7 @@
       const params=new URLSearchParams(location.search);let stored=null;try{stored=localStorage.getItem('ptboSelectedCity')}catch(_){}
       const requested=String(params.get('city')||stored||'oshawa').toLowerCase(),cityId=/^[a-z0-9-]+$/.test(requested)&&requested!=='peterborough'?requested:'oshawa';
       try{localStorage.setItem('ptboSelectedCity',cityId)}catch(_){}
-      const innerUrl=new URL('../index.html',location.href);innerUrl.searchParams.set('city',cityId);innerUrl.searchParams.set('v',VERSION);innerUrl.searchParams.set('fresh',params.get('fresh')||String(Date.now()));frame.src=innerUrl.href;frame.dataset.ptboCity=cityId;
+      const innerUrl=new URL('../index.html',location.href);innerUrl.searchParams.set('city',cityId);innerUrl.searchParams.set('v',VERSION);innerUrl.searchParams.set('fresh',params.get('fresh')||String(Date.now()));frame.dataset.ptboCity=cityId;
       document.title=`${cityId.replace(/(^|-)([a-z])/g,(_,d,l)=>`${d?' ':''}${l.toUpperCase()}`)} Base Training`;
       trace.mark('Dedicated base-training runtime started',`city=${cityId}`);trace.setCurrent('WAITING: inner simulator document.');
 
@@ -103,7 +103,7 @@
         trace.ok('Service chooser opened');trace.setCurrent('READY: choose Fire or EMS.','ok');status.textContent='Base training ready';loading.classList.add('hidden');setTimeout(()=>loading.remove(),240);
       }
       let started=false;function launch(){if(started)return;started=true;startFrame().catch(error=>{started=false;console.error('Dedicated base-training startup failed.',error);trace.fail('Base-training startup failed',error);status.textContent='The selected city could not finish loading.';retry.classList.add('show')})}
-      frame.addEventListener('load',launch);setTimeout(()=>{if(frame.contentDocument?.readyState==='complete')launch()},0);
+      frame.addEventListener('load',launch);frame.src=innerUrl.href;
       retry.addEventListener('click',()=>{const url=new URL(location.href);url.searchParams.set('v',VERSION);url.searchParams.set('fresh',String(Date.now()));location.replace(url.href)});
 
       let selectedStation=1;window.ptboGetSelectedStationNumber=()=>selectedStation;window.ptboSetSelectedStation=n=>{selectedStation=Number(n)||1};
