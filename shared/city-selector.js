@@ -1,16 +1,23 @@
 /* Dispatch launcher city selector. All cities use the Peterborough simulator controls and UI. */
 (() => {
   'use strict';
-  const VERSION = '1.6.21';
+  const VERSION = '1.6.22';
   if (window.PTBO_CITY_SELECTOR?.version === VERSION) return;
 
   const dispatchLink = document.getElementById('dispatch-game-link');
   const cities = window.PTBO_CITIES || [];
   if (!dispatchLink || !cities.length) return;
 
-  const touchMobile = window.innerWidth <= 900 && (
-    matchMedia('(pointer: coarse)').matches || navigator.maxTouchPoints > 0 || navigator.userAgentData?.mobile === true || 'ontouchstart' in window
-  );
+  function wantsMobileSurface() {
+    if (typeof window.PTBO_DEVICE_SURFACE?.isMobile === 'function') {
+      return window.PTBO_DEVICE_SURFACE.isMobile();
+    }
+    const ua = String(navigator?.userAgent || '');
+    const touchPoints = Number(navigator?.maxTouchPoints || 0);
+    const mobileUa = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i.test(ua);
+    const iPadDesktopUa = /Macintosh/i.test(ua) && touchPoints > 1;
+    return navigator?.userAgentData?.mobile === true || mobileUa || iPadDesktopUa;
+  }
 
   const style = document.createElement('style');
   style.id = 'ptbo-city-selector-style';
@@ -59,13 +66,15 @@
   });
 
   function launch(city) {
-    const route = touchMobile ? city.dispatch?.mobile : city.dispatch?.desktop;
+    const mobile = wantsMobileSurface();
+    const route = mobile ? city.dispatch?.mobile : city.dispatch?.desktop;
     if (!route) return;
     try { localStorage.setItem('ptboSelectedCity', city.id); } catch (_) {}
     dialog.close();
     const url = new URL(route, location.href);
     url.searchParams.set('city', city.id);
     url.searchParams.set('v', VERSION);
+    url.searchParams.set('surface', mobile ? 'mobile' : 'desktop');
     url.searchParams.set('fresh', String(Date.now()));
     location.href = url.href;
   }
@@ -85,5 +94,10 @@
     if (!dialog.open) dialog.showModal();
   }, true);
 
-  window.PTBO_CITY_SELECTOR = Object.freeze({version: VERSION,open: () => { if (!dialog.open) dialog.showModal(); },cities});
+  window.PTBO_CITY_SELECTOR = Object.freeze({
+    version:VERSION,
+    open:() => { if (!dialog.open) dialog.showModal(); },
+    preferredSurface:() => wantsMobileSurface() ? 'mobile' : 'desktop',
+    cities,
+  });
 })();
