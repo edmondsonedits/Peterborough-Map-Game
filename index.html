@@ -74,7 +74,7 @@
       <footer>Unofficial fan-made project. Not affiliated with any municipal fire or paramedic service.</footer>
     </main>
 
-    <script src="shared/build-version.js?v=1.6.20"></script>
+    <script src="shared/build-version.js?v=1.6.22"></script>
     <script>
       (()=>{
         const developerKey='ptbo-emergency-developer-mode';
@@ -87,7 +87,7 @@
         const digest=async value=>{const bytes=new TextEncoder().encode(value);const result=await crypto.subtle.digest('SHA-256',bytes);return Array.from(new Uint8Array(result),byte=>byte.toString(16).padStart(2,'0')).join('')};
         const openDeveloperGate=async()=>{if(developerEnabled()){if(confirm('Developer mode is active. Turn it off?')){try{localStorage.removeItem(developerKey)}catch{}hideDeveloperMode()}return}const code=prompt('Developer access code:');if(code===null)return;try{if(await digest(code.trim())===accessHash){localStorage.setItem(developerKey,'enabled');showDeveloperMode()}else alert('Access denied.')}catch{alert('Developer access is unavailable in this browser.')}};
         if(developerEnabled())showDeveloperMode();addEventListener('keydown',event=>{if(event.ctrlKey&&event.shiftKey&&event.altKey&&event.code==='KeyD'){event.preventDefault();openDeveloperGate()}});let tapCount=0,tapTimer=0;if(developerTrigger)developerTrigger.addEventListener('click',()=>{tapCount+=1;clearTimeout(tapTimer);tapTimer=setTimeout(()=>{tapCount=0},3500);if(tapCount>=7){tapCount=0;clearTimeout(tapTimer);openDeveloperGate()}});
-        const touchMobile=window.innerWidth<=900&&(matchMedia('(pointer: coarse)').matches||navigator.maxTouchPoints>0||navigator.userAgentData?.mobile===true||'ontouchstart'in window),dispatchLink=document.getElementById('dispatch-game-link'),geoLink=document.getElementById('geo-game-link');if(touchMobile){if(dispatchLink)dispatchLink.href='response-simulator/mobile/';if(geoLink){geoLink.href='geo-guesser/mobile/';geoLink.setAttribute('aria-label','Open Peterborough Geo Guesser with the mobile interface')}}
+        const touchMobile=window.PTBO_DEVICE_SURFACE?.isMobile?.()===true,dispatchLink=document.getElementById('dispatch-game-link'),geoLink=document.getElementById('geo-game-link');if(touchMobile){if(dispatchLink)dispatchLink.href='response-simulator/mobile/';if(geoLink){geoLink.href='geo-guesser/mobile/';geoLink.setAttribute('aria-label','Open Peterborough Geo Guesser with the mobile interface')}}
         const launchStatus=document.getElementById('launch-status'),playerLinks=[dispatchLink,geoLink,document.getElementById('city-explorer-link')].filter(Boolean);playerLinks.forEach(link=>link.addEventListener('click',()=>{playerLinks.forEach(item=>item.classList.toggle('is-launching',item===link));if(launchStatus)launchStatus.textContent=link===dispatchLink?'Choose a city to continue.':`Opening ${link.querySelector('h2')?.textContent||'game'}…`}));addEventListener('pageshow',()=>{playerLinks.forEach(link=>link.classList.remove('is-launching'));if(launchStatus)launchStatus.textContent=''})
       })();
     </script>
