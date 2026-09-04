@@ -119,8 +119,13 @@ test('v1.6.17 vehicle bootstrap cannot wait forever on nested steering modules',
   assert.match(source,/existing\.remove\(\)/);
 });
 
-test('base-training mode permanently blocks every dispatch entry point', () => {
-  const source=read('response-simulator/base-training-mode-1.6.8.js');for(const name of ['triggerDispatchWorkflow','fireRandomIncidentDispatch','toggleAllLocations','recordCurrentLocation','exportUpdatedDatabase'])assert.match(source,new RegExp(`window\\.${name}=blockedDispatch`),name);assert.match(source,/Calls Unavailable/);assert.match(source,/Dispatch calls unavailable/);assert.match(source,/const VERSION = '1\.6\.13'/);
+test('v1.6.19 base-training mode blocks dispatch without recursively refreshing the base store', () => {
+  const source=read('response-simulator/base-training-mode-1.6.8.js');
+  for(const name of ['triggerDispatchWorkflow','fireRandomIncidentDispatch','toggleAllLocations','recordCurrentLocation','exportUpdatedDatabase'])assert.match(source,new RegExp(`window\\.${name}=blockedDispatch`),name);
+  assert.match(source,/Calls Unavailable/);assert.match(source,/Dispatch calls unavailable/);assert.match(source,/const VERSION = '1\.6\.19'/);
+  const applyBody=source.match(/function apply\(\) \{([\s\S]*?)\n  \}/)?.[1]||'';
+  assert.doesNotMatch(applyBody,/refreshFromCityPackage/,'apply must never emit ptbo-bases-updated through a refresh');
+  assert.match(source,/let applying=false/);
 });
 
 test('v1.6.18 production loader keeps the Peterborough readiness path available', () => {
@@ -150,16 +155,17 @@ test('legacy desktop and mobile wrappers remain available for Peterborough', () 
   }
 });
 
-test('dedicated v1.6.18 base-training wrapper bypasses readiness and generalized enhancement bootstraps', () => {
+test('dedicated v1.6.19 base-training wrapper bypasses readiness and never waits for optional safety UI', () => {
   const source=read('response-simulator/base-training/index.html');
-  assert.match(source,/v1\.6\.18/);
-  assert.match(source,/service-selection\.js\?v=1\.6\.18/);
+  assert.match(source,/v1\.6\.19/);
+  assert.match(source,/service-selection\.js\?v=1\.6\.19/);
   assert.match(source,/PTBO_CITY_PACKAGE/);
   assert.match(source,/PTBO_BASE_STORE/);
   assert.match(source,/PTBO_SERVICE_SELECTION\.open/);
   assert.match(source,/vehicle-instruments\.js/);
   assert.match(source,/satellite-map-1\.5\.6\.js/);
   assert.match(source,/base-training-mode-1\.6\.8\.js/);
+  assert.doesNotMatch(source,/await loadInner\(doc,'base-training-mode-1\.6\.8\.js'/);
   assert.doesNotMatch(source,/PTBO_SIMULATOR_READY/);
   assert.doesNotMatch(source,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION/);
   assert.doesNotMatch(source,/simulator-readiness-/);
@@ -172,8 +178,8 @@ test('city selector launches with a fresh v1.6.18 URL so cached old routes are n
   const source=read('shared/city-selector.js');assert.match(source,/const VERSION = '1\.6\.18'/);assert.match(source,/url\.searchParams\.set\('fresh', String\(Date\.now\(\)\)\)/);
 });
 
-test('production build is v1.6.18 while packaged inner assets remain compatible with v1.6.13', () => {
-  assert.match(read('shared/build-version.js'),/const VERSION = '1\.6\.18'/);assert.match(read('shared/base-locations.js'),/const VERSION = '1\.6\.13'/);assert.match(read('index.html'),/shared\/build-version\.js\?v=1\.6\.13/);assert.match(read('cities/preview-package-factory.js'),/const VERSION = '1\.6\.13'/);assert.match(read('cities/peterborough/package.js'),/const VERSION = '1\.6\.13'/);assert.match(read('response-simulator/vehicle-instruments.js'),/const VERSION = '1\.6\.17'/);
+test('production build is v1.6.18 while base training is v1.6.19 and packaged inner assets remain compatible', () => {
+  assert.match(read('shared/build-version.js'),/const VERSION = '1\.6\.18'/);assert.match(read('shared/base-locations.js'),/const VERSION = '1\.6\.13'/);assert.match(read('index.html'),/shared\/build-version\.js\?v=1\.6\.13/);assert.match(read('cities/preview-package-factory.js'),/const VERSION = '1\.6\.13'/);assert.match(read('cities/peterborough/package.js'),/const VERSION = '1\.6\.13'/);assert.match(read('response-simulator/vehicle-instruments.js'),/const VERSION = '1\.6\.17'/);assert.match(read('response-simulator/base-training/index.html'),/v1\.6\.19/);
 });
 
 test('inner simulator initialization is idempotent for wrapper polling', () => {
