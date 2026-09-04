@@ -1,7 +1,7 @@
 /* Generic Fire/EMS base store. Supports synchronous Peterborough data and asynchronous base-training city packages. */
 (() => {
   'use strict';
-  const VERSION = '1.6.8';
+  const VERSION = '1.6.9';
   if (window.PTBO_BASE_STORE_VERSION === VERSION && window.PTBO_BASE_STORE) return;
 
   const config = window.PTBO_SERVICE_CONFIG;
@@ -228,7 +228,5 @@
     window.dispatchEvent(new CustomEvent('ptbo-bases-updated',{detail:{cityId,source:'storage'}}));
   });
 
-  // The asynchronous city package may already have finished before this newer
-  // store was injected by the production loader.
   if (city.features?.baseTraining && (config.profiles?.fire?.bases?.length || config.profiles?.ems?.bases?.length)) refreshFromCityPackage();
 })();
