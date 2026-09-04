@@ -1,7 +1,7 @@
 /* Simulator readiness gate — protected roads for full-dispatch cities, intentional free-drive for base-training cities. */
 (() => {
   'use strict';
-  const VERSION = '1.6.8';
+  const VERSION = '1.6.9';
   if (window.PTBO_SIMULATOR_READY_VERSION === VERSION && window.PTBO_SIMULATOR_READY) return;
   window.PTBO_SIMULATOR_READY_VERSION = VERSION;
 
@@ -96,8 +96,26 @@
     return city;
   }
 
+  async function waitForAuthoritativeRuntime() {
+    const expected = window.PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION;
+    if (!expected) return null;
+    const ready = await waitForValue(
+      () => window.PTBO_CITY_RUNTIME_READY_VERSION === expected && window.PTBO_CITY_RUNTIME_READY,
+      `City runtime ${expected}`,
+      20000,
+    );
+    const detail = await ready;
+    if (window.PTBO_CITY_RUNTIME_ERROR) throw window.PTBO_CITY_RUNTIME_ERROR;
+    return detail;
+  }
+
   async function initialize() {
     installVersionBadge();
+
+    // A wrapper running v1.6.9 installs a deterministic repair bootstrap first.
+    // Waiting here prevents stale v1.6.2 inner-frame files from being accepted as
+    // a valid city/road runtime on devices that have older simulator files cached.
+    await waitForAuthoritativeRuntime();
 
     const city = await waitForValue(() => window.PTBO_CITY_PACKAGE, 'City package', 10000);
     if (!city.id || !city.map || !city.serviceConfig || !city.roads) throw new Error('The selected city package is incomplete.');
@@ -149,9 +167,6 @@
 
     await waitForValue(() => window.PTBO_COMPACT_SETTINGS?.state?.installed, 'Compact settings menu', 10000);
 
-    // Arcade handling and the stable mobile camera are enhancements. If either is
-    // unavailable, the core steering API remains playable instead of trapping the
-    // user behind a false fatal-loading screen.
     const arcadeHandling = window.PTBO_ARCADE_HANDLING?.version || null;
     const stableCamera = window.PTBO_STABLE_MOBILE_CAMERA?.version || null;
 
@@ -172,6 +187,7 @@
       arcadeHandlingCore:arcadeHandling,
       stableCamera,
       compactSettings:window.PTBO_COMPACT_SETTINGS?.version || null,
+      cityRuntime:window.PTBO_CITY_RUNTIME_READY_VERSION || null,
     };
     window.dispatchEvent(new CustomEvent('ptbo-simulator-ready', { detail }));
     return detail;
