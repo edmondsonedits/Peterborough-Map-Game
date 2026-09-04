@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.16';
+  const VERSION = '1.6.17';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
   const SCRIPT_TIMEOUT_MS = 6000;
@@ -75,8 +75,6 @@
           finish(null, existing);
           return;
         }
-        // A script can exist after its load event already fired without our marker.
-        // Replacing it is safer than attaching listeners to an event that may never fire again.
         existing.remove();
       }
 
@@ -84,12 +82,17 @@
       script.id = id;
       script.src = expected;
       script.dataset.ptboVersion = VERSION;
+      script.dataset.ptboLoading = 'true';
       if (marker) script.setAttribute(marker, 'true');
       script.onload = () => {
+        script.dataset.ptboLoading = 'false';
         script.dataset.ptboLoaded = 'true';
         finish(null, script);
       };
-      script.onerror = () => finish(new Error(`Unable to load ${relativeUrl}.`));
+      script.onerror = () => {
+        script.remove();
+        finish(new Error(`Unable to load ${relativeUrl}.`));
+      };
       (targetDocument.body || targetDocument.head || targetDocument.documentElement).appendChild(script);
     });
   }
@@ -211,7 +214,19 @@
         try {
           enhancementStage('iframe-attached', selectedCityId());
           game.PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION = VERSION;
-          await injectIntoFrame(doc, 'ptbo-city-runtime-bootstrap', `../response-simulator/city-runtime-bootstrap-1.6.16.js?v=${VERSION}`);
+
+          // Readiness must exist before the wrapper reaches its own startup gate.
+          // It can safely wait for the city runtime asynchronously after script execution.
+          await injectIntoFrame(
+            doc,
+            'ptbo-simulator-readiness',
+            `../response-simulator/simulator-readiness-1.6.17.js?v=${VERSION}`,
+            'data-ptbo-simulator-readiness',
+            6000,
+          );
+          enhancementStage('readiness-gate-created', VERSION);
+
+          await injectIntoFrame(doc, 'ptbo-city-runtime-bootstrap', `../response-simulator/city-runtime-bootstrap-1.6.17.js?v=${VERSION}`);
           enhancementStage('waiting-city-runtime');
           await Promise.race([
             Promise.resolve(game.PTBO_CITY_RUNTIME_READY),
@@ -222,7 +237,6 @@
           const baseTraining = Boolean(city?.features?.baseTraining || city?.dispatch?.available === false);
           traceOk('Enhancement loader: city runtime accepted', city?.name || selectedCityId());
 
-          // These features are useful, but they are not allowed to block startup.
           if (baseTraining) {
             void optionalInnerModule(doc, 'ptbo-base-training-mode', `../response-simulator/base-training-mode-1.6.8.js?v=${VERSION}`, '', 4000);
           }
