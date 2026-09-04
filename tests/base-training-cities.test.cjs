@@ -110,6 +110,15 @@ test('v1.6.17 readiness uses bounded stale-safe module loading', () => {
   assert.match(readiness,/waiting-compact-settings/);
 });
 
+test('v1.6.17 vehicle bootstrap cannot wait forever on nested steering modules', () => {
+  const source=read('response-simulator/vehicle-instruments.js');
+  assert.match(source,/const VERSION = '1\.6\.17'/);
+  assert.match(source,/SCRIPT_TIMEOUT_MS = 6000/);
+  assert.match(source,/Timed out loading/);
+  assert.match(source,/data-ptbo-bootstrap-file/);
+  assert.match(source,/existing\.remove\(\)/);
+});
+
 test('base-training mode permanently blocks every dispatch entry point', () => {
   const source=read('response-simulator/base-training-mode-1.6.8.js');for(const name of ['triggerDispatchWorkflow','fireRandomIncidentDispatch','toggleAllLocations','recordCurrentLocation','exportUpdatedDatabase'])assert.match(source,new RegExp(`window\\.${name}=blockedDispatch`),name);assert.match(source,/Calls Unavailable/);assert.match(source,/Dispatch calls unavailable/);assert.match(source,/const VERSION = '1\.6\.13'/);
 });
@@ -165,7 +174,7 @@ test('city selector launches with a fresh URL so mobile caches cannot replay an 
 });
 
 test('production wrapper build is v1.6.17 while packaged inner assets remain compatible with v1.6.13', () => {
-  assert.match(read('shared/build-version.js'),/const VERSION = '1\.6\.17'/);assert.match(read('shared/base-locations.js'),/const VERSION = '1\.6\.13'/);assert.match(read('index.html'),/shared\/build-version\.js\?v=1\.6\.13/);assert.match(read('cities/preview-package-factory.js'),/const VERSION = '1\.6\.13'/);assert.match(read('cities/peterborough/package.js'),/const VERSION = '1\.6\.13'/);assert.match(read('response-simulator/vehicle-instruments.js'),/const VERSION = '1\.6\.14'/);
+  assert.match(read('shared/build-version.js'),/const VERSION = '1\.6\.17'/);assert.match(read('shared/base-locations.js'),/const VERSION = '1\.6\.13'/);assert.match(read('index.html'),/shared\/build-version\.js\?v=1\.6\.13/);assert.match(read('cities/preview-package-factory.js'),/const VERSION = '1\.6\.13'/);assert.match(read('cities/peterborough/package.js'),/const VERSION = '1\.6\.13'/);assert.match(read('response-simulator/vehicle-instruments.js'),/const VERSION = '1\.6\.17'/);
 });
 
 test('inner simulator initialization is idempotent for wrapper polling', () => {
