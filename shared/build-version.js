@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.17';
+  const VERSION = '1.6.18';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
   const SCRIPT_TIMEOUT_MS = 6000;
@@ -215,8 +215,6 @@
           enhancementStage('iframe-attached', selectedCityId());
           game.PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION = VERSION;
 
-          // Readiness must exist before the wrapper reaches its own startup gate.
-          // It can safely wait for the city runtime asynchronously after script execution.
           await injectIntoFrame(
             doc,
             'ptbo-simulator-readiness',
