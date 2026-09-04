@@ -58,6 +58,61 @@ test('base-training routes no longer reference the separate base-training wrappe
   assert.match(registry,/response-simulator\/mobile\//);
 });
 
+for (const interfaceName of ['desktop', 'mobile']) {
+  test(`every city launches the Peterborough ${interfaceName} UI and keeps its selected city in the game iframe`, () => {
+    const buttons = [], storage = new Map();
+    const baseUrl = 'https://example.com/Peterborough-Map-Game/';
+    const mobile = interfaceName === 'mobile';
+    const makeNode = () => ({ dataset:{}, listeners:{}, setAttribute(){},
+      addEventListener(type, handler){ this.listeners[type] = handler; },
+      appendChild(){}, close(){ this.open = false; }, showModal(){ this.open = true; },
+    });
+    const grid = makeNode();
+    grid.appendChild = button => buttons.push(button);
+    const dialog = makeNode(), cancel = makeNode();
+    dialog.querySelector = selector => selector === '.city-grid' ? grid : cancel;
+    const c = browserContext({
+      location:{href:baseUrl},
+      navigator:{userAgentData:{mobile}},
+      matchMedia:query=>({matches:query === '(pointer: coarse)' ? mobile : !mobile}),
+      localStorage:{getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,String(value))},
+      document:{getElementById:()=>makeNode(),createElement:tag=>tag === 'dialog' ? dialog : makeNode(),
+        head:makeNode(),body:makeNode(),addEventListener(){}},
+    });
+    vm.runInContext(read('cities/city-registry.js'), c);
+    vm.runInContext(read('shared/city-selector.js'), c);
+    assert.equal(buttons.length, 7);
+    const wrapperPath = interfaceName === 'desktop' ? 'response-simulator/play/' : 'response-simulator/mobile/';
+    const wrapper = read(`${wrapperPath}index.html`);
+    const frameLauncher = [...wrapper.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi)]
+      .map(match=>match[1]).find(script=>script.includes('frame.src=url.href'));
+    assert.ok(frameLauncher, `${interfaceName} initializes the shared game iframe`);
+
+    for (const button of buttons) {
+      c.location.href = baseUrl;
+      c.PTBO_CITY_SELECTOR.open();
+      button.listeners.click();
+      const url = new URL(c.location.href);
+      assert.equal(url.pathname, `/Peterborough-Map-Game/${wrapperPath}`, button.dataset.city);
+      assert.equal(url.searchParams.get('city'), button.dataset.city);
+      assert.equal(storage.get('ptboSelectedCity'), button.dataset.city);
+      assert.equal(dialog.open, false);
+
+      const frame = {dataset:{}};
+      const inner = browserContext({URLSearchParams,location:{href:url.href,search:url.search},
+        // An explicit city must also beat a stale saved choice from another city.
+        localStorage:{getItem:()=> 'peterborough',setItem(){}},
+        document:{getElementById:()=>frame},
+      });
+      vm.runInContext(frameLauncher, inner);
+      const gameUrl = new URL(frame.src);
+      assert.equal(gameUrl.pathname, '/Peterborough-Map-Game/response-simulator/index.html');
+      assert.equal(gameUrl.searchParams.get('city'), button.dataset.city);
+      assert.equal(frame.dataset.ptboCity, button.dataset.city);
+    }
+  });
+}
+
 test('every base-training city ships a packaged city definition and deliberately empty dispatch descriptor', () => {
   for(const id of cities){
     const packageSource=read(`cities/${id}/package.js`);
