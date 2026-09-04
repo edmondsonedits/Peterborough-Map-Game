@@ -70,43 +70,23 @@ test('duplicate Oshawa EMS names receive unique IDs and survive the strict base 
     {attributes:{NAME:'Oshawa Paramedic Base',ADDRESS:'100 First St',TOWN:'OSHAWA',MUNICIPALITY:'OSHAWA'},geometry:{x:-78.861,y:43.901}},
     {attributes:{NAME:'Oshawa Paramedic Base',ADDRESS:'200 Second St',TOWN:'OSHAWA',MUNICIPALITY:'OSHAWA'},geometry:{x:-78.872,y:43.912}},
   ]};
-  const c=browserContext({
-    fetch:async()=>({ok:true,status:200,json:async()=>gisPayload}),
-    PTBO_LOCATION_CHANGES:{diff:noChangesDiff},
-  });
+  const c=browserContext({fetch:async()=>({ok:true,status:200,json:async()=>gisPayload}),PTBO_LOCATION_CHANGES:{diff:noChangesDiff}});
   vm.runInContext(read('cities/preview-package-factory.js'),c);
   c.document.currentScript.src='https://example.com/cities/oshawa/package.js';
-  const config={
-    id:'oshawa',name:'Oshawa',sourceUrl:new URL('https://example.com/cities/oshawa/package.js'),
-    map:{defaultCenter:[43.8971,-78.8658],defaultHeading:180,defaultZoom:15,minZoom:10,maxZoom:19,bounds:[[43.83,-78.98],[44.01,-78.76]]},
-    sources:{
-      fire:{type:'static',entries:[{number:1,name:'Fire Station 1',shortName:'Stn 1',address:'199 Adelaide Ave W',lat:43.900,lng:-78.870}]},
-      ems:{type:'durham-paramedic',municipality:'OSHAWA',url:'https://example.com/durham/9',outFields:'NAME,ADDRESS,TOWN,MUNICIPALITY'},
-    },
-  };
+  const config={id:'oshawa',name:'Oshawa',sourceUrl:new URL('https://example.com/cities/oshawa/package.js'),map:{defaultCenter:[43.8971,-78.8658],defaultHeading:180,defaultZoom:15,minZoom:10,maxZoom:19,bounds:[[43.83,-78.98],[44.01,-78.76]]},sources:{fire:{type:'static',entries:[{number:1,name:'Fire Station 1',shortName:'Stn 1',address:'199 Adelaide Ave W',lat:43.900,lng:-78.870}]},ems:{type:'durham-paramedic',municipality:'OSHAWA',url:'https://example.com/durham/9',outFields:'NAME,ADDRESS,TOWN,MUNICIPALITY'}}};
   await c.PTBO_PREVIEW_CITY_FACTORY.create(config);
   const imported=c.PTBO_SERVICE_CONFIG.profiles.ems.bases;
-  assert.equal(imported.length,2);
-  assert.equal(new Set(imported.map(base=>base.id)).size,2,'imported EMS base IDs must be unique');
-  assert.equal(new Set(imported.map(base=>base.number)).size,2,'imported EMS base numbers must be unique');
+  assert.equal(imported.length,2);assert.equal(new Set(imported.map(base=>base.id)).size,2,'imported EMS base IDs must be unique');assert.equal(new Set(imported.map(base=>base.number)).size,2,'imported EMS base numbers must be unique');
   vm.runInContext(read('shared/base-locations.js'),c);
-  const stored=c.PTBO_BASE_STORE.getBases('ems');
-  assert.equal(stored.length,2);
-  assert.equal(new Set(stored.map(base=>base.id)).size,2,'base store must preserve unique repaired IDs');
+  const stored=c.PTBO_BASE_STORE.getBases('ems');assert.equal(stored.length,2);assert.equal(new Set(stored.map(base=>base.id)).size,2,'base store must preserve unique repaired IDs');
 });
 
 test('base store independently repairs duplicate source IDs as a defensive fallback', () => {
-  const fire=[
-    {id:'duplicate',number:1,name:'Station A',shortName:'A',address:'1 A St',lat:44.01,lng:-79.01},
-    {id:'duplicate',number:2,name:'Station B',shortName:'B',address:'2 B St',lat:44.02,lng:-79.02},
-  ];
+  const fire=[{id:'duplicate',number:1,name:'Station A',shortName:'A',address:'1 A St',lat:44.01,lng:-79.01},{id:'duplicate',number:2,name:'Station B',shortName:'B',address:'2 B St',lat:44.02,lng:-79.02}];
   const ems=[{id:'duplicate',number:1,name:'Base C',shortName:'C',address:'3 C St',lat:44.03,lng:-79.03}];
   const hospital={id:'none',name:'Unavailable',addr:'Unavailable',lat:44,lng:-79,radius:30};
   const c=browserContext({PTBO_CITY_PACKAGE:{id:'test',name:'Test City',features:{baseTraining:true},roads:{center:[44,-79]},map:{defaultCenter:[44,-79]}},PTBO_SERVICE_CONFIG:{profiles:{fire:{id:'fire',bases:fire},ems:{id:'ems',bases:ems}},hospital,alarmCategories:[]},PTBO_LOCATION_CHANGES:{diff:noChangesDiff}});
-  assert.doesNotThrow(()=>vm.runInContext(read('shared/base-locations.js'),c));
-  const all=c.PTBO_BASE_STORE.getAll();
-  assert.equal(all.length,3);
-  assert.equal(new Set(all.map(base=>base.id)).size,3);
+  assert.doesNotThrow(()=>vm.runInContext(read('shared/base-locations.js'),c));const all=c.PTBO_BASE_STORE.getAll();assert.equal(all.length,3);assert.equal(new Set(all.map(base=>base.id)).size,3);
 });
 
 test('base store refreshes when an asynchronous city package fills its base arrays', () => {
@@ -123,25 +103,27 @@ test('base-training mode permanently blocks every dispatch entry point', () => {
   const source=read('response-simulator/base-training-mode-1.6.8.js');for(const name of ['triggerDispatchWorkflow','fireRandomIncidentDispatch','toggleAllLocations','recordCurrentLocation','exportUpdatedDatabase'])assert.match(source,new RegExp(`window\\.${name}=blockedDispatch`),name);assert.match(source,/Calls Unavailable/);assert.match(source,/Dispatch calls unavailable/);assert.match(source,/const VERSION = '1\.6\.13'/);
 });
 
-test('v1.6.15 wrapper runtime validates the already-loaded city package and exposes its current stage', () => {
-  const build=read('shared/build-version.js'),runtime=read('response-simulator/city-runtime-bootstrap-1.6.15.js'),service=read('response-simulator/service-selection.js');
-  assert.match(build,/city-runtime-bootstrap-1\.6\.15\.js/);assert.match(build,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION/);assert.match(runtime,/PTBO_CITY_RUNTIME_READY_VERSION/);assert.match(runtime,/PTBO_BASE_STORE/);assert.match(runtime,/PTBO_SERVICE/);assert.doesNotMatch(runtime,/function loadScript|loadScript\(/);assert.match(runtime,/loader:\s*'service-config'/);assert.match(runtime,/PTBO_STARTUP_STAGE/);assert.match(service,/runtimeReady\(game\)/);assert.match(service,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION/);assert.match(service,/const VERSION = '1\.6\.15'/);
+test('v1.6.16 wrapper runtime validates the already-loaded city package and cannot block forever on optional enhancements', () => {
+  const build=read('shared/build-version.js'),runtime=read('response-simulator/city-runtime-bootstrap-1.6.16.js'),service=read('response-simulator/service-selection.js');
+  assert.match(build,/city-runtime-bootstrap-1\.6\.16\.js/);assert.match(build,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION/);assert.match(build,/Timed out loading/);assert.match(build,/optionalInnerModule/);assert.match(build,/PTBO_ENHANCEMENT_STAGE/);assert.match(build,/void optionalInnerModule\(doc, 'ptbo-base-training-mode'/);assert.doesNotMatch(build,/if\s*\(baseTraining\)\s*await\s+injectIntoFrame/);
+  assert.match(runtime,/const VERSION = '1\.6\.16'/);assert.match(runtime,/PTBO_CITY_RUNTIME_READY_VERSION/);assert.match(runtime,/PTBO_BASE_STORE/);assert.match(runtime,/PTBO_SERVICE/);assert.doesNotMatch(runtime,/function loadScript|loadScript\(/);assert.match(runtime,/loader:\s*'service-config'/);assert.match(runtime,/PTBO_STARTUP_STAGE/);
+  assert.match(service,/runtimeReady\(game\)/);assert.match(service,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION/);assert.match(service,/const VERSION = '1\.6\.15'/);
 });
 
 test('desktop and mobile construct the selected city iframe before shared startup and show live startup diagnostics', () => {
-  for(const file of ['response-simulator/play/index.html','response-simulator/mobile/index.html']){const source=read(file);assert.match(source,/1\.6\.15/,file);assert.match(source,/url\.searchParams\.set\('city',city\)/,file);assert.match(source,/url\.searchParams\.set\('fresh'/,file);assert.match(source,/startup-trace-1\.6\.15\.js\?v=1\.6\.15/,file);assert.match(source,/shared\/build-version\.js\?v=1\.6\.15/,file);assert.match(source,/simulator-readiness-1\.4\.5\.js/,file);assert.match(source,/diagnostic/,file);assert.match(source,/startupPoll/,file);assert.match(source,/PTBO_STARTUP_TRACE/,file);assert.doesNotMatch(source,/loading\.innerHTML=`<div><strong>Simulator did not finish loading/)}
+  for(const file of ['response-simulator/play/index.html','response-simulator/mobile/index.html']){const source=read(file);assert.match(source,/1\.6\.16/,file);assert.match(source,/url\.searchParams\.set\('city',city\)/,file);assert.match(source,/url\.searchParams\.set\('fresh'/,file);assert.match(source,/startup-trace-1\.6\.16\.js\?v=1\.6\.16/,file);assert.match(source,/shared\/build-version\.js\?v=1\.6\.16/,file);assert.match(source,/simulator-readiness-1\.4\.5\.js/,file);assert.match(source,/Timed out loading/,file);assert.match(source,/diagnostic/,file);assert.match(source,/startupPoll/,file);assert.match(source,/PTBO_STARTUP_TRACE/,file);assert.doesNotMatch(source,/loading\.innerHTML=`<div><strong>Simulator did not finish loading/)}
 });
 
-test('startup trace reports the unresolved startup condition and inner-frame errors', () => {
-  const source=read('response-simulator/startup-trace-1.6.15.js');assert.match(source,/Live startup trace/);assert.match(source,/WAITING: PTBO_CITY_PACKAGE/);assert.match(source,/PTBO_CITY_RUNTIME_READY_VERSION/);assert.match(source,/PTBO_STARTUP_STAGE/);assert.match(source,/PTBO_BUILD_ERRORS/);assert.match(source,/Inner-frame JavaScript error/);assert.match(source,/unchanged for/);
+test('startup trace reports unresolved startup conditions, enhancement stages, and inner-frame errors', () => {
+  const source=read('response-simulator/startup-trace-1.6.16.js');assert.match(source,/Live startup trace/);assert.match(source,/WAITING: PTBO_CITY_PACKAGE/);assert.match(source,/PTBO_CITY_RUNTIME_READY_VERSION/);assert.match(source,/PTBO_STARTUP_STAGE/);assert.match(source,/PTBO_ENHANCEMENT_STAGE/);assert.match(source,/PTBO_BUILD_ERRORS/);assert.match(source,/Inner-frame JavaScript error/);assert.match(source,/unchanged for/);
 });
 
 test('city selector launches with a fresh URL so mobile caches cannot replay an old wrapper', () => {
   const source=read('shared/city-selector.js');assert.match(source,/const VERSION = '1\.6\.13'/);assert.match(source,/url\.searchParams\.set\('fresh', String\(Date\.now\(\)\)\)/);
 });
 
-test('production wrapper build is v1.6.15 while packaged inner assets remain compatible with v1.6.13', () => {
-  assert.match(read('shared/build-version.js'),/const VERSION = '1\.6\.15'/);assert.match(read('shared/base-locations.js'),/const VERSION = '1\.6\.13'/);assert.match(read('index.html'),/shared\/build-version\.js\?v=1\.6\.13/);assert.match(read('cities/preview-package-factory.js'),/const VERSION = '1\.6\.13'/);assert.match(read('cities/peterborough/package.js'),/const VERSION = '1\.6\.13'/);assert.match(read('response-simulator/vehicle-instruments.js'),/const VERSION = '1\.6\.14'/);
+test('production wrapper build is v1.6.16 while packaged inner assets remain compatible with v1.6.13', () => {
+  assert.match(read('shared/build-version.js'),/const VERSION = '1\.6\.16'/);assert.match(read('shared/base-locations.js'),/const VERSION = '1\.6\.13'/);assert.match(read('index.html'),/shared\/build-version\.js\?v=1\.6\.13/);assert.match(read('cities/preview-package-factory.js'),/const VERSION = '1\.6\.13'/);assert.match(read('cities/peterborough/package.js'),/const VERSION = '1\.6\.13'/);assert.match(read('response-simulator/vehicle-instruments.js'),/const VERSION = '1\.6\.14'/);
 });
 
 test('inner simulator initialization is idempotent for wrapper polling', () => {
@@ -149,10 +131,5 @@ test('inner simulator initialization is idempotent for wrapper polling', () => {
 });
 
 test('inner simulator loads its mapping runtime locally without a blocking CDN dependency', () => {
-  const source=read('response-simulator/index.html');
-  assert.doesNotMatch(source,/unpkg\.com\/leaflet/);
-  for(const file of ['leaflet.js','leaflet.css','leaflet.edgebuffer.js','leaflet.rotatedMarker.js']){
-    assert.ok(source.includes(`vendor/leaflet-1.9.4/${file}?v=1.6.13`),file);
-    assert.ok(fs.statSync(path.join(root,'response-simulator/vendor/leaflet-1.9.4',file)).size>100,file);
-  }
+  const source=read('response-simulator/index.html');assert.doesNotMatch(source,/unpkg\.com\/leaflet/);for(const file of ['leaflet.js','leaflet.css','leaflet.edgebuffer.js','leaflet.rotatedMarker.js']){assert.ok(source.includes(`vendor/leaflet-1.9.4/${file}?v=1.6.13`),file);assert.ok(fs.statSync(path.join(root,'response-simulator/vendor/leaflet-1.9.4',file)).size>100,file)}
 });

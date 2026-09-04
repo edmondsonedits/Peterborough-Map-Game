@@ -30,7 +30,7 @@
   <iframe id="simulator" title="Fire and EMS Emergency Response Simulator"></iframe>
   <script>
     (()=>{
-      const VERSION='1.6.15';
+      const VERSION='1.6.16';
       const params=new URLSearchParams(location.search);
       let stored=null;try{stored=localStorage.getItem('ptboSelectedCity')}catch(_){}
       const requested=String(params.get('city')||stored||'peterborough').toLowerCase();
@@ -62,16 +62,16 @@
   <div class="control-hint">Drag the wheel to steer · Hold Gas to drive · Hold Reverse to back up</div>
   <div class="loading-cover" id="loading-cover"><div><strong id="loading-title">Loading mobile simulator</strong><span id="loading-status">Preparing city package, vehicle controls, and map…</span><button type="button" id="loading-refresh">Refresh Page</button></div></div>
 
-  <script src="../startup-trace-1.6.15.js?v=1.6.15"></script>
-  <script src="../../shared/build-version.js?v=1.6.15"></script>
-  <script src="../../shared/dispatch-locations.js?v=1.6.15"></script>
-  <script src="../../shared/dispatch-data-1.4.4.js?v=1.6.15"></script>
-  <script src="../../shared/dispatch-override-1.4.4.js?v=1.6.15"></script>
-  <script src="../../shared/stations.js?v=1.6.15"></script>
-  <script src="../service-selection.js?v=1.6.15"></script>
+  <script src="../startup-trace-1.6.16.js?v=1.6.16"></script>
+  <script src="../../shared/build-version.js?v=1.6.16"></script>
+  <script src="../../shared/dispatch-locations.js?v=1.6.16"></script>
+  <script src="../../shared/dispatch-data-1.4.4.js?v=1.6.16"></script>
+  <script src="../../shared/dispatch-override-1.4.4.js?v=1.6.16"></script>
+  <script src="../../shared/stations.js?v=1.6.16"></script>
+  <script src="../service-selection.js?v=1.6.16"></script>
   <script>
     (() => {
-      const VERSION='1.6.15';
+      const VERSION='1.6.16';
       const CAMERA_TEST=new URLSearchParams(location.search).get('cameraTest');
       const MOBILE_ZOOM=19;
       const AUDIO_KEY='ptboDispatchVoiceEnabled';
@@ -100,7 +100,7 @@
       steering.addEventListener('pointerdown',event=>{event.preventDefault();steeringPointer=event.pointerId;steering.setPointerCapture(event.pointerId);steering.classList.add('active');setSteering(event.clientX)});
       steering.addEventListener('pointermove',event=>{if(event.pointerId!==steeringPointer)return;event.preventDefault();setSteering(event.clientX)});steering.addEventListener('pointerup',releaseSteering);steering.addEventListener('pointercancel',releaseSteering);steering.addEventListener('lostpointercapture',releaseSteering);bindPedal(gas,'gas');bindPedal(reverse,'reverse');
 
-      function injectScript(doc,filename,marker){trace?.mark('Loading inner module',filename);return new Promise((resolve,reject)=>{const existing=doc.querySelector(`script[${marker}]`);if(existing){if(existing.dataset.ptboLoaded==='true'){trace?.ok('Inner module already loaded',filename);return resolve(existing)}existing.addEventListener('load',()=>{trace?.ok('Inner module loaded',filename);resolve(existing)},{once:true});existing.addEventListener('error',()=>reject(new Error(`Unable to load ${filename}.`)),{once:true});return}const script=doc.createElement('script');script.src=new URL(`../${filename}?v=${VERSION}`,location.href).href;script.setAttribute(marker,'true');script.onload=()=>{script.dataset.ptboLoaded='true';trace?.ok('Inner module loaded',filename);resolve(script)};script.onerror=()=>reject(new Error(`Unable to load ${filename}.`));doc.body.appendChild(script)})}
+      function injectScript(doc,filename,marker,timeoutMs=6000){trace?.mark('Loading inner module',filename);return new Promise((resolve,reject)=>{let settled=false;const finish=(error,script)=>{if(settled)return;settled=true;clearTimeout(timer);error?reject(error):resolve(script)},timer=setTimeout(()=>finish(new Error(`Timed out loading ${filename} after ${timeoutMs} ms.`)),timeoutMs);const existing=doc.querySelector(`script[${marker}]`);if(existing){if(existing.dataset.ptboLoaded==='true'){trace?.ok('Inner module already loaded',filename);finish(null,existing);return}existing.remove()}const script=doc.createElement('script');script.src=new URL(`../${filename}?v=${VERSION}`,location.href).href;script.setAttribute(marker,'true');script.onload=()=>{script.dataset.ptboLoaded='true';trace?.ok('Inner module loaded',filename);finish(null,script)};script.onerror=()=>finish(new Error(`Unable to load ${filename}.`));doc.body.appendChild(script)})}
       function showStartupError(error,generation){if(generation!==frameGeneration)return;console.error('Mobile simulator startup failed.',error);const cityName=sim()?.PTBO_CITY_PACKAGE?.name||frame.dataset.ptboCity||'selected city';const reason=String(error?.message||error||'Unknown startup error');trace?.fail('Mobile wrapper startup failed',error);const shell=loading.firstElementChild||loading;const title=document.getElementById('loading-title')||shell.querySelector('strong');if(title)title.textContent='Simulator did not finish loading';if(loadingStatus)loadingStatus.textContent=`${cityName} could not finish startup.`;let diagnostic=shell.querySelector('.diagnostic');if(!diagnostic){diagnostic=document.createElement('div');diagnostic.className='diagnostic';shell.insertBefore(diagnostic,document.getElementById('ptbo-startup-trace')||null)}diagnostic.textContent=`v${VERSION} · ${reason}`;let button=document.getElementById('startup-retry');if(!button){button=document.createElement('button');button.id='startup-retry';button.type='button';button.textContent='Refresh Page';shell.appendChild(button)}button.addEventListener('click',refreshPage,{once:true})}
 
       function initializeFrame(){const doc=frame.contentDocument,game=frame.contentWindow;if(!doc||!game||typeof game.initializeSimulator!=='function'||doc.documentElement.dataset.ptboMobileWrapperInitialized===VERSION)return;const generation=++frameGeneration;trace?.mark('Mobile wrapper attached to iframe',`generation=${generation}`);doc.documentElement.dataset.ptboMobileWrapperInitialized=VERSION;
