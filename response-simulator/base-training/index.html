@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#111827">
+  <title>Emergency Response Base Training</title>
+  <style>
+    :root{color-scheme:dark;--panel:rgba(8,13,24,.96);--border:rgba(255,255,255,.22);--ink:#f8fafc;--muted:#cbd5e1}
+    *{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#111827;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-user-select:none;user-select:none}
+    #simulator{position:fixed;inset:0;width:100%;height:100%;border:0;background:#111827}
+    .topbar{position:fixed;top:calc(8px + env(safe-area-inset-top));left:8px;right:8px;z-index:5000;display:grid;grid-template-columns:46px minmax(0,1fr) auto;gap:8px;align-items:center;pointer-events:none}
+    .action{width:46px;height:46px;display:grid;place-items:center;padding:0;color:var(--ink);border:1px solid var(--border);border-radius:13px;background:var(--panel);box-shadow:0 6px 20px #0007;text-decoration:none;font:800 12px/1 system-ui;pointer-events:auto;touch-action:manipulation}.action:active{transform:scale(.95)}
+    .station-shortcuts{width:min(100%,520px);justify-self:center;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(64px,1fr);gap:5px;overflow-x:auto;scrollbar-width:none;pointer-events:auto}.station-shortcuts::-webkit-scrollbar{display:none}
+    .station-button{height:39px;padding:0 7px;color:#e5e7eb;border:1px solid var(--border);border-radius:10px;background:rgba(8,13,24,.94);font:850 10px/1.1 system-ui;white-space:nowrap;touch-action:manipulation}.station-button.active{color:#fff;border-color:#ef4444;background:#991b1b}html[data-service=ems] .station-button.active{border-color:#38bdf8;background:#075985}
+    .right-actions{display:flex;gap:6px;pointer-events:auto}.version{position:fixed;top:max(2px,env(safe-area-inset-top));left:50%;z-index:5100;padding:2px 7px;border:1px solid #ffffff38;border-radius:999px;background:#0f172ad9;color:#e2e8f0;font:800 8px/1.2 system-ui;letter-spacing:.05em;transform:translateX(-50%);pointer-events:none}
+    #loading{position:fixed;inset:0;z-index:6000;display:grid;place-items:center;padding:22px;background:#111827;color:#f8fafc;text-align:center;transition:opacity .18s}#loading.hidden{opacity:0;pointer-events:none}
+    .loading-shell{width:min(680px,calc(100vw - 28px))}.loading-shell h1{margin:0;font-size:clamp(24px,5vw,34px)}.loading-shell>p{margin:8px 0 18px;color:var(--muted);font-size:14px;line-height:1.45}
+    #trace{overflow:hidden;text-align:left;border:1px solid #94a3b85c;border-radius:13px;background:#050b14;font-family:ui-monospace,SFMono-Regular,Consolas,monospace}.trace-head{display:flex;justify-content:space-between;padding:9px 11px;border-bottom:1px solid #94a3b838;background:#0b1523;color:#e2e8f0;font-size:10px;font-weight:850;text-transform:uppercase;letter-spacing:.06em}.trace-head span:last-child{color:#94a3b8;text-transform:none;letter-spacing:0}.trace-current{padding:9px 11px;border-bottom:1px solid #94a3b829;color:#fde68a;font-size:10px;font-weight:800;line-height:1.45}.trace-current.ok{color:#86efac}.trace-current.error{color:#fca5a5}.trace-log{height:min(170px,25vh);margin:0;padding:9px 11px;overflow:auto;white-space:pre-wrap;word-break:break-word;background:#020711;color:#cbd5e1;font:600 9px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace}.trace-log .ok{color:#86efac}.trace-log .warn{color:#fde68a}.trace-log .error{color:#fca5a5}
+    #retry{margin-top:14px;padding:11px 18px;border:1px solid #ffffff40;border-radius:10px;background:#dc2626;color:white;font:850 14px system-ui;display:none}#retry.show{display:inline-block}
+    .mobile-controls{display:none;position:fixed;left:0;right:0;bottom:0;z-index:4900;min-height:170px;padding:12px max(13px,env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) max(13px,env(safe-area-inset-left));grid-template-columns:132px 1fr 158px;align-items:end;gap:8px;pointer-events:none;background:linear-gradient(to top,rgba(5,10,20,.86),rgba(5,10,20,0))}
+    .joystick{position:relative;width:132px;height:132px;border:1px solid var(--border);border-radius:50%;background:radial-gradient(circle at center,#ffffff12 0 35%,transparent 36%),var(--panel);box-shadow:inset 0 0 28px #0006,0 8px 24px #0007;touch-action:none;pointer-events:auto}.thumb{position:absolute;left:50%;top:50%;width:60px;height:60px;display:grid;place-items:center;border:2px solid #ffffff73;border-radius:50%;background:linear-gradient(145deg,#374151,#111827);transform:translate(-50%,-50%);font-size:24px;pointer-events:none}.joystick-label{position:absolute;left:0;right:0;bottom:12px;color:#ffffff8f;font-size:9px;font-weight:850;letter-spacing:.12em;text-align:center;text-transform:uppercase;pointer-events:none}
+    .pedals{display:flex;justify-content:flex-end;align-items:end;gap:8px;pointer-events:auto}.pedal{width:72px;height:108px;border:1px solid #ffffff40;border-radius:22px;color:white;font:900 11px system-ui;text-transform:uppercase;touch-action:none}.pedal.reverse{height:86px;background:linear-gradient(#475569,#1e293b)}.pedal.gas{background:linear-gradient(#ef4444,#991b1b)}.pedal.pressed{transform:translateY(5px);filter:brightness(1.15)}
+    .center-mobile{display:flex;justify-content:center;align-items:end;padding-bottom:8px;pointer-events:auto}.center-mobile .action{border-radius:50%}
+    @media(max-width:900px),(pointer:coarse){.mobile-controls{display:grid}.topbar{grid-template-columns:46px minmax(0,1fr) 100px}.station-shortcuts{width:100%}.right-actions .desktop-extra{display:none}.station-button{font-size:9px}.loading-shell{width:min(100%,calc(100vw - 20px))}.trace-log{height:min(150px,23vh);font-size:8px}}
+    @media(max-width:390px){.mobile-controls{grid-template-columns:124px 48px 142px;gap:6px}.joystick{width:124px;height:124px}.pedal{width:66px}.topbar{left:6px;right:6px;gap:5px}.action{width:44px;height:44px}}
+  </style>
+</head>
+<body>
+  <iframe id="simulator" title="Fire and EMS base training simulator"></iframe>
+  <div class="version">v1.6.18</div>
+  <nav class="topbar" aria-label="Base training controls">
+    <a class="action" href="../../" aria-label="Return to all games">←</a>
+    <div class="station-shortcuts" aria-label="Response bases"></div>
+    <div class="right-actions">
+      <button class="action" id="options" type="button" aria-label="Open options">☰</button>
+      <button class="action desktop-extra" id="siren" type="button" aria-label="Toggle emergency lights">✦</button>
+      <button class="action desktop-extra" id="recenter" type="button" aria-label="Recenter vehicle">◎</button>
+    </div>
+  </nav>
+  <section class="mobile-controls" aria-label="Mobile driving controls">
+    <div class="joystick" id="steering"><div class="thumb" id="thumb">↕</div><span class="joystick-label">Steer</span></div>
+    <div class="center-mobile"><button class="action" id="mobile-recenter" type="button" aria-label="Recenter vehicle">◎</button></div>
+    <div class="pedals"><button class="pedal reverse" id="reverse" type="button">Reverse</button><button class="pedal gas" id="gas" type="button">Gas</button></div>
+  </section>
+  <div id="loading"><div class="loading-shell"><h1 id="loading-title">Loading base training</h1><p id="loading-status">Starting the selected city directly…</p><section id="trace"><div class="trace-head"><span>Base Training Startup</span><span>v1.6.18</span></div><div class="trace-current" id="trace-current">Starting…</div><pre class="trace-log" id="trace-log"></pre></section><button id="retry" type="button">Refresh Page</button></div></div>
+
+  <script>
+    (()=>{
+      'use strict';
+      const start=performance.now(),entries=[],log=document.getElementById('trace-log'),current=document.getElementById('trace-current');
+      const text=value=>value instanceof Error?value.message:String(value??'');
+      function add(message,level='info',detail=''){const line=`[+${((performance.now()-start)/1000).toFixed(2)}s] ${message}${detail?` — ${text(detail)}`:''}`;const span=document.createElement('span');span.className=level;span.textContent=line+'\n';log.appendChild(span);log.scrollTop=log.scrollHeight;entries.push({message,level,detail:text(detail)});return line}
+      function set(message,level=''){current.className=`trace-current ${level}`;current.textContent=message}
+      window.PTBO_STARTUP_TRACE=Object.freeze({version:'1.6.18',entries,mark:(m,d)=>add(m,'info',d),ok:(m,d)=>add(m,'ok',d),warn:(m,d)=>add(m,'warn',d),fail:(m,d)=>{add(m,'error',d);set(`ERROR: ${m}${d?` — ${text(d)}`:''}`,'error')},setCurrent:set});
+    })();
+  </script>
+  <script src="../service-selection.js?v=1.6.18"></script>
+  <script>
+    (()=>{
+      'use strict';
+      const VERSION='1.6.18',trace=window.PTBO_STARTUP_TRACE,frame=document.getElementById('simulator'),loading=document.getElementById('loading'),status=document.getElementById('loading-status'),retry=document.getElementById('retry');
+      const params=new URLSearchParams(location.search);let stored=null;try{stored=localStorage.getItem('ptboSelectedCity')}catch(_){}
+      const requested=String(params.get('city')||stored||'oshawa').toLowerCase(),cityId=/^[a-z0-9-]+$/.test(requested)&&requested!=='peterborough'?requested:'oshawa';
+      try{localStorage.setItem('ptboSelectedCity',cityId)}catch(_){}
+      const innerUrl=new URL('../index.html',location.href);innerUrl.searchParams.set('city',cityId);innerUrl.searchParams.set('v',VERSION);innerUrl.searchParams.set('fresh',params.get('fresh')||String(Date.now()));frame.src=innerUrl.href;frame.dataset.ptboCity=cityId;
+      document.title=`${cityId.replace(/(^|-)([a-z])/g,(_,d,l)=>`${d?' ':''}${l.toUpperCase()}`)} Base Training`;
+      trace.mark('Dedicated base-training runtime started',`city=${cityId}`);trace.setCurrent('WAITING: inner simulator document.');
+
+      const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+      async function waitFor(read,label,timeout=12000){const started=performance.now();trace.setCurrent(`WAITING: ${label}.`);while(true){let value=null;try{value=read()}catch(_){}if(value){trace.ok(`${label} ready`);return value}if(performance.now()-started>timeout)throw new Error(`${label} did not become ready within ${timeout} ms.`);await sleep(40)}}
+      function loadInner(doc,filename,id,timeout=4000){trace.mark('Loading optional inner module',filename);return new Promise((resolve,reject)=>{let done=false;const finish=(error,node)=>{if(done)return;done=true;clearTimeout(timer);error?reject(error):resolve(node)},old=doc.getElementById(id);if(old)old.remove();const script=doc.createElement('script');script.id=id;script.src=new URL(filename,doc.baseURI).href+(filename.includes('?')?'&':'?')+`v=${VERSION}`;script.onload=()=>finish(null,script);script.onerror=()=>finish(new Error(`Unable to load ${filename}.`));const timer=setTimeout(()=>{script.remove();finish(new Error(`Timed out loading ${filename}.`))},timeout);(doc.body||doc.head||doc.documentElement).appendChild(script)})}
+      function installInnerShell(doc,game){if(doc.getElementById('ptbo-base-wrapper-style'))return;const style=doc.createElement('style');style.id='ptbo-base-wrapper-style';style.textContent='#game-home{display:none!important}#hud-action-btn{display:none!important}@media(max-width:900px),(pointer:coarse){#menu-toggle,#dispatch-hud{display:none!important}.panel-scroll{padding-top:70px!important;padding-bottom:190px!important}.leaflet-bottom{bottom:175px!important}}';doc.head.appendChild(style);const helper=doc.createElement('script');helper.textContent=`window.mobileRecenter=window.ptboBaseWrapperRecenter=()=>{try{const z=Math.min(Number(window.PTBO_CITY_PACKAGE?.map?.maxZoom)||19,19);if(mapInstance)mapInstance.setView([simLat,simLng],z,{animate:false})}catch(_){}};`;doc.body.appendChild(helper);try{game.PTBO_SERVICE?.applyCityMap?.(true)}catch(_){} }
+      async function recoverCore(game,doc){
+        if(!game.PTBO_BASE_STORE){trace.warn('Base store missing; reloading base-locations');await loadInner(doc,'../shared/base-locations.js','ptbo-base-store-recovery',4000)}
+        if(!game.PTBO_SERVICE){trace.warn('Service runtime missing; reloading service-mode');await loadInner(doc,'service-mode.js','ptbo-service-runtime-recovery',4000)}
+      }
+      function backgroundEnhancements(doc){
+        loadInner(doc,'vehicle-instruments.js','ptbo-base-vehicle',5000).then(()=>trace.ok('Vehicle enhancement loaded')).catch(error=>trace.warn('Vehicle enhancement skipped',error));
+        loadInner(doc,'satellite-map-1.5.6.js','ptbo-base-satellite',5000).then(()=>trace.ok('Satellite map enhancement loaded')).catch(error=>trace.warn('Satellite enhancement skipped',error));
+      }
+      async function startFrame(){
+        const game=frame.contentWindow,doc=frame.contentDocument;if(!game||!doc)return;
+        trace.mark('Iframe load event fired');
+        await waitFor(()=>doc.readyState==='complete'&&game.initializeSimulator,'inner simulator code',10000);
+        try{game.initializeSimulator()}catch(error){trace.warn('initializeSimulator call reported an error',error)}
+        const city=await waitFor(()=>game.PTBO_CITY_PACKAGE,'selected city package',10000);
+        if(city.id!==cityId)throw new Error(`Loaded ${city.id}; expected ${cityId}.`);
+        if(game.PTBO_CITY_PACKAGE_READY?.then){trace.setCurrent(`WAITING: ${city.name} packaged base data.`);await Promise.race([game.PTBO_CITY_PACKAGE_READY,sleep(8000).then(()=>{throw new Error(`${city.name} base package timed out.`)})])}
+        if(game.PTBO_CITY_PACKAGE_LOAD_ERROR)throw game.PTBO_CITY_PACKAGE_LOAD_ERROR;
+        await recoverCore(game,doc);
+        const store=await waitFor(()=>game.PTBO_BASE_STORE,'base location store',6000);store.refreshFromCityPackage?.();
+        const service=await waitFor(()=>game.PTBO_SERVICE,'Fire/EMS service runtime',6000);
+        const fire=store.getBases?.('fire')||game.PTBO_SERVICE_CONFIG?.profiles?.fire?.bases||[],ems=store.getBases?.('ems')||game.PTBO_SERVICE_CONFIG?.profiles?.ems?.bases||[];
+        if(!fire.length||!ems.length)throw new Error(`${city.name} base data is incomplete (${fire.length} Fire / ${ems.length} EMS).`);
+        trace.ok('Core base-training data ready',`${fire.length} Fire / ${ems.length} EMS`);
+        installInnerShell(doc,game);service.applyCityMap?.(true);
+        try{await loadInner(doc,'base-training-mode-1.6.8.js','ptbo-base-training-mode',3000);trace.ok('Dispatch disabled for base training')}catch(error){trace.warn('Base-training UI module skipped; core driving continues',error)}
+        backgroundEnhancements(doc);
+        trace.setCurrent('OPENING: Fire / EMS service chooser.');
+        await window.PTBO_SERVICE_SELECTION.ready(game);
+        await window.PTBO_SERVICE_SELECTION.open(game);
+        trace.ok('Service chooser opened');trace.setCurrent('READY: choose Fire or EMS.','ok');status.textContent='Base training ready';loading.classList.add('hidden');setTimeout(()=>loading.remove(),240);
+      }
+      let started=false;function launch(){if(started)return;started=true;startFrame().catch(error=>{started=false;console.error('Dedicated base-training startup failed.',error);trace.fail('Base-training startup failed',error);status.textContent='The selected city could not finish loading.';retry.classList.add('show')})}
+      frame.addEventListener('load',launch);setTimeout(()=>{if(frame.contentDocument?.readyState==='complete')launch()},0);
+      retry.addEventListener('click',()=>{const url=new URL(location.href);url.searchParams.set('v',VERSION);url.searchParams.set('fresh',String(Date.now()));location.replace(url.href)});
+
+      let selectedStation=1;window.ptboGetSelectedStationNumber=()=>selectedStation;window.ptboSetSelectedStation=n=>{selectedStation=Number(n)||1};
+      const sim=()=>frame.contentWindow,pressed=new Set();function key(key,down){sim()?.dispatchEvent(new KeyboardEvent(down?'keydown':'keyup',{key,code:key,bubbles:true,cancelable:true}))}function drive(name,down){if((down&&pressed.has(name))||(!down&&!pressed.has(name)))return;down?pressed.add(name):pressed.delete(name);key(name==='gas'?'ArrowUp':'ArrowDown',down)}
+      function bindPedal(node,name){let p=null;node.addEventListener('pointerdown',e=>{e.preventDefault();p=e.pointerId;node.setPointerCapture(e.pointerId);node.classList.add('pressed');drive(name,true)});const up=e=>{if(p!==null&&e.pointerId!==p)return;p=null;node.classList.remove('pressed');drive(name,false)};node.addEventListener('pointerup',up);node.addEventListener('pointercancel',up);node.addEventListener('lostpointercapture',up)}
+      bindPedal(document.getElementById('gas'),'gas');bindPedal(document.getElementById('reverse'),'reverse');
+      const steering=document.getElementById('steering'),thumb=document.getElementById('thumb');let steerPointer=null,fallback=null;function setSteer(x){const r=steering.getBoundingClientRect(),travel=r.width*.25,offset=Math.max(-travel,Math.min(travel,x-r.left-r.width/2)),value=offset/Math.max(1,travel);thumb.style.transform=`translate(calc(-50% + ${offset}px),-50%)`;const api=sim()?.PTBO_VEHICLE_INSTRUMENTS;if(api?.setAnalogSteering){if(fallback){key(fallback,false);fallback=null}api.setAnalogSteering(value)}else{const next=value<-.08?'ArrowLeft':value>.08?'ArrowRight':null;if(next!==fallback){if(fallback)key(fallback,false);fallback=next;if(fallback)key(fallback,true)}}}function releaseSteer(e){if(steerPointer!==null&&e?.pointerId!==undefined&&e.pointerId!==steerPointer)return;steerPointer=null;thumb.style.transform='translate(-50%,-50%)';if(fallback){key(fallback,false);fallback=null}sim()?.PTBO_VEHICLE_INSTRUMENTS?.setAnalogSteering?.(0)}steering.addEventListener('pointerdown',e=>{e.preventDefault();steerPointer=e.pointerId;steering.setPointerCapture(e.pointerId);setSteer(e.clientX)});steering.addEventListener('pointermove',e=>{if(e.pointerId===steerPointer){e.preventDefault();setSteer(e.clientX)}});steering.addEventListener('pointerup',releaseSteer);steering.addEventListener('pointercancel',releaseSteer);steering.addEventListener('lostpointercapture',releaseSteer);
+      function recenter(){sim()?.ptboBaseWrapperRecenter?.()}document.getElementById('recenter').addEventListener('click',recenter);document.getElementById('mobile-recenter').addEventListener('click',recenter);document.getElementById('options').addEventListener('click',()=>sim()?.togglePanel?.());document.getElementById('siren').addEventListener('click',()=>{const game=sim(),box=game?.document?.getElementById('chk-siren');if(!box)return;box.checked=!box.checked;game.updateVehicleChassis?.();box.dispatchEvent(new Event('change',{bubbles:true}))});
+      function releaseAll(){[...pressed].forEach(n=>drive(n,false));releaseSteer()}window.addEventListener('blur',releaseAll);document.addEventListener('visibilitychange',()=>{if(document.hidden)releaseAll()});
+    })();
+  </script>
+</body>
+</html>
