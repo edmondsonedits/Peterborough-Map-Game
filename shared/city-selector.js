@@ -1,15 +1,16 @@
 /* Dispatch launcher city selector. All cities use the Peterborough simulator controls and UI. */
 (() => {
   'use strict';
-  const VERSION = '1.6.20';
+  const VERSION = '1.6.21';
   if (window.PTBO_CITY_SELECTOR?.version === VERSION) return;
 
   const dispatchLink = document.getElementById('dispatch-game-link');
   const cities = window.PTBO_CITIES || [];
   if (!dispatchLink || !cities.length) return;
 
-  const touchMobile = window.innerWidth <= 900 && (
-    matchMedia('(pointer: coarse)').matches || navigator.maxTouchPoints > 0 || navigator.userAgentData?.mobile === true || 'ontouchstart' in window
+  // A small window or a touchscreen alone does not make a computer mobile.
+  const touchMobile = navigator.userAgentData?.mobile === true || (
+    matchMedia('(pointer: coarse)').matches && !matchMedia('(any-pointer: fine)').matches
   );
 
   const style = document.createElement('style');

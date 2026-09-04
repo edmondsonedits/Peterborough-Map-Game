@@ -126,9 +126,9 @@ test('duplicate EMS source names still receive unique IDs before entering the sh
   assert.equal(new Set(imported.map(base=>base.number)).size,2);
 });
 
-test('v1.6.20 build uses the stable v1.6.17 city-runtime protocol instead of the build number', () => {
+test('current build uses the stable v1.6.17 city-runtime protocol instead of the build number', () => {
   const build=read('shared/build-version.js');
-  assert.match(build,/const VERSION = '1\.6\.20'/);
+  assert.match(build,/const VERSION = '1\.6\.21'/);
   assert.match(build,/const CITY_RUNTIME_VERSION = '1\.6\.17'/);
   assert.match(build,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION = CITY_RUNTIME_VERSION/);
   assert.match(build,/simulator-readiness-1\.6\.17\.js/);
@@ -151,9 +151,9 @@ test('v1.6.20 base-training mode only disables dispatch and keeps the shared sim
   assert.match(source,/let applying=false/);
 });
 
-test('city selector publishes fresh v1.6.20 shared-wrapper URLs', () => {
+test('city selector publishes fresh current-build shared-wrapper URLs', () => {
   const source=read('shared/city-selector.js');
-  assert.match(source,/const VERSION = '1\.6\.20'/);
+  assert.match(source,/const VERSION = '1\.6\.21'/);
   assert.match(source,/same Peterborough driving controls/);
   assert.match(source,/url\.searchParams\.set\('fresh', String\(Date\.now\(\)\)\)/);
 });

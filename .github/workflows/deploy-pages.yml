@@ -30,7 +30,7 @@ jobs:
           node-version: 22
 
       - name: Check gameplay regressions
-        run: node --test tests/critical-gameplay.test.cjs tests/gearbox.test.cjs tests/camera-zoom.test.cjs tests/ems.test.cjs tests/base-training-cities.test.cjs
+        run: node --test tests/critical-gameplay.test.cjs tests/gearbox.test.cjs tests/camera-zoom.test.cjs tests/ems.test.cjs tests/base-training-cities.test.cjs tests/desktop-keyboard.test.cjs
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
