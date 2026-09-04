@@ -23,7 +23,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.17';
+  const VERSION = '1.6.21';
   const SCRIPT_TIMEOUT_MS = 6000;
 
   if (window.PTBO_VEHICLE_INSTRUMENTS_READY) return;

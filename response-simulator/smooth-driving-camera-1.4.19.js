@@ -33,7 +33,9 @@
 
   function isMobileWrapper() {
     try {
-      return matchMedia('(pointer:coarse)').matches || Boolean(parent?.document?.getElementById('steering'));
+      return parent !== window
+        ? Boolean(parent.document.getElementById('steering'))
+        : matchMedia('(pointer:coarse)').matches;
     } catch (_) {
       return matchMedia('(pointer:coarse)').matches;
     }
@@ -190,7 +192,6 @@
       #ptbo-camera-settings-toggle[data-mode="fixed"]{color:#102033;border-color:#94a3b8;background:#e2e8f0}
       #ptbo-camera-settings-toggle:active{transform:scale(.985)}
       #ptbo-camera-settings-hint{margin-top:6px;color:#64748b;font:600 10px/1.35 system-ui;text-align:center}
-      @media(pointer:coarse){#ptbo-camera-panel{display:none!important}}
     `;
 
     document.getElementById('ptbo-smooth-camera-panel')?.remove();
