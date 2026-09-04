@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- DESKTOP RESPONSE-SIMULATOR WRAPPER — city-package runtime v1.6.8 -->
+<!-- DESKTOP RESPONSE-SIMULATOR WRAPPER — city-package runtime v1.6.9 -->
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -8,115 +8,42 @@
   <title>Emergency Response Simulator</title>
   <style>
     :root{color-scheme:dark;--panel:rgba(8,13,24,.96);--border:rgba(255,255,255,.2);--ink:#f8fafc;--muted:#cbd5e1}
-    *{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#111827;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-    #simulator{position:fixed;inset:0;width:100%;height:100%;border:0;background:#111827}
-    .desktop-action{position:fixed;z-index:5000;width:42px;height:42px;display:grid;place-items:center;padding:0;color:var(--ink);border:1px solid var(--border);border-radius:12px;background:var(--panel);box-shadow:0 6px 20px #0006;cursor:pointer;transition:transform .12s,background .12s,border-color .12s,color .12s}
-    .desktop-action:hover{background:rgba(30,41,59,.98);border-color:rgba(255,255,255,.34)}.desktop-action:active{transform:scale(.94)}
-    .desktop-action:focus-visible,.station-button:focus-visible{outline:3px solid #7dd3fc;outline-offset:2px}.desktop-action svg{width:22px;height:22px;stroke:currentColor}
-    #audio-button{top:15px;right:145px}#siren-button{top:15px;right:195px}#recenter-button{right:15px;bottom:128px}
-    .speaker-off{display:none}#audio-button.muted{color:#9ca3af}#audio-button.muted .speaker-on{display:none}#audio-button.muted .speaker-off{display:block}
-    #siren-button.active{color:#fff;border-color:rgba(239,68,68,.85);background:rgba(185,28,28,.96);box-shadow:0 0 0 1px rgba(239,68,68,.18),0 6px 20px #0007}
-    .station-shortcuts{position:fixed;top:68px;left:15px;z-index:5000;width:min(215px,calc(100vw - 30px));display:grid;grid-template-columns:repeat(3,minmax(65px,1fr));gap:6px;pointer-events:auto;scrollbar-width:none}.station-shortcuts::-webkit-scrollbar{display:none}
-    .station-button{min-width:0;height:38px;padding:0 7px;color:#e5e7eb;border:1px solid var(--border);border-radius:10px;background:rgba(8,13,24,.94);box-shadow:0 5px 16px rgba(0,0,0,.34);font:inherit;font-size:10px;font-weight:850;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}.station-button:hover{background:rgba(30,41,59,.98)}.station-button.active{color:#fff;border-color:rgba(239,68,68,.8);background:rgba(185,28,28,.96)}html[data-service=ems] .station-button.active{border-color:#38bdf8;background:#075985}
-    #loading{position:fixed;inset:0;z-index:6000;display:grid;place-items:center;padding:24px;color:var(--ink);background:#111827;text-align:center;transition:opacity .18s ease}#loading.hidden{opacity:0;pointer-events:none}#loading strong{display:block;font-size:1.15rem}#loading span{display:block;margin-top:6px;color:var(--muted);font-size:.9rem;line-height:1.45}#loading button{margin-top:16px;padding:10px 18px;color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:9px;background:#dc2626;font:inherit;font-weight:800;cursor:pointer}
-    @media(max-width:900px),(pointer:coarse){.desktop-action,.station-shortcuts{display:none!important}}
+    *{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#111827;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}#simulator{position:fixed;inset:0;width:100%;height:100%;border:0;background:#111827}
+    .desktop-action{position:fixed;z-index:5000;width:42px;height:42px;display:grid;place-items:center;padding:0;color:var(--ink);border:1px solid var(--border);border-radius:12px;background:var(--panel);box-shadow:0 6px 20px #0006;cursor:pointer;transition:transform .12s,background .12s,border-color .12s,color .12s}.desktop-action:hover{background:rgba(30,41,59,.98);border-color:rgba(255,255,255,.34)}.desktop-action:active{transform:scale(.94)}.desktop-action:focus-visible,.station-button:focus-visible{outline:3px solid #7dd3fc;outline-offset:2px}.desktop-action svg{width:22px;height:22px;stroke:currentColor}#audio-button{top:15px;right:145px}#siren-button{top:15px;right:195px}#recenter-button{right:15px;bottom:128px}.speaker-off{display:none}#audio-button.muted{color:#9ca3af}#audio-button.muted .speaker-on{display:none}#audio-button.muted .speaker-off{display:block}#siren-button.active{color:#fff;border-color:rgba(239,68,68,.85);background:rgba(185,28,28,.96);box-shadow:0 0 0 1px rgba(239,68,68,.18),0 6px 20px #0007}
+    .station-shortcuts{position:fixed;top:68px;left:15px;z-index:5000;width:min(215px,calc(100vw - 30px));display:grid;grid-template-columns:repeat(3,minmax(65px,1fr));gap:6px;pointer-events:auto;scrollbar-width:none}.station-shortcuts::-webkit-scrollbar{display:none}.station-button{min-width:0;height:38px;padding:0 7px;color:#e5e7eb;border:1px solid var(--border);border-radius:10px;background:rgba(8,13,24,.94);box-shadow:0 5px 16px rgba(0,0,0,.34);font:inherit;font-size:10px;font-weight:850;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}.station-button:hover{background:rgba(30,41,59,.98)}.station-button.active{color:#fff;border-color:rgba(239,68,68,.8);background:rgba(185,28,28,.96)}html[data-service=ems] .station-button.active{border-color:#38bdf8;background:#075985}
+    #loading{position:fixed;inset:0;z-index:6000;display:grid;place-items:center;padding:24px;color:var(--ink);background:#111827;text-align:center;transition:opacity .18s ease}#loading.hidden{opacity:0;pointer-events:none}#loading strong{display:block;font-size:1.15rem}#loading span{display:block;margin-top:6px;color:var(--muted);font-size:.9rem;line-height:1.45}#loading .diagnostic{margin-top:10px;padding:8px 10px;border:1px solid #ffffff1f;border-radius:8px;background:#050b14;color:#fca5a5;font:600 10px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace}#loading button{margin-top:16px;padding:10px 18px;color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:9px;background:#dc2626;font:inherit;font-weight:800;cursor:pointer}@media(max-width:900px),(pointer:coarse){.desktop-action,.station-shortcuts{display:none!important}}
   </style>
 </head>
 <body>
   <iframe id="simulator" title="Fire and EMS Emergency Response Simulator"></iframe>
+  <script>
+    (()=>{const VERSION='1.6.9',params=new URLSearchParams(location.search);let stored=null;try{stored=localStorage.getItem('ptboSelectedCity')}catch(_){}const requested=String(params.get('city')||stored||'peterborough').toLowerCase(),city=/^[a-z0-9-]+$/.test(requested)?requested:'peterborough';try{localStorage.setItem('ptboSelectedCity',city)}catch(_){}const url=new URL('../index.html',location.href);url.searchParams.set('city',city);url.searchParams.set('v',VERSION);url.searchParams.set('fresh',params.get('fresh')||String(Date.now()));const frame=document.getElementById('simulator');frame.dataset.ptboCity=city;frame.dataset.ptboCityUrlVersion=VERSION;frame.src=url.href})();
+  </script>
   <div class="station-shortcuts" aria-label="Quick response bases"></div>
   <button class="desktop-action" id="siren-button" type="button" aria-label="Toggle emergency lights" aria-pressed="true" title="Emergency lights"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 14V9a5 5 0 0 1 10 0v5M5 18h14M8 14h8l1 4H7l1-4ZM4 7 2 6M20 7l2-1M12 3V1"/></svg></button>
   <button class="desktop-action" id="audio-button" type="button" aria-label="Mute dispatch voice" aria-pressed="true" title="Dispatch voice"><svg class="speaker-on" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15 9a4 4 0 0 1 0 6M17.5 6.5a7.5 7.5 0 0 1 0 11"/></svg><svg class="speaker-off" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="m16 9 5 5M21 9l-5 5"/></svg></button>
   <button class="desktop-action" id="recenter-button" type="button" aria-label="Recenter on vehicle" title="Recenter on vehicle"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></button>
   <div id="loading"><div><strong id="loading-title">Loading simulator</strong><span id="loading-status">Preparing city package, vehicle controls, and map…</span></div></div>
 
-  <script src="../../shared/build-version.js?v=1.6.8"></script>
-  <script src="../../shared/dispatch-locations.js?v=1.6.8"></script>
-  <script src="../../shared/dispatch-data-1.4.4.js?v=1.6.8"></script>
-  <script src="../../shared/dispatch-override-1.4.4.js?v=1.6.8"></script>
-  <script src="../../shared/stations.js?v=1.6.8"></script>
-  <script src="../service-selection.js?v=1.6.8"></script>
+  <script src="../../shared/build-version.js?v=1.6.9"></script>
+  <script src="../../shared/dispatch-locations.js?v=1.6.9"></script>
+  <script src="../../shared/dispatch-data-1.4.4.js?v=1.6.9"></script>
+  <script src="../../shared/dispatch-override-1.4.4.js?v=1.6.9"></script>
+  <script src="../../shared/stations.js?v=1.6.9"></script>
+  <script src="../service-selection.js?v=1.6.9"></script>
   <script>
-    (() => {
+    (()=>{
       'use strict';
-      const VERSION='1.6.8';
-      const AUDIO_KEY='ptboDispatchVoiceEnabled';
-      const params=new URLSearchParams(location.search);
-      const stored=(()=>{try{return localStorage.getItem('ptboSelectedCity')}catch(_){return null}})();
-      const requested=String(params.get('city')||stored||'peterborough').toLowerCase();
-      const cityId=/^[a-z0-9-]+$/.test(requested)?requested:'peterborough';
-      const cityName=cityId.replace(/(^|-)([a-z])/g,(_,dash,letter)=>`${dash?' ':''}${letter.toUpperCase()}`);
-      const frame=document.getElementById('simulator');
-      const audioButton=document.getElementById('audio-button');
-      const sirenButton=document.getElementById('siren-button');
-      const recenterButton=document.getElementById('recenter-button');
-      const loading=document.getElementById('loading');
-      const loadingStatus=document.getElementById('loading-status');
-      document.getElementById('loading-title').textContent=`Loading ${cityName}`;
-      document.title=`${cityName} Emergency Response Simulator`;
-      frame.title=`${cityName} Fire and EMS Emergency Response Simulator`;
-      frame.src=`../index.html?city=${encodeURIComponent(cityId)}&v=${VERSION}`;
-
-      let voiceEnabled=localStorage.getItem(AUDIO_KEY)!=='false';
-      let selectedStationNumber=1;
-      window.ptboDispatchVoiceEnabled=()=>voiceEnabled;
-      window.ptboGetSelectedStationNumber=()=>selectedStationNumber;
-      window.ptboSetSelectedStation=number=>{selectedStationNumber=Number(number)||1};
-
-      function updateAudio(){audioButton.classList.toggle('muted',!voiceEnabled);audioButton.setAttribute('aria-pressed',String(voiceEnabled));audioButton.setAttribute('aria-label',voiceEnabled?'Mute dispatch voice':'Turn on dispatch voice')}
-      audioButton.addEventListener('click',()=>{voiceEnabled=!voiceEnabled;localStorage.setItem(AUDIO_KEY,String(voiceEnabled));if(!voiceEnabled)frame.contentWindow?.speechSynthesis?.cancel?.();updateAudio()});updateAudio();
-
-      function syncSiren(game=frame.contentWindow){const siren=game?.document?.getElementById('chk-siren');const active=siren?siren.checked:true;sirenButton.classList.toggle('active',active);sirenButton.setAttribute('aria-pressed',String(active));sirenButton.setAttribute('aria-label',active?'Turn emergency lights off':'Turn emergency lights on')}
-      sirenButton.addEventListener('click',()=>{const game=frame.contentWindow;const siren=game?.document?.getElementById('chk-siren');if(!siren)return;siren.checked=!siren.checked;game.updateVehicleChassis?.();siren.dispatchEvent(new Event('change',{bubbles:true}));syncSiren(game);frame.focus()});
-      recenterButton.addEventListener('click',()=>{const game=frame.contentWindow;const lock=game?.document?.getElementById('chk-camera');if(lock)lock.checked=true;game?.PTBO_DESKTOP_FOLLOW_CAMERA?.recenter?.();frame.focus()});
-
+      const VERSION='1.6.9',AUDIO_KEY='ptboDispatchVoiceEnabled',params=new URLSearchParams(location.search),frame=document.getElementById('simulator'),audioButton=document.getElementById('audio-button'),sirenButton=document.getElementById('siren-button'),recenterButton=document.getElementById('recenter-button'),loading=document.getElementById('loading'),loadingStatus=document.getElementById('loading-status');
+      const cityId=frame.dataset.ptboCity||'peterborough',cityName=cityId.replace(/(^|-)([a-z])/g,(_,dash,letter)=>`${dash?' ':''}${letter.toUpperCase()}`);document.getElementById('loading-title').textContent=`Loading ${cityName}`;document.title=`${cityName} Emergency Response Simulator`;frame.title=`${cityName} Fire and EMS Emergency Response Simulator`;
+      let voiceEnabled=localStorage.getItem(AUDIO_KEY)!=='false',selectedStationNumber=1,frameGeneration=0;window.ptboDispatchVoiceEnabled=()=>voiceEnabled;window.ptboGetSelectedStationNumber=()=>selectedStationNumber;window.ptboSetSelectedStation=number=>{selectedStationNumber=Number(number)||1};
+      function updateAudio(){audioButton.classList.toggle('muted',!voiceEnabled);audioButton.setAttribute('aria-pressed',String(voiceEnabled));audioButton.setAttribute('aria-label',voiceEnabled?'Mute dispatch voice':'Turn on dispatch voice')}audioButton.addEventListener('click',()=>{voiceEnabled=!voiceEnabled;localStorage.setItem(AUDIO_KEY,String(voiceEnabled));if(!voiceEnabled)frame.contentWindow?.speechSynthesis?.cancel?.();updateAudio()});updateAudio();
+      function syncSiren(game=frame.contentWindow){const siren=game?.document?.getElementById('chk-siren'),active=siren?siren.checked:true;sirenButton.classList.toggle('active',active);sirenButton.setAttribute('aria-pressed',String(active));sirenButton.setAttribute('aria-label',active?'Turn emergency lights off':'Turn emergency lights on')}sirenButton.addEventListener('click',()=>{const game=frame.contentWindow,siren=game?.document?.getElementById('chk-siren');if(!siren)return;siren.checked=!siren.checked;game.updateVehicleChassis?.();siren.dispatchEvent(new Event('change',{bubbles:true}));syncSiren(game);frame.focus()});recenterButton.addEventListener('click',()=>{const game=frame.contentWindow,lock=game?.document?.getElementById('chk-camera');if(lock)lock.checked=true;game?.PTBO_DESKTOP_FOLLOW_CAMERA?.recenter?.();frame.focus()});
       function injectScript(doc,filename,marker){return new Promise((resolve,reject)=>{const existing=doc.querySelector(`script[${marker}]`);if(existing){if(existing.dataset.ptboLoaded==='true')return resolve(existing);existing.addEventListener('load',()=>resolve(existing),{once:true});existing.addEventListener('error',()=>reject(new Error(`Unable to load ${filename}.`)),{once:true});return}const script=doc.createElement('script');script.src=new URL(`../${filename}?v=${VERSION}`,location.href).href;script.setAttribute(marker,'true');script.onload=()=>{script.dataset.ptboLoaded='true';resolve(script)};script.onerror=()=>reject(new Error(`Unable to load ${filename}.`));doc.body.appendChild(script)})}
-
-      function installDesktopFollowMap(doc,game){
-        const city=game.PTBO_CITY_PACKAGE;
-        const maxZoom=Number(city?.map?.maxZoom)||19;
-        const highSpeedZoom=Math.max(Number(city?.map?.minZoom)||10,maxZoom-1);
-        const helper=doc.createElement('script');helper.textContent=`(() => {
-          if(window.PTBO_DESKTOP_FOLLOW_CAMERA?.version==='${VERSION}')return;
-          document.documentElement.dataset.ptboDesktopFollowMap='true';
-          const MAX_ZOOM=${maxZoom},HIGH_SPEED_ZOOM=${highSpeedZoom},ZOOM_OUT_SPEED_KMH=500,ZOOM_IN_SPEED_KMH=450,FOLLOW_INTERVAL_MS=1000/30;
-          let lastFollowAt=0,lastUiSyncAt=0,automaticZoom=MAX_ZOOM;
-          const cameraLockEnabled=()=>{const lock=document.getElementById('chk-camera');return !lock||lock.checked};
-          const currentSpeedKmh=()=>{try{const raw=Math.abs(Number(velocity)||0);return window.PTBO_FIXED_STEP?raw*111195*60*3.6:0}catch(_){return 0}};
-          const syncUi=()=>{const lock=document.getElementById('chk-camera');if(lock&&lock.dataset.ptboDesktopFollowInitialized!=='true'){lock.checked=true;lock.dataset.ptboDesktopFollowInitialized='true'}const note=document.getElementById('ptbo-arcade-note');if(note)note.textContent='Desktop camera follows the vehicle at the closest map view and steps out one level at 500 km/h. Turn Camera Lock off to inspect the map manually.'};
-          const automatic=()=>{const speed=currentSpeedKmh();if(automaticZoom===MAX_ZOOM&&speed>=ZOOM_OUT_SPEED_KMH)automaticZoom=HIGH_SPEED_ZOOM;else if(automaticZoom===HIGH_SPEED_ZOOM&&speed<ZOOM_IN_SPEED_KMH)automaticZoom=MAX_ZOOM;return automaticZoom};
-          const recenter=zoom=>{try{if(!mapInstance)return false;const requested=zoom==null?mapInstance.getZoom():Number(zoom);const target=Number.isFinite(requested)?requested:mapInstance.getZoom();mapInstance.setView([simLat,simLng],target,{animate:false});return true}catch(_){return false}};
-          const tick=timestamp=>{if(timestamp-lastUiSyncAt>=1000){syncUi();lastUiSyncAt=timestamp}const review=Boolean(window.PTBO_ROUTE_COMPARE?.state?.reviewOpen);if(!review&&cameraLockEnabled()&&timestamp-lastFollowAt>=FOLLOW_INTERVAL_MS){recenter(automatic());lastFollowAt=timestamp}requestAnimationFrame(tick)};
-          try{mapInstance.options.zoomSnap=1;mapInstance.options.zoomDelta=1;mapInstance.options.zoomAnimation=false;syncUi();recenter(MAX_ZOOM)}catch(_){}
-          window.PTBO_DESKTOP_FOLLOW_CAMERA=Object.freeze({version:'${VERSION}',maxZoom:MAX_ZOOM,highSpeedZoom:HIGH_SPEED_ZOOM,zoomOutSpeedKmh:ZOOM_OUT_SPEED_KMH,recenter:()=>recenter(automatic())});requestAnimationFrame(tick);
-        })();`;doc.body.appendChild(helper);
-      }
-
-      function showStartupError(error){console.error('Simulator startup failed.',error);loading.innerHTML=`<div><strong>Simulator did not finish loading</strong><span>${cityName} or the vehicle controls could not initialize. Refresh to retry.</span><button type="button" id="startup-retry">Refresh Page</button></div>`;document.getElementById('startup-retry')?.addEventListener('click',()=>{const url=new URL(location.href);url.searchParams.set('v',VERSION);url.searchParams.set('refresh',Date.now());location.replace(url.href)})}
-
-      let initializedDocument=null;
-      function onFrameLoad(){
-        const doc=frame.contentDocument;const game=frame.contentWindow;
-        if(!doc||!game||doc===initializedDocument||typeof game.initializeSimulator!=='function')return;
-        initializedDocument=doc;
-        const siren=doc.getElementById('chk-siren');if(siren){siren.addEventListener('change',()=>syncSiren(game));syncSiren(game)}
-        injectScript(doc,'route-compare-1.4.2.js','data-ptbo-route-compare-core').catch(console.error);
-        injectScript(doc,'route-review-ui-1.4.3.js','data-ptbo-route-review-ui').catch(console.error);
-        const baseTraining=Boolean(game.PTBO_CITY_PACKAGE?.features?.baseTraining||game.PTBO_CITY_PACKAGE?.dispatch?.available===false);
-        const loadedName=game.PTBO_CITY_PACKAGE?.name||cityName;
-        document.getElementById('loading-title').textContent=baseTraining?`Loading ${loadedName} base training`:`Loading ${loadedName} protected roads`;
-        loadingStatus.textContent=baseTraining?'Connecting Fire/EMS bases, vehicle controls, and free-driving map…':'Connecting city package, vehicle controls, and protected road boundaries…';
-        const simulatorReady=injectScript(doc,'simulator-readiness-1.4.5.js','data-ptbo-simulator-readiness').then(()=>game.PTBO_SIMULATOR_READY||Promise.reject(new Error('Startup verifier was not created.')));
-        const dispatchReady=baseTraining?Promise.resolve({available:false,cityId:game.PTBO_CITY_PACKAGE?.id}):window.PTBO_DISPATCH_STORE.ready();
-        Promise.all([dispatchReady,simulatorReady,window.PTBO_SERVICE_SELECTION.ready(game)]).then(()=>{
-          installDesktopFollowMap(doc,game);
-          window.PTBO_SERVICE_SELECTION.open(game);
-          loadingStatus.textContent=baseTraining?'Base training ready':'Simulator ready';
-          loading.classList.add('hidden');setTimeout(()=>loading.remove(),250);
-        }).catch(showStartupError);
-      }
-      frame.addEventListener('load',onFrameLoad);
-      if(frame.contentDocument?.readyState==='complete')setTimeout(onFrameLoad,0);
+      function installDesktopFollowMap(doc,game){const city=game.PTBO_CITY_PACKAGE,maxZoom=Number(city?.map?.maxZoom)||19,highSpeedZoom=Math.max(Number(city?.map?.minZoom)||10,maxZoom-1),helper=doc.createElement('script');helper.textContent=`(()=>{if(window.PTBO_DESKTOP_FOLLOW_CAMERA?.version==='${VERSION}')return;const MAX_ZOOM=${maxZoom},HIGH_SPEED_ZOOM=${highSpeedZoom},OUT=500,IN=450,INTERVAL=1000/30;let last=0,lastUi=0,auto=MAX_ZOOM;const locked=()=>{const x=document.getElementById('chk-camera');return !x||x.checked},speed=()=>{try{return window.PTBO_FIXED_STEP?Math.abs(Number(velocity)||0)*111195*60*3.6:0}catch(_){return 0}},zoom=()=>{const s=speed();if(auto===MAX_ZOOM&&s>=OUT)auto=HIGH_SPEED_ZOOM;else if(auto===HIGH_SPEED_ZOOM&&s<IN)auto=MAX_ZOOM;return auto},center=z=>{try{if(!mapInstance)return false;mapInstance.setView([simLat,simLng],Number.isFinite(Number(z))?Number(z):mapInstance.getZoom(),{animate:false});return true}catch(_){return false}},tick=t=>{const review=Boolean(window.PTBO_ROUTE_COMPARE?.state?.reviewOpen);if(!review&&locked()&&t-last>=INTERVAL){center(zoom());last=t}if(t-lastUi>=1000){const lock=document.getElementById('chk-camera');if(lock){lock.checked=true;lock.dataset.ptboDesktopFollowInitialized='true'}lastUi=t}requestAnimationFrame(tick)};try{mapInstance.options.zoomAnimation=false;center(MAX_ZOOM)}catch(_){}window.PTBO_DESKTOP_FOLLOW_CAMERA=Object.freeze({version:'${VERSION}',maxZoom:MAX_ZOOM,highSpeedZoom:HIGH_SPEED_ZOOM,zoomOutSpeedKmh:OUT,recenter:()=>center(zoom())});requestAnimationFrame(tick)})();`;doc.body.appendChild(helper)}
+      function showStartupError(error,generation){if(generation!==frameGeneration)return;console.error('Simulator startup failed.',error);const reason=String(error?.message||error||'Unknown startup error');loading.innerHTML=`<div><strong>Simulator did not finish loading</strong><span>${cityName} could not finish startup.</span><div class="diagnostic">v${VERSION} · ${reason}</div><button type="button" id="startup-retry">Refresh Page</button></div>`;document.getElementById('startup-retry')?.addEventListener('click',()=>{const url=new URL(location.href);url.searchParams.set('v',VERSION);url.searchParams.set('fresh',String(Date.now()));location.replace(url.href)})}
+      async function waitRuntime(game){if(!game.PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION)return;const started=performance.now();while(game.PTBO_CITY_RUNTIME_READY_VERSION!==VERSION||!game.PTBO_CITY_RUNTIME_READY){if(performance.now()-started>20000)throw new Error('Current city runtime did not start in time.');await new Promise(resolve=>setTimeout(resolve,40))}await game.PTBO_CITY_RUNTIME_READY}
+      function onFrameLoad(){const generation=++frameGeneration,doc=frame.contentDocument,game=frame.contentWindow;if(!doc||!game||typeof game.initializeSimulator!=='function')return;const start=async()=>{await waitRuntime(game);if(generation!==frameGeneration)return;const siren=doc.getElementById('chk-siren');if(siren){siren.addEventListener('change',()=>syncSiren(game));syncSiren(game)}injectScript(doc,'route-compare-1.4.2.js','data-ptbo-route-compare-core').catch(()=>{});injectScript(doc,'route-review-ui-1.4.3.js','data-ptbo-route-review-ui').catch(()=>{});const city=game.PTBO_CITY_PACKAGE,baseTraining=Boolean(city?.features?.baseTraining||city?.dispatch?.available===false),loadedName=city?.name||cityName;document.getElementById('loading-title').textContent=baseTraining?`Loading ${loadedName} base training`:`Loading ${loadedName} protected roads`;loadingStatus.textContent=baseTraining?'Connecting Fire/EMS bases, vehicle controls, and free-driving map…':'Connecting city package, vehicle controls, and protected road boundaries…';const simulatorReady=injectScript(doc,'simulator-readiness-1.4.5.js','data-ptbo-simulator-readiness').then(()=>game.PTBO_SIMULATOR_READY||Promise.reject(new Error('Startup verifier was not created.'))),dispatchReady=baseTraining?Promise.resolve({available:false,cityId:city?.id}):window.PTBO_DISPATCH_STORE.ready();await Promise.all([dispatchReady,simulatorReady,window.PTBO_SERVICE_SELECTION.ready(game)]);if(generation!==frameGeneration)return;installDesktopFollowMap(doc,game);await window.PTBO_SERVICE_SELECTION.open(game);loadingStatus.textContent=baseTraining?'Base training ready':'Simulator ready';loading.classList.add('hidden');setTimeout(()=>loading.remove(),250)};start().catch(error=>showStartupError(error,generation))}frame.addEventListener('load',onFrameLoad);if(frame.contentDocument?.readyState==='complete')setTimeout(onFrameLoad,0);
     })();
   </script>
 </body>
