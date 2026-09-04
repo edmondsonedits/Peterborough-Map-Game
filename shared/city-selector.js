@@ -1,7 +1,7 @@
 /* Dispatch launcher city selector. Preview cities can be used for Fire/EMS base training while calls are built. */
 (() => {
   'use strict';
-  const VERSION = '1.6.13';
+  const VERSION = '1.6.18';
   if (window.PTBO_CITY_SELECTOR?.version === VERSION) return;
 
   const dispatchLink = document.getElementById('dispatch-game-link');
