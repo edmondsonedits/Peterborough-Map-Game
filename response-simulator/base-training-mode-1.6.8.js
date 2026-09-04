@@ -1,7 +1,7 @@
 /* Base-training mode for cities that have Fire/EMS bases but no dispatch-call database yet. */
 (() => {
   'use strict';
-  const VERSION = '1.6.19';
+  const VERSION = '1.6.20';
   if (window.PTBO_BASE_TRAINING_MODE?.version === VERSION) return;
 
   const city = window.PTBO_CITY_PACKAGE;
@@ -68,12 +68,12 @@
       content.innerHTML=`
         <div class="hud-title">${escapeText(profile.label.toUpperCase())} / BASE TRAINING · ${escapeText(city.name.toUpperCase())}</div>
         <p class="hud-address">${escapeText(base.name)}</p>
-        <div class="hud-meta">${escapeText(base.address)} · Dispatch calls unavailable · Free driving enabled.</div>`;
+        <div class="hud-meta">${escapeText(base.address)} · Peterborough simulator controls · Dispatch calls unavailable.</div>`;
     } else {
       content.innerHTML=`
         <div class="hud-title">BASE TRAINING · ${escapeText(city.name.toUpperCase())}</div>
         <p class="hud-address">Choose Fire or EMS</p>
-        <div class="hud-meta">All available response bases can be used for spawning and free driving. Dispatch calls are not available yet.</div>`;
+        <div class="hud-meta">Uses the same Peterborough vehicle, camera, controls, gears and UI. Dispatch calls are not available yet.</div>`;
     }
     const hud=document.getElementById('dispatch-hud');
     if(hud)hud.className='';
@@ -85,7 +85,7 @@
 
   // UI-only application. Never refresh the base store here. refreshFromCityPackage()
   // emits ptbo-bases-updated, and this module listens for that event. Calling refresh
-  // from apply() created the v1.6.18 infinite microtask loop that froze startup.
+  // from apply() previously created an infinite microtask loop that froze startup.
   let applying=false;
   function apply() {
     if(!active || applying)return false;
