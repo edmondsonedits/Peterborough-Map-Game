@@ -1,7 +1,7 @@
 /* Dispatch launcher city selector. All cities use the Peterborough simulator controls and UI. */
 (() => {
   'use strict';
-  const VERSION = '1.6.20';
+  const VERSION = '1.6.21';
   if (window.PTBO_CITY_SELECTOR?.version === VERSION) return;
 
   const dispatchLink = document.getElementById('dispatch-game-link');
