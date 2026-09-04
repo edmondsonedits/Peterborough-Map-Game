@@ -95,35 +95,77 @@ test('base store refreshes when an asynchronous city package fills its base arra
   vm.runInContext(read('shared/base-locations.js'),c);assert.equal(c.PTBO_BASE_STORE.getAll().length,0);fire.push({id:'fire-1',number:1,name:'Fire Station 1',shortName:'Stn 1',address:'1 Fire Rd',lat:44.01,lng:-79.01,yardSize:120,yardRotation:0});ems.push({id:'ems-1',number:1,name:'Paramedic Base 1',shortName:'Base 1',address:'1 EMS Rd',lat:44.02,lng:-79.02,yardSize:120,yardRotation:0});assert.equal(c.PTBO_BASE_STORE.refreshFromCityPackage(),true);assert.equal(c.PTBO_BASE_STORE.getBases('fire').length,1);assert.equal(c.PTBO_BASE_STORE.getBases('ems').length,1);
 });
 
-test('readiness makes road protection conditional, waits for the city runtime, and publishes live startup stages', () => {
-  const readiness=read('response-simulator/simulator-readiness-1.4.5.js');assert.match(readiness,/const VERSION = '1\.6\.15'/);assert.match(readiness,/roadRequired\s*=\s*city\.features\?\.roadBoundaries\s*!==\s*false/);assert.match(readiness,/base-training-free-drive/);assert.match(readiness,/installFreeDriveRoadApi/);assert.match(readiness,/waitForAuthoritativeRuntime/);assert.match(readiness,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION/);assert.match(readiness,/PTBO_STARTUP_STAGE/);assert.match(readiness,/waiting-compact-settings/);
+test('v1.6.17 readiness uses bounded stale-safe module loading', () => {
+  const readiness=read('response-simulator/simulator-readiness-1.6.17.js');
+  assert.match(readiness,/const VERSION = '1\.6\.17'/);
+  assert.match(readiness,/SCRIPT_TIMEOUT_MS = 6000/);
+  assert.match(readiness,/existing\.remove\(\)/);
+  assert.match(readiness,/Timed out loading/);
+  assert.match(readiness,/PTBO_SIMULATOR_READY_ERROR/);
+  assert.match(readiness,/roadRequired\s*=\s*city\.features\?\.roadBoundaries\s*!==\s*false/);
+  assert.match(readiness,/base-training-free-drive/);
+  assert.match(readiness,/installFreeDriveRoadApi/);
+  assert.match(readiness,/waitForAuthoritativeRuntime/);
+  assert.match(readiness,/PTBO_STARTUP_STAGE/);
+  assert.match(readiness,/waiting-compact-settings/);
 });
 
 test('base-training mode permanently blocks every dispatch entry point', () => {
   const source=read('response-simulator/base-training-mode-1.6.8.js');for(const name of ['triggerDispatchWorkflow','fireRandomIncidentDispatch','toggleAllLocations','recordCurrentLocation','exportUpdatedDatabase'])assert.match(source,new RegExp(`window\\.${name}=blockedDispatch`),name);assert.match(source,/Calls Unavailable/);assert.match(source,/Dispatch calls unavailable/);assert.match(source,/const VERSION = '1\.6\.13'/);
 });
 
-test('v1.6.16 wrapper runtime validates the already-loaded city package and cannot block forever on optional enhancements', () => {
-  const build=read('shared/build-version.js'),runtime=read('response-simulator/city-runtime-bootstrap-1.6.16.js'),service=read('response-simulator/service-selection.js');
-  assert.match(build,/city-runtime-bootstrap-1\.6\.16\.js/);assert.match(build,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION/);assert.match(build,/Timed out loading/);assert.match(build,/optionalInnerModule/);assert.match(build,/PTBO_ENHANCEMENT_STAGE/);assert.match(build,/void optionalInnerModule\(doc, 'ptbo-base-training-mode'/);assert.doesNotMatch(build,/if\s*\(baseTraining\)\s*await\s+injectIntoFrame/);
-  assert.match(runtime,/const VERSION = '1\.6\.16'/);assert.match(runtime,/PTBO_CITY_RUNTIME_READY_VERSION/);assert.match(runtime,/PTBO_BASE_STORE/);assert.match(runtime,/PTBO_SERVICE/);assert.doesNotMatch(runtime,/function loadScript|loadScript\(/);assert.match(runtime,/loader:\s*'service-config'/);assert.match(runtime,/PTBO_STARTUP_STAGE/);
-  assert.match(service,/runtimeReady\(game\)/);assert.match(service,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION/);assert.match(service,/const VERSION = '1\.6\.15'/);
+test('v1.6.17 enhancement loader creates readiness before releasing the city runtime gate', () => {
+  const build=read('shared/build-version.js'),runtime=read('response-simulator/city-runtime-bootstrap-1.6.17.js'),service=read('response-simulator/service-selection.js');
+  assert.match(build,/const VERSION = '1\.6\.17'/);
+  assert.match(build,/simulator-readiness-1\.6\.17\.js/);
+  assert.match(build,/city-runtime-bootstrap-1\.6\.17\.js/);
+  assert.match(build,/data-ptbo-simulator-readiness/);
+  assert.ok(build.indexOf('simulator-readiness-1.6.17.js') < build.indexOf('city-runtime-bootstrap-1.6.17.js'),'readiness script must load before city runtime resolves');
+  assert.match(build,/readiness-gate-created/);
+  assert.match(build,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION/);
+  assert.match(build,/Timed out loading/);
+  assert.match(build,/optionalInnerModule/);
+  assert.match(build,/PTBO_ENHANCEMENT_STAGE/);
+  assert.match(build,/void optionalInnerModule\(doc, 'ptbo-base-training-mode'/);
+  assert.doesNotMatch(build,/if\s*\(baseTraining\)\s*await\s+injectIntoFrame/);
+  assert.match(runtime,/const VERSION = '1\.6\.17'/);assert.match(runtime,/PTBO_CITY_RUNTIME_READY_VERSION/);assert.match(runtime,/PTBO_BASE_STORE/);assert.match(runtime,/PTBO_SERVICE/);assert.doesNotMatch(runtime,/function loadScript|loadScript\(/);assert.match(runtime,/loader:\s*'service-config'/);assert.match(runtime,/PTBO_STARTUP_STAGE/);
+  assert.match(service,/runtimeReady\(game\)/);assert.match(service,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION/);
 });
 
-test('desktop and mobile construct the selected city iframe before shared startup and show live startup diagnostics', () => {
-  for(const file of ['response-simulator/play/index.html','response-simulator/mobile/index.html']){const source=read(file);assert.match(source,/1\.6\.16/,file);assert.match(source,/url\.searchParams\.set\('city',city\)/,file);assert.match(source,/url\.searchParams\.set\('fresh'/,file);assert.match(source,/startup-trace-1\.6\.16\.js\?v=1\.6\.16/,file);assert.match(source,/shared\/build-version\.js\?v=1\.6\.16/,file);assert.match(source,/simulator-readiness-1\.4\.5\.js/,file);assert.match(source,/Timed out loading/,file);assert.match(source,/diagnostic/,file);assert.match(source,/startupPoll/,file);assert.match(source,/PTBO_STARTUP_TRACE/,file);assert.doesNotMatch(source,/loading\.innerHTML=`<div><strong>Simulator did not finish loading/)}
+test('desktop and mobile request v1.6.17 startup assets and keep bounded wrapper injection', () => {
+  for(const file of ['response-simulator/play/index.html','response-simulator/mobile/index.html']){
+    const source=read(file);
+    assert.match(source,/1\.6\.17/,file);
+    assert.match(source,/url\.searchParams\.set\('city',city\)/,file);
+    assert.match(source,/url\.searchParams\.set\('fresh'/,file);
+    assert.match(source,/startup-trace-1\.6\.17\.js\?v=1\.6\.17/,file);
+    assert.match(source,/shared\/build-version\.js\?v=1\.6\.17/,file);
+    assert.match(source,/Timed out loading/,file);
+    assert.match(source,/diagnostic/,file);
+    assert.match(source,/startupPoll/,file);
+    assert.match(source,/PTBO_STARTUP_TRACE/,file);
+    assert.doesNotMatch(source,/loading\.innerHTML=`<div><strong>Simulator did not finish loading/);
+  }
 });
 
-test('startup trace reports unresolved startup conditions, enhancement stages, and inner-frame errors', () => {
-  const source=read('response-simulator/startup-trace-1.6.16.js');assert.match(source,/Live startup trace/);assert.match(source,/WAITING: PTBO_CITY_PACKAGE/);assert.match(source,/PTBO_CITY_RUNTIME_READY_VERSION/);assert.match(source,/PTBO_STARTUP_STAGE/);assert.match(source,/PTBO_ENHANCEMENT_STAGE/);assert.match(source,/PTBO_BUILD_ERRORS/);assert.match(source,/Inner-frame JavaScript error/);assert.match(source,/unchanged for/);
+test('v1.6.17 startup trace distinguishes missing readiness from a readiness failure', () => {
+  const source=read('response-simulator/startup-trace-1.6.17.js');
+  assert.match(source,/Live startup trace/);
+  assert.match(source,/PTBO_SIMULATOR_READY_ERROR/);
+  assert.match(source,/simulator-readiness script has not created its startup gate/);
+  assert.match(source,/PTBO_CITY_RUNTIME_READY_VERSION/);
+  assert.match(source,/PTBO_ENHANCEMENT_STAGE/);
+  assert.match(source,/PTBO_BUILD_ERRORS/);
+  assert.match(source,/Inner-frame JavaScript error/);
+  assert.match(source,/unchanged for/);
 });
 
 test('city selector launches with a fresh URL so mobile caches cannot replay an old wrapper', () => {
   const source=read('shared/city-selector.js');assert.match(source,/const VERSION = '1\.6\.13'/);assert.match(source,/url\.searchParams\.set\('fresh', String\(Date\.now\(\)\)\)/);
 });
 
-test('production wrapper build is v1.6.16 while packaged inner assets remain compatible with v1.6.13', () => {
-  assert.match(read('shared/build-version.js'),/const VERSION = '1\.6\.16'/);assert.match(read('shared/base-locations.js'),/const VERSION = '1\.6\.13'/);assert.match(read('index.html'),/shared\/build-version\.js\?v=1\.6\.13/);assert.match(read('cities/preview-package-factory.js'),/const VERSION = '1\.6\.13'/);assert.match(read('cities/peterborough/package.js'),/const VERSION = '1\.6\.13'/);assert.match(read('response-simulator/vehicle-instruments.js'),/const VERSION = '1\.6\.14'/);
+test('production wrapper build is v1.6.17 while packaged inner assets remain compatible with v1.6.13', () => {
+  assert.match(read('shared/build-version.js'),/const VERSION = '1\.6\.17'/);assert.match(read('shared/base-locations.js'),/const VERSION = '1\.6\.13'/);assert.match(read('index.html'),/shared\/build-version\.js\?v=1\.6\.13/);assert.match(read('cities/preview-package-factory.js'),/const VERSION = '1\.6\.13'/);assert.match(read('cities/peterborough/package.js'),/const VERSION = '1\.6\.13'/);assert.match(read('response-simulator/vehicle-instruments.js'),/const VERSION = '1\.6\.14'/);
 });
 
 test('inner simulator initialization is idempotent for wrapper polling', () => {
