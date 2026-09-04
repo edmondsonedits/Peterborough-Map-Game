@@ -1,7 +1,7 @@
 /* Dispatch launcher city selector. Preview cities can be used for Fire/EMS base training while calls are built. */
 (() => {
   'use strict';
-  const VERSION = '1.6.8';
+  const VERSION = '1.6.9';
   if (window.PTBO_CITY_SELECTOR?.version === VERSION) return;
 
   const dispatchLink = document.getElementById('dispatch-game-link');
@@ -63,8 +63,11 @@
     if (!route) return;
     try { localStorage.setItem('ptboSelectedCity', city.id); } catch (_) {}
     dialog.close();
-    const separator = route.includes('?') ? '&' : '?';
-    location.href = `${route}${separator}city=${encodeURIComponent(city.id)}&v=${VERSION}`;
+    const url = new URL(route, location.href);
+    url.searchParams.set('city', city.id);
+    url.searchParams.set('v', VERSION);
+    url.searchParams.set('fresh', String(Date.now()));
+    location.href = url.href;
   }
 
   dialog.querySelector('.city-close').addEventListener('click', () => dialog.close());
