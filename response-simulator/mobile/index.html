@@ -30,7 +30,7 @@
   <iframe id="simulator" title="Fire and EMS Emergency Response Simulator"></iframe>
   <script>
     (()=>{
-      const VERSION='1.6.10';
+      const VERSION='1.6.11';
       const params=new URLSearchParams(location.search);
       let stored=null;try{stored=localStorage.getItem('ptboSelectedCity')}catch(_){}
       const requested=String(params.get('city')||stored||'peterborough').toLowerCase();
@@ -62,15 +62,15 @@
   <div class="control-hint">Drag the wheel to steer · Hold Gas to drive · Hold Reverse to back up</div>
   <div class="loading-cover" id="loading-cover"><div><strong>Loading mobile simulator</strong><span id="loading-status">Preparing city package, vehicle controls, and map…</span><button type="button" id="loading-refresh">Refresh Page</button></div></div>
 
-  <script src="../../shared/build-version.js?v=1.6.10"></script>
-  <script src="../../shared/dispatch-locations.js?v=1.6.10"></script>
-  <script src="../../shared/dispatch-data-1.4.4.js?v=1.6.10"></script>
-  <script src="../../shared/dispatch-override-1.4.4.js?v=1.6.10"></script>
-  <script src="../../shared/stations.js?v=1.6.10"></script>
-  <script src="../service-selection.js?v=1.6.10"></script>
+  <script src="../../shared/build-version.js?v=1.6.11"></script>
+  <script src="../../shared/dispatch-locations.js?v=1.6.11"></script>
+  <script src="../../shared/dispatch-data-1.4.4.js?v=1.6.11"></script>
+  <script src="../../shared/dispatch-override-1.4.4.js?v=1.6.11"></script>
+  <script src="../../shared/stations.js?v=1.6.11"></script>
+  <script src="../service-selection.js?v=1.6.11"></script>
   <script>
     (() => {
-      const VERSION='1.6.10';
+      const VERSION='1.6.11';
       const CAMERA_TEST=new URLSearchParams(location.search).get('cameraTest');
       const MOBILE_ZOOM=19;
       const AUDIO_KEY='ptboDispatchVoiceEnabled';

@@ -1,20 +1,23 @@
 (() => {
   'use strict';
-  const VERSION='1.6.10';
+  const VERSION='1.6.11';
   const sourceUrl=new URL(document.currentScript?.src || location.href,location.href);
   const config={
     id:'oshawa',name:'Oshawa',
     map:{defaultCenter:[43.8971,-78.8658],defaultHeading:180,defaultZoom:15,minZoom:10,maxZoom:19,bounds:[[43.83,-78.98],[44.01,-78.76]]},
     sources:{
       fire:{type:'static',entries:[
-        {number:1,name:'Fire Station 1',shortName:'Stn 1',address:'199 Adelaide Ave W'},
-        {number:2,name:'Fire Station 2',shortName:'Stn 2',address:'1111 Simcoe St S'},
-        {number:3,name:'Fire Station 3',shortName:'Stn 3',address:'50 Beatrice St E'},
-        {number:4,name:'Fire Station 4',shortName:'Stn 4',address:'50 Harmony Rd N'},
-        {number:5,name:'Fire Station 5',shortName:'Stn 5',address:'1550 Harmony Rd N'},
-        {number:6,name:'Fire Station 6',shortName:'Stn 6',address:'2339 Simcoe St N'}
+        {number:1,name:'Fire Station 1',shortName:'Stn 1',address:'199 Adelaide Ave W',lat:43.901134,lng:-78.873094},
+        {number:2,name:'Fire Station 2',shortName:'Stn 2',address:'1111 Simcoe St S',lat:43.873098,lng:-78.842404},
+        {number:3,name:'Fire Station 3',shortName:'Stn 3',address:'50 Beatrice St E',lat:43.926985,lng:-78.873865},
+        {number:4,name:'Fire Station 4',shortName:'Stn 4',address:'50 Harmony Rd N',lat:43.905658,lng:-78.835179},
+        {number:5,name:'Fire Station 5',shortName:'Stn 5',address:'1550 Harmony Rd N',lat:43.945033,lng:-78.852329},
+        {number:6,name:'Fire Station 6',shortName:'Stn 6',address:'2339 Simcoe St N',lat:43.956749,lng:-78.899303}
       ]},
-      ems:{type:'durham-paramedic',municipality:'OSHAWA',url:'https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/9',outFields:'NAME,ADDRESS,TOWN,MUNICIPALITY,POSTAL_CODE'}
+      ems:{type:'durham-paramedic',municipality:'OSHAWA',url:'https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/9',outFields:'NAME,ADDRESS,TOWN,MUNICIPALITY,POSTAL_CODE',preferFallback:true,fallback:[
+        {number:1,name:'Oshawa North RDPS',shortName:'North RDPS',address:'1260 Wilson Rd N',lat:43.934665,lng:-78.858686},
+        {number:2,name:'Oshawa South RDPS',shortName:'South RDPS',address:'497 Bloor St E',lat:43.884028,lng:-78.837869}
+      ]}
     }
   };
   const start=()=>window.PTBO_PREVIEW_CITY_FACTORY.create({...config,sourceUrl});

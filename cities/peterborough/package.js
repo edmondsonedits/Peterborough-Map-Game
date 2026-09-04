@@ -1,7 +1,7 @@
 /* Peterborough city package — authoritative geographic/service configuration. */
 (() => {
   'use strict';
-  const VERSION = '1.6.10';
+  const VERSION = '1.6.11';
   if (window.PTBO_CITY_PACKAGE?.id === 'peterborough' && window.PTBO_CITY_PACKAGE?.version === VERSION) return;
 
   const sourceUrl = new URL(document.currentScript?.src || location.href, location.href);

@@ -1,7 +1,7 @@
 /* Generic base-training city package factory for cities without dispatch calls yet. */
 (() => {
   'use strict';
-  const VERSION = '1.6.10';
+  const VERSION = '1.6.11';
   if (window.PTBO_PREVIEW_CITY_FACTORY?.version === VERSION) return;
 
   const normalizeText = value => String(value ?? '').trim().replace(/\s+/g,' ');
@@ -130,6 +130,10 @@
       return finalizeRecords(await staticBases(source.fallback,config.name,service),config,service);
     };
     try {
+      // Production startup must not depend on a municipal server or geocoder.
+      // Verified packaged coordinates open immediately; live feeds remain useful
+      // for future data-refresh tooling outside the critical game boot path.
+      if(source.preferFallback&&source.fallback?.length)return finalizeRecords(await staticBases(source.fallback,config.name,service),config,service);
       if(source.type==='static')return finalizeRecords(await staticBases(source.entries||[],config.name,service),config,service);
 
       const features=await queryArcGis(source.url,source.where||'1=1',source.outFields||'*');

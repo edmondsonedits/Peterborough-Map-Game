@@ -36,8 +36,27 @@ test('city registry exposes Peterborough full dispatch plus six base-training ci
   for(const id of cities){const city=c.PTBO_CITIES.find(item=>item.id===id);assert.ok(city,id);assert.equal(city.playable,true,id);assert.equal(city.status,'base-training',id);assert.match(city.note,/Calls unavailable/i,id);assert.ok(city.dispatch.desktop&&city.dispatch.mobile,id)}
 });
 
-test('every base-training city ships a v1.6.10 package and deliberately empty dispatch descriptor', () => {
-  for(const id of cities){const packageSource=read(`cities/${id}/package.js`),dispatchSource=read(`cities/${id}/dispatch-data.js`);assert.match(packageSource,/const VERSION='1\.6\.10'/,id);assert.match(packageSource,/PTBO_PREVIEW_CITY_FACTORY/,id);assert.match(dispatchSource,/available:false/,id)}
+test('every base-training city ships a v1.6.11 package and deliberately empty dispatch descriptor', () => {
+  for(const id of cities){const packageSource=read(`cities/${id}/package.js`),dispatchSource=read(`cities/${id}/dispatch-data.js`);assert.match(packageSource,/const VERSION='1\.6\.11'/,id);assert.match(packageSource,/PTBO_PREVIEW_CITY_FACTORY/,id);assert.match(dispatchSource,/available:false/,id)}
+});
+
+test('every base-training city has packaged coordinates for startup without live services', () => {
+  for(const id of cities){const source=read(`cities/${id}/package.js`);assert.match(source,/lat:\d/,`${id} latitude`);assert.match(source,/lng:-\d/,`${id} longitude`);if(!['oshawa','pickering'].includes(id))assert.match(source,/preferFallback:true|type:'static'/,`${id} packaged source`)}
+});
+
+test('all six base-training city packages start when every external request fails', async () => {
+  for(const id of cities){
+    let fetchCount=0;
+    const c=browserContext({fetch:async()=>{fetchCount+=1;throw new Error('network unavailable')}});
+    vm.runInContext(read('cities/preview-package-factory.js'),c);
+    c.document.currentScript.src=`https://example.com/cities/${id}/package.js`;
+    vm.runInContext(read(`cities/${id}/package.js`),c);
+    await Promise.race([c.PTBO_CITY_PACKAGE_READY,new Promise((_,reject)=>setTimeout(()=>reject(new Error(`${id} timed out`)),100))]);
+    assert.equal(c.PTBO_CITY_PACKAGE.id,id);
+    assert.ok(c.PTBO_SERVICE_CONFIG.profiles.fire.bases.length,`${id} fire bases`);
+    assert.ok(c.PTBO_SERVICE_CONFIG.profiles.ems.bases.length,`${id} EMS bases`);
+    assert.equal(fetchCount,0,`${id} startup must not call external services`);
+  }
 });
 
 test('preview package factory resolves Fire and EMS bases while keeping calls and road protection disabled', async () => {
@@ -97,26 +116,26 @@ test('base store refreshes when an asynchronous city package fills its base arra
 });
 
 test('readiness makes road protection conditional and waits for the authoritative city repair', () => {
-  const readiness=read('response-simulator/simulator-readiness-1.4.5.js');assert.match(readiness,/const VERSION = '1\.6\.10'/);assert.match(readiness,/roadRequired\s*=\s*city\.features\?\.roadBoundaries\s*!==\s*false/);assert.match(readiness,/base-training-free-drive/);assert.match(readiness,/installFreeDriveRoadApi/);assert.match(readiness,/waitForAuthoritativeRuntime/);assert.match(readiness,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION/);
+  const readiness=read('response-simulator/simulator-readiness-1.4.5.js');assert.match(readiness,/const VERSION = '1\.6\.11'/);assert.match(readiness,/roadRequired\s*=\s*city\.features\?\.roadBoundaries\s*!==\s*false/);assert.match(readiness,/base-training-free-drive/);assert.match(readiness,/installFreeDriveRoadApi/);assert.match(readiness,/waitForAuthoritativeRuntime/);assert.match(readiness,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION/);
 });
 
 test('base-training mode permanently blocks every dispatch entry point', () => {
-  const source=read('response-simulator/base-training-mode-1.6.8.js');for(const name of ['triggerDispatchWorkflow','fireRandomIncidentDispatch','toggleAllLocations','recordCurrentLocation','exportUpdatedDatabase'])assert.match(source,new RegExp(`window\\.${name}=blockedDispatch`),name);assert.match(source,/Calls Unavailable/);assert.match(source,/Dispatch calls unavailable/);assert.match(source,/const VERSION = '1\.6\.10'/);
+  const source=read('response-simulator/base-training-mode-1.6.8.js');for(const name of ['triggerDispatchWorkflow','fireRandomIncidentDispatch','toggleAllLocations','recordCurrentLocation','exportUpdatedDatabase'])assert.match(source,new RegExp(`window\\.${name}=blockedDispatch`),name);assert.match(source,/Calls Unavailable/);assert.match(source,/Dispatch calls unavailable/);assert.match(source,/const VERSION = '1\.6\.11'/);
 });
 
-test('v1.6.10 wrapper bootstrap repairs stale inner simulator modules before readiness', () => {
+test('v1.6.11 wrapper bootstrap repairs stale inner simulator modules before readiness', () => {
   const build=read('shared/build-version.js'),runtime=read('response-simulator/city-runtime-bootstrap-1.6.10.js'),service=read('response-simulator/service-selection.js');
-  assert.match(build,/city-runtime-bootstrap-1\.6\.10\.js/);assert.match(build,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION/);assert.match(runtime,/PTBO_CITY_RUNTIME_READY_VERSION/);assert.match(runtime,/shared\/base-locations\.js/);assert.match(runtime,/response-simulator\/service-mode\.js/);assert.match(service,/runtimeReady\(game\)/);assert.match(service,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION/);assert.match(service,/const VERSION = '1\.6\.10'/);
+  assert.match(build,/city-runtime-bootstrap-1\.6\.10\.js/);assert.match(build,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION/);assert.match(runtime,/PTBO_CITY_RUNTIME_READY_VERSION/);assert.match(runtime,/shared\/base-locations\.js/);assert.match(runtime,/response-simulator\/service-mode\.js/);assert.match(service,/runtimeReady\(game\)/);assert.match(service,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION/);assert.match(service,/const VERSION = '1\.6\.11'/);
 });
 
 test('desktop and mobile construct the selected city iframe before shared startup and show real diagnostics', () => {
-  for(const file of ['response-simulator/play/index.html','response-simulator/mobile/index.html']){const source=read(file);assert.match(source,/1\.6\.10/,file);assert.match(source,/url\.searchParams\.set\('city',city\)/,file);assert.match(source,/url\.searchParams\.set\('fresh'/,file);assert.match(source,/shared\/build-version\.js\?v=1\.6\.10/,file);assert.match(source,/simulator-readiness-1\.4\.5\.js/,file);assert.match(source,/diagnostic/,file)}
+  for(const file of ['response-simulator/play/index.html','response-simulator/mobile/index.html']){const source=read(file);assert.match(source,/1\.6\.11/,file);assert.match(source,/url\.searchParams\.set\('city',city\)/,file);assert.match(source,/url\.searchParams\.set\('fresh'/,file);assert.match(source,/shared\/build-version\.js\?v=1\.6\.11/,file);assert.match(source,/simulator-readiness-1\.4\.5\.js/,file);assert.match(source,/diagnostic/,file)}
 });
 
 test('city selector launches with a fresh URL so mobile caches cannot replay an old wrapper', () => {
-  const source=read('shared/city-selector.js');assert.match(source,/const VERSION = '1\.6\.10'/);assert.match(source,/url\.searchParams\.set\('fresh', String\(Date\.now\(\)\)\)/);
+  const source=read('shared/city-selector.js');assert.match(source,/const VERSION = '1\.6\.11'/);assert.match(source,/url\.searchParams\.set\('fresh', String\(Date\.now\(\)\)\)/);
 });
 
-test('production build marker, base store and launch screen all use v1.6.10', () => {
-  assert.match(read('shared/build-version.js'),/const VERSION = '1\.6\.10'/);assert.match(read('shared/base-locations.js'),/const VERSION = '1\.6\.10'/);assert.match(read('index.html'),/shared\/build-version\.js\?v=1\.6\.10/);assert.match(read('cities/preview-package-factory.js'),/const VERSION = '1\.6\.10'/);assert.match(read('cities/peterborough/package.js'),/const VERSION = '1\.6\.10'/);
+test('production build marker, base store and launch screen all use v1.6.11', () => {
+  assert.match(read('shared/build-version.js'),/const VERSION = '1\.6\.11'/);assert.match(read('shared/base-locations.js'),/const VERSION = '1\.6\.11'/);assert.match(read('index.html'),/shared\/build-version\.js\?v=1\.6\.11/);assert.match(read('cities/preview-package-factory.js'),/const VERSION = '1\.6\.11'/);assert.match(read('cities/peterborough/package.js'),/const VERSION = '1\.6\.11'/);
 });

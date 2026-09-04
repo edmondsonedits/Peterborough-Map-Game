@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const VERSION = '1.6.5';
+  const VERSION = '1.6.11';
   const sourceUrl = document.currentScript?.src;
   if (!sourceUrl) return;
 
