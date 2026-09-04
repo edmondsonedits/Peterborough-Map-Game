@@ -1,7 +1,7 @@
 /* Base-training mode for cities that have Fire/EMS bases but no dispatch-call database yet. */
 (() => {
   'use strict';
-  const VERSION = '1.6.13';
+  const VERSION = '1.6.19';
   if (window.PTBO_BASE_TRAINING_MODE?.version === VERSION) return;
 
   const city = window.PTBO_CITY_PACKAGE;
@@ -83,15 +83,23 @@
     if(distance)distance.textContent='--';
   }
 
+  // UI-only application. Never refresh the base store here. refreshFromCityPackage()
+  // emits ptbo-bases-updated, and this module listens for that event. Calling refresh
+  // from apply() created the v1.6.18 infinite microtask loop that froze startup.
+  let applying=false;
   function apply() {
-    if(!active)return false;
-    window.PTBO_BASE_STORE?.refreshFromCityPackage?.();
-    window.PTBO_SERVICE?.updateControls?.();
-    disableDispatchControls();
-    updateCallSectionLabels();
-    showHud();
-    state.ready=true;
-    return true;
+    if(!active || applying)return false;
+    applying=true;
+    try {
+      window.PTBO_SERVICE?.updateControls?.();
+      disableDispatchControls();
+      updateCallSectionLabels();
+      showHud();
+      state.ready=true;
+      return true;
+    } finally {
+      applying=false;
+    }
   }
 
   const blockedDispatch=()=>{apply();return false;};
