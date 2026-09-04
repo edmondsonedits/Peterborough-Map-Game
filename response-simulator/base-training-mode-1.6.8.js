@@ -1,7 +1,7 @@
 /* Base-training mode for cities that have Fire/EMS bases but no dispatch-call database yet. */
 (() => {
   'use strict';
-  const VERSION = '1.6.8';
+  const VERSION = '1.6.9';
   if (window.PTBO_BASE_TRAINING_MODE?.version === VERSION) return;
 
   const city = window.PTBO_CITY_PACKAGE;
