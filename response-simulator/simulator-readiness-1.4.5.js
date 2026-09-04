@@ -1,7 +1,7 @@
 /* Simulator readiness gate — protected roads for full-dispatch cities, intentional free-drive for base-training cities. */
 (() => {
   'use strict';
-  const VERSION = '1.6.9';
+  const VERSION = '1.6.10';
   if (window.PTBO_SIMULATOR_READY_VERSION === VERSION && window.PTBO_SIMULATOR_READY) return;
   window.PTBO_SIMULATOR_READY_VERSION = VERSION;
 
@@ -112,9 +112,9 @@
   async function initialize() {
     installVersionBadge();
 
-    // A wrapper running v1.6.9 installs a deterministic repair bootstrap first.
-    // Waiting here prevents stale v1.6.2 inner-frame files from being accepted as
-    // a valid city/road runtime on devices that have older simulator files cached.
+    // The wrapper installs the current deterministic city bootstrap first.
+    // Waiting here prevents older inner-frame files from being accepted as the
+    // selected city's runtime on devices with stale simulator files cached.
     await waitForAuthoritativeRuntime();
 
     const city = await waitForValue(() => window.PTBO_CITY_PACKAGE, 'City package', 10000);
