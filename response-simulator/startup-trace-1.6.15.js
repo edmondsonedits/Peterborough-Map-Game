@@ -57,8 +57,12 @@
 
   function stringifyDetail(detail) {
     if (detail == null || detail === '') return '';
-    if (detail instanceof Error) return detail.message || String(detail);
     if (typeof detail === 'string') return detail;
+    if (detail instanceof Error || (typeof detail === 'object' && typeof detail?.message === 'string')) return detail.message || String(detail);
+    if (typeof detail === 'object' && detail?.error) {
+      const nested = stringifyDetail(detail.error);
+      if (nested) return nested;
+    }
     try { return JSON.stringify(detail); } catch (_) { return String(detail); }
   }
 
@@ -185,6 +189,11 @@
 
   function monitor() {
     if (stopped) return;
+    if (!loading.isConnected) {
+      stopped = true;
+      clearTimeout(monitorTimer);
+      return;
+    }
     const doc = safe(() => frame.contentDocument, null);
     const game = safe(() => frame.contentWindow, null);
     attachInnerListeners(game);
@@ -201,6 +210,7 @@
   }
 
   frame.addEventListener('load', () => {
+    clearTimeout(monitorTimer);
     mark('Iframe load event fired', frame.src);
     attachedGame = null;
     lastStateKey = '';
