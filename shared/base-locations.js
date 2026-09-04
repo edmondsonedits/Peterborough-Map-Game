@@ -1,7 +1,7 @@
 /* Generic Fire/EMS base store. Supports synchronous Peterborough data and asynchronous base-training city packages. */
 (() => {
   'use strict';
-  const VERSION = '1.6.9';
+  const VERSION = '1.6.10';
   if (window.PTBO_BASE_STORE_VERSION === VERSION && window.PTBO_BASE_STORE) return;
 
   const config = window.PTBO_SERVICE_CONFIG;
@@ -20,12 +20,25 @@
   const metresLng = 111320 * Math.cos(referenceLat * Math.PI / 180);
 
   function buildSeed() {
-    return Object.values(config.profiles || {}).flatMap(profile => (profile.bases || []).map(base => ({
-      yardSize:160,
-      yardRotation:0,
-      ...base,
-      service:profile.id,
-    })));
+    const usedIds = new Set();
+    const usedNumbers = new Set();
+    return Object.values(config.profiles || {}).flatMap(profile => (profile.bases || []).map((base,index) => {
+      const service = String(profile.id);
+      let number = Number(base.number);
+      if (!Number.isInteger(number) || number < 1 || usedNumbers.has(`${service}:${number}`)) number = index + 1;
+      while (usedNumbers.has(`${service}:${number}`)) number += 1;
+      usedNumbers.add(`${service}:${number}`);
+
+      const rawId = String(base.id || `${service}-base-${number}`).toLowerCase().replace(/[^a-z0-9-]+/g,'-').replace(/^-+|-+$/g,'');
+      const root = rawId.startsWith(`${service}-`) ? rawId : `${service}-${rawId || `base-${number}`}`;
+      let id = root;
+      if (usedIds.has(id)) id = `${root}-${number}`;
+      let suffix = 2;
+      while (usedIds.has(id)) id = `${root}-${number}-${suffix++}`;
+      usedIds.add(id);
+
+      return {yardSize:160,yardRotation:0,...base,id,number,service};
+    }));
   }
 
   function validate(list) {
@@ -60,9 +73,7 @@
       if (primary) return JSON.parse(primary);
       const legacy = legacyKey ? localStorage.getItem(legacyKey) : null;
       return legacy ? JSON.parse(legacy) : null;
-    } catch (_) {
-      return null;
-    }
+    } catch (_) { return null; }
   }
 
   let seed = buildSeed();
@@ -86,16 +97,7 @@
 
   function validateHospital(raw) {
     const source = raw || {};
-    const h = {
-      ...config.hospital,
-      ...source,
-      id:config.hospital.id,
-      name:String(source.name ?? config.hospital.name).trim(),
-      addr:String(source.addr ?? config.hospital.addr).trim(),
-      lat:Number(source.lat ?? config.hospital.lat),
-      lng:Number(source.lng ?? config.hospital.lng),
-      radius:Number(source.radius ?? config.hospital.radius),
-    };
+    const h = {...config.hospital,...source,id:config.hospital.id,name:String(source.name ?? config.hospital.name).trim(),addr:String(source.addr ?? config.hospital.addr).trim(),lat:Number(source.lat ?? config.hospital.lat),lng:Number(source.lng ?? config.hospital.lng),radius:Number(source.radius ?? config.hospital.radius)};
     if (!h.name || !h.addr || ![h.lat,h.lng,h.radius].every(Number.isFinite) || Math.abs(h.lat)>85 || Math.abs(h.lng)>180 || h.radius<10 || h.radius>200) throw new Error('Enter a hospital name, address, valid coordinates, and arrival radius of 10–200 m.');
     return h;
   }
@@ -115,11 +117,8 @@
   function saveHospital(raw) {
     const next = validateHospital(raw);
     const delta = diff([config.hospital],[next]);
-    try {
-      localStorage.setItem(hospitalKey, JSON.stringify(delta.updated[0] || {}));
-    } catch {
-      throw new Error('Hospital changes could not be saved. Free browser storage and try again.');
-    }
+    try { localStorage.setItem(hospitalKey, JSON.stringify(delta.updated[0] || {})); }
+    catch { throw new Error('Hospital changes could not be saved. Free browser storage and try again.'); }
     hospital = next;
     window.dispatchEvent(new CustomEvent('ptbo-hospital-updated',{detail:{cityId}}));
     return {...hospital};
@@ -134,11 +133,8 @@
   function replaceAll(list) {
     const next = validate(list);
     requireLoadedServices(next);
-    try {
-      localStorage.setItem(storageKey, JSON.stringify({schema:1,cityId,...diff(seed,next)}));
-    } catch {
-      throw new Error('Base changes could not be saved. Free browser storage and try again.');
-    }
+    try { localStorage.setItem(storageKey, JSON.stringify({schema:1,cityId,...diff(seed,next)})); }
+    catch { throw new Error('Base changes could not be saved. Free browser storage and try again.'); }
     items = next;
     window.dispatchEvent(new CustomEvent('ptbo-bases-updated',{detail:{cityId,source:'editor'}}));
     return copy(items);
@@ -155,78 +151,37 @@
   }
 
   function corners(base) {
-    const half=Number(base.yardSize || 160)/2;
-    const angle=Number(base.yardRotation || 0)*Math.PI/180;
+    const half=Number(base.yardSize || 160)/2,angle=Number(base.yardRotation || 0)*Math.PI/180;
     return [[-half,-half],[half,-half],[half,half],[-half,half]].map(([x,y]) => {
-      const east=x*Math.cos(angle)-y*Math.sin(angle);
-      const north=x*Math.sin(angle)+y*Math.cos(angle);
+      const east=x*Math.cos(angle)-y*Math.sin(angle),north=x*Math.sin(angle)+y*Math.cos(angle);
       return [base.lat+north/metresLat,base.lng+east/metresLng];
     });
   }
 
   function contains(base,lat,lng) {
-    const east=(lng-base.lng)*metresLng;
-    const north=(lat-base.lat)*metresLat;
-    const angle=Number(base.yardRotation || 0)*Math.PI/180;
-    return Math.abs(east*Math.cos(angle)+north*Math.sin(angle))<=Number(base.yardSize || 160)/2+1e-7 &&
-      Math.abs(-east*Math.sin(angle)+north*Math.cos(angle))<=Number(base.yardSize || 160)/2+1e-7;
+    const east=(lng-base.lng)*metresLng,north=(lat-base.lat)*metresLat,angle=Number(base.yardRotation || 0)*Math.PI/180;
+    return Math.abs(east*Math.cos(angle)+north*Math.sin(angle))<=Number(base.yardSize || 160)/2+1e-7 && Math.abs(-east*Math.sin(angle)+north*Math.cos(angle))<=Number(base.yardSize || 160)/2+1e-7;
   }
 
   function roadAccess(base, roads) {
-    const angle=Number(base.yardRotation||0)*Math.PI/180;
-    const half=Number(base.yardSize||160)/2;
-    const local=point=>{
-      const e=(point[0]-base.lng)*metresLng;
-      const n=(point[1]-base.lat)*metresLat;
-      return [e*Math.cos(angle)+n*Math.sin(angle),-e*Math.sin(angle)+n*Math.cos(angle)];
-    };
+    const angle=Number(base.yardRotation||0)*Math.PI/180,half=Number(base.yardSize||160)/2;
+    const local=point=>{const e=(point[0]-base.lng)*metresLng,n=(point[1]-base.lat)*metresLat;return [e*Math.cos(angle)+n*Math.sin(angle),-e*Math.sin(angle)+n*Math.cos(angle)];};
     for (const feature of roads?.features || []) {
       const lines=feature.geometry?.type==='LineString'?[feature.geometry.coordinates]:feature.geometry?.type==='MultiLineString'?feature.geometry.coordinates:[];
       for (const line of lines) for(let i=1;i<line.length;i++) {
-        const a=local(line[i-1]);
-        const b=local(line[i]);
-        let lo=0,hi=1;
-        for(let axis=0;axis<2;axis++) {
-          const d=b[axis]-a[axis];
-          if(Math.abs(d)<1e-10){if(Math.abs(a[axis])>half){hi=-1;break;}}
-          else{const p=(-half-a[axis])/d,q=(half-a[axis])/d;lo=Math.max(lo,Math.min(p,q));hi=Math.min(hi,Math.max(p,q));}
-        }
+        const a=local(line[i-1]),b=local(line[i]);let lo=0,hi=1;
+        for(let axis=0;axis<2;axis++) {const d=b[axis]-a[axis];if(Math.abs(d)<1e-10){if(Math.abs(a[axis])>half){hi=-1;break;}}else{const p=(-half-a[axis])/d,q=(half-a[axis])/d;lo=Math.max(lo,Math.min(p,q));hi=Math.min(hi,Math.max(p,q));}}
         if(lo<=hi)return true;
       }
     }
     return false;
   }
 
-  const api = Object.freeze({
-    version:VERSION,
-    cityId,
-    getAll:()=>copy(items),
-    getSeed:()=>copy(seed),
-    getHospital:()=>({...hospital}),
-    getHospitalSeed:()=>({...config.hospital}),
-    saveHospital,
-    getBases:service=>copy(items.filter(base=>base.service===service).sort((a,b)=>a.number-b.number)),
-    replaceAll,
-    refreshFromCityPackage,
-    corners,
-    contains,
-    roadAccess,
-    storageKey,
-    hospitalKey,
-  });
+  const api = Object.freeze({version:VERSION,cityId,getAll:()=>copy(items),getSeed:()=>copy(seed),getHospital:()=>({...hospital}),getHospitalSeed:()=>({...config.hospital}),saveHospital,getBases:service=>copy(items.filter(base=>base.service===service).sort((a,b)=>a.number-b.number)),replaceAll,refreshFromCityPackage,corners,contains,roadAccess,storageKey,hospitalKey});
   window.PTBO_BASE_STORE = api;
   window.PTBO_BASE_STORE_VERSION = VERSION;
 
-  window.addEventListener('ptbo-city-package-data-ready', event => {
-    if (event.detail?.id && event.detail.id !== cityId) return;
-    refreshFromCityPackage();
-  });
-  window.addEventListener('storage',event=>{
-    if(event.key===hospitalKey || event.key===legacyHospitalKey){hospital=readHospital();return;}
-    if(event.key!==storageKey && event.key!==legacyStorageKey)return;
-    items=readSaved();
-    window.dispatchEvent(new CustomEvent('ptbo-bases-updated',{detail:{cityId,source:'storage'}}));
-  });
-
+  window.addEventListener('ptbo-city-package-data-ready', event => {if (event.detail?.id && event.detail.id !== cityId) return;refreshFromCityPackage();});
+  window.addEventListener('storage',event=>{if(event.key===hospitalKey || event.key===legacyHospitalKey){hospital=readHospital();return;}if(event.key!==storageKey && event.key!==legacyStorageKey)return;items=readSaved();window.dispatchEvent(new CustomEvent('ptbo-bases-updated',{detail:{cityId,source:'storage'}}));});
   if (city.features?.baseTraining && (config.profiles?.fire?.bases?.length || config.profiles?.ems?.bases?.length)) refreshFromCityPackage();
 })();
