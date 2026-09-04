@@ -4,7 +4,7 @@
    so the rest of the simulator always sees a city/service config during parsing. */
 (() => {
   'use strict';
-  const VERSION = '1.6.8';
+  const VERSION = '1.6.9';
 
   function peterboroughFallback() {
     const fireBases = [
@@ -38,7 +38,7 @@
     return;
   }
 
-  if (window.PTBO_SERVICE_CONFIG && window.PTBO_CITY_PACKAGE) return;
+  if (window.PTBO_SERVICE_CONFIG && window.PTBO_CITY_PACKAGE?.version === VERSION) return;
 
   const canLoadPackage = typeof location !== 'undefined' && typeof document !== 'undefined' && Boolean(document.currentScript?.src);
   if (!canLoadPackage) {
@@ -62,8 +62,6 @@
 
   const scriptTag = url => `<script src="${url.replace(/&/g,'&amp;')}"><\/script>`;
   if (document.readyState === 'loading' && typeof document.write === 'function') {
-    // The original HTML loads base-locations immediately after this file. Writing
-    // both tags here guarantees factory -> selected package -> base store order.
     if (cityId !== 'peterborough') document.write(scriptTag(previewFactoryUrl));
     document.write(scriptTag(packageUrl));
     return;
