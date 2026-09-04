@@ -1,11 +1,12 @@
-/* Shared Fire/EMS chooser. Waits for the selected city's base data before allowing a service selection. */
+/* Shared Fire/EMS chooser. Waits for the selected city's authoritative runtime and base data. */
 (() => {
   'use strict';
-  const VERSION = '1.6.8';
+  const VERSION = '1.6.9';
   if (window.PTBO_SERVICE_SELECTION?.version === VERSION) return;
 
   let dialog = null;
   let opening = null;
+  const sleep = milliseconds => new Promise(resolve => setTimeout(resolve,milliseconds));
 
   function satelliteReady(game) {
     if (game.PTBO_SATELLITE_MAP_READY) return Promise.resolve(game.PTBO_SATELLITE_MAP_READY).catch(() => {});
@@ -22,7 +23,21 @@
     });
   }
 
+  async function runtimeReady(game) {
+    const expected = game.PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION;
+    if (!expected) return null;
+    const started = performance.now();
+    while (game.PTBO_CITY_RUNTIME_READY_VERSION !== expected || !game.PTBO_CITY_RUNTIME_READY) {
+      if (performance.now() - started > 20000) throw new Error(`City runtime ${expected} did not start.`);
+      await sleep(40);
+    }
+    const detail = await game.PTBO_CITY_RUNTIME_READY;
+    if (game.PTBO_CITY_RUNTIME_ERROR) throw game.PTBO_CITY_RUNTIME_ERROR;
+    return detail;
+  }
+
   async function cityBasesReady(game) {
+    await runtimeReady(game);
     const city = game.PTBO_CITY_PACKAGE;
     if (!city) throw new Error('The selected city package did not load.');
     const packageReady = game.PTBO_CITY_PACKAGE_READY;
@@ -42,11 +57,11 @@
   async function open(game) {
     if (dialog?.open || game.PTBO_SERVICE?.state.selected) return;
     if (opening) return opening;
-    if (!game.PTBO_SERVICE) throw new Error('Fire / EMS controls did not load.');
 
     opening = (async () => {
       const {city,fire,ems} = await ready(game);
       if (dialog?.open || game.PTBO_SERVICE?.state.selected) return;
+      if (!game.PTBO_SERVICE) throw new Error('Fire / EMS controls did not load.');
 
       const baseTraining = city.features?.baseTraining === true || city.dispatch?.available === false;
       const style = document.getElementById('ptbo-service-choice-style') || document.createElement('style');
@@ -100,5 +115,5 @@
     return opening;
   }
 
-  window.PTBO_SERVICE_SELECTION = Object.freeze({version:VERSION,open,ready,cityBasesReady});
+  window.PTBO_SERVICE_SELECTION = Object.freeze({version:VERSION,open,ready,cityBasesReady,runtimeReady});
 })();
