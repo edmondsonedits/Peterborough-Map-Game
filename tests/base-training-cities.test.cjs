@@ -141,10 +141,12 @@ test('v1.6.21 build uses the stable v1.6.17 city-runtime protocol instead of the
   assert.match(build,/data-ptbo-simulator-readiness'[\s\S]*?15000/);
 });
 
-test('v1.6.20 base-training mode only disables dispatch and keeps the shared simulator surface', () => {
+test('v1.6.21 base-training mode only disables dispatch and keeps the shared simulator surface', () => {
   const source=read('response-simulator/base-training-mode-1.6.8.js');
-  assert.match(source,/const VERSION = '1\.6\.20'/);
+  assert.match(source,/const VERSION = '1\.6\.21'/);
   assert.match(source,/Peterborough simulator controls/);
+  assert.match(source,/ptbo-incident-types-summary-label/);
+  assert.match(source,/startsWith\('Incident Types'\)/);
   for(const name of ['triggerDispatchWorkflow','fireRandomIncidentDispatch','toggleAllLocations','recordCurrentLocation','exportUpdatedDatabase']){
     assert.match(source,new RegExp(`window\\.${name}=blockedDispatch`),name);
   }
