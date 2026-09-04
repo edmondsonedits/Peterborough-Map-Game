@@ -30,7 +30,7 @@
   <iframe id="simulator" title="Fire and EMS Emergency Response Simulator"></iframe>
   <script>
     (()=>{
-      const VERSION='1.6.11';
+      const VERSION='1.6.12';
       const params=new URLSearchParams(location.search);
       let stored=null;try{stored=localStorage.getItem('ptboSelectedCity')}catch(_){}
       const requested=String(params.get('city')||stored||'peterborough').toLowerCase();
@@ -62,15 +62,15 @@
   <div class="control-hint">Drag the wheel to steer · Hold Gas to drive · Hold Reverse to back up</div>
   <div class="loading-cover" id="loading-cover"><div><strong>Loading mobile simulator</strong><span id="loading-status">Preparing city package, vehicle controls, and map…</span><button type="button" id="loading-refresh">Refresh Page</button></div></div>
 
-  <script src="../../shared/build-version.js?v=1.6.11"></script>
-  <script src="../../shared/dispatch-locations.js?v=1.6.11"></script>
-  <script src="../../shared/dispatch-data-1.4.4.js?v=1.6.11"></script>
-  <script src="../../shared/dispatch-override-1.4.4.js?v=1.6.11"></script>
-  <script src="../../shared/stations.js?v=1.6.11"></script>
-  <script src="../service-selection.js?v=1.6.11"></script>
+  <script src="../../shared/build-version.js?v=1.6.12"></script>
+  <script src="../../shared/dispatch-locations.js?v=1.6.12"></script>
+  <script src="../../shared/dispatch-data-1.4.4.js?v=1.6.12"></script>
+  <script src="../../shared/dispatch-override-1.4.4.js?v=1.6.12"></script>
+  <script src="../../shared/stations.js?v=1.6.12"></script>
+  <script src="../service-selection.js?v=1.6.12"></script>
   <script>
     (() => {
-      const VERSION='1.6.11';
+      const VERSION='1.6.12';
       const CAMERA_TEST=new URLSearchParams(location.search).get('cameraTest');
       const MOBILE_ZOOM=19;
       const AUDIO_KEY='ptboDispatchVoiceEnabled';
@@ -101,7 +101,8 @@
       function injectScript(doc,filename,marker){return new Promise((resolve,reject)=>{const existing=doc.querySelector(`script[${marker}]`);if(existing){if(existing.dataset.ptboLoaded==='true')return resolve(existing);existing.addEventListener('load',()=>resolve(existing),{once:true});existing.addEventListener('error',()=>reject(new Error(`Unable to load ${filename}.`)),{once:true});return}const script=doc.createElement('script');script.src=new URL(`../${filename}?v=${VERSION}`,location.href).href;script.setAttribute(marker,'true');script.onload=()=>{script.dataset.ptboLoaded='true';resolve(script)};script.onerror=()=>reject(new Error(`Unable to load ${filename}.`));doc.body.appendChild(script)})}
       function showStartupError(error,generation){if(generation!==frameGeneration)return;console.error('Mobile simulator startup failed.',error);const cityName=sim()?.PTBO_CITY_PACKAGE?.name||frame.dataset.ptboCity||'selected city';const reason=String(error?.message||error||'Unknown startup error');loading.innerHTML=`<div><strong>Simulator did not finish loading</strong><span id="loading-status">${cityName} could not finish startup.</span><div class="diagnostic">v${VERSION} · ${reason}</div><button type="button" id="startup-retry">Refresh Page</button></div>`;document.getElementById('startup-retry')?.addEventListener('click',refreshPage)}
 
-      function initializeFrame(){const generation=++frameGeneration,doc=frame.contentDocument,game=frame.contentWindow;if(!doc||!game||typeof game.initializeSimulator!=='function')return;doc.documentElement.dataset.ptboMobileWrapperInitialized=VERSION;
+      function initializeFrame(){const doc=frame.contentDocument,game=frame.contentWindow;if(!doc||!game||typeof game.initializeSimulator!=='function'||doc.documentElement.dataset.ptboMobileWrapperInitialized===VERSION)return;const generation=++frameGeneration;doc.documentElement.dataset.ptboMobileWrapperInitialized=VERSION;
+        try{const boot=doc.createElement('script');boot.textContent=`if(typeof mapInstance!=='undefined'&&!mapInstance&&typeof initializeSimulator==='function')initializeSimulator();`;doc.body.appendChild(boot)}catch(error){console.warn('Unable to start the inner simulator immediately.',error)}
         const style=doc.createElement('style');style.textContent=`#game-home,#menu-toggle{display:none!important}#dispatch-hud{top:calc(66px + env(safe-area-inset-top))!important;left:10px!important;right:10px!important;width:auto!important;max-width:none!important;padding:11px 12px 11px 14px!important;transform:none!important;border-left-width:4px!important;border-radius:14px!important;display:grid!important;grid-template-columns:minmax(0,1fr) 98px!important;align-items:center!important;gap:10px!important}.hud-main{min-width:0!important}.hud-title{font-size:9px!important}.hud-address{font-size:15px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}.hud-meta{font-size:10px!important;line-height:1.3!important}.hud-timer-block{min-width:0!important;margin-left:0!important}.hud-clock-display{font-size:21px!important}.hud-btn{min-height:40px!important;padding:7px 8px!important;border-radius:10px!important;font-size:12px!important}#control-panel{width:min(360px,100vw)!important;z-index:3000!important}.panel-scroll{padding:calc(70px + env(safe-area-inset-top)) 18px calc(190px + env(safe-area-inset-bottom))!important}.leaflet-bottom{bottom:calc(174px + env(safe-area-inset-bottom))!important}#map-orientation-controls{display:none!important}`;doc.head.appendChild(style);
         injectScript(doc,'route-compare-1.4.2.js','data-ptbo-route-compare-core').catch(()=>{});injectScript(doc,'route-review-ui-1.4.3.js','data-ptbo-route-review-ui').catch(()=>{});
         const helper=doc.createElement('script');helper.textContent=`(() => {window.mobileRecenter=()=>{const lock=document.getElementById('chk-camera');if(lock)lock.checked=true;try{if(mapInstance)mapInstance.setView([simLat,simLng],${MOBILE_ZOOM},{animate:false})}catch(_){}window.PTBO_STABLE_MOBILE_CAMERA?.resetZoom?.()};setTimeout(window.mobileRecenter,0)})();`;doc.body.appendChild(helper);
@@ -111,7 +112,9 @@
         start().catch(error=>showStartupError(error,generation));
       }
 
-      frame.addEventListener('load',initializeFrame);if(frame.contentDocument?.readyState==='complete')initializeFrame();
+      frame.addEventListener('load',initializeFrame);initializeFrame();
+      const startupPoll=setInterval(()=>{initializeFrame();if(frame.contentDocument?.documentElement?.dataset.ptboMobileWrapperInitialized===VERSION)clearInterval(startupPoll)},100);
+      setTimeout(()=>{clearInterval(startupPoll);if(!loading.isConnected||loading.classList.contains('hidden'))return;const game=sim(),doc=frame.contentDocument;const errors=(game?.PTBO_BUILD_ERRORS||[]).map(item=>item.message).filter(Boolean).slice(-2).join(' | ');showStartupError(new Error(errors||`Inner simulator state: ${doc?.readyState||'missing'}; initializeSimulator: ${typeof game?.initializeSimulator}; city runtime: ${game?.PTBO_CITY_RUNTIME_READY_VERSION||'not started'}.`),frameGeneration)},30000);
       function releaseAll(){[...pressed].forEach(name=>sendKey(name,false));setFallbackSteering(0);releaseSteering();gas.classList.remove('pressed');reverse.classList.remove('pressed')}
       window.addEventListener('blur',releaseAll);document.addEventListener('visibilitychange',()=>{if(document.hidden)releaseAll()});window.addEventListener('pagehide',releaseAll);updateAudio();
     })();

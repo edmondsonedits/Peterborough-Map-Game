@@ -3,7 +3,7 @@
    normalization/editing behaviour shared and namespaces browser edits by city. */
 (() => {
   'use strict';
-  const BUILD_VERSION = '1.6.11';
+  const BUILD_VERSION = '1.6.12';
   const STORE_VERSION = 3;
   const scriptUrl = new URL(document.currentScript?.src || location.href, location.href);
   const currentUrl = new URL(typeof location !== 'undefined' && location.href ? location.href : scriptUrl.href);

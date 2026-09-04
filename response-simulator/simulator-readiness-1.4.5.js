@@ -1,7 +1,7 @@
 /* Simulator readiness gate — protected roads for full-dispatch cities, intentional free-drive for base-training cities. */
 (() => {
   'use strict';
-  const VERSION = '1.6.11';
+  const VERSION = '1.6.12';
   if (window.PTBO_SIMULATOR_READY_VERSION === VERSION && window.PTBO_SIMULATOR_READY) return;
   window.PTBO_SIMULATOR_READY_VERSION = VERSION;
 

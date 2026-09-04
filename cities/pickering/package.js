@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const VERSION='1.6.11';
+  const VERSION='1.6.12';
   const sourceUrl=new URL(document.currentScript?.src || location.href,location.href);
   const config={
     id:'pickering',name:'Pickering',
