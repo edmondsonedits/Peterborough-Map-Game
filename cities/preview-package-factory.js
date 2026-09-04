@@ -1,7 +1,7 @@
 /* Generic base-training city package factory for cities without dispatch calls yet. */
 (() => {
   'use strict';
-  const VERSION = '1.6.9';
+  const VERSION = '1.6.10';
   if (window.PTBO_PREVIEW_CITY_FACTORY?.version === VERSION) return;
 
   const normalizeText = value => String(value ?? '').trim().replace(/\s+/g,' ');
@@ -75,8 +75,38 @@
     });
   }
 
+  function finalizeRecords(records, config, service) {
+    const seenPlaces=new Set();
+    const cleaned=(records||[]).filter(base=>base?.name&&base?.address&&Number.isFinite(Number(base.lat))&&Number.isFinite(Number(base.lng))).filter(base=>{
+      const fingerprint=`${key(base.address)}|${Number(base.lat).toFixed(5)}|${Number(base.lng).toFixed(5)}`;
+      if(seenPlaces.has(fingerprint))return false;
+      seenPlaces.add(fingerprint);
+      return true;
+    });
+    if(!cleaned.length)throw new Error(`No ${service} bases were returned for ${config.name}.`);
+    cleaned.sort((a,b)=>Number(a.number)-Number(b.number)||String(a.name).localeCompare(String(b.name)));
+
+    const usedNumbers=new Set();
+    const usedIds=new Set();
+    return cleaned.map((base,index)=>{
+      let number=Number(base.number);
+      if(!Number.isInteger(number)||number<1||usedNumbers.has(number))number=index+1;
+      while(usedNumbers.has(number))number+=1;
+      usedNumbers.add(number);
+
+      const rawId=String(base.id||'').toLowerCase().replace(/[^a-z0-9-]+/g,'-').replace(/^-+|-+$/g,'');
+      const serviceRoot=rawId.startsWith(`${service}-`) ? rawId : `${service}-${rawId||slug(base.name||base.address)}`;
+      let id=serviceRoot;
+      if(usedIds.has(id))id=`${serviceRoot}-${number}`;
+      let suffix=2;
+      while(usedIds.has(id))id=`${serviceRoot}-${number}-${suffix++}`;
+      usedIds.add(id);
+      return Object.freeze({...base,id,number});
+    });
+  }
+
   async function staticBases(entries, cityName, service) {
-    return Promise.all(entries.map(async (entry,index) => {
+    return Promise.all((entries||[]).map(async (entry,index) => {
       let lat=Number(entry.lat),lng=Number(entry.lng);
       if(!Number.isFinite(lat)||!Number.isFinite(lng)) {
         const point=await geocode(entry.address,cityName);
@@ -97,10 +127,10 @@
     const fallback=async error => {
       if(!source.fallback?.length)throw error;
       console.warn(`${config.name} ${service} live facility source failed; using verified-address geocoding.`,error);
-      return staticBases(source.fallback,config.name,service);
+      return finalizeRecords(await staticBases(source.fallback,config.name,service),config,service);
     };
     try {
-      if(source.type==='static')return await staticBases(source.entries||[],config.name,service);
+      if(source.type==='static')return finalizeRecords(await staticBases(source.entries||[],config.name,service),config,service);
 
       const features=await queryArcGis(source.url,source.where||'1=1',source.outFields||'*');
       let records=[];
@@ -159,18 +189,7 @@
         if(records.length!==wanted.length)throw new Error(`Expected ${wanted.length} Belleville fire stations, received ${records.length}.`);
       } else throw new Error(`Unknown city facility source: ${source.type}`);
 
-      records=records.filter(base=>base.name&&base.address&&Number.isFinite(base.lat)&&Number.isFinite(base.lng));
-      if(!records.length)throw new Error(`No ${service} bases were returned for ${config.name}.`);
-      records.sort((a,b)=>a.number-b.number||a.name.localeCompare(b.name));
-      const used=new Set();
-      records=records.map((base,index)=>{
-        let number=Number(base.number);
-        if(!Number.isInteger(number)||number<1||used.has(number)) number=index+1;
-        while(used.has(number)) number+=1;
-        used.add(number);
-        return number===base.number?base:Object.freeze({...base,number});
-      });
-      return records;
+      return finalizeRecords(records,config,service);
     } catch(error) { return fallback(error); }
   }
 
@@ -192,24 +211,17 @@
     window.PTBO_ROUTE_COMPARE_BOOT_VERSION='preview';
     window.PTBO_ROUTE_COMPARE=Object.freeze({available:false,state:{reviewOpen:false},sync:()=>{},reset:()=>{},stop:()=>{}});
     const marker=document.createElement('script');
-    marker.type='application/json';
-    marker.dataset.ptboRouteCompareCore='preview';
-    marker.dataset.ptboLoaded='true';
-    document.head.appendChild(marker);
+    marker.type='application/json';marker.dataset.ptboRouteCompareCore='preview';marker.dataset.ptboLoaded='true';document.head.appendChild(marker);
   }
 
   function create(config) {
     if(!config?.id||!config?.name||!config?.map||!config?.sources)throw new Error('Preview city configuration is incomplete.');
     if(window.PTBO_CITY_PACKAGE?.id===config.id&&window.PTBO_CITY_PACKAGE?.version===VERSION)return window.PTBO_CITY_PACKAGE_READY||Promise.resolve(window.PTBO_CITY_PACKAGE);
 
-    const fireBases=[];
-    const emsBases=[];
+    const fireBases=[],emsBases=[];
     const alarmCategories=Object.freeze(['Auto Alarm / Vehicle Fire','Alarms No Apparent Problem']);
     const unavailableHospital=Object.freeze({id:`${config.id}-hospital-unavailable`,main:'Medical',sub:'Hospital Transport',name:'Hospital transport unavailable',addr:'Dispatch calls are not available for this city yet.',lat:config.map.defaultCenter[0],lng:config.map.defaultCenter[1],radius:30,disabled:true});
-    const profiles=Object.freeze({
-      fire:Object.freeze({id:'fire',label:'Fire',vehicle:'Fire truck',bases:fireBases}),
-      ems:Object.freeze({id:'ems',label:'EMS',vehicle:'Ambulance',bases:emsBases}),
-    });
+    const profiles=Object.freeze({fire:Object.freeze({id:'fire',label:'Fire',vehicle:'Fire truck',bases:fireBases}),ems:Object.freeze({id:'ems',label:'EMS',vehicle:'Ambulance',bases:emsBases})});
     const serviceConfig=Object.freeze({profiles,hospital:unavailableHospital,alarmCategories});
     const features=Object.freeze({baseTraining:true,dispatch:false,roadBoundaries:false,routeGuidance:false,hospitalTransport:false});
     const roads=Object.freeze({available:false,center:Object.freeze([...config.map.defaultCenter]),sourceAsset:null});
@@ -217,35 +229,22 @@
     const map=Object.freeze({...config.map,defaultCenter:Object.freeze([...config.map.defaultCenter]),bounds:Object.freeze(config.map.bounds.map(pair=>Object.freeze([...pair])))});
     const cityPackage=Object.freeze({schemaVersion:3,version:VERSION,id:config.id,name:config.name,province:'Ontario',country:'Canada',playable:true,status:'base-training',features,map,roads,dispatch,serviceConfig,sources:Object.freeze({...config.sources})});
 
-    window.PTBO_CITY_PACKAGE=cityPackage;
-    window.PTBO_ACTIVE_CITY=cityPackage;
-    window.PTBO_SERVICE_CONFIG=serviceConfig;
-    window.PTBO_STATIONS=fireBases;
+    window.PTBO_CITY_PACKAGE=cityPackage;window.PTBO_ACTIVE_CITY=cityPackage;window.PTBO_SERVICE_CONFIG=serviceConfig;window.PTBO_STATIONS=fireBases;
     window.getPtboStation=number=>fireBases.find(station=>station.number===Number(number));
-    document.documentElement.dataset.city=config.id;
-    document.documentElement.dataset.cityPackageVersion=VERSION;
-    document.documentElement.dataset.dispatchAvailable='false';
+    document.documentElement.dataset.city=config.id;document.documentElement.dataset.cityPackageVersion=VERSION;document.documentElement.dataset.dispatchAvailable='false';
     installPreviewSubsystemShims(config.id);
 
     const ready=(async()=>{
-      const [fire,ems]=await Promise.all([
-        loadSource(config.sources.fire,config,'fire'),
-        loadSource(config.sources.ems,config,'ems'),
-      ]);
+      const [fire,ems]=await Promise.all([loadSource(config.sources.fire,config,'fire'),loadSource(config.sources.ems,config,'ems')]);
       if(!fire.length||!ems.length)throw new Error(`${config.name} needs at least one Fire and one EMS base.`);
-      fireBases.splice(0,fireBases.length,...fire);
-      emsBases.splice(0,emsBases.length,...ems);
-      window.PTBO_STATIONS=fireBases;
-      document.documentElement.dataset.fireBaseCount=String(fireBases.length);
-      document.documentElement.dataset.emsBaseCount=String(emsBases.length);
+      fireBases.splice(0,fireBases.length,...fire);emsBases.splice(0,emsBases.length,...ems);window.PTBO_STATIONS=fireBases;
+      document.documentElement.dataset.fireBaseCount=String(fireBases.length);document.documentElement.dataset.emsBaseCount=String(emsBases.length);
       window.dispatchEvent(new CustomEvent('ptbo-city-package-data-ready',{detail:{id:config.id,version:VERSION,fireBases:fireBases.length,emsBases:emsBases.length,dispatch:false}}));
       return cityPackage;
     })();
     window.PTBO_CITY_PACKAGE_READY=ready;
     ready.then(()=>window.dispatchEvent(new CustomEvent('ptbo-city-package-ready',{detail:{id:config.id,version:VERSION}}))).catch(error=>{
-      window.PTBO_CITY_PACKAGE_LOAD_ERROR=error;
-      console.error(`${config.name} base data could not load.`,error);
-      window.dispatchEvent(new CustomEvent('ptbo-city-package-error',{detail:{id:config.id,version:VERSION,error}}));
+      window.PTBO_CITY_PACKAGE_LOAD_ERROR=error;console.error(`${config.name} base data could not load.`,error);window.dispatchEvent(new CustomEvent('ptbo-city-package-error',{detail:{id:config.id,version:VERSION,error}}));
     });
     return ready;
   }
