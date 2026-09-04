@@ -126,9 +126,9 @@ test('duplicate EMS source names still receive unique IDs before entering the sh
   assert.equal(new Set(imported.map(base=>base.number)).size,2);
 });
 
-test('v1.6.21 build uses the stable v1.6.17 city-runtime protocol instead of the build number', () => {
+test('v1.6.22 build uses the stable v1.6.17 city-runtime protocol instead of the build number', () => {
   const build=read('shared/build-version.js');
-  assert.match(build,/const VERSION = '1\.6\.21'/);
+  assert.match(build,/const VERSION = '1\.6\.22'/);
   assert.match(build,/const CITY_RUNTIME_VERSION = '1\.6\.17'/);
   assert.match(build,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION = CITY_RUNTIME_VERSION/);
   assert.match(build,/simulator-readiness-1\.6\.17\.js/);
@@ -141,9 +141,23 @@ test('v1.6.21 build uses the stable v1.6.17 city-runtime protocol instead of the
   assert.match(build,/data-ptbo-simulator-readiness'[\s\S]*?15000/);
 });
 
-test('v1.6.21 base-training mode only disables dispatch and keeps the shared simulator surface', () => {
+test('v1.6.22 automatically selects the Peterborough mobile or desktop wrapper', () => {
+  const build=read('shared/build-version.js');
+  const selector=read('shared/city-selector.js');
+  assert.match(build,/PTBO_DEVICE_SURFACE/);
+  assert.match(build,/function prefersMobileSurface\(\)/);
+  assert.match(build,/Android\|webOS\|iPhone\|iPad\|iPod/);
+  assert.match(build,/function redirectWrongSimulatorSurface\(\)/);
+  assert.match(build,/wantsMobile \? '\.\.\/mobile\/' : '\.\.\/play\/'/);
+  assert.match(build,/location\.replace\(target\.href\)/);
+  assert.match(selector,/PTBO_DEVICE_SURFACE/);
+  assert.match(selector,/const route = mobile \? city\.dispatch\?\.mobile : city\.dispatch\?\.desktop/);
+  assert.doesNotMatch(selector,/window\.innerWidth\s*<=\s*900/);
+});
+
+test('v1.6.22 base-training mode only disables dispatch and keeps the shared simulator surface', () => {
   const source=read('response-simulator/base-training-mode-1.6.8.js');
-  assert.match(source,/const VERSION = '1\.6\.21'/);
+  assert.match(source,/const VERSION = '1\.6\.22'/);
   assert.match(source,/Peterborough simulator controls/);
   assert.match(source,/ptbo-incident-types-summary-label/);
   assert.match(source,/startsWith\('Incident Types'\)/);
@@ -157,16 +171,17 @@ test('v1.6.21 base-training mode only disables dispatch and keeps the shared sim
 
 test('compact settings accepts the base-training Incident Types label instead of blocking startup', () => {
   const source=read('response-simulator/settings-menu-compact-1.5.3.js');
-  assert.match(source,/const VERSION = '1\.6\.21'/);
+  assert.match(source,/const VERSION = '1\.6\.22'/);
   assert.match(source,/startsWith\('Incident Types'\)/);
   assert.match(source,/existingDetails[\s\S]*state\.installed = true/);
   assert.doesNotMatch(source,/node\.textContent\.trim\(\) === 'Incident Types'/);
 });
 
-test('city selector publishes fresh v1.6.21 shared-wrapper URLs', () => {
+test('city selector publishes fresh v1.6.22 shared-wrapper URLs', () => {
   const source=read('shared/city-selector.js');
-  assert.match(source,/const VERSION = '1\.6\.21'/);
+  assert.match(source,/const VERSION = '1\.6\.22'/);
   assert.match(source,/same Peterborough driving controls/);
+  assert.match(source,/url\.searchParams\.set\('surface', mobile \? 'mobile' : 'desktop'\)/);
   assert.match(source,/url\.searchParams\.set\('fresh', String\(Date\.now\(\)\)\)/);
 });
 
