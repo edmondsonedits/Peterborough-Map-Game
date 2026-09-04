@@ -32,6 +32,39 @@
     }
   }
 
+  function ensureResponseBasesFitMap(city, bases) {
+    const sourceBounds = city?.map?.bounds;
+    if (!Array.isArray(sourceBounds) || sourceBounds.length !== 2) return false;
+    let south = Number(sourceBounds[0]?.[0]);
+    let west = Number(sourceBounds[0]?.[1]);
+    let north = Number(sourceBounds[1]?.[0]);
+    let east = Number(sourceBounds[1]?.[1]);
+    if (![south, west, north, east].every(Number.isFinite)) return false;
+
+    const margin = 0.005;
+    let expanded = false;
+    for (const base of bases) {
+      const lat = Number(base?.lat), lng = Number(base?.lng);
+      if (!Number.isFinite(lat) || !Number.isFinite(lng)) continue;
+      if (lat < south) { south = lat - margin; expanded = true; }
+      if (lat > north) { north = lat + margin; expanded = true; }
+      if (lng < west) { west = lng - margin; expanded = true; }
+      if (lng > east) { east = lng + margin; expanded = true; }
+    }
+    if (!expanded) return false;
+
+    try {
+      if (typeof mapInstance !== 'undefined' && mapInstance && typeof L !== 'undefined' && L.latLngBounds) {
+        mapInstance.setMaxBounds(L.latLngBounds([south, west], [north, east]));
+      }
+      document.documentElement.dataset.baseBoundsExpanded = 'true';
+      return true;
+    } catch (error) {
+      console.warn(`Unable to expand ${city.name} map bounds for configured response bases.`, error);
+      return false;
+    }
+  }
+
   async function boot() {
     const cityId = requestedCityId();
     window.PTBO_REQUESTED_CITY = cityId;
@@ -39,7 +72,7 @@
     document.documentElement.dataset.cityRuntimeVersion = VERSION;
     document.documentElement.dataset.cityRuntimeReady = 'false';
 
-    const city = await waitForValue(() => window.PTBO_CITY_PACKAGE, 'City package');
+    await waitForValue(() => window.PTBO_CITY_PACKAGE, 'City package');
     if (window.PTBO_CITY_PACKAGE_READY?.then) await window.PTBO_CITY_PACKAGE_READY;
     if (window.PTBO_CITY_PACKAGE_LOAD_ERROR) throw window.PTBO_CITY_PACKAGE_LOAD_ERROR;
 
@@ -64,6 +97,7 @@
 
     const service = await waitForValue(() => window.PTBO_SERVICE, 'Fire/EMS service runtime');
     service.applyCityMap?.(true);
+    const boundsExpanded = ensureResponseBasesFitMap(activeCity, [...fire, ...ems]);
 
     const baseTraining = activeCity.features?.baseTraining === true || activeCity.dispatch?.available === false;
     document.documentElement.dataset.city = activeCity.id;
@@ -77,6 +111,7 @@
       baseTraining,
       fireBases: fire.length,
       emsBases: ems.length,
+      boundsExpanded,
       loader: 'service-config',
     };
 
