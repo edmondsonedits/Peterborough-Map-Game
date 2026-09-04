@@ -1,7 +1,7 @@
-/* Dispatch launcher city selector. Preview cities can be used for Fire/EMS base training while calls are built. */
+/* Dispatch launcher city selector. All cities use the Peterborough simulator controls and UI. */
 (() => {
   'use strict';
-  const VERSION = '1.6.18';
+  const VERSION = '1.6.20';
   if (window.PTBO_CITY_SELECTOR?.version === VERSION) return;
 
   const dispatchLink = document.getElementById('dispatch-game-link');
@@ -41,9 +41,9 @@
   dialog.innerHTML = `
     <p class="city-kicker">Emergency Response Simulator</p>
     <h2 id="ptbo-city-title">Choose a city</h2>
-    <p class="city-intro">Peterborough includes full dispatch calls. The other cities currently include Fire and EMS base spawning with free-driving practice while their call databases and road-boundary packages are being built.</p>
+    <p class="city-intro">Every city now uses the same Peterborough driving controls, camera behavior, gears, speedometer, vehicle UI, and mobile/desktop layout. Peterborough has full dispatch calls; the other cities currently use the same simulator for Fire/EMS base spawning and driving practice while their call databases and road-boundary packages are built.</p>
     <div class="city-grid"></div>
-    <div class="city-foot"><span>“Calls unavailable” cities are still playable for station/base familiarization and driving practice.</span><button class="city-close" type="button">Cancel</button></div>`;
+    <div class="city-foot"><span>“Calls unavailable” only disables dispatch missions. It does not change the driving controls or simulator UI.</span><button class="city-close" type="button">Cancel</button></div>`;
 
   const grid = dialog.querySelector('.city-grid');
   cities.forEach(city => {
