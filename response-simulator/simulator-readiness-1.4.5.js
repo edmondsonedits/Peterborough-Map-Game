@@ -1,7 +1,7 @@
 /* Simulator readiness gate — protected roads for full-dispatch cities, intentional free-drive for base-training cities. */
 (() => {
   'use strict';
-  const VERSION = '1.6.13';
+  const VERSION = '1.6.15';
   if (window.PTBO_SIMULATOR_READY_VERSION === VERSION && window.PTBO_SIMULATOR_READY) return;
   window.PTBO_SIMULATOR_READY_VERSION = VERSION;
 
@@ -10,6 +10,11 @@
     try { return window.parent !== window && Boolean(window.parent.document.getElementById('steering')); }
     catch (_) { return false; }
   })();
+
+  function stage(name, detail = '') {
+    window.PTBO_STARTUP_STAGE = Object.freeze({source:'simulator-readiness',stage:name,detail:String(detail || ''),at:performance.now(),version:VERSION});
+    window.dispatchEvent(new CustomEvent('ptbo-startup-stage', {detail:window.PTBO_STARTUP_STAGE}));
+  }
 
   function installVersionBadge() {
     const panel = document.querySelector('.panel-scroll');
@@ -53,6 +58,7 @@
 
   async function waitForValue(readValue, label, timeoutMilliseconds = 20000) {
     const startedAt = performance.now();
+    stage(`waiting-${label.toLowerCase().replace(/[^a-z0-9]+/g,'-')}`, label);
     while (true) {
       const value = readValue();
       if (value) return value;
@@ -62,6 +68,7 @@
   }
 
   function installFreeDriveRoadApi(cityId) {
+    stage('installing-free-drive-road-api', cityId);
     if (!window.PTBO_ROAD_COLLISION) {
       const state = { status:'ready', enabled:false, originalLoop:true, segments:[], grid:new Map(), stationExit:null };
       const api = {
@@ -87,6 +94,7 @@
 
   async function waitForCityData(city) {
     if (!city?.features?.baseTraining) return city;
+    stage('waiting-city-base-data', city.name || city.id);
     const ready = window.PTBO_CITY_PACKAGE_READY;
     if (ready && typeof ready.then === 'function') await ready;
     if (window.PTBO_CITY_PACKAGE_LOAD_ERROR) throw window.PTBO_CITY_PACKAGE_LOAD_ERROR;
@@ -99,6 +107,7 @@
   async function waitForAuthoritativeRuntime() {
     const expected = window.PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION;
     if (!expected) return null;
+    stage('waiting-authoritative-city-runtime', `expected v${expected}`);
     const ready = await waitForValue(
       () => window.PTBO_CITY_RUNTIME_READY_VERSION === expected && window.PTBO_CITY_RUNTIME_READY,
       `City runtime ${expected}`,
@@ -110,17 +119,17 @@
   }
 
   async function initialize() {
+    stage('starting', isMobileWrapper ? 'mobile wrapper' : 'desktop wrapper');
     installVersionBadge();
 
-    // The wrapper installs the current deterministic city bootstrap first.
-    // Waiting here prevents older inner-frame files from being accepted as the
-    // selected city's runtime on devices with stale simulator files cached.
     await waitForAuthoritativeRuntime();
 
     const city = await waitForValue(() => window.PTBO_CITY_PACKAGE, 'City package', 10000);
+    stage('validating-city-package', city.id || 'unknown');
     if (!city.id || !city.map || !city.serviceConfig || !city.roads) throw new Error('The selected city package is incomplete.');
     await waitForCityData(city);
 
+    stage('waiting-base-simulator', 'mapInstance + simulationLoop');
     await waitForValue(
       () => typeof mapInstance !== 'undefined' && mapInstance && typeof simulationLoop === 'function',
       'Base simulator',
@@ -129,6 +138,7 @@
     const roadRequired = city.features?.roadBoundaries !== false && city.roads?.available !== false;
     document.documentElement.dataset.roadMode = roadRequired ? 'protected' : 'free-drive';
 
+    stage('loading-required-modules', roadRequired ? 'vehicle + settings + protected roads' : 'vehicle + settings + free-drive roads');
     const requiredScripts = [
       injectScript('vehicle-instruments.js', 'data-ptbo-readiness-vehicle'),
       injectScript('settings-menu-compact-1.5.3.js', 'data-ptbo-readiness-compact-settings'),
@@ -143,6 +153,7 @@
     }
     await Promise.all(requiredScripts);
 
+    stage('waiting-vehicle-steering', 'PTBO_VEHICLE_INSTRUMENTS_READY');
     const instruments = await (window.PTBO_VEHICLE_INSTRUMENTS_READY
       || waitForValue(() => window.PTBO_VEHICLE_INSTRUMENTS, 'Vehicle steering system'));
     if (!instruments?.setAnalogSteering) throw new Error('Vehicle steering API is incomplete.');
@@ -150,11 +161,13 @@
     let roads = window.PTBO_ROAD_COLLISION || null;
     let hardBoundary = window.PTBO_HARD_ROAD_BOUNDARY || null;
     if (roadRequired) {
+      stage('waiting-road-boundaries', city.id);
       roads = await (window.PTBO_ROAD_COLLISION_BOOTSTRAP_READY || (async () => {
         const roadApi = await waitForValue(() => window.PTBO_ROAD_COLLISION, 'Road-boundary system');
         await roadApi.ready;
         return roadApi;
       })());
+      stage('waiting-hard-road-boundary', city.id);
       hardBoundary = await (async () => {
         const hard = await waitForValue(() => window.PTBO_HARD_ROAD_BOUNDARY, 'Hard road-boundary guard');
         await hard.ready;
@@ -165,6 +178,7 @@
       if (roads?.config?.cityId && roads.config.cityId !== city.id) throw new Error(`Road package mismatch: expected ${city.id}, received ${roads.config.cityId}.`);
     }
 
+    stage('waiting-compact-settings', 'PTBO_COMPACT_SETTINGS.state.installed');
     await waitForValue(() => window.PTBO_COMPACT_SETTINGS?.state?.installed, 'Compact settings menu', 10000);
 
     const arcadeHandling = window.PTBO_ARCADE_HANDLING?.version || null;
@@ -189,6 +203,7 @@
       compactSettings:window.PTBO_COMPACT_SETTINGS?.version || null,
       cityRuntime:window.PTBO_CITY_RUNTIME_READY_VERSION || null,
     };
+    stage('ready', `${city.name || city.id}; ${detail.mode}`);
     window.dispatchEvent(new CustomEvent('ptbo-simulator-ready', { detail }));
     return detail;
   }
@@ -196,6 +211,7 @@
   const ready = initialize();
   window.PTBO_SIMULATOR_READY = ready;
   ready.catch(error => {
+    stage('error', error?.message || String(error));
     window.dispatchEvent(new CustomEvent('ptbo-simulator-startup-error', { detail:{ version:VERSION, cityId:window.PTBO_CITY_PACKAGE?.id || null, error } }));
     console.error('Simulator startup verification failed.', error);
   });
