@@ -2,11 +2,11 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.20';
+  const VERSION = '1.6.21';
   const CITY_RUNTIME_VERSION = '1.6.17';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
-  const SCRIPT_TIMEOUT_MS = 6000;
+  const SCRIPT_TIMEOUT_MS = 12000;
   if (window.PTBO_BUILD?.version === VERSION) return;
 
   window.PTBO_BUILD = Object.freeze({
@@ -225,7 +225,7 @@
             'ptbo-simulator-readiness',
             `../response-simulator/simulator-readiness-1.6.17.js?v=${VERSION}`,
             'data-ptbo-simulator-readiness',
-            6000,
+            15000,
           );
           await injectIntoFrame(
             doc,
@@ -236,7 +236,7 @@
           enhancementStage('waiting-city-runtime', `protocol v${CITY_RUNTIME_VERSION}`);
           await Promise.race([
             Promise.resolve(game.PTBO_CITY_RUNTIME_READY),
-            sleep(10000).then(() => { throw new Error('City runtime readiness timed out after 10000 ms.'); }),
+            sleep(15000).then(() => { throw new Error('City runtime readiness timed out after 15000 ms.'); }),
           ]);
           if (game.PTBO_CITY_RUNTIME_ERROR) throw game.PTBO_CITY_RUNTIME_ERROR;
 
@@ -252,7 +252,7 @@
               'ptbo-base-training-mode',
               `../response-simulator/base-training-mode-1.6.8.js?v=${VERSION}`,
               '',
-              4000,
+              6000,
             );
           }
 
@@ -262,14 +262,14 @@
               'ptbo-directional-drive-zoom-loader',
               `../response-simulator/directional-drive-zoom-1.5.8.js?v=${VERSION}`,
               '',
-              4000,
+              6000,
             );
             void optionalInnerModule(
               doc,
               'ptbo-mobile-ui-layout-loader',
               `../response-simulator/mobile-ui-layout-1.5.9.js?v=${VERSION}`,
               '',
-              4000,
+              6000,
             );
           }
 
@@ -278,13 +278,13 @@
             'ptbo-satellite-map-loader',
             `../response-simulator/satellite-map-1.5.6.js?v=${VERSION}`,
             '',
-            6000,
+            10000,
           );
 
           if (game.PTBO_SATELLITE_MAP_READY) {
             await Promise.race([
               Promise.resolve(game.PTBO_SATELLITE_MAP_READY).catch(error => traceWarn('Satellite map readiness rejected', error)),
-              sleep(8000).then(() => traceWarn('Satellite map readiness timed out; continuing')),
+              sleep(10000).then(() => traceWarn('Satellite map readiness timed out; continuing')),
             ]);
           }
 
