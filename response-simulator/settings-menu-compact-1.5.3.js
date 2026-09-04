@@ -31,7 +31,7 @@
   The version prevents duplicate installation and lets startup verification
   confirm that the expected module loaded.
   */
-  const VERSION = '1.5.3';
+  const VERSION = '1.6.21';
   if (window.PTBO_COMPACT_SETTINGS?.version === VERSION) return;
 
   /*
@@ -198,13 +198,22 @@
   loading and should be checked again shortly.
   */
   function install() {
-    if (state.installed || document.getElementById('ptbo-incident-types-details')) return true;
+    if (state.installed) return true;
+    const existingDetails = document.getElementById('ptbo-incident-types-details');
+    if (existingDetails) {
+      state.installed = true;
+      return true;
+    }
     const panel = document.querySelector('.panel-scroll');
     if (!panel) return false;
 
+    // Base-training mode appends “— Calls Unavailable” to this heading before
+    // the compact module can run. Match the stable semantic prefix rather than
+    // requiring one exact label so every city shares the same Options UI.
     const title = [...panel.querySelectorAll('.section-title')]
-      .find(node => node.textContent.trim() === 'Incident Types');
+      .find(node => node.textContent.trim().startsWith('Incident Types'));
     if (!title) return false;
+    const titleText = title.textContent.trim();
 
     // Everything after Incident Types and before the next section belongs inside.
     const movable = [];
@@ -222,7 +231,7 @@
     details.open = false;
     details.innerHTML = `
       <summary>
-        <span id="ptbo-incident-types-summary-label">Incident Types</span>
+        <span id="ptbo-incident-types-summary-label"></span>
         <span id="ptbo-incident-types-count"></span>
       </summary>
       <div id="ptbo-incident-types-body">
@@ -232,6 +241,7 @@
         </div>
       </div>
     `;
+    details.querySelector('#ptbo-incident-types-summary-label').textContent = titleText;
 
     title.replaceWith(details);
     const body = details.querySelector('#ptbo-incident-types-body');
