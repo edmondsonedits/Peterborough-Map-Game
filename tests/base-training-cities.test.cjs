@@ -30,10 +30,10 @@ const noChangesDiff = (before,after) => ({
   deleted:[],
 });
 
-test('city registry exposes Peterborough full dispatch plus six base-training cities', () => {
+test('city registry exposes Peterborough dispatch and routes six base-training cities to the independent runtime', () => {
   const c=browserContext();vm.runInContext(read('cities/city-registry.js'),c);assert.equal(c.PTBO_CITIES.length,7);
-  const peterborough=c.PTBO_CITIES.find(city=>city.id==='peterborough');assert.equal(peterborough.playable,true);assert.equal(peterborough.status,'playable');
-  for(const id of cities){const city=c.PTBO_CITIES.find(item=>item.id===id);assert.ok(city,id);assert.equal(city.playable,true,id);assert.equal(city.status,'base-training',id);assert.match(city.note,/Calls unavailable/i,id);assert.ok(city.dispatch.desktop&&city.dispatch.mobile,id)}
+  const peterborough=c.PTBO_CITIES.find(city=>city.id==='peterborough');assert.equal(peterborough.playable,true);assert.equal(peterborough.status,'playable');assert.equal(peterborough.dispatch.desktop,'response-simulator/play/');assert.equal(peterborough.dispatch.mobile,'response-simulator/mobile/');
+  for(const id of cities){const city=c.PTBO_CITIES.find(item=>item.id===id);assert.ok(city,id);assert.equal(city.playable,true,id);assert.equal(city.status,'base-training',id);assert.match(city.note,/Calls unavailable/i,id);assert.equal(city.dispatch.desktop,'response-simulator/base-training/',id);assert.equal(city.dispatch.mobile,'response-simulator/base-training/',id)}
 });
 
 test('every base-training city ships a v1.6.13 package and deliberately empty dispatch descriptor', () => {
@@ -123,58 +123,57 @@ test('base-training mode permanently blocks every dispatch entry point', () => {
   const source=read('response-simulator/base-training-mode-1.6.8.js');for(const name of ['triggerDispatchWorkflow','fireRandomIncidentDispatch','toggleAllLocations','recordCurrentLocation','exportUpdatedDatabase'])assert.match(source,new RegExp(`window\\.${name}=blockedDispatch`),name);assert.match(source,/Calls Unavailable/);assert.match(source,/Dispatch calls unavailable/);assert.match(source,/const VERSION = '1\.6\.13'/);
 });
 
-test('v1.6.17 enhancement loader creates readiness before releasing the city runtime gate', () => {
+test('v1.6.18 production loader keeps the Peterborough readiness path available', () => {
   const build=read('shared/build-version.js'),runtime=read('response-simulator/city-runtime-bootstrap-1.6.17.js'),service=read('response-simulator/service-selection.js');
-  assert.match(build,/const VERSION = '1\.6\.17'/);
+  assert.match(build,/const VERSION = '1\.6\.18'/);
   assert.match(build,/simulator-readiness-1\.6\.17\.js/);
   assert.match(build,/city-runtime-bootstrap-1\.6\.17\.js/);
   assert.match(build,/data-ptbo-simulator-readiness/);
-  assert.ok(build.indexOf('simulator-readiness-1.6.17.js') < build.indexOf('city-runtime-bootstrap-1.6.17.js'),'readiness script must load before city runtime resolves');
-  assert.match(build,/readiness-gate-created/);
   assert.match(build,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION/);
   assert.match(build,/Timed out loading/);
   assert.match(build,/optionalInnerModule/);
   assert.match(build,/PTBO_ENHANCEMENT_STAGE/);
-  assert.match(build,/void optionalInnerModule\(doc, 'ptbo-base-training-mode'/);
-  assert.doesNotMatch(build,/if\s*\(baseTraining\)\s*await\s+injectIntoFrame/);
   assert.match(runtime,/const VERSION = '1\.6\.17'/);assert.match(runtime,/PTBO_CITY_RUNTIME_READY_VERSION/);assert.match(runtime,/PTBO_BASE_STORE/);assert.match(runtime,/PTBO_SERVICE/);assert.doesNotMatch(runtime,/function loadScript|loadScript\(/);assert.match(runtime,/loader:\s*'service-config'/);assert.match(runtime,/PTBO_STARTUP_STAGE/);
   assert.match(service,/runtimeReady\(game\)/);assert.match(service,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION/);
 });
 
-test('desktop and mobile request v1.6.17 startup assets and keep bounded wrapper injection', () => {
+test('legacy desktop and mobile wrappers remain available for Peterborough', () => {
   for(const file of ['response-simulator/play/index.html','response-simulator/mobile/index.html']){
     const source=read(file);
     assert.match(source,/1\.6\.17/,file);
     assert.match(source,/url\.searchParams\.set\('city',city\)/,file);
     assert.match(source,/url\.searchParams\.set\('fresh'/,file);
-    assert.match(source,/startup-trace-1\.6\.17\.js\?v=1\.6\.17/,file);
-    assert.match(source,/shared\/build-version\.js\?v=1\.6\.17/,file);
     assert.match(source,/Timed out loading/,file);
     assert.match(source,/diagnostic/,file);
     assert.match(source,/startupPoll/,file);
     assert.match(source,/PTBO_STARTUP_TRACE/,file);
-    assert.doesNotMatch(source,/loading\.innerHTML=`<div><strong>Simulator did not finish loading/);
   }
 });
 
-test('v1.6.17 startup trace distinguishes missing readiness from a readiness failure', () => {
-  const source=read('response-simulator/startup-trace-1.6.17.js');
-  assert.match(source,/Live startup trace/);
-  assert.match(source,/PTBO_SIMULATOR_READY_ERROR/);
-  assert.match(source,/simulator-readiness script has not created its startup gate/);
-  assert.match(source,/PTBO_CITY_RUNTIME_READY_VERSION/);
-  assert.match(source,/PTBO_ENHANCEMENT_STAGE/);
-  assert.match(source,/PTBO_BUILD_ERRORS/);
-  assert.match(source,/Inner-frame JavaScript error/);
-  assert.match(source,/unchanged for/);
+test('dedicated v1.6.18 base-training wrapper bypasses readiness and generalized enhancement bootstraps', () => {
+  const source=read('response-simulator/base-training/index.html');
+  assert.match(source,/v1\.6\.18/);
+  assert.match(source,/service-selection\.js\?v=1\.6\.18/);
+  assert.match(source,/PTBO_CITY_PACKAGE/);
+  assert.match(source,/PTBO_BASE_STORE/);
+  assert.match(source,/PTBO_SERVICE_SELECTION\.open/);
+  assert.match(source,/vehicle-instruments\.js/);
+  assert.match(source,/satellite-map-1\.5\.6\.js/);
+  assert.match(source,/base-training-mode-1\.6\.8\.js/);
+  assert.doesNotMatch(source,/PTBO_SIMULATOR_READY/);
+  assert.doesNotMatch(source,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION/);
+  assert.doesNotMatch(source,/simulator-readiness-/);
+  assert.doesNotMatch(source,/shared\/build-version\.js/);
+  const inline=[...source.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].map(match=>match[1]).filter(body=>body.trim());
+  for(const [index,body] of inline.entries())assert.doesNotThrow(()=>new vm.Script(body),`inline script ${index+1} should parse`);
 });
 
-test('city selector launches with a fresh URL so mobile caches cannot replay an old wrapper', () => {
-  const source=read('shared/city-selector.js');assert.match(source,/const VERSION = '1\.6\.13'/);assert.match(source,/url\.searchParams\.set\('fresh', String\(Date\.now\(\)\)\)/);
+test('city selector launches with a fresh v1.6.18 URL so cached old routes are not reused', () => {
+  const source=read('shared/city-selector.js');assert.match(source,/const VERSION = '1\.6\.18'/);assert.match(source,/url\.searchParams\.set\('fresh', String\(Date\.now\(\)\)\)/);
 });
 
-test('production wrapper build is v1.6.17 while packaged inner assets remain compatible with v1.6.13', () => {
-  assert.match(read('shared/build-version.js'),/const VERSION = '1\.6\.17'/);assert.match(read('shared/base-locations.js'),/const VERSION = '1\.6\.13'/);assert.match(read('index.html'),/shared\/build-version\.js\?v=1\.6\.13/);assert.match(read('cities/preview-package-factory.js'),/const VERSION = '1\.6\.13'/);assert.match(read('cities/peterborough/package.js'),/const VERSION = '1\.6\.13'/);assert.match(read('response-simulator/vehicle-instruments.js'),/const VERSION = '1\.6\.17'/);
+test('production build is v1.6.18 while packaged inner assets remain compatible with v1.6.13', () => {
+  assert.match(read('shared/build-version.js'),/const VERSION = '1\.6\.18'/);assert.match(read('shared/base-locations.js'),/const VERSION = '1\.6\.13'/);assert.match(read('index.html'),/shared\/build-version\.js\?v=1\.6\.13/);assert.match(read('cities/preview-package-factory.js'),/const VERSION = '1\.6\.13'/);assert.match(read('cities/peterborough/package.js'),/const VERSION = '1\.6\.13'/);assert.match(read('response-simulator/vehicle-instruments.js'),/const VERSION = '1\.6\.17'/);
 });
 
 test('inner simulator initialization is idempotent for wrapper polling', () => {
