@@ -1,31 +1,48 @@
 /* Shared Fire/EMS chooser. Waits for the selected city's authoritative runtime and base data. */
 (() => {
   'use strict';
-  const VERSION = '1.6.13';
+  const VERSION = '1.6.15';
   if (window.PTBO_SERVICE_SELECTION?.version === VERSION) return;
 
   let dialog = null;
   let opening = null;
   const sleep = milliseconds => new Promise(resolve => setTimeout(resolve,milliseconds));
+  const trace = (message, detail = '') => window.PTBO_STARTUP_TRACE?.mark?.(message, detail);
+  const traceOk = (message, detail = '') => window.PTBO_STARTUP_TRACE?.ok?.(message, detail);
+  const traceWarn = (message, detail = '') => window.PTBO_STARTUP_TRACE?.warn?.(message, detail);
 
   function satelliteReady(game) {
-    if (game.PTBO_SATELLITE_MAP_READY) return Promise.resolve(game.PTBO_SATELLITE_MAP_READY).catch(() => {});
+    trace('Service chooser: waiting for satellite map');
+    const timeoutMilliseconds = 12000;
+    if (game.PTBO_SATELLITE_MAP_READY) {
+      return Promise.race([
+        Promise.resolve(game.PTBO_SATELLITE_MAP_READY).catch(error => {
+          traceWarn('Service chooser: satellite promise rejected', error);
+        }),
+        sleep(timeoutMilliseconds).then(() => traceWarn('Service chooser: satellite wait timed out; continuing', `${timeoutMilliseconds} ms`)),
+      ]).then(() => traceOk('Service chooser: satellite wait finished'));
+    }
     return new Promise(resolve => {
-      const finish = () => {
+      const finish = reason => {
         clearTimeout(timer);
-        game.removeEventListener('ptbo-satellite-map-ready', finish);
-        game.removeEventListener('ptbo-satellite-map-error', finish);
+        game.removeEventListener('ptbo-satellite-map-ready', readyHandler);
+        game.removeEventListener('ptbo-satellite-map-error', errorHandler);
+        if (reason === 'timeout') traceWarn('Service chooser: satellite event wait timed out; continuing', `${timeoutMilliseconds} ms`);
+        traceOk('Service chooser: satellite wait finished');
         resolve();
       };
-      const timer = setTimeout(finish, 12000);
-      game.addEventListener('ptbo-satellite-map-ready', finish, {once:true});
-      game.addEventListener('ptbo-satellite-map-error', finish, {once:true});
+      const readyHandler = () => finish('ready');
+      const errorHandler = () => finish('error');
+      const timer = setTimeout(() => finish('timeout'), timeoutMilliseconds);
+      game.addEventListener('ptbo-satellite-map-ready', readyHandler, {once:true});
+      game.addEventListener('ptbo-satellite-map-error', errorHandler, {once:true});
     });
   }
 
   async function runtimeReady(game) {
     const expected = game.PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION;
     if (!expected) return null;
+    trace('Service chooser: waiting for city runtime', `v${expected}`);
     const started = performance.now();
     while (game.PTBO_CITY_RUNTIME_READY_VERSION !== expected || !game.PTBO_CITY_RUNTIME_READY) {
       if (performance.now() - started > 20000) throw new Error(`City runtime ${expected} did not start.`);
@@ -33,6 +50,7 @@
     }
     const detail = await game.PTBO_CITY_RUNTIME_READY;
     if (game.PTBO_CITY_RUNTIME_ERROR) throw game.PTBO_CITY_RUNTIME_ERROR;
+    traceOk('Service chooser: city runtime ready', detail?.cityId || 'unknown city');
     return detail;
   }
 
@@ -40,6 +58,7 @@
     await runtimeReady(game);
     const city = game.PTBO_CITY_PACKAGE;
     if (!city) throw new Error('The selected city package did not load.');
+    trace('Service chooser: validating Fire/EMS bases', city.name || city.id);
     const packageReady = game.PTBO_CITY_PACKAGE_READY;
     if (packageReady && typeof packageReady.then === 'function') await packageReady;
     if (game.PTBO_CITY_PACKAGE_LOAD_ERROR) throw game.PTBO_CITY_PACKAGE_LOAD_ERROR;
@@ -47,10 +66,12 @@
     const fire = game.PTBO_BASE_STORE?.getBases?.('fire') || game.PTBO_SERVICE_CONFIG?.profiles?.fire?.bases || [];
     const ems = game.PTBO_BASE_STORE?.getBases?.('ems') || game.PTBO_SERVICE_CONFIG?.profiles?.ems?.bases || [];
     if (!fire.length || !ems.length) throw new Error(`${city.name} Fire/EMS base locations are unavailable.`);
+    traceOk('Service chooser: base data ready', `${fire.length} fire / ${ems.length} EMS`);
     return {city,fire,ems};
   }
 
   function ready(game) {
+    trace('Service chooser: readiness started');
     return Promise.all([satelliteReady(game), cityBasesReady(game)]).then(([,data]) => data);
   }
 
@@ -58,6 +79,7 @@
     if (dialog?.open || game.PTBO_SERVICE?.state.selected) return;
     if (opening) return opening;
 
+    trace('Service chooser: opening');
     opening = (async () => {
       const {city,fire,ems} = await ready(game);
       if (dialog?.open || game.PTBO_SERVICE?.state.selected) return;
@@ -111,6 +133,7 @@
       }));
       document.body.appendChild(dialog);
       dialog.showModal();
+      traceOk('Service chooser opened', `${city.name}; ${baseTraining ? 'base training' : 'dispatch'}`);
     })().finally(() => { opening = null; });
     return opening;
   }
