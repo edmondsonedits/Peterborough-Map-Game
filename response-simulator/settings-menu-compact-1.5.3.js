@@ -31,7 +31,7 @@
   The version prevents duplicate installation and lets startup verification
   confirm that the expected module loaded.
   */
-  const VERSION = '1.6.21';
+  const VERSION = '1.6.22';
   if (window.PTBO_COMPACT_SETTINGS?.version === VERSION) return;
 
   /*
