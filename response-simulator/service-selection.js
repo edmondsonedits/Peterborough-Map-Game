@@ -1,7 +1,7 @@
 /* Shared Fire/EMS chooser. Waits for the selected city's authoritative runtime and base data. */
 (() => {
   'use strict';
-  const VERSION = '1.6.15';
+  const VERSION = '1.6.16-hotfix1';
   if (window.PTBO_SERVICE_SELECTION?.version === VERSION) return;
 
   let dialog = null;
@@ -10,34 +10,6 @@
   const trace = (message, detail = '') => window.PTBO_STARTUP_TRACE?.mark?.(message, detail);
   const traceOk = (message, detail = '') => window.PTBO_STARTUP_TRACE?.ok?.(message, detail);
   const traceWarn = (message, detail = '') => window.PTBO_STARTUP_TRACE?.warn?.(message, detail);
-
-  function satelliteReady(game) {
-    trace('Service chooser: waiting for satellite map');
-    const timeoutMilliseconds = 12000;
-    if (game.PTBO_SATELLITE_MAP_READY) {
-      return Promise.race([
-        Promise.resolve(game.PTBO_SATELLITE_MAP_READY).catch(error => {
-          traceWarn('Service chooser: satellite promise rejected', error);
-        }),
-        sleep(timeoutMilliseconds).then(() => traceWarn('Service chooser: satellite wait timed out; continuing', `${timeoutMilliseconds} ms`)),
-      ]).then(() => traceOk('Service chooser: satellite wait finished'));
-    }
-    return new Promise(resolve => {
-      const finish = reason => {
-        clearTimeout(timer);
-        game.removeEventListener('ptbo-satellite-map-ready', readyHandler);
-        game.removeEventListener('ptbo-satellite-map-error', errorHandler);
-        if (reason === 'timeout') traceWarn('Service chooser: satellite event wait timed out; continuing', `${timeoutMilliseconds} ms`);
-        traceOk('Service chooser: satellite wait finished');
-        resolve();
-      };
-      const readyHandler = () => finish('ready');
-      const errorHandler = () => finish('error');
-      const timer = setTimeout(() => finish('timeout'), timeoutMilliseconds);
-      game.addEventListener('ptbo-satellite-map-ready', readyHandler, {once:true});
-      game.addEventListener('ptbo-satellite-map-error', errorHandler, {once:true});
-    });
-  }
 
   async function runtimeReady(game) {
     const expected = game.PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION;
@@ -72,7 +44,11 @@
 
   function ready(game) {
     trace('Service chooser: readiness started');
-    return Promise.all([satelliteReady(game), cityBasesReady(game)]).then(([,data]) => data);
+    // The chooser only needs authoritative city/base data. Satellite imagery is an
+    // optional enhancement and has its own independent startup/fallback path.
+    // Waiting for it here made base-training startup wait twice (ready + open),
+    // leaving the loading cover on screen even though the simulator was usable.
+    return cityBasesReady(game);
   }
 
   async function open(game) {
