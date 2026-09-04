@@ -1,8 +1,8 @@
-/* Deterministic city runtime bootstrap — v1.6.12.
+/* Deterministic city runtime bootstrap — v1.6.13.
    Repairs stale inner-frame modules before the simulator readiness gate runs. */
 (() => {
   'use strict';
-  const VERSION = '1.6.12';
+  const VERSION = '1.6.13';
   if (window.PTBO_CITY_RUNTIME_READY_VERSION === VERSION && window.PTBO_CITY_RUNTIME_READY) return;
   window.PTBO_CITY_RUNTIME_READY_VERSION = VERSION;
 

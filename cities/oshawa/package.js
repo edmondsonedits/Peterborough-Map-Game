@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const VERSION='1.6.12';
+  const VERSION='1.6.13';
   const sourceUrl=new URL(document.currentScript?.src || location.href,location.href);
   const config={
     id:'oshawa',name:'Oshawa',

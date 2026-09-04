@@ -4,7 +4,7 @@
    so the rest of the simulator always sees a city/service config during parsing. */
 (() => {
   'use strict';
-  const VERSION = '1.6.12';
+  const VERSION = '1.6.13';
 
   function peterboroughFallback() {
     const fireBases = [

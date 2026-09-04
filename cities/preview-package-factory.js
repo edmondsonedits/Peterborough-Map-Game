@@ -1,7 +1,7 @@
 /* Generic base-training city package factory for cities without dispatch calls yet. */
 (() => {
   'use strict';
-  const VERSION = '1.6.12';
+  const VERSION = '1.6.13';
   if (window.PTBO_PREVIEW_CITY_FACTORY?.version === VERSION) return;
 
   const normalizeText = value => String(value ?? '').trim().replace(/\s+/g,' ');

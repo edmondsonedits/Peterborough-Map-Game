@@ -1,7 +1,7 @@
 /* Shared Fire/EMS chooser. Waits for the selected city's authoritative runtime and base data. */
 (() => {
   'use strict';
-  const VERSION = '1.6.12';
+  const VERSION = '1.6.13';
   if (window.PTBO_SERVICE_SELECTION?.version === VERSION) return;
 
   let dialog = null;
