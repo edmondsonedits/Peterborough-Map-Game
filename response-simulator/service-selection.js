@@ -9,21 +9,33 @@
   const sleep = milliseconds => new Promise(resolve => setTimeout(resolve,milliseconds));
   const trace = (message, detail = '') => window.PTBO_STARTUP_TRACE?.mark?.(message, detail);
   const traceOk = (message, detail = '') => window.PTBO_STARTUP_TRACE?.ok?.(message, detail);
+  const traceWarn = (message, detail = '') => window.PTBO_STARTUP_TRACE?.warn?.(message, detail);
 
   function satelliteReady(game) {
     trace('Service chooser: waiting for satellite map');
-    if (game.PTBO_SATELLITE_MAP_READY) return Promise.resolve(game.PTBO_SATELLITE_MAP_READY).catch(() => {});
+    const timeoutMilliseconds = 12000;
+    if (game.PTBO_SATELLITE_MAP_READY) {
+      return Promise.race([
+        Promise.resolve(game.PTBO_SATELLITE_MAP_READY).catch(error => {
+          traceWarn('Service chooser: satellite promise rejected', error);
+        }),
+        sleep(timeoutMilliseconds).then(() => traceWarn('Service chooser: satellite wait timed out; continuing', `${timeoutMilliseconds} ms`)),
+      ]).then(() => traceOk('Service chooser: satellite wait finished'));
+    }
     return new Promise(resolve => {
-      const finish = () => {
+      const finish = reason => {
         clearTimeout(timer);
-        game.removeEventListener('ptbo-satellite-map-ready', finish);
-        game.removeEventListener('ptbo-satellite-map-error', finish);
+        game.removeEventListener('ptbo-satellite-map-ready', readyHandler);
+        game.removeEventListener('ptbo-satellite-map-error', errorHandler);
+        if (reason === 'timeout') traceWarn('Service chooser: satellite event wait timed out; continuing', `${timeoutMilliseconds} ms`);
         traceOk('Service chooser: satellite wait finished');
         resolve();
       };
-      const timer = setTimeout(finish, 12000);
-      game.addEventListener('ptbo-satellite-map-ready', finish, {once:true});
-      game.addEventListener('ptbo-satellite-map-error', finish, {once:true});
+      const readyHandler = () => finish('ready');
+      const errorHandler = () => finish('error');
+      const timer = setTimeout(() => finish('timeout'), timeoutMilliseconds);
+      game.addEventListener('ptbo-satellite-map-ready', readyHandler, {once:true});
+      game.addEventListener('ptbo-satellite-map-error', errorHandler, {once:true});
     });
   }
 
