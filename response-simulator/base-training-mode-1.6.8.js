@@ -1,7 +1,7 @@
 /* Base-training mode for cities that have Fire/EMS bases but no dispatch-call database yet. */
 (() => {
   'use strict';
-  const VERSION = '1.6.20';
+  const VERSION = '1.6.21';
   if (window.PTBO_BASE_TRAINING_MODE?.version === VERSION) return;
 
   const city = window.PTBO_CITY_PACKAGE;
@@ -51,8 +51,11 @@
   }
 
   function updateCallSectionLabels() {
-    const incidentHeading=[...document.querySelectorAll('.section-title')].find(node=>node.textContent.trim()==='Incident Types');
-    if(incidentHeading) incidentHeading.textContent='Incident Types — Calls Unavailable';
+    const unavailableLabel='Incident Types — Calls Unavailable';
+    const incidentHeading=[...document.querySelectorAll('.section-title')].find(node=>node.textContent.trim().startsWith('Incident Types'));
+    if(incidentHeading) incidentHeading.textContent=unavailableLabel;
+    const compactLabel=document.getElementById('ptbo-incident-types-summary-label');
+    if(compactLabel) compactLabel.textContent=unavailableLabel;
     const customHeading=[...document.querySelectorAll('.section-title')].find(node=>node.textContent.trim()==='Custom Dispatch Logging');
     if(customHeading) customHeading.textContent='Dispatch Logging — Unavailable';
   }
