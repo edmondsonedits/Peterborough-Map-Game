@@ -126,9 +126,9 @@ test('duplicate EMS source names still receive unique IDs before entering the sh
   assert.equal(new Set(imported.map(base=>base.number)).size,2);
 });
 
-test('v1.6.20 build uses the stable v1.6.17 city-runtime protocol instead of the build number', () => {
+test('v1.6.21 build uses the stable v1.6.17 city-runtime protocol instead of the build number', () => {
   const build=read('shared/build-version.js');
-  assert.match(build,/const VERSION = '1\.6\.20'/);
+  assert.match(build,/const VERSION = '1\.6\.21'/);
   assert.match(build,/const CITY_RUNTIME_VERSION = '1\.6\.17'/);
   assert.match(build,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION = CITY_RUNTIME_VERSION/);
   assert.match(build,/simulator-readiness-1\.6\.17\.js/);
@@ -137,6 +137,8 @@ test('v1.6.20 build uses the stable v1.6.17 city-runtime protocol instead of the
   assert.match(build,/directional-drive-zoom-1\.5\.8\.js/);
   assert.match(build,/mobile-ui-layout-1\.5\.9\.js/);
   assert.match(build,/satellite-map-1\.5\.6\.js/);
+  assert.match(build,/const SCRIPT_TIMEOUT_MS = 12000/);
+  assert.match(build,/data-ptbo-simulator-readiness'[\s\S]*?15000/);
 });
 
 test('v1.6.20 base-training mode only disables dispatch and keeps the shared simulator surface', () => {
@@ -151,9 +153,17 @@ test('v1.6.20 base-training mode only disables dispatch and keeps the shared sim
   assert.match(source,/let applying=false/);
 });
 
-test('city selector publishes fresh v1.6.20 shared-wrapper URLs', () => {
+test('compact settings accepts the base-training Incident Types label instead of blocking startup', () => {
+  const source=read('response-simulator/settings-menu-compact-1.5.3.js');
+  assert.match(source,/const VERSION = '1\.6\.21'/);
+  assert.match(source,/startsWith\('Incident Types'\)/);
+  assert.match(source,/existingDetails[\s\S]*state\.installed = true/);
+  assert.doesNotMatch(source,/node\.textContent\.trim\(\) === 'Incident Types'/);
+});
+
+test('city selector publishes fresh v1.6.21 shared-wrapper URLs', () => {
   const source=read('shared/city-selector.js');
-  assert.match(source,/const VERSION = '1\.6\.20'/);
+  assert.match(source,/const VERSION = '1\.6\.21'/);
   assert.match(source,/same Peterborough driving controls/);
   assert.match(source,/url\.searchParams\.set\('fresh', String\(Date\.now\(\)\)\)/);
 });
