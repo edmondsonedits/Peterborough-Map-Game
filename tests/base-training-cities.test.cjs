@@ -126,9 +126,9 @@ test('duplicate EMS source names still receive unique IDs before entering the sh
   assert.equal(new Set(imported.map(base=>base.number)).size,2);
 });
 
-test('v1.6.23 build uses the stable v1.6.17 city-runtime protocol instead of the build number', () => {
+test('v1.6.24 build uses the stable v1.6.17 city-runtime protocol instead of the build number', () => {
   const build=read('shared/build-version.js');
-  assert.match(build,/const VERSION = '1\.6\.23'/);
+  assert.match(build,/const VERSION = '1\.6\.24'/);
   assert.match(build,/const CITY_RUNTIME_VERSION = '1\.6\.17'/);
   assert.match(build,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION = CITY_RUNTIME_VERSION/);
   assert.match(build,/simulator-readiness-1\.6\.17\.js/);
@@ -137,11 +137,13 @@ test('v1.6.23 build uses the stable v1.6.17 city-runtime protocol instead of the
   assert.match(build,/directional-drive-zoom-1\.5\.8\.js/);
   assert.match(build,/mobile-ui-layout-1\.5\.9\.js/);
   assert.match(build,/satellite-map-1\.5\.6\.js/);
+  assert.match(build,/site-analytics-1\.6\.24\.js/);
+  assert.match(build,/window\.top !== window/);
   assert.match(build,/const SCRIPT_TIMEOUT_MS = 12000/);
   assert.match(build,/data-ptbo-simulator-readiness'[\s\S]*?15000/);
 });
 
-test('v1.6.23 automatically selects the Peterborough mobile or desktop wrapper', () => {
+test('v1.6.24 automatically selects the Peterborough mobile or desktop wrapper', () => {
   const build=read('shared/build-version.js');
   const selector=read('shared/city-selector.js');
   assert.match(build,/PTBO_DEVICE_SURFACE/);
@@ -197,26 +199,31 @@ test('main menu exposes the password-locked Dispatch Editor and hides Website St
   assert.match(source,/tapCount<10/);
   assert.match(source,/localStorage\.setItem\(statsKey,'enabled'\)/);
   assert.match(source,/href="site-stats\//);
-  assert.match(source,/shared\/site-analytics-1\.6\.23\.js/);
-  assert.match(source,/shared\/build-version\.js\?v=1\.6\.23/);
+  assert.match(source,/shared\/site-analytics-1\.6\.24\.js/);
+  assert.match(source,/shared\/build-version\.js\?v=1\.6\.24/);
 });
 
-test('website stats dashboard uses anonymous aggregate records and stays locked outside the hidden menu', () => {
-  const tracker=read('shared/site-analytics-1.6.23.js');
+test('v1.6.24 detailed analytics tracks play time, dispatch behaviour and controls without storing exact routes', () => {
+  const tracker=read('shared/site-analytics-1.6.24.js');
   const dashboard=read('site-stats/index.html');
-  assert.match(tracker,/const VERSION = '1\.6\.23'/);
-  assert.match(tracker,/PRIMARY_COLLECTION = 'siteAnalytics'/);
-  assert.match(tracker,/FALLBACK_COLLECTION = 'scores'/);
-  assert.match(tracker,/baseRecord\('visitor'\)/);
-  assert.match(tracker,/baseRecord\('session'\)/);
-  assert.match(tracker,/baseRecord\('launch'\)/);
-  assert.match(tracker,/baseRecord\('city_select'\)/);
+  assert.match(tracker,/const VERSION='1\.6\.24'/);
+  assert.match(tracker,/recordType:'session_summary'/);
+  for(const metric of ['activeSeconds','drivingSeconds','stationarySeconds','distanceMeters','callsStarted','callsCompleted','callsAbandoned','responseMsTotal','transportMsTotal','sirenToggles','recenterUses','reverseUses','acceleratorUses','steeringUses','startupSuccesses','startupFailures']){
+    assert.match(tracker,new RegExp(metric),metric);
+  }
+  assert.match(tracker,/attachSimulatorFrame/);
+  assert.match(tracker,/attachGeoFrame/);
+  assert.match(tracker,/haversine/);
+  assert.match(tracker,/incident_/);
+  assert.match(tracker,/city_seconds_/);
   assert.doesNotMatch(tracker,/getCurrentPosition|navigator\.geolocation/);
   assert.match(dashboard,/ptbo-emergency-stats-mode/);
-  assert.match(dashboard,/Unique browsers/);
-  assert.match(dashboard,/Device sessions/);
-  assert.match(dashboard,/City selections/);
-  assert.match(dashboard,/Tracking starts with v1\.6\.23/);
+  assert.match(dashboard,/Active time/);
+  assert.match(dashboard,/Calls started/);
+  assert.match(dashboard,/Distance driven/);
+  assert.match(dashboard,/Incident types/);
+  assert.match(dashboard,/Startup reliability/);
+  assert.match(dashboard,/Detailed gameplay tracking begins with v1\.6\.24/);
 });
 
 test('Peterborough desktop and mobile wrappers remain the canonical control surfaces', () => {
