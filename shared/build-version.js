@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.24';
+  const VERSION = '1.6.25';
   const CITY_RUNTIME_VERSION = '1.6.17';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
@@ -204,7 +204,7 @@
     if (window.top !== window || window.PTBO_SITE_ANALYTICS?.version === VERSION || document.getElementById('ptbo-site-analytics-loader')) return;
     const script = document.createElement('script');
     script.id = 'ptbo-site-analytics-loader';
-    script.src = new URL(`site-analytics-1.6.24.js?v=${VERSION}`, SCRIPT_URL).href;
+    script.src = new URL(`site-analytics-1.6.25.js?v=${VERSION}`, SCRIPT_URL).href;
     script.async = true;
     script.onerror = () => console.warn('Detailed analytics client could not load.');
     document.head.appendChild(script);
