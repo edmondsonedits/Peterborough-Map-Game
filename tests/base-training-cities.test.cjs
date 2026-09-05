@@ -16,7 +16,7 @@ function browserContext(extra = {}) {
     performance:{now:()=>0},
     CustomEvent:class { constructor(type,options){this.type=type;this.detail=options?.detail;} },
     location:{href:'https://example.com/response-simulator/index.html?city=test'},
-    localStorage:{getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.setItem(key,String(value)),removeItem:key=>storage.delete(key)},
+    localStorage:{getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,String(value)),removeItem:key=>storage.delete(key)},
     document:{
       currentScript:{src:'https://example.com/cities/preview-package-factory.js'},
       readyState:'complete',baseURI:'https://example.com/response-simulator/',
