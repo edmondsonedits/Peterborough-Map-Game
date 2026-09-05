@@ -126,9 +126,9 @@ test('duplicate EMS source names still receive unique IDs before entering the sh
   assert.equal(new Set(imported.map(base=>base.number)).size,2);
 });
 
-test('v1.6.25 build uses the stable v1.6.17 city-runtime protocol and current analytics client', () => {
+test('v1.6.26 build uses the stable v1.6.17 city-runtime protocol and current analytics client', () => {
   const build=read('shared/build-version.js');
-  assert.match(build,/const VERSION = '1\.6\.25'/);
+  assert.match(build,/const VERSION = '1\.6\.26'/);
   assert.match(build,/const CITY_RUNTIME_VERSION = '1\.6\.17'/);
   assert.match(build,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION = CITY_RUNTIME_VERSION/);
   assert.match(build,/simulator-readiness-1\.6\.17\.js/);
@@ -137,13 +137,14 @@ test('v1.6.25 build uses the stable v1.6.17 city-runtime protocol and current an
   assert.match(build,/directional-drive-zoom-1\.5\.8\.js/);
   assert.match(build,/mobile-ui-layout-1\.5\.9\.js/);
   assert.match(build,/satellite-map-1\.5\.6\.js/);
+  assert.match(build,/route-reveal-review-1\.6\.26\.js/);
   assert.match(build,/site-analytics-1\.6\.25\.js/);
   assert.match(build,/window\.top !== window/);
   assert.match(build,/const SCRIPT_TIMEOUT_MS = 12000/);
   assert.match(build,/data-ptbo-simulator-readiness'[\s\S]*?15000/);
 });
 
-test('v1.6.25 automatically selects the Peterborough mobile or desktop wrapper', () => {
+test('v1.6.26 automatically selects the Peterborough mobile or desktop wrapper', () => {
   const build=read('shared/build-version.js');
   const selector=read('shared/city-selector.js');
   assert.match(build,/PTBO_DEVICE_SURFACE/);
@@ -199,8 +200,8 @@ test('main menu exposes the password-locked Dispatch Editor and hides Website St
   assert.match(source,/tapCount<10/);
   assert.match(source,/localStorage\.setItem\(statsKey,'enabled'\)/);
   assert.match(source,/href="site-stats\//);
-  assert.match(source,/shared\/site-analytics-1\.6\.25\.js/);
-  assert.match(source,/shared\/build-version\.js\?v=1\.6\.25/);
+  assert.match(source,/shared\/site-analytics-1\.6\.25\.js\?v=1\.6\.26/);
+  assert.match(source,/shared\/build-version\.js\?v=1\.6\.26/);
 });
 
 test('v1.6.25 analytics reliably records gameplay lifecycle without exact route history', () => {
@@ -234,6 +235,20 @@ test('v1.6.25 analytics reliably records gameplay lifecycle without exact route 
   assert.match(dashboard,/Startup timeouts/);
   assert.match(dashboard,/JS errors/);
   assert.match(dashboard,/Detailed gameplay tracking began with v1\.6\.24/);
+});
+
+test('v1.6.26 route reveal keeps the map visible on mobile and restores the pre-reveal view', () => {
+  const source=read('response-simulator/route-reveal-review-1.6.26.js');
+  assert.match(source,/const VERSION = '1\.6\.26'/);
+  assert.match(source,/captureView/);
+  assert.match(source,/getCenter\(\)/);
+  assert.match(source,/getZoom\(\)/);
+  assert.match(source,/map\.setView\(saved\.center, saved\.zoom/);
+  assert.match(source,/ptbo-route-reveal-active/);
+  assert.match(source,/\.mobile-controls/);
+  assert.match(source,/visibility:hidden!important/);
+  assert.match(source,/bottom:calc\(12px \+ env\(safe-area-inset-bottom\)\)/);
+  assert.match(source,/paddingBottomRight: \[28, cardHeight \+ 30\]/);
 });
 
 test('all canonical player surfaces load the shared build bootstrap that injects analytics', () => {
