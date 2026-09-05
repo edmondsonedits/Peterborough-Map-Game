@@ -126,9 +126,9 @@ test('duplicate EMS source names still receive unique IDs before entering the sh
   assert.equal(new Set(imported.map(base=>base.number)).size,2);
 });
 
-test('v1.6.22 build uses the stable v1.6.17 city-runtime protocol instead of the build number', () => {
+test('v1.6.23 build uses the stable v1.6.17 city-runtime protocol instead of the build number', () => {
   const build=read('shared/build-version.js');
-  assert.match(build,/const VERSION = '1\.6\.22'/);
+  assert.match(build,/const VERSION = '1\.6\.23'/);
   assert.match(build,/const CITY_RUNTIME_VERSION = '1\.6\.17'/);
   assert.match(build,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION = CITY_RUNTIME_VERSION/);
   assert.match(build,/simulator-readiness-1\.6\.17\.js/);
@@ -141,7 +141,7 @@ test('v1.6.22 build uses the stable v1.6.17 city-runtime protocol instead of the
   assert.match(build,/data-ptbo-simulator-readiness'[\s\S]*?15000/);
 });
 
-test('v1.6.22 automatically selects the Peterborough mobile or desktop wrapper', () => {
+test('v1.6.23 automatically selects the Peterborough mobile or desktop wrapper', () => {
   const build=read('shared/build-version.js');
   const selector=read('shared/city-selector.js');
   assert.match(build,/PTBO_DEVICE_SURFACE/);
@@ -155,7 +155,7 @@ test('v1.6.22 automatically selects the Peterborough mobile or desktop wrapper',
   assert.doesNotMatch(selector,/window\.innerWidth\s*<=\s*900/);
 });
 
-test('v1.6.22 base-training mode only disables dispatch and keeps the shared simulator surface', () => {
+test('base-training mode only disables dispatch and keeps the shared simulator surface', () => {
   const source=read('response-simulator/base-training-mode-1.6.8.js');
   assert.match(source,/const VERSION = '1\.6\.22'/);
   assert.match(source,/Peterborough simulator controls/);
@@ -177,12 +177,46 @@ test('compact settings accepts the base-training Incident Types label instead of
   assert.doesNotMatch(source,/node\.textContent\.trim\(\) === 'Incident Types'/);
 });
 
-test('city selector publishes fresh v1.6.22 shared-wrapper URLs', () => {
+test('city selector keeps the shared mobile and desktop wrapper URLs', () => {
   const source=read('shared/city-selector.js');
   assert.match(source,/const VERSION = '1\.6\.22'/);
   assert.match(source,/same Peterborough driving controls/);
   assert.match(source,/url\.searchParams\.set\('surface', mobile \? 'mobile' : 'desktop'\)/);
   assert.match(source,/url\.searchParams\.set\('fresh', String\(Date\.now\(\)\)\)/);
+});
+
+test('main menu exposes the password-locked Dispatch Editor and hides Website Stats behind ten taps', () => {
+  const source=read('index.html');
+  const editorTag=source.match(/<a id="dispatch-editor-link"[^>]*>/)?.[0]||'';
+  assert.match(editorTag,/locked-card/);
+  assert.doesNotMatch(editorTag,/\shidden(?:\s|>)/);
+  assert.match(source,/<a id="site-stats-link"[^>]*hidden/);
+  assert.match(source,/const accessHash='435c554a2e9cd54d2d3431b8af2b5d7ba740c64f1dca92b7af8a76b05d484ef3'/);
+  assert.match(source,/Dispatch Editor password:/);
+  assert.match(source,/Website Stats password:/);
+  assert.match(source,/tapCount<10/);
+  assert.match(source,/localStorage\.setItem\(statsKey,'enabled'\)/);
+  assert.match(source,/href="site-stats\//);
+  assert.match(source,/shared\/site-analytics-1\.6\.23\.js/);
+  assert.match(source,/shared\/build-version\.js\?v=1\.6\.23/);
+});
+
+test('website stats dashboard uses anonymous aggregate records and stays locked outside the hidden menu', () => {
+  const tracker=read('shared/site-analytics-1.6.23.js');
+  const dashboard=read('site-stats/index.html');
+  assert.match(tracker,/const VERSION = '1\.6\.23'/);
+  assert.match(tracker,/PRIMARY_COLLECTION = 'siteAnalytics'/);
+  assert.match(tracker,/FALLBACK_COLLECTION = 'scores'/);
+  assert.match(tracker,/recordType:'visitor'/);
+  assert.match(tracker,/recordType:'session'/);
+  assert.match(tracker,/recordType:'launch'/);
+  assert.match(tracker,/recordType:'city_select'/);
+  assert.doesNotMatch(tracker,/geolocation|getCurrentPosition|email|playerName/i);
+  assert.match(dashboard,/ptbo-emergency-stats-mode/);
+  assert.match(dashboard,/Unique browsers/);
+  assert.match(dashboard,/Device sessions/);
+  assert.match(dashboard,/City selections/);
+  assert.match(dashboard,/Tracking starts with v1\.6\.23/);
 });
 
 test('Peterborough desktop and mobile wrappers remain the canonical control surfaces', () => {
