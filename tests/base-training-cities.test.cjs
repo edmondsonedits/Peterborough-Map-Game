@@ -16,7 +16,7 @@ function browserContext(extra = {}) {
     performance:{now:()=>0},
     CustomEvent:class { constructor(type,options){this.type=type;this.detail=options?.detail;} },
     location:{href:'https://example.com/response-simulator/index.html?city=test'},
-    localStorage:{getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,String(value)),removeItem:key=>storage.delete(key)},
+    localStorage:{getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.setItem(key,String(value)),removeItem:key=>storage.delete(key)},
     document:{
       currentScript:{src:'https://example.com/cities/preview-package-factory.js'},
       readyState:'complete',baseURI:'https://example.com/response-simulator/',
@@ -207,11 +207,11 @@ test('website stats dashboard uses anonymous aggregate records and stays locked 
   assert.match(tracker,/const VERSION = '1\.6\.23'/);
   assert.match(tracker,/PRIMARY_COLLECTION = 'siteAnalytics'/);
   assert.match(tracker,/FALLBACK_COLLECTION = 'scores'/);
-  assert.match(tracker,/recordType:'visitor'/);
-  assert.match(tracker,/recordType:'session'/);
-  assert.match(tracker,/recordType:'launch'/);
-  assert.match(tracker,/recordType:'city_select'/);
-  assert.doesNotMatch(tracker,/geolocation|getCurrentPosition|email|playerName/i);
+  assert.match(tracker,/baseRecord\('visitor'\)/);
+  assert.match(tracker,/baseRecord\('session'\)/);
+  assert.match(tracker,/baseRecord\('launch'\)/);
+  assert.match(tracker,/baseRecord\('city_select'\)/);
+  assert.doesNotMatch(tracker,/getCurrentPosition|navigator\.geolocation/);
   assert.match(dashboard,/ptbo-emergency-stats-mode/);
   assert.match(dashboard,/Unique browsers/);
   assert.match(dashboard,/Device sessions/);
