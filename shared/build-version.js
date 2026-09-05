@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.27';
+  const VERSION = '1.6.28';
   const CITY_RUNTIME_VERSION = '1.6.17';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
@@ -339,7 +339,7 @@
           await optionalInnerModule(
             doc,
             'ptbo-quick-tutorial-loader',
-            `../response-simulator/quick-tutorial-1.6.27.js?v=${VERSION}`,
+            `../response-simulator/quick-tutorial-1.6.28.js?v=${VERSION}`,
             '',
             6000,
           );

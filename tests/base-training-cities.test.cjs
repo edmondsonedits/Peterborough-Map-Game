@@ -126,9 +126,9 @@ test('duplicate EMS source names still receive unique IDs before entering the sh
   assert.equal(new Set(imported.map(base=>base.number)).size,2);
 });
 
-test('v1.6.27 build uses the stable v1.6.17 city-runtime protocol and current analytics client', () => {
+test('v1.6.28 build uses the stable v1.6.17 city-runtime protocol and current analytics client', () => {
   const build=read('shared/build-version.js');
-  assert.match(build,/const VERSION = '1\.6\.27'/);
+  assert.match(build,/const VERSION = '1\.6\.28'/);
   assert.match(build,/const CITY_RUNTIME_VERSION = '1\.6\.17'/);
   assert.match(build,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION = CITY_RUNTIME_VERSION/);
   assert.match(build,/simulator-readiness-1\.6\.17\.js/);
@@ -138,14 +138,14 @@ test('v1.6.27 build uses the stable v1.6.17 city-runtime protocol and current an
   assert.match(build,/mobile-ui-layout-1\.5\.9\.js/);
   assert.match(build,/satellite-map-1\.5\.6\.js/);
   assert.match(build,/route-reveal-review-1\.6\.26\.js/);
-  assert.match(build,/quick-tutorial-1\.6\.27\.js/);
+  assert.match(build,/quick-tutorial-1\.6\.28\.js/);
   assert.match(build,/site-analytics-1\.6\.25\.js/);
   assert.match(build,/window\.top !== window/);
   assert.match(build,/const SCRIPT_TIMEOUT_MS = 12000/);
   assert.match(build,/data-ptbo-simulator-readiness'[\s\S]*?15000/);
 });
 
-test('v1.6.27 automatically selects the Peterborough mobile or desktop wrapper', () => {
+test('v1.6.28 automatically selects the Peterborough mobile or desktop wrapper', () => {
   const build=read('shared/build-version.js');
   const selector=read('shared/city-selector.js');
   assert.match(build,/PTBO_DEVICE_SURFACE/);
@@ -201,8 +201,8 @@ test('main menu exposes the password-locked Dispatch Editor and hides Website St
   assert.match(source,/tapCount<10/);
   assert.match(source,/localStorage\.setItem\(statsKey,'enabled'\)/);
   assert.match(source,/href="site-stats\//);
-  assert.match(source,/shared\/site-analytics-1\.6\.25\.js\?v=1\.6\.27/);
-  assert.match(source,/shared\/build-version\.js\?v=1\.6\.27/);
+  assert.match(source,/shared\/site-analytics-1\.6\.25\.js\?v=1\.6\.28/);
+  assert.match(source,/shared\/build-version\.js\?v=1\.6\.28/);
 });
 
 test('v1.6.25 analytics reliably records gameplay lifecycle without exact route history', () => {
@@ -252,21 +252,27 @@ test('v1.6.26 route reveal keeps the map visible on mobile and restores the pre-
   assert.match(source,/paddingBottomRight: \[28, cardHeight \+ 30\]/);
 });
 
-test('v1.6.27 quick tutorial covers each simulator mode and stays replayable', () => {
-  const source=read('response-simulator/quick-tutorial-1.6.27.js');
-  assert.match(source,/const VERSION = '1\.6\.27'/);
-  assert.match(source,/ptboResponseQuickTutorialSeenV1/);
+test('v1.6.28 visual tutorial shows the real controls and faithful game examples', () => {
+  const source=read('response-simulator/quick-tutorial-1.6.28.js');
+  assert.match(source,/const VERSION = '1\.6\.28'/);
+  assert.match(source,/ptboResponseVisualTutorialSeenV1/);
   assert.match(source,/PTBO_CITY_PACKAGE/);
   assert.match(source,/baseTraining/);
-  assert.match(source,/Directional mode/);
-  assert.match(source,/Gears 1–5 limit speed to 50, 100, 150, 200, and 250 km\/h/);
-  assert.match(source,/Scene first, then hospital/);
+  assert.match(source,/ptbo-tutorial-stage-driving/);
+  assert.match(source,/\.mobile-controls/);
+  assert.match(source,/Point \+ hold/);
+  assert.match(source,/PTBO_SERVICE\?\.getBases/);
+  assert.match(source,/ACTIVE ENROUTE DISPATCH/);
+  assert.match(source,/Lansdowne Place Mall/);
+  assert.match(source,/Fire finishes at the scene/);
+  assert.match(source,/EMS adds a hospital trip/);
   assert.match(source,/Compare Routes/);
-  assert.match(source,/Replay Quick Tutorial/);
+  assert.match(source,/hospital-recommended/);
+  assert.match(source,/Replay Visual Tutorial/);
   assert.match(source,/ptbo-service-change/);
   assert.match(source,/aria-modal/);
   for(const file of ['index.html','response-simulator/index.html','response-simulator/play/index.html','response-simulator/mobile/index.html']){
-    assert.match(read(file),/build-version\.js\?v=1\.6\.27/,file);
+    assert.match(read(file),/build-version\.js\?v=1\.6\.28/,file);
   }
 });
 
