@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.23';
+  const VERSION = '1.6.24';
   const CITY_RUNTIME_VERSION = '1.6.17';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
@@ -200,6 +200,16 @@
       .catch(error => console.error('City selector failed to initialize.', error));
   }
 
+  function installSiteAnalytics() {
+    if (window.top !== window || window.PTBO_SITE_ANALYTICS?.version === VERSION || document.getElementById('ptbo-site-analytics-loader')) return;
+    const script = document.createElement('script');
+    script.id = 'ptbo-site-analytics-loader';
+    script.src = new URL(`site-analytics-1.6.24.js?v=${VERSION}`, SCRIPT_URL).href;
+    script.async = true;
+    script.onerror = () => console.warn('Detailed analytics client could not load.');
+    document.head.appendChild(script);
+  }
+
   function normalizeSimulatorFrameUrl(frame) {
     if (!frame) return;
     const isWrapper = /\/response-simulator\/(?:play|mobile)\/(?:index\.html)?$/.test(location.pathname);
@@ -257,10 +267,6 @@
       installPromise = (async () => {
         try {
           enhancementStage('iframe-attached', selectedCityId());
-
-          // Production builds may advance independently from the stable city-runtime
-          // protocol. Readiness must wait for the protocol actually reported by the
-          // current city-runtime file, not for the marketing/build version.
           game.PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION = CITY_RUNTIME_VERSION;
 
           await injectIntoFrame(
@@ -287,8 +293,6 @@
           const baseTraining = Boolean(city?.features?.baseTraining || city?.dispatch?.available === false);
           traceOk('Enhancement loader: city runtime accepted', city?.name || selectedCityId());
 
-          // Base training only removes dispatch missions. It deliberately keeps the
-          // Peterborough simulator wrappers and their vehicle/camera/control stack.
           if (baseTraining) {
             void optionalInnerModule(
               doc,
@@ -353,6 +357,7 @@
   function installPageEnhancements() {
     installDeviceSurfaceApi();
     installBadge();
+    installSiteAnalytics();
     const isMobile = /\/response-simulator\/mobile\/(?:index\.html)?$/.test(location.pathname);
     if (isMobile && !document.getElementById('ptbo-mobile-dispatch-hud-loader')) {
       const script = document.createElement('script');
