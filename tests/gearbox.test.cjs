@@ -35,6 +35,7 @@ function simulator() {
     updateMapOrientation(){},evaluateDistanceToTarget(){},
     PTBO_GEARBOX:gearbox,PTBO_ARCADE_HANDLING:{state:{installed:false,settings:{}}},
     PTBO_VEHICLE_INSTRUMENTS:{state:{steeringMode:'directional'},setSteeringMode(){}},
+    PTBO_DRIVING_CAMERA:{recenterCalls:0,recenter(){this.recenterCalls+=1;}},
   });
   c.window=c;
   const html=source('response-simulator/index.html');
@@ -163,4 +164,11 @@ test('shifting gears at rest does not change the map zoom',()=>{
   const s=simulator();const zoom=s.c.mapInstance.getZoom();
   s.gear(6);assert.equal(s.c.mapInstance.getZoom(),zoom);
   s.gear(1);assert.equal(s.c.mapInstance.getZoom(),zoom);
+});
+
+test('mobile Recenter resumes continuous truck following as well as centring the map',()=>{
+  const s=simulator();
+  s.c.mobileRecenter();
+  assert.equal(s.c.PTBO_DRIVING_CAMERA.recenterCalls,1);
+  assert.equal(s.c.mapInstance.getZoom(),19);
 });

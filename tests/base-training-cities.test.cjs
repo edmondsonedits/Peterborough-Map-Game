@@ -126,9 +126,9 @@ test('duplicate EMS source names still receive unique IDs before entering the sh
   assert.equal(new Set(imported.map(base=>base.number)).size,2);
 });
 
-test('v1.6.28 build uses the stable v1.6.17 city-runtime protocol and current analytics client', () => {
+test('v1.6.29 build uses the stable v1.6.17 city-runtime protocol and current analytics client', () => {
   const build=read('shared/build-version.js');
-  assert.match(build,/const VERSION = '1\.6\.28'/);
+  assert.match(build,/const VERSION = '1\.6\.29'/);
   assert.match(build,/const CITY_RUNTIME_VERSION = '1\.6\.17'/);
   assert.match(build,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION = CITY_RUNTIME_VERSION/);
   assert.match(build,/simulator-readiness-1\.6\.17\.js/);
@@ -145,7 +145,7 @@ test('v1.6.28 build uses the stable v1.6.17 city-runtime protocol and current an
   assert.match(build,/data-ptbo-simulator-readiness'[\s\S]*?15000/);
 });
 
-test('v1.6.28 automatically selects the Peterborough mobile or desktop wrapper', () => {
+test('v1.6.29 automatically selects the Peterborough mobile or desktop wrapper', () => {
   const build=read('shared/build-version.js');
   const selector=read('shared/city-selector.js');
   assert.match(build,/PTBO_DEVICE_SURFACE/);
@@ -201,8 +201,8 @@ test('main menu exposes the password-locked Dispatch Editor and hides Website St
   assert.match(source,/tapCount<10/);
   assert.match(source,/localStorage\.setItem\(statsKey,'enabled'\)/);
   assert.match(source,/href="site-stats\//);
-  assert.match(source,/shared\/site-analytics-1\.6\.25\.js\?v=1\.6\.28/);
-  assert.match(source,/shared\/build-version\.js\?v=1\.6\.28/);
+  assert.match(source,/shared\/site-analytics-1\.6\.25\.js\?v=1\.6\.29/);
+  assert.match(source,/shared\/build-version\.js\?v=1\.6\.29/);
 });
 
 test('v1.6.25 analytics reliably records gameplay lifecycle without exact route history', () => {
@@ -272,7 +272,7 @@ test('v1.6.28 visual tutorial shows the real controls and faithful game examples
   assert.match(source,/ptbo-service-change/);
   assert.match(source,/aria-modal/);
   for(const file of ['index.html','response-simulator/index.html','response-simulator/play/index.html','response-simulator/mobile/index.html']){
-    assert.match(read(file),/build-version\.js\?v=1\.6\.28/,file);
+    assert.match(read(file),/build-version\.js\?v=1\.6\.29/,file);
   }
 });
 
@@ -301,8 +301,10 @@ test('Peterborough desktop and mobile wrappers remain the canonical control surf
   assert.match(mobile,/id="reverse-pedal"/);
   assert.match(mobile,/id="gas-pedal"/);
   assert.match(mobile,/id="recenter-button"/);
+  assert.match(mobile,/Recenter and follow vehicle/);
   const desktop=read('response-simulator/play/index.html');
   assert.match(desktop,/id="recenter-button"/);
+  assert.match(desktop,/PTBO_DRIVING_CAMERA\?\.recenter/);
   assert.match(desktop,/id="siren-button"/);
   assert.match(desktop,/station-shortcuts/);
 });

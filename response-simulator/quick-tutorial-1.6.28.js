@@ -149,7 +149,7 @@
         title: mobile ? 'Point, hold, and drive' : 'Drive with WASD or the arrows',
         copy: mobile
           ? 'Point and hold the wheel to face and drive. Tap the red Gear button for more speed; Down shifts lower; Reverse backs up.'
-          : 'Hold Gas or Reverse and steer at the same time. The map follows your vehicle; use Recenter if you pan away.',
+          : 'Hold Gas or Reverse and steer at the same time. If you pan away, Recenter returns to the truck and resumes following it.',
         visual: mobile ? '' : desktopDriveExample(),
       },
     ];

@@ -421,6 +421,9 @@
     window.mobileRecenter = () => {
       disableLegacySpeedZoom();
       applyNorthUp();
+      // Dragging the map pauses the shared camera's follow state. Resume that
+      // state before changing zoom so Recenter keeps the truck centred.
+      window.PTBO_DRIVING_CAMERA?.recenter?.();
       setClosestView();
     };
   }
