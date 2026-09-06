@@ -9,6 +9,7 @@
     if (document.currentScript?.hasAttribute('data-ptbo-driving-camera-test')) return true;
     try { return new URL(parent.location.href).searchParams.has('cameraTest'); } catch (_) { return false; }
   })();
+  const TELEMETRY_INTERVAL_MS = CAMERA_TEST ? 0 : 250;
   const sleep = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds));
   const clamp = (value, minimum, maximum) => Math.max(minimum, Math.min(maximum, value));
   const wrap360 = angle => ((angle % 360) + 360) % 360;
@@ -98,6 +99,7 @@
       frameCount: 0,
       positionSyncCount: 0,
       lastTimestamp: performance.now(),
+      lastTelemetryAt: -Infinity,
       maxNormalPositionError: 0,
       maxLongFramePositionError: 0,
       maxRoadScreenError: 0,
@@ -301,9 +303,15 @@
       if (!state.following) return;
       if (cameraLock?.checked) cameraLock.checked = false;
       try { headingUpMode = false; } catch (_) {}
-      mapInstance.setView(state.latestLatLng, mapInstance.getZoom(), { animate: false, reset: false });
+      const center = mapInstance.getCenter();
+      const centerChanged = !center
+        || Math.abs(center.lat - state.latestLatLng.lat) > 1e-10
+        || Math.abs(center.lng - state.latestLatLng.lng) > 1e-10;
+      if (centerChanged) {
+        mapInstance.setView(state.latestLatLng, mapInstance.getZoom(), { animate: false, reset: false });
+        state.positionSyncCount += 1;
+      }
       applyCameraTransform();
-      state.positionSyncCount += 1;
     }
 
     vehicleMarker.setLatLng = function cameraAwareSetLatLng(latLng) {
@@ -525,7 +533,10 @@
         if (state.following) centerOnTruck();
         else applyCameraTransform();
         state.frameCount += 1;
-        readTelemetry(frameDuration);
+        if (timestamp - state.lastTelemetryAt >= TELEMETRY_INTERVAL_MS) {
+          state.lastTelemetryAt = timestamp;
+          readTelemetry(frameDuration);
+        }
       } catch (error) { recordError('camera-frame', error); }
       requestAnimationFrame(frame);
     }

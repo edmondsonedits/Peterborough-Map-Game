@@ -82,10 +82,14 @@
 
   function applyNorthUp() {
     try {
-      headingUpMode = false;
+      let orientationChanged = headingUpMode !== false;
+      if (orientationChanged) headingUpMode = false;
       const pane = mapInstance?.getPane?.('mapPane');
-      if (pane) pane.style.rotate = '0deg';
-      updateMapOrientation?.();
+      if (pane && pane.style.rotate !== '0deg') {
+        pane.style.rotate = '0deg';
+        orientationChanged = true;
+      }
+      if (orientationChanged) updateMapOrientation?.();
     } catch {
       // The base map may not exist yet.
     }

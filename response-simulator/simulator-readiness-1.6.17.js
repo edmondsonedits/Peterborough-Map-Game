@@ -2,7 +2,7 @@
 (() => {
   'use strict';
   const VERSION = '1.6.17';
-  const SCRIPT_TIMEOUT_MS = 6000;
+  const SCRIPT_TIMEOUT_MS = 15000;
   if (window.PTBO_SIMULATOR_READY_VERSION === VERSION && window.PTBO_SIMULATOR_READY) return;
 
   window.PTBO_SIMULATOR_READY_VERSION = VERSION;
@@ -95,6 +95,87 @@
     }
   }
 
+  function findLoader(filename) {
+    return [...document.scripts].find(script => {
+      try { return new URL(script.src).pathname.endsWith(`/${filename}`); }
+      catch (_) { return false; }
+    });
+  }
+
+  async function ensureVehicleInstruments() {
+    if (window.PTBO_VEHICLE_INSTRUMENTS) return window.PTBO_VEHICLE_INSTRUMENTS;
+    if (window.PTBO_VEHICLE_INSTRUMENTS_READY) {
+      try { return await window.PTBO_VEHICLE_INSTRUMENTS_READY; }
+      catch (error) {
+        findLoader('vehicle-instruments.js')?.remove();
+        window.PTBO_VEHICLE_INSTRUMENTS_READY = null;
+        window.PTBO_VEHICLE_INSTRUMENTS_BOOTSTRAP = false;
+        console.warn('The first vehicle-instrument bootstrap failed; retrying once.', error);
+      }
+    }
+
+    // shared/stations.js normally starts this loader first. Reuse that request
+    // instead of issuing a duplicate request with a separate timeout clock.
+    const existingLoader = findLoader('vehicle-instruments.js');
+    if (existingLoader) {
+      try {
+        return await waitForValue(
+          () => window.PTBO_VEHICLE_INSTRUMENTS_READY || window.PTBO_VEHICLE_INSTRUMENTS,
+          'Existing vehicle instrument loader',
+          SCRIPT_TIMEOUT_MS,
+        );
+      } catch (error) {
+        existingLoader.remove();
+        if (!window.PTBO_VEHICLE_INSTRUMENTS) {
+          window.PTBO_VEHICLE_INSTRUMENTS_READY = null;
+          window.PTBO_VEHICLE_INSTRUMENTS_BOOTSTRAP = false;
+        }
+        console.warn('The first vehicle-instrument request stalled; retrying once.', error);
+      }
+    }
+
+    await injectScript('vehicle-instruments.js', 'data-ptbo-readiness-vehicle', SCRIPT_TIMEOUT_MS);
+    return window.PTBO_VEHICLE_INSTRUMENTS_READY || window.PTBO_VEHICLE_INSTRUMENTS;
+  }
+
+  async function ensureRoadCollision() {
+    let retryRequired = false;
+    if (window.PTBO_ROAD_COLLISION_BOOTSTRAP_READY) {
+      try { return await window.PTBO_ROAD_COLLISION_BOOTSTRAP_READY; }
+      catch (error) {
+        findLoader('road-collision.js')?.remove();
+        window.PTBO_ROAD_COLLISION_BOOTSTRAP_READY = null;
+        window.PTBO_ROAD_COLLISION_BOOTSTRAP = false;
+        retryRequired = true;
+        console.warn('The first road-boundary bootstrap failed; retrying once.', error);
+      }
+    }
+    if (!retryRequired && window.PTBO_ROAD_COLLISION) return window.PTBO_ROAD_COLLISION;
+
+    // The dispatch store may already be loading this bootstrap. Reusing it also
+    // lets that single bootstrap own the hard-boundary module it loads next.
+    const existingLoader = findLoader('road-collision.js');
+    if (existingLoader) {
+      try {
+        return await waitForValue(
+          () => window.PTBO_ROAD_COLLISION_BOOTSTRAP_READY || window.PTBO_ROAD_COLLISION,
+          'Existing road-boundary loader',
+          SCRIPT_TIMEOUT_MS,
+        );
+      } catch (error) {
+        existingLoader.remove();
+        if (!window.PTBO_ROAD_COLLISION) {
+          window.PTBO_ROAD_COLLISION_BOOTSTRAP_READY = null;
+          window.PTBO_ROAD_COLLISION_BOOTSTRAP = false;
+        }
+        console.warn('The first road-boundary request stalled; retrying once.', error);
+      }
+    }
+
+    await injectScript('road-collision.js', 'data-ptbo-readiness-road', SCRIPT_TIMEOUT_MS);
+    return window.PTBO_ROAD_COLLISION_BOOTSTRAP_READY || window.PTBO_ROAD_COLLISION;
+  }
+
   function installFreeDriveRoadApi(cityId) {
     stage('installing-free-drive-road-api', cityId);
     if (!window.PTBO_ROAD_COLLISION) {
@@ -169,14 +250,11 @@
 
     stage('loading-required-modules', roadRequired ? 'vehicle + settings + protected roads' : 'vehicle + settings + free-drive roads');
     const requiredScripts = [
-      injectScript('vehicle-instruments.js', 'data-ptbo-readiness-vehicle'),
+      ensureVehicleInstruments(),
       injectScript('settings-menu-compact-1.5.3.js', 'data-ptbo-readiness-compact-settings'),
     ];
     if (roadRequired) {
-      requiredScripts.push(
-        injectScript('road-collision.js', 'data-ptbo-readiness-road'),
-        injectScript('road-hard-boundary-1.6.6.js', 'data-ptbo-readiness-hard-road-boundary'),
-      );
+      requiredScripts.push(ensureRoadCollision());
     } else {
       installFreeDriveRoadApi(city.id);
     }

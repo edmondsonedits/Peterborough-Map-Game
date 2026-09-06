@@ -126,9 +126,9 @@ test('duplicate EMS source names still receive unique IDs before entering the sh
   assert.equal(new Set(imported.map(base=>base.number)).size,2);
 });
 
-test('v1.6.29 build uses the stable v1.6.17 city-runtime protocol and current analytics client', () => {
+test('v1.6.31 build uses the stable v1.6.17 city-runtime protocol and current analytics client', () => {
   const build=read('shared/build-version.js');
-  assert.match(build,/const VERSION = '1\.6\.29'/);
+  assert.match(build,/const VERSION = '1\.6\.31'/);
   assert.match(build,/const CITY_RUNTIME_VERSION = '1\.6\.17'/);
   assert.match(build,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION = CITY_RUNTIME_VERSION/);
   assert.match(build,/simulator-readiness-1\.6\.17\.js/);
@@ -145,7 +145,7 @@ test('v1.6.29 build uses the stable v1.6.17 city-runtime protocol and current an
   assert.match(build,/data-ptbo-simulator-readiness'[\s\S]*?15000/);
 });
 
-test('v1.6.29 automatically selects the Peterborough mobile or desktop wrapper', () => {
+test('v1.6.31 automatically selects the Peterborough mobile or desktop wrapper', () => {
   const build=read('shared/build-version.js');
   const selector=read('shared/city-selector.js');
   assert.match(build,/PTBO_DEVICE_SURFACE/);
@@ -157,6 +157,36 @@ test('v1.6.29 automatically selects the Peterborough mobile or desktop wrapper',
   assert.match(selector,/PTBO_DEVICE_SURFACE/);
   assert.match(selector,/const route = mobile \? city\.dispatch\?\.mobile : city\.dispatch\?\.desktop/);
   assert.doesNotMatch(selector,/window\.innerWidth\s*<=\s*900/);
+});
+
+test('v1.6.31 reuses the existing vehicle loader and retries slow mobile startup safely', () => {
+  const readiness=read('response-simulator/simulator-readiness-1.6.17.js');
+  assert.match(readiness,/const SCRIPT_TIMEOUT_MS = 15000/);
+  assert.match(readiness,/function findLoader\(filename\)/);
+  assert.match(readiness,/function ensureVehicleInstruments\(\)/);
+  assert.match(readiness,/document\.scripts/);
+  assert.match(readiness,/findLoader\('vehicle-instruments\.js'\)/);
+  assert.match(readiness,/Existing vehicle instrument loader/);
+  assert.match(readiness,/retrying once/);
+  assert.match(readiness,/function ensureRoadCollision\(\)/);
+  assert.match(readiness,/Existing road-boundary loader/);
+  assert.match(readiness,/const requiredScripts = \[\s*ensureVehicleInstruments\(\)/);
+  assert.match(readiness,/requiredScripts\.push\(ensureRoadCollision\(\)\)/);
+  assert.doesNotMatch(readiness,/const requiredScripts = \[\s*injectScript\('vehicle-instruments\.js'/);
+  assert.doesNotMatch(readiness,/injectScript\('road-hard-boundary-1\.6\.6\.js'/);
+});
+
+test('v1.6.31 reduces camera frame work and starts optional enhancements in parallel', () => {
+  const camera=read('response-simulator/smooth-driving-camera-1.4.19.js');
+  const directional=read('response-simulator/directional-drive-zoom-1.5.8.js');
+  const build=read('shared/build-version.js');
+  assert.match(camera,/const TELEMETRY_INTERVAL_MS = CAMERA_TEST \? 0 : 250/);
+  assert.match(camera,/timestamp - state\.lastTelemetryAt >= TELEMETRY_INTERVAL_MS/);
+  assert.match(camera,/Math\.abs\(center\.lat - state\.latestLatLng\.lat\) > 1e-10/);
+  assert.match(camera,/if \(centerChanged\) \{\s*mapInstance\.setView/);
+  assert.match(directional,/if \(pane && pane\.style\.rotate !== '0deg'\)/);
+  assert.match(directional,/if \(orientationChanged\) updateMapOrientation\?\.\(\)/);
+  assert.match(build,/await Promise\.all\(\[\s*optionalInnerModule\([\s\S]*?ptbo-satellite-map-loader[\s\S]*?ptbo-route-reveal-review-loader[\s\S]*?ptbo-quick-tutorial-loader/);
 });
 
 test('base-training mode only disables dispatch and keeps the shared simulator surface', () => {
@@ -201,8 +231,8 @@ test('main menu exposes the password-locked Dispatch Editor and hides Website St
   assert.match(source,/tapCount<10/);
   assert.match(source,/localStorage\.setItem\(statsKey,'enabled'\)/);
   assert.match(source,/href="site-stats\//);
-  assert.match(source,/shared\/site-analytics-1\.6\.25\.js\?v=1\.6\.29/);
-  assert.match(source,/shared\/build-version\.js\?v=1\.6\.29/);
+  assert.match(source,/shared\/site-analytics-1\.6\.25\.js\?v=1\.6\.31/);
+  assert.match(source,/shared\/build-version\.js\?v=1\.6\.31/);
 });
 
 test('v1.6.25 analytics reliably records gameplay lifecycle without exact route history', () => {
@@ -272,7 +302,7 @@ test('v1.6.28 visual tutorial shows the real controls and faithful game examples
   assert.match(source,/ptbo-service-change/);
   assert.match(source,/aria-modal/);
   for(const file of ['index.html','response-simulator/index.html','response-simulator/play/index.html','response-simulator/mobile/index.html']){
-    assert.match(read(file),/build-version\.js\?v=1\.6\.29/,file);
+    assert.match(read(file),/build-version\.js\?v=1\.6\.31/,file);
   }
 });
 
