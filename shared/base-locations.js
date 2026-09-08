@@ -9,6 +9,7 @@
   const diff = window.PTBO_LOCATION_CHANGES?.diff;
   if (!config || !city || !diff) throw new Error('City service configuration did not load before the base store.');
 
+  const sourceUrl = document.currentScript?.src || location.href;
   const cityId = city.id;
   const storageKey = `ptboBaseLocationChangesV1:${cityId}`;
   const hospitalKey = `ptboHospitalChangesV1:${cityId}`;
@@ -18,6 +19,7 @@
   const referenceLat = Number(city.roads?.center?.[0] ?? city.map?.defaultCenter?.[0] ?? 44.3091);
   const metresLat = 110540;
   const metresLng = 111320 * Math.cos(referenceLat * Math.PI / 180);
+  const normalizeHeading = value => ((Number(value) % 360) + 360) % 360;
 
   function buildSeed() {
     const usedIds = new Set();
@@ -37,7 +39,7 @@
       while (usedIds.has(id)) id = `${root}-${number}-${suffix++}`;
       usedIds.add(id);
 
-      return {yardSize:160,yardRotation:0,...base,id,number,service};
+      return {yardSize:160,yardRotation:0,spawnLat:base.lat,spawnLng:base.lng,spawnHeading:180,...base,id,number,service};
     }));
   }
 
@@ -45,6 +47,8 @@
     const ids = new Set();
     const numbers = new Set();
     return list.map(raw => {
+      const lat = Number(raw.lat);
+      const lng = Number(raw.lng);
       const base = {
         id:String(raw.id),
         service:String(raw.service),
@@ -52,15 +56,22 @@
         name:String(raw.name ?? '').trim(),
         shortName:String(raw.shortName ?? raw.name ?? '').trim(),
         address:String(raw.address ?? '').trim(),
-        lat:Number(raw.lat),
-        lng:Number(raw.lng),
+        lat,
+        lng,
         yardSize:Number(raw.yardSize ?? 160),
         yardRotation:Number(raw.yardRotation ?? 0),
+        spawnLat:Number(raw.spawnLat ?? lat),
+        spawnLng:Number(raw.spawnLng ?? lng),
+        spawnHeading:normalizeHeading(raw.spawnHeading ?? 180),
       };
       if (!/^[a-z0-9-]+$/.test(base.id) || ids.has(base.id)) throw new Error('Base IDs must be unique.');
       if (!['fire','ems'].includes(base.service) || !Number.isInteger(base.number) || base.number < 1 || numbers.has(`${base.service}:${base.number}`)) throw new Error('Base numbers must be unique within each service.');
       if (!base.name || !base.shortName || !base.address) throw new Error('Enter a base name, short name and address.');
-      if (![base.lat,base.lng,base.yardSize,base.yardRotation].every(Number.isFinite) || Math.abs(base.lat)>85 || Math.abs(base.lng)>180 || base.yardSize<10 || base.yardSize>400 || base.yardRotation<0 || base.yardRotation>=360) throw new Error('Use valid coordinates, a square size of 10–400 m, and rotation of 0–359°.');
+      if (![base.lat,base.lng,base.yardSize,base.yardRotation,base.spawnLat,base.spawnLng,base.spawnHeading].every(Number.isFinite)
+        || Math.abs(base.lat)>85 || Math.abs(base.lng)>180 || Math.abs(base.spawnLat)>85 || Math.abs(base.spawnLng)>180
+        || base.yardSize<10 || base.yardSize>400 || base.yardRotation<0 || base.yardRotation>=360) {
+        throw new Error('Use valid base/spawn coordinates, a square size of 10–400 m, and rotation of 0–359°.');
+      }
       ids.add(base.id);
       numbers.add(`${base.service}:${base.number}`);
       return base;
@@ -184,4 +195,15 @@
   window.addEventListener('ptbo-city-package-data-ready', event => {if (event.detail?.id && event.detail.id !== cityId) return;refreshFromCityPackage();});
   window.addEventListener('storage',event=>{if(event.key===hospitalKey || event.key===legacyHospitalKey){hospital=readHospital();return;}if(event.key!==storageKey && event.key!==legacyStorageKey)return;items=readSaved();window.dispatchEvent(new CustomEvent('ptbo-bases-updated',{detail:{cityId,source:'storage'}}));});
   if (city.features?.baseTraining && (config.profiles?.fire?.bases?.length || config.profiles?.ems?.bases?.length)) refreshFromCityPackage();
+
+  // The base editor needs to own the Leaflet map before editor.js creates it,
+  // so load the v1.6.37 spawn-box helper synchronously only on that page.
+  try {
+    if (/\/dispatch-editor\/(?:index\.html)?$/.test(location.pathname) && document.readyState === 'loading' && typeof document.write === 'function') {
+      const helperUrl = new URL('../dispatch-editor/spawn-box-editor-1.6.37.js?v=1.6.37', sourceUrl).href;
+      document.write(`<script src="${helperUrl.replace(/&/g,'&amp;')}"><\/script>`);
+    }
+  } catch (error) {
+    console.warn('Unable to load the truck spawn-box editor.', error);
+  }
 })();
