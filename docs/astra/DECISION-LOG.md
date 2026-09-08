@@ -31,3 +31,6 @@ Fog, bloom, darkness, depth of field, grading, vegetation or similar effects can
 
 ## D010 — Version discipline
 Any production code change increments the project version exactly 0.0.1. Documentation-only state maintenance does not by itself create a new production version.
+
+## D011 — Operational response geometry must remain drivable
+Real-world identity/address and visual/GIS representation can be distinct from the simulator's operational arrival/access coordinate. EMS/fire yards and response targets must intersect the authoritative drivable network. Do not use a building centroid or visually convenient point as the driving target when it makes arrival impossible; use a documented road-access/operational point while preserving the real place identity.

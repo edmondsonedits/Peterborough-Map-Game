@@ -1,45 +1,54 @@
 # Astra Execution Packet
 
 ## Phase
-**1A — Station 1 Reproducible Baseline Capture**
+**1A — Station 1 Reproducible Baseline Capture (render/measure only)**
 
 ## Repository
 `https://github.com/edmondsonedits/Peterborough-Map-Game`
 
-## Expected production-code base
-`62bdd24d077c74758ad8042a218cb90f3d43032b` (v1.6.38)
+## Exact expected base
+- Branch: `main`
+- Commit: `eecace29927d71776bc3380aaec855fc39ffdac3`
+- Production version: **v1.6.39**
+- Deployed City Explorer: `https://edmondsonedits.github.io/Peterborough-Map-Game/city-explorer/`
 
-Documentation-only `docs/astra/` commits may exist after that SHA. Before doing any production work, sync `main`, run `git status`, and compare the current tree against the expected code base. If files outside `docs/astra/` changed after that base unexpectedly, report the conflict before proceeding.
+Regular ChatGPT has already completed repository review, reference-system review and CI preflight. GitHub Pages run `34290047215` passed all **69/69 regression tests** and deployed successfully. Do not repeat that work unless the local checkout conflicts with the commit above.
 
 ## Objective
-Capture trustworthy current Station 1 visual/performance evidence. Do **not** redesign Peterborough, perform broad research, or grade your own renders.
+Produce the visual/performance evidence that cannot be truthfully produced from a text-only repository review:
+1. six reproducible Station 1 renders;
+2. real browser/GPU measurements for full and forced-lite quality;
+3. a compact factual execution receipt.
 
-The existing GIS city is authoritative and already contains Ontario lidar terrain, OSM/municipal geometry, Station 1 semantic survey data and a calibrated 2023 Ontario orthophoto.
+Do **not** redesign Peterborough, perform broad research, optimize unrelated code, grade your own renders or rewrite project-management docs.
 
-## Read only what is needed
-Always read applicable repository instructions first. Then read:
-- `docs/astra/PROJECT-CHARTER.md`
-- `docs/astra/PROJECT-STATE.md`
-- `docs/astra/VISUAL-QA.md`
-- `docs/astra/PERFORMANCE-BASELINE.md`
-- `city-explorer/README.md`
-- `city-explorer/SEMANTIC-SURVEY-WORKFLOW.md`
-- `city-explorer/data/survey/station-one-survey.geojson`
-
-Open other files only when needed to run/capture the existing scene.
+## Startup
+1. Sync `main`.
+2. Confirm HEAD is `eecace29927d71776bc3380aaec855fc39ffdac3` or a later documentation-only `docs/astra/` commit whose production files are identical.
+3. Run `git status --short`; begin only from a clean tree.
+4. Read applicable repository instructions/AGENTS if present.
+5. Read only:
+   - `docs/astra/PROJECT-CHARTER.md`
+   - `docs/astra/PROJECT-STATE.md`
+   - `docs/astra/VISUAL-QA.md`
+   - `docs/astra/PERFORMANCE-BASELINE.md`
+   - `city-explorer/README.md`
+   - `city-explorer/SEMANTIC-SURVEY-WORKFLOW.md`
+   - `city-explorer/data/survey/station-one-survey.geojson`
+6. Open other code only as needed to operate/capture the existing scene.
 
 ## Preserve
 - GIS/geospatial truth remains authoritative.
 - Visual assets do not own collision/navigation.
 - Existing mesh city remains fallback.
 - Three.js/browser remains the runtime target.
-- Do not create unlicensed capture/texture assets.
-- Do not break existing gameplay.
+- No unlicensed capture/texture assets.
+- No gameplay changes.
 
 ## Required named views
-Capture all from the same commit and daylight theme unless a view explicitly requires survey overlay:
+Use the same commit and daylight theme unless survey overlay is required.
 
-1. `S1-AERIAL-NORTH` — elevated north-up or near-orthographic context showing Station 1, yard, adjacent roads and stable tree pattern.
+1. `S1-AERIAL-NORTH` — elevated north-up/near-orthographic context showing Station 1, yard, adjacent roads and stable tree pattern.
 2. `S1-APPARATUS-FRONT` — street-level view normal to the four apparatus bays.
 3. `S1-PUBLIC-ENTRY` — three-quarter/street-level view showing office facade, projecting entry, planting bed and flagpole.
 4. `S1-YARD-CONTEXT` — oblique view showing apron/yard relationship to road and neighbouring parcels.
@@ -58,59 +67,46 @@ For every view save the image and record:
 - time/lighting theme;
 - debug/reference mode.
 
-If repeatable named camera presets already exist, use them. If they do not, prefer recording reproducible metadata without changing production code. Do not add a large camera system merely for this session.
+If fixed camera presets do not exist, record reproducible metadata rather than adding a large camera system.
 
-## Performance baseline
-Measure mesh-only City Explorer first; no approved splat asset currently exists.
-
-On the same machine where practical capture:
+## Performance measurement
+No approved splat asset is installed; measure the mesh city.
 
 ### Full profile
+At `S1-PLAYER-SPAWN`, record:
 - browser/version, OS, GPU/device class;
 - viewport/DPR;
-- cold load time to ready;
-- 30-second median FPS at `S1-PLAYER-SPAWN`;
+- cold-load time to ready;
+- 30-second median FPS;
 - 1% low FPS if readily available;
 - readily available renderer memory/program/draw-call stats;
+- HUD feature/object count;
 - any stall, black frame, context loss or loading failure.
 
 ### Forced low-power
-Repeat using `?lite=1` with the same view and viewport where practical.
+Repeat on the same machine using `?lite=1`, keeping the view and viewport as similar as practical.
 
-Do not build elaborate benchmarking infrastructure unless existing browser/HUD tooling is insufficient.
+Do not build elaborate benchmarking infrastructure unless the existing HUD/browser tooling cannot provide a useful comparison.
 
 ## Code-change rule
-This phase should normally require **no production code change**. If a genuine blocker requires code modification, keep the change minimal, run relevant tests, increment production version exactly 0.0.1, and identify why the capture could not be completed without it.
-
-## Do not do
-- no broad Peterborough reference research;
-- no new city-wide feature;
-- no splat/capture generation;
-- no visual beauty score;
-- no self-authored resemblance verdict;
-- no rewriting the five project-management documents;
-- no starting Phase 1B.
+**No production code change is expected.** If capture is impossible because of a genuine bug, stop and report the blocker rather than using Astra credits on an unrelated fix. Regular ChatGPT will handle code changes first where possible.
 
 ## End-of-session receipt
-Return only facts from the execution environment:
+Return only:
 
-BASE CODE COMMIT:
+BASE COMMIT:
 FINAL COMMIT:
 BRANCH:
 PRODUCTION VERSION:
-DEPLOYED VERSION/URL (if changed):
-
-CHANGED FILES:
 
 CAPTURED VIEWS:
-- name -> exact file/path + camera metadata
-
-VERIFIED:
-- tests/actions actually performed
+- name -> exact path + camera metadata
 
 PERFORMANCE — FULL:
 
 PERFORMANCE — LITE:
+
+VERIFIED:
 
 BLOCKERS / UNCERTAINTIES:
 
@@ -118,4 +114,4 @@ FINAL `git status --short`:
 
 UNCOMMITTED / UNPUBLISHED WORK:
 
-Do not speculate about the next phase. Stop after the receipt.
+Stop after the receipt. Do not begin Phase 1B.
