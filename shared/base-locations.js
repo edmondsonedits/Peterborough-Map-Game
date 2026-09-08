@@ -1,7 +1,7 @@
 /* Generic Fire/EMS base store. Supports synchronous Peterborough data and asynchronous base-training city packages. */
 (() => {
   'use strict';
-  const VERSION = '1.6.13';
+  const VERSION = '1.6.39';
   if (window.PTBO_BASE_STORE_VERSION === VERSION && window.PTBO_BASE_STORE) return;
 
   const config = window.PTBO_SERVICE_CONFIG;
@@ -9,7 +9,8 @@
   const diff = window.PTBO_LOCATION_CHANGES?.diff;
   if (!config || !city || !diff) throw new Error('City service configuration did not load before the base store.');
 
-  const sourceUrl = document.currentScript?.src || location.href;
+  const runtimeLocation = globalThis.location || { href:'https://example.invalid/', pathname:'' };
+  const sourceUrl = document.currentScript?.src || runtimeLocation.href;
   const cityId = city.id;
   const storageKey = `ptboBaseLocationChangesV1:${cityId}`;
   const hospitalKey = `ptboHospitalChangesV1:${cityId}`;
@@ -199,7 +200,7 @@
   // The base editor needs to own the Leaflet map before editor.js creates it,
   // so load the v1.6.37 spawn-box helper synchronously only on that page.
   try {
-    if (/\/dispatch-editor\/(?:index\.html)?$/.test(location.pathname) && document.readyState === 'loading' && typeof document.write === 'function') {
+    if (/\/dispatch-editor\/(?:index\.html)?$/.test(runtimeLocation.pathname) && document.readyState === 'loading' && typeof document.write === 'function') {
       const helperUrl = new URL('../dispatch-editor/spawn-box-editor-1.6.37.js?v=1.6.37', sourceUrl).href;
       document.write(`<script src="${helperUrl.replace(/&/g,'&amp;')}"><\/script>`);
     }
