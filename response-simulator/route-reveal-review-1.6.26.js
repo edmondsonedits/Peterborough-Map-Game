@@ -1,8 +1,8 @@
-/* Route reveal review bundle loader — v1.6.36. */
+/* Route reveal review bundle loader — v1.6.37. */
 (() => {
   'use strict';
 
-  const VERSION = '1.6.36';
+  const VERSION = '1.6.37';
   if (window.PTBO_ROUTE_REVEAL_REVIEW_LOADER?.version === VERSION) return;
 
   const source = document.currentScript?.src || location.href;
