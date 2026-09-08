@@ -1,8 +1,8 @@
-/* Route reveal review bundle loader — v1.6.32. */
+/* Route reveal review bundle loader — v1.6.33. */
 (() => {
   'use strict';
 
-  const VERSION = '1.6.32';
+  const VERSION = '1.6.33';
   if (window.PTBO_ROUTE_REVEAL_REVIEW_LOADER?.version === VERSION) return;
 
   const source = document.currentScript?.src || location.href;
@@ -23,7 +23,7 @@
   }
 
   const ready = load('ptbo-route-reveal-review-core', 'route-reveal-review-core-1.6.26.js')
-    .then(() => load('ptbo-tutorial-route-grid', 'tutorial-route-grid-1.6.32.js'))
+    .then(() => load('ptbo-tutorial-route-grid', 'tutorial-route-grid-1.6.33.js'))
     .catch(error => {
       console.error('Route reveal review bundle failed to initialize.', error);
       throw error;
