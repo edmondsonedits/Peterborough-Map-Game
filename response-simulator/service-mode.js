@@ -87,6 +87,15 @@
       <div class="hud-meta">${state.mode === 'ems' ? 'Respond to the scene, then transport to hospital.' : `Choose a station and respond to calls across ${city.name}.`}</div>`;
   }
 
+  function applySpawnHeading(base) {
+    const heading = Number(base?.spawnHeading);
+    if (!Number.isFinite(heading)) return;
+    const normalized = ((heading % 360) + 360) % 360;
+    try { currentHeading = normalized; } catch (_) { window.currentHeading = normalized; }
+    try { vehicleMarker?.setRotationAngle?.(normalized - 90); } catch (_) {}
+    try { updateVehicleChassis?.(); } catch (_) {}
+  }
+
   function spawn(number) {
     if (!state.selected) return false;
     const base = getBases().find(item => item.number === Number(number));
@@ -94,7 +103,10 @@
     applyCityMap(false);
     resetDispatchWorkflow();
     state.baseNumber = base.number;
-    window.teleportToStation(base.lat,base.lng);
+    const spawnLat = Number.isFinite(Number(base.spawnLat)) ? Number(base.spawnLat) : base.lat;
+    const spawnLng = Number.isFinite(Number(base.spawnLng)) ? Number(base.spawnLng) : base.lng;
+    window.teleportToStation(spawnLat,spawnLng);
+    applySpawnHeading(base);
     updateControls();
     showAvailable();
     return true;
