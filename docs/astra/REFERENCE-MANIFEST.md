@@ -16,12 +16,19 @@ This file records reference classes and handling rules. It does not replace sour
 | Google Maps / Street View | Manual visual comparison only | No scraping, downloaded textures, reconstruction, splats or training-derived assets without separate explicit rights. |
 
 ## Station 1 reference package
+- Current identity verified 2026-09-08 from the City of Peterborough Fire Services pages: **Station 1, 210 Sherbrooke St., Peterborough, ON K9J 2N3**. The City also describes 210 Sherbrooke St. as the main fire station for station tours.
 - Survey metadata: `city-explorer/data/survey/station-one-survey.geojson`
 - District inventory: `city-explorer/data/survey/station-one-district-inventory.geojson`
 - 2023 district orthophoto: `city-explorer/data/survey/station-one-district-orthophoto-2023.jpg`
 - Local orthophoto calibration image: `city-explorer/data/survey/station-one-ontario-orthophoto-2023.jpg`
 - Existing renders/screenshots: `city-explorer/screenshots/station-1-*`
 - Station 1 OSM building source: `way/1009651229`
+- City corporate-energy records independently identify the Sherbrooke fire hall at 210 Sherbrooke and report approximately 1,744 m² building area; use this only as a coarse facility-scale cross-check, not as facade geometry.
+
+### Street-level reference status
+A broad public-web search on 2026-09-08 did **not** produce a trustworthy current photograph that could be confidently identified as the 210 Sherbrooke Station 1 facade. Search-image results were dominated by Station 2 (100 Marina Blvd.) and Station 3 (839 Clonsilla Ave.). Those images are explicitly rejected as Station 1 reference evidence. Do not let visually attractive images from another Peterborough station contaminate the Station 1 model.
+
+If a street-level Station 1 reference is later supplied through Mapillary, Panoramax, an owned photograph, or another rights-compatible source, record the exact location, date, heading/FOV confidence and licence before using it for architectural corrections.
 
 ## Station 1 reviewed semantic evidence
 Verified records currently include:
