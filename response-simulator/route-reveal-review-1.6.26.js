@@ -1,8 +1,8 @@
-/* Route reveal review bundle loader — v1.6.34. */
+/* Route reveal review bundle loader — v1.6.35. */
 (() => {
   'use strict';
 
-  const VERSION = '1.6.34';
+  const VERSION = '1.6.35';
   if (window.PTBO_ROUTE_REVEAL_REVIEW_LOADER?.version === VERSION) return;
 
   const source = document.currentScript?.src || location.href;
@@ -22,7 +22,7 @@
     });
   }
 
-  const ready = load('ptbo-desktop-fixed-map-default', 'desktop-fixed-map-default-1.6.34.js')
+  const ready = load('ptbo-desktop-fixed-map-default', 'desktop-fixed-map-default-1.6.35.js')
     .then(() => load('ptbo-route-reveal-review-core', 'route-reveal-review-core-1.6.26.js'))
     .then(() => load('ptbo-tutorial-route-grid', 'tutorial-route-grid-1.6.33.js'))
     .catch(error => {
