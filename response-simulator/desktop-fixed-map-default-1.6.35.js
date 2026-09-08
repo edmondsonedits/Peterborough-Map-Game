@@ -127,8 +127,9 @@
       return false;
     }
 
-    const maximumZoom = Number(city?.map?.maxZoom) || Number(mapInstance.options?.maxZoom) || 19;
-    const minimumZoom = Number(city?.map?.minZoom) || Number(mapInstance.options?.minZoom) || 10;
+    const cityPackage = window.PTBO_CITY_PACKAGE;
+    const maximumZoom = Number(cityPackage?.map?.maxZoom) || Number(mapInstance.options?.maxZoom) || 19;
+    const minimumZoom = Number(cityPackage?.map?.minZoom) || Number(mapInstance.options?.minZoom) || 10;
     const mediumZoom = Math.max(minimumZoom, maximumZoom - 1);
     const farZoom = Math.max(minimumZoom, maximumZoom - 2);
     const nativeSetView = mapInstance.setView;
