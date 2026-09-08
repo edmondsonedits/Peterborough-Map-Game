@@ -4,7 +4,7 @@
    so the rest of the simulator always sees a city/service config during parsing. */
 (() => {
   'use strict';
-  const VERSION = '1.6.13';
+  const VERSION = '1.6.38';
 
   function peterboroughFallback() {
     const fireBases = [
@@ -13,10 +13,10 @@
       { id:'station-3', number:3, name:'Station 3', shortName:'Station 3', address:'839 Clonsilla Ave', lat:44.284867, lng:-78.350902, yardSize:160, yardRotation:0 },
     ];
     const emsBases = [
-      { id:'ems-armour', number:1, name:'Armour Road Headquarters', shortName:'Armour', address:'310 Armour Rd', lat:44.3047473, lng:-78.3034836, yardSize:160, yardRotation:0 },
-      { id:'ems-clonsilla', number:2, name:'Clonsilla Avenue Base', shortName:'Clonsilla', address:'1003 Clonsilla Ave', lat:44.2892770, lng:-78.3459780, yardSize:160, yardRotation:0 },
+      { id:'ems-armour', number:1, name:'Armour Road Headquarters', shortName:'Armour', address:'310 Armour Rd', lat:44.3047475, lng:-78.3034836, yardSize:120, yardRotation:19 },
+      { id:'ems-clonsilla', number:2, name:'Clonsilla Avenue Base', shortName:'Clonsilla', address:'1003 Clonsilla Ave', lat:44.289533, lng:-78.345914, yardSize:92, yardRotation:46 },
     ];
-    const hospital = { id:'prhc', main:'Medical', sub:'Hospital Transport', name:'Peterborough Regional Health Centre', addr:'1 Hospital Drive', lat:44.30095, lng:-78.3460594, radius:30 };
+    const hospital = { id:'prhc', main:'Medical', sub:'Hospital Transport', name:'Peterborough Regional Health Centre', addr:'1 Hospital Drive', lat:44.3009, lng:-78.3476, radius:40 };
     const alarmCategories = ['Auto Alarm / Vehicle Fire','Alarms No Apparent Problem'];
     const profiles = {
       fire:{id:'fire',label:'Fire',vehicle:'Fire truck',bases:fireBases},
