@@ -1,7 +1,7 @@
 /* Peterborough city package — authoritative geographic/service configuration. */
 (() => {
   'use strict';
-  const VERSION = '1.6.38';
+  const VERSION = '1.6.39';
   if (window.PTBO_CITY_PACKAGE?.id === 'peterborough' && window.PTBO_CITY_PACKAGE?.version === VERSION) return;
 
   const sourceUrl = new URL(document.currentScript?.src || location.href, location.href);
@@ -15,13 +15,13 @@
 
   const emsBases = freezeList([
     { id:'ems-armour', number:1, name:'Armour Road Headquarters', shortName:'Armour', address:'310 Armour Rd', lat:44.3047475, lng:-78.3034836, yardSize:120, yardRotation:19 },
-    { id:'ems-clonsilla', number:2, name:'Clonsilla Avenue Base', shortName:'Clonsilla', address:'1003 Clonsilla Ave', lat:44.289533, lng:-78.345914, yardSize:92, yardRotation:46 },
+    { id:'ems-clonsilla', number:2, name:'Clonsilla Avenue Base', shortName:'Clonsilla', address:'1003 Clonsilla Ave', lat:44.289533, lng:-78.345914, yardSize:120, yardRotation:46 },
   ]);
 
   const hospital = Object.freeze({
     id:'prhc', main:'Medical', sub:'Hospital Transport',
     name:'Peterborough Regional Health Centre', addr:'1 Hospital Drive',
-    lat:44.3009, lng:-78.3476, radius:40,
+    lat:44.30095, lng:-78.3460594, radius:40,
   });
 
   const alarmCategories = Object.freeze(['Auto Alarm / Vehicle Fire','Alarms No Apparent Problem']);
