@@ -14,7 +14,6 @@
   const cityId = originalStore.cityId || window.PTBO_CITY_PACKAGE?.id || 'peterborough';
   const storageKey = `ptboHospitalDropoffAreaV1:${cityId}`;
   const copy = value => JSON.parse(JSON.stringify(value));
-  const finite = value => Number.isFinite(Number(value));
   let staged = null;
 
   function defaultArea(hospital = originalStore.getHospital()) {
@@ -128,12 +127,17 @@
 
   function save(raw = {}) {
     const source = originalStore.getHospital();
-    const area = validateCheckpoint(normalized(raw, staged || current));
+    // The editor stages the rectangle before its normal hospital form submit runs.
+    // Prefer that staged geometry so older form fields cannot overwrite the new width/length edits.
+    const area = staged
+      ? validateCheckpoint(normalized(staged,current))
+      : validateCheckpoint(normalized(raw,current));
     const name = String(raw.name ?? source.name ?? '').trim();
     const addr = String(raw.addr ?? raw.address ?? source.addr ?? source.address ?? '').trim();
     const baseSaved = originalStore.saveHospital({
-      ...source,
-      ...raw,
+      id:source.id,
+      main:source.main,
+      sub:source.sub,
       name,
       addr,
       lat:area.checkpointLat,
