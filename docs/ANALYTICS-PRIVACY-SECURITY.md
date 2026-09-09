@@ -1,6 +1,6 @@
 # Analytics Privacy & Security
 
-Release: **v1.6.40**  
+Release: **v1.6.41**  
 Purpose: keep useful department-level product analytics while avoiding unnecessary firefighter identity tracking and public/raw administrative data access.
 
 ## Product policy
@@ -33,7 +33,7 @@ Do not collect for product analytics:
 
 ## Current client behaviour
 
-`shared/analytics-privacy-upgrade-1.6.33.js` contains the active v1.6.40 privacy/authority policy layer. The filename is retained temporarily for compatibility; the policy version is v1.6.40.
+`shared/analytics-privacy-upgrade-1.6.33.js` contains the active v1.6.40 privacy/authority policy layer. The filename is retained temporarily for compatibility; v1.6.41 hardens how that policy is loaded before the legacy analytics implementation.
 
 - Public demo analytics remains enabled by default.
 - Department/private/commercial deployments default analytics **off** unless trusted deployment configuration explicitly permits it.
@@ -71,9 +71,21 @@ For analytics decisions, the deployment sets the maximum permitted collection le
 
 A lower-trust source must never override a higher-trust source to increase telemetry or change the trusted department identity.
 
-### Known v1.6.40 limitation
+### v1.6.41 bootstrap ordering
 
-The shared build bootstrap loads the privacy policy before its dynamically loaded analytics client. However, the root launcher still contains a direct legacy analytics script include from older releases. Removing that remaining startup race is the planned v1.6.41 hardening step. Until then, v1.6.40 fixes the authority rules themselves but does not claim the load-order race is fully eliminated on every entry path.
+The canonical launcher no longer includes `site-analytics-1.6.25.js` directly. Analytics is started through the shared bootstrap only.
+
+The shared bootstrap now enforces this sequence:
+
+1. request the privacy/authority policy
+2. positively verify that `PTBO_ANALYTICS_PRIVACY` initialized with its required API
+3. only then load the legacy analytics implementation
+4. reuse one installation promise if startup is requested more than once
+5. leave analytics unavailable if privacy initialization fails
+
+The page bootstrap also avoids the previous immediate-plus-`DOMContentLoaded` double invocation path. This removes the known v1.6.40 startup race on canonical entry points. Regression tests in `tests/analytics-bootstrap.test.cjs` verify the ordering contract and fail-closed behavior.
+
+Manual cache-buster values still exist in older page wrappers. Security-sensitive canonical references are being refreshed as releases touch them, but replacing manual cache versioning with generated release stamping remains a separate planned hardening task.
 
 ## Secure commercial architecture
 
