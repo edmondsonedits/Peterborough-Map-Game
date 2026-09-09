@@ -62,7 +62,7 @@
 
         <form id="base-editor" class="editor hidden">
           <div class="editor-head"><div><h2 id="base-title">Edit base</h2><p id="base-id"></p></div><button type="button" class="close" id="close-base" aria-label="Close base editor">×</button></div>
-          <p class="form-help" id="base-help">The marker is the spawn and square centre. Move it on the map, then size and rotate the square so it overlaps a road.</p>
+          <p class="form-help" id="base-help">Drag the drivable area box to move it, then resize its width and length with the map handles.</p>
           <div class="form-grid">
             <label class="base-only"><span>Service</span><select id="b-service" class="field-control"><option value="fire">Fire</option><option value="ems">EMS</option></select></label>
             <label class="base-only"><span>Base number</span><input id="b-number" class="field-control" type="number" min="1" step="1" required></label>
@@ -71,8 +71,8 @@
             <label class="full"><span>Address</span><input id="b-address" class="field-control" required></label>
             <label><span>Latitude</span><input id="b-lat" class="field-control" type="number" min="-85" max="85" step="any" required></label>
             <label><span>Longitude</span><input id="b-lng" class="field-control" type="number" min="-180" max="180" step="any" required></label>
-            <label class="base-only"><span>Square side length (m)</span><input id="b-size" class="field-control" type="number" min="10" max="400" step="1" required></label>
-            <label class="base-only"><span>Square rotation (°)</span><input id="b-rotation" class="field-control" type="number" min="0" max="359" step="1" required></label>
+            <label class="base-only"><span>Square side length (m)</span><input id="b-size" class="field-control" type="number" min="10" max="600" step="1" required></label>
+            <label class="base-only"><span>Area rotation (°)</span><input id="b-rotation" class="field-control" type="number" min="0" max="359" step="1" required></label>
             <label class="full hospital-only" hidden><span>Arrival radius (m)</span><input id="b-radius" class="field-control" type="number" min="10" max="200" required disabled></label>
           </div>
           <p class="form-help" id="access-check" role="status"></p>
@@ -84,12 +84,12 @@
   </div>
   <script src="../shared/build-version.js?v=1.6.47"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="../shared/stations.js?v=1.6.2"></script>
-  <script src="../shared/dispatch-locations.js?v=1.6.2"></script>
-  <script src="../response-simulator/service-config.js?v=1.6.2"></script>
-  <script src="../shared/location-changes.js?v=1.6.2"></script>
-  <script src="../shared/base-locations.js?v=1.6.2"></script>
+  <script src="../shared/stations.js?v=1.6.47"></script>
+  <script src="../shared/dispatch-locations.js?v=1.6.47"></script>
+  <script src="../response-simulator/service-config.js?v=1.6.47"></script>
+  <script src="../shared/location-changes.js?v=1.6.47"></script>
+  <script src="../shared/base-locations.js?v=1.6.47"></script>
   <script src="spawn-box-editor-1.6.47.js?v=1.6.47"></script>
-  <script src="editor.js?v=1.6.2"></script>
+  <script src="editor.js?v=1.6.47"></script>
 </body>
 </html>
