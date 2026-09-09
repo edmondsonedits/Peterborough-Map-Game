@@ -39,23 +39,26 @@ jobs:
           rewrite('response-simulator/training-history-1.6.45.js', text => {
             const pattern = /  function loadEntries\(\) \{[\s\S]*?\n  \}\n\n  function saveEntries/;
             if (!pattern.test(text)) throw new Error('Training-history storage anchor changed');
-            return text.replace(pattern, `  function loadEntries() {
-    if (!state.storageAvailable && memory.length) return memory.slice();
-    try {
-      const raw = localStorage?.getItem?.(STORAGE_KEY);
-      const parsed = raw ? JSON.parse(raw) : [];
-      if (!Array.isArray(parsed)) return [];
-      const clean = parsed.slice(0, MAX_ENTRIES);
-      state.storageAvailable = true;
-      memory.splice(0, memory.length, ...clean);
-      return clean;
-    } catch (_) {
-      state.storageAvailable = false;
-      return memory.slice();
-    }
-  }
-
-  function saveEntries`);
+            const replacement = [
+              '  function loadEntries() {',
+              '    if (!state.storageAvailable && memory.length) return memory.slice();',
+              '    try {',
+              '      const raw = localStorage?.getItem?.(STORAGE_KEY);',
+              '      const parsed = raw ? JSON.parse(raw) : [];',
+              '      if (!Array.isArray(parsed)) return [];',
+              '      const clean = parsed.slice(0, MAX_ENTRIES);',
+              '      state.storageAvailable = true;',
+              '      memory.splice(0, memory.length, ...clean);',
+              '      return clean;',
+              '    } catch (_) {',
+              '      state.storageAvailable = false;',
+              '      return memory.slice();',
+              '    }',
+              '  }',
+              '',
+              '  function saveEntries',
+            ].join('\n');
+            return text.replace(pattern, replacement);
           });
 
           rewrite('shared/build-version.js', text => {
@@ -64,8 +67,7 @@ jobs:
             const historyLine = "            optionalInnerModule(doc, 'ptbo-training-history-loader', `../response-simulator/training-history-1.6.45.js?v=${VERSION}`, '', 6000),";
             if (!next.includes(incidentLine)) throw new Error('Incident formatter loader anchor changed');
             if (next.includes(historyLine)) throw new Error('Training history loader already present');
-            next = next.replace(incidentLine, `${incidentLine}\n${historyLine}`);
-            return next;
+            return next.replace(incidentLine, `${incidentLine}\n${historyLine}`);
           });
 
           for (const file of [
@@ -91,20 +93,22 @@ jobs:
           rewrite('response-simulator/index.html', text => {
             const anchor = "            mission.phase = 'complete';\n            simulationState = STATES.INSERVICE;\n            totalTrackedCalls++;";
             if (!text.includes(anchor)) throw new Error('completeAssignment history anchor changed');
-            const replacement = `            mission.phase = 'complete';
-            simulationState = STATES.INSERVICE;
-            const historySnapshot = {
-                generation: mission.generation,
-                service: mission.service,
-                scene: mission.scene ? {...mission.scene} : null,
-                hospital: mission.hospital ? {...mission.hospital} : null,
-                responseMs: mission.responseMs,
-                transportMs: mission.transportMs,
-                completedAt: Date.now()
-            };
-            if (window.PTBO_TRAINING_HISTORY?.recordCompletion) window.PTBO_TRAINING_HISTORY.recordCompletion(historySnapshot);
-            else (window.PTBO_PENDING_TRAINING_HISTORY ||= []).push(historySnapshot);
-            totalTrackedCalls++;`;
+            const replacement = [
+              "            mission.phase = 'complete';",
+              '            simulationState = STATES.INSERVICE;',
+              '            const historySnapshot = {',
+              '                generation: mission.generation,',
+              '                service: mission.service,',
+              '                scene: mission.scene ? {...mission.scene} : null,',
+              '                hospital: mission.hospital ? {...mission.hospital} : null,',
+              '                responseMs: mission.responseMs,',
+              '                transportMs: mission.transportMs,',
+              '                completedAt: Date.now()',
+              '            };',
+              '            if (window.PTBO_TRAINING_HISTORY?.recordCompletion) window.PTBO_TRAINING_HISTORY.recordCompletion(historySnapshot);',
+              '            else (window.PTBO_PENDING_TRAINING_HISTORY ||= []).push(historySnapshot);',
+              '            totalTrackedCalls++;',
+            ].join('\n');
             return text.replace(anchor, replacement);
           });
           NODE
