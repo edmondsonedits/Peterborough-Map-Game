@@ -52,6 +52,11 @@ if (fs.existsSync(path.join(ROOT, 'shared/build-version.js'))) {
   else console.log(`Commercial readiness audit: build v${match[1]}`);
 }
 
+// Retired GTA Fire Response is intentionally kept only in Git history/archive branch.
+for (const retiredPath of ['gta-fire-response', 'tests/gta-fire-response', 'docs/gta-fire-response', '.github/workflows/gta-fire-response-tests.yml']) {
+  if (fs.existsSync(path.join(ROOT, retiredPath))) failures.push(`Retired GTA Fire Response artifact is still present on the production branch: ${retiredPath}`);
+}
+
 // The admin stats page must not regress to client-side pseudo-auth or direct Firestore reads.
 if (fs.existsSync(path.join(ROOT, 'site-stats/index.html'))) {
   const stats = read('site-stats/index.html');
@@ -72,6 +77,8 @@ const guardedLegacy = new Set([
   'response-simulator/satellite-map-1.5.6.js',
   'response-simulator/carto-basemap-policy-1.6.36.js',
   'response-simulator/index.html',
+  'dispatch-editor/editor.js',
+  'geo-guesser/index.html',
 ]);
 
 const patterns = [
@@ -117,6 +124,27 @@ for (const file of files) {
     /\bAKIA[0-9A-Z]{16}\b/,
   ];
   if (secretPatterns.some(regex => regex.test(content))) failures.push(`Possible committed secret/private key detected in ${normalized}.`);
+}
+
+// Dispatch Editor must fail closed for department map services while keeping public-demo fallbacks.
+if (fs.existsSync(path.join(ROOT, 'dispatch-editor/editor.js'))) {
+  const editor = read('dispatch-editor/editor.js');
+  for (const term of ['mapConfig.osmTileUrl', 'arcgisAccessToken', 'commercial', 'blankTile', 'ibasemaps-api.arcgis.com']) {
+    if (!editor.includes(term)) failures.push(`Dispatch Editor map-provider guard is missing expected control: ${term}`);
+  }
+  if (/https:\/\/\{s\}\.tile\.openstreetmap\.org/i.test(editor)) failures.push('Dispatch Editor still uses the legacy OSM subdomain template instead of the exact demo URL/configured provider.');
+}
+
+// Geo Guesser keeps its stable core HTML, but every supported wrapper must install
+// the commercial map policy before the iframe can accept player interaction.
+if (fs.existsSync(path.join(ROOT, 'geo-guesser/index.html'))) {
+  const build = fs.existsSync(path.join(ROOT, 'shared/build-version.js')) ? read('shared/build-version.js') : '';
+  for (const term of ['installGeoGuesserMapPolicy', 'ptbo-geo-commercial-map-policy', "frame.style.pointerEvents = 'none'", 'osmTileUrl']) {
+    if (!build.includes(term)) failures.push(`Geo Guesser map-provider bridge is missing expected control: ${term}`);
+  }
+  for (const wrapper of ['geo-guesser/desktop/index.html', 'geo-guesser/mobile/index.html', 'geo-guesser/online/index.html']) {
+    if (!fs.existsSync(path.join(ROOT, wrapper))) failures.push(`Missing Geo Guesser wrapper protected by the shared map-provider bridge: ${wrapper}`);
+  }
 }
 
 // Confirm the runtime privacy policy keeps department deployments opt-in.
