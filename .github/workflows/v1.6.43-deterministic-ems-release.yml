@@ -53,9 +53,7 @@ jobs:
             'geo-guesser/mobile/index.html',
             'geo-guesser/online/index.html',
           ]) {
-            rewrite(file, text => text
-              .replace(/build-version\.js\?v=\d+\.\d+\.\d+/g, `build-version.js?v=${VERSION}`)
-              .replace(/const VERSION\s*=\s*'\d+\.\d+\.\d+';/, `const VERSION = '${VERSION}';`));
+            rewrite(file, text => text.replaceAll('1.6.42', VERSION));
           }
 
           rewrite('tests/ems.test.cjs', text => {
