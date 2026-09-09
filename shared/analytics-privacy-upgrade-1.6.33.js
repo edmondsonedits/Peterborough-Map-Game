@@ -1,19 +1,24 @@
-/* Privacy and department-context upgrade layered on the existing analytics client. */
+/* Privacy, department-context, and secure-stats policy for Emergency Games v1.6.37. */
 (() => {
   'use strict';
-  const VERSION = '1.6.33';
+  const VERSION = '1.6.37';
   if (window.top !== window || window.PTBO_ANALYTICS_PRIVACY?.version === VERSION) return;
 
   const DEPARTMENT_KEY = 'ptbo-deployment-department-v1';
   const RECORDED_SESSION_KEY = 'ptbo-department-recorded-session-v1';
+  const BASE_TRACKING_BLOCK_KEY = 'ptbo-emergency-stats-mode';
+  const PRIVACY_BLOCK_MARKER = 'ptbo-privacy-blocked-base-analytics-v1';
   const LEGACY_PERSISTENT_KEYS = [
     'ptbo-site-visitor-id-v1',
     'ptbo-site-visitor-first-v2',
     'ptbo-site-visitor-sessions-v2',
   ];
+  const TRACKING_METHOD = /^(?:record|track)/i;
+  const RETENTION_DAYS = 180;
+
   const slug = value => String(value || 'public_demo').toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '').slice(0, 60) || 'public_demo';
   const safeGet = (storage, key) => { try { return storage.getItem(key); } catch (_) { return null; } };
-  const safeSet = (storage, key, value) => { try { storage.setItem(key, String(value)); } catch (_) {} };
+  const safeSet = (storage, key, value) => { try { storage.setItem(key, String(value)); return true; } catch (_) { return false; } };
   const safeRemove = (storage, key) => { try { storage.removeItem(key); } catch (_) {} };
 
   function department() {
@@ -23,25 +28,83 @@
     return slug(requested || safeGet(localStorage, DEPARTMENT_KEY) || window.PTBO_DEPLOYMENT?.department || 'public_demo');
   }
 
+  function departmentDeployment() {
+    const deployment = window.PTBO_DEPLOYMENT || {};
+    const mode = String(deployment.mode || '').toLowerCase();
+    return deployment.commercial === true || deployment.private === true || mode === 'department' || mode === 'commercial' || mode === 'private';
+  }
+
+  function explicitAnalyticsChoice() {
+    const query = new URLSearchParams(location.search).get('analytics');
+    if (/^(?:on|true|1)$/i.test(String(query || ''))) return true;
+    if (/^(?:off|false|0)$/i.test(String(query || ''))) return false;
+    if (typeof window.PTBO_DEPLOYMENT?.analyticsEnabled === 'boolean') return window.PTBO_DEPLOYMENT.analyticsEnabled;
+    if (typeof window.PTBO_ANALYTICS_CONFIG?.enabled === 'boolean') return window.PTBO_ANALYTICS_CONFIG.enabled;
+    return null;
+  }
+
+  function analyticsEnabled() {
+    const explicit = explicitAnalyticsChoice();
+    if (explicit !== null) return explicit;
+    return !departmentDeployment();
+  }
+
   function purgePersistentPlayerIdentity() {
     LEGACY_PERSISTENT_KEYS.forEach(key => safeRemove(localStorage, key));
+  }
+
+  function setBaseTrackingBlock(blocked) {
+    const marker = safeGet(sessionStorage, PRIVACY_BLOCK_MARKER);
+    if (blocked) {
+      if (!marker) safeSet(sessionStorage, PRIVACY_BLOCK_MARKER, safeGet(localStorage, BASE_TRACKING_BLOCK_KEY) ?? '__absent__');
+      safeSet(localStorage, BASE_TRACKING_BLOCK_KEY, 'enabled');
+      return;
+    }
+    if (!marker) return;
+    if (marker === '__absent__') safeRemove(localStorage, BASE_TRACKING_BLOCK_KEY);
+    else safeSet(localStorage, BASE_TRACKING_BLOCK_KEY, marker);
+    safeRemove(sessionStorage, PRIVACY_BLOCK_MARKER);
+  }
+
+  function secureStatsLoader() {
+    const secure = window.PTBO_SECURE_ANALYTICS;
+    if (secure && typeof secure.loadStats === 'function') return secure.loadStats.bind(secure);
+    return async () => {
+      throw new Error('Secure analytics backend is not configured. Direct browser Firestore reads are disabled by the privacy policy.');
+    };
+  }
+
+  function summarizeDepartments(stats) {
+    const departments = {};
+    for (const [key, value] of Object.entries(stats?.launches || {})) {
+      if (!key.startsWith('department_')) continue;
+      const name = key.slice('department_'.length) || 'public_demo';
+      departments[name] = (departments[name] || 0) + Number(value || 0);
+    }
+    return departments;
   }
 
   function enhanceAnalyticsApi() {
     const base = window.PTBO_SITE_ANALYTICS;
     if (!base || base.privacyUpgradeVersion === VERSION) return base;
+
+    const guardedMethods = {};
+    for (const [name, value] of Object.entries(base)) {
+      if (typeof value === 'function' && TRACKING_METHOD.test(name)) {
+        guardedMethods[name] = (...args) => analyticsEnabled() ? value(...args) : false;
+      }
+    }
+
+    const loadSecureStats = secureStatsLoader();
     const enhanced = Object.freeze({
       ...base,
+      ...guardedMethods,
       version:VERSION,
       privacyUpgradeVersion:VERSION,
+      trackingAllowed:() => analyticsEnabled() && Boolean(base.trackingAllowed?.()),
       loadStats:async () => {
-        const stats = await base.loadStats();
-        const departments = {};
-        for (const [key, value] of Object.entries(stats.launches || {})) {
-          if (!key.startsWith('department_')) continue;
-          const name = key.slice('department_'.length) || 'public_demo';
-          departments[name] = (departments[name] || 0) + Number(value || 0);
-        }
+        const stats = await loadSecureStats();
+        const departments = summarizeDepartments(stats);
         const publicDemoSessions = Number(departments.public_demo || 0);
         const departmentSessions = Object.entries(departments).filter(([key]) => key !== 'public_demo').reduce((sum, [, value]) => sum + Number(value || 0), 0);
         return Object.freeze({
@@ -50,7 +113,7 @@
           departmentCount:Object.keys(departments).filter(key => key !== 'public_demo').length,
           departmentSessions,
           publicDemoSessions,
-          playerSessions:Number(stats.sessions || 0),
+          playerSessions:Number(stats?.sessions || 0),
           persistentCrossVisitPlayerId:false,
           privacyUpgradeVersion:VERSION,
         });
@@ -59,7 +122,11 @@
         ...(base.health?.() || {}),
         version:VERSION,
         department:department(),
+        departmentDeployment:departmentDeployment(),
+        analyticsEnabled:analyticsEnabled(),
         persistentCrossVisitPlayerId:false,
+        retentionDays:RETENTION_DAYS,
+        secureStatsBackend:Boolean(window.PTBO_SECURE_ANALYTICS?.loadStats),
       }),
     });
     window.PTBO_SITE_ANALYTICS = enhanced;
@@ -68,7 +135,7 @@
 
   function registerDepartment() {
     const api = window.PTBO_SITE_ANALYTICS;
-    if (!api?.trackingAllowed?.()) return;
+    if (!analyticsEnabled() || !api?.trackingAllowed?.()) return;
     const health = api.health?.() || {};
     const sessionId = String(health.sessionId || '');
     const marker = safeGet(sessionStorage, RECORDED_SESSION_KEY);
@@ -77,30 +144,52 @@
     if (sessionId) safeSet(sessionStorage, RECORDED_SESSION_KEY, sessionId);
   }
 
-  function install() {
+  function applyPolicy() {
     purgePersistentPlayerIdentity();
+    setBaseTrackingBlock(!analyticsEnabled());
     enhanceAnalyticsApi();
     registerDepartment();
-    addEventListener('pagehide', purgePersistentPlayerIdentity, { once:true });
     return true;
   }
 
+  function setEnabled(enabled) {
+    window.PTBO_ANALYTICS_CONFIG = Object.freeze({ ...(window.PTBO_ANALYTICS_CONFIG || {}), enabled:Boolean(enabled) });
+    setBaseTrackingBlock(!enabled);
+    applyPolicy();
+    return Boolean(enabled);
+  }
+
+  /* Run before the base client when possible. In department/private mode this
+     prevents the legacy analytics client from emitting its initial visitor/session write. */
   purgePersistentPlayerIdentity();
+  setBaseTrackingBlock(!analyticsEnabled());
+
   window.PTBO_ANALYTICS_PRIVACY = Object.freeze({
     version:VERSION,
     department,
+    departmentDeployment,
+    analyticsEnabled,
+    setEnabled,
     purgePersistentPlayerIdentity,
     persistentCrossVisitPlayerId:false,
-    note:'Department is retained as deployment context; player/browser identity is not retained in localStorage between visits.',
+    retentionDays:RETENTION_DAYS,
+    collected:'department/deployment, session duration, surface/browser buckets, city/service use, calls, aggregate response timing, feature/control use, driving totals, and reliability events',
+    excluded:'names, emails, exact routes/coordinates, prompts, room codes, and cross-visit player/browser identity',
+    note:'Department deployments default analytics off until explicitly enabled. Stats reads require a secure analytics backend.',
   });
 
-  if (window.PTBO_SITE_ANALYTICS) install();
+  if (window.PTBO_SITE_ANALYTICS) applyPolicy();
   else {
     let attempts = 0;
     const timer = setInterval(() => {
       attempts += 1;
-      if (window.PTBO_SITE_ANALYTICS) { clearInterval(timer); install(); }
-      else if (attempts >= 80) clearInterval(timer);
+      if (window.PTBO_SITE_ANALYTICS) { clearInterval(timer); applyPolicy(); }
+      else if (attempts >= 120) clearInterval(timer);
     }, 100);
   }
+
+  addEventListener('pagehide', () => {
+    purgePersistentPlayerIdentity();
+    if (!departmentDeployment()) setBaseTrackingBlock(false);
+  }, { once:true });
 })();
