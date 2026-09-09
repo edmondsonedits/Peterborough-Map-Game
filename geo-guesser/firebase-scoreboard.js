@@ -2,6 +2,7 @@
   if (window.__geoFirebaseScoreboardInstalled) return;
   window.__geoFirebaseScoreboardInstalled = true;
 
+  const VERSION = '1.6.37';
   const projectId = 'geo-guesser-scoreboard';
   const apiKey = 'AIzaSyA5_GrKYKporIPhwXF6FN0Gp0iP_k8wb0I';
   const collectionUrl = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/scores`;
@@ -9,18 +10,32 @@
   const safeText = value => String(value ?? '');
   const formatTime = value => `${Number(value).toFixed(1)}s`;
 
+  function departmentDeployment() {
+    const deployment = window.PTBO_DEPLOYMENT || {};
+    const mode = String(deployment.mode || '').toLowerCase();
+    return deployment.commercial === true || deployment.private === true || mode === 'department' || mode === 'commercial' || mode === 'private';
+  }
+
+  function leaderboardEnabled() {
+    if (!departmentDeployment()) return true;
+    return window.PTBO_DEPLOYMENT?.publicLeaderboardEnabled === true;
+  }
+
   function context() {
     const value = typeof window.geoScoreContext === 'function' ? window.geoScoreContext() : {};
     return {
       responseTimeSeconds: Number(value.responseTimeSeconds),
-      station: safeText(value.station || 'Unknown Station'),
-      callType: safeText(value.callType || 'Random Shift')
+      station: safeText(value.station || 'Unknown Station').slice(0, 60),
+      callType: safeText(value.callType || 'Random Shift').slice(0, 80)
     };
   }
 
   function playerName() {
     const input = byId('player');
-    const name = safeText(input?.value).trim() || 'Anonymous';
+    const name = safeText(input?.value)
+      .replace(/[\u0000-\u001f\u007f]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim() || 'Anonymous';
     return name.slice(0, 30);
   }
 
@@ -34,6 +49,10 @@
     const list = byId(id);
     if (!list) return;
     list.innerHTML = `<p class="muted" style="text-align:center">${escapeMarkup(message)}</p>`;
+  }
+
+  function disabledMessage() {
+    return 'Public online leaderboards are disabled for this department deployment.';
   }
 
   function renderRows(id, rows, extraLine) {
@@ -70,8 +89,11 @@
   }
 
   async function firestoreRequest(url, options = {}) {
+    if (!leaderboardEnabled()) throw new Error(disabledMessage());
     const response = await fetch(url, {
       cache: 'no-store',
+      credentials: 'omit',
+      referrerPolicy: 'no-referrer',
       ...options,
       headers: {
         Accept: 'application/json',
@@ -88,6 +110,7 @@
   }
 
   async function fetchScores() {
+    if (!leaderboardEnabled()) return [];
     const scores = [];
     let pageToken = '';
     do {
@@ -101,6 +124,7 @@
   }
 
   async function createScore(score) {
+    if (!leaderboardEnabled()) throw new Error(disabledMessage());
     const params = new URLSearchParams({ key: apiKey });
     return firestoreRequest(`${collectionUrl}?${params}`, {
       method: 'POST',
@@ -117,11 +141,26 @@
     });
   }
 
+  function updatePrivacyCopy() {
+    const input = byId('player');
+    if (input) {
+      input.maxLength = 30;
+      input.autocomplete = 'off';
+      input.placeholder = 'Nickname / alias';
+      input.setAttribute('aria-label', 'Public leaderboard nickname or alias');
+    }
+    document.querySelectorAll('.leaderboard-note').forEach(note => {
+      if (leaderboardEnabled()) note.textContent = 'Online scores are public. Use a nickname or alias rather than a full real name.';
+      else note.textContent = disabledMessage();
+    });
+  }
+
   window.showPersonalScores = async stationName => {
     window.show('scores');
     document.querySelectorAll('.score-tab').forEach(button => {
       button.classList.toggle('active', button.dataset.station === stationName);
     });
+    if (!leaderboardEnabled()) { setListMessage('score-list', disabledMessage()); return; }
     setListMessage('score-list', 'Loading online scores…');
     try {
       const scores = (await fetchScores())
@@ -137,7 +176,8 @@
   window.showCityTenScores = async () => {
     window.show('city-ten-scores');
     const note = byId('city-ten-scores')?.querySelector('.leaderboard-note');
-    if (note) note.textContent = 'Each player’s fastest online City Ten result is shown once.';
+    if (note) note.textContent = leaderboardEnabled() ? 'Each player’s fastest online City Ten result is shown once. Use a nickname or alias.' : disabledMessage();
+    if (!leaderboardEnabled()) { setListMessage('city-ten-list', disabledMessage()); return; }
     setListMessage('city-ten-list', 'Loading online scores…');
     try {
       const cityScores = (await fetchScores()).filter(score => score.callType === 'The City Ten');
@@ -145,12 +185,9 @@
       cityScores.forEach(score => {
         const key = safeText(score.playerName || 'Anonymous').trim().toLocaleLowerCase();
         const current = bestByPlayer.get(key);
-        if (!current || Number(score.responseTimeSeconds) < Number(current.responseTimeSeconds)) {
-          bestByPlayer.set(key, score);
-        }
+        if (!current || Number(score.responseTimeSeconds) < Number(current.responseTimeSeconds)) bestByPlayer.set(key, score);
       });
-      const best = [...bestByPlayer.values()]
-        .sort((a, b) => Number(a.responseTimeSeconds) - Number(b.responseTimeSeconds));
+      const best = [...bestByPlayer.values()].sort((a, b) => Number(a.responseTimeSeconds) - Number(b.responseTimeSeconds));
       renderRows('city-ten-list', best, score => score.station || 'Unknown Station');
     } catch (error) {
       console.error('Could not load City Ten scoreboard:', error);
@@ -164,9 +201,10 @@
   };
 
   window.saveScore = async () => {
+    if (!leaderboardEnabled()) { alert(disabledMessage()); return; }
     const saveButton = byId('score-row')?.querySelector('button');
     const scoreContext = context();
-    if (!Number.isFinite(scoreContext.responseTimeSeconds) || scoreContext.responseTimeSeconds < 0) {
+    if (!Number.isFinite(scoreContext.responseTimeSeconds) || scoreContext.responseTimeSeconds < 0 || scoreContext.responseTimeSeconds > 7200) {
       alert('The score could not be calculated. Please finish another timed game and try again.');
       return;
     }
@@ -185,12 +223,12 @@
         responseTimeSeconds: scoreContext.responseTimeSeconds,
         score: scoreContext.responseTimeSeconds
       });
-      try { localStorage.setItem('geoPlayerName', name); } catch {}
-      if (scoreContext.callType === 'The City Ten') {
-        await window.showCityTenScores();
-      } else {
-        await window.showPersonalScores(scoreContext.station);
-      }
+      try {
+        const storage = departmentDeployment() ? sessionStorage : localStorage;
+        storage.setItem('geoPlayerName', name);
+      } catch {}
+      if (scoreContext.callType === 'The City Ten') await window.showCityTenScores();
+      else await window.showPersonalScores(scoreContext.station);
     } catch (error) {
       console.error('Could not save score:', error);
       alert(`The score could not be saved online: ${error.message}`);
@@ -204,7 +242,10 @@
 
   const nameInput = byId('player');
   if (nameInput) {
-    try { nameInput.value = localStorage.getItem('geoPlayerName') || ''; } catch {}
+    try {
+      const storage = departmentDeployment() ? sessionStorage : localStorage;
+      nameInput.value = storage.getItem('geoPlayerName') || '';
+    } catch {}
     nameInput.addEventListener('keydown', event => {
       if (event.key === 'Enter') {
         event.preventDefault();
@@ -213,12 +254,16 @@
     });
   }
 
+  updatePrivacyCopy();
+  window.PTBO_GEO_SCOREBOARD_POLICY = Object.freeze({ version:VERSION, departmentDeployment, leaderboardEnabled });
   window.__geoScoreboardReady = true;
-  document.documentElement.dataset.scoreboard = 'connecting';
-  fetchScores().then(() => {
-    document.documentElement.dataset.scoreboard = 'online';
-  }).catch(error => {
-    document.documentElement.dataset.scoreboard = 'offline';
-    console.error('Firestore REST scoreboard connection check failed:', error);
-  });
+  document.documentElement.dataset.scoreboard = leaderboardEnabled() ? 'connecting' : 'disabled';
+  if (leaderboardEnabled()) {
+    fetchScores().then(() => {
+      document.documentElement.dataset.scoreboard = 'online';
+    }).catch(error => {
+      document.documentElement.dataset.scoreboard = 'offline';
+      console.error('Firestore REST scoreboard connection check failed:', error);
+    });
+  }
 })();
