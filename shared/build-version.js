@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.38';
+  const VERSION = '1.6.39';
   const CITY_RUNTIME_VERSION = '1.6.17';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
@@ -83,7 +83,7 @@
   function installTrainingNotice() {
     if (!document.body || window.top !== window || document.getElementById('ptbo-training-use-notice')) return;
     const path = location.pathname;
-    const playerSurface = /(?:\/Peterborough-Map-Game\/?$|\/response-simulator\/|\/geo-guesser\/|\/city-explorer\/|\/gta-fire-response\/)/.test(path);
+    const playerSurface = /(?:\/Peterborough-Map-Game\/?$|\/response-simulator\/|\/geo-guesser\/|\/city-explorer\/)/.test(path);
     const excluded = /\/(?:dispatch-editor|site-stats|legal)\//.test(path);
     if (!playerSurface || excluded) return;
     let style = document.getElementById('ptbo-training-use-style');
@@ -202,6 +202,57 @@
     if (document.getElementById('ptbo-map-attribution-loader')) return;
     injectPageScript('ptbo-map-attribution-loader', `map-attribution-1.6.35.js?v=${VERSION}`)
       .catch(error => traceWarn('Map attribution controller could not load', error));
+  }
+
+  function installGeoGuesserMapPolicy() {
+    const isWrapper = /\/geo-guesser\/(?:desktop|mobile|online)\/(?:index\.html)?$/.test(location.pathname);
+    if (!isWrapper) return;
+    const frame = document.getElementById('game-frame');
+    if (!frame || frame.dataset.ptboMapPolicyBridge === VERSION) return;
+    frame.dataset.ptboMapPolicyBridge = VERSION;
+
+    const showBlocked = message => {
+      let blocker = document.getElementById('ptbo-geo-map-policy-blocker');
+      if (!blocker) {
+        blocker = document.createElement('div');
+        blocker.id = 'ptbo-geo-map-policy-blocker';
+        blocker.style.cssText = 'position:fixed;inset:auto 12px calc(12px + env(safe-area-inset-bottom));z-index:2147483000;max-width:520px;margin:auto;padding:12px 14px;border:1px solid #f59e0b;border-radius:12px;background:rgba(69,26,3,.97);color:#fff;font:700 12px/1.45 system-ui,sans-serif;box-shadow:0 8px 28px #0009';
+        document.body?.appendChild(blocker);
+      }
+      blocker.textContent = message;
+    };
+
+    const install = async () => {
+      const doc = frame.contentDocument;
+      const game = frame.contentWindow;
+      if (!doc || !game) return;
+      frame.style.pointerEvents = 'none';
+      try {
+        if (window.PTBO_DEPLOYMENT) game.PTBO_DEPLOYMENT = window.PTBO_DEPLOYMENT;
+        game.PTBO_MAP_CONFIG = {
+          ...(window.PTBO_DEPLOYMENT?.map || {}),
+          ...(window.PTBO_MAP_CONFIG || {}),
+          ...(game.PTBO_MAP_CONFIG || {}),
+        };
+        await injectScript(doc, 'ptbo-geo-commercial-map-policy', `../response-simulator/carto-basemap-policy-1.6.36.js?v=${VERSION}`, '', 6000);
+        const policy = game.PTBO_COMMERCIAL_MAP_POLICY;
+        policy?.enforce?.();
+        const configured = policy?.config?.() || {};
+        if (policy?.commercialMode?.() && !String(configured.osmTileUrl || '').trim()) {
+          throw new Error('Department Geo Guesser requires a licensed/self-hosted street-map tile provider.');
+        }
+        document.getElementById('ptbo-geo-map-policy-blocker')?.remove();
+        frame.dataset.ptboMapPolicyReady = 'true';
+        frame.style.pointerEvents = '';
+      } catch (error) {
+        frame.dataset.ptboMapPolicyReady = 'false';
+        traceWarn('Geo Guesser map-provider policy failed', error);
+        showBlocked(error?.message || 'Geo Guesser map-provider configuration failed.');
+      }
+    };
+
+    frame.addEventListener('load', () => { void install(); });
+    if (frame.contentDocument?.readyState === 'complete') void install();
   }
 
   function installSiteAnalytics() {
@@ -328,6 +379,7 @@
     installBadge();
     installTrainingNotice();
     installMapAttribution();
+    installGeoGuesserMapPolicy();
     installSiteAnalytics();
     const isMobile = /\/response-simulator\/mobile\/(?:index\.html)?$/.test(location.pathname);
     if (isMobile && !document.getElementById('ptbo-mobile-dispatch-hud-loader')) {
