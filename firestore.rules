@@ -9,6 +9,34 @@ service cloud.firestore {
       return signedIn() && request.auth.token.admin == true;
     }
 
+    function validPublicScore(data) {
+      return
+        data.keys().hasOnly([
+          'playerName',
+          'station',
+          'callType',
+          'responseTimeSeconds',
+          'score',
+          'createdAt'
+        ]) &&
+        data.playerName is string &&
+        data.playerName.size() >= 1 &&
+        data.playerName.size() <= 30 &&
+        data.station is string &&
+        data.station.size() >= 1 &&
+        data.station.size() <= 60 &&
+        data.callType is string &&
+        data.callType.size() >= 1 &&
+        data.callType.size() <= 80 &&
+        data.responseTimeSeconds is number &&
+        data.responseTimeSeconds >= 0 &&
+        data.responseTimeSeconds <= 7200 &&
+        data.score is number &&
+        data.score >= 0 &&
+        data.score <= 7200 &&
+        data.createdAt is timestamp;
+    }
+
     // Commercial analytics target: never expose raw analytics records publicly.
     // Writes should move through an authenticated/validated backend before these
     // rules are deployed to production. Server SDKs use IAM rather than rules.
@@ -17,37 +45,13 @@ service cloud.firestore {
       allow create, update: if false;
     }
 
-    // Transitional public-demo Geo Guesser leaderboard. Public score creation is
-    // tightly schema/range limited; paid department deployments disable this by
-    // default in the client. Move writes behind App Check/auth/backend before a
-    // larger public launch if abuse becomes a concern.
+    // Transitional public-demo Geo Guesser leaderboard. Only documents that
+    // match the public score schema can be read without admin authorization.
+    // This also prevents legacy analytics fallback records in this collection
+    // from becoming publicly readable after these rules are deployed.
     match /scores/{scoreId} {
-      allow read: if true;
-      allow create: if
-        request.resource.data.keys().hasOnly([
-          'playerName',
-          'station',
-          'callType',
-          'responseTimeSeconds',
-          'score',
-          'createdAt'
-        ]) &&
-        request.resource.data.playerName is string &&
-        request.resource.data.playerName.size() >= 1 &&
-        request.resource.data.playerName.size() <= 30 &&
-        request.resource.data.station is string &&
-        request.resource.data.station.size() >= 1 &&
-        request.resource.data.station.size() <= 60 &&
-        request.resource.data.callType is string &&
-        request.resource.data.callType.size() >= 1 &&
-        request.resource.data.callType.size() <= 80 &&
-        request.resource.data.responseTimeSeconds is number &&
-        request.resource.data.responseTimeSeconds >= 0 &&
-        request.resource.data.responseTimeSeconds <= 7200 &&
-        request.resource.data.score is number &&
-        request.resource.data.score >= 0 &&
-        request.resource.data.score <= 7200 &&
-        request.resource.data.createdAt is timestamp;
+      allow read: if admin() || validPublicScore(resource.data);
+      allow create: if validPublicScore(request.resource.data);
       allow update, delete: if admin();
     }
 
