@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.35';
+  const VERSION = '1.6.36';
   const CITY_RUNTIME_VERSION = '1.6.17';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
@@ -287,6 +287,7 @@
             void optionalInnerModule(doc, 'ptbo-directional-drive-zoom-loader', `../response-simulator/directional-drive-zoom-1.5.8.js?v=${VERSION}`, '', 6000);
             void optionalInnerModule(doc, 'ptbo-mobile-ui-layout-loader', `../response-simulator/mobile-ui-layout-1.5.9.js?v=${VERSION}`, '', 6000);
           }
+          await optionalInnerModule(doc, 'ptbo-carto-basemap-policy', `../response-simulator/carto-basemap-policy-1.6.36.js?v=${VERSION}`, '', 6000);
           await Promise.all([
             optionalInnerModule(doc, 'ptbo-satellite-map-loader', `../response-simulator/satellite-map-1.5.6.js?v=${VERSION}`, '', 10000),
             optionalInnerModule(doc, 'ptbo-route-reveal-review-loader', `../response-simulator/route-reveal-review-1.6.26.js?v=${VERSION}`, '', 6000),
