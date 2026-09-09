@@ -92,8 +92,8 @@ test('Geo Guesser core loads shared commercial policy and core provider before g
 test('Geo Guesser gameplay and editor maps use the provider boundary instead of direct OSM tile creation', () => {
   const html = coreSource();
   assert.doesNotMatch(html, /L\.tileLayer\(['\"]https:\/\/\{s\}\.tile\.openstreetmap\.org/);
-  assert.match(html, /PTBO_GEO_MAP_PROVIDER\.createStreetLayer/);
-  assert.match(html, /PTBO_GEO_MAP_PROVIDER\.requireReady/);
+  assert.ok(html.includes('PTBO_GEO_MAP_PROVIDER.createStreetLayer'), 'Geo Guesser maps must be created through PTBO_GEO_MAP_PROVIDER');
+  assert.ok(html.includes('PTBO_GEO_MAP_PROVIDER?.requireReady'), 'Geo Guesser entry paths must require provider readiness before map use');
   const uses = [...html.matchAll(/PTBO_GEO_MAP_PROVIDER\.createStreetLayer/g)];
   assert.ok(uses.length >= 2, 'both gameplay and editor maps must use the shared provider boundary');
 });
