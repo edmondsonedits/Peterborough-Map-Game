@@ -99,5 +99,5 @@
   for(const id of ['download-source','copy-source','export-changes'])$(id).onclick=showExport;
   document.addEventListener('keydown',event=>{if(event.key==='Escape'&&placing){placing=null;$('placement-banner').classList.add('hidden');$('base-editor').classList.remove('placing');$('add-map').classList.remove('active');status('Map placement cancelled.');}});
   fetch('../city-explorer/data/osm-public-roads.geojson').then(response=>{if(!response.ok)throw new Error('Road data unavailable');return response.json();}).then(data=>{roads=data;if(draft&&mode!=='calls')previewBase();}).catch(error=>status(error.message+'; reload to check base access.'));
-  calls.ready().then(()=>{locations=normalizeCalls(calls.getAll());callSeed=normalizeCalls(calls.getSeed());ready=true;updateSubs($('sub-filter'),'');render();fit();status('Ready. Saved edits apply on this device; exports contain changes only.');}).catch(error=>status(error.message));
+  calls.ready().then(()=>{locations=normalizeCalls(calls.getAll());callSeed=normalizeCalls(calls.getSeed?.()||locations);ready=true;updateSubs($('sub-filter'),'');render();fit();status('Ready. Saved edits apply on this device; exports contain changes only.');}).catch(error=>status(error.message));
 })();

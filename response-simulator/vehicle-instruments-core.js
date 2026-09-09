@@ -32,7 +32,8 @@
   });
 
   const storedMode = localStorage.getItem(STEERING_STORAGE_KEY);
-  const initialMode = storedMode === STEERING_MODES.DIRECTIONAL
+  // A phone's saved thumbstick preference must never disable desktop keys.
+  const initialMode = isMobileWrapper() && storedMode === STEERING_MODES.DIRECTIONAL
     ? STEERING_MODES.DIRECTIONAL
     : STEERING_MODES.STANDARD;
 
@@ -288,7 +289,8 @@
   }
 
   function setSteeringMode(mode) {
-    const nextMode = mode === STEERING_MODES.DIRECTIONAL
+    const mobile = isMobileWrapper();
+    const nextMode = mobile && mode === STEERING_MODES.DIRECTIONAL
       ? STEERING_MODES.DIRECTIONAL
       : STEERING_MODES.STANDARD;
     if (state.steeringMode === nextMode) {
@@ -299,7 +301,7 @@
 
     resetSteeringInputs();
     state.steeringMode = nextMode;
-    localStorage.setItem(STEERING_STORAGE_KEY, nextMode);
+    if (mobile) localStorage.setItem(STEERING_STORAGE_KEY, nextMode);
     syncSteeringModeControl();
     updateParentJoystickMode();
 
