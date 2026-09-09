@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.44';
+  const VERSION = '1.6.45';
   const CITY_RUNTIME_VERSION = '1.6.17';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
@@ -356,6 +356,7 @@
             optionalInnerModule(doc, 'ptbo-quick-tutorial-loader', `../response-simulator/quick-tutorial-1.6.28.js?v=${VERSION}`, '', 6000),
             optionalInnerModule(doc, 'ptbo-simulated-incident-loader', `../response-simulator/simulated-incident-notice-1.6.33.js?v=${VERSION}`, '', 6000),
             optionalInnerModule(doc, 'ptbo-incident-formatting-loader', `../response-simulator/incident-formatting-1.6.44.js?v=${VERSION}`, '', 6000),
+            optionalInnerModule(doc, 'ptbo-training-history-loader', `../response-simulator/training-history-1.6.45.js?v=${VERSION}`, '', 6000),
             optionalInnerModule(doc, 'ptbo-map-attribution-inner-loader', `map-attribution-1.6.35.js?v=${VERSION}`, '', 6000),
           ]);
           if (game.PTBO_SATELLITE_MAP_READY) {

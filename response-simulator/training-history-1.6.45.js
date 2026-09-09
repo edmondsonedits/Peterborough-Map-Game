@@ -57,11 +57,15 @@
   }
 
   function loadEntries() {
+    if (!state.storageAvailable && memory.length) return memory.slice();
     try {
-      const parsed = readJson(localStorage, STORAGE_KEY, []);
+      const raw = localStorage?.getItem?.(STORAGE_KEY);
+      const parsed = raw ? JSON.parse(raw) : [];
       if (!Array.isArray(parsed)) return [];
+      const clean = parsed.slice(0, MAX_ENTRIES);
       state.storageAvailable = true;
-      return parsed.slice(0, MAX_ENTRIES);
+      memory.splice(0, memory.length, ...clean);
+      return clean;
     } catch (_) {
       state.storageAvailable = false;
       return memory.slice();

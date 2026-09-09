@@ -900,6 +900,17 @@
             if (!mission || simulationState !== STATES.ONSCENE || !['on-scene','handover'].includes(mission.phase)) return;
             mission.phase = 'complete';
             simulationState = STATES.INSERVICE;
+            const historySnapshot = {
+                generation: mission.generation,
+                service: mission.service,
+                scene: mission.scene ? {...mission.scene} : null,
+                hospital: mission.hospital ? {...mission.hospital} : null,
+                responseMs: mission.responseMs,
+                transportMs: mission.transportMs,
+                completedAt: Date.now()
+            };
+            if (window.PTBO_TRAINING_HISTORY?.recordCompletion) window.PTBO_TRAINING_HISTORY.recordCompletion(historySnapshot);
+            else (window.PTBO_PENDING_TRAINING_HISTORY ||= []).push(historySnapshot);
             totalTrackedCalls++;
             try { localStorage.setItem('simTotalCalls',totalTrackedCalls); } catch (_) {}
             document.getElementById('tel-total-calls').innerText = totalTrackedCalls;
