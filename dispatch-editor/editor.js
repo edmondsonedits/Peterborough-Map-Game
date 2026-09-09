@@ -73,7 +73,10 @@
     return {...draft,service:$('b-service').value,number:+$('b-number').value,name:$('b-name').value.trim(),shortName:$('b-short').value.trim(),address:$('b-address').value.trim(),lat:+$('b-lat').value,lng:+$('b-lng').value,yardSize:Math.max(width,length),yardWidth:width,yardLength:length,yardRotation:+$('b-rotation').value};
   }
   function hospitalFromForm(){return {...draft,name:$('b-name').value.trim(),addr:$('b-address').value.trim(),lat:+$('b-lat').value,lng:+$('b-lng').value,radius:+$('b-radius').value};}
-  function accessText(x){if(!roads)return 'Road access check is loading…';return bases.roadAccess(x,roads)?'✓ Area connects to the mapped road network.':'Area does not meet a mapped road. Move or resize it before saving.';}
+  function accessText(x){
+    if(!roads)return 'Road access check is loading…';
+    return 'Road access is checked when you save the base.';
+  }
   function previewBase(){clearPreview();const hospital=mode==='hospital',x=hospital?hospitalFromForm():baseFromForm();if(hospital){if(![x.lat,x.lng,x.radius].every(Number.isFinite))return;}else if(![x.lat,x.lng,x.yardWidth,x.yardLength,x.yardRotation].every(Number.isFinite))return;preview=hospital?L.circle([x.lat,x.lng],{radius:x.radius,color:'#c084fc',fillOpacity:.2}).addTo(map):L.polygon(bases.corners(x),{color:'#fbbf24',weight:3,fillOpacity:.18}).addTo(map);$('access-check').textContent=accessText(x);}
   function previewCall(){clearPreview();const lat=+$('f-lat').value,lng=+$('f-lng').value;if(Number.isFinite(lat)&&Number.isFinite(lng))preview=L.circle([lat,lng],{radius:+$('f-radius').value||50,color:'#38bdf8',fillOpacity:.15}).addTo(map);}
   function beginPlacement(kind){if(!ready)return;placing=kind;$('placement-banner').textContent=kind==='move'?'Tap the new position · Escape cancels':`Tap the map to place a new ${mode==='bases'?'base':'call'} · Escape cancels`;$('placement-banner').classList.remove('hidden');$('add-map').classList.add('active');if(kind==='move')$('base-editor').classList.add('placing');else closeFormForPlacement();}

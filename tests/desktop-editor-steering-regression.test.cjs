@@ -7,7 +7,10 @@ const root = path.resolve(__dirname, '..');
 const read = file => fs.readFileSync(path.join(root, file), 'utf8');
 
 test('dispatch editor does not require the removed dispatch-store getSeed API', () => {
-  assert.match(read('dispatch-editor/editor.js'), /calls\.getSeed\?\.\(\)\|\|locations/);
+  const source = read('dispatch-editor/editor.js');
+  assert.match(source, /calls\.getSeed\?\.\(\)\|\|locations/);
+  assert.match(source, /Road access is checked when you save the base/);
+  assert.doesNotMatch(source, /function accessText\(x\)[\s\S]*?return bases\.roadAccess\(x,roads\)/);
 });
 
 test('desktop keyboard path is loaded by the desktop wrapper and stays out of mobile', () => {
