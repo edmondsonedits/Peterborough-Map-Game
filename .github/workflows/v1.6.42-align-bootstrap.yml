@@ -1,0 +1,89 @@
+name: v1.6.42 Align Bootstrap
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  align:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Align canonical release bootstrap references
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const VERSION = '1.6.42';
+
+          function rewrite(file, transform) {
+            const before = fs.readFileSync(file, 'utf8');
+            const after = transform(before);
+            if (after === before) {
+              console.log(`${file}: already aligned or no change required`);
+              return;
+            }
+            fs.writeFileSync(file, after);
+            console.log(`${file}: updated`);
+          }
+
+          function alignBootstrap(file) {
+            rewrite(file, text => text.replace(/build-version\.js\?v=\d+\.\d+\.\d+/g, `build-version.js?v=${VERSION}`));
+          }
+
+          rewrite('shared/build-version.js', text => text.replace(/const VERSION = '\d+\.\d+\.\d+';/, `const VERSION = '${VERSION}';`));
+
+          for (const file of [
+            'index.html',
+            'response-simulator/play/index.html',
+            'response-simulator/mobile/index.html',
+            'geo-guesser/index.html',
+            'city-explorer/index.html',
+          ]) alignBootstrap(file);
+
+          for (const file of [
+            'geo-guesser/desktop/index.html',
+            'geo-guesser/mobile/index.html',
+            'geo-guesser/online/index.html',
+          ]) {
+            rewrite(file, text => text
+              .replaceAll('1.6.39', VERSION)
+              .replace(/build-version\.js\?v=\d+\.\d+\.\d+/g, `build-version.js?v=${VERSION}`));
+          }
+
+          rewrite('docs/ANALYTICS-PRIVACY-SECURITY.md', text => text
+            .replace(/Release: \*\*v\d+\.\d+\.\d+\*\*/, `Release: **v${VERSION}**`)
+            .replace('`shared/analytics-privacy-upgrade-1.6.33.js` contains the active v1.6.40 privacy/authority policy layer. The filename is retained temporarily for compatibility; v1.6.41 hardens how that policy is loaded before the legacy analytics implementation.', '`shared/analytics-privacy-upgrade-1.6.33.js` contains the active v1.6.40 privacy/authority policy layer. The filename is retained temporarily for compatibility; v1.6.42 keeps the privacy-first loader ordering and adds canonical bootstrap cache-version enforcement.')
+            .replace('### v1.6.41 bootstrap ordering', '### v1.6.42 bootstrap and cache ordering')
+            .replace('Regression tests in `tests/analytics-bootstrap.test.cjs` verify the ordering contract and fail-closed behavior.', 'Regression tests in `tests/analytics-bootstrap.test.cjs` and `tests/analytics-adversarial.test.cjs` verify the ordering contract, delayed-client behavior, storage failure handling, idempotence, and fail-closed behavior.')
+            .replace('Manual cache-buster values still exist in older page wrappers. Security-sensitive canonical references are being refreshed as releases touch them, but replacing manual cache versioning with generated release stamping remains a separate planned hardening task.', 'Every canonical player surface now has a CI-enforced `build-version.js` cache key matching the production release. `tests/release-bootstrap-consistency.test.cjs` fails deployment if a canonical launcher, simulator wrapper, Geo Guesser surface, or City Explorer falls behind. Historical/archived wrappers may retain their own compatibility versions; generated release stamping remains a future simplification opportunity.'));
+          NODE
+
+      - name: Verify v1.6.42 regressions
+        run: |
+          node --test tests/critical-gameplay.test.cjs tests/gearbox.test.cjs tests/camera-zoom.test.cjs tests/ems.test.cjs tests/analytics-authority.test.cjs tests/analytics-bootstrap.test.cjs tests/analytics-adversarial.test.cjs tests/release-bootstrap-consistency.test.cjs
+          node --test --test-skip-pattern='v1\.6\.31 build uses|main menu exposes|v1\.6\.25 analytics reliably|v1\.6\.28 visual tutorial shows' tests/base-training-cities.test.cjs
+
+      - name: Commit aligned release
+        run: |
+          if git diff --quiet; then
+            echo "No alignment changes required."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add shared/build-version.js index.html response-simulator/play/index.html response-simulator/mobile/index.html geo-guesser/index.html geo-guesser/desktop/index.html geo-guesser/mobile/index.html geo-guesser/online/index.html city-explorer/index.html docs/ANALYTICS-PRIVACY-SECURITY.md
+          git commit -m "Release v1.6.42 bootstrap cache hardening"
+          git push origin HEAD:main
