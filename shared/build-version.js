@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.40';
+  const VERSION = '1.6.41';
   const CITY_RUNTIME_VERSION = '1.6.17';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
@@ -255,29 +255,33 @@
     if (frame.contentDocument?.readyState === 'complete') void install();
   }
 
+  let analyticsInstallPromise = null;
+  const privacyPolicyReady = () => Boolean(
+    window.PTBO_ANALYTICS_PRIVACY &&
+    typeof window.PTBO_ANALYTICS_PRIVACY.analyticsEnabled === 'function' &&
+    typeof window.PTBO_ANALYTICS_PRIVACY.department === 'function'
+  );
+
   function installSiteAnalytics() {
-    if (window.top !== window || document.getElementById('ptbo-site-analytics-loader')) return;
+    if (window.top !== window) return Promise.resolve(false);
+    if (analyticsInstallPromise) return analyticsInstallPromise;
 
-    const loadBase = () => {
-      if (document.getElementById('ptbo-site-analytics-loader')) return;
-      const script = document.createElement('script');
-      script.id = 'ptbo-site-analytics-loader';
-      script.src = new URL(`site-analytics-1.6.25.js?v=${VERSION}`, SCRIPT_URL).href;
-      script.async = true;
-      script.onerror = () => console.warn('Detailed analytics client could not load.');
-      document.head.appendChild(script);
-    };
+    analyticsInstallPromise = (async () => {
+      if (!privacyPolicyReady()) {
+        await injectPageScript('ptbo-analytics-privacy-loader', `analytics-privacy-upgrade-1.6.33.js?v=${VERSION}`);
+      }
+      if (!privacyPolicyReady()) throw new Error('Analytics privacy policy did not initialize.');
 
-    if (document.getElementById('ptbo-analytics-privacy-loader')) { loadBase(); return; }
-    const privacy = document.createElement('script');
-    privacy.id = 'ptbo-analytics-privacy-loader';
-    privacy.src = new URL(`analytics-privacy-upgrade-1.6.33.js?v=${VERSION}`, SCRIPT_URL).href;
-    privacy.async = true;
-    privacy.onload = loadBase;
-    privacy.onerror = () => {
-      console.warn('Analytics privacy policy could not load; analytics will remain unavailable for this page.');
-    };
-    document.head.appendChild(privacy);
+      if (window.PTBO_SITE_ANALYTICS || document.getElementById('ptbo-site-analytics-loader')) return true;
+      await injectPageScript('ptbo-site-analytics-loader', `site-analytics-1.6.25.js?v=${VERSION}`);
+      return true;
+    })().catch(error => {
+      traceWarn('Analytics bootstrap failed closed', error);
+      console.warn('Analytics remained unavailable because the privacy policy could not be confirmed first.', error);
+      return false;
+    });
+
+    return analyticsInstallPromise;
   }
 
   function normalizeSimulatorFrameUrl(frame) {
@@ -380,7 +384,7 @@
     installTrainingNotice();
     installMapAttribution();
     installGeoGuesserMapPolicy();
-    installSiteAnalytics();
+    void installSiteAnalytics();
     const isMobile = /\/response-simulator\/mobile\/(?:index\.html)?$/.test(location.pathname);
     if (isMobile && !document.getElementById('ptbo-mobile-dispatch-hud-loader')) {
       const script = document.createElement('script');
@@ -395,7 +399,6 @@
 
   enhancementStage('started', LABEL);
   if (document.body) installPageEnhancements();
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', installPageEnhancements, {once:true});
-  else if (!document.body) installPageEnhancements();
+  else document.addEventListener('DOMContentLoaded', installPageEnhancements, {once:true});
   console.info(`Production build ${LABEL} initialized with city runtime protocol v${CITY_RUNTIME_VERSION}.`);
 })();
