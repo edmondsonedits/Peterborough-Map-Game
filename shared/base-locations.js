@@ -1,7 +1,7 @@
 /* Generic Fire/EMS base store. Supports synchronous Peterborough data and asynchronous base-training city packages. */
 (() => {
   'use strict';
-  const VERSION = '1.6.39';
+  const VERSION = '1.6.47';
   if (window.PTBO_BASE_STORE_VERSION === VERSION && window.PTBO_BASE_STORE) return;
 
   const config = window.PTBO_SERVICE_CONFIG;
@@ -40,7 +40,18 @@
       while (usedIds.has(id)) id = `${root}-${number}-${suffix++}`;
       usedIds.add(id);
 
-      return {yardSize:160,yardRotation:0,spawnLat:base.lat,spawnLng:base.lng,spawnHeading:180,...base,id,number,service};
+      const legacySize = Number(base.yardSize ?? 160);
+      return {
+        yardSize:legacySize,
+        yardWidth:Number(base.yardWidth ?? legacySize),
+        yardLength:Number(base.yardLength ?? legacySize),
+        yardRotation:0,
+        spawnLat:base.lat,
+        spawnLng:base.lng,
+        spawnHeading:180,
+        ...base,
+        id,number,service,
+      };
     }));
   }
 
@@ -50,6 +61,9 @@
     return list.map(raw => {
       const lat = Number(raw.lat);
       const lng = Number(raw.lng);
+      const legacySize = Number(raw.yardSize ?? 160);
+      const yardWidth = Number(raw.yardWidth ?? legacySize);
+      const yardLength = Number(raw.yardLength ?? legacySize);
       const base = {
         id:String(raw.id),
         service:String(raw.service),
@@ -59,7 +73,9 @@
         address:String(raw.address ?? '').trim(),
         lat,
         lng,
-        yardSize:Number(raw.yardSize ?? 160),
+        yardSize:Math.max(yardWidth,yardLength),
+        yardWidth,
+        yardLength,
         yardRotation:Number(raw.yardRotation ?? 0),
         spawnLat:Number(raw.spawnLat ?? lat),
         spawnLng:Number(raw.spawnLng ?? lng),
@@ -68,10 +84,11 @@
       if (!/^[a-z0-9-]+$/.test(base.id) || ids.has(base.id)) throw new Error('Base IDs must be unique.');
       if (!['fire','ems'].includes(base.service) || !Number.isInteger(base.number) || base.number < 1 || numbers.has(`${base.service}:${base.number}`)) throw new Error('Base numbers must be unique within each service.');
       if (!base.name || !base.shortName || !base.address) throw new Error('Enter a base name, short name and address.');
-      if (![base.lat,base.lng,base.yardSize,base.yardRotation,base.spawnLat,base.spawnLng,base.spawnHeading].every(Number.isFinite)
+      if (![base.lat,base.lng,base.yardWidth,base.yardLength,base.yardRotation,base.spawnLat,base.spawnLng,base.spawnHeading].every(Number.isFinite)
         || Math.abs(base.lat)>85 || Math.abs(base.lng)>180 || Math.abs(base.spawnLat)>85 || Math.abs(base.spawnLng)>180
-        || base.yardSize<10 || base.yardSize>400 || base.yardRotation<0 || base.yardRotation>=360) {
-        throw new Error('Use valid base/spawn coordinates, a square size of 10–400 m, and rotation of 0–359°.');
+        || base.yardWidth<10 || base.yardWidth>600 || base.yardLength<10 || base.yardLength>600
+        || base.yardRotation<0 || base.yardRotation>=360) {
+        throw new Error('Use valid base/spawn coordinates, area width and length of 10–600 m, and rotation of 0–359°.');
       }
       ids.add(base.id);
       numbers.add(`${base.service}:${base.number}`);
@@ -162,27 +179,40 @@
     return true;
   }
 
+  function dimensions(base) {
+    const legacy = Number(base.yardSize || 160);
+    return {
+      width:Number(base.yardWidth ?? legacy),
+      length:Number(base.yardLength ?? legacy),
+    };
+  }
+
   function corners(base) {
-    const half=Number(base.yardSize || 160)/2,angle=Number(base.yardRotation || 0)*Math.PI/180;
-    return [[-half,-half],[half,-half],[half,half],[-half,half]].map(([x,y]) => {
+    const {width,length}=dimensions(base),halfW=width/2,halfL=length/2,angle=Number(base.yardRotation || 0)*Math.PI/180;
+    return [[-halfW,-halfL],[halfW,-halfL],[halfW,halfL],[-halfW,halfL]].map(([x,y]) => {
       const east=x*Math.cos(angle)-y*Math.sin(angle),north=x*Math.sin(angle)+y*Math.cos(angle);
       return [base.lat+north/metresLat,base.lng+east/metresLng];
     });
   }
 
   function contains(base,lat,lng) {
-    const east=(lng-base.lng)*metresLng,north=(lat-base.lat)*metresLat,angle=Number(base.yardRotation || 0)*Math.PI/180;
-    return Math.abs(east*Math.cos(angle)+north*Math.sin(angle))<=Number(base.yardSize || 160)/2+1e-7 && Math.abs(-east*Math.sin(angle)+north*Math.cos(angle))<=Number(base.yardSize || 160)/2+1e-7;
+    const {width,length}=dimensions(base),east=(lng-base.lng)*metresLng,north=(lat-base.lat)*metresLat,angle=Number(base.yardRotation || 0)*Math.PI/180;
+    const localX=east*Math.cos(angle)+north*Math.sin(angle),localY=-east*Math.sin(angle)+north*Math.cos(angle);
+    return Math.abs(localX)<=width/2+1e-7 && Math.abs(localY)<=length/2+1e-7;
   }
 
   function roadAccess(base, roads) {
-    const angle=Number(base.yardRotation||0)*Math.PI/180,half=Number(base.yardSize||160)/2;
+    const {width,length}=dimensions(base),angle=Number(base.yardRotation||0)*Math.PI/180,half=[width/2,length/2];
     const local=point=>{const e=(point[0]-base.lng)*metresLng,n=(point[1]-base.lat)*metresLat;return [e*Math.cos(angle)+n*Math.sin(angle),-e*Math.sin(angle)+n*Math.cos(angle)];};
     for (const feature of roads?.features || []) {
       const lines=feature.geometry?.type==='LineString'?[feature.geometry.coordinates]:feature.geometry?.type==='MultiLineString'?feature.geometry.coordinates:[];
       for (const line of lines) for(let i=1;i<line.length;i++) {
         const a=local(line[i-1]),b=local(line[i]);let lo=0,hi=1;
-        for(let axis=0;axis<2;axis++) {const d=b[axis]-a[axis];if(Math.abs(d)<1e-10){if(Math.abs(a[axis])>half){hi=-1;break;}}else{const p=(-half-a[axis])/d,q=(half-a[axis])/d;lo=Math.max(lo,Math.min(p,q));hi=Math.min(hi,Math.max(p,q));}}
+        for(let axis=0;axis<2;axis++) {
+          const d=b[axis]-a[axis],limit=half[axis];
+          if(Math.abs(d)<1e-10){if(Math.abs(a[axis])>limit){hi=-1;break;}}
+          else{const p=(-limit-a[axis])/d,q=(limit-a[axis])/d;lo=Math.max(lo,Math.min(p,q));hi=Math.min(hi,Math.max(p,q));}
+        }
         if(lo<=hi)return true;
       }
     }
@@ -197,14 +227,13 @@
   window.addEventListener('storage',event=>{if(event.key===hospitalKey || event.key===legacyHospitalKey){hospital=readHospital();return;}if(event.key!==storageKey && event.key!==legacyStorageKey)return;items=readSaved();window.dispatchEvent(new CustomEvent('ptbo-bases-updated',{detail:{cityId,source:'storage'}}));});
   if (city.features?.baseTraining && (config.profiles?.fire?.bases?.length || config.profiles?.ems?.bases?.length)) refreshFromCityPackage();
 
-  // The base editor needs to own the Leaflet map before editor.js creates it,
-  // so load the v1.6.37 spawn-box helper synchronously only on that page.
+  // The dispatch editor helper owns the interactive base-area and vehicle-spawn editing overlays.
   try {
     if (/\/dispatch-editor\/(?:index\.html)?$/.test(runtimeLocation.pathname) && document.readyState === 'loading' && typeof document.write === 'function') {
-      const helperUrl = new URL('../dispatch-editor/spawn-box-editor-1.6.37.js?v=1.6.37', sourceUrl).href;
+      const helperUrl = new URL('../dispatch-editor/spawn-box-editor-1.6.47.js?v=1.6.47', sourceUrl).href;
       document.write(`<script src="${helperUrl.replace(/&/g,'&amp;')}"><\/script>`);
     }
   } catch (error) {
-    console.warn('Unable to load the truck spawn-box editor.', error);
+    console.warn('Unable to load the base-area / vehicle-spawn editor.', error);
   }
 })();
