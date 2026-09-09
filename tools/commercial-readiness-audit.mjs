@@ -19,6 +19,7 @@ const requiredFiles = [
   'shared/map-attribution-1.6.35.js',
   'shared/analytics-privacy-upgrade-1.6.33.js',
   'response-simulator/carto-basemap-policy-1.6.36.js',
+  'geo-guesser/map-provider-1.6.46.js',
 ];
 
 for (const file of requiredFiles) {
@@ -78,7 +79,6 @@ const guardedLegacy = new Set([
   'response-simulator/carto-basemap-policy-1.6.36.js',
   'response-simulator/index.html',
   'dispatch-editor/editor.js',
-  'geo-guesser/index.html',
 ]);
 
 const patterns = [
@@ -135,12 +135,20 @@ if (fs.existsSync(path.join(ROOT, 'dispatch-editor/editor.js'))) {
   if (/https:\/\/\{s\}\.tile\.openstreetmap\.org/i.test(editor)) failures.push('Dispatch Editor still uses the legacy OSM subdomain template instead of the exact demo URL/configured provider.');
 }
 
-// Geo Guesser keeps its stable core HTML, but every supported wrapper must install
-// the commercial map policy before the iframe can accept player interaction.
+// Geo Guesser enforces map-provider policy inside the core itself; wrappers remain defense-in-depth.
 if (fs.existsSync(path.join(ROOT, 'geo-guesser/index.html'))) {
+  const geo = read('geo-guesser/index.html');
+  const provider = fs.existsSync(path.join(ROOT, 'geo-guesser/map-provider-1.6.46.js')) ? read('geo-guesser/map-provider-1.6.46.js') : '';
   const build = fs.existsSync(path.join(ROOT, 'shared/build-version.js')) ? read('shared/build-version.js') : '';
-  for (const term of ['installGeoGuesserMapPolicy', 'ptbo-geo-commercial-map-policy', "frame.style.pointerEvents = 'none'", 'osmTileUrl']) {
-    if (!build.includes(term)) failures.push(`Geo Guesser map-provider bridge is missing expected control: ${term}`);
+  for (const term of ['carto-basemap-policy-1.6.36.js', 'map-provider-1.6.46.js', 'PTBO_GEO_MAP_PROVIDER.createStreetLayer', 'PTBO_GEO_MAP_PROVIDER?.requireReady']) {
+    if (!geo.includes(term)) failures.push(`Geo Guesser core map-provider enforcement is missing expected control: ${term}`);
+  }
+  if (/https:\/\/\{s\}\.tile\.openstreetmap\.org/i.test(geo)) failures.push('Geo Guesser core still constructs the legacy OSM subdomain tile URL directly.');
+  for (const term of ['PUBLIC_DEMO_URL', 'configured-provider', 'blocked-missing-provider', 'requireReady', 'createStreetLayer']) {
+    if (!provider.includes(term)) failures.push(`Geo Guesser core map-provider module is missing expected control: ${term}`);
+  }
+  for (const term of ['installGeoGuesserMapPolicy', 'ptbo-geo-commercial-map-policy', "frame.style.pointerEvents = 'none'", 'PTBO_GEO_MAP_PROVIDER?.readiness']) {
+    if (!build.includes(term)) failures.push(`Geo Guesser wrapper defense-in-depth bridge is missing expected control: ${term}`);
   }
   for (const wrapper of ['geo-guesser/desktop/index.html', 'geo-guesser/mobile/index.html', 'geo-guesser/online/index.html']) {
     if (!fs.existsSync(path.join(ROOT, wrapper))) failures.push(`Missing Geo Guesser wrapper protected by the shared map-provider bridge: ${wrapper}`);

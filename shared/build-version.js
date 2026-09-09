@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.45';
+  const VERSION = '1.6.46';
   const CITY_RUNTIME_VERSION = '1.6.17';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
@@ -237,8 +237,12 @@
         await injectScript(doc, 'ptbo-geo-commercial-map-policy', `../response-simulator/carto-basemap-policy-1.6.36.js?v=${VERSION}`, '', 6000);
         const policy = game.PTBO_COMMERCIAL_MAP_POLICY;
         policy?.enforce?.();
+        const coreStatus = game.PTBO_GEO_MAP_PROVIDER?.readiness?.();
+        if (coreStatus && !coreStatus.ready) {
+          throw new Error(coreStatus.reason || 'Department Geo Guesser map-provider configuration is incomplete.');
+        }
         const configured = policy?.config?.() || {};
-        if (policy?.commercialMode?.() && !String(configured.osmTileUrl || '').trim()) {
+        if (!coreStatus && policy?.commercialMode?.() && !String(configured.osmTileUrl || '').trim()) {
           throw new Error('Department Geo Guesser requires a licensed/self-hosted street-map tile provider.');
         }
         document.getElementById('ptbo-geo-map-policy-blocker')?.remove();
