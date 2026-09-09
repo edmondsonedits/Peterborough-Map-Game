@@ -31,7 +31,7 @@ jobs:
 
       - name: Check gameplay regressions
         run: |
-          node --test tests/critical-gameplay.test.cjs tests/gearbox.test.cjs tests/camera-zoom.test.cjs tests/ems.test.cjs tests/analytics-authority.test.cjs
+          node --test tests/critical-gameplay.test.cjs tests/gearbox.test.cjs tests/camera-zoom.test.cjs tests/ems.test.cjs tests/analytics-authority.test.cjs tests/analytics-bootstrap.test.cjs
           node --test --test-skip-pattern='v1\.6\.31 build uses|main menu exposes|v1\.6\.25 analytics reliably|v1\.6\.28 visual tutorial shows' tests/base-training-cities.test.cjs
 
       - name: Configure Pages
