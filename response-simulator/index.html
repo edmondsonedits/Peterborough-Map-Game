@@ -744,13 +744,19 @@
             requestAnimationFrame(simulationLoop);
         }
 
+        function drivingKey(event) {
+            const codes = { KeyW: 'w', KeyA: 'a', KeyS: 's', KeyD: 'd' };
+            return codes[event.code] || (event.key?.length === 1 ? event.key.toLowerCase() : event.key);
+        }
         window.addEventListener("keydown", e => {
             if (e.key === 'Escape' && !document.getElementById('control-panel').classList.contains('minimized')) { togglePanel(); return; }
-            if (e.target?.closest?.('input,textarea,select,[contenteditable="true"]')) return;
-            if (keys.hasOwnProperty(e.key)) { e.preventDefault(); keys[e.key] = true; }
+            if (e.ctrlKey || e.altKey || e.metaKey || e.target?.closest?.('input,textarea,select,[contenteditable]:not([contenteditable="false"])')) return;
+            const key = drivingKey(e);
+            if (Object.hasOwn(keys, key)) { e.preventDefault(); keys[key] = true; }
         });
         window.addEventListener("keyup", e => {
-            if (keys.hasOwnProperty(e.key)) { e.preventDefault(); keys[e.key] = false; }
+            const key = drivingKey(e);
+            if (Object.hasOwn(keys, key)) { e.preventDefault(); keys[key] = false; }
         });
         function releaseDrivingInput() {
             Object.keys(keys).forEach(key => { keys[key] = false; });
