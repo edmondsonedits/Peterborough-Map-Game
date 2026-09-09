@@ -1,7 +1,7 @@
-/* Privacy, department-context, and secure-stats policy for Emergency Games v1.6.37. */
+/* Privacy, department-context, and secure-stats policy for Emergency Games v1.6.40. */
 (() => {
   'use strict';
-  const VERSION = '1.6.37';
+  const VERSION = '1.6.40';
   if (window.top !== window || window.PTBO_ANALYTICS_PRIVACY?.version === VERSION) return;
 
   const DEPARTMENT_KEY = 'ptbo-deployment-department-v1';
@@ -21,36 +21,44 @@
   const safeSet = (storage, key, value) => { try { storage.setItem(key, String(value)); return true; } catch (_) { return false; } };
   const safeRemove = (storage, key) => { try { storage.removeItem(key); } catch (_) {} };
 
+  function deploymentConfig() {
+    return window.PTBO_DEPLOYMENT && typeof window.PTBO_DEPLOYMENT === 'object' ? window.PTBO_DEPLOYMENT : {};
+  }
+
   function department() {
-    const params = new URLSearchParams(location.search);
-    const requested = params.get('dept') || params.get('department');
-    if (requested) safeSet(localStorage, DEPARTMENT_KEY, slug(requested));
-    return slug(requested || safeGet(localStorage, DEPARTMENT_KEY) || window.PTBO_DEPLOYMENT?.department || 'public_demo');
+    // Department identity is trusted deployment context, never a browser URL or
+    // previously persisted local value. Clear the old client-controlled value
+    // so v1.6.33-v1.6.39 spoofed labels cannot carry into new sessions.
+    safeRemove(localStorage, DEPARTMENT_KEY);
+    return slug(deploymentConfig().department || 'public_demo');
   }
 
   function departmentDeployment() {
-    const deployment = window.PTBO_DEPLOYMENT || {};
+    const deployment = deploymentConfig();
     const mode = String(deployment.mode || '').toLowerCase();
     return deployment.commercial === true || deployment.private === true || mode === 'department' || mode === 'commercial' || mode === 'private';
   }
 
-  function explicitAnalyticsChoice() {
+  function deploymentAnalyticsPermitted() {
+    const deployment = deploymentConfig();
+    if (typeof deployment.analyticsEnabled === 'boolean') return deployment.analyticsEnabled;
+    return !departmentDeployment();
+  }
+
+  function userOptedOut() {
     const query = new URLSearchParams(location.search).get('analytics');
-    if (/^(?:on|true|1)$/i.test(String(query || ''))) return true;
-    if (/^(?:off|false|0)$/i.test(String(query || ''))) return false;
-    if (typeof window.PTBO_DEPLOYMENT?.analyticsEnabled === 'boolean') return window.PTBO_DEPLOYMENT.analyticsEnabled;
-    if (typeof window.PTBO_ANALYTICS_CONFIG?.enabled === 'boolean') return window.PTBO_ANALYTICS_CONFIG.enabled;
-    return null;
+    if (/^(?:off|false|0)$/i.test(String(query || ''))) return true;
+    if (window.PTBO_ANALYTICS_CONFIG?.enabled === false) return true;
+    return false;
   }
 
   function analyticsEnabled() {
-    const explicit = explicitAnalyticsChoice();
-    if (explicit !== null) return explicit;
-    return !departmentDeployment();
+    return deploymentAnalyticsPermitted() && !userOptedOut();
   }
 
   function purgePersistentPlayerIdentity() {
     LEGACY_PERSISTENT_KEYS.forEach(key => safeRemove(localStorage, key));
+    safeRemove(localStorage, DEPARTMENT_KEY);
   }
 
   function setBaseTrackingBlock(blocked) {
@@ -122,8 +130,12 @@
         ...(base.health?.() || {}),
         version:VERSION,
         department:department(),
+        departmentSource:deploymentConfig().department ? 'deployment' : 'public_demo',
         departmentDeployment:departmentDeployment(),
+        analyticsPermitted:deploymentAnalyticsPermitted(),
         analyticsEnabled:analyticsEnabled(),
+        browserCanEnableAnalytics:false,
+        browserCanOverrideDepartment:false,
         persistentCrossVisitPlayerId:false,
         retentionDays:RETENTION_DAYS,
         secureStatsBackend:Boolean(window.PTBO_SECURE_ANALYTICS?.loadStats),
@@ -153,10 +165,13 @@
   }
 
   function setEnabled(enabled) {
+    // Browser/runtime controls are allowed to reduce collection, never to exceed
+    // the deployment policy. A department deployment configured with analytics
+    // disabled remains disabled even if code or a URL attempts to turn it on.
     window.PTBO_ANALYTICS_CONFIG = Object.freeze({ ...(window.PTBO_ANALYTICS_CONFIG || {}), enabled:Boolean(enabled) });
-    setBaseTrackingBlock(!enabled);
+    setBaseTrackingBlock(!analyticsEnabled());
     applyPolicy();
-    return Boolean(enabled);
+    return analyticsEnabled();
   }
 
   /* Run before the base client when possible. In department/private mode this
@@ -168,14 +183,17 @@
     version:VERSION,
     department,
     departmentDeployment,
+    deploymentAnalyticsPermitted,
     analyticsEnabled,
     setEnabled,
     purgePersistentPlayerIdentity,
     persistentCrossVisitPlayerId:false,
+    browserCanEnableAnalytics:false,
+    browserCanOverrideDepartment:false,
     retentionDays:RETENTION_DAYS,
-    collected:'department/deployment, session duration, surface/browser buckets, city/service use, calls, aggregate response timing, feature/control use, driving totals, and reliability events',
-    excluded:'names, emails, exact routes/coordinates, prompts, room codes, and cross-visit player/browser identity',
-    note:'Department deployments default analytics off until explicitly enabled. Stats reads require a secure analytics backend.',
+    collected:'trusted department/deployment context, session duration, surface/browser buckets, city/service use, calls, aggregate response timing, feature/control use, driving totals, and reliability events',
+    excluded:'names, emails, exact routes/coordinates, prompts, room codes, browser-supplied department identity, and cross-visit player/browser identity',
+    note:'Deployment policy is authoritative. Browser/query input may opt out of analytics but cannot enable collection beyond deployment policy or change the trusted department.',
   });
 
   if (window.PTBO_SITE_ANALYTICS) applyPolicy();
