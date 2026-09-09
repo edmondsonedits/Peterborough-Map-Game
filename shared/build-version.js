@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.34';
+  const VERSION = '1.6.35';
   const CITY_RUNTIME_VERSION = '1.6.17';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
@@ -198,6 +198,12 @@
       .catch(error => console.error('City selector failed to initialize.', error));
   }
 
+  function installMapAttribution() {
+    if (document.getElementById('ptbo-map-attribution-loader')) return;
+    injectPageScript('ptbo-map-attribution-loader', `map-attribution-1.6.35.js?v=${VERSION}`)
+      .catch(error => traceWarn('Map attribution controller could not load', error));
+  }
+
   function installSiteAnalytics() {
     if (window.top !== window || document.getElementById('ptbo-site-analytics-loader')) return;
     const script = document.createElement('script');
@@ -287,6 +293,7 @@
             optionalInnerModule(doc, 'ptbo-quick-tutorial-loader', `../response-simulator/quick-tutorial-1.6.28.js?v=${VERSION}`, '', 6000),
             optionalInnerModule(doc, 'ptbo-simulated-incident-loader', `../response-simulator/simulated-incident-notice-1.6.33.js?v=${VERSION}`, '', 6000),
             optionalInnerModule(doc, 'ptbo-sensitive-location-loader', `../response-simulator/sensitive-location-framing-1.6.34.js?v=${VERSION}`, '', 6000),
+            optionalInnerModule(doc, 'ptbo-map-attribution-inner-loader', `map-attribution-1.6.35.js?v=${VERSION}`, '', 6000),
           ]);
           if (game.PTBO_SATELLITE_MAP_READY) {
             await Promise.race([
@@ -312,6 +319,7 @@
     installDeviceSurfaceApi();
     installBadge();
     installTrainingNotice();
+    installMapAttribution();
     installSiteAnalytics();
     const isMobile = /\/response-simulator\/mobile\/(?:index\.html)?$/.test(location.pathname);
     if (isMobile && !document.getElementById('ptbo-mobile-dispatch-hud-loader')) {
