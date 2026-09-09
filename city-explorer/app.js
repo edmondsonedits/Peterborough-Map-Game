@@ -7,7 +7,7 @@ import {
   createPeterboroughLandmarks,
 } from './landmark-models.js?v=1.5.5-streets4';
 import { ROAD_SURFACE_CLEARANCE, RoadSurfaceIndex, laneCountFor, reconcileRoadNetworkElevations, roadProfile, roadRibbonCrossSections, resampleRoadLine } from './road-network.js?v=1.5.5-r10';
-import { OfficialDrivableSurfaceIndex, officialSurfaceStatusActive } from './official-road-surfaces.js?v=1.5.5-pavement1';
+import { OfficialDrivableSurfaceIndex, RenderedPavementIndex, officialSurfaceStatusActive, officialBridgeIsVehicular } from './official-road-surfaces.js?v=1.5.6-bridge-use1';
 import { FLY_TUNING, adjustFlySpeedScale, applyFlyLookDelta, dampingFactors, flyAxesFromKeys, flySpeedFor, flyYawToward, isFlyControlCode, wrapFlyYaw } from './fly-controls.js?v=1.5.5-fly4';
 import { clearLandCoverRaster, paintLandCoverPolygon } from './land-cover-raster.js?v=1.5.5-raster1';
 import { sampleOfficialTerrainElevation, validOfficialTerrainMetadata } from './terrain-heightmap.js?v=1.5.5-lidar1';
@@ -28,7 +28,7 @@ import {
   installWorldSurfaceDetail,
   projectedVerticalSliceBounds,
   worldPointInVerticalSlice,
-} from './vertical-slice-quality.js?v=1.5.5-aaa6';
+} from './vertical-slice-quality.js?v=1.5.6-material2';
 import {
   FIRE_STATION_ONE,
   PLAYER_TUNING,
@@ -42,7 +42,7 @@ import {
   gameplayAxesFromKeys,
   headingFromDirection,
   stepFireTruckKinematics,
-} from './gameplay-systems.js?v=1.5.6-station4';
+} from './gameplay-systems.js?v=1.5.6-station5';
 import {
   SEMANTIC_POINT_TYPES,
   createDraftPointFeature,
@@ -50,13 +50,15 @@ import {
   createSemanticSurveyLayer,
   semanticSurveySummary,
   validateSemanticSurvey,
-} from './semantic-survey.js?v=1.5.6-survey3';
+} from './semantic-survey.js?v=1.5.6-planting4';
 
 // Render tiles preserve a useful balance between material batching and
 // camera-local culling. The semantic GIS features remain independent.
 const RENDER_TILE_SIZE = 1800;
 const ROAD_RENDER_TILE_SIZE = 3600;
 const explorerStartedAt = performance.now();
+// Explicit opt-in; no probe allocation or extra citywide queries during play.
+const pavementQA = new URLSearchParams(location.search).has('pavementQA') ? [] : null;
 
 const CITY = {
   name: 'Peterborough, Ontario',
@@ -133,7 +135,7 @@ const els = {
 const REVIEWED_BUILDING_STYLES = Object.freeze({
   'way/1009651229': Object.freeze({
     name: 'Peterborough Fire Station 1',
-    wallMaterial: 'civicBrick',
+    wallMaterial: 'stationBuffBrick',
     wallHeight: 5.75,
     roofHeight: 0.28,
     roofShape: 'flat',
@@ -178,6 +180,7 @@ const state = {
   officialRoadSurfaceCount: 0,
   officialCurbSegmentCount: 0,
   officialDrivableSurfaceIndex: new OfficialDrivableSurfaceIndex(),
+  renderedPavementIndex: new RenderedPavementIndex(),
   officialHydroAvailable: false,
   officialHydroCount: 0,
   roadSurfaceIndex: new RoadSurfaceIndex(),
@@ -423,6 +426,7 @@ const materials = {
   industrialMetal: standard(0x85918f, { roughness: 0.46, metalness: 0.22, side: THREE.DoubleSide }),
   civic: standard(0xa0937b, { side: THREE.DoubleSide }),
   civicBrick: standard(0x80584b, { side: THREE.DoubleSide }),
+  stationBuffBrick: standard(0xa5977b, { side: THREE.DoubleSide }),
   tower: standard(0x718f94, { roughness: 0.32, metalness: 0.1, side: THREE.DoubleSide }),
   roofDark: standard(0x303a3b, { roughness: 0.9 }),
   roofClay: standard(0x70463c, { roughness: 0.92 }),
@@ -479,7 +483,7 @@ const materials = {
 };
 
 [
-  ['residential', 'brick'], ['residentialBrick', 'brick'], ['civicBrick', 'brick'],
+  ['residential', 'brick'], ['residentialBrick', 'brick'], ['civicBrick', 'brick'], ['stationBuffBrick', 'brick'],
   ['residentialPale', 'masonry'], ['residentialSlate', 'masonry'], ['commercial', 'masonry'],
   ['industrial', 'masonry'], ['industrialMetal', 'masonry'], ['civic', 'masonry'], ['tower', 'masonry'],
   ['roofDark', 'roof'], ['roofClay', 'roof'], ['roofMetal', 'roof'],
@@ -3326,7 +3330,7 @@ function appendDrapedOfficialRoadTriangle(target, a, b, c, layer, heightCache, d
   );
 }
 
-function appendOfficialRoadPolygon(polygonCoordinates, layer, batches, heightCache) {
+function appendOfficialRoadPolygon(polygonCoordinates, layer, batches, heightCache, metadata = {}) {
   const sourceRings = polygonCoordinates.map(coordinatesToLandRing).map(cleanRing).filter((ring) => ring.length >= 3);
   if (!sourceRings.length) return 0;
   let outer = sourceRings[0];
@@ -3367,6 +3371,22 @@ function appendOfficialRoadPolygon(polygonCoordinates, layer, batches, heightCac
     appendDrapedOfficialRoadTriangle(batch.positions, a, b, c, layer, heightCache);
   });
   batch.segments += 1;
+  const p = batch.positions;
+  for (let i = before; i < p.length; i += 9) {
+    state.renderedPavementIndex.addTriangle(
+      p[i], p[i + 1], p[i + 2], p[i + 3], p[i + 4], p[i + 5],
+      p[i + 6], p[i + 7], p[i + 8],
+      metadata,
+    );
+    if (pavementQA && state.renderedPavementIndex.triangleCount % 113 === 0 && pavementQA.length < 3000) {
+      pavementQA.push({
+        x: (Math.fround(p[i]) + Math.fround(p[i + 3]) + Math.fround(p[i + 6])) / 3,
+        z: (Math.fround(p[i + 2]) + Math.fround(p[i + 5]) + Math.fround(p[i + 8])) / 3,
+        height: (Math.fround(p[i + 1]) + Math.fround(p[i + 4]) + Math.fround(p[i + 7])) / 3,
+        layer,
+      });
+    }
+  }
   return (batch.positions.length - before) / 9;
 }
 
@@ -3376,10 +3396,12 @@ async function buildOfficialRoadSurfaces(collection, osmBuildingIndex = null) {
   const heightCache = new Map();
   const curbs = [];
   const counts = { road_surfaces: 0, parking_surfaces: 0, bridges: 0, curb_edges: 0 };
+  const excludedBridgeUses = {};
   const municipalBuildingBatches = createBuildingBufferBatches();
   let supplementalBuildings = 0;
   let triangles = 0;
   state.officialDrivableSurfaceIndex = new OfficialDrivableSurfaceIndex();
+  state.renderedPavementIndex = new RenderedPavementIndex();
 
   for (let featureIndex = 0; featureIndex < collection.features.length; featureIndex += 1) {
     if (featureIndex > 0 && featureIndex % 900 === 0) {
@@ -3391,6 +3413,11 @@ async function buildOfficialRoadSurfaces(collection, osmBuildingIndex = null) {
     const layer = String(properties.ptbo_layer || '').toLowerCase();
     const status = String(propertyValue(properties, 'STATUS') || '').toLowerCase();
     if (!officialSurfaceStatusActive(status)) continue;
+    if (layer === 'bridges' && !officialBridgeIsVehicular(properties)) {
+      const use = String(propertyValue(properties, 'BR_USE') || 'Unspecified');
+      excludedBridgeUses[use] = (excludedBridgeUses[use] || 0) + 1;
+      continue;
+    }
     if (layer === 'official_buildings') {
       geometryPolygons(feature).forEach((polygonCoordinates) => {
         const rings = polygonCoordinates.map(coordinatesToRing).filter((ring) => ring.length >= 4);
@@ -3433,7 +3460,10 @@ async function buildOfficialRoadSurfaces(collection, osmBuildingIndex = null) {
     geometryPolygons(feature).forEach((polygon) => {
       const rings = polygon.map(coordinatesToLandRing).map(cleanRing).filter((ring) => ring.length >= 3);
       if (!rings.length) return;
-      triangles += appendOfficialRoadPolygon(polygon, layer, batches, heightCache);
+      triangles += appendOfficialRoadPolygon(polygon, layer, batches, heightCache, {
+        id: feature.id, layer, properties,
+        drivable: layer !== 'parking_surfaces', parking: layer === 'parking_surfaces',
+      });
       state.officialDrivableSurfaceIndex.add(rings, {
         id: feature.id,
         layer,
@@ -3453,8 +3483,29 @@ async function buildOfficialRoadSurfaces(collection, osmBuildingIndex = null) {
   document.documentElement.dataset.officialRoadSurfaces = String(counts.road_surfaces);
   document.documentElement.dataset.officialParkingSurfaces = String(counts.parking_surfaces);
   document.documentElement.dataset.officialBridgeSurfaces = String(counts.bridges);
+  document.documentElement.dataset.excludedBridgeUses = JSON.stringify(excludedBridgeUses);
   document.documentElement.dataset.officialCurbSegments = String(curbs.length);
   document.documentElement.dataset.officialRoadTriangles = String(triangles);
+  document.documentElement.dataset.pavementHeightTriangles = String(state.renderedPavementIndex.triangleCount);
+  if (pavementQA) {
+    let oldMax = 0, newMax = 0, oldSum = 0, newSum = 0, missing = 0;
+    for (const probe of pavementQA) {
+      const oldRoad = state.roadSurfaceIndex.sample(probe.x, probe.z, probe.layer === 'bridges' ? 20 : 15, probe.height);
+      const oldHeight = Math.max(terrainHeightAtWorld(probe.x, probe.z), oldRoad?.height ?? -Infinity);
+      const hit = state.renderedPavementIndex.sample(probe.x, probe.z, probe.height);
+      if (!hit) { missing += 1; continue; }
+      const oldError = Math.abs(oldHeight - probe.height);
+      const newError = Math.abs(hit.height - probe.height);
+      oldSum += oldError; newSum += newError;
+      oldMax = Math.max(oldMax, oldError); newMax = Math.max(newMax, newError);
+    }
+    document.documentElement.dataset.pavementQa = JSON.stringify({
+      samples: pavementQA.length, missing,
+      oldMeanMetres: oldSum / Math.max(1, pavementQA.length - missing), oldMaxMetres: oldMax,
+      meshMeanMetres: newSum / Math.max(1, pavementQA.length - missing), meshMaxMetres: newMax,
+      comparison: 'Legacy centreline/terrain query versus rendered Float32 face centroids; not survey accuracy',
+    });
+  }
   document.documentElement.dataset.supplementalCityBuildings = String(supplementalBuildings);
   globalThis.__PTBO_OFFICIAL_ROADS__ = Object.freeze({ ...counts, curbSegments: curbs.length, triangles });
   globalThis.PeterboroughDrivableSurfaces = Object.freeze({
@@ -3467,25 +3518,14 @@ async function buildOfficialRoadSurfaces(collection, osmBuildingIndex = null) {
     },
     sampleLatLon(lat, lon, options = {}) {
       const point = project(lat, lon);
-      const surface = state.officialDrivableSurfaceIndex.query(point.x, point.y, options);
-      if (!surface) return null;
-      const candidates = state.roadSurfaceIndex.sampleAll(point.x, point.y, surface.layer === 'bridges' ? 20 : 14);
-      const road = surface.layer === 'bridges'
-        ? candidates.find((candidate) => candidate.bridge) || candidates[0]
-        : candidates[0];
-      return { ...surface, height: road?.height ?? terrainHeightAtWorld(point.x, point.y) + ROAD_SURFACE_CLEARANCE };
+      return state.renderedPavementIndex.sample(point.x, point.y, options.referenceHeight, options);
     },
     sampleWorld(x, z, options = {}) {
-      const surface = state.officialDrivableSurfaceIndex.query(x, z, options);
-      if (!surface) return null;
-      const candidates = state.roadSurfaceIndex.sampleAll(x, z, surface.layer === 'bridges' ? 20 : 14);
-      const road = surface.layer === 'bridges'
-        ? candidates.find((candidate) => candidate.bridge) || candidates[0]
-        : candidates[0];
-      return { ...surface, height: road?.height ?? terrainHeightAtWorld(x, z) + ROAD_SURFACE_CLEARANCE };
+      return state.renderedPavementIndex.sample(x, z, options.referenceHeight, options);
     },
     get polygonCount() { return state.officialDrivableSurfaceIndex.polygonCount; },
-    version: '1.5.5-official-pavement',
+    get triangleCount() { return state.renderedPavementIndex.triangleCount; },
+    version: '1.5.6-rendered-pavement',
   });
   return { ...counts, curbSegments: curbs.length, supplementalBuildings, triangles };
 }
@@ -4218,14 +4258,21 @@ function keyboardInputIsBlocked(event) {
 
 function gameplaySurfaceAt(x, z, referenceHeight = null) {
   const terrainY = terrainHeightAtWorld(x, z);
-  const official = state.officialDrivableSurfaceIndex.query(x, z, { includeParking: true });
+  const official = state.renderedPavementIndex.sample(x, z, referenceHeight);
   const tolerance = official?.layer === 'bridges' ? 20 : official ? 15 : 2.2;
   const road = state.roadSurfaceIndex.sample(x, z, tolerance, referenceHeight);
   const onRoad = Boolean(official || road?.onRoad);
   const roadHeight = onRoad && Number.isFinite(road?.height) ? road.height : -Infinity;
+  // A surveyed bridge polygon may overlap an OSM underpass with no separate
+  // municipal face. Keep that lower road only when the actor's height clearly
+  // identifies it; ordinary centimetre-separated overlays use the mesh height.
+  const useLowerRoad = official && road?.onRoad && Number.isFinite(referenceHeight)
+    && (official.layer === 'bridges' || road.bridge) && official.height - road.height > 1
+    && Math.abs(road.height - referenceHeight) + 0.5 < Math.abs(official.height - referenceHeight);
   return {
-    height: Math.max(terrainY, roadHeight),
-    name: road?.name || (official?.parking ? 'Station apron' : onRoad ? 'Peterborough road' : 'Off road'),
+    height: official && !useLowerRoad ? official.height : Math.max(terrainY, roadHeight),
+    heightSource: official && !useLowerRoad ? official.heightSource : road?.onRoad ? 'road-ribbon' : 'terrain',
+    name: road?.name || (official?.parking ? 'Parking / apron' : onRoad ? 'Peterborough road' : 'Off road'),
     onRoad,
     official,
     road,
@@ -4787,6 +4834,12 @@ function updateGameplayHud() {
   els.interactionPrompt.classList.toggle('is-visible', Boolean(prompt));
   document.documentElement.dataset.gameplaySpeedKmh = String(Math.round(Math.abs(truckState.speed) * 3.6));
   document.documentElement.dataset.gameplayOnRoad = String(surface.onRoad);
+  if (pavementQA) {
+    document.documentElement.dataset.gameplayContact = JSON.stringify({
+      mode: state.mode, x: focus.x, z: focus.z, y: focus.y,
+      ground: surface.height, source: surface.heightSource,
+    });
+  }
 }
 
 function enterOrExitVehicle() {
@@ -5213,6 +5266,13 @@ function animate() {
   updateFps();
   atmosphere.mesh.position.copy(camera.position);
   if (sun.castShadow) {
+    // Spend the existing shadow map on human-scale contact detail in gameplay.
+    // Fly/map retain broad coverage; GIS geometry and light direction are intact.
+    const shadowExtent = state.mode === 'onFoot' || state.mode === 'driving' ? 100 : 1450;
+    if (sun.shadow.camera.right !== shadowExtent) {
+      Object.assign(sun.shadow.camera, { left: -shadowExtent, right: shadowExtent, top: shadowExtent, bottom: -shadowExtent });
+      sun.shadow.camera.updateProjectionMatrix();
+    }
     const ground = terrainHeightAtWorld(camera.position.x, camera.position.z);
     sunTarget.position.set(camera.position.x, ground, camera.position.z);
     sun.position.set(camera.position.x - 1200, ground + 2200, camera.position.z + 900);

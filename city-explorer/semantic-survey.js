@@ -303,14 +303,36 @@ function buildPlantingArea(THREE, feature, project, terrainHeightAtWorld, materi
   const maxX = Math.max(...ring.map((point) => point.x));
   const minZ = Math.min(...ring.map((point) => point.z));
   const maxZ = Math.max(...ring.map((point) => point.z));
-  const spacing = lowPower ? 1.35 : 0.85;
+  // The bed is surveyed; individual plants/species are not. Neutral inferred
+  // groundcover replaces unsupported regularly spaced oversized red flowers.
+  root.userData.plantingEvidence = 'surveyed-bed; inferred-neutral-groundcover';
+  const spacing = lowPower ? 0.65 : 0.42;
+  const leaves = [];
   for (let x = minX + 0.45; x < maxX - 0.3; x += spacing) {
     for (let z = minZ + 0.4; z < maxZ - 0.3; z += spacing) {
       if (!pointInRing(x, z, ring)) continue;
-      const flower = addMesh(THREE, root, new THREE.SphereGeometry(0.19, 6, 4), materials.flower, x, terrainHeightAtWorld(x, z) + 0.42, z);
-      flower.scale.y = 0.75;
+      const seed = Math.sin(x * 12.9898 + z * 78.233) * 43758.5453;
+      const jitter = seed - Math.floor(seed);
+      for (let leaf = 0; leaf < 5; leaf += 1) {
+        const angle = leaf * 2.39996 + jitter * 6.28318;
+        leaves.push({ x: x + Math.cos(angle) * 0.10, z: z + Math.sin(angle) * 0.10,
+          y: terrainHeightAtWorld(x, z) + 0.19 + jitter * 0.12,
+          angle, size: 0.8 + jitter * 0.4 });
+      }
     }
   }
+  const foliage = new THREE.InstancedMesh(new THREE.SphereGeometry(1, 5, 3), materials.green, leaves.length);
+  const dummy = new THREE.Object3D();
+  leaves.forEach((leaf, index) => {
+    dummy.position.set(leaf.x, leaf.y, leaf.z);
+    dummy.rotation.set(0.35, leaf.angle, 0.35);
+    dummy.scale.set(0.055 * leaf.size, 0.025, 0.16 * leaf.size);
+    dummy.updateMatrix();
+    foliage.setMatrixAt(index, dummy.matrix);
+  });
+  foliage.receiveShadow = true;
+  foliage.castShadow = true;
+  root.add(foliage);
   return root;
 }
 

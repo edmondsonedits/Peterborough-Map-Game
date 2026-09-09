@@ -6,6 +6,8 @@
   replacement can therefore share one documented set of tuning values.
 */
 
+import { installWorldSurfaceDetail } from './vertical-slice-quality.js?v=1.5.6-material2';
+
 export const FIRE_STATION_ONE = Object.freeze({
   id: 'peterborough-fire-station-1',
   name: 'Peterborough Fire Station 1',
@@ -376,13 +378,17 @@ export function createFireStationFacade(THREE, { project, terrainHeightAtWorld, 
   }
 
   const materials = {
-    brick: standardMaterial(THREE, 0x6f4538, { roughness: 0.94 }),
+    // Buff masonry observed in Evan Holt's 2011 Station 1 exterior photograph.
+    // Approximate albedo, not a colour-calibrated measurement.
+    brick: standardMaterial(THREE, 0xa5977b, { roughness: 0.94 }),
     door: standardMaterial(THREE, 0xb93d3e, { roughness: 0.7, metalness: 0.05 }),
     frame: standardMaterial(THREE, 0x575550, { roughness: 0.72, metalness: 0.12 }),
     glass: standardMaterial(THREE, 0x203b46, { roughness: 0.22, metalness: 0.16 }),
     roof: standardMaterial(THREE, 0x282b29, { roughness: 0.92 }),
   };
   const apparatusFeature = stationSurveyFeature(survey, 'station1-apparatus-facade');
+  installWorldSurfaceDetail(materials.brick, 'brick');
+  installWorldSurfaceDetail(materials.roof, 'roof');
   const entryFeature = stationSurveyFeature(survey, 'station1-entry-facade');
   const officeFeature = stationSurveyFeature(survey, 'station1-office-facade');
   const apparatusFrame = surveyLineFrame(THREE, apparatusFeature, project);

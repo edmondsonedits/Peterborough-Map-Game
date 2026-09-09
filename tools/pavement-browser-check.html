@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><title>Pavement browser check</title>
+<style>body{margin:0;background:#15202a;color:white;font:14px system-ui}button{margin:8px;padding:8px}iframe{width:100%;height:75vh;border:0}pre{white-space:pre-wrap;margin:8px}</style>
+<button id="run" disabled>Drive Station 1 apron test</button>
+<pre id="report">Loading local city…</pre>
+<iframe id="city" src="../city-explorer/?pavementQA=1" title="Peterborough driving test"></iframe>
+<script>
+const city = document.querySelector('#city');
+const run = document.querySelector('#run');
+const report = document.querySelector('#report');
+const key = (code, down) => city.contentWindow.dispatchEvent(new KeyboardEvent(down ? 'keydown' : 'keyup', { code, key: code.slice(3).toLowerCase(), bubbles: true }));
+const pause = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+const ready = setInterval(() => {
+  const data = city.contentDocument?.documentElement.dataset;
+  if (data?.gameplayReady !== 'true') return;
+  clearInterval(ready); run.disabled = false;
+  report.textContent = `Ready. ${data.pavementHeightTriangles} indexed faces.\n${data.pavementQa}`;
+}, 500);
+run.onclick = async () => {
+  run.disabled = true;
+  const samples = [];
+  const data = () => city.contentDocument.documentElement.dataset;
+  const read = () => ({ ...JSON.parse(data().gameplayContact), speed: Number(data().gameplaySpeedKmh) });
+  let timer;
+  try {
+    key('KeyE', true); key('KeyE', false);
+    await pause(250);
+    if (data().gameplayMode !== 'driving') throw new Error('Truck did not enter driving mode');
+    samples.push(read());
+    timer = setInterval(() => samples.push(read()), 50);
+    key('KeyW', true); await pause(2200); key('KeyW', false);
+    key('KeyS', true); await pause(1050); key('KeyS', false);
+    await pause(1200);
+    clearInterval(timer);
+    const first = samples[0], last = samples.at(-1);
+    report.textContent = JSON.stringify({
+      distanceMetres: Math.hypot(last.x - first.x, last.z - first.z),
+      peakSpeedKmh: Math.max(...samples.map(s => s.speed)),
+      samples: samples.length,
+      heightSources: [...new Set(samples.map(s => s.source))],
+      maximumContactOffsetMetres: Math.max(...samples.map(s => Math.abs(s.y - s.ground))),
+      maximumGroundStepMetres: Math.max(...samples.slice(1).map((s,i) => Math.abs(s.ground - samples[i].ground))),
+      final: last,
+      pavement: JSON.parse(data().pavementQa),
+    }, null, 2);
+  } catch (error) { report.textContent = error.stack; }
+  finally { clearInterval(timer); key('KeyW', false); key('KeyS', false); }
+};
+</script></html>

@@ -56,12 +56,18 @@ const SURFACE_FRAGMENTS = Object.freeze({
     diffuseColor.rgb *= aaaShade;
   `,
   brick: `
-    float aaaCourse = step(0.075, fract((vAaaWorldPosition.y + 0.11) / 0.72));
-    float aaaBond = step(0.05, fract((vAaaWorldPosition.x + vAaaWorldPosition.z) / 1.42
-      + floor(vAaaWorldPosition.y / 0.72) * 0.5));
-    float aaaBrick = aaaCourse * aaaBond;
-    float aaaVariation = aaaHash21(floor(vAaaWorldPosition.xz * 0.48) + floor(vAaaWorldPosition.y));
-    diffuseColor.rgb *= mix(vec3(0.79), vec3(mix(0.94, 1.055, aaaVariation)), aaaBrick);
+    // Conservative modular brick, not a measured Station 1 masonry schedule.
+    // World units are metres. Derivative filtering prevents distant moire.
+    vec2 aaaWall = vec2(vAaaWorldPosition.x + vAaaWorldPosition.z, vAaaWorldPosition.y);
+    vec2 aaaGrid = aaaWall / vec2(0.225, 0.075);
+    aaaGrid.x += floor(aaaGrid.y) * 0.5;
+    vec2 aaaCell = fract(aaaGrid);
+    vec2 aaaAA = max(fwidth(aaaGrid), vec2(0.001));
+    vec2 aaaEdge = min(aaaCell, 1.0 - aaaCell);
+    vec2 aaaJoint = smoothstep(vec2(0.018, 0.045) - aaaAA, vec2(0.018, 0.045) + aaaAA, aaaEdge);
+    float aaaBrick = mix(aaaJoint.x * aaaJoint.y, 0.87, smoothstep(0.3, 1.0, max(aaaAA.x, aaaAA.y)));
+    float aaaVariation = aaaHash21(floor(aaaGrid));
+    diffuseColor.rgb *= mix(vec3(0.83, 0.86, 0.85), vec3(mix(0.86, 1.12, aaaVariation)), aaaBrick);
   `,
   masonry: `
     float aaaPanel = aaaHash21(floor(vAaaWorldPosition.xz * 0.34) + floor(vAaaWorldPosition.y * 0.33));
@@ -108,7 +114,7 @@ float aaaHash21(vec2 value) {
         `vec4 diffuseColor = vec4( diffuse, opacity );\n${SURFACE_FRAGMENTS[kind]}`,
       );
   };
-  material.customProgramCacheKey = () => `ptbo-world-surface-${kind}-v1`;
+  material.customProgramCacheKey = () => `ptbo-world-surface-${kind}-v2`;
   material.userData = { ...(material.userData || {}), worldSurfaceDetail: kind };
   material.needsUpdate = true;
   return true;
