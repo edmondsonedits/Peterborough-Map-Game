@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.31';
+  const VERSION = '1.6.32';
   const CITY_RUNTIME_VERSION = '1.6.17';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
@@ -78,6 +78,29 @@
     }
     badge.textContent = LABEL;
     badge.setAttribute('aria-label', `Production version ${VERSION}`);
+  }
+
+  function installTrainingNotice() {
+    if (!document.body || window.top !== window || document.getElementById('ptbo-training-use-notice')) return;
+    const path = location.pathname;
+    const playerSurface = /(?:\/Peterborough-Map-Game\/?$|\/response-simulator\/|\/geo-guesser\/|\/city-explorer\/|\/gta-fire-response\/)/.test(path);
+    const excluded = /\/(?:dispatch-editor|site-stats|legal)\//.test(path);
+    if (!playerSurface || excluded) return;
+
+    let style = document.getElementById('ptbo-training-use-style');
+    if (!style) {
+      style = document.createElement('style');
+      style.id = 'ptbo-training-use-style';
+      style.textContent = '#ptbo-training-use-notice{position:fixed;top:max(8px,env(safe-area-inset-top));right:8px;z-index:2147483646;max-width:190px;padding:7px 9px;border:1px solid rgba(251,113,133,.48);border-radius:10px;background:rgba(69,10,10,.86);box-shadow:0 4px 14px rgba(0,0,0,.28);color:#fff;text-decoration:none;font:700 10px/1.22 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.01em;-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px)}#ptbo-training-use-notice strong{display:block;margin-bottom:2px;color:#fecdd3;font-size:9px;letter-spacing:.08em;text-transform:uppercase}#ptbo-training-use-notice span{color:#f8fafc;font-weight:650}#ptbo-training-use-notice:hover,#ptbo-training-use-notice:focus-visible{border-color:#fda4af;background:rgba(69,10,10,.96);outline:none}@media(max-width:520px){#ptbo-training-use-notice{top:max(5px,env(safe-area-inset-top));right:5px;max-width:145px;padding:5px 7px;font-size:8px}#ptbo-training-use-notice strong{font-size:7px}}';
+      document.head.appendChild(style);
+    }
+
+    const notice = document.createElement('a');
+    notice.id = 'ptbo-training-use-notice';
+    notice.href = new URL('../legal/', SCRIPT_URL).href;
+    notice.innerHTML = '<strong>Training use only</strong><span>Not for live response, navigation, dispatch, or operational decisions.</span>';
+    notice.setAttribute('aria-label', 'Training use only. Not for live response, navigation, dispatch, or operational decisions. Open the full training use notice.');
+    document.body.appendChild(notice);
   }
 
   function injectScript(targetDocument, id, relativeUrl, marker = '', timeoutMs = SCRIPT_TIMEOUT_MS) {
@@ -373,6 +396,7 @@
   function installPageEnhancements() {
     installDeviceSurfaceApi();
     installBadge();
+    installTrainingNotice();
     installSiteAnalytics();
     const isMobile = /\/response-simulator\/mobile\/(?:index\.html)?$/.test(location.pathname);
     if (isMobile && !document.getElementById('ptbo-mobile-dispatch-hud-loader')) {
