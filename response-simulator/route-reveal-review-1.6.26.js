@@ -232,7 +232,7 @@
   install();
 
   const ready = load('ptbo-desktop-fixed-map-default', 'desktop-fixed-map-default-1.6.35.js')
-    .then(() => load('ptbo-desktop-map-follow-toggle', 'desktop-map-follow-toggle-1.6.36.js'))
+    .then(() => load('ptbo-desktop-map-follow-toggle-v1639', 'desktop-map-follow-toggle-1.6.39.js'))
     .then(() => load('ptbo-tutorial-route-grid', 'tutorial-route-grid-1.6.33.js'))
     .catch(error => {
       console.error('Route reveal review bundle failed to initialize.', error);
