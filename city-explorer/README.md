@@ -50,6 +50,7 @@ The browser prefers deployment assets in `city-explorer/data/`. The manifest's g
 - Yellow two-way centrelines, white same-direction dividers and highway edge lines follow the exact sloped road surface and remain spatially culled without source-order truncation
 - One unified junction pass removes the former overlapping major/minor caps, while bridge decks receive distance-based profiles, clearance, smooth network approaches, side skirts and matching rails
 - `road-network.js` exposes the same road profiles, resampling rules and spatial surface-height query used by the renderer; queries accept vehicle height and can return every stacked deck so overpasses do not snap vehicles to the road below
+- Municipal pavement now has a spatial height index built from the exact Float32 triangles sent to WebGL. Player/truck ground queries and `PeterboroughDrivableSurfaces.sampleWorld/sampleLatLon` interpolate those faces, including parking aprons, instead of substituting a nearby centreline's elevation. Pass `referenceHeight` in the public query options to select the current deck at overlapping surfaces; without a hint the highest face is returned. A clearly lower OSM road remains available beneath a mapped bridge, and missing municipal mesh data retains the existing road/terrain fallback.
 - CI reconstructs the deployed Ontario lidar mesh and checks nearly three million pavement points across all 5,947 non-tunnel rendered roads; the current asset retains at least 0.104 m of visible terrain clearance
 - Large terrain-following land and parking polygons are tessellated before elevation sampling, preventing a single coarse triangle from bridging hills as a floating slab
 - Land cover is spatially batched; paths, railways, crossings, bridges, trees, transit furniture, street lights and traffic signals use instanced rendering
@@ -104,6 +105,15 @@ The project now uses a two-stage workflow:
 Use `python tools/geospatial/build_peterborough_assets.py --strict` for a fresh build, or `--reuse-osm --strict` to rebuild derived assets/validation during a temporary Overpass outage. See [`../tools/geospatial/README.md`](../tools/geospatial/README.md) and [`GEOSPATIAL-RESEARCH.md`](GEOSPATIAL-RESEARCH.md).
 
 For the block-by-block visual-audit method and the exact licence boundaries for Ontario orthophotos, Mapillary, Panoramax, City open data, and visual-comparison-only services, see [`LAWFUL-CITY-REFERENCES.md`](LAWFUL-CITY-REFERENCES.md).
+
+## Pavement contact verification
+
+Municipal bridge overlays now respect the source `BR_USE` field: only the 44 explicitly Vehicular records generate official road-deck meshes. The 29 Pedestrian, 4 Railway, 26 Culvert and 4 unspecified records remain in the source inventory but do not become asphalt or enter the municipal drivable index. Their independently mapped OSM paths/rails and road-surface polygons remain unchanged. A culvert's structural footprint is not evidence of pavement extent. `node tools/test_official_bridge_use.mjs` checks every packaged bridge record, including pedestrian crossing `12/101` (The Parkway north of Lansdowne). No deck heights are inferred from the use field; missing bridge-height evidence remains unresolved.
+
+Run `node tools/test_rendered_pavement.mjs` for slope, triangle-edge, seam, stacked-deck, fallback, and gameplay-integration regressions. For a repeatable local browser check, serve the repository and open `tools/pavement-browser-check.html`; its explicit button drives from the Station 1 apron using the game's input handlers and reports contact samples. `city-explorer/?pavementQA=1` enables bounded mesh-centroid diagnostics; ordinary play does not collect those probes.
+
+On the packaged desktop mesh, 2,725 sampled triangle centroids had a legacy centreline/terrain mismatch averaging 0.0474 m (maximum 1.4255 m). The rendered-face sampler matched all of them with maximum error below 0.000000001 m. These numbers measure internal mesh/contact consistency, **not** accuracy against a physical survey or wheel/suspension simulation. No source footprints, centreline coordinates, CRS, vertical datum, or imagery were replaced. Heights of municipal pavement still inherit the existing terrain/ribbon construction and its approximations; mesh overlaps and incorrect real-world bridge grades require separate source-based review.
+
 
 ## Next development milestones
 

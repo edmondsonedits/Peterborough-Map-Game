@@ -27,9 +27,9 @@ const shader = {
 material.onBeforeCompile(shader, null);
 assert.match(shader.vertexShader, /vAaaWorldPosition/);
 assert.match(shader.fragmentShader, /aaaAggregate/);
-assert.equal(material.customProgramCacheKey(), 'ptbo-world-surface-asphalt-v1');
+assert.equal(material.customProgramCacheKey(), 'ptbo-world-surface-asphalt-v2');
 
-for (const [kind, fragmentMarker] of [['grass', 'aaaGrassPatch'], ['water', 'aaaWaterLight']]) {
+for (const [kind, fragmentMarker] of [['brick', 'aaaJoint'], ['grass', 'aaaGrassPatch'], ['water', 'aaaWaterLight']]) {
   const surfaceMaterial = { userData: {}, needsUpdate: false, onBeforeCompile: null };
   assert.equal(installWorldSurfaceDetail(surfaceMaterial, kind), true);
   const surfaceShader = {
@@ -43,6 +43,6 @@ for (const [kind, fragmentMarker] of [['grass', 'aaaGrassPatch'], ['water', 'aaa
 console.log(JSON.stringify({
   status: 'pass',
   heroLocations: 3,
-  deterministicSurfaceShaders: ['asphalt', 'grass', 'water'],
+  deterministicSurfaceShaders: ['asphalt', 'brick', 'grass', 'water'],
   boundedQualityLayer: true,
 }, null, 2));
