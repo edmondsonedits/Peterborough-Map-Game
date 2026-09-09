@@ -1,0 +1,46 @@
+name: v1.6.46 Geo Guesser Map Provider Release
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Apply v1.6.46 Geo Guesser core map policy
+        run: node tools/release-v1.6.46.mjs
+
+      - name: Check Geo Guesser map-provider enforcement
+        run: node --test tests/geo-map-policy.test.cjs
+
+      - name: Check commercial readiness
+        run: node tools/commercial-readiness-audit.mjs
+
+      - name: Verify production regression suite
+        run: |
+          node --test tests/critical-gameplay.test.cjs tests/gearbox.test.cjs tests/camera-zoom.test.cjs tests/ems.test.cjs tests/incident-formatting.test.cjs tests/training-history.test.cjs tests/geo-map-policy.test.cjs tests/analytics-authority.test.cjs tests/analytics-bootstrap.test.cjs tests/analytics-adversarial.test.cjs tests/release-bootstrap-consistency.test.cjs
+          node --test --test-skip-pattern='v1\.6\.31 build uses|main menu exposes|v1\.6\.25 analytics reliably|v1\.6\.28 visual tutorial shows' tests/base-training-cities.test.cjs
+          for pass in 1 2 3 4 5; do node --test tests/ems.test.cjs >/dev/null; done
+
+      - name: Commit v1.6.46 release
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add geo-guesser/index.html shared/build-version.js index.html response-simulator/play/index.html response-simulator/mobile/index.html city-explorer/index.html geo-guesser/desktop/index.html geo-guesser/mobile/index.html geo-guesser/online/index.html tools/commercial-readiness-audit.mjs
+          git commit -m "Release v1.6.46 Geo Guesser core map-provider enforcement"
+          git push origin main
