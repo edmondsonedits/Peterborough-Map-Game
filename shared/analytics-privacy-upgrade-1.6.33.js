@@ -27,6 +27,45 @@
     LEGACY_PERSISTENT_KEYS.forEach(key => safeRemove(localStorage, key));
   }
 
+  function enhanceAnalyticsApi() {
+    const base = window.PTBO_SITE_ANALYTICS;
+    if (!base || base.privacyUpgradeVersion === VERSION) return base;
+    const enhanced = Object.freeze({
+      ...base,
+      version:VERSION,
+      privacyUpgradeVersion:VERSION,
+      loadStats:async () => {
+        const stats = await base.loadStats();
+        const departments = {};
+        for (const [key, value] of Object.entries(stats.launches || {})) {
+          if (!key.startsWith('department_')) continue;
+          const name = key.slice('department_'.length) || 'public_demo';
+          departments[name] = (departments[name] || 0) + Number(value || 0);
+        }
+        const publicDemoSessions = Number(departments.public_demo || 0);
+        const departmentSessions = Object.entries(departments).filter(([key]) => key !== 'public_demo').reduce((sum, [, value]) => sum + Number(value || 0), 0);
+        return Object.freeze({
+          ...stats,
+          departments:Object.freeze(departments),
+          departmentCount:Object.keys(departments).filter(key => key !== 'public_demo').length,
+          departmentSessions,
+          publicDemoSessions,
+          playerSessions:Number(stats.sessions || 0),
+          persistentCrossVisitPlayerId:false,
+          privacyUpgradeVersion:VERSION,
+        });
+      },
+      health:() => Object.freeze({
+        ...(base.health?.() || {}),
+        version:VERSION,
+        department:department(),
+        persistentCrossVisitPlayerId:false,
+      }),
+    });
+    window.PTBO_SITE_ANALYTICS = enhanced;
+    return enhanced;
+  }
+
   function registerDepartment() {
     const api = window.PTBO_SITE_ANALYTICS;
     if (!api?.trackingAllowed?.()) return;
@@ -40,11 +79,13 @@
 
   function install() {
     purgePersistentPlayerIdentity();
+    enhanceAnalyticsApi();
     registerDepartment();
     addEventListener('pagehide', purgePersistentPlayerIdentity, { once:true });
     return true;
   }
 
+  purgePersistentPlayerIdentity();
   window.PTBO_ANALYTICS_PRIVACY = Object.freeze({
     version:VERSION,
     department,
@@ -59,7 +100,7 @@
     const timer = setInterval(() => {
       attempts += 1;
       if (window.PTBO_SITE_ANALYTICS) { clearInterval(timer); install(); }
-      else if (attempts >= 40) clearInterval(timer);
+      else if (attempts >= 80) clearInterval(timer);
     }, 100);
   }
 })();
