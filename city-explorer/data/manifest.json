@@ -192,7 +192,7 @@
     "file": "construction-audit.json",
     "policy": "Only authoritative completed geometry changes alter the packaged city"
   },
-  "generated_at": "2026-09-01T13:32:48+00:00",
+  "generated_at": "2026-09-09T21:47:50+00:00",
   "hydrography": {
     "cache_reused": false,
     "feature_count": 1312,
@@ -223,10 +223,10 @@
     "named_feature_count": 3074
   },
   "osm": {
-    "drivable_road_count": 5957,
-    "element_count": 43070,
+    "drivable_road_count": 5961,
+    "element_count": 43079,
     "file": "peterborough-osm.json",
-    "public_road_count": 2775,
+    "public_road_count": 2778,
     "public_road_file": "osm-public-roads.geojson",
     "road_file": "osm-roads.geojson",
     "source": "OpenStreetMap via Overpass API"
@@ -236,12 +236,12 @@
     "report": "../ROAD-VALIDATION.md",
     "status": "pass",
     "public_osm_to_orn": {
-      "samples": 49756,
-      "mean_m": 6.382,
+      "samples": 49763,
+      "mean_m": 6.381,
       "median_m": 0.639,
-      "p90_m": 2.343,
-      "p95_m": 3.628,
-      "p99_m": 53.794,
+      "p90_m": 2.344,
+      "p95_m": 3.631,
+      "p99_m": 53.78,
       "within_5m_pct": 96.98,
       "within_10m_pct": 98.43,
       "within_20m_pct": 98.72,
@@ -260,9 +260,9 @@
       "within_30m_pct": 98.27
     },
     "street_names": {
-      "checked_segments": 2638,
-      "matching_segments": 2512,
-      "match_pct": 95.22,
+      "checked_segments": 2641,
+      "matching_segments": 2515,
+      "match_pct": 95.23,
       "sample_mismatches": [
         {
           "osm": "ST PATRICK S ST",
