@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.36';
+  const VERSION = '1.6.37';
   const CITY_RUNTIME_VERSION = '1.6.17';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
@@ -206,20 +206,27 @@
 
   function installSiteAnalytics() {
     if (window.top !== window || document.getElementById('ptbo-site-analytics-loader')) return;
-    const script = document.createElement('script');
-    script.id = 'ptbo-site-analytics-loader';
-    script.src = new URL(`site-analytics-1.6.25.js?v=${VERSION}`, SCRIPT_URL).href;
-    script.async = true;
-    script.onload = () => {
-      if (document.getElementById('ptbo-analytics-privacy-loader')) return;
-      const privacy = document.createElement('script');
-      privacy.id = 'ptbo-analytics-privacy-loader';
-      privacy.src = new URL(`analytics-privacy-upgrade-1.6.33.js?v=${VERSION}`, SCRIPT_URL).href;
-      privacy.async = true;
-      document.head.appendChild(privacy);
+
+    const loadBase = () => {
+      if (document.getElementById('ptbo-site-analytics-loader')) return;
+      const script = document.createElement('script');
+      script.id = 'ptbo-site-analytics-loader';
+      script.src = new URL(`site-analytics-1.6.25.js?v=${VERSION}`, SCRIPT_URL).href;
+      script.async = true;
+      script.onerror = () => console.warn('Detailed analytics client could not load.');
+      document.head.appendChild(script);
     };
-    script.onerror = () => console.warn('Detailed analytics client could not load.');
-    document.head.appendChild(script);
+
+    if (document.getElementById('ptbo-analytics-privacy-loader')) { loadBase(); return; }
+    const privacy = document.createElement('script');
+    privacy.id = 'ptbo-analytics-privacy-loader';
+    privacy.src = new URL(`analytics-privacy-upgrade-1.6.33.js?v=${VERSION}`, SCRIPT_URL).href;
+    privacy.async = true;
+    privacy.onload = loadBase;
+    privacy.onerror = () => {
+      console.warn('Analytics privacy policy could not load; analytics will remain unavailable for this page.');
+    };
+    document.head.appendChild(privacy);
   }
 
   function normalizeSimulatorFrameUrl(frame) {
