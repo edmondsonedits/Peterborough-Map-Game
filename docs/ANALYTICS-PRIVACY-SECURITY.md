@@ -1,6 +1,6 @@
 # Analytics Privacy & Security
 
-Release: **v1.6.41**  
+Release: **v1.6.42**  
 Purpose: keep useful department-level product analytics while avoiding unnecessary firefighter identity tracking and public/raw administrative data access.
 
 ## Product policy
@@ -33,7 +33,7 @@ Do not collect for product analytics:
 
 ## Current client behaviour
 
-`shared/analytics-privacy-upgrade-1.6.33.js` contains the active v1.6.40 privacy/authority policy layer. The filename is retained temporarily for compatibility; v1.6.41 hardens how that policy is loaded before the legacy analytics implementation.
+`shared/analytics-privacy-upgrade-1.6.33.js` contains the active v1.6.40 privacy/authority policy layer. The filename is retained temporarily for compatibility; v1.6.42 keeps the privacy-first loader ordering and adds canonical bootstrap cache-version enforcement.
 
 - Public demo analytics remains enabled by default.
 - Department/private/commercial deployments default analytics **off** unless trusted deployment configuration explicitly permits it.
@@ -71,7 +71,7 @@ For analytics decisions, the deployment sets the maximum permitted collection le
 
 A lower-trust source must never override a higher-trust source to increase telemetry or change the trusted department identity.
 
-### v1.6.41 bootstrap ordering
+### v1.6.42 bootstrap and cache ordering
 
 The canonical launcher no longer includes `site-analytics-1.6.25.js` directly. Analytics is started through the shared bootstrap only.
 
@@ -83,9 +83,9 @@ The shared bootstrap now enforces this sequence:
 4. reuse one installation promise if startup is requested more than once
 5. leave analytics unavailable if privacy initialization fails
 
-The page bootstrap also avoids the previous immediate-plus-`DOMContentLoaded` double invocation path. This removes the known v1.6.40 startup race on canonical entry points. Regression tests in `tests/analytics-bootstrap.test.cjs` verify the ordering contract and fail-closed behavior.
+The page bootstrap also avoids the previous immediate-plus-`DOMContentLoaded` double invocation path. This removes the known v1.6.40 startup race on canonical entry points. Regression tests in `tests/analytics-bootstrap.test.cjs` and `tests/analytics-adversarial.test.cjs` verify the ordering contract, delayed-client behavior, storage failure handling, idempotence, and fail-closed behavior.
 
-Manual cache-buster values still exist in older page wrappers. Security-sensitive canonical references are being refreshed as releases touch them, but replacing manual cache versioning with generated release stamping remains a separate planned hardening task.
+Every canonical player surface now has a CI-enforced `build-version.js` cache key matching the production release. `tests/release-bootstrap-consistency.test.cjs` fails deployment if a canonical launcher, simulator wrapper, Geo Guesser surface, or City Explorer falls behind. Historical/archived wrappers may retain their own compatibility versions; generated release stamping remains a future simplification opportunity.
 
 ## Secure commercial architecture
 
