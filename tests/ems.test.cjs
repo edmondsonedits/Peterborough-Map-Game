@@ -18,14 +18,18 @@ function node(id='') {
     addEventListener(){},dispatchEvent(){},appendChild(child){this.children.push(child);},replaceChildren(...children){this.children=children;},
     classList:{add(){},remove(){},toggle(){},contains(){return false;}},querySelector:()=>null,closest:()=>null};
 }
-function game() {
+function game({random=0}={}) {
   let time=0,serial=0;
   const timers=new Map(),intervals=new Map(),elements=new Map(),spoken=[],alerts=[];
+  // Keep dispatch selection deterministic. A randomly selected scene near the hospital can
+  // legitimately complete the transport transition immediately and make unrelated tests flaky.
+  const testMath=Object.create(Math);
+  testMath.random=()=>random;
   const filters=[...html.matchAll(/data-sub="([^"]+)" checked/g)].map(match=>{
     const box=node();box.dataset.sub=match[1];box.attributes['data-sub']=match[1];return box;
   });
   const element=id=>{if(!elements.has(id))elements.set(id,node(id));return elements.get(id);};
-  const c=vm.createContext({console,URL,performance:{now:()=>time},Event:class{},CustomEvent:class{},
+  const c=vm.createContext({console,URL,Math:testMath,performance:{now:()=>time},Event:class{},CustomEvent:class{},
     setTimeout:fn=>{timers.set(++serial,fn);return serial;},clearTimeout:id=>timers.delete(id),
     setInterval:fn=>{intervals.set(++serial,fn);return serial;},clearInterval:id=>intervals.delete(id),
     requestAnimationFrame(){},addEventListener(){},dispatchEvent(){},
