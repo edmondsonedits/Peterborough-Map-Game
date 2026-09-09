@@ -1,14 +1,14 @@
 /* Peterborough city package — authoritative geographic/service configuration. */
 (() => {
   'use strict';
-  const VERSION = '1.6.39';
+  const VERSION = '1.6.47';
   if (window.PTBO_CITY_PACKAGE?.id === 'peterborough' && window.PTBO_CITY_PACKAGE?.version === VERSION) return;
 
   const sourceUrl = new URL(document.currentScript?.src || location.href, location.href);
   const freezeList = list => Object.freeze(list.map(item => Object.freeze({ ...item })));
 
   const fireBases = freezeList([
-    { id:'station-1', number:1, name:'Station 1', shortName:'Station 1', address:'210 Sherbrooke St', lat:44.30102, lng:-78.32202, yardSize:69, yardRotation:2, spawnLat:44.30102, spawnLng:-78.32202, spawnHeading:180 },
+    { id:'station-1', number:1, name:'Station 1', shortName:'Station 1', address:'210 Sherbrooke St', lat:44.30102, lng:-78.32202, yardSize:69, yardRotation:2, spawnLat:44.300906, spawnLng:-78.322196, spawnHeading:177 },
     { id:'station-2', number:2, name:'Station 2', shortName:'Station 2', address:'100 Marina Blvd', lat:44.335266, lng:-78.316657, yardSize:160, yardRotation:0 },
     { id:'station-3', number:3, name:'Station 3', shortName:'Station 3', address:'839 Clonsilla Ave', lat:44.284867, lng:-78.350902, yardSize:160, yardRotation:0 },
   ]);
