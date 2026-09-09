@@ -1,10 +1,10 @@
-/* Mobile route-reveal presentation and exact pre-reveal view restoration.
-   Core behavior remains v1.6.26; dependency bundle revision is v1.6.39. */
+/* Route-reveal presentation and exact pre-reveal view restoration.
+   Core behavior remains v1.6.26; dependency bundle revision is v1.6.48. */
 (() => {
   'use strict';
 
   const VERSION = '1.6.26';
-  const BUNDLE_REVISION = '1.6.39';
+  const BUNDLE_REVISION = '1.6.48';
   if (window.PTBO_ROUTE_REVEAL_REVIEW_LOADER?.version === BUNDLE_REVISION
     && window.PTBO_ROUTE_REVEAL_REVIEW?.version === VERSION) return;
 
@@ -234,6 +234,7 @@
   const ready = load('ptbo-desktop-fixed-map-default', 'desktop-fixed-map-default-1.6.35.js')
     .then(() => load('ptbo-desktop-map-follow-toggle-v1639', 'desktop-map-follow-toggle-1.6.39.js'))
     .then(() => load('ptbo-tutorial-route-grid', 'tutorial-route-grid-1.6.33.js'))
+    .then(() => load('ptbo-response-tablet-v1648', 'response-tablet-1.6.48.js'))
     .catch(error => {
       console.error('Route reveal review bundle failed to initialize.', error);
       throw error;
