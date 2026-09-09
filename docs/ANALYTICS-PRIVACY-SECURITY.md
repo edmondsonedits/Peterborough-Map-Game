@@ -1,6 +1,6 @@
 # Analytics Privacy & Security
 
-Release: **v1.6.37**  
+Release: **v1.6.40**  
 Purpose: keep useful department-level product analytics while avoiding unnecessary firefighter identity tracking and public/raw administrative data access.
 
 ## Product policy
@@ -9,7 +9,7 @@ Emergency Games should measure **how the product is used**, not build individual
 
 Approved analytics categories:
 
-- department/deployment identifier supplied during setup
+- department/deployment identifier supplied through trusted deployment setup
 - anonymous player/session counts
 - session and active-play duration
 - city and Fire/EMS mode usage
@@ -26,19 +26,22 @@ Do not collect for product analytics:
 - exact driven routes or stored GPS traces
 - exact incident/player coordinates
 - IP-derived department identity
+- browser/query-string supplied department identity
 - prompts, room codes or free-form personal text
 - persistent cross-visit browser/player identifiers
 - real operational incident/CAD records unless a separate approved data product is designed and contracted for that purpose
 
 ## Current client behaviour
 
-`shared/analytics-privacy-upgrade-1.6.33.js` is the active privacy policy layer for v1.6.37.
+`shared/analytics-privacy-upgrade-1.6.33.js` contains the active v1.6.40 privacy/authority policy layer. The filename is retained temporarily for compatibility; the policy version is v1.6.40.
 
 - Public demo analytics remains enabled by default.
-- Department/private/commercial deployments default analytics **off**.
-- A department deployment can explicitly enable analytics with `PTBO_DEPLOYMENT.analyticsEnabled = true` after the department has been informed of the telemetry policy.
+- Department/private/commercial deployments default analytics **off** unless trusted deployment configuration explicitly permits it.
+- A department deployment can explicitly permit analytics with `PTBO_DEPLOYMENT.analyticsEnabled = true` after the department has been informed of the telemetry policy.
+- `PTBO_DEPLOYMENT.department` is the only trusted browser-side department label. `?dept=`, `?department=` and previously persisted department labels cannot override it.
+- Browser/runtime controls cannot turn analytics on when deployment policy disallows it.
+- `?analytics=off` and a local runtime opt-out may reduce collection when the deployment permits analytics; lower-trust input cannot increase collection beyond the deployment policy.
 - Persistent legacy visitor identifiers are removed.
-- The privacy policy loads before the legacy analytics client.
 - Administrative stats reads fail closed unless an authenticated secure stats integration is present.
 - Recommended raw/session-detail retention target: **180 days**, followed by deletion or aggregation where practical.
 
@@ -55,7 +58,22 @@ window.PTBO_DEPLOYMENT = {
 </script>
 ```
 
-Do not identify a department by IP address. Give each deployment an explicit organization/deployment ID instead.
+Do not identify a department by IP address or a user-editable URL parameter. Give each deployment an explicit organization/deployment ID instead.
+
+### Authority hierarchy
+
+For analytics decisions, the deployment sets the maximum permitted collection level. Browser-controlled state may only reduce collection.
+
+1. trusted deployment policy
+2. department/application policy defaults
+3. user opt-out where permitted
+4. debug/query input
+
+A lower-trust source must never override a higher-trust source to increase telemetry or change the trusted department identity.
+
+### Known v1.6.40 limitation
+
+The shared build bootstrap loads the privacy policy before its dynamically loaded analytics client. However, the root launcher still contains a direct legacy analytics script include from older releases. Removing that remaining startup race is the planned v1.6.41 hardening step. Until then, v1.6.40 fixes the authority rules themselves but does not claim the load-order race is fully eliminated on every entry path.
 
 ## Secure commercial architecture
 
@@ -120,14 +138,14 @@ Recommended migration order:
 
 The public-demo leaderboard is separate from private department analytics.
 
-v1.6.37:
+Current policy:
 
 - asks for a **nickname / alias**, not a real name
 - limits names to 30 characters
 - disables public leaderboards by default for department/private deployments
 - department nickname storage is session-only
 - validates score/time ranges client-side
-- repository Firestore rules provide schema/range validation for transitional public score creation
+- repository Firestore rules are a target security baseline and must be tested against the final leaderboard query design before deployment
 
 For a larger public launch, move score writes behind Firebase App Check/authenticated or server-side rate-limited submission to reduce spam/abuse risk.
 
