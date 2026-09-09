@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.32';
+  const VERSION = '1.6.33';
   const CITY_RUNTIME_VERSION = '1.6.17';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
@@ -86,7 +86,6 @@
     const playerSurface = /(?:\/Peterborough-Map-Game\/?$|\/response-simulator\/|\/geo-guesser\/|\/city-explorer\/|\/gta-fire-response\/)/.test(path);
     const excluded = /\/(?:dispatch-editor|site-stats|legal)\//.test(path);
     if (!playerSurface || excluded) return;
-
     let style = document.getElementById('ptbo-training-use-style');
     if (!style) {
       style = document.createElement('style');
@@ -94,7 +93,6 @@
       style.textContent = '#ptbo-training-use-notice{position:fixed;top:max(8px,env(safe-area-inset-top));right:8px;z-index:2147483646;max-width:190px;padding:7px 9px;border:1px solid rgba(251,113,133,.48);border-radius:10px;background:rgba(69,10,10,.86);box-shadow:0 4px 14px rgba(0,0,0,.28);color:#fff;text-decoration:none;font:700 10px/1.22 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.01em;-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px)}#ptbo-training-use-notice strong{display:block;margin-bottom:2px;color:#fecdd3;font-size:9px;letter-spacing:.08em;text-transform:uppercase}#ptbo-training-use-notice span{color:#f8fafc;font-weight:650}#ptbo-training-use-notice:hover,#ptbo-training-use-notice:focus-visible{border-color:#fda4af;background:rgba(69,10,10,.96);outline:none}@media(max-width:520px){#ptbo-training-use-notice{top:max(5px,env(safe-area-inset-top));right:5px;max-width:145px;padding:5px 7px;font-size:8px}#ptbo-training-use-notice strong{font-size:7px}}';
       document.head.appendChild(style);
     }
-
     const notice = document.createElement('a');
     notice.id = 'ptbo-training-use-notice';
     notice.href = new URL('../legal/', SCRIPT_URL).href;
@@ -113,41 +111,25 @@
         clearTimeout(timer);
         error ? reject(error) : resolve(script);
       };
-      const timer = setTimeout(
-        () => finish(new Error(`Timed out loading ${relativeUrl} after ${timeoutMs} ms.`)),
-        timeoutMs,
-      );
-
+      const timer = setTimeout(() => finish(new Error(`Timed out loading ${relativeUrl} after ${timeoutMs} ms.`)), timeoutMs);
       const existing = targetDocument.getElementById(id);
       if (existing) {
-        if (existing.src === expected && existing.dataset.ptboLoaded === 'true') {
-          finish(null, existing);
-          return;
-        }
+        if (existing.src === expected && existing.dataset.ptboLoaded === 'true') { finish(null, existing); return; }
         existing.remove();
       }
-
       const script = targetDocument.createElement('script');
       script.id = id;
       script.src = expected;
       script.dataset.ptboVersion = VERSION;
       script.dataset.ptboLoading = 'true';
       if (marker) script.setAttribute(marker, 'true');
-      script.onload = () => {
-        script.dataset.ptboLoading = 'false';
-        script.dataset.ptboLoaded = 'true';
-        finish(null, script);
-      };
-      script.onerror = () => {
-        script.remove();
-        finish(new Error(`Unable to load ${relativeUrl}.`));
-      };
+      script.onload = () => { script.dataset.ptboLoading = 'false'; script.dataset.ptboLoaded = 'true'; finish(null, script); };
+      script.onerror = () => { script.remove(); finish(new Error(`Unable to load ${relativeUrl}.`)); };
       (targetDocument.body || targetDocument.head || targetDocument.documentElement).appendChild(script);
     });
   }
 
-  const injectPageScript = (id, relativeUrl, timeoutMs = SCRIPT_TIMEOUT_MS) =>
-    injectScript(document, id, relativeUrl, '', timeoutMs);
+  const injectPageScript = (id, relativeUrl, timeoutMs = SCRIPT_TIMEOUT_MS) => injectScript(document, id, relativeUrl, '', timeoutMs);
 
   function injectIntoFrame(doc, id, relativeUrl, marker = '', timeoutMs = SCRIPT_TIMEOUT_MS) {
     enhancementStage('injecting-inner-module', relativeUrl);
@@ -158,9 +140,8 @@
   }
 
   async function optionalInnerModule(doc, id, relativeUrl, marker = '', timeoutMs = SCRIPT_TIMEOUT_MS) {
-    try {
-      return await injectIntoFrame(doc, id, relativeUrl, marker, timeoutMs);
-    } catch (error) {
+    try { return await injectIntoFrame(doc, id, relativeUrl, marker, timeoutMs); }
+    catch (error) {
       traceWarn('Enhancement loader: optional module skipped', `${relativeUrl} — ${error?.message || error}`);
       return null;
     }
@@ -190,11 +171,7 @@
 
   function installDeviceSurfaceApi() {
     if (window.PTBO_DEVICE_SURFACE?.version === VERSION) return window.PTBO_DEVICE_SURFACE;
-    window.PTBO_DEVICE_SURFACE = Object.freeze({
-      version:VERSION,
-      isMobile:prefersMobileSurface,
-      preferred:() => prefersMobileSurface() ? 'mobile' : 'desktop',
-    });
+    window.PTBO_DEVICE_SURFACE = Object.freeze({ version:VERSION, isMobile:prefersMobileSurface, preferred:() => prefersMobileSurface() ? 'mobile' : 'desktop' });
     return window.PTBO_DEVICE_SURFACE;
   }
 
@@ -202,10 +179,8 @@
     const isDesktop = /\/response-simulator\/play\/(?:index\.html)?$/.test(location.pathname);
     const isMobile = /\/response-simulator\/mobile\/(?:index\.html)?$/.test(location.pathname);
     if (!isDesktop && !isMobile) return false;
-
     const wantsMobile = prefersMobileSurface();
     if ((wantsMobile && isMobile) || (!wantsMobile && isDesktop)) return false;
-
     const target = new URL(wantsMobile ? '../mobile/' : '../play/', location.href);
     target.search = location.search;
     target.searchParams.set('city', selectedCityId());
@@ -224,11 +199,19 @@
   }
 
   function installSiteAnalytics() {
-    if (window.top !== window || window.PTBO_SITE_ANALYTICS?.version === VERSION || document.getElementById('ptbo-site-analytics-loader')) return;
+    if (window.top !== window || document.getElementById('ptbo-site-analytics-loader')) return;
     const script = document.createElement('script');
     script.id = 'ptbo-site-analytics-loader';
     script.src = new URL(`site-analytics-1.6.25.js?v=${VERSION}`, SCRIPT_URL).href;
     script.async = true;
+    script.onload = () => {
+      if (document.getElementById('ptbo-analytics-privacy-loader')) return;
+      const privacy = document.createElement('script');
+      privacy.id = 'ptbo-analytics-privacy-loader';
+      privacy.src = new URL(`analytics-privacy-upgrade-1.6.33.js?v=${VERSION}`, SCRIPT_URL).href;
+      privacy.async = true;
+      document.head.appendChild(privacy);
+    };
     script.onerror = () => console.warn('Detailed analytics client could not load.');
     document.head.appendChild(script);
   }
@@ -245,13 +228,8 @@
       url.searchParams.set('v', VERSION);
       frame.dataset.ptboCityUrlVersion = VERSION;
       frame.dataset.ptboCity = cityId;
-      if (changed) {
-        enhancementStage('normalizing-iframe-url', url.href);
-        frame.src = url.href;
-      }
-    } catch (error) {
-      traceWarn('Enhancement loader: iframe URL normalization failed', error);
-    }
+      if (changed) { enhancementStage('normalizing-iframe-url', url.href); frame.src = url.href; }
+    } catch (error) { traceWarn('Enhancement loader: iframe URL normalization failed', error); }
   }
 
   function setCityLoadingCopy() {
@@ -267,16 +245,13 @@
     const isMobile = /\/response-simulator\/mobile\/(?:index\.html)?$/.test(location.pathname);
     if (!isDesktop && !isMobile) return;
     if (redirectWrongSimulatorSurface()) return;
-
     const frame = document.getElementById('simulator');
     if (!frame) return;
     enhancementStage('response-simulator-detected', isMobile ? 'mobile' : 'desktop');
     normalizeSimulatorFrameUrl(frame);
     setCityLoadingCopy();
-
     if (frame.dataset.ptboEnhancementLoader === VERSION) return;
     frame.dataset.ptboEnhancementLoader = VERSION;
-
     let installPromise = null;
     let installedDocument = null;
 
@@ -286,94 +261,38 @@
       if (!doc || !game) return Promise.resolve();
       if (installPromise && installedDocument === doc) return installPromise;
       installedDocument = doc;
-
       installPromise = (async () => {
         try {
           enhancementStage('iframe-attached', selectedCityId());
           game.PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION = CITY_RUNTIME_VERSION;
-
-          await injectIntoFrame(
-            doc,
-            'ptbo-simulator-readiness',
-            `../response-simulator/simulator-readiness-1.6.17.js?v=${VERSION}`,
-            'data-ptbo-simulator-readiness',
-            15000,
-          );
-          await injectIntoFrame(
-            doc,
-            'ptbo-city-runtime-bootstrap',
-            `../response-simulator/city-runtime-bootstrap-1.6.17.js?v=${VERSION}`,
-          );
-
+          await injectIntoFrame(doc, 'ptbo-simulator-readiness', `../response-simulator/simulator-readiness-1.6.17.js?v=${VERSION}`, 'data-ptbo-simulator-readiness', 15000);
+          await injectIntoFrame(doc, 'ptbo-city-runtime-bootstrap', `../response-simulator/city-runtime-bootstrap-1.6.17.js?v=${VERSION}`);
           enhancementStage('waiting-city-runtime', `protocol v${CITY_RUNTIME_VERSION}`);
           await Promise.race([
             Promise.resolve(game.PTBO_CITY_RUNTIME_READY),
             sleep(15000).then(() => { throw new Error('City runtime readiness timed out after 15000 ms.'); }),
           ]);
           if (game.PTBO_CITY_RUNTIME_ERROR) throw game.PTBO_CITY_RUNTIME_ERROR;
-
           const city = game.PTBO_CITY_PACKAGE;
           const baseTraining = Boolean(city?.features?.baseTraining || city?.dispatch?.available === false);
           traceOk('Enhancement loader: city runtime accepted', city?.name || selectedCityId());
-
-          if (baseTraining) {
-            void optionalInnerModule(
-              doc,
-              'ptbo-base-training-mode',
-              `../response-simulator/base-training-mode-1.6.8.js?v=${VERSION}`,
-              '',
-              6000,
-            );
-          }
-
+          if (baseTraining) void optionalInnerModule(doc, 'ptbo-base-training-mode', `../response-simulator/base-training-mode-1.6.8.js?v=${VERSION}`, '', 6000);
           if (isMobile) {
-            void optionalInnerModule(
-              doc,
-              'ptbo-directional-drive-zoom-loader',
-              `../response-simulator/directional-drive-zoom-1.5.8.js?v=${VERSION}`,
-              '',
-              6000,
-            );
-            void optionalInnerModule(
-              doc,
-              'ptbo-mobile-ui-layout-loader',
-              `../response-simulator/mobile-ui-layout-1.5.9.js?v=${VERSION}`,
-              '',
-              6000,
-            );
+            void optionalInnerModule(doc, 'ptbo-directional-drive-zoom-loader', `../response-simulator/directional-drive-zoom-1.5.8.js?v=${VERSION}`, '', 6000);
+            void optionalInnerModule(doc, 'ptbo-mobile-ui-layout-loader', `../response-simulator/mobile-ui-layout-1.5.9.js?v=${VERSION}`, '', 6000);
           }
-
           await Promise.all([
-            optionalInnerModule(
-              doc,
-              'ptbo-satellite-map-loader',
-              `../response-simulator/satellite-map-1.5.6.js?v=${VERSION}`,
-              '',
-              10000,
-            ),
-            optionalInnerModule(
-              doc,
-              'ptbo-route-reveal-review-loader',
-              `../response-simulator/route-reveal-review-1.6.26.js?v=${VERSION}`,
-              '',
-              6000,
-            ),
-            optionalInnerModule(
-              doc,
-              'ptbo-quick-tutorial-loader',
-              `../response-simulator/quick-tutorial-1.6.28.js?v=${VERSION}`,
-              '',
-              6000,
-            ),
+            optionalInnerModule(doc, 'ptbo-satellite-map-loader', `../response-simulator/satellite-map-1.5.6.js?v=${VERSION}`, '', 10000),
+            optionalInnerModule(doc, 'ptbo-route-reveal-review-loader', `../response-simulator/route-reveal-review-1.6.26.js?v=${VERSION}`, '', 6000),
+            optionalInnerModule(doc, 'ptbo-quick-tutorial-loader', `../response-simulator/quick-tutorial-1.6.28.js?v=${VERSION}`, '', 6000),
+            optionalInnerModule(doc, 'ptbo-simulated-incident-loader', `../response-simulator/simulated-incident-notice-1.6.33.js?v=${VERSION}`, '', 6000),
           ]);
-
           if (game.PTBO_SATELLITE_MAP_READY) {
             await Promise.race([
               Promise.resolve(game.PTBO_SATELLITE_MAP_READY).catch(error => traceWarn('Satellite map readiness rejected', error)),
               sleep(10000).then(() => traceWarn('Satellite map readiness timed out; continuing')),
             ]);
           }
-
           enhancementStage('complete', city?.name || selectedCityId());
           traceOk('Enhancement loader complete');
         } catch (error) {
@@ -384,12 +303,7 @@
       })();
       return installPromise;
     };
-
-    frame.addEventListener('load', () => {
-      installPromise = null;
-      installedDocument = null;
-      installInsideFrame();
-    });
+    frame.addEventListener('load', () => { installPromise = null; installedDocument = null; installInsideFrame(); });
     if (frame.contentDocument?.readyState === 'complete') setTimeout(installInsideFrame, 0);
   }
 
@@ -412,10 +326,7 @@
 
   enhancementStage('started', LABEL);
   if (document.body) installPageEnhancements();
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', installPageEnhancements, {once:true});
-  } else if (!document.body) {
-    installPageEnhancements();
-  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', installPageEnhancements, {once:true});
+  else if (!document.body) installPageEnhancements();
   console.info(`Production build ${LABEL} initialized with city runtime protocol v${CITY_RUNTIME_VERSION}.`);
 })();
