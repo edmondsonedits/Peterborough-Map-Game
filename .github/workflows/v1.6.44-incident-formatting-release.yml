@@ -1,0 +1,84 @@
+name: v1.6.44 Incident Formatting Release
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Apply v1.6.44 release wiring
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const VERSION = '1.6.44';
+
+          function rewrite(file, transform) {
+            const before = fs.readFileSync(file, 'utf8');
+            const after = transform(before);
+            if (after === before) throw new Error(`${file}: expected v1.6.44 transformation did not change the file`);
+            fs.writeFileSync(file, after);
+            console.log(`${file}: updated`);
+          }
+
+          rewrite('shared/build-version.js', text => {
+            let next = text.replace(/const VERSION = '\d+\.\d+\.\d+';/, `const VERSION = '${VERSION}';`);
+            const oldLoader = "optionalInnerModule(doc, 'ptbo-sensitive-location-loader', `../response-simulator/sensitive-location-framing-1.6.34.js?v=${VERSION}`, '', 6000),";
+            const newLoader = "optionalInnerModule(doc, 'ptbo-incident-formatting-loader', `../response-simulator/incident-formatting-1.6.44.js?v=${VERSION}`, '', 6000),";
+            if (!next.includes(oldLoader)) throw new Error('Legacy sensitive-location loader anchor changed');
+            next = next.replace(oldLoader, newLoader);
+            return next;
+          });
+
+          for (const file of [
+            'index.html',
+            'response-simulator/play/index.html',
+            'response-simulator/mobile/index.html',
+            'geo-guesser/index.html',
+            'city-explorer/index.html',
+          ]) {
+            rewrite(file, text => text.replace(/build-version\.js\?v=\d+\.\d+\.\d+/g, `build-version.js?v=${VERSION}`));
+          }
+
+          for (const file of [
+            'geo-guesser/desktop/index.html',
+            'geo-guesser/mobile/index.html',
+            'geo-guesser/online/index.html',
+          ]) {
+            rewrite(file, text => text
+              .replace(/build-version\.js\?v=\d+\.\d+\.\d+/g, `build-version.js?v=${VERSION}`)
+              .replace(/const VERSION\s*=\s*'\d+\.\d+\.\d+'/, `const VERSION = '${VERSION}'`));
+          }
+          NODE
+
+      - name: Check central incident formatting
+        run: node --test tests/incident-formatting.test.cjs
+
+      - name: Verify production regression suite
+        run: |
+          node --test tests/critical-gameplay.test.cjs tests/gearbox.test.cjs tests/camera-zoom.test.cjs tests/ems.test.cjs tests/incident-formatting.test.cjs tests/analytics-authority.test.cjs tests/analytics-bootstrap.test.cjs tests/analytics-adversarial.test.cjs tests/release-bootstrap-consistency.test.cjs
+          node --test --test-skip-pattern='v1\.6\.31 build uses|main menu exposes|v1\.6\.25 analytics reliably|v1\.6\.28 visual tutorial shows' tests/base-training-cities.test.cjs
+          for pass in 1 2 3 4 5; do node --test tests/ems.test.cjs >/dev/null; done
+
+      - name: Commit v1.6.44 release
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add shared/build-version.js index.html response-simulator/play/index.html response-simulator/mobile/index.html geo-guesser/index.html geo-guesser/desktop/index.html geo-guesser/mobile/index.html geo-guesser/online/index.html city-explorer/index.html
+          git commit -m "Release v1.6.44 central incident formatting"
+          git push origin main
