@@ -1,7 +1,7 @@
 /* Generic Fire/EMS base store. Supports synchronous Peterborough data and asynchronous base-training city packages. */
 (() => {
   'use strict';
-  const VERSION = '1.6.47';
+  const VERSION = '1.6.48';
   if (window.PTBO_BASE_STORE_VERSION === VERSION && window.PTBO_BASE_STORE) return;
 
   const config = window.PTBO_SERVICE_CONFIG;
@@ -230,7 +230,7 @@
   // The dispatch editor helper owns the interactive base-area and vehicle-spawn editing overlays.
   try {
     if (/\/dispatch-editor\/(?:index\.html)?$/.test(runtimeLocation.pathname) && document.readyState === 'loading' && typeof document.write === 'function') {
-      const helperUrl = new URL('../dispatch-editor/spawn-box-editor-1.6.47.js?v=1.6.47', sourceUrl).href;
+      const helperUrl = new URL('../dispatch-editor/spawn-box-editor-1.6.48.js?v=1.6.48', sourceUrl).href;
       document.write(`<script src="${helperUrl.replace(/&/g,'&amp;')}"><\/script>`);
     }
   } catch (error) {
