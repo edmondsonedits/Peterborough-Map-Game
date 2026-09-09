@@ -100,6 +100,13 @@
     return `https://static-map-tiles-api.arcgis.com/arcgis/rest/services/static-basemap-tiles-service/v1/arcgis/imagery/labels/static/tile/{z}/{y}/{x}?token=${token}`;
   }
 
+  function authenticatedImageryTile(url) {
+    const match = String(url || '').match(/World_Imagery\/MapServer\/tile\/(\d+)\/(\d+)\/(\d+)/i);
+    if (!match || !arcgisConfigured()) return BLANK_TILE;
+    const token = encodeURIComponent(config().arcgisAccessToken);
+    return `https://ibasemaps-api.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/${match[1]}/${match[2]}/${match[3]}?token=${token}`;
+  }
+
   function guardLeafletTileLayer() {
     if (!window.L?.tileLayer || window.L.tileLayer.__ptboCommercialMapPolicyVersion === VERSION) return;
     const original = window.L.tileLayer;
@@ -166,6 +173,37 @@
     window.L.tileLayer = guarded;
   }
 
+  // The satellite zoom warmer uses new Image().src directly, bypassing Leaflet.
+  // Guard those preload requests too so commercial mode cannot silently fetch
+  // the legacy public Esri endpoints after the visible layers were secured.
+  function guardImagePreloads() {
+    if (!commercialMode() || !window.Image || window.Image.__ptboCommercialMapPolicyVersion === VERSION) return;
+    const NativeImage = window.Image;
+    const descriptor = window.HTMLImageElement && Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, 'src');
+    if (!descriptor?.get || !descriptor?.set) return;
+
+    function GuardedImage(width, height) {
+      const image = new NativeImage(width, height);
+      Object.defineProperty(image, 'src', {
+        configurable:true,
+        enumerable:true,
+        get() { return descriptor.get.call(image); },
+        set(value) {
+          let next = String(value || '');
+          if (isEsriImageryUrl(next)) next = authenticatedImageryTile(next);
+          else if (isEsriLabelsUrl(next)) next = BLANK_TILE; // Labels still load normally through the authenticated Leaflet layer.
+          descriptor.set.call(image, next);
+        },
+      });
+      return image;
+    }
+
+    GuardedImage.prototype = NativeImage.prototype;
+    Object.setPrototypeOf(GuardedImage, NativeImage);
+    Object.defineProperty(GuardedImage, '__ptboCommercialMapPolicyVersion', { value:VERSION });
+    window.Image = GuardedImage;
+  }
+
   function guardLegacySelector() {
     const select = document.getElementById('layer-select');
     if (!select || select.dataset.ptboCommercialMapGuard === VERSION) return;
@@ -197,6 +235,7 @@
   function enforce() {
     removeUnavailableOptions();
     guardLeafletTileLayer();
+    guardImagePreloads();
     guardLegacySelector();
     window.PTBO_MAP_READINESS = readiness();
   }
