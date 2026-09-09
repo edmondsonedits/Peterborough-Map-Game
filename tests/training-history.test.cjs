@@ -9,6 +9,7 @@ const vm = require('node:vm');
 const root = path.resolve(__dirname, '..');
 const formatterSource = fs.readFileSync(path.join(root, 'response-simulator/incident-formatting-1.6.44.js'), 'utf8');
 const historySource = fs.readFileSync(path.join(root, 'response-simulator/training-history-1.6.45.js'), 'utf8');
+const simulatorSource = fs.readFileSync(path.join(root, 'response-simulator/index.html'), 'utf8');
 
 function storage({ failWrites = false } = {}) {
   const values = new Map();
@@ -159,4 +160,12 @@ test('summary reports calls, sessions, EMS transports and average response', () 
     emsTransports: 1,
     averageResponseSeconds: 15,
   });
+});
+
+test('the simulator completion path emits exactly one history snapshot hook', () => {
+  const matches = simulatorSource.match(/PTBO_TRAINING_HISTORY\?\.recordCompletion/g) || [];
+  assert.equal(matches.length, 1);
+  assert.match(simulatorSource, /PTBO_PENDING_TRAINING_HISTORY/);
+  assert.match(simulatorSource, /responseMs:\s*mission\.responseMs/);
+  assert.match(simulatorSource, /transportMs:\s*mission\.transportMs/);
 });
