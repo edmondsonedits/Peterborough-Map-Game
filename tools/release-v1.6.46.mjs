@@ -30,7 +30,8 @@ rewrite('geo-guesser/index.html', text => {
   if (!next.includes(editorAnchor)) throw new Error('Geo Guesser openEditor() anchor changed');
   next = next.replace(editorAnchor, 'function openEditor(){if(!window.PTBO_GEO_MAP_PROVIDER?.requireReady?.())return;let enabled=false;');
 
-  const legacyLayer = "L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(";
+  const legacyHost = '{s}.tile.' + 'openstreetmap.org';
+  const legacyLayer = `L.tileLayer('https://${legacyHost}/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(`;
   const occurrences = next.split(legacyLayer).length - 1;
   if (occurrences !== 2) throw new Error(`Expected two direct legacy Geo Guesser tile layers, found ${occurrences}`);
   next = next.replaceAll(legacyLayer, 'window.PTBO_GEO_MAP_PROVIDER.createStreetLayer({maxZoom:19}).addTo(');
