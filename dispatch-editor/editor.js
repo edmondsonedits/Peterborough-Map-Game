@@ -3,7 +3,7 @@
 (() => {
   'use strict';
   const $=id=>document.getElementById(id),calls=window.PTBO_DISPATCH_STORE,bases=window.PTBO_BASE_STORE,changes=window.PTBO_LOCATION_CHANGES;
-  let mode='calls',locations=[],callSeed=[],selectedId=null,draft=null,placing=null,preview=null,roads=null,ready=false;
+  let mode='calls',locations=[],callSeed=[],selectedId=null,draft=null,placing=null,preview=null,roads=null,ready=false,selectionBusy=false;
   const deployment=window.PTBO_DEPLOYMENT||{},mapConfig={...(deployment.map||{}),...(window.PTBO_MAP_CONFIG||{})},deploymentMode=String(deployment.mode||'').toLowerCase();
   const commercial=deployment.commercial===true||deployment.private===true||['department','commercial','private'].includes(deploymentMode);
   const blankTile='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
@@ -49,15 +49,19 @@
   function setMode(next){closeEditor();mode=next;$('search').value='';document.querySelectorAll('[data-mode]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.mode===mode)));$('main-filter').hidden=mode!=='calls';$('sub-filter').hidden=mode!=='calls';$('hide-confirmed').closest('label').hidden=mode!=='calls';$('add-call').hidden=mode==='hospital';$('add-map').hidden=mode==='hospital';$('add-call').textContent=mode==='bases'?'Add Base':'Add Call';$('editor-notice').textContent=mode==='calls'?'Verify call positions and mark accurate locations as confirmed.':mode==='bases'?'Edit Fire and EMS bases. Drag and resize the drivable area box, then place the vehicle spawn inside it.':'Move the EMS hospital drop-off and adjust its arrival radius. Keep it on a reachable road.';render();fit();}
   function fit(){const list=filtered();if(list.length)map.fitBounds(L.latLngBounds(list.flatMap(x=>mode==='bases'?bases.corners(x):[[x.lat,x.lng]])).pad(.15),{maxZoom:18});}
   function select(id,pan=true){
+    if(selectionBusy)return;
     const x=allItems().find(item=>item.id===id);if(!x)return;
-    closeEditor();selectedId=id;draft={...x};
+    selectionBusy=true;
+    try {
+      closeEditor();selectedId=id;draft={...x};
     if(mode==='calls'){
       $('editor-title').textContent='Edit call';$('editor-id').textContent=x.id;
       $('f-main').value=x.main;updateSubs($('f-sub'),x.main,x.sub);
       for(const field of ['name','addr','lat','lng','radius','district'])$('f-'+field).value=x[field];
       $('f-city-ten').checked=Boolean(x.cityTen);$('f-confirmed').checked=Boolean(x.confirmed);$('editor').classList.remove('hidden');previewCall();
     }else{openBase(x);}
-    if(pan)map.setView([x.lat,x.lng],18);render();
+      if(pan)map.setView([x.lat,x.lng],18);render();
+    } finally { selectionBusy=false; }
   }
   function openBase(x){
     const hospital=mode==='hospital';$('base-title').textContent=hospital?'Hospital drop-off':selectedId?'Edit base':'Add base';$('base-id').textContent=x.id;
