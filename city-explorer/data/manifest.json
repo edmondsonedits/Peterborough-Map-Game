@@ -192,7 +192,7 @@
     "file": "construction-audit.json",
     "policy": "Only authoritative completed geometry changes alter the packaged city"
   },
-  "generated_at": "2026-09-09T21:47:50+00:00",
+  "generated_at": "2026-09-10T18:05:32+00:00",
   "hydrography": {
     "cache_reused": false,
     "feature_count": 1312,
