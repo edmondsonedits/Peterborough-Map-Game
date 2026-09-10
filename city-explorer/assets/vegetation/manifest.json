@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "family": "illustrative-broadleaf",
+  "seed": 41073,
+  "generator": "tools/blender/build_city_vegetation.py",
+  "blender": "5.2.0 LTS",
+  "provenance": "Original procedural geometry; inferred appearance, not a surveyed tree or species identification.",
+  "coordinate_system": "GLB +Y up; meters; origin at trunk ground contact",
+  "materials_per_lod": 1,
+  "textures": 0,
+  "palette_linear_rgba": {
+    "bark": [
+      0.19,
+      0.125,
+      0.075,
+      1.0
+    ],
+    "leaf_shadow": [
+      0.075,
+      0.17,
+      0.045,
+      1.0
+    ],
+    "leaf_mid": [
+      0.15,
+      0.28,
+      0.075,
+      1.0
+    ],
+    "leaf_sun": [
+      0.25,
+      0.37,
+      0.11,
+      1.0
+    ]
+  },
+  "assets": [
+    {
+      "lod": 0,
+      "file": "broadleaf-lod0.glb",
+      "mesh": "Broadleaf_LOD0",
+      "triangles": 816,
+      "bytes": 86536,
+      "dimensions_xyz_blender_m": [
+        6.205676555633545,
+        5.687771320343018,
+        7.889452934265137
+      ],
+      "suggested_distance_m": 0
+    },
+    {
+      "lod": 1,
+      "file": "broadleaf-lod1.glb",
+      "mesh": "Broadleaf_LOD1",
+      "triangles": 184,
+      "bytes": 21180,
+      "dimensions_xyz_blender_m": [
+        5.830262184143066,
+        5.228794574737549,
+        7.811887741088867
+      ],
+      "suggested_distance_m": 85
+    },
+    {
+      "lod": 2,
+      "file": "broadleaf-lod2.glb",
+      "mesh": "Broadleaf_LOD2",
+      "triangles": 36,
+      "bytes": 4732,
+      "dimensions_xyz_blender_m": [
+        4.910521984100342,
+        4.8395514488220215,
+        7.736574172973633
+      ],
+      "suggested_distance_m": 190
+    }
+  ]
+}

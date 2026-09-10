@@ -1,4 +1,8 @@
 import * as THREE from 'three';
+import { installQualityCapture } from './quality-capture.js?v=1.6.56';
+import { buildingFacadePlan } from './building-archetypes.js?v=1.6.56';
+import { loadVegetationAssets } from './vegetation-assets.js?v=1.6.56';
+import { installStationApron } from './site-surface-materials.js?v=1.6.56';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import {
   LANDMARKS,
@@ -57,6 +61,7 @@ import {
 const RENDER_TILE_SIZE = 1800;
 const ROAD_RENDER_TILE_SIZE = 3600;
 const explorerStartedAt = performance.now();
+let captureFrame = null;
 // Explicit opt-in; no probe allocation or extra citywide queries during play.
 const pavementQA = new URLSearchParams(location.search).has('pavementQA') ? [] : null;
 
@@ -427,6 +432,7 @@ const materials = {
   civic: standard(0xa0937b, { side: THREE.DoubleSide }),
   civicBrick: standard(0x80584b, { side: THREE.DoubleSide }),
   stationBuffBrick: standard(0xa5977b, { side: THREE.DoubleSide }),
+  stationRoof: standard(0xa3a7a2, { roughness: 0.96, side: THREE.DoubleSide }),
   tower: standard(0x718f94, { roughness: 0.32, metalness: 0.1, side: THREE.DoubleSide }),
   roofDark: standard(0x303a3b, { roughness: 0.9 }),
   roofClay: standard(0x70463c, { roughness: 0.92 }),
@@ -486,11 +492,12 @@ const materials = {
   ['residential', 'brick'], ['residentialBrick', 'brick'], ['civicBrick', 'brick'], ['stationBuffBrick', 'brick'],
   ['residentialPale', 'masonry'], ['residentialSlate', 'masonry'], ['commercial', 'masonry'],
   ['industrial', 'masonry'], ['industrialMetal', 'masonry'], ['civic', 'masonry'], ['tower', 'masonry'],
-  ['roofDark', 'roof'], ['roofClay', 'roof'], ['roofMetal', 'roof'],
+  ['roofDark', 'roof'], ['roofClay', 'roof'], ['roofMetal', 'roof'], ['stationRoof', 'roof'],
   ['roadHighway', 'asphalt'], ['roadArterial', 'asphalt'], ['roadCollector', 'asphalt'],
   ['roadLocal', 'asphalt'], ['roadService', 'asphalt'], ['roadTunnel', 'asphalt'], ['officialRoad', 'asphalt'], ['parking', 'asphalt'],
   ['park', 'grass'], ['grass', 'grass'], ['residentialLand', 'grass'], ['water', 'water'],
 ].forEach(([materialKey, detailKind]) => installWorldSurfaceDetail(materials[materialKey], detailKind));
+['roadService', 'officialRoad', 'parking'].forEach((key) => installStationApron(materials[key], project));
 document.documentElement.dataset.verticalSliceQuality = 'downtown-little-lake-v1';
 document.documentElement.dataset.qualityShadows = sun.castShadow ? 'pcf-soft-2048' : 'mobile-off';
 
@@ -829,6 +836,8 @@ function initializeLandCoverRaster(terrainGeometry) {
   const mesh = new THREE.Mesh(geometry, material);
   mesh.receiveShadow = !lowPowerProfile;
   mesh.renderOrder = -20;
+  installWorldSurfaceDetail(material, 'asphalt');
+  installStationApron(material, project);
   mesh.userData = { type: 'terrain-land-cover-raster', textureSize: dimension };
   terrainGroup.add(mesh);
 
@@ -937,6 +946,8 @@ function createTerrainMesh(hydroSurfaceIndex = null) {
   }
   geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
   const mesh = new THREE.Mesh(geometry, new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 1, metalness: 0 }));
+  installWorldSurfaceDetail(mesh.material, 'grass');
+  installStationApron(mesh.material, project);
   mesh.receiveShadow = !lowPowerProfile;
   mesh.userData.type = 'terrain';
   terrainGroup.add(mesh);
@@ -1507,9 +1518,60 @@ function appendRingWalls(target, ring, bottomHeights, lowerHeight, upperHeight) 
 
 const FACADE_DETAIL_QUAD_LIMIT = lowPowerProfile ? 32000 : 132000;
 let facadeDetailQuads = 0;
+let prototypeFacadeQuads = 0;
+let prototypeRoadContextReady = false;
+const prototypeFacadeQueue = [];
+function flushPrototypeFacades() {
+  prototypeRoadContextReady = true;
+  for (const args of prototypeFacadeQueue) appendPrototypeFacade(...args);
+  prototypeFacadeQueue.length = 0;
+}
+
+// Bounded pilot: GIS still owns volumes; these inferred panels add visual use
+// and frontage grammar. No doors/windows are claimed as surveyed features.
+function appendPrototypeFacade(outer, tags, featureId, foundationTop, wallTop, batches, anchor) {
+  const station = project(44.3010, -78.32212);
+  if (Math.hypot(anchor.x - station.x, anchor.y - station.y) > 190) return false;
+  if (!prototypeRoadContextReady) {
+    prototypeFacadeQueue.push([outer, tags, featureId, foundationTop, wallTop, batches, anchor]);
+    return true;
+  }
+  const area = THREE.ShapeUtils.area(outer);
+  const outwardSign = area > 0 ? 1 : -1;
+  let frontEdge = -1;
+  let nearestRoad = Infinity;
+  outer.forEach((a, edge) => {
+    const b = outer[(edge + 1) % outer.length];
+    const road = state.roadSurfaceIndex.sample((a.x + b.x) / 2, (a.y + b.y) / 2, 35);
+    if (road && road.distance < nearestRoad && a.distanceTo(b) > 3) { frontEdge = edge; nearestRoad = road.distance; }
+  });
+  outer.forEach((a, edge) => {
+    const b = outer[(edge + 1) % outer.length];
+    const length = a.distanceTo(b);
+    const plan = buildingFacadePlan({ tags, featureId, edgeLength: length, wallHeight: wallTop - foundationTop,
+      edgeIndex: edge, footprintArea: Math.abs(area), lite: lowPowerProfile, front: edge === frontEdge });
+    for (const panel of plan.panels) {
+      if (prototypeFacadeQuads >= (lowPowerProfile ? 6500 : 20000)) break;
+      const ux = (b.x - a.x) / length, uz = (b.y - a.y) / length;
+      const nx = uz * outwardSign, nz = -ux * outwardSign;
+      const mx = a.x + ux * length * panel.t + nx * panel.offset;
+      const mz = a.y + uz * length * panel.t + nz * panel.offset;
+      const half = panel.width / 2;
+      const bottom = foundationTop + panel.lowerY, top = foundationTop + panel.upperY;
+      appendQuad(batchPositions(batches, panel.materialKey, anchor),
+        new THREE.Vector3(mx - ux * half, bottom, mz - uz * half),
+        new THREE.Vector3(mx + ux * half, bottom, mz + uz * half),
+        new THREE.Vector3(mx + ux * half, top, mz + uz * half),
+        new THREE.Vector3(mx - ux * half, top, mz - uz * half));
+      prototypeFacadeQuads += 1;
+    }
+  });
+  document.documentElement.dataset.prototypeFacadeQuads = String(prototypeFacadeQuads);
+  return true;
+}
 
 function appendFacadePanel(target, a, b, center, t, width, lowerY, upperY) {
-  if (facadeDetailQuads >= FACADE_DETAIL_QUAD_LIMIT || upperY - lowerY < 0.35) return false;
+  if (facadeDetailQuads >= FACADE_DETAIL_QUAD_LIMIT || upperY - lowerY < 0.04) return false;
   const dx = b.x - a.x;
   const dz = b.y - a.y;
   const length = Math.hypot(dx, dz);
@@ -1538,6 +1600,7 @@ function appendFacadePanel(target, a, b, center, t, width, lowerY, upperY) {
 }
 
 function appendBuildingFacadeDetails(outer, tags, featureId, foundationTop, wallTop, dimensions, batches, anchor) {
+  if (appendPrototypeFacade(outer, tags, featureId, foundationTop, wallTop, batches, anchor)) return;
   if (facadeDetailQuads >= FACADE_DETAIL_QUAD_LIMIT || dimensions.height < 3.1) return;
   const detailClass = facadeDetailClass(tags);
   if (detailClass === 'none') return;
@@ -1622,7 +1685,7 @@ function appendBufferedBuilding(rings, tags, featureId, batches) {
   const roofTop = wallTop + dimensions.roofHeight;
   const anchor = polygonCentroid(outer);
   const wallKey = buildingMaterialKey(tags, dimensions.height + dimensions.minHeight + dimensions.roofHeight, featureId);
-  const roofKey = roofMaterialKey(tags, wallKey);
+  const roofKey = featureId === 'way/1009651229' ? 'stationRoof' : roofMaterialKey(tags, wallKey);
   const wallPositions = batchPositions(batches, wallKey, anchor);
   const roofPositions = batchPositions(batches, roofKey, anchor);
 
@@ -3824,11 +3887,12 @@ async function parseOsmWithGeoJson(data) {
 
   finalizeRoadLines(roadLines, lineBuckets, roadBatches);
   buildBufferedLandBatches(landBatches);
-  buildBufferedBuildingBatches(buildingBatches);
   buildInstancedLines(lineBuckets.path, 'path');
   buildInstancedLines(lineBuckets.railway, 'railway');
   const roadSegments = lineBuckets.major.concat(lineBuckets.minor);
   buildRoadSurfaceIndex(roadSegments);
+  flushPrototypeFacades();
+  buildBufferedBuildingBatches(buildingBatches);
   buildMapRoadLines(roadSegments);
   if (!state.officialRoadSurfacesAvailable) {
     buildRoadJunctions(roadSegments);
@@ -3908,11 +3972,12 @@ function parseOsmWayFallback(data) {
     }
   }
   finalizeRoadLines(roadLines, lineBuckets, roadBatches);
-  buildBufferedBuildingBatches(buildingBatches);
   buildInstancedLines(lineBuckets.path, 'path');
   buildInstancedLines(lineBuckets.railway, 'railway');
   const roadSegments = lineBuckets.major.concat(lineBuckets.minor);
   buildRoadSurfaceIndex(roadSegments);
+  flushPrototypeFacades();
+  buildBufferedBuildingBatches(buildingBatches);
   buildMapRoadLines(roadSegments);
   if (!state.officialRoadSurfacesAvailable) {
     buildRoadJunctions(roadSegments);
@@ -4210,6 +4275,7 @@ async function buildCity() {
     });
   }
   if (qaParams.get('survey') === '1') activateSemanticSurveyMode(true);
+  captureFrame = installQualityCapture({ THREE, renderer, camera, state, project, terrainHeightAtWorld, stopMotion: stopFlyMotion, overlay: semanticSurveyOverlay, lowPower: lowPowerProfile, startedAt: explorerStartedAt });
   setTimeout(() => els.loading.classList.add('is-hidden'), 420);
 }
 
@@ -5005,6 +5071,28 @@ async function initializeSemanticSurvey() {
       terrainHeightAtWorld,
       lowPower: lowPowerProfile,
     });
+    // Optional authored appearance loads after the complete procedural fallback.
+    // Failure never blocks terrain, roads or gameplay readiness.
+    loadVegetationAssets().then((family) => {
+      if (!family) return;
+      let replaced = 0;
+      semanticSurveyGroup.children.forEach((tree) => {
+        if (tree.userData?.type !== 'semantic-tree') return;
+        const lod = new THREE.LOD();
+        family.lods.filter((level) => !lowPowerProfile || level.lod > 0).forEach((level, index) => {
+          const mesh = new THREE.Mesh(level.geometry, level.material);
+          mesh.castShadow = !lowPowerProfile;
+          mesh.receiveShadow = true;
+          lod.addLevel(mesh, index === 0 ? 0 : level.distance);
+        });
+        tree.children.forEach((child) => { child.visible = false; });
+        tree.add(lod);
+        lod.updateMatrixWorld(true);
+        tree.userData.appearanceEvidence = family.provenance;
+        replaced += 1;
+      });
+      document.documentElement.dataset.authoredVegetationCount = String(replaced);
+    });
     semanticSurveyOverlay = createOrthophotoOverlay({
       THREE,
       definition: collection.metadata.reference_overlay,
@@ -5156,7 +5244,7 @@ function updateFps() {
 const FAR_BUILDING_DETAIL_MATERIALS = new Set([
   'facadeTrim', 'storefrontGlass', 'windowGlass', 'windowWarm',
 ]);
-const BUILDING_ROOF_MATERIALS = new Set(['roofDark', 'roofClay', 'roofMetal']);
+const BUILDING_ROOF_MATERIALS = new Set(['roofDark', 'roofClay', 'roofMetal', 'stationRoof']);
 const NEAR_STREETSCAPE_TYPES = new Set([
   'official-curb-ribbons', 'terrain-following-urban-curbs',
   'mapped-turn-arrows', 'mapped-crossing-bars', 'mapped-crossing-lines', 'mapped-crossing-dots',
@@ -5280,7 +5368,8 @@ function animate() {
   }
   citySplatLayer?.update(camera, performance.now());
   if (animatedFountain) animatedFountain.scale.y = 1 + Math.sin(performance.now() * 0.0018) * 0.018;
-  renderer.render(scene, camera);
+  renderer.render(scene, captureFrame?.camera || camera);
+  captureFrame?.(performance.now());
   animationFrameId = requestAnimationFrame(animate);
 }
 

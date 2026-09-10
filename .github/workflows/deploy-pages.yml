@@ -30,7 +30,7 @@ jobs:
           node-version: 22
 
       - name: Normalize production release
-        run: node scripts/normalize-release-1.6.55.cjs
+        run: node scripts/normalize-release-1.6.56.cjs
 
       - name: Check gameplay regressions
         run: |

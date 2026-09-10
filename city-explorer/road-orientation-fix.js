@@ -44,7 +44,7 @@ globalThis.showPeterboroughExplorerFatalError = showFatalError;
 
 try {
   globalThis.__PTBO_EXPLORER_BOOTSTRAP__?.touch?.('loading 3D city module');
-  await import('./app.js?v=1.5.6-station-material2');
+  await import('./app.js?v=1.6.56');
 } catch (error) {
   showFatalError(error);
 }

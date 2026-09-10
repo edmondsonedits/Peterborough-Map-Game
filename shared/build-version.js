@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.49';
+  const VERSION = '1.6.56';
   const CITY_RUNTIME_VERSION = '1.6.17';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
