@@ -1,5 +1,6 @@
 /** Opt-in repeatable visual evidence. No effect on normal gameplay. */
 export const STATION_VIEWS = Object.freeze({
+  '08': { lat: 44.30080, lon: -78.32212, altitude: 0.85, distance: 12, bearing: 90, pitch: 0, fov: 65 },
   '01': { lat: 44.3010, lon: -78.32212, altitude: 170, distance: 0.01, bearing: 180, pitch: -Math.PI / 2, fov: 50 },
   '02': { lat: 44.300893, lon: -78.322265, altitude: 2.0, distance: 32, bearing: 178, pitch: 0.03, fov: 52 },
   '03': { lat: 44.30088, lon: -78.32201, altitude: 2.0, distance: 29, bearing: 145, pitch: 0.025, fov: 52 },
@@ -40,6 +41,12 @@ export function installQualityCapture({ THREE, renderer, camera, state, project,
     camera.updateMatrixWorld(true);
     if (overlay) overlay.visible = params.get('capture') === '07';
   }
+  // Ground-level seam inspection must not inherit the fly controller's 5m floor.
+  const groundInspection = params.get('capture') === '08';
+  if (groundInspection) {
+    camera = mainCamera.clone();
+    camera.updateMatrixWorld(true);
+  }
   const times = [];
   let previous = 0;
   let first = 0;
@@ -70,6 +77,6 @@ export function installQualityCapture({ THREE, renderer, camera, state, project,
       });
     }
   };
-  capture.camera = orthographic ? camera : null;
+  capture.camera = orthographic || groundInspection ? camera : null;
   return capture;
 }

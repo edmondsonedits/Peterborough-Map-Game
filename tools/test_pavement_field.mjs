@@ -1,0 +1,30 @@
+import assert from 'node:assert/strict';
+import { createPavementField, conformPavementTriangles } from '../city-explorer/pavement-continuity.js';
+const close = (a,b) => assert.ok(Math.abs(a-b)<1e-8, `${a} != ${b}`);
+const plane = (x,z) => 10 + .02*x + .01*z;
+let calls = 0;
+const field = createPavementField({ center: {x:0,z:0}, heightAt: (x,z) => {calls++;return plane(x,z);} });
+for (const [x,z] of [[0,0],[-3.7,8.4],[3.9,3.9],[201,0]]) close(field.sample(x,z),plane(x,z));
+field.sample(1,1); const count=calls; field.sample(1,1); assert.equal(calls,count);
+const input = [-7,30,-5, 15,31,-5, -7,29,17];
+const original=input.slice();
+const result = conformPavementTriangles(input,field);
+assert.deepEqual(input,original);
+const area = p => {let sum=0;for(let i=0;i<p.length;i+=9)sum+=Math.abs((p[i+3]-p[i])*(p[i+8]-p[i+2])-(p[i+5]-p[i+2])*(p[i+6]-p[i]))/2;return sum;};
+close(area(result),area(input));
+for(let i=0;i<result.length;i+=3) close(result[i+1],plane(result[i],result[i+2]));
+const outside = [300,1,300, 304,2,300, 300,3,304];
+assert.deepEqual(conformPavementTriangles(outside,field,{offset:2}),outside);
+const crossing = [-300,2,-300, 300,3,-300, -300,4,300];
+close(area(conformPavementTriangles(crossing,field)),area(crossing));
+const curved = createPavementField({center:{x:0,z:0},heightAt:(x,z)=>Math.sin(x/10)+Math.cos(z/11)});
+const conformed = conformPavementTriangles(input,curved,{offset:.02});
+for(let i=0;i<conformed.length;i+=9){
+  const x=(conformed[i]+conformed[i+3]+conformed[i+6])/3;
+  const z=(conformed[i+2]+conformed[i+5]+conformed[i+8])/3;
+  close((conformed[i+1]+conformed[i+4]+conformed[i+7])/3,curved.sample(x,z)+.02);
+}
+close(field.weight(200,0),1);close(field.weight(220,0),.5);close(field.weight(240,0),0);
+assert.throws(()=>createPavementField({center:{x:0,z:0},spacing:0,heightAt:plane}));
+assert.throws(()=>conformPavementTriangles([0,0,0],field));
+console.log(JSON.stringify({status:'pass',areaPreserved:true,planarGradePreserved:true,commonCellPlanes:true,outsideUnchanged:true,triangles:result.length/9}));

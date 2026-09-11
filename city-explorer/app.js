@@ -1,4 +1,6 @@
 import * as THREE from 'three';
+import { reconcileStationPavement } from './station-pavement-layer.js?v=1.6.57';
+import { CURB_REVEAL, curbIsRaised, stationRoadWeight, splitRoadDetailSegment, pavementSupportBottom } from './station-road-detail.js?v=1.6.58';
 import { installQualityCapture } from './quality-capture.js?v=1.6.56';
 import { buildingFacadePlan } from './building-archetypes.js?v=1.6.56';
 import { loadVegetationAssets } from './vegetation-assets.js?v=1.6.56';
@@ -2234,6 +2236,13 @@ function groupSegmentsByTile(segments) {
 
 function buildInstancedLines(segments, bucket) {
   if (!segments.length) return;
+  if (bucket === 'sidewalk') {
+    const local = segments.filter(segment => stationRoadDetailWeight(segment.a.x, segment.a.y) && stationRoadDetailWeight(segment.b.x, segment.b.y));
+    buildStationSidewalkRibbons(local.flatMap(segment => splitRoadDetailSegment(segment)));
+    const replaced = new Set(local);
+    segments = segments.filter(segment => !replaced.has(segment));
+    if (!segments.length) return;
+  }
   const thickness = bucket === 'path' ? 0.16 : bucket === 'curb' ? 0.14 : bucket === 'railway' ? 0.28 : 0.34;
   const material = bucket === 'path'
       ? materials.path
@@ -2254,8 +2263,19 @@ function buildInstancedLines(segments, bucket) {
     const midpoint = new THREE.Vector3();
     tileSegments.forEach((segment, index) => {
       const elevationOffset = bucket === 'path' || bucket === 'sidewalk' || bucket === 'trail' ? 0.2 : bucket === 'curb' ? 0.21 : 0.13;
-      const aY = Number.isFinite(segment.aY) ? segment.aY : terrainHeightAtWorld(segment.a.x, segment.a.y) + elevationOffset;
-      const bY = Number.isFinite(segment.bY) ? segment.bY : terrainHeightAtWorld(segment.b.x, segment.b.y) + elevationOffset;
+      let aY = Number.isFinite(segment.aY) ? segment.aY : terrainHeightAtWorld(segment.a.x, segment.a.y) + elevationOffset;
+      let bY = Number.isFinite(segment.bY) ? segment.bY : terrainHeightAtWorld(segment.b.x, segment.b.y) + elevationOffset;
+      if (bucket === 'sidewalk') {
+        for (const [point, key] of [[segment.a, 'a'], [segment.b, 'b']]) {
+          const weight = stationRoadDetailWeight(point.x, point.y);
+          const pavement = weight && stationAdjacentPavementHeight(point.x, point.y);
+          if (Number.isFinite(pavement) && weight) {
+            const old = key === 'a' ? aY : bY;
+            const aligned = old + weight * (pavement + CURB_REVEAL - thickness / 2 - old);
+            if (key === 'a') aY = aligned; else bY = aligned;
+          }
+        }
+      }
       direction.set(segment.b.x - segment.a.x, bY - aY, segment.b.y - segment.a.y);
       const length = Math.max(0.1, direction.length());
       direction.normalize();
@@ -2275,7 +2295,63 @@ function buildInstancedLines(segments, bucket) {
   state.objectCount += segments.length;
 }
 
+function buildStationSidewalkRibbons(segments) {
+  if (!segments.length) return;
+  const joints = new Map();
+  const key = point => `${point.x.toFixed(5)}:${point.y.toFixed(5)}`;
+  for (const segment of segments) {
+    const dx = segment.b.x - segment.a.x, dz = segment.b.y - segment.a.y;
+    const length = Math.hypot(dx, dz);
+    segment.normal = { x: dz / length, z: -dx / length };
+    for (const point of [segment.a, segment.b]) {
+      if (!joints.has(key(point))) joints.set(key(point), []);
+      joints.get(key(point)).push(segment.normal);
+    }
+  }
+  const corners = (point, segment) => {
+    // Shared mitered joins replace overlapping tilted boxes. Align reversed
+    // source lines before averaging; clamp acute corners to avoid long spikes.
+    const normal = segment.normal;
+    const sum = joints.get(key(point)).reduce((total, n) => {
+      const sign = n.x * normal.x + n.z * normal.z < 0 ? -1 : 1;
+      return { x: total.x + n.x * sign, z: total.z + n.z * sign };
+    }, { x: 0, z: 0 });
+    const magnitude = Math.hypot(sum.x, sum.z) || 1;
+    sum.x /= magnitude; sum.z /= magnitude;
+    const width = segment.width / 2 / Math.max(0.7, sum.x * normal.x + sum.z * normal.z);
+    const oldTop = terrainHeightAtWorld(point.x, point.y) + 0.37;
+    const pavement = stationAdjacentPavementHeight(point.x, point.y);
+    const top = Number.isFinite(pavement)
+      ? oldTop + stationRoadDetailWeight(point.x, point.y) * (pavement + CURB_REVEAL - oldTop) : oldTop;
+    return [new THREE.Vector3(point.x + sum.x * width, top, point.y + sum.z * width),
+      new THREE.Vector3(point.x - sum.x * width, top, point.y - sum.z * width)];
+  };
+  const positions = [];
+  const triangle = (a, b, c) => positions.push(...a.toArray(), ...b.toArray(), ...c.toArray());
+  for (const segment of segments) {
+    const [al, ar] = corners(segment.a, segment), [bl, br] = corners(segment.b, segment);
+    triangle(al, ar, br); triangle(al, br, bl);
+    const edges = [[bl, al], [ar, br]];
+    if (joints.get(key(segment.a)).length === 1) edges.push([al, ar]);
+    if (joints.get(key(segment.b)).length === 1) edges.push([br, bl]);
+    for (const [a, b] of edges) {
+      const bottomA = a.clone(); bottomA.y = pavementSupportBottom(a.y, terrainHeightAtWorld(a.x, a.z));
+      const bottomB = b.clone(); bottomB.y = pavementSupportBottom(b.y, terrainHeightAtWorld(b.x, b.z));
+      triangle(a, b, bottomB); triangle(a, bottomB, bottomA);
+    }
+  }
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  geometry.computeVertexNormals(); geometry.computeBoundingSphere();
+  const mesh = new THREE.Mesh(geometry, materials.sidewalk);
+  mesh.receiveShadow = !lowPowerProfile;
+  mesh.userData = { type: 'station-sidewalk-ribbons', inferredCrossSection: true, segments: segments.length };
+  roadGroup.add(mesh);
+  state.objectCount += segments.length;
+}
+
 function buildOfficialCurbRibbons(segments) {
+  segments = segments.flatMap(segment => segment.stationDetail ? splitRoadDetailSegment(segment) : [segment]);
   const batches = new Map();
   for (const segment of segments) {
     const dx = segment.b.x - segment.a.x;
@@ -2288,10 +2364,15 @@ function buildOfficialCurbRibbons(segments) {
     const key = `${tile.x}:${tile.z}`;
     if (!batches.has(key)) batches.set(key, { tile, positions: [], segments: 0 });
     const batch = batches.get(key);
-    const aTop = segment.aY;
-    const bTop = segment.bY;
-    const aBottom = aTop - 0.11;
-    const bBottom = bTop - 0.11;
+    const aTop = segment.stationDetail ? stationCurbTop(segment.a, segment.aY) : segment.aY;
+    const bTop = segment.stationDetail ? stationCurbTop(segment.b, segment.bY) : segment.bY;
+    const depth = segment.stationDetail ? CURB_REVEAL + 0.03 : 0.11;
+    const aBottom = segment.stationDetail ? pavementSupportBottom(aTop, Math.min(
+      terrainHeightAtWorld(segment.a.x + sideX, segment.a.y + sideZ),
+      terrainHeightAtWorld(segment.a.x - sideX, segment.a.y - sideZ)), depth) : aTop - depth;
+    const bBottom = segment.stationDetail ? pavementSupportBottom(bTop, Math.min(
+      terrainHeightAtWorld(segment.b.x + sideX, segment.b.y + sideZ),
+      terrainHeightAtWorld(segment.b.x - sideX, segment.b.y - sideZ)), depth) : bTop - depth;
     const alx = segment.a.x + sideX;
     const alz = segment.a.y + sideZ;
     const arx = segment.a.x - sideX;
@@ -2302,12 +2383,16 @@ function buildOfficialCurbRibbons(segments) {
     const brz = segment.b.y - sideZ;
     appendRoadTriangle(batch.positions, alx, aTop, alz, arx, aTop, arz, brx, bTop, brz);
     appendRoadTriangle(batch.positions, alx, aTop, alz, brx, bTop, brz, blx, bTop, blz);
-    if (!lowPowerProfile) {
+    if (!lowPowerProfile || segment.stationDetail) {
       // The pavement-facing wall is concealed by asphalt. Retaining only the
       // visible outer curb face saves two triangles per surveyed segment while
       // preserving the exact top and roadside silhouette.
       appendRoadTriangle(batch.positions, alx, aBottom, alz, blx, bBottom, blz, blx, bTop, blz);
       appendRoadTriangle(batch.positions, alx, aBottom, alz, blx, bTop, blz, alx, aTop, alz);
+      if (segment.stationDetail) {
+        appendRoadTriangle(batch.positions, arx, aBottom, arz, arx, aTop, arz, brx, bTop, brz);
+        appendRoadTriangle(batch.positions, arx, aBottom, arz, brx, bTop, brz, brx, bBottom, brz);
+      }
     }
     batch.segments += 1;
   }
@@ -3353,13 +3438,40 @@ function officialRoadHeightAt(x, z, layer = 'road_surfaces') {
   return Math.max(road?.height ?? -Infinity, terrainY + ROAD_SURFACE_CLEARANCE) + surfaceOffset;
 }
 
+function stationRoadDetailWeight(x, z) {
+  return stationRoadWeight(x, z, project(44.3010, -78.32212));
+}
+
+function stationAdjacentPavementHeight(x, z) {
+  // Sample the actual rendered faces, not a second independently draped slab.
+  // Search nearest first: sidewalks are normally outside the pavement polygon.
+  const direct = state.renderedPavementIndex?.sample(x, z, null, { includeParking: false });
+  if (direct && direct.layer !== 'bridges') return direct.height;
+  for (const radius of [0.25, 0.5, 1, 2, 3, 4]) {
+    const heights = [];
+    for (let i = 0; i < 16; i += 1) {
+      const angle = i * Math.PI / 8;
+      const hit = state.renderedPavementIndex?.sample(x + Math.cos(angle) * radius, z + Math.sin(angle) * radius, null, { includeParking: false });
+      if (hit && hit.layer !== 'bridges') heights.push(hit.height);
+    }
+    if (heights.length) return heights.reduce((sum, height) => sum + height, 0) / heights.length;
+  }
+  return null;
+}
+
+function stationCurbTop(point, fallback) {
+  const pavement = stationAdjacentPavementHeight(point.x, point.y);
+  if (!Number.isFinite(pavement)) return fallback;
+  return fallback + stationRoadDetailWeight(point.x, point.y) * (pavement + CURB_REVEAL - fallback);
+}
+
 function cachedOfficialRoadHeightAt(cache, point, layer) {
   const key = `${layer}:${Math.round(point.x * 1000)}:${Math.round(point.y * 1000)}`;
   if (!cache.has(key)) cache.set(key, officialRoadHeightAt(point.x, point.y, layer));
   return cache.get(key);
 }
 
-function appendDrapedOfficialRoadTriangle(target, a, b, c, layer, heightCache, depth = 0) {
+function appendDrapedOfficialRoadTriangle(target, a, b, c, layer, heightCache, depth = 0, localDetail = null) {
   const ab = a.distanceToSquared(b);
   const bc = b.distanceToSquared(c);
   const ca = c.distanceToSquared(a);
@@ -3368,20 +3480,28 @@ function appendDrapedOfficialRoadTriangle(target, a, b, c, layer, heightCache, d
   // These surveyed polygons own the horizontal silhouette, so one subdivision
   // per terrain cell is sufficient and avoids spending mobile GPU time on
   // nearly coplanar triangles that add no visible plan accuracy.
-  const maximumEdge = lowPowerProfile ? 48 : layer === 'parking_surfaces' ? 42 : 36;
-  if (longest > maximumEdge * maximumEdge && depth < 9) {
+  if (localDetail === null) {
+    const center = project(44.3010, -78.32212);
+    const closestX = Math.max(Math.min(a.x, b.x, c.x), Math.min(center.x, Math.max(a.x, b.x, c.x)));
+    const closestZ = Math.max(Math.min(a.y, b.y, c.y), Math.min(center.y, Math.max(a.y, b.y, c.y)));
+    localDetail = layer !== 'bridges' && Math.hypot(closestX - center.x, closestZ - center.y) < 240;
+  }
+  // Keep the decision for all children: no change of resolution partway down
+  // a shared source edge. Local road-level traversal needs more than 36–48 m faces.
+  const maximumEdge = localDetail ? 8 : lowPowerProfile ? 48 : layer === 'parking_surfaces' ? 42 : 36;
+  if (longest > maximumEdge * maximumEdge && depth < (localDetail ? 20 : 9)) {
     if (longest === ab) {
       const midpoint = a.clone().lerp(b, 0.5);
-      appendDrapedOfficialRoadTriangle(target, a, midpoint, c, layer, heightCache, depth + 1);
-      appendDrapedOfficialRoadTriangle(target, midpoint, b, c, layer, heightCache, depth + 1);
+      appendDrapedOfficialRoadTriangle(target, a, midpoint, c, layer, heightCache, depth + 1, localDetail);
+      appendDrapedOfficialRoadTriangle(target, midpoint, b, c, layer, heightCache, depth + 1, localDetail);
     } else if (longest === bc) {
       const midpoint = b.clone().lerp(c, 0.5);
-      appendDrapedOfficialRoadTriangle(target, a, b, midpoint, layer, heightCache, depth + 1);
-      appendDrapedOfficialRoadTriangle(target, a, midpoint, c, layer, heightCache, depth + 1);
+      appendDrapedOfficialRoadTriangle(target, a, b, midpoint, layer, heightCache, depth + 1, localDetail);
+      appendDrapedOfficialRoadTriangle(target, a, midpoint, c, layer, heightCache, depth + 1, localDetail);
     } else {
       const midpoint = c.clone().lerp(a, 0.5);
-      appendDrapedOfficialRoadTriangle(target, a, b, midpoint, layer, heightCache, depth + 1);
-      appendDrapedOfficialRoadTriangle(target, midpoint, b, c, layer, heightCache, depth + 1);
+      appendDrapedOfficialRoadTriangle(target, a, b, midpoint, layer, heightCache, depth + 1, localDetail);
+      appendDrapedOfficialRoadTriangle(target, midpoint, b, c, layer, heightCache, depth + 1, localDetail);
     }
     return;
   }
@@ -3458,6 +3578,7 @@ async function buildOfficialRoadSurfaces(collection, osmBuildingIndex = null) {
   const batches = new Map();
   const heightCache = new Map();
   const curbs = [];
+  const pavementPolygons = [];
   const counts = { road_surfaces: 0, parking_surfaces: 0, bridges: 0, curb_edges: 0 };
   const excludedBridgeUses = {};
   const municipalBuildingBatches = createBuildingBufferBatches();
@@ -3511,9 +3632,11 @@ async function buildOfficialRoadSurfaces(collection, osmBuildingIndex = null) {
           const a = points[index - 1];
           const b = points[index];
           if (a.distanceTo(b) < 0.25) continue;
+          const stationDetail = Boolean(stationRoadDetailWeight(a.x, a.y) || stationRoadDetailWeight(b.x, b.y));
+          if (stationDetail && curbIsRaised(propertyValue(properties, 'CURBTYPE')) === false) continue;
           const aBase = cachedOfficialRoadHeightAt(heightCache, a, 'road_surfaces');
           const bBase = cachedOfficialRoadHeightAt(heightCache, b, 'road_surfaces');
-          curbs.push({ a, b, width: 0.24, tags: { source: 'City of Peterborough Basedata' }, name: '', bridge: false, aY: aBase + 0.07, bY: bBase + 0.07 });
+          curbs.push({ a, b, stationDetail, width: 0.24, tags: { source: 'City of Peterborough Basedata' }, name: '', bridge: false, aY: aBase + 0.07, bY: bBase + 0.07 });
         }
       });
       counts.curb_edges += 1;
@@ -3523,6 +3646,7 @@ async function buildOfficialRoadSurfaces(collection, osmBuildingIndex = null) {
     geometryPolygons(feature).forEach((polygon) => {
       const rings = polygon.map(coordinatesToLandRing).map(cleanRing).filter((ring) => ring.length >= 3);
       if (!rings.length) return;
+      pavementPolygons.push({ layer, rings: rings.map(ring => ring.map(point => [point.x, point.y])) });
       triangles += appendOfficialRoadPolygon(polygon, layer, batches, heightCache, {
         id: feature.id, layer, properties,
         drivable: layer !== 'parking_surfaces', parking: layer === 'parking_surfaces',
@@ -3537,6 +3661,26 @@ async function buildOfficialRoadSurfaces(collection, osmBuildingIndex = null) {
   }
 
   buildBufferedRoadBatches(batches);
+  const stationCenter = project(44.3010, -78.32212);
+  if (new URLSearchParams(location.search).get('pavementContinuity') !== '0') {
+    try {
+      const result = reconcileStationPavement({ THREE, group: roadGroup, polygons: pavementPolygons,
+        center: { x: stationCenter.x, z: stationCenter.y }, terrainHeight: terrainHeightAtWorld,
+        roadIndex: state.roadSurfaceIndex, Index: RenderedPavementIndex });
+      if (result) {
+        state.renderedPavementIndex = result.index;
+        document.documentElement.dataset.pavementContinuity = JSON.stringify(result.diagnostics);
+        if (pavementQA) {
+          const report = document.createElement('script'); report.type = 'application/json'; report.id = 'pavement-continuity-snapshot';
+          report.textContent = JSON.stringify({ triangles: result.snapshot, center: { x: stationCenter.x, z: stationCenter.y } });
+          document.body.append(report);
+          pavementQA.length = 0;
+          for (const { vertices: p, metadata } of result.snapshot.filter((_, i) => i % 13 === 0).slice(0, 3000))
+            pavementQA.push({ x: (p[0] + p[3] + p[6]) / 3, z: (p[2] + p[5] + p[8]) / 3, height: (p[1] + p[4] + p[7]) / 3, layer: metadata.layer });
+        }
+      }
+    } catch (error) { console.warn('Station pavement continuity retained original geometry:', error); }
+  }
   buildOfficialCurbRibbons(curbs);
   buildBufferedBuildingBatches(municipalBuildingBatches);
   heightCache.clear();
