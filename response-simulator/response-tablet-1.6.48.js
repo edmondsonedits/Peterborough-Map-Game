@@ -1,8 +1,8 @@
-/* v1.6.63 incident tablet: resilient street map and responsive phone/desktop UI. */
+/* v1.6.64 incident tablet: resilient street map and responsive phone/desktop UI. */
 (() => {
   'use strict';
 
-  const VERSION = '1.6.63';
+  const VERSION = '1.6.64';
   if (window.PTBO_RESPONSE_TABLET?.version === VERSION) return;
 
   const state = {
@@ -19,6 +19,7 @@
     freezeFrame: 0,
     basemapToken: 0,
     fallbackUsed: false,
+    basemapTimer: 0,
   };
 
   const NORMAL_MAPS = Object.freeze({
@@ -263,29 +264,56 @@
     node.dataset.state = status;
   }
 
-  function createStreetLayer(style = 'osm') {
-    const provider = NORMAL_MAPS[style] || NORMAL_MAPS.osm;
-    return L.tileLayer(provider.url, { minZoom:10, maxZoom:19, maxNativeZoom:19, subdomains:provider.subdomains, updateWhenIdle:false, keepBuffer:4, attribution:style === 'osm' ? '© OpenStreetMap contributors' : '© OpenStreetMap contributors © CARTO' });
+  function currentSimulatorStreetProvider() {
+    try {
+      if (typeof tileLayerInstance === 'undefined' || !tileLayerInstance?._url) return null;
+      const url = String(tileLayerInstance._url);
+      if (!/(?:openstreetmap\.org|cartocdn\.com)\//i.test(url)) return null;
+      return {
+        url,
+        subdomains:tileLayerInstance.options?.subdomains,
+        maxNativeZoom:tileLayerInstance.options?.maxNativeZoom,
+        attribution:tileLayerInstance.options?.attribution,
+      };
+    } catch (_) { return null; }
+  }
+
+  function createStreetLayer(style = 'simulator') {
+    const provider = style === 'simulator'
+      ? (currentSimulatorStreetProvider() || NORMAL_MAPS.osm)
+      : (NORMAL_MAPS[style] || NORMAL_MAPS.osm);
+    return L.tileLayer(provider.url, {
+      minZoom:10,
+      maxZoom:19,
+      maxNativeZoom:Number(provider.maxNativeZoom) || 18,
+      subdomains:provider.subdomains,
+      updateWhenIdle:false,
+      keepBuffer:4,
+      crossOrigin:false,
+      attribution:provider.attribution || (style === 'positron' ? '© OpenStreetMap contributors © CARTO' : '© OpenStreetMap contributors'),
+    });
   }
 
   function installBasemap() {
     if (!state.tabletMap || !window.L?.tileLayer) return;
     clearMapLayers();
+    clearTimeout(state.basemapTimer);
     const token = ++state.basemapToken;
     state.fallbackUsed = false;
     setMapStatus('Loading street map…', 'loading');
-    const primary = createStreetLayer('osm');
+    const primary = createStreetLayer('simulator');
     let primaryLoaded = 0;
     let primaryFailures = 0;
     const markPrimaryLoaded = () => {
       if (token !== state.basemapToken) return;
       primaryLoaded += 1;
+      clearTimeout(state.basemapTimer);
       setMapStatus('Street-map incident view · driving paused');
     };
     const markPrimaryFailed = () => {
       if (token !== state.basemapToken || state.fallbackUsed) return;
       primaryFailures += 1;
-      if (primaryFailures < 2 || primaryLoaded > 0) return;
+      if (primaryFailures < 1 || primaryLoaded > 0) return;
       state.fallbackUsed = true;
       clearMapLayers();
       const fallback = createStreetLayer('positron');
@@ -298,6 +326,7 @@
     primary.on('tileerror', markPrimaryFailed);
     primary.addTo(state.tabletMap);
     state.baseLayers.push(primary);
+    state.basemapTimer = setTimeout(markPrimaryFailed, 3500);
   }
 
   function ensureMap() {
