@@ -1,4 +1,4 @@
-/* v1.6.48 desktop incident tablet: replaces route reveal with a pausing map tablet. */
+/* v1.6.48 desktop incident tablet: replaces route reveal with a pausing street-map tablet. */
 (() => {
   'use strict';
 
@@ -19,8 +19,6 @@
     freezeFrame: 0,
   };
 
-  const SATELLITE_IMAGERY = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
-  const SATELLITE_LABELS = 'https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}';
   const NORMAL_MAPS = Object.freeze({
     osm: { url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', subdomains: 'abc' },
     positron: { url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', subdomains: 'abcd' },
@@ -247,17 +245,7 @@
   function installBasemap() {
     if (!state.tabletMap || !window.L?.tileLayer) return;
     clearMapLayers();
-    const satelliteState = window.PTBO_SATELLITE_MAP?.state;
-    if (satelliteState?.mode === 'satellite') {
-      const imagery = L.tileLayer(SATELLITE_IMAGERY, { minZoom:10, maxZoom:19, maxNativeZoom:19, updateWhenIdle:false, keepBuffer:3, attribution:'Tiles © Esri' });
-      const labels = L.tileLayer(SATELLITE_LABELS, { minZoom:10, maxZoom:19, maxNativeZoom:19, updateWhenIdle:false, keepBuffer:3, attribution:'Labels © Esri' });
-      imagery.addTo(state.tabletMap);
-      labels.addTo(state.tabletMap);
-      state.baseLayers.push(imagery, labels);
-      return;
-    }
-    const selected = String(satelliteState?.normalStyle || document.getElementById('layer-select')?.value || 'osm');
-    const provider = NORMAL_MAPS[selected] || NORMAL_MAPS.osm;
+    const provider = NORMAL_MAPS.osm;
     const layer = L.tileLayer(provider.url, { minZoom:10, maxZoom:19, subdomains:provider.subdomains, updateWhenIdle:false, keepBuffer:3, attribution:'© OpenStreetMap contributors' });
     layer.addTo(state.tabletMap);
     state.baseLayers.push(layer);

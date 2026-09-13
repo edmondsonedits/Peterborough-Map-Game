@@ -8,6 +8,14 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const read = file => fs.readFileSync(path.join(root, file), 'utf8');
 
+test('dispatch tablet always uses a normal street basemap', () => {
+  const tablet = read('response-simulator/response-tablet-1.6.48.js');
+  assert.doesNotMatch(tablet, /World_Imagery|SATELLITE_IMAGERY|SATELLITE_LABELS/);
+  assert.match(tablet, /const provider = NORMAL_MAPS\.osm/);
+  assert.doesNotMatch(tablet, /satelliteState\?\.mode === 'satellite'/);
+  assert.match(read('shared/release-bootstrap-1.6.57.js'), /response-tablet-1\.6\.48\.js\?v=1\.6\.57&map=street/);
+});
+
 const bridge = read('response-simulator/tablet-close-dispatch-1.6.53.js');
 const release = read('shared/release-bootstrap-1.6.53.js');
 

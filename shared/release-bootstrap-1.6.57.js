@@ -60,7 +60,7 @@
       if (!doc || !game || !doc.body) return false;
 
       if (game.PTBO_RESPONSE_TABLET?.version !== '1.6.48') {
-        ensureScript(doc, 'ptbo-release-tablet-v1657', new URL('../response-tablet-1.6.48.js?v=1.6.57', location.href).href);
+        ensureScript(doc, 'ptbo-release-tablet-v1657', new URL('../response-tablet-1.6.48.js?v=1.6.57&map=street', location.href).href);
       }
       if (game.PTBO_TABLET_CLOSE_DISPATCH?.version !== '1.6.53') {
         ensureScript(doc, 'ptbo-tablet-close-dispatch-v1657', new URL('../tablet-close-dispatch-1.6.53.js?v=1.6.57', location.href).href);
