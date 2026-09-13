@@ -14,11 +14,12 @@ test('dispatch tablet uses normal street maps with a backup provider', () => {
   assert.match(tablet, /function currentSimulatorStreetProvider\(\)/);
   assert.match(tablet, /function createStreetLayer\(style = 'simulator'\)/);
   assert.match(tablet, /tileLayerInstance\._url/);
+  assert.match(tablet, /subdomains:provider\.subdomains \|\| 'abc'/);
   assert.match(tablet, /primary\.on\('tileerror', markPrimaryFailed\)/);
   assert.match(tablet, /setTimeout\(markPrimaryFailed, 3500\)/);
   assert.match(tablet, /createStreetLayer\('positron'\)/);
   assert.match(tablet, /data-state="loading"/);
-  assert.match(read('shared/release-bootstrap-1.6.57.js'), /response-tablet-1\.6\.48\.js\?v=1\.6\.64&map=street/);
+  assert.match(read('shared/release-bootstrap-1.6.57.js'), /response-tablet-1\.6\.48\.js\?v=1\.6\.65&map=street/);
 });
 
 const bridge = read('response-simulator/tablet-close-dispatch-1.6.53.js');
