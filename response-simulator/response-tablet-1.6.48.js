@@ -1,4 +1,4 @@
-/* v1.6.58 incident tablet: resilient satellite-hybrid map and responsive phone/desktop UI. */
+/* v1.6.58 incident tablet: resilient street map and responsive phone/desktop UI. */
 (() => {
   'use strict';
 
@@ -21,13 +21,8 @@
     fallbackUsed: false,
   };
 
-  const SATELLITE_MAP = Object.freeze({
-    imageryUrl: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-    labelsUrl: 'https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',
-  });
-
   const NORMAL_MAPS = Object.freeze({
-    osm: { url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', subdomains: 'abc' },
+    osm: { url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png' },
     positron: { url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', subdomains: 'abcd' },
     dark: { url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', subdomains: 'abcd' },
   });
@@ -238,10 +233,10 @@
         </header>
         <div id="ptbo-response-tablet-map-wrap">
           <div id="ptbo-response-tablet-map"></div>
-          <div id="ptbo-tablet-map-status" data-state="loading">Loading satellite incident map…</div>
+          <div id="ptbo-tablet-map-status" data-state="loading">Loading street map…</div>
         </div>
         <footer class="tablet-footer">
-          <div class="tablet-help">Satellite incident view. Use <strong>Show Route Area</strong> to see the vehicle and destination together.</div>
+          <div class="tablet-help">Street-map incident view. Use <strong>Show Route Area</strong> to see the vehicle and destination together.</div>
           <div class="tablet-actions">
             <button class="tablet-btn" id="ptbo-tablet-incident-view" type="button">Incident View</button>
             <button class="tablet-btn primary" id="ptbo-tablet-zoom-out" type="button">Show Route Area</button>
@@ -268,9 +263,9 @@
     node.dataset.state = status;
   }
 
-  function createStreetLayer() {
-    const provider = NORMAL_MAPS.osm;
-    return L.tileLayer(provider.url, { minZoom:10, maxZoom:19, maxNativeZoom:19, subdomains:provider.subdomains, updateWhenIdle:false, keepBuffer:4, attribution:'© OpenStreetMap contributors' });
+  function createStreetLayer(style = 'osm') {
+    const provider = NORMAL_MAPS[style] || NORMAL_MAPS.osm;
+    return L.tileLayer(provider.url, { minZoom:10, maxZoom:19, maxNativeZoom:19, subdomains:provider.subdomains, updateWhenIdle:false, keepBuffer:4, attribution:style === 'osm' ? '© OpenStreetMap contributors' : '© OpenStreetMap contributors © CARTO' });
   }
 
   function installBasemap() {
@@ -278,33 +273,31 @@
     clearMapLayers();
     const token = ++state.basemapToken;
     state.fallbackUsed = false;
-    setMapStatus('Loading satellite incident map…', 'loading');
-    const imagery = L.tileLayer(SATELLITE_MAP.imageryUrl, { minZoom:10, maxZoom:19, maxNativeZoom:19, updateWhenIdle:false, keepBuffer:4, attribution:'Tiles © Esri and imagery providers' });
-    const labels = L.tileLayer(SATELLITE_MAP.labelsUrl, { minZoom:10, maxZoom:19, maxNativeZoom:19, updateWhenIdle:false, keepBuffer:4, attribution:'Reference labels © Esri' });
-    let imageryLoaded = 0;
-    let imageryFailures = 0;
-    const markImageryLoaded = () => {
+    setMapStatus('Loading street map…', 'loading');
+    const primary = createStreetLayer('osm');
+    let primaryLoaded = 0;
+    let primaryFailures = 0;
+    const markPrimaryLoaded = () => {
       if (token !== state.basemapToken) return;
-      imageryLoaded += 1;
-      setMapStatus('Satellite incident view · driving paused');
+      primaryLoaded += 1;
+      setMapStatus('Street-map incident view · driving paused');
     };
-    const markImageryFailed = () => {
+    const markPrimaryFailed = () => {
       if (token !== state.basemapToken || state.fallbackUsed) return;
-      imageryFailures += 1;
-      if (imageryFailures < 2 || imageryLoaded > 0) return;
+      primaryFailures += 1;
+      if (primaryFailures < 2 || primaryLoaded > 0) return;
       state.fallbackUsed = true;
       clearMapLayers();
-      const street = createStreetLayer();
-      street.once('load', () => setMapStatus('Street-map fallback · driving paused'));
-      street.on('tileerror', () => setMapStatus('Map tiles are unavailable. Check your connection and reopen the tablet.', 'error'));
-      street.addTo(state.tabletMap);
-      state.baseLayers.push(street);
+      const fallback = createStreetLayer('positron');
+      fallback.once('load', () => setMapStatus('Backup street map · driving paused'));
+      fallback.on('tileerror', () => setMapStatus('Map tiles are unavailable. Check your connection and reopen the tablet.', 'error'));
+      fallback.addTo(state.tabletMap);
+      state.baseLayers.push(fallback);
     };
-    imagery.on('tileload', markImageryLoaded);
-    imagery.on('tileerror', markImageryFailed);
-    imagery.addTo(state.tabletMap);
-    labels.addTo(state.tabletMap);
-    state.baseLayers.push(imagery, labels);
+    primary.on('tileload', markPrimaryLoaded);
+    primary.on('tileerror', markPrimaryFailed);
+    primary.addTo(state.tabletMap);
+    state.baseLayers.push(primary);
   }
 
   function ensureMap() {
@@ -332,7 +325,7 @@
     if (address) address.textContent = dest ? `${dest.callType} · ${dest.address}` : 'No active destination';
     if (status && status.dataset.state !== 'loading' && status.dataset.state !== 'error') status.textContent = dest?.phase === 'transporting'
       ? 'Transport destination · driving paused'
-      : `${state.fallbackUsed ? 'Street-map fallback' : 'Satellite incident view'} · driving paused`;
+      : `${state.fallbackUsed ? 'Backup street map' : 'Street-map incident view'} · driving paused`;
   }
 
   function drawTabletMarkers(dest) {

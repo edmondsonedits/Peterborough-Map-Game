@@ -8,14 +8,14 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const read = file => fs.readFileSync(path.join(root, file), 'utf8');
 
-test('dispatch tablet uses satellite hybrid with a working street-map fallback', () => {
+test('dispatch tablet uses normal street maps with a backup provider', () => {
   const tablet = read('response-simulator/response-tablet-1.6.48.js');
-  assert.match(tablet, /World_Imagery/);
-  assert.match(tablet, /World_Boundaries_and_Places/);
-  assert.match(tablet, /function createStreetLayer\(\)/);
-  assert.match(tablet, /imagery\.on\('tileerror', markImageryFailed\)/);
+  assert.doesNotMatch(tablet, /World_Imagery|World_Boundaries_and_Places/);
+  assert.match(tablet, /function createStreetLayer\(style = 'osm'\)/);
+  assert.match(tablet, /primary\.on\('tileerror', markPrimaryFailed\)/);
+  assert.match(tablet, /createStreetLayer\('positron'\)/);
   assert.match(tablet, /data-state="loading"/);
-  assert.match(read('shared/release-bootstrap-1.6.57.js'), /response-tablet-1\.6\.48\.js\?v=1\.6\.58&map=satellite-hybrid/);
+  assert.match(read('shared/release-bootstrap-1.6.57.js'), /response-tablet-1\.6\.48\.js\?v=1\.6\.58&map=street/);
 });
 
 const bridge = read('response-simulator/tablet-close-dispatch-1.6.53.js');

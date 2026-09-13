@@ -1,4 +1,4 @@
-/* v1.6.58 production release bootstrap: resilient incident map and responsive tablet UI. */
+/* v1.6.58 production release bootstrap: resilient street-map tablet and responsive UI. */
 (() => {
   'use strict';
 
@@ -60,7 +60,7 @@
       if (!doc || !game || !doc.body) return false;
 
       if (game.PTBO_RESPONSE_TABLET?.version !== VERSION) {
-        ensureScript(doc, 'ptbo-release-tablet-v1658', new URL('../response-tablet-1.6.48.js?v=1.6.58&map=satellite-hybrid', location.href).href);
+        ensureScript(doc, 'ptbo-release-tablet-v1658', new URL('../response-tablet-1.6.48.js?v=1.6.58&map=street', location.href).href);
       }
       if (game.PTBO_TABLET_CLOSE_DISPATCH?.version !== '1.6.53') {
         ensureScript(doc, 'ptbo-tablet-close-dispatch-v1658', new URL('../tablet-close-dispatch-1.6.53.js?v=1.6.58', location.href).href);
