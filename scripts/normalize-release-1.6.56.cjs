@@ -3,7 +3,10 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
-const VERSION = '1.6.56';
+// The filename is retained as the stable workflow entry point. VERSION is the
+// production release applied to the generated Pages artifact.
+const VERSION = '1.6.60';
+const RELEASE_BOOTSTRAP_ENTRY = '1.6.56';
 const root = path.resolve(__dirname, '..');
 const canonicalSurfaces = [
   'index.html',
@@ -57,7 +60,7 @@ for (const file of canonicalSurfaces) {
       file,
       html,
       /release-bootstrap-\d+\.\d+\.\d+\.js\?v=\d+\.\d+\.\d+/g,
-      `release-bootstrap-${VERSION}.js?v=${VERSION}`,
+      `release-bootstrap-${RELEASE_BOOTSTRAP_ENTRY}.js?v=${VERSION}`,
       'release bootstrap'
     );
   }
