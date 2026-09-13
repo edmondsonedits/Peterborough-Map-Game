@@ -1,8 +1,8 @@
-/* v1.6.64 incident tablet: resilient street map and responsive phone/desktop UI. */
+/* v1.6.65 incident tablet: resilient street map and responsive phone/desktop UI. */
 (() => {
   'use strict';
 
-  const VERSION = '1.6.64';
+  const VERSION = '1.6.65';
   if (window.PTBO_RESPONSE_TABLET?.version === VERSION) return;
 
   const state = {
@@ -23,7 +23,7 @@
   };
 
   const NORMAL_MAPS = Object.freeze({
-    osm: { url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png' },
+    osm: { url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png', subdomains:'abc' },
     positron: { url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', subdomains: 'abcd' },
     dark: { url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', subdomains: 'abcd' },
   });
@@ -286,7 +286,7 @@
       minZoom:10,
       maxZoom:19,
       maxNativeZoom:Number(provider.maxNativeZoom) || 18,
-      subdomains:provider.subdomains,
+      subdomains:provider.subdomains || 'abc',
       updateWhenIdle:false,
       keepBuffer:4,
       crossOrigin:false,
