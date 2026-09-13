@@ -5,13 +5,14 @@ const path = require('node:path');
 
 // The filename is retained as the stable workflow entry point. VERSION is the
 // production release applied to the generated Pages artifact.
-const VERSION = '1.6.60';
+const VERSION = '1.6.61';
 const RELEASE_BOOTSTRAP_ENTRY = '1.6.56';
 const root = path.resolve(__dirname, '..');
 const canonicalSurfaces = [
   'index.html',
   'response-simulator/play/index.html',
   'response-simulator/mobile/index.html',
+  'response-simulator/index.html',
   'geo-guesser/index.html',
   'geo-guesser/desktop/index.html',
   'geo-guesser/mobile/index.html',
@@ -74,6 +75,16 @@ for (const file of canonicalSurfaces) {
       'dispatch editor spawn-box module'
     );
     html = html.replace(/\?v=\d+\.\d+\.\d+/g, `?v=${VERSION}`);
+  }
+
+  if (file === 'response-simulator/index.html') {
+    html = replaceRequired(
+      file,
+      html,
+      /service-config\.js\?v=\d+\.\d+\.\d+/g,
+      `service-config.js?v=${VERSION}`,
+      'versioned service configuration'
+    );
   }
 
   if ([

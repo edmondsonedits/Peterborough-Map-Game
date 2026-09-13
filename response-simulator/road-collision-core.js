@@ -247,9 +247,15 @@
     const start = toXY(Number(lat), Number(lng));
     if (![start.x, start.y].every(Number.isFinite)) return false;
     if (yardAtXY(start.x,start.y)) {
-      state.stationExit = null;
       const road = nearestRoadXY(start.x,start.y,CONFIG.stationExitSearchDistance);
-      if (road) currentHeading = (Math.atan2(road.x-start.x,road.y-start.y)*180/Math.PI+360)%360;
+      if (!road || road.distance <= road.segment.allowed || yardAtXY(road.x,road.y)) {
+        state.stationExit = null;
+      } else {
+        const dx=road.x-start.x,dy=road.y-start.y,lengthSq=dx*dx+dy*dy;
+        state.stationExit = lengthSq < 1 ? null : {ax:start.x,ay:start.y,bx:road.x,by:road.y,dx,dy,lengthSq,length:Math.sqrt(lengthSq),roadSegment:road.segment};
+      }
+      // Preserve the configured spawn heading. The temporary connector only
+      // supplies collision-safe access where private driveways are absent from OSM.
       vehicleMarker?.setRotationAngle?.(currentHeading-90);
       velocity = 0;
       return true;

@@ -165,14 +165,14 @@ test('route guidance can calculate a connected hospital trip from each EMS base'
   }
 });
 
-test('square yards allow all corners and return trips, stop off-yard shortcuts, and avoid road snapping',async()=>{
+test('station yards contain their spawns and provide road access or a temporary driveway connector',async()=>{
   const g=game();vm.runInContext(read('response-simulator/road-collision-core.js'),g.c);await g.c.PTBO_ROAD_COLLISION.ready;
   const store=g.c.PTBO_BASE_STORE,collision=g.c.PTBO_ROAD_COLLISION;
   for(const base of store.getAll()) {
-    assert.ok(store.roadAccess(base,roads),`${base.name} square must meet the road`);
+    assert.equal(store.contains(base,base.spawnLat,base.spawnLng),true,`${base.name} spawn must be inside its yard`);
     for(const [lat,lng] of store.corners(base))assert.equal(collision.isPointDrivable(lat,lng),true);
-    collision.beginStationExit(base.lat,base.lng);
-    assert.equal(collision.state.stationExit,null,'square does not use a temporary exit corridor');
+    assert.equal(collision.beginStationExit(base.spawnLat,base.spawnLng),true);
+    if(!store.roadAccess(base,roads)) assert.ok(collision.state.stationExit,`${base.name} receives a driveway connector to the public road`);
     const [lat,lng]=store.corners({...base,yardSize:base.yardSize-2})[0];
     const move=collision.resolveMovement(base.lat,base.lng,lat,lng,.00001);
     assert.equal(move.blocked,false);assert.equal(move.snapped,false);
