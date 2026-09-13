@@ -1,8 +1,8 @@
-/* v1.6.48 desktop incident tablet: replaces route reveal with a pausing street-map tablet. */
+/* v1.6.58 incident tablet: resilient satellite-hybrid map and responsive phone/desktop UI. */
 (() => {
   'use strict';
 
-  const VERSION = '1.6.48';
+  const VERSION = '1.6.58';
   if (window.PTBO_RESPONSE_TABLET?.version === VERSION) return;
 
   const state = {
@@ -17,7 +17,14 @@
     lastDestinationKey: null,
     syncTimer: 0,
     freezeFrame: 0,
+    basemapToken: 0,
+    fallbackUsed: false,
   };
+
+  const SATELLITE_MAP = Object.freeze({
+    imageryUrl: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    labelsUrl: 'https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',
+  });
 
   const NORMAL_MAPS = Object.freeze({
     osm: { url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', subdomains: 'abc' },
@@ -146,32 +153,35 @@
     style.textContent = `
       #ptbo-response-tablet-overlay[hidden]{display:none!important}
       #ptbo-response-tablet-overlay{
-        position:fixed;inset:0;z-index:2147482500;display:grid;place-items:center;padding:clamp(18px,4vw,52px);
-        background:rgba(2,6,15,.64);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
+        position:fixed;inset:0;z-index:2147482500;display:grid;place-items:center;padding:clamp(14px,3vw,42px);
+        background:rgba(2,6,15,.76);-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px);
         font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
       }
       #ptbo-response-tablet{
-        width:min(1120px,92vw);height:min(760px,84vh);min-height:460px;display:grid;grid-template-rows:auto minmax(0,1fr) auto;
-        overflow:hidden;border:12px solid #111827;border-radius:28px;background:#0b1220;color:#f8fafc;
-        box-shadow:0 34px 110px rgba(0,0,0,.72),inset 0 0 0 1px rgba(255,255,255,.08);
+        width:min(1180px,94vw);height:min(780px,88vh);min-height:460px;display:grid;grid-template-rows:auto minmax(0,1fr) auto;
+        overflow:hidden;border:9px solid #080d18;border-radius:26px;background:#0b1220;color:#f8fafc;
+        box-shadow:0 34px 110px rgba(0,0,0,.78),0 0 0 1px rgba(255,255,255,.16),inset 0 0 0 1px rgba(255,255,255,.06);
       }
-      #ptbo-response-tablet .tablet-topbar{display:flex;align-items:center;gap:14px;padding:15px 18px;border-bottom:1px solid rgba(255,255,255,.12);background:#111b2e}
+      #ptbo-response-tablet .tablet-topbar{display:flex;align-items:center;gap:14px;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.12);background:linear-gradient(135deg,#111c31,#17243a)}
       #ptbo-response-tablet .tablet-icon{width:36px;height:36px;display:grid;place-items:center;flex:0 0 auto;border:1px solid rgba(56,189,248,.38);border-radius:10px;background:rgba(14,116,144,.18);color:#67e8f9}
       #ptbo-response-tablet .tablet-icon svg{width:21px;height:21px;stroke:currentColor}
       #ptbo-response-tablet .tablet-heading{min-width:0;flex:1}
       #ptbo-response-tablet .tablet-kicker{margin:0 0 2px;color:#67e8f9;font-size:10px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
       #ptbo-response-tablet .tablet-title{margin:0;overflow:hidden;color:#fff;font-size:18px;font-weight:900;line-height:1.2;text-overflow:ellipsis;white-space:nowrap}
       #ptbo-response-tablet .tablet-address{margin:3px 0 0;overflow:hidden;color:#cbd5e1;font-size:12px;line-height:1.3;text-overflow:ellipsis;white-space:nowrap}
-      #ptbo-tablet-close{width:42px;height:42px;display:grid;place-items:center;flex:0 0 auto;border:1px solid rgba(255,255,255,.2);border-radius:11px;background:#263248;color:#fff;font-size:24px;line-height:1;cursor:pointer}
+      #ptbo-tablet-close{width:44px;height:44px;display:grid;place-items:center;flex:0 0 auto;border:1px solid rgba(255,255,255,.22);border-radius:13px;background:#263248;color:#fff;font-size:24px;line-height:1;cursor:pointer;touch-action:manipulation}
       #ptbo-tablet-close:hover{background:#334155}
       #ptbo-response-tablet-map-wrap{position:relative;min-height:0;background:#152033}
       #ptbo-response-tablet-map{position:absolute;inset:0;background:#152033}
       #ptbo-response-tablet-map .leaflet-control-attribution{font-size:8px!important;opacity:.72}
-      #ptbo-tablet-map-status{position:absolute;left:14px;top:14px;z-index:700;max-width:min(380px,72%);padding:8px 10px;border:1px solid rgba(255,255,255,.16);border-radius:10px;background:rgba(7,17,31,.9);color:#e2e8f0;font-size:11px;font-weight:750;line-height:1.35;pointer-events:none}
+      #ptbo-tablet-map-status{position:absolute;left:14px;top:14px;z-index:700;max-width:min(440px,76%);padding:9px 11px;border:1px solid rgba(255,255,255,.2);border-radius:11px;background:rgba(7,17,31,.92);box-shadow:0 5px 18px rgba(0,0,0,.35);color:#e2e8f0;font-size:11px;font-weight:750;line-height:1.35;pointer-events:none}
+      #ptbo-tablet-map-status[data-state="loading"]::before{content:"";display:inline-block;width:8px;height:8px;margin-right:7px;border:2px solid #7dd3fc;border-right-color:transparent;border-radius:50%;vertical-align:-1px;animation:ptbo-tablet-spin .75s linear infinite}
+      #ptbo-tablet-map-status[data-state="error"]{border-color:rgba(251,191,36,.7);color:#fef3c7;background:rgba(69,26,3,.94)}
+      @keyframes ptbo-tablet-spin{to{transform:rotate(360deg)}}
       #ptbo-response-tablet .tablet-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 16px;border-top:1px solid rgba(255,255,255,.12);background:#101a2d}
       #ptbo-response-tablet .tablet-help{color:#94a3b8;font-size:11px;line-height:1.35}
       #ptbo-response-tablet .tablet-actions{display:flex;gap:9px;flex:0 0 auto}
-      #ptbo-response-tablet .tablet-btn{min-height:42px;padding:9px 14px;border:1px solid rgba(255,255,255,.2);border-radius:10px;background:#243246;color:#f8fafc;font:850 12px/1.15 inherit;cursor:pointer}
+      #ptbo-response-tablet .tablet-btn{min-height:44px;padding:10px 15px;border:1px solid rgba(255,255,255,.2);border-radius:11px;background:#243246;color:#f8fafc;font:850 12px/1.15 inherit;cursor:pointer;touch-action:manipulation}
       #ptbo-response-tablet .tablet-btn.primary{border-color:#38bdf8;background:#0369a1}
       #ptbo-response-tablet .tablet-btn:hover{filter:brightness(1.08)}
       #ptbo-response-tablet button:focus-visible{outline:3px solid #fbbf24;outline-offset:2px}
@@ -181,15 +191,24 @@
       #route-answer-btn.is-visible{background:#0369a1!important;border-color:#38bdf8!important}
       #route-answer-card{display:none!important}
       @media(max-width:720px){
-        #ptbo-response-tablet-overlay{padding:10px}
-        #ptbo-response-tablet{width:100%;height:min(86vh,720px);min-height:420px;border-width:7px;border-radius:21px}
-        #ptbo-response-tablet .tablet-topbar{padding:11px 12px;gap:9px}
+        #ptbo-response-tablet-overlay{place-items:stretch;padding:max(6px,env(safe-area-inset-top)) max(6px,env(safe-area-inset-right)) max(6px,env(safe-area-inset-bottom)) max(6px,env(safe-area-inset-left))}
+        #ptbo-response-tablet{width:100%;height:100%;min-height:0;border-width:5px;border-radius:18px;grid-template-rows:auto minmax(0,1fr) auto}
+        #ptbo-response-tablet .tablet-topbar{padding:10px 10px 10px 12px;gap:8px}
         #ptbo-response-tablet .tablet-icon{display:none}
         #ptbo-response-tablet .tablet-title{font-size:15px}
-        #ptbo-response-tablet .tablet-address{font-size:10px}
-        #ptbo-response-tablet .tablet-footer{align-items:stretch;flex-direction:column;padding:10px 12px}
+        #ptbo-response-tablet .tablet-address{font-size:11px}
+        #ptbo-tablet-close{width:42px;height:42px}
+        #ptbo-tablet-map-status{left:9px;top:9px;max-width:calc(100% - 66px);padding:7px 9px;font-size:10px}
+        #ptbo-response-tablet .tablet-footer{align-items:stretch;flex-direction:column;padding:9px 10px;gap:8px}
+        #ptbo-response-tablet .tablet-help{display:none}
         #ptbo-response-tablet .tablet-actions{display:grid;grid-template-columns:1fr 1fr;width:100%}
         #ptbo-response-tablet .tablet-btn{width:100%}
+      }
+      @media(orientation:landscape) and (max-height:560px){
+        #ptbo-response-tablet .tablet-kicker,#ptbo-response-tablet .tablet-address{display:none}
+        #ptbo-response-tablet .tablet-topbar{padding:7px 9px}
+        #ptbo-response-tablet .tablet-footer{padding:7px 9px;flex-direction:row}
+        #ptbo-response-tablet .tablet-actions{margin-left:auto;width:min(340px,56vw)}
       }
     `;
     document.head.appendChild(style);
@@ -219,13 +238,13 @@
         </header>
         <div id="ptbo-response-tablet-map-wrap">
           <div id="ptbo-response-tablet-map"></div>
-          <div id="ptbo-tablet-map-status">Incident view · driving paused while tablet is open</div>
+          <div id="ptbo-tablet-map-status" data-state="loading">Loading satellite incident map…</div>
         </div>
         <footer class="tablet-footer">
-          <div class="tablet-help">Starts zoomed in on the destination. Use <strong>Zoom Out</strong> to see the truck and destination together.</div>
+          <div class="tablet-help">Satellite incident view. Use <strong>Show Route Area</strong> to see the vehicle and destination together.</div>
           <div class="tablet-actions">
             <button class="tablet-btn" id="ptbo-tablet-incident-view" type="button">Incident View</button>
-            <button class="tablet-btn primary" id="ptbo-tablet-zoom-out" type="button">Zoom Out</button>
+            <button class="tablet-btn primary" id="ptbo-tablet-zoom-out" type="button">Show Route Area</button>
           </div>
         </footer>
       </section>`;
@@ -242,13 +261,50 @@
     state.baseLayers = [];
   }
 
+  function setMapStatus(message, status = 'ready') {
+    const node = document.getElementById('ptbo-tablet-map-status');
+    if (!node) return;
+    node.textContent = message;
+    node.dataset.state = status;
+  }
+
+  function createStreetLayer() {
+    const provider = NORMAL_MAPS.osm;
+    return L.tileLayer(provider.url, { minZoom:10, maxZoom:19, maxNativeZoom:19, subdomains:provider.subdomains, updateWhenIdle:false, keepBuffer:4, attribution:'© OpenStreetMap contributors' });
+  }
+
   function installBasemap() {
     if (!state.tabletMap || !window.L?.tileLayer) return;
     clearMapLayers();
-    const provider = NORMAL_MAPS.osm;
-    const layer = L.tileLayer(provider.url, { minZoom:10, maxZoom:19, subdomains:provider.subdomains, updateWhenIdle:false, keepBuffer:3, attribution:'© OpenStreetMap contributors' });
-    layer.addTo(state.tabletMap);
-    state.baseLayers.push(layer);
+    const token = ++state.basemapToken;
+    state.fallbackUsed = false;
+    setMapStatus('Loading satellite incident map…', 'loading');
+    const imagery = L.tileLayer(SATELLITE_MAP.imageryUrl, { minZoom:10, maxZoom:19, maxNativeZoom:19, updateWhenIdle:false, keepBuffer:4, attribution:'Tiles © Esri and imagery providers' });
+    const labels = L.tileLayer(SATELLITE_MAP.labelsUrl, { minZoom:10, maxZoom:19, maxNativeZoom:19, updateWhenIdle:false, keepBuffer:4, attribution:'Reference labels © Esri' });
+    let imageryLoaded = 0;
+    let imageryFailures = 0;
+    const markImageryLoaded = () => {
+      if (token !== state.basemapToken) return;
+      imageryLoaded += 1;
+      setMapStatus('Satellite incident view · driving paused');
+    };
+    const markImageryFailed = () => {
+      if (token !== state.basemapToken || state.fallbackUsed) return;
+      imageryFailures += 1;
+      if (imageryFailures < 2 || imageryLoaded > 0) return;
+      state.fallbackUsed = true;
+      clearMapLayers();
+      const street = createStreetLayer();
+      street.once('load', () => setMapStatus('Street-map fallback · driving paused'));
+      street.on('tileerror', () => setMapStatus('Map tiles are unavailable. Check your connection and reopen the tablet.', 'error'));
+      street.addTo(state.tabletMap);
+      state.baseLayers.push(street);
+    };
+    imagery.on('tileload', markImageryLoaded);
+    imagery.on('tileerror', markImageryFailed);
+    imagery.addTo(state.tabletMap);
+    labels.addTo(state.tabletMap);
+    state.baseLayers.push(imagery, labels);
   }
 
   function ensureMap() {
@@ -274,9 +330,9 @@
     const status = document.getElementById('ptbo-tablet-map-status');
     if (title) title.textContent = dest?.name || 'Active incident';
     if (address) address.textContent = dest ? `${dest.callType} · ${dest.address}` : 'No active destination';
-    if (status) status.textContent = dest?.phase === 'transporting'
-      ? 'Transport destination · driving paused while tablet is open'
-      : 'Incident view · driving paused while tablet is open';
+    if (status && status.dataset.state !== 'loading' && status.dataset.state !== 'error') status.textContent = dest?.phase === 'transporting'
+      ? 'Transport destination · driving paused'
+      : `${state.fallbackUsed ? 'Street-map fallback' : 'Satellite incident view'} · driving paused`;
   }
 
   function drawTabletMarkers(dest) {
@@ -329,7 +385,6 @@
     document.documentElement.classList.add('ptbo-response-tablet-open');
     setParentTabletMode(true);
     updateTabletDetails(dest);
-    installBasemap();
     drawTabletMarkers(dest);
     const map = ensureMap();
     setTimeout(() => {
@@ -395,7 +450,6 @@
     if (state.open && dKey && dKey !== state.lastDestinationKey) {
       state.lastDestinationKey = dKey;
       updateTabletDetails(dest);
-      installBasemap();
       drawTabletMarkers(dest);
       showIncidentView();
     }
