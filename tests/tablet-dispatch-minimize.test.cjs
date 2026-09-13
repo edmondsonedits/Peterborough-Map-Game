@@ -10,6 +10,7 @@ const read = file => fs.readFileSync(path.join(root, file), 'utf8');
 
 test('dispatch tablet uses normal street maps with a backup provider', () => {
   const tablet = read('response-simulator/response-tablet-1.6.48.js');
+  const mapPolicy = read('response-simulator/carto-basemap-policy-1.6.36.js');
   assert.doesNotMatch(tablet, /World_Imagery|World_Boundaries_and_Places/);
   assert.match(tablet, /function currentSimulatorStreetProvider\(\)/);
   assert.match(tablet, /function createStreetLayer\(style = 'simulator'\)/);
@@ -17,9 +18,11 @@ test('dispatch tablet uses normal street maps with a backup provider', () => {
   assert.match(tablet, /subdomains:provider\.subdomains \|\| 'abc'/);
   assert.match(tablet, /primary\.on\('tileerror', markPrimaryFailed\)/);
   assert.match(tablet, /setTimeout\(markPrimaryFailed, 3500\)/);
+  assert.doesNotMatch(mapPolicy, /subdomains:undefined/);
+  assert.match(mapPolicy, /subdomains:'abc'/);
   assert.match(tablet, /createStreetLayer\('positron'\)/);
   assert.match(tablet, /data-state="loading"/);
-  assert.match(read('shared/release-bootstrap-1.6.57.js'), /response-tablet-1\.6\.48\.js\?v=1\.6\.65&map=street/);
+  assert.match(read('shared/release-bootstrap-1.6.57.js'), /response-tablet-1\.6\.48\.js\?v=1\.6\.66&map=street/);
 });
 
 const bridge = read('response-simulator/tablet-close-dispatch-1.6.53.js');

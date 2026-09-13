@@ -1,10 +1,10 @@
-/* Commercial basemap policy for Emergency Games v1.6.37.
+/* Commercial basemap policy for Emergency Games v1.6.38.
    Keeps the public demo working while making department/commercial deployments
    fail closed unless production map services are explicitly configured. */
 (() => {
   'use strict';
 
-  const VERSION = '1.6.37';
+  const VERSION = '1.6.38';
   const OSM_COMMUNITY_URL = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
   const BLANK_TILE = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
   const CARTO_VALUES = new Set(['positron', 'dark']);
@@ -120,21 +120,21 @@
         } else {
           console.warn('CARTO request blocked because a current CARTO tile template/API key is not configured.');
           nextUrl = commercialMode() && !productionOsmConfigured() ? BLANK_TILE : configuredOsmUrl();
-          nextOptions = { ...nextOptions, subdomains:undefined, attribution:'&copy; OpenStreetMap contributors' };
+          nextOptions = { ...nextOptions, subdomains:'abc', attribution:'&copy; OpenStreetMap contributors' };
         }
       }
 
       if (isOsmCommunityUrl(nextUrl)) {
         if (productionOsmConfigured()) {
           nextUrl = configuredOsmUrl();
-          nextOptions = { ...nextOptions, subdomains:undefined };
+          nextOptions = { ...nextOptions, subdomains:nextOptions.subdomains || 'abc' };
         } else if (commercialMode()) {
           warnOnce('osm', 'Department deployment needs a licensed/self-hosted street-map tile service before sale.');
           nextUrl = BLANK_TILE;
-          nextOptions = { ...nextOptions, subdomains:undefined, attribution:'' };
+          nextOptions = { ...nextOptions, subdomains:'abc', attribution:'' };
         } else {
           nextUrl = OSM_COMMUNITY_URL;
-          nextOptions = { ...nextOptions, subdomains:undefined, attribution:'&copy; OpenStreetMap contributors' };
+          nextOptions = { ...nextOptions, subdomains:'abc', attribution:'&copy; OpenStreetMap contributors' };
         }
       }
 
