@@ -6,6 +6,16 @@
 
   const NOTICE_URL = new URL('../legal/simulated-incidents.html', document.currentScript?.src || location.href).href;
 
+  function ensureTrainingUi() {
+    if (window.PTBO_TRAINING_UI?.version === '1.6.57' || document.getElementById('ptbo-training-ui-v1657-fallback')) return;
+    const script = document.createElement('script');
+    script.id = 'ptbo-training-ui-v1657-fallback';
+    script.src = new URL('training-ui-1.6.57.js?v=1.6.57', document.currentScript?.src || location.href).href;
+    script.dataset.ptboRelease = '1.6.57';
+    script.onerror = () => script.remove();
+    (document.body || document.head || document.documentElement).appendChild(script);
+  }
+
   function ensureStyle() {
     if (document.getElementById('ptbo-simulated-incident-style')) return;
     const style = document.createElement('style');
@@ -20,6 +30,7 @@
   }
 
   function install() {
+    ensureTrainingUi();
     const hud = document.getElementById('dispatch-hud');
     const content = document.getElementById('hud-content');
     if (!hud || !content) return false;
@@ -58,6 +69,7 @@
     attempts += 1;
     if (install() || attempts >= 40) clearInterval(timer);
   }, 250);
+  ensureTrainingUi();
   install();
 
   window.PTBO_SIMULATED_INCIDENT_NOTICE = Object.freeze({ version:VERSION, install });
