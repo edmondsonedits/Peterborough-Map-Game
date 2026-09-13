@@ -17,8 +17,8 @@ test('Peterborough fire stations use the approved base and spawn geometry', () =
   });
   assert.deepEqual(station2, {
     id:'station-2', number:2, name:'Station 2', shortName:'Station 2', address:'100 Marina Blvd',
-    lat:44.335711, lng:-78.316298, yardSize:137, yardWidth:137, yardLength:41,
-    yardRotation:68, spawnLat:44.335686, spawnLng:-78.316271, spawnHeading:202,
+    lat:44.335719, lng:-78.316209, yardSize:151, yardWidth:151, yardLength:41,
+    yardRotation:65, spawnLat:44.335928, spawnLng:-78.316016, spawnHeading:202,
   });
   assert.deepEqual(station3, {
     id:'station-3', number:3, name:'Station 3', shortName:'Station 3', address:'839 Clonsilla Ave',

@@ -1,8 +1,8 @@
-/* v1.6.62 incident tablet: resilient street map and responsive phone/desktop UI. */
+/* v1.6.63 incident tablet: resilient street map and responsive phone/desktop UI. */
 (() => {
   'use strict';
 
-  const VERSION = '1.6.62';
+  const VERSION = '1.6.63';
   if (window.PTBO_RESPONSE_TABLET?.version === VERSION) return;
 
   const state = {
