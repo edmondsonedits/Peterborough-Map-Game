@@ -5,7 +5,7 @@ const path = require('node:path');
 
 // The filename is retained as the stable workflow entry point. VERSION is the
 // production release applied to the generated Pages artifact.
-const VERSION = '1.6.65';
+const VERSION = '1.6.66';
 const RELEASE_BOOTSTRAP_ENTRY = '1.6.56';
 const root = path.resolve(__dirname, '..');
 const canonicalSurfaces = [
