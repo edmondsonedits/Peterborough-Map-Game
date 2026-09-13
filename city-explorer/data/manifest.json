@@ -120,13 +120,13 @@
   },
   "city_road_surfaces": {
     "cache_reused": false,
-    "feature_count": 18862,
+    "feature_count": 18864,
     "file": "peterborough-road-surfaces.geojson",
     "layer_counts": {
       "bridges": 107,
       "curb_edges": 9610,
       "official_streets": 2667,
-      "parking_surfaces": 1924,
+      "parking_surfaces": 1926,
       "road_surfaces": 4554
     },
     "layers": [
@@ -147,7 +147,7 @@
         "name": "Curb / Edge of Pavement"
       },
       {
-        "feature_count": 1924,
+        "feature_count": 1926,
         "id": 10,
         "key": "parking_surfaces",
         "last_edit_date": null,
@@ -192,7 +192,7 @@
     "file": "construction-audit.json",
     "policy": "Only authoritative completed geometry changes alter the packaged city"
   },
-  "generated_at": "2026-09-11T00:19:32+00:00",
+  "generated_at": "2026-09-13T18:44:35+00:00",
   "hydrography": {
     "cache_reused": false,
     "feature_count": 1312,
