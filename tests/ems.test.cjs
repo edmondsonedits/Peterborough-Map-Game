@@ -32,7 +32,7 @@ function game({random=0}={}) {
   const c=vm.createContext({console,URL,Math:testMath,performance:{now:()=>time},Event:class{},CustomEvent:class{},
     setTimeout:fn=>{timers.set(++serial,fn);return serial;},clearTimeout:id=>timers.delete(id),
     setInterval:fn=>{intervals.set(++serial,fn);return serial;},clearInterval:id=>intervals.delete(id),
-    requestAnimationFrame(){},addEventListener(){},dispatchEvent(){},
+    requestAnimationFrame(){},queueMicrotask:fn=>fn(),addEventListener(){},dispatchEvent(){},
     localStorage:{getItem:()=>null,setItem(){}},
     document:{addEventListener(){},getElementById:element,querySelector:()=>null,querySelectorAll:selector=>selector==='.filter-chk'?filters:selector==='.filter-chk:checked'?filters.filter(x=>x.checked):[],
       createElement:()=>node(),documentElement:{dataset:{}},head:node(),body:node()},
@@ -135,7 +135,7 @@ test('EMS radio identifies ambulance crews and hospital transport; Fire retains 
 });
 
 test('both EMS base exits and hospital target connect to the shipped road network',async()=>{
-  const g=game();vm.runInContext(read('response-simulator/road-collision-core.js'),g.c);await g.c.PTBO_ROAD_COLLISION.ready;
+  const g=game();g.service.select('ems');vm.runInContext(read('shared/hospital-dropoff-store-1.6.49.js'),g.c);vm.runInContext(read('response-simulator/road-collision-core.js'),g.c);await g.c.PTBO_ROAD_COLLISION.ready;
   for(const base of config.profiles.ems.bases) {
     const nearest=g.c.PTBO_ROAD_COLLISION.nearestRoad(base.lat,base.lng,120);
     assert.ok(nearest&&nearest.distance<120,`${base.name} needs an exit within 120 m`);
@@ -143,7 +143,7 @@ test('both EMS base exits and hospital target connect to the shipped road networ
   }
   const h=config.hospital;
   assert.equal(g.c.PTBO_ROAD_COLLISION.isPointDrivable(h.lat,h.lng),true);
-  g.service.select('ems');g.run('triggerDispatchWorkflow()');g.arrive();g.transition();
+  g.run('triggerDispatchWorkflow()');g.arrive();g.transition();
   g.run('simLat=activeArrivalPoint.lat;simLng=activeArrivalPoint.lng;simulationStep();');
   assert.equal(g.run('mission.phase'),'handover','hospital arrival must run through the collision-wrapped physics step');
 });
