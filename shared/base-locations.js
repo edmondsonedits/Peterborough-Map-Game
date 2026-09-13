@@ -227,13 +227,6 @@
   window.addEventListener('storage',event=>{if(event.key===hospitalKey || event.key===legacyHospitalKey){hospital=readHospital();return;}if(event.key!==storageKey && event.key!==legacyStorageKey)return;items=readSaved();window.dispatchEvent(new CustomEvent('ptbo-bases-updated',{detail:{cityId,source:'storage'}}));});
   if (city.features?.baseTraining && (config.profiles?.fire?.bases?.length || config.profiles?.ems?.bases?.length)) refreshFromCityPackage();
 
-  // The dispatch editor helper owns the interactive base-area and vehicle-spawn editing overlays.
-  try {
-    if (/\/dispatch-editor\/(?:index\.html)?$/.test(runtimeLocation.pathname) && document.readyState === 'loading' && typeof document.write === 'function') {
-      const helperUrl = new URL('../dispatch-editor/spawn-box-editor-1.6.48.js?v=1.6.48', sourceUrl).href;
-      document.write(`<script src="${helperUrl.replace(/&/g,'&amp;')}"><\/script>`);
-    }
-  } catch (error) {
-    console.warn('Unable to load the base-area / vehicle-spawn editor.', error);
-  }
+  // UI helpers are loaded explicitly by dispatch-editor/index.html. Injecting an
+  // older helper here leaves a second observer alive alongside the fixed editor.
 })();

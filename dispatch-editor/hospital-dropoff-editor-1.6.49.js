@@ -20,11 +20,22 @@
   let loadedHospital = false;
   let lastCheckpoint = null;
   let roads = null;
+  let syncQueued = false;
+
+  // Observe editor selection only, never the labels/fields written by sync.
+  function scheduleSync() {
+    if (syncQueued) return;
+    syncQueued = true;
+    requestAnimationFrame(() => {
+      syncQueued = false;
+      syncFromEditor();
+    });
+  }
 
   L.map = function ptboHospitalAreaMapFactory(...args) {
     const map = nativeMapFactory.apply(this,args);
     editorMap = map;
-    queueMicrotask(syncFromEditor);
+    scheduleSync();
     return map;
   };
   Object.assign(L.map,nativeMapFactory);
@@ -343,17 +354,19 @@
     updateAccess();
   }
 
-  const observer = new MutationObserver(() => queueMicrotask(syncFromEditor));
+  const observer = new MutationObserver(scheduleSync);
   const start = () => {
     installStyle(); installFields();
     const form = $('base-editor');
-    if (form) observer.observe(form,{attributes:true,subtree:true,childList:true,characterData:true});
+    if (form) observer.observe(form,{attributes:true,attributeFilter:['class']});
+    const baseId = document.getElementById('base-id');
+    if (baseId) observer.observe(baseId,{childList:true,characterData:true,subtree:true});
     addEventListener('mouseup',endMove);
     fetch('../city-explorer/data/osm-public-roads.geojson',{cache:'force-cache'})
       .then(response => { if (!response.ok) throw new Error('Road data unavailable'); return response.json(); })
       .then(data => { roads=data; updateAccess(); })
       .catch(() => { roads=null; updateAccess(); });
-    window.addEventListener('ptbo-hospital-dropoff-updated',() => { loadedHospital=false; queueMicrotask(syncFromEditor); });
+    window.addEventListener('ptbo-hospital-dropoff-updated',() => { loadedHospital=false; scheduleSync(); });
     syncFromEditor();
   };
 
