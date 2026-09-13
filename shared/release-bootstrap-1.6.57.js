@@ -1,8 +1,8 @@
-/* v1.6.57 production release bootstrap: station-shortcut cleanup and first-run training-use notice. */
+/* v1.6.58 production release bootstrap: resilient street-map tablet and responsive UI. */
 (() => {
   'use strict';
 
-  const VERSION = '1.6.57';
+  const VERSION = '1.6.58';
   if (window.PTBO_RELEASE?.version === VERSION) return;
 
   const release = Object.freeze({ version:VERSION, label:`v${VERSION}`, channel:'production' });
@@ -59,23 +59,23 @@
       const game = frame.contentWindow;
       if (!doc || !game || !doc.body) return false;
 
-      if (game.PTBO_RESPONSE_TABLET?.version !== '1.6.48') {
-        ensureScript(doc, 'ptbo-release-tablet-v1657', new URL('../response-tablet-1.6.48.js?v=1.6.57&map=street', location.href).href);
+      if (game.PTBO_RESPONSE_TABLET?.version !== VERSION) {
+        ensureScript(doc, 'ptbo-release-tablet-v1658', new URL('../response-tablet-1.6.48.js?v=1.6.58&map=street', location.href).href);
       }
       if (game.PTBO_TABLET_CLOSE_DISPATCH?.version !== '1.6.53') {
-        ensureScript(doc, 'ptbo-tablet-close-dispatch-v1657', new URL('../tablet-close-dispatch-1.6.53.js?v=1.6.57', location.href).href);
+        ensureScript(doc, 'ptbo-tablet-close-dispatch-v1658', new URL('../tablet-close-dispatch-1.6.53.js?v=1.6.58', location.href).href);
       }
       if (game.PTBO_TABLET_BUTTON_STABILITY?.version !== '1.6.54') {
-        ensureScript(doc, 'ptbo-tablet-button-stability-v1657', new URL('../tablet-button-stability-1.6.54.js?v=1.6.57', location.href).href);
+        ensureScript(doc, 'ptbo-tablet-button-stability-v1658', new URL('../tablet-button-stability-1.6.54.js?v=1.6.58', location.href).href);
       }
-      if (game.PTBO_TRAINING_UI?.version !== VERSION) {
-        ensureScript(doc, 'ptbo-training-ui-v1657', new URL('../training-ui-1.6.57.js?v=1.6.57', location.href).href);
+      if (game.PTBO_TRAINING_UI?.version !== '1.6.57') {
+        ensureScript(doc, 'ptbo-training-ui-v1658', new URL('../training-ui-1.6.57.js?v=1.6.58', location.href).href);
       }
 
-      return game.PTBO_RESPONSE_TABLET?.version === '1.6.48'
+      return game.PTBO_RESPONSE_TABLET?.version === VERSION
         && game.PTBO_TABLET_CLOSE_DISPATCH?.version === '1.6.53'
         && game.PTBO_TABLET_BUTTON_STABILITY?.version === '1.6.54'
-        && game.PTBO_TRAINING_UI?.version === VERSION;
+        && game.PTBO_TRAINING_UI?.version === '1.6.57';
     };
 
     const startPolling = () => {
