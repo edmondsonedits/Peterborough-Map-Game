@@ -1,7 +1,7 @@
 /* Peterborough city package — authoritative geographic/service configuration. */
 (() => {
   'use strict';
-  const VERSION = '1.6.47';
+  const VERSION = '1.6.61';
   if (window.PTBO_CITY_PACKAGE?.id === 'peterborough' && window.PTBO_CITY_PACKAGE?.version === VERSION) return;
 
   const sourceUrl = new URL(document.currentScript?.src || location.href, location.href);
@@ -9,8 +9,8 @@
 
   const fireBases = freezeList([
     { id:'station-1', number:1, name:'Station 1', shortName:'Station 1', address:'210 Sherbrooke St', lat:44.30102, lng:-78.32202, yardSize:69, yardRotation:2, spawnLat:44.300906, spawnLng:-78.322196, spawnHeading:177 },
-    { id:'station-2', number:2, name:'Station 2', shortName:'Station 2', address:'100 Marina Blvd', lat:44.335266, lng:-78.316657, yardSize:160, yardRotation:0 },
-    { id:'station-3', number:3, name:'Station 3', shortName:'Station 3', address:'839 Clonsilla Ave', lat:44.284867, lng:-78.350902, yardSize:160, yardRotation:0 },
+    { id:'station-2', number:2, name:'Station 2', shortName:'Station 2', address:'100 Marina Blvd', lat:44.335711, lng:-78.316298, yardSize:137, yardWidth:137, yardLength:41, yardRotation:68, spawnLat:44.335686, spawnLng:-78.316271, spawnHeading:202 },
+    { id:'station-3', number:3, name:'Station 3', shortName:'Station 3', address:'839 Clonsilla Ave', lat:44.284779, lng:-78.351068, yardSize:92, yardWidth:92, yardLength:85, yardRotation:53, spawnLat:44.284959, spawnLng:-78.350694, spawnHeading:127 },
   ]);
 
   const emsBases = freezeList([
