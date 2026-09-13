@@ -1,10 +1,10 @@
 /* Route-reveal presentation and exact pre-reveal view restoration.
-   Core behavior remains v1.6.26; dependency bundle revision is v1.6.59. */
+   Core behavior remains v1.6.26; dependency bundle revision is v1.6.60. */
 (() => {
   'use strict';
 
   const VERSION = '1.6.26';
-  const BUNDLE_REVISION = '1.6.59';
+  const BUNDLE_REVISION = '1.6.60';
   if (window.PTBO_ROUTE_REVEAL_REVIEW_LOADER?.version === BUNDLE_REVISION
     && window.PTBO_ROUTE_REVEAL_REVIEW?.version === VERSION) return;
 

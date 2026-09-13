@@ -1,7 +1,7 @@
-/* Compatibility loader: v1.6.56 entry point forwards to production v1.6.59. */
+/* Compatibility loader: v1.6.56 entry point forwards to production v1.6.60. */
 (() => {
   'use strict';
-  const VERSION = '1.6.59';
+  const VERSION = '1.6.60';
   if (window.PTBO_RELEASE?.version === VERSION || document.getElementById('ptbo-release-bootstrap-v1657')) return;
   const script = document.createElement('script');
   script.id = 'ptbo-release-bootstrap-v1657';
