@@ -1,7 +1,7 @@
-/* Keep keyboard driving connected while the desktop toolbar has focus. Desktop simulator release v1.6.67. */
+/* Keep keyboard driving connected while the desktop toolbar has focus. Desktop simulator release v1.6.68. */
 (() => {
   'use strict';
-  const VERSION = '1.6.67';
+  const VERSION = '1.6.68';
   const frame = document.getElementById('simulator');
   if (!frame || !/\/response-simulator\/play\/(?:index\.html)?$/.test(location.pathname)) return;
   const codes = { KeyW:'w', KeyA:'a', KeyS:'s', KeyD:'d' };
