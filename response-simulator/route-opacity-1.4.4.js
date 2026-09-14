@@ -1,41 +1,35 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.5.10';
-  const ROUTE_OPACITY = 0.30;
-  const CASING_OPACITY = 0.38;
+  const VERSION = '1.6.69';
   if (window.PTBO_ROUTE_OPACITY_VERSION === VERSION) return;
   window.PTBO_ROUTE_OPACITY_VERSION = VERSION;
 
-  const style = document.createElement('style');
-  style.id = 'ptbo-version-144-style';
-  style.textContent = `
-    #ptbo-version-badge{font-size:0!important}
-    #ptbo-version-badge::after{content:'v${VERSION}';font-size:8px;font-weight:700;letter-spacing:.08em}
-  `;
-  document.head.appendChild(style);
-
-  function routeIsVisible(name) {
-    const compact = document.querySelector(`[data-route="${name}"]`);
-    if (compact) return compact.getAttribute('aria-pressed') !== 'false';
-    const legacyName = name === 'player' ? 'player' : 'suggested';
-    const legacy = document.querySelector(`[data-toggle="${legacyName}"]`);
-    return !legacy || legacy.getAttribute('aria-pressed') !== 'false';
+  function isVisible(entry) {
+    const button = document.querySelector(`[data-line="${entry.key}"]`);
+    return !button || button.getAttribute('aria-pressed') !== 'false';
   }
 
-  function applyOpacity(line, visible) {
+  function applyFallback(line, visible) {
     if (!line?.setStyle) return;
-    line.setStyle({ opacity: visible ? ROUTE_OPACITY : 0 });
-    line._ptboCasing?.setStyle?.({ opacity: visible ? CASING_OPACITY : 0 });
+    line.setStyle({ opacity: visible ? (line._ptboVisibleOpacity ?? .8) : 0 });
+    line._ptboCasing?.setStyle?.({ opacity: visible ? (line._ptboCasingVisibleOpacity ?? .65) : 0 });
+    line._ptboShadowCasing?.setStyle?.({ opacity: visible ? (line._ptboShadowVisibleOpacity ?? .28) : 0 });
   }
 
   function sync() {
-    const state = window.PTBO_ROUTE_COMPARE?.state;
+    const api = window.PTBO_ROUTE_COMPARE;
+    const state = api?.state;
     if (!state?.reviewOpen) return;
-    applyOpacity(state.playerLine, routeIsVisible('player'));
-    applyOpacity(state.suggestedLine, routeIsVisible('suggested'));
+    for (const entry of state.lineEntries || []) {
+      if (!entry?.line) continue;
+      const visible = isVisible(entry);
+      if (window.PTBO_ROUTE_REVIEW_UI?.setLineVisible) window.PTBO_ROUTE_REVIEW_UI.setLineVisible(entry.line, visible);
+      else applyFallback(entry.line, visible);
+    }
   }
 
   sync();
-  setInterval(sync, 100);
+  const timer = setInterval(sync, 120);
+  window.PTBO_ROUTE_OPACITY = Object.freeze({ version: VERSION, sync, timer });
 })();
