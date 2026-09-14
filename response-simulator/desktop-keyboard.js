@@ -1,12 +1,25 @@
-/* Keep keyboard driving connected while the desktop toolbar has focus. */
+/* Keep keyboard driving connected while the desktop toolbar has focus. Desktop simulator release v1.6.67. */
 (() => {
   'use strict';
+  const VERSION = '1.6.67';
   const frame = document.getElementById('simulator');
   if (!frame || !/\/response-simulator\/play\/(?:index\.html)?$/.test(location.pathname)) return;
   const codes = { KeyW:'w', KeyA:'a', KeyS:'s', KeyD:'d' };
   const drivingKeys = new Set(['w','a','s','d','ArrowUp','ArrowDown','ArrowLeft','ArrowRight']);
   const editable = 'input,textarea,select,[contenteditable]:not([contenteditable="false"])';
   const held = new Set();
+
+  function installDesktopDrivetrain() {
+    const doc = frame.contentDocument;
+    if (!doc?.body || doc.querySelector('script[data-ptbo-desktop-drivetrain-loader]')) return false;
+    const script = doc.createElement('script');
+    script.src = new URL(`../desktop-drivetrain-${VERSION}.js?v=${VERSION}`, location.href).href;
+    script.dataset.ptboDesktopDrivetrainLoader = VERSION;
+    script.onerror = () => console.error(`Desktop simulator drivetrain ${VERSION} failed to load.`);
+    doc.body.appendChild(script);
+    return true;
+  }
+
   function release() { held.clear(); frame.contentWindow?.releaseDrivingInput?.(); }
   function forward(event) {
     const key = codes[event.code] || (event.key?.length === 1 ? event.key.toLowerCase() : event.key);
@@ -24,5 +37,6 @@
   addEventListener('keydown', forward); addEventListener('keyup', forward);
   addEventListener('blur', release);
   document.addEventListener('visibilitychange', () => { if (document.hidden) release(); });
-  frame.addEventListener('load', () => held.clear());
+  frame.addEventListener('load', () => { held.clear(); installDesktopDrivetrain(); });
+  if (frame.contentDocument?.readyState === 'complete') installDesktopDrivetrain();
 })();
