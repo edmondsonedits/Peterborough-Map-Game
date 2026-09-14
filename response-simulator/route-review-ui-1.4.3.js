@@ -100,7 +100,7 @@
 
   function ensureCasing(entry) {
     const line = entry?.line;
-    if (!line?.setStyle || !line.getLatLngs || !window.L || !window.mapInstance) return;
+    if (!line?.setStyle || !line.getLatLngs || !window.L || typeof mapInstance === 'undefined' || !mapInstance) return;
     const kind = entry.suggested ? 'suggested' : 'player', spec = STYLES[kind];
     line.setStyle({color:entry.color,weight:spec.weight,opacity:spec.opacity,lineCap:'round',lineJoin:'round'});
     line._ptboVisibleOpacity = spec.opacity;
@@ -123,7 +123,7 @@
     for (const layer of state.layers || []) {
       if (!layer?.getRadius || routeLines.has(layer)) continue;
       try {
-        layer.setStyle?.({radius:8,weight:3,opacity:.98,fillOpacity:1});
+        layer.setRadius?.(8); layer.setStyle?.({weight:3,opacity:.98,fillOpacity:1});
         const tooltip = layer.getTooltip?.(), label = tooltip?.getContent?.();
         if (label) { layer.unbindTooltip?.(); layer.bindTooltip(label,{permanent:true,direction:'top',offset:[0,-7],className:'ptbo-route-marker-label'}); }
       } catch (_) {}
@@ -175,7 +175,7 @@
 
     setTimeout(()=>{
       try {
-        if(!state.reviewOpen||!state.layers?.length||!window.L||!window.mapInstance)return;
+        if(!state.reviewOpen||!state.layers?.length||!window.L||typeof mapInstance==='undefined'||!mapInstance)return;
         const bounds=L.featureGroup(state.layers).getBounds(); if(!bounds.isValid())return;
         const mobile=matchMedia('(max-width:900px),(pointer:coarse)').matches, cardHeight=Math.ceil(legend.getBoundingClientRect().height);
         mapInstance.fitBounds(bounds,mobile?{paddingTopLeft:[24,Math.min(cardHeight+24,Math.round(innerHeight*.52))],paddingBottomRight:[24,36],maxZoom:16,animate:false}:{paddingTopLeft:[374,55],paddingBottomRight:[70,55],maxZoom:16,animate:false});
