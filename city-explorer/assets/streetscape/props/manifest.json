@@ -1,0 +1,321 @@
+{
+  "schema": 1,
+  "generator": "tools/blender/build_streetscape_props.py",
+  "blender": "5.2.0 LTS",
+  "provenance": "Original procedural geometry and colors, authored for this project. Illustrative dimensions; no surveyed, electrical-engineering or regulatory accuracy claimed.",
+  "license": "CC0-1.0",
+  "coordinate_system": "Meters; GLB +Y up, front +Z; origin at ground or documented facade mount.",
+  "palette_linear_rgba": {
+    "wood": [
+      0.24,
+      0.15,
+      0.08,
+      1
+    ],
+    "metal": [
+      0.16,
+      0.19,
+      0.2,
+      1
+    ],
+    "light": [
+      0.52,
+      0.56,
+      0.55,
+      1
+    ],
+    "concrete": [
+      0.44,
+      0.42,
+      0.36,
+      1
+    ],
+    "soil": [
+      0.1,
+      0.07,
+      0.035,
+      1
+    ],
+    "green": [
+      0.16,
+      0.27,
+      0.085,
+      1
+    ],
+    "fabric": [
+      0.13,
+      0.25,
+      0.28,
+      1
+    ],
+    "red": [
+      0.42,
+      0.025,
+      0.03,
+      1
+    ],
+    "brick": [
+      0.28,
+      0.16,
+      0.1,
+      1
+    ]
+  },
+  "assets": [
+    {
+      "id": "utility-pole-plain",
+      "family": "utility",
+      "file": "utility-pole-plain.glb",
+      "triangles": 44,
+      "bytes": 4000,
+      "dimensions_gltf_xyz_m": [
+        0.3799999952316284,
+        9.0,
+        0.3799999952316284
+      ],
+      "materials": 1,
+      "textures": 0,
+      "wire_attachment_points_gltf_m": [
+        [
+          0,
+          8.7,
+          0
+        ]
+      ]
+    },
+    {
+      "id": "utility-pole-crossarm",
+      "family": "utility",
+      "file": "utility-pole-crossarm.glb",
+      "triangles": 140,
+      "bytes": 10636,
+      "dimensions_gltf_xyz_m": [
+        2.200000047683716,
+        9.0,
+        0.3799999952316284
+      ],
+      "materials": 1,
+      "textures": 0,
+      "wire_attachment_points_gltf_m": [
+        [
+          -0.85,
+          8.48,
+          0
+        ],
+        [
+          0,
+          8.48,
+          0
+        ],
+        [
+          0.85,
+          8.48,
+          0
+        ]
+      ]
+    },
+    {
+      "id": "utility-pole-transformer",
+      "family": "utility",
+      "file": "utility-pole-transformer.glb",
+      "triangles": 224,
+      "bytes": 16328,
+      "dimensions_gltf_xyz_m": [
+        2.200000047683716,
+        9.0,
+        0.8100000023841858
+      ],
+      "materials": 1,
+      "textures": 0,
+      "wire_attachment_points_gltf_m": [
+        [
+          -0.85,
+          8.48,
+          0
+        ],
+        [
+          0,
+          8.48,
+          0
+        ],
+        [
+          0.85,
+          8.48,
+          0
+        ]
+      ]
+    },
+    {
+      "id": "planter",
+      "family": "street-furniture",
+      "file": "planter.glb",
+      "triangles": 132,
+      "bytes": 13620,
+      "dimensions_gltf_xyz_m": [
+        1.3545434474945068,
+        0.9999999403953552,
+        0.7000000476837158
+      ],
+      "materials": 1,
+      "textures": 0
+    },
+    {
+      "id": "bollard",
+      "family": "street-furniture",
+      "file": "bollard.glb",
+      "triangles": 132,
+      "bytes": 9732,
+      "dimensions_gltf_xyz_m": [
+        0.30000001192092896,
+        0.9200000166893005,
+        0.30000001192092896
+      ],
+      "materials": 1,
+      "textures": 0
+    },
+    {
+      "id": "fence-wood-module",
+      "family": "fence",
+      "file": "fence-wood-module.glb",
+      "triangles": 180,
+      "bytes": 15216,
+      "dimensions_gltf_xyz_m": [
+        2.0999999046325684,
+        1.2000000476837158,
+        0.10000000149011612
+      ],
+      "materials": 1,
+      "textures": 0,
+      "repeat_axis_gltf": "X",
+      "module_length_m": 2,
+      "connection_points_gltf_m": [
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "id": "railing-metal-module",
+      "family": "fence",
+      "file": "railing-metal-module.glb",
+      "triangles": 180,
+      "bytes": 15220,
+      "dimensions_gltf_xyz_m": [
+        2.0999999046325684,
+        1.2000000476837158,
+        0.10000000149011612
+      ],
+      "materials": 1,
+      "textures": 0,
+      "repeat_axis_gltf": "X",
+      "module_length_m": 2,
+      "connection_points_gltf_m": [
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "id": "facade-vent",
+      "family": "facade",
+      "file": "facade-vent.glb",
+      "triangles": 96,
+      "bytes": 8652,
+      "dimensions_gltf_xyz_m": [
+        0.800000011920929,
+        0.800000011920929,
+        0.19207847118377686
+      ],
+      "materials": 1,
+      "textures": 0,
+      "mount": "facade; origin at lower center, front +Z in GLB"
+    },
+    {
+      "id": "facade-canopy",
+      "family": "facade",
+      "file": "facade-canopy.glb",
+      "triangles": 80,
+      "bytes": 6852,
+      "dimensions_gltf_xyz_m": [
+        2.4000003337860107,
+        0.4454408288002014,
+        1.0529303550720215
+      ],
+      "materials": 1,
+      "textures": 0,
+      "mount": "facade; origin at lower wall contact, projects toward +Z in GLB"
+    },
+    {
+      "id": "bench",
+      "family": "street-furniture",
+      "file": "bench.glb",
+      "triangles": 144,
+      "bytes": 12392,
+      "dimensions_gltf_xyz_m": [
+        1.7000000476837158,
+        0.880000114440918,
+        0.5149999856948853
+      ],
+      "materials": 1,
+      "textures": 0
+    },
+    {
+      "id": "sign-panel",
+      "family": "sign",
+      "file": "sign-panel.glb",
+      "triangles": 40,
+      "bytes": 3976,
+      "dimensions_gltf_xyz_m": [
+        0.48000001907348633,
+        2.5,
+        0.08750000596046448
+      ],
+      "materials": 1,
+      "textures": 0,
+      "purpose": "Blank generic sign panel; no regulatory message or logo."
+    },
+    {
+      "id": "streetlight",
+      "family": "utility",
+      "file": "streetlight.glb",
+      "triangles": 76,
+      "bytes": 6376,
+      "dimensions_gltf_xyz_m": [
+        0.2800000011920929,
+        7.507121562957764,
+        1.9000000953674316
+      ],
+      "materials": 1,
+      "textures": 0
+    },
+    {
+      "id": "garage-bay-module",
+      "family": "facade",
+      "file": "garage-bay-module.glb",
+      "triangles": 228,
+      "bytes": 18956,
+      "dimensions_gltf_xyz_m": [
+        3.5199997425079346,
+        3.820000171661377,
+        0.2499999701976776
+      ],
+      "materials": 1,
+      "textures": 0,
+      "mount": "facade module; illustrative garage bay; not Station 1 replacement geometry"
+    }
+  ]
+}

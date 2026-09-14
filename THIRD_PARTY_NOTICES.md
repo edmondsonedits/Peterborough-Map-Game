@@ -114,6 +114,12 @@ See:
 - relevant `vendor/**/LICENSE*` files
 - City Explorer data manifests/validation documents
 
+## Kenney City Kit Roads 2.1
+
+Selected decorative models and their shared colour texture in `city-explorer/assets/streetscape/kenney/` are by Kenney, distributed under Creative Commons Zero (CC0). Commercial use and modification are permitted; attribution is optional. Original licence text is retained in that directory's `License.txt`. Its manifest records the publisher URL, archive hash, model hashes and texture dependency.
+
+Source: https://kenney.nl/assets/city-kit-roads
+
 ## Distribution checklist
 
 Before any paid/private distribution:

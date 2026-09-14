@@ -1,9 +1,11 @@
 import * as THREE from 'three';
 import { reconcileStationPavement } from './station-pavement-layer.js?v=1.6.57';
 import { CURB_REVEAL, curbIsRaised, stationRoadWeight, splitRoadDetailSegment, pavementSupportBottom } from './station-road-detail.js?v=1.6.58';
-import { installQualityCapture } from './quality-capture.js?v=1.6.56';
+import { installQualityCapture } from './quality-capture.js?v=streetscape-20260914';
 import { buildingFacadePlan } from './building-archetypes.js?v=1.6.56';
 import { loadVegetationAssets } from './vegetation-assets.js?v=1.6.56';
+import { createVegetationVariant, stationOneVegetationPalette } from './vegetation-variants.js?v=streetscape-1';
+import { installStationStreetscape } from './streetscape-assets.js?v=streetscape-2';
 import { installStationApron } from './site-surface-materials.js?v=1.6.56';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import {
@@ -64,6 +66,13 @@ const RENDER_TILE_SIZE = 1800;
 const ROAD_RENDER_TILE_SIZE = 3600;
 const explorerStartedAt = performance.now();
 let captureFrame = null;
+const captureRequested = new URLSearchParams(location.search).has('capture');
+// Freeze interaction only in the explicit evidence mode. No saved settings change.
+if (captureRequested) {
+  for (const type of ['keydown', 'keyup', 'pointerdown', 'pointermove', 'pointerup', 'wheel', 'touchstart', 'touchmove', 'click']) {
+    addEventListener(type, event => { event.preventDefault(); event.stopImmediatePropagation(); }, { capture:true, passive:false });
+  }
+}
 // Explicit opt-in; no probe allocation or extra citywide queries during play.
 const pavementQA = new URLSearchParams(location.search).has('pavementQA') ? [] : null;
 
@@ -4419,7 +4428,8 @@ async function buildCity() {
     });
   }
   if (qaParams.get('survey') === '1') activateSemanticSurveyMode(true);
-  captureFrame = installQualityCapture({ THREE, renderer, camera, state, project, terrainHeightAtWorld, stopMotion: stopFlyMotion, overlay: semanticSurveyOverlay, lowPower: lowPowerProfile, startedAt: explorerStartedAt });
+  captureFrame = installQualityCapture({ THREE, renderer, camera, state, project, terrainHeightAtWorld, stopMotion: stopFlyMotion, preparePlayerSpawn: resetGameplay, overlay: semanticSurveyOverlay, lowPower: lowPowerProfile, startedAt: explorerStartedAt,
+    lighting: () => ({ theme:state.theme, exposure:renderer.toneMappingExposure, toneMapping:renderer.toneMapping, sunPosition:sun.position.toArray(), sunTarget:sunTarget.position.toArray(), sunIntensity:sun.intensity, shadows:sun.castShadow }) });
   setTimeout(() => els.loading.classList.add('is-hidden'), 420);
 }
 
@@ -4961,7 +4971,7 @@ function updateFireTruck(delta) {
     hub.rotation.set(truckState.wheelRotation, 0, Math.PI / 2);
   });
   truckVisual.frontWheels.forEach((pivot) => { pivot.rotation.y = truckState.steering; });
-  const flash = state.emergencyLights && Math.floor(performance.now() / 125) % 2 === 0;
+  const flash = state.emergencyLights && Math.floor((captureRequested ? 0 : performance.now()) / 125) % 2 === 0;
   truckVisual.beacons.forEach((beacon, index) => {
     beacon.visible = !state.emergencyLights || flash === (index % 2 === 0);
     beacon.material.emissiveIntensity = state.emergencyLights ? 3.1 : 0.35;
@@ -5217,13 +5227,20 @@ async function initializeSemanticSurvey() {
     });
     // Optional authored appearance loads after the complete procedural fallback.
     // Failure never blocks terrain, roads or gameplay readiness.
-    loadVegetationAssets().then((family) => {
+    const vegetationReady = loadVegetationAssets().then((family) => {
       if (!family) return;
+      const variants = new Map();
       let replaced = 0;
       semanticSurveyGroup.children.forEach((tree) => {
         if (tree.userData?.type !== 'semantic-tree') return;
+        const palette = stationOneVegetationPalette(tree.userData.surveyFeatureId);
+        if (palette && !variants.has(palette)) {
+          try { variants.set(palette, createVegetationVariant(family, palette)); }
+          catch (error) { console.warn('Illustrative tree palette unavailable; retaining existing authored tree.', error); variants.set(palette, family); }
+        }
+        const appearance = variants.get(palette) || family;
         const lod = new THREE.LOD();
-        family.lods.filter((level) => !lowPowerProfile || level.lod > 0).forEach((level, index) => {
+        appearance.lods.filter((level) => !lowPowerProfile || level.lod > 0).forEach((level, index) => {
           const mesh = new THREE.Mesh(level.geometry, level.material);
           mesh.castShadow = !lowPowerProfile;
           mesh.receiveShadow = true;
@@ -5232,11 +5249,16 @@ async function initializeSemanticSurvey() {
         tree.children.forEach((child) => { child.visible = false; });
         tree.add(lod);
         lod.updateMatrixWorld(true);
-        tree.userData.appearanceEvidence = family.provenance;
+        tree.userData.appearanceEvidence = appearance.provenance;
+        tree.userData.appearanceFamily = appearance.family;
         replaced += 1;
       });
       document.documentElement.dataset.authoredVegetationCount = String(replaced);
     });
+    if (captureRequested) await vegetationReady;
+    const streetscapeReady=installStationStreetscape({group:semanticSurveyGroup,project,terrainHeightAtWorld,lowPower:lowPowerProfile})
+      .catch(error=>{console.warn('Optional streetscape unavailable; base city remains active.',error);});
+    if(captureRequested) await streetscapeReady;
     semanticSurveyOverlay = createOrthophotoOverlay({
       THREE,
       definition: collection.metadata.reference_overlay,
@@ -5398,21 +5420,21 @@ const NEAR_STREETSCAPE_TYPES = new Set([
 ]);
 let cityVisualLod = '';
 
-function distanceToRenderTile(object) {
+function distanceToRenderTile(object, viewCamera = camera) {
   const tile = object.userData?.tile;
   const tileSize = Number(object.userData?.tileSize);
   if (!tile || !Number.isFinite(tileSize)) return 0;
   const centerX = CITY.worldBounds.minX + (tile.x + 0.5) * tileSize;
   const centerZ = CITY.worldBounds.minZ + (tile.z + 0.5) * tileSize;
-  return Math.hypot(camera.position.x - centerX, camera.position.z - centerZ);
+  return Math.hypot(viewCamera.position.x - centerX, viewCamera.position.z - centerZ);
 }
 
-function updateCityVisualLod() {
-  const ground = terrainHeightAtWorld(camera.position.x, camera.position.z);
-  const altitude = Math.max(0, camera.position.y - ground);
+function updateCityVisualLod(viewCamera = camera) {
+  const ground = terrainHeightAtWorld(viewCamera.position.x, viewCamera.position.z);
+  const altitude = Math.max(0, viewCamera.position.y - ground);
   const nearDetail = altitude < 115 && state.mode !== 'map';
   const tier = state.mode === 'map' ? 'map' : nearDetail ? 'street' : 'overview';
-  const lodKey = `${tier}:${Math.floor(camera.position.x / 600)}:${Math.floor(camera.position.z / 600)}`;
+  const lodKey = `${tier}:${Math.floor(viewCamera.position.x / 600)}:${Math.floor(viewCamera.position.z / 600)}`;
   if (lodKey === cityVisualLod) return;
   cityVisualLod = lodKey;
 
@@ -5423,7 +5445,7 @@ function updateCityVisualLod() {
     }
     if (object.userData?.type === 'vertical-slice-rooftop-equipment') object.visible = nearDetail;
     else if (object.userData?.type === 'building-batch' && object.userData.tile) {
-      const distance = distanceToRenderTile(object);
+      const distance = distanceToRenderTile(object, viewCamera);
       if (FAR_BUILDING_DETAIL_MATERIALS.has(object.userData.material)) {
         object.visible = nearDetail && distance < 2200;
       } else if (BUILDING_ROOF_MATERIALS.has(object.userData.material)) {
@@ -5446,14 +5468,14 @@ function updateCityVisualLod() {
       return;
     }
     if (object.userData?.tile && object.userData?.tileSize) {
-      object.visible = distanceToRenderTile(object) < roadRadius;
+      object.visible = distanceToRenderTile(object, viewCamera) < roadRadius;
     }
   });
 
   streetscapeGroup.children.forEach((object) => {
     if (!NEAR_STREETSCAPE_TYPES.has(object.userData?.type)) return;
     const tiled = object.userData?.tile && object.userData?.tileSize;
-    object.visible = nearDetail && (!tiled || distanceToRenderTile(object) < 3500);
+    object.visible = nearDetail && (!tiled || distanceToRenderTile(object, viewCamera) < 3500);
   });
   vegetationGroup.children.forEach((object) => {
     if (state.mode === 'map') object.visible = false;
@@ -5485,6 +5507,7 @@ function animate() {
     return;
   }
   const delta = Math.min(clock.getDelta(), 0.05);
+  if (!captureFrame) {
   if (state.mode === 'fly') updateFlyControls(delta);
   else if (state.mode === 'map') updateMapControls(delta);
   else {
@@ -5493,10 +5516,12 @@ function animate() {
     updateGameplayCamera(delta);
     updateGameplayHud();
   }
-  updateCityVisualLod();
+  }
+  const viewCamera = captureFrame?.camera || camera;
+  updateCityVisualLod(viewCamera);
   updateLocation();
   updateFps();
-  atmosphere.mesh.position.copy(camera.position);
+  atmosphere.mesh.position.copy(viewCamera.position);
   if (sun.castShadow) {
     // Spend the existing shadow map on human-scale contact detail in gameplay.
     // Fly/map retain broad coverage; GIS geometry and light direction are intact.
@@ -5505,14 +5530,14 @@ function animate() {
       Object.assign(sun.shadow.camera, { left: -shadowExtent, right: shadowExtent, top: shadowExtent, bottom: -shadowExtent });
       sun.shadow.camera.updateProjectionMatrix();
     }
-    const ground = terrainHeightAtWorld(camera.position.x, camera.position.z);
-    sunTarget.position.set(camera.position.x, ground, camera.position.z);
-    sun.position.set(camera.position.x - 1200, ground + 2200, camera.position.z + 900);
+    const ground = terrainHeightAtWorld(viewCamera.position.x, viewCamera.position.z);
+    sunTarget.position.set(viewCamera.position.x, ground, viewCamera.position.z);
+    sun.position.set(viewCamera.position.x - 1200, ground + 2200, viewCamera.position.z + 900);
     sunTarget.updateMatrixWorld();
   }
-  citySplatLayer?.update(camera, performance.now());
-  if (animatedFountain) animatedFountain.scale.y = 1 + Math.sin(performance.now() * 0.0018) * 0.018;
-  renderer.render(scene, captureFrame?.camera || camera);
+  citySplatLayer?.update(viewCamera, captureFrame ? 0 : performance.now());
+  if (animatedFountain) animatedFountain.scale.y = 1 + Math.sin((captureFrame ? 0 : performance.now()) * 0.0018) * 0.018;
+  renderer.render(scene, viewCamera);
   captureFrame?.(performance.now());
   animationFrameId = requestAnimationFrame(animate);
 }

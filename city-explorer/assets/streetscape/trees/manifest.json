@@ -1,0 +1,136 @@
+{
+  "schema": 1,
+  "family": "streetscape-trees",
+  "generator": "tools/blender/build_streetscape_trees.py",
+  "source_generator": "tools/blender/build_city_vegetation.py",
+  "editable_source": "artifacts\\streetscape\\trees-workshop.blend",
+  "blender": "5.2.0 LTS",
+  "provenance": "Original procedural geometry derived from the original city vegetation workshop; illustrative unsurveyed crown shapes, not species identification. No external assets or textures.",
+  "coordinate_system": "GLB +Y up; meters; ground at Y=0; Blender source +Z up",
+  "materials_per_lod": 1,
+  "textures": 0,
+  "palette_linear_rgba": {
+    "bark": [
+      0.19,
+      0.125,
+      0.075,
+      1.0
+    ],
+    "leaf_shadow": [
+      0.075,
+      0.17,
+      0.045,
+      1.0
+    ],
+    "leaf_mid": [
+      0.15,
+      0.28,
+      0.075,
+      1.0
+    ],
+    "leaf_sun": [
+      0.25,
+      0.37,
+      0.11,
+      1.0
+    ]
+  },
+  "assets": [
+    {
+      "id": "broad-irregular-lod0",
+      "family": "broad-irregular",
+      "lod": 0,
+      "file": "broad-irregular-lod0.glb",
+      "triangles": 816,
+      "bytes": 86564,
+      "sha256": "31b8ce1d98497f12018a4018a78024973e9e4badc766c35daca7ecd2d9685986",
+      "seed": 72193,
+      "dimensions_xyz_blender_m": [
+        6.875263214111328,
+        6.298122882843018,
+        8.300000190734863
+      ],
+      "suggested_distance_m": 0
+    },
+    {
+      "id": "broad-irregular-lod1",
+      "family": "broad-irregular",
+      "lod": 1,
+      "file": "broad-irregular-lod1.glb",
+      "triangles": 184,
+      "bytes": 21208,
+      "sha256": "3fd219becf330828f806eb2bcd71e6b07741702f43762903e48c888853e4957f",
+      "seed": 72193,
+      "dimensions_xyz_blender_m": [
+        6.8236894607543945,
+        5.962766170501709,
+        8.300000190734863
+      ],
+      "suggested_distance_m": 85
+    },
+    {
+      "id": "broad-irregular-lod2",
+      "family": "broad-irregular",
+      "lod": 2,
+      "file": "broad-irregular-lod2.glb",
+      "triangles": 36,
+      "bytes": 4760,
+      "sha256": "8d8799b4d3982507a9dd21b9b8a87313b956b001c16db3dbd2db849fc19e1041",
+      "seed": 72193,
+      "dimensions_xyz_blender_m": [
+        6.345355033874512,
+        5.445399284362793,
+        8.300000190734863
+      ],
+      "suggested_distance_m": 190
+    },
+    {
+      "id": "upright-lod0",
+      "family": "upright",
+      "lod": 0,
+      "file": "upright-lod0.glb",
+      "triangles": 816,
+      "bytes": 86552,
+      "sha256": "33cd71bd0015530f4d8f580818bc54190eb09d708466c9754791351a830c8f00",
+      "seed": 91237,
+      "dimensions_xyz_blender_m": [
+        3.8309783935546875,
+        4.291232109069824,
+        9.199999809265137
+      ],
+      "suggested_distance_m": 0
+    },
+    {
+      "id": "upright-lod1",
+      "family": "upright",
+      "lod": 1,
+      "file": "upright-lod1.glb",
+      "triangles": 184,
+      "bytes": 21192,
+      "sha256": "fa049cbc7cc87227fb64757142ef4320c03125afee328d3732f9ed126dbfc7eb",
+      "seed": 91237,
+      "dimensions_xyz_blender_m": [
+        3.4139745235443115,
+        4.240688323974609,
+        9.199999809265137
+      ],
+      "suggested_distance_m": 85
+    },
+    {
+      "id": "upright-lod2",
+      "family": "upright",
+      "lod": 2,
+      "file": "upright-lod2.glb",
+      "triangles": 36,
+      "bytes": 4744,
+      "sha256": "b957ed6c86bc8e0f35720c86ca8c71e314f8f925e31cb7b97f5722ca1f9fbecf",
+      "seed": 91237,
+      "dimensions_xyz_blender_m": [
+        3.159424304962158,
+        3.1447432041168213,
+        9.199999809265137
+      ],
+      "suggested_distance_m": 190
+    }
+  ]
+}
