@@ -1,3 +1,4 @@
+import { addStationArchitecturalDetails } from './station-architecture.js';
 /*
   Peterborough City Explorer gameplay primitives.
 
@@ -185,12 +186,18 @@ export function createFirefighter(THREE) {
   const rightLeg = makeLimb(1, false);
   mesh(THREE, new THREE.BoxGeometry(0.76, 0.09, 0.05), gold, visual, 0, 1.22, -0.31);
   root.userData.animation = { visual, leftArm, rightArm, leftLeg, rightLeg, phase: 0 };
+  root.userData.animation.assetStatus = 'loading';
+  root.userData.animation.ready = import('./firefighter-asset.js').then(({installFirefighter}) => installFirefighter(root)).catch(error => {
+    root.userData.animation.assetStatus = 'procedural-fallback';
+    root.userData.animation.assetError = String(error.message || error);
+    return 'procedural-fallback';
+  }).then(status => { document.documentElement.dataset.firefighterAsset = status; return status; });
   return root;
 }
 
 export function createFireTruck(THREE) {
   const root = new THREE.Group();
-  root.name = 'Peterborough pumper truck';
+  root.name = 'Generic fire rescue pumper';
   const visual = new THREE.Group();
   root.add(visual);
   const red = standardMaterial(THREE, 0xb3131d, { roughness: 0.48, metalness: 0.16 });
@@ -273,7 +280,7 @@ export function createFireTruck(THREE) {
   context.font = '700 38px system-ui, sans-serif';
   context.textAlign = 'center';
   context.textBaseline = 'middle';
-  context.fillText('PETERBOROUGH FIRE', 256, 48);
+  context.fillText('FIRE RESCUE', 256, 48);
   const labelTexture = new THREE.CanvasTexture(labelCanvas);
   labelTexture.colorSpace = THREE.SRGBColorSpace;
   const labelMaterial = new THREE.MeshBasicMaterial({ map: labelTexture, transparent: true, depthWrite: false, side: THREE.DoubleSide });
@@ -283,6 +290,15 @@ export function createFireTruck(THREE) {
   }
 
   root.userData.truck = { visual, wheels, frontWheels, beacons, labelTexture };
+  root.userData.truck.assetStatus = 'loading';
+  root.userData.truck.ready = import('./pumper-asset.js').then(({ installPumper }) => installPumper(root)).catch(error => {
+    root.userData.truck.assetStatus = 'procedural-fallback';
+    root.userData.truck.assetError = String(error.message || error);
+    return 'procedural-fallback';
+  }).then(status => {
+    document.documentElement.dataset.pumperAsset = status;
+    return status;
+  });
   return root;
 }
 
@@ -322,7 +338,7 @@ function addSurveyAlignedPanel(THREE, root, frame, terrainHeightAtWorld, materia
   mesh(THREE, new THREE.BoxGeometry(frame.length + 0.2, 0.32, 0.36), materials.roof, section, 0, wallHeight - 0.08, -0.01);
 
   if (options.kind === 'apparatus') {
-    const bays = 4;
+    const bays = 5;
     const margin = 0.55;
     const bayWidth = (frame.length - margin * 2) / bays;
     for (let index = 0; index < bays; index += 1) {
@@ -349,9 +365,10 @@ function addSurveyAlignedPanel(THREE, root, frame, terrainHeightAtWorld, materia
     mesh(THREE, new THREE.BoxGeometry(1.7, 2.7, 0.055), materials.glass, section, frame.length * 0.39, 1.43, 0.25);
   }
   if (options.kind === 'entry') {
-    mesh(THREE, new THREE.BoxGeometry(frame.length * 0.7, 0.72, 0.04), materials.glass, section, 0, 2.05, 0.225);
+    mesh(THREE, new THREE.BoxGeometry(Math.min(frame.length * 0.85, 2.8), 2.8, 0.06), materials.glass, section, 0, 1.45, 0.255);
     mesh(THREE, new THREE.BoxGeometry(0.075, 0.8, 0.04), materials.frame, section, 0, 2.05, 0.255);
   }
+  addStationArchitecturalDetails(THREE, section, options.kind, frame.length, Number.isFinite(options.roofY) ? options.roofY-ground : undefined);
   return section;
 }
 
@@ -363,7 +380,7 @@ function addSurveyAlignedPanel(THREE, root, frame, terrainHeightAtWorld, materia
  * reviewed geographic line in the semantic survey, so it cannot drift away
  * from the footprint when the city origin, terrain, or building data changes.
  */
-export function createFireStationFacade(THREE, { project, terrainHeightAtWorld, survey } = {}) {
+export function createFireStationFacade(THREE, { project, terrainHeightAtWorld, survey, roofY } = {}) {
   const root = new THREE.Group();
   root.name = 'Fire Station 1 surveyed facade detail';
   root.userData = {
@@ -395,7 +412,7 @@ export function createFireStationFacade(THREE, { project, terrainHeightAtWorld, 
   const entryFrame = surveyLineFrame(THREE, entryFeature, project);
   const officeFrame = surveyLineFrame(THREE, officeFeature, project);
   if (apparatusFrame) {
-    addSurveyAlignedPanel(THREE, root, apparatusFrame, terrainHeightAtWorld, materials, { kind: 'apparatus', wallHeight: 5.55 });
+    addSurveyAlignedPanel(THREE, root, apparatusFrame, terrainHeightAtWorld, materials, { kind: 'apparatus', wallHeight: 5.55, roofY });
     root.userData.surveyFeatureIds.push(apparatusFeature.id);
   }
   if (entryFrame) {

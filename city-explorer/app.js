@@ -1,4 +1,4 @@
-import { recordSherbrookeBuilding, recordSherbrookeSidewalk } from './sherbrooke-plan.js';
+import { recordSherbrookeBuilding, recordSherbrookeSidewalk, sherbrookeBuildings } from './sherbrooke-plan.js';
 import { installSherbrookeDetails } from './sherbrooke-details.js';
 import * as THREE from 'three';
 import { reconcileStationPavement } from './station-pavement-layer.js?v=1.6.57';
@@ -445,7 +445,7 @@ const materials = {
   civic: standard(0xa0937b, { side: THREE.DoubleSide }),
   civicBrick: standard(0x80584b, { side: THREE.DoubleSide }),
   stationBuffBrick: standard(0xa5977b, { side: THREE.DoubleSide }),
-  stationRoof: standard(0xa3a7a2, { roughness: 0.96, side: THREE.DoubleSide }),
+  stationRoof: standard(0x646962, { roughness: 0.96, side: THREE.DoubleSide }),
   tower: standard(0x718f94, { roughness: 0.32, metalness: 0.1, side: THREE.DoubleSide }),
   roofDark: standard(0x303a3b, { roughness: 0.9 }),
   roofClay: standard(0x70463c, { roughness: 0.92 }),
@@ -505,7 +505,7 @@ const materials = {
   ['residential', 'brick'], ['residentialBrick', 'brick'], ['civicBrick', 'brick'], ['stationBuffBrick', 'brick'],
   ['residentialPale', 'masonry'], ['residentialSlate', 'masonry'], ['commercial', 'masonry'],
   ['industrial', 'masonry'], ['industrialMetal', 'masonry'], ['civic', 'masonry'], ['tower', 'masonry'],
-  ['roofDark', 'roof'], ['roofClay', 'roof'], ['roofMetal', 'roof'], ['stationRoof', 'roof'],
+  ['roofDark', 'roof'], ['roofClay', 'roof'], ['roofMetal', 'roof'],
   ['roadHighway', 'asphalt'], ['roadArterial', 'asphalt'], ['roadCollector', 'asphalt'],
   ['roadLocal', 'asphalt'], ['roadService', 'asphalt'], ['roadTunnel', 'asphalt'], ['officialRoad', 'asphalt'], ['parking', 'asphalt'],
   ['park', 'grass'], ['grass', 'grass'], ['residentialLand', 'grass'], ['water', 'water'],
@@ -1795,7 +1795,8 @@ function buildBufferedBuildingBatches(batches) {
     geometry.computeBoundingSphere();
     const mesh = new THREE.Mesh(geometry, materials[materialKey] || materials.residential);
     mesh.userData = { type: 'building-batch', material: materialKey, tile, tileSize: RENDER_TILE_SIZE, vertices: positions.length / 3 };
-    mesh.receiveShadow = !lowPowerProfile;
+    // This isolated flat landmark roof uses matte shading to avoid city shadow-map banding.
+    mesh.receiveShadow = !lowPowerProfile && materialKey !== 'stationRoof';
     mesh.castShadow = !lowPowerProfile && worldPointInVerticalSlice(
       geometry.boundingSphere.center.x,
       geometry.boundingSphere.center.z,
@@ -4417,6 +4418,7 @@ async function buildCity() {
   await initializeSemanticSurvey();
   await initializeCapturedDetailLayer();
   initializeGameplay();
+  await Promise.all([fireTruckActor.userData.truck.ready, playerActor.userData.animation.ready]);
   cityVisualLod = '';
   updateCityVisualLod();
   freezeStaticCityTransforms();
@@ -4521,7 +4523,7 @@ function updateGameplayHint() {
   if (state.mode === 'onFoot') {
     els.modeHint.innerHTML = '<strong>On foot at Fire Station 1.</strong> WASD or arrows move · Shift sprints · mouse looks · E enters the fire truck · F free camera.';
   } else if (state.mode === 'driving') {
-    els.modeHint.innerHTML = '<strong>Driving Peterborough Engine 1.</strong> W/S throttle and brake · A/D steer · E exits when stopped · C camera · L emergency lights.';
+    els.modeHint.innerHTML = '<strong>Driving Fire Rescue Engine 1.</strong> W/S throttle and brake · A/D steer · E exits when stopped · C camera · L emergency lights.';
   }
 }
 
@@ -4554,6 +4556,7 @@ function initializeGameplay() {
   gameplayGroup.add(fireTruckActor);
 
   fireStationDetail = createFireStationFacade(THREE, {
+    roofY: (sherbrookeBuildings.get('way/1009651229')?.top ?? NaN) + 0.28,
     project,
     terrainHeightAtWorld,
     survey: semanticSurveyCollection,
@@ -4577,6 +4580,19 @@ function initializeGameplay() {
         mode: state.mode,
         player: playerActor ? { x: playerActor.position.x, y: playerActor.position.y, z: playerActor.position.z } : null,
         truck: { ...truckState },
+        firefighterAppearance: playerActor ? {
+          status: playerActor.userData.animation.assetStatus,
+          visible: playerActor.visible,
+          limbs: ['leftArm','rightArm','leftLeg','rightLeg'].map(key => playerActor.userData.animation[key].rotation.x),
+        } : null,
+        truckAppearance: fireTruckActor ? {
+          status: fireTruckActor.userData.truck.assetStatus,
+          wheelCount: fireTruckActor.userData.truck.wheels.length,
+          wheelSpin: fireTruckActor.userData.truck.wheels[0]?.spin?.rotation.x ?? null,
+          frontSteering: fireTruckActor.userData.truck.frontWheels.map(wheel => wheel.rotation.y),
+          emergencyLights: state.emergencyLights,
+          beacons: fireTruckActor.userData.truck.beacons.map(beacon => ({ visible: beacon.visible, intensity: beacon.material.emissiveIntensity })),
+        } : null,
         onRoad: gameplaySurfaceAt(truckState.x, truckState.z, truckState.y).onRoad,
       };
     },
@@ -4973,7 +4989,8 @@ function updateFireTruck(delta) {
   truckVisual.visual.rotation.x = exponentialStep(truckVisual.visual.rotation.x, bodyPitch, 5.5, delta);
   truckVisual.visual.rotation.z = exponentialStep(truckVisual.visual.rotation.z, bodyRoll, 5.5, delta);
   truckState.wheelRotation += truckState.speed * delta / 0.56;
-  truckVisual.wheels.forEach(({ wheel, hub }) => {
+  truckVisual.wheels.forEach(({ wheel, hub, spin }) => {
+    if (spin) { spin.rotation.x = -truckState.wheelRotation; return; }
     wheel.rotation.set(truckState.wheelRotation, 0, Math.PI / 2);
     hub.rotation.set(truckState.wheelRotation, 0, Math.PI / 2);
   });
@@ -5047,13 +5064,13 @@ function updateGameplayHud() {
     lastRoadLabel = label;
     els.gameplayRoad.textContent = label;
   }
-  els.gameplayRole.textContent = driving ? 'Peterborough Engine 1' : 'Firefighter · On foot';
+  els.gameplayRole.textContent = driving ? 'Fire Rescue Engine 1' : 'Firefighter · On foot';
   els.gameplaySpeed.textContent = String(Math.round(Math.abs(truckState.speed) * 3.6)).padStart(3, '0');
   els.gameplayGear.textContent = Math.abs(truckState.speed) < 0.18 ? 'N' : truckState.speed < 0 ? 'R' : 'D';
   let prompt = '';
   if (state.mode === 'onFoot') {
     const distance = Math.hypot(playerActor.position.x - truckState.x, playerActor.position.z - truckState.z);
-    if (distance <= PLAYER_TUNING.enterDistance) prompt = '<kbd>E</kbd> Enter Peterborough Engine 1';
+    if (distance <= PLAYER_TUNING.enterDistance) prompt = '<kbd>E</kbd> Enter Fire Rescue Engine 1';
   } else if (driving && Math.abs(truckState.speed) <= TRUCK_TUNING.exitSpeed) {
     prompt = '<kbd>E</kbd> Exit fire truck';
   }
@@ -5074,7 +5091,7 @@ function enterOrExitVehicle() {
   if (state.mode === 'onFoot') {
     const distance = Math.hypot(playerActor.position.x - truckState.x, playerActor.position.z - truckState.z);
     if (distance > PLAYER_TUNING.enterDistance) {
-      showToast('Move closer to Peterborough Engine 1');
+      showToast('Move closer to Fire Rescue Engine 1');
       return;
     }
     playerActor.visible = false;
@@ -5084,7 +5101,7 @@ function enterOrExitVehicle() {
     state.gameplayPitch = -0.17;
     setMode('driving', true);
     ensureVehicleAudio();
-    showToast('Peterborough Engine 1 ready');
+    showToast('Fire Rescue Engine 1 ready');
     return;
   }
   if (state.mode !== 'driving') return;

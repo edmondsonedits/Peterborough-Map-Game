@@ -1,0 +1,15 @@
+{
+  "name": "Generic turnout firefighter",
+  "source": "Original Blender geometry using supplied image as visual reference only",
+  "triangles": 48412,
+  "units": "metres",
+  "up": "+Y",
+  "forward": "-Z",
+  "rig": "Rigid shoulder and hip groups; existing procedural gait",
+  "commercialUse": "Project-created geometry and generic markings, no third-party assets or photo pixels",
+  "limitations": [
+    "Stylized facial likeness, not a photorealistic scan",
+    "No facial, finger or elbow animation",
+    "Helmet carried as part of left arm"
+  ]
+}

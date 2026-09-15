@@ -40,6 +40,9 @@ jobs:
       - name: Check streetscape regressions
         run: node --test tests/sherbrooke-plan.test.mjs tests/sherbrooke-fallback.test.mjs tests/station-reference-details.test.mjs tests/streetscape-assets.test.mjs tests/vegetation-variants.test.mjs
 
+      - name: Check authored actors and station architecture
+        run: node --test tests/pumper-asset.test.mjs tests/firefighter-asset.test.mjs tests/station-architecture.test.mjs
+
       - name: Stress deterministic EMS transitions
         run: |
           for pass in 1 2 3 4 5; do

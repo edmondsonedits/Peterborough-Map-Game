@@ -1,0 +1,29 @@
+{
+  "name": "Generic rescue pumper",
+  "version": 1,
+  "source": "Original Blender geometry inspired by user-provided reference; no embedded photograph or department marks",
+  "units": "metres",
+  "forward": "-Z",
+  "up": "+Y",
+  "wheelRadius": 0.56,
+  "wheelbase": 5.65,
+  "triangles": 50704,
+  "meshObjects": 19,
+  "wheelNodes": [
+    "Wheel_FL",
+    "Wheel_FR",
+    "Wheel_RL",
+    "Wheel_RR"
+  ],
+  "beaconNodes": [
+    "Beacon_L",
+    "Beacon_R",
+    "Beacon_RearL",
+    "Beacon_RearR"
+  ],
+  "limitations": [
+    "Unseen rear and opposite side are plausible original designs",
+    "Dimensions estimated to retain existing simulator handling envelope"
+  ],
+  "commercialUse": "Original project-created geometry and generic markings; no third-party model or texture dependencies"
+}
