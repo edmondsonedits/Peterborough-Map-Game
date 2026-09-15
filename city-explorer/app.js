@@ -1,9 +1,11 @@
+import { recordSherbrookeBuilding, recordSherbrookeSidewalk } from './sherbrooke-plan.js';
+import { installSherbrookeDetails } from './sherbrooke-details.js';
 import * as THREE from 'three';
 import { reconcileStationPavement } from './station-pavement-layer.js?v=1.6.57';
 import { CURB_REVEAL, curbIsRaised, stationRoadWeight, splitRoadDetailSegment, pavementSupportBottom } from './station-road-detail.js?v=1.6.58';
-import { installQualityCapture } from './quality-capture.js?v=streetscape-20260914';
+import { installQualityCapture } from './quality-capture.js?v=sherbrooke-20260915';
 import { buildingFacadePlan } from './building-archetypes.js?v=1.6.56';
-import { loadVegetationAssets } from './vegetation-assets.js?v=1.6.56';
+import { loadVegetationAssets } from './vegetation-assets.js?v=sherbrooke-20260915';
 import { createVegetationVariant, stationOneVegetationPalette } from './vegetation-variants.js?v=streetscape-1';
 import { installStationStreetscape } from './streetscape-assets.js?v=streetscape-2';
 import { installStationApron } from './site-surface-materials.js?v=1.6.56';
@@ -58,7 +60,7 @@ import {
   createSemanticSurveyLayer,
   semanticSurveySummary,
   validateSemanticSurvey,
-} from './semantic-survey.js?v=1.5.6-planting4';
+} from './semantic-survey.js?v=sherbrooke-20260915';
 
 // Render tiles preserve a useful balance between material batching and
 // camera-local culling. The semantic GIS features remain independent.
@@ -1694,6 +1696,7 @@ function appendBufferedBuilding(rings, tags, featureId, batches) {
   const foundationTop = Math.max(...groundHeights);
   const wallTop = foundationTop + dimensions.height;
   const roofTop = wallTop + dimensions.roofHeight;
+  recordSherbrookeBuilding(featureId, outer, foundationTop, wallTop);
   const anchor = polygonCentroid(outer);
   const wallKey = buildingMaterialKey(tags, dimensions.height + dimensions.minHeight + dimensions.roofHeight, featureId);
   const roofKey = featureId === 'way/1009651229' ? 'stationRoof' : roofMaterialKey(tags, wallKey);
@@ -2293,6 +2296,9 @@ function buildInstancedLines(segments, bucket) {
       setRoadQuaternion(dummy, direction);
       dummy.scale.set(segment.width, 1, length + 0.7);
       dummy.updateMatrix();
+      if (bucket === 'sidewalk' && /sherbrooke/i.test(segment.name || '')) recordSherbrookeSidewalk(segment,
+        new THREE.Vector3(-.5, thickness/2, -.5).applyMatrix4(dummy.matrix),new THREE.Vector3(.5, thickness/2, -.5).applyMatrix4(dummy.matrix),
+        new THREE.Vector3(-.5, thickness/2, .5).applyMatrix4(dummy.matrix),new THREE.Vector3(.5, thickness/2, .5).applyMatrix4(dummy.matrix));
       mesh.setMatrixAt(index, dummy.matrix);
     });
     mesh.instanceMatrix.needsUpdate = true;
@@ -2340,6 +2346,7 @@ function buildStationSidewalkRibbons(segments) {
   for (const segment of segments) {
     const [al, ar] = corners(segment.a, segment), [bl, br] = corners(segment.b, segment);
     triangle(al, ar, br); triangle(al, br, bl);
+    recordSherbrookeSidewalk(segment, al, ar, bl, br);
     const edges = [[bl, al], [ar, br]];
     if (joints.get(key(segment.a)).length === 1) edges.push([al, ar]);
     if (joints.get(key(segment.b)).length === 1) edges.push([br, bl]);
@@ -5227,7 +5234,7 @@ async function initializeSemanticSurvey() {
     });
     // Optional authored appearance loads after the complete procedural fallback.
     // Failure never blocks terrain, roads or gameplay readiness.
-    const vegetationReady = loadVegetationAssets().then((family) => {
+    const vegetationReady = Promise.all([loadVegetationAssets(), loadVegetationAssets('broad-irregular')]).then(([family, frontFamily]) => {
       if (!family) return;
       const variants = new Map();
       let replaced = 0;
@@ -5235,7 +5242,7 @@ async function initializeSemanticSurvey() {
         if (tree.userData?.type !== 'semantic-tree') return;
         const palette = stationOneVegetationPalette(tree.userData.surveyFeatureId);
         if (palette && !variants.has(palette)) {
-          try { variants.set(palette, createVegetationVariant(family, palette)); }
+          try { variants.set(palette, createVegetationVariant(frontFamily || family, palette)); }
           catch (error) { console.warn('Illustrative tree palette unavailable; retaining existing authored tree.', error); variants.set(palette, family); }
         }
         const appearance = variants.get(palette) || family;
@@ -5256,7 +5263,7 @@ async function initializeSemanticSurvey() {
       document.documentElement.dataset.authoredVegetationCount = String(replaced);
     });
     if (captureRequested) await vegetationReady;
-    const streetscapeReady=installStationStreetscape({group:semanticSurveyGroup,project,terrainHeightAtWorld,lowPower:lowPowerProfile})
+    const streetscapeReady=installSherbrookeDetails({group:semanticSurveyGroup,project,terrainHeightAtWorld,lowPower:lowPowerProfile})
       .catch(error=>{console.warn('Optional streetscape unavailable; base city remains active.',error);});
     if(captureRequested) await streetscapeReady;
     semanticSurveyOverlay = createOrthophotoOverlay({

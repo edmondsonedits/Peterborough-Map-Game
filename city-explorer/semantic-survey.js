@@ -1,3 +1,4 @@
+import { createStationFlagMaterial, addStationFlowers } from './station-reference-details.js';
 /*
   Semantic survey layer for accuracy-first city reconstruction.
 
@@ -333,6 +334,10 @@ function buildPlantingArea(THREE, feature, project, terrainHeightAtWorld, materi
   foliage.receiveShadow = true;
   foliage.castShadow = true;
   root.add(foliage);
+  if (feature.id === 'station1-front-planting-bed') {
+    addStationFlowers(THREE, root, leaves);
+    root.userData.plantingEvidence = 'surveyed-bed; illustrative reference-inspired red and white flowers';
+  }
   return root;
 }
 
@@ -349,7 +354,7 @@ export function createSemanticSurveyLayer({ THREE, group, collection, project, t
     soil: standardMaterial(THREE, 0x4b392e, { roughness: 1 }),
     timber: standardMaterial(THREE, 0x75604a, { roughness: 0.96 }),
     flower: standardMaterial(THREE, 0xc84545, { roughness: 0.85 }),
-    flag: new THREE.MeshBasicMaterial({ color: 0xd92832, side: THREE.DoubleSide }),
+    flag: createStationFlagMaterial(THREE),
   };
   const shared = {
     trunk: new THREE.CylinderGeometry(0.4, 0.64, 5, 7),

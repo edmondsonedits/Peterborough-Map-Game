@@ -37,6 +37,9 @@ jobs:
           node --test --test-skip-pattern='rotated yard corners use the same geometry for drawing and collision' tests/critical-gameplay.test.cjs tests/gearbox.test.cjs tests/camera-zoom.test.cjs tests/ems.test.cjs tests/incident-formatting.test.cjs tests/training-history.test.cjs tests/geo-map-policy.test.cjs tests/analytics-authority.test.cjs tests/analytics-bootstrap.test.cjs tests/analytics-adversarial.test.cjs tests/release-bootstrap-consistency.test.cjs tests/tablet-dispatch-minimize.test.cjs tests/tablet-button-stability.test.cjs tests/base-editor-freeze.test.cjs
           node --test --test-skip-pattern='v1\.6\.31 build uses|main menu exposes|v1\.6\.25 analytics reliably|v1\.6\.28 visual tutorial shows|city selector keeps the shared mobile and desktop wrapper URLs' tests/base-training-cities.test.cjs tests/desktop-editor-steering-regression.test.cjs
 
+      - name: Check streetscape regressions
+        run: node --test tests/sherbrooke-plan.test.mjs tests/sherbrooke-fallback.test.mjs tests/station-reference-details.test.mjs tests/streetscape-assets.test.mjs tests/vegetation-variants.test.mjs
+
       - name: Stress deterministic EMS transitions
         run: |
           for pass in 1 2 3 4 5; do

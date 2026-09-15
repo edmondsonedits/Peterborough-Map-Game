@@ -44,7 +44,7 @@ globalThis.showPeterboroughExplorerFatalError = showFatalError;
 
 try {
   globalThis.__PTBO_EXPLORER_BOOTSTRAP__?.touch?.('loading 3D city module');
-  await import('./app.js?v=streetscape-20260914');
+  await import('./app.js?v=sherbrooke-20260915');
 } catch (error) {
   showFatalError(error);
 }

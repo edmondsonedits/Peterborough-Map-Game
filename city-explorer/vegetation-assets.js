@@ -1,15 +1,16 @@
 import { GLTFLoader } from './vendor/three-r180/examples/jsm/loaders/GLTFLoader.js';
 
 // One cached family, shared by every placed tree. Placement remains survey-owned.
-let familyPromise;
+const families = new Map();
+const PREFIXES = { base: './assets/vegetation/broadleaf', 'broad-irregular': './assets/streetscape/trees/broad-irregular' };
 const LEVELS = [
   { lod: 0, distance: 0, triangleBudget: 1200 },
   { lod: 1, distance: 85, triangleBudget: 250 },
   { lod: 2, distance: 190, triangleBudget: 60 },
 ];
 
-async function readLevel(loader, level) {
-  const url = new URL(`./assets/vegetation/broadleaf-lod${level.lod}.glb`, import.meta.url);
+async function readLevel(loader, level, prefix) {
+  const url = new URL(`${prefix}-lod${level.lod}.glb`, import.meta.url);
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 12000);
   let gltf;
@@ -59,11 +60,12 @@ async function readLevel(loader, level) {
  * Meshes and InstancedMeshes must reuse these resources and not dispose them per tree.
  * Callers can retain their procedural trees while loading, or when null is returned.
  */
-export function loadVegetationAssets() {
-  if (!familyPromise) {
-    familyPromise = (async () => {
+export function loadVegetationAssets(variant = 'base') {
+  if (!Object.hasOwn(PREFIXES, variant)) return Promise.resolve(null);
+  if (!families.has(variant)) {
+    const familyPromise = (async () => {
       const loader = new GLTFLoader();
-      const results = await Promise.allSettled(LEVELS.map((level) => readLevel(loader, level)));
+      const results = await Promise.allSettled(LEVELS.map((level) => readLevel(loader, level, PREFIXES[variant])));
       const lods = results.filter((result) => result.status === 'fulfilled').map((result) => result.value);
       if (lods.length !== LEVELS.length) {
         for (const lod of lods) { lod.geometry.dispose(); lod.material.dispose(); }
@@ -76,11 +78,12 @@ export function loadVegetationAssets() {
         lod.material = material;
       }
       return {
-        family: 'illustrative-broadleaf',
+        family: `illustrative-${variant === 'base' ? 'broadleaf' : variant}`,
         provenance: 'Original Blender geometry; inferred appearance, not surveyed species or dimensions.',
         lods,
       };
     })().catch(() => null);
+    families.set(variant, familyPromise);
   }
-  return familyPromise;
+  return families.get(variant);
 }
