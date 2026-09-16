@@ -11,7 +11,7 @@
   },
   "city": "Peterborough, Ontario",
   "city_buildings": {
-    "cache_reused": true,
+    "cache_reused": false,
     "desktop_detail_layer": true,
     "feature_count": 5325,
     "file": "peterborough-official-buildings.geojson",
@@ -42,12 +42,12 @@
     ],
     "simplification_tolerance_m": 0.08,
     "source": "City of Peterborough Basedata",
-    "source_feature_count": 5325,
+    "source_feature_count": 37349,
     "source_url": "https://citymaps.peterborough.ca/arcgis/rest/services/Basedata/MapServer",
     "spatial_reference": "EPSG:4326"
   },
   "city_open_data": {
-    "cache_reused": true,
+    "cache_reused": false,
     "feature_count": 4326,
     "file": "peterborough-city-open-data.geojson",
     "layer_counts": {
@@ -119,7 +119,7 @@
     "spatial_reference": "EPSG:4326"
   },
   "city_road_surfaces": {
-    "cache_reused": true,
+    "cache_reused": false,
     "feature_count": 18864,
     "file": "peterborough-road-surfaces.geojson",
     "layer_counts": {
@@ -192,7 +192,7 @@
     "file": "construction-audit.json",
     "policy": "Only authoritative completed geometry changes alter the packaged city"
   },
-  "generated_at": "2026-09-16T01:41:03+00:00",
+  "generated_at": "2026-09-16T16:08:49+00:00",
   "hydrography": {
     "cache_reused": false,
     "feature_count": 1312,
