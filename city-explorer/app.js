@@ -52,7 +52,7 @@ import {
   gameplayAxesFromKeys,
   headingFromDirection,
   stepFireTruckKinematics,
-} from './gameplay-systems.js?v=firefighter3';
+} from './gameplay-systems.js?v=firefighter4';
 import {
   SEMANTIC_POINT_TYPES,
   createDraftPointFeature,
@@ -6105,3 +6105,4 @@ buildCity().catch((error) => {
   globalThis.showPeterboroughExplorerFatalError?.(error);
 });
 animate();
+

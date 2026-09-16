@@ -8,6 +8,11 @@ sys.path.insert(0,str(HERE))
 from firefighter_anatomy import add_anatomy
 ROOT=HERE.parents[1];VENDOR=ROOT/'assets-source/firefighter-v2/vendor'
 source=(HERE/'build_firefighter.py').read_text()
+# Remove the carried prop while retaining the glove and its animation pivot.
+helmet_start=source.index('# A compact helmet carried')
+helmet_end=source.index('# Combine each articulated part',helmet_start)
+source=source[:helmet_start]+source[helmet_end:]
+source=source.replace("'Helmet carried as part of left arm'", "'Hands have no carried props'")
 # The existing factory and limb pivots are retained; obsolete head is replaced.
 start=source.index('# Bare head');end=source.index('for side,armname,legname',start)
 source=source[:start]+source[end:]
@@ -117,11 +122,6 @@ for side,part in [(-1,'LeftLeg'),(1,'RightLeg')]:
  for i in range(20):
   a=i*math.tau/20
   sphere('Boot welt stitch',(x+.099*math.cos(a),.05,-.06+.142*math.sin(a)),(.003,.002,.003),seam,8,6)
-active='LeftArm'
-for dx in [-.09,0,.09]:
- for i in range(12):
-  a=-1.0+i*.15;b=a+.15
-  rod('Helmet reinforced ridge',(hx+dx,hy+.127*math.cos(a),hz+.146*math.sin(a)),(hx+dx,hy+.127*math.cos(b),hz+.146*math.sin(b)),.003,metal)
 """
 source=source.replace('# Combine each articulated part',details+'\n# Combine each articulated part')
 source=source.replace("scene=bpy.context.scene;", "add_anatomy(VENDOR,bpy.data.objects['Body'])\nscene=bpy.context.scene;")

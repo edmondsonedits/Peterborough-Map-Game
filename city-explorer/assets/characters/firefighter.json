@@ -1,7 +1,7 @@
 {
   "name": "Generic turnout firefighter",
   "source": "Original turnout gear plus CC0 MakeHuman anatomical head, eyes, brows, hair and skin; user sheet is visual reference",
-  "triangles": 110998,
+  "triangles": 106674,
   "units": "metres",
   "up": "+Y",
   "forward": "-Z",
@@ -10,6 +10,6 @@
   "limitations": [
     "Stylized facial likeness, not a photorealistic scan",
     "No facial, finger or elbow animation",
-    "Helmet carried as part of left arm"
+    "Hands have no carried props"
   ]
 }
