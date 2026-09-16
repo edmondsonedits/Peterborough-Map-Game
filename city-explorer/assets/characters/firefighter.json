@@ -1,12 +1,12 @@
 {
   "name": "Generic turnout firefighter",
-  "source": "Original Blender geometry using supplied image as visual reference only",
-  "triangles": 48412,
+  "source": "Original turnout gear plus CC0 MakeHuman anatomical head, eyes, brows, hair and skin; user sheet is visual reference",
+  "triangles": 110998,
   "units": "metres",
   "up": "+Y",
   "forward": "-Z",
   "rig": "Rigid shoulder and hip groups; existing procedural gait",
-  "commercialUse": "Project-created geometry and generic markings, no third-party assets or photo pixels",
+  "commercialUse": "Original gear; CC0 MakeHuman assets, license and provenance retained in assets-source/firefighter-v2/vendor",
   "limitations": [
     "Stylized facial likeness, not a photorealistic scan",
     "No facial, finger or elbow animation",

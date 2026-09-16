@@ -12,11 +12,17 @@ export function prepareFirefighter(scene) {
     if(!node||!node.children.length||!node.position.toArray().every(Number.isFinite))throw Error(`Missing firefighter limb: ${name}`);
     rig[key]=node;
   }
-  scene.traverse(node=>{if(node.isMesh){node.castShadow=true;node.receiveShadow=true;}});
+  scene.traverse(node=>{if(node.isMesh){
+    node.castShadow=true;node.receiveShadow=true;
+    if(node.material.name==='short04') {
+      node.material.color.setRGB(.6,.28,.10);
+      node.material.alphaTest=.35;node.material.transparent=false;node.material.depthWrite=true;
+    }
+  }});
   return {scene,...rig};
 }
 export async function installFirefighter(root) {
-  const url=new URL('./assets/characters/firefighter.glb',import.meta.url);
+  const url=new URL('./assets/characters/firefighter.glb?v=2',import.meta.url);
   const response=await fetch(url,{signal:AbortSignal.timeout(15000)});
   if(!response.ok)throw Error(`Firefighter HTTP ${response.status}`);
   const model=prepareFirefighter((await new GLTFLoader().parseAsync(await response.arrayBuffer(),new URL('.',url).href)).scene);
