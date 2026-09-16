@@ -73,4 +73,8 @@ def add_anatomy(vendor,parent):
     for v in hair.data.vertices:
         weight=max(0,min(1,(v.co.z-1.79)/.09))*max(0,min(1,(v.co.y+.015)/.11))
         v.co.z+=.027*weight;v.co.x+=.01*weight
+    # Seat the complete head assembly closer to the turnout collar. Blender Z
+    # is vertical; keep face, eyes, brows and hair aligned as one adjustment.
+    for name in ['Anatomical head and neck','high-poly','eyebrow001','short04']:
+        bpy.data.objects[name].location.z -= .065
     return head

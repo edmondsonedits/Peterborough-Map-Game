@@ -22,7 +22,7 @@ export function prepareFirefighter(scene) {
   return {scene,...rig};
 }
 export async function installFirefighter(root) {
-  const url=new URL('./assets/characters/firefighter.glb?v=2',import.meta.url);
+  const url=new URL('./assets/characters/firefighter.glb?v=3',import.meta.url);
   const response=await fetch(url,{signal:AbortSignal.timeout(15000)});
   if(!response.ok)throw Error(`Firefighter HTTP ${response.status}`);
   const model=prepareFirefighter((await new GLTFLoader().parseAsync(await response.arrayBuffer(),new URL('.',url).href)).scene);

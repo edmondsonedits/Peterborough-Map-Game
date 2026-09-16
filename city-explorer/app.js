@@ -52,7 +52,7 @@ import {
   gameplayAxesFromKeys,
   headingFromDirection,
   stepFireTruckKinematics,
-} from './gameplay-systems.js?v=firefighter2';
+} from './gameplay-systems.js?v=firefighter3';
 import {
   SEMANTIC_POINT_TYPES,
   createDraftPointFeature,
