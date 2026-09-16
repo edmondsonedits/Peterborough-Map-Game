@@ -1,0 +1,344 @@
+/* Peterborough 3D Simulator mobile gameplay controls — v1.6.68 */
+
+#touch-controls { --mobile-safe-bottom: env(safe-area-inset-bottom, 0px); }
+.mobile-joystick-wrap, .mobile-action-wrap, .mobile-flight-pad, #mobile-menu-toggle, #mobile-menu-scrim { display: none; }
+
+@media (pointer: coarse) {
+  #touch-controls {
+    position: absolute;
+    inset: 0;
+    z-index: 24;
+    display: block;
+    pointer-events: none;
+  }
+
+  .mobile-joystick-wrap {
+    position: absolute;
+    left: max(14px, env(safe-area-inset-left, 0px));
+    bottom: calc(14px + var(--mobile-safe-bottom));
+    display: grid;
+    justify-items: center;
+    gap: 5px;
+    pointer-events: auto;
+  }
+  .mobile-joystick {
+    position: relative;
+    width: 144px;
+    height: 144px;
+    border: 1px solid rgba(237, 212, 141, .28);
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(255,255,255,.055) 0 23%, transparent 24%),
+      radial-gradient(circle at 50% 50%, rgba(3,13,19,.62), rgba(3,13,19,.34) 70%, rgba(3,13,19,.10) 71%);
+    box-shadow: inset 0 0 0 8px rgba(255,255,255,.015), 0 8px 24px rgba(0,0,0,.22);
+    -webkit-backdrop-filter: blur(7px);
+    backdrop-filter: blur(7px);
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .mobile-joystick::before, .mobile-joystick::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    pointer-events: none;
+    background: rgba(221,229,224,.26);
+    transform: translate(-50%, -50%);
+  }
+  .mobile-joystick::before { width: 1px; height: 76%; }
+  .mobile-joystick::after { width: 76%; height: 1px; }
+  .mobile-joystick[data-strength="strong"] { border-color: rgba(237,212,141,.50); }
+  .mobile-joystick.is-running { box-shadow: inset 0 0 0 3px rgba(237,212,141,.13), 0 8px 24px rgba(0,0,0,.22); }
+
+  .joystick-knob {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 62px;
+    height: 62px;
+    margin: -31px 0 0 -31px;
+    border: 1px solid rgba(237,212,141,.64);
+    border-radius: 50%;
+    background: linear-gradient(145deg, rgba(68,72,65,.96), rgba(22,29,31,.96));
+    box-shadow: 0 6px 16px rgba(0,0,0,.38), inset 0 0 0 5px rgba(200,172,102,.055);
+    transform: translate3d(0,0,0);
+    transition: box-shadow .1s ease, background .1s ease;
+    will-change: transform;
+    pointer-events: none;
+  }
+  .mobile-joystick.is-active .joystick-knob {
+    background: linear-gradient(145deg, rgba(88,81,58,.98), rgba(29,34,31,.97));
+    box-shadow: 0 7px 18px rgba(0,0,0,.44), inset 0 0 0 5px rgba(237,212,141,.10);
+  }
+  .mobile-joystick.is-running .joystick-knob { border-color: rgba(255,231,157,.92); }
+
+  .mobile-control-caption {
+    color: rgba(236,241,237,.78);
+    font-size: 8px;
+    font-weight: 850;
+    letter-spacing: .17em;
+    line-height: 1;
+    text-transform: uppercase;
+    text-shadow: 0 1px 5px rgba(0,0,0,.8);
+    pointer-events: none;
+  }
+
+  .mobile-action-wrap {
+    position: absolute;
+    right: max(17px, env(safe-area-inset-right, 0px));
+    bottom: calc(22px + var(--mobile-safe-bottom));
+    display: grid;
+    justify-items: center;
+    gap: 5px;
+    pointer-events: auto;
+  }
+  #mobile-action-button {
+    width: 94px;
+    height: 94px;
+    padding: 0;
+    display: grid;
+    place-content: center;
+    gap: 2px;
+    border: 1px solid rgba(255,105,112,.42);
+    border-radius: 50%;
+    background: radial-gradient(circle at 38% 30%, rgba(83,34,39,.84), rgba(38,17,21,.82) 68%);
+    box-shadow: 0 9px 26px rgba(0,0,0,.30), inset 0 0 0 5px rgba(255,255,255,.022);
+    color: #fff;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: opacity .15s ease, transform .1s ease, border-color .15s ease, background .15s ease;
+  }
+  #mobile-action-button.is-ready {
+    border-color: rgba(255,102,112,.78);
+    background: radial-gradient(circle at 38% 30%, rgba(117,34,41,.96), rgba(47,16,21,.92) 68%);
+    box-shadow: 0 10px 28px rgba(0,0,0,.34), inset 0 0 0 5px rgba(255,255,255,.03);
+  }
+  #mobile-action-button:not(:disabled):active, #mobile-action-button.is-pressed { transform: scale(.95); }
+  #mobile-action-button:disabled { opacity: .46; filter: saturate(.60); }
+  #mobile-action-label { font-size: 14px; font-weight: 900; letter-spacing: .07em; line-height: 1.05; text-transform: uppercase; }
+  #mobile-action-detail { color: rgba(255,222,224,.80); font-size: 8px; font-weight: 800; letter-spacing: .11em; line-height: 1.1; text-transform: uppercase; }
+
+  #mobile-menu-toggle {
+    position: absolute;
+    left: 50%;
+    bottom: calc(23px + var(--mobile-safe-bottom));
+    z-index: 29;
+    width: 58px;
+    height: 58px;
+    padding: 0;
+    border: 1px solid rgba(200,172,102,.42);
+    border-radius: 18px;
+    background: rgba(4,16,22,.74);
+    color: #eef3ef;
+    display: grid;
+    place-content: center;
+    gap: 1px;
+    transform: translateX(-50%);
+    -webkit-backdrop-filter: blur(9px);
+    backdrop-filter: blur(9px);
+    pointer-events: auto;
+    touch-action: manipulation;
+  }
+  #mobile-menu-toggle .menu-icon { font-size: 19px; line-height: 1; }
+  #mobile-menu-toggle .menu-label { color: rgba(237,212,141,.88); font-size: 7px; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; }
+  .mobile-menu-open #mobile-menu-toggle { border-color: rgba(237,212,141,.82); background: rgba(42,39,27,.88); }
+
+  #mobile-menu-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 25;
+    background: rgba(0,8,12,.28);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .16s ease;
+  }
+  .mobile-menu-open #mobile-menu-scrim { display: block; opacity: 1; pointer-events: auto; }
+
+  .mobile-flight-pad {
+    position: absolute;
+    right: max(17px, env(safe-area-inset-right, 0px));
+    bottom: calc(22px + var(--mobile-safe-bottom));
+    grid-template-columns: repeat(2, 62px);
+    gap: 8px;
+    pointer-events: auto;
+  }
+  .mobile-flight-pad button {
+    min-height: 58px;
+    border: 1px solid rgba(200,172,102,.42);
+    border-radius: 16px;
+    background: rgba(3,13,19,.70);
+    color: #edf3ee;
+    font-size: 10px;
+    font-weight: 850;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    touch-action: none;
+  }
+  .mobile-flight-pad button.is-pressed, .mobile-flight-pad button:active { background: rgba(200,172,102,.24); }
+
+  #touch-controls.is-fly-mode .mobile-action-wrap { display: none; }
+  #touch-controls.is-fly-mode .mobile-flight-pad { display: grid; }
+  #touch-controls.is-map-mode .mobile-joystick-wrap,
+  #touch-controls.is-map-mode .mobile-action-wrap,
+  #touch-controls.is-map-mode .mobile-flight-pad { display: none; }
+  #interaction-prompt kbd { display: none; }
+}
+
+@media (max-width: 760px) and (pointer: coarse) {
+  .stats-bar { display: none; }
+  .help-panel { display: none; }
+
+  #app .control-panel {
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    top: auto;
+    bottom: calc(164px + env(safe-area-inset-bottom, 0px));
+    z-index: 28;
+    width: auto;
+    max-height: none;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
+    overflow: visible;
+    border: 1px solid rgba(200,172,102,.22);
+    border-radius: 16px;
+    background: rgba(4,15,21,.91);
+    box-shadow: 0 16px 42px rgba(0,0,0,.40);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(9px) scale(.985);
+    transition: opacity .16s ease, transform .16s ease, visibility .16s ease;
+  }
+  #app.mobile-menu-open .control-panel {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: none;
+  }
+  #app .control-panel .hud-button {
+    min-width: 0;
+    width: 100%;
+    min-height: 46px;
+    padding: 0 8px;
+    border-radius: 10px;
+    justify-content: center;
+    text-align: center;
+    font-size: 8px;
+    background: rgba(255,255,255,.035);
+    box-shadow: none;
+  }
+  #app .control-panel .hud-button.is-active { background: rgba(200,172,102,.13); }
+
+  #gameplay-hud {
+    left: 14px;
+    right: 14px;
+    bottom: calc(166px + env(safe-area-inset-bottom, 0px));
+    align-items: flex-end;
+  }
+  .mobile-menu-open #gameplay-hud { opacity: 0; }
+  .gameplay-state-panel {
+    min-width: 0;
+    max-width: 174px;
+    padding: 7px 9px;
+    border-radius: 0 9px 9px 0;
+    background: linear-gradient(90deg, rgba(5,15,20,.82), rgba(5,15,20,.40));
+  }
+  .gameplay-state-panel strong { max-width: 150px; font-size: 8px; }
+  .vehicle-instruments {
+    min-width: 112px;
+    padding: 6px 8px;
+    gap: 8px;
+    border-radius: 9px 0 0 9px;
+  }
+  .vehicle-instruments > div:first-child strong { min-width: 44px; font-size: 21px; }
+  .gear-readout strong { font-size: 19px; }
+
+  #interaction-prompt { display: none; }
+
+  .brand-panel { top: 10px; left: 10px; gap: 8px; }
+  .brand-panel p { display: none; }
+  .brand-mark { width: 32px; height: 32px; font-size: 14px; }
+  .brand-panel h1 { font-size: 9px; letter-spacing: .20em; }
+
+  .location-panel {
+    top: 52px;
+    left: 10px;
+    right: auto;
+    width: min(66vw, 300px);
+    text-align: left;
+    pointer-events: none;
+  }
+  .location-panel h2 {
+    display: inline-block;
+    max-width: 100%;
+    margin: 0;
+    padding: 5px 8px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 9px;
+    background: rgba(4,15,21,.52);
+    font-size: 10px;
+    line-height: 1.15;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -webkit-backdrop-filter: blur(7px);
+    backdrop-filter: blur(7px);
+  }
+  .location-panel > p:not(.location-kicker) { display: none; }
+  .status-chip {
+    margin-top: 5px;
+    min-height: 22px;
+    max-width: 100%;
+    padding: 0 7px;
+    overflow: hidden;
+    border-radius: 8px;
+    font-size: 7px;
+    line-height: 1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  #toast { top: 88px; max-width: calc(100vw - 28px); text-align: center; }
+}
+
+@media (max-width: 390px) and (pointer: coarse) {
+  .mobile-joystick { width: 130px; height: 130px; }
+  .joystick-knob { width: 58px; height: 58px; margin: -29px 0 0 -29px; }
+  #mobile-action-button { width: 86px; height: 86px; }
+  #mobile-menu-toggle { width: 54px; height: 54px; border-radius: 16px; }
+  #gameplay-hud { bottom: calc(150px + env(safe-area-inset-bottom, 0px)); }
+  #app .control-panel { bottom: calc(150px + env(safe-area-inset-bottom, 0px)); grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  #app .control-panel .hud-button { min-height: 43px; font-size: 7px; }
+}
+
+@media (orientation: landscape) and (max-height: 520px) and (pointer: coarse) {
+  .brand-panel p, .location-panel, #gameplay-hud, #interaction-prompt { display: none; }
+  .mobile-joystick-wrap { left: max(12px, env(safe-area-inset-left, 0px)); bottom: calc(7px + env(safe-area-inset-bottom, 0px)); }
+  .mobile-joystick { width: 112px; height: 112px; }
+  .joystick-knob { width: 50px; height: 50px; margin: -25px 0 0 -25px; }
+  .mobile-action-wrap { right: max(14px, env(safe-area-inset-right, 0px)); bottom: calc(10px + env(safe-area-inset-bottom, 0px)); }
+  #mobile-action-button { width: 78px; height: 78px; }
+  #mobile-menu-toggle { bottom: calc(12px + env(safe-area-inset-bottom, 0px)); width: 52px; height: 52px; }
+  #app .control-panel {
+    left: 145px;
+    right: 145px;
+    bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  #app .control-panel .hud-button { min-height: 38px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #app .control-panel, #mobile-menu-scrim, #mobile-action-button { transition-duration: .01ms !important; }
+}
