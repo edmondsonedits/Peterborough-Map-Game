@@ -19,11 +19,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#07131b">
     <meta name="description" content="A playable full-city 3D simulation of Peterborough, Ontario, generated from validated road, building, land-cover, and elevation data.">
-    <title>Peterborough 3D Simulator — v1.5.6</title>
+    <title>Peterborough 3D Simulator — v1.6.67</title>
 
     <!-- Terrain has an optional live fallback; the rendering runtime is shipped locally. -->
     <link rel="preconnect" href="https://s3.amazonaws.com">
     <link rel="stylesheet" href="styles.css?v=1.5.6-startup1">
+    <link rel="stylesheet" href="mobile-controls-1.6.67.css?v=1.6.67">
 
     <!--
     IMPORT MAP:
@@ -134,17 +135,24 @@
         </form>
       </dialog>
 
-      <!-- Touch buttons send the same key codes used by desktop movement. -->
-      <div id="touch-controls" aria-label="Touch flight controls">
-        <div class="touch-pad movement-pad">
-          <button data-touch-key="KeyW" aria-label="Move forward">▲</button>
-          <button data-touch-key="KeyA" aria-label="Move left">◀</button>
-          <button data-touch-key="KeyS" aria-label="Move backward">▼</button>
-          <button data-touch-key="KeyD" aria-label="Move right">▶</button>
+      <!-- Mobile play controls: joystick for W/A/S/D and one contextual vehicle action. -->
+      <div id="touch-controls" aria-label="Mobile simulator controls">
+        <div class="mobile-joystick-wrap">
+          <div id="movement-joystick" class="mobile-joystick" aria-label="Movement joystick">
+            <div class="joystick-knob" aria-hidden="true"></div>
+          </div>
+          <span class="mobile-control-caption">Move</span>
         </div>
-        <div class="touch-pad altitude-pad">
-          <button data-touch-key="KeyE" aria-label="Move up">＋</button>
-          <button data-touch-key="KeyQ" aria-label="Move down">−</button>
+        <div class="mobile-action-wrap">
+          <button id="mobile-action-button" type="button" aria-label="Enter fire truck" disabled>
+            <span id="mobile-action-label">Enter</span>
+            <span id="mobile-action-detail">Truck</span>
+          </button>
+          <span class="mobile-control-caption">Action</span>
+        </div>
+        <div class="mobile-flight-pad" aria-label="Fly mode altitude controls">
+          <button type="button" data-mobile-command="KeyQ" aria-label="Fly down">− Down</button>
+          <button type="button" data-mobile-command="KeyE" aria-label="Fly up">＋ Up</button>
         </div>
       </div>
 
@@ -284,9 +292,11 @@
         }, 2000);
       })();
     </script>
-  <script src="../shared/build-version.js?v=1.6.66"></script>
+    <script src="../shared/build-version.js?v=1.6.66"></script>
+    <script src="release-1.6.67.js?v=1.6.67"></script>
     <script type="module" src="data-loader.js?v=1.5.6-accuracy1"></script>
     <script src="vendor/osmtogeojson-3.0.0-beta.5/osmtogeojson.js?v=1.5.5"></script>
     <script type="module" src="road-orientation-fix.js?v=sherbrooke-20260915"></script>
+    <script src="mobile-controls-1.6.67.js?v=1.6.67"></script>
   </body>
 </html>
