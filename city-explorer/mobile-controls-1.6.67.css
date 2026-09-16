@@ -1,0 +1,297 @@
+/* Peterborough 3D Simulator mobile gameplay controls — v1.6.67 */
+
+#touch-controls {
+  --mobile-safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.mobile-joystick-wrap,
+.mobile-action-wrap,
+.mobile-flight-pad {
+  display: none;
+}
+
+@media (pointer: coarse) {
+  #touch-controls {
+    position: absolute;
+    inset: 0;
+    z-index: 24;
+    display: block;
+    pointer-events: none;
+  }
+
+  .mobile-joystick-wrap {
+    position: absolute;
+    left: 18px;
+    bottom: calc(20px + var(--mobile-safe-bottom));
+    display: grid;
+    justify-items: center;
+    gap: 7px;
+    pointer-events: auto;
+  }
+
+  .mobile-joystick {
+    position: relative;
+    width: 136px;
+    height: 136px;
+    border: 1px solid rgba(237, 212, 141, .32);
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(255,255,255,.055) 0 27%, transparent 28%),
+      radial-gradient(circle at 50% 50%, rgba(3, 13, 19, .72), rgba(3, 13, 19, .38) 67%, rgba(3, 13, 19, .18) 68%);
+    box-shadow: inset 0 0 0 9px rgba(255,255,255,.018), 0 10px 30px rgba(0,0,0,.26);
+    backdrop-filter: blur(8px);
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .mobile-joystick::before,
+  .mobile-joystick::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    pointer-events: none;
+    opacity: .32;
+    background: rgba(221, 229, 224, .44);
+    transform: translate(-50%, -50%);
+  }
+  .mobile-joystick::before { width: 1px; height: 84%; }
+  .mobile-joystick::after { width: 84%; height: 1px; }
+
+  .joystick-knob {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 58px;
+    height: 58px;
+    margin: -29px 0 0 -29px;
+    border: 1px solid rgba(237, 212, 141, .7);
+    border-radius: 50%;
+    background: linear-gradient(145deg, rgba(64, 69, 61, .98), rgba(24, 31, 32, .96));
+    box-shadow: 0 7px 18px rgba(0,0,0,.42), inset 0 0 0 5px rgba(200,172,102,.07);
+    transform: translate3d(0,0,0);
+    transition: box-shadow .12s ease, background .12s ease;
+    will-change: transform;
+    pointer-events: none;
+  }
+  .mobile-joystick.is-active .joystick-knob {
+    background: linear-gradient(145deg, rgba(83, 77, 54, .98), rgba(30, 34, 31, .97));
+    box-shadow: 0 8px 20px rgba(0,0,0,.48), inset 0 0 0 5px rgba(237,212,141,.12);
+  }
+
+  .mobile-control-caption {
+    color: rgba(226, 232, 228, .72);
+    font-size: 8px;
+    font-weight: 850;
+    letter-spacing: .18em;
+    line-height: 1;
+    text-transform: uppercase;
+    text-shadow: 0 1px 5px rgba(0,0,0,.8);
+    pointer-events: none;
+  }
+
+  .mobile-action-wrap {
+    position: absolute;
+    right: 22px;
+    bottom: calc(30px + var(--mobile-safe-bottom));
+    display: grid;
+    justify-items: center;
+    gap: 7px;
+    pointer-events: auto;
+  }
+
+  #mobile-action-button {
+    width: 96px;
+    height: 96px;
+    padding: 0;
+    display: grid;
+    place-content: center;
+    gap: 1px;
+    border: 1px solid rgba(255, 91, 101, .7);
+    border-radius: 50%;
+    background: radial-gradient(circle at 38% 30%, rgba(107, 31, 36, .96), rgba(44, 15, 20, .92) 68%);
+    box-shadow: 0 11px 30px rgba(0,0,0,.34), inset 0 0 0 6px rgba(255,255,255,.025);
+    color: #fff;
+    backdrop-filter: blur(9px);
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  #mobile-action-button:not(:disabled):active,
+  #mobile-action-button.is-pressed {
+    transform: scale(.96);
+    background: radial-gradient(circle at 38% 30%, rgba(139, 38, 44, .98), rgba(55, 17, 23, .96) 68%);
+  }
+  #mobile-action-button:disabled {
+    opacity: .42;
+    filter: saturate(.55);
+  }
+  #mobile-action-label {
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: .08em;
+    line-height: 1.05;
+    text-transform: uppercase;
+  }
+  #mobile-action-detail {
+    color: rgba(255, 218, 219, .8);
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: .13em;
+    line-height: 1.1;
+    text-transform: uppercase;
+  }
+
+  .mobile-flight-pad {
+    position: absolute;
+    right: 25px;
+    bottom: calc(34px + var(--mobile-safe-bottom));
+    grid-template-columns: repeat(2, 58px);
+    gap: 8px;
+    pointer-events: auto;
+  }
+  .mobile-flight-pad button {
+    min-height: 58px;
+    border: 1px solid rgba(200,172,102,.42);
+    border-radius: 16px;
+    background: rgba(3,13,19,.7);
+    color: #edf3ee;
+    font-size: 10px;
+    font-weight: 850;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    backdrop-filter: blur(8px);
+    touch-action: none;
+  }
+  .mobile-flight-pad button.is-pressed,
+  .mobile-flight-pad button:active { background: rgba(200,172,102,.24); }
+
+  #touch-controls.is-fly-mode .mobile-action-wrap { display: none; }
+  #touch-controls.is-fly-mode .mobile-flight-pad { display: grid; }
+  #touch-controls.is-map-mode .mobile-joystick-wrap,
+  #touch-controls.is-map-mode .mobile-action-wrap,
+  #touch-controls.is-map-mode .mobile-flight-pad { display: none; }
+
+  #interaction-prompt kbd { display: none; }
+}
+
+@media (max-width: 760px) and (pointer: coarse) {
+  /* Keep the world readable: movement stays low, contextual information sits above it. */
+  .stats-bar { display: none; }
+
+  #app .control-panel {
+    left: 12px;
+    right: 12px;
+    bottom: calc(188px + env(safe-area-inset-bottom, 0px));
+    width: auto;
+    gap: 6px;
+    padding: 0 1px 3px;
+    scroll-snap-type: x proximity;
+  }
+  #app .control-panel .hud-button {
+    min-width: calc((100vw - 42px) / 4);
+    flex: 0 0 calc((100vw - 42px) / 4);
+    min-height: 42px;
+    padding: 0 10px;
+    scroll-snap-align: start;
+    border-radius: 10px;
+    text-align: center;
+    justify-content: center;
+    background: rgba(4, 18, 24, .74);
+    box-shadow: 0 7px 20px rgba(0,0,0,.18);
+  }
+
+  #gameplay-hud {
+    left: 14px;
+    right: 14px;
+    bottom: calc(240px + env(safe-area-inset-bottom, 0px));
+    align-items: flex-end;
+  }
+  .gameplay-state-panel {
+    min-width: 0;
+    max-width: 190px;
+    padding: 8px 10px;
+    border-radius: 0 9px 9px 0;
+  }
+  .vehicle-instruments {
+    min-width: 118px;
+    padding: 7px 9px;
+    border-radius: 9px 0 0 9px;
+  }
+
+  #interaction-prompt {
+    bottom: calc(293px + env(safe-area-inset-bottom, 0px));
+    max-width: calc(100vw - 28px);
+    font-size: 9px;
+  }
+  #interaction-prompt.is-visible {
+    min-width: 0;
+    padding: 7px 11px;
+    border-radius: 9px;
+  }
+
+  .brand-panel {
+    top: 12px;
+    left: 12px;
+    gap: 9px;
+  }
+  .brand-panel p { display: none; }
+  .brand-mark { width: 34px; height: 34px; }
+  .brand-panel h1 { font-size: 10px; letter-spacing: .22em; }
+
+  .location-panel {
+    top: 62px;
+    right: 12px;
+    width: calc(100vw - 24px);
+  }
+  .location-panel h2 { font-size: 12px; line-height: 1.15; }
+  .location-panel > p:not(.location-kicker) { margin-top: 4px; }
+  .status-chip {
+    margin-top: 7px;
+    min-height: 24px;
+    max-width: 100%;
+    padding: 0 8px;
+    line-height: 1.2;
+    text-align: right;
+  }
+
+  .mobile-joystick-wrap { left: 14px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
+  .mobile-joystick { width: 128px; height: 128px; }
+  .mobile-action-wrap { right: 17px; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); }
+  #mobile-action-button { width: 92px; height: 92px; }
+  .mobile-flight-pad { right: 16px; bottom: calc(28px + env(safe-area-inset-bottom, 0px)); }
+}
+
+@media (max-width: 390px) and (pointer: coarse) {
+  #app .control-panel { bottom: calc(176px + env(safe-area-inset-bottom, 0px)); }
+  #app .control-panel .hud-button {
+    min-width: calc((100vw - 39px) / 4);
+    flex-basis: calc((100vw - 39px) / 4);
+    min-height: 40px;
+    padding: 0 7px;
+    font-size: 7px;
+  }
+  #gameplay-hud { bottom: calc(224px + env(safe-area-inset-bottom, 0px)); }
+  #interaction-prompt { bottom: calc(272px + env(safe-area-inset-bottom, 0px)); }
+  .mobile-joystick { width: 118px; height: 118px; }
+  .joystick-knob { width: 54px; height: 54px; margin: -27px 0 0 -27px; }
+  #mobile-action-button { width: 86px; height: 86px; }
+}
+
+@media (orientation: landscape) and (max-height: 520px) and (pointer: coarse) {
+  .brand-panel p,
+  .location-panel,
+  #gameplay-hud,
+  #interaction-prompt { display: none; }
+  #app .control-panel {
+    top: 10px;
+    left: 88px;
+    right: 150px;
+    bottom: auto;
+  }
+  .mobile-joystick-wrap { left: 18px; bottom: calc(10px + env(safe-area-inset-bottom, 0px)); }
+  .mobile-joystick { width: 110px; height: 110px; }
+  .mobile-action-wrap { right: 18px; bottom: calc(13px + env(safe-area-inset-bottom, 0px)); }
+  #mobile-action-button { width: 82px; height: 82px; }
+}
