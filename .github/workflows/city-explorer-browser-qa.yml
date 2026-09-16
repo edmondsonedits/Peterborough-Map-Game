@@ -6,10 +6,13 @@ on:
     branches: [main]
     paths:
       - 'tools/check-station-driving.cjs'
+      - 'tools/check-mobile-controls.cjs'
+      - 'city-explorer/index.html'
       - 'city-explorer/app.js'
       - 'city-explorer/gameplay-systems*.js'
       - 'city-explorer/driving-refinement*.js'
       - 'city-explorer/mobile-controls*.js'
+      - 'city-explorer/mobile-controls*.css'
       - 'city-explorer/road-orientation-fix.js'
       - '.github/workflows/city-explorer-browser-qa.yml'
 
@@ -23,7 +26,7 @@ concurrency:
 jobs:
   station-1-driving:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -57,13 +60,19 @@ jobs:
           PTBO_QA_ARTIFACT_DIR: artifacts/driving-qa
         run: node tools/check-station-driving.cjs http://127.0.0.1:4174 station-1-ci
 
+      - name: Run mobile controls and responsive-layout QA
+        env:
+          PTBO_QA_ARTIFACT_DIR: artifacts/mobile-qa
+        run: node tools/check-mobile-controls.cjs http://127.0.0.1:4174 mobile-ci
+
       - name: Preserve browser QA evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: city-explorer-station-1-driving-${{ github.run_id }}
+          name: city-explorer-browser-qa-${{ github.run_id }}
           path: |
             artifacts/driving-qa/
+            artifacts/mobile-qa/
             /tmp/ptbo-http.log
           if-no-files-found: warn
           retention-days: 14
