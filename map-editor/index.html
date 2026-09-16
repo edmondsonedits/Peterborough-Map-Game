@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Peterborough 3D Map Editor — Development Shell</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">Peterborough 3D Simulator</p>
+      <h1>Map Editor</h1>
+    </div>
+    <div class="topbar-actions" aria-label="Project actions">
+      <button type="button" disabled>Undo</button>
+      <button type="button" disabled>Redo</button>
+      <button type="button" disabled>Save draft</button>
+      <button type="button" disabled>Export scene</button>
+    </div>
+  </header>
+
+  <main class="editor-shell">
+    <aside class="panel asset-panel" aria-labelledby="asset-heading">
+      <h2 id="asset-heading">Asset library</h2>
+      <label>
+        <span>Search assets</span>
+        <input type="search" placeholder="Hydrant, tree, bench…" disabled>
+      </label>
+      <p class="empty-state">Asset catalog will appear here.</p>
+    </aside>
+
+    <section class="viewport" aria-labelledby="viewport-heading">
+      <div class="viewport-toolbar">
+        <h2 id="viewport-heading">World viewport</h2>
+        <div class="segmented" aria-label="Transform mode">
+          <button type="button" disabled>Move</button>
+          <button type="button" disabled>Rotate</button>
+          <button type="button" disabled>Scale</button>
+        </div>
+        <label>
+          Snap
+          <select disabled>
+            <option>Coarse</option>
+            <option>Fine</option>
+            <option>Free</option>
+          </select>
+        </label>
+      </div>
+      <canvas id="editor-canvas" aria-label="Interactive 3D editor viewport"></canvas>
+      <div class="development-card">
+        <strong>Development shell</strong>
+        <p>The editor implementation has been split into short, reviewable ChatGPT High Reasoning sessions.</p>
+        <a href="README.md">Open the complete worklist and prompts</a>
+      </div>
+    </section>
+
+    <aside class="panel inspector-panel" aria-labelledby="inspector-heading">
+      <h2 id="inspector-heading">Inspector</h2>
+      <p class="empty-state">Select an object to edit its position, rotation, scale, snapping, source, and notes.</p>
+    </aside>
+  </main>
+
+  <footer class="statusbar">
+    <span>Status: planning scaffold</span>
+    <span>Selection: none</span>
+    <span>Unsaved changes: 0</span>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
