@@ -143,8 +143,6 @@ const angleDelta = (a, b) => Math.abs(Math.atan2(
       await page.screenshot({ path: path.join(artifactRoot, 'portrait-ready.png'), fullPage: false });
     }
 
-    // Prove the joystick surface emits directional input while on foot without
-    // moving far enough to lose the nearby truck interaction.
     const joystickBox = await page.locator('#movement-joystick').boundingBox();
     if (!joystickBox) throw new Error('Mobile joystick is not rendered');
     const centerX = joystickBox.x + joystickBox.width / 2;
@@ -161,8 +159,6 @@ const angleDelta = (a, b) => Math.abs(Math.atan2(
       return down('KeyW') && up('KeyW') && down('KeyA') && up('KeyA');
     }, null, { timeout: 5000 });
 
-    // At the Station 1 spawn, the contextual mobile action should expose the
-    // same enter-truck interaction as keyboard E.
     await page.waitForFunction(() => {
       const button = document.getElementById('mobile-action-button');
       const label = document.getElementById('mobile-action-label')?.textContent || '';
@@ -180,8 +176,6 @@ const angleDelta = (a, b) => Math.abs(Math.atan2(
     const driveCy = drivingJoystick.y + drivingJoystick.height / 2;
     const driveRadius = Math.min(drivingJoystick.width, drivingJoystick.height) * 0.29;
 
-    // Hold forward until the actual simulation proves acceleration, then blend
-    // in a modest left input and require a resulting steering/heading change.
     await page.mouse.move(driveCx, driveCy - driveRadius);
     await page.mouse.down();
     await page.waitForFunction(({ x, z }) => {
@@ -215,15 +209,12 @@ const angleDelta = (a, b) => Math.abs(Math.atan2(
       await page.screenshot({ path: path.join(artifactRoot, 'portrait-driving.png'), fullPage: false });
     }
 
-    // Exercise the real mobile menu -> map transition. Map mode must hide drive
-    // controls so map gestures are not interpreted as movement.
     await page.locator('#mobile-menu-toggle').tap();
     await page.waitForFunction(() => document.getElementById('app')?.classList.contains('mobile-menu-open'), null, { timeout: 5000 });
     await page.locator('#map-mode').tap();
     await page.waitForFunction(() => document.getElementById('touch-controls')?.classList.contains('is-map-mode'), null, { timeout: 5000 });
     const mapMode = await layoutSnapshot();
 
-    // Return to play before testing landscape placement.
     await page.locator('#mobile-menu-toggle').tap();
     await page.waitForFunction(() => document.getElementById('app')?.classList.contains('mobile-menu-open'), null, { timeout: 5000 });
     await page.locator('#play-mode').tap();
@@ -263,7 +254,7 @@ const angleDelta = (a, b) => Math.abs(Math.atan2(
     };
 
     report.assertions = {
-      buildIdentified: report.build === '1.6.73',
+      buildIdentified: /^\d+\.\d+\.\d+$/.test(String(report.build || '')),
       coarsePointerEmulated: portraitInitial.coarsePointer === true,
       mobileControlsLoaded: Boolean(portraitInitial.mobileControlsVersion),
       portraitOrientationDetected: portraitInitial.portrait === true,

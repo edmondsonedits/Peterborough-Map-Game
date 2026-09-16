@@ -1,4 +1,4 @@
-/* Peterborough 3D Simulator mobile gameplay controls — v1.6.68 */
+/* Peterborough 3D Simulator mobile gameplay controls — v1.6.74 */
 
 #touch-controls { --mobile-safe-bottom: env(safe-area-inset-bottom, 0px); }
 .mobile-joystick-wrap, .mobile-action-wrap, .mobile-flight-pad, #mobile-menu-toggle, #mobile-menu-scrim { display: none; }
@@ -317,7 +317,7 @@
   .joystick-knob { width: 58px; height: 58px; margin: -29px 0 0 -29px; }
   #mobile-action-button { width: 86px; height: 86px; }
   #mobile-menu-toggle { width: 54px; height: 54px; border-radius: 16px; }
-  #gameplay-hud { bottom: calc(150px + env(safe-area-inset-bottom, 0px)); }
+  #gameplay-hud { bottom: calc(166px + env(safe-area-inset-bottom, 0px)); }
   #app .control-panel { bottom: calc(150px + env(safe-area-inset-bottom, 0px)); grid-template-columns: repeat(3, minmax(0, 1fr)); }
   #app .control-panel .hud-button { min-height: 43px; font-size: 7px; }
 }
