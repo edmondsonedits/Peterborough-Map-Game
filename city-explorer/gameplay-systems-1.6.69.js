@@ -1,10 +1,12 @@
-/* Peterborough 3D Simulator driving refinement — v1.6.69
-   Keeps the existing gameplay asset/building code, but replaces the fire-truck
+/* Peterborough 3D Simulator driving refinement — v1.6.76
+   Keeps the existing gameplay asset/building code, adds selectable starts at
+   Peterborough Fire Stations 1, 2, and 3, and preserves the refined fire-truck
    kinematics with smoother analog throttle and progressive steering response. */
 
 export * from './gameplay-systems.js?base=1.6.69';
 
 import {
+  FIRE_STATION_ONE as BASE_FIRE_STATION_ONE,
   TRUCK_TUNING,
   directionFromHeading,
   exponentialStep,
@@ -12,6 +14,89 @@ import {
 } from './gameplay-systems.js?base=1.6.69';
 
 const clamp = (value, min, max) => Math.max(min, Math.min(max, Number(value) || 0));
+const degreesToRadians = degrees => Number(degrees) * Math.PI / 180;
+
+// Stations 2 and 3 come from the Peterborough city package's authoritative
+// Fire Services base configuration. Player positions are intentionally derived
+// a few metres beside the documented truck spawn so the firefighter starts
+// close enough to enter the apparatus without overlapping it.
+function playerBesideTruck(lat, lon, headingDegrees, lateralMetres = -4.5, rearMetres = 2) {
+  const heading = degreesToRadians(headingDegrees);
+  const forwardNorth = Math.cos(heading);
+  const forwardEast = Math.sin(heading);
+  const rightNorth = -Math.sin(heading);
+  const rightEast = Math.cos(heading);
+  const northMetres = -rearMetres * forwardNorth + lateralMetres * rightNorth;
+  const eastMetres = -rearMetres * forwardEast + lateralMetres * rightEast;
+  const metresPerDegree = 111320;
+  const latitude = lat + northMetres / metresPerDegree;
+  const longitude = lon + eastMetres / (metresPerDegree * Math.cos(degreesToRadians(lat)));
+  return Object.freeze({ lat: latitude, lon: longitude });
+}
+
+const stationOne = Object.freeze({
+  ...BASE_FIRE_STATION_ONE,
+  number: 1,
+  shortName: 'Station 1',
+  spawnSource: 'reviewed-station-1-gameplay',
+});
+
+const stationTwoPlayer = playerBesideTruck(44.335928, -78.316016, 202);
+export const FIRE_STATION_TWO = Object.freeze({
+  id: 'peterborough-fire-station-2',
+  number: 2,
+  name: 'Peterborough Fire Station 2',
+  shortName: 'Station 2',
+  address: '100 Marina Blvd',
+  lat: 44.335719,
+  lon: -78.316209,
+  buildingLat: 44.335719,
+  buildingLon: -78.316209,
+  playerLat: stationTwoPlayer.lat,
+  playerLon: stationTwoPlayer.lon,
+  truckLat: 44.335928,
+  truckLon: -78.316016,
+  truckHeading: degreesToRadians(202),
+  spawnSource: 'cities/peterborough/package.js',
+});
+
+const stationThreePlayer = playerBesideTruck(44.284959, -78.350694, 127);
+export const FIRE_STATION_THREE = Object.freeze({
+  id: 'peterborough-fire-station-3',
+  number: 3,
+  name: 'Peterborough Fire Station 3',
+  shortName: 'Station 3',
+  address: '839 Clonsilla Ave',
+  lat: 44.284779,
+  lon: -78.351068,
+  buildingLat: 44.284779,
+  buildingLon: -78.351068,
+  playerLat: stationThreePlayer.lat,
+  playerLon: stationThreePlayer.lon,
+  truckLat: 44.284959,
+  truckLon: -78.350694,
+  truckHeading: degreesToRadians(127),
+  spawnSource: 'cities/peterborough/package.js',
+});
+
+export const FIRE_STATIONS = Object.freeze([stationOne, FIRE_STATION_TWO, FIRE_STATION_THREE]);
+
+const requestedStationNumber = (() => {
+  try {
+    const value = new URLSearchParams(globalThis.location?.search || '').get('station');
+    const number = Number(value);
+    return [1, 2, 3].includes(number) ? number : 1;
+  } catch {
+    return 1;
+  }
+})();
+
+export const ACTIVE_FIRE_STATION = FIRE_STATIONS.find(station => station.number === requestedStationNumber) || stationOne;
+
+// Compatibility export: app.js historically imports FIRE_STATION_ONE as the
+// active gameplay base. Keeping the name avoids a risky app.js rewrite while
+// allowing ?station=1|2|3 to choose the starting fire hall.
+export const FIRE_STATION_ONE = ACTIVE_FIRE_STATION;
 
 /**
  * Advance the fire apparatus with progressive analog throttle and steering.

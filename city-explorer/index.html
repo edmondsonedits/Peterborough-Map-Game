@@ -19,7 +19,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#07131b">
     <meta name="description" content="A playable full-city 3D simulation of Peterborough, Ontario, generated from validated road, building, land-cover, and elevation data.">
-    <title>Peterborough 3D Simulator — v1.6.75</title>
+    <title>Peterborough 3D Simulator — v1.6.76</title>
 
     <!-- Terrain has an optional live fallback; the rendering runtime is shipped locally. -->
     <link rel="preconnect" href="https://s3.amazonaws.com">
@@ -37,7 +37,7 @@
           "three": "./vendor/three-r180/build/three.module.min.js",
           "three/addons/": "./vendor/three-r180/examples/jsm/",
           "@sparkjsdev/spark": "./vendor/spark-2.1.0/spark.module.min.js",
-          "./gameplay-systems.js?v=firefighter4": "./gameplay-systems-1.6.69.js?v=1.6.69"
+          "./gameplay-systems.js?v=firefighter4": "./gameplay-systems-1.6.69.js?v=1.6.76"
         }
       }
     </script>
@@ -83,7 +83,7 @@
       </aside>
 
       <section class="help-panel hud-panel">
-        <p id="mode-hint"><strong>Loading Fire Station 1.</strong> WASD or arrows move · Shift sprints · E enters the truck · mouse controls the camera.</p>
+        <p id="mode-hint"><strong>Loading selected fire station.</strong> WASD or arrows move · Shift sprints · E enters the truck · mouse controls the camera.</p>
       </section>
 
       <section id="gameplay-hud" aria-label="Player and vehicle status">
@@ -125,7 +125,7 @@
           <label for="search-input">Address, landmark, park, or street</label>
           <div class="search-row"><input id="search-input" type="search" autocomplete="off" placeholder="Try Peterborough Lift Lock"><button id="search-submit" value="default">Find</button></div>
           <p id="search-note">Local landmarks are instant. Address search uses OpenStreetMap's Nominatim service.</p>
-          <div id="search-results" class="result-list" aria-live="polite"></div>
+          <div id="search-results" class="result-list ariba-live="polite"></div>
         </form>
       </dialog>
 
@@ -156,7 +156,7 @@
           <button type="button" data-mobile-command="KeyE" aria-label="Fly up">＋ Up</button>
         </div>
         <button id="mobile-menu-toggle" type="button" aria-label="Open simulator menu" aria-expanded="false">
-          <span class="menu-icon" aria-hidden="true">☰</span>
+          <span class="menu-icon" aria-hidden="true">☠</span>
           <span class="menu-label">Menu</span>
         </button>
         <button id="mobile-menu-scrim" type="button" tabindex="-1" aria-label="Close simulator menu"></button>
@@ -191,7 +191,7 @@
       </aside>
       <aside id="reference-panel" hidden aria-label="Lawful map reference tools">
         <strong>City reference mode</strong>
-        <span id="reference-position">Current camera location</span>
+        <span id="reference-position">Current camra location</span>
         <a id="reference-mapillary" target="_blank" rel="noopener noreferrer">Open Mapillary street imagery</a>
         <a id="reference-ontario" target="_blank" rel="noopener noreferrer">Open Ontario 2023 orthophoto</a>
         <a href="https://explore.panoramax.fr/" target="_blank" rel="noopener noreferrer">Open Panoramax street imagery</a>
@@ -203,7 +203,7 @@
     MODULE ORDER:
     1. Shared build badge/error log.
     2. Data loader intercepts prepared OSM/terrain requests before world code.
-    3. Local osmtogeojson converts OpenStreetMap response structures to GeoJSON.
+    3. Local osmtogeojson converts OpenStreet map response structures to GeoJSON.
     4. Road-orientation/world module builds and runs the 3D scene.
     -->
     <script>
@@ -299,7 +299,7 @@
       })();
     </script>
     <script src="../shared/build-version.js?v=1.6.66"></script>
-    <script src="release-1.6.69.js?v=1.6.75"></script>
+    <script src="release-1.6.69.js?v=1.6.76"></script>
     <script type="module" src="data-loader.js?v=1.5.6-accuracy1"></script>
     <script src="vendor/osmtogeojson-3.0.0-beta.5/osmtogeojson.js?v=1.5.5"></script>
     <script type="module" src="road-orientation-fix.js?v=sherbrooke-20260915"></script>
