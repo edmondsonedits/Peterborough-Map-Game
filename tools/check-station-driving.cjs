@@ -17,7 +17,8 @@ const criticalConsolePattern = /\b(?:uncaught|typeerror|referenceerror|syntaxerr
 
 (async () => {
   if (shouldCaptureArtifacts) fs.mkdirSync(artifactRoot, { recursive: true });
-  const browser = await chromium.launch({ headless: true, args: ['--use-angle=d3d11'] });
+  const chromiumArgs = process.platform === 'win32' ? ['--use-angle=d3d11'] : [];
+  const browser = await chromium.launch({ headless: true, args: chromiumArgs });
   const pageErrors = [];
   const consoleErrors = [];
   const failedRequests = [];
@@ -73,7 +74,6 @@ const criticalConsolePattern = /\b(?:uncaught|typeerror|referenceerror|syntaxerr
       }, 50);
     });
 
-    // Forward acceleration, followed by a small steering input while moving.
     await page.keyboard.down('KeyW');
     await page.waitForTimeout(1800);
     const forwardState = await page.evaluate(() => globalThis.__PTBO_GAMEPLAY__.state());
@@ -84,7 +84,6 @@ const criticalConsolePattern = /\b(?:uncaught|typeerror|referenceerror|syntaxerr
     await page.keyboard.up('KeyW');
     const steeredState = await page.evaluate(() => globalThis.__PTBO_GAMEPLAY__.state());
 
-    // Brake through zero, then continue long enough to prove reverse engages.
     await page.keyboard.down('KeyS');
     await page.waitForFunction(() => globalThis.__PTBO_GAMEPLAY__.state().truck.speed <= 0.25, null, { timeout: 4000 });
     const brakedState = await page.evaluate(() => globalThis.__PTBO_GAMEPLAY__.state());

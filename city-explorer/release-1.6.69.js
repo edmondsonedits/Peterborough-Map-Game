@@ -1,7 +1,7 @@
-/* City Explorer release marker — v1.6.70 */
+/* City Explorer release marker — v1.6.71 */
 (() => {
   'use strict';
-  const VERSION = '1.6.70';
+  const VERSION = '1.6.71';
   window.PTBO_CITY_EXPLORER_BUILD = Object.freeze({ version: VERSION, label: `v${VERSION}` });
   document.documentElement.dataset.cityExplorerBuild = VERSION;
   document.title = document.title.replace(/v\d+\.\d+\.\d+/i, `v${VERSION}`);

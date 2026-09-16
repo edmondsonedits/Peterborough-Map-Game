@@ -1,0 +1,69 @@
+name: City Explorer Browser QA
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/check-station-driving.cjs'
+      - 'city-explorer/app.js'
+      - 'city-explorer/gameplay-systems*.js'
+      - 'city-explorer/driving-refinement*.js'
+      - 'city-explorer/mobile-controls*.js'
+      - 'city-explorer/road-orientation-fix.js'
+      - '.github/workflows/city-explorer-browser-qa.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: city-explorer-browser-qa-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  station-1-driving:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Playwright test runtime
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install --no-save --no-package-lock playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Start local simulator server
+        run: |
+          python3 -m http.server 4174 --bind 127.0.0.1 > /tmp/ptbo-http.log 2>&1 &
+          echo $! > /tmp/ptbo-http.pid
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:4174/city-explorer/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/ptbo-http.log
+          exit 1
+
+      - name: Run deterministic Station 1 driving QA
+        env:
+          PTBO_QA_ARTIFACT_DIR: artifacts/driving-qa
+        run: node tools/check-station-driving.cjs http://127.0.0.1:4174 station-1-ci
+
+      - name: Preserve browser QA evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: city-explorer-station-1-driving-${{ github.run_id }}
+          path: |
+            artifacts/driving-qa/
+            /tmp/ptbo-http.log
+          if-no-files-found: warn
+          retention-days: 14
