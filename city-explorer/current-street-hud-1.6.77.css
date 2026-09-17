@@ -1,0 +1,59 @@
+/* Peterborough 3D Simulator — current street HUD v1.6.77 */
+.current-street-box {
+  min-width: 210px;
+  max-width: min(360px, 42vw);
+  padding: 8px 14px 9px;
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  border: 1px solid rgba(200, 172, 102, .38);
+  border-bottom: 2px solid #c8ac66;
+  background: rgba(4, 15, 20, .82);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, .28);
+  backdrop-filter: blur(9px);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.current-street-label {
+  color: #c8ac66;
+  font-size: 7px;
+  font-weight: 850;
+  letter-spacing: .18em;
+}
+
+.current-street-box strong {
+  width: 100%;
+  overflow: hidden;
+  color: #f3f5f1;
+  font-size: 11px;
+  letter-spacing: .055em;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.is-driving .current-street-box {
+  border-color: rgba(237, 212, 141, .52);
+  background: rgba(4, 15, 20, .9);
+}
+
+@media (max-width: 760px) {
+  .current-street-box {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 8px);
+    min-width: 154px;
+    max-width: min(240px, calc(100vw - 24px));
+    padding: 6px 10px 7px;
+    transform: translateX(-50%);
+  }
+
+  .current-street-label {
+    font-size: 6px;
+  }
+
+  .current-street-box strong {
+    font-size: 9px;
+  }
+}
