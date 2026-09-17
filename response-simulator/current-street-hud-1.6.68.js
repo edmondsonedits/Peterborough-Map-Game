@@ -79,6 +79,7 @@
       hud.setAttribute('aria-label', 'Current street');
       hud.innerHTML = '<span class="street-kicker">Current street</span><strong id="ptbo-current-street-name">Loading street…</strong>';
       document.body.appendChild(hud);
+      requestAnimationFrame(() => window.PTBO_MOBILE_UI_LAYOUT?.refresh?.());
     }
     return hud;
   }
@@ -92,8 +93,8 @@
       lastName = nextName;
       node.textContent = nextName;
       hud.title = nextName;
+      window.PTBO_MOBILE_UI_LAYOUT?.refresh?.();
     }
-    window.PTBO_MOBILE_UI_LAYOUT?.refresh?.();
   }
 
   function install() {
