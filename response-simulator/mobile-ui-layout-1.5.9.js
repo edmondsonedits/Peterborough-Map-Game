@@ -1,13 +1,13 @@
 /* =========================================================
-   RESPONSE SIMULATOR — MOBILE UI LAYOUT FIXES v1.5.9
+   RESPONSE SIMULATOR — MOBILE UI LAYOUT FIXES v1.6.68
 
-   Keeps map controls clear of the dispatch HUD and makes the Leaflet map
-   attribution/scale compact so they no longer stretch across the play area.
+   Keeps map controls clear of the dispatch HUD, places the live street name
+   below the speedometer, and keeps required map attribution unobtrusive.
    ========================================================= */
 (() => {
   'use strict';
 
-  const VERSION = '1.5.9';
+  const VERSION = '1.6.68';
   if (window.PTBO_MOBILE_UI_LAYOUT?.version === VERSION) return;
 
   const state = {
@@ -55,6 +55,29 @@
         text-overflow:ellipsis!important;
         white-space:nowrap!important;
       }
+      #ptbo-current-street-hud{
+        bottom:auto!important;
+        left:10px!important;
+        z-index:1460!important;
+        min-width:0!important;
+        max-width:min(43vw,170px)!important;
+        padding:7px 9px!important;
+        transform:none!important;
+        text-align:left!important;
+        border:1px solid rgba(255,255,255,.18)!important;
+        border-left:3px solid #38bdf8!important;
+        border-radius:10px!important;
+        background:rgba(8,13,24,.91)!important;
+        box-shadow:0 5px 16px rgba(0,0,0,.28)!important;
+      }
+      #ptbo-current-street-hud .street-kicker{
+        font-size:6px!important;
+        letter-spacing:.13em!important;
+      }
+      #ptbo-current-street-name{
+        font-size:10px!important;
+        line-height:1.18!important;
+      }
 
       .leaflet-control-scale{
         margin:0 0 0 8px!important;
@@ -76,16 +99,17 @@
         text-shadow:none!important;
       }
       .leaflet-control-attribution{
-        margin:0 8px 0 0!important;
-        max-width:min(58vw,330px)!important;
-        padding:3px 6px!important;
-        color:rgba(248,250,252,.74)!important;
-        border:1px solid rgba(255,255,255,.08)!important;
-        border-radius:7px!important;
-        background:rgba(8,13,24,.52)!important;
-        box-shadow:0 3px 10px rgba(0,0,0,.16)!important;
-        font-size:6.5px!important;
-        line-height:1.18!important;
+        margin:0 7px 1px 0!important;
+        max-width:min(43vw,250px)!important;
+        padding:1px 3px!important;
+        color:rgba(248,250,252,.58)!important;
+        border:0!important;
+        border-radius:3px!important;
+        background:rgba(8,13,24,.24)!important;
+        box-shadow:none!important;
+        font-size:5px!important;
+        font-weight:600!important;
+        line-height:1.08!important;
         text-align:right!important;
         white-space:normal!important;
       }
@@ -94,7 +118,8 @@
       @media(max-width:420px){
         #ptbo-speedometer{left:8px!important;}
         #ptbo-map-toggle{right:8px!important;max-width:min(45vw,172px)!important;}
-        .leaflet-control-attribution{max-width:55vw!important;font-size:6px!important;}
+        #ptbo-current-street-hud{left:8px!important;max-width:min(44vw,160px)!important;}
+        .leaflet-control-attribution{max-width:42vw!important;font-size:4.75px!important;}
       }
     `;
     document.head.appendChild(style);
@@ -120,27 +145,41 @@
     installStyle();
     const speed = document.getElementById('ptbo-speedometer');
     const mapToggle = document.getElementById('ptbo-map-toggle');
+    const street = document.getElementById('ptbo-current-street-hud');
 
     const desiredTop = Math.max(118, safeDispatchBottom() + 12);
     const controlsTop = parentControlsTop();
+    const speedRect = speed?.getBoundingClientRect?.();
     const tallestControl = Math.max(
-      Number(speed?.getBoundingClientRect?.().height) || 72,
+      Number(speedRect?.height) || 72,
       Number(mapToggle?.getBoundingClientRect?.().height) || 44,
     );
     const latestSafeTop = Math.max(118, Math.floor(controlsTop - tallestControl - 14));
     const top = Math.min(desiredTop, latestSafeTop);
     state.lastTop = top;
 
+    const mobileLeft = matchMedia('(max-width:420px)').matches ? 8 : 10;
     if (speed) {
       speed.style.setProperty('top', `${top}px`, 'important');
       speed.style.setProperty('bottom', 'auto', 'important');
-      speed.style.setProperty('left', matchMedia('(max-width:420px)').matches ? '8px' : '10px', 'important');
+      speed.style.setProperty('left', `${mobileLeft}px`, 'important');
     }
     if (mapToggle) {
       mapToggle.style.setProperty('top', `${top}px`, 'important');
       mapToggle.style.setProperty('bottom', 'auto', 'important');
       mapToggle.style.setProperty('left', 'auto', 'important');
       mapToggle.style.setProperty('right', matchMedia('(max-width:420px)').matches ? '8px' : '10px', 'important');
+    }
+    if (street) {
+      const actualSpeedRect = speed?.getBoundingClientRect?.();
+      const streetTop = Math.round(top + (Number(actualSpeedRect?.height) || 72) + 10);
+      const speedWidth = Math.round(Number(actualSpeedRect?.width) || 158);
+      street.style.setProperty('top', `${streetTop}px`, 'important');
+      street.style.setProperty('bottom', 'auto', 'important');
+      street.style.setProperty('left', `${mobileLeft}px`, 'important');
+      street.style.setProperty('width', `${speedWidth}px`, 'important');
+      street.style.setProperty('max-width', `min(44vw, ${Math.max(140, speedWidth)}px)`, 'important');
+      street.style.setProperty('transform', 'none', 'important');
     }
 
     placeLeafletFooter();
