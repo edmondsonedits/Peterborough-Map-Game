@@ -1,7 +1,7 @@
-/* City Explorer release marker — v1.6.76 */
+/* City Explorer release marker — v1.6.77 */
 (() => {
   'use strict';
-  const VERSION = '1.6.76';
+  const VERSION = '1.6.77';
   const validStationNumbers = ['1', '2', '3'];
   const params = new URLSearchParams(location.search);
   const activeStation = validStationNumbers.includes(params.get('station')) ? params.get('station') : '1';
