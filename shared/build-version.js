@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.66';
+  const VERSION = '1.6.67';
   const CITY_RUNTIME_VERSION = '1.6.17';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
@@ -60,23 +60,34 @@
     });
   }
 
+  function removeNestedBuildBadge(doc) {
+    if (!doc || doc === document) return;
+    doc.getElementById('ptbo-build-badge')?.remove();
+    doc.getElementById('ptbo-build-style')?.remove();
+  }
+
   function installBadge() {
     if (!document.body) return;
+    if (window.top !== window) {
+      document.getElementById('ptbo-build-badge')?.remove();
+      document.getElementById('ptbo-build-style')?.remove();
+      return;
+    }
     let style = document.getElementById('ptbo-build-style');
     if (!style) {
       style = document.createElement('style');
       style.id = 'ptbo-build-style';
-      style.textContent = '#ptbo-build-badge{position:fixed;top:max(4px,env(safe-area-inset-top));left:50%;z-index:2147483647;padding:3px 8px;color:#e2e8f0;border:1px solid rgba(255,255,255,.28);border-radius:999px;background:rgba(15,23,42,.82);box-shadow:0 3px 10px rgba(0,0,0,.25);font:800 9px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.05em;white-space:nowrap;transform:translateX(-50%);pointer-events:none}@media(max-width:420px){#ptbo-build-badge{top:max(2px,env(safe-area-inset-top));padding:2px 6px;font-size:7px}}';
+      style.textContent = '#ptbo-build-badge{position:fixed;top:max(4px,env(safe-area-inset-top));left:50%;z-index:2147483647;padding:3px 8px;color:#e2e8f0;border:1px solid rgba(255,255,255,.28);border-radius:999px;background:rgba(15,23,42,.88);box-shadow:0 3px 10px rgba(0,0,0,.25);font:800 9px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.05em;white-space:nowrap;transform:translate3d(-50%,0,0);backface-visibility:hidden;contain:layout paint style;pointer-events:none;animation:none!important;transition:none!important}@media(max-width:420px){#ptbo-build-badge{top:max(2px,env(safe-area-inset-top));padding:2px 6px;font-size:7px}}';
       document.head.appendChild(style);
     }
     let badge = document.getElementById('ptbo-build-badge');
     if (!badge) {
       badge = document.createElement('div');
       badge.id = 'ptbo-build-badge';
-      badge.setAttribute('role','status');
       document.body.appendChild(badge);
     }
-    badge.textContent = LABEL;
+    if (badge.textContent !== LABEL) badge.textContent = LABEL;
+    badge.dataset.ptboStableVersion = VERSION;
     badge.setAttribute('aria-label', `Production version ${VERSION}`);
   }
 
@@ -122,7 +133,7 @@
       script.src = expected;
       script.dataset.ptboVersion = VERSION;
       script.dataset.ptboLoading = 'true';
-      if (marker) script.setAttribute(marker, 'true');
+      if (marker) script.setAttribute(marker,'true');
       script.onload = () => { script.dataset.ptboLoading = 'false'; script.dataset.ptboLoaded = 'true'; finish(null, script); };
       script.onerror = () => { script.remove(); finish(new Error(`Unable to load ${relativeUrl}.`)); };
       (targetDocument.body || targetDocument.head || targetDocument.documentElement).appendChild(script);
@@ -331,6 +342,7 @@
       const doc = frame.contentDocument;
       const game = frame.contentWindow;
       if (!doc || !game) return Promise.resolve();
+      removeNestedBuildBadge(doc);
       if (installPromise && installedDocument === doc) return installPromise;
       installedDocument = doc;
       installPromise = (async () => {
