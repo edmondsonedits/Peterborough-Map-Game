@@ -5,6 +5,10 @@
   meshes rolling on slopes. v1.5.5 keeps that tangent-frame calculation inside
   app.js instead, so this file remains a harmless compatibility entry point for
   existing links while no longer mutating Three.js behaviour for the page.
+
+  v1.6.79 also installs the optional editor-authored-scene bridge before app.js.
+  The bridge is inert unless ?authored=1 is present and fails open independently
+  of the normal Peterborough world/gameplay bootstrap.
 */
 
 function showFatalError(error) {
@@ -43,8 +47,10 @@ function showFatalError(error) {
 globalThis.showPeterboroughExplorerFatalError = showFatalError;
 
 try {
+  globalThis.__PTBO_EXPLORER_BOOTSTRAP__?.touch?.('loading authored-scene bridge');
+  await import('./authored-scene-bootstrap.js?v=1.6.79');
   globalThis.__PTBO_EXPLORER_BOOTSTRAP__?.touch?.('loading 3D city module');
-  await import('./app.js?v=sherbrooke-20260915');
+  await import('./app.js?v=1.6.79');
 } catch (error) {
   showFatalError(error);
 }

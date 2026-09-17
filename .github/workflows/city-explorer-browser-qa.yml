@@ -7,13 +7,18 @@ on:
     paths:
       - 'tools/check-station-driving.cjs'
       - 'tools/check-mobile-controls.cjs'
+      - 'tools/check-authored-scene.cjs'
+      - 'tools/test_authored_scene_runtime.mjs'
       - 'city-explorer/index.html'
       - 'city-explorer/app.js'
+      - 'city-explorer/authored-scene-*.js'
+      - 'city-explorer/data/authored/**'
       - 'city-explorer/gameplay-systems*.js'
       - 'city-explorer/driving-refinement*.js'
       - 'city-explorer/mobile-controls*.js'
       - 'city-explorer/mobile-controls*.css'
       - 'city-explorer/road-orientation-fix.js'
+      - 'city-explorer/release-*.js'
       - '.github/workflows/city-explorer-browser-qa.yml'
 
 permissions:
@@ -26,7 +31,7 @@ concurrency:
 jobs:
   station-1-driving:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 24
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -35,6 +40,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+
+      - name: Run authored scene runtime unit tests
+        run: node tools/test_authored_scene_runtime.mjs
 
       - name: Install Playwright test runtime
         run: |
@@ -54,6 +62,9 @@ jobs:
           done
           cat /tmp/ptbo-http.log
           exit 1
+
+      - name: Run authored scene fail-open integration QA
+        run: node tools/check-authored-scene.cjs http://127.0.0.1:4174
 
       - name: Run deterministic Station 1 driving QA
         env:

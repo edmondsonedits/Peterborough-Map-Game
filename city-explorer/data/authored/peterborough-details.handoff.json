@@ -1,0 +1,36 @@
+{
+  "editorVersion": "0.0.41",
+  "format": "peterborough-authored-scene-handoff",
+  "formatVersion": 1,
+  "runtimePreview": {
+    "objectCount": 1,
+    "objects": [],
+    "terrainSampler": "editor-preview-only; simulator must resample rendered terrain"
+  },
+  "sourceScene": {
+    "coordinateSystem": "WGS84+terrain-relative-meters",
+    "objects": [
+      {
+        "assetId": "generic-prop-marker",
+        "id": "task2-station1-authored-marker",
+        "position": {
+          "heightOffsetM": 0.05,
+          "lat": 44.301005,
+          "lon": -78.32234
+        },
+        "rotationDeg": { "x": 0, "y": 0, "z": 0 },
+        "scale": { "x": 1, "y": 1, "z": 1 },
+        "source": {
+          "kind": "integration-test",
+          "note": "Project-owned proxy marker used only to prove the editor-to-simulator authored scene pipeline before production asset mapping.",
+          "reference": "Task 2 Station 1 integration fixture"
+        },
+        "surfaceMode": "terrain",
+        "tags": ["integration-test", "station-1", "task-2"]
+      }
+    ],
+    "sceneId": "peterborough-authored-details-task2",
+    "schemaVersion": 1,
+    "updatedAt": "2026-09-17T16:30:00.000Z"
+  }
+}
