@@ -1,7 +1,8 @@
-/* Shared Fire/EMS runtime. The active city package supplies bases, hospital,
-   map bounds and labels; dispatch phases remain shared simulator behaviour. */
+/* Shared Fire/EMS runtime v1.6.18. The active city package supplies bases,
+   hospital, map bounds and labels; dispatch phases remain shared simulator behaviour. */
 (() => {
   'use strict';
+  const RUNTIME_VERSION = '1.6.18';
   const config = window.PTBO_SERVICE_CONFIG;
   const city = window.PTBO_CITY_PACKAGE;
   if (!config || !city) throw new Error('City package/service configuration did not load.');
@@ -28,6 +29,7 @@
         mapInstance.setView(map.defaultCenter,zoom,{animate:false});
       }
       document.documentElement.dataset.city = city.id;
+      document.documentElement.dataset.dispatchRuntime = RUNTIME_VERSION;
       document.title = `${city.name} Fire & EMS Dispatch Simulator`;
       return true;
     } catch (error) {
@@ -94,6 +96,77 @@
     try { currentHeading = normalized; } catch (_) { window.currentHeading = normalized; }
     try { vehicleMarker?.setRotationAngle?.(normalized - 90); } catch (_) {}
     try { updateVehicleChassis?.(); } catch (_) {}
+  }
+
+  function currentVehiclePosition() {
+    try {
+      const lat = Number(simLat);
+      const lng = Number(simLng);
+      return Number.isFinite(lat) && Number.isFinite(lng) ? {lat,lng} : null;
+    } catch (_) {
+      const lat = Number(window.simLat);
+      const lng = Number(window.simLng);
+      return Number.isFinite(lat) && Number.isFinite(lng) ? {lat,lng} : null;
+    }
+  }
+
+  function currentStreetName() {
+    const roads = window.PTBO_ROAD_COLLISION;
+    if (!roads || roads.state?.status === 'loading') return 'Loading street…';
+    if (roads.state?.status !== 'ready' || typeof roads.nearestRoad !== 'function') return 'Street unavailable';
+    const position = currentVehiclePosition();
+    if (!position) return 'Street unavailable';
+    const nearest = roads.nearestRoad(position.lat,position.lng,32);
+    if (!nearest || !Number.isFinite(Number(nearest.distance)) || nearest.distance > 16) return 'Off street';
+    const name = String(nearest.road || '').trim();
+    return name || 'Unnamed road';
+  }
+
+  function installCurrentStreetHud() {
+    if (!document.body) return;
+    let style = document.getElementById('ptbo-current-street-style');
+    if (!style) {
+      style = document.createElement('style');
+      style.id = 'ptbo-current-street-style';
+      style.textContent = `
+        #ptbo-current-street-hud{position:fixed;left:50%;bottom:24px;z-index:1195;min-width:190px;max-width:min(360px,70vw);padding:7px 13px 8px;display:grid;gap:2px;transform:translateX(-50%);color:#f8fafc;border:1px solid rgba(255,255,255,.2);border-bottom:2px solid #38bdf8;border-radius:9px;background:rgba(8,13,24,.9);box-shadow:0 7px 22px rgba(0,0,0,.38);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);text-align:center;pointer-events:none}
+        #ptbo-current-street-hud .street-kicker{color:#94a3b8;font-size:7px;font-weight:850;letter-spacing:.16em;text-transform:uppercase}
+        #ptbo-current-street-name{overflow:hidden;color:#fff;font-size:12px;font-weight:850;line-height:1.2;letter-spacing:.025em;text-overflow:ellipsis;white-space:nowrap}
+        @media(max-width:760px),(pointer:coarse){#ptbo-current-street-hud{bottom:calc(190px + env(safe-area-inset-bottom));min-width:150px;max-width:min(250px,72vw);padding:6px 10px 7px;border-radius:8px}#ptbo-current-street-hud .street-kicker{font-size:6px}#ptbo-current-street-name{font-size:10px}}
+        @media(orientation:landscape) and (max-height:560px){#ptbo-current-street-hud{bottom:calc(148px + env(safe-area-inset-bottom))}}
+      `;
+      document.head.appendChild(style);
+    }
+
+    let hud = document.getElementById('ptbo-current-street-hud');
+    if (!hud) {
+      hud = document.createElement('div');
+      hud.id = 'ptbo-current-street-hud';
+      hud.setAttribute('role','status');
+      hud.setAttribute('aria-live','polite');
+      hud.setAttribute('aria-label','Current street');
+      hud.innerHTML = '<span class="street-kicker">Current street</span><strong id="ptbo-current-street-name">Loading street…</strong>';
+      document.body.appendChild(hud);
+    }
+
+    let lastName = '';
+    const update = () => {
+      const node = document.getElementById('ptbo-current-street-name');
+      if (!node) return;
+      const nextName = currentStreetName();
+      if (nextName !== lastName) {
+        lastName = nextName;
+        node.textContent = nextName;
+        hud.title = nextName;
+      }
+    };
+
+    update();
+    clearInterval(installCurrentStreetHud.timer);
+    installCurrentStreetHud.timer = setInterval(update,250);
+    window.addEventListener('ptbo-road-collision-ready',update);
+    window.addEventListener('ptbo-bases-updated',update);
+    window.addEventListener('ptbo-service-change',update);
   }
 
   function spawn(number) {
@@ -167,4 +240,5 @@
   window.addEventListener('ptbo-bases-updated',() => {showBaseYards();updateControls();});
   applyCityMap(false);
   showBaseYards();
+  installCurrentStreetHud();
 })();
