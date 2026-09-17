@@ -1,8 +1,8 @@
-/* Shared Fire/EMS runtime v1.6.18. The active city package supplies bases,
+/* Shared Fire/EMS runtime v1.6.19. The active city package supplies bases,
    hospital, map bounds and labels; dispatch phases remain shared simulator behaviour. */
 (() => {
   'use strict';
-  const RUNTIME_VERSION = '1.6.18';
+  const RUNTIME_VERSION = '1.6.19';
   const config = window.PTBO_SERVICE_CONFIG;
   const city = window.PTBO_CITY_PACKAGE;
   if (!config || !city) throw new Error('City package/service configuration did not load.');
@@ -150,6 +150,7 @@
     }
 
     let lastName = '';
+    let lastUpdate = 0;
     const update = () => {
       const node = document.getElementById('ptbo-current-street-name');
       if (!node) return;
@@ -160,10 +161,17 @@
         hud.title = nextName;
       }
     };
+    const tick = now => {
+      if (!lastUpdate || now - lastUpdate >= 250) {
+        lastUpdate = now;
+        update();
+      }
+      installCurrentStreetHud.raf = requestAnimationFrame(tick);
+    };
 
     update();
-    clearInterval(installCurrentStreetHud.timer);
-    installCurrentStreetHud.timer = setInterval(update,250);
+    if (installCurrentStreetHud.raf) window.cancelAnimationFrame?.(installCurrentStreetHud.raf);
+    installCurrentStreetHud.raf = requestAnimationFrame(tick);
     window.addEventListener('ptbo-road-collision-ready',update);
     window.addEventListener('ptbo-bases-updated',update);
     window.addEventListener('ptbo-service-change',update);
