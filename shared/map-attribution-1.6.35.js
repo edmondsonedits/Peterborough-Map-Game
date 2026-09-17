@@ -1,7 +1,7 @@
-/* Shared map-provider attribution controller for Emergency Games v1.6.35. */
+/* Shared map-provider attribution controller for Emergency Games v1.6.68. */
 (() => {
   'use strict';
-  const VERSION = '1.6.35';
+  const VERSION = '1.6.68';
   if (window.PTBO_MAP_ATTRIBUTION?.version === VERSION) return;
 
   const PROVIDERS = Object.freeze({
@@ -71,7 +71,27 @@
       .leaflet-control-attribution a:hover,.leaflet-control-attribution a:focus-visible{
         color:#0c4a6e!important;outline:2px solid #38bdf8;outline-offset:1px;
       }
-      @media(max-width:520px){.leaflet-control-attribution{max-width:82vw!important;font-size:8px!important;padding:2px 4px!important}}
+      @media(max-width:520px){
+        .leaflet-control-attribution{
+          max-width:min(43vw,250px)!important;
+          margin:0 7px 1px 0!important;
+          padding:1px 3px!important;
+          border:0!important;
+          border-radius:3px!important;
+          background:rgba(8,13,24,.24)!important;
+          box-shadow:none!important;
+          color:rgba(248,250,252,.58)!important;
+          font-size:5px!important;
+          font-weight:600!important;
+          line-height:1.08!important;
+          text-align:right!important;
+          white-space:normal!important;
+        }
+        .leaflet-control-attribution a{
+          color:inherit!important;
+          text-decoration:none!important;
+        }
+      }
     `;
     (doc.head || doc.documentElement).appendChild(style);
   }
