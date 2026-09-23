@@ -1,12 +1,10 @@
-/* Compatibility loader: v1.6.56 entry point forwards to production v1.6.66. */
+/* Historical release URL retained for compatibility. */
 (() => {
   'use strict';
-  const VERSION = '1.6.66';
-  if (window.PTBO_RELEASE?.version === VERSION || document.getElementById('ptbo-release-bootstrap-v1657')) return;
+  if (document.getElementById('ptbo-legacy-release-forwarder-loader')) return;
   const script = document.createElement('script');
-  script.id = 'ptbo-release-bootstrap-v1657';
-  script.src = new URL(`release-bootstrap-1.6.57.js?v=${VERSION}`, document.currentScript?.src || location.href).href;
-  script.dataset.ptboRelease = VERSION;
+  script.id = 'ptbo-legacy-release-forwarder-loader';
+  script.src = new URL('legacy-release-forwarder.js', document.currentScript?.src || location.href).href;
   script.onerror = () => script.remove();
   (document.head || document.documentElement).appendChild(script);
 })();

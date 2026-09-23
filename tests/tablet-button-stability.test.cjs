@@ -9,7 +9,7 @@ const root = path.resolve(__dirname, '..');
 const read = file => fs.readFileSync(path.join(root, file), 'utf8');
 
 const patch = read('response-simulator/tablet-button-stability-1.6.54.js');
-const release = read('shared/release-bootstrap-1.6.54.js');
+const release = read('shared/release-bootstrap.js');
 
 test('tablet button uses a CSS-owned label so legacy Reveal Route text cannot flash on screen', () => {
   assert.match(patch, /#route-answer-btn\.ptbo-tablet-owned-label\{/);
@@ -19,9 +19,8 @@ test('tablet button uses a CSS-owned label so legacy Reveal Route text cannot fl
   assert.match(patch, /MutationObserver/);
 });
 
-test('v1.6.54 desktop release loads the tablet button stability patch', () => {
-  assert.match(release, /const VERSION = '1\.6\.54'/);
-  assert.match(release, /tablet-button-stability-1\.6\.54\.js\?v=1\.6\.54/);
-  assert.match(release, /PTBO_TABLET_BUTTON_STABILITY\?\.version !== VERSION/);
+test('current desktop release loads the tablet button stability patch', () => {
+  assert.match(release, /tablet-button-stability-1\.6\.54\.js\?v=\$\{VERSION\}/);
+  assert.match(release, /PTBO_TABLET_BUTTON_STABILITY\?\.version !== '1\.6\.54'/);
   assert.match(release, /PTBO_TABLET_CLOSE_DISPATCH\?\.version !== '1\.6\.53'/);
 });

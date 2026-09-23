@@ -22,11 +22,11 @@ test('dispatch tablet uses normal street maps with a backup provider', () => {
   assert.match(mapPolicy, /subdomains:'abc'/);
   assert.match(tablet, /createStreetLayer\('positron'\)/);
   assert.match(tablet, /data-state="loading"/);
-  assert.match(read('shared/release-bootstrap-1.6.57.js'), /response-tablet-1\.6\.48\.js\?v=1\.6\.66&map=street/);
+  assert.match(read('shared/release-bootstrap.js'), /response-tablet-1\.6\.48\.js\?v=\$\{VERSION\}&map=street/);
 });
 
 const bridge = read('response-simulator/tablet-close-dispatch-1.6.53.js');
-const release = read('shared/release-bootstrap-1.6.53.js');
+const release = read('shared/release-bootstrap.js');
 
 test('closing the response tablet minimizes the active dispatch HUD', () => {
   assert.match(bridge, /if \(state\.wasTabletOpen && !open\) minimizeDispatchHud\(\)/);
@@ -36,9 +36,8 @@ test('closing the response tablet minimizes the active dispatch HUD', () => {
   assert.match(bridge, /hud\.classList\.remove\('ptbo-tablet-dispatch-collapsed'\)/);
 });
 
-test('v1.6.53 desktop release loads both the tablet and its dispatch minimizer', () => {
-  assert.match(release, /const VERSION = '1\.6\.53'/);
-  assert.match(release, /response-tablet-1\.6\.48\.js\?v=1\.6\.53/);
-  assert.match(release, /tablet-close-dispatch-1\.6\.53\.js\?v=1\.6\.53/);
-  assert.match(release, /PTBO_TABLET_CLOSE_DISPATCH\?\.version !== VERSION/);
+test('current desktop release loads both the tablet and its dispatch minimizer', () => {
+  assert.match(release, /response-tablet-1\.6\.48\.js\?v=\$\{VERSION\}&map=street/);
+  assert.match(release, /tablet-close-dispatch-1\.6\.53\.js\?v=\$\{VERSION\}/);
+  assert.match(release, /PTBO_TABLET_CLOSE_DISPATCH\?\.version !== '1\.6\.53'/);
 });

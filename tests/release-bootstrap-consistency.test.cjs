@@ -82,3 +82,27 @@ test('deployment and browser QA use the stable release-management entry points',
   assert.match(read('.github/workflows/deploy-pages.yml'), /node scripts\/normalize-release\.cjs/);
   assert.match(read('.github/workflows/city-explorer-browser-qa.yml'), /city-explorer\/release\.js/);
 });
+
+
+test('numbered release bootstraps are compatibility-only forwarders', () => {
+  const sharedDir = path.join(root, 'shared');
+  const files = fs.readdirSync(sharedDir)
+    .filter(file => /^release-bootstrap-\d+\.\d+\.\d+\.js$/.test(file))
+    .sort();
+  assert.equal(files.length, 9);
+  for (const file of files) {
+    const source = read(`shared/${file}`);
+    assert.match(source, /legacy-release-forwarder\.js/);
+    assert.doesNotMatch(source, /window\.PTBO_RELEASE\s*=/);
+    assert.doesNotMatch(source, /const VERSION\s*=/);
+    assert.ok(source.length < 900, `${file} should remain a tiny compatibility stub`);
+  }
+});
+
+test('legacy compatibility bridge resolves through canonical build and stable release', () => {
+  const source = read('shared/legacy-release-forwarder.js');
+  assert.match(source, /build-version\.js\?legacy=current/);
+  assert.match(source, /window\.PTBO_BUILD\?\.version/);
+  assert.match(source, /release-bootstrap\.js\?v=\$\{version\}/);
+  assert.doesNotMatch(source, /const VERSION\s*=\s*'\d+\.\d+\.\d+'/);
+});
