@@ -18,6 +18,7 @@ on:
       - 'city-explorer/mobile-controls*.js'
       - 'city-explorer/mobile-controls*.css'
       - 'city-explorer/road-orientation-fix.js'
+      - 'city-explorer/release.js'
       - 'city-explorer/release-*.js'
       - '.github/workflows/city-explorer-browser-qa.yml'
 

@@ -1,0 +1,87 @@
+/* Stable production release bootstrap. Release identity comes only from shared/build-version.js. */
+(() => {
+  'use strict';
+
+  const VERSION = window.PTBO_BUILD?.version;
+  if (!VERSION) { console.error('Production release bootstrap requires shared/build-version.js first.'); return; }
+  if (window.PTBO_RELEASE?.version === VERSION) return;
+
+  const release = Object.freeze({ version:VERSION, label:`v${VERSION}`, channel:'production' });
+  window.PTBO_RELEASE = release;
+  document.documentElement.dataset.ptboRelease = VERSION;
+
+  function syncBuildMarker() {
+    const badge = document.getElementById('ptbo-build-badge');
+    if (badge) {
+      badge.textContent = release.label;
+      badge.setAttribute('aria-label', `Production version ${VERSION}`);
+    }
+    document.documentElement.dataset.ptboRelease = VERSION;
+    document.getElementById('ptbo-training-use-notice')?.remove();
+    document.getElementById('ptbo-training-use-style')?.remove();
+  }
+
+  [0, 50, 250, 750, 1500, 3000].forEach(delay => setTimeout(syncBuildMarker, delay));
+  addEventListener('pageshow', syncBuildMarker);
+
+  function installDesktopTabletBridge() {
+    if (!/\/response-simulator\/play\/(?:index\.html)?$/.test(location.pathname)) return;
+    const frame = document.getElementById('simulator');
+    if (!frame) return;
+
+    let attempts = 0;
+    let timer = 0;
+
+    const ensureScript = (doc, id, src) => {
+      if (doc.getElementById(id)) return;
+      const script = doc.createElement('script');
+      script.id = id;
+      script.src = src;
+      script.dataset.ptboRelease = VERSION;
+      script.onload = () => { script.dataset.ptboLoaded = 'true'; syncBuildMarker(); };
+      script.onerror = () => script.remove();
+      doc.body.appendChild(script);
+    };
+
+    const inject = () => {
+      attempts += 1;
+      const doc = frame.contentDocument;
+      const game = frame.contentWindow;
+      if (!doc || !game || !doc.body) return false;
+
+      if (game.PTBO_RESPONSE_TABLET?.version !== VERSION) {
+        ensureScript(doc, 'ptbo-release-tablet', new URL(`../response-tablet-1.6.48.js?v=${VERSION}&map=street`, location.href).href);
+      }
+      if (game.PTBO_TABLET_CLOSE_DISPATCH?.version !== '1.6.53') {
+        ensureScript(doc, 'ptbo-tablet-close-dispatch', new URL(`../tablet-close-dispatch-1.6.53.js?v=${VERSION}`, location.href).href);
+      }
+      if (game.PTBO_TABLET_BUTTON_STABILITY?.version !== '1.6.54') {
+        ensureScript(doc, 'ptbo-tablet-button-stability', new URL(`../tablet-button-stability-1.6.54.js?v=${VERSION}`, location.href).href);
+      }
+      if (game.PTBO_TRAINING_UI?.version !== '1.6.57') {
+        ensureScript(doc, 'ptbo-training-ui', new URL(`../training-ui-1.6.57.js?v=${VERSION}`, location.href).href);
+      }
+
+      return game.PTBO_RESPONSE_TABLET?.version === VERSION
+        && game.PTBO_TABLET_CLOSE_DISPATCH?.version === '1.6.53'
+        && game.PTBO_TABLET_BUTTON_STABILITY?.version === '1.6.54'
+        && game.PTBO_TRAINING_UI?.version === '1.6.57';
+    };
+
+    const startPolling = () => {
+      clearInterval(timer);
+      attempts = 0;
+      inject();
+      timer = setInterval(() => {
+        if (inject() || attempts >= 60) clearInterval(timer);
+      }, 250);
+    };
+
+    frame.addEventListener('load', startPolling);
+    if (frame.contentDocument?.readyState === 'complete') startPolling();
+    addEventListener('pagehide', () => clearInterval(timer), { once:true });
+  }
+
+  installDesktopTabletBridge();
+  syncBuildMarker();
+})();

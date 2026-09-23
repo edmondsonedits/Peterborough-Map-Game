@@ -46,3 +46,39 @@ for (const file of [
     assert.equal(match[1], releaseVersion, `${file} wrapper VERSION must match v${releaseVersion}`);
   });
 }
+
+
+test('shared build version is the single production release authority', () => {
+  const releaseBootstrap = read('shared/release-bootstrap.js');
+  const cityRelease = read('city-explorer/release.js');
+  const tablet = read('response-simulator/response-tablet-1.6.48.js');
+  const normalizer = read('scripts/normalize-release.cjs');
+
+  assert.match(releaseBootstrap, /const VERSION = window\.PTBO_BUILD\?\.version/);
+  assert.match(cityRelease, /const VERSION = window\.PTBO_BUILD\?\.version/);
+  assert.match(tablet, /const VERSION = window\.PTBO_BUILD\?\.version/);
+  assert.doesNotMatch(releaseBootstrap, /const VERSION = '\d+\.\d+\.\d+'/);
+  assert.doesNotMatch(cityRelease, /const VERSION = '\d+\.\d+\.\d+'/);
+  assert.doesNotMatch(tablet, /const VERSION = '\d+\.\d+\.\d+'/);
+  assert.match(normalizer, /const versionMatch = build\.match/);
+  assert.doesNotMatch(normalizer, /const VERSION = '\d+\.\d+\.\d+'/);
+});
+
+test('live release entry points use stable filenames and the canonical cache version', () => {
+  const rootHtml = read('index.html');
+  const desktopHtml = read('response-simulator/play/index.html');
+  const explorerHtml = read('city-explorer/index.html');
+
+  assert.match(rootHtml, new RegExp(`shared/release-bootstrap\\.js\\?v=${releaseVersion}`));
+  assert.match(desktopHtml, new RegExp(`shared/release-bootstrap\\.js\\?v=${releaseVersion}`));
+  assert.match(explorerHtml, new RegExp(`release\\.js\\?v=${releaseVersion}`));
+  assert.match(explorerHtml, new RegExp(`Peterborough 3D Simulator — v${releaseVersion}`));
+  assert.doesNotMatch(rootHtml, /release-bootstrap-\d+\.\d+\.\d+\.js/);
+  assert.doesNotMatch(desktopHtml, /release-bootstrap-\d+\.\d+\.\d+\.js/);
+  assert.doesNotMatch(explorerHtml, /release-\d+\.\d+\.\d+\.js/);
+});
+
+test('deployment and browser QA use the stable release-management entry points', () => {
+  assert.match(read('.github/workflows/deploy-pages.yml'), /node scripts\/normalize-release\.cjs/);
+  assert.match(read('.github/workflows/city-explorer-browser-qa.yml'), /city-explorer\/release\.js/);
+});

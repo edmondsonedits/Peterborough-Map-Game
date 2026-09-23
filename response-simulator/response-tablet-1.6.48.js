@@ -2,7 +2,8 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.66';
+  const VERSION = window.PTBO_BUILD?.version;
+  if (!VERSION) { console.error('Response tablet requires shared/build-version.js first.'); return; }
   if (window.PTBO_RESPONSE_TABLET?.version === VERSION) return;
 
   const state = {
