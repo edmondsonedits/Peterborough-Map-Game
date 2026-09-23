@@ -34,7 +34,6 @@ on:
       - 'city-explorer/data/splats/manifest.json'
       - 'city-explorer/road-orientation-fix.js'
       - 'city-explorer/styles.css'
-      - 'city-explorer/index.html'
       - 'city-explorer/vendor/**'
   pull_request:
     paths:
@@ -68,7 +67,6 @@ on:
       - 'city-explorer/data/splats/manifest.json'
       - 'city-explorer/road-orientation-fix.js'
       - 'city-explorer/styles.css'
-      - 'city-explorer/index.html'
       - 'city-explorer/vendor/**'
   schedule:
     - cron: '23 8 1 * *'

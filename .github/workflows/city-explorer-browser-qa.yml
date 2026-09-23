@@ -9,7 +9,6 @@ on:
       - 'tools/check-mobile-controls.cjs'
       - 'tools/check-authored-scene.cjs'
       - 'tools/test_authored_scene_runtime.mjs'
-      - 'city-explorer/index.html'
       - 'city-explorer/app.js'
       - 'city-explorer/feature-utils.js'
       - 'city-explorer/authored-scene-*.js'
