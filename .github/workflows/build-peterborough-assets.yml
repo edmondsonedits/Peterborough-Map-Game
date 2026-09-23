@@ -14,6 +14,8 @@ on:
       - 'tools/test_city_detail_rules.mjs'
       - 'tools/test_terrain_heightmap.mjs'
       - 'city-explorer/app.js'
+      - 'city-explorer/feature-utils.js'
+      - 'tests/city-feature-utils.test.mjs'
       - 'city-explorer/fly-controls.js'
       - 'city-explorer/data-loader.js'
       - 'city-explorer/landmark-models.js'
@@ -46,6 +48,8 @@ on:
       - 'tools/test_city_detail_rules.mjs'
       - 'tools/test_terrain_heightmap.mjs'
       - 'city-explorer/app.js'
+      - 'city-explorer/feature-utils.js'
+      - 'tests/city-feature-utils.test.mjs'
       - 'city-explorer/fly-controls.js'
       - 'city-explorer/data-loader.js'
       - 'city-explorer/landmark-models.js'
@@ -140,6 +144,8 @@ jobs:
           echo '663bb5bbae47d5d12bff9cf1c87b8f973e85fab4b1f83453810aae99add54592  city-explorer/vendor/osmtogeojson-3.0.0-beta.5/osmtogeojson.js' | sha256sum -c -
           node --check city-explorer/data-loader.js
           node --check city-explorer/app.js
+          node --check city-explorer/feature-utils.js
+          node --test tests/city-feature-utils.test.mjs
           node --check city-explorer/fly-controls.js
           node --check city-explorer/landmark-models.js
           node --check city-explorer/road-network.js

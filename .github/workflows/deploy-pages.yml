@@ -38,7 +38,7 @@ jobs:
           node --test --test-skip-pattern='v1\.6\.31 build uses|main menu exposes|v1\.6\.25 analytics reliably|v1\.6\.28 visual tutorial shows|city selector keeps the shared mobile and desktop wrapper URLs' tests/base-training-cities.test.cjs tests/desktop-editor-steering-regression.test.cjs
 
       - name: Check streetscape regressions
-        run: node --test tests/sherbrooke-plan.test.mjs tests/sherbrooke-fallback.test.mjs tests/station-reference-details.test.mjs tests/streetscape-assets.test.mjs tests/vegetation-variants.test.mjs
+        run: node --test tests/sherbrooke-plan.test.mjs tests/sherbrooke-fallback.test.mjs tests/station-reference-details.test.mjs tests/streetscape-assets.test.mjs tests/vegetation-variants.test.mjs tests/city-feature-utils.test.mjs
 
       - name: Check authored actors and station architecture
         run: node --test tests/pumper-asset.test.mjs tests/firefighter-asset.test.mjs tests/station-architecture.test.mjs
