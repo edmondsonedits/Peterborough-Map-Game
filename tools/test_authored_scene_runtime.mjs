@@ -49,3 +49,11 @@ await assert.rejects(
 );
 
 console.log('Authored scene runtime validation tests passed.');
+
+
+const browserQaPath = path.resolve(here, './check-authored-scene.cjs');
+const browserQaSource = await fs.readFile(browserQaPath, 'utf8');
+assert.equal((browserQaSource.match(/browser\.newPage\(/g) || []).length, 2, 'browser QA should use only disabled + enabled simulator startups');
+assert.match(browserQaSource, /for \(const mode of \['missing', 'corrupt', 'invalid'\]\)/);
+assert.match(browserQaSource, /await validPage\.unroute\(handoffRoute\)/);
+assert.match(browserQaSource, /did not recover after fail-open checks/);
