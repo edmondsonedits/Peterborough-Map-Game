@@ -5,26 +5,26 @@
     "public_osm_to_orn_within_20m_min_pct": 90,
     "orn_to_public_osm_within_20m_min_pct": 95
   },
-  "public_osm_feature_count": 2761,
-  "rendered_osm_feature_count": 5941,
+  "public_osm_feature_count": 2778,
+  "rendered_osm_feature_count": 5961,
   "orn_feature_count": 3179,
   "public_osm_to_orn": {
-    "samples": 49739,
-    "mean_m": 6.385,
+    "samples": 49763,
+    "mean_m": 6.382,
     "median_m": 0.64,
-    "p90_m": 2.346,
+    "p90_m": 2.344,
     "p95_m": 3.631,
-    "p99_m": 53.827,
-    "within_5m_pct": 96.97,
+    "p99_m": 53.78,
+    "within_5m_pct": 96.98,
     "within_10m_pct": 98.43,
     "within_20m_pct": 98.72,
     "within_30m_pct": 98.83
   },
   "orn_to_public_osm": {
     "samples": 50434,
-    "mean_m": 2.578,
+    "mean_m": 2.579,
     "median_m": 0.629,
-    "p90_m": 2.32,
+    "p90_m": 2.318,
     "p95_m": 3.574,
     "p99_m": 61.844,
     "within_5m_pct": 96.85,
@@ -33,21 +33,21 @@
     "within_30m_pct": 98.27
   },
   "all_rendered_osm_to_orn": {
-    "samples": 76236,
-    "mean_m": 28.523,
+    "samples": 76284,
+    "mean_m": 28.542,
     "median_m": 1.235,
-    "p90_m": 80.161,
-    "p95_m": 134.329,
-    "p99_m": 334.319,
+    "p90_m": 80.3,
+    "p95_m": 134.553,
+    "p99_m": 334.285,
     "within_5m_pct": 67.44,
-    "within_10m_pct": 68.62,
-    "within_20m_pct": 72.72,
-    "within_30m_pct": 77.69
+    "within_10m_pct": 68.61,
+    "within_20m_pct": 72.71,
+    "within_30m_pct": 77.68
   },
   "street_names": {
-    "checked_segments": 2624,
-    "matching_segments": 2501,
-    "match_pct": 95.31,
+    "checked_segments": 2641,
+    "matching_segments": 2515,
+    "match_pct": 95.23,
     "sample_mismatches": [
       {
         "osm": "ST PATRICK S ST",
@@ -117,7 +117,7 @@
         "orn": [
           "FIFES BAY RD"
         ],
-        "p90_offset_m": 1.02
+        "p90_offset_m": 0.01
       },
       {
         "osm": "PETERBORO AVE",
@@ -477,13 +477,13 @@
     {
       "name": "HWY 7",
       "samples": 544,
-      "mean_m": 371.914,
+      "mean_m": 371.909,
       "median_m": 3.398,
       "p90_m": 1712.457,
       "p95_m": 2211.147,
       "p99_m": 2595.447,
       "within_5m_pct": 60.29,
-      "within_10m_pct": 68.75,
+      "within_10m_pct": 68.93,
       "within_20m_pct": 72.24,
       "within_30m_pct": 72.61
     },
@@ -664,6 +664,6 @@
     "Recent construction and private roads can be present in only one source.",
     "The test validates centrelines and names, not curbs, lanes, grades, turn rules or legal survey boundaries."
   ],
-  "generated_at": "2026-09-23T10:04:33+00:00",
+  "generated_at": "2026-09-23T11:11:08+00:00",
   "orn_named_feature_count": 3074
 }
