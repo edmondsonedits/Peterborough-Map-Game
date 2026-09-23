@@ -8,6 +8,9 @@ const vm = require('node:vm');
 const root = path.resolve(__dirname, '..');
 const read = file => fs.readFileSync(path.join(root, file), 'utf8');
 const cities = ['oshawa','belleville','scarborough','pickering','markham','toronto'];
+const canonicalBuildSource = read('shared/build-version.js');
+const canonicalBuildVersion = canonicalBuildSource.match(/const VERSION = '(\d+\.\d+\.\d+)'/)?.[1];
+const escapedCanonicalBuildVersion = canonicalBuildVersion?.replace(/\./g, '\\.') || '';
 
 function browserContext(extra = {}) {
   const events = [], nodes = [], storage = new Map();
@@ -126,9 +129,10 @@ test('duplicate EMS source names still receive unique IDs before entering the sh
   assert.equal(new Set(imported.map(base=>base.number)).size,2);
 });
 
-test('v1.6.31 build uses the stable v1.6.17 city-runtime protocol and current analytics client', () => {
+test('current build uses the stable v1.6.17 city-runtime protocol and current analytics client', () => {
   const build=read('shared/build-version.js');
-  assert.match(build,/const VERSION = '1\.6\.31'/);
+  assert.match(build,/const VERSION = '\d+\.\d+\.\d+'/);
+  assert.ok(canonicalBuildVersion);
   assert.match(build,/const CITY_RUNTIME_VERSION = '1\.6\.17'/);
   assert.match(build,/PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION = CITY_RUNTIME_VERSION/);
   assert.match(build,/simulator-readiness-1\.6\.17\.js/);
@@ -213,7 +217,7 @@ test('compact settings accepts the base-training Incident Types label instead of
 
 test('city selector keeps the shared mobile and desktop wrapper URLs', () => {
   const source=read('shared/city-selector.js');
-  assert.match(source,/const VERSION = '1\.6\.22'/);
+  assert.match(source,/const VERSION = '\d+\.\d+\.\d+'/);
   assert.match(source,/same Peterborough driving controls/);
   assert.match(source,/url\.searchParams\.set\('surface', mobile \? 'mobile' : 'desktop'\)/);
   assert.match(source,/url\.searchParams\.set\('fresh', String\(Date\.now\(\)\)\)/);
@@ -231,11 +235,11 @@ test('main menu exposes the password-locked Dispatch Editor and hides Website St
   assert.match(source,/tapCount<10/);
   assert.match(source,/localStorage\.setItem\(statsKey,'enabled'\)/);
   assert.match(source,/href="site-stats\//);
-  assert.match(source,/shared\/site-analytics-1\.6\.25\.js\?v=1\.6\.31/);
-  assert.match(source,/shared\/build-version\.js\?v=1\.6\.31/);
+  assert.match(source,new RegExp(`shared/build-version\\.js\\?v=${escapedCanonicalBuildVersion}`));
+  assert.match(canonicalBuildSource,/site-analytics-1\.6\.25\.js/);
 });
 
-test('v1.6.25 analytics reliably records gameplay lifecycle without exact route history', () => {
+test('analytics reliably records gameplay lifecycle and the dashboard requires secure admin access', () => {
   const tracker=read('shared/site-analytics-1.6.25.js');
   const dashboard=read('site-stats/index.html');
   assert.match(tracker,/const VERSION = '1\.6\.25'/);
@@ -261,11 +265,16 @@ test('v1.6.25 analytics reliably records gameplay lifecycle without exact route 
   assert.match(tracker,/incident_/);
   assert.match(tracker,/city_seconds_/);
   assert.doesNotMatch(tracker,/getCurrentPosition|navigator\.geolocation/);
-  assert.match(dashboard,/site-analytics-1\.6\.25\.js/);
-  assert.match(dashboard,/Startup & analytics reliability/);
-  assert.match(dashboard,/Startup timeouts/);
-  assert.match(dashboard,/JS errors/);
-  assert.match(dashboard,/Detailed gameplay tracking began with v1\.6\.24/);
+
+  assert.match(dashboard,/Authenticated admin area/);
+  assert.match(dashboard,/PTBO_SECURE_ANALYTICS/);
+  assert.match(dashboard,/loadStats/);
+  assert.match(dashboard,/authorized/);
+  assert.match(dashboard,/does not read Firestore directly/);
+  assert.match(dashboard,/does not use localStorage as authentication/);
+  assert.doesNotMatch(dashboard,/localStorage\.(?:getItem|setItem)/);
+  assert.match(dashboard,/Secure admin backend required/);
+  assert.match(dashboard,/aggregate department\/session statistics only/);
 });
 
 test('v1.6.26 route reveal keeps the map visible on mobile and restores the pre-reveal view', () => {
@@ -302,7 +311,7 @@ test('v1.6.28 visual tutorial shows the real controls and faithful game examples
   assert.match(source,/ptbo-service-change/);
   assert.match(source,/aria-modal/);
   for(const file of ['index.html','response-simulator/index.html','response-simulator/play/index.html','response-simulator/mobile/index.html']){
-    assert.match(read(file),/build-version\.js\?v=1\.6\.31/,file);
+    assert.match(read(file),new RegExp(`build-version\\.js\\?v=${escapedCanonicalBuildVersion}`),file);
   }
 });
 

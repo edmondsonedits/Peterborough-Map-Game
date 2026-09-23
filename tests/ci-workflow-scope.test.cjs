@@ -32,3 +32,9 @@ test('all workflows remain independent of OpenAI or Codex API calls', () => {
     assert.doesNotMatch(source, /\b(?:openai|codex|chatgpt)\b/i, `${file} unexpectedly invokes AI tooling`);
   }
 });
+
+
+test('production CI does not silently skip named tests', () => {
+  const deploy = read('.github/workflows/deploy-pages.yml');
+  assert.doesNotMatch(deploy, /--test-skip-pattern/);
+});
