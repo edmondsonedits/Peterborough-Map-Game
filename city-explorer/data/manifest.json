@@ -11,7 +11,7 @@
   },
   "city": "Peterborough, Ontario",
   "city_buildings": {
-    "cache_reused": false,
+    "cache_reused": true,
     "desktop_detail_layer": true,
     "feature_count": 5322,
     "file": "peterborough-official-buildings.geojson",
@@ -42,12 +42,12 @@
     ],
     "simplification_tolerance_m": 0.08,
     "source": "City of Peterborough Basedata",
-    "source_feature_count": 37349,
+    "source_feature_count": 5322,
     "source_url": "https://citymaps.peterborough.ca/arcgis/rest/services/Basedata/MapServer",
     "spatial_reference": "EPSG:4326"
   },
   "city_open_data": {
-    "cache_reused": false,
+    "cache_reused": true,
     "feature_count": 4326,
     "file": "peterborough-city-open-data.geojson",
     "layer_counts": {
@@ -119,7 +119,7 @@
     "spatial_reference": "EPSG:4326"
   },
   "city_road_surfaces": {
-    "cache_reused": false,
+    "cache_reused": true,
     "feature_count": 18864,
     "file": "peterborough-road-surfaces.geojson",
     "layer_counts": {
@@ -192,9 +192,9 @@
     "file": "construction-audit.json",
     "policy": "Only authoritative completed geometry changes alter the packaged city"
   },
-  "generated_at": "2026-09-17T16:59:23+00:00",
+  "generated_at": "2026-09-23T10:01:38+00:00",
   "hydrography": {
-    "cache_reused": true,
+    "cache_reused": false,
     "feature_count": 1312,
     "file": "peterborough-hydrography.geojson",
     "lidar_breaklines_url": "https://www.publicdocs.mnr.gov.on.ca/mirb/Lidar%20DTM%20-%20Ptbo%20-%20breaklines.zip",
@@ -223,10 +223,10 @@
     "named_feature_count": 3074
   },
   "osm": {
-    "drivable_road_count": 5942,
-    "element_count": 42934,
+    "drivable_road_count": 5941,
+    "element_count": 42933,
     "file": "peterborough-osm.json",
-    "public_road_count": 2762,
+    "public_road_count": 2761,
     "public_road_file": "osm-public-roads.geojson",
     "road_file": "osm-roads.geojson",
     "source": "OpenStreetMap via Overpass API"
@@ -236,12 +236,12 @@
     "report": "../ROAD-VALIDATION.md",
     "status": "pass",
     "public_osm_to_orn": {
-      "samples": 49740,
+      "samples": 49739,
       "mean_m": 6.385,
       "median_m": 0.64,
       "p90_m": 2.346,
       "p95_m": 3.631,
-      "p99_m": 53.825,
+      "p99_m": 53.827,
       "within_5m_pct": 96.97,
       "within_10m_pct": 98.43,
       "within_20m_pct": 98.72,
@@ -260,8 +260,8 @@
       "within_30m_pct": 98.27
     },
     "street_names": {
-      "checked_segments": 2625,
-      "matching_segments": 2502,
+      "checked_segments": 2624,
+      "matching_segments": 2501,
       "match_pct": 95.31,
       "sample_mismatches": [
         {
