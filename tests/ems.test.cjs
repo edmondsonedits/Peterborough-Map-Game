@@ -187,7 +187,7 @@ test('station yards contain their spawns and provide road access or a temporary 
 });
 
 test('rotated yard corners use the same geometry for drawing and collision',()=>{
-  const g=game(),store=g.c.PTBO_BASE_STORE,base={...store.getAll()[0],yardSize:40,yardRotation:45};
+  const g=game(),store=g.c.PTBO_BASE_STORE,base={...store.getAll()[0],yardSize:40,yardWidth:40,yardLength:40,yardRotation:45};
   for(const [lat,lng] of store.corners(base))assert.equal(store.contains(base,lat,lng),true);
   assert.equal(store.contains(base,base.lat+30/110540,base.lng),false);
   assert.equal(store.contains(base,base.lat+20/110540,base.lng),true);
