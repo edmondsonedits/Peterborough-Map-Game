@@ -38,3 +38,15 @@ test('production CI does not silently skip named tests', () => {
   const deploy = read('.github/workflows/deploy-pages.yml');
   assert.doesNotMatch(deploy, /--test-skip-pattern/);
 });
+
+
+test('Pages deployment stages only the production-facing artifact', () => {
+  const deploy = read('.github/workflows/deploy-pages.yml');
+  assert.match(deploy, /name: Stage production Pages artifact/);
+  assert.match(deploy, /path: _site/);
+  assert.doesNotMatch(deploy, /path: \./);
+  for (const excluded of ['.git/','.github/','tests/','tools/','scripts/','test-artifacts/']) {
+    assert.match(deploy, new RegExp(`--exclude '${excluded.replace(/[.*+?^$()|[\]{}\\]/g, '\\$&')}'`), excluded);
+  }
+  assert.match(deploy, /test -f _site\/docs\/ANALYTICS-PRIVACY-SECURITY\.md/);
+});

@@ -51,13 +51,36 @@ jobs:
             node --test tests/ems.test.cjs >/dev/null
           done
 
+      - name: Stage production Pages artifact
+        run: |
+          rm -rf _site
+          mkdir _site
+          rsync -a ./ _site/ \
+            --exclude '_site/' \
+            --exclude '.git/' \
+            --exclude '.github/' \
+            --exclude 'tests/' \
+            --exclude 'tools/' \
+            --exclude 'scripts/' \
+            --exclude 'test-artifacts/'
+          test -f _site/index.html
+          test -f _site/city-explorer/index.html
+          test -f _site/response-simulator/index.html
+          test -f _site/docs/ANALYTICS-PRIVACY-SECURITY.md
+          test ! -e _site/.git
+          test ! -e _site/.github
+          test ! -e _site/tests
+          test ! -e _site/tools
+          test ! -e _site/scripts
+          test ! -e _site/test-artifacts
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
 
       - name: Deploy to GitHub Pages
         id: deployment
