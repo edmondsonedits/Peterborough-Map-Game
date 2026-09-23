@@ -22,12 +22,12 @@
   <div class="app">
     <header class="topbar">
       <a class="back" href="../" aria-label="Return to main menu"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></a>
-      <div class="title"><h1>Call & Base Editor</h1><p>Edit calls, Fire/EMS bases and hospital drop-off</p></div>
+      <div class="title"><h1>Call & Base Editor</h1><p>Local edits only · export changes for publishing</p></div>
       <div class="top-actions"><button class="icon-btn" id="add-call" type="button">Add Call</button><button class="icon-btn" id="fit-all" type="button">Show Visible</button><button class="icon-btn" id="export-changes" type="button">Export Changes</button></div>
     </header>
     <main class="workspace">
       <aside class="sidebar">
-        <nav class="editor-tabs" aria-label="Location type"><button type="button" data-mode="calls" aria-pressed="true">Calls</button><button type="button" data-mode="bases" aria-pressed="false">Bases</button><button type="button" data-mode="hospital" aria-pressed="false">Hospital</button></nav><div class="notice" id="editor-notice">Check <strong>Location confirmed accurate</strong> after verifying a call. Turn on <strong>Hide confirmed calls</strong> to work only through calls still awaiting review.</div>
+        <nav class="editor-tabs" aria-label="Location type"><button type="button" data-mode="calls" aria-pressed="true">Calls</button><button type="button" data-mode="bases" aria-pressed="false">Bases</button><button type="button" data-mode="hospital" aria-pressed="false">Hospital</button></nav><div class="notice" id="editor-notice"><strong>Local editor:</strong> this page cannot publish to the live game. Save changes on this device, verify them, then export the JSON for review and publishing. Check <strong>Location confirmed accurate</strong> after verifying a call.</div>
         <div class="filters">
           <input id="search" aria-label="Search locations" class="field-control wide" type="search" placeholder="Search name, address or call type">
           <select id="main-filter" aria-label="Division filter" class="field-control"><option value="">All divisions</option><option>Fire</option><option>Medical</option></select>
@@ -82,16 +82,16 @@
       </section>
     </main>
   </div>
-  <script src="../shared/build-version.js?v=1.6.87"></script>
+  <script src="../shared/build-version.js?v=1.6.88"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="../shared/stations.js?v=1.6.87"></script>
-  <script src="../shared/dispatch-locations.js?v=1.6.87"></script>
-  <script src="../response-simulator/service-config.js?v=1.6.87"></script>
-  <script src="../shared/location-changes.js?v=1.6.87"></script>
-  <script src="../shared/base-locations.js?v=1.6.87&fix=base-selection"></script>
-  <script src="spawn-box-editor-1.6.55.js?v=1.6.87&fix=base-selection"></script>
-  <script src="../shared/hospital-dropoff-store-1.6.49.js?v=1.6.87"></script>
-  <script src="hospital-dropoff-editor-1.6.49.js?v=1.6.87&fix=base-selection"></script>
-  <script src="editor.js?v=1.6.87"></script>
+  <script src="../shared/stations.js?v=1.6.88"></script>
+  <script src="../shared/dispatch-locations.js?v=1.6.88"></script>
+  <script src="../response-simulator/service-config.js?v=1.6.88"></script>
+  <script src="../shared/location-changes.js?v=1.6.88"></script>
+  <script src="../shared/base-locations.js?v=1.6.88&fix=base-selection"></script>
+  <script src="spawn-box-editor-1.6.55.js?v=1.6.88&fix=base-selection"></script>
+  <script src="../shared/hospital-dropoff-store-1.6.49.js?v=1.6.88"></script>
+  <script src="hospital-dropoff-editor-1.6.49.js?v=1.6.88&fix=base-selection"></script>
+  <script src="editor.js?v=1.6.88"></script>
 </body>
 </html>

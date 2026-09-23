@@ -223,20 +223,30 @@ test('city selector keeps the shared mobile and desktop wrapper URLs', () => {
   assert.match(source,/url\.searchParams\.set\('fresh', String\(Date\.now\(\)\)\)/);
 });
 
-test('main menu exposes the password-locked Dispatch Editor and hides Website Stats behind ten taps', () => {
+test('main menu exposes the locally locked Dispatch Editor and keeps secure analytics separately gated', () => {
   const source=read('index.html');
   const editorTag=source.match(/<a id="dispatch-editor-link"[^>]*>/)?.[0]||'';
   assert.match(editorTag,/locked-card/);
+  assert.match(source,/Local editor lock/);
+  assert.match(source,/edits stay local until exported and published/);
   assert.doesNotMatch(editorTag,/\shidden(?:\s|>)/);
   assert.match(source,/<a id="site-stats-link"[^>]*hidden/);
   assert.match(source,/const accessHash='435c554a2e9cd54d2d3431b8af2b5d7ba740c64f1dca92b7af8a76b05d484ef3'/);
   assert.match(source,/Dispatch Editor password:/);
+  assert.match(source,/Convenience gate only: the Dispatch Editor saves locally and cannot publish directly/);
   assert.match(source,/Website Stats password:/);
   assert.match(source,/tapCount<10/);
   assert.match(source,/localStorage\.setItem\(statsKey,'enabled'\)/);
   assert.match(source,/href="site-stats\//);
   assert.match(source,new RegExp(`shared/build-version\\.js\\?v=${escapedCanonicalBuildVersion}`));
   assert.match(canonicalBuildSource,/site-analytics-1\.6\.25\.js/);
+  const editorPage=read('dispatch-editor/index.html');
+  const editorCode=read('dispatch-editor/editor.js');
+  assert.match(editorPage,/Local edits only · export changes for publishing/);
+  assert.match(editorPage,/this page cannot publish to the live game/);
+  assert.equal((editorCode.match(/\bfetch\s*\(/g)||[]).length,1);
+  assert.match(editorCode,/fetch\('\.\.\/city-explorer\/data\/osm-public-roads\.geojson'\)/);
+  assert.doesNotMatch(editorCode,/fetch\([^\n]*(?:POST|PUT|PATCH|DELETE)/i);
 });
 
 test('analytics reliably records gameplay lifecycle and the dashboard requires secure admin access', () => {
