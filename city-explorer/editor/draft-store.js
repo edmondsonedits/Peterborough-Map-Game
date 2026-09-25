@@ -13,6 +13,10 @@ function normalizeDocument(input) {
   return { ok: true, document: validated.document };
 }
 
+function copyDocument(document) {
+  return normalizeDocument(document).document;
+}
+
 function parseEnvelope(raw) {
   const envelope = JSON.parse(raw);
   if (!envelope || typeof envelope !== 'object' || Array.isArray(envelope)
@@ -89,7 +93,7 @@ export function createDraftStore({ storage, key = DEFAULT_KEY, debounceMs = 250,
       target.setItem(key, JSON.stringify(pending));
       const document = pending.document;
       pending = null;
-      return result('saved', document);
+      return result('saved', copyDocument(document));
     } catch (error) {
       return result('unavailable', null, error);
     }
@@ -110,7 +114,7 @@ export function createDraftStore({ storage, key = DEFAULT_KEY, debounceMs = 250,
       };
       clearTimer();
       timer = setTimeout(() => { flush(); }, Math.max(0, debounceMs));
-      return result('scheduled', normalized.document);
+      return result('scheduled', copyDocument(normalized.document));
     },
 
     flush,
@@ -120,21 +124,21 @@ export function createDraftStore({ storage, key = DEFAULT_KEY, debounceMs = 250,
       if (loaded.status !== 'recovered') return loaded;
       const envelope = loaded.envelope;
       if (baseRevision !== undefined && baseRevision !== envelope.baseRevision) {
-        return result('base-revision-mismatch', loaded.document, Object.assign(
+        return result('base-revision-mismatch', copyDocument(loaded.document), Object.assign(
           new Error(`Draft is based on revision ${envelope.baseRevision}; current revision is ${baseRevision}.`),
           { code: 'BASE_REVISION_MISMATCH', baseRevision: envelope.baseRevision, currentRevision: baseRevision },
         ), { timestamp: envelope.timestamp, baseRevision: envelope.baseRevision });
       }
-      return result('recovered', loaded.document, null, { timestamp: envelope.timestamp, baseRevision: envelope.baseRevision });
+      return result('recovered', copyDocument(loaded.document), null, { timestamp: envelope.timestamp, baseRevision: envelope.baseRevision });
     },
 
     exportDraft() {
       if (pending) {
-        return result('exported', pending.document, null, { data: `${JSON.stringify(pending, null, 2)}\n` });
+        return result('exported', copyDocument(pending.document), null, { data: `${JSON.stringify(pending, null, 2)}\n` });
       }
       const loaded = readEnvelope();
       if (loaded.status !== 'recovered') return loaded;
-      return result('exported', loaded.document, null, { data: `${JSON.stringify(loaded.envelope, null, 2)}\n` });
+      return result('exported', copyDocument(loaded.document), null, { data: `${JSON.stringify(loaded.envelope, null, 2)}\n` });
     },
 
     discardDraft() {

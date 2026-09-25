@@ -135,4 +135,34 @@ const two = { ...empty, updatedAt: 'two' };
   assert.equal(store.loadDraft({ baseRevision: 1 }).status, 'missing');
 }
 
+{
+  const memory = new Map();
+  const storage = {
+    getItem: (key) => memory.get(key) ?? null,
+    setItem: (key, value) => memory.set(key, value),
+    removeItem: (key) => memory.delete(key),
+  };
+  const store = createDraftStore({ storage, debounceMs: 60_000 });
+  const saved = store.saveDraft({ ...documentAt(2), updatedAt: 'original' }, { baseRevision: 1 });
+  saved.document.updatedAt = 'mutated through save result';
+  store.flush();
+  assert.equal(JSON.parse(memory.get('ptbo-city-editor-draft-v1')).document.updatedAt, 'original');
+}
+
+{
+  const memory = new Map();
+  const storage = {
+    getItem: (key) => memory.get(key) ?? null,
+    setItem: (key, value) => memory.set(key, value),
+    removeItem: (key) => memory.delete(key),
+  };
+  const store = createDraftStore({ storage, debounceMs: 60_000 });
+  store.saveDraft({ ...documentAt(2), updatedAt: 'original' }, { baseRevision: 1 });
+  const exported = store.exportDraft();
+  exported.document.updatedAt = 'mutated through export result';
+  assert.equal(JSON.parse(exported.data).document.updatedAt, 'original');
+  store.flush();
+  assert.equal(JSON.parse(memory.get('ptbo-city-editor-draft-v1')).document.updatedAt, 'original');
+}
+
 console.log('City editor history and recovery draft state passed.');
