@@ -747,7 +747,7 @@ export function createCityEditor(adapter) {
 
   function update(delta) {
     if (!active) return;
-    transform?.updateMatrixWorld();
+    transform?.getHelper?.().updateMatrixWorld();
     if (preview && pendingAssetKey) preview.rotation.y = Math.round(preview.rotation.y / (Math.PI / 12)) * (Math.PI / 12);
     hooks.onUpdate?.(delta);
   }

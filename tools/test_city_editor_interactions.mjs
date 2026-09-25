@@ -52,6 +52,8 @@ assert.match(html, /data-editor-panel-toggle="inspector"/, 'mobile editor needs 
 assert.match(css, /\.is-editor #city-editor-left:not\(\[hidden\]\)[\s\S]*?max-height:\s*55vh/, 'an opened mobile drawer should overlay a bounded area instead of consuming half the canvas');
 assert.match(editor, /rebindEditorSelection/, 'history reload should rebind or clear the current selection');
 assert.match(editor, /cancelTransformControlDrag/, 'gesture cancellation should release TransformControls');
+assert.doesNotMatch(editor, /transform\?\.updateMatrixWorld\(/, 'the TransformControls wrapper is not an Object3D and must not receive updateMatrixWorld');
+assert.match(editor, /transform\?\.getHelper\?\.\(\)\.updateMatrixWorld\(/, 'the TransformControls helper should receive matrix updates');
 assert.match(editor, /startEditorCameraSession\(camera, cameraNavigation, previousMode/, 'every editor entry should snapshot and reset navigation for its prior mode');
 assert.match(editor, /restoreEditorCameraSession\(camera, cameraSnapshot\)/, 'editor exit should restore the exact prior camera state');
 assert.match(editor, /matchMedia\?\.\('\(max-width: 760px\)'\)/, 'mobile editor drawers should start collapsed at narrow viewport sizes');
