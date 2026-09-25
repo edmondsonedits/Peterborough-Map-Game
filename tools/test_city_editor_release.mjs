@@ -37,7 +37,7 @@ assert.doesNotMatch(html, /AIza[0-9A-Za-z_-]{20,}|sk-[A-Za-z0-9]{20,}/, 'the pub
 assert.equal(scene.schemaVersion, 1);
 assert.equal(scene.city, 'peterborough-on');
 assert.ok(Array.isArray(scene.objects) && Array.isArray(scene.overrides), 'the published scene JSON must have valid authored collections');
-assert.match(workflow, /path:\s*\./, 'the existing Pages workflow must continue publishing the repository root');
+assert.match(workflow, /uses:\s*actions\/upload-pages-artifact@v3\s+with:\s+path:\s*_site/, 'the current Pages workflow must publish its staged production artifact');
 
 const importPattern = /(?:\bimport\s*(?:[^'";]*?\sfrom\s*)?|\bimport\s*\()(['"])([^'"]+)\1/g;
 const checked = new Set();
