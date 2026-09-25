@@ -10,6 +10,8 @@ import { createVegetationVariant, stationOneVegetationPalette } from './vegetati
 import { installStationStreetscape } from './streetscape-assets.js?v=streetscape-2';
 import { installStationApron } from './site-surface-materials.js?v=1.6.56';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
+import { createAuthoredRuntime } from './editor/authored-runtime.js';
+import { validateSceneDocument } from './editor/scene-document.js';
 import {
   LANDMARKS,
   LANDMARK_BUILDING_HEIGHT_OVERRIDES,
@@ -321,7 +323,9 @@ const streetscapeGroup = new THREE.Group();
 const streetLabelGroup = new THREE.Group();
 const semanticSurveyGroup = new THREE.Group();
 const surveyMarkerGroup = new THREE.Group();
-world.add(terrainGroup, roadGroup, mapRoadGroup, buildingGroup, vegetationGroup, streetscapeGroup, landmarkGroup, gameplayGroup, semanticSurveyGroup, surveyMarkerGroup, streetLabelGroup);
+const authoredDetailGroup = new THREE.Group();
+const authoredRuntime = createAuthoredRuntime({ THREE, project, unproject, terrainHeightAtWorld, authoredDetailGroup });
+world.add(terrainGroup, roadGroup, mapRoadGroup, buildingGroup, vegetationGroup, streetscapeGroup, landmarkGroup, gameplayGroup, semanticSurveyGroup, surveyMarkerGroup, streetLabelGroup, authoredDetailGroup);
 mapRoadGroup.visible = false;
 streetLabelGroup.visible = false;
 surveyMarkerGroup.visible = false;
@@ -4284,6 +4288,7 @@ async function buildCity() {
   cityVisualLod = '';
   updateCityVisualLod();
   freezeStaticCityTransforms();
+  await loadPublishedAuthoredDetails();
   setProgress(100, 'Peterborough is ready');
   setReadyStatus(summary);
   globalThis.__PTBO_EXPLORER_BOOTSTRAP__?.ready?.();
@@ -4302,6 +4307,21 @@ async function buildCity() {
   captureFrame = installQualityCapture({ THREE, renderer, camera, state, project, terrainHeightAtWorld, stopMotion: stopFlyMotion, preparePlayerSpawn: resetGameplay, overlay: semanticSurveyOverlay, lowPower: lowPowerProfile, startedAt: explorerStartedAt,
     lighting: () => ({ theme:state.theme, exposure:renderer.toneMappingExposure, toneMapping:renderer.toneMapping, sunPosition:sun.position.toArray(), sunTarget:sunTarget.position.toArray(), sunIntensity:sun.intensity, shadows:sun.castShadow }) });
   setTimeout(() => els.loading.classList.add('is-hidden'), 420);
+}
+
+async function loadPublishedAuthoredDetails() {
+  try {
+    const response = await fetch('./data/editor/peterborough-details.json');
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const result = validateSceneDocument(await response.json());
+    if (!result.ok) {
+      console.warn('Published authored city details are invalid; continuing without them.', result.errors);
+      return;
+    }
+    authoredRuntime.load(result.document);
+  } catch (error) {
+    console.warn('Published authored city details are unavailable; the simulator remains ready without them.', error);
+  }
 }
 
 function updateMapGuide() {
