@@ -2429,6 +2429,12 @@ function roadProfilePriority(profile) {
   return ({ highway: 6, arterial: 5, collector: 4, local: 3, service: 2, tunnel: 1, unpaved: 0 })[profile?.renderClass] ?? 2;
 }
 
+function attachRoadInstance(lineId, object, instanceIndex) {
+  if (!lineId) return false;
+  const id = generatedRegistry.makeGeneratedId({ sourceType: 'road', sourceId: lineId });
+  return generatedRegistry.attachEditablePart(id, object, instanceIndex);
+}
+
 function buildRoadJunctions(segments) {
   const vertices = new Map();
   const addVertex = (segment, endpoint) => {
@@ -2498,6 +2504,7 @@ function buildRoadJunctions(segments) {
         dummy.scale.set(diameter, 1, diameter);
         dummy.updateMatrix();
         mesh.setMatrixAt(index, dummy.matrix);
+        vertex.lines.forEach((lineId) => attachRoadInstance(lineId, mesh, index));
       });
       mesh.instanceMatrix.needsUpdate = true;
       mesh.computeBoundingSphere();
@@ -2685,11 +2692,11 @@ function buildRoadMarkings(segments) {
     const node = roadNodes.get(nodeKey(point));
     return Boolean(node && (node.names.size > 1 || node.lines.size >= 3));
   };
-  const addMarking = (marking, materialKey, kind) => {
+  const addMarking = (marking, materialKey, kind, lineId) => {
     const tile = roadRenderTileCoordinates(marking.x, marking.z);
     const key = `${tile.x}:${tile.z}:${materialKey}:${kind}`;
     if (!groups.has(key)) groups.set(key, { kind, markings: [], materialKey, tile });
-    groups.get(key).markings.push(marking);
+    groups.get(key).markings.push({ ...marking, lineId });
   };
 
   for (const segment of segments) {
@@ -2716,7 +2723,7 @@ function buildRoadMarkings(segments) {
         x: (segment.a.x + segment.b.x) / 2 + sideX * offset,
         y: (segment.aY + segment.bY) / 2 + 0.019,
         z: (segment.a.y + segment.b.y) / 2 + sideZ * offset,
-      }, 'roadPaintWhite', 'cycle-edge');
+      }, 'roadPaintWhite', 'cycle-edge', segment.lineId);
     });
 
     const lanes = laneCountFor(tags);
@@ -2743,7 +2750,7 @@ function buildRoadMarkings(segments) {
           x: THREE.MathUtils.lerp(segment.a.x, segment.b.x, t) + sideX * offset,
           y: THREE.MathUtils.lerp(segment.aY, segment.bY, t) + 0.018,
           z: THREE.MathUtils.lerp(segment.a.y, segment.b.y, t) + sideZ * offset,
-        }, boundaryRule.materialKey, 'solid');
+        }, boundaryRule.materialKey, 'solid', segment.lineId);
         continue;
       }
       for (let dashStart = firstDash; dashStart < chainEnd; dashStart += period) {
@@ -2760,7 +2767,7 @@ function buildRoadMarkings(segments) {
           x: centerX + sideX * offset,
           y: THREE.MathUtils.lerp(segment.aY, segment.bY, t) + 0.018,
           z: centerZ + sideZ * offset,
-        }, boundaryRule.materialKey, 'dash');
+        }, boundaryRule.materialKey, 'dash', segment.lineId);
       }
     }
 
@@ -2773,7 +2780,7 @@ function buildRoadMarkings(segments) {
           x: (segment.a.x + segment.b.x) / 2 + sideX * offset,
           y: (segment.aY + segment.bY) / 2 + 0.017,
           z: (segment.a.y + segment.b.y) / 2 + sideZ * offset,
-        }, 'roadPaintWhite', 'edge');
+        }, 'roadPaintWhite', 'edge', segment.lineId);
       });
     }
   }
@@ -2790,6 +2797,7 @@ function buildRoadMarkings(segments) {
       dummy.scale.set(1, 1, marking.length);
       dummy.updateMatrix();
       mesh.setMatrixAt(index, dummy.matrix);
+      attachRoadInstance(marking.lineId, mesh, index);
     });
     mesh.instanceMatrix.needsUpdate = true;
     mesh.computeBoundingSphere();
@@ -2877,6 +2885,7 @@ function buildMappedTurnArrows(segments) {
           : laneWidth * (laneIndex + 0.5);
         arrows[normalizedKind(symbol)].push({
           direction,
+          lineId: segment.lineId,
           x: THREE.MathUtils.lerp(segment.a.x, segment.b.x, t) + sideX * offset,
           y: THREE.MathUtils.lerp(segment.aY, segment.bY, t) + 0.026,
           z: THREE.MathUtils.lerp(segment.a.y, segment.b.y, t) + sideZ * offset,
@@ -2895,6 +2904,7 @@ function buildMappedTurnArrows(segments) {
       dummy.scale.setScalar(1);
       dummy.updateMatrix();
       mesh.setMatrixAt(index, dummy.matrix);
+      attachRoadInstance(entry.lineId, mesh, index);
     });
     mesh.instanceMatrix.needsUpdate = true;
     mesh.computeBoundingSphere();
@@ -3013,6 +3023,7 @@ function buildBridgeDetails(segments) {
       dummy.scale.set(1, 1, length + 0.65);
       dummy.updateMatrix();
       rail.setMatrixAt(railIndex, dummy.matrix);
+      attachRoadInstance(segment.lineId, rail, railIndex);
       railIndex += 1;
     });
   });
@@ -3048,6 +3059,7 @@ function buildTunnelStructures(segments) {
       dummy.scale.set(1, 1, length + 0.35);
       dummy.updateMatrix();
       walls.setMatrixAt(wallIndex, dummy.matrix);
+      attachRoadInstance(segment.lineId, walls, wallIndex);
       wallIndex += 1;
     });
     dummy.position.set(midpointX, midpointY + 4.72, midpointZ);
@@ -3055,6 +3067,7 @@ function buildTunnelStructures(segments) {
     dummy.scale.set(segment.width + 0.85, 1, length + 0.35);
     dummy.updateMatrix();
     roofs.setMatrixAt(index, dummy.matrix);
+    attachRoadInstance(segment.lineId, roofs, index);
   });
   walls.instanceMatrix.needsUpdate = true;
   roofs.instanceMatrix.needsUpdate = true;
@@ -3868,6 +3881,11 @@ function scatterTreesInPolygon(rings, featureId, target, maxTotal, sourceId = nu
   const desired = Math.min(maxTotal - target.length, Math.max(1, Math.floor(area / (heroDensity ? 760 : 2600))));
   const startCount = target.length;
   let seed = stableHash(featureId || `${minX}:${minZ}`) || 1;
+  const polygonCoordinates = outer.map((vertex) => {
+    const coordinates = unproject(vertex.x, vertex.y);
+    return [coordinates.lon, coordinates.lat];
+  });
+  const polygonId = generatedRegistry.makeGeneratedId({ sourceType: 'tree-scatter-polygon', geometry: { type: 'Polygon', coordinates: [polygonCoordinates] } });
   const random = () => {
     seed = Math.imul(seed ^ (seed >>> 15), 1 | seed);
     seed ^= seed + Math.imul(seed ^ (seed >>> 7), 61 | seed);
@@ -3878,7 +3896,7 @@ function scatterTreesInPolygon(rings, featureId, target, maxTotal, sourceId = nu
     attempts += 1;
     const point = new THREE.Vector2(THREE.MathUtils.lerp(minX, maxX, random()), THREE.MathUtils.lerp(minZ, maxZ, random()));
     if (!pointInPolygon(point, rings)) continue;
-    target.push({ x: point.x, z: point.y, scale: deterministicNumber(`${featureId}:${attempts}`, 0.75, 1.35), sourceId: sourceId ? `${sourceId}:tree:${attempts}` : null });
+    target.push({ x: point.x, z: point.y, scale: deterministicNumber(`${featureId}:${attempts}`, 0.75, 1.35), sourceId, sourceSubId: `${polygonId}:${attempts}` });
   }
 }
 
@@ -3969,7 +3987,8 @@ function buildTrees(treePoints, { append = false, limit, type = 'trees' } = {}) 
     const point = unproject(tree.x, tree.z);
     generatedRegistry.registerEditableObject(trunks, {
       sourceType: 'tree',
-      sourceId: tree.sourceId || `generated-tree:${point.lon.toFixed(6)}:${point.lat.toFixed(6)}`,
+      sourceId: tree.sourceId,
+      sourceSubId: tree.sourceSubId,
       geometry: { type: 'Point', coordinates: [point.lon, point.lat] },
       label: 'Tree',
       properties: { category: type, scale: tree.scale || 1 },

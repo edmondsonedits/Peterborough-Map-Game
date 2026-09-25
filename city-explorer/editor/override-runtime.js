@@ -7,6 +7,7 @@ export function applyOverrides(document, adapter = {}) {
   const registry = adapter.registry || generatedRegistry;
   const authoredRuntime = adapter.authoredRuntime;
 
+  registry.resetOverrides?.();
   for (const id of registry.records.keys()) registry.restore(id);
   for (const id of registry.appliedReplacementIds) authoredRuntime?.remove?.(id);
   registry.appliedReplacementIds.clear();

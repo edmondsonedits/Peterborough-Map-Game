@@ -24,6 +24,7 @@ export function createFeatureBatchBinding(ranges, resolveMesh) {
   const originals = new Map();
   const sourceColors = new Map();
   let hidden = false;
+  const rangeIdentity = (range) => JSON.stringify([range.key, range.startVertex, range.vertexCount]);
 
   function attributeFor(range, name) {
     return resolveMesh(range.key)?.geometry?.getAttribute?.(name) ?? null;
@@ -36,8 +37,9 @@ export function createFeatureBatchBinding(ranges, resolveMesh) {
       if (!attribute) continue;
       const start = range.startVertex * 3;
       const end = start + range.vertexCount * 3;
-      if (!originals.has(range.key)) originals.set(range.key, attribute.array.slice(start, end));
-      if (visible) attribute.array.set(originals.get(range.key), start);
+      const identity = rangeIdentity(range);
+      if (!originals.has(identity)) originals.set(identity, attribute.array.slice(start, end));
+      if (visible) attribute.array.set(originals.get(identity), start);
       else attribute.array.fill(0, start, end);
       attribute.needsUpdate = true;
       resolveMesh(range.key)?.geometry?.computeBoundingSphere?.();
@@ -54,7 +56,8 @@ export function createFeatureBatchBinding(ranges, resolveMesh) {
       if (!attribute) return false;
       const start = range.startVertex * 3;
       const end = start + range.vertexCount * 3;
-      if (!sourceColors.has(range.key)) sourceColors.set(range.key, attribute.array.slice(start, end));
+      const identity = rangeIdentity(range);
+      if (!sourceColors.has(identity)) sourceColors.set(identity, attribute.array.slice(start, end));
       for (let offset = start; offset < end; offset += 3) attribute.array.set(color, offset);
       attribute.needsUpdate = true;
     }
@@ -64,7 +67,7 @@ export function createFeatureBatchBinding(ranges, resolveMesh) {
   function restore() {
     setVisible(true);
     for (const range of ranges) {
-      const source = sourceColors.get(range.key);
+      const source = sourceColors.get(rangeIdentity(range));
       const attribute = attributeFor(range, 'color');
       if (source && attribute) {
         attribute.array.set(source, range.startVertex * 3);

@@ -21,7 +21,7 @@ function hashText(text) {
     for (let offset = 0; offset < text.length; offset += 1) {
       hash ^= text.charCodeAt(offset) + index * 17;
       hash = Math.imul(hash, 0x01000193) >>> 0;
-      hash ^= hash >>> 13;
+      hash = (hash ^ (hash >>> 13)) >>> 0;
     }
     return hash.toString(16).padStart(8, '0');
   }).join('');
@@ -35,13 +35,14 @@ function uuidFromText(text) {
   return `${value.slice(0, 8)}-${value.slice(8, 12)}-${value.slice(12, 16)}-${value.slice(16, 20)}-${value.slice(20, 32)}`;
 }
 
-export function makeGeneratedId({ sourceType, sourceId, geometry } = {}) {
+export function makeGeneratedId({ sourceType, sourceId, sourceSubId, geometry } = {}) {
   const type = String(sourceType || 'generated').trim().toLowerCase();
+  const subId = sourceSubId === undefined || sourceSubId === null ? '' : `:part:${String(sourceSubId).trim()}`;
   if (sourceId !== undefined && sourceId !== null && String(sourceId).trim()) {
-    return uuidFromText(`city-generated:v1:${type}:source:${String(sourceId).trim()}`);
+    return uuidFromText(`city-generated:v1:${type}:source:${String(sourceId).trim()}${subId}`);
   }
   if (geometry === undefined || geometry === null) throw new TypeError('Generated identity requires a sourceId or geometry.');
-  return uuidFromText(`city-generated:v1:${type}:geometry:${JSON.stringify(canonicalGeometry(geometry))}`);
+  return uuidFromText(`city-generated:v1:${type}:geometry:${JSON.stringify(canonicalGeometry(geometry))}${subId}`);
 }
 
 function cloneInstanceMatrix(object, index) {
@@ -54,6 +55,17 @@ function cloneInstanceMatrix(object, index) {
 export function createGeneratedRegistry() {
   const records = new Map();
   const appliedReplacementIds = new Set();
+  const attachedInstanceParts = new WeakMap();
+  const hiddenTargets = new Set();
+
+  function setInstanceColor(object, index, color) {
+    if (!object?.instanceColor && Number.isInteger(object?.count) && object.count > 0 && color?.constructor) {
+      const white = new color.constructor(0xffffff);
+      for (let instance = 0; instance < object.count; instance += 1) object.setColorAt(instance, white);
+    }
+    object.setColorAt(index, color);
+    if (object.instanceColor) object.instanceColor.needsUpdate = true;
+  }
 
   function registerEditableObject(object, metadata = {}) {
     if (!object || typeof object !== 'object') throw new TypeError('An editable generated object is required.');
@@ -71,6 +83,7 @@ export function createGeneratedRegistry() {
       transform: metadata.transform || null,
       sourceType: String(metadata.sourceType || 'generated'),
       sourceId: metadata.sourceId === undefined ? null : String(metadata.sourceId),
+      sourceSubId: metadata.sourceSubId === undefined ? null : String(metadata.sourceSubId),
       geometry: metadata.geometry,
       instanceIndex: Number.isInteger(metadata.instanceIndex) ? metadata.instanceIndex : null,
       parts: parts.map((part) => ({
@@ -136,7 +149,21 @@ export function createGeneratedRegistry() {
   function attachEditablePart(id, object, instanceIndex) {
     const record = records.get(id);
     if (!record || !object || !Number.isInteger(instanceIndex)) return false;
-    if (record.parts.some((part) => part.object === object && part.instanceIndex === instanceIndex)) return true;
+    let byIndex = attachedInstanceParts.get(object);
+    if (!byIndex) {
+      byIndex = new Map();
+      attachedInstanceParts.set(object, byIndex);
+    }
+    let part = byIndex.get(instanceIndex);
+    if (part) {
+      if (!record.parts.includes(part)) record.parts.push(part);
+      part.owners.add(id);
+      object.userData ||= {};
+      object.userData.cityEditorInstances ||= {};
+      object.userData.cityEditorInstances[instanceIndex] = [...part.owners];
+      return true;
+    }
+    if (record.parts.some((existing) => existing.object === object && existing.instanceIndex === instanceIndex)) return true;
     const sourceColor = typeof object.setColorAt === 'function'
       ? (() => {
         const color = object.userData?.cityEditorColorFactory?.() || { r: 1, g: 1, b: 1 };
@@ -144,17 +171,20 @@ export function createGeneratedRegistry() {
         return color.clone?.() ?? { r: color.r, g: color.g, b: color.b };
       })()
       : null;
-    record.parts.push({
+    part = {
       object, instanceIndex,
+      owners: new Set([id]),
       sourceVisible: object.visible !== false,
       sourceMaterial: object.material,
       sourceMaterials: [],
       sourceMatrix: cloneInstanceMatrix(object, instanceIndex),
       sourceColor,
-    });
+    };
+    byIndex.set(instanceIndex, part);
+    record.parts.push(part);
     object.userData ||= {};
     object.userData.cityEditorInstances ||= {};
-    object.userData.cityEditorInstances[instanceIndex] = id;
+    object.userData.cityEditorInstances[instanceIndex] = [...part.owners];
     return true;
   }
 
@@ -174,8 +204,7 @@ export function createGeneratedRegistry() {
         if (part.object.instanceMatrix) part.object.instanceMatrix.needsUpdate = true;
       }
       if (part.instanceIndex !== null && part.sourceColor && typeof part.object.setColorAt === 'function') {
-        part.object.setColorAt(part.instanceIndex, part.sourceColor);
-        if (part.object.instanceColor) part.object.instanceColor.needsUpdate = true;
+        setInstanceColor(part.object, part.instanceIndex, part.sourceColor);
       }
     });
     return true;
@@ -184,6 +213,7 @@ export function createGeneratedRegistry() {
   function hide(id) {
     const record = records.get(id);
     if (!record) return false;
+    hiddenTargets.add(id);
     if (record.batchBinding) {
       record.batchBinding.setVisible(false);
       record.object.visible = false;
@@ -193,6 +223,14 @@ export function createGeneratedRegistry() {
       if (part.instanceIndex === null) {
         part.object.visible = false;
       } else {
+        if (part.owners && [...part.owners].some((owner) => !hiddenTargets.has(owner))) {
+          const matrix = part.sourceMatrix?.clone?.() ?? (part.sourceMatrix ? structuredClone(part.sourceMatrix) : null);
+          if (matrix && typeof part.object.setMatrixAt === 'function') {
+            part.object.setMatrixAt(part.instanceIndex, matrix);
+            if (part.object.instanceMatrix) part.object.instanceMatrix.needsUpdate = true;
+          }
+          return;
+        }
         const matrix = part.sourceMatrix?.clone?.() ?? (part.sourceMatrix ? structuredClone(part.sourceMatrix) : null);
         if (!matrix || typeof part.object.setMatrixAt !== 'function') { success = false; return; }
         if (Array.isArray(matrix.elements)) {
@@ -230,8 +268,7 @@ export function createGeneratedRegistry() {
       }
       if (color !== undefined && record.object.setColorAt && adapter.THREE?.Color) {
         record.parts.forEach((part) => {
-          part.object.setColorAt(part.instanceIndex, new adapter.THREE.Color(color));
-          part.object.instanceColor.needsUpdate = true;
+          setInstanceColor(part.object, part.instanceIndex, new adapter.THREE.Color(color));
         });
         return true;
       }
@@ -274,6 +311,7 @@ export function createGeneratedRegistry() {
     registerEditableObject,
     getEditableRecord,
     attachEditablePart,
+    resetOverrides() { hiddenTargets.clear(); },
     restore,
     hide,
     setAppearance,
