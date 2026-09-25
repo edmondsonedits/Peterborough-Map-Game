@@ -6,6 +6,20 @@ const isRecord = (value) => value !== null && typeof value === 'object' && !Arra
 const isFiniteNumber = (value) => typeof value === 'number' && Number.isFinite(value);
 const canonicalId = (value) => typeof value === 'string' && UUID_LIKE.test(value) ? value.toLowerCase() : value;
 
+function isJsonSafe(value, seen = new Set()) {
+  if (value === null || typeof value === 'string' || typeof value === 'boolean') return true;
+  if (typeof value === 'number') return Number.isFinite(value);
+  if (typeof value !== 'object' || seen.has(value)) return false;
+  if (!Array.isArray(value) && !isRecord(value)) return false;
+  if (!Array.isArray(value) && ![Object.prototype, null].includes(Object.getPrototypeOf(value))) return false;
+  seen.add(value);
+  const safe = Array.isArray(value)
+    ? value.every((item) => isJsonSafe(item, seen))
+    : Object.keys(value).every((key) => isJsonSafe(value[key], seen));
+  seen.delete(value);
+  return safe;
+}
+
 export function createEmptySceneDocument() {
   return {
     schemaVersion: SCENE_SCHEMA_VERSION,
@@ -30,19 +44,15 @@ function normalizedTransform(transform = {}) {
 }
 
 function normalizeObject(object) {
+  const assetKey = object.assetKey.trim();
   const result = {
     id: canonicalId(object.id),
-    catalogueKey: object.catalogueKey,
+    assetKey,
+    label: typeof object.label === 'string' && object.label.trim() ? object.label.trim() : assetKey,
+    visible: object.visible ?? true,
+    properties: object.properties === undefined ? {} : JSON.parse(JSON.stringify(object.properties)),
     transform: normalizedTransform(object.transform),
   };
-  if (typeof object.name === 'string') result.name = object.name;
-  if (typeof object.notes === 'string') result.notes = object.notes;
-  if (isRecord(object.provenance)) {
-    result.provenance = {};
-    for (const key of ['source', 'url', 'licence', 'author', 'reviewedAt']) {
-      if (typeof object.provenance[key] === 'string') result.provenance[key] = object.provenance[key];
-    }
-  }
   return result;
 }
 
@@ -54,8 +64,8 @@ function normalizeOverride(override) {
       if (override.appearance[key] !== undefined) result.appearance[key] = override.appearance[key];
     }
   }
-  if (override.operation === 'replace' && typeof override.catalogueKey === 'string') {
-    result.catalogueKey = override.catalogueKey;
+  if (override.operation === 'replace' && typeof override.assetKey === 'string') {
+    result.assetKey = override.assetKey.trim();
   }
   return result;
 }
@@ -91,7 +101,12 @@ export function validateSceneDocument(input) {
     if (typeof object.id !== 'string' || !UUID_LIKE.test(object.id)) errors.push(`Authored object ID must be UUID-like: ${String(object.id)}.`);
     else if (objectIds.has(id)) errors.push(`Duplicate authored object ID: ${object.id}.`);
     objectIds.add(id);
-    if (typeof object.catalogueKey !== 'string' || !object.catalogueKey.trim()) errors.push(`${object.id || 'Object'} requires a catalogueKey.`);
+    if (typeof object.assetKey !== 'string' || !object.assetKey.trim()) errors.push(`${object.id || 'Object'} requires an assetKey.`);
+    if (object.label !== undefined && typeof object.label !== 'string') errors.push(`${object.id || 'Object'} label must be a string.`);
+    if (object.visible !== undefined && typeof object.visible !== 'boolean') errors.push(`${object.id || 'Object'} visible must be a boolean.`);
+    if (object.properties !== undefined && (!isRecord(object.properties) || !isJsonSafe(object.properties))) {
+      errors.push(`${object.id || 'Object'} properties must be a JSON-safe object.`);
+    }
 
     const transform = object.transform;
     if (!isRecord(transform)) {
@@ -133,7 +148,7 @@ export function validateSceneDocument(input) {
     overrideIds.add(id);
     if (!OPERATIONS.has(override.operation)) errors.push(`${override.id || 'Override'} operation must be hide, appearance, or replace.`);
     if (override.operation === 'appearance' && !isRecord(override.appearance)) errors.push(`${override.id || 'Override'} appearance operation requires appearance data.`);
-    if (override.operation === 'replace' && (typeof override.catalogueKey !== 'string' || !override.catalogueKey.trim())) errors.push(`${override.id || 'Override'} replace operation requires catalogueKey.`);
+    if (override.operation === 'replace' && (typeof override.assetKey !== 'string' || !override.assetKey.trim())) errors.push(`${override.id || 'Override'} replace operation requires assetKey.`);
   }
 
   return { ok: errors.length === 0, errors, document: errors.length ? null : normalizeSceneDocument(input) };

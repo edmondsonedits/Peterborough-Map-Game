@@ -15,7 +15,10 @@ const idHex = 'abcdefab-cdef-4abc-8def-abcdefabcdef';
 function authoredObject(id, longitude = -78.32) {
   return {
     id,
-    catalogueKey: 'tree.oak',
+    assetKey: ' tree.oak ',
+    label: ' Mature oak ',
+    visible: true,
+    properties: { species: 'oak', tags: ['canopy', { native: true }] },
     transform: {
       longitude,
       latitude: 44.30,
@@ -40,6 +43,9 @@ assert.deepEqual(validateSceneDocument(empty), { ok: true, errors: [], document:
 
 const malformedInputs = [
   { ...empty, schemaVersion: 2 },
+  { ...empty, objects: [{ ...authoredObject(idA), assetKey: '   ' }] },
+  { ...empty, objects: [{ ...authoredObject(idA), properties: { height: Infinity } }] },
+  { ...empty, objects: [{ ...authoredObject(idA), properties: { capturedAt: new Date('2020-01-01T00:00:00Z') } }] },
   { ...empty, objects: [{ ...authoredObject(idA), transform: { ...authoredObject(idA).transform, elevation: Infinity } }] },
   { ...empty, objects: [authoredObject(idA), authoredObject(idA)] },
   { ...empty, objects: [authoredObject(idHex), authoredObject(idHex.toUpperCase())] },
@@ -71,13 +77,23 @@ const uppercaseOverrideResult = validateSceneDocument({
   overrides: [{ id: idHex.toUpperCase(), operation: 'hide' }],
 });
 assert.equal(uppercaseOverrideResult.document.overrides[0].id, idHex);
+const optionalDefaultsInput = authoredObject(idB);
+delete optionalDefaultsInput.label;
+delete optionalDefaultsInput.visible;
+delete optionalDefaultsInput.properties;
+const optionalDefaults = validateSceneDocument({ ...empty, objects: [optionalDefaultsInput] });
+assert.equal(optionalDefaults.ok, true);
+assert.deepEqual(
+  (({ label, visible, properties }) => ({ label, visible, properties }))(optionalDefaults.document.objects[0]),
+  { label: 'tree.oak', visible: true, properties: {} },
+);
 
 const unordered = {
   ...empty,
   unexpected: 'removed',
   objects: [
-    { ...authoredObject(idB), extra: true },
-    authoredObject(idA),
+    { ...authoredObject(idB), catalogueKey: 'obsolete.asset', name: 'obsolete', notes: 'obsolete', provenance: { source: 'obsolete' }, extra: true },
+    { ...authoredObject(idA), name: 'obsolete', catalogueKey: 'obsolete.asset' },
   ],
   overrides: [
     { id: idB, operation: 'hide', extra: true },
@@ -86,15 +102,22 @@ const unordered = {
 };
 const normalized = normalizeSceneDocument(unordered);
 assert.deepEqual(normalized.objects.map((object) => object.id), [idA, idB]);
+assert.equal(normalized.objects[0].assetKey, 'tree.oak');
+assert.equal(normalized.objects[0].label, 'Mature oak');
+assert.equal(normalized.objects[0].visible, true);
+assert.deepEqual(normalized.objects[0].properties, { species: 'oak', tags: ['canopy', { native: true }] });
 assert.deepEqual(normalized.overrides.map((override) => override.id), [idA, idB]);
 assert.equal('unexpected' in normalized, false);
 assert.equal('extra' in normalized.objects[1], false);
+for (const obsoleteField of ['catalogueKey', 'name', 'notes', 'provenance']) {
+  assert.equal(obsoleteField in normalized.objects[1], false);
+}
 assert.equal('extra' in normalized.overrides[1], false);
 
 const roundTripInput = {
   ...empty,
   objects: [authoredObject(idA)],
-  overrides: [{ id: idB, operation: 'replace', catalogueKey: 'tree.maple' }],
+  overrides: [{ id: idB, operation: 'replace', assetKey: 'tree.maple' }],
 };
 const roundTrip = validateSceneDocument(JSON.parse(serializeSceneDocument(roundTripInput)));
 assert.equal(roundTrip.ok, true);
@@ -102,7 +125,7 @@ assert.deepEqual(roundTrip.document, normalizeSceneDocument(roundTripInput));
 
 const built = makeAuthoredObject(authoredObject(idB));
 assert.equal(built.id, idB);
-assert.equal(built.catalogueKey, 'tree.oak');
+assert.equal(built.assetKey, 'tree.oak');
 assert.deepEqual(validateSceneDocument({ ...empty, objects: [built] }).errors, []);
 
 console.log(JSON.stringify({ status: 'pass', validationCases: malformedInputs.length, stableOrdering: true, roundTrip: true }));
