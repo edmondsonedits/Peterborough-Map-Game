@@ -12,6 +12,9 @@ import { installStationApron } from './site-surface-materials.js?v=1.6.56';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js';
 import { validateSceneDocument } from './editor/scene-document.js';
+import { createGeneratedRegistry } from './editor/generated-registry.js';
+import { applyOverrides } from './editor/override-runtime.js';
+import { captureBatchLengths, collectBatchRanges, createFeatureBatchBinding } from './editor/feature-batch-binding.js';
 import {
   LANDMARKS,
   LANDMARK_BUILDING_HEIGHT_OVERRIDES,
@@ -324,8 +327,45 @@ const streetLabelGroup = new THREE.Group();
 const semanticSurveyGroup = new THREE.Group();
 const surveyMarkerGroup = new THREE.Group();
 const authoredDetailGroup = new THREE.Group();
+const generatedEditorProxyGroup = new THREE.Group();
+generatedEditorProxyGroup.name = 'city-editor-generated-proxies';
 const authoredRuntime = createAuthoredRuntime({ THREE, project, unproject, terrainHeightAtWorld, authoredDetailGroup });
-world.add(terrainGroup, roadGroup, mapRoadGroup, buildingGroup, vegetationGroup, streetscapeGroup, landmarkGroup, gameplayGroup, semanticSurveyGroup, surveyMarkerGroup, streetLabelGroup, authoredDetailGroup);
+const generatedRegistry = createGeneratedRegistry();
+const generatedBuildingMeshes = new Map();
+const generatedRoadMeshes = new Map();
+const generatedBuildingFeatures = new Map();
+const batchSetIds = new WeakMap();
+let nextBatchSetId = 1;
+function batchSetId(batches) {
+  if (!batchSetIds.has(batches)) batchSetIds.set(batches, nextBatchSetId++);
+  return batchSetIds.get(batches);
+}
+function batchMeshKey(batches, key) { return `${batchSetId(batches)}:${key}`; }
+function namespacedRanges(batches, starts) {
+  return collectBatchRanges(batches, starts).map((range) => ({ ...range, key: batchMeshKey(batches, range.key) }));
+}
+const generatedProxyGeometry = new THREE.BoxGeometry(1, 1, 1);
+const generatedProxyMaterial = new THREE.MeshBasicMaterial({ colorWrite: false, depthWrite: false, depthTest: false });
+function makeGeneratedProxy(bounds) {
+  const proxy = new THREE.Mesh(generatedProxyGeometry, generatedProxyMaterial);
+  proxy.position.set(bounds.x, bounds.y, bounds.z);
+  proxy.scale.set(Math.max(0.1, bounds.width), Math.max(0.1, bounds.height), Math.max(0.1, bounds.depth));
+  proxy.layers.set(31);
+  proxy.userData.cityEditorProxy = true;
+  generatedEditorProxyGroup.add(proxy);
+  return proxy;
+}
+function makeBatchBinding(ranges, meshIndex) {
+  return createFeatureBatchBinding(ranges, (key) => meshIndex.get(key));
+}
+function prepareGeneratedInstances(objects) {
+  objects.forEach((object) => {
+    object.userData ||= {};
+    object.userData.cityEditorMatrixFactory ||= () => new THREE.Matrix4();
+    object.userData.cityEditorColorFactory ||= () => new THREE.Color();
+  });
+}
+world.add(terrainGroup, roadGroup, mapRoadGroup, buildingGroup, vegetationGroup, streetscapeGroup, landmarkGroup, gameplayGroup, semanticSurveyGroup, surveyMarkerGroup, streetLabelGroup, authoredDetailGroup, generatedEditorProxyGroup);
 mapRoadGroup.visible = false;
 streetLabelGroup.visible = false;
 surveyMarkerGroup.visible = false;
@@ -1552,7 +1592,7 @@ function appendBuildingFacadeDetails(outer, tags, featureId, foundationTop, wall
   }
 }
 
-function appendBufferedBuilding(rings, tags, featureId, batches) {
+function appendBufferedBuilding(rings, tags, featureId, batches, sourceId = featureId) {
   const outer = cleanRing(rings[0]);
   if (!outer.length) return false;
   const holes = rings.slice(1).map(cleanRing).filter((ring) => ring.length);
@@ -1564,8 +1604,10 @@ function appendBufferedBuilding(rings, tags, featureId, batches) {
   const roofTop = wallTop + dimensions.roofHeight;
   recordSherbrookeBuilding(featureId, outer, foundationTop, wallTop);
   const anchor = polygonCentroid(outer);
+  const generatedFeatureKey = `${batchSetId(batches)}:${featureId}`;
   const wallKey = buildingMaterialKey(tags, dimensions.height + dimensions.minHeight + dimensions.roofHeight, featureId);
   const roofKey = featureId === 'way/1009651229' ? 'stationRoof' : roofMaterialKey(tags, wallKey);
+  const rangeStarts = captureBatchLengths(batches);
   const wallPositions = batchPositions(batches, wallKey, anchor);
   const roofPositions = batchPositions(batches, roofKey, anchor);
 
@@ -1613,6 +1655,7 @@ function appendBufferedBuilding(rings, tags, featureId, batches) {
         depth,
         height: deterministicNumber(`${featureId}:unit-height:${index}`, 0.65, 1.45),
         yaw: deterministicNumber(`${featureId}:unit-yaw:${index}`, 0, Math.PI),
+        generatedFeatureKey,
       });
     }
   }
@@ -1649,17 +1692,52 @@ function appendBufferedBuilding(rings, tags, featureId, batches) {
   if (!REVIEWED_BUILDING_STYLES[featureId]?.customFacade) {
     appendBuildingFacadeDetails(outer, tags, featureId, foundationTop, wallTop, dimensions, batches, anchor);
   }
+  const key = generatedFeatureKey;
+  const point = unproject(anchor.x, anchor.y);
+  let feature = generatedBuildingFeatures.get(key);
+  if (!feature) {
+    feature = {
+      sourceId: sourceId === undefined || sourceId === null || sourceId === '' ? null : String(sourceId),
+      stableSourceId: sourceId,
+      sourceGeometry: [],
+      batchSet: batches,
+      ranges: [],
+      minX: Infinity, maxX: -Infinity, minZ: Infinity, maxZ: -Infinity,
+      minY: Infinity, maxY: -Infinity,
+      longitude: point.lon, latitude: point.lat,
+      label: tags.name || tags['addr:housenumber'] || `Building ${featureId}`,
+      properties: { ...tags },
+    };
+    generatedBuildingFeatures.set(key, feature);
+  }
+  feature.ranges.push(...namespacedRanges(batches, rangeStarts));
+  feature.sourceGeometry.push([outer, ...holes].map((ring) => ring.map((vertex) => {
+    const coordinates = unproject(vertex.x, vertex.y);
+    return [coordinates.lon, coordinates.lat];
+  })));
+  outer.forEach((vertex) => {
+    feature.minX = Math.min(feature.minX, vertex.x);
+    feature.maxX = Math.max(feature.maxX, vertex.x);
+    feature.minZ = Math.min(feature.minZ, vertex.y);
+    feature.maxZ = Math.max(feature.maxZ, vertex.y);
+  });
+  feature.minY = Math.min(feature.minY, foundationTop);
+  feature.maxY = Math.max(feature.maxY, roofTop);
   return true;
 }
 
 function buildBufferedBuildingBatches(batches) {
-  batches.forEach(({ positions, materialKey, tile }) => {
+  batches.forEach(({ positions, materialKey, tile }, key) => {
     if (!positions.length) return;
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.Float32BufferAttribute(new Float32Array(positions.length).fill(1), 3));
     geometry.computeVertexNormals();
     geometry.computeBoundingSphere();
-    const mesh = new THREE.Mesh(geometry, materials[materialKey] || materials.residential);
+    const sourceMaterial = materials[materialKey] || materials.residential;
+    const batchMaterial = sourceMaterial.clone();
+    batchMaterial.vertexColors = true;
+    const mesh = new THREE.Mesh(geometry, batchMaterial);
     mesh.userData = { type: 'building-batch', material: materialKey, tile, tileSize: RENDER_TILE_SIZE, vertices: positions.length / 3 };
     // This isolated flat landmark roof uses matte shading to avoid city shadow-map banding.
     mesh.receiveShadow = !lowPowerProfile && materialKey !== 'stationRoof';
@@ -1669,7 +1747,29 @@ function buildBufferedBuildingBatches(batches) {
       verticalSliceShadowBounds,
     );
     buildingGroup.add(mesh);
+    generatedBuildingMeshes.set(batchMeshKey(batches, key), mesh);
   });
+  for (const feature of generatedBuildingFeatures.values()) {
+    if (feature.batchSet !== batches || feature.registered) continue;
+    const proxy = makeGeneratedProxy({
+      x: (feature.minX + feature.maxX) / 2,
+      y: (feature.minY + feature.maxY) / 2,
+      z: (feature.minZ + feature.maxZ) / 2,
+      width: feature.maxX - feature.minX,
+      height: feature.maxY - feature.minY,
+      depth: feature.maxZ - feature.minZ,
+    });
+    const geometry = { type: 'MultiPolygon', coordinates: feature.sourceGeometry };
+    const id = generatedRegistry.makeGeneratedId({ sourceType: 'building', sourceId: feature.stableSourceId, geometry });
+    generatedRegistry.registerEditableObject(proxy, {
+      id, sourceType: 'building', sourceId: feature.stableSourceId, geometry, label: feature.label,
+      properties: feature.properties,
+      transform: { longitude: feature.longitude, latitude: feature.latitude, elevation: 0, rotation: { x: 0, y: 0, z: 0 }, scale: { x: 1, y: 1, z: 1 } },
+      batchBinding: makeBatchBinding(feature.ranges, generatedBuildingMeshes),
+    });
+    feature.generatedId = id;
+    feature.registered = true;
+  }
   document.documentElement.dataset.facadePanels = String(facadeDetailQuads);
 }
 
@@ -1692,6 +1792,11 @@ function buildVerticalSliceRooftopEquipment() {
   mesh.receiveShadow = true;
   mesh.userData = { type: 'vertical-slice-rooftop-equipment', count: units.length };
   buildingGroup.add(mesh);
+  prepareGeneratedInstances([mesh]);
+  units.forEach((unit, index) => {
+    const feature = generatedBuildingFeatures.get(unit.generatedFeatureKey);
+    if (feature?.generatedId) generatedRegistry.attachEditablePart(feature.generatedId, mesh, index);
+  });
   document.documentElement.dataset.verticalSliceRooftopUnits = String(units.length);
   state.objectCount += units.length;
 }
@@ -1993,17 +2098,22 @@ function appendRoadRibbon(line, batches) {
 }
 
 function buildBufferedRoadBatches(batches) {
-  batches.forEach(({ positions, materialKey, tile, kind, segments }) => {
+  batches.forEach(({ positions, materialKey, tile, kind, segments }, key) => {
     if (!positions.length) return;
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.Float32BufferAttribute(new Float32Array(positions.length).fill(1), 3));
     geometry.computeVertexNormals();
     geometry.computeBoundingSphere();
-    const mesh = new THREE.Mesh(geometry, materials[materialKey] || materials.roadLocal);
+    const sourceMaterial = materials[materialKey] || materials.roadLocal;
+    const batchMaterial = sourceMaterial.clone();
+    batchMaterial.vertexColors = true;
+    const mesh = new THREE.Mesh(geometry, batchMaterial);
     mesh.userData = { type: `road-${kind}-batch`, material: materialKey, tile, tileSize: ROAD_RENDER_TILE_SIZE, segments, vertices: positions.length / 3 };
     mesh.renderOrder = kind.startsWith('official-') ? 4 : kind === 'surface' ? 3 : 2;
     mesh.receiveShadow = !lowPowerProfile;
     roadGroup.add(mesh);
+    generatedRoadMeshes.set(batchMeshKey(batches, key), mesh);
   });
 }
 
@@ -2011,7 +2121,9 @@ function finalizeRoadLines(roadLines, buckets, roadBatches) {
   applyBridgeElevationProfiles(roadLines);
   reconcileRoadElevationProfiles(roadLines);
   roadLines.forEach((line) => {
+    const rangeStarts = captureBatchLengths(roadBatches);
     appendRoadRibbon(line, roadBatches);
+    line.generatedBatchRanges = namespacedRanges(roadBatches, rangeStarts);
     for (let index = 1; index < line.samples.length; index += 1) {
       const a = line.samples[index - 1];
       const b = line.samples[index];
@@ -2036,6 +2148,25 @@ function finalizeRoadLines(roadLines, buckets, roadBatches) {
     }
   });
   buildBufferedRoadBatches(roadBatches);
+  roadLines.forEach((line) => {
+    if (!line.generatedBatchRanges?.length) return;
+    const samples = line.samples;
+    const minX = Math.min(...samples.map((sample) => sample.x)) - line.profile.width / 2;
+    const maxX = Math.max(...samples.map((sample) => sample.x)) + line.profile.width / 2;
+    const minZ = Math.min(...samples.map((sample) => sample.y)) - line.profile.width / 2;
+    const maxZ = Math.max(...samples.map((sample) => sample.y)) + line.profile.width / 2;
+    const minY = Math.min(...samples.map((sample) => sample.height)) - 0.1;
+    const maxY = Math.max(...samples.map((sample) => sample.height)) + 0.1;
+    const point = unproject((minX + maxX) / 2, (minZ + maxZ) / 2);
+    const proxy = makeGeneratedProxy({ x: (minX + maxX) / 2, y: (minY + maxY) / 2, z: (minZ + maxZ) / 2, width: maxX - minX, height: maxY - minY, depth: maxZ - minZ });
+    generatedRegistry.registerEditableObject(proxy, {
+      sourceType: 'road', sourceId: line.id, label: line.tags.name || line.tags.ref || line.profile.renderClass,
+      properties: { ...line.tags, renderClass: line.profile.renderClass },
+      transform: { longitude: point.lon, latitude: point.lat, elevation: 0, rotation: { x: 0, y: 0, z: 0 }, scale: { x: 1, y: 1, z: 1 } },
+      batchBinding: makeBatchBinding(line.generatedBatchRanges, generatedRoadMeshes),
+      canTransform: false,
+    });
+  });
 }
 
 function queueProjectedLine(points, tags, buckets, roadLines, lineId) {
@@ -3140,6 +3271,16 @@ function buildStreetFurniture(props) {
     poles.userData = { type: 'street-lamp-poles', count: lamps.length };
     heads.userData = { type: 'street-lamp-heads', count: lamps.length };
     streetscapeGroup.add(poles, heads);
+    prepareGeneratedInstances([poles, heads]);
+    lamps.forEach((point, index) => {
+      const coordinates = unproject(point.x, point.z);
+      generatedRegistry.registerEditableObject(poles, {
+        sourceType: 'street-lamp', sourceId: point.sourceId || `lamp:${coordinates.lon.toFixed(6)}:${coordinates.lat.toFixed(6)}`,
+        geometry: { type: 'Point', coordinates: [coordinates.lon, coordinates.lat] },
+        label: 'Street lamp', transform: { longitude: coordinates.lon, latitude: coordinates.lat, elevation: 0, rotation: { x: 0, y: point.heading || 0, z: 0 }, scale: { x: point.scale || 1, y: point.scale || 1, z: point.scale || 1 } },
+        parts: [{ object: poles, instanceIndex: index }, { object: heads, instanceIndex: index }], canTransform: false,
+      });
+    });
     state.objectCount += lamps.length * 2;
   }
 
@@ -3174,6 +3315,16 @@ function buildStreetFurniture(props) {
     redLenses.userData = { type: 'traffic-signal-backs', count: signalPoints.length };
     greenLenses.userData = { type: 'traffic-signal-arms', count: signalPoints.length };
     streetscapeGroup.add(poles, housings, redLenses, greenLenses);
+    prepareGeneratedInstances([poles, housings, redLenses, greenLenses]);
+    signalPoints.forEach((point, index) => {
+      const coordinates = unproject(point.x, point.z);
+      generatedRegistry.registerEditableObject(poles, {
+        sourceType: 'traffic-signal', sourceId: point.sourceId || `signal:${coordinates.lon.toFixed(6)}:${coordinates.lat.toFixed(6)}`,
+        geometry: { type: 'Point', coordinates: [coordinates.lon, coordinates.lat] },
+        label: 'Traffic signal', transform: { longitude: coordinates.lon, latitude: coordinates.lat, elevation: 0, rotation: { x: 0, y: point.heading || 0, z: 0 }, scale: { x: 1, y: 1, z: 1 } },
+        parts: [{ object: poles, instanceIndex: index }, { object: housings, instanceIndex: index }, { object: redLenses, instanceIndex: index }, { object: greenLenses, instanceIndex: index }], canTransform: false,
+      });
+    });
     state.objectCount += signalPoints.length * 4;
   }
 }
@@ -3501,7 +3652,7 @@ async function buildOfficialRoadSurfaces(collection, osmBuildingIndex = null) {
           source: 'City of Peterborough Basedata',
           'source:geometry': 'City of Peterborough Basedata layer 6',
         };
-        if (!appendBufferedBuilding(rings, tags, `city-building/${feature.id}`, municipalBuildingBatches)) return;
+        if (!appendBufferedBuilding(rings, tags, `city-building/${feature.id}`, municipalBuildingBatches, feature.id ? `city-building/${feature.id}` : null)) return;
         supplementalBuildings += 1;
       });
       continue;
@@ -3704,7 +3855,7 @@ function landMaterialFor(tags) {
   return null;
 }
 
-function scatterTreesInPolygon(rings, featureId, target, maxTotal) {
+function scatterTreesInPolygon(rings, featureId, target, maxTotal, sourceId = null) {
   if (!rings.length || maxTotal <= target.length) return;
   const outer = rings[0];
   const area = polygonArea(outer);
@@ -3727,7 +3878,7 @@ function scatterTreesInPolygon(rings, featureId, target, maxTotal) {
     attempts += 1;
     const point = new THREE.Vector2(THREE.MathUtils.lerp(minX, maxX, random()), THREE.MathUtils.lerp(minZ, maxZ, random()));
     if (!pointInPolygon(point, rings)) continue;
-    target.push({ x: point.x, z: point.y, scale: deterministicNumber(`${featureId}:${attempts}`, 0.75, 1.35) });
+    target.push({ x: point.x, z: point.y, scale: deterministicNumber(`${featureId}:${attempts}`, 0.75, 1.35), sourceId: sourceId ? `${sourceId}:tree:${attempts}` : null });
   }
 }
 
@@ -3768,6 +3919,10 @@ function buildTrees(treePoints, { append = false, limit, type = 'trees' } = {}) 
   let deciduousIndex = 0;
   let lightIndex = 0;
   let coniferIndex = 0;
+  const treeParts = capped.map((tree, index) => [
+    { object: trunks, instanceIndex: index },
+    { object: farCrowns, instanceIndex: index },
+  ]);
   capped.forEach((tree, farIndex) => {
     const terrainY = terrainHeightAtWorld(tree.x, tree.z);
     const scale = tree.scale || 1;
@@ -3777,9 +3932,16 @@ function buildTrees(treePoints, { append = false, limit, type = 'trees' } = {}) 
     dummy.scale.set(scale, scale, scale);
     dummy.updateMatrix();
     farCrowns.setMatrixAt(farIndex, dummy.matrix);
-    if (seed % 5 === 0) coniferCrowns.setMatrixAt(coniferIndex++, dummy.matrix);
-    else if (seed % 3 === 0) lightCrowns.setMatrixAt(lightIndex++, dummy.matrix);
-    else crowns.setMatrixAt(deciduousIndex++, dummy.matrix);
+    if (seed % 5 === 0) {
+      coniferCrowns.setMatrixAt(coniferIndex, dummy.matrix);
+      treeParts[farIndex].push({ object: coniferCrowns, instanceIndex: coniferIndex++ });
+    } else if (seed % 3 === 0) {
+      lightCrowns.setMatrixAt(lightIndex, dummy.matrix);
+      treeParts[farIndex].push({ object: lightCrowns, instanceIndex: lightIndex++ });
+    } else {
+      crowns.setMatrixAt(deciduousIndex, dummy.matrix);
+      treeParts[farIndex].push({ object: crowns, instanceIndex: deciduousIndex++ });
+    }
   });
   trunks.instanceMatrix.needsUpdate = true;
   crowns.instanceMatrix.needsUpdate = true;
@@ -3802,6 +3964,20 @@ function buildTrees(treePoints, { append = false, limit, type = 'trees' } = {}) 
   farCrowns.castShadow = false;
   farCrowns.receiveShadow = false;
   vegetationGroup.add(trunks, crowns, lightCrowns, coniferCrowns, farCrowns);
+  prepareGeneratedInstances([trunks, crowns, lightCrowns, coniferCrowns, farCrowns]);
+  capped.forEach((tree, index) => {
+    const point = unproject(tree.x, tree.z);
+    generatedRegistry.registerEditableObject(trunks, {
+      sourceType: 'tree',
+      sourceId: tree.sourceId || `generated-tree:${point.lon.toFixed(6)}:${point.lat.toFixed(6)}`,
+      geometry: { type: 'Point', coordinates: [point.lon, point.lat] },
+      label: 'Tree',
+      properties: { category: type, scale: tree.scale || 1 },
+      transform: { longitude: point.lon, latitude: point.lat, elevation: 0, rotation: { x: 0, y: 0, z: deterministicNumber(`${tree.x}:${tree.z}`, 0, Math.PI * 2) }, scale: { x: tree.scale || 1, y: tree.scale || 1, z: tree.scale || 1 } },
+      parts: treeParts[index],
+      canTransform: false,
+    });
+  });
   const priorCount = append ? Number(document.documentElement.dataset.treeInstances || 0) : 0;
   document.documentElement.dataset.treeInstances = String(priorCount + capped.length);
   if (append) document.documentElement.dataset.municipalParkTrees = String(capped.length);
@@ -3842,16 +4018,16 @@ async function parseOsmWithGeoJson(data) {
     // These point features are requested explicitly by the v1.5.5 asset build.
     // Keeping them separate from highway lines preserves their real OSM positions.
     if (tags.highway === 'street_lamp' || tags.man_made === 'street_lamp') {
-      geometryPoints(feature).forEach(([lon, lat]) => {
+      geometryPoints(feature).forEach(([lon, lat], pointIndex) => {
         const p = project(lat, lon);
-        streetProps.lamps.push({ x: p.x, z: p.y, scale: deterministicNumber(featureId, 0.88, 1.14) });
+        streetProps.lamps.push({ x: p.x, z: p.y, scale: deterministicNumber(featureId, 0.88, 1.14), sourceId: feature.id || tags.id ? `${feature.id || tags.id}:point:${pointIndex}` : null });
       });
       continue;
     }
     if (tags.highway === 'traffic_signals') {
-      geometryPoints(feature).forEach(([lon, lat]) => {
+      geometryPoints(feature).forEach(([lon, lat], pointIndex) => {
         const p = project(lat, lon);
-        streetProps.signals.push({ x: p.x, z: p.y });
+        streetProps.signals.push({ x: p.x, z: p.y, sourceId: feature.id || tags.id ? `${feature.id || tags.id}:point:${pointIndex}` : null });
       });
       continue;
     }
@@ -3860,7 +4036,7 @@ async function parseOsmWithGeoJson(data) {
       for (const polygonCoordinates of geometryPolygons(feature)) {
         const rings = polygonCoordinates.map(coordinatesToRing).filter((ring) => ring.length >= 4);
         if (!rings.length) continue;
-        if (!appendBufferedBuilding(rings, tags, featureId, buildingBatches)) continue;
+        if (!appendBufferedBuilding(rings, tags, featureId, buildingBatches, feature.id || tags.id || null)) continue;
         buildingCentroidIndex.add(rings);
         buildings += 1;
         state.objectCount += 1;
@@ -3881,10 +4057,10 @@ async function parseOsmWithGeoJson(data) {
     }
 
     if (tags.natural === 'tree') {
-      for (const [lon, lat] of geometryPoints(feature)) {
+      geometryPoints(feature).forEach(([lon, lat], pointIndex) => {
         const p = project(lat, lon);
-        treePoints.push({ x: p.x, z: p.y, scale: deterministicNumber(featureId, 0.8, 1.25) });
-      }
+        treePoints.push({ x: p.x, z: p.y, scale: deterministicNumber(featureId, 0.8, 1.25), sourceId: feature.id || tags.id ? `${feature.id || tags.id}:point:${pointIndex}` : null });
+      });
       continue;
     }
 
@@ -3906,7 +4082,7 @@ async function parseOsmWithGeoJson(data) {
         const centroid = polygonCentroid(rings[0]);
         const squareMetresPerTree = worldPointInVerticalSlice(centroid.x, centroid.y, verticalSliceBounds) ? 620 : 2100;
         const maxToAdd = Math.min(treeInstanceLimit - before, Math.max(1, Math.floor(polygonArea(rings[0]) / squareMetresPerTree)));
-        scatterTreesInPolygon(rings, featureId, treePoints, before + maxToAdd);
+        scatterTreesInPolygon(rings, featureId, treePoints, before + maxToAdd, feature.id || tags.id || null);
       }
     }
 
@@ -3966,7 +4142,7 @@ function parseOsmWayFallback(data) {
     }
     if (points.length < 2) continue;
     if (tags.building && points.length >= 4) {
-      if (appendBufferedBuilding([points], tags, `way/${way.id}`, buildingBatches)) {
+      if (appendBufferedBuilding([points], tags, `way/${way.id}`, buildingBatches, `way/${way.id}`)) {
         buildingCentroidIndex.add([points]);
         buildings += 1;
         state.objectCount += 1;
@@ -4278,6 +4454,18 @@ async function buildCity() {
     object.castShadow = !lowPowerProfile;
     object.receiveShadow = !lowPowerProfile;
   });
+  LANDMARKS.forEach((landmark) => {
+    if (!landmark.model) return;
+    const root = landmarkGroup.children.find((child) => child.userData?.landmarkId === landmark.id);
+    if (!root) return;
+    generatedRegistry.registerEditableObject(root, {
+      sourceType: 'landmark', sourceId: landmark.id,
+      geometry: { type: 'Point', coordinates: [landmark.lon, landmark.lat] },
+      label: landmark.name, properties: { category: landmark.category, osmRefs: landmark.osmRefs || [] },
+      transform: { longitude: landmark.lon, latitude: landmark.lat, elevation: 0, rotation: { x: root.rotation.x, y: root.rotation.y, z: root.rotation.z }, scale: { x: root.scale.x, y: root.scale.y, z: root.scale.z } },
+      canTransform: false,
+    });
+  });
   state.objectCount += landmarkSummary.objects;
   animatedFountain = landmarkGroup.children.find((child) => child.userData?.animatedWater) || null;
   buildLandmarkMapLabels();
@@ -4320,6 +4508,7 @@ async function loadPublishedAuthoredDetails() {
     return;
   }
   authoredRuntime.load(result.document);
+  applyOverrides(result.document, { registry: generatedRegistry, authoredRuntime, materials, THREE });
 }
 
 function updateMapGuide() {
