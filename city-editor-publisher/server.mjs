@@ -1,10 +1,26 @@
 import http from 'node:http';
+import { isIP } from 'node:net';
 import { pathToFileURL } from 'node:url';
 import { createAuth } from './auth.mjs';
 import { createGithubPublisher } from './github-publisher.mjs';
 import { validateCandidate } from './scene-validation.mjs';
 
 const shaPattern = /^[0-9a-f]{40}$/i;
+
+function normalizeIp(value) {
+  if (typeof value !== 'string') return null;
+  const address = value.trim().toLowerCase();
+  if (address.startsWith('::ffff:') && isIP(address.slice(7)) === 4) return address.slice(7);
+  return isIP(address) ? address : null;
+}
+
+export function resolveAuthSource(req, config) {
+  const peer = normalizeIp(req.socket?.remoteAddress) || req.socket?.remoteAddress || 'unknown';
+  if (!config.trustedProxyAddresses?.includes(peer)) return peer;
+  const forwarded = req.headers['x-forwarded-for'];
+  if (typeof forwarded !== 'string') return peer;
+  return normalizeIp(forwarded.split(',').at(-1)) || peer;
+}
 
 export function loadConfig(env = process.env) {
   const names = ['CITY_EDITOR_GITHUB_APP_CLIENT_ID', 'CITY_EDITOR_GITHUB_APP_CLIENT_SECRET', 'CITY_EDITOR_SESSION_SECRET', 'CITY_EDITOR_ORIGIN', 'CITY_EDITOR_CALLBACK_URL', 'CITY_EDITOR_RETURN_URL'];
@@ -16,19 +32,23 @@ export function loadConfig(env = process.env) {
   if (callback.protocol !== 'https:' || callback.pathname !== '/auth/callback') throw new Error('CITY_EDITOR_CALLBACK_URL must be HTTPS /auth/callback');
   const returnUrl = new URL(env.CITY_EDITOR_RETURN_URL);
   if (returnUrl.origin !== origin.origin || returnUrl.search || returnUrl.hash) throw new Error('CITY_EDITOR_RETURN_URL must be within CITY_EDITOR_ORIGIN');
+  const proxyValue = env.CITY_EDITOR_TRUSTED_PROXY_ADDRESSES || '';
+  const trustedProxyAddresses = proxyValue ? proxyValue.split(',').map(normalizeIp) : [];
+  if (trustedProxyAddresses.some((address) => !address)) throw new Error('CITY_EDITOR_TRUSTED_PROXY_ADDRESSES must contain literal IP addresses');
   return {
     clientId: env.CITY_EDITOR_GITHUB_APP_CLIENT_ID, clientSecret: env.CITY_EDITOR_GITHUB_APP_CLIENT_SECRET,
     sessionSecret: env.CITY_EDITOR_SESSION_SECRET, origin: env.CITY_EDITOR_ORIGIN,
     callbackUrl: env.CITY_EDITOR_CALLBACK_URL, returnUrl: env.CITY_EDITOR_RETURN_URL, owner: 'edmondsonedits',
-    repo: 'Peterborough-Map-Game', branch: 'main',
+    repo: 'Peterborough-Map-Game', branch: 'main', trustedProxyAddresses,
   };
 }
 
-export function createPublisherServer({ config = loadConfig(), fetchImpl = fetch, logger = console, now } = {}) {
+export function createPublisherServer({ config = loadConfig(), fetchImpl = fetch, logger = console, now, sourceKeyForRequest } = {}) {
   if (!config?.clientId || !config?.clientSecret || !config?.sessionSecret || !config?.origin || !config?.callbackUrl || !config?.returnUrl) throw new Error('Publisher configuration is incomplete');
   if (config.owner !== 'edmondsonedits') throw new Error('Publisher owner must be edmondsonedits');
   const auth = createAuth({ config, fetchImpl, now });
   const publisher = createGithubPublisher({ config, fetchImpl });
+  const sourceForRequest = sourceKeyForRequest || ((req) => resolveAuthSource(req, config));
 
   function json(res, status, body, headers = {}) {
     res.writeHead(status, { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store', ...headers });
@@ -59,7 +79,7 @@ export function createPublisherServer({ config = loadConfig(), fetchImpl = fetch
     try {
       if (req.method === 'GET' && url.pathname === '/health') return json(res, 200, { ok: true });
       if (req.method === 'GET' && url.pathname === '/auth/github') {
-        const started = auth.begin();
+        const started = auth.begin(sourceForRequest(req));
         if (!started) return error(res, 429, 'auth_rate_limited', req);
         res.writeHead(302, { location: started.location, 'set-cookie': started.cookie, 'cache-control': 'no-store' });
         return res.end();

@@ -47,7 +47,9 @@ function githubMock({ login = 'edmondsonedits', current = currentSha, putStatus 
 
 async function fixture(mock = githubMock(), options = {}) {
   const logs = [];
-  const server = createPublisherServer({ config, fetchImpl: mock.fetchImpl, now: options.now, logger: { error: (...args) => logs.push(args.join(' ')) } });
+  const server = createPublisherServer({ config, fetchImpl: mock.fetchImpl, now: options.now,
+    sourceKeyForRequest: options.sourceKeyForRequest,
+    logger: { error: (...args) => logs.push(args.join(' ')) } });
   await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
   const base = `http://127.0.0.1:${server.address().port}`;
   async function request(path, options = {}) { return fetch(`${base}${path}`, { redirect: 'manual', ...options }); }
@@ -209,6 +211,43 @@ test('OAuth starts have a hard cap and expired states release capacity', async (
     time += 11 * 60 * 1_000;
     assert.equal((await f.request('/auth/github')).status, 302, 'expired starts should release capacity');
   } finally { await f.close(); }
+});
+
+test('one saturated OAuth source cannot deny a different owner source', async () => {
+  const f = await fixture(githubMock(), { sourceKeyForRequest: (req) => req.headers['x-test-source'] });
+  try {
+    const starts = [];
+    for (let i = 0; i < 9; i++) starts.push((await f.request('/auth/github', { headers: { 'x-test-source': 'attacker' } })).status);
+    assert.equal(starts.at(-1), 429);
+    assert.equal((await f.request('/auth/github', { headers: { 'x-test-source': 'owner' } })).status, 302);
+  } finally { await f.close(); }
+});
+
+test('forwarded address is ignored unless the socket peer is explicitly trusted', async () => {
+  const { resolveAuthSource } = await import('../city-editor-publisher/server.mjs');
+  const req = { socket: { remoteAddress: '203.0.113.5' }, headers: { 'x-forwarded-for': '198.51.100.7' } };
+  assert.equal(resolveAuthSource(req, { trustedProxyAddresses: [] }), '203.0.113.5');
+  assert.equal(resolveAuthSource(req, { trustedProxyAddresses: ['192.0.2.10'] }), '203.0.113.5');
+});
+
+test('trusted proxy uses only the nearest valid forwarded peer', async () => {
+  const { resolveAuthSource } = await import('../city-editor-publisher/server.mjs');
+  const req = { socket: { remoteAddress: '192.0.2.10' }, headers: { 'x-forwarded-for': '198.51.100.7, 203.0.113.8' } };
+  assert.equal(resolveAuthSource(req, { trustedProxyAddresses: ['192.0.2.10'] }), '203.0.113.8');
+  req.headers['x-forwarded-for'] = '198.51.100.7, invalid';
+  assert.equal(resolveAuthSource(req, { trustedProxyAddresses: ['192.0.2.10'] }), '192.0.2.10');
+});
+
+test('trusted proxy list is explicit validated deployment configuration', () => {
+  const env = {
+    CITY_EDITOR_GITHUB_APP_CLIENT_ID: 'client', CITY_EDITOR_GITHUB_APP_CLIENT_SECRET: 'secret',
+    CITY_EDITOR_SESSION_SECRET: 'session-secret-at-least-32-bytes-long', CITY_EDITOR_ORIGIN: origin,
+    CITY_EDITOR_CALLBACK_URL: 'https://publisher.example/auth/callback',
+    CITY_EDITOR_RETURN_URL: `${origin}/Peterborough-Map-Game/city-explorer/`,
+    CITY_EDITOR_TRUSTED_PROXY_ADDRESSES: '192.0.2.10,203.0.113.9',
+  };
+  assert.deepEqual(loadConfig(env).trustedProxyAddresses, ['192.0.2.10', '203.0.113.9']);
+  assert.throws(() => loadConfig({ ...env, CITY_EDITOR_TRUSTED_PROXY_ADDRESSES: '0.0.0.0/0' }), /CITY_EDITOR_TRUSTED_PROXY_ADDRESSES/);
 });
 
 test('expiry sweep removes states and session tokens without another request', async () => {

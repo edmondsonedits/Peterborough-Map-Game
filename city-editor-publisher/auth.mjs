@@ -2,6 +2,7 @@ import { createHmac, randomBytes, timingSafeEqual } from 'node:crypto';
 
 const lifetimeMs = 8 * 60 * 60 * 1000;
 const maxPendingStates = 64;
+const maxPendingStatesPerSource = 8;
 const maxSessions = 32;
 const random = () => randomBytes(32).toString('hex');
 
@@ -14,17 +15,21 @@ export function createAuth({ config, fetchImpl, now = () => Date.now(), schedule
 
   function pruneExpired() {
     const current = now();
-    for (const [state, expires] of pendingStates) if (expires <= current) pendingStates.delete(state);
+    for (const [state, entry] of pendingStates) if (entry.expires <= current) pendingStates.delete(state);
     for (const [id, session] of sessions) if (session.expires <= current) sessions.delete(id);
   }
   const sweepTimer = scheduleInterval(pruneExpired, 60 * 1000);
   sweepTimer?.unref?.();
 
-  function begin() {
+  function begin(source = 'unknown') {
     pruneExpired();
+    const sourceKey = typeof source === 'string' && source ? source : 'unknown';
+    let sourceCount = 0;
+    for (const entry of pendingStates.values()) if (entry.source === sourceKey) sourceCount++;
+    if (sourceCount >= maxPendingStatesPerSource) return null;
     if (pendingStates.size >= maxPendingStates) return null;
     const state = random();
-    pendingStates.set(state, now() + 10 * 60 * 1000);
+    pendingStates.set(state, { expires: now() + 10 * 60 * 1000, source: sourceKey });
     const url = new URL('https://github.com/login/oauth/authorize');
     url.searchParams.set('client_id', config.clientId);
     url.searchParams.set('redirect_uri', config.callbackUrl);
@@ -46,8 +51,8 @@ export function createAuth({ config, fetchImpl, now = () => Date.now(), schedule
   async function complete(req, state, code) {
     pruneExpired();
     const [cookieState, signature] = (readCookie(req, 'publisher_oauth_state') || '').split('.');
-    const expiry = pendingStates.get(state);
-    if (!state || !code || state !== cookieState || !validSignature(state, signature) || !expiry || expiry < now()) return null;
+    const entry = pendingStates.get(state);
+    if (!state || !code || state !== cookieState || !validSignature(state, signature) || !entry || entry.expires < now()) return null;
     pendingStates.delete(state);
     const tokenResponse = await fetchImpl('https://github.com/login/oauth/access_token', {
       method: 'POST', headers: { accept: 'application/json', 'content-type': 'application/x-www-form-urlencoded' },
