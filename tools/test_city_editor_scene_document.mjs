@@ -10,6 +10,7 @@ import {
 
 const idA = '00000000-0000-4000-8000-000000000001';
 const idB = '00000000-0000-4000-8000-000000000002';
+const idHex = 'abcdefab-cdef-4abc-8def-abcdefabcdef';
 
 function authoredObject(id, longitude = -78.32) {
   return {
@@ -41,6 +42,11 @@ const malformedInputs = [
   { ...empty, schemaVersion: 2 },
   { ...empty, objects: [{ ...authoredObject(idA), transform: { ...authoredObject(idA).transform, elevation: Infinity } }] },
   { ...empty, objects: [authoredObject(idA), authoredObject(idA)] },
+  { ...empty, objects: [authoredObject(idHex), authoredObject(idHex.toUpperCase())] },
+  { ...empty, overrides: [
+    { id: idHex, operation: 'hide' },
+    { id: idHex.toUpperCase(), operation: 'hide' },
+  ] },
   { ...empty, objects: [authoredObject(idA, -78.56)] },
   { ...empty, objects: [authoredObject(idA, -78.04)] },
   { ...empty, objects: [{ ...authoredObject(idA), transform: { ...authoredObject(idA).transform, latitude: 44.51 } }] },
@@ -56,6 +62,15 @@ for (const input of malformedInputs) {
   assert.ok(result.errors.length > 0);
   assert.equal(result.document, null);
 }
+
+const uppercaseIdResult = validateSceneDocument({ ...empty, objects: [authoredObject(idHex.toUpperCase())] });
+assert.equal(uppercaseIdResult.ok, true);
+assert.equal(uppercaseIdResult.document.objects[0].id, idHex);
+const uppercaseOverrideResult = validateSceneDocument({
+  ...empty,
+  overrides: [{ id: idHex.toUpperCase(), operation: 'hide' }],
+});
+assert.equal(uppercaseOverrideResult.document.overrides[0].id, idHex);
 
 const unordered = {
   ...empty,

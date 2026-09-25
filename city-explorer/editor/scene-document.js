@@ -4,6 +4,7 @@ const UUID_LIKE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}
 const OPERATIONS = new Set(['hide', 'appearance', 'replace']);
 const isRecord = (value) => value !== null && typeof value === 'object' && !Array.isArray(value);
 const isFiniteNumber = (value) => typeof value === 'number' && Number.isFinite(value);
+const canonicalId = (value) => typeof value === 'string' && UUID_LIKE.test(value) ? value.toLowerCase() : value;
 
 export function createEmptySceneDocument() {
   return {
@@ -30,7 +31,7 @@ function normalizedTransform(transform = {}) {
 
 function normalizeObject(object) {
   const result = {
-    id: object.id,
+    id: canonicalId(object.id),
     catalogueKey: object.catalogueKey,
     transform: normalizedTransform(object.transform),
   };
@@ -46,7 +47,7 @@ function normalizeObject(object) {
 }
 
 function normalizeOverride(override) {
-  const result = { id: override.id, operation: override.operation };
+  const result = { id: canonicalId(override.id), operation: override.operation };
   if (override.operation === 'appearance' && isRecord(override.appearance)) {
     result.appearance = {};
     for (const key of ['materialKey', 'color', 'opacity']) {
@@ -86,9 +87,10 @@ export function validateSceneDocument(input) {
       errors.push('Each authored object must be an object.');
       continue;
     }
+    const id = canonicalId(object.id);
     if (typeof object.id !== 'string' || !UUID_LIKE.test(object.id)) errors.push(`Authored object ID must be UUID-like: ${String(object.id)}.`);
-    else if (objectIds.has(object.id)) errors.push(`Duplicate authored object ID: ${object.id}.`);
-    objectIds.add(object.id);
+    else if (objectIds.has(id)) errors.push(`Duplicate authored object ID: ${object.id}.`);
+    objectIds.add(id);
     if (typeof object.catalogueKey !== 'string' || !object.catalogueKey.trim()) errors.push(`${object.id || 'Object'} requires a catalogueKey.`);
 
     const transform = object.transform;
@@ -125,9 +127,10 @@ export function validateSceneDocument(input) {
       errors.push('Each override must be an object.');
       continue;
     }
+    const id = canonicalId(override.id);
     if (typeof override.id !== 'string' || !UUID_LIKE.test(override.id)) errors.push(`Override ID must be UUID-like: ${String(override.id)}.`);
-    else if (overrideIds.has(override.id)) errors.push(`Duplicate override ID: ${override.id}.`);
-    overrideIds.add(override.id);
+    else if (overrideIds.has(id)) errors.push(`Duplicate override ID: ${override.id}.`);
+    overrideIds.add(id);
     if (!OPERATIONS.has(override.operation)) errors.push(`${override.id || 'Override'} operation must be hide, appearance, or replace.`);
     if (override.operation === 'appearance' && !isRecord(override.appearance)) errors.push(`${override.id || 'Override'} appearance operation requires appearance data.`);
     if (override.operation === 'replace' && (typeof override.catalogueKey !== 'string' || !override.catalogueKey.trim())) errors.push(`${override.id || 'Override'} replace operation requires catalogueKey.`);
