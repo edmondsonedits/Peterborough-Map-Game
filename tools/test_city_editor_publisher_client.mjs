@@ -84,6 +84,15 @@ test('unconfigured publisher keeps the local draft and reports no published succ
   assert.equal(requests.length, 0);
 });
 
+test('invalid asset keys stay in the local draft but never reach publisher', async () => {
+  const f = fixture();
+  const invalid = { ...scene, objects: [{ id: '00000000-0000-4000-8000-000000000001', assetKey: 'unknown', transform: { longitude: -78.3, latitude: 44.3, elevation: 0, rotation: { x: 0, y: 0, z: 0 }, scale: { x: 1, y: 1, z: 1 } } }] };
+  const result = await f.saver.save(invalid);
+  assert.deepEqual(result, { state: 'failed', reason: 'invalid-document' });
+  assert.equal(f.events.some(([kind]) => kind === 'flush'), true);
+  assert.equal(f.requests.length, 0);
+});
+
 test('remote content changed since editor load causes conflict without publication', async () => {
   const f = fixture({ publishedDocument: { ...scene, updatedAt: '2026-09-25T13:00:00.000Z' } });
   assert.equal((await f.saver.save(scene)).state, 'conflict');

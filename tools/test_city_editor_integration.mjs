@@ -32,6 +32,7 @@ assert.match(html, /id="city-editor-recovery"/, 'the editor should provide draft
 assert.match(app, /createCityEditor\(/, 'the application should construct the editor adapter');
 assert.match(app, /cityEditor\.update\(delta\)/, 'the single animation loop should update the editor');
 assert.match(app, /cityEditor\?\.enter\(\)/, 'the Editor button should enter editor mode');
+assert.match(app, /\.get\('editor'\) === '1'[\s\S]*?cityEditor\.enter\(\)/, 'private owner editor query should request entry through the same guard');
 assert.match(app, /data\/editor\/peterborough-details\.json/, 'published authored content should load');
 assert.match(app, /onChange:\s*\(documentValue\)\s*=>[\s\S]*?draftStore\.saveDraft\(documentValue/, 'every editor document change should schedule local recovery autosave');
 assert.match(editor, /Publisher not configured; local draft is safe\./, 'an absent publisher must be reported honestly while preserving the local draft');

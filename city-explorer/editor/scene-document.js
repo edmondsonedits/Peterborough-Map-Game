@@ -1,3 +1,6 @@
+import { ASSET_CATALOG } from './asset-catalog.js';
+import { makeGeneratedId } from './generated-registry.js';
+
 export const SCENE_SCHEMA_VERSION = 1;
 
 const UUID_LIKE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -152,6 +155,83 @@ export function validateSceneDocument(input) {
   }
 
   return { ok: errors.length === 0, errors, document: errors.length ? null : normalizeSceneDocument(input) };
+}
+
+export function validatePublishableSceneDocument(input) {
+  const result = validateSceneDocument(input);
+  if (!result.ok) return result;
+  const errors = [];
+  const document = result.document;
+  const clonesBySource = new Map();
+  for (const object of document.objects) {
+    if (Object.hasOwn(ASSET_CATALOG, object.assetKey)) continue;
+    if (object.assetKey !== 'generated-source-clone') {
+      errors.push(`${object.id} uses an unapproved assetKey.`);
+      continue;
+    }
+    const sourceId = object.properties?.sourceTargetId;
+    if (typeof sourceId !== 'string' || !UUID_LIKE.test(sourceId) || sourceId === object.id
+        || object.id !== makeGeneratedId({ sourceType: 'authored-replacement', sourceId })) {
+      errors.push(`${object.id} generated source clone requires a matching sourceTargetId and replacement ID.`);
+      continue;
+    }
+    clonesBySource.set(sourceId, object);
+  }
+  for (const override of document.overrides) {
+    if (override.operation !== 'replace') continue;
+    if (override.assetKey === 'generated-source-clone') {
+      if (!clonesBySource.has(override.id)) errors.push(`${override.id} generated source replacement requires a matching clone.`);
+    } else if (!Object.hasOwn(ASSET_CATALOG, override.assetKey)) errors.push(`${override.id} replacement uses an unapproved assetKey.`);
+  }
+  for (const sourceId of clonesBySource.keys()) {
+    if (!document.overrides.some((override) => override.id === sourceId && override.operation === 'replace' && override.assetKey === 'generated-source-clone')) {
+      errors.push(`${sourceId} generated source clone requires a matching replace override.`);
+    }
+  }
+  return { ok: errors.length === 0, errors, document: errors.length ? null : document };
+}
+
+export function sanitizeRenderableSceneDocument(input, { hasGeneratedSource = () => true } = {}) {
+  if (!Array.isArray(input?.objects) || !Array.isArray(input?.overrides)) return validateSceneDocument(input);
+  const base = validateSceneDocument({ ...input, objects: [], overrides: [] });
+  if (!base.ok) return base;
+  const document = base.document;
+  const objects = [];
+  const overrides = [];
+  for (const object of input.objects) {
+    const result = validateSceneDocument({ ...document, objects: [object] });
+    if (result.ok) objects.push(result.document.objects[0]);
+  }
+  for (const override of input.overrides) {
+    const result = validateSceneDocument({ ...document, overrides: [override] });
+    if (result.ok) overrides.push(result.document.overrides[0]);
+  }
+  function firstPerId(records) {
+    const seen = new Set();
+    return records.filter((record) => {
+      if (seen.has(record.id)) return false;
+      seen.add(record.id);
+      return true;
+    });
+  }
+  const cloneSources = new Set(overrides.filter((item) => item.operation === 'replace' && item.assetKey === 'generated-source-clone').map((item) => item.id));
+  document.objects = firstPerId(objects.filter((object) => {
+    if (Object.hasOwn(ASSET_CATALOG, object.assetKey)) return true;
+    if (object.assetKey !== 'generated-source-clone') return false;
+    const sourceId = object.properties?.sourceTargetId;
+    return typeof sourceId === 'string' && UUID_LIKE.test(sourceId)
+      && object.id === makeGeneratedId({ sourceType: 'authored-replacement', sourceId })
+      && cloneSources.has(sourceId) && hasGeneratedSource(sourceId);
+  }));
+  document.overrides = firstPerId(overrides.filter((override) => {
+    if (override.operation !== 'replace') return true;
+    if (Object.hasOwn(ASSET_CATALOG, override.assetKey)) return true;
+    return override.assetKey === 'generated-source-clone'
+      && document.objects.some((object) => object.assetKey === 'generated-source-clone' && object.properties.sourceTargetId === override.id);
+  }));
+  document.objects = document.objects.filter((object) => object.assetKey !== 'generated-source-clone'
+    || document.overrides.some((override) => override.id === object.properties.sourceTargetId && override.operation === 'replace' && override.assetKey === 'generated-source-clone'));
+  return validateSceneDocument(document);
 }
 
 export function serializeSceneDocument(input) {

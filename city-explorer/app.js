@@ -15,7 +15,7 @@ import { createCatalogObject } from './editor/asset-catalog.js';
 import { createCommandHistory } from './editor/command-history.js';
 import { createDraftStore } from './editor/draft-store.js';
 import { createCityEditor } from './editor/city-editor.js';
-import { createEmptySceneDocument, validateSceneDocument } from './editor/scene-document.js';
+import { createEmptySceneDocument, sanitizeRenderableSceneDocument } from './editor/scene-document.js';
 import { createGeneratedRegistry } from './editor/generated-registry.js';
 import { applyOverrides } from './editor/override-runtime.js';
 import { captureBatchLengths, collectBatchRanges, createFeatureBatchBinding } from './editor/feature-batch-binding.js';
@@ -4529,7 +4529,7 @@ async function buildCity() {
 async function loadPublishedAuthoredDetails() {
   const response = await fetch('./data/editor/peterborough-details.json');
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
-  const result = validateSceneDocument(await response.json());
+  const result = sanitizeRenderableSceneDocument(await response.json(), { hasGeneratedSource: (id) => Boolean(generatedRegistry.getEditableRecord(id)) });
   if (!result.ok) {
     console.warn('Published authored city details are invalid; continuing without them.', result.errors);
     initializeCityEditor(createEmptySceneDocument());
@@ -4625,6 +4625,7 @@ function initializeCityEditor(publishedDocument = createEmptySceneDocument()) {
   });
   cityEditor.initialize();
   if (els.editorMode) els.editorMode.disabled = false;
+  if (new URLSearchParams(location.search).get('editor') === '1') void cityEditor.enter();
   return cityEditor;
 }
 

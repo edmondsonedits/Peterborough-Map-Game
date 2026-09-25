@@ -141,6 +141,26 @@ test('invalid document and stale SHA never write', async () => {
   } finally { await f.close(); }
 });
 
+test('publisher rejects unknown assets and unlinked generated clones before commit', async () => {
+  const f = await fixture();
+  try {
+    const { sessionCookie, status } = await f.login();
+    const headers = { cookie: sessionCookie, origin, 'x-csrf-token': status.csrfToken, 'content-type': 'application/json' };
+    const transform = { longitude: -78.3, latitude: 44.3, elevation: 0, rotation: { x: 0, y: 0, z: 0 }, scale: { x: 1, y: 1, z: 1 } };
+    const id = '00000000-0000-4000-8000-000000000001';
+    const bad = [
+      { ...scene, objects: [{ id, assetKey: 'unknown', transform }] },
+      { ...scene, objects: [{ id, assetKey: 'generated-source-clone', properties: { sourceTargetId: id }, transform }] },
+      { ...scene, overrides: [{ id, operation: 'replace', assetKey: 'unknown' }] },
+    ];
+    for (const document of bad) {
+      const response = await f.request('/api/scene/versions', { method: 'POST', headers, body: JSON.stringify({ baseRevision: currentSha, document }) });
+      assert.equal(response.status, 422);
+    }
+    assert.equal(f.mock.calls.filter(({ options }) => options.method === 'PUT').length, 0);
+  } finally { await f.close(); }
+});
+
 test('successful commit serializes deterministically and status follows deployment', async () => {
   const f = await fixture();
   try {

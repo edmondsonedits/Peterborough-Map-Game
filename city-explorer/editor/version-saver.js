@@ -1,4 +1,4 @@
-import { serializeSceneDocument } from './scene-document.js';
+import { serializeSceneDocument, validatePublishableSceneDocument } from './scene-document.js';
 
 export function createVersionSaver({ serviceUrl, publishedDocument, draftStore, fetchImpl = fetch, onState = () => {}, wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms)), maxPolls = 5 }) {
   const base = serviceUrl?.replace(/\/$/, '');
@@ -10,6 +10,7 @@ export function createVersionSaver({ serviceUrl, publishedDocument, draftStore, 
     const local = scheduled.status === 'scheduled' ? draftStore.flush() : scheduled;
     if (local.status !== 'saved') return state('failed', { reason: 'local-draft' });
     if (!base) return state('failed', { reason: 'unconfigured' });
+    if (!validatePublishableSceneDocument(document).ok) return state('failed', { reason: 'invalid-document' });
     try {
       const statusResponse = await fetchImpl(`${base}/auth/status`, { credentials: 'include' });
       if (statusResponse.status === 401) return state('auth-expired');

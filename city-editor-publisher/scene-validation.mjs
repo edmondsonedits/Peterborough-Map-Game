@@ -1,7 +1,7 @@
-import { serializeSceneDocument, validateSceneDocument } from '../city-explorer/editor/scene-document.js';
+import { serializeSceneDocument, validatePublishableSceneDocument } from '../city-explorer/editor/scene-document.js';
 
 export function validateCandidate(input) {
-  const result = validateSceneDocument(input);
+  const result = validatePublishableSceneDocument(input);
   if (!result.ok) return { ok: false, errors: result.errors };
   if (typeof result.document.updatedAt !== 'string' || !/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z$/.test(result.document.updatedAt)
       || !Number.isFinite(Date.parse(result.document.updatedAt))) {

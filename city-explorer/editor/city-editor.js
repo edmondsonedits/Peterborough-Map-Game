@@ -6,6 +6,8 @@ import { cancelTransformControlDrag, rebindEditorSelection } from './editor-inte
 import { createEditorCameraNavigation } from './editor-camera-navigation.js';
 import { restoreEditorCameraSession, startEditorCameraSession } from './editor-camera-session.js';
 import { createVersionSaver } from './version-saver.js';
+import { authorizeEditorEntry } from './editor-entry.js';
+import { createRecoveryPrompt } from './recovery-prompt.js';
 
 export { createGeneratedReplacementDocument, isProtectedEditorTarget, pickEditorSelection } from './city-editor-selection.js';
 
@@ -32,7 +34,8 @@ export function createCityEditor(adapter) {
   let transform = null;
   let cameraNavigation = null;
   let cameraSnapshot = null;
-  let recoveryStatus = null;
+  let recoveryPrompt = createRecoveryPrompt(null);
+  let entryPending = false;
   let transientClone = null;
   let gestureGeneratedRecord = null;
   const listeners = [];
@@ -667,14 +670,15 @@ export function createCityEditor(adapter) {
         adapter.applyOverrides?.(draft.document);
         refreshUI();
       }
+      recoveryPrompt.dismiss();
       ui.recovery.close();
     });
-    addListener(discard, 'click', () => { draftStore.discardDraft(); ui.recovery.close(); });
+    addListener(discard, 'click', () => { draftStore.discardDraft(); recoveryPrompt.dismiss(); ui.recovery.close(); });
     const draft = draftStore.loadDraft({ baseRevision: currentDocument().revision });
     if (draft.status === 'recovered' || draft.status === 'base-revision-mismatch') {
-      recoveryStatus = draft.status;
+      recoveryPrompt = createRecoveryPrompt(draft.status);
       const note = ui.recovery?.querySelector('[data-recovery-note]');
-      if (note) note.textContent = recoveryStatus === 'recovered'
+      if (note) note.textContent = draft.status === 'recovered'
         ? 'A local draft matches the published city. Recover it or discard it.'
         : 'A local draft was created from a different published revision. Recovering it will replace this city in your browser.';
     } else if (draft.status === 'corrupt') setStatus('A damaged local draft was quarantined for recovery');
@@ -683,8 +687,13 @@ export function createCityEditor(adapter) {
     return api;
   }
 
-  function enter() {
-    if (disposed || active) return false;
+  async function enter() {
+    if (disposed || active || entryPending) return false;
+    entryPending = true;
+    let authorized;
+    try { authorized = await authorizeEditorEntry({ publisherUrl }); }
+    finally { entryPending = false; }
+    if (!authorized || disposed || active) return false;
     active = true;
     previousMode = hooks.getMode?.() ?? 'onFoot';
     cameraSnapshot = startEditorCameraSession(camera, cameraNavigation, previousMode, (mode) => {
@@ -700,7 +709,7 @@ export function createCityEditor(adapter) {
     syncPanelLayout();
     transform.enabled = true;
     transform.getHelper().visible = true;
-    if (recoveryStatus && ui.recovery?.showModal) ui.recovery.showModal();
+    if (recoveryPrompt.pending && ui.recovery?.showModal) ui.recovery.showModal();
     refreshUI();
     canvas.focus({ preventScroll: true });
     setStatus('Editor active · right-drag orbit · Shift+right-drag pan · wheel zoom');
