@@ -24,6 +24,8 @@ assert.match(html, /id="city-editor-left"/, 'the editor should provide an asset 
 assert.match(html, /id="city-editor-inspector"/, 'the editor should provide an inspector');
 assert.match(html, /id="city-editor-transform-toolbar"/, 'the editor should provide transform controls');
 assert.match(html, /id="city-editor-status"/, 'the editor should provide a status and action bar');
+assert.match(html, /data-editor-save-version/, 'the editor should provide a Save Version action');
+assert.match(html, /name="city-editor-publisher"/, 'the static page should expose a publisher URL configuration point');
 assert.match(html, /id="city-editor-recovery"/, 'the editor should provide draft recovery UI');
 
 assert.match(app, /createCityEditor\(/, 'the application should construct the editor adapter');

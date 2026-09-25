@@ -5,6 +5,7 @@ import { createGeneratedReplacementDocument, isProtectedEditorTarget, pickEditor
 import { cancelTransformControlDrag, rebindEditorSelection } from './editor-interactions.js';
 import { createEditorCameraNavigation } from './editor-camera-navigation.js';
 import { restoreEditorCameraSession, startEditorCameraSession } from './editor-camera-session.js';
+import { createVersionSaver } from './version-saver.js';
 
 export { createGeneratedReplacementDocument, isProtectedEditorTarget, pickEditorSelection } from './city-editor-selection.js';
 
@@ -54,7 +55,28 @@ export function createCityEditor(adapter) {
     statusCount: ui.status?.querySelector('[data-editor-count]'),
     undo: ui.status?.querySelector('[data-editor-undo]'),
     redo: ui.status?.querySelector('[data-editor-redo]'),
+    saveVersion: ui.status?.querySelector('[data-editor-save-version]'),
   };
+  const publisherUrl = globalThis.CITY_EDITOR_PUBLISHER_URL || document.querySelector('meta[name="city-editor-publisher"]')?.content;
+  const versionSaver = createVersionSaver({
+    serviceUrl: publisherUrl,
+    publishedDocument: documentHistory.current,
+    draftStore,
+    onState({ name, commitSha, reason }) {
+      const version = commitSha || '';
+      const messages = {
+        saved: `Version saved (${version}); deployment pending`,
+        deploying: `Version ${version} is deploying`,
+        live: `Version ${version} is live`,
+        conflict: 'Published city changed; your local draft is safe. Reload and reconcile before saving.',
+        'auth-expired': 'Owner sign-in required; your local draft is safe.',
+        failed: reason === 'local-draft' ? 'Local draft could not be saved; check browser storage.'
+          : reason === 'unconfigured' ? 'Publishing service is not configured; local draft is safe.'
+            : 'Version save failed; your local draft is safe.',
+      };
+      setStatus(messages[name] || 'Saving version…');
+    },
+  });
 
   function addListener(target, type, callback, options) {
     target?.addEventListener(type, callback, options);
@@ -598,6 +620,15 @@ export function createCityEditor(adapter) {
     addListener(ui.status?.querySelector('[data-editor-restore]'), 'click', restoreSelected);
     addListener(controls.undo, 'click', undo);
     addListener(controls.redo, 'click', redo);
+    addListener(controls.saveVersion, 'click', async () => {
+      if (controls.saveVersion.disabled) return;
+      controls.saveVersion.disabled = true;
+      setStatus('Saving local recovery draft…');
+      const candidate = { ...currentDocument(), updatedAt: new Date().toISOString() };
+      const result = await versionSaver.save(candidate);
+      controls.saveVersion.disabled = false;
+      if (result.state === 'auth-expired' && publisherUrl) globalThis.location.assign(`${publisherUrl.replace(/\/$/, '')}/auth/github`);
+    });
     addListener(ui.status?.querySelector('[data-editor-export]'), 'click', () => {
       const result = draftStore.exportDraft();
       if (result.status !== 'exported') { setStatus('No saved draft is available to export'); return; }
