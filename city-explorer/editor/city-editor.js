@@ -2,6 +2,8 @@ import { TransformControls } from 'three/addons/controls/TransformControls.js';
 import { ASSET_CATALOG } from './asset-catalog.js';
 import { createEmptySceneDocument } from './scene-document.js';
 import { createGeneratedReplacementDocument, isProtectedEditorTarget, pickEditorSelection } from './city-editor-selection.js';
+import { cancelTransformControlDrag, rebindEditorSelection } from './editor-interactions.js';
+import { createEditorCameraNavigation } from './editor-camera-navigation.js';
 
 export { createGeneratedReplacementDocument, isProtectedEditorTarget, pickEditorSelection } from './city-editor-selection.js';
 
@@ -26,6 +28,7 @@ export function createCityEditor(adapter) {
   let pointerDown = null;
   let gestureSnapshot = null;
   let transform = null;
+  let cameraNavigation = null;
   let recoveryStatus = null;
   let transientClone = null;
   let gestureGeneratedRecord = null;
@@ -64,6 +67,7 @@ export function createCityEditor(adapter) {
     const current = currentDocument();
     const next = { ...current, ...change, updatedAt: new Date().toISOString() };
     documentHistory.execute('Edit city', next);
+    if (selected?.kind === 'authored') rebindSelectionToLiveRuntime();
     return currentDocument();
   }
 
@@ -353,18 +357,19 @@ export function createCityEditor(adapter) {
 
   function cancelGesture() {
     cancelPlacement();
-    if (!gestureSnapshot || !selected) return;
-    const object = recordFor(selected.id, selected)?.object;
-    if (object) {
+    cameraNavigation?.end();
+    const object = gestureSnapshot && selected ? recordFor(selected.id, selected)?.object : null;
+    if (object && gestureSnapshot) {
       object.position.copy(gestureSnapshot.position);
       object.rotation.copy(gestureSnapshot.rotation);
       object.scale.copy(gestureSnapshot.scale);
       object.updateMatrixWorld(true);
-      transform?.attach(object);
     }
     gestureGeneratedRecord = null;
     gestureSnapshot = null;
-    setStatus('Transform cancelled');
+    cancelTransformControlDrag(transform);
+    if (object) transform?.attach(object);
+    if (object) setStatus('Transform cancelled');
   }
 
   function duplicateSelected() {
@@ -417,6 +422,7 @@ export function createCityEditor(adapter) {
       const documentValue = currentDocument();
       authoredRuntime.load(documentValue);
       adapter.applyOverrides?.(documentValue);
+      rebindSelectionToLiveRuntime();
       refreshUI();
     }
   }
@@ -426,8 +432,32 @@ export function createCityEditor(adapter) {
       const documentValue = currentDocument();
       authoredRuntime.load(documentValue);
       adapter.applyOverrides?.(documentValue);
+      rebindSelectionToLiveRuntime();
       refreshUI();
     }
+  }
+
+  function rebindSelectionToLiveRuntime() {
+    if (!selected) return;
+    const nextSelection = rebindEditorSelection(selected, (id) => recordFor(id));
+    if (nextSelection) setSelected(nextSelection);
+    else setSelected(null);
+  }
+
+  function setPanelOpen(name, open) {
+    const panel = name === 'assets' ? ui.left : ui.inspector;
+    const toggle = ui.toolbar?.querySelector(`[data-editor-panel-toggle="${name}"]`);
+    if (!panel || !toggle) return;
+    panel.hidden = !open;
+    panel.inert = !open;
+    toggle.setAttribute('aria-pressed', String(open));
+    document.documentElement.classList.toggle(`editor-panel-${name}-open`, open);
+  }
+
+  function syncPanelLayout() {
+    const isMobile = globalThis.matchMedia?.('(max-width: 760px)').matches || false;
+    setPanelOpen('assets', !isMobile);
+    setPanelOpen('inspector', !isMobile);
   }
 
   function handleShortcut(event) {
@@ -453,18 +483,27 @@ export function createCityEditor(adapter) {
   function onCanvasPointerMove(event) {
     if (!active) return;
     event.stopPropagation();
+    if (cameraNavigation?.move(event)) return;
     if (pendingAssetKey) updatePreview(event);
   }
 
   function onCanvasPointerDown(event) {
     if (!active) return;
     event.stopPropagation();
+    if (event.button === 2 && !transform?.dragging && cameraNavigation?.begin(event)) {
+      event.preventDefault();
+      pointerDown = null;
+      return;
+    }
     pointerDown = { x: event.clientX, y: event.clientY, transform: transform?.axis !== null && transform?.axis !== undefined };
   }
 
   function onCanvasPointerUp(event) {
     if (!active) return;
     event.stopPropagation();
+    if (cameraNavigation?.end()) {
+      return;
+    }
     const start = pointerDown;
     pointerDown = null;
     if (!start || start.transform || Math.hypot(event.clientX - start.x, event.clientY - start.y) > 5) return;
@@ -478,6 +517,11 @@ export function createCityEditor(adapter) {
     if (!active) return;
     event.preventDefault();
     event.stopPropagation();
+    cameraNavigation?.zoom(event.deltaY);
+  }
+
+  function onCanvasContextMenu(event) {
+    if (active) event.preventDefault();
   }
 
   function saveInspectorTransform() {
@@ -502,6 +546,8 @@ export function createCityEditor(adapter) {
   function initialize() {
     if (disposed) throw new Error('City editor has been disposed.');
     transform = new TransformControls(camera, canvas);
+    const rect = canvas.getBoundingClientRect();
+    cameraNavigation = createEditorCameraNavigation(THREE, camera, { width: rect.width, height: rect.height });
     raycaster.layers.enable(31);
     camera.layers.enable(31);
     transform.enabled = false;
@@ -524,6 +570,13 @@ export function createCityEditor(adapter) {
     addListener(canvas, 'pointerup', onCanvasPointerUp);
     addListener(canvas, 'pointercancel', cancelGesture);
     addListener(canvas, 'wheel', onCanvasWheel, { passive: false });
+    addListener(canvas, 'contextmenu', onCanvasContextMenu);
+    addListener(ui.toolbar, 'click', (event) => {
+      const toggle = event.target.closest?.('[data-editor-panel-toggle]');
+      if (!toggle) return;
+      const name = toggle.dataset.editorPanelToggle;
+      setPanelOpen(name, toggle.getAttribute('aria-pressed') !== 'true');
+    });
     addListener(controls.search, 'input', renderAssets);
     addListener(controls.label, 'change', () => {
       if (!selected) return;
@@ -605,12 +658,13 @@ export function createCityEditor(adapter) {
     hooks.setMode?.('editor');
     Object.values(ui).forEach((panel) => { if (panel) { panel.hidden = false; panel.inert = false; } });
     document.documentElement.classList.add('is-editor');
+    syncPanelLayout();
     transform.enabled = true;
     transform.getHelper().visible = true;
     if (recoveryStatus && ui.recovery?.showModal) ui.recovery.showModal();
     refreshUI();
     canvas.focus({ preventScroll: true });
-    setStatus('Editor active · click an editable feature or choose an asset');
+    setStatus('Editor active · right-drag orbit · Shift+right-drag pan · wheel zoom');
     return true;
   }
 
@@ -626,6 +680,7 @@ export function createCityEditor(adapter) {
     active = false;
     Object.values(ui).forEach((panel) => { if (panel) { panel.hidden = true; panel.inert = true; } });
     document.documentElement.classList.remove('is-editor');
+    document.documentElement.classList.remove('editor-panel-assets-open', 'editor-panel-inspector-open');
     hooks.clearInputs?.();
     hooks.setMode?.(previousMode === 'editor' ? 'onFoot' : previousMode);
     canvas.focus({ preventScroll: true });

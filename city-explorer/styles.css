@@ -438,6 +438,15 @@ button { color: inherit; }
   .city-editor-panel { top: 66px; bottom: 70px; width: min(250px, calc(50vw - 16px)); padding: 11px; }
   #city-editor-left { left: 8px; }
   .city-editor-inspector { right: 8px; }
+  .is-editor #city-editor-left:not([hidden]),
+  .is-editor #city-editor-inspector:not([hidden]) {
+    top: 62px;
+    right: 10px;
+    bottom: 126px;
+    left: 10px;
+    width: auto;
+    max-height: 55vh;
+  }
   .city-editor-toolbar { top: 8px; max-width: calc(100vw - 16px); overflow-x: auto; }
   .city-editor-toolbar button { flex: 0 0 auto; }
   .city-editor-status { right: 8px; bottom: 7px; left: 8px; flex-wrap: wrap; gap: 5px 10px; }
