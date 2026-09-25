@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createPublisherServer, loadConfig } from '../city-editor-publisher/server.mjs';
+import { createAuth } from '../city-editor-publisher/auth.mjs';
 
 const origin = 'https://edmondsonedits.github.io';
 const config = {
@@ -44,9 +45,9 @@ function githubMock({ login = 'edmondsonedits', current = currentSha, putStatus 
   return { fetchImpl, calls };
 }
 
-async function fixture(mock = githubMock()) {
+async function fixture(mock = githubMock(), options = {}) {
   const logs = [];
-  const server = createPublisherServer({ config, fetchImpl: mock.fetchImpl, logger: { error: (...args) => logs.push(args.join(' ')) } });
+  const server = createPublisherServer({ config, fetchImpl: mock.fetchImpl, now: options.now, logger: { error: (...args) => logs.push(args.join(' ')) } });
   await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
   const base = `http://127.0.0.1:${server.address().port}`;
   async function request(path, options = {}) { return fetch(`${base}${path}`, { redirect: 'manual', ...options }); }
@@ -196,4 +197,56 @@ test('write rate limit returns 429', async () => {
     for (let i = 0; i < 7; i++) statuses.push((await f.request('/api/scene/versions', { method: 'POST', headers, body: JSON.stringify({ baseRevision: currentSha, document: scene }) })).status);
     assert.equal(statuses.at(-1), 429);
   } finally { await f.close(); }
+});
+
+test('OAuth starts have a hard cap and expired states release capacity', async () => {
+  let time = 1_000;
+  const f = await fixture(githubMock(), { now: () => time });
+  try {
+    const statuses = [];
+    for (let i = 0; i < 129; i++) statuses.push((await f.request('/auth/github')).status);
+    assert.ok(statuses.includes(429), 'a flood of pending login starts must be bounded');
+    time += 11 * 60 * 1_000;
+    assert.equal((await f.request('/auth/github')).status, 302, 'expired starts should release capacity');
+  } finally { await f.close(); }
+});
+
+test('expiry sweep removes states and session tokens without another request', async () => {
+  let time = 1_000;
+  let sweep;
+  const mock = githubMock();
+  const auth = createAuth({ config, fetchImpl: mock.fetchImpl, now: () => time,
+    scheduleInterval: (callback) => { sweep = callback; return { unref() {} }; }, cancelInterval: () => {} });
+  try {
+    const abandoned = auth.begin();
+    const abandonedState = new URL(abandoned.location).searchParams.get('state');
+    const valid = auth.begin();
+    const validState = new URL(valid.location).searchParams.get('state');
+    const loggedIn = await auth.complete({ headers: { cookie: valid.cookie.split(';')[0] } }, validState, 'code');
+    assert.ok(auth.session({ headers: { cookie: loggedIn.cookie.split(';')[0] } }));
+    time += 8 * 60 * 60 * 1_000 + 1;
+    sweep();
+    time = 1_000; // Rewind the injected clock: rejection now proves deletion, not only time checking.
+    assert.equal(auth.session({ headers: { cookie: loggedIn.cookie.split(';')[0] } }), null);
+    assert.equal(await auth.complete({ headers: { cookie: abandoned.cookie.split(';')[0] } }, abandonedState, 'code'), null);
+    assert.equal(mock.calls.filter(({ pathname }) => pathname === '/login/oauth/access_token').length, 1);
+  } finally { auth.dispose(); }
+});
+
+test('session storage evicts the oldest owner login when its hard cap is reached', async () => {
+  const mock = githubMock();
+  const auth = createAuth({ config, fetchImpl: mock.fetchImpl });
+  try {
+    const cookies = [];
+    for (let i = 0; i < 65; i++) {
+      const started = auth.begin();
+      const state = new URL(started.location).searchParams.get('state');
+      const completed = await auth.complete({ headers: { cookie: started.cookie.split(';')[0] } }, state, 'code');
+      cookies.push(completed.cookie.split(';')[0]);
+    }
+    assert.equal(auth.session({ headers: { cookie: cookies[0] } }), null);
+    assert.equal(auth.session({ headers: { cookie: cookies[32] } }), null);
+    assert.ok(auth.session({ headers: { cookie: cookies[33] } }));
+    assert.ok(auth.session({ headers: { cookie: cookies.at(-1) } }));
+  } finally { auth.dispose(); }
 });

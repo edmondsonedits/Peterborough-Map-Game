@@ -7,7 +7,7 @@ const sha = 'a'.repeat(40);
 const commit = 'b'.repeat(40);
 
 function response(status, value) { return { ok: status >= 200 && status < 300, status, json: async () => value }; }
-function fixture({ authenticated = true, statusStatus = 200, postStatus = 201, deployment = ['deploying', 'live'], draftStatus = 'saved', publishedDocument = scene } = {}) {
+function fixture({ authenticated = true, statusStatus = 200, postStatus = 201, deployment = ['deploying', 'live'], draftStatus = 'saved', publishedDocument = scene, throwOnDeployment = false } = {}) {
   const events = [];
   const requests = [];
   let remoteDocument = publishedDocument;
@@ -20,7 +20,10 @@ function fixture({ authenticated = true, statusStatus = 200, postStatus = 201, d
     requests.push([url, options]);
     if (url.endsWith('/auth/status')) return response(statusStatus, authenticated ? { authenticated: true, csrfToken: 'csrf', baseRevision: sha, publishedDocument: remoteDocument } : { authenticated: false });
     if (url.endsWith('/api/scene/versions')) return response(postStatus, postStatus === 201 ? { commitSha: commit } : { error: postStatus === 409 ? 'stale_revision' : 'failure' });
-    if (url.endsWith(`/api/scene/versions/${commit}/status`)) return response(200, { state: deployment[Math.min(deploymentIndex++, deployment.length - 1)] });
+    if (url.endsWith(`/api/scene/versions/${commit}/status`)) {
+      if (throwOnDeployment) throw new Error('Deployment lookup unavailable');
+      return response(200, { state: deployment[Math.min(deploymentIndex++, deployment.length - 1)] });
+    }
     throw new Error(`unexpected ${url}`);
   };
   const saver = createVersionSaver({ serviceUrl: 'https://publisher.example', publishedDocument: scene, draftStore, fetchImpl, onState: (state) => events.push(['state', state]), wait: async () => {}, maxPolls: 2 });
@@ -74,4 +77,12 @@ test('a later edit can be published after an earlier successful save', async () 
   const later = { ...scene, updatedAt: '2026-09-25T14:00:00.000Z' };
   assert.equal((await f.saver.save(later)).state, 'live');
   assert.equal(f.requests.filter(([url]) => url.endsWith('/api/scene/versions')).length, 2);
+});
+
+test('deployment lookup exception keeps a successful commit marked saved', async () => {
+  const f = fixture({ throwOnDeployment: true });
+  const result = await f.saver.save(scene);
+  assert.deepEqual(result, { state: 'saved', commitSha: commit, deploymentStatus: 'unavailable' });
+  assert.deepEqual(f.events.at(-1), ['state', { name: 'saved', commitSha: commit, deploymentStatus: 'unavailable' }]);
+  assert.equal(f.events.some(([type]) => type === 'flush'), true);
 });

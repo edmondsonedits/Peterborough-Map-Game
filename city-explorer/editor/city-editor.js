@@ -62,10 +62,12 @@ export function createCityEditor(adapter) {
     serviceUrl: publisherUrl,
     publishedDocument: documentHistory.current,
     draftStore,
-    onState({ name, commitSha, reason }) {
+    onState({ name, commitSha, reason, deploymentStatus }) {
       const version = commitSha || '';
       const messages = {
-        saved: `Version saved (${version}); deployment pending`,
+        saved: deploymentStatus === 'unavailable'
+          ? `Version saved (${version}); deployment status unavailable`
+          : `Version saved (${version}); deployment pending`,
         deploying: `Version ${version} is deploying`,
         live: `Version ${version} is live`,
         conflict: 'Published city changed; your local draft is safe. Reload and reconcile before saving.',

@@ -24,6 +24,8 @@ Set the static page's `meta[name="city-editor-publisher"]` content to the public
 
 The GitHub Pages workflow must create `github-pages` deployments for the commit. The status route reads that deployment's latest status; a missing deployment remains `deploying` until the editor's bounded polling ends. No live status is inferred from a successful Contents API write alone.
 
+OAuth starts are limited to 64 pending states and owner sessions to 32. Expired entries are removed by a one-minute sweep and when auth routes run; stopping the service clears both stores. Excess login starts receive `429` until capacity is released. If a commit succeeds but deployment status cannot be checked, the editor still reports the saved commit SHA and marks deployment status unavailable.
+
 To rotate credentials, update the GitHub App client secret and/or `CITY_EDITOR_SESSION_SECRET` in the deployment platform, restart the single service instance, then revoke the old GitHub App secret. Rotating the session secret signs out all owners. Never put the secrets in the static page, repository, logs, or a URL.
 
 Run `node tools/test_city_editor_publisher.mjs` and `node tools/test_city_editor_publisher_client.mjs` from the repository root to exercise authorization, validation, GitHub failures, stale edits, and client recovery behavior with mocked GitHub HTTP.

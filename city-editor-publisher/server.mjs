@@ -49,7 +49,7 @@ export function createPublisherServer({ config = loadConfig(), fetchImpl = fetch
     return JSON.parse(Buffer.concat(chunks).toString('utf8'));
   }
 
-  return http.createServer(async (req, res) => {
+  const server = http.createServer(async (req, res) => {
     const url = new URL(req.url, 'http://localhost');
     if (req.method === 'OPTIONS' && url.pathname.startsWith('/api/')) {
       if (req.headers.origin !== config.origin) return error(res, 403, 'origin_rejected', req);
@@ -60,6 +60,7 @@ export function createPublisherServer({ config = loadConfig(), fetchImpl = fetch
       if (req.method === 'GET' && url.pathname === '/health') return json(res, 200, { ok: true });
       if (req.method === 'GET' && url.pathname === '/auth/github') {
         const started = auth.begin();
+        if (!started) return error(res, 429, 'auth_rate_limited', req);
         res.writeHead(302, { location: started.location, 'set-cookie': started.cookie, 'cache-control': 'no-store' });
         return res.end();
       }
@@ -107,6 +108,8 @@ export function createPublisherServer({ config = loadConfig(), fetchImpl = fetch
       return error(res, 502, 'publisher_failure', req);
     }
   });
+  server.on('close', auth.dispose);
+  return server;
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {

@@ -29,15 +29,19 @@ export function createVersionSaver({ serviceUrl, publishedDocument, draftStore, 
       if (!/^[0-9a-f]{40}$/i.test(commitSha || '')) return state('failed');
       baseline = document;
       state('saved', { commitSha });
-      for (let index = 0; index < maxPolls; index++) {
-        if (index) await wait(Math.min(1000 * 2 ** (index - 1), 8000));
-        const deployment = await fetchImpl(`${base}/api/scene/versions/${commitSha}/status`, { credentials: 'include' });
-        if (deployment.status === 401) return state('auth-expired', { commitSha });
-        if (!deployment.ok) return state('failed', { commitSha });
-        const { state: deploymentState } = await deployment.json();
-        if (deploymentState === 'live') return state('live', { commitSha });
-        if (deploymentState === 'failed') return state('failed', { commitSha });
-        state('deploying', { commitSha });
+      try {
+        for (let index = 0; index < maxPolls; index++) {
+          if (index) await wait(Math.min(1000 * 2 ** (index - 1), 8000));
+          const deployment = await fetchImpl(`${base}/api/scene/versions/${commitSha}/status`, { credentials: 'include' });
+          if (deployment.status === 401) return state('auth-expired', { commitSha });
+          if (!deployment.ok) return state('saved', { commitSha, deploymentStatus: 'unavailable' });
+          const { state: deploymentState } = await deployment.json();
+          if (deploymentState === 'live') return state('live', { commitSha });
+          if (deploymentState === 'failed') return state('failed', { commitSha });
+          state('deploying', { commitSha });
+        }
+      } catch {
+        return state('saved', { commitSha, deploymentStatus: 'unavailable' });
       }
       return state('deploying', { commitSha });
     } catch {

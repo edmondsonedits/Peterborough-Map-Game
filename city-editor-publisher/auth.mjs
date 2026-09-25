@@ -1,16 +1,28 @@
 import { createHmac, randomBytes, timingSafeEqual } from 'node:crypto';
 
 const lifetimeMs = 8 * 60 * 60 * 1000;
+const maxPendingStates = 64;
+const maxSessions = 32;
 const random = () => randomBytes(32).toString('hex');
 
-export function createAuth({ config, fetchImpl, now = () => Date.now() }) {
+export function createAuth({ config, fetchImpl, now = () => Date.now(), scheduleInterval = setInterval, cancelInterval = clearInterval }) {
   const sessions = new Map();
   const pendingStates = new Map();
   const secret = config.sessionSecret;
   const sign = (value) => createHmac('sha256', secret).update(value).digest('hex');
   const cookie = (name, value, maxAge) => `${name}=${value}; Path=/; Max-Age=${maxAge}; HttpOnly; Secure; SameSite=None`;
 
+  function pruneExpired() {
+    const current = now();
+    for (const [state, expires] of pendingStates) if (expires <= current) pendingStates.delete(state);
+    for (const [id, session] of sessions) if (session.expires <= current) sessions.delete(id);
+  }
+  const sweepTimer = scheduleInterval(pruneExpired, 60 * 1000);
+  sweepTimer?.unref?.();
+
   function begin() {
+    pruneExpired();
+    if (pendingStates.size >= maxPendingStates) return null;
     const state = random();
     pendingStates.set(state, now() + 10 * 60 * 1000);
     const url = new URL('https://github.com/login/oauth/authorize');
@@ -32,6 +44,7 @@ export function createAuth({ config, fetchImpl, now = () => Date.now() }) {
   }
 
   async function complete(req, state, code) {
+    pruneExpired();
     const [cookieState, signature] = (readCookie(req, 'publisher_oauth_state') || '').split('.');
     const expiry = pendingStates.get(state);
     if (!state || !code || state !== cookieState || !validSignature(state, signature) || !expiry || expiry < now()) return null;
@@ -54,11 +67,13 @@ export function createAuth({ config, fetchImpl, now = () => Date.now() }) {
     const id = random();
     const expires = now() + lifetimeMs;
     const csrfToken = random();
+    if (sessions.size >= maxSessions) sessions.delete(sessions.keys().next().value);
     sessions.set(id, { token: data.access_token, csrfToken, expires, writes: [] });
     return { cookie: cookie('publisher_session', `${id}.${sign(`${id}.${expires}`)}.${expires}`, lifetimeMs / 1000), expires };
   }
 
   function session(req) {
+    pruneExpired();
     const [id, signature, rawExpiry] = (readCookie(req, 'publisher_session') || '').split('.');
     const expires = Number(rawExpiry);
     if (!/^[0-9a-f]{64}$/.test(id || '') || !Number.isSafeInteger(expires) || expires <= now() || !validSignature(`${id}.${expires}`, signature)) return null;
@@ -82,5 +97,11 @@ export function createAuth({ config, fetchImpl, now = () => Date.now() }) {
     return true;
   }
 
-  return { begin, complete, session, allowWrite, consumeWrite };
+  function dispose() {
+    cancelInterval(sweepTimer);
+    pendingStates.clear();
+    sessions.clear();
+  }
+
+  return { begin, complete, session, allowWrite, consumeWrite, dispose };
 }
