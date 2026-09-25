@@ -204,4 +204,15 @@ assert.deepEqual(matrices[0], { position: [1, 2, 3], scale: [1, 1, 1] });
 assert.deepEqual(lanePaintMatrices[0], { position: [7, 8, 9], scale: [1, 1, 1] }, 'lane paint restores with its road ribbon');
 assert.deepEqual(bridgeDetailMatrices[0], { position: [10, 11, 12], scale: [1, 1, 1] }, 'bridge details restore with their road ribbon');
 
+const unpreparedRoadDetail = new THREE.InstancedMesh(new THREE.BoxGeometry(), new THREE.MeshBasicMaterial(), 1);
+const realRoadRegistry = createGeneratedRegistry(THREE);
+const realRoadId = realRoadRegistry.registerEditableObject({ visible: true, userData: {} }, { sourceType: 'road', sourceId: 'way/real-road' });
+realRoadRegistry.attachEditablePart(realRoadId, unpreparedRoadDetail, 0);
+assert.ok(unpreparedRoadDetail.userData.cityEditorColorFactory() instanceof THREE.Color, 'registry adapter prepares real Three.js color factories before attachment');
+assert.ok(unpreparedRoadDetail.userData.cityEditorMatrixFactory() instanceof THREE.Matrix4, 'registry adapter prepares real Three.js matrix factories before attachment');
+assert.doesNotThrow(
+  () => applyOverrides({ overrides: [] }, { registry: realRoadRegistry }),
+  'restoring an empty document must support real road-detail InstancedMesh objects',
+);
+
 console.log('Generated city asset IDs, overrides, and instance masking passed.');

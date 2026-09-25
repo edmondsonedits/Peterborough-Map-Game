@@ -52,11 +52,18 @@ function cloneInstanceMatrix(object, index) {
   return matrix.clone?.() ?? structuredClone(matrix);
 }
 
-export function createGeneratedRegistry() {
+export function createGeneratedRegistry(THREE = {}) {
   const records = new Map();
   const appliedReplacementIds = new Set();
   const attachedInstanceParts = new WeakMap();
   const hiddenTargets = new Set();
+
+  function prepareInstanceObject(object) {
+    if (!object || typeof object.setColorAt !== 'function') return;
+    object.userData ||= {};
+    if (THREE.Matrix4) object.userData.cityEditorMatrixFactory ||= () => new THREE.Matrix4();
+    if (THREE.Color) object.userData.cityEditorColorFactory ||= () => new THREE.Color();
+  }
 
   function setInstanceColor(object, index, color) {
     if (!object?.instanceColor && Number.isInteger(object?.count) && object.count > 0 && color?.constructor) {
@@ -74,6 +81,7 @@ export function createGeneratedRegistry() {
       object: part.object,
       instanceIndex: Number.isInteger(part.instanceIndex) ? part.instanceIndex : null,
     }));
+    parts.forEach((part) => { if (part.instanceIndex !== null) prepareInstanceObject(part.object); });
     const record = {
       id,
       assetKey: metadata.assetKey || String(metadata.sourceType || 'generated'),
@@ -149,6 +157,7 @@ export function createGeneratedRegistry() {
   function attachEditablePart(id, object, instanceIndex) {
     const record = records.get(id);
     if (!record || !object || !Number.isInteger(instanceIndex)) return false;
+    prepareInstanceObject(object);
     let byIndex = attachedInstanceParts.get(object);
     if (!byIndex) {
       byIndex = new Map();
