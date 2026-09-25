@@ -11,8 +11,24 @@ export function createEditorCameraNavigation(THREE, camera, viewport) {
   function initializeTarget() {
     if (initialized) return;
     camera.getWorldDirection(forward);
-    target.copy(camera.position).addScaledVector(forward, 250);
+    target.copy(camera.position).addScaledVector(forward, Math.max(30, Math.abs(camera.position.y) * 0.75));
     initialized = true;
+  }
+
+  function reset(targetPoint) {
+    drag = null;
+    initialized = false;
+    target.set(0, 0, 0);
+    if (targetPoint && [targetPoint.x, targetPoint.y, targetPoint.z].every(Number.isFinite)) {
+      target.copy(targetPoint);
+      initialized = true;
+    }
+    return initialized ? distanceToTarget() : null;
+  }
+
+  function distanceToTarget() {
+    initializeTarget();
+    return camera.position.distanceTo(target);
   }
 
   function begin(event) {
@@ -64,7 +80,7 @@ export function createEditorCameraNavigation(THREE, camera, viewport) {
   function zoom(deltaY) {
     initializeTarget();
     offset.copy(camera.position).sub(target);
-    const distance = THREE.MathUtils.clamp(offset.length() * Math.exp(Number(deltaY || 0) * 0.001), 8, 12000);
+    const distance = THREE.MathUtils.clamp(Math.max(8, offset.length()) * Math.exp(Number(deltaY || 0) * 0.001), 8, 12000);
     offset.setLength(distance);
     camera.position.copy(target).add(offset);
     camera.lookAt(target);
@@ -72,5 +88,5 @@ export function createEditorCameraNavigation(THREE, camera, viewport) {
     return distance;
   }
 
-  return { begin, move, end, zoom, target };
+  return { begin, move, end, zoom, reset, distanceToTarget, target };
 }

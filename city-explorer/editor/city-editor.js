@@ -4,6 +4,7 @@ import { createEmptySceneDocument } from './scene-document.js';
 import { createGeneratedReplacementDocument, isProtectedEditorTarget, pickEditorSelection } from './city-editor-selection.js';
 import { cancelTransformControlDrag, rebindEditorSelection } from './editor-interactions.js';
 import { createEditorCameraNavigation } from './editor-camera-navigation.js';
+import { restoreEditorCameraSession, startEditorCameraSession } from './editor-camera-session.js';
 
 export { createGeneratedReplacementDocument, isProtectedEditorTarget, pickEditorSelection } from './city-editor-selection.js';
 
@@ -29,6 +30,7 @@ export function createCityEditor(adapter) {
   let gestureSnapshot = null;
   let transform = null;
   let cameraNavigation = null;
+  let cameraSnapshot = null;
   let recoveryStatus = null;
   let transientClone = null;
   let gestureGeneratedRecord = null;
@@ -652,6 +654,10 @@ export function createCityEditor(adapter) {
     if (disposed || active) return false;
     active = true;
     previousMode = hooks.getMode?.() ?? 'onFoot';
+    cameraSnapshot = startEditorCameraSession(camera, cameraNavigation, previousMode, (mode) => {
+      const target = adapter.getNavigationTarget?.(mode);
+      return target || new THREE.Vector3(camera.position.x, 0, camera.position.z);
+    });
     hooks.stopSimulation?.();
     hooks.exitPointerLock?.();
     hooks.clearInputs?.();
@@ -683,6 +689,9 @@ export function createCityEditor(adapter) {
     document.documentElement.classList.remove('editor-panel-assets-open', 'editor-panel-inspector-open');
     hooks.clearInputs?.();
     hooks.setMode?.(previousMode === 'editor' ? 'onFoot' : previousMode);
+    restoreEditorCameraSession(camera, cameraSnapshot);
+    cameraSnapshot = null;
+    cameraNavigation?.reset(null);
     canvas.focus({ preventScroll: true });
     return true;
   }

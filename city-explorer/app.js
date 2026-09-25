@@ -4586,6 +4586,14 @@ function initializeCityEditor(publishedDocument = createEmptySceneDocument()) {
       const point = unproject(x, z);
       return { longitude: point.lon, latitude: point.lat, elevation: y - terrainHeightAtWorld(x, z) };
     },
+    getNavigationTarget() {
+      editorRaycaster.setFromCamera(new THREE.Vector2(0, 0), camera);
+      const groundHit = editorRaycaster.intersectObjects(terrainGroup.children, true)[0]?.point;
+      if (groundHit) return groundHit.clone();
+      const x = camera.position.x;
+      const z = camera.position.z;
+      return new THREE.Vector3(x, terrainHeightAtWorld(x, z), z);
+    },
     applyOverrides(documentValue) {
       applyOverrides(documentValue, { registry: generatedRegistry, authoredRuntime, materials, THREE });
     },
