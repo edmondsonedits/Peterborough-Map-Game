@@ -11,7 +11,11 @@ import { installStationStreetscape } from './streetscape-assets.js?v=streetscape
 import { installStationApron } from './site-surface-materials.js?v=1.6.56';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js';
-import { validateSceneDocument } from './editor/scene-document.js';
+import { createCatalogObject } from './editor/asset-catalog.js';
+import { createCommandHistory } from './editor/command-history.js';
+import { createDraftStore } from './editor/draft-store.js';
+import { createCityEditor } from './editor/city-editor.js';
+import { createEmptySceneDocument, validateSceneDocument } from './editor/scene-document.js';
 import { createGeneratedRegistry } from './editor/generated-registry.js';
 import { applyOverrides } from './editor/override-runtime.js';
 import { captureBatchLengths, collectBatchRanges, createFeatureBatchBinding } from './editor/feature-batch-binding.js';
@@ -129,6 +133,7 @@ const els = {
   playMode: document.querySelector('#play-mode'),
   flyMode: document.querySelector('#fly-mode'),
   mapMode: document.querySelector('#map-mode'),
+  editorMode: document.querySelector('#editor-mode'),
   searchButton: document.querySelector('#search-button'),
   landmarksButton: document.querySelector('#landmarks-button'),
   timeButton: document.querySelector('#time-button'),
@@ -329,8 +334,8 @@ const surveyMarkerGroup = new THREE.Group();
 const authoredDetailGroup = new THREE.Group();
 const generatedEditorProxyGroup = new THREE.Group();
 generatedEditorProxyGroup.name = 'city-editor-generated-proxies';
-const authoredRuntime = createAuthoredRuntime({ THREE, project, unproject, terrainHeightAtWorld, authoredDetailGroup });
 const generatedRegistry = createGeneratedRegistry(THREE);
+const authoredRuntime = createAuthoredRuntime({ THREE, project, unproject, terrainHeightAtWorld, authoredDetailGroup, generatedRegistry });
 const generatedBuildingMeshes = new Map();
 const generatedRoadMeshes = new Map();
 const generatedBuildingFeatures = new Map();
@@ -402,7 +407,9 @@ let semanticSurveyActive = false;
 let semanticSurveyPlacing = false;
 const semanticSurveyDrafts = [];
 const surveyRaycaster = new THREE.Raycaster();
+const editorRaycaster = new THREE.Raycaster();
 const surveyPointer = new THREE.Vector2();
+let cityEditor = null;
 let playerHeading = Math.PI;
 let playerSpeed = 0;
 const playerVelocity = new THREE.Vector3();
@@ -4497,6 +4504,7 @@ async function buildCity() {
   freezeStaticCityTransforms();
   startOptionalTask(loadPublishedAuthoredDetails, (error) => {
     console.warn('Published authored city details are unavailable; the simulator remains ready without them.', error);
+    initializeCityEditor(createEmptySceneDocument());
   });
   setProgress(100, 'Peterborough is ready');
   setReadyStatus(summary);
@@ -4524,10 +4532,92 @@ async function loadPublishedAuthoredDetails() {
   const result = validateSceneDocument(await response.json());
   if (!result.ok) {
     console.warn('Published authored city details are invalid; continuing without them.', result.errors);
+    initializeCityEditor(createEmptySceneDocument());
     return;
   }
   authoredRuntime.load(result.document);
   applyOverrides(result.document, { registry: generatedRegistry, authoredRuntime, materials, THREE });
+  initializeCityEditor(result.document);
+}
+
+function initializeCityEditor(publishedDocument = createEmptySceneDocument()) {
+  if (cityEditor) return cityEditor;
+  const draftStore = createDraftStore();
+  const history = createCommandHistory({
+    initialDocument: publishedDocument,
+    onChange: (documentValue) => {
+      authoredRuntime.load(documentValue);
+      applyOverrides(documentValue, { registry: generatedRegistry, authoredRuntime, materials, THREE });
+      draftStore.saveDraft(documentValue, { baseRevision: publishedDocument.revision });
+    },
+  });
+  cityEditor = createCityEditor({
+    THREE,
+    scene,
+    authoredRuntime,
+    generatedRegistry,
+    documentHistory: history,
+    draftStore,
+    raycaster: editorRaycaster,
+    camera,
+    canvas: els.canvas,
+    layers: {
+      Authored: authoredDetailGroup,
+      Landmarks: landmarkGroup,
+      Buildings: buildingGroup,
+      Roads: roadGroup,
+      Vegetation: vegetationGroup,
+      'Editor proxies': generatedEditorProxyGroup,
+    },
+    protectedGroups: new Set([
+      terrainGroup, mapRoadGroup, gameplayGroup, semanticSurveyGroup, surveyMarkerGroup,
+      streetLabelGroup,
+    ]),
+    intersectGround(pointer) {
+      editorRaycaster.setFromCamera(pointer, camera);
+      return editorRaycaster.intersectObjects(terrainGroup.children, true)[0]?.point ?? null;
+    },
+    createPreview: createCatalogObject,
+    transformFromWorld(x, z, y) {
+      const point = unproject(x, z);
+      return { longitude: point.lon, latitude: point.lat, elevation: y - terrainHeightAtWorld(x, z) };
+    },
+    toGeographic(x, z, y) {
+      const point = unproject(x, z);
+      return { longitude: point.lon, latitude: point.lat, elevation: y - terrainHeightAtWorld(x, z) };
+    },
+    applyOverrides(documentValue) {
+      applyOverrides(documentValue, { registry: generatedRegistry, authoredRuntime, materials, THREE });
+    },
+    hooks: {
+      getMode: () => state.mode,
+      setMode(mode) {
+        if (mode === 'editor') return;
+        setMode(mode);
+      },
+      clearInputs() {
+        state.keys.clear();
+        state.previousTouch = null;
+        state.dragLooking = false;
+        state.dragPointerId = null;
+        state.previousPointer = null;
+        gamepadActionDown = false;
+        gamepadCameraDown = false;
+      },
+      stopSimulation() {
+        stopFlyMotion();
+        playerVelocity.set(0, 0, 0);
+        playerSpeed = 0;
+        truckState.speed = 0;
+        truckState.steering = 0;
+        velocity.set(0, 0, 0);
+      },
+      exitPointerLock: () => document.exitPointerLock?.(),
+    },
+  });
+  cityEditor.initialize();
+  if (els.editorMode) els.editorMode.disabled = false;
+  return cityEditor;
 }
 
 function updateMapGuide() {
@@ -4766,6 +4856,7 @@ function setModeLegacy(mode) {
 }
 
 function setMode(mode, force = false) {
+  if (cityEditor?.active) return;
   const resolvedMode = mode === 'play' ? (state.lastNonMapMode === 'driving' ? 'driving' : 'onFoot') : mode;
   if (resolvedMode === state.mode && !force) {
     if (resolvedMode === 'fly') updateFlyHint();
@@ -5620,14 +5711,15 @@ function animate() {
   }
   const delta = Math.min(clock.getDelta(), 0.05);
   if (!captureFrame) {
-  if (state.mode === 'fly') updateFlyControls(delta);
-  else if (state.mode === 'map') updateMapControls(delta);
-  else {
-    if (state.mode === 'onFoot') updatePlayerActor(delta);
-    updateFireTruck(delta);
-    updateGameplayCamera(delta);
-    updateGameplayHud();
-  }
+    if (cityEditor?.active) cityEditor.update(delta);
+    else if (state.mode === 'fly') updateFlyControls(delta);
+    else if (state.mode === 'map') updateMapControls(delta);
+    else {
+      if (state.mode === 'onFoot') updatePlayerActor(delta);
+      updateFireTruck(delta);
+      updateGameplayCamera(delta);
+      updateGameplayHud();
+    }
   }
   const viewCamera = captureFrame?.camera || camera;
   updateCityVisualLod(viewCamera);
@@ -5926,6 +6018,7 @@ function showToast(message) {
 }
 
 function onPointerMove(event) {
+  if (cityEditor?.active) return;
   if (!state.pointerLocked || state.mode === 'map') return;
   if (state.mode === 'fly') {
     const look = applyFlyLookDelta(state.yaw, state.pitch, event.movementX, event.movementY);
@@ -5939,6 +6032,7 @@ function onPointerMove(event) {
 }
 
 function requestMouseLook() {
+  if (cityEditor?.active) return;
   if (state.mode === 'map' || document.pointerLockElement === els.canvas || !els.canvas.requestPointerLock) return;
   const reportFailure = () => showToast('Mouse capture unavailable — hold and drag on the city to look around');
   const requestStandardLock = () => {
@@ -5958,6 +6052,7 @@ function requestMouseLook() {
 }
 
 function beginCanvasLook(event) {
+  if (cityEditor?.active) return;
   const mouseLikePointer = event.pointerType === 'mouse' || matchMedia('(any-pointer: fine)').matches;
   if (state.mode === 'map' || !mouseLikePointer || ![0, 2].includes(event.button)) return;
   els.canvas.focus({ preventScroll: true });
@@ -5971,6 +6066,7 @@ function beginCanvasLook(event) {
 }
 
 function updateCanvasDrag(event) {
+  if (cityEditor?.active) return;
   if (!state.dragLooking || state.pointerLocked || state.dragPointerId !== event.pointerId || !state.previousPointer) return;
   const dx = event.clientX - state.previousPointer.x;
   const dy = event.clientY - state.previousPointer.y;
@@ -5995,6 +6091,7 @@ function endCanvasLook(event) {
 }
 
 function onWheel(event) {
+  if (cityEditor?.active) { event.preventDefault(); return; }
   if (state.mode === 'map') {
     event.preventDefault();
     camera.position.y = THREE.MathUtils.clamp(camera.position.y + event.deltaY * 2.2, 500, Math.max(9000, CITY.terrainSize * 1.05));
@@ -6020,6 +6117,7 @@ function wireEvents() {
   els.playMode?.addEventListener('click', () => { setMode('play'); els.canvas.focus({ preventScroll: true }); });
   els.flyMode.addEventListener('click', () => { setMode('fly'); els.canvas.focus({ preventScroll: true }); });
   els.mapMode.addEventListener('click', () => { setMode('map'); els.canvas.focus({ preventScroll: true }); });
+  els.editorMode?.addEventListener('click', () => cityEditor?.enter());
   els.searchButton.addEventListener('click', () => { stopFlyMotion(); document.exitPointerLock?.(); els.searchDialog.showModal(); setTimeout(() => els.searchInput.focus(), 50); });
   els.landmarksButton.addEventListener('click', () => { stopFlyMotion(); document.exitPointerLock?.(); els.landmarksDialog.showModal(); });
   els.timeButton.addEventListener('click', cycleTheme);
@@ -6048,6 +6146,7 @@ function wireEvents() {
   });
 
   els.canvas.addEventListener('pointerdown', (event) => {
+    if (cityEditor?.active) return;
     if (!addSemanticSurveyPoint(event)) return;
     event.preventDefault();
     event.stopPropagation();
@@ -6059,6 +6158,7 @@ function wireEvents() {
   els.canvas.addEventListener('lostpointercapture', endCanvasLook);
   els.canvas.addEventListener('contextmenu', (event) => event.preventDefault());
   document.addEventListener('pointerlockchange', () => {
+    if (cityEditor?.active) { state.pointerLocked = false; updateMouseLookUi(); return; }
     const wasLocked = state.pointerLocked;
     state.pointerLocked = document.pointerLockElement === els.canvas;
     if (state.pointerLocked) {
@@ -6070,11 +6170,12 @@ function wireEvents() {
     }
     updateMouseLookUi();
   });
-  document.addEventListener('pointerlockerror', () => showToast('Mouse capture unavailable — hold and drag to look around'));
+  document.addEventListener('pointerlockerror', () => { if (!cityEditor?.active) showToast('Mouse capture unavailable — hold and drag to look around'); });
   document.addEventListener('mousemove', onPointerMove);
   els.canvas.addEventListener('wheel', onWheel, { passive: false });
 
   window.addEventListener('keydown', (event) => {
+    if (cityEditor?.active) { cityEditor.handleShortcut(event); return; }
     if (keyboardInputIsBlocked(event)) return;
     if (!event.repeat && event.code === 'KeyM') {
       setMode(state.mode === 'map' ? state.lastNonMapMode : 'map');
@@ -6113,9 +6214,9 @@ function wireEvents() {
     if (isFlyControlCode(event.code)) state.keys.add(event.code);
     if (isFlyControlCode(event.code) || ['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.code)) event.preventDefault();
   });
-  window.addEventListener('keyup', (event) => state.keys.delete(event.code));
+  window.addEventListener('keyup', (event) => { if (!cityEditor?.active) state.keys.delete(event.code); });
   window.addEventListener('blur', () => stopFlyMotion());
-  window.addEventListener('pagehide', () => citySplatLayer?.dispose(), { once: true });
+  window.addEventListener('pagehide', () => { citySplatLayer?.dispose(); cityEditor?.dispose(); }, { once: true });
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
       stopFlyMotion();
@@ -6127,8 +6228,8 @@ function wireEvents() {
 
   document.querySelectorAll('[data-touch-key]').forEach((button) => {
     const key = button.dataset.touchKey;
-    const start = (event) => { event.preventDefault(); state.keys.add(key); };
-    const end = (event) => { event.preventDefault(); state.keys.delete(key); };
+    const start = (event) => { event.preventDefault(); if (!cityEditor?.active) state.keys.add(key); };
+    const end = (event) => { event.preventDefault(); if (!cityEditor?.active) state.keys.delete(key); };
     button.addEventListener('pointerdown', start);
     button.addEventListener('pointerup', end);
     button.addEventListener('pointercancel', end);
@@ -6151,10 +6252,12 @@ function wireEvents() {
   });
 
   els.canvas.addEventListener('touchstart', (event) => {
+    if (cityEditor?.active) return;
     if (event.touches.length !== 1 || state.mode === 'map') return;
     state.previousTouch = { x: event.touches[0].clientX, y: event.touches[0].clientY };
   }, { passive: true });
   els.canvas.addEventListener('touchmove', (event) => {
+    if (cityEditor?.active) return;
     if (!state.previousTouch || event.touches.length !== 1 || state.mode === 'map') return;
     const touch = event.touches[0];
     const dx = touch.clientX - state.previousTouch.x;

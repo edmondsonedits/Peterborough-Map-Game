@@ -76,5 +76,43 @@ export function createFeatureBatchBinding(ranges, resolveMesh) {
     }
   }
 
-  return { setVisible, setAppearance, restore };
+  function cloneGeometry(THREE, origin = null) {
+    const root = new THREE.Group();
+    if (origin) root.position.copy(origin);
+    for (const range of ranges) {
+      const sourceMesh = resolveMesh(range.key);
+      const sourceGeometry = sourceMesh?.geometry;
+      if (!sourceMesh || !sourceGeometry) continue;
+      const geometry = new THREE.BufferGeometry();
+      const first = range.startVertex;
+      const last = first + range.vertexCount;
+      for (const name of Object.keys(sourceGeometry.attributes)) {
+        const attribute = sourceGeometry.getAttribute(name);
+        const start = first * attribute.itemSize;
+        const end = last * attribute.itemSize;
+        const array = attribute.array.slice(start, end);
+        if (name === 'position' && origin) {
+          for (let offset = 0; offset + 2 < array.length; offset += attribute.itemSize) {
+            array[offset] -= origin.x;
+            array[offset + 1] -= origin.y;
+            array[offset + 2] -= origin.z;
+          }
+        }
+        geometry.setAttribute(name, new THREE.BufferAttribute(array, attribute.itemSize, attribute.normalized));
+      }
+      if (!geometry.getAttribute('position')) { geometry.dispose(); continue; }
+      geometry.computeBoundingBox();
+      geometry.computeBoundingSphere();
+      const sourceMaterials = Array.isArray(sourceMesh.material) ? sourceMesh.material : [sourceMesh.material];
+      const materials = sourceMaterials.map((material) => material?.clone?.() ?? material);
+      const mesh = new THREE.Mesh(geometry, Array.isArray(sourceMesh.material) ? materials : materials[0]);
+      mesh.castShadow = sourceMesh.castShadow;
+      mesh.receiveShadow = sourceMesh.receiveShadow;
+      mesh.renderOrder = sourceMesh.renderOrder;
+      root.add(mesh);
+    }
+    return root;
+  }
+
+  return { setVisible, setAppearance, restore, cloneGeometry };
 }

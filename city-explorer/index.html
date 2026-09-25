@@ -63,6 +63,7 @@
         <button id="play-mode" class="hud-button is-active" type="button">Play</button>
         <button id="fly-mode" class="hud-button" type="button">Fly mode</button>
         <button id="map-mode" class="hud-button" type="button">Map</button>
+        <button id="editor-mode" class="hud-button" type="button" aria-label="Open city editor">Editor</button>
         <button id="search-button" class="hud-button" type="button">Search</button>
         <button id="landmarks-button" class="hud-button" type="button">Landmarks</button>
         <button id="time-button" class="hud-button" type="button">Dusk</button>
@@ -201,6 +202,63 @@
         <a href="https://explore.panoramax.fr/" target="_blank" rel="noopener noreferrer">Open Panoramax street imagery</a>
         <small>Reference only. Record source, capture date, licence, and attribution before deriving an asset. No imagery is copied into the game.</small>
       </aside>
+
+      <aside id="city-editor-left" class="city-editor-panel" aria-label="City editor assets and layers" hidden inert>
+        <header><div><p>City editor</p><h2>Assets &amp; layers</h2></div></header>
+        <label class="editor-search-label" for="city-editor-search">Search assets</label>
+        <input id="city-editor-search" data-editor-search type="search" autocomplete="off" placeholder="Tree, sign, bench…">
+        <div class="city-editor-section"><h3>Place an asset</h3><div class="city-editor-assets" data-editor-assets aria-label="Asset catalogue"></div></div>
+        <div class="city-editor-section"><h3>Visible layers</h3><div class="city-editor-layers" data-editor-layers></div></div>
+      </aside>
+
+      <section id="city-editor-transform-toolbar" class="city-editor-toolbar" aria-label="Transform tools" hidden inert>
+        <button type="button" data-transform-mode="translate" aria-pressed="true" title="Move (G)">Move</button>
+        <button type="button" data-transform-mode="rotate" aria-pressed="false" title="Rotate (R)">Rotate</button>
+        <button type="button" data-transform-mode="scale" aria-pressed="false" title="Scale (S)">Scale</button>
+        <button type="button" data-transform-space aria-pressed="false" title="Toggle world or local coordinates">World</button>
+        <label>Snap <input data-transform-snap type="number" min="0" step="0.1" value="0" aria-label="Transform snap interval; zero disables snapping"></label>
+      </section>
+
+      <aside id="city-editor-inspector" class="city-editor-panel city-editor-inspector" aria-label="Selected asset inspector" hidden inert>
+        <header><div><p>Selection</p><h2 data-editor-selected>No selection</h2></div></header>
+        <label>Label<input data-editor-label type="text" maxlength="120" autocomplete="off"></label>
+        <fieldset><legend>Geographic transform</legend>
+          <label>Longitude<input data-transform-field="longitude" type="number" step="0.000001" inputmode="decimal"></label>
+          <label>Latitude<input data-transform-field="latitude" type="number" step="0.000001" inputmode="decimal"></label>
+          <label>Elevation (m)<input data-transform-field="elevation" type="number" step="0.1" inputmode="decimal"></label>
+          <label>Rotation X<input data-transform-field="rotationX" type="number" step="0.01" inputmode="decimal"></label>
+          <label>Rotation Y<input data-transform-field="rotationY" type="number" step="0.01" inputmode="decimal"></label>
+          <label>Rotation Z<input data-transform-field="rotationZ" type="number" step="0.01" inputmode="decimal"></label>
+          <label>Scale X<input data-transform-field="scaleX" type="number" min="0.05" step="0.05" inputmode="decimal"></label>
+          <label>Scale Y<input data-transform-field="scaleY" type="number" min="0.05" step="0.05" inputmode="decimal"></label>
+          <label>Scale Z<input data-transform-field="scaleZ" type="number" min="0.05" step="0.05" inputmode="decimal"></label>
+        </fieldset>
+      </aside>
+
+      <footer id="city-editor-status" class="city-editor-status" aria-label="Editor actions and status" hidden inert>
+        <span data-editor-status-text role="status" aria-live="polite">Editor ready</span>
+        <span data-editor-count>0 records</span>
+        <div class="city-editor-actions">
+          <button type="button" data-editor-undo aria-label="Undo edit">Undo</button>
+          <button type="button" data-editor-redo aria-label="Redo edit">Redo</button>
+          <button type="button" data-editor-duplicate>Duplicate</button>
+          <button type="button" data-editor-delete>Delete / hide</button>
+          <button type="button" data-editor-restore>Restore</button>
+          <button type="button" data-editor-export>Export draft</button>
+          <button type="button" data-editor-exit>Exit editor</button>
+        </div>
+      </footer>
+
+      <dialog id="city-editor-recovery" class="explorer-dialog city-editor-recovery" aria-labelledby="city-editor-recovery-title">
+        <section class="dialog-shell">
+          <header><div><p>Local recovery</p><h2 id="city-editor-recovery-title">Recover city draft?</h2></div></header>
+          <p data-recovery-note>A local city editor draft is available.</p>
+          <div class="city-editor-actions">
+            <button type="button" data-recovery-action="recover">Recover draft</button>
+            <button type="button" data-recovery-action="discard">Discard draft</button>
+          </div>
+        </section>
+      </dialog>
     </div>
 
     <!--

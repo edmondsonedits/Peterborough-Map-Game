@@ -154,6 +154,24 @@ export function createGeneratedRegistry(THREE = {}) {
     return editable;
   }
 
+  function cloneEditableObject(id) {
+    const record = records.get(id);
+    if (!record) return null;
+    if (record.batchBinding?.cloneGeometry && THREE.Group) {
+      return record.batchBinding.cloneGeometry(THREE, record.object.position);
+    }
+    const clone = record.object.clone?.(true);
+    if (!clone) return null;
+    clone.traverse?.((object) => {
+      if (!object.isMesh) return;
+      object.geometry = object.geometry?.clone?.() ?? object.geometry;
+      const materials = Array.isArray(object.material) ? object.material : [object.material];
+      const copies = materials.map((material) => material?.clone?.() ?? material);
+      object.material = Array.isArray(object.material) ? copies : copies[0];
+    });
+    return clone;
+  }
+
   function attachEditablePart(id, object, instanceIndex) {
     const record = records.get(id);
     if (!record || !object || !Number.isInteger(instanceIndex)) return false;
@@ -319,6 +337,7 @@ export function createGeneratedRegistry(THREE = {}) {
     makeGeneratedId,
     registerEditableObject,
     getEditableRecord,
+    cloneEditableObject,
     attachEditablePart,
     resetOverrides() { hiddenTargets.clear(); },
     restore,

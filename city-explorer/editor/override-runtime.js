@@ -27,16 +27,17 @@ export function applyOverrides(document, adapter = {}) {
     if (override.operation === 'replace' && authoredRuntime?.upsert && override.assetKey) {
       registry.hide(override.id);
       const replacementId = makeGeneratedId({ sourceType: 'authored-replacement', sourceId: override.id });
-      const transform = target.transform || {
+      const storedReplacement = document.objects?.find((record) => record.id === replacementId);
+      const transform = storedReplacement?.transform || target.transform || {
         longitude: 0, latitude: 0, elevation: 0,
         rotation: { x: 0, y: 0, z: 0 }, scale: { x: 1, y: 1, z: 1 },
       };
       authoredRuntime.upsert({
         id: replacementId,
-        assetKey: override.assetKey,
-        label: target.label,
-        visible: true,
-        properties: { sourceTargetId: target.id },
+        assetKey: storedReplacement?.assetKey || override.assetKey,
+        label: storedReplacement?.label || target.label,
+        visible: storedReplacement?.visible !== false,
+        properties: storedReplacement?.properties || { sourceTargetId: target.id },
         transform,
       });
       const replacement = authoredRuntime.getObject?.(replacementId);
