@@ -73,7 +73,7 @@ export function createCityEditor(adapter) {
         conflict: 'Published city changed; your local draft is safe. Reload and reconcile before saving.',
         'auth-expired': 'Owner sign-in required; your local draft is safe.',
         failed: reason === 'local-draft' ? 'Local draft could not be saved; check browser storage.'
-          : reason === 'unconfigured' ? 'Publishing service is not configured; local draft is safe.'
+          : reason === 'unconfigured' ? 'Publisher not configured; local draft is safe. Download/Export JSON remains available.'
             : 'Version save failed; your local draft is safe.',
       };
       setStatus(messages[name] || 'Saving version…');

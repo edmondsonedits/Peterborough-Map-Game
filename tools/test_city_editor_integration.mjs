@@ -25,6 +25,7 @@ assert.match(html, /id="city-editor-inspector"/, 'the editor should provide an i
 assert.match(html, /id="city-editor-transform-toolbar"/, 'the editor should provide transform controls');
 assert.match(html, /id="city-editor-status"/, 'the editor should provide a status and action bar');
 assert.match(html, /data-editor-save-version/, 'the editor should provide a Save Version action');
+assert.match(html, /data-editor-export[^>]*>Download\/Export JSON<\/button>/, 'the editor should provide an explicit local JSON download/export action');
 assert.match(html, /name="city-editor-publisher"/, 'the static page should expose a publisher URL configuration point');
 assert.match(html, /id="city-editor-recovery"/, 'the editor should provide draft recovery UI');
 
@@ -32,6 +33,9 @@ assert.match(app, /createCityEditor\(/, 'the application should construct the ed
 assert.match(app, /cityEditor\.update\(delta\)/, 'the single animation loop should update the editor');
 assert.match(app, /cityEditor\?\.enter\(\)/, 'the Editor button should enter editor mode');
 assert.match(app, /data\/editor\/peterborough-details\.json/, 'published authored content should load');
+assert.match(app, /onChange:\s*\(documentValue\)\s*=>[\s\S]*?draftStore\.saveDraft\(documentValue/, 'every editor document change should schedule local recovery autosave');
+assert.match(editor, /Publisher not configured; local draft is safe\./, 'an absent publisher must be reported honestly while preserving the local draft');
+assert.match(editor, /data-editor-export/, 'the local JSON export action must remain wired while publishing is unavailable');
 assert.match(app, /if\s*\(!result\.ok\)[\s\S]*?initializeCityEditor\(createEmptySceneDocument\(\)\);[\s\S]*?return;/, 'invalid published content should leave the editor available with an empty document');
 assert.match(app, /if\s*\(cityEditor\?\.active\)/, 'global simulator shortcuts should be isolated in editor mode');
 assert.match(html, /"three\/addons\/":\s*"\.\/vendor\/three-r180\/examples\/jsm\//, 'the addon import map should resolve to Three r180');

@@ -95,6 +95,16 @@ The current repository contains **zero licensed production splat assets**. All f
 
 Desktop motion uses analytic, frame-rate-independent velocity damping. Combined inputs are normalized, terrain/world-boundary collisions cancel outward velocity, pointer-lock loss and dialogs clear held inputs, and the testable control math lives in `fly-controls.js`.
 
+## City editor and owner publishing
+
+The Editor button opens the integrated scene editor. Changes are autosaved to this browser's local storage, and **Download/Export JSON** downloads a recovery copy. Use that export before clearing browser data or moving the draft to another device; a local draft is not a published city version.
+
+**Save Version** first flushes the local recovery draft, then asks the separately hosted publisher to authenticate the owner and create a versioned repository snapshot. The public simulator reads only the published `data/editor/peterborough-details.json`; it does not need the publisher to display the city. The publisher service URL is configured in the `city-editor-publisher` meta tag (or `CITY_EDITOR_PUBLISHER_URL` at runtime), and write credentials stay on that service.
+
+The publisher URL is currently unconfigured in this checkout. Save Version therefore reports **Publisher not configured**, keeps the local draft, and makes no network write. Editor operations remain browser-local until the publisher is configured; do not describe local changes as deployed or owner-only. To continue safely, use **Download/Export JSON** and retain the file. After configuration, the owner signs in through the publisher before saving; wait for the editor to report that the version is live before treating it as public. A stale revision or failed save leaves the recovery draft available for export and reconciliation.
+
+Release checks for the editor are all nine `node tools/test_city_editor_*.mjs` scripts (including the release assertions), followed by the listed city/gameplay regression tests. The current release has not been published or verified at the public URL because publisher configuration and deployment credentials are unavailable in this checkout.
+
 ## Asset build architecture
 
 The project now uses a two-stage workflow:

@@ -63,6 +63,27 @@ test('unavailable local storage prevents a network write', async () => {
   assert.equal(f.requests.length, 0);
 });
 
+test('unconfigured publisher keeps the local draft and reports no published success', async () => {
+  const events = [];
+  const requests = [];
+  const draftStore = {
+    saveDraft(document, options) { events.push(['draft', document, options]); return { status: 'scheduled' }; },
+    flush() { events.push(['flush']); return { status: 'saved' }; },
+  };
+  const saver = createVersionSaver({
+    serviceUrl: '',
+    publishedDocument: scene,
+    draftStore,
+    fetchImpl: async (...args) => { requests.push(args); throw new Error('network should not be used'); },
+    onState: (value) => events.push(['state', value]),
+  });
+  const result = await saver.save(scene);
+  assert.deepEqual(result, { state: 'failed', reason: 'unconfigured' });
+  assert.deepEqual(events.slice(0, 2).map(([type]) => type), ['draft', 'flush']);
+  assert.deepEqual(events.at(-1), ['state', { name: 'failed', reason: 'unconfigured' }]);
+  assert.equal(requests.length, 0);
+});
+
 test('remote content changed since editor load causes conflict without publication', async () => {
   const f = fixture({ publishedDocument: { ...scene, updatedAt: '2026-09-25T13:00:00.000Z' } });
   assert.equal((await f.saver.save(scene)).state, 'conflict');

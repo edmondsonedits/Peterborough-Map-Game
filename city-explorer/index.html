@@ -24,7 +24,7 @@
 
     <!-- Terrain has an optional live fallback; the rendering runtime is shipped locally. -->
     <link rel="preconnect" href="https://s3.amazonaws.com">
-    <link rel="stylesheet" href="styles.css?v=1.5.6-startup1">
+    <link rel="stylesheet" href="styles.css?v=city-editor-20260925">
     <link rel="stylesheet" href="mobile-controls-1.6.68.css?v=1.6.75">
     <link rel="stylesheet" href="current-street-hud-1.6.77.css?v=1.6.77">
 
@@ -248,7 +248,7 @@
           <button type="button" data-editor-delete>Delete / hide</button>
           <button type="button" data-editor-restore>Restore</button>
           <button type="button" data-editor-save-version aria-label="Save published city version">Save Version</button>
-          <button type="button" data-editor-export>Export draft</button>
+          <button type="button" data-editor-export aria-label="Download or export the local city draft as JSON">Download/Export JSON</button>
           <button type="button" data-editor-exit>Exit editor</button>
         </div>
       </footer>
@@ -366,9 +366,9 @@
     </script>
     <script src="../shared/build-version.js?v=1.6.88"></script>
     <script src="release.js?v=1.6.88"></script>
-    <script type="module" src="data-loader.js?v=1.5.6-accuracy1"></script>
-    <script src="vendor/osmtogeojson-3.0.0-beta.5/osmtogeojson.js?v=1.5.5"></script>
-    <script type="module" src="road-orientation-fix.js?v=sherbrooke-20260915"></script>
+    <script type="module" src="data-loader.js?v=city-editor-20260925"></script>
+    <script src="vendor/osmtogeojson-3.0.0-beta.5/osmtogeojson.js?v=city-editor-20260925"></script>
+    <script type="module" src="road-orientation-fix.js?v=city-editor-20260925"></script>
     <script src="mobile-controls-1.6.68.js?v=1.6.68"></script>
     <script src="driving-refinement-1.6.69.js?v=1.6.69"></script>
   </body>
