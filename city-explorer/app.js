@@ -10,7 +10,7 @@ import { createVegetationVariant, stationOneVegetationPalette } from './vegetati
 import { installStationStreetscape } from './streetscape-assets.js?v=streetscape-2';
 import { installStationApron } from './site-surface-materials.js?v=1.6.56';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
-import { createAuthoredRuntime } from './editor/authored-runtime.js';
+import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js';
 import { validateSceneDocument } from './editor/scene-document.js';
 import {
   LANDMARKS,
@@ -4288,7 +4288,9 @@ async function buildCity() {
   cityVisualLod = '';
   updateCityVisualLod();
   freezeStaticCityTransforms();
-  await loadPublishedAuthoredDetails();
+  startOptionalTask(loadPublishedAuthoredDetails, (error) => {
+    console.warn('Published authored city details are unavailable; the simulator remains ready without them.', error);
+  });
   setProgress(100, 'Peterborough is ready');
   setReadyStatus(summary);
   globalThis.__PTBO_EXPLORER_BOOTSTRAP__?.ready?.();
@@ -4310,18 +4312,14 @@ async function buildCity() {
 }
 
 async function loadPublishedAuthoredDetails() {
-  try {
-    const response = await fetch('./data/editor/peterborough-details.json');
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const result = validateSceneDocument(await response.json());
-    if (!result.ok) {
-      console.warn('Published authored city details are invalid; continuing without them.', result.errors);
-      return;
-    }
-    authoredRuntime.load(result.document);
-  } catch (error) {
-    console.warn('Published authored city details are unavailable; the simulator remains ready without them.', error);
+  const response = await fetch('./data/editor/peterborough-details.json');
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  const result = validateSceneDocument(await response.json());
+  if (!result.ok) {
+    console.warn('Published authored city details are invalid; continuing without them.', result.errors);
+    return;
   }
+  authoredRuntime.load(result.document);
 }
 
 function updateMapGuide() {

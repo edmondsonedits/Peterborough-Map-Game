@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import * as THREE from '../city-explorer/vendor/three-r180/build/three.module.min.js';
 import { ASSET_CATALOG, createCatalogObject } from '../city-explorer/editor/asset-catalog.js';
-import { createAuthoredRuntime } from '../city-explorer/editor/authored-runtime.js';
+import { createAuthoredRuntime, startOptionalTask } from '../city-explorer/editor/authored-runtime.js';
 
 const requiredCatalogFields = [
   'key',
@@ -101,5 +101,25 @@ assert.equal(replaced.visible, false);
 assert.equal(authoredDetailGroup.children.length, 1, 'upsert replaces the prior rendered object');
 runtime.dispose();
 assert.equal(authoredDetailGroup.children.length, 0);
+
+let finishOptionalLoad;
+let optionalLoadFinished = false;
+let ready = false;
+const optionalLoad = new Promise((resolve) => { finishOptionalLoad = resolve; });
+const scheduled = startOptionalTask(() => optionalLoad.then(() => { optionalLoadFinished = true; }));
+assert.equal(scheduled, undefined, 'optional loading does not return a promise that startup can await');
+ready = true;
+await Promise.resolve();
+assert.equal(ready, true, 'base readiness proceeds while authored details remain pending');
+assert.equal(optionalLoadFinished, false);
+finishOptionalLoad();
+await Promise.resolve();
+await Promise.resolve();
+assert.equal(optionalLoadFinished, true);
+
+let containedError = null;
+startOptionalTask(() => Promise.reject(new Error('optional load failed')), (error) => { containedError = error; });
+await new Promise((resolve) => setImmediate(resolve));
+assert.equal(containedError?.message, 'optional load failed', 'optional task failures are contained');
 
 console.log(JSON.stringify({ status: 'pass', catalogueEntries: catalogueKeys.length, geographicRoundTrip: true }));

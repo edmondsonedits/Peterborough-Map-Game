@@ -1,5 +1,16 @@
 import { ASSET_CATALOG, createCatalogObject } from './asset-catalog.js';
 
+export function startOptionalTask(task, onError = () => {}) {
+  if (typeof task !== 'function') throw new TypeError('Optional task must be a function.');
+  void Promise.resolve().then(task).catch((error) => {
+    try {
+      onError(error);
+    } catch {
+      // A reporting callback must not turn an optional startup task into a failure.
+    }
+  });
+}
+
 function disposeObject(root) {
   root.traverse((object) => {
     if (!object.isMesh) return;
