@@ -215,9 +215,11 @@
       if(!roadName||roadName==='Unnamed road')continue;
       const a=state.graph.nodes[segment.from],b=state.graph.nodes[segment.to];
       if(!a||!b)continue;
-      const ll=toLatLng((a.x+b.x)/2,(a.y+b.y)/2),nodeId=difficultyProfileForNode(segment.from,highway).routeDistance>=difficultyProfileForNode(segment.to,highway).routeDistance?segment.from:segment.to;
-      const profile=difficultyProfileForNode(nodeId,highway);
-      if(!Number.isFinite(profile.routeDistance)||profile.routeDistance<1800)continue;
+      const fromDistance=state.difficultyIndex.distances[segment.from],toDistance=state.difficultyIndex.distances[segment.to];
+      const nodeId=Number.isFinite(fromDistance)&&(!Number.isFinite(toDistance)||fromDistance>=toDistance)?segment.from:segment.to;
+      const quickDistance=state.difficultyIndex.distances[nodeId];
+      if(!Number.isFinite(quickDistance)||quickDistance<1800)continue;
+      const ll=toLatLng((a.x+b.x)/2,(a.y+b.y)/2),profile=difficultyProfileForNode(nodeId,highway);
       candidates.push({
         lat:ll.lat,lng:ll.lng,nodeId,road:roadName,highway,
         difficulty:profile.score,routeDistance:profile.routeDistance,
