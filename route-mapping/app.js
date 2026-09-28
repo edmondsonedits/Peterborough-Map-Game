@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.94';
+  const VERSION = '1.6.95';
   const CONFIG = Object.freeze({
     roadUrl: '../city-explorer/data/osm-public-roads.geojson',
     centerLat: 44.3091,
@@ -23,6 +23,10 @@
     destinationApproachRadius: 260,
     strokeDirectionPenalty: 85,
     strokeRoadContinuityBonus: 24,
+    canonicalCallCount: 100,
+    advancedCallCount: 100,
+    advancedMinSpacing: 190,
+    difficultyApproachDistance: 700,
     maxIntermediateAnchors: 9,
     maxVisitedNodes: 120000,
     routeTapZoom: 16,
@@ -40,7 +44,7 @@
 
   const ui = {
     app:document.getElementById('route-app'), map:document.getElementById('map'), drawSurface:document.getElementById('draw-surface'),
-    callNumber:document.getElementById('call-number'), baseLabel:document.getElementById('base-label'), callType:document.getElementById('call-type'),
+    callNumber:document.getElementById('call-number'), difficultyLabel:document.getElementById('difficulty-label'), baseLabel:document.getElementById('base-label'), callType:document.getElementById('call-type'),
     callAddress:document.getElementById('call-address'), hint:document.getElementById('hint'), clear:document.getElementById('clear-button'),
     undo:document.getElementById('undo-button'), submit:document.getElementById('submit-button'), results:document.getElementById('results'),
     efficiency:document.getElementById('efficiency-value'), playerDistance:document.getElementById('player-distance'), shortestDistance:document.getElementById('shortest-distance'),
@@ -51,7 +55,7 @@
   };
 
   const state = {
-    map:null, graph:null, calls:[], service:'fire', base:null, call:null, callCount:0, recentCallIds:[], mode:'loading',
+    map:null, graph:null, calls:[], originalCalls:[], advancedCalls:[], difficultyIndex:null, service:'fire', base:null, call:null, callCount:0, recentCallIds:[], mode:'loading',
     rawPoints:[], rawLine:null, drawingPointer:null, originAnchor:null, destinationAnchor:null, anchors:[], history:[], playerRoute:null,
     shortestRoute:null, recommendedRoute:null, playerLayers:[], referenceLayers:[], startMarker:null, callMarker:null, editMarker:null, previewLine:null,
     interactiveLine:null, editDraft:null, lastPreviewAt:0, firstSnapShown:false
@@ -88,6 +92,175 @@
     const features=Array.isArray(geojson&&geojson.features)?geojson.features:[];features.forEach(f=>{const g=f&&f.geometry,p=f&&f.properties||{};if(g&&g.type==='LineString')addLine(g.coordinates,p);if(g&&g.type==='MultiLineString')g.coordinates.forEach(line=>addLine(line,p));});
     if(!nodes.length||!directedEdges||!segments.length)throw new Error('Peterborough road data did not contain usable roads.');
     return {nodes,nodeGrid,segments,segmentGrid,directedEdges};
+  }
+
+  function clamp(value,min,max){ return Math.max(min,Math.min(max,value)); }
+  function percentile(values,fraction){
+    const sorted=values.filter(Number.isFinite).slice().sort((a,b)=>a-b);
+    if(!sorted.length)return 0;
+    const index=Math.max(0,Math.min(sorted.length-1,Math.round((sorted.length-1)*fraction)));
+    return sorted[index];
+  }
+
+  function buildDifficultyIndex(){
+    const nodes=state.graph.nodes,distances=new Float64Array(nodes.length),previous=new Int32Array(nodes.length),previousEdge=new Array(nodes.length),sourceStation=new Int16Array(nodes.length),heap=new MinHeap();
+    distances.fill(Infinity);previous.fill(-1);sourceStation.fill(-1);
+    const stations=basesForService('fire');
+    stations.forEach((base,stationIndex)=>{
+      const point=basePoint(base),road=nearestRoad(point.lat,point.lng,260);
+      if(!road)return;
+      distances[road.nodeId]=0;
+      sourceStation[road.nodeId]=stationIndex;
+      heap.push({id:road.nodeId,score:0});
+    });
+    while(heap.size){
+      const current=heap.pop();
+      if(!current||current.score>distances[current.id]+1e-7)continue;
+      for(const edge of nodes[current.id].edges){
+        const next=distances[current.id]+edge.distance;
+        if(next+1e-7>=distances[edge.to])continue;
+        distances[edge.to]=next;
+        previous[edge.to]=current.id;
+        previousEdge[edge.to]=edge;
+        sourceStation[edge.to]=sourceStation[current.id];
+        heap.push({id:edge.to,score:next});
+      }
+    }
+    state.difficultyIndex={distances,previous,previousEdge,sourceStation,stations};
+  }
+
+  function difficultyProfileForNode(nodeId,destinationHighway){
+    const index=state.difficultyIndex;
+    if(!index||nodeId<0||nodeId>=index.distances.length)return {score:50,routeDistance:0,roadChanges:0,smallApproachRatio:0};
+    const routeDistance=index.distances[nodeId];
+    if(!Number.isFinite(routeDistance))return {score:65,routeDistance:0,roadChanges:0,smallApproachRatio:0};
+
+    const reverseEdges=[];
+    let cursor=nodeId,guard=0;
+    while(index.previous[cursor]>=0&&guard++<5000){
+      const edge=index.previousEdge[cursor];
+      if(!edge)break;
+      reverseEdges.push(edge);
+      cursor=index.previous[cursor];
+    }
+    const routeEdges=reverseEdges.reverse();
+    let roadChanges=0,lastRoad='';
+    for(const edge of routeEdges){
+      const road=String(edge.name||edge.ref||'').trim();
+      if(!road)continue;
+      if(lastRoad&&road!==lastRoad)roadChanges+=1;
+      lastRoad=road;
+    }
+
+    const smallClasses=new Set(['residential','living_street','service','unclassified','road']);
+    let approachDistance=0,smallApproach=0;
+    for(let i=routeEdges.length-1;i>=0&&approachDistance<CONFIG.difficultyApproachDistance;i-=1){
+      const edge=routeEdges[i],remaining=CONFIG.difficultyApproachDistance-approachDistance,take=Math.min(edge.distance,remaining);
+      approachDistance+=take;
+      if(smallClasses.has(String(edge.highway||'')))smallApproach+=take;
+    }
+    const smallApproachRatio=approachDistance>0?smallApproach/approachDistance:0;
+    const classPenalty={
+      motorway:0,motorway_link:2,trunk:3,trunk_link:4,primary:4,primary_link:5,
+      secondary:7,secondary_link:8,tertiary:11,tertiary_link:12,unclassified:17,
+      residential:20,road:19,living_street:24,service:26
+    }[String(destinationHighway||'road')] ?? 16;
+
+    const distanceScore=clamp((routeDistance-700)/6500*48,0,48);
+    const complexityScore=clamp((roadChanges-2)*2.25,0,18);
+    const approachScore=clamp(smallApproachRatio*8,0,8);
+    const score=Math.round(clamp(distanceScore+classPenalty+complexityScore+approachScore,0,100));
+    return {score,routeDistance,roadChanges,smallApproachRatio,classPenalty};
+  }
+
+  function scoreCall(call){
+    const point=callPoint(call),road=nearestRoad(point.lat,point.lng,650);
+    if(!road){
+      const stations=basesForService('fire'),nearest=Math.min(...stations.map(base=>dist(point,basePoint(base))));
+      const score=Math.round(clamp((nearest-700)/6500*48+16,0,100));
+      return {...call,difficulty:score,difficultyDistance:nearest,difficultyRoadClass:'unknown'};
+    }
+    const profile=difficultyProfileForNode(road.nodeId,road.highway);
+    return {...call,difficulty:profile.score,difficultyDistance:profile.routeDistance,difficultyRoadClass:road.highway,difficultyRoad:road.road};
+  }
+
+  function connectedCrossStreet(segment){
+    const names=new Set();
+    for(const nodeId of [segment.from,segment.to]){
+      const node=state.graph.nodes[nodeId];
+      for(const edge of node?.edges||[]){
+        const name=String(edge.name||'').trim();
+        if(name&&name!=='Unnamed road'&&name!==segment.name)names.add(name);
+      }
+    }
+    return [...names].sort()[0]||'';
+  }
+
+  function buildAdvancedCalls(originalCalls){
+    const eligibleClasses=new Set(['tertiary','tertiary_link','unclassified','residential','living_street','service','road']);
+    const existingPoints=originalCalls.map(call=>callPoint(call));
+    const originalDistances=originalCalls.map(call=>Number(call.difficultyDistance)).filter(Number.isFinite);
+    const originalDifficulty=originalCalls.map(call=>Number(call.difficulty)).filter(Number.isFinite);
+    const distanceFloor=Math.max(2200,percentile(originalDistances,.58));
+    const difficultyFloor=Math.max(52,percentile(originalDifficulty,.58)+5);
+    const fireSubtypes=[...new Set(originalCalls.filter(call=>String(call.main).toLowerCase()==='fire').map(call=>String(call.sub||'Structure Fire')).filter(Boolean))];
+    const fallbackSubtypes=['Structure Fire','Burning Complaint','Motor Vehicle Collision','Alarms No Apparent Problem'];
+    const subtypes=fireSubtypes.length?fireSubtypes:fallbackSubtypes;
+    const candidates=[];
+
+    for(let i=0;i<state.graph.segments.length;i+=1){
+      const segment=state.graph.segments[i],highway=String(segment.highway||'road');
+      if(!eligibleClasses.has(highway))continue;
+      const roadName=String(segment.name||'').trim();
+      if(!roadName||roadName==='Unnamed road')continue;
+      const a=state.graph.nodes[segment.from],b=state.graph.nodes[segment.to];
+      if(!a||!b)continue;
+      const ll=toLatLng((a.x+b.x)/2,(a.y+b.y)/2),nodeId=difficultyProfileForNode(segment.from,highway).routeDistance>=difficultyProfileForNode(segment.to,highway).routeDistance?segment.from:segment.to;
+      const profile=difficultyProfileForNode(nodeId,highway);
+      if(!Number.isFinite(profile.routeDistance)||profile.routeDistance<1800)continue;
+      candidates.push({
+        lat:ll.lat,lng:ll.lng,nodeId,road:roadName,highway,
+        difficulty:profile.score,routeDistance:profile.routeDistance,
+        crossStreet:connectedCrossStreet(segment),
+        rankScore:profile.score*100+Math.min(9999,profile.routeDistance)
+      });
+    }
+
+    candidates.sort((a,b)=>b.rankScore-a.rankScore||b.routeDistance-a.routeDistance||a.road.localeCompare(b.road)||a.lat-b.lat||a.lng-b.lng);
+    const selected=[],roadCounts=new Map();
+    const accept=(candidate,strict)=>{
+      const count=roadCounts.get(candidate.road)||0;
+      if(count>=3)return false;
+      if(strict&&(candidate.routeDistance<distanceFloor||candidate.difficulty<difficultyFloor))return false;
+      for(const point of existingPoints)if(dist(candidate,point)<145)return false;
+      const spacing=strict?CONFIG.advancedMinSpacing:135;
+      for(const item of selected)if(dist(candidate,item)<spacing)return false;
+      selected.push(candidate);roadCounts.set(candidate.road,count+1);return true;
+    };
+    for(const candidate of candidates){if(selected.length>=CONFIG.advancedCallCount)break;accept(candidate,true);}
+    if(selected.length<CONFIG.advancedCallCount){
+      for(const candidate of candidates){if(selected.length>=CONFIG.advancedCallCount)break;if(selected.includes(candidate))continue;accept(candidate,false);}
+    }
+
+    return selected.slice(0,CONFIG.advancedCallCount).map((candidate,index)=>{
+      const locationLabel=candidate.crossStreet?candidate.road+' & '+candidate.crossStreet:candidate.road;
+      return {
+        id:'route-advanced-'+String(index+1).padStart(3,'0'),
+        main:'Fire',
+        sub:subtypes[index%subtypes.length],
+        name:'Advanced Route '+String(index+1).padStart(3,'0'),
+        addr:locationLabel,
+        lat:candidate.lat,
+        lng:candidate.lng,
+        radius:35,
+        advanced:true,
+        sources:['route-mapping-advanced'],
+        difficulty:candidate.difficulty,
+        difficultyDistance:candidate.routeDistance,
+        difficultyRoadClass:candidate.highway,
+        difficultyRoad:candidate.road
+      };
+    });
   }
 
   function nearbySegments(x,y,radius){
@@ -542,7 +715,11 @@
   }
 
   function newCall(){
-    cancelEdit();clearRaw();clearReference();clearLayers(state.playerLayers);clearLayer(state.interactiveLine);state.interactiveLine=null;state.call=chooseCall();state.callCount+=1;state.playerRoute=null;state.shortestRoute=null;state.recommendedRoute=null;state.anchors=[];state.history=[];ui.callNumber.textContent='CALL '+state.callCount;ui.baseLabel.textContent=state.base.shortName||state.base.name;ui.callType.textContent=state.call.sub||state.call.main||'Dispatch Call';ui.callAddress.textContent=state.call.addr||state.call.name;updateMarkers();fitExercise();setMode('drawing');setHint('Draw a route from '+(state.base.shortName||state.base.name)+' to the call');
+    cancelEdit();clearRaw();clearReference();clearLayers(state.playerLayers);clearLayer(state.interactiveLine);state.interactiveLine=null;state.call=chooseCall();state.callCount+=1;state.playerRoute=null;state.shortestRoute=null;state.recommendedRoute=null;state.anchors=[];state.history=[];ui.callNumber.textContent='CALL '+state.callCount;ui.baseLabel.textContent=state.base.shortName||state.base.name;ui.callType.textContent=state.call.sub||state.call.main||'Dispatch Call';ui.callAddress.textContent=state.call.addr||state.call.name;
+    const difficulty=clamp(Math.round(Number(state.call.difficulty)||0),0,100);
+    ui.difficultyLabel.textContent='DIFFICULTY '+difficulty;
+    ui.difficultyLabel.dataset.level=difficulty>=80?'extreme':difficulty>=60?'hard':difficulty>=35?'medium':'easy';
+    updateMarkers();fitExercise();setMode('drawing');setHint('Draw a route from '+(state.base.shortName||state.base.name)+' to the call');
   }
 
   function basesForService(service){const store=window.PTBO_BASE_STORE;if(store&&typeof store.getBases==='function')return store.getBases(service);const profiles=window.PTBO_SERVICE_CONFIG&&window.PTBO_SERVICE_CONFIG.profiles;return profiles&&profiles[service]?profiles[service].bases||[]:[];}
@@ -567,8 +744,29 @@
   }
 
   async function loadData(){
-    if(!window.PTBO_DISPATCH_STORE)throw new Error('Shared dispatch store did not load.');const calls=await window.PTBO_DISPATCH_STORE.ready();state.calls=Array.isArray(calls)?calls:window.PTBO_DISPATCH_STORE.getAll();if(!state.calls.length)throw new Error('The shared dispatch database is empty.');
-    const response=await fetch(CONFIG.roadUrl,{cache:'force-cache'});if(!response.ok)throw new Error('Peterborough road data failed to load ('+response.status+').');const geojson=await response.json();state.graph=buildGraph(geojson);
+    if(!window.PTBO_DISPATCH_STORE)throw new Error('Shared dispatch store did not load.');
+    const calls=await window.PTBO_DISPATCH_STORE.ready();
+    const sharedCalls=Array.isArray(calls)?calls:window.PTBO_DISPATCH_STORE.getAll();
+    if(!sharedCalls.length)throw new Error('The shared dispatch database is empty.');
+    const response=await fetch(CONFIG.roadUrl,{cache:'force-cache'});
+    if(!response.ok)throw new Error('Peterborough road data failed to load ('+response.status+').');
+    const geojson=await response.json();
+    state.graph=buildGraph(geojson);
+    buildDifficultyIndex();
+
+    const canonical=sharedCalls.slice(0,CONFIG.canonicalCallCount).map(scoreCall);
+    state.originalCalls=canonical;
+    state.advancedCalls=buildAdvancedCalls(canonical);
+    state.calls=[...state.originalCalls,...state.advancedCalls];
+    console.info('Route Mapping call set:',{
+      original:state.originalCalls.length,
+      advanced:state.advancedCalls.length,
+      total:state.calls.length,
+      difficultyRange:[
+        Math.min(...state.calls.map(call=>call.difficulty)),
+        Math.max(...state.calls.map(call=>call.difficulty))
+      ]
+    });
   }
 
   function showFailure(error){console.error(error);ui.app.setAttribute('aria-busy','false');ui.errorMessage.textContent=error&&error.message?error.message:String(error||'Unknown startup error');ui.error.hidden=false;setMode('loading');}
