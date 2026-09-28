@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.90';
+  const VERSION = '1.6.91';
   const CONFIG = Object.freeze({
     roadUrl: '../city-explorer/data/osm-public-roads.geojson',
     centerLat: 44.3091,
@@ -260,7 +260,7 @@
 
   function initMap(){
     state.map=L.map('map',{zoomControl:false,attributionControl:true,preferCanvas:true,minZoom:11,maxZoom:19,worldCopyJump:false}).setView([CONFIG.centerLat,CONFIG.centerLng],13);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{subdomains:'abcd',maxZoom:20,attribution:'&copy; OpenStreetMap contributors &copy; CARTO'}).addTo(state.map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{subdomains:'abc',maxZoom:19,attribution:'&copy; OpenStreetMap contributors'}).addTo(state.map);
     L.control.zoom({position:'bottomright'}).addTo(state.map);state.map.doubleClickZoom.disable();
   }
 
