@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.88';
+  const VERSION = '1.6.89';
   const CITY_RUNTIME_VERSION = '1.6.17';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
@@ -94,7 +94,7 @@
   function installTrainingNotice() {
     if (!document.body || window.top !== window || document.getElementById('ptbo-training-use-notice')) return;
     const path = location.pathname;
-    const playerSurface = /(?:\/Peterborough-Map-Game\/?$|\/response-simulator\/|\/geo-guesser\/|\/city-explorer\/)/.test(path);
+    const playerSurface = /(?:\/Peterborough-Map-Game\/?$|\/response-simulator\/|\/geo-guesser\/|\/city-explorer\/|\/route-mapping\/)/.test(path);
     const excluded = /\/(?:dispatch-editor|site-stats|legal)\//.test(path);
     if (!playerSurface || excluded) return;
     let style = document.getElementById('ptbo-training-use-style');
