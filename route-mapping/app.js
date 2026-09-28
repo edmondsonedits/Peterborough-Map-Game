@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.92';
+  const VERSION = '1.6.93';
   const CONFIG = Object.freeze({
     roadUrl: '../city-explorer/data/osm-public-roads.geojson',
     centerLat: 44.3091,
@@ -16,6 +16,11 @@
     straightAssistMaxDeviation: 95,
     weakTurnDeviation: 48,
     weakTurnAngle: 32,
+    loopCollapseSavings: 120,
+    loopCollapseRatio: 0.82,
+    detourAnchorSavings: 90,
+    detourAnchorRatio: 0.84,
+    destinationApproachRadius: 260,
     maxIntermediateAnchors: 9,
     maxVisitedNodes: 120000,
     routeTapZoom: 16,
@@ -227,6 +232,104 @@
     return reduced;
   }
 
+  function collapseRepeatedNodeLoops(anchors){
+    if(!Array.isArray(anchors)||anchors.length<3)return anchors.slice();
+    const result=[],seen=new Map();
+    for(const anchor of anchors){
+      const key=String(anchor.nodeId);
+      if(seen.has(key)){
+        const keepIndex=seen.get(key);
+        result.splice(keepIndex+1);
+        for(const [seenKey,index] of [...seen.entries()])if(index>keepIndex)seen.delete(seenKey);
+        continue;
+      }
+      seen.set(key,result.length);
+      result.push(anchor);
+    }
+    return result;
+  }
+
+  function routeDistanceForAnchors(anchors){
+    const route=composeRoute(anchors,'distance');
+    return route&&route.failedLeg===undefined?route.distance:Infinity;
+  }
+
+  function collapseRepeatedRoadLoops(anchors){
+    if(!Array.isArray(anchors)||anchors.length<4)return anchors.slice();
+    let result=anchors.slice(),changed=true;
+    while(changed&&result.length>3){
+      changed=false;
+      outer:for(let i=1;i<result.length-2;i+=1){
+        const road=String(result[i].road||'').trim();
+        if(!road)continue;
+        for(let j=i+2;j<result.length-1;j+=1){
+          if(String(result[j].road||'').trim()!==road)continue;
+          const via=result.slice(i,j+1);
+          const direct=[result[i],result[j]];
+          const viaDistance=routeDistanceForAnchors(via),directDistance=routeDistanceForAnchors(direct);
+          const savings=viaDistance-directDistance;
+          if(Number.isFinite(viaDistance)&&Number.isFinite(directDistance)&&savings>=CONFIG.loopCollapseSavings&&directDistance<=viaDistance*CONFIG.loopCollapseRatio){
+            result.splice(i+1,j-i);
+            changed=true;
+            break outer;
+          }
+        }
+      }
+    }
+    return result;
+  }
+
+  function removeNeedlessDetourAnchors(anchors){
+    if(!Array.isArray(anchors)||anchors.length<3)return anchors.slice();
+    let result=anchors.slice(),changed=true;
+    while(changed&&result.length>2){
+      changed=false;
+      for(let i=1;i<result.length-1;i+=1){
+        const previous=result[i-1],current=result[i],next=result[i+1];
+        const viaDistance=routeDistanceForAnchors([previous,current,next]);
+        const directDistance=routeDistanceForAnchors([previous,next]);
+        const savings=viaDistance-directDistance;
+        const sharpBacktrack=turnAngleDegrees(previous,current,next)>118;
+        const obviousDetour=Number.isFinite(viaDistance)&&Number.isFinite(directDistance)&&savings>=CONFIG.detourAnchorSavings&&directDistance<=viaDistance*CONFIG.detourAnchorRatio;
+        if(sharpBacktrack||obviousDetour){
+          result.splice(i,1);
+          changed=true;
+          break;
+        }
+      }
+    }
+    return result;
+  }
+
+  function trimAfterClosestDestinationApproach(anchors,destinationPoint){
+    if(!Array.isArray(anchors)||anchors.length<2)return anchors.slice();
+    let closestIndex=-1,closestDistance=Infinity;
+    for(let i=0;i<anchors.length;i+=1){
+      const distance=dist(anchors[i],destinationPoint);
+      if(distance<closestDistance){closestDistance=distance;closestIndex=i;}
+    }
+    if(closestIndex<0||closestIndex===anchors.length-1)return anchors.slice();
+    const lastDistance=dist(anchors[anchors.length-1],destinationPoint);
+    const approachedCall=closestDistance<=CONFIG.destinationApproachRadius;
+    const obviousOvershoot=lastDistance>closestDistance+110;
+    return approachedCall&&obviousOvershoot?anchors.slice(0,closestIndex+1):anchors.slice();
+  }
+
+  function optimizeIntentAnchors(origin,middle,destination){
+    let working=[origin,...middle,destination];
+    working=collapseRepeatedNodeLoops(working);
+    working=collapseRepeatedRoadLoops(working);
+    working=removeNeedlessDetourAnchors(working);
+
+    // The origin and dispatch destination are authoritative even when pruning
+    // removes noisy anchors around them.
+    if(working[0]?.nodeId!==origin.nodeId)working.unshift(origin);
+    else working[0]=origin;
+    if(working[working.length-1]?.nodeId!==destination.nodeId)working.push(destination);
+    else working[working.length-1]=destination;
+    return working;
+  }
+
   function cloneAnchors(list){return list.map(a=>({lat:a.lat,lng:a.lng,nodeId:a.nodeId,road:a.road||'',fixed:Boolean(a.fixed)}));}
   function clearLayer(layer){if(layer&&state.map)try{state.map.removeLayer(layer);}catch(_){}}
   function clearLayers(list){list.forEach(clearLayer);list.length=0;}
@@ -285,8 +388,17 @@
     try{
       const mapped=mappedAnchorsFromStroke(state.rawPoints),startPoint=basePoint(state.base),endPoint=callPoint(state.call),origin=nearestRoad(startPoint.lat,startPoint.lng,220),destination=nearestRoad(endPoint.lat,endPoint.lng,CONFIG.destinationSearchRadius);
       if(!origin||!destination)throw new Error('The start or call could not be matched to the Peterborough road network.');state.originAnchor=Object.assign({},origin,startPoint,{fixed:true});state.destinationAnchor=Object.assign({},destination,endPoint,{fixed:true});
-      let middle=mapped.filter(a=>a.nodeId!==origin.nodeId&&a.nodeId!==destination.nodeId);if(middle.length>CONFIG.maxIntermediateAnchors)middle=middle.slice(0,CONFIG.maxIntermediateAnchors);let anchors=[state.originAnchor,...middle,state.destinationAnchor];let route=composeRoute(anchors,'distance');
-      while(route&&route.failedLeg!==undefined&&anchors.length>2){const removeIndex=Math.min(Math.max(1,route.failedLeg+1),anchors.length-2);anchors.splice(removeIndex,1);route=composeRoute(anchors,'distance');}
+      let middle=mapped.filter(a=>a.nodeId!==origin.nodeId&&a.nodeId!==destination.nodeId);
+      middle=trimAfterClosestDestinationApproach(middle,endPoint);
+      if(middle.length>CONFIG.maxIntermediateAnchors)middle=middle.slice(0,CONFIG.maxIntermediateAnchors);
+      let anchors=optimizeIntentAnchors(state.originAnchor,middle,state.destinationAnchor);
+      let route=composeRoute(anchors,'distance');
+      while(route&&route.failedLeg!==undefined&&anchors.length>2){
+        const removeIndex=Math.min(Math.max(1,route.failedLeg+1),anchors.length-2);
+        anchors.splice(removeIndex,1);
+        anchors=removeNeedlessDetourAnchors(collapseRepeatedNodeLoops(anchors));
+        route=composeRoute(anchors,'distance');
+      }
       if(!route||route.failedLeg!==undefined)throw new Error('That drawing could not be connected through the road network. Try drawing closer to the streets you want.');
       state.anchors=cloneAnchors(anchors);state.playerRoute=route;state.history=[];clearRaw();renderPlayerRoute();setMode('editing');setHint('Route snapped · tap the blue route to adjust it · pinch to zoom');
       if(!state.firstSnapShown){state.firstSnapShown=true;try{localStorage.setItem('ptboRouteMappingFirstSnap','1');}catch(_){}}
