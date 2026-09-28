@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.97';
+  const VERSION = '1.6.98';
   const CONFIG = Object.freeze({
     roadUrl: '../city-explorer/data/osm-public-roads.geojson',
     centerLat: 44.3091,
@@ -40,6 +40,14 @@
     callsPerStationPhase: 20,
     peterboroughCallProximity: 1400,
     continuousMinNextCallDistance: 850,
+    decisionCandidateCount: 6,
+    decisionAnalyzeNodes: 3,
+    decisionMeaningfulPenalty: 160,
+    decisionStrongPenalty: 1300,
+    decisionEqualRouteRatio: 0.035,
+    decisionWeaknessMinAge: 2,
+    decisionWeaknessMaxAge: 18,
+    decisionWeaknessMaxCount: 30,
     maxIntermediateAnchors: 9,
     maxVisitedNodes: 120000,
     routeTapZoom: 16,
@@ -69,7 +77,7 @@
 
   const state = {
     map:null, graph:null, calls:[], originalCalls:[], advancedCalls:[], difficultyIndex:null, service:'fire', base:null, call:null, callCount:0, recentCallIds:[], mode:'loading',
-    skillProfiles:null, skillProfile:null, adaptiveTarget:null, progression:null, phase:null,
+    skillProfiles:null, skillProfile:null, adaptiveTarget:null, progression:null, phase:null, lastDecisionAnalysis:null,
     rawPoints:[], rawLine:null, drawingPointer:null, originAnchor:null, destinationAnchor:null, anchors:[], history:[], playerRoute:null,
     shortestRoute:null, recommendedRoute:null, playerLayers:[], referenceLayers:[], startMarker:null, callMarker:null, editMarker:null, previewLine:null,
     interactiveLine:null, editDraft:null, lastPreviewAt:0, firstSnapShown:false
