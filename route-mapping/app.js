@@ -153,19 +153,20 @@
 
   function difficultyProfileForNode(nodeId,destinationHighway){
     const index=state.difficultyIndex;
-    if(!index||nodeId<0||nodeId>=index.distances.length)return {score:50,routeDistance:0,roadChanges:0,smallApproachRatio:0};
+    if(!index||nodeId<0||nodeId>=index.distances.length)return {score:50,routeDistance:0,roadChanges:0,smallApproachRatio:0,decisionPotential:0,decisionForks:0};
     const routeDistance=index.distances[nodeId];
-    if(!Number.isFinite(routeDistance))return {score:65,routeDistance:0,roadChanges:0,smallApproachRatio:0};
+    if(!Number.isFinite(routeDistance))return {score:65,routeDistance:0,roadChanges:0,smallApproachRatio:0,decisionPotential:0,decisionForks:0};
 
-    const reverseEdges=[];
+    const reverseEdges=[],reverseNodes=[nodeId];
     let cursor=nodeId,guard=0;
     while(index.previous[cursor]>=0&&guard++<5000){
       const edge=index.previousEdge[cursor];
       if(!edge)break;
       reverseEdges.push(edge);
       cursor=index.previous[cursor];
+      reverseNodes.push(cursor);
     }
-    const routeEdges=reverseEdges.reverse();
+    const routeEdges=reverseEdges.reverse(),routeNodes=reverseNodes.reverse();
     let roadChanges=0,lastRoad='';
     for(const edge of routeEdges){
       const road=String(edge.name||edge.ref||'').trim();
@@ -188,11 +189,46 @@
       residential:20,road:19,living_street:24,service:26
     }[String(destinationHighway||'road')] ?? 16;
 
+    // Cheap whole-city fork analysis. This identifies routes that repeatedly
+    // present believable alternate roads without running a new route search.
+    let decisionRaw=0,decisionForks=0,travelled=0;
+    const destinationNode=state.graph.nodes[nodeId];
+    for(let i=0;i<routeEdges.length;i+=1){
+      const edge=routeEdges[i],node=state.graph.nodes[edge.from];
+      if(!node||!destinationNode)continue;
+      const previousNodeId=i>0?routeEdges[i-1].from:-1;
+      const currentToDestination=Math.hypot(destinationNode.x-node.x,destinationNode.y-node.y);
+      if(currentToDestination<180){travelled+=edge.distance;continue;}
+      const roadNames=new Set();
+      let plausible=0,majorPlausible=0;
+      for(const alt of node.edges){
+        if(alt.to===edge.to||alt.to===previousNodeId)continue;
+        const altNode=state.graph.nodes[alt.to];
+        if(!altNode)continue;
+        const altDistance=Math.hypot(destinationNode.x-altNode.x,destinationNode.y-altNode.y);
+        const stillLooksUseful=altDistance<=currentToDestination+Math.max(160,currentToDestination*.14);
+        if(!stillLooksUseful)continue;
+        const name=String(alt.name||alt.ref||alt.to);
+        if(roadNames.has(name))continue;
+        roadNames.add(name);plausible+=1;
+        if(['motorway','trunk','primary','secondary','tertiary'].includes(String(alt.highway||'')))majorPlausible+=1;
+      }
+      if(plausible){
+        decisionForks+=1;
+        const progress=routeDistance>0?travelled/routeDistance:0;
+        const earlyBonus=progress<.38?1.18:progress<.68?1.06:1;
+        decisionRaw+=Math.min(3,plausible)*(7.5+majorPlausible*1.5)*earlyBonus;
+      }
+      travelled+=edge.distance;
+    }
+    const decisionPotential=clamp(decisionRaw+Math.max(0,roadChanges-3)*1.4,0,100);
+
     const distanceScore=clamp((routeDistance-700)/6500*48,0,48);
     const complexityScore=clamp((roadChanges-2)*2.25,0,18);
     const approachScore=clamp(smallApproachRatio*8,0,8);
-    const score=Math.round(clamp(distanceScore+classPenalty+complexityScore+approachScore,0,100));
-    return {score,routeDistance,roadChanges,smallApproachRatio,classPenalty};
+    const routeBase=clamp(distanceScore+classPenalty+complexityScore+approachScore,0,100);
+    const score=Math.round(clamp(routeBase*.58+decisionPotential*.42,0,100));
+    return {score,routeBase,routeDistance,roadChanges,smallApproachRatio,classPenalty,decisionPotential,decisionForks,routeNodes};
   }
 
   function scoreCall(call){
@@ -200,10 +236,19 @@
     if(!road){
       const stations=basesForService('fire'),nearest=Math.min(...stations.map(base=>dist(point,basePoint(base))));
       const score=Math.round(clamp((nearest-700)/6500*48+16,0,100));
-      return {...call,difficulty:score,difficultyDistance:nearest,difficultyRoadClass:'unknown'};
+      return {...call,difficulty:score,difficultyDistance:nearest,difficultyRoadClass:'unknown',decisionPotential:0,decisionForks:0};
     }
     const profile=difficultyProfileForNode(road.nodeId,road.highway);
-    return {...call,difficulty:profile.score,difficultyDistance:profile.routeDistance,difficultyRoadClass:road.highway,difficultyRoad:road.road};
+    return {
+      ...call,
+      difficulty:profile.score,
+      routeBaseDifficulty:profile.routeBase,
+      decisionPotential:profile.decisionPotential,
+      decisionForks:profile.decisionForks,
+      difficultyDistance:profile.routeDistance,
+      difficultyRoadClass:road.highway,
+      difficultyRoad:road.road
+    };
   }
 
   function connectedCrossStreet(segment){
@@ -249,7 +294,9 @@
         lat:ll.lat,lng:ll.lng,nodeId,road:roadName,highway,
         difficulty:profile.score,routeDistance:profile.routeDistance,
         crossStreet:connectedCrossStreet(segment),
-        rankScore:profile.score*100+Math.min(9999,profile.routeDistance)
+        decisionPotential:profile.decisionPotential,
+        decisionForks:profile.decisionForks,
+        rankScore:profile.score*85+profile.decisionPotential*70+Math.min(7000,profile.routeDistance)
       });
     }
 
@@ -283,6 +330,8 @@
         advanced:true,
         sources:['route-mapping-advanced'],
         difficulty:candidate.difficulty,
+        decisionPotential:candidate.decisionPotential,
+        decisionForks:candidate.decisionForks,
         difficultyDistance:candidate.routeDistance,
         difficultyRoadClass:candidate.highway,
         difficultyRoad:candidate.road
