@@ -902,7 +902,7 @@
       decisionLearning=updateDecisionLearning(eff,extra);
     }
     if(decisionLearning&&Number.isFinite(extra)){
-      ui.resultNote.textContent='Key decision: '+decisionLearning.correctRoad+'. Your route added '+formatDistance(extra)+' overall. This decision will return later for practice.';
+      ui.resultNote.textContent='Key decision: '+decisionLearning.correctRoad+'. Your route added '+formatDistance(extra)+' overall.';
     }
     recordProgressionCompletion();
     clearLayer(state.interactiveLine);state.interactiveLine=null;renderReference();setMode('results');setHint('');
