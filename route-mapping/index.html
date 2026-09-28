@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+  <meta name="theme-color" content="#07111f">
+  <meta name="description" content="Rapid Peterborough route-learning practice. Draw a response route, snap it to real roads, compare it, and move to the next call.">
+  <title>Route Mapping · Peterborough Emergency Games</title>
+  <link rel="stylesheet" href="../response-simulator/vendor/leaflet-1.9.4/leaflet.css?v=1.6.89">
+  <link rel="stylesheet" href="./styles.css?v=1.6.89">
+</head>
+<body>
+  <main id="route-app" aria-busy="true">
+    <div id="map" aria-label="Peterborough route training map"></div>
+    <div id="draw-surface" aria-label="Draw your response route"></div>
+
+    <a class="back-button glass" href="../" aria-label="Return to all games">←</a>
+    <button id="settings-button" class="settings-button glass" type="button" aria-label="Route Mapping settings">⚙</button>
+
+    <section class="dispatch-card glass" aria-live="polite">
+      <div class="dispatch-topline"><span id="call-number">CALL 1</span><span id="base-label">Station 1</span></div>
+      <strong id="call-type">Loading route training…</strong>
+      <span id="call-address">Preparing Peterborough road data</span>
+    </section>
+
+    <div id="hint" class="hint glass" role="status" aria-live="polite">Loading roads…</div>
+
+    <section id="controls" class="controls glass" aria-label="Route controls">
+      <button id="clear-button" class="secondary" type="button">Clear</button>
+      <button id="undo-button" class="secondary" type="button" disabled>Undo</button>
+      <button id="submit-button" class="primary" type="button" disabled>Submit Route</button>
+    </section>
+
+    <section id="results" class="results glass" hidden aria-live="polite">
+      <div class="result-heading"><span>ROUTE REVIEW</span><strong id="efficiency-value">—</strong></div>
+      <div class="result-grid">
+        <div><span>Your route</span><strong id="player-distance">—</strong></div>
+        <div><span>Shortest</span><strong id="shortest-distance">—</strong></div>
+        <div><span>Extra</span><strong id="extra-distance">—</strong></div>
+      </div>
+      <p id="result-note">Blue is your route. Green is the recommended response route.</p>
+      <button id="next-button" class="primary next" type="button">Next Call</button>
+    </section>
+
+    <section id="settings-sheet" class="sheet-backdrop" hidden>
+      <form id="settings-form" class="sheet glass">
+        <div class="sheet-head"><div><span>ROUTE MAPPING</span><strong>Starting unit</strong></div><button id="settings-close" type="button" aria-label="Close settings">×</button></div>
+        <label>Service<select id="service-select"><option value="fire">Fire</option><option value="ems">EMS</option></select></label>
+        <label>Base<select id="base-select"></select></label>
+        <p>Calls are drawn from the same shared dispatch database used by the other Peterborough training modes.</p>
+        <button class="primary" type="submit">Use this base</button>
+      </form>
+    </section>
+
+    <div id="loading-error" class="loading-error" hidden>
+      <strong>Route Mapping could not start.</strong>
+      <span id="loading-error-message">Refresh and try again.</span>
+      <button id="retry-button" class="primary" type="button">Retry</button>
+    </div>
+  </main>
+
+  <script src="../shared/build-version.js?v=1.6.89"></script>
+  <script src="../response-simulator/vendor/leaflet-1.9.4/leaflet.js?v=1.6.89"></script>
+  <script src="../response-simulator/service-config.js?v=1.6.89"></script>
+  <script src="../shared/location-changes.js?v=1.6.89"></script>
+  <script src="../shared/base-locations.js?v=1.6.89"></script>
+  <script src="../shared/dispatch-locations.js?city=peterborough&amp;v=1.6.89"></script>
+  <script src="./app.js?v=1.6.89"></script>
+</body>
+</html>
