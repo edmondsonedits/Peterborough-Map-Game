@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.95';
+  const VERSION = '1.6.96';
   const CONFIG = Object.freeze({
     roadUrl: '../city-explorer/data/osm-public-roads.geojson',
     centerLat: 44.3091,
@@ -27,6 +27,15 @@
     advancedCallCount: 100,
     advancedMinSpacing: 190,
     difficultyApproachDistance: 700,
+    adaptiveSkillStorageKey: 'ptboRouteMappingAdaptiveSkillV1',
+    adaptiveDefaultRating: 28,
+    adaptiveCalibrationCalls: 6,
+    adaptiveHistorySize: 20,
+    adaptiveRecentWindow: 6,
+    adaptiveBaseChallenge: 5,
+    adaptiveCallBand: 12,
+    adaptiveStretchChance: 0.16,
+    adaptiveBreatherChance: 0.10,
     maxIntermediateAnchors: 9,
     maxVisitedNodes: 120000,
     routeTapZoom: 16,
@@ -56,6 +65,7 @@
 
   const state = {
     map:null, graph:null, calls:[], originalCalls:[], advancedCalls:[], difficultyIndex:null, service:'fire', base:null, call:null, callCount:0, recentCallIds:[], mode:'loading',
+    skillProfiles:null, skillProfile:null, adaptiveTarget:null,
     rawPoints:[], rawLine:null, drawingPointer:null, originAnchor:null, destinationAnchor:null, anchors:[], history:[], playerRoute:null,
     shortestRoute:null, recommendedRoute:null, playerLayers:[], referenceLayers:[], startMarker:null, callMarker:null, editMarker:null, previewLine:null,
     interactiveLine:null, editDraft:null, lastPreviewAt:0, firstSnapShown:false
@@ -708,12 +718,19 @@
     ui.efficiency.textContent=Number.isFinite(eff)?Math.round(eff)+'% efficient':'Route complete';ui.playerDistance.textContent=formatDistance(player);ui.shortestDistance.textContent=formatDistance(shortest);ui.extraDistance.textContent=Number.isFinite(extra)?'+'+formatDistance(extra):'—';
     const playerRoads=state.playerRoute.mainRoads||[],recommendedRoads=state.recommendedRoute&&state.recommendedRoute.mainRoads||[],different=recommendedRoads.find(name=>name&&!playerRoads.includes(name));
     if(Number.isFinite(eff)&&eff>=97)ui.resultNote.textContent='Very close to the shortest available road route. Green shows the recommended response route.';else if(different)ui.resultNote.textContent='Compare where the green route uses '+different+' instead. Green favours major roads and estimated travel time.';else ui.resultNote.textContent='Blue is your route. Green is the recommended response route.';
+    if(Number.isFinite(eff))updateHiddenSkill(eff);
     clearLayer(state.interactiveLine);state.interactiveLine=null;renderReference();setMode('results');setHint('');
   }
 
   function callsForService(){const target=state.service==='ems'?'medical':'fire',filtered=state.calls.filter(c=>String(c.main||'').toLowerCase()===target);return filtered.length?filtered:state.calls;}
   function chooseCall(){
-    const pool=callsForService(),recent=new Set(state.recentCallIds),fresh=pool.filter(c=>!recent.has(c.id)),source=fresh.length?fresh:pool;if(!source.length)throw new Error('No dispatch calls are available.');const call=source[Math.floor(Math.random()*source.length)];state.recentCallIds.push(call.id);while(state.recentCallIds.length>CONFIG.recentCalls)state.recentCallIds.shift();return call;
+    const pool=callsForService(),recent=new Set(state.recentCallIds),fresh=pool.filter(call=>!recent.has(call.id)),source=fresh.length?fresh:pool;
+    if(!source.length)throw new Error('No dispatch calls are available.');
+    const target=adaptiveDifficultyTarget();
+    const call=weightedCallChoice(source,target)||source[0];
+    state.recentCallIds.push(call.id);
+    while(state.recentCallIds.length>CONFIG.recentCalls)state.recentCallIds.shift();
+    return call;
   }
 
   function newCall(){
@@ -724,9 +741,183 @@
     updateMarkers();fitExercise();setMode('drawing');setHint('Draw a route from '+(state.base.shortName||state.base.name)+' to the call');
   }
 
+  function defaultSkillProfile(){
+    return {rating:CONFIG.adaptiveDefaultRating,plays:0,confidence:0,highStreak:0,lowStreak:0,history:[],lastTarget:CONFIG.adaptiveDefaultRating,updatedAt:0};
+  }
+
+  function normalizeSkillProfile(raw){
+    const fallback=defaultSkillProfile(),source=raw&&typeof raw==='object'?raw:{};
+    const history=Array.isArray(source.history)?source.history.slice(-CONFIG.adaptiveHistorySize).map(item=>({
+      efficiency:clamp(Number(item.efficiency)||0,0,100),
+      difficulty:clamp(Number(item.difficulty)||0,0,100),
+      rating:clamp(Number(item.rating)||fallback.rating,0,100)
+    })):[];
+    const plays=Math.max(0,Math.floor(Number(source.plays)||history.length||0));
+    return {
+      rating:clamp(Number(source.rating)||fallback.rating,3,97),
+      plays,
+      confidence:clamp(Number(source.confidence)||0,0,1),
+      highStreak:Math.max(0,Math.floor(Number(source.highStreak)||0)),
+      lowStreak:Math.max(0,Math.floor(Number(source.lowStreak)||0)),
+      history,
+      lastTarget:clamp(Number(source.lastTarget)||fallback.lastTarget,0,100),
+      updatedAt:Number(source.updatedAt)||0
+    };
+  }
+
+  function loadSkillProfiles(){
+    let parsed=null;
+    try{parsed=JSON.parse(localStorage.getItem(CONFIG.adaptiveSkillStorageKey)||'null');}catch(_){}
+    const profiles=parsed&&parsed.version===1&&parsed.profiles?parsed.profiles:{};
+    state.skillProfiles={
+      fire:normalizeSkillProfile(profiles.fire),
+      ems:normalizeSkillProfile(profiles.ems)
+    };
+    state.skillProfile=state.skillProfiles[state.service]||state.skillProfiles.fire;
+  }
+
+  function saveSkillProfiles(){
+    if(!state.skillProfiles)return;
+    try{
+      localStorage.setItem(CONFIG.adaptiveSkillStorageKey,JSON.stringify({
+        version:1,
+        profiles:state.skillProfiles
+      }));
+    }catch(_){}
+  }
+
+  function recentSkillHistory(profile,count=CONFIG.adaptiveRecentWindow){
+    return (profile?.history||[]).slice(-Math.max(1,count));
+  }
+
+  function averageRecentEfficiency(profile){
+    const history=recentSkillHistory(profile);
+    if(!history.length)return 88;
+    return history.reduce((sum,item)=>sum+item.efficiency,0)/history.length;
+  }
+
+  function expectedRouteSuccess(rating,difficulty){
+    return 1/(1+Math.pow(10,(difficulty-rating)/30));
+  }
+
+  function efficiencyOutcome(efficiency){
+    return clamp((efficiency-72)/26,0,1);
+  }
+
+  function updateHiddenSkill(efficiency){
+    const profile=state.skillProfile;
+    if(!profile||!Number.isFinite(efficiency)||!state.call)return;
+    const difficulty=clamp(Number(state.call.difficulty)||0,0,100);
+    const actual=efficiencyOutcome(efficiency);
+    const expected=expectedRouteSuccess(profile.rating,difficulty);
+    const calibration=profile.plays<CONFIG.adaptiveCalibrationCalls;
+    const k=calibration?14:8.5;
+    let delta=k*(actual-expected);
+
+    // Loss protection: one distracted or unusual call should not erase several
+    // strong performances. Improvement can climb faster than a single miss falls.
+    if(delta<0)delta*=0.58;
+
+    if(efficiency>=96){
+      profile.highStreak+=1;
+      profile.lowStreak=0;
+      if(profile.highStreak>=3)delta+=0.7;
+      if(profile.highStreak>=5)delta+=0.9;
+    }else if(efficiency<=80){
+      profile.lowStreak+=1;
+      profile.highStreak=0;
+      if(profile.lowStreak>=3)delta-=0.5;
+    }else{
+      profile.highStreak=Math.max(0,profile.highStreak-1);
+      profile.lowStreak=Math.max(0,profile.lowStreak-1);
+    }
+
+    profile.rating=clamp(profile.rating+delta,3,97);
+    profile.plays+=1;
+    profile.confidence=clamp(1-Math.exp(-profile.plays/8),0,1);
+    profile.history.push({efficiency,difficulty,rating:profile.rating});
+    if(profile.history.length>CONFIG.adaptiveHistorySize)profile.history.splice(0,profile.history.length-CONFIG.adaptiveHistorySize);
+    profile.updatedAt=Date.now();
+    saveSkillProfiles();
+  }
+
+  function adaptiveDifficultyTarget(){
+    const profile=state.skillProfile||defaultSkillProfile();
+    const recent=recentSkillHistory(profile);
+    const recentEfficiency=averageRecentEfficiency(profile);
+    const calibration=profile.plays<CONFIG.adaptiveCalibrationCalls;
+
+    let target=profile.rating+CONFIG.adaptiveBaseChallenge;
+
+    // Calibration starts a little easier and ramps quickly when the player
+    // demonstrates strong routes.
+    if(calibration){
+      target=Math.min(target,30+profile.plays*5);
+      if(recentEfficiency>=95)target+=4;
+    }
+
+    // Momentum: sustained mastery quietly opens harder calls faster.
+    if(profile.highStreak>=3)target+=4;
+    if(profile.highStreak>=5)target+=5;
+
+    // Struggle protection: two difficult results in a row trigger a subtle
+    // breather without revealing that difficulty was adjusted.
+    if(profile.lowStreak>=2)target-=8;
+
+    // Rolling performance keeps the system responsive without chasing one score.
+    target+=clamp((recentEfficiency-90)*0.45,-5,6);
+
+    // Director-style pacing: occasionally give a stretch challenge or a breather.
+    // The weighted call picker still keeps this near the player's skill band.
+    const roll=Math.random();
+    if(profile.plays>=3&&recentEfficiency>=91&&roll<CONFIG.adaptiveStretchChance)target+=9;
+    else if(profile.plays>=3&&roll>1-CONFIG.adaptiveBreatherChance)target-=7;
+
+    // Every seventh completed call can act like a hidden challenge beat when the
+    // player is performing well, similar to pacing systems in action games.
+    if(profile.plays>0&&profile.plays%7===0&&recentEfficiency>=92)target+=7;
+
+    target=clamp(target,5,98);
+    profile.lastTarget=target;
+    state.adaptiveTarget=target;
+    return target;
+  }
+
+  function weightedCallChoice(calls,target){
+    if(!calls.length)return null;
+    const profile=state.skillProfile||defaultSkillProfile();
+    const calibration=profile.plays<CONFIG.adaptiveCalibrationCalls;
+    const band=calibration?18:CONFIG.adaptiveCallBand;
+    let candidates=calls.filter(call=>Math.abs((Number(call.difficulty)||0)-target)<=band);
+    if(candidates.length<4)candidates=calls.filter(call=>Math.abs((Number(call.difficulty)||0)-target)<=band+10);
+    if(!candidates.length)candidates=calls.slice();
+
+    const weighted=candidates.map(call=>{
+      const difficulty=Number(call.difficulty)||0;
+      const gap=Math.abs(difficulty-target);
+      let weight=Math.exp(-gap/(calibration?11:7.5));
+
+      // Slightly prefer calls above target when the player is on a mastery streak.
+      if(profile.highStreak>=3&&difficulty>=target)weight*=1.22;
+
+      // Keep advanced calls from flooding calibration, then make them more common
+      // naturally as the hidden rating reaches their difficulty range.
+      if(call.advanced&&profile.plays<CONFIG.adaptiveCalibrationCalls)weight*=0.45;
+
+      return {call,weight:Math.max(.01,weight)};
+    });
+    const total=weighted.reduce((sum,item)=>sum+item.weight,0);
+    let pick=Math.random()*total;
+    for(const item of weighted){
+      pick-=item.weight;
+      if(pick<=0)return item.call;
+    }
+    return weighted[weighted.length-1].call;
+  }
+
   function basesForService(service){const store=window.PTBO_BASE_STORE;if(store&&typeof store.getBases==='function')return store.getBases(service);const profiles=window.PTBO_SERVICE_CONFIG&&window.PTBO_SERVICE_CONFIG.profiles;return profiles&&profiles[service]?profiles[service].bases||[]:[];}
   function fillBases(service,preferredId){const bases=basesForService(service);ui.baseSelect.innerHTML='';bases.forEach(base=>{const option=document.createElement('option');option.value=base.id;option.textContent=(base.shortName||base.name)+' · '+base.address;ui.baseSelect.appendChild(option);});const wanted=bases.find(b=>b.id===preferredId)||bases[0];if(wanted)ui.baseSelect.value=wanted.id;return wanted;}
-  function loadPreferences(){let service='fire',baseId='station-1';try{service=localStorage.getItem('ptboRouteMappingService')||service;baseId=localStorage.getItem('ptboRouteMappingBase')||baseId;}catch(_){}if(!['fire','ems'].includes(service))service='fire';state.service=service;ui.serviceSelect.value=service;state.base=fillBases(service,baseId);}
+  function loadPreferences(){let service='fire',baseId='station-1';try{service=localStorage.getItem('ptboRouteMappingService')||service;baseId=localStorage.getItem('ptboRouteMappingBase')||baseId;}catch(_){}if(!['fire','ems'].includes(service))service='fire';state.service=service;ui.serviceSelect.value=service;state.base=fillBases(service,baseId);loadSkillProfiles();}
   function savePreferences(){try{localStorage.setItem('ptboRouteMappingService',state.service);localStorage.setItem('ptboRouteMappingBase',state.base.id);}catch(_){}}
   function openSettings(){ui.serviceSelect.value=state.service;fillBases(state.service,state.base&&state.base.id);ui.settingsSheet.hidden=false;}
   function closeSettings(){ui.settingsSheet.hidden=true;}
@@ -741,7 +932,7 @@
     ui.drawSurface.addEventListener('pointerdown',onDrawStart);ui.drawSurface.addEventListener('pointermove',onDrawMove);ui.drawSurface.addEventListener('pointerup',onDrawEnd);ui.drawSurface.addEventListener('pointercancel',onDrawEnd);
     ui.clear.addEventListener('click',resetDrawing);ui.undo.addEventListener('click',undo);ui.submit.addEventListener('click',submitRoute);ui.next.addEventListener('click',newCall);ui.settingsButton.addEventListener('click',openSettings);ui.settingsClose.addEventListener('click',closeSettings);ui.retry.addEventListener('click',()=>location.reload());
     ui.serviceSelect.addEventListener('change',()=>fillBases(ui.serviceSelect.value,null));
-    ui.settingsForm.addEventListener('submit',event=>{event.preventDefault();const service=ui.serviceSelect.value,bases=basesForService(service),base=bases.find(b=>b.id===ui.baseSelect.value)||bases[0];if(!base)return;state.service=service;state.base=base;savePreferences();closeSettings();newCall();});
+    ui.settingsForm.addEventListener('submit',event=>{event.preventDefault();const service=ui.serviceSelect.value,bases=basesForService(service),base=bases.find(b=>b.id===ui.baseSelect.value)||bases[0];if(!base)return;state.service=service;state.base=base;state.skillProfile=state.skillProfiles?.[service]||normalizeSkillProfile(null);if(state.skillProfiles&&!state.skillProfiles[service])state.skillProfiles[service]=state.skillProfile;savePreferences();closeSettings();newCall();});
     ui.settingsSheet.addEventListener('click',event=>{if(event.target===ui.settingsSheet)closeSettings();});
   }
 
