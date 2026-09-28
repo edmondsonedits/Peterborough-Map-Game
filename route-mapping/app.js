@@ -896,7 +896,14 @@
     ui.efficiency.textContent=Number.isFinite(eff)?Math.round(eff)+'% efficient':'Route complete';ui.playerDistance.textContent=formatDistance(player);ui.shortestDistance.textContent=formatDistance(shortest);ui.extraDistance.textContent=Number.isFinite(extra)?'+'+formatDistance(extra):'—';
     const playerRoads=state.playerRoute.mainRoads||[],recommendedRoads=state.recommendedRoute&&state.recommendedRoute.mainRoads||[],different=recommendedRoads.find(name=>name&&!playerRoads.includes(name));
     if(Number.isFinite(eff)&&eff>=97)ui.resultNote.textContent='Very close to the shortest available road route. Green shows the recommended response route.';else if(different)ui.resultNote.textContent='Compare where the green route uses '+different+' instead. Green favours major roads and estimated travel time.';else ui.resultNote.textContent='Blue is your route. Green is the recommended response route.';
-    if(Number.isFinite(eff))updateHiddenSkill(eff);
+    let decisionLearning=null;
+    if(Number.isFinite(eff)){
+      updateHiddenSkill(eff);
+      decisionLearning=updateDecisionLearning(eff,extra);
+    }
+    if(decisionLearning&&Number.isFinite(extra)){
+      ui.resultNote.textContent='Key decision: '+decisionLearning.correctRoad+'. Your route added '+formatDistance(extra)+' overall. This decision will return later for practice.';
+    }
     recordProgressionCompletion();
     clearLayer(state.interactiveLine);state.interactiveLine=null;renderReference();setMode('results');setHint('');
   }
@@ -1078,7 +1085,7 @@
   }
 
   function defaultSkillProfile(){
-    return {rating:CONFIG.adaptiveDefaultRating,plays:0,confidence:0,highStreak:0,lowStreak:0,history:[],lastTarget:CONFIG.adaptiveDefaultRating,updatedAt:0};
+    return {rating:CONFIG.adaptiveDefaultRating,plays:0,confidence:0,highStreak:0,lowStreak:0,history:[],weakDecisions:{},lastTarget:CONFIG.adaptiveDefaultRating,updatedAt:0};
   }
 
   function normalizeSkillProfile(raw){
@@ -1089,6 +1096,21 @@
       rating:clamp(Number(item.rating)||fallback.rating,0,100)
     })):[];
     const plays=Math.max(0,Math.floor(Number(source.plays)||history.length||0));
+    const weakDecisions={};
+    if(source.weakDecisions&&typeof source.weakDecisions==='object'){
+      for(const [key,item] of Object.entries(source.weakDecisions)){
+        if(!item||typeof item!=='object')continue;
+        weakDecisions[key]={
+          score:clamp(Number(item.score)||0,0,3),
+          lastPlay:Math.max(0,Math.floor(Number(item.lastPlay)||0)),
+          exposures:Math.max(0,Math.floor(Number(item.exposures)||0)),
+          correctRoad:String(item.correctRoad||''),
+          chosenRoad:String(item.chosenRoad||''),
+          lat:Number(item.lat)||0,
+          lng:Number(item.lng)||0
+        };
+      }
+    }
     return {
       rating:clamp(Number(source.rating)||fallback.rating,3,97),
       plays,
@@ -1096,6 +1118,7 @@
       highStreak:Math.max(0,Math.floor(Number(source.highStreak)||0)),
       lowStreak:Math.max(0,Math.floor(Number(source.lowStreak)||0)),
       history,
+      weakDecisions,
       lastTarget:clamp(Number(source.lastTarget)||fallback.lastTarget,0,100),
       updatedAt:Number(source.updatedAt)||0
     };
@@ -1175,6 +1198,83 @@
     if(profile.history.length>CONFIG.adaptiveHistorySize)profile.history.splice(0,profile.history.length-CONFIG.adaptiveHistorySize);
     profile.updatedAt=Date.now();
     saveSkillProfiles();
+  }
+
+  function routeEdgeSame(a,b){
+    return Boolean(a&&b&&a.from===b.from&&a.to===b.to);
+  }
+
+  function firstMeaningfulRouteDivergence(){
+    const reference=state.shortestRoute?.edges||[],player=state.playerRoute?.edges||[];
+    if(!reference.length||!player.length)return null;
+    let index=0;
+    while(index<reference.length&&index<player.length&&routeEdgeSame(reference[index],player[index]))index+=1;
+    if(index>=reference.length)return null;
+    const correct=reference[index];
+    let chosen=player[index]||null;
+    if(!chosen||chosen.from!==correct.from){
+      chosen=player.slice(Math.max(0,index-2),Math.min(player.length,index+5)).find(edge=>edge.from===correct.from)||chosen;
+    }
+    return {index,correct,chosen};
+  }
+
+  function pruneWeakDecisions(profile){
+    const entries=Object.entries(profile.weakDecisions||{});
+    if(entries.length<=CONFIG.decisionWeaknessMaxCount)return;
+    entries.sort((a,b)=>(Number(b[1].score)||0)-(Number(a[1].score)||0)||(Number(b[1].lastPlay)||0)-(Number(a[1].lastPlay)||0));
+    const keep=new Set(entries.slice(0,CONFIG.decisionWeaknessMaxCount).map(([key])=>key));
+    for(const key of Object.keys(profile.weakDecisions))if(!keep.has(key))delete profile.weakDecisions[key];
+  }
+
+  function updateDecisionLearning(efficiency,extraDistance){
+    const profile=state.skillProfile;
+    if(!profile||!Number.isFinite(efficiency)||!state.shortestRoute?.edges?.length)return null;
+    profile.weakDecisions=profile.weakDecisions||{};
+
+    // Correctly navigating a previously weak decision reduces its priority.
+    if(efficiency>=93){
+      for(const edge of state.shortestRoute.edges){
+        const key=decisionKey(edge.from,edge.name||edge.ref);
+        const memory=profile.weakDecisions[key];
+        if(!memory)continue;
+        memory.score*=efficiency>=98?.62:.76;
+        if(memory.score<.18)delete profile.weakDecisions[key];
+      }
+    }
+
+    const tolerance=Math.max(CONFIG.decisionMeaningfulPenalty,(Number(state.shortestRoute.distance)||0)*CONFIG.decisionEqualRouteRatio);
+    if(!Number.isFinite(extraDistance)||extraDistance<=tolerance||efficiency>=96){
+      pruneWeakDecisions(profile);saveSkillProfiles();return null;
+    }
+
+    const divergence=firstMeaningfulRouteDivergence();
+    if(!divergence?.correct)return null;
+    const correctRoad=String(divergence.correct.name||divergence.correct.ref||'the preferred road');
+    const chosenRoad=String(divergence.chosen?.name||divergence.chosen?.ref||'the alternate road');
+    const key=decisionKey(divergence.correct.from,correctRoad);
+    if(!key)return null;
+    const node=state.graph.nodes[divergence.correct.from];
+    const knownTrap=state.call?.decisionAnalysis?.traps?.find(trap=>trap.key===key)||null;
+    const severity=clamp(
+      .35+
+      Math.min(1.45,extraDistance/900)+
+      Math.max(0,95-efficiency)/22+
+      (knownTrap?knownTrap.trapScore/220:0),
+      .35,3
+    );
+    const existing=profile.weakDecisions[key]||{score:0,exposures:0};
+    profile.weakDecisions[key]={
+      score:clamp((Number(existing.score)||0)*.72+severity,0,3),
+      lastPlay:Number(profile.plays)||0,
+      exposures:(Number(existing.exposures)||0)+1,
+      correctRoad,
+      chosenRoad,
+      lat:Number(node?.lat)||0,
+      lng:Number(node?.lng)||0
+    };
+    pruneWeakDecisions(profile);
+    saveSkillProfiles();
+    return {key,correctRoad,chosenRoad,extraDistance,trap:knownTrap};
   }
 
   function adaptiveDifficultyTarget(){
