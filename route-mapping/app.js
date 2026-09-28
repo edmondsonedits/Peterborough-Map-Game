@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.91';
+  const VERSION = '1.6.92';
   const CONFIG = Object.freeze({
     roadUrl: '../city-explorer/data/osm-public-roads.geojson',
     centerLat: 44.3091,
@@ -9,9 +9,14 @@
     gridSize: 120,
     roadSearchRadius: 130,
     destinationSearchRadius: 520,
-    strokeAnchorSpacing: 150,
-    strokeTolerance: 18,
-    maxIntermediateAnchors: 12,
+    strokeAnchorSpacing: 170,
+    strokeTolerance: 22,
+    straightAssistTolerance: 52,
+    straightAssistRatio: 0.78,
+    straightAssistMaxDeviation: 95,
+    weakTurnDeviation: 48,
+    weakTurnAngle: 32,
+    maxIntermediateAnchors: 9,
     maxVisitedNodes: 120000,
     routeTapZoom: 16,
     recentCalls: 10,
@@ -131,10 +136,95 @@
     out.push(points[points.length-1]);return out;
   }
 
+  function pointSegmentDistanceMeters(point,start,end){
+    const p=toXY(point.lat,point.lng),a=toXY(start.lat,start.lng),b=toXY(end.lat,end.lng),dx=b.x-a.x,dy=b.y-a.y,lenSq=dx*dx+dy*dy;
+    if(lenSq<1e-6)return Math.hypot(p.x-a.x,p.y-a.y);
+    const t=Math.max(0,Math.min(1,((p.x-a.x)*dx+(p.y-a.y)*dy)/lenSq)),x=a.x+dx*t,y=a.y+dy*t;
+    return Math.hypot(p.x-x,p.y-y);
+  }
+
+  function strokeLength(points){
+    let total=0;
+    for(let i=1;i<points.length;i+=1){const d=dist(points[i-1],points[i]);if(Number.isFinite(d))total+=d;}
+    return total;
+  }
+
+  function turnAngleDegrees(a,b,c){
+    const aa=toXY(a.lat,a.lng),bb=toXY(b.lat,b.lng),cc=toXY(c.lat,c.lng),v1={x:bb.x-aa.x,y:bb.y-aa.y},v2={x:cc.x-bb.x,y:cc.y-bb.y};
+    const l1=Math.hypot(v1.x,v1.y),l2=Math.hypot(v2.x,v2.y);
+    if(l1<1||l2<1)return 0;
+    const cosine=Math.max(-1,Math.min(1,(v1.x*v2.x+v1.y*v2.y)/(l1*l2)));
+    return Math.acos(cosine)*180/Math.PI;
+  }
+
+  function simplifyStrokeIntent(points){
+    if(!Array.isArray(points)||points.length<3)return points.slice();
+    const start=points[0],end=points[points.length-1],direct=dist(start,end),travelled=strokeLength(points);
+    let maxDeviation=0;
+    for(let i=1;i<points.length-1;i+=1)maxDeviation=Math.max(maxDeviation,pointSegmentDistanceMeters(points[i],start,end));
+    const straightness=travelled>0?direct/travelled:1;
+    const allowedDeviation=Math.min(CONFIG.straightAssistMaxDeviation,Math.max(42,direct*0.045));
+
+    // A mostly straight finger stroke is treated as a straight intention. Small
+    // thumb/finger wobble should not become routing waypoints.
+    if(direct>180&&straightness>=CONFIG.straightAssistRatio&&maxDeviation<=allowedDeviation)return [start,end];
+
+    let simplified=rdp(points,CONFIG.straightAssistTolerance);
+    let changed=true;
+    while(changed&&simplified.length>2){
+      changed=false;
+      const next=[simplified[0]];
+      for(let i=1;i<simplified.length-1;i+=1){
+        const previous=next[next.length-1],current=simplified[i],following=simplified[i+1];
+        const deviation=pointSegmentDistanceMeters(current,previous,following),angle=turnAngleDegrees(previous,current,following);
+        const shortLeg=Math.min(dist(previous,current),dist(current,following))<125;
+        const weakBend=deviation<CONFIG.weakTurnDeviation&&(angle<CONFIG.weakTurnAngle||shortLeg);
+        if(weakBend){changed=true;continue;}
+        next.push(current);
+      }
+      next.push(simplified[simplified.length-1]);
+      simplified=next;
+    }
+    return simplified;
+  }
+
+  function pruneMappedAnchors(mapped){
+    if(mapped.length<3)return mapped;
+    let result=mapped.slice(),changed=true;
+    while(changed&&result.length>2){
+      changed=false;
+      const next=[result[0]];
+      for(let i=1;i<result.length-1;i+=1){
+        const previous=next[next.length-1],current=result[i],following=result[i+1];
+        const deviation=pointSegmentDistanceMeters(current,previous,following),angle=turnAngleDegrees(previous,current,following);
+        const sameRoad=previous.road&&current.road&&following.road&&previous.road===current.road&&current.road===following.road;
+        if(sameRoad||(deviation<CONFIG.weakTurnDeviation&&angle<CONFIG.weakTurnAngle)){changed=true;continue;}
+        next.push(current);
+      }
+      next.push(result[result.length-1]);
+      result=next;
+    }
+    return result;
+  }
+
   function mappedAnchorsFromStroke(points){
-    const simplified=rdp(points,CONFIG.strokeTolerance),samples=resample(simplified,CONFIG.strokeAnchorSpacing),mapped=[];
-    for(const p of samples){const road=nearestRoad(p.lat,p.lng,CONFIG.roadSearchRadius);if(!road)continue;const previous=mapped[mapped.length-1];if(previous&&previous.nodeId===road.nodeId)continue;if(previous&&dist(previous,road)<75&&previous.road===road.road)continue;mapped.push(road);}
-    if(mapped.length<=CONFIG.maxIntermediateAnchors)return mapped;const reduced=[];for(let i=0;i<CONFIG.maxIntermediateAnchors;i+=1){const index=Math.round(i*(mapped.length-1)/(CONFIG.maxIntermediateAnchors-1));const item=mapped[index];if(!reduced.length||reduced[reduced.length-1].nodeId!==item.nodeId)reduced.push(item);}return reduced;
+    const intent=simplifyStrokeIntent(points),samples=resample(intent,CONFIG.strokeAnchorSpacing),mapped=[];
+    for(const p of samples){
+      const road=nearestRoad(p.lat,p.lng,CONFIG.roadSearchRadius);
+      if(!road)continue;
+      const previous=mapped[mapped.length-1];
+      if(previous&&previous.nodeId===road.nodeId)continue;
+      if(previous&&dist(previous,road)<90&&previous.road===road.road)continue;
+      mapped.push(road);
+    }
+    const pruned=pruneMappedAnchors(mapped);
+    if(pruned.length<=CONFIG.maxIntermediateAnchors)return pruned;
+    const reduced=[];
+    for(let i=0;i<CONFIG.maxIntermediateAnchors;i+=1){
+      const index=Math.round(i*(pruned.length-1)/(CONFIG.maxIntermediateAnchors-1)),item=pruned[index];
+      if(!reduced.length||reduced[reduced.length-1].nodeId!==item.nodeId)reduced.push(item);
+    }
+    return reduced;
   }
 
   function cloneAnchors(list){return list.map(a=>({lat:a.lat,lng:a.lng,nodeId:a.nodeId,road:a.road||'',fixed:Boolean(a.fixed)}));}
