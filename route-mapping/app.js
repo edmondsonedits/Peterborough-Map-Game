@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.96';
+  const VERSION = '1.6.97';
   const CONFIG = Object.freeze({
     roadUrl: '../city-explorer/data/osm-public-roads.geojson',
     centerLat: 44.3091,
@@ -36,6 +36,10 @@
     adaptiveCallBand: 12,
     adaptiveStretchChance: 0.16,
     adaptiveBreatherChance: 0.10,
+    progressionStorageKey: 'ptboRouteMappingProgressionV1',
+    callsPerStationPhase: 20,
+    peterboroughCallProximity: 1400,
+    continuousMinNextCallDistance: 850,
     maxIntermediateAnchors: 9,
     maxVisitedNodes: 120000,
     routeTapZoom: 16,
@@ -65,7 +69,7 @@
 
   const state = {
     map:null, graph:null, calls:[], originalCalls:[], advancedCalls:[], difficultyIndex:null, service:'fire', base:null, call:null, callCount:0, recentCallIds:[], mode:'loading',
-    skillProfiles:null, skillProfile:null, adaptiveTarget:null,
+    skillProfiles:null, skillProfile:null, adaptiveTarget:null, progression:null, phase:null,
     rawPoints:[], rawLine:null, drawingPointer:null, originAnchor:null, destinationAnchor:null, anchors:[], history:[], playerRoute:null,
     shortestRoute:null, recommendedRoute:null, playerLayers:[], referenceLayers:[], startMarker:null, callMarker:null, editMarker:null, previewLine:null,
     interactiveLine:null, editDraft:null, lastPreviewAt:0, firstSnapShown:false
@@ -208,6 +212,7 @@
 
   function buildAdvancedCalls(originalCalls){
     const eligibleClasses=new Set(['tertiary','tertiary_link','unclassified','residential','living_street','service','road']);
+    const envelope=buildPeterboroughTrainingEnvelope(originalCalls);
     const existingPoints=originalCalls.map(call=>callPoint(call));
     const originalDistances=originalCalls.map(call=>Number(call.difficultyDistance)).filter(Number.isFinite);
     const originalDifficulty=originalCalls.map(call=>Number(call.difficulty)).filter(Number.isFinite);
@@ -229,7 +234,9 @@
       const nodeId=Number.isFinite(fromDistance)&&(!Number.isFinite(toDistance)||fromDistance>=toDistance)?segment.from:segment.to;
       const quickDistance=state.difficultyIndex.distances[nodeId];
       if(!Number.isFinite(quickDistance)||quickDistance<1800)continue;
-      const ll=toLatLng((a.x+b.x)/2,(a.y+b.y)/2),profile=difficultyProfileForNode(nodeId,highway);
+      const ll=toLatLng((a.x+b.x)/2,(a.y+b.y)/2);
+      if(!isPeterboroughTrainingPoint(ll,envelope))continue;
+      const profile=difficultyProfileForNode(nodeId,highway);
       candidates.push({
         lat:ll.lat,lng:ll.lng,nodeId,road:roadName,highway,
         difficulty:profile.score,routeDistance:profile.routeDistance,
@@ -273,6 +280,120 @@
         difficultyRoad:candidate.road
       };
     });
+  }
+
+  function buildPeterboroughTrainingEnvelope(calls){
+    const points=(calls||[]).map(callPoint).filter(point=>Number.isFinite(point.lat)&&Number.isFinite(point.lng));
+    if(!points.length)return null;
+    return {
+      minLat:Math.min(...points.map(point=>point.lat)),
+      maxLat:Math.max(...points.map(point=>point.lat)),
+      minLng:Math.min(...points.map(point=>point.lng)),
+      maxLng:Math.max(...points.map(point=>point.lng)),
+      points
+    };
+  }
+
+  function isPeterboroughTrainingPoint(point,envelope){
+    if(!point||!envelope)return false;
+    if(point.lat<envelope.minLat||point.lat>envelope.maxLat||point.lng<envelope.minLng||point.lng>envelope.maxLng)return false;
+    let nearest=Infinity;
+    for(const existing of envelope.points){
+      const distance=dist(point,existing);
+      if(distance<nearest)nearest=distance;
+      if(nearest<=CONFIG.peterboroughCallProximity)return true;
+    }
+    return false;
+  }
+
+  function defaultProgression(){
+    return {completed:0,lastCall:null,updatedAt:0};
+  }
+
+  function normalizeProgression(raw){
+    const source=raw&&typeof raw==='object'?raw:{};
+    const last=source.lastCall&&Number.isFinite(Number(source.lastCall.lat))&&Number.isFinite(Number(source.lastCall.lng))
+      ? {id:String(source.lastCall.id||''),name:String(source.lastCall.name||source.lastCall.addr||'Previous Call'),addr:String(source.lastCall.addr||source.lastCall.name||'Previous Call'),lat:Number(source.lastCall.lat),lng:Number(source.lastCall.lng)}
+      : null;
+    return {completed:Math.max(0,Math.floor(Number(source.completed)||0)),lastCall:last,updatedAt:Number(source.updatedAt)||0};
+  }
+
+  function loadProgression(){
+    let parsed=null;
+    try{parsed=JSON.parse(localStorage.getItem(CONFIG.progressionStorageKey)||'null');}catch(_){}
+    state.progression=normalizeProgression(parsed&&parsed.version===1?parsed.progression:null);
+  }
+
+  function saveProgression(){
+    if(!state.progression)return;
+    try{localStorage.setItem(CONFIG.progressionStorageKey,JSON.stringify({version:1,progression:state.progression}));}catch(_){}
+  }
+
+  function progressionPhase(){
+    const completed=Math.max(0,Number(state.progression?.completed)||0),size=CONFIG.callsPerStationPhase;
+    if(completed<size)return {index:0,key:'central',stationNumber:1,label:'Station 1',completedInPhase:completed,rankProgress:completed/size};
+    if(completed<size*2)return {index:1,key:'north',stationNumber:2,label:'North Station',completedInPhase:completed-size,rankProgress:(completed-size)/size};
+    if(completed<size*3)return {index:2,key:'west',stationNumber:3,label:'West Station',completedInPhase:completed-size*2,rankProgress:(completed-size*2)/size};
+    return {index:3,key:'continuous',stationNumber:null,label:'Previous Call',completedInPhase:completed-size*3,rankProgress:1};
+  }
+
+  function stationForPhase(phase){
+    const stations=basesForService('fire');
+    return stations.find(base=>Number(base.number)===Number(phase.stationNumber))||stations[Math.max(0,Math.min(stations.length-1,phase.index))]||null;
+  }
+
+  function previousCallBase(lastCall){
+    if(!lastCall)return null;
+    return {
+      id:'previous-call',
+      number:0,
+      name:'Previous Call',
+      shortName:'Previous Call',
+      address:lastCall.addr||lastCall.name||'Previous dispatch',
+      lat:Number(lastCall.lat),
+      lng:Number(lastCall.lng),
+      spawnLat:Number(lastCall.lat),
+      spawnLng:Number(lastCall.lng),
+      spawnHeading:0
+    };
+  }
+
+  function applyProgressionStart(){
+    const phase=progressionPhase();
+    state.phase=phase;
+    if(phase.index<3){
+      const station=stationForPhase(phase);
+      if(station)state.base=station;
+      return phase;
+    }
+    const previous=previousCallBase(state.progression?.lastCall);
+    if(previous)state.base=previous;
+    else{
+      const fallback=stationForPhase({index:2,stationNumber:3});
+      if(fallback)state.base=fallback;
+    }
+    return phase;
+  }
+
+  function progressionDifficultyTarget(){
+    const phase=state.phase||progressionPhase();
+    if(phase.index>=3)return null;
+    const step=Math.max(0,Math.min(CONFIG.callsPerStationPhase-1,phase.completedInPhase));
+    return 12+(step/(CONFIG.callsPerStationPhase-1))*82;
+  }
+
+  function recordProgressionCompletion(){
+    if(!state.progression||!state.call)return;
+    state.progression.completed+=1;
+    state.progression.lastCall={
+      id:String(state.call.id||''),
+      name:String(state.call.name||state.call.addr||'Previous Call'),
+      addr:String(state.call.addr||state.call.name||'Previous Call'),
+      lat:Number(state.call.lat),
+      lng:Number(state.call.lng)
+    };
+    state.progression.updatedAt=Date.now();
+    saveProgression();
   }
 
   function nearbySegments(x,y,radius){
@@ -719,12 +840,20 @@
     const playerRoads=state.playerRoute.mainRoads||[],recommendedRoads=state.recommendedRoute&&state.recommendedRoute.mainRoads||[],different=recommendedRoads.find(name=>name&&!playerRoads.includes(name));
     if(Number.isFinite(eff)&&eff>=97)ui.resultNote.textContent='Very close to the shortest available road route. Green shows the recommended response route.';else if(different)ui.resultNote.textContent='Compare where the green route uses '+different+' instead. Green favours major roads and estimated travel time.';else ui.resultNote.textContent='Blue is your route. Green is the recommended response route.';
     if(Number.isFinite(eff))updateHiddenSkill(eff);
+    recordProgressionCompletion();
     clearLayer(state.interactiveLine);state.interactiveLine=null;renderReference();setMode('results');setHint('');
   }
 
   function callsForService(){const target=state.service==='ems'?'medical':'fire',filtered=state.calls.filter(c=>String(c.main||'').toLowerCase()===target);return filtered.length?filtered:state.calls;}
   function chooseCall(){
-    const pool=callsForService(),recent=new Set(state.recentCallIds),fresh=pool.filter(call=>!recent.has(call.id)),source=fresh.length?fresh:pool;
+    const pool=callsForService(),recent=new Set(state.recentCallIds);
+    let fresh=pool.filter(call=>!recent.has(call.id));
+    if(state.phase?.index>=3&&state.base){
+      const start=basePoint(state.base);
+      const spaced=fresh.filter(call=>dist(start,callPoint(call))>=CONFIG.continuousMinNextCallDistance);
+      if(spaced.length>=4)fresh=spaced;
+    }
+    const source=fresh.length?fresh:pool;
     if(!source.length)throw new Error('No dispatch calls are available.');
     const target=adaptiveDifficultyTarget();
     const call=weightedCallChoice(source,target)||source[0];
@@ -734,11 +863,23 @@
   }
 
   function newCall(){
-    cancelEdit();clearRaw();clearReference();clearLayers(state.playerLayers);clearLayer(state.interactiveLine);state.interactiveLine=null;state.call=chooseCall();state.callCount+=1;state.playerRoute=null;state.shortestRoute=null;state.recommendedRoute=null;state.anchors=[];state.history=[];ui.callNumber.textContent='CALL '+state.callCount;ui.baseLabel.textContent=state.base.shortName||state.base.name;ui.callType.textContent=state.call.sub||state.call.main||'Dispatch Call';ui.callAddress.textContent=state.call.addr||state.call.name;
+    cancelEdit();clearRaw();clearReference();clearLayers(state.playerLayers);clearLayer(state.interactiveLine);state.interactiveLine=null;
+    const previousPhase=state.phase?.index;
+    const phase=applyProgressionStart();
+    state.call=chooseCall();state.callCount+=1;state.playerRoute=null;state.shortestRoute=null;state.recommendedRoute=null;state.anchors=[];state.history=[];ui.callNumber.textContent='CALL '+state.callCount;ui.baseLabel.textContent=state.base.shortName||state.base.name;ui.callType.textContent=state.call.sub||state.call.main||'Dispatch Call';ui.callAddress.textContent=state.call.addr||state.call.name;
     const difficulty=clamp(Math.round(Number(state.call.difficulty)||0),0,100);
     ui.difficultyLabel.textContent='DIFFICULTY '+difficulty;
     ui.difficultyLabel.dataset.level=difficulty>=80?'extreme':difficulty>=60?'hard':difficulty>=35?'medium':'easy';
-    updateMarkers();fitExercise();setMode('drawing');setHint('Draw a route from '+(state.base.shortName||state.base.name)+' to the call');
+    updateMarkers();fitExercise();setMode('drawing');
+    if(previousPhase!==undefined&&previousPhase!==phase.index){
+      const message=phase.index===1?'North Station unlocked · routes now start from Station 2'
+        :phase.index===2?'West Station unlocked · routes now start from Station 3'
+        :phase.index===3?'City mastery mode unlocked · each call now starts at the previous dispatch'
+        :'Draw a route to the call';
+      setHint(message);
+    }else{
+      setHint('Draw a route from '+(state.base.shortName||state.base.name)+' to the call');
+    }
   }
 
   function defaultSkillProfile(){
@@ -848,6 +989,12 @@
     const calibration=profile.plays<CONFIG.adaptiveCalibrationCalls;
 
     let target=profile.rating+CONFIG.adaptiveBaseChallenge;
+    const phaseTarget=progressionDifficultyTarget();
+    if(Number.isFinite(phaseTarget)){
+      // Each station has a 20-call hidden rank ladder. Completion determines
+      // permanent rank progress; performance still shifts challenge around it.
+      target=phaseTarget*0.68+target*0.32;
+    }
 
     // Calibration starts a little easier and ramps quickly when the player
     // demonstrates strong routes.
@@ -917,7 +1064,7 @@
 
   function basesForService(service){const store=window.PTBO_BASE_STORE;if(store&&typeof store.getBases==='function')return store.getBases(service);const profiles=window.PTBO_SERVICE_CONFIG&&window.PTBO_SERVICE_CONFIG.profiles;return profiles&&profiles[service]?profiles[service].bases||[]:[];}
   function fillBases(service,preferredId){const bases=basesForService(service);ui.baseSelect.innerHTML='';bases.forEach(base=>{const option=document.createElement('option');option.value=base.id;option.textContent=(base.shortName||base.name)+' · '+base.address;ui.baseSelect.appendChild(option);});const wanted=bases.find(b=>b.id===preferredId)||bases[0];if(wanted)ui.baseSelect.value=wanted.id;return wanted;}
-  function loadPreferences(){let service='fire',baseId='station-1';try{service=localStorage.getItem('ptboRouteMappingService')||service;baseId=localStorage.getItem('ptboRouteMappingBase')||baseId;}catch(_){}if(!['fire','ems'].includes(service))service='fire';state.service=service;ui.serviceSelect.value=service;state.base=fillBases(service,baseId);loadSkillProfiles();}
+  function loadPreferences(){let service='fire';try{service=localStorage.getItem('ptboRouteMappingService')||service;}catch(_){}if(!['fire','ems'].includes(service))service='fire';state.service=service;ui.serviceSelect.value=service;fillBases(service,null);loadSkillProfiles();loadProgression();applyProgressionStart();}
   function savePreferences(){try{localStorage.setItem('ptboRouteMappingService',state.service);localStorage.setItem('ptboRouteMappingBase',state.base.id);}catch(_){}}
   function openSettings(){ui.serviceSelect.value=state.service;fillBases(state.service,state.base&&state.base.id);ui.settingsSheet.hidden=false;}
   function closeSettings(){ui.settingsSheet.hidden=true;}
@@ -932,7 +1079,7 @@
     ui.drawSurface.addEventListener('pointerdown',onDrawStart);ui.drawSurface.addEventListener('pointermove',onDrawMove);ui.drawSurface.addEventListener('pointerup',onDrawEnd);ui.drawSurface.addEventListener('pointercancel',onDrawEnd);
     ui.clear.addEventListener('click',resetDrawing);ui.undo.addEventListener('click',undo);ui.submit.addEventListener('click',submitRoute);ui.next.addEventListener('click',newCall);ui.settingsButton.addEventListener('click',openSettings);ui.settingsClose.addEventListener('click',closeSettings);ui.retry.addEventListener('click',()=>location.reload());
     ui.serviceSelect.addEventListener('change',()=>fillBases(ui.serviceSelect.value,null));
-    ui.settingsForm.addEventListener('submit',event=>{event.preventDefault();const service=ui.serviceSelect.value,bases=basesForService(service),base=bases.find(b=>b.id===ui.baseSelect.value)||bases[0];if(!base)return;state.service=service;state.base=base;state.skillProfile=state.skillProfiles?.[service]||normalizeSkillProfile(null);if(state.skillProfiles&&!state.skillProfiles[service])state.skillProfiles[service]=state.skillProfile;savePreferences();closeSettings();newCall();});
+    ui.settingsForm.addEventListener('submit',event=>{event.preventDefault();const service=ui.serviceSelect.value;state.service=service;state.skillProfile=state.skillProfiles?.[service]||normalizeSkillProfile(null);if(state.skillProfiles&&!state.skillProfiles[service])state.skillProfiles[service]=state.skillProfile;savePreferences();closeSettings();newCall();});
     ui.settingsSheet.addEventListener('click',event=>{if(event.target===ui.settingsSheet)closeSettings();});
   }
 
@@ -965,7 +1112,7 @@
   function showFailure(error){console.error(error);ui.app.setAttribute('aria-busy','false');ui.errorMessage.textContent=error&&error.message?error.message:String(error||'Unknown startup error');ui.error.hidden=false;setMode('loading');}
 
   async function initialize(){
-    try{initMap();bindUi();loadPreferences();await loadData();if(!state.base){const bases=basesForService(state.service);state.base=bases[0];}if(!state.base)throw new Error('No starting base is available.');ui.app.setAttribute('aria-busy','false');newCall();window.PTBO_ROUTE_MAPPING=Object.freeze({version:VERSION,state,nearestRoad,composeRoute,pathBetween,newCall});}
+    try{initMap();bindUi();loadPreferences();await loadData();applyProgressionStart();if(!state.base)throw new Error('No starting base is available.');ui.app.setAttribute('aria-busy','false');newCall();window.PTBO_ROUTE_MAPPING=Object.freeze({version:VERSION,state,nearestRoad,composeRoute,pathBetween,newCall});}
     catch(error){showFailure(error);}
   }
 
