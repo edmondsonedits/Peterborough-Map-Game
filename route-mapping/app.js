@@ -901,6 +901,142 @@
     clearLayer(state.interactiveLine);state.interactiveLine=null;renderReference();setMode('results');setHint('');
   }
 
+  function decisionKey(nodeId,correctRoad){
+    const node=state.graph?.nodes?.[nodeId];
+    if(!node)return '';
+    return node.lat.toFixed(5)+','+node.lng.toFixed(5)+'|'+String(correctRoad||'').trim().toLowerCase();
+  }
+
+  function roadChoicePlausibility(edge,node,destinationNode){
+    const altNode=state.graph.nodes[edge.to];
+    if(!altNode||!node||!destinationNode)return 0;
+    const currentDistance=Math.hypot(destinationNode.x-node.x,destinationNode.y-node.y);
+    const alternateDistance=Math.hypot(destinationNode.x-altNode.x,destinationNode.y-altNode.y);
+    if(currentDistance<1)return 0;
+    const direction=clamp(1-(alternateDistance-currentDistance)/Math.max(240,currentDistance*.38),0,1);
+    const roadClass=String(edge.highway||'');
+    const familiarRoad=['motorway','trunk','primary','secondary','tertiary'].includes(roadClass)?1:.78;
+    return clamp(direction*.72+familiarRoad*.28,0,1);
+  }
+
+  function analyzeDecisionDifficulty(call,startBase){
+    const baseDifficulty=clamp(Number(call?.difficulty)||0,0,100);
+    if(!call||!startBase||!state.graph)return {score:baseDifficulty,decisionScore:Number(call?.decisionPotential)||0,traps:[],meaningfulForks:0,equalAlternatives:0};
+    const startPoint=basePoint(startBase),endPoint=callPoint(call);
+    const origin=nearestRoad(startPoint.lat,startPoint.lng,260),destination=nearestRoad(endPoint.lat,endPoint.lng,CONFIG.destinationSearchRadius);
+    if(!origin||!destination)return {score:baseDifficulty,decisionScore:Number(call.decisionPotential)||0,traps:[],meaningfulForks:0,equalAlternatives:0};
+
+    const optimal=pathBetween(origin.nodeId,destination.nodeId,'distance');
+    if(!optimal||!optimal.edges?.length)return {score:baseDifficulty,decisionScore:Number(call.decisionPotential)||0,traps:[],meaningfulForks:0,equalAlternatives:0};
+
+    const edges=optimal.edges,destinationNode=state.graph.nodes[destination.nodeId],suffix=new Float64Array(edges.length+1),prefix=new Float64Array(edges.length+1);
+    for(let i=edges.length-1;i>=0;i-=1)suffix[i]=suffix[i+1]+edges[i].distance;
+    for(let i=0;i<edges.length;i+=1)prefix[i+1]=prefix[i]+edges[i].distance;
+
+    const forkCandidates=[];
+    for(let i=0;i<edges.length;i+=1){
+      const correct=edges[i],node=state.graph.nodes[correct.from];
+      if(!node||suffix[i]<220)continue;
+      const previousNodeId=i>0?edges[i-1].from:-1,seenRoads=new Set(),alternatives=[];
+      for(const alt of node.edges){
+        if(alt.to===correct.to||alt.to===previousNodeId)continue;
+        const altName=String(alt.name||alt.ref||'').trim();
+        const correctName=String(correct.name||correct.ref||'').trim();
+        if(altName&&correctName&&altName===correctName)continue;
+        const roadKey=altName||String(alt.to);
+        if(seenRoads.has(roadKey))continue;
+        seenRoads.add(roadKey);
+        const plausibility=roadChoicePlausibility(alt,node,destinationNode);
+        if(plausibility<.34)continue;
+        alternatives.push({edge:alt,plausibility});
+      }
+      if(!alternatives.length)continue;
+      alternatives.sort((a,b)=>b.plausibility-a.plausibility);
+      const progress=optimal.distance>0?prefix[i]/optimal.distance:0;
+      const earlyBonus=progress<.38?1.18:progress<.7?1.07:1;
+      forkCandidates.push({
+        index:i,nodeId:correct.from,correct,alternatives,
+        quickScore:alternatives[0].plausibility*earlyBonus*(1+Math.min(2,alternatives.length)*.18),
+        progress
+      });
+    }
+
+    forkCandidates.sort((a,b)=>b.quickScore-a.quickScore);
+    const traps=[];let meaningfulForks=0,equalAlternatives=0;
+    for(const fork of forkCandidates.slice(0,CONFIG.decisionAnalyzeNodes)){
+      const alternate=fork.alternatives[0],altPath=pathBetween(alternate.edge.to,destination.nodeId,'distance');
+      if(!altPath)continue;
+      const alternateRemaining=alternate.edge.distance+altPath.distance,correctRemaining=suffix[fork.index];
+      const penalty=Math.max(0,alternateRemaining-correctRemaining);
+      const equalTolerance=Math.max(CONFIG.decisionMeaningfulPenalty,optimal.distance*CONFIG.decisionEqualRouteRatio);
+      if(penalty<=equalTolerance){equalAlternatives+=1;continue;}
+      meaningfulForks+=1;
+      const earlyBonus=fork.progress<.38?1.15:fork.progress<.7?1.06:1;
+      const strength=clamp((penalty-equalTolerance)/Math.max(1,CONFIG.decisionStrongPenalty-equalTolerance)*100,0,100);
+      const trapScore=clamp(strength*(.68+alternate.plausibility*.32)*earlyBonus,0,100);
+      traps.push({
+        key:decisionKey(fork.nodeId,fork.correct.name||fork.correct.ref),
+        nodeId:fork.nodeId,
+        correctRoad:String(fork.correct.name||fork.correct.ref||'the preferred road'),
+        alternateRoad:String(alternate.edge.name||alternate.edge.ref||'the alternate road'),
+        penalty,
+        trapScore,
+        progress:fork.progress,
+        plausibility:alternate.plausibility
+      });
+    }
+
+    traps.sort((a,b)=>b.trapScore-a.trapScore);
+    const decisionScore=clamp(
+      (traps[0]?.trapScore||0)*.52+
+      (traps[1]?.trapScore||0)*.29+
+      (traps[2]?.trapScore||0)*.15+
+      meaningfulForks*5,
+      0,100
+    );
+    const score=Math.round(clamp(Math.max(baseDifficulty*.62,baseDifficulty*.45+decisionScore*.55),0,100));
+    return {score,baseDifficulty,decisionScore,traps,meaningfulForks,equalAlternatives,optimalDistance:optimal.distance,optimal};
+  }
+
+  function decisionShortlist(calls,target){
+    const rating=Number(state.skillProfile?.rating)||CONFIG.adaptiveDefaultRating;
+    const decisionPreference=clamp((rating-25)/70,0,1);
+    return calls.map(call=>{
+      const difficulty=Number(call.difficulty)||0,decision=Number(call.decisionPotential)||0;
+      const jitter=Math.random()*7;
+      const score=Math.abs(difficulty-target)-decision*decisionPreference*.055+jitter;
+      return {call,score};
+    }).sort((a,b)=>a.score-b.score).slice(0,CONFIG.decisionCandidateCount).map(item=>item.call);
+  }
+
+  function weaknessBoostForAnalysis(analysis){
+    const profile=state.skillProfile,weak=profile?.weakDecisions;
+    if(!analysis?.traps?.length||!weak)return 1;
+    let strongest=0;
+    for(const trap of analysis.traps){
+      const memory=weak[trap.key];
+      if(!memory)continue;
+      const age=Math.max(0,(Number(profile.plays)||0)-(Number(memory.lastPlay)||0));
+      if(age<CONFIG.decisionWeaknessMinAge||age>CONFIG.decisionWeaknessMaxAge)continue;
+      const spacingBonus=age>=4&&age<=10?1.18:1;
+      strongest=Math.max(strongest,clamp(Number(memory.score)||0,0,3)*spacingBonus);
+    }
+    return 1+Math.min(1.25,strongest*.42);
+  }
+
+  function analyzeCallShortlist(calls,target){
+    const shortlist=decisionShortlist(calls,target);
+    return shortlist.map(call=>{
+      const analysis=analyzeDecisionDifficulty(call,state.base);
+      return {
+        ...call,
+        sessionDifficulty:analysis.score,
+        decisionAnalysis:analysis,
+        weaknessBoost:weaknessBoostForAnalysis(analysis)
+      };
+    });
+  }
+
   function callsForService(){const target=state.service==='ems'?'medical':'fire',filtered=state.calls.filter(c=>String(c.main||'').toLowerCase()===target);return filtered.length?filtered:state.calls;}
   function chooseCall(){
     const pool=callsForService(),recent=new Set(state.recentCallIds);
@@ -913,7 +1049,9 @@
     const source=fresh.length?fresh:pool;
     if(!source.length)throw new Error('No dispatch calls are available.');
     const target=adaptiveDifficultyTarget();
-    const call=weightedCallChoice(source,target)||source[0];
+    const analyzed=analyzeCallShortlist(source,target);
+    const call=weightedCallChoice(analyzed.length?analyzed:source,target)||(analyzed[0]||source[0]);
+    state.lastDecisionAnalysis=call.decisionAnalysis||null;
     state.recentCallIds.push(call.id);
     while(state.recentCallIds.length>CONFIG.recentCalls)state.recentCallIds.shift();
     return call;
@@ -924,7 +1062,7 @@
     const previousPhase=state.phase?.index;
     const phase=applyProgressionStart();
     state.call=chooseCall();state.callCount+=1;state.playerRoute=null;state.shortestRoute=null;state.recommendedRoute=null;state.anchors=[];state.history=[];ui.callNumber.textContent='CALL '+state.callCount;ui.baseLabel.textContent=state.base.shortName||state.base.name;ui.callType.textContent=state.call.sub||state.call.main||'Dispatch Call';ui.callAddress.textContent=state.call.addr||state.call.name;
-    const difficulty=clamp(Math.round(Number(state.call.difficulty)||0),0,100);
+    const difficulty=clamp(Math.round(Number(state.call.sessionDifficulty??state.call.difficulty)||0),0,100);
     ui.difficultyLabel.textContent='DIFFICULTY '+difficulty;
     ui.difficultyLabel.dataset.level=difficulty>=80?'extreme':difficulty>=60?'hard':difficulty>=35?'medium':'easy';
     updateMarkers();fitExercise();setMode('drawing');
@@ -1005,7 +1143,7 @@
   function updateHiddenSkill(efficiency){
     const profile=state.skillProfile;
     if(!profile||!Number.isFinite(efficiency)||!state.call)return;
-    const difficulty=clamp(Number(state.call.difficulty)||0,0,100);
+    const difficulty=clamp(Number(state.call.sessionDifficulty??state.call.difficulty)||0,0,100);
     const actual=efficiencyOutcome(efficiency);
     const expected=expectedRouteSuccess(profile.rating,difficulty);
     const calibration=profile.plays<CONFIG.adaptiveCalibrationCalls;
@@ -1092,14 +1230,19 @@
     const profile=state.skillProfile||defaultSkillProfile();
     const calibration=profile.plays<CONFIG.adaptiveCalibrationCalls;
     const band=calibration?18:CONFIG.adaptiveCallBand;
-    let candidates=calls.filter(call=>Math.abs((Number(call.difficulty)||0)-target)<=band);
-    if(candidates.length<4)candidates=calls.filter(call=>Math.abs((Number(call.difficulty)||0)-target)<=band+10);
+    const callDifficulty=call=>Number(call.sessionDifficulty??call.difficulty)||0;
+    let candidates=calls.filter(call=>Math.abs(callDifficulty(call)-target)<=band);
+    if(candidates.length<4)candidates=calls.filter(call=>Math.abs(callDifficulty(call)-target)<=band+10);
     if(!candidates.length)candidates=calls.slice();
 
     const weighted=candidates.map(call=>{
-      const difficulty=Number(call.difficulty)||0;
+      const difficulty=callDifficulty(call);
       const gap=Math.abs(difficulty-target);
       let weight=Math.exp(-gap/(calibration?11:7.5));
+      const decisionScore=Number(call.decisionAnalysis?.decisionScore??call.decisionPotential)||0;
+      const mastery=clamp(((Number(profile.rating)||0)-25)/70,0,1);
+      weight*=1+(decisionScore/100)*(.12+.42*mastery);
+      weight*=Number(call.weaknessBoost)||1;
 
       // Slightly prefer calls above target when the player is on a mastery streak.
       if(profile.highStreak>=3&&difficulty>=target)weight*=1.22;
