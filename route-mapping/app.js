@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.93';
+  const VERSION = '1.6.94';
   const CONFIG = Object.freeze({
     roadUrl: '../city-explorer/data/osm-public-roads.geojson',
     centerLat: 44.3091,
@@ -21,6 +21,8 @@
     detourAnchorSavings: 90,
     detourAnchorRatio: 0.84,
     destinationApproachRadius: 260,
+    strokeDirectionPenalty: 85,
+    strokeRoadContinuityBonus: 24,
     maxIntermediateAnchors: 9,
     maxVisitedNodes: 120000,
     routeTapZoom: 16,
@@ -107,6 +109,29 @@
     return {lat:ll.lat,lng:ll.lng,distance:best.distance,nodeId:node.id,road:best.segment.name,highway:best.segment.highway};
   }
 
+  function nearestRoadForStroke(point,before,after,preferredRoad){
+    if(!state.graph||!point)return null;
+    const p=toXY(point.lat,point.lng),a=toXY((before||point).lat,(before||point).lng),b=toXY((after||point).lat,(after||point).lng);
+    const vx=b.x-a.x,vy=b.y-a.y,vLength=Math.hypot(vx,vy);
+    let best=null,bestScore=Infinity;
+    for(const index of nearbySegments(p.x,p.y,CONFIG.roadSearchRadius)){
+      const segment=state.graph.segments[index],projection=projectToSegment(p.x,p.y,segment);
+      if(projection.distance>CONFIG.roadSearchRadius)continue;
+      const segmentLength=Math.max(1,Math.hypot(segment.dx,segment.dy));
+      const alignment=vLength>1?Math.abs((vx*segment.dx+vy*segment.dy)/(vLength*segmentLength)):1;
+      const directionPenalty=(1-Math.max(0,Math.min(1,alignment)))*CONFIG.strokeDirectionPenalty;
+      const continuityBonus=preferredRoad&&segment.name===preferredRoad?CONFIG.strokeRoadContinuityBonus:0;
+      const score=projection.distance+directionPenalty-continuityBonus;
+      if(score>=bestScore)continue;
+      const nodeA=state.graph.nodes[segment.from],nodeB=state.graph.nodes[segment.to];
+      const distanceA=Math.hypot(projection.x-nodeA.x,projection.y-nodeA.y),distanceB=Math.hypot(projection.x-nodeB.x,projection.y-nodeB.y);
+      const node=distanceA<=distanceB?nodeA:nodeB,ll=toLatLng(projection.x,projection.y);
+      bestScore=score;
+      best={lat:ll.lat,lng:ll.lng,distance:projection.distance,nodeId:node.id,road:segment.name,highway:segment.highway,alignment};
+    }
+    return best;
+  }
+
   function heuristic(node,target,objective){const straight=Math.hypot(target.x-node.x,target.y-node.y);return objective==='distance'?straight:straight/(112/3.6)*.82;}
   function edgeCost(edge,objective){return objective==='distance'?edge.distance:edge.weight;}
 
@@ -118,15 +143,82 @@
     if(!found)return null;const nodeIds=[],edges=[];let cursor=endId;while(cursor>=0){nodeIds.push(cursor);if(previousEdge[cursor])edges.push(previousEdge[cursor]);if(cursor===startId)break;cursor=previous[cursor];if(cursor<0)return null;}nodeIds.reverse();edges.reverse();return {nodeIds,edges,distance:edges.reduce((s,e)=>s+e.distance,0),duration:edges.reduce((s,e)=>s+e.duration,0)};
   }
 
+  function eraseGraphLoops(edges){
+    if(!Array.isArray(edges)||!edges.length)return {edges:[],nodeIds:[],removedDistance:0};
+    const keptEdges=[],nodeIds=[edges[0].from],nodePosition=new Map([[edges[0].from,0]]);
+    let removedDistance=0;
+    for(const edge of edges){
+      const current=nodeIds[nodeIds.length-1];
+      if(current!==edge.from){
+        // A composed route should be connected. If an unexpected discontinuity
+        // appears, preserve it rather than inventing a shortcut.
+        keptEdges.push(edge);
+        if(!nodePosition.has(edge.from)){nodePosition.set(edge.from,nodeIds.length);nodeIds.push(edge.from);}
+        if(!nodePosition.has(edge.to)){nodePosition.set(edge.to,nodeIds.length);nodeIds.push(edge.to);}
+        continue;
+      }
+      if(nodePosition.has(edge.to)){
+        const keepNodeIndex=nodePosition.get(edge.to);
+        removedDistance+=edge.distance;
+        while(nodeIds.length-1>keepNodeIndex){
+          const removedNode=nodeIds.pop();
+          nodePosition.delete(removedNode);
+          const removedEdge=keptEdges.pop();
+          if(removedEdge)removedDistance+=removedEdge.distance;
+        }
+        continue;
+      }
+      keptEdges.push(edge);
+      nodeIds.push(edge.to);
+      nodePosition.set(edge.to,nodeIds.length-1);
+    }
+    return {edges:keptEdges,nodeIds,removedDistance};
+  }
+
   function summarizeRoads(edges){const out=[];for(const edge of edges){const name=edge.name==='Unnamed road'?edge.ref:edge.name;if(!name)continue;const last=out[out.length-1];if(last&&last.name===name)last.distance+=edge.distance;else out.push({name,distance:edge.distance});}return out.filter(r=>r.distance>=35).slice(0,8).map(r=>r.name);}
 
   function composeRoute(anchors,objective){
-    if(!Array.isArray(anchors)||anchors.length<2)return null;const coordinates=[],coordinateLegIndex=[],edges=[];let distance=0,duration=0;
-    for(let i=0;i<anchors.length-1;i+=1){const a=anchors[i],b=anchors[i+1],path=pathBetween(a.nodeId,b.nodeId,objective);if(!path)return {failedLeg:i};const legCoords=path.nodeIds.map(id=>[state.graph.nodes[id].lat,state.graph.nodes[id].lng]);if(!coordinates.length){coordinates.push([a.lat,a.lng]);coordinateLegIndex.push(i);}for(const c of legCoords){const last=coordinates[coordinates.length-1];if(last&&Math.abs(last[0]-c[0])<1e-10&&Math.abs(last[1]-c[1])<1e-10)continue;coordinates.push(c);coordinateLegIndex.push(i);}edges.push(...path.edges);distance+=path.distance;duration+=path.duration;}
-    const firstNode=state.graph.nodes[anchors[0].nodeId],lastNode=state.graph.nodes[anchors[anchors.length-1].nodeId],firstConnector=dist(anchors[0],firstNode),lastConnector=dist(anchors[anchors.length-1],lastNode);
-    distance+=Number.isFinite(firstConnector)?firstConnector:0;distance+=Number.isFinite(lastConnector)?lastConnector:0;duration+=(Number.isFinite(firstConnector)?firstConnector/12:0)+(Number.isFinite(lastConnector)?lastConnector/9:0);
-    const end=anchors[anchors.length-1],last=coordinates[coordinates.length-1];if(!last||Math.abs(last[0]-end.lat)>1e-10||Math.abs(last[1]-end.lng)>1e-10){coordinates.push([end.lat,end.lng]);coordinateLegIndex.push(Math.max(0,anchors.length-2));}
-    return {coordinates,coordinateLegIndex,edges,distance,duration,mainRoads:summarizeRoads(edges),objective};
+    if(!Array.isArray(anchors)||anchors.length<2)return null;
+    const taggedEdges=[];
+    for(let i=0;i<anchors.length-1;i+=1){
+      const path=pathBetween(anchors[i].nodeId,anchors[i+1].nodeId,objective);
+      if(!path)return {failedLeg:i};
+      path.edges.forEach(edge=>taggedEdges.push(Object.assign({_legIndex:i},edge)));
+    }
+
+    const cleaned=eraseGraphLoops(taggedEdges),edges=cleaned.edges,coordinates=[],coordinateLegIndex=[];
+    const start=anchors[0],end=anchors[anchors.length-1];
+    coordinates.push([start.lat,start.lng]);
+    coordinateLegIndex.push(0);
+
+    if(edges.length){
+      const firstNode=state.graph.nodes[edges[0].from];
+      const firstCoordinate=[firstNode.lat,firstNode.lng];
+      const firstShown=coordinates[coordinates.length-1];
+      if(Math.abs(firstShown[0]-firstCoordinate[0])>1e-10||Math.abs(firstShown[1]-firstCoordinate[1])>1e-10){
+        coordinates.push(firstCoordinate);
+        coordinateLegIndex.push(edges[0]._legIndex||0);
+      }
+      for(const edge of edges){
+        const node=state.graph.nodes[edge.to],coordinate=[node.lat,node.lng],last=coordinates[coordinates.length-1];
+        if(last&&Math.abs(last[0]-coordinate[0])<1e-10&&Math.abs(last[1]-coordinate[1])<1e-10)continue;
+        coordinates.push(coordinate);
+        coordinateLegIndex.push(edge._legIndex||0);
+      }
+    }
+
+    const lastCoordinate=coordinates[coordinates.length-1];
+    if(!lastCoordinate||Math.abs(lastCoordinate[0]-end.lat)>1e-10||Math.abs(lastCoordinate[1]-end.lng)>1e-10){
+      coordinates.push([end.lat,end.lng]);
+      coordinateLegIndex.push(Math.max(0,anchors.length-2));
+    }
+
+    const firstNode=state.graph.nodes[start.nodeId],lastNode=state.graph.nodes[end.nodeId];
+    const firstConnector=dist(start,firstNode),lastConnector=dist(end,lastNode);
+    const edgeDistance=edges.reduce((sum,edge)=>sum+edge.distance,0),edgeDuration=edges.reduce((sum,edge)=>sum+edge.duration,0);
+    const distance=edgeDistance+(Number.isFinite(firstConnector)?firstConnector:0)+(Number.isFinite(lastConnector)?lastConnector:0);
+    const duration=edgeDuration+(Number.isFinite(firstConnector)?firstConnector/12:0)+(Number.isFinite(lastConnector)?lastConnector/9:0);
+    return {coordinates,coordinateLegIndex,edges,distance,duration,mainRoads:summarizeRoads(edges),objective,removedLoopDistance:cleaned.removedDistance};
   }
 
   function rdp(points,tolerance){
@@ -214,10 +306,10 @@
 
   function mappedAnchorsFromStroke(points){
     const intent=simplifyStrokeIntent(points),samples=resample(intent,CONFIG.strokeAnchorSpacing),mapped=[];
-    for(const p of samples){
-      const road=nearestRoad(p.lat,p.lng,CONFIG.roadSearchRadius);
+    for(let i=0;i<samples.length;i+=1){
+      const point=samples[i],before=samples[Math.max(0,i-1)],after=samples[Math.min(samples.length-1,i+1)],previous=mapped[mapped.length-1];
+      const road=nearestRoadForStroke(point,before,after,previous?.road||'');
       if(!road)continue;
-      const previous=mapped[mapped.length-1];
       if(previous&&previous.nodeId===road.nodeId)continue;
       if(previous&&dist(previous,road)<90&&previous.road===road.road)continue;
       mapped.push(road);
