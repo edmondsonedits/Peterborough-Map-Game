@@ -17,7 +17,7 @@
 <body>
   <iframe id="simulator" title="Fire and EMS Emergency Response Simulator"></iframe>
   <script>
-    (()=>{const VERSION='1.6.99',params=new URLSearchParams(location.search);let stored=null;try{stored=localStorage.getItem('ptboSelectedCity')}catch(_){}const requested=String(params.get('city')||stored||'peterborough').toLowerCase(),city=/^[a-z0-9-]+$/.test(requested)?requested:'peterborough';try{localStorage.setItem('ptboSelectedCity',city)}catch(_){}const url=new URL('../index.html',location.href);url.searchParams.set('city',city);url.searchParams.set('v',VERSION);url.searchParams.set('fresh',params.get('fresh')||String(Date.now()));const frame=document.getElementById('simulator');frame.dataset.ptboCity=city;frame.dataset.ptboCityUrlVersion=VERSION;frame.src=url.href})();
+    (()=>{const VERSION='1.6.100',params=new URLSearchParams(location.search);let stored=null;try{stored=localStorage.getItem('ptboSelectedCity')}catch(_){}const requested=String(params.get('city')||stored||'peterborough').toLowerCase(),city=/^[a-z0-9-]+$/.test(requested)?requested:'peterborough';try{localStorage.setItem('ptboSelectedCity',city)}catch(_){}const url=new URL('../index.html',location.href);url.searchParams.set('city',city);url.searchParams.set('v',VERSION);url.searchParams.set('fresh',params.get('fresh')||String(Date.now()));const frame=document.getElementById('simulator');frame.dataset.ptboCity=city;frame.dataset.ptboCityUrlVersion=VERSION;frame.src=url.href})();
   </script>
   <div class="station-shortcuts" aria-label="Quick response bases"></div>
   <button class="desktop-action" id="siren-button" type="button" aria-label="Toggle emergency lights" aria-pressed="true" title="Emergency lights"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 14V9a5 5 0 0 1 10 0v5M5 18h14M8 14h8l1 4H7l1-4ZM4 7 2 6M20 7l2-1M12 3V1"/></svg></button>
@@ -25,15 +25,15 @@
   <button class="desktop-action" id="recenter-button" type="button" aria-label="Recenter and follow vehicle" title="Recenter and follow vehicle"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></button>
   <div id="loading"><div><strong id="loading-title">Loading simulator</strong><span id="loading-status">Preparing city package, vehicle controls, and map…</span></div></div>
 
-  <script src="../startup-trace-1.6.17.js?v=1.6.99"></script>
-  <script src="../desktop-keyboard.js?v=1.6.99"></script>
-  <script src="../../shared/build-version.js?v=1.6.99"></script>
-  <script src="../../shared/release-bootstrap.js?v=1.6.99"></script>
-  <script src="../../shared/dispatch-locations.js?v=1.6.99"></script>
-  <script src="../../shared/dispatch-data-1.4.4.js?v=1.6.99"></script>
-  <script src="../../shared/dispatch-override-1.4.4.js?v=1.6.99"></script>
-  <script src="../../shared/stations.js?v=1.6.99"></script>
-  <script src="../service-selection.js?v=1.6.99"></script>
+  <script src="../startup-trace-1.6.17.js?v=1.6.100"></script>
+  <script src="../desktop-keyboard.js?v=1.6.100"></script>
+  <script src="../../shared/build-version.js?v=1.6.100"></script>
+  <script src="../../shared/release-bootstrap.js?v=1.6.100"></script>
+  <script src="../../shared/dispatch-locations.js?v=1.6.100"></script>
+  <script src="../../shared/dispatch-data-1.4.4.js?v=1.6.100"></script>
+  <script src="../../shared/dispatch-override-1.4.4.js?v=1.6.100"></script>
+  <script src="../../shared/stations.js?v=1.6.100"></script>
+  <script src="../service-selection.js?v=1.6.100"></script>
   <script>
     (()=>{
       'use strict';

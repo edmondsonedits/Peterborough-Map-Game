@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Peterborough Geo Guesser</title>
-  <link rel="stylesheet" href="../response-simulator/vendor/leaflet-1.9.4/leaflet.css?v=1.6.99">
+  <link rel="stylesheet" href="../response-simulator/vendor/leaflet-1.9.4/leaflet.css?v=1.6.100">
   <style>
     :root { --bg:#121218; --panel:rgba(30,30,42,.9); --border:rgba(255,255,255,.12); --blue:#3b82f6; --muted:#94a3b8; --green:#22c55e; --red:#ef4444; --orange:#f97316; --fire:#fb7185; --medical:#34d399; --mvc:#fbbf24; --water:#38bdf8; }
     * { box-sizing:border-box } body { margin:0; font-family:system-ui,-apple-system,sans-serif; color:#f8fafc; background:var(--bg); overflow:hidden }
@@ -89,10 +89,10 @@
   <section id="scores" class="screen hidden"><h1>Personal Scoreboard</h1><div class="score-tabs"><button class="score-tab" data-station="Station 1" onclick="showPersonalScores('Station 1')">Station 1</button><button class="score-tab" data-station="Station 2" onclick="showPersonalScores('Station 2')">Station 2</button><button class="score-tab" data-station="Station 3" onclick="showPersonalScores('Station 3')">Station 3</button></div><div id="score-list" class="list"></div><button class="menu-btn" onclick="show('scoreboards')">Back</button></section>
   <section id="city-ten-scores" class="screen hidden"><h1>The City Ten</h1><p class="leaderboard-note">Each player’s fastest City Ten result is shown once. Online sharing will be enabled when the game is connected to a leaderboard service.</p><div id="city-ten-list" class="list"></div><button class="menu-btn" onclick="show('scoreboards')">Back</button></section>
   <section id="editor" class="screen hidden"><div class="map-container"><div id="editor-map"></div><aside id="editor-side" class="panel"><h3>Level Editor</h3><p class="muted">Click the map to add a location. Drag markers to move them. Click a marker to edit it.</p><div id="edit-form" class="hidden"><label>Main Category</label><select id="e-main" class="field" onchange="updateEditorSubcategories()"><option value="Fire">Fire</option><option value="Medical">Medical</option></select><label>Sub Category</label><select id="e-sub" class="field"></select><label>Location Name</label><input id="e-name" class="field"><label>Address</label><input id="e-address" class="field"><label>Station District</label><select id="e-district" class="field"><option value="1">Station 1 District</option><option value="2">Station 2 District</option><option value="3">Station 3 District</option></select><label class="filter-option"><input id="e-city-ten" type="checkbox"> Include in The City Ten</label><label>Radius: <span id="radius-value">50</span> m</label><input id="e-radius" class="field" type="range" min="10" max="500" step="10" oninput="previewRadius(this.value)"><div class="editor-actions"><button class="save" onclick="applyEdit()">Apply</button><button class="delete" onclick="deleteEdit()">Delete</button></div></div><hr><button class="menu-btn" style="width:100%;margin:8px 0" onclick="exportData()">Export Database</button><button class="menu-btn" style="width:100%;margin:0" onclick="show('settings')">Exit Editor</button></aside></div></section>
-  <script src="../shared/build-version.js?v=1.6.99"></script>
-  <script src="../response-simulator/vendor/leaflet-1.9.4/leaflet.js?v=1.6.99"></script>
-  <script src="../response-simulator/carto-basemap-policy-1.6.36.js?v=1.6.99"></script>
-  <script src="map-provider-1.6.46.js?v=1.6.99"></script>
+  <script src="../shared/build-version.js?v=1.6.100"></script>
+  <script src="../response-simulator/vendor/leaflet-1.9.4/leaflet.js?v=1.6.100"></script>
+  <script src="../response-simulator/carto-basemap-policy-1.6.36.js?v=1.6.100"></script>
+  <script src="map-provider-1.6.46.js?v=1.6.100"></script>
   <script> 
     const stations=[{name:'Station 1',lat:44.300871,lng:-78.322206},{name:'Station 2',lat:44.335266,lng:-78.316657},{name:'Station 3',lat:44.284867,lng:-78.350902}];
     let locations=[

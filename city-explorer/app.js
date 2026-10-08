@@ -5825,16 +5825,37 @@ function populateLandmarks() {
   });
 }
 
+let citySearchGeneration = 0;
+let citySearchController = null;
+
+function cancelCitySearch() {
+  citySearchGeneration += 1;
+  citySearchController?.abort();
+  citySearchController = null;
+}
+
 async function searchLocations(query) {
+  cancelCitySearch();
+  const generation = citySearchGeneration;
   const normalized = query.trim().toLowerCase();
   els.searchResults.innerHTML = '';
-  const localMatches = [...LANDMARKS, ...state.localPlaces]
-    .filter((landmark, index, entries) => entries.findIndex((candidate) => candidate.name === landmark.name && candidate.lat === landmark.lat && candidate.lon === landmark.lon) === index)
-    .filter((landmark) => `${landmark.name} ${landmark.category} ${landmark.address || ''}`.toLowerCase().includes(normalized))
-    .slice(0, 12);
+  const localMatches = [];
+  const seen = new Set();
+  for (const landmark of [...LANDMARKS, ...state.localPlaces]) {
+    const key = JSON.stringify([landmark.name, landmark.lat, landmark.lon]);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    if (!`${landmark.name} ${landmark.category} ${landmark.address || ''}`.toLowerCase().includes(normalized)) continue;
+    localMatches.push(landmark);
+    if (localMatches.length === 12) break;
+  }
   localMatches.forEach(addSearchResult);
   if (localMatches.length >= 4) return;
 
+  const controller = new AbortController();
+  citySearchController = controller;
+  const timeout = setTimeout(() => controller.abort(), 12000);
+  const ownsResults = () => generation === citySearchGeneration && els.searchDialog.open;
   const url = new URL('https://nominatim.openstreetmap.org/search');
   url.searchParams.set('format', 'jsonv2');
   url.searchParams.set('limit', '6');
@@ -5843,25 +5864,38 @@ async function searchLocations(query) {
   url.searchParams.set('bounded', '1');
   url.searchParams.set('q', `${query}, Peterborough, Ontario`);
   try {
-    const response = await fetch(url, { headers: { Accept: 'application/json' } });
+    const response = await fetch(url, { headers: { Accept: 'application/json' }, signal: controller.signal });
+    if (!ownsResults()) return;
     if (!response.ok) throw new Error(`Search returned ${response.status}`);
     const results = await response.json();
-    const known = new Set(localMatches.map((item) => item.name.toLowerCase()));
-    results.forEach((result) => {
-      const name = result.display_name?.split(',').slice(0, 3).join(', ') || 'Search result';
-      if (known.has(name.toLowerCase())) return;
+    if (!ownsResults()) return;
+    if (!Array.isArray(results)) throw new Error('Search returned an invalid result list');
+    const knownNames = new Set(localMatches.map((item) => item.name.toLowerCase()));
+    const remoteKeys = new Set();
+    for (const result of results) {
+      if (!result || !['number', 'string'].includes(typeof result.lat) || !['number', 'string'].includes(typeof result.lon)
+        || String(result.lat).trim() === '' || String(result.lon).trim() === '') continue;
+      const lat = Number(result.lat), lon = Number(result.lon);
+      if (![lat, lon].every(Number.isFinite) || Math.abs(lat) > 90 || Math.abs(lon) > 180) continue;
+      const name = typeof result.display_name === 'string'
+        ? result.display_name.split(',').slice(0, 3).join(', ') || 'Search result' : 'Search result';
+      const key = JSON.stringify([name, lat, lon]);
+      if (knownNames.has(name.toLowerCase()) || remoteKeys.has(key)) continue;
+      remoteKeys.add(key);
       addSearchResult({
         name,
         category: result.type || result.class || 'OpenStreetMap result',
-        lat: Number.parseFloat(result.lat),
-        lon: Number.parseFloat(result.lon),
-        altitude: 32,
+        lat, lon, altitude: 32,
       });
-    });
+    }
     if (!els.searchResults.children.length) els.searchResults.innerHTML = '<p>No matching Peterborough locations were found.</p>';
   } catch (error) {
+    if (!ownsResults()) return;
     console.warn(error);
     if (!els.searchResults.children.length) els.searchResults.innerHTML = '<p>Address search is temporarily unavailable. Try one of the built-in landmarks.</p>';
+  } finally {
+    clearTimeout(timeout);
+    if (citySearchController === controller) citySearchController = null;
   }
 }
 
@@ -6112,6 +6146,7 @@ function wireEvents() {
 
   [els.searchDialog, els.landmarksDialog].forEach((dialog) => {
     dialog.addEventListener('close', () => {
+      if (dialog === els.searchDialog) cancelCitySearch();
       stopFlyMotion();
       if (state.mode !== 'map') els.canvas.focus({ preventScroll: true });
     });

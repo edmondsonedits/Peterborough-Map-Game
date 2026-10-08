@@ -9,8 +9,9 @@ async function journey(name,mobile,fn,setup){
  if(only&&!only.includes(name))return;
  const previous=reports.findIndex(r=>r.name===name);if(previous>=0)reports.splice(previous,1);
  const context=await browser.newContext({viewport:mobile?{width:390,height:844}:{width:1440,height:900},isMobile:mobile,hasTouch:mobile}),page=await context.newPage(),errors=[],missing=[];page.setDefaultTimeout(15000);
+ await context.route('https://firestore.googleapis.com/**', route => route.fulfill({status:403,contentType:'application/json',body:JSON.stringify({error:{status:'PERMISSION_DENIED',message:'Local analytics fixture'}})}));
  page.on('pageerror',e=>errors.push(e.stack||e.message));page.on('response',r=>{if(r.url().startsWith(base)&&r.status()>=400)missing.push(r.status()+' '+r.url());});
- try{if(setup)await setup(context,page);const detail=await fn(page,context);assert.equal(errors.length,0,errors.join('; '));assert.equal(missing.length,0,missing.join('; '));assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false,'horizontal overflow');reports.push({name,status:'pass',detail,errors,missing});}
+ try{if(setup)await setup(context,page);const detail=await fn(page,context);assert.equal(errors.length,0,errors.join('; '));assert.equal(missing.length,0,missing.join('; '));assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false,'horizontal overflow');reports.push({name,status:'pass',detail,errors,missing,analyticsWritesIntercepted:true});}
  catch(e){reports.push({name,status:'fail',error:e.message,errors,missing});}
  await page.screenshot({path:path.join(out,name+'.png'),fullPage:true}).catch(()=>{});
  console.log(JSON.stringify(reports.at(-1)));await context.close();

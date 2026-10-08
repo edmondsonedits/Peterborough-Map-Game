@@ -50,7 +50,8 @@ try {
   globalThis.__PTBO_EXPLORER_BOOTSTRAP__?.touch?.('loading authored-scene bridge');
   await import('./authored-scene-bootstrap.js?v=1.6.79');
   globalThis.__PTBO_EXPLORER_BOOTSTRAP__?.touch?.('loading 3D city module');
-  await import('./app.js?v=city-editor-20260925');
+  const appVersion = globalThis.PTBO_BUILD?.version || 'city-editor-20260925';
+  await import('./app.js?v=' + encodeURIComponent(appVersion));
 } catch (error) {
   showFatalError(error);
 }

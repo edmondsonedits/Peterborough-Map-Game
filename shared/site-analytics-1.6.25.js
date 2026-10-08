@@ -13,7 +13,6 @@
   const FALLBACK_COLLECTION = 'scores';
   const ROOT = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;
 
-  const COLLECTION_KEY = 'ptbo-site-analytics-collection-v3';
   const VISITOR_ID_KEY = 'ptbo-site-visitor-id-v1';
   const VISITOR_FIRST_KEY = 'ptbo-site-visitor-first-v2';
   const VISITOR_SESSIONS_KEY = 'ptbo-site-visitor-sessions-v2';
@@ -121,7 +120,11 @@
         headers:{ Accept:'application/json', ...(hasBody ? {'Content-Type':'application/json'} : {}), ...(options.headers || {}) },
       });
       const payload = await response.json().catch(() => ({}));
-      if (!response.ok) throw new Error(payload?.error?.message || `Firestore request failed (${response.status})`);
+      if (!response.ok) {
+        const error = new Error(payload?.error?.message || `Firestore request failed (${response.status})`);
+        error.status = response.status;
+        throw error;
+      }
       return payload;
     } finally {
       clearTimeout(timer);
@@ -133,19 +136,37 @@
   async function writeToCollection(collection, record, documentId = '') {
     const body = JSON.stringify({ fields:encodeFields(record) });
     await firestoreRequest(collectionUrl(collection, documentId), { method:documentId ? 'PATCH' : 'POST', body, keepalive:true });
-    safeSet(sessionStorage, COLLECTION_KEY, collection);
     return true;
   }
 
+  let analyticsWriteDenied = false;
+  let analyticsWriteConfirmed = false;
+  let analyticsAccessProbe = null;
+
   async function writeRecord(record, documentId = '') {
-    if (!trackingAllowed()) return false;
-    const preferred = safeGet(sessionStorage, COLLECTION_KEY);
-    const collections = preferred === FALLBACK_COLLECTION ? [FALLBACK_COLLECTION, PRIMARY_COLLECTION] : [PRIMARY_COLLECTION, FALLBACK_COLLECTION];
-    for (const collection of collections) {
-      try { return await writeToCollection(collection, record, documentId); }
-      catch (_) {}
+    if (!trackingAllowed() || analyticsWriteDenied) return false;
+    // Share the first request so a denied deployment does not fan out requests.
+    // A failed probe drops waiting records; a later scheduled write may retry
+    // transient failures without retaining an unbounded queue.
+    if (analyticsAccessProbe) {
+      const allowed = await analyticsAccessProbe;
+      if (!allowed || !trackingAllowed() || analyticsWriteDenied) return false;
     }
-    return false;
+
+    const request = writeToCollection(PRIMARY_COLLECTION, record, documentId).catch(error => {
+      if (error.status === 401 || error.status === 403) analyticsWriteDenied = true;
+      return false;
+    });
+    if (analyticsWriteConfirmed) return request;
+
+    analyticsAccessProbe = request;
+    try {
+      const allowed = await request;
+      if (allowed) analyticsWriteConfirmed = true;
+      return allowed;
+    } finally {
+      if (analyticsAccessProbe === request) analyticsAccessProbe = null;
+    }
   }
 
   let visitorId = safeGet(localStorage, VISITOR_ID_KEY);

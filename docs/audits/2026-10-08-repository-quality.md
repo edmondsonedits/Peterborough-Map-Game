@@ -74,7 +74,7 @@ These were recorded when the extended browser/retry/profile checks exposed them,
 
 **Shared/launcher/data/tools:** preserve explicit city selection, canonical release/cache delivery, provider attribution, geographic/dispatch data and analytics authority. Versioned compatibility forwarders remain because cached clients reference them. No extra mode, training subsystem or dependency was introduced.
 
-## Final verification
+## First-pass verification
 Local build: **1.6.99**. Required checks passed against the final implementation:
 | Check | Result |
 |---|---|
@@ -126,7 +126,34 @@ Browser screenshots, JSON receipts, profiles and logs are under ignored `test-ar
 ## Remaining validation boundaries
 - Changes are local on the isolated branch; nothing was pushed, merged or deployed. The public GitHub Pages build is not represented as fixed by this local audit.
 - Physical-phone testing and human recruit playtesting were not performed; mobile results are Chromium viewport/touch tests.
-- Real Firebase writes/scoreboard permissions and authenticated publisher deployment were not exercised. Firebase API compatibility uses the existing collection/schema and documented [v8 CollectionReference.doc](https://firebase.google.com/docs/reference/js/v8/firebase.firestore.CollectionReference#doc); behavioral retry tests used a mock.
-- Optional provider requests can fail: existing 3D driving QA recorded noncritical external HTTP 403 console messages while packaged city data and movement stayed usable. No critical runtime/request failure was recorded by those checks. This does not certify every live provider.
+- Successful production Firebase writes/scoreboard permissions and authenticated publisher deployment were not exercised. Firebase API compatibility uses the existing collection/schema and documented [v8 CollectionReference.doc](https://firebase.google.com/docs/reference/js/v8/firebase.firestore.CollectionReference#doc); behavioral retry tests used a mock.
+- The initial 3D HTTP 403 messages were later identified as denied analytics transport, rather than GIS loading. Q28 stops repeated denied writes locally; final checks intercept that transport. Backend permissions and successful live analytics access were not changed or certified.
 - Splat ownership fixes use controlled async fixtures because the current pilots have no approved live splat asset. They are not a claim of asset approval or live splat validation.
 - No finite audit proves every possible state or assigns an objective 9/10 rating. This delivery is grounded in documented defects, focused fixes, complete automated suites, actual gameplay journeys and measured rendering improvement.
+
+## Continuation analysis — October 8, 2026
+At the start of this continuation, saved baseline `d6194c7` was the sole local commit ahead of unchanged origin/main. This pass targets gaps left by the first runtime journeys; it does not repeat the completed broad audit.
+- Q26: 3D remote address search has no generation/cancellation/deadline ownership. Controlled tests show a superseded request appends old results, a closed dialog accepts late results, and remote records with invalid coordinates or exact duplicates become clickable. Local deduplication also performs 641,600 name reads for an 800-record nonmatching query. Plan: invalidate older work on new searches/dialog close, abort its request, check ownership after headers/body, retain existing fallback text with a 12-second deadline, validate coordinates and use a single-pass identity set for local matching.
+- Q27: `city-explorer/index.html` search result markup has malformed `class="result-list ariba-live="polite"`; its intended live-region attribute is absent. Correct the existing class and aria-live attribute, then verify the actual DOM.
+- Expanded browser checks will identify the noncritical provider 403 URLs, verify Station 2/3 departures through their existing controls and exercise Geo City Ten/Open Drill restart paths. Findings will be recorded before any additional product edits.
+
+- Q28: Browser receipts identify the 403s as denied Firestore analytics writes. The active client retries every failed analytics write into the leaderboard `scores` collection and continues scheduled writes after permanent access denial. Fix only the active transport: preserve HTTP status, use only `siteAnalytics` for new analytics records, share the initial access probe, and stop page-lifetime writes after 401/403. Keep local counters, transient retry eligibility, existing privacy authority and historical dashboard reads. Do not change backend rules or score schema.
+
+- Q29: Cache verification found that the active city bootstrap and its dynamic `app.js` import still use the fixed `city-editor-20260925` token. A fresh-browser smoke cannot demonstrate delivery to a returning client with that URL cached. Version the bootstrap in the canonical HTML and inherit `PTBO_BUILD.version` for its changed app import; retain the original fallback for legacy standalone entry points. Verify both source behavior and actual Chromium request URLs.
+
+## Continuation delivery and verification
+Local build: **1.6.100**. Q26–Q29 are fixed without adding modes or changing authoritative GIS/training data.
+
+- City search now invalidates earlier work on each query and dialog close, checks ownership after headers and JSON, aborts on a 12-second deadline, validates remote coordinates, and removes exact duplicates. Local identity deduplication is linear and retains first-record semantics. The intended result-list class and live region now reach the DOM.
+- The active analytics client preserves HTTP status, shares one initial access probe, writes new records only to `siteAnalytics`, and stops further page-lifetime writes after 401/403. Local counters remain available. Transient failures permit later scheduled retry without a retained write queue; concurrent records waiting on a failed transient probe are dropped. Historical dashboard reads remain compatible with old records.
+- The city HTML versions its bootstrap module with the canonical build token. The bootstrap requests the changed app with that token, while its standalone legacy fallback remains. Chromium requested both `road-orientation-fix.js?v=1.6.100` and `app.js?v=1.6.100`.
+- **292 automated tests passed:** 216 application Node tests, 72 tooling/geospatial Node tests and 4 Python terrain tests. The 21 added regressions cover async search, invalid responses, local deduplication, cache delivery and analytics transport transitions. Initial red receipts are retained for the reproduced search/analytics/cache failures.
+- Repository compile/inventory checks cover **573 files, 307 JavaScript files, 27 inline scripts and 37 JSON/GeoJSON files**, with no syntax/data errors or missing local HTML resources. Diff whitespace checks pass; release normalization is byte-idempotent.
+- Actual Chromium checks pass for overlapping/closed search, result live region, exact city import URLs, and one denied analytics request per page. Stations 2 and 3 depart through the existing enter/drive controls, moving 3.20m and 3.26m in the final two-second sample with finite coordinates. The original one-second sample was too short for its arbitrary one-metre assertion; no movement code change was warranted.
+- Canonical desktop and mobile Geo surfaces both complete ten City Ten rounds and three Open Drill rounds, then restart with cleared history/elapsed/review state. Open Drill also ends cleanly with zero completed calls after restart. No Geo product change was necessary.
+- Launcher, real Route Mapping pointer/cancel/review/next flow, desktop Fire and mobile EMS movement/lifecycle pass on build 1.6.100. Response arrival/hospital positions are test-set for lifecycle checks. The shared journey harness and new follow-up helpers intercept Firestore transport; no external score save or publisher write is part of these final checks.
+- A focused read-only review found no unresolved material issue in search ownership or analytics transport/privacy interaction.
+
+Reproduce the additional browser checks with `node tools/check-quality-search.cjs` and `node tools/check-quality-geo-extended.cjs` after starting the existing preview server. Final receipts, baseline comparisons and screenshots remain in ignored `test-artifacts/quality-audit/continuation/`. The Geo wrapper check deliberately simulates an unavailable Firebase SDK; it establishes usable local gameplay rather than successful live scoreboard access.
+
+The changes remain local and unpublished. Successful production Firebase access, physical phones and human recruit playtesting remain outside this evidence.
