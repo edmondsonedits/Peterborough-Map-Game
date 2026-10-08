@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Peterborough Fire & Emergency Dispatch Simulator</title>
     
-    <link rel="stylesheet" href="vendor/leaflet-1.9.4/leaflet.css?v=1.6.13" />
+    <link rel="stylesheet" href="vendor/leaflet-1.9.4/leaflet.css?v=1.6.99" />
     
     <style>
         html, body, #map {
@@ -200,16 +200,16 @@
 
     <div id="map"></div>
 
-    <script src="../shared/build-version.js?v=1.6.88"></script>
-    <script src="vendor/leaflet-1.9.4/leaflet.js?v=1.6.13"></script>
-    <script src="vendor/leaflet-1.9.4/leaflet.edgebuffer.js?v=1.6.13"></script>
-    <script src="vendor/leaflet-1.9.4/leaflet.rotatedMarker.js?v=1.6.13"></script>
+    <script src="../shared/build-version.js?v=1.6.99"></script>
+    <script src="vendor/leaflet-1.9.4/leaflet.js?v=1.6.99"></script>
+    <script src="vendor/leaflet-1.9.4/leaflet.edgebuffer.js?v=1.6.99"></script>
+    <script src="vendor/leaflet-1.9.4/leaflet.rotatedMarker.js?v=1.6.99"></script>
     
-    <script src="service-config.js?v=1.6.66"></script>
-    <script src="../shared/location-changes.js?v=1.6.13"></script>
-    <script src="../shared/base-locations.js?v=1.6.13"></script>
-    <script src="service-selection.js?v=1.6.13"></script>
-    <script src="gearbox-core.js?v=1.6.13"></script>
+    <script src="service-config.js?v=1.6.99"></script>
+    <script src="../shared/location-changes.js?v=1.6.99"></script>
+    <script src="../shared/base-locations.js?v=1.6.99"></script>
+    <script src="service-selection.js?v=1.6.99"></script>
+    <script src="gearbox-core.js?v=1.6.99"></script>
     <script>
         const dispatchDatabase = [
             { main:"Fire", sub:"Water & Ice Rescue", name:"Beavermead Park Beach", addr:"2015 Ashburnham Dr", lat:44.295749, lng:-78.303611 },
@@ -729,6 +729,8 @@
             if (simulationState === STATES.ENROUTE || simulationState === STATES.TRANSPORTING) evaluateDistanceToTarget();
         }
 
+        const telemetryNodes=['tel-lat','tel-lng','tel-hdg'].map(id=>document.getElementById(id));
+        let lastTelemetryTimestamp=-Infinity;
         function simulationLoop(timestamp) {
             if (lastTimestamp === null) lastTimestamp = timestamp;
             physicsAccumulator += Math.min(100, Math.max(0, timestamp - lastTimestamp));
@@ -737,9 +739,11 @@
                 simulationStep();
                 physicsAccumulator -= FIXED_STEP_MS;
             }
-            document.getElementById('tel-lat').innerText = simLat.toFixed(6);
-            document.getElementById('tel-lng').innerText = simLng.toFixed(6);
-            document.getElementById('tel-hdg').innerText = Math.round(currentHeading) + '°';
+            if(timestamp-lastTelemetryTimestamp>=100){
+                const values=[simLat.toFixed(6),simLng.toFixed(6),Math.round(currentHeading)+'°'];
+                telemetryNodes.forEach((node,index)=>{if(node&&node.textContent!==values[index])node.textContent=values[index];});
+                lastTelemetryTimestamp=timestamp;
+            }
             updateMapOrientation();
             requestAnimationFrame(simulationLoop);
         }
@@ -991,6 +995,6 @@
 
         window.onload = initializeSimulator;
     </script>
-    <script src="service-mode.js?v=1.6.13"></script>
+    <script src="service-mode.js?v=1.6.99"></script>
 </body>
 </html>

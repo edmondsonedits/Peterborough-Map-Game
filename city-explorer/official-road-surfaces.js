@@ -103,13 +103,19 @@ export class OfficialDrivableSurfaceIndex {
 
   add(rings, metadata = {}) {
     if (metadata.layer === 'bridges' && !officialBridgeIsVehicular(metadata.properties)) return false;
-    if (!Array.isArray(rings) || !rings[0]?.length) return false;
-    const outer = rings[0];
-    const minX = Math.min(...outer.map((point) => point.x));
-    const maxX = Math.max(...outer.map((point) => point.x));
-    const minZ = Math.min(...outer.map((point) => point.y));
-    const maxZ = Math.max(...outer.map((point) => point.y));
-    if (![minX, maxX, minZ, maxZ].every(Number.isFinite)) return false;
+    if (!Array.isArray(rings) || !rings.length) return false;
+    let minX=Infinity,maxX=-Infinity,minZ=Infinity,maxZ=-Infinity;
+    for(let ringIndex=0;ringIndex<rings.length;ringIndex+=1){
+      const ring=rings[ringIndex];
+      if(!Array.isArray(ring)||ring.length<3)return false;
+      for(const point of ring){
+        if(!Number.isFinite(point?.x)||!Number.isFinite(point?.y))return false;
+        if(ringIndex===0){
+          minX=Math.min(minX,point.x);maxX=Math.max(maxX,point.x);
+          minZ=Math.min(minZ,point.y);maxZ=Math.max(maxZ,point.y);
+        }
+      }
+    }
     const entry = {
       bounds: { minX, maxX, minZ, maxZ },
       drivable: metadata.layer === 'road_surfaces' || metadata.layer === 'bridges',

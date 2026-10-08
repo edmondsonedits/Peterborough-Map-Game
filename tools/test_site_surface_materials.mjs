@@ -54,8 +54,17 @@ assert.match(shader.fragmentShader, /vec3\(0\.105, 0\.115, 0\.11\)/);
 assert.equal((shader.fragmentShader.match(/diffuseColor\.rgb = vec3/g) || []).length, 2);
 assert.equal(JSON.stringify({ geometry: mesh.geometry, position: mesh.position, zones: [STATION_APRON, STATION_REAR_PAVING] }), snapshot);
 for (const view of Object.values(STATION_VIEWS)) {
-  for (const key of ['lat', 'lon', 'altitude', 'distance', 'bearing', 'pitch', 'fov']) assert.ok(Number.isFinite(view[key]));
-  assert.ok(view.fov > 0 && view.fov < 180);
+  if(view.projection==='orthographic'){
+    const base=STATION_VIEWS[view.baseView];
+    assert.ok(base&&base.projection==='perspective');
+    assert.ok(Number.isFinite(view.halfHeight)&&view.halfHeight>0);
+    assert.equal(typeof view.overlay,'boolean');
+  }else{
+    const keys=view.spawn?['yaw','pitch','cameraDistanceScale','fov']:['lat','lon','altitude','distance','bearing','pitch','fov'];
+    for(const key of keys)assert.ok(Number.isFinite(view[key]),key+' is finite');
+    assert.ok(view.fov>0&&view.fov<180);
+    if(view.spawn){assert.equal(view.spawn,'FIRE_STATION_ONE');assert.equal(view.mode,'onFoot');assert.ok(view.cameraDistanceScale>0);}
+  }
 }
 // Capture is strictly opt-in and must not touch normal scene/camera state.
 const previousLocation = Object.getOwnPropertyDescriptor(globalThis, 'location');

@@ -371,7 +371,7 @@ test('inner simulator loads Leaflet locally without a blocking CDN dependency', 
   const source=read('response-simulator/index.html');
   assert.doesNotMatch(source,/unpkg\.com\/leaflet/);
   for(const file of ['leaflet.js','leaflet.css','leaflet.edgebuffer.js','leaflet.rotatedMarker.js']){
-    assert.ok(source.includes(`vendor/leaflet-1.9.4/${file}?v=1.6.13`),file);
+    assert.ok(source.includes(`vendor/leaflet-1.9.4/${file}?v=${canonicalBuildVersion}`),file);
     assert.ok(fs.statSync(path.join(root,'response-simulator/vendor/leaflet-1.9.4',file)).size>100,file);
   }
 });

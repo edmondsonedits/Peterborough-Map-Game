@@ -100,7 +100,8 @@ export function buildSplatPlacement(pilot, project, terrainHeightAtWorld, terrai
   const projected = project(Number(pilot.anchor.latitude), Number(pilot.anchor.longitude));
   const x = Number(projected.x);
   const z = Number(projected.z ?? projected.y);
-  const datum = Number(pilot.anchor.elevationMetresCGVD2013);
+  const rawDatum = pilot.anchor.elevationMetresCGVD2013;
+  const datum = rawDatum === null || rawDatum === undefined || rawDatum === '' ? NaN : Number(rawDatum);
   const terrainY = Number(terrainHeightAtWorld(x, z));
   const y = (Number.isFinite(datum) ? datum - Number(terrainBaseElevation || 0) : terrainY)
     + Number(pilot.anchor.verticalOffset || 0);
@@ -283,11 +284,13 @@ export class CitySplatLayer {
     if (!record || record.mesh || record.state === 'loading' || !record.pilot.asset) return;
     record.state = 'loading';
     record.error = '';
-    record.controller = new AbortController();
+    const controller = new AbortController();
+    record.controller = controller;
+    const ownsRecord = () => record.controller === controller && !controller.signal.aborted && !this.disposed;
     this.publish();
     try {
       await this.ensureRuntime();
-      if (record.controller.signal.aborted) return;
+      if (!ownsRecord()) return;
       this.ensureSparkRenderer();
       const { SplatMesh } = this.runtime;
       const assetUrl = new URL(record.pilot.asset, new URL(this.manifestUrl, import.meta.url));
@@ -298,16 +301,17 @@ export class CitySplatLayer {
         paged: record.pilot.format === 'rad',
       };
       if (record.pilot.format === 'spz') {
-        const response = await fetch(assetUrl, { signal: record.controller.signal });
+        const response = await fetch(assetUrl, { signal: controller.signal });
         if (!response.ok) throw new Error(`Captured asset returned ${response.status}`);
         const buffer = await response.arrayBuffer();
+        if (!ownsRecord()) return;
         record.assetBytes = buffer.byteLength;
         options.fileBytes = new Uint8Array(buffer);
         options.fileName = `${record.pilot.id}.spz`;
       } else {
         options.url = assetUrl.href;
       }
-      if (record.controller.signal.aborted) return;
+      if (controller.signal.aborted) return;
       const mesh = new SplatMesh(options);
       mesh.name = `Captured detail: ${record.pilot.name}`;
       mesh.position.set(record.placement.position.x, record.placement.position.y, record.placement.position.z);
@@ -318,13 +322,11 @@ export class CitySplatLayer {
       this.scene.add(mesh);
       record.mesh = mesh;
       await mesh.initialized;
-      if (record.controller.signal.aborted || this.disposed) {
-        this.disposeRecord(record, 'enabled');
-        return;
-      }
+      if (!ownsRecord()) return;
       record.state = 'ready';
       this.publish();
     } catch (error) {
+      if (!ownsRecord()) return;
       if (error?.name === 'AbortError') {
         record.state = 'enabled';
       } else {

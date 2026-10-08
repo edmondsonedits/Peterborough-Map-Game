@@ -134,7 +134,15 @@
       : validateCheckpoint(normalized(raw,current));
     const name = String(raw.name ?? source.name ?? '').trim();
     const addr = String(raw.addr ?? raw.address ?? source.addr ?? source.address ?? '').trim();
-    const baseSaved = originalStore.saveHospital({
+    let previousArea;
+    try {
+      previousArea=localStorage.getItem(storageKey);
+      localStorage.setItem(storageKey,JSON.stringify({schema:1,cityId,...area}));
+    } catch (_) {
+      throw new Error('Hospital drop-off area could not be saved. Free browser storage and try again.');
+    }
+    let baseSaved;
+    try { baseSaved = originalStore.saveHospital({
       id:source.id,
       main:source.main,
       sub:source.sub,
@@ -143,14 +151,13 @@
       lat:area.checkpointLat,
       lng:area.checkpointLng,
       radius:area.checkpointRadius,
-    });
+    }); } catch (error) {
+      try {if(previousArea===null)localStorage.removeItem(storageKey);else localStorage.setItem(storageKey,previousArea);}
+      catch (rollbackError) {throw new Error('Hospital save failed and its area record could not be restored. Retry saving the draft.',{cause:rollbackError});}
+      throw error;
+    }
     current = area;
     staged = null;
-    try {
-      localStorage.setItem(storageKey, JSON.stringify({schema:1,cityId,...current}));
-    } catch (_) {
-      throw new Error('Hospital drop-off area could not be saved. Free browser storage and try again.');
-    }
     const detail = {cityId,hospital:mergedHospital(current,baseSaved),area:copy(current)};
     window.dispatchEvent(new CustomEvent('ptbo-hospital-dropoff-updated',{detail}));
     // Road collision caches drivable base polygons. Refresh that cache whenever the hospital area changes.

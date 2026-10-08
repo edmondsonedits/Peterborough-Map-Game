@@ -23,7 +23,7 @@
   }
 
   function clampForwardSpeed() {
-    if (!Number.isFinite(state.maxKmh)) return;
+    if (!Number.isFinite(state.maxKmh) || typeof velocity === 'undefined') return;
     const conversion = velocityToKmh();
     const currentVelocity = Number(velocity) || 0;
     if (currentVelocity > 0 && currentVelocity * conversion > state.maxKmh) {

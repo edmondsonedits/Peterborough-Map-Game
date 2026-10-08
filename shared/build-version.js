@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.98';
+  const VERSION = '1.6.99';
   const CITY_RUNTIME_VERSION = '1.6.17';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
@@ -106,6 +106,9 @@
     }
     const notice = document.createElement('a');
     notice.id = 'ptbo-training-use-notice';
+    if(/\/route-mapping\//.test(path))notice.style.top='calc(76px + env(safe-area-inset-top))';
+    else if(/\/geo-guesser\//.test(path))notice.style.top='calc(90px + env(safe-area-inset-top))';
+    else if(/\/city-explorer\//.test(path))notice.style.top='calc(148px + env(safe-area-inset-top))';
     notice.href = new URL('../legal/', SCRIPT_URL).href;
     notice.innerHTML = '<strong>Training use only</strong><span>Not for live response, navigation, dispatch, or operational decisions.</span>';
     notice.setAttribute('aria-label', 'Training use only. Not for live response, navigation, dispatch, or operational decisions. Open the full training use notice.');

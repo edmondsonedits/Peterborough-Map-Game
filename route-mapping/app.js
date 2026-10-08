@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.98';
+  const VERSION = '1.6.99';
   const CONFIG = Object.freeze({
     roadUrl: '../city-explorer/data/osm-public-roads.geojson',
     centerLat: 44.3091,
@@ -498,7 +498,21 @@
   function heuristic(node,target,objective){const straight=Math.hypot(target.x-node.x,target.y-node.y);return objective==='distance'?straight:straight/(112/3.6)*.82;}
   function edgeCost(edge,objective){return objective==='distance'?edge.distance:edge.weight;}
 
+  const routePathCache=new Map();
+  let cachedRouteGraph=null;
   function pathBetween(startId,endId,objective){
+    const graph=state.graph;
+    if(graph!==cachedRouteGraph){routePathCache.clear();cachedRouteGraph=graph;}
+    if(!Number.isInteger(startId)||!Number.isInteger(endId)||!graph?.nodes[startId]||!graph.nodes[endId])return null;
+    const key=objective+':'+startId+':'+endId;
+    let result;
+    if(routePathCache.has(key)){result=routePathCache.get(key);routePathCache.delete(key);}
+    else result=computePathBetween(startId,endId,objective);
+    routePathCache.set(key,result);
+    if(routePathCache.size>256)routePathCache.delete(routePathCache.keys().next().value);
+    return result?{...result,nodeIds:result.nodeIds.slice(),edges:result.edges.slice()}:null;
+  }
+  function computePathBetween(startId,endId,objective){
     if(startId===endId)return {nodeIds:[startId],edges:[],distance:0,duration:0};
     const nodes=state.graph.nodes,target=nodes[endId],scores=new Float64Array(nodes.length),previous=new Int32Array(nodes.length),previousEdge=new Array(nodes.length),heap=new MinHeap();
     scores.fill(Infinity);previous.fill(-1);scores[startId]=0;heap.push({id:startId,score:heuristic(nodes[startId],target,objective)});let visited=0,found=false;
@@ -823,8 +837,8 @@
   function setHint(text){ui.hint.textContent=text;}
   function setMode(mode){state.mode=mode;document.body.classList.toggle('is-drawing-ready',mode==='drawing');ui.submit.disabled=!(mode==='editing'&&state.playerRoute);ui.undo.disabled=!(mode==='editing'&&state.history.length);ui.clear.disabled=mode==='loading'||mode==='snapping'||mode==='results';ui.results.hidden=mode!=='results';}
 
-  function clearRaw(){clearLayer(state.rawLine);state.rawLine=null;state.rawPoints=[];state.drawingPointer=null;}
-  function cancelEdit(){clearLayer(state.editMarker);clearLayer(state.previewLine);state.editMarker=null;state.previewLine=null;state.editDraft=null;}
+  function clearRaw(){const pointer=state.drawingPointer;state.drawingPointer=null;if(pointer!==null&&ui.drawSurface.hasPointerCapture?.(pointer))ui.drawSurface.releasePointerCapture(pointer);clearLayer(state.rawLine);state.rawLine=null;state.rawPoints=[];}
+  function cancelEdit(){state.map?.dragging.enable();clearLayer(state.editMarker);clearLayer(state.previewLine);state.editMarker=null;state.previewLine=null;state.editDraft=null;}
 
   function resetDrawing(){
     cancelEdit();clearRaw();clearReference();clearLayers(state.playerLayers);clearLayer(state.interactiveLine);state.interactiveLine=null;state.anchors=[];state.history=[];state.playerRoute=null;state.shortestRoute=null;state.recommendedRoute=null;setMode('drawing');setHint('Draw a route from your base to the call');ui.submit.disabled=true;fitExercise();
@@ -833,13 +847,20 @@
   function pointerPoint(event){const rect=ui.map.getBoundingClientRect(),point=L.point(event.clientX-rect.left,event.clientY-rect.top),ll=state.map.containerPointToLatLng(point);return {lat:ll.lat,lng:ll.lng};}
 
   function onDrawStart(event){
-    if(state.mode!=='drawing'||state.drawingPointer!==null||event.button>0)return;event.preventDefault();state.drawingPointer=event.pointerId;ui.drawSurface.setPointerCapture&&ui.drawSurface.setPointerCapture(event.pointerId);const p=pointerPoint(event),start=basePoint(state.base);state.rawPoints=[start,p];state.rawLine=L.polyline([[start.lat,start.lng],[p.lat,p.lng]],{color:'#0ea5e9',weight:6,opacity:.72,dashArray:'5 7',lineCap:'round',lineJoin:'round',interactive:false}).addTo(state.map);setHint('Keep drawing toward the call');
+    if(state.mode!=='drawing'||state.drawingPointer!==null||event.button>0||ui.settingsSheet.open)return;event.preventDefault();state.drawingPointer=event.pointerId;ui.drawSurface.setPointerCapture&&ui.drawSurface.setPointerCapture(event.pointerId);const p=pointerPoint(event),start=basePoint(state.base);state.rawPoints=[start,p];state.rawLine=L.polyline([[start.lat,start.lng],[p.lat,p.lng]],{color:'#0ea5e9',weight:6,opacity:.72,dashArray:'5 7',lineCap:'round',lineJoin:'round',interactive:false}).addTo(state.map);setHint('Keep drawing toward the call');
   }
   function onDrawMove(event){if(state.mode!=='drawing'||event.pointerId!==state.drawingPointer)return;event.preventDefault();const p=pointerPoint(event),last=state.rawPoints[state.rawPoints.length-1];if(dist(last,p)<7)return;state.rawPoints.push(p);state.rawLine&&state.rawLine.addLatLng([p.lat,p.lng]);}
   async function onDrawEnd(event){if(state.mode!=='drawing'||event.pointerId!==state.drawingPointer)return;event.preventDefault();state.drawingPointer=null;if(state.rawPoints.length<3){clearRaw();setHint('Draw a little farther along the streets');return;}await snapStroke();}
 
+  function cancelDrawing(event){
+    if(state.drawingPointer===null||(event?.pointerId!==undefined&&event.pointerId!==state.drawingPointer))return;
+    clearRaw();setHint('Drawing cancelled · draw your route again');
+  }
+
+  let exerciseGeneration=0;
   async function snapStroke(){
-    setMode('snapping');setHint('Snapping your drawing to Peterborough roads…');await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+    const generation=exerciseGeneration;setMode('snapping');setHint('Snapping your drawing to Peterborough roads…');await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+    if(generation!==exerciseGeneration||state.mode!=='snapping')return;
     try{
       const mapped=mappedAnchorsFromStroke(state.rawPoints),startPoint=basePoint(state.base),endPoint=callPoint(state.call),origin=nearestRoad(startPoint.lat,startPoint.lng,220),destination=nearestRoad(endPoint.lat,endPoint.lng,CONFIG.destinationSearchRadius);
       if(!origin||!destination)throw new Error('The start or call could not be matched to the Peterborough road network.');state.originAnchor=Object.assign({},origin,startPoint,{fixed:true});state.destinationAnchor=Object.assign({},destination,endPoint,{fixed:true});
@@ -1065,7 +1086,7 @@
   }
 
   function newCall(){
-    cancelEdit();clearRaw();clearReference();clearLayers(state.playerLayers);clearLayer(state.interactiveLine);state.interactiveLine=null;
+    exerciseGeneration+=1;cancelEdit();clearRaw();clearReference();clearLayers(state.playerLayers);clearLayer(state.interactiveLine);state.interactiveLine=null;
     const previousPhase=state.phase?.index;
     const phase=applyProgressionStart();
     state.call=chooseCall();state.callCount+=1;state.playerRoute=null;state.shortestRoute=null;state.recommendedRoute=null;state.anchors=[];state.history=[];ui.callNumber.textContent='CALL '+state.callCount;ui.baseLabel.textContent=state.base.shortName||state.base.name;ui.callType.textContent=state.call.sub||state.call.main||'Dispatch Call';ui.callAddress.textContent=state.call.addr||state.call.name;
@@ -1366,8 +1387,8 @@
   function fillBases(service,preferredId){const bases=basesForService(service);ui.baseSelect.innerHTML='';bases.forEach(base=>{const option=document.createElement('option');option.value=base.id;option.textContent=(base.shortName||base.name)+' · '+base.address;ui.baseSelect.appendChild(option);});const wanted=bases.find(b=>b.id===preferredId)||bases[0];if(wanted)ui.baseSelect.value=wanted.id;return wanted;}
   function loadPreferences(){let service='fire';try{service=localStorage.getItem('ptboRouteMappingService')||service;}catch(_){}if(!['fire','ems'].includes(service))service='fire';state.service=service;ui.serviceSelect.value=service;fillBases(service,null);loadSkillProfiles();loadProgression();applyProgressionStart();}
   function savePreferences(){try{localStorage.setItem('ptboRouteMappingService',state.service);localStorage.setItem('ptboRouteMappingBase',state.base.id);}catch(_){}}
-  function openSettings(){ui.serviceSelect.value=state.service;fillBases(state.service,state.base&&state.base.id);ui.settingsSheet.hidden=false;}
-  function closeSettings(){ui.settingsSheet.hidden=true;}
+  function openSettings(){cancelDrawing();cancelEdit();ui.serviceSelect.value=state.service;fillBases(state.service,state.base&&state.base.id);if(!ui.settingsSheet.open)ui.settingsSheet.showModal();}
+  function closeSettings(){if(ui.settingsSheet.open)ui.settingsSheet.close();}
 
   function initMap(){
     state.map=L.map('map',{zoomControl:false,attributionControl:true,preferCanvas:true,minZoom:11,maxZoom:19,worldCopyJump:false}).setView([CONFIG.centerLat,CONFIG.centerLng],13);
@@ -1376,7 +1397,8 @@
   }
 
   function bindUi(){
-    ui.drawSurface.addEventListener('pointerdown',onDrawStart);ui.drawSurface.addEventListener('pointermove',onDrawMove);ui.drawSurface.addEventListener('pointerup',onDrawEnd);ui.drawSurface.addEventListener('pointercancel',onDrawEnd);
+    ui.drawSurface.addEventListener('pointerdown',onDrawStart);ui.drawSurface.addEventListener('pointermove',onDrawMove);ui.drawSurface.addEventListener('pointerup',onDrawEnd);ui.drawSurface.addEventListener('pointercancel',cancelDrawing);ui.drawSurface.addEventListener('lostpointercapture',cancelDrawing);
+    window.addEventListener('blur',()=>{cancelDrawing();cancelEdit();});document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelDrawing();cancelEdit();}});
     ui.clear.addEventListener('click',resetDrawing);ui.undo.addEventListener('click',undo);ui.submit.addEventListener('click',submitRoute);ui.next.addEventListener('click',newCall);ui.settingsButton.addEventListener('click',openSettings);ui.settingsClose.addEventListener('click',closeSettings);ui.retry.addEventListener('click',()=>location.reload());
     ui.serviceSelect.addEventListener('change',()=>fillBases(ui.serviceSelect.value,null));
     ui.settingsForm.addEventListener('submit',event=>{event.preventDefault();const service=ui.serviceSelect.value;state.service=service;state.skillProfile=state.skillProfiles?.[service]||normalizeSkillProfile(null);if(state.skillProfiles&&!state.skillProfiles[service])state.skillProfiles[service]=state.skillProfile;savePreferences();closeSettings();newCall();});

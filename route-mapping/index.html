@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#07111f">
   <meta name="description" content="Rapid Peterborough route-learning practice. Draw a response route, snap it to real roads, compare it, and move to the next call.">
   <title>Route Mapping · Peterborough Emergency Games</title>
-  <link rel="stylesheet" href="../response-simulator/vendor/leaflet-1.9.4/leaflet.css?v=1.6.98">
-  <link rel="stylesheet" href="./styles.css?v=1.6.98">
+  <link rel="stylesheet" href="../response-simulator/vendor/leaflet-1.9.4/leaflet.css?v=1.6.99">
+  <link rel="stylesheet" href="./styles.css?v=1.6.99">
 </head>
 <body>
   <main id="route-app" aria-busy="true">
@@ -42,15 +42,15 @@
       <button id="next-button" class="primary next" type="button">Next Call</button>
     </section>
 
-    <section id="settings-sheet" class="sheet-backdrop" hidden>
+    <dialog id="settings-sheet" class="sheet-backdrop" aria-labelledby="settings-title">
       <form id="settings-form" class="sheet glass">
-        <div class="sheet-head"><div><span>ROUTE MAPPING</span><strong>Starting unit</strong></div><button id="settings-close" type="button" aria-label="Close settings">×</button></div>
+        <div class="sheet-head"><div><span>ROUTE MAPPING</span><strong id="settings-title">Starting unit</strong></div><button id="settings-close" type="button" aria-label="Close settings">×</button></div>
         <label>Service<select id="service-select"><option value="fire">Fire</option><option value="ems">EMS</option></select></label>
         <label hidden>Base<select id="base-select"></select></label>
         <p>Starting points advance automatically: Station 1 → North Station → West Station → previous dispatch. Each station phase lasts 20 completed calls.</p>
         <button class="primary" type="submit">Use this base</button>
       </form>
-    </section>
+    </dialog>
 
     <div id="loading-error" class="loading-error" hidden>
       <strong>Route Mapping could not start.</strong>
@@ -59,12 +59,12 @@
     </div>
   </main>
 
-  <script src="../shared/build-version.js?v=1.6.98"></script>
-  <script src="../response-simulator/vendor/leaflet-1.9.4/leaflet.js?v=1.6.98"></script>
-  <script src="../response-simulator/service-config.js?v=1.6.98"></script>
-  <script src="../shared/location-changes.js?v=1.6.98"></script>
-  <script src="../shared/base-locations.js?v=1.6.98"></script>
-  <script src="../shared/dispatch-locations.js?city=peterborough&amp;v=1.6.98"></script>
-  <script src="./app.js?v=1.6.98"></script>
+  <script src="../shared/build-version.js?v=1.6.99"></script>
+  <script src="../response-simulator/vendor/leaflet-1.9.4/leaflet.js?v=1.6.99"></script>
+  <script src="../response-simulator/service-config.js?v=1.6.99"></script>
+  <script src="../shared/location-changes.js?v=1.6.99"></script>
+  <script src="../shared/base-locations.js?v=1.6.99"></script>
+  <script src="../shared/dispatch-locations.js?city=peterborough&amp;v=1.6.99"></script>
+  <script src="./app.js?v=1.6.99"></script>
 </body>
 </html>

@@ -2,6 +2,7 @@
 (() => {
   'use strict';
   const VERSION = '1.6.17';
+  const CACHE_VERSION = new URL(document.currentScript?.src||location.href).searchParams.get('v')||VERSION;
   const SCRIPT_TIMEOUT_MS = 15000;
   if (window.PTBO_SIMULATOR_READY_VERSION === VERSION && window.PTBO_SIMULATOR_READY) return;
 
@@ -63,7 +64,7 @@
 
       const script = document.createElement('script');
       const url = new URL(filename, document.baseURI);
-      url.searchParams.set('v', VERSION);
+      url.searchParams.set('v', CACHE_VERSION);
       script.src = url.href;
       script.setAttribute(marker, 'true');
       script.dataset.ptboLoading = 'true';

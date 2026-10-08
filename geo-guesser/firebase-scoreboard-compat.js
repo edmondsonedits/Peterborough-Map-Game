@@ -28,7 +28,9 @@
     return {
       responseTimeSeconds: Number(value.responseTimeSeconds),
       station: safeText(value.station || 'Unknown Station'),
-      callType: safeText(value.callType || 'Random Shift')
+      callType: safeText(value.callType || 'Random Shift'),
+      completed: value.completed !== false,
+      sessionId: safeText(value.sessionId)
     };
   }
 
@@ -155,14 +157,22 @@
     window.showPersonalScores(stationName.startsWith('Station ') ? stationName : 'Station 1');
   };
 
+  let saving = false;
+  const uploadedSessions = new Set();
+  const scoreDocuments = new Map();
   window.saveScore = async () => {
     const saveButton = byId('score-row')?.querySelector('button');
     const scoreContext = context();
-    if (!Number.isFinite(scoreContext.responseTimeSeconds) || scoreContext.responseTimeSeconds < 0) {
+    const sessionKey = scoreContext.sessionId || [scoreContext.station, scoreContext.callType, scoreContext.responseTimeSeconds].join('|');
+    if (saving || uploadedSessions.has(sessionKey)) return;
+    if (!scoreContext.completed || !Number.isFinite(scoreContext.responseTimeSeconds) || scoreContext.responseTimeSeconds < 0 || scoreContext.responseTimeSeconds > 7200) {
       alert('The score could not be calculated. Finish a timed game and try again.');
       return;
     }
 
+    const name = playerName();
+    const ownsResults=()=>context().sessionId===scoreContext.sessionId&&!byId('results')?.classList.contains('hidden');
+    saving = true;
     if (saveButton) {
       saveButton.disabled = true;
       saveButton.textContent = 'Connecting…';
@@ -170,9 +180,15 @@
 
     try {
       await readyPromise;
-      if (saveButton) saveButton.textContent = 'Saving…';
-      const name = playerName();
-      await withTimeout(scoresCollection.add({
+      if (saveButton && ownsResults()) saveButton.textContent = 'Saving…';
+      // Keep the generated reference across retries: a timed-out write may
+      // still reach Firestore, so retrying add() could create another row.
+      let scoreDocument=scoreDocuments.get(sessionKey);
+      if(!scoreDocument){
+        scoreDocument=scoresCollection.doc();scoreDocuments.set(sessionKey,scoreDocument);
+        if(scoreDocuments.size>100)scoreDocuments.delete(scoreDocuments.keys().next().value);
+      }
+      await withTimeout(scoreDocument.set({
         playerName: name,
         station: scoreContext.station,
         callType: scoreContext.callType,
@@ -180,15 +196,20 @@
         score: scoreContext.responseTimeSeconds,
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       }), 15000, 'Score upload');
+      uploadedSessions.add(sessionKey);
+      if (uploadedSessions.size > 100) uploadedSessions.delete(uploadedSessions.values().next().value);
       try { localStorage.setItem('geoPlayerName', name); } catch {}
-      if (scoreContext.callType === 'The City Ten') await window.showCityTenScores();
-      else await window.showPersonalScores(scoreContext.station);
+      if(ownsResults()){
+        if (scoreContext.callType === 'The City Ten') await window.showCityTenScores();
+        else await window.showPersonalScores(scoreContext.station);
+      }
     } catch (error) {
-      alert(`Scoreboard error: ${errorText(error)}`);
+      if(ownsResults())alert(`Scoreboard error: ${errorText(error)}`);
     } finally {
-      if (saveButton) {
-        saveButton.disabled = false;
-        saveButton.textContent = 'Save';
+      saving = false;
+      if (saveButton && context().sessionId === scoreContext.sessionId) {
+        saveButton.disabled = uploadedSessions.has(sessionKey);
+        saveButton.textContent = uploadedSessions.has(sessionKey) ? 'Saved' : 'Save';
       }
     }
   };

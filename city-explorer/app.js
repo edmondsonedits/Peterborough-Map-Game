@@ -14,7 +14,7 @@ import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runt
 import { createCatalogObject } from './editor/asset-catalog.js';
 import { createCommandHistory } from './editor/command-history.js';
 import { createDraftStore } from './editor/draft-store.js';
-import { createCityEditor } from './editor/city-editor.js';
+import { createCityEditor } from './editor/city-editor.js?v=1.6.99';
 import { createEmptySceneDocument, sanitizeRenderableSceneDocument } from './editor/scene-document.js';
 import { createGeneratedRegistry } from './editor/generated-registry.js';
 import { applyOverrides } from './editor/override-runtime.js';
@@ -26,13 +26,13 @@ import {
   createPeterboroughLandmarks,
 } from './landmark-models.js?v=1.5.5-streets4';
 import { ROAD_SURFACE_CLEARANCE, RoadSurfaceIndex, laneCountFor, reconcileRoadNetworkElevations, roadProfile, roadRibbonCrossSections, resampleRoadLine } from './road-network.js?v=1.5.5-r10';
-import { OfficialDrivableSurfaceIndex, RenderedPavementIndex, officialSurfaceStatusActive, officialBridgeIsVehicular } from './official-road-surfaces.js?v=1.5.6-bridge-use1';
+import { OfficialDrivableSurfaceIndex, RenderedPavementIndex, officialSurfaceStatusActive, officialBridgeIsVehicular } from './official-road-surfaces.js?v=1.6.99';
 import { FLY_TUNING, adjustFlySpeedScale, applyFlyLookDelta, dampingFactors, flyAxesFromKeys, flySpeedFor, flyYawToward, isFlyControlCode, wrapFlyYaw } from './fly-controls.js?v=1.5.5-fly4';
 import { clearLandCoverRaster, paintLandCoverPolygon } from './land-cover-raster.js?v=1.5.5-raster1';
 import { sampleOfficialTerrainElevation, validOfficialTerrainMetadata } from './terrain-heightmap.js?v=1.5.5-lidar1';
 import { sampleTriangulatedTerrainHeight } from './terrain-surface.js?v=1.5.5-terrain1';
 import { HydroSurfaceIndex, WATER_SURFACE_CLEARANCE, WATER_TERRAIN_RECESS, createWaterStageSampler, relativeWaterElevation, robustFallbackWaterHeight, subdivideWaterTriangle, watercourseWidth } from './water-system.js?v=1.5.5-hydro2';
-import { CitySplatLayer } from './city-splat-layer.js?v=1.5.5-hybrid1';
+import { CitySplatLayer } from './city-splat-layer.js?v=1.6.99';
 import {
   estimatedBuildingFloors,
   facadeDetailClass,
@@ -332,6 +332,8 @@ const streetLabelGroup = new THREE.Group();
 const semanticSurveyGroup = new THREE.Group();
 const surveyMarkerGroup = new THREE.Group();
 const authoredDetailGroup = new THREE.Group();
+// Pick-only proxies stay outside the render tree. The editor raycasts the
+// registry directly; traversing these 40,000+ objects every frame is wasted work.
 const generatedEditorProxyGroup = new THREE.Group();
 generatedEditorProxyGroup.name = 'city-editor-generated-proxies';
 const generatedRegistry = createGeneratedRegistry(THREE);
@@ -370,7 +372,7 @@ function prepareGeneratedInstances(objects) {
     object.userData.cityEditorColorFactory ||= () => new THREE.Color();
   });
 }
-world.add(terrainGroup, roadGroup, mapRoadGroup, buildingGroup, vegetationGroup, streetscapeGroup, landmarkGroup, gameplayGroup, semanticSurveyGroup, surveyMarkerGroup, streetLabelGroup, authoredDetailGroup, generatedEditorProxyGroup);
+world.add(terrainGroup, roadGroup, mapRoadGroup, buildingGroup, vegetationGroup, streetscapeGroup, landmarkGroup, gameplayGroup, semanticSurveyGroup, surveyMarkerGroup, streetLabelGroup, authoredDetailGroup);
 mapRoadGroup.visible = false;
 streetLabelGroup.visible = false;
 surveyMarkerGroup.visible = false;
@@ -4497,6 +4499,7 @@ async function buildCity() {
   buildLandmarkMapLabels();
   await initializeSemanticSurvey();
   await initializeCapturedDetailLayer();
+  generatedEditorProxyGroup.updateMatrixWorld(true);
   initializeGameplay();
   await Promise.all([fireTruckActor.userData.truck.ready, playerActor.userData.animation.ready]);
   cityVisualLod = '';
@@ -4814,56 +4817,6 @@ function resetGameplay() {
   return true;
 }
 
-function setModeLegacy(mode) {
-  if (mode === state.mode) {
-    if (mode === 'fly') updateFlyHint();
-    return;
-  }
-  stopFlyMotion();
-  state.dragLooking = false;
-  state.dragPointerId = null;
-  state.previousPointer = null;
-  if (mode === 'map') {
-    state.lastFlyPosition.copy(camera.position);
-    state.lastFlyYaw = state.yaw;
-    state.lastFlyPitch = state.pitch;
-    document.exitPointerLock?.();
-    state.mode = 'map';
-    els.app.classList.add('is-map');
-    camera.near = 30;
-    camera.updateProjectionMatrix();
-    mapRoadGroup.visible = true;
-    const mapAltitude = Math.max(5600, CITY.terrainSize * 0.95);
-    camera.position.set(
-      CITY.terrainCenter.x,
-      mapAltitude,
-      CITY.terrainCenter.z,
-    );
-    camera.up.set(0, 0, -1);
-    camera.lookAt(CITY.terrainCenter.x, terrainHeightAtWorld(CITY.terrainCenter.x, CITY.terrainCenter.z), CITY.terrainCenter.z);
-    streetLabelGroup.visible = innerWidth >= 760;
-    updateMapGuide();
-    els.flyMode.classList.remove('is-active');
-    els.mapMode.classList.add('is-active');
-    els.modeHint.innerHTML = '<strong>Map mode.</strong> Scroll to zoom · WASD or arrows to pan · select Fly mode to return.';
-  } else {
-    state.mode = 'fly';
-    els.app.classList.remove('is-map');
-    camera.near = 0.5;
-    camera.updateProjectionMatrix();
-    mapRoadGroup.visible = false;
-    streetLabelGroup.visible = false;
-    camera.up.set(0, 1, 0);
-    camera.position.copy(state.lastFlyPosition);
-    state.yaw = state.lastFlyYaw;
-    state.pitch = state.lastFlyPitch;
-    els.flyMode.classList.add('is-active');
-    els.mapMode.classList.remove('is-active');
-    updateFlyHint();
-  }
-  updateMouseLookUi();
-}
-
 function setMode(mode, force = false) {
   if (cityEditor?.active) return;
   const resolvedMode = mode === 'play' ? (state.lastNonMapMode === 'driving' ? 'driving' : 'onFoot') : mode;
@@ -5029,7 +4982,8 @@ function cycleGameplayCameraDistance() {
 }
 
 function currentGameplayAxes(delta) {
-  const keyboard = gameplayAxesFromKeys(state.keys);
+  const modalOpen=Boolean(document.querySelector('dialog[open]'));
+  const keyboard = modalOpen ? {forward:0,strafe:0,steering:0,sprinting:false} : gameplayAxesFromKeys(state.keys);
   const pads = navigator.getGamepads?.() || [];
   const gamepad = Array.from(pads).find((candidate) => candidate?.connected && candidate.mapping === 'standard')
     || Array.from(pads).find((candidate) => candidate?.connected);
@@ -5040,6 +4994,7 @@ function currentGameplayAxes(delta) {
     return keyboard;
   }
   document.documentElement.dataset.gamepadConnected = 'true';
+  if(modalOpen){gamepadActionDown=Boolean(gamepad.buttons?.[0]?.pressed);gamepadCameraDown=Boolean(gamepad.buttons?.[3]?.pressed);return keyboard;}
   const deadzone = (value, threshold = 0.16) => {
     const magnitude = Math.abs(Number(value) || 0);
     return magnitude <= threshold ? 0 : Math.sign(value) * (magnitude - threshold) / (1 - threshold);
@@ -5246,15 +5201,19 @@ function updateGameplayHud() {
   const surface = gameplaySurfaceAt(focus.x, focus.z, driving ? truckState.y : playerActor.position.y);
   const nearStation = Math.hypot(focus.x - fireStationWorld.x, focus.z - fireStationWorld.z) < 80;
   const label = !surface.onRoad && nearStation
-    ? 'Fire Station 1 apron'
+    ? `Fire Station ${FIRE_STATION_ONE.number} apron`
     : surface.name || (surface.onRoad ? 'Peterborough street' : 'Off road');
   if (label !== lastRoadLabel) {
     lastRoadLabel = label;
     els.gameplayRoad.textContent = label;
   }
-  els.gameplayRole.textContent = driving ? 'Fire Rescue Engine 1' : 'Firefighter · On foot';
-  els.gameplaySpeed.textContent = String(Math.round(Math.abs(truckState.speed) * 3.6)).padStart(3, '0');
-  els.gameplayGear.textContent = Math.abs(truckState.speed) < 0.18 ? 'N' : truckState.speed < 0 ? 'R' : 'D';
+  const role=driving?'Fire Rescue Engine 1':'Firefighter · On foot';
+  const speedKmh=String(Math.round(Math.abs(truckState.speed)*3.6));
+  const speedText=speedKmh.padStart(3,'0');
+  const gear=Math.abs(truckState.speed)<0.18?'N':truckState.speed<0?'R':'D';
+  if(els.gameplayRole.textContent!==role)els.gameplayRole.textContent=role;
+  if(els.gameplaySpeed.textContent!==speedText)els.gameplaySpeed.textContent=speedText;
+  if(els.gameplayGear.textContent!==gear)els.gameplayGear.textContent=gear;
   let prompt = '';
   if (state.mode === 'onFoot') {
     const distance = Math.hypot(playerActor.position.x - truckState.x, playerActor.position.z - truckState.z);
@@ -5262,10 +5221,13 @@ function updateGameplayHud() {
   } else if (driving && Math.abs(truckState.speed) <= TRUCK_TUNING.exitSpeed) {
     prompt = '<kbd>E</kbd> Exit fire truck';
   }
-  els.interactionPrompt.innerHTML = prompt;
-  els.interactionPrompt.classList.toggle('is-visible', Boolean(prompt));
-  document.documentElement.dataset.gameplaySpeedKmh = String(Math.round(Math.abs(truckState.speed) * 3.6));
-  document.documentElement.dataset.gameplayOnRoad = String(surface.onRoad);
+  if(els.interactionPrompt.innerHTML!==prompt){
+    els.interactionPrompt.innerHTML=prompt;
+    els.interactionPrompt.classList.toggle('is-visible',Boolean(prompt));
+  }
+  const rootData=document.documentElement.dataset;
+  if(rootData.gameplaySpeedKmh!==speedKmh)rootData.gameplaySpeedKmh=speedKmh;
+  if(rootData.gameplayOnRoad!==String(surface.onRoad))rootData.gameplayOnRoad=String(surface.onRoad);
   if (pavementQA) {
     document.documentElement.dataset.gameplayContact = JSON.stringify({
       mode: state.mode, x: focus.x, z: focus.z, y: focus.y,
@@ -5720,7 +5682,8 @@ function animate() {
   }
   const delta = Math.min(clock.getDelta(), 0.05);
   if (!captureFrame) {
-    if (cityEditor?.active) cityEditor.update(delta);
+    if(document.querySelector('dialog[open]')){state.keys.clear();currentGameplayAxes(0);}
+    else if (cityEditor?.active) cityEditor.update(delta);
     else if (state.mode === 'fly') updateFlyControls(delta);
     else if (state.mode === 'map') updateMapControls(delta);
     else {
@@ -6286,7 +6249,7 @@ function wireEvents() {
   window.addEventListener('resize', () => {
     camera.aspect = innerWidth / innerHeight;
     camera.updateProjectionMatrix();
-    renderer.setPixelRatio(Math.min(devicePixelRatio, innerWidth < 760 ? 1.25 : 1.65));
+    renderer.setPixelRatio(Math.min(devicePixelRatio, lowPowerProfile ? 1.2 : innerWidth < 760 ? 1.25 : 1.65));
     renderer.setSize(innerWidth, innerHeight, false);
     streetLabelGroup.visible = state.mode === 'map' && innerWidth >= 760;
     updateMapGuide();

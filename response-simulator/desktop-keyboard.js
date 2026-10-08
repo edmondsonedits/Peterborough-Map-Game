@@ -13,7 +13,7 @@
     const doc = frame.contentDocument;
     if (!doc?.body || doc.querySelector('script[data-ptbo-desktop-drivetrain-loader]')) return false;
     const script = doc.createElement('script');
-    script.src = new URL(`../desktop-drivetrain-${VERSION}.js?v=${VERSION}`, location.href).href;
+    script.src = new URL(`../desktop-drivetrain-${VERSION}.js?v=${window.PTBO_BUILD?.version||VERSION}`, location.href).href;
     script.dataset.ptboDesktopDrivetrainLoader = VERSION;
     script.onerror = () => console.error(`Desktop simulator drivetrain ${VERSION} failed to load.`);
     doc.body.appendChild(script);

@@ -1,0 +1,22 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),{chromium}=require('playwright');
+(async()=>{const b=await chromium.launch({headless:true,args:['--use-angle=d3d11']}),page=await b.newPage({viewport:{width:1440,height:900}}),errors=[];
+try{
+ await page.addInitScript(()=>{window.qaPad={connected:true,mapping:'standard',axes:[0,0,0,0],buttons:Array.from({length:16},()=>({pressed:false,value:0}))};Object.defineProperty(navigator,'getGamepads',{value:()=>[qaPad]});});
+ page.on('pageerror',e=>errors.push(e.message));await page.goto('http://127.0.0.1:4188/city-explorer/',{waitUntil:'domcontentloaded',timeout:60000});
+ await page.waitForFunction(()=>document.documentElement.dataset.gameplayReady==='true',null,{timeout:180000});
+ await page.locator('#play-mode').click();await page.locator('canvas').first().focus();await page.keyboard.press('KeyE');
+ await page.waitForFunction(()=>__PTBO_GAMEPLAY__.state().mode==='driving');
+ await page.evaluate(()=>{qaPad.buttons[7].value=.8;});await page.waitForTimeout(600);
+ await page.locator('#search-button').click();await page.waitForFunction(()=>document.querySelector('#search-dialog').open);
+ const start=await page.evaluate(()=>__PTBO_GAMEPLAY__.state());
+ await page.evaluate(()=>{qaPad.axes=[.7,-.9,.8,.8];qaPad.buttons[0].pressed=true;qaPad.buttons[3].pressed=true;});
+ await page.waitForTimeout(500);const paused=await page.evaluate(()=>__PTBO_GAMEPLAY__.state());
+ assert.deepEqual(paused,start,'modal pauses movement and vehicle actions');
+ await page.keyboard.press('Escape');await page.evaluate(()=>{qaPad.buttons[7].value=0;qaPad.axes=[0,0,0,0];});
+ await page.waitForTimeout(350);assert.equal(await page.evaluate(()=>__PTBO_GAMEPLAY__.state().mode),'driving','held enter button is latched across modal close');
+ await page.evaluate(()=>{qaPad.buttons[0].pressed=false;qaPad.buttons[3].pressed=false;});
+ const performanceSample=await page.evaluate(()=>new Promise(resolve=>{const times=[];let previous=performance.now(),start=previous;function tick(now){times.push(now-previous);previous=now;if(now-start>=10000){times.sort((a,b)=>a-b);resolve({frames:times.length,durationMs:now-start,medianFps:1000/times[Math.floor(times.length/2)],p99FrameMs:times[Math.floor(times.length*.99)]});}else requestAnimationFrame(tick);}requestAnimationFrame(tick);}));
+ assert.equal(errors.length,0,errors.join('; '));const graphics=await page.evaluate(()=>{const gl=document.querySelector('canvas').getContext('webgl2'),extension=gl.getExtension('WEBGL_debug_renderer_info');return{renderer:extension?gl.getParameter(extension.UNMASKED_RENDERER_WEBGL):gl.getParameter(gl.RENDERER),pixelRatio:devicePixelRatio,canvas:[gl.drawingBufferWidth,gl.drawingBufferHeight]};});const receipt={status:'pass',graphics,profile:'full',build:await page.evaluate(()=>PTBO_BUILD.version),modalPaused:true,heldControllerActionLatched:true,performanceSample,errors};
+ const out=path.resolve('test-artifacts/quality-audit/after');fs.writeFileSync(path.join(out,'city-modal.json'),JSON.stringify(receipt,null,2));await page.screenshot({path:path.join(out,'city-full.png')});console.log(JSON.stringify(receipt));
+}finally{await b.close();}})().catch(e=>{console.error(e);process.exitCode=1;});
