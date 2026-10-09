@@ -58,22 +58,18 @@ function solveFallbackJunctions(segments,options={}){
     }
     if(arms.length<3)continue;
     const trims=arms.map(a=>Math.min(maxTrim,Math.max(0.6,a.half*0.6)));
-    const cornerOffsets=[];
     for(let i=0;i<arms.length;i++){
       const a=arms[i],b=arms[(i+1)%arms.length];
       const leftA={x:-a.dz*a.half,z:a.dx*a.half},rightB={x:b.dz*b.half,z:-b.dx*b.half};
       const denom=cross(a.dx,a.dz,b.dx,b.dz);
-      let intersection=null;
       if(Math.abs(denom)>1e-6){
         const rx=rightB.x-leftA.x,rz=rightB.z-leftA.z;
         const t=cross(rx,rz,b.dx,b.dz)/denom,u=cross(rx,rz,a.dx,a.dz)/denom;
         if(t>=0&&u>=0&&t<=maxTrim&&u<=maxTrim){
           trims[i]=Math.max(trims[i],t+0.05);
           trims[(i+1)%arms.length]=Math.max(trims[(i+1)%arms.length],u+0.05);
-          intersection={x:node.x+leftA.x+t*a.dx,z:node.z+leftA.z+t*a.dz};
         }
       }
-      cornerOffsets.push(intersection);
     }
     const points=[];
     for(let i=0;i<arms.length;i++){
@@ -93,9 +89,12 @@ function solveFallbackJunctions(segments,options={}){
     // Do not invent pavement when the angular arms produce crossed boundaries.
     // A triangle count of n-2 is required for one simple closed polygon.
     if(triangles.length!==(points.length-2)*3)continue;
+    const priority = { highway: 6, arterial: 5, collector: 4, local: 3, service: 2, tunnel: 1, unpaved: 0 };
+    const dominant = arms.reduce((best, arm) =>
+      (priority[arm.profile?.renderClass] ?? 2) > (priority[best.profile?.renderClass] ?? 2) ? arm : best, arms[0]);
     polygons.push({key:node.key,x:node.x,z:node.z,y:node.y,points,triangles,
-      materialKey:arms[0].profile?.surfaceKey||'roadLocal',
-      edgeKey:arms[0].profile?.edgeKey||'roadEdge',
+      materialKey:dominant.profile?.surfaceKey||'roadLocal',
+      edgeKey:dominant.profile?.edgeKey||'roadEdge',
       lines:[...new Set(arms.map(a=>a.lineId))],
       trimDistances:trims,angles:arms.map(a=>a.angle)});
     solvedKeys.add(node.key);
