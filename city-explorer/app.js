@@ -2403,11 +2403,14 @@ function buildOfficialCurbRibbons(segments) {
     const bPavement = segment.stationDetail
       ? stationAdjacentPavementHeight(segment.b.x, segment.b.y)
       : nearbyMunicipalRoadHeight(state.renderedPavementIndex, segment.b.x, segment.b.y, segment.bY);
+    // Old packaged data has no CURBTYPE: retain its original inferred cross-
+    // section rather than erasing every curb until a new asset refresh.
+    const inferred = segment.curbMode !== 'raised';
     const aTop = segment.stationDetail ? stationCurbTop(segment.a, segment.aY)
-      : municipalCurbTop(aPavement, segment.aY);
+      : municipalCurbTop(aPavement, segment.aY, { raised: !inferred });
     const bTop = segment.stationDetail ? stationCurbTop(segment.b, segment.bY)
-      : municipalCurbTop(bPavement, segment.bY);
-    const depth = CURB_REVEAL + 0.03;
+      : municipalCurbTop(bPavement, segment.bY, { raised: !inferred });
+    const depth = inferred && !segment.stationDetail ? 0.11 : CURB_REVEAL + 0.03;
     const aBottom = segment.stationDetail ? pavementSupportBottom(aTop, Math.min(
       terrainHeightAtWorld(segment.a.x + sideX, segment.a.y + sideZ),
       terrainHeightAtWorld(segment.a.x - sideX, segment.a.y - sideZ)), depth) : aTop - depth;
@@ -3776,9 +3779,10 @@ async function buildOfficialRoadSurfaces(collection, osmBuildingIndex = null) {
           if (a.distanceTo(b) < 0.25) continue;
           const stationDetail = Boolean(stationRoadDetailWeight(a.x, a.y) || stationRoadDetailWeight(b.x, b.y));
           const curbMode = officialCurbDisplayMode(curbIsRaised(propertyValue(properties, 'CURBTYPE')));
-          // The City also maps flush pavement edges and unknown line types.
-          // Do not fabricate a raised concrete curb for either category.
-          if (curbMode !== 'raised') continue;
+          // A classified flush pavement edge must not become a raised wall.
+          // Unclassified legacy cache segments retain the former inferred
+          // geometry until new City attributes can be fetched and validated.
+          if (curbMode === 'edge-of-pavement') continue;
           const aBase = cachedOfficialRoadHeightAt(heightCache, a, 'road_surfaces');
           const bBase = cachedOfficialRoadHeightAt(heightCache, b, 'road_surfaces');
           curbs.push({ a, b, stationDetail, curbMode, width: 0.24, tags: { source: 'City of Peterborough Basedata' }, name: '', bridge: false, aY: aBase + 0.07, bY: bBase + 0.07 });
