@@ -2676,6 +2676,8 @@ function buildUrbanCurbs(segments, junctionTrims = null) {
 }
 
 function buildRoadSurfaceIndex(segments) {
+  // Never retain polygon contacts after a map rebuild or a disabled preview.
+  state.fallbackJunctionSurfaceIndex = null;
   state.roadSurfaceIndex = new RoadSurfaceIndex();
   state.roadSurfaceIndex.addAll(segments);
   state.roadSurfaceCount = segments.length;
