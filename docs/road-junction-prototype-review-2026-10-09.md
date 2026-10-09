@@ -36,7 +36,7 @@
 
 ## Validation and benchmark status
 
-The solver implementation was exercised during authoring against seven directly evaluated synthetic topologies (T, four-way, bend, dead end, divided carriageways, stacked grades, angled T); all produced the expected polygon counts and valid triangle counts. This is **not** a claim that Node tests or browser regression suites were executed against a cloned working tree.
+The **saved GitHub branch code** was independently executed in a JavaScript isolate with **10 topology checks** (T, four-way, skewed T, driveway, bend, dead end, divided road, grade-separated crossing, parking aisle, tunnel). All passed. The saved **actual gameplaySurfaceAt() function** also passed three checks: experimental polygon contact, surveyed pavement precedence, and disabled-prototype rollback. A separate synthetic workload of 1,000 four-way junctions (4,000 segments / 6,000 triangles) was solved in **approximately 49 ms** in that isolate; this is uncalibrated CPU-only timing and not a device/rendering performance measure. These checks do **not** establish that Node tests or browser regression suites were executed against a cloned working tree.
 
 The GitHub connector writes were successful, but this environment could not clone GitHub (DNS resolution failed), so the following repository tests, full-city terrain clearance and desktop/mobile browser benchmarks **remain unexecuted here**. Do not infer FPS, memory or per-device gains.
 
