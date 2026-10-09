@@ -350,9 +350,9 @@ def fetch_city_open_data_layer(
         or "OBJECTID"
     )
     requested_fields = list(dict.fromkeys((object_id_field, *layer["fields"])))
-    # CURBTYPE was previously omitted from the packaged layer 8 despite the
-    # 3D viewer supporting its classification. Discover the actual attribute
-    # name instead of assuming all ArcGIS deployments publish it.
+    # The City layer description lists curb types, but its current field
+    # schema may omit CURBTYPE entirely. Only request/source a classification
+    # when it is genuinely present in the returned ArcGIS metadata.
     curb_type_field = None
     if layer["key"] == "curb_edges":
         available = [str(field.get("name") or "") for field in layer_metadata.get("fields") or []]
