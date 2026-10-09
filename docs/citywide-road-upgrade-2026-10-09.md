@@ -91,6 +91,12 @@ Visual benchmark matrix (compare all with the same start/spawn, camera settings,
 
 Measure p50/p95 frame times, draw calls, GPU memory, WebGL context loss, startup/build time, road-face samples missed at wheel corners, visual roadway continuity, bridging, and camera motion smoothness. A quality increase is not a performance improvement until measured.
 
+## Geospatial accuracy findings to review before changing street locations
+
+The packaged October 1 `city-explorer/data/road-validation.json` reports **0.639 m median** OSM-to-ORN separation for public roads, but **53.819 m P99** (49,743 sampled points). The distribution contains major outliers; a citywide material/mesh pass does not fix mislocated road centrelines. For example, the report flags O'Toole Crescent (91.531 m median), Wright Avenue (149.985 m median), Bolster Boulevard (125.296 m median), and portions of Highway 7 as requiring review.
+
+**Do not shift any OSM road automatically to ORN.** These may reflect network omissions, different carriageway representation, new construction or mismatched identities rather than actual road misplacement. Prioritize named outliers for independent comparison against municipal pavement and real imagery, and correct only when the source evidence resolves the mismatch.
+
 ## Remaining scope
 
 1. **Run real phone/desktop tests before enabling full municipal loading in production.** If too expensive, implement visible-tile / proximity municipal index and mesh streaming rather than discarding surveyed roads or silently degrading the entire map.
