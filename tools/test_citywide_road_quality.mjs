@@ -109,7 +109,7 @@ const runLoader = async (lowPowerProfile, search) => {
     officialRoadSurfacesAvailable: false };
   const document = { documentElement: { dataset: {} } };
   let requests = 0;
-  const load = runInNewContext(loaderSource + '\\nloadOfficialRoadSurfaces', {
+  const load = runInNewContext(loaderSource + '\nloadOfficialRoadSurfaces', {
     lowPowerProfile, state, document, location: { search }, URL, URLSearchParams,
     fetch: async () => { requests += 1; return { ok: true, json: async () => mockCollection }; },
   });
