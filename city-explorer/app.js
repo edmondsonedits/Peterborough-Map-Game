@@ -26,6 +26,7 @@ import {
   createPeterboroughLandmarks,
 } from './landmark-models.js?v=1.5.5-streets4';
 import { ROAD_SURFACE_CLEARANCE, RoadSurfaceIndex, laneCountFor, reconcileRoadNetworkElevations, roadProfile, roadRibbonCrossSections, resampleRoadLine } from './road-network.js?v=1.5.5-r10';
+import { solveFallbackJunctions, polygonArea } from './fallback-junction-geometry.js';
 import { OfficialDrivableSurfaceIndex, RenderedPavementIndex, officialSurfaceStatusActive, officialBridgeIsVehicular } from './official-road-surfaces.js?v=1.5.6-bridge-use1';
 import { FLY_TUNING, adjustFlySpeedScale, applyFlyLookDelta, dampingFactors, flyAxesFromKeys, flySpeedFor, flyYawToward, isFlyControlCode, wrapFlyYaw } from './fly-controls.js?v=1.5.5-fly4';
 import { clearLandCoverRaster, paintLandCoverPolygon } from './land-cover-raster.js?v=1.5.5-raster1';
@@ -2442,7 +2443,59 @@ function attachRoadInstance(lineId, object, instanceIndex) {
   return generatedRegistry.attachEditablePart(id, object, instanceIndex);
 }
 
+
+/** Polygon alternative to circular fallback junction caps. Opt-in only until
+ * real-city screenshots/performance are checked. Surveyed municipal pavement
+ * bypasses this whole fallback path. The indexed triangles are identical to the
+ * Float32 vertices sent to WebGL, including the presentation height offset.
+ */
+function buildFallbackPolygonJunctionMeshes(polygons) {
+  const batches = new Map();
+  const index = new RenderedPavementIndex();
+  const batchFor = (polygon, foundation) => {
+    const tile = roadRenderTileCoordinates(polygon.x, polygon.z);
+    const kind = foundation ? 'foundation' : 'surface';
+    const materialKey = foundation ? polygon.edgeKey : polygon.materialKey;
+    const key = `${tile.x}:${tile.z}:${kind}:${materialKey}`;
+    if (!batches.has(key)) batches.set(key, { tile, kind, materialKey, positions: [], count: 0 });
+    return batches.get(key);
+  };
+  for (const polygon of polygons) {
+    const surface = batchFor(polygon, false);
+    const foundation = batchFor(polygon, true);
+    const flip = polygonArea(polygon.points) > 0;
+    for (let i = 0; i < polygon.triangles.length; i += 3) {
+      const ids = polygon.triangles.slice(i, i + 3);
+      if (flip) [ids[1], ids[2]] = [ids[2], ids[1]]; // XZ area -> upward-facing Y normal
+      const [a, b, c] = ids.map(id => polygon.points[id]);
+      appendRoadTriangle(surface.positions, a.x, a.y + 0.018, a.z, b.x, b.y + 0.018, b.z, c.x, c.y + 0.018, c.z);
+      appendRoadTriangle(foundation.positions, a.x, a.y - 0.055, a.z, b.x, b.y - 0.055, b.z, c.x, c.y - 0.055, c.z);
+      index.addTriangle(a.x, a.y + 0.018, a.z, b.x, b.y + 0.018, b.z, c.x, c.y + 0.018, c.z,
+        { layer: 'road_surfaces', id: `fallback-junction:${polygon.key}`, name: 'Junction' });
+    }
+    surface.count += 1;
+    foundation.count += 1;
+  }
+  for (const batch of batches.values()) {
+    if (!batch.positions.length) continue;
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(batch.positions, 3));
+    geometry.computeVertexNormals();
+    geometry.computeBoundingSphere();
+    const mesh = new THREE.Mesh(geometry, materials[batch.materialKey] || materials.roadLocal);
+    mesh.renderOrder = batch.kind === 'foundation' ? 2 : 4;
+    mesh.receiveShadow = !lowPowerProfile;
+    mesh.userData = { type: `prototype-junction-${batch.kind}`, count: batch.count, tile: batch.tile, material: batch.materialKey };
+    roadGroup.add(mesh);
+  }
+  state.fallbackJunctionSurfaceIndex = index;
+  document.documentElement.dataset.fallbackJunctionPrototypeCount = String(polygons.length);
+  state.objectCount += polygons.length * 2;
+}
+
 function buildRoadJunctions(segments) {
+  const prototype = new URLSearchParams(location.search).get('junctionPrototype') === '1'
+    ? solveFallbackJunctions(segments) : null;
   const vertices = new Map();
   const addVertex = (segment, endpoint) => {
     const isA = endpoint === 'a';
@@ -2455,6 +2508,7 @@ function buildRoadJunctions(segments) {
     const key = `${Math.round(point.x * 20)}:${Math.round(point.y * 20)}:${Math.round(y * 4)}`;
     if (!vertices.has(key)) {
       vertices.set(key, {
+        key,
         edgeExtra: segment.profile.edgeExtra,
         edgeKey: segment.profile.edgeKey,
         lineEndpoint: false,
@@ -2485,7 +2539,8 @@ function buildRoadJunctions(segments) {
     addVertex(segment, 'b');
   });
 
-  const junctions = [...vertices.values()].filter((vertex) => vertex.lineEndpoint || vertex.lines.size > 1);
+  const junctions = [...vertices.values()].filter((vertex) => (vertex.lineEndpoint || vertex.lines.size > 1)
+    && !prototype?.solvedKeys.has(vertex.key));
   const surfaceGroups = new Map();
   const foundationGroups = new Map();
   const addGroup = (groups, vertex, materialKey) => {
@@ -2523,9 +2578,11 @@ function buildRoadJunctions(segments) {
   buildGroups(foundationGroups, true);
   buildGroups(surfaceGroups, false);
   state.objectCount += junctions.length * 2;
+  if (prototype?.polygons.length) buildFallbackPolygonJunctionMeshes(prototype.polygons);
+  return prototype?.trimBySegment || null;
 }
 
-function buildUrbanCurbs(segments) {
+function buildUrbanCurbs(segments, junctionTrims = null) {
   const nodeLines = new Map();
   const nodeKey = (point, y) => `${Math.round(point.x * 10)}:${Math.round(point.y * 10)}:${Math.round(y * 2)}`;
   const recordNode = (point, y, lineId, sourceVertex) => {
@@ -2562,8 +2619,11 @@ function buildUrbanCurbs(segments) {
     const sideZ = -dx / length;
     const aJunction = (nodeLines.get(nodeKey(segment.a, segment.aY))?.size || 0) > 1;
     const bJunction = (nodeLines.get(nodeKey(segment.b, segment.bY))?.size || 0) > 1;
-    const trimA = aJunction ? Math.min(1.4, length * 0.22) : 0;
-    const trimB = bJunction ? Math.min(1.4, length * 0.22) : 0;
+    // The polygon solver determines the actual junction mouth. Legacy fallback
+    // retains its existing trim distances; only the opt-in path uses new values.
+    const requested = junctionTrims?.get(segment);
+    const trimA = aJunction ? Math.min(Math.max(1.4, requested?.a || 0), length * (junctionTrims ? 0.45 : 0.22)) : 0;
+    const trimB = bJunction ? Math.min(Math.max(1.4, requested?.b || 0), length * (junctionTrims ? 0.45 : 0.22)) : 0;
     if (trimA + trimB >= length * 0.78) continue;
     const tA = trimA / length;
     const tB = 1 - trimB / length;
@@ -4124,8 +4184,8 @@ async function parseOsmWithGeoJson(data) {
   buildBufferedBuildingBatches(buildingBatches);
   buildMapRoadLines(roadSegments);
   if (!state.officialRoadSurfacesAvailable) {
-    buildRoadJunctions(roadSegments);
-    buildUrbanCurbs(roadSegments);
+    const fallbackTrims = buildRoadJunctions(roadSegments);
+    buildUrbanCurbs(roadSegments, fallbackTrims);
   }
   buildRoadMarkings(roadSegments);
   buildMappedTurnArrows(roadSegments);
@@ -4209,8 +4269,8 @@ function parseOsmWayFallback(data) {
   buildBufferedBuildingBatches(buildingBatches);
   buildMapRoadLines(roadSegments);
   if (!state.officialRoadSurfacesAvailable) {
-    buildRoadJunctions(roadSegments);
-    buildUrbanCurbs(roadSegments);
+    const fallbackTrims = buildRoadJunctions(roadSegments);
+    buildUrbanCurbs(roadSegments, fallbackTrims);
   }
   buildRoadMarkings(roadSegments);
   buildMappedTurnArrows(roadSegments);
@@ -4287,8 +4347,8 @@ function buildFallbackCity() {
   buildRoadSurfaceIndex(roadSegments);
   buildMapRoadLines(roadSegments);
   if (!state.officialRoadSurfacesAvailable) {
-    buildRoadJunctions(roadSegments);
-    buildUrbanCurbs(roadSegments);
+    const fallbackTrims = buildRoadJunctions(roadSegments);
+    buildUrbanCurbs(roadSegments, fallbackTrims);
   }
   buildRoadMarkings(roadSegments);
   buildMappedTurnArrows(roadSegments);
@@ -4675,9 +4735,12 @@ function keyboardInputIsBlocked(event) {
 function gameplaySurfaceAt(x, z, referenceHeight = null) {
   const terrainY = terrainHeightAtWorld(x, z);
   const official = state.renderedPavementIndex.sample(x, z, referenceHeight);
+  // Surveyed pavement wins. Only use prototype fallback polygons when the
+  // authoritative mesh does not cover this point.
+  const fallbackJunction = !official ? state.fallbackJunctionSurfaceIndex?.sample(x, z, referenceHeight) : null;
   const tolerance = official?.layer === 'bridges' ? 20 : official ? 15 : 2.2;
   const road = state.roadSurfaceIndex.sample(x, z, tolerance, referenceHeight);
-  const onRoad = Boolean(official || road?.onRoad);
+  const onRoad = Boolean(official || fallbackJunction || road?.onRoad);
   const roadHeight = onRoad && Number.isFinite(road?.height) ? road.height : -Infinity;
   // A surveyed bridge polygon may overlap an OSM underpass with no separate
   // municipal face. Keep that lower road only when the actor's height clearly
@@ -4686,8 +4749,8 @@ function gameplaySurfaceAt(x, z, referenceHeight = null) {
     && (official.layer === 'bridges' || road.bridge) && official.height - road.height > 1
     && Math.abs(road.height - referenceHeight) + 0.5 < Math.abs(official.height - referenceHeight);
   return {
-    height: official && !useLowerRoad ? official.height : Math.max(terrainY, roadHeight),
-    heightSource: official && !useLowerRoad ? official.heightSource : road?.onRoad ? 'road-ribbon' : 'terrain',
+    height: official && !useLowerRoad ? official.height : fallbackJunction ? fallbackJunction.height : Math.max(terrainY, roadHeight),
+    heightSource: official && !useLowerRoad ? official.heightSource : fallbackJunction ? 'junction-polygon' : road?.onRoad ? 'road-ribbon' : 'terrain',
     name: road?.name || (official?.parking ? 'Parking / apron' : onRoad ? 'Peterborough road' : 'Off road'),
     onRoad,
     official,
