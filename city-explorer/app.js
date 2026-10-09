@@ -3602,6 +3602,8 @@ function cachedOfficialRoadHeightAt(cache, point, layer) {
   return cache.get(key);
 }
 
+const CITY_ROAD_MESH_LEGACY = new URLSearchParams(location.search).get('roadMesh') === 'legacy';
+
 function appendDrapedOfficialRoadTriangle(target, a, b, c, layer, heightCache, depth = 0, localDetail = null) {
   const ab = a.distanceToSquared(b);
   const bc = b.distanceToSquared(c);
@@ -3619,8 +3621,7 @@ function appendDrapedOfficialRoadTriangle(target, a, b, c, layer, heightCache, d
   }
   // Higher resolution across the city; source polygon XY remains unchanged.
   const maximumEdge = officialRoadMeshEdgeLength(layer, {
-    lowPower: lowPowerProfile, nearStation: localDetail,
-    legacy: new URLSearchParams(location.search).get('roadMesh') === 'legacy',
+    lowPower: lowPowerProfile, nearStation: localDetail, legacy: CITY_ROAD_MESH_LEGACY,
   });
   if (longest > maximumEdge * maximumEdge && depth < (localDetail ? 20 : 14)) {
     if (longest === ab) {
