@@ -28,6 +28,7 @@ import {
 import { ROAD_SURFACE_CLEARANCE, RoadSurfaceIndex, laneCountFor, reconcileRoadNetworkElevations, roadProfile, roadRibbonCrossSections, resampleRoadLine } from './road-network.js?v=1.5.5-r10';
 import { solveFallbackJunctions, polygonArea } from './fallback-junction-geometry.js';
 import { officialRoadMeshEdgeLength, officialCurbDisplayMode, nearbyMunicipalRoadHeight, municipalCurbTop } from './citywide-road-quality.js';
+import { sampleTruckWheelContacts, truckIsOnRoad } from './road-wheel-contact.js';
 import { OfficialDrivableSurfaceIndex, RenderedPavementIndex, officialSurfaceStatusActive, officialBridgeIsVehicular } from './official-road-surfaces.js?v=1.5.6-bridge-use1';
 import { FLY_TUNING, adjustFlySpeedScale, applyFlyLookDelta, dampingFactors, flyAxesFromKeys, flySpeedFor, flyYawToward, isFlyControlCode, wrapFlyYaw } from './fly-controls.js?v=1.5.5-fly4';
 import { clearLandCoverRaster, paintLandCoverPolygon } from './land-cover-raster.js?v=1.5.5-raster1';
@@ -5223,7 +5224,7 @@ function updateFireTruck(delta) {
     const next = stepFireTruckKinematics(truckState, {
       throttle: axes.forward,
       steering: axes.steering,
-    }, delta, currentSurface.onRoad);
+    }, delta, truckIsOnRoad(currentSurface.onRoad, truckState.lastRoadWheelCount));
     next.x = THREE.MathUtils.clamp(next.x, CITY.worldBounds.minX, CITY.worldBounds.maxX);
     next.z = THREE.MathUtils.clamp(next.z, CITY.worldBounds.minZ, CITY.worldBounds.maxZ);
     Object.assign(truckState, next);
@@ -5233,24 +5234,14 @@ function updateFireTruck(delta) {
     }
   }
 
-  const direction = directionFromHeading(truckState.heading);
-  gameplayForward.set(direction.x, 0, direction.z);
-  gameplayRight.set(Math.cos(truckState.heading), 0, -Math.sin(truckState.heading));
-  const frontX = truckState.x + gameplayForward.x * TRUCK_TUNING.wheelbase * 0.5;
-  const frontZ = truckState.z + gameplayForward.z * TRUCK_TUNING.wheelbase * 0.5;
-  const rearX = truckState.x - gameplayForward.x * TRUCK_TUNING.wheelbase * 0.5;
-  const rearZ = truckState.z - gameplayForward.z * TRUCK_TUNING.wheelbase * 0.5;
-  const leftX = truckState.x - gameplayRight.x * TRUCK_TUNING.trackWidth * 0.5;
-  const leftZ = truckState.z - gameplayRight.z * TRUCK_TUNING.trackWidth * 0.5;
-  const rightX = truckState.x + gameplayRight.x * TRUCK_TUNING.trackWidth * 0.5;
-  const rightZ = truckState.z + gameplayRight.z * TRUCK_TUNING.trackWidth * 0.5;
   const center = gameplaySurfaceAt(truckState.x, truckState.z, truckState.y);
-  const front = gameplaySurfaceAt(frontX, frontZ, truckState.y);
-  const rear = gameplaySurfaceAt(rearX, rearZ, truckState.y);
-  const left = gameplaySurfaceAt(leftX, leftZ, truckState.y);
-  const right = gameplaySurfaceAt(rightX, rightZ, truckState.y);
-  const targetPitch = THREE.MathUtils.clamp(Math.atan2(front.height - rear.height, TRUCK_TUNING.wheelbase), -0.22, 0.22);
-  const targetRoll = THREE.MathUtils.clamp(Math.atan2(right.height - left.height, TRUCK_TUNING.trackWidth), -0.18, 0.18);
+  // Use four actual tire positions rather than independent centreline-only
+  // front/rear/side queries. Total number of surface queries is unchanged:
+  // one chassis centre + four suspension footprint contacts per frame.
+  const wheelContacts = sampleTruckWheelContacts(truckState, TRUCK_TUNING, gameplaySurfaceAt);
+  truckState.lastRoadWheelCount = wheelContacts.roadWheelCount;
+  const targetPitch = THREE.MathUtils.clamp(wheelContacts.pitch, -0.22, 0.22);
+  const targetRoll = THREE.MathUtils.clamp(wheelContacts.roll, -0.18, 0.18);
   truckState.pitch = exponentialStep(truckState.pitch, targetPitch, 9, delta);
   truckState.roll = exponentialStep(truckState.roll, targetRoll, 9, delta);
   truckState.y = exponentialStep(truckState.y, center.height + 0.035, 18, delta);
