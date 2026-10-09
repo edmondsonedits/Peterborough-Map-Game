@@ -3720,6 +3720,8 @@ function appendOfficialRoadPolygon(polygonCoordinates, layer, batches, heightCac
 
 async function buildOfficialRoadSurfaces(collection, osmBuildingIndex = null) {
   if (!collection?.features?.length || !state.officialRoadSurfacesAvailable) return null;
+  const municipalBuildStartedAt = performance.now();
+  const curbModeCounts = { raised: 0, 'edge-of-pavement': 0, unclassified: 0 };
   const batches = new Map();
   const heightCache = new Map();
   const curbs = [];
@@ -3779,6 +3781,7 @@ async function buildOfficialRoadSurfaces(collection, osmBuildingIndex = null) {
           if (a.distanceTo(b) < 0.25) continue;
           const stationDetail = Boolean(stationRoadDetailWeight(a.x, a.y) || stationRoadDetailWeight(b.x, b.y));
           const curbMode = officialCurbDisplayMode(curbIsRaised(propertyValue(properties, 'CURBTYPE')));
+          curbModeCounts[curbMode] += 1;
           // A classified flush pavement edge must not become a raised wall.
           // Unclassified legacy cache segments retain the former inferred
           // geometry until new City attributes can be fetched and validated.
@@ -3841,6 +3844,8 @@ async function buildOfficialRoadSurfaces(collection, osmBuildingIndex = null) {
   document.documentElement.dataset.officialBridgeSurfaces = String(counts.bridges);
   document.documentElement.dataset.excludedBridgeUses = JSON.stringify(excludedBridgeUses);
   document.documentElement.dataset.officialCurbSegments = String(curbs.length);
+  document.documentElement.dataset.officialCurbTypes = JSON.stringify(curbModeCounts);
+  document.documentElement.dataset.officialRoadBuildMs = String(Math.round(performance.now() - municipalBuildStartedAt));
   document.documentElement.dataset.officialRoadTriangles = String(triangles);
   document.documentElement.dataset.pavementHeightTriangles = String(state.renderedPavementIndex.triangleCount);
   if (pavementQA) {
