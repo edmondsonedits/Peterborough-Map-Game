@@ -98,5 +98,36 @@ assert.ok(station.triangles > desktop.triangles);
 assert.ok(desktop.maxEdge <= 24 + 1e-8);
 assert.ok(mobile.maxEdge <= 34 + 1e-8);
 assert.ok(station.maxEdge <= 8 + 1e-8);
+// Exercise the real mobile municipal-data loader, not a mocked replacement
+// implementation. These fixtures are in-memory and do not make network calls.
+const loaderSource = app.match(/^async function loadOfficialRoadSurfaces\([^]*?^\}/m)?.[0]
+  ?.replaceAll('import.meta.url', "'https://test.invalid/city-explorer/app.js'");
+assert.ok(loaderSource, 'Actual municipal road loader exists');
+const mockCollection = { type: 'FeatureCollection', features: [{ properties: { ptbo_layer: 'road_surfaces' } }] };
+const runLoader = async (lowPowerProfile, search) => {
+  const state = { manifest: { generated_at: 'fixture', city_road_surfaces: { file: 'peterborough-road-surfaces.geojson' } },
+    officialRoadSurfacesAvailable: false };
+  const document = { documentElement: { dataset: {} } };
+  let requests = 0;
+  const load = runInNewContext(loaderSource + '\\nloadOfficialRoadSurfaces', {
+    lowPowerProfile, state, document, location: { search }, URL, URLSearchParams,
+    fetch: async () => { requests += 1; return { ok: true, json: async () => mockCollection }; },
+  });
+  const result = await load();
+  return { requests, available: state.officialRoadSurfacesAvailable,
+    mode: document.documentElement.dataset.officialRoadDetail, result };
+};
+const mobileRoads = await runLoader(true, '');
+assert.equal(mobileRoads.requests, 1);
+assert.equal(mobileRoads.available, true);
+assert.equal(mobileRoads.mode, 'citywide-municipal-mobile');
+const mobileFallback = await runLoader(true, '?municipalRoads=0');
+assert.equal(mobileFallback.requests, 0);
+assert.equal(mobileFallback.available, false);
+assert.equal(mobileFallback.mode, 'osm-compatibility-fallback');
+const desktopRoads = await runLoader(false, '');
+assert.equal(desktopRoads.available, true);
+assert.equal(desktopRoads.mode, 'citywide-municipal-desktop');
+
 console.log(JSON.stringify({ status: 'pass', syntheticMesh: { original, desktop, mobile, station },
   note: 'Actual production triangulation executed in a synthetic test; not an FPS or surveyed-accuracy claim.' }, null, 2));
