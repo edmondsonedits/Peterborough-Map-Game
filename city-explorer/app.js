@@ -2288,11 +2288,18 @@ function buildInstancedLines(segments, bucket) {
       if (bucket === 'sidewalk') {
         for (const [point, key] of [[segment.a, 'a'], [segment.b, 'b']]) {
           const weight = stationRoadDetailWeight(point.x, point.y);
-          const pavement = weight && stationAdjacentPavementHeight(point.x, point.y);
-          if (Number.isFinite(pavement) && weight) {
+          // City-published sidewalks are loaded after municipal pavement:
+          // join their tops to that surface where it is genuinely nearby.
+          // OSM-only sidewalks built earlier retain their terrain fallback.
+          const pavement = weight
+            ? stationAdjacentPavementHeight(point.x, point.y)
+            : nearbyMunicipalRoadHeight(state.renderedPavementIndex,
+              point.x, point.y, key === 'a' ? aY : bY);
+          if (Number.isFinite(pavement)) {
             const old = key === 'a' ? aY : bY;
-            const aligned = old + weight * (pavement + CURB_REVEAL - thickness / 2 - old);
-            if (key === 'a') aY = aligned; else bY = aligned;
+            const aligned = pavement + CURB_REVEAL - thickness / 2;
+            const next = weight ? old + weight * (aligned - old) : aligned;
+            if (key === 'a') aY = next; else bY = next;
           }
         }
       }
