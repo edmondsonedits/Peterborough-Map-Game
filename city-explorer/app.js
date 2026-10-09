@@ -27,6 +27,7 @@ import {
 } from './landmark-models.js?v=1.5.5-streets4';
 import { ROAD_SURFACE_CLEARANCE, RoadSurfaceIndex, laneCountFor, reconcileRoadNetworkElevations, roadProfile, roadRibbonCrossSections, resampleRoadLine } from './road-network.js?v=1.5.5-r10';
 import { solveFallbackJunctions, polygonArea } from './fallback-junction-geometry.js';
+import { officialRoadMeshEdgeLength, officialCurbDisplayMode, nearbyMunicipalRoadHeight, municipalCurbTop } from './citywide-road-quality.js';
 import { OfficialDrivableSurfaceIndex, RenderedPavementIndex, officialSurfaceStatusActive, officialBridgeIsVehicular } from './official-road-surfaces.js?v=1.5.6-bridge-use1';
 import { FLY_TUNING, adjustFlySpeedScale, applyFlyLookDelta, dampingFactors, flyAxesFromKeys, flySpeedFor, flyYawToward, isFlyControlCode, wrapFlyYaw } from './fly-controls.js?v=1.5.5-fly4';
 import { clearLandCoverRaster, paintLandCoverPolygon } from './land-cover-raster.js?v=1.5.5-raster1';
@@ -2110,12 +2111,12 @@ function buildBufferedRoadBatches(batches) {
     if (!positions.length) return;
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-    geometry.setAttribute('color', new THREE.Float32BufferAttribute(new Float32Array(positions.length).fill(1), 3));
+    // A full white vertex-colour array duplicates the position buffer.
     geometry.computeVertexNormals();
     geometry.computeBoundingSphere();
     const sourceMaterial = materials[materialKey] || materials.roadLocal;
     const batchMaterial = sourceMaterial.clone();
-    batchMaterial.vertexColors = true;
+    batchMaterial.vertexColors = false;
     const mesh = new THREE.Mesh(geometry, batchMaterial);
     mesh.userData = { type: `road-${kind}-batch`, material: materialKey, tile, tileSize: ROAD_RENDER_TILE_SIZE, segments, vertices: positions.length / 3 };
     mesh.renderOrder = kind.startsWith('official-') ? 4 : kind === 'surface' ? 3 : 2;
@@ -2373,7 +2374,9 @@ function buildStationSidewalkRibbons(segments) {
 }
 
 function buildOfficialCurbRibbons(segments) {
-  segments = segments.flatMap(segment => segment.stationDetail ? splitRoadDetailSegment(segment) : [segment]);
+  segments = segments.flatMap(segment => splitRoadDetailSegment(
+    segment, segment.stationDetail ? 2 : lowPowerProfile ? 12 : 8,
+  ));
   const batches = new Map();
   for (const segment of segments) {
     const dx = segment.b.x - segment.a.x;
@@ -2386,9 +2389,17 @@ function buildOfficialCurbRibbons(segments) {
     const key = `${tile.x}:${tile.z}`;
     if (!batches.has(key)) batches.set(key, { tile, positions: [], segments: 0 });
     const batch = batches.get(key);
-    const aTop = segment.stationDetail ? stationCurbTop(segment.a, segment.aY) : segment.aY;
-    const bTop = segment.stationDetail ? stationCurbTop(segment.b, segment.bY) : segment.bY;
-    const depth = segment.stationDetail ? CURB_REVEAL + 0.03 : 0.11;
+    const aPavement = segment.stationDetail
+      ? stationAdjacentPavementHeight(segment.a.x, segment.a.y)
+      : nearbyMunicipalRoadHeight(state.renderedPavementIndex, segment.a.x, segment.a.y, segment.aY);
+    const bPavement = segment.stationDetail
+      ? stationAdjacentPavementHeight(segment.b.x, segment.b.y)
+      : nearbyMunicipalRoadHeight(state.renderedPavementIndex, segment.b.x, segment.b.y, segment.bY);
+    const aTop = segment.stationDetail ? stationCurbTop(segment.a, segment.aY)
+      : municipalCurbTop(aPavement, segment.aY);
+    const bTop = segment.stationDetail ? stationCurbTop(segment.b, segment.bY)
+      : municipalCurbTop(bPavement, segment.bY);
+    const depth = CURB_REVEAL + 0.03;
     const aBottom = segment.stationDetail ? pavementSupportBottom(aTop, Math.min(
       terrainHeightAtWorld(segment.a.x + sideX, segment.a.y + sideZ),
       terrainHeightAtWorld(segment.a.x - sideX, segment.a.y - sideZ)), depth) : aTop - depth;
@@ -3506,7 +3517,8 @@ async function loadCityOpenData() {
 }
 
 async function loadOfficialRoadSurfaces() {
-  if (lowPowerProfile) {
+  // Retain an explicit escape hatch for low-memory devices.
+  if (lowPowerProfile && new URLSearchParams(location.search).get('municipalRoads') === '0') {
     state.officialRoadSurfacesAvailable = false;
     document.documentElement.dataset.officialRoadDetail = 'osm-compatibility-fallback';
     return null;
@@ -3521,6 +3533,9 @@ async function loadOfficialRoadSurfaces() {
   state.officialRoadSurfacesAvailable = collection.features.some((feature) => (
     String(feature?.properties?.ptbo_layer || '') === 'road_surfaces'
   ));
+  document.documentElement.dataset.officialRoadDetail = state.officialRoadSurfacesAvailable
+    ? (lowPowerProfile ? 'citywide-municipal-mobile' : 'citywide-municipal-desktop')
+    : 'osm-compatibility-fallback';
   return collection;
 }
 
@@ -3602,10 +3617,12 @@ function appendDrapedOfficialRoadTriangle(target, a, b, c, layer, heightCache, d
     const closestZ = Math.max(Math.min(a.y, b.y, c.y), Math.min(center.y, Math.max(a.y, b.y, c.y)));
     localDetail = layer !== 'bridges' && Math.hypot(closestX - center.x, closestZ - center.y) < 240;
   }
-  // Keep the decision for all children: no change of resolution partway down
-  // a shared source edge. Local road-level traversal needs more than 36–48 m faces.
-  const maximumEdge = localDetail ? 8 : lowPowerProfile ? 48 : layer === 'parking_surfaces' ? 42 : 36;
-  if (longest > maximumEdge * maximumEdge && depth < (localDetail ? 20 : 9)) {
+  // Higher resolution across the city; source polygon XY remains unchanged.
+  const maximumEdge = officialRoadMeshEdgeLength(layer, {
+    lowPower: lowPowerProfile, nearStation: localDetail,
+    legacy: new URLSearchParams(location.search).get('roadMesh') === 'legacy',
+  });
+  if (longest > maximumEdge * maximumEdge && depth < (localDetail ? 20 : 14)) {
     if (longest === ab) {
       const midpoint = a.clone().lerp(b, 0.5);
       appendDrapedOfficialRoadTriangle(target, a, midpoint, c, layer, heightCache, depth + 1, localDetail);
@@ -3749,10 +3766,13 @@ async function buildOfficialRoadSurfaces(collection, osmBuildingIndex = null) {
           const b = points[index];
           if (a.distanceTo(b) < 0.25) continue;
           const stationDetail = Boolean(stationRoadDetailWeight(a.x, a.y) || stationRoadDetailWeight(b.x, b.y));
-          if (stationDetail && curbIsRaised(propertyValue(properties, 'CURBTYPE')) === false) continue;
+          const curbMode = officialCurbDisplayMode(curbIsRaised(propertyValue(properties, 'CURBTYPE')));
+          // The City also maps flush pavement edges and unknown line types.
+          // Do not fabricate a raised concrete curb for either category.
+          if (curbMode !== 'raised') continue;
           const aBase = cachedOfficialRoadHeightAt(heightCache, a, 'road_surfaces');
           const bBase = cachedOfficialRoadHeightAt(heightCache, b, 'road_surfaces');
-          curbs.push({ a, b, stationDetail, width: 0.24, tags: { source: 'City of Peterborough Basedata' }, name: '', bridge: false, aY: aBase + 0.07, bY: bBase + 0.07 });
+          curbs.push({ a, b, stationDetail, curbMode, width: 0.24, tags: { source: 'City of Peterborough Basedata' }, name: '', bridge: false, aY: aBase + 0.07, bY: bBase + 0.07 });
         }
       });
       counts.curb_edges += 1;
