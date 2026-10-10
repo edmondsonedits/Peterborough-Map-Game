@@ -1,0 +1,28 @@
+name: Street evidence audit
+on:
+  workflow_dispatch:
+  push:
+    branches: ['fix/citywide-street-markings-20261010']
+    paths: ['.github/workflows/street-evidence-audit.yml']
+permissions:
+  contents: read
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Collect bounded public road evidence
+        run: python tools/geospatial/collect_street_evidence.py
+      - name: Package exact source and tests without repository credentials
+        run: git archive --format=tar.gz --output=artifacts/street-evidence/source.tar.gz HEAD
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: street-evidence-and-source
+          path: artifacts/street-evidence/
+          retention-days: 7
+          if-no-files-found: error
