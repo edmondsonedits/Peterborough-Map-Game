@@ -69,13 +69,14 @@ export class RenderedPavementIndex {
     return true;
   }
 
-  sample(x, z, referenceHeight = null, { includeParking = true } = {}) {
+  sample(x, z, referenceHeight = null, { includeParking = true, includeBridges = true } = {}) {
     if (!Number.isFinite(x) || !Number.isFinite(z)) return null;
     const faces = this.cells.get(`${Math.floor(x / this.cellSize)}:${Math.floor(z / this.cellSize)}`) || [];
     let best = null;
     let distance = Infinity;
     for (const face of faces) {
       if (!includeParking && face.metadata.layer === 'parking_surfaces') continue;
+      if (!includeBridges && face.metadata.layer === 'bridges') continue;
       const dx = x - face.ax, dz = z - face.az;
       const b = (dx * face.vz - dz * face.vx) * face.inverse;
       const c = (face.ux * dz - face.uz * dx) * face.inverse;
