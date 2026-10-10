@@ -24,9 +24,9 @@ The City road datasets have 2D polygons and curb lines plus separately sampled t
 | Desktop official road maximum triangle edge | 36 m | **24 m** |
 | Desktop official bridge maximum edge | 36 m | **20 m** |
 | Desktop official parking maximum edge | 42 m | **30 m** |
-| Mobile official road maximum edge | Official asset disabled | **34 m** with municipal XY polygons |
-| Mobile official bridge maximum edge | Official asset disabled | **30 m** |
-| Mobile official parking maximum edge | Official asset disabled | **40 m** |
+| Mobile official road maximum edge | Official asset disabled | **34 m**, opt-in `?municipalRoads=1` |
+| Mobile official bridge maximum edge | Official asset disabled | **30 m**, opt-in only |
+| Mobile official parking maximum edge | Official asset disabled | **40 m**, opt-in only |
 | Station 1 near-field maximum | 8 m | **8 m**, preserved |
 | Curbs outside Station 1 | Fixed inferred height | Nearby rendered municipality road-face height where explicitly classified raised; unclassified cached curbs retain original inferred treatment |
 | Official sidewalks outside Station 1 | Terrain offset | Align to nearby actual paved road faces where available; otherwise preserve terrain fallback |
@@ -36,15 +36,15 @@ The City road datasets have 2D polygons and curb lines plus separately sampled t
 
 **Critical backward compatibility:** The currently packaged official curb layer in the repo only includes `STATUS`. The [City's published layer 8 metadata](https://citymaps.peterborough.ca/arcgis/rest/services/Basedata/MapServer/8?f=pjson) describes `CURBTYPE` in its display text, but the actual exposed `fields` array (checked October 9, 2026) does **not** include that attribute. Therefore automatically regenerating the asset cannot currently classify raised versus flush curbs from this service alone. No claim is made that it already contains `CURBTYPE`. Therefore unknown classifications must not be taken as proof of flat edges or as proof of raised kerbs. Existing unclassified segments retain their approximate display; known flat edges are not rendered as concrete curbs. Do not force a City asset rebuild without first verifying the upstream field exists and the layer returns a complete result.
 
-**Mobile performance risk:** Enabling the full municipal dataset on mobile may consume significantly more startup time and memory than the previous OSM fallback. The reduced tessellation budget, redundant GPU buffer removal, and yield-every-900-features loop help, but no Android/desktop runtime benchmark has been run. The automatic mobile upgrade must remain development-only until real-device results meet budget.
+**Mobile performance risk:** Enabling the full municipal dataset on mobile may consume significantly more startup time and memory than the previous OSM fallback. The reduced tessellation budget, redundant GPU buffer removal, and yield-every-900-features loop help, but no Android/desktop runtime benchmark has been run. The mobile upgrade is opt-in only until real-device results meet budget.
 
 ## How to compare / roll back
 
 All flags apply to the development code **after** it is deployed to an isolated preview. They do not activate changes on the current published `main` Pages site.
 
-- Default branch build: citywide official road/curb treatment.
+- Default desktop branch build: citywide official road/curb treatment; default low-power/mobile branch build retains original OSM fallback pending device verification.
 - `?roadMesh=legacy` restores the previous triangle edge budget for same-hardware mesh comparisons; Station 1's existing 8 m rule is unchanged.
-- `?municipalRoads=0` disables mobile official road data and restores the original OSM-only fallback.
+- `?municipalRoads=1` enables experimental full municipal road geometry on mobile; omitting this parameter retains the original OSM fallback.
 - `?pavementContinuity=0` disables the existing special Station 1 pavement reconciliation if it regresses.
 - `?junctionPrototype=1` is the older isolated fallback-junction experiment. It has **no effect** with official road surfaces successfully loaded.
 
