@@ -49,8 +49,7 @@ test('all cities launch through the same Peterborough desktop and mobile simulat
   for(const id of cities){
     const city=c.PTBO_CITIES.find(item=>item.id===id);
     assert.equal(city.status,'base-training',id);
-    assert.match(city.note,/Peterborough controls/i,id);
-    assert.match(city.note,/Calls unavailable/i,id);
+    assert.equal(city.note,'calls unavailable',id);
   }
 });
 
@@ -218,7 +217,7 @@ test('compact settings accepts the base-training Incident Types label instead of
 test('city selector keeps the shared mobile and desktop wrapper URLs', () => {
   const source=read('shared/city-selector.js');
   assert.match(source,/const VERSION = '\d+\.\d+\.\d+'/);
-  assert.match(source,/same Peterborough driving controls/);
+  assert.match(source,/Peterborough for the full game/);
   assert.match(source,/url\.searchParams\.set\('surface', mobile \? 'mobile' : 'desktop'\)/);
   assert.match(source,/url\.searchParams\.set\('fresh', String\(Date\.now\(\)\)\)/);
 });
