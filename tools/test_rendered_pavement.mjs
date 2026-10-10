@@ -64,6 +64,8 @@ assert.equal(decks.sample(2, 2, 0).id, 'street', 'Zero is a valid height hint');
 assert.equal(decks.sample(2, 2, 14).id, 'bridge');
 assert.equal(decks.sample(2, 2, 19).id, 'parking');
 assert.equal(decks.sample(2, 2, null, { includeParking: false }).id, 'bridge');
+assert.equal(decks.sample(2, 2, 14, { includeBridges: false, includeParking: false }).id, 'street',
+  'Municipal curb requests exclude elevated bridge faces');
 assert.equal(decks.sample(2, 2, 19, { includeParking: false }).id, 'bridge');
 const parkingOnly = new RenderedPavementIndex();
 parkingOnly.addTriangle(0, 1, 0, 10, 1, 0, 0, 1, 10,
