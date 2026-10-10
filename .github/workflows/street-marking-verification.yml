@@ -1,0 +1,102 @@
+name: Street marking verification
+on:
+  workflow_dispatch:
+  push:
+    branches: ['fix/citywide-street-markings-20261010']
+    paths: ['.github/workflows/street-marking-verification.yml']
+permissions:
+  contents: write
+concurrency:
+  group: street-marking-verification
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/citywide-street-markings-20261010
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Apply hash-checked candidate
+        run: python3 tools/transfer/apply_street_transform.py
+      - name: Syntax and street regressions
+        run: |
+          git diff --check
+          node --input-type=module --check < city-explorer/app.js
+          node --input-type=module --check < city-explorer/street-paint-renderer.js
+          node tools/test_street_marking_fidelity.mjs
+          node tools/test_city_detail_rules.mjs
+          node tools/test_city_editor_release.mjs
+          node tools/test_rendered_pavement.mjs
+          node tools/test_station_road_detail.mjs
+          node tools/test_citywide_road_quality.mjs
+          node tools/test_gameplay_systems.mjs
+          node tools/test_official_road_surface_index.mjs
+          node tools/geospatial/test_road_network.mjs
+          node tools/geospatial/test_road_terrain_clearance.mjs
+          node tools/geospatial/test_official_road_surfaces.mjs
+      - name: Test normalized release without modifying source pages
+        run: |
+          mkdir /tmp/ptbo-normalized
+          rsync -a --exclude=.git --exclude=node_modules --exclude=artifacts ./ /tmp/ptbo-normalized/
+          cd /tmp/ptbo-normalized
+          node scripts/normalize-release.cjs
+          node --test tests/*.cjs tests/*.mjs
+      - name: Prepare matched baseline and browser
+        run: |
+          git fetch --depth=1 origin 3a9f333270bd8d832e5651d6b4cda4125e90d32c
+          mkdir /tmp/ptbo-baseline
+          git archive 3a9f333270bd8d832e5651d6b4cda4125e90d32c | tar -x -C /tmp/ptbo-baseline
+          npm install --no-save --no-package-lock playwright@1.55.0
+          npx playwright install chromium
+          python3 -m http.server 4174 --bind 127.0.0.1 >/tmp/street-candidate-http.log 2>&1 &
+          python3 -m http.server 4175 --bind 127.0.0.1 --directory /tmp/ptbo-baseline >/tmp/street-baseline-http.log 2>&1 &
+          sleep 2
+      - name: Baseline full-profile street views
+        env:
+          STREET_CAPTURE_LABEL: baseline-full
+        run: node tools/check-street-visuals.cjs http://127.0.0.1:4175
+      - name: Candidate full-profile street views
+        env:
+          STREET_CAPTURE_LABEL: candidate-full
+        run: node tools/check-street-visuals.cjs http://127.0.0.1:4174
+      - name: Driving and mobile regressions
+        run: |
+          node tools/check-road-preview-smoke.cjs http://127.0.0.1:4174
+          node tools/check-station-driving.cjs http://127.0.0.1:4174 street-marking-ci
+          node tools/check-mobile-controls.cjs http://127.0.0.1:4174 street-marking-mobile
+      - name: Capture corrected official imagery anchors
+        run: |
+          python3 -c "import sys; sys.path.insert(0, 'tools/geospatial'); from collect_lane_records import imagery; print(imagery())"
+      - name: Commit verified branch changes only
+        run: |
+          test "$GITHUB_REF_NAME" = 'fix/citywide-street-markings-20261010'
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          while IFS= read -r file; do git add -- "$file"; done </tmp/street-changed-files.txt
+          git add -u tools/transfer/
+          git diff --cached --check
+          git commit -m 'Correct evidence-reviewed street paint and conform markings to actual pavement'
+          git push origin HEAD:fix/citywide-street-markings-20261010
+          git rev-parse HEAD >artifacts/street-evidence/verified-source-sha.txt
+          git archive --format=tar.gz --output=artifacts/street-evidence/source.tar.gz HEAD
+      - name: Preserve evidence even on failure
+        if: always()
+        run: |
+          mkdir -p artifacts/street-evidence
+          git diff --stat >artifacts/street-evidence/remaining-diff.txt
+          cp /tmp/street-candidate-http.log artifacts/street-evidence/ 2>/dev/null || true
+          cp /tmp/street-baseline-http.log artifacts/street-evidence/ 2>/dev/null || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: street-marking-browser-comparison
+          path: |
+            artifacts/street-evidence/
+            artifacts/driving-qa/
+            artifacts/mobile-qa/
+          retention-days: 14
+          if-no-files-found: error
