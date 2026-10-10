@@ -12,7 +12,7 @@
 <body>
   <main id="route-app" aria-busy="true">
     <div id="map" aria-label="Peterborough route training map"></div>
-    <div id="draw-surface" aria-label="Draw your response route"></div>
+    <div id="draw-surface" role="region" hidden aria-label="Drag from START to draw the response route"></div>
 
     <a class="back-button glass" href="../" aria-label="Return to all games">←</a>
     <button id="settings-button" class="settings-button glass" type="button" aria-label="Route Mapping settings">⚙</button>
@@ -28,7 +28,6 @@
     <section id="controls" class="controls glass" aria-label="Route controls">
       <button id="clear-button" class="secondary" type="button">Clear</button>
       <button id="undo-button" class="secondary" type="button" disabled>Undo</button>
-      <button id="interaction-button" class="secondary" type="button" aria-pressed="false">Pan map</button>
       <button id="submit-button" class="primary" type="button" disabled>Submit Route</button>
     </section>
 

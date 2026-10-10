@@ -58,14 +58,14 @@
     straightPreference:document.getElementById('straight-preference'), straightPreferenceValue:document.getElementById('straight-preference-value'),
     arrivalDistance:document.getElementById('arrival-distance'), arrivalDistanceValue:document.getElementById('arrival-distance-value'),
     challengeFrequency:document.getElementById('challenge-frequency'), challengeFrequencyValue:document.getElementById('challenge-frequency-value'), settingsReset:document.getElementById('settings-reset'),
-    error:document.getElementById('loading-error'), errorMessage:document.getElementById('loading-error-message'), retry:document.getElementById('retry-button'), interaction:document.getElementById('interaction-button'), zoomIn:document.getElementById('zoom-in'), zoomOut:document.getElementById('zoom-out'), phaseNote:document.getElementById('phase-note')
+    error:document.getElementById('loading-error'), errorMessage:document.getElementById('loading-error-message'), retry:document.getElementById('retry-button'), zoomIn:document.getElementById('zoom-in'), zoomOut:document.getElementById('zoom-out'), phaseNote:document.getElementById('phase-note')
   };
 
   const state = {
-    map:null, graph:null, traceCore:null, interaction:'draw', endpointMarker:null, calls:[], originalCalls:[], advancedCalls:[], difficultyIndex:null, service:'fire', base:null, call:null, callCount:0, recentCallIds:[], mode:'loading',
+    map:null, graph:null, traceCore:null, endpointMarker:null, calls:[], originalCalls:[], advancedCalls:[], difficultyIndex:null, service:'fire', base:null, call:null, callCount:0, recentCallIds:[], mode:'loading', mapZooming:false,
     skillProfiles:null, skillProfile:null, adaptiveTarget:null, progression:null, phase:null, lastDecisionAnalysis:null, tuning:null,
     rawPoints:[], rawLine:null, drawingPointer:null, originAnchor:null, destinationAnchor:null, history:[], playerRoute:null,
-    shortestRoute:null, playerLayers:[], referenceLayers:[], startMarker:null, callMarker:null
+    shortestRoute:null, playerLayers:[], referenceLayers:[], startMarker:null, callMarker:null, mapGestureSnapshot:null
   };
 
   function toXY(lat,lng){ return {x:(lng-CONFIG.centerLng)*METERS_PER_LNG,y:(lat-CONFIG.centerLat)*METERS_PER_LAT}; }
@@ -526,10 +526,33 @@
   }
   function traceOptions(value=state.tuning){const tuning=normalizeTuning(value);return {tolerance:traceTolerance(tuning),directionBias:tuning.straightPreference/100};}
   function arrivalDistance(){return normalizeTuning(state.tuning).arrivalDistance;}
-  function setInteraction(value){
-    state.interaction=value;
-    document.body.classList.toggle('is-drawing-ready',state.mode==='drawing'&&value==='draw');
-    if(ui.interaction){ui.interaction.textContent=value==='draw'?'Pan map':'Draw route';ui.interaction.setAttribute('aria-pressed',String(value==='pan'));ui.interaction.disabled=state.mode==='loading'||state.mode==='snapping'||state.mode==='results'||Boolean(state.playerRoute?.complete);}
+  function updateDrawTarget(anchorOverride){
+    const surface=ui.drawSurface,map=state.map;
+    if(!surface||!map||!map.latLngToContainerPoint||!map.getSize||!map.getContainer){if(surface)surface.hidden=true;return;}
+    const anchor=anchorOverride||state.playerRoute?.endpoint||(state.base&&state.traceCore?.snap(basePoint(state.base),260));
+    const available=state.mode==='drawing'&&!state.mapZooming&&!ui.settingsSheet?.open&&!state.playerRoute?.complete&&Boolean(anchor);
+    if(!available){surface.hidden=true;return;}
+    const point=map.latLngToContainerPoint(anchor),size=map.getSize();
+    if(!point||!Number.isFinite(point.x)||!Number.isFinite(point.y)||point.x<0||point.y<0||point.x>size.x||point.y>size.y){surface.hidden=true;return;}
+    const rect=map.getContainer().getBoundingClientRect();
+    surface.style.left=(rect.left+point.x)+'px';surface.style.top=(rect.top+point.y)+'px';
+    surface.setAttribute('aria-label','Drag from '+(state.playerRoute?'END':'START')+' to draw the response route');
+    surface.hidden=false;
+  }
+
+  function setMapGestureLock(locked){
+    if(locked){
+      if(state.mapGestureSnapshot||!state.map)return;
+      const names=['dragging','touchZoom','scrollWheelZoom','keyboard','doubleClickZoom','boxZoom'];
+      const handlers=Object.fromEntries(names.map(name=>{const handler=state.map[name];return[name,Boolean(handler?.enabled?.())];}));
+      state.mapGestureSnapshot={handlers,zoomInDisabled:Boolean(ui.zoomIn?.disabled),zoomOutDisabled:Boolean(ui.zoomOut?.disabled)};
+      for(const name of names)state.map[name]?.disable?.();
+      if(ui.zoomIn)ui.zoomIn.disabled=true;if(ui.zoomOut)ui.zoomOut.disabled=true;
+      return;
+    }
+    const snapshot=state.mapGestureSnapshot;if(!snapshot)return;state.mapGestureSnapshot=null;
+    for(const [name,enabled] of Object.entries(snapshot.handlers)){const handler=state.map?.[name];if(enabled)handler?.enable?.();else handler?.disable?.();}
+    if(ui.zoomIn)ui.zoomIn.disabled=snapshot.zoomInDisabled;if(ui.zoomOut)ui.zoomOut.disabled=snapshot.zoomOutDisabled;
   }
 
   function clearLayer(layer){if(layer&&state.map)try{state.map.removeLayer(layer);}catch(_){}}
@@ -573,23 +596,29 @@
 
   function fitExercise(){if(!state.base||!state.call)return;const s=basePoint(state.base),e=callAccessPoint(state.call);state.map.fitBounds([[s.lat,s.lng],[e.lat,e.lng]],{paddingTopLeft:[45,100],paddingBottomRight:[45,115],maxZoom:15,animate:!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches});}
   function setHint(text){ui.hint.textContent=text;}
-  function setMode(mode){state.mode=mode;setInteraction(state.interaction);ui.submit.disabled=!(mode==='editing'&&state.playerRoute?.complete);ui.undo.disabled=!(state.history.length&&(mode==='drawing'||mode==='editing'));ui.clear.disabled=mode==='loading'||mode==='snapping'||mode==='results';ui.results.hidden=mode!=='results';}
+  function setMode(mode){state.mode=mode;updateDrawTarget();ui.submit.disabled=!(mode==='editing'&&state.playerRoute?.complete);ui.undo.disabled=!(state.history.length&&(mode==='drawing'||mode==='editing'));ui.clear.disabled=mode==='loading'||mode==='snapping'||mode==='results';ui.results.hidden=mode!=='results';}
 
-  function clearRaw(){const pointer=state.drawingPointer;state.drawingPointer=null;if(pointer!==null&&ui.drawSurface.hasPointerCapture?.(pointer))ui.drawSurface.releasePointerCapture(pointer);clearLayer(state.rawLine);state.rawLine=null;state.rawPoints=[];}
+  function clearRaw(){const pointer=state.drawingPointer;state.drawingPointer=null;setMapGestureLock(false);if(pointer!==null&&ui.drawSurface.hasPointerCapture?.(pointer))ui.drawSurface.releasePointerCapture(pointer);clearLayer(state.rawLine);state.rawLine=null;state.rawPoints=[];}
 
   function resetDrawing(){
     exerciseGeneration+=1;clearRaw();clearReference();clearLayers(state.playerLayers);clearLayer(state.endpointMarker);state.endpointMarker=null;
-    state.history=[];state.playerRoute=null;state.shortestRoute=null;state.interaction='draw';
-    setMode('drawing');setHint('Start at START and follow the streets.');fitExercise();
+    state.history=[];state.playerRoute=null;state.shortestRoute=null;
+    setMode('drawing');setHint('Drag from START to draw. Drag elsewhere to move the map.');fitExercise();
   }
 
   function pointerPoint(event){const rect=ui.map.getBoundingClientRect(),point=L.point(event.clientX-rect.left,event.clientY-rect.top),ll=state.map.containerPointToLatLng(point);return {lat:ll.lat,lng:ll.lng};}
 
   function onDrawStart(event){
-    if(state.mode!=='drawing'||state.interaction!=='draw'||state.drawingPointer!==null||event.button>0||ui.settingsSheet.open)return;
-    const p=pointerPoint(event),start=state.playerRoute?.endpoint||state.traceCore.snap(basePoint(state.base),260);
-    if(!start||dist(p,start)>Math.max(30,traceTolerance()*1.8)){setHint(state.playerRoute?'Continue from the blue END marker.':'Start your drawing at START.');return;}
-    event.preventDefault();state.drawingPointer=event.pointerId;ui.drawSurface.setPointerCapture?.(event.pointerId);
+    if(state.mode!=='drawing'||ui.drawSurface.hidden||state.mapZooming||state.drawingPointer!==null||event.button>0||ui.settingsSheet.open)return;
+    let rect=ui.drawSurface.getBoundingClientRect();
+    if(Math.hypot(event.clientX-(rect.left+rect.width/2),event.clientY-(rect.top+rect.height/2))>28){setHint(state.playerRoute?'Continue from the blue END marker.':'Start your drawing at START.');return;}
+    state.map.stop?.();
+    const start=state.playerRoute?.endpoint||state.traceCore.snap(basePoint(state.base),260);
+    if(!start){setHint('Start your drawing at START.');return;}
+    updateDrawTarget(start);rect=ui.drawSurface.getBoundingClientRect();
+    if(ui.drawSurface.hidden||Math.hypot(event.clientX-(rect.left+rect.width/2),event.clientY-(rect.top+rect.height/2))>28){setHint(state.playerRoute?'Continue from the blue END marker.':'Start your drawing at START.');return;}
+    const p=pointerPoint(event);
+    event.preventDefault();state.drawingPointer=event.pointerId;ui.drawSurface.setPointerCapture?.(event.pointerId);setMapGestureLock(true);
     state.rawPoints=[start,p];state.rawLine=L.polyline([[start.lat,start.lng],[p.lat,p.lng]],{color:'#0ea5e9',weight:5,opacity:.8,dashArray:'5 7',interactive:false}).addTo(state.map);
     setHint('Release to stop. Your street choices will be kept.');
   }
@@ -601,7 +630,7 @@
   async function onDrawEnd(event){
     if(state.mode!=='drawing'||event.pointerId!==state.drawingPointer)return;event.preventDefault();
     const p=pointerPoint(event);if(dist(state.rawPoints.at(-1),p)>.5)state.rawPoints.push(p);
-    state.drawingPointer=null;await snapStroke();
+    state.drawingPointer=null;setMapGestureLock(false);await snapStroke();
   }
 
   function cancelDrawing(event){
@@ -623,8 +652,8 @@
       const route=state.traceCore.finish(state.traceCore.combine(previous,trace),state.destinationAnchor,arrivalDistance());
       state.history.push(previous);if(state.history.length>30)state.history.shift();
       state.playerRoute=route;state.shortestRoute=null;clearRaw();renderPlayerRoute();
-      state.interaction=route.complete?'pan':'draw';setMode(route.complete?'editing':'drawing');
-      setHint(route.complete?'Call road access reached. Submit to compare your decisions.':'Continue from END, or choose Pan map to move and zoom.');
+      setMode(route.complete?'editing':'drawing');
+      setHint(route.complete?'Call road access reached. Submit to compare your decisions.':'Continue from END. Drag elsewhere to move the map.');
     }catch(error){
       clearRaw();state.playerRoute=previous;setMode(previous?.complete?'editing':'drawing');setHint(error.message||'Trace closer to the streets you want.');
     }
@@ -635,7 +664,7 @@
   function undo(){
     if(!state.history.length||!['drawing','editing'].includes(state.mode))return;
     clearRaw();state.playerRoute=state.history.pop();state.shortestRoute=null;
-    state.interaction='draw';renderPlayerRoute();setMode('drawing');
+    renderPlayerRoute();setMode('drawing');
     setHint(state.playerRoute?'Last stroke undone. Continue from END.':'Last stroke undone. Start at START.');
   }
 
@@ -783,7 +812,7 @@
 
   function newCall(){
     exerciseGeneration+=1;clearRaw();clearReference();clearLayers(state.playerLayers);
-    clearLayer(state.endpointMarker);state.endpointMarker=null;state.interaction='draw';
+    clearLayer(state.endpointMarker);state.endpointMarker=null;
     const previousPhase=state.phase?.index;
     const phase=applyProgressionStart();
     state.call=chooseCall();state.callCount+=1;state.playerRoute=null;state.shortestRoute=null;state.history=[];ui.callNumber.textContent='CALL '+state.callCount;ui.baseLabel.textContent=state.base.shortName||state.base.name;ui.callType.textContent=state.call.sub||state.call.main||'Dispatch Call';ui.callAddress.textContent=state.call.addr||state.call.name;
@@ -795,7 +824,7 @@
       const message=phase.continuous?'Each route now starts at the previous call.':'Routes now start from '+phase.label+'.';
       setHint(message);
     }else{
-      setHint('Draw a route from '+(state.base.shortName||state.base.name)+' to CALL road access');
+      setHint('Drag from START to draw. Drag elsewhere to move the map.');
     }
   }
 
@@ -1049,20 +1078,22 @@
   }
   function loadPreferences(){state.tuning=loadTuning();displayTuning(state.tuning);let service='fire';try{service=localStorage.getItem('ptboRouteMappingService')||service;}catch(_){}if(!['fire','ems'].includes(service))service='fire';state.service=service;ui.serviceSelect.value=service;fillBases(service,null);loadSkillProfiles();loadProgression();applyProgressionStart();}
   function savePreferences(){try{localStorage.setItem('ptboRouteMappingService',state.service);}catch(_){}}
-  function openSettings(){cancelDrawing();ui.serviceSelect.value=state.service;fillBases(state.service,state.base&&state.base.id);displayTuning(state.tuning);ui.phaseNote.textContent=basesForService(state.service).map(b=>b.shortName||b.name).join(' → ')+' → previous call. Each base phase lasts 20 completed calls. CALL marks the nearest mapped public-road access to the address.';if(!ui.settingsSheet.open)ui.settingsSheet.showModal();}
-  function closeSettings(){if(ui.settingsSheet.open)ui.settingsSheet.close();}
+  function openSettings(){cancelDrawing();ui.serviceSelect.value=state.service;fillBases(state.service,state.base&&state.base.id);displayTuning(state.tuning);ui.phaseNote.textContent=basesForService(state.service).map(b=>b.shortName||b.name).join(' → ')+' → previous call. Each base phase lasts 20 completed calls. CALL marks the nearest mapped public-road access to the address.';if(!ui.settingsSheet.open)ui.settingsSheet.showModal();updateDrawTarget();}
+  function closeSettings(){if(ui.settingsSheet.open)ui.settingsSheet.close();updateDrawTarget();}
 
   function initMap(){
     state.map=L.map('map',{zoomControl:false,attributionControl:true,preferCanvas:true,minZoom:11,maxZoom:19,worldCopyJump:false}).setView([CONFIG.centerLat,CONFIG.centerLng],13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{subdomains:'abc',maxZoom:19,attribution:'&copy; OpenStreetMap contributors'}).addTo(state.map);
     state.map.doubleClickZoom.disable();
+    state.map.on('zoomstart',()=>{state.mapZooming=true;updateDrawTarget();});
+    state.map.on('zoomend',()=>{state.mapZooming=false;updateDrawTarget();});
+    state.map.on('move resize',()=>updateDrawTarget());
     const reduced=window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;if(reduced)state.map.options.zoomAnimation=false;
   }
 
   function bindUi(){
     ui.drawSurface.addEventListener('pointerdown',onDrawStart);ui.drawSurface.addEventListener('pointermove',onDrawMove);ui.drawSurface.addEventListener('pointerup',onDrawEnd);ui.drawSurface.addEventListener('pointercancel',cancelDrawing);ui.drawSurface.addEventListener('lostpointercapture',cancelDrawing);
     window.addEventListener('blur',()=>{cancelDrawing();});document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelDrawing();}});
-    ui.interaction.addEventListener('click',()=>{cancelDrawing();setInteraction(state.interaction==='draw'?'pan':'draw');setHint(state.interaction==='pan'?'Pan or pinch to explore. Choose Draw route to continue.':state.playerRoute?'Continue drawing from END.':'Start your drawing at START.');});
     ui.zoomIn.addEventListener('click',()=>state.map.zoomIn());ui.zoomOut.addEventListener('click',()=>state.map.zoomOut());
     ui.clear.addEventListener('click',resetDrawing);ui.undo.addEventListener('click',undo);ui.submit.addEventListener('click',submitRoute);ui.next.addEventListener('click',newCall);ui.settingsButton.addEventListener('click',openSettings);ui.settingsClose.addEventListener('click',closeSettings);ui.retry.addEventListener('click',()=>location.reload());
     ui.serviceSelect.addEventListener('change',()=>{fillBases(ui.serviceSelect.value,null);ui.phaseNote.textContent=basesForService(ui.serviceSelect.value).map(b=>b.shortName||b.name).join(' → ')+' → previous call. Each base phase lasts 20 completed calls. CALL marks the nearest mapped public-road access to the address.';});
@@ -1070,6 +1101,7 @@
     ui.settingsReset?.addEventListener('click',()=>displayTuning(DEFAULT_TUNING));
     ui.settingsForm.addEventListener('submit',event=>{event.preventDefault();const changed=applySettings(ui.serviceSelect.value,draftTuning());closeSettings();if(changed)newCall();});
     ui.settingsSheet.addEventListener('click',event=>{if(event.target===ui.settingsSheet)closeSettings();});
+    ui.settingsSheet.addEventListener('close',()=>updateDrawTarget());
   }
 
   async function loadData(){
