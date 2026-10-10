@@ -15,12 +15,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Retrieve source lane events without modifying OSM geometry
+      - name: Retrieve source lane events and aerial review references
         shell: bash
         run: |
           mkdir -p artifacts/street-evidence
           python - <<'PY'
-          import json, urllib.request, urllib.parse, datetime, time
+          import json, urllib.request, urllib.parse, datetime
           from pathlib import Path
           from concurrent.futures import ThreadPoolExecutor
           root=Path('artifacts/street-evidence')
@@ -44,7 +44,7 @@ jobs:
                   if not page: raise RuntimeError('Empty incomplete lane page')
                   offset+=len(page)
               return rows
-          groups=[ids[i:i+150] for i in range(0,len(ids),150)]
+          groups=[ids[i:i+40] for i in range(0,len(ids),40)]
           rows=[]
           with ThreadPoolExecutor(max_workers=3) as pool:
               for result in pool.map(chunk,groups): rows.extend(result)
