@@ -39,7 +39,7 @@ export function officialCurbDisplayMode(raisedClassification) {
 export function nearbyMunicipalRoadHeight(index, x, z, referenceHeight = null, searchRadius = 2.2) {
   if (!index?.sample || ![x, z, searchRadius].every(Number.isFinite)
     || searchRadius < 0) return null;
-  const options = { includeParking: false };
+  const options = { includeParking: false, includeBridges: false };
   const sampleAt = (px, pz) => {
     const sample = index.sample(px, pz, referenceHeight, options);
     return sample && sample.layer === 'road_surfaces' && Number.isFinite(sample.height)
