@@ -350,6 +350,16 @@ def fetch_city_open_data_layer(
         or "OBJECTID"
     )
     requested_fields = list(dict.fromkeys((object_id_field, *layer["fields"])))
+    # The City layer description lists curb types, but its current field
+    # schema may omit CURBTYPE entirely. Only request/source a classification
+    # when it is genuinely present in the returned ArcGIS metadata.
+    curb_type_field = None
+    if layer["key"] == "curb_edges":
+        available = [str(field.get("name") or "") for field in layer_metadata.get("fields") or []]
+        curb_type_field = next((name for name in available
+            if name.casefold().replace("_", "") in ("curbtype", "curbtypecode")), None)
+        if curb_type_field:
+            requested_fields.append(curb_type_field)
     page_size = min(int(layer_metadata.get("maxRecordCount") or 1000), 5000)
     west, south, east, north = BBOX
     city_extent = box(west, south, east, north)
@@ -387,6 +397,11 @@ def fetch_city_open_data_layer(
         new_ids_on_page = 0
         for feature in page:
             properties = feature.get("properties") or {}
+            if curb_type_field:
+                # Normalize to one stable renderer-facing name, regardless of
+                # service casing/underscore spelling. The value is original.
+                properties = dict(properties)
+                properties["CURBTYPE"] = property_value(properties, curb_type_field)
             source_id = property_value(properties, object_id_field)
             if source_id is None:
                 source_id = feature.get("id")
@@ -412,7 +427,11 @@ def fetch_city_open_data_layer(
                 {
                     "type": "Feature",
                     "id": feature_id,
-                    "properties": compact_city_properties(properties, layer),
+                    "properties": {
+                        **compact_city_properties(properties, layer),
+                        **({"CURBTYPE": properties["CURBTYPE"]}
+                           if curb_type_field and properties.get("CURBTYPE") is not None else {}),
+                    },
                     "geometry": mapping(clipped_geometry),
                 }
             )

@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { runInNewContext } from 'node:vm';
 import { CURB_REVEAL, curbIsRaised, stationRoadWeight, splitRoadDetailSegment, pavementSupportBottom } from '../city-explorer/station-road-detail.js';
+import { officialRoadMeshEdgeLength } from '../city-explorer/citywide-road-quality.js';
 assert.equal(pavementSupportBottom(2, 0), -0.03, 'Raised slab foundation reaches the terrain');
 assert.equal(pavementSupportBottom(2, 2), 1.875, 'Slab keeps its minimum thickness');
 assert.equal(pavementSupportBottom(-5, -7), -7.03, 'Negative local heights remain supported');
@@ -38,6 +39,7 @@ const routine = app.match(/^function appendDrapedOfficialRoadTriangle\([^]*?^\}/
 assert.ok(routine);
 const subdivide = runInNewContext(`${routine}\nappendDrapedOfficialRoadTriangle`, {
   project: () => ({ x: 0, y: 0 }), lowPowerProfile: false,
+  officialRoadMeshEdgeLength, CITY_ROAD_MESH_LEGACY: false,
   cachedOfficialRoadHeightAt: (_cache, point) => 100 + point.x * 0.02 + point.y * 0.01,
   appendRoadTriangle: (out, ...vertices) => out.push(vertices),
 });

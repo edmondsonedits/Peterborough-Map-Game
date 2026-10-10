@@ -26,6 +26,9 @@ import {
   createPeterboroughLandmarks,
 } from './landmark-models.js?v=1.5.5-streets4';
 import { ROAD_SURFACE_CLEARANCE, RoadSurfaceIndex, laneCountFor, reconcileRoadNetworkElevations, roadProfile, roadRibbonCrossSections, resampleRoadLine } from './road-network.js?v=1.5.5-r10';
+import { solveFallbackJunctions, polygonArea as junctionPolygonArea } from './fallback-junction-geometry.js';
+import { officialRoadMeshEdgeLength, officialCurbDisplayMode, nearbyMunicipalRoadHeight, municipalCurbTop } from './citywide-road-quality.js';
+import { sampleTruckWheelContacts, truckIsOnRoad } from './road-wheel-contact.js';
 import { OfficialDrivableSurfaceIndex, RenderedPavementIndex, officialSurfaceStatusActive, officialBridgeIsVehicular } from './official-road-surfaces.js?v=1.5.6-bridge-use1';
 import { FLY_TUNING, adjustFlySpeedScale, applyFlyLookDelta, dampingFactors, flyAxesFromKeys, flySpeedFor, flyYawToward, isFlyControlCode, wrapFlyYaw } from './fly-controls.js?v=1.5.5-fly4';
 import { clearLandCoverRaster, paintLandCoverPolygon } from './land-cover-raster.js?v=1.5.5-raster1';
@@ -2109,12 +2112,12 @@ function buildBufferedRoadBatches(batches) {
     if (!positions.length) return;
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-    geometry.setAttribute('color', new THREE.Float32BufferAttribute(new Float32Array(positions.length).fill(1), 3));
+    // A full white vertex-colour array duplicates the position buffer.
     geometry.computeVertexNormals();
     geometry.computeBoundingSphere();
     const sourceMaterial = materials[materialKey] || materials.roadLocal;
     const batchMaterial = sourceMaterial.clone();
-    batchMaterial.vertexColors = true;
+    batchMaterial.vertexColors = false;
     const mesh = new THREE.Mesh(geometry, batchMaterial);
     mesh.userData = { type: `road-${kind}-batch`, material: materialKey, tile, tileSize: ROAD_RENDER_TILE_SIZE, segments, vertices: positions.length / 3 };
     mesh.renderOrder = kind.startsWith('official-') ? 4 : kind === 'surface' ? 3 : 2;
@@ -2285,11 +2288,18 @@ function buildInstancedLines(segments, bucket) {
       if (bucket === 'sidewalk') {
         for (const [point, key] of [[segment.a, 'a'], [segment.b, 'b']]) {
           const weight = stationRoadDetailWeight(point.x, point.y);
-          const pavement = weight && stationAdjacentPavementHeight(point.x, point.y);
-          if (Number.isFinite(pavement) && weight) {
+          // City-published sidewalks are loaded after municipal pavement:
+          // join their tops to that surface where it is genuinely nearby.
+          // OSM-only sidewalks built earlier retain their terrain fallback.
+          const pavement = weight
+            ? stationAdjacentPavementHeight(point.x, point.y)
+            : nearbyMunicipalRoadHeight(state.renderedPavementIndex,
+              point.x, point.y, key === 'a' ? aY : bY);
+          if (Number.isFinite(pavement)) {
             const old = key === 'a' ? aY : bY;
-            const aligned = old + weight * (pavement + CURB_REVEAL - thickness / 2 - old);
-            if (key === 'a') aY = aligned; else bY = aligned;
+            const aligned = pavement + CURB_REVEAL - thickness / 2;
+            const next = weight ? old + weight * (aligned - old) : aligned;
+            if (key === 'a') aY = next; else bY = next;
           }
         }
       }
@@ -2372,7 +2382,9 @@ function buildStationSidewalkRibbons(segments) {
 }
 
 function buildOfficialCurbRibbons(segments) {
-  segments = segments.flatMap(segment => segment.stationDetail ? splitRoadDetailSegment(segment) : [segment]);
+  segments = segments.flatMap(segment => splitRoadDetailSegment(
+    segment, segment.stationDetail ? 2 : lowPowerProfile ? 12 : 8,
+  ));
   const batches = new Map();
   for (const segment of segments) {
     const dx = segment.b.x - segment.a.x;
@@ -2385,9 +2397,20 @@ function buildOfficialCurbRibbons(segments) {
     const key = `${tile.x}:${tile.z}`;
     if (!batches.has(key)) batches.set(key, { tile, positions: [], segments: 0 });
     const batch = batches.get(key);
-    const aTop = segment.stationDetail ? stationCurbTop(segment.a, segment.aY) : segment.aY;
-    const bTop = segment.stationDetail ? stationCurbTop(segment.b, segment.bY) : segment.bY;
-    const depth = segment.stationDetail ? CURB_REVEAL + 0.03 : 0.11;
+    const aPavement = segment.stationDetail
+      ? stationAdjacentPavementHeight(segment.a.x, segment.a.y)
+      : nearbyMunicipalRoadHeight(state.renderedPavementIndex, segment.a.x, segment.a.y, segment.aY);
+    const bPavement = segment.stationDetail
+      ? stationAdjacentPavementHeight(segment.b.x, segment.b.y)
+      : nearbyMunicipalRoadHeight(state.renderedPavementIndex, segment.b.x, segment.b.y, segment.bY);
+    // Old packaged data has no CURBTYPE: retain its original inferred cross-
+    // section rather than erasing every curb until a new asset refresh.
+    const inferred = segment.curbMode !== 'raised';
+    const aTop = segment.stationDetail ? stationCurbTop(segment.a, segment.aY)
+      : municipalCurbTop(aPavement, segment.aY, { raised: !inferred });
+    const bTop = segment.stationDetail ? stationCurbTop(segment.b, segment.bY)
+      : municipalCurbTop(bPavement, segment.bY, { raised: !inferred });
+    const depth = inferred && !segment.stationDetail ? 0.11 : CURB_REVEAL + 0.03;
     const aBottom = segment.stationDetail ? pavementSupportBottom(aTop, Math.min(
       terrainHeightAtWorld(segment.a.x + sideX, segment.a.y + sideZ),
       terrainHeightAtWorld(segment.a.x - sideX, segment.a.y - sideZ)), depth) : aTop - depth;
@@ -2442,7 +2465,59 @@ function attachRoadInstance(lineId, object, instanceIndex) {
   return generatedRegistry.attachEditablePart(id, object, instanceIndex);
 }
 
+
+/** Polygon alternative to circular fallback junction caps. Opt-in only until
+ * real-city screenshots/performance are checked. Surveyed municipal pavement
+ * bypasses this whole fallback path. The indexed triangles are identical to the
+ * Float32 vertices sent to WebGL, including the presentation height offset.
+ */
+function buildFallbackPolygonJunctionMeshes(polygons) {
+  const batches = new Map();
+  const index = new RenderedPavementIndex();
+  const batchFor = (polygon, foundation) => {
+    const tile = roadRenderTileCoordinates(polygon.x, polygon.z);
+    const kind = foundation ? 'foundation' : 'surface';
+    const materialKey = foundation ? polygon.edgeKey : polygon.materialKey;
+    const key = `${tile.x}:${tile.z}:${kind}:${materialKey}`;
+    if (!batches.has(key)) batches.set(key, { tile, kind, materialKey, positions: [], count: 0 });
+    return batches.get(key);
+  };
+  for (const polygon of polygons) {
+    const surface = batchFor(polygon, false);
+    const foundation = batchFor(polygon, true);
+    const flip = junctionPolygonArea(polygon.points) > 0;
+    for (let i = 0; i < polygon.triangles.length; i += 3) {
+      const ids = polygon.triangles.slice(i, i + 3);
+      if (flip) [ids[1], ids[2]] = [ids[2], ids[1]]; // XZ area -> upward-facing Y normal
+      const [a, b, c] = ids.map(id => polygon.points[id]);
+      appendRoadTriangle(surface.positions, a.x, a.y + 0.018, a.z, b.x, b.y + 0.018, b.z, c.x, c.y + 0.018, c.z);
+      appendRoadTriangle(foundation.positions, a.x, a.y - 0.055, a.z, b.x, b.y - 0.055, b.z, c.x, c.y - 0.055, c.z);
+      index.addTriangle(a.x, a.y + 0.018, a.z, b.x, b.y + 0.018, b.z, c.x, c.y + 0.018, c.z,
+        { layer: 'road_surfaces', id: `fallback-junction:${polygon.key}`, name: 'Junction' });
+    }
+    surface.count += 1;
+    foundation.count += 1;
+  }
+  for (const batch of batches.values()) {
+    if (!batch.positions.length) continue;
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(batch.positions, 3));
+    geometry.computeVertexNormals();
+    geometry.computeBoundingSphere();
+    const mesh = new THREE.Mesh(geometry, materials[batch.materialKey] || materials.roadLocal);
+    mesh.renderOrder = batch.kind === 'foundation' ? 2 : 4;
+    mesh.receiveShadow = !lowPowerProfile;
+    mesh.userData = { type: `prototype-junction-${batch.kind}`, count: batch.count, tile: batch.tile, material: batch.materialKey };
+    roadGroup.add(mesh);
+  }
+  state.fallbackJunctionSurfaceIndex = index;
+  document.documentElement.dataset.fallbackJunctionPrototypeCount = String(polygons.length);
+  state.objectCount += polygons.length * 2;
+}
+
 function buildRoadJunctions(segments) {
+  const prototype = new URLSearchParams(location.search).get('junctionPrototype') === '1'
+    ? solveFallbackJunctions(segments) : null;
   const vertices = new Map();
   const addVertex = (segment, endpoint) => {
     const isA = endpoint === 'a';
@@ -2455,6 +2530,7 @@ function buildRoadJunctions(segments) {
     const key = `${Math.round(point.x * 20)}:${Math.round(point.y * 20)}:${Math.round(y * 4)}`;
     if (!vertices.has(key)) {
       vertices.set(key, {
+        key,
         edgeExtra: segment.profile.edgeExtra,
         edgeKey: segment.profile.edgeKey,
         lineEndpoint: false,
@@ -2485,7 +2561,8 @@ function buildRoadJunctions(segments) {
     addVertex(segment, 'b');
   });
 
-  const junctions = [...vertices.values()].filter((vertex) => vertex.lineEndpoint || vertex.lines.size > 1);
+  const junctions = [...vertices.values()].filter((vertex) => (vertex.lineEndpoint || vertex.lines.size > 1)
+    && !prototype?.solvedKeys.has(vertex.key));
   const surfaceGroups = new Map();
   const foundationGroups = new Map();
   const addGroup = (groups, vertex, materialKey) => {
@@ -2523,9 +2600,11 @@ function buildRoadJunctions(segments) {
   buildGroups(foundationGroups, true);
   buildGroups(surfaceGroups, false);
   state.objectCount += junctions.length * 2;
+  if (prototype?.polygons.length) buildFallbackPolygonJunctionMeshes(prototype.polygons);
+  return prototype?.trimBySegment || null;
 }
 
-function buildUrbanCurbs(segments) {
+function buildUrbanCurbs(segments, junctionTrims = null) {
   const nodeLines = new Map();
   const nodeKey = (point, y) => `${Math.round(point.x * 10)}:${Math.round(point.y * 10)}:${Math.round(y * 2)}`;
   const recordNode = (point, y, lineId, sourceVertex) => {
@@ -2562,8 +2641,11 @@ function buildUrbanCurbs(segments) {
     const sideZ = -dx / length;
     const aJunction = (nodeLines.get(nodeKey(segment.a, segment.aY))?.size || 0) > 1;
     const bJunction = (nodeLines.get(nodeKey(segment.b, segment.bY))?.size || 0) > 1;
-    const trimA = aJunction ? Math.min(1.4, length * 0.22) : 0;
-    const trimB = bJunction ? Math.min(1.4, length * 0.22) : 0;
+    // The polygon solver determines the actual junction mouth. Legacy fallback
+    // retains its existing trim distances; only the opt-in path uses new values.
+    const requested = junctionTrims?.get(segment);
+    const trimA = aJunction ? Math.min(Math.max(1.4, requested?.a || 0), length * (junctionTrims ? 0.45 : 0.22)) : 0;
+    const trimB = bJunction ? Math.min(Math.max(1.4, requested?.b || 0), length * (junctionTrims ? 0.45 : 0.22)) : 0;
     if (trimA + trimB >= length * 0.78) continue;
     const tA = trimA / length;
     const tB = 1 - trimB / length;
@@ -2616,6 +2698,8 @@ function buildUrbanCurbs(segments) {
 }
 
 function buildRoadSurfaceIndex(segments) {
+  // Never retain polygon contacts after a map rebuild or a disabled preview.
+  state.fallbackJunctionSurfaceIndex = null;
   state.roadSurfaceIndex = new RoadSurfaceIndex();
   state.roadSurfaceIndex.addAll(segments);
   state.roadSurfaceCount = segments.length;
@@ -3444,7 +3528,8 @@ async function loadCityOpenData() {
 }
 
 async function loadOfficialRoadSurfaces() {
-  if (lowPowerProfile) {
+  // Retain an explicit escape hatch for low-memory devices.
+  if (lowPowerProfile && new URLSearchParams(location.search).get('municipalRoads') !== '1') {
     state.officialRoadSurfacesAvailable = false;
     document.documentElement.dataset.officialRoadDetail = 'osm-compatibility-fallback';
     return null;
@@ -3459,6 +3544,9 @@ async function loadOfficialRoadSurfaces() {
   state.officialRoadSurfacesAvailable = collection.features.some((feature) => (
     String(feature?.properties?.ptbo_layer || '') === 'road_surfaces'
   ));
+  document.documentElement.dataset.officialRoadDetail = state.officialRoadSurfacesAvailable
+    ? (lowPowerProfile ? 'citywide-municipal-mobile' : 'citywide-municipal-desktop')
+    : 'osm-compatibility-fallback';
   return collection;
 }
 
@@ -3525,6 +3613,8 @@ function cachedOfficialRoadHeightAt(cache, point, layer) {
   return cache.get(key);
 }
 
+const CITY_ROAD_MESH_LEGACY = new URLSearchParams(location.search).get('roadMesh') === 'legacy';
+
 function appendDrapedOfficialRoadTriangle(target, a, b, c, layer, heightCache, depth = 0, localDetail = null) {
   const ab = a.distanceToSquared(b);
   const bc = b.distanceToSquared(c);
@@ -3540,10 +3630,11 @@ function appendDrapedOfficialRoadTriangle(target, a, b, c, layer, heightCache, d
     const closestZ = Math.max(Math.min(a.y, b.y, c.y), Math.min(center.y, Math.max(a.y, b.y, c.y)));
     localDetail = layer !== 'bridges' && Math.hypot(closestX - center.x, closestZ - center.y) < 240;
   }
-  // Keep the decision for all children: no change of resolution partway down
-  // a shared source edge. Local road-level traversal needs more than 36–48 m faces.
-  const maximumEdge = localDetail ? 8 : lowPowerProfile ? 48 : layer === 'parking_surfaces' ? 42 : 36;
-  if (longest > maximumEdge * maximumEdge && depth < (localDetail ? 20 : 9)) {
+  // Higher resolution across the city; source polygon XY remains unchanged.
+  const maximumEdge = officialRoadMeshEdgeLength(layer, {
+    lowPower: lowPowerProfile, nearStation: localDetail, legacy: CITY_ROAD_MESH_LEGACY,
+  });
+  if (longest > maximumEdge * maximumEdge && depth < (localDetail ? 20 : 14)) {
     if (longest === ab) {
       const midpoint = a.clone().lerp(b, 0.5);
       appendDrapedOfficialRoadTriangle(target, a, midpoint, c, layer, heightCache, depth + 1, localDetail);
@@ -3629,6 +3720,8 @@ function appendOfficialRoadPolygon(polygonCoordinates, layer, batches, heightCac
 
 async function buildOfficialRoadSurfaces(collection, osmBuildingIndex = null) {
   if (!collection?.features?.length || !state.officialRoadSurfacesAvailable) return null;
+  const municipalBuildStartedAt = performance.now();
+  const curbModeCounts = { raised: 0, 'edge-of-pavement': 0, unclassified: 0 };
   const batches = new Map();
   const heightCache = new Map();
   const curbs = [];
@@ -3687,10 +3780,15 @@ async function buildOfficialRoadSurfaces(collection, osmBuildingIndex = null) {
           const b = points[index];
           if (a.distanceTo(b) < 0.25) continue;
           const stationDetail = Boolean(stationRoadDetailWeight(a.x, a.y) || stationRoadDetailWeight(b.x, b.y));
-          if (stationDetail && curbIsRaised(propertyValue(properties, 'CURBTYPE')) === false) continue;
+          const curbMode = officialCurbDisplayMode(curbIsRaised(propertyValue(properties, 'CURBTYPE')));
+          curbModeCounts[curbMode] += 1;
+          // A classified flush pavement edge must not become a raised wall.
+          // Unclassified legacy cache segments retain the former inferred
+          // geometry until new City attributes can be fetched and validated.
+          if (curbMode === 'edge-of-pavement') continue;
           const aBase = cachedOfficialRoadHeightAt(heightCache, a, 'road_surfaces');
           const bBase = cachedOfficialRoadHeightAt(heightCache, b, 'road_surfaces');
-          curbs.push({ a, b, stationDetail, width: 0.24, tags: { source: 'City of Peterborough Basedata' }, name: '', bridge: false, aY: aBase + 0.07, bY: bBase + 0.07 });
+          curbs.push({ a, b, stationDetail, curbMode, width: 0.24, tags: { source: 'City of Peterborough Basedata' }, name: '', bridge: false, aY: aBase + 0.07, bY: bBase + 0.07 });
         }
       });
       counts.curb_edges += 1;
@@ -3746,6 +3844,8 @@ async function buildOfficialRoadSurfaces(collection, osmBuildingIndex = null) {
   document.documentElement.dataset.officialBridgeSurfaces = String(counts.bridges);
   document.documentElement.dataset.excludedBridgeUses = JSON.stringify(excludedBridgeUses);
   document.documentElement.dataset.officialCurbSegments = String(curbs.length);
+  document.documentElement.dataset.officialCurbTypes = JSON.stringify(curbModeCounts);
+  document.documentElement.dataset.officialRoadBuildMs = String(Math.round(performance.now() - municipalBuildStartedAt));
   document.documentElement.dataset.officialRoadTriangles = String(triangles);
   document.documentElement.dataset.pavementHeightTriangles = String(state.renderedPavementIndex.triangleCount);
   if (pavementQA) {
@@ -4124,8 +4224,8 @@ async function parseOsmWithGeoJson(data) {
   buildBufferedBuildingBatches(buildingBatches);
   buildMapRoadLines(roadSegments);
   if (!state.officialRoadSurfacesAvailable) {
-    buildRoadJunctions(roadSegments);
-    buildUrbanCurbs(roadSegments);
+    const fallbackTrims = buildRoadJunctions(roadSegments);
+    buildUrbanCurbs(roadSegments, fallbackTrims);
   }
   buildRoadMarkings(roadSegments);
   buildMappedTurnArrows(roadSegments);
@@ -4209,8 +4309,8 @@ function parseOsmWayFallback(data) {
   buildBufferedBuildingBatches(buildingBatches);
   buildMapRoadLines(roadSegments);
   if (!state.officialRoadSurfacesAvailable) {
-    buildRoadJunctions(roadSegments);
-    buildUrbanCurbs(roadSegments);
+    const fallbackTrims = buildRoadJunctions(roadSegments);
+    buildUrbanCurbs(roadSegments, fallbackTrims);
   }
   buildRoadMarkings(roadSegments);
   buildMappedTurnArrows(roadSegments);
@@ -4287,8 +4387,8 @@ function buildFallbackCity() {
   buildRoadSurfaceIndex(roadSegments);
   buildMapRoadLines(roadSegments);
   if (!state.officialRoadSurfacesAvailable) {
-    buildRoadJunctions(roadSegments);
-    buildUrbanCurbs(roadSegments);
+    const fallbackTrims = buildRoadJunctions(roadSegments);
+    buildUrbanCurbs(roadSegments, fallbackTrims);
   }
   buildRoadMarkings(roadSegments);
   buildMappedTurnArrows(roadSegments);
@@ -4675,9 +4775,12 @@ function keyboardInputIsBlocked(event) {
 function gameplaySurfaceAt(x, z, referenceHeight = null) {
   const terrainY = terrainHeightAtWorld(x, z);
   const official = state.renderedPavementIndex.sample(x, z, referenceHeight);
+  // Surveyed pavement wins. Only use prototype fallback polygons when the
+  // authoritative mesh does not cover this point.
+  const fallbackJunction = !official ? state.fallbackJunctionSurfaceIndex?.sample(x, z, referenceHeight) : null;
   const tolerance = official?.layer === 'bridges' ? 20 : official ? 15 : 2.2;
   const road = state.roadSurfaceIndex.sample(x, z, tolerance, referenceHeight);
-  const onRoad = Boolean(official || road?.onRoad);
+  const onRoad = Boolean(official || fallbackJunction || road?.onRoad);
   const roadHeight = onRoad && Number.isFinite(road?.height) ? road.height : -Infinity;
   // A surveyed bridge polygon may overlap an OSM underpass with no separate
   // municipal face. Keep that lower road only when the actor's height clearly
@@ -4686,8 +4789,8 @@ function gameplaySurfaceAt(x, z, referenceHeight = null) {
     && (official.layer === 'bridges' || road.bridge) && official.height - road.height > 1
     && Math.abs(road.height - referenceHeight) + 0.5 < Math.abs(official.height - referenceHeight);
   return {
-    height: official && !useLowerRoad ? official.height : Math.max(terrainY, roadHeight),
-    heightSource: official && !useLowerRoad ? official.heightSource : road?.onRoad ? 'road-ribbon' : 'terrain',
+    height: official && !useLowerRoad ? official.height : fallbackJunction ? fallbackJunction.height : Math.max(terrainY, roadHeight),
+    heightSource: official && !useLowerRoad ? official.heightSource : fallbackJunction ? 'junction-polygon' : road?.onRoad ? 'road-ribbon' : 'terrain',
     name: road?.name || (official?.parking ? 'Parking / apron' : onRoad ? 'Peterborough road' : 'Off road'),
     onRoad,
     official,
@@ -5137,7 +5240,7 @@ function updateFireTruck(delta) {
     const next = stepFireTruckKinematics(truckState, {
       throttle: axes.forward,
       steering: axes.steering,
-    }, delta, currentSurface.onRoad);
+    }, delta, truckIsOnRoad(currentSurface.onRoad, truckState.lastRoadWheelCount));
     next.x = THREE.MathUtils.clamp(next.x, CITY.worldBounds.minX, CITY.worldBounds.maxX);
     next.z = THREE.MathUtils.clamp(next.z, CITY.worldBounds.minZ, CITY.worldBounds.maxZ);
     Object.assign(truckState, next);
@@ -5147,24 +5250,14 @@ function updateFireTruck(delta) {
     }
   }
 
-  const direction = directionFromHeading(truckState.heading);
-  gameplayForward.set(direction.x, 0, direction.z);
-  gameplayRight.set(Math.cos(truckState.heading), 0, -Math.sin(truckState.heading));
-  const frontX = truckState.x + gameplayForward.x * TRUCK_TUNING.wheelbase * 0.5;
-  const frontZ = truckState.z + gameplayForward.z * TRUCK_TUNING.wheelbase * 0.5;
-  const rearX = truckState.x - gameplayForward.x * TRUCK_TUNING.wheelbase * 0.5;
-  const rearZ = truckState.z - gameplayForward.z * TRUCK_TUNING.wheelbase * 0.5;
-  const leftX = truckState.x - gameplayRight.x * TRUCK_TUNING.trackWidth * 0.5;
-  const leftZ = truckState.z - gameplayRight.z * TRUCK_TUNING.trackWidth * 0.5;
-  const rightX = truckState.x + gameplayRight.x * TRUCK_TUNING.trackWidth * 0.5;
-  const rightZ = truckState.z + gameplayRight.z * TRUCK_TUNING.trackWidth * 0.5;
   const center = gameplaySurfaceAt(truckState.x, truckState.z, truckState.y);
-  const front = gameplaySurfaceAt(frontX, frontZ, truckState.y);
-  const rear = gameplaySurfaceAt(rearX, rearZ, truckState.y);
-  const left = gameplaySurfaceAt(leftX, leftZ, truckState.y);
-  const right = gameplaySurfaceAt(rightX, rightZ, truckState.y);
-  const targetPitch = THREE.MathUtils.clamp(Math.atan2(front.height - rear.height, TRUCK_TUNING.wheelbase), -0.22, 0.22);
-  const targetRoll = THREE.MathUtils.clamp(Math.atan2(right.height - left.height, TRUCK_TUNING.trackWidth), -0.18, 0.18);
+  // Use four actual tire positions rather than independent centreline-only
+  // front/rear/side queries. Total number of surface queries is unchanged:
+  // one chassis centre + four suspension footprint contacts per frame.
+  const wheelContacts = sampleTruckWheelContacts(truckState, TRUCK_TUNING, gameplaySurfaceAt);
+  truckState.lastRoadWheelCount = wheelContacts.roadWheelCount;
+  const targetPitch = THREE.MathUtils.clamp(wheelContacts.pitch, -0.22, 0.22);
+  const targetRoll = THREE.MathUtils.clamp(wheelContacts.roll, -0.18, 0.18);
   truckState.pitch = exponentialStep(truckState.pitch, targetPitch, 9, delta);
   truckState.roll = exponentialStep(truckState.roll, targetRoll, 9, delta);
   truckState.y = exponentialStep(truckState.y, center.height + 0.035, 18, delta);
