@@ -117,11 +117,11 @@ const runLoader = async (lowPowerProfile, search) => {
   return { requests, available: state.officialRoadSurfacesAvailable,
     mode: document.documentElement.dataset.officialRoadDetail, result };
 };
-const mobileRoads = await runLoader(true, '');
+const mobileRoads = await runLoader(true, '?municipalRoads=1');
 assert.equal(mobileRoads.requests, 1);
 assert.equal(mobileRoads.available, true);
 assert.equal(mobileRoads.mode, 'citywide-municipal-mobile');
-const mobileFallback = await runLoader(true, '?municipalRoads=0');
+const mobileFallback = await runLoader(true, '');
 assert.equal(mobileFallback.requests, 0);
 assert.equal(mobileFallback.available, false);
 assert.equal(mobileFallback.mode, 'osm-compatibility-fallback');
