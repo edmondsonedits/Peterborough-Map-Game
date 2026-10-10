@@ -1,0 +1,156 @@
+[
+  {
+    "id": "sherbrooke-station",
+    "street": "Sherbrooke Street",
+    "osm_way": "460581459",
+    "lat": 44.30073409148051,
+    "lon": -78.32136204898562,
+    "tags": {
+      "highway": "secondary",
+      "lanes": "4",
+      "maxspeed": "50",
+      "name": "Sherbrooke Street",
+      "parking:both": "lane",
+      "source": "Geobase_Import_2009",
+      "source:maxspeed": "CA_ON:urban",
+      "surface": "asphalt"
+    },
+    "length_m": 265.55,
+    "capture_distance": 32,
+    "capture_altitude": 65
+  },
+  {
+    "id": "george-downtown",
+    "street": "George Street North",
+    "osm_way": "40793460",
+    "lat": 44.30335071468687,
+    "lon": -78.31987384459475,
+    "tags": {
+      "cycleway:right": "lane",
+      "highway": "secondary",
+      "lanes": "2",
+      "maxspeed": "40",
+      "name": "George Street North",
+      "oneway": "yes",
+      "sidewalk": "both",
+      "source": "Geobase_Import_2009",
+      "surface": "asphalt"
+    },
+    "length_m": 294.85,
+    "capture_distance": 32,
+    "capture_altitude": 65
+  },
+  {
+    "id": "water-downtown",
+    "street": "Water Street",
+    "osm_way": "33966726",
+    "lat": 44.302908860699745,
+    "lon": -78.31886221892874,
+    "tags": {
+      "cycleway:right": "lane",
+      "highway": "secondary",
+      "lanes": "2",
+      "maxspeed": "40",
+      "name": "Water Street",
+      "oneway": "yes",
+      "sidewalk": "both",
+      "source": "Geobase_Import_2009",
+      "surface": "asphalt"
+    },
+    "length_m": 405.33,
+    "capture_distance": 32,
+    "capture_altitude": 65
+  },
+  {
+    "id": "lansdowne",
+    "street": "Lansdowne Street West",
+    "osm_way": "1340376375",
+    "lat": 44.28396552466872,
+    "lon": -78.33738866798079,
+    "tags": {
+      "highway": "secondary",
+      "lanes": "2",
+      "lit": "yes",
+      "maxspeed": "50",
+      "name": "Lansdowne Street West",
+      "oneway": "yes",
+      "surface": "asphalt"
+    },
+    "length_m": 101.19,
+    "capture_distance": 32,
+    "capture_altitude": 65
+  },
+  {
+    "id": "parkhill",
+    "street": "Parkhill Road West",
+    "osm_way": "33950129",
+    "lat": 44.3118840514911,
+    "lon": -78.3356279238978,
+    "tags": {
+      "highway": "secondary",
+      "lanes": "4",
+      "maxspeed": "50",
+      "name": "Parkhill Road West",
+      "old_ref": "7B;28",
+      "source": "Geobase_Import_2009"
+    },
+    "length_m": 244.18,
+    "capture_distance": 32,
+    "capture_altitude": 65
+  },
+  {
+    "id": "rubidge",
+    "street": "Rubidge Street",
+    "osm_way": "460582088",
+    "lat": 44.30356150744639,
+    "lon": -78.32663205024492,
+    "tags": {
+      "highway": "secondary",
+      "lanes": "2",
+      "name": "Rubidge Street",
+      "oneway": "yes",
+      "sidewalk": "separate",
+      "source": "Geobase_Import_2009"
+    },
+    "length_m": 97.27,
+    "capture_distance": 32,
+    "capture_altitude": 65
+  },
+  {
+    "id": "chemong",
+    "street": "Chemong Road",
+    "osm_way": "1003268691",
+    "lat": 44.32391217730544,
+    "lon": -78.33611502273227,
+    "tags": {
+      "highway": "secondary",
+      "lanes": "4",
+      "lit": "yes",
+      "maxspeed": "50",
+      "name": "Chemong Road",
+      "oneway": "yes",
+      "source": "Geobase_Import_2009",
+      "surface": "asphalt"
+    },
+    "length_m": 105.53,
+    "capture_distance": 32,
+    "capture_altitude": 65
+  },
+  {
+    "id": "ashburnham",
+    "street": "Ashburnham Drive",
+    "osm_way": "791593617",
+    "lat": 44.298574586663996,
+    "lon": -78.30133430503186,
+    "tags": {
+      "cycleway": "lane",
+      "highway": "secondary",
+      "lanes": "2",
+      "name": "Ashburnham Drive",
+      "source": "Geobase_Import_2009"
+    },
+    "length_m": 456.47,
+    "capture_distance": 32,
+    "capture_altitude": 65
+  }
+]

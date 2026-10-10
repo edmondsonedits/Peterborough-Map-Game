@@ -1,0 +1,25 @@
+{
+  "osm_snapshot": "2026-10-10T01:49:01Z",
+  "orn_lane_source": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/6",
+  "orn_lane_records": 3213,
+  "orn_road_ids_requested": 3179,
+  "all_drivable_ways": 5961,
+  "ways_intersecting_city": 5331,
+  "named_streets_intersecting_city": 798,
+  "status_city": {
+    "inventory-agreement": 1797,
+    "partial-or-varying-inventory": 54,
+    "unmatched": 3292,
+    "inventory-only": 50,
+    "inventory-conflict": 138
+  },
+  "mapped_lanes_city": 2608,
+  "shared_lane_ways_city": 20,
+  "limitations": [
+    "Automated inventory audit, NOT a visual inspection of every road.",
+    "ORN effective dates may be old; inventory conflicts require imagery or municipal review.",
+    "Matching uses names, local bearing, <=8m separation and linear-referenced lane events.",
+    "City-intersecting ways may extend beyond the municipal boundary.",
+    "Lane count does not determine single/double/solid/broken paint or actual curb height."
+  ]
+}

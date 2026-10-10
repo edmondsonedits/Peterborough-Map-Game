@@ -5,16 +5,15 @@ const path = require('node:path');
 const base = (process.argv[2] || 'http://127.0.0.1:4174').replace(/\/$/, '');
 const label = process.env.STREET_CAPTURE_LABEL || 'baseline';
 const output = path.join('artifacts', 'street-evidence', label);
-const views = [
-  ['sherbrooke-station',44.30074,-78.3221],['george-downtown',44.3027,-78.3191],
-  ['water-downtown',44.3040,-78.3175],['lansdowne',44.2890,-78.3390],
-  ['parkhill',44.3145,-78.3380],['residential-rubidge',44.3032,-78.3260],
-  ['chemong',44.3250,-78.3334],['ashburnham',44.2960,-78.3037],
-];
+const views = JSON.parse(fs.readFileSync('city-explorer/data/street-review-sites.json','utf8'))
+  .map(s=>[s.id,s.lat,s.lon]);
 (async () => {
   fs.mkdirSync(output, {recursive:true});
   const browser = await chromium.launch({headless:true,args:['--use-gl=angle','--use-angle=swiftshader','--enable-webgl']});
   const page = await browser.newPage({viewport:{width:1280,height:900},deviceScaleFactor:1});
+  // Explicit desktop emulation prevents the CI runner's 2-core hardware from
+  // silently testing only the OSM compatibility path. Not a physical-device benchmark.
+  await page.addInitScript(()=>{Object.defineProperty(navigator,'deviceMemory',{get:()=>8});Object.defineProperty(navigator,'hardwareConcurrency',{get:()=>8});});
   const errors=[];
   page.on('pageerror', e=>errors.push(String(e)));
   // Measurement only. Do not alter geometry or paint production code.
@@ -32,7 +31,7 @@ const views = [
     await page.addStyleTag({content:'.hud-panel,.gameplay-hud,#flight-reticle,#mode-hint,.brand-panel{visibility:hidden!important}'});
     const captures=[];
     for(const [name,lat,lon] of views){
-      await page.evaluate(v=>window.__PTBO_CITY_QA__.setView(v), {lat,lon,altitude:48,distance:20,bearing:180,pitch:-1.16});
+      await page.evaluate(v=>window.__PTBO_CITY_QA__.setView(v), {lat,lon,altitude:65,distance:32,bearing:180,pitch:-1.16});
       await page.waitForTimeout(800);
       await page.screenshot({path:path.join(output,name+'.png')});
       captures.push({name,lat,lon,metrics:await page.evaluate(()=>window.__PTBO_CITY_QA__.metrics())});
@@ -43,9 +42,12 @@ const views = [
       const matrix=new THREE.Matrix4(),p=new THREE.Vector3();
       let samples=0,covered=0,buried=0,floating=0,maxError=0;
       streetscapeGroup.traverse(o=>{
-        if(!o.isInstancedMesh||!/^road-(lane|centre|edge)|mapped-cycle/.test(o.userData?.type||''))return;
+        if(!o.isInstancedMesh||!/^road-(lane|centre|edge)|mapped-cycle|surface-conforming-road-paint/.test(o.userData?.type||''))return;
         for(let i=0;i<o.count;i++){
-          o.getMatrixAt(i,matrix);p.setFromMatrixPosition(matrix);samples++;
+          o.getMatrixAt(i,matrix);
+          if(o.userData.type==='surface-conforming-road-paint')p.set(1/3,0,-1/3).applyMatrix4(matrix);
+          else p.setFromMatrixPosition(matrix);
+          samples++;
           const hit=state.renderedPavementIndex.sample(p.x,p.z,p.y,{includeParking:false});
           if(!hit)continue;covered++;
           const error=p.y-hit.height;maxError=Math.max(maxError,Math.abs(error));

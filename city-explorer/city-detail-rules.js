@@ -17,52 +17,82 @@ export function shouldRenderUrbanCurb(tags = {}, profile = {}) {
 }
 
 export function mappedCycleLaneSides(tags = {}) {
-  const sides = new Set();
-  const both = String(tags.cycleway || tags['cycleway:both'] || '').toLowerCase();
-  const left = String(tags['cycleway:left'] || '').toLowerCase();
-  const right = String(tags['cycleway:right'] || '').toLowerCase();
-  // A mapped `shared_lane` is a sharrow rather than a continuous cycle-lane
-  // boundary, so it must not generate a misleading solid edge line.
-  const lane = (value) => /^(lane|track|share_busway|shoulder)$/.test(value);
-  if (lane(both)) { sides.add('left'); sides.add('right'); }
-  if (lane(left)) sides.add('left');
-  if (lane(right)) sides.add('right');
-  return [...sides];
+  // Tracks, shoulders, sharrows and bus lanes are not proof of bicycle-lane
+  // paint. A side-specific `no` takes precedence over the generic tag.
+  const common = tags['cycleway:both'] ?? tags.cycleway ?? '';
+  return ['left', 'right'].filter(side =>
+    /^(lane|opposite_lane)$/.test(String(tags[`cycleway:${side}`] ?? common).toLowerCase()));
 }
 
-/**
- * Return the paint boundaries between mapped vehicle lanes.
- *
- * Ontario convention uses yellow to divide opposing traffic and white between
- * lanes moving in the same direction. Urban opposing-traffic boundaries are
- * continuous by default; OSM `overtaking=yes` is treated as explicit evidence
- * that a broken centre line is appropriate.
+/** Lane order is LEFT-to-RIGHT looking along the original OSM way.
+ * Parking and bicycle lanes are not included in OSM's motor-vehicle count.
+ * An odd two-way count without directional tags is ambiguous, not permission
+ * to guess which side has the extra lane. Reversible lanes need a timed model.
+ */
+export function roadLaneLayout(tags = {}, profile = {}) {
+  const parse = value => /^\d+$/.test(String(value ?? '')) ? Number(value) : null;
+  if (/^(reversible|alternating)$/.test(String(tags.oneway || ''))) return null;
+  const lanes = parse(tags.lanes) || Number(profile.lanes);
+  if (!Number.isInteger(lanes) || lanes < 1 || lanes > 20) return null;
+  const oneWay = Boolean(profile.oneWay) || /^(yes|1|-1)$/.test(String(tags.oneway || ''));
+  if (oneWay) return { lanes, forward: tags.oneway === '-1' ? 0 : lanes,
+    backward: tags.oneway === '-1' ? lanes : 0, shared: 0, oneWay: true };
+  let forward = parse(tags['lanes:forward']), backward = parse(tags['lanes:backward']);
+  if (forward === null && tags['turn:lanes:forward']) forward = String(tags['turn:lanes:forward']).split('|').length;
+  if (backward === null && tags['turn:lanes:backward']) backward = String(tags['turn:lanes:backward']).split('|').length;
+  const shared = parse(tags['lanes:both_ways']) || 0;
+  if (forward === null && backward !== null) forward = lanes - backward - shared;
+  if (backward === null && forward !== null) backward = lanes - forward - shared;
+  if (forward === null && backward === null && (lanes - shared) % 2 === 0) {
+    forward = backward = (lanes - shared) / 2;
+  }
+  if (!(forward > 0 && backward > 0) || forward + backward + shared !== lanes || shared > 1) return null;
+  return { lanes, forward, backward, shared, oneWay: false };
+}
+
+/** Convention-based paint, not a claim of per-road photogrammetric verification.
+ * References: Ontario Traffic Manual Book 11, Figures 3 and 34. A permission to
+ * overtake is NOT an observation of a broken yellow line.
  */
 export function roadLaneMarkingBoundaries(tags = {}, profile = {}) {
   if (profile.unpaved || profile.tunnel || profile.parkingAisle) return [];
   if (tags.junction === 'roundabout' || String(tags.lane_markings || '').toLowerCase() === 'no') return [];
   const highway = String(profile.highway || tags.highway || '').toLowerCase();
-  const markableClass = /^(motorway|trunk|primary|secondary|tertiary)(?:_link)?$/.test(highway)
+  const markable = /^(motorway|trunk|primary|secondary|tertiary)(?:_link)?$/.test(highway)
     || String(tags.lane_markings || '').toLowerCase() === 'yes';
-  const lanes = Math.max(1, Math.round(Number(profile.lanes) || Number(tags.lanes) || 1));
-  if (!markableClass || lanes < 2) return [];
-
-  const twoWay = !profile.oneWay;
-  const mappedBackward = Number.parseFloat(tags['lanes:backward']);
-  const centerBoundary = twoWay
-    ? Number.isFinite(mappedBackward) && mappedBackward > 0 ? Math.round(mappedBackward) : Math.floor(lanes / 2)
-    : -1;
-  const brokenOpposingBoundary = /^(yes|permissive)$/i.test(String(tags.overtaking || ''));
-  const boundaries = [];
-  for (let boundary = 1; boundary < lanes; boundary += 1) {
-    const opposing = twoWay && boundary === centerBoundary;
-    boundaries.push({
-      boundary,
-      materialKey: opposing ? 'roadPaintYellow' : 'roadPaintWhite',
-      pattern: opposing && !brokenOpposingBoundary ? 'solid' : 'dash',
-    });
+  const layout = roadLaneLayout(tags, profile);
+  if (!markable || !layout || layout.lanes < 2) return [];
+  const result = [];
+  for (let boundary = 1; boundary < layout.lanes; boundary += 1) {
+    const sharedBorder = layout.shared && (boundary === layout.backward || boundary === layout.backward + 1);
+    const opposing = !layout.oneWay && (boundary === layout.backward || sharedBorder);
+    const entry = { boundary, materialKey: opposing ? 'roadPaintYellow' : 'roadPaintWhite',
+      pattern: sharedBorder ? 'shared' : opposing ? 'solid' : 'dash' };
+    if (sharedBorder) entry.sharedInsideSign = boundary === layout.backward ? -1 : 1;
+    result.push(entry);
   }
-  return boundaries;
+  return result;
+}
+
+/** Positive offset points LEFT of the original OSM way, matching renderer normals. */
+export function laneBoundaryOffset(width, lanes, boundary) {
+  return width / 2 - width * boundary / lanes;
+}
+
+export function turnLaneOffset(tags, profile, direction, laneIndex) {
+  const layout = roadLaneLayout(tags, profile);
+  if (!layout || !Number.isInteger(laneIndex) || laneIndex < 0) return null;
+  const count = layout[direction];
+  if (!(count > laneIndex)) return null;
+  const index = direction === 'backward' ? layout.backward - 1 - laneIndex
+    : layout.backward + layout.shared + laneIndex;
+  return profile.width / 2 - profile.width * (index + 0.5) / layout.lanes;
+}
+
+/** Ontario Book 11 urban/rural dash templates; actual exceptions require survey. */
+export function roadDashPattern(tags = {}) {
+  return { length: 3, period: /^(motorway|trunk)(?:_link)?$/.test(tags.highway || '')
+    || Number.parseFloat(tags.maxspeed) >= 90 ? 12 : 9 };
 }
 
 const TURN_SYMBOLS = new Set(['left', 'slight_left', 'sharp_left', 'through', 'right', 'slight_right', 'sharp_right', 'reverse', 'merge_to_left', 'merge_to_right']);
@@ -70,7 +100,7 @@ const TURN_SYMBOLS = new Set(['left', 'slight_left', 'sharp_left', 'through', 'r
 function turnLaneSymbols(value) {
   return String(value || '').split('|').map((lane) => {
     const choices = lane.split(';').map((choice) => choice.trim().toLowerCase()).filter(Boolean);
-    return choices.find((choice) => TURN_SYMBOLS.has(choice)) || null;
+    return choices.filter((choice) => TURN_SYMBOLS.has(choice)).join(';') || null;
   });
 }
 

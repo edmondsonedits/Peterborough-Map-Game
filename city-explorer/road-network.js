@@ -64,12 +64,15 @@ export function isRoadOneWay(tags = {}) {
 }
 
 export function mappedLaneCount(tags = {}) {
-  const lanes = Number.parseFloat(tags.lanes);
-  if (Number.isFinite(lanes) && lanes > 0) return Math.max(1, Math.round(lanes));
-  const forward = Number.parseFloat(tags['lanes:forward']);
-  const backward = Number.parseFloat(tags['lanes:backward']);
-  if (Number.isFinite(forward) || Number.isFinite(backward)) {
-    return Math.max(1, Math.round((forward || 0) + (backward || 0)));
+  const parse = (value) => /^\d+$/.test(String(value ?? '')) ? Number(value) : null;
+  const lanes = parse(tags.lanes);
+  if (lanes > 0 && lanes <= 20) return lanes;
+  const forward = parse(tags['lanes:forward']);
+  const backward = parse(tags['lanes:backward']);
+  const shared = parse(tags['lanes:both_ways']) || 0;
+  if (forward !== null || backward !== null) {
+    const total = (forward || 0) + (backward || 0) + shared;
+    return total > 0 && total <= 20 ? total : null;
   }
   return null;
 }

@@ -14,7 +14,7 @@ assert.equal(shouldRenderUrbanCurb({ highway: 'secondary', maxspeed: '80' }, {})
 assert.equal(shouldRenderUrbanCurb({ highway: 'secondary', lit: 'yes' }, {}), true);
 assert.equal(shouldRenderUrbanCurb({ highway: 'motorway' }, {}), false);
 assert.deepEqual(mappedCycleLaneSides({ cycleway: 'lane' }), ['left', 'right']);
-assert.deepEqual(mappedCycleLaneSides({ 'cycleway:right': 'track' }), ['right']);
+assert.deepEqual(mappedCycleLaneSides({ 'cycleway:right': 'track' }), []);
 assert.deepEqual(mappedCycleLaneSides({ cycleway: 'shared_lane' }), []);
 assert.deepEqual(
   roadLaneMarkingBoundaries(
@@ -46,7 +46,7 @@ assert.deepEqual(
     { highway: 'secondary', lanes: '2', overtaking: 'yes' },
     { highway: 'secondary', lanes: 2, oneWay: false },
   ),
-  [{ boundary: 1, materialKey: 'roadPaintYellow', pattern: 'dash' }],
+  [{ boundary: 1, materialKey: 'roadPaintYellow', pattern: 'solid' }],
 );
 assert.deepEqual(
   roadLaneMarkingBoundaries(
@@ -60,7 +60,7 @@ assert.deepEqual(
     { oneway: 'yes', 'turn:lanes': 'left|none|through;right' },
     { oneWay: true },
   ),
-  [{ direction: 'forward', symbols: ['left', null, 'through'], oneWay: true }],
+  [{ direction: 'forward', symbols: ['left', null, 'through;right'], oneWay: true }],
 );
 assert.deepEqual(
   mappedTurnLaneGroups(

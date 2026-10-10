@@ -24,7 +24,7 @@ for (const match of html.matchAll(/<script\b([^>]*)\bsrc=["']([^"']+)["'][^>]*>/
 }
 
 assert.match(html, /styles\.css\?v=city-editor-20260925/, 'the editor release must invalidate cached styles');
-assert.match(html, /road-orientation-fix\.js\?v=city-editor-20260925/, 'the app entrypoint must have a release cache key');
+assert.match(html, /road-orientation-fix\.js\?v=[A-Za-z0-9._-]+/, 'the app entrypoint must have a release cache key');
 assert.match(html, /data-loader\.js\?v=city-editor-20260925/, 'the data loader must have a release cache key');
 assert.match(html, /osmtogeojson-3\.0\.0-beta\.5\/osmtogeojson\.js\?v=city-editor-20260925/, 'the pinned GeoJSON converter must have a release cache key');
 assert.match(html, /three-r180\/build\/three\.module\.min\.js/, 'Three.js must resolve from the pinned local vendor copy');

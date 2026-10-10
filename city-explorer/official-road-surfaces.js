@@ -37,6 +37,19 @@ export function officialBridgeIsVehicular(properties = {}) {
  * XY source outlines remain unchanged; this index owns no inferred geography.
  * A height hint retains the current deck at grade-separated crossings.
  */
+function clipPaintHalfPlane(polygon, distance) {
+  const result=[];
+  for (let i=0;i<polygon.length;i++) {
+    const a=polygon[i], b=polygon[(i+1)%polygon.length], da=distance(a), db=distance(b);
+    if (da >= -1e-9) result.push(a);
+    if ((da >= -1e-9) !== (db >= -1e-9)) {
+      const t=da/(da-db);
+      result.push({x:a.x+(b.x-a.x)*t,z:a.z+(b.z-a.z)*t});
+    }
+  }
+  return result;
+}
+
 export class RenderedPavementIndex {
   constructor(cellSize = 60) {
     if (!Number.isFinite(cellSize) || cellSize <= 0) throw new RangeError('Invalid pavement cell size');
@@ -67,6 +80,60 @@ export class RenderedPavementIndex {
     }
     this.triangleCount += 1;
     return true;
+  }
+
+  /** Project a convex paint footprint onto the EXACT rendered Float32 faces.
+   * Clips at road edges and holes instead of letting a long floating box cross
+   * traffic islands. Adjacent faces keep their actual planes; no height averaging.
+   * Distinct bridge decks are selected with the caller's road-height hint.
+   */
+  projectPaintPolygon(polygon, referenceHeight = null, options = {}) {
+    if (!Array.isArray(polygon) || polygon.length < 3
+      || !polygon.every(p => Number.isFinite(p.x) && Number.isFinite(p.z))) return [];
+    const minX = Math.min(...polygon.map(p => p.x)), maxX = Math.max(...polygon.map(p => p.x));
+    const minZ = Math.min(...polygon.map(p => p.z)), maxZ = Math.max(...polygon.map(p => p.z));
+    const candidates = new Set();
+    for (let x = Math.floor(minX / this.cellSize); x <= Math.floor(maxX / this.cellSize); x++) {
+      for (let z = Math.floor(minZ / this.cellSize); z <= Math.floor(maxZ / this.cellSize); z++) {
+        for (const face of this.cells.get(`${x}:${z}`) || []) candidates.add(face);
+      }
+    }
+    const result = [];
+    const offset = options.offset ?? 0.006;
+    if (!Number.isFinite(offset) || offset < 0 || offset > 0.1) throw new RangeError('Invalid paint offset');
+    const includeBridges = options.includeBridges ?? Boolean(options.bridge);
+    for (const face of candidates) {
+      if (face.metadata.layer === 'parking_surfaces' || (!includeBridges && face.metadata.layer === 'bridges')) continue;
+      const a = {x:face.ax,z:face.az}, b = {x:face.ax+face.ux,z:face.az+face.uz}, c = {x:face.ax+face.vx,z:face.az+face.vz};
+      if (Math.max(a.x,b.x,c.x)<minX || Math.min(a.x,b.x,c.x)>maxX
+        || Math.max(a.z,b.z,c.z)<minZ || Math.min(a.z,b.z,c.z)>maxZ) continue;
+      const sign = Math.sign(1 / face.inverse);
+      let clipped = polygon;
+      for (const [u,v] of [[a,b],[b,c],[c,a]]) {
+        clipped = clipPaintHalfPlane(clipped, p => sign*((v.x-u.x)*(p.z-u.z)-(v.z-u.z)*(p.x-u.x)));
+        if (clipped.length < 3) break;
+      }
+      if (clipped.length < 3) continue;
+      const heightAt = p => {
+        const dx=p.x-face.ax, dz=p.z-face.az;
+        return face.ay + (dx*face.vz-dz*face.vx)*face.inverse*face.dyB
+          + (face.ux*dz-face.uz*dx)*face.inverse*face.dyC;
+      };
+      const centre = clipped.reduce((p,q)=>({x:p.x+q.x/clipped.length,z:p.z+q.z/clipped.length}),{x:0,z:0});
+      const owner = this.sample(centre.x,centre.z,referenceHeight,{includeParking:false,includeBridges});
+      // Do not paint a lower carriageway from an upper-deck way, or vice versa.
+      // Near-coincident municipal faces are allowed; the visible upper face owns
+      // its own paint, rather than a midpoint guess bridging the two surfaces.
+      if (owner && Math.abs(heightAt(centre)-owner.height) > 0.05) continue;
+      for (let i=1;i+1<clipped.length;i++) {
+        const points=[clipped[0],clipped[i],clipped[i+1]];
+        const area=(points[1].x-points[0].x)*(points[2].z-points[0].z)-(points[1].z-points[0].z)*(points[2].x-points[0].x);
+        if (Math.abs(area)<1e-10) continue;
+        if (area>0) [points[1],points[2]]=[points[2],points[1]];
+        result.push(points.map(p=>({x:p.x,y:heightAt(p)+offset,z:p.z})));
+      }
+    }
+    return result;
   }
 
   sample(x, z, referenceHeight = null, { includeParking = true, includeBridges = true } = {}) {

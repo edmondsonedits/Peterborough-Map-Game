@@ -61,16 +61,9 @@ def orn_lanes():
 
 def imagery():
     url = 'https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_Imagery/Ontario_Imagery_Web_Map_Service/MapServer'
-    sites = [
-        ('sherbrooke-station', 44.30074, -78.3221),
-        ('george-downtown', 44.3027, -78.3191),
-        ('water-downtown', 44.3040, -78.3175),
-        ('lansdowne', 44.2890, -78.3390),
-        ('parkhill', 44.3145, -78.3380),
-        ('residential-rubidge', 44.3032, -78.3260),
-        ('chemong', 44.3250, -78.3334),
-        ('ashburnham', 44.2960, -78.3037),
-    ]
+    from pathlib import Path
+    review_sites = json.loads(Path('city-explorer/data/street-review-sites.json').read_text())
+    sites = [(s['id'], s['lat'], s['lon']) for s in review_sites]
     results = []
     for name, lat, lon in sites:
         dx = 100 / (111320 * math.cos(math.radians(lat)))

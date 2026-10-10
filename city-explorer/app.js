@@ -1,6 +1,7 @@
 import { recordSherbrookeBuilding, recordSherbrookeSidewalk, sherbrookeBuildings } from './sherbrooke-plan.js';
 import { installSherbrookeDetails } from './sherbrooke-details.js';
 import * as THREE from 'three';
+import { renderStreetPaint } from './street-paint-renderer.js?v=street-audit-20261010';
 import { reconcileStationPavement } from './station-pavement-layer.js?v=1.6.57';
 import { CURB_REVEAL, curbIsRaised, stationRoadWeight, splitRoadDetailSegment, pavementSupportBottom } from './station-road-detail.js?v=1.6.58';
 import { installQualityCapture } from './quality-capture.js?v=sherbrooke-20260915';
@@ -25,11 +26,11 @@ import {
   createBuildingFootprintPlacement,
   createPeterboroughLandmarks,
 } from './landmark-models.js?v=1.5.5-streets4';
-import { ROAD_SURFACE_CLEARANCE, RoadSurfaceIndex, laneCountFor, reconcileRoadNetworkElevations, roadProfile, roadRibbonCrossSections, resampleRoadLine } from './road-network.js?v=1.5.5-r10';
+import { ROAD_SURFACE_CLEARANCE, RoadSurfaceIndex, laneCountFor, reconcileRoadNetworkElevations, roadProfile, roadRibbonCrossSections, resampleRoadLine } from './road-network.js?v=street-audit-20261010';
 import { solveFallbackJunctions, polygonArea as junctionPolygonArea } from './fallback-junction-geometry.js';
 import { officialRoadMeshEdgeLength, officialCurbDisplayMode, nearbyMunicipalRoadHeight, municipalCurbTop } from './citywide-road-quality.js';
 import { sampleTruckWheelContacts, truckIsOnRoad } from './road-wheel-contact.js';
-import { OfficialDrivableSurfaceIndex, RenderedPavementIndex, officialSurfaceStatusActive, officialBridgeIsVehicular } from './official-road-surfaces.js?v=1.5.6-bridge-use1';
+import { OfficialDrivableSurfaceIndex, RenderedPavementIndex, officialSurfaceStatusActive, officialBridgeIsVehicular } from './official-road-surfaces.js?v=street-audit-20261010';
 import { FLY_TUNING, adjustFlySpeedScale, applyFlyLookDelta, dampingFactors, flyAxesFromKeys, flySpeedFor, flyYawToward, isFlyControlCode, wrapFlyYaw } from './fly-controls.js?v=1.5.5-fly4';
 import { clearLandCoverRaster, paintLandCoverPolygon } from './land-cover-raster.js?v=1.5.5-raster1';
 import { sampleOfficialTerrainElevation, validOfficialTerrainMetadata } from './terrain-heightmap.js?v=1.5.5-lidar1';
@@ -44,7 +45,7 @@ import {
   roadLaneMarkingBoundaries,
   selectStreetSignIntersections,
   shouldRenderUrbanCurb,
-} from './city-detail-rules.js?v=1.5.5-streets3';
+} from './city-detail-rules.js?v=street-audit-20261010';
 import {
   createSkyAtmosphere,
   installWorldSurfaceDetail,
@@ -2134,6 +2135,7 @@ function finalizeRoadLines(roadLines, buckets, roadBatches) {
     const rangeStarts = captureBatchLengths(roadBatches);
     appendRoadRibbon(line, roadBatches);
     line.generatedBatchRanges = namespacedRanges(roadBatches, rangeStarts);
+    const paintSides = roadRibbonCrossSections(line.samples, line.profile.width);
     for (let index = 1; index < line.samples.length; index += 1) {
       const a = line.samples[index - 1];
       const b = line.samples[index];
@@ -2143,6 +2145,8 @@ function finalizeRoadLines(roadLines, buckets, roadBatches) {
         aLineEndpoint: index === 1,
         aSourceVertex: a.sourceVertex,
         aY: a.height,
+        paintA: paintSides[index - 1],
+        paintB: paintSides[index],
         bLineEndpoint: index === line.samples.length - 1,
         bSourceVertex: b.sourceVertex,
         bY: b.height,
@@ -2757,255 +2761,13 @@ function buildMapRoadLines(segments) {
 }
 
 function buildRoadMarkings(segments) {
-  const groups = new Map();
-  const roadNodes = new Map();
-  const nodeKey = (point) => `${Math.round(point.x * 20)}:${Math.round(point.y * 20)}`;
-  const recordPublicRoadNode = (segment, endpoint) => {
-    const profile = segment.profile || roadProfile(segment.tags || {});
-    const sourceVertex = endpoint === 'a' ? segment.aSourceVertex : segment.bSourceVertex;
-    if (!sourceVertex || !profile || profile.renderClass === 'service') return;
-    const point = endpoint === 'a' ? segment.a : segment.b;
-    const key = nodeKey(point);
-    if (!roadNodes.has(key)) roadNodes.set(key, { lines: new Set(), names: new Set() });
-    const node = roadNodes.get(key);
-    node.lines.add(segment.lineId);
-    const name = String(segment.name || segment.tags?.name || '').trim().toLowerCase();
-    if (name) node.names.add(name);
-  };
-  segments.forEach((segment) => {
-    recordPublicRoadNode(segment, 'a');
-    recordPublicRoadNode(segment, 'b');
-  });
-  const isTrueIntersection = (segment, endpoint) => {
-    const sourceVertex = endpoint === 'a' ? segment.aSourceVertex : segment.bSourceVertex;
-    if (!sourceVertex) return false;
-    const point = endpoint === 'a' ? segment.a : segment.b;
-    const node = roadNodes.get(nodeKey(point));
-    return Boolean(node && (node.names.size > 1 || node.lines.size >= 3));
-  };
-  const addMarking = (marking, materialKey, kind, lineId) => {
-    const tile = roadRenderTileCoordinates(marking.x, marking.z);
-    const key = `${tile.x}:${tile.z}:${materialKey}:${kind}`;
-    if (!groups.has(key)) groups.set(key, { kind, markings: [], materialKey, tile });
-    groups.get(key).markings.push({ ...marking, lineId });
-  };
-
-  for (const segment of segments) {
-    const tags = segment.tags || {};
-    const profile = segment.profile || roadProfile(tags);
-    if (!profile || profile.unpaved || profile.tunnel || tags.junction === 'roundabout' || tags.lane_markings === 'no') continue;
-    const dx = segment.b.x - segment.a.x;
-    const dz = segment.b.y - segment.a.y;
-    const planarLength = Math.hypot(dx, dz);
-    if (planarLength < 0.5) continue;
-    const sideX = dz / planarLength;
-    const sideZ = -dx / planarLength;
-    const dy = segment.bY - segment.aY;
-    const direction = new THREE.Vector3(dx, dy, dz).normalize();
-
-    // Only render cycle-lane separators where OSM explicitly maps a lane,
-    // track, shoulder, or bus-shared lane. Untagged streets are never guessed.
-    mappedCycleLaneSides(tags).forEach((mappedSide) => {
-      const side = mappedSide === 'left' ? 1 : -1;
-      const offset = side * Math.max(0.45, segment.width / 2 - 1.52);
-      addMarking({
-        direction,
-        length: Math.hypot(dx, dy, dz) + 0.06,
-        x: (segment.a.x + segment.b.x) / 2 + sideX * offset,
-        y: (segment.aY + segment.bY) / 2 + 0.019,
-        z: (segment.a.y + segment.b.y) / 2 + sideZ * offset,
-      }, 'roadPaintWhite', 'cycle-edge', segment.lineId);
-    });
-
-    const lanes = laneCountFor(tags);
-    const boundaries = roadLaneMarkingBoundaries(tags, { ...profile, lanes });
-    if (!boundaries.length) continue;
-    const period = 10.5;
-    const dashLength = 4.2;
-    const chainStart = segment.chainStart || 0;
-    const chainEnd = chainStart + planarLength;
-    const firstDash = Math.floor(chainStart / period) * period;
-    const junctionTrim = Math.max(2.8, segment.width * 0.62);
-    const localMinimum = isTrueIntersection(segment, 'a') ? Math.min(planarLength / 2, junctionTrim) : 0;
-    const localMaximum = planarLength - (isTrueIntersection(segment, 'b') ? Math.min(planarLength / 2, junctionTrim) : 0);
-    if (localMaximum - localMinimum < 0.35) continue;
-
-    for (const boundaryRule of boundaries) {
-      const offset = -segment.width / 2 + segment.width * boundaryRule.boundary / lanes;
-      if (boundaryRule.pattern === 'solid') {
-        const localMiddle = (localMinimum + localMaximum) / 2;
-        const t = localMiddle / planarLength;
-        addMarking({
-          direction,
-          length: localMaximum - localMinimum,
-          x: THREE.MathUtils.lerp(segment.a.x, segment.b.x, t) + sideX * offset,
-          y: THREE.MathUtils.lerp(segment.aY, segment.bY, t) + 0.018,
-          z: THREE.MathUtils.lerp(segment.a.y, segment.b.y, t) + sideZ * offset,
-        }, boundaryRule.materialKey, 'solid', segment.lineId);
-        continue;
-      }
-      for (let dashStart = firstDash; dashStart < chainEnd; dashStart += period) {
-        const localStart = Math.max(localMinimum, dashStart - chainStart);
-        const localEnd = Math.min(localMaximum, dashStart + dashLength - chainStart);
-        if (localEnd - localStart < 0.35) continue;
-        const localMiddle = (localStart + localEnd) / 2;
-        const t = localMiddle / planarLength;
-        const centerX = THREE.MathUtils.lerp(segment.a.x, segment.b.x, t);
-        const centerZ = THREE.MathUtils.lerp(segment.a.y, segment.b.y, t);
-        addMarking({
-          direction,
-          length: localEnd - localStart,
-          x: centerX + sideX * offset,
-          y: THREE.MathUtils.lerp(segment.aY, segment.bY, t) + 0.018,
-          z: centerZ + sideZ * offset,
-        }, boundaryRule.materialKey, 'dash', segment.lineId);
-      }
-    }
-
-    if (/^(motorway|trunk)(?:_link)?$/.test(profile.highway)) {
-      [-1, 1].forEach((side) => {
-        const offset = side * Math.max(0.5, segment.width / 2 - 0.2);
-        addMarking({
-          direction,
-          length: Math.hypot(dx, dy, dz) + 0.08,
-          x: (segment.a.x + segment.b.x) / 2 + sideX * offset,
-          y: (segment.aY + segment.bY) / 2 + 0.017,
-          z: (segment.a.y + segment.b.y) / 2 + sideZ * offset,
-        }, 'roadPaintWhite', 'edge', segment.lineId);
-      });
-    }
-  }
-
-  const dashGeometry = new THREE.BoxGeometry(0.15, 0.025, 1);
-  const edgeGeometry = new THREE.BoxGeometry(0.13, 0.024, 1);
-  const dummy = new THREE.Object3D();
-  let markingCount = 0;
-  groups.forEach(({ kind, markings, materialKey, tile }) => {
-    const mesh = new THREE.InstancedMesh(kind === 'dash' ? dashGeometry : edgeGeometry, materials[materialKey], markings.length);
-    markings.forEach((marking, index) => {
-      dummy.position.set(marking.x, marking.y, marking.z);
-      setRoadQuaternion(dummy, marking.direction);
-      dummy.scale.set(1, 1, marking.length);
-      dummy.updateMatrix();
-      mesh.setMatrixAt(index, dummy.matrix);
-      attachRoadInstance(marking.lineId, mesh, index);
-    });
-    mesh.instanceMatrix.needsUpdate = true;
-    mesh.computeBoundingSphere();
-    mesh.renderOrder = 6;
-    mesh.userData = {
-      type: kind === 'dash'
-        ? 'road-lane-dashes'
-        : kind === 'solid'
-          ? 'road-centre-lines'
-          : kind === 'cycle-edge' ? 'mapped-cycle-lane-edges' : 'road-edge-lines',
-      material: materialKey,
-      tile,
-      tileSize: ROAD_RENDER_TILE_SIZE,
-      count: markings.length,
-    };
-    streetscapeGroup.add(mesh);
-    markingCount += markings.length;
-  });
-  state.objectCount += markingCount;
-}
-
-function turnArrowGeometry(kind) {
-  const positions = [];
-  const addTriangle2d = (a, b, c) => positions.push(a[0], 0, a[1], b[0], 0, b[1], c[0], 0, c[1]);
-  const addQuad2d = (a, b, c, d) => {
-    addTriangle2d(a, b, c);
-    addTriangle2d(a, c, d);
-  };
-  const turnLeft = /left|reverse/.test(kind);
-  const turnRight = /right/.test(kind);
-  if (!turnLeft && !turnRight) {
-    addQuad2d([-0.14, -1.8], [0.14, -1.8], [0.14, 0.62], [-0.14, 0.62]);
-    addTriangle2d([-0.68, 0.52], [0.68, 0.52], [0, 1.72]);
-  } else {
-    const side = turnLeft ? -1 : 1;
-    addQuad2d([-0.14, -1.75], [0.14, -1.75], [0.14, 0.48], [-0.14, 0.48]);
-    addQuad2d([0, 0.24], [side * 1.02, 0.24], [side * 1.02, 0.52], [0, 0.52]);
-    addTriangle2d([side * 1.58, 0.38], [side * 0.82, -0.25], [side * 0.82, 1.01]);
-  }
-  const geometry = new THREE.BufferGeometry();
-  geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-  geometry.computeVertexNormals();
-  geometry.computeBoundingSphere();
-  return geometry;
-}
-
-function buildMappedTurnArrows(segments) {
-  const lines = new Map();
-  segments.forEach((segment) => {
-    if (!segment.lineId || !mappedTurnLaneGroups(segment.tags, segment.profile).length) return;
-    if (!lines.has(segment.lineId)) lines.set(segment.lineId, []);
-    lines.get(segment.lineId).push(segment);
-  });
-  const arrows = { left: [], right: [], through: [] };
-  const normalizedKind = (symbol) => /left|reverse/.test(symbol) ? 'left' : /right/.test(symbol) ? 'right' : 'through';
-  for (const lineSegments of lines.values()) {
-    lineSegments.sort((a, b) => (a.chainStart || 0) - (b.chainStart || 0));
-    const exemplar = lineSegments[0];
-    const lineLength = exemplar.lineLength || lineSegments.reduce((sum, segment) => sum + segment.a.distanceTo(segment.b), 0);
-    const groups = mappedTurnLaneGroups(exemplar.tags, exemplar.profile);
-    groups.forEach((group) => {
-      const targetDistance = group.direction === 'forward'
-        ? Math.max(lineLength * 0.5, lineLength - 13)
-        : Math.min(lineLength * 0.5, 13);
-      const segment = lineSegments.find((candidate) => {
-        const length = candidate.a.distanceTo(candidate.b);
-        return targetDistance >= (candidate.chainStart || 0) - 0.01
-          && targetDistance <= (candidate.chainStart || 0) + length + 0.01;
-      }) || (group.direction === 'forward' ? lineSegments.at(-1) : lineSegments[0]);
-      const segmentLength = Math.max(0.001, segment.a.distanceTo(segment.b));
-      const t = THREE.MathUtils.clamp((targetDistance - (segment.chainStart || 0)) / segmentLength, 0.15, 0.85);
-      const reverse = group.direction === 'backward';
-      const dx = (segment.b.x - segment.a.x) * (reverse ? -1 : 1);
-      const dz = (segment.b.y - segment.a.y) * (reverse ? -1 : 1);
-      const dy = (segment.bY - segment.aY) * (reverse ? -1 : 1);
-      const direction = new THREE.Vector3(dx, dy, dz).normalize();
-      const sideX = dz / Math.max(0.001, Math.hypot(dx, dz));
-      const sideZ = -dx / Math.max(0.001, Math.hypot(dx, dz));
-      const totalLanes = Math.max(group.symbols.length * (group.oneWay ? 1 : 2), laneCountFor(segment.tags));
-      const laneWidth = segment.width / totalLanes;
-      group.symbols.forEach((symbol, laneIndex) => {
-        if (!symbol) return;
-        const offset = group.oneWay
-          ? -segment.width / 2 + laneWidth * (laneIndex + 0.5)
-          : laneWidth * (laneIndex + 0.5);
-        arrows[normalizedKind(symbol)].push({
-          direction,
-          lineId: segment.lineId,
-          x: THREE.MathUtils.lerp(segment.a.x, segment.b.x, t) + sideX * offset,
-          y: THREE.MathUtils.lerp(segment.aY, segment.bY, t) + 0.026,
-          z: THREE.MathUtils.lerp(segment.a.y, segment.b.y, t) + sideZ * offset,
-        });
-      });
-    });
-  }
-  const dummy = new THREE.Object3D();
-  let count = 0;
-  Object.entries(arrows).forEach(([kind, entries]) => {
-    if (!entries.length) return;
-    const mesh = new THREE.InstancedMesh(turnArrowGeometry(kind), materials.roadPaintWhite, entries.length);
-    entries.forEach((entry, index) => {
-      dummy.position.set(entry.x, entry.y, entry.z);
-      setRoadQuaternion(dummy, entry.direction);
-      dummy.scale.setScalar(1);
-      dummy.updateMatrix();
-      mesh.setMatrixAt(index, dummy.matrix);
-      attachRoadInstance(entry.lineId, mesh, index);
-    });
-    mesh.instanceMatrix.needsUpdate = true;
-    mesh.computeBoundingSphere();
-    mesh.renderOrder = 7;
-    mesh.userData = { type: 'mapped-turn-arrows', kind, count: entries.length };
-    streetscapeGroup.add(mesh);
-    count += entries.length;
-  });
-  document.documentElement.dataset.mappedTurnArrows = String(count);
-  state.objectCount += count;
+  if (!segments?.length) return;
+  const stats = renderStreetPaint({ THREE, segments, pavementIndex: state.renderedPavementIndex,
+    materials, group: streetscapeGroup, tileAt: roadRenderTileCoordinates,
+    tileSize: ROAD_RENDER_TILE_SIZE, attach: attachRoadInstance });
+  state.objectCount += stats.triangles;
+  document.documentElement.dataset.streetPaint = JSON.stringify(stats);
+  document.documentElement.dataset.mappedTurnArrows = String(stats.arrowIntents);
 }
 
 function buildCrossings(crossings) {
@@ -4227,8 +3989,7 @@ async function parseOsmWithGeoJson(data) {
     const fallbackTrims = buildRoadJunctions(roadSegments);
     buildUrbanCurbs(roadSegments, fallbackTrims);
   }
-  buildRoadMarkings(roadSegments);
-  buildMappedTurnArrows(roadSegments);
+  state.pendingRoadPaint = roadSegments;
   buildCrossings(crossings);
   buildBridgeDetails(roadSegments);
   buildTunnelStructures(roadSegments);
@@ -4312,8 +4073,7 @@ function parseOsmWayFallback(data) {
     const fallbackTrims = buildRoadJunctions(roadSegments);
     buildUrbanCurbs(roadSegments, fallbackTrims);
   }
-  buildRoadMarkings(roadSegments);
-  buildMappedTurnArrows(roadSegments);
+  state.pendingRoadPaint = roadSegments;
   buildCrossings(crossings);
   buildBridgeDetails(roadSegments);
   buildTunnelStructures(roadSegments);
@@ -4390,8 +4150,7 @@ function buildFallbackCity() {
     const fallbackTrims = buildRoadJunctions(roadSegments);
     buildUrbanCurbs(roadSegments, fallbackTrims);
   }
-  buildRoadMarkings(roadSegments);
-  buildMappedTurnArrows(roadSegments);
+  state.pendingRoadPaint = roadSegments;
   buildStreetNameSigns(roadSegments);
 
   const river = [
@@ -4563,6 +4322,12 @@ async function buildCity() {
     await nextFrame();
     summary.cityOpenData = buildCityOpenData(cityOpenData);
   }
+  // Markings must be built AFTER the municipal and Station 1 pavement faces.
+  // The former early OSM-height pass could bury paint or float it above asphalt.
+  setProgress(94, 'Fitting lane markings to the actual street surfaces…');
+  await nextFrame();
+  buildRoadMarkings(state.pendingRoadPaint);
+  state.pendingRoadPaint = null;
   // All OSM and municipal polygons are now available. Paint once in a fixed
   // class-priority order so overlaps do not depend on source feature order.
   flushLandCoverRaster();
