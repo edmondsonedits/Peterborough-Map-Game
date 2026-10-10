@@ -2,6 +2,11 @@ name: City Explorer Browser QA
 
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - 'city-explorer/**'
+      - 'tools/**'
+      - '.github/workflows/city-explorer-browser-qa.yml'
   push:
     branches: [main]
     paths:
@@ -44,6 +49,21 @@ jobs:
 
       - name: Run authored scene runtime unit tests
         run: node tools/test_authored_scene_runtime.mjs
+
+      - name: Verify road geometry and driver contact regressions
+        run: |
+          node --check city-explorer/app.js
+          node --check city-explorer/citywide-road-quality.js
+          node --check city-explorer/fallback-junction-geometry.js
+          node --check city-explorer/road-wheel-contact.js
+          node tools/test_citywide_road_quality.mjs
+          node tools/test_fallback_junction_geometry.mjs
+          node tools/test_station_road_detail.mjs
+          node tools/test_gameplay_systems.mjs
+          node tools/test_official_road_surface_index.mjs
+          node tools/test_rendered_pavement.mjs
+          node tools/geospatial/test_road_network.mjs
+          node tools/geospatial/test_road_terrain_clearance.mjs
 
       - name: Install Playwright test runtime
         run: |
