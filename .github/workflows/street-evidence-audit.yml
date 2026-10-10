@@ -9,15 +9,30 @@ permissions:
 jobs:
   collect:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
       - name: Collect bounded public road evidence
-        run: python tools/geospatial/collect_street_evidence.py
+        run: |
+          python tools/geospatial/collect_street_evidence.py
+          python tools/geospatial/collect_lane_records.py
+      - name: Install browser test runtime
+        run: |
+          npm install --no-save --no-package-lock playwright@1.55.0
+          npx playwright install chromium
+      - name: Capture street baseline
+        run: |
+          python3 -m http.server 4174 --bind 127.0.0.1 >/tmp/street-http.log 2>&1 &
+          sleep 2
+          node tools/check-street-visuals.cjs http://127.0.0.1:4174
       - name: Package exact source and tests without repository credentials
+        if: always()
         run: git archive --format=tar.gz --output=artifacts/street-evidence/source.tar.gz HEAD
       - uses: actions/upload-artifact@v4
         if: always()
