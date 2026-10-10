@@ -48,3 +48,35 @@ test('hospital area persistence failure leaves both runtime records and draft in
 test('hospital base failure rolls back the area write and retains its draft',()=>{
  const{c,values,old,draft}=hospitalContext(false,true);assert.throws(()=>c.save({}),/Base denied/);assert.equal(values.get('area'),'old-json');assert.equal(c.current,old);assert.equal(c.staged,draft);
 });
+
+test('route starts project the selected spawn onto the public road without changing the base',()=>{
+ const base={lat:44.300942,lng:-78.322201,spawnLat:44.301,spawnLng:-78.322},street={lat:44.30055,lng:-78.322,road:'Sherbrooke Street'},seen=[];
+ const c=vm.createContext({state:{graph:{}},nearestRoad:(lat,lng)=>{seen.push({lat,lng});return street;}});
+ vm.runInContext(slice(route,'  function basePoint(','  function callPoint('),c);
+ const point=c.basePoint(base);
+ assert.equal(point.lat,street.lat);assert.equal(point.lng,street.lng);
+ assert.equal(seen[0].lat,base.spawnLat);assert.equal(seen[0].lng,base.spawnLng);
+ assert.equal(base.lat,44.300942);assert.equal(base.spawnLat,44.301);
+});
+
+test('route start retains the selected coordinate until road data is ready or a match exists',()=>{
+ const base={lat:44.3,lng:-78.32};
+ const c=vm.createContext({state:{graph:null},nearestRoad:()=>null});
+ vm.runInContext(slice(route,'  function basePoint(','  function callPoint('),c);
+ assert.equal(c.basePoint(base).lat,base.lat);assert.equal(c.basePoint(base).lng,base.lng);
+ c.state.graph={};assert.equal(c.basePoint(base).lat,base.lat);
+});
+
+test('Station 1 departure lies on Sherbrooke Street in the packaged road graph',()=>{
+ const c=vm.createContext({state:{graph:null}});
+ vm.runInContext(slice(route,'  const CONFIG =','  const ui =')+
+   slice(route,'  function toXY(','  function clamp(')+
+   slice(route,'  function nearbySegments(','  function nearestRoadForStroke(')+
+   slice(route,'  function basePoint(','  function callPoint('),c);
+ c.state.graph=c.buildGraph(JSON.parse(read('city-explorer/data/osm-public-roads.geojson')));
+ const base={lat:44.30102,lng:-78.32202,spawnLat:44.300942,spawnLng:-78.322201};
+ const point=c.basePoint(base),road=c.nearestRoad(point.lat,point.lng,260);
+ assert.equal(road.road,'Sherbrooke Street');
+ assert.ok(road.distance<.01,'departure should be on the road, not the station parcel');
+ assert.ok(c.dist(point,{lat:base.spawnLat,lng:base.spawnLng})>10);
+});

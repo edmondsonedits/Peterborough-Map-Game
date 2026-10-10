@@ -824,7 +824,12 @@
   function icon(className,label){return L.divIcon({className:'',html:'<div class="'+className+'">'+label+'</div>',iconSize:[27,27],iconAnchor:[13,13]});}
   function handleIcon(invalid){return L.divIcon({className:'',html:'<div class="route-handle'+(invalid?' invalid':'')+'"></div>',iconSize:[30,30],iconAnchor:[15,15]});}
 
-  function basePoint(base){return {lat:Number(base.spawnLat||base.lat),lng:Number(base.spawnLng||base.lng)};}
+  function basePoint(base){
+    const point={lat:Number(base.spawnLat??base.lat),lng:Number(base.spawnLng??base.lng)};
+    // Route drawing begins after leaving the yard, on the public road network.
+    const road=state.graph?nearestRoad(point.lat,point.lng,260):null;
+    return road?{lat:road.lat,lng:road.lng}:point;
+  }
   function callPoint(call){return {lat:Number(call.lat),lng:Number(call.lng)};}
 
   function updateMarkers(){
