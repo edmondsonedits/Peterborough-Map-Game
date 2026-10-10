@@ -15,14 +15,14 @@
       for(let x=-cells;x<=cells;x++)for(let y=-cells;y<=cells;y++)for(const id of graph.segmentGrid.get((cx+x)+','+(cy+y))||[])out.add(id);
       return out;
     }
-    function snap(point,tolerance=30,direction,previous){
-      const p=toXY(point.lat,point.lng);let best=null,bestScore=Infinity;
+    function snap(point,tolerance=30,direction,previous,directionBias=.35){
+      const p=toXY(point.lat,point.lng),bias=Number.isFinite(directionBias)?Math.max(0,Math.min(1,directionBias)):.35;let best=null,bestScore=Infinity;
       for(const id of indexes(p,tolerance)){
         const s=graph.segments[id],t=Math.max(0,Math.min(1,((p.x-s.ax)*s.dx+(p.y-s.ay)*s.dy)/s.lengthSq));
         const xy={x:s.ax+s.dx*t,y:s.ay+s.dy*t},gap=Math.hypot(xy.x-p.x,xy.y-p.y);
         if(gap>tolerance)continue;
         const v=direction,alignment=v&&Math.hypot(v.x,v.y)>0?Math.abs((v.x*s.dx+v.y*s.dy)/(Math.hypot(v.x,v.y)*s.length)):1;
-        const score=gap+(1-alignment)*tolerance*.35-(previous?.segmentId===id?2:0);
+        const score=gap+(1-alignment)*tolerance*bias-(previous?.segmentId===id?2:0);
         if(score>=bestScore)continue;
         bestScore=score;best={...pointAt(s,t),segmentId:id,t,road:s.name||'Road',highway:s.highway,distance:gap};
       }
@@ -135,14 +135,21 @@
       }
       return out;
     }
-    function trace(points,{tolerance=30}={}){
+    function trace(points,{tolerance=30,directionBias=.35}={}){
       if(!Array.isArray(points)||points.length<2)throw new Error('Draw farther along the street.');
       const sampled=samples(points,Math.max(6,Math.min(16,tolerance*.6))),edges=[];
       let start=null,previous=null;
       for(let i=0;i<sampled.length;i++){
         const p=sampled[i],before=sampled[Math.max(0,i-1)],after=sampled[Math.min(sampled.length-1,i+1)],a=toXY(before.lat,before.lng),b=toXY(after.lat,after.lng);
-        const current=i===0&&Number.isInteger(points[0].segmentId)?points[0]:snap(p,tolerance,{x:b.x-a.x,y:b.y-a.y},previous);
-        if(!current)throw new Error('Trace closer to the street. This section could not be matched.');
+        const current=i===0&&Number.isInteger(points[0].segmentId)?points[0]:snap(p,tolerance,{x:b.x-a.x,y:b.y-a.y},previous,directionBias);
+        if(!current){
+          const nearest=snap(p,Math.max(200,tolerance*3),null,null,0);
+          const error=new Error(nearest
+            ? 'That section is '+Math.round(nearest.distance)+' m from the mapped street ('+Math.round(tolerance)+' m allowed). Increase Street forgiveness in settings or zoom in.'
+            : 'No mapped street was found near that section. Check the street and Street forgiveness in settings.');
+          error.code='street-gap';error.point={lat:p.lat,lng:p.lng};error.nearestDistance=nearest?.distance??null;error.tolerance=tolerance;
+          throw error;
+        }
         if(!start)start=current;
         if(previous&&(previous.segmentId!==current.segmentId||distance(previous,current)>.05)){
           const gap=distance(previous,current),maxDistance=Math.max(.5,gap*1.8+1);

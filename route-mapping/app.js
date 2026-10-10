@@ -23,6 +23,7 @@
     adaptiveStretchChance: 0.16,
     adaptiveBreatherChance: 0.10,
     progressionStorageKey: 'ptboRouteMappingProgressionV1',
+    tuningStorageKey: 'ptboRouteMappingTuningV1',
     callsPerStationPhase: 20,
     peterboroughCallProximity: 1400,
     continuousMinNextCallDistance: 850,
@@ -53,12 +54,16 @@
     extraDistance:document.getElementById('extra-distance'), resultNote:document.getElementById('result-note'), next:document.getElementById('next-button'),
     settingsButton:document.getElementById('settings-button'), settingsSheet:document.getElementById('settings-sheet'), settingsForm:document.getElementById('settings-form'),
     settingsClose:document.getElementById('settings-close'), serviceSelect:document.getElementById('service-select'), baseSelect:document.getElementById('base-select'),
+    streetForgiveness:document.getElementById('street-forgiveness'), streetForgivenessValue:document.getElementById('street-forgiveness-value'),
+    straightPreference:document.getElementById('straight-preference'), straightPreferenceValue:document.getElementById('straight-preference-value'),
+    arrivalDistance:document.getElementById('arrival-distance'), arrivalDistanceValue:document.getElementById('arrival-distance-value'),
+    challengeFrequency:document.getElementById('challenge-frequency'), challengeFrequencyValue:document.getElementById('challenge-frequency-value'), settingsReset:document.getElementById('settings-reset'),
     error:document.getElementById('loading-error'), errorMessage:document.getElementById('loading-error-message'), retry:document.getElementById('retry-button'), interaction:document.getElementById('interaction-button'), zoomIn:document.getElementById('zoom-in'), zoomOut:document.getElementById('zoom-out'), phaseNote:document.getElementById('phase-note')
   };
 
   const state = {
     map:null, graph:null, traceCore:null, interaction:'draw', endpointMarker:null, calls:[], originalCalls:[], advancedCalls:[], difficultyIndex:null, service:'fire', base:null, call:null, callCount:0, recentCallIds:[], mode:'loading',
-    skillProfiles:null, skillProfile:null, adaptiveTarget:null, progression:null, phase:null, lastDecisionAnalysis:null,
+    skillProfiles:null, skillProfile:null, adaptiveTarget:null, progression:null, phase:null, lastDecisionAnalysis:null, tuning:null,
     rawPoints:[], rawLine:null, drawingPointer:null, originAnchor:null, destinationAnchor:null, history:[], playerRoute:null,
     shortestRoute:null, playerLayers:[], referenceLayers:[], startMarker:null, callMarker:null
   };
@@ -115,6 +120,20 @@
   }
 
   function clamp(value,min,max){ return Math.max(min,Math.min(max,value)); }
+  const DEFAULT_TUNING=Object.freeze({streetForgiveness:12,straightPreference:35,arrivalDistance:40,challengeFrequency:80});
+  function normalizeTuning(raw){
+    const source=raw&&typeof raw==='object'?raw:{};
+    const bounded=(key,min,max)=>{if(source[key]===null||source[key]===''||source[key]===undefined)return DEFAULT_TUNING[key];const value=Number(source[key]);return Number.isFinite(value)?Math.round(clamp(value,min,max)):DEFAULT_TUNING[key];};
+    return {streetForgiveness:bounded('streetForgiveness',6,24),straightPreference:bounded('straightPreference',0,100),arrivalDistance:bounded('arrivalDistance',10,60),challengeFrequency:bounded('challengeFrequency',50,100)};
+  }
+  function loadTuning(){
+    try{return normalizeTuning(JSON.parse(localStorage.getItem(CONFIG.tuningStorageKey)||'null'));}
+    catch(_){return normalizeTuning(null);}
+  }
+  function saveTuning(tuning){
+    state.tuning=normalizeTuning(tuning);
+    try{localStorage.setItem(CONFIG.tuningStorageKey,JSON.stringify(state.tuning));}catch(_){}
+  }
   function percentile(values,fraction){
     const sorted=values.filter(Number.isFinite).slice().sort((a,b)=>a-b);
     if(!sorted.length)return 0;
@@ -499,11 +518,14 @@
     }
     return route;
   }
-  function traceTolerance(){
-    if(!state.map)return 24;
-    const a=state.map.containerPointToLatLng(L.point(0,0)),b=state.map.containerPointToLatLng(L.point(10,0));
-    return clamp(dist(a,b),12,40);
+  function traceTolerance(value=state.tuning){
+    const tuning=normalizeTuning(value),map=state.map;
+    if(!map)return 24*tuning.streetForgiveness/10;
+    const pixels=tuning.streetForgiveness,a=map.containerPointToLatLng(L.point(0,0)),b=map.containerPointToLatLng(L.point(pixels,0));
+    return clamp(dist(a,b),12,90);
   }
+  function traceOptions(value=state.tuning){const tuning=normalizeTuning(value);return {tolerance:traceTolerance(tuning),directionBias:tuning.straightPreference/100};}
+  function arrivalDistance(){return normalizeTuning(state.tuning).arrivalDistance;}
   function setInteraction(value){
     state.interaction=value;
     document.body.classList.toggle('is-drawing-ready',state.mode==='drawing'&&value==='draw');
@@ -593,12 +615,12 @@
     await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
     if(generation!==exerciseGeneration||state.mode!=='snapping')return;
     try{
-      const trace=state.traceCore.trace(state.rawPoints,{tolerance:traceTolerance()});
+      const trace=state.traceCore.trace(state.rawPoints,traceOptions());
       if(trace.distance<3)throw new Error('Draw a little farther along the street.');
       const startPoint=basePoint(state.base),endPoint=callPoint(state.call);
       state.originAnchor=state.traceCore.snap(startPoint,260);state.destinationAnchor=state.traceCore.snap(endPoint,CONFIG.destinationSearchRadius);
       if(!state.destinationAnchor)throw new Error('This call has no road access in the training network.');
-      const route=state.traceCore.finish(state.traceCore.combine(previous,trace),state.destinationAnchor,40);
+      const route=state.traceCore.finish(state.traceCore.combine(previous,trace),state.destinationAnchor,arrivalDistance());
       state.history.push(previous);if(state.history.length>30)state.history.shift();
       state.playerRoute=route;state.shortestRoute=null;clearRaw();renderPlayerRoute();
       state.interaction=route.complete?'pan':'draw';setMode(route.complete?'editing':'drawing');
@@ -972,7 +994,7 @@
     if(!calls.length)return null;
     const challenges=calls.filter(call=>call.decisionAnalysis?.traps?.length);
     const refreshers=calls.filter(call=>!call.decisionAnalysis?.traps?.length);
-    if(challenges.length&&Math.random()<.8)calls=challenges;else if(refreshers.length)calls=refreshers;
+    if(challenges.length&&Math.random()<normalizeTuning(state.tuning).challengeFrequency/100)calls=challenges;else if(refreshers.length)calls=refreshers;
     const profile=state.skillProfile||defaultSkillProfile();
     const calibration=profile.plays<CONFIG.adaptiveCalibrationCalls;
     const band=calibration?18:CONFIG.adaptiveCallBand;
@@ -1010,9 +1032,24 @@
 
   function basesForService(service){const store=window.PTBO_BASE_STORE;if(store&&typeof store.getBases==='function')return store.getBases(service);const profiles=window.PTBO_SERVICE_CONFIG&&window.PTBO_SERVICE_CONFIG.profiles;return profiles&&profiles[service]?profiles[service].bases||[]:[];}
   function fillBases(service,preferredId){const bases=basesForService(service);ui.baseSelect.innerHTML='';bases.forEach(base=>{const option=document.createElement('option');option.value=base.id;option.textContent=(base.shortName||base.name)+' · '+base.address;ui.baseSelect.appendChild(option);});const wanted=bases.find(b=>b.id===preferredId)||bases[0];if(wanted)ui.baseSelect.value=wanted.id;return wanted;}
-  function loadPreferences(){let service='fire';try{service=localStorage.getItem('ptboRouteMappingService')||service;}catch(_){}if(!['fire','ems'].includes(service))service='fire';state.service=service;ui.serviceSelect.value=service;fillBases(service,null);loadSkillProfiles();loadProgression();applyProgressionStart();}
+  function draftTuning(){return normalizeTuning({streetForgiveness:ui.streetForgiveness?.value,straightPreference:ui.straightPreference?.value,arrivalDistance:ui.arrivalDistance?.value,challengeFrequency:ui.challengeFrequency?.value});}
+  function displayTuning(tuning=state.tuning){
+    const values=normalizeTuning(tuning);
+    for(const [input,value] of [[ui.streetForgiveness,values.streetForgiveness],[ui.straightPreference,values.straightPreference],[ui.arrivalDistance,values.arrivalDistance],[ui.challengeFrequency,values.challengeFrequency]])if(input)input.value=String(value);
+    if(ui.streetForgivenessValue){const tolerance=traceTolerance(values);ui.streetForgivenessValue.textContent=values.streetForgiveness+' px · '+Math.round(tolerance)+' m at this zoom';}
+    if(ui.straightPreferenceValue)ui.straightPreferenceValue.textContent=values.straightPreference+'%';
+    if(ui.arrivalDistanceValue)ui.arrivalDistanceValue.textContent=values.arrivalDistance+' m';
+    if(ui.challengeFrequencyValue)ui.challengeFrequencyValue.textContent=values.challengeFrequency+'%';
+  }
+  function applySettings(service,tuning){
+    const serviceChanged=service!==state.service;
+    saveTuning(tuning);
+    if(serviceChanged){state.service=service;loadProgression();state.skillProfile=state.skillProfiles?.[service]||normalizeSkillProfile(null);if(state.skillProfiles&&!state.skillProfiles[service])state.skillProfiles[service]=state.skillProfile;savePreferences();}
+    return serviceChanged;
+  }
+  function loadPreferences(){state.tuning=loadTuning();displayTuning(state.tuning);let service='fire';try{service=localStorage.getItem('ptboRouteMappingService')||service;}catch(_){}if(!['fire','ems'].includes(service))service='fire';state.service=service;ui.serviceSelect.value=service;fillBases(service,null);loadSkillProfiles();loadProgression();applyProgressionStart();}
   function savePreferences(){try{localStorage.setItem('ptboRouteMappingService',state.service);}catch(_){}}
-  function openSettings(){cancelDrawing();ui.serviceSelect.value=state.service;fillBases(state.service,state.base&&state.base.id);ui.phaseNote.textContent=basesForService(state.service).map(b=>b.shortName||b.name).join(' → ')+' → previous call. Each base phase lasts 20 completed calls. CALL marks the nearest mapped public-road access to the address.';if(!ui.settingsSheet.open)ui.settingsSheet.showModal();}
+  function openSettings(){cancelDrawing();ui.serviceSelect.value=state.service;fillBases(state.service,state.base&&state.base.id);displayTuning(state.tuning);ui.phaseNote.textContent=basesForService(state.service).map(b=>b.shortName||b.name).join(' → ')+' → previous call. Each base phase lasts 20 completed calls. CALL marks the nearest mapped public-road access to the address.';if(!ui.settingsSheet.open)ui.settingsSheet.showModal();}
   function closeSettings(){if(ui.settingsSheet.open)ui.settingsSheet.close();}
 
   function initMap(){
@@ -1029,7 +1066,9 @@
     ui.zoomIn.addEventListener('click',()=>state.map.zoomIn());ui.zoomOut.addEventListener('click',()=>state.map.zoomOut());
     ui.clear.addEventListener('click',resetDrawing);ui.undo.addEventListener('click',undo);ui.submit.addEventListener('click',submitRoute);ui.next.addEventListener('click',newCall);ui.settingsButton.addEventListener('click',openSettings);ui.settingsClose.addEventListener('click',closeSettings);ui.retry.addEventListener('click',()=>location.reload());
     ui.serviceSelect.addEventListener('change',()=>{fillBases(ui.serviceSelect.value,null);ui.phaseNote.textContent=basesForService(ui.serviceSelect.value).map(b=>b.shortName||b.name).join(' → ')+' → previous call. Each base phase lasts 20 completed calls. CALL marks the nearest mapped public-road access to the address.';});
-    ui.settingsForm.addEventListener('submit',event=>{event.preventDefault();const service=ui.serviceSelect.value;state.service=service;loadProgression();state.skillProfile=state.skillProfiles?.[service]||normalizeSkillProfile(null);if(state.skillProfiles&&!state.skillProfiles[service])state.skillProfiles[service]=state.skillProfile;savePreferences();closeSettings();newCall();});
+    for(const input of [ui.streetForgiveness,ui.straightPreference,ui.arrivalDistance,ui.challengeFrequency])input?.addEventListener('input',()=>displayTuning(draftTuning()));
+    ui.settingsReset?.addEventListener('click',()=>displayTuning(DEFAULT_TUNING));
+    ui.settingsForm.addEventListener('submit',event=>{event.preventDefault();const changed=applySettings(ui.serviceSelect.value,draftTuning());closeSettings();if(changed)newCall();});
     ui.settingsSheet.addEventListener('click',event=>{if(event.target===ui.settingsSheet)closeSettings();});
   }
 

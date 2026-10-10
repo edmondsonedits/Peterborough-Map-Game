@@ -8,7 +8,7 @@
 **Spec:** ../specs/2026-10-10-route-decisions.md
 
 ## Global constraints
-Local worktree only. Preserve authoritative station/GIS/dispatch records. Completion within 40 m by road. Trace tolerance 12-40 m. Approximately 20% refresher pacing. Keep ratings during weakness migration.
+Local worktree only. Preserve authoritative station/GIS/dispatch records. Completion defaults to 40 m by road, adjustable from 10-60 m. Street forgiveness is 6-24 screen pixels, default 12, bounded to 12-90 m. Challenge preference defaults to 80%, adjustable from 50-100%. Keep ratings during weakness migration.
 
 ## Review focus
 - Sparse strokes must not invent routes across obstacles.
@@ -52,3 +52,10 @@ Files: route-mapping/index.html, styles.css, app.js; shared build marker only if
 - Build ruling: retain unpublished local 1.6.100; server uses no-store. New cores have explicit script includes. No push or deployment.
 - Saved screenshots: test-artifacts/quality-audit/route-decisions-final.jpg and route-decisions-review.jpg (ignored artifacts). Local preview: http://127.0.0.1:4188/route-mapping/?v=1.6.100.
 - Remaining validation limits: physical touch-device/human training study not performed; road legality and obstacle reasoning depend on packaged graph accuracy and metadata.
+
+## Street forgiveness and tuning follow-up
+- Baseline: 6091fc2. The user reported a visually close stroke being rejected. At map zoom 14, the old 40 m ceiling allowed roughly six screen pixels, despite the intended ten-pixel tolerance. The rejected raw stroke was not retained, so that exact input could not be replayed.
+- Increased default forgiveness to 12 screen pixels with a 90 m ceiling. Added saved Street forgiveness, Straight-street preference, Call arrival distance, and Decision challenge frequency sliders, draft cancellation, Apply settings, and Reset defaults. Applying tuning to the same service preserves the current call and drawn route. No road or dispatch source records changed.
+- Red-to-green coverage confirms a 45 m offset rejected at 40 m succeeds at 50 m; configurable alignment bias affects local street matching; failed matches report measured gaps. Maximum tolerance still rejects disconnected and wrong-way traversal, including disconnected arrival attempts.
+- Verification: 255/255 application tests; app and trace syntax checks; diff whitespace check. Browser QA accepted a nearby partial stroke at zoom 14, left Submit disabled, preserved route geometry when applying settings, confirmed keyboard slider changes, cancelled drafts, persisted applied values after reload, and restored defaults. Final settings panel was visually checked at the normal desktop viewport; no browser warnings/errors. Physical touch-device testing remains outstanding.
+- Saved proof: test-artifacts/quality-audit/route-tuning-settings.jpg. Local preview remains http://127.0.0.1:4188/route-mapping/?v=1.6.100. No push or deployment.

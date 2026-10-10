@@ -68,3 +68,31 @@ test('local connectors must keep their endpoints inside the drawn corridor',()=>
  const a={...pt(0,0),segmentId:0,t:0},b={...pt(10,0),segmentId:1,t:1};
  assert.equal(c.between(a,b,{local:true,maxDistance:100,corridorStart:pt(0,0),corridorEnd:pt(10,0),corridorWidth:18}),null);
 });
+
+test('a modest visual offset is rejected by the old cap but traces with explicit extra forgiveness',()=>{
+ const c=core(line()),points=[{...pt(0,0),segmentId:0,t:0},pt(50,45)];
+ assert.throws(()=>c.trace(points,{tolerance:40}),/street/);
+ const r=c.trace(points,{tolerance:50});
+ assert.ok(Math.abs(r.distance-50)<.01);assert.equal(r.complete,false);
+});
+test('street-following preference changes geometric matching without routing to a call',()=>{
+ const c=core(fixture([[-100,0],[100,0],[8,-100],[8,100]],[[0,1,false,'East-west'],[2,3,false,'North-south']]));
+ assert.equal(c.snap(pt(8,3),12,{x:1,y:0},null,0).road,'North-south');
+ assert.equal(c.snap(pt(8,3),12,{x:1,y:0},null,1).road,'East-west');
+});
+test('a street-gap rejection exposes its location and measured tolerance for actionable feedback',()=>{
+ const c=core(line());
+ assert.throws(()=>c.trace([pt(0,0),pt(50,45)],{tolerance:40}),error=>{
+  assert.equal(error.code,'street-gap');assert.ok(error.point);assert.ok(error.nearestDistance>40);assert.equal(error.tolerance,40);
+  return true;
+ });
+});
+
+test('high forgiveness still rejects disconnected crossings and backward one-way travel',()=>{
+ const separate=core(fixture([[0,0],[100,0],[0,25],[100,25]],[[0,1],[2,3]]));
+ assert.throws(()=>separate.trace([pt(0,0),pt(90,0),pt(90,25)],{tolerance:90,directionBias:1}),/connected|street/i);
+ const oneWay=core(fixture([[0,0],[200,0]],[[0,1,true]]));
+ assert.throws(()=>oneWay.trace([pt(70,0),pt(20,0)],{tolerance:90,directionBias:0}),/connected|direction/i);
+ const partial=separate.trace([pt(0,0),pt(90,0)],{tolerance:90});
+ assert.equal(separate.finish(partial,separate.snap(pt(90,25),12),60).complete,false);
+});
