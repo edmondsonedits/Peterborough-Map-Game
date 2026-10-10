@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#07111f">
   <meta name="description" content="Rapid Peterborough route-learning practice. Draw a response route, snap it to real roads, compare it, and move to the next call.">
   <title>Route Mapping · Peterborough Emergency Games</title>
@@ -19,8 +19,8 @@
 
     <section class="dispatch-card glass" aria-live="polite">
       <div class="dispatch-topline"><span id="call-number">CALL 1</span><span id="difficulty-label" data-level="easy">DIFFICULTY —</span><span id="base-label">Station 1</span></div>
-      <strong id="call-type">Loading route training…</strong>
-      <span id="call-address">Preparing Peterborough road data</span>
+      <strong id="call-address">Preparing Peterborough road data</strong>
+      <span id="call-type">Loading route training…</span>
     </section>
 
     <div id="hint" class="hint glass" role="status" aria-live="polite">Loading roads…</div>
@@ -28,17 +28,23 @@
     <section id="controls" class="controls glass" aria-label="Route controls">
       <button id="clear-button" class="secondary" type="button">Clear</button>
       <button id="undo-button" class="secondary" type="button" disabled>Undo</button>
+      <button id="interaction-button" class="secondary" type="button" aria-pressed="false">Pan map</button>
       <button id="submit-button" class="primary" type="button" disabled>Submit Route</button>
     </section>
+
+    <nav class="map-nav" aria-label="Map zoom">
+      <button id="zoom-in" type="button" aria-label="Zoom in">+</button>
+      <button id="zoom-out" type="button" aria-label="Zoom out">−</button>
+    </nav>
 
     <section id="results" class="results glass" hidden aria-live="polite">
       <div class="result-heading"><span>ROUTE REVIEW</span><strong id="efficiency-value">—</strong></div>
       <div class="result-grid">
         <div><span>Your route</span><strong id="player-distance">—</strong></div>
-        <div><span>Shortest</span><strong id="shortest-distance">—</strong></div>
+        <div><span>Shortest legal route</span><strong id="shortest-distance">—</strong></div>
         <div><span>Extra</span><strong id="extra-distance">—</strong></div>
       </div>
-      <p id="result-note">Blue is your route. Green is the recommended response route.</p>
+      <p id="result-note">Blue is your route. Green is a shortest legal route.</p>
       <button id="next-button" class="primary next" type="button">Next Call</button>
     </section>
 
@@ -47,8 +53,8 @@
         <div class="sheet-head"><div><span>ROUTE MAPPING</span><strong id="settings-title">Starting unit</strong></div><button id="settings-close" type="button" aria-label="Close settings">×</button></div>
         <label>Service<select id="service-select"><option value="fire">Fire</option><option value="ems">EMS</option></select></label>
         <label hidden>Base<select id="base-select"></select></label>
-        <p>Starting points advance automatically: Station 1 → North Station → West Station → previous dispatch. Each station phase lasts 20 completed calls.</p>
-        <button class="primary" type="submit">Use this base</button>
+        <p id="phase-note">Starting points advance automatically: Station 1 → North Station → West Station → previous dispatch. Each station phase lasts 20 completed calls. CALL marks the nearest mapped public-road access to the address.</p>
+        <button class="primary" type="submit">Apply service</button>
       </form>
     </dialog>
 
@@ -65,6 +71,8 @@
   <script src="../shared/location-changes.js?v=1.6.100"></script>
   <script src="../shared/base-locations.js?v=1.6.100"></script>
   <script src="../shared/dispatch-locations.js?city=peterborough&amp;v=1.6.100"></script>
+  <script src="./trace-core.js?v=1.6.100"></script>
+  <script src="./learning-core.js?v=1.6.100"></script>
   <script src="./app.js?v=1.6.100"></script>
 </body>
 </html>

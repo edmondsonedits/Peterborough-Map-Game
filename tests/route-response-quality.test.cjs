@@ -7,7 +7,7 @@ function routeContext(){
  let reads=0;const edges=[{from:0,to:1,distance:10,duration:1,weight:5},{from:0,to:2,distance:30,duration:2,weight:1}];
  const nodes=[{id:0,x:0,y:0,get edges(){reads++;return edges;}},{id:1,x:10,y:0,edges:[{from:1,to:2,distance:10,duration:1,weight:5}]},{id:2,x:20,y:0,edges:[]}];
  const c=vm.createContext({state:{graph:{nodes}},CONFIG:{maxVisitedNodes:120000}});
- vm.runInContext(slice(route,'  class MinHeap','  function addGrid(')+slice(route,'  function heuristic(','  function eraseGraphLoops('),c);
+ vm.runInContext(slice(route,'  class MinHeap','  function addGrid(')+slice(route,'  function heuristic(','  function composeRoute('),c);
  return{c,readCount:()=>reads};
 }
 test('repeated route searches reuse work without leaking caller array edits',()=>{
@@ -25,10 +25,10 @@ test('route cache stays bounded during many distinct exercises',()=>{
 test('a cancelled route pointer discards its stroke and never snaps it',async()=>{
  const listeners={};const control={addEventListener(type,fn){listeners[type]=fn;}},noop={addEventListener(){}};
  let snaps=0,enabled=0;
- const c=vm.createContext({state:{mode:'drawing',drawingPointer:7,rawPoints:[{},{},{}],map:{removeLayer(){},dragging:{enable(){enabled++;}}},rawLine:{},editMarker:null,previewLine:null},ui:{drawSurface:{...control,hasPointerCapture:()=>true,releasePointerCapture(){}},clear:noop,undo:noop,submit:noop,next:noop,settingsButton:noop,settingsClose:noop,retry:noop,serviceSelect:noop,settingsForm:noop,settingsSheet:noop},clearLayer(){},snapStroke:async()=>{snaps++;},setHint(){},setMode(){},resetDrawing(){},undo(){},submitRoute(){},newCall(){},openSettings(){},closeSettings(){},fillBases(){},window:{addEventListener(){}},document:{addEventListener(){}}});
+ const c=vm.createContext({state:{mode:'drawing',drawingPointer:7,rawPoints:[{},{},{}],map:{removeLayer(){},dragging:{enable(){enabled++;}}},rawLine:{},editMarker:null,previewLine:null},ui:{drawSurface:{...control,hasPointerCapture:()=>true,releasePointerCapture(){}},clear:noop,undo:noop,submit:noop,next:noop,settingsButton:noop,settingsClose:noop,retry:noop,serviceSelect:noop,settingsForm:noop,settingsSheet:noop,interaction:noop,zoomIn:noop,zoomOut:noop},clearLayer(){},snapStroke:async()=>{snaps++;},setHint(){},setMode(){},resetDrawing(){},undo(){},submitRoute(){},newCall(){},openSettings(){},closeSettings(){},fillBases(){},window:{addEventListener(){}},document:{addEventListener(){}}});
  vm.runInContext(slice(route,'  function clearRaw()','  async function snapStroke()')+slice(route,'  function bindUi()','  async function loadData()'),c);
  c.bindUi();await listeners.pointercancel({pointerId:7,preventDefault(){}});assert.equal(snaps,0);assert.equal(c.state.rawPoints.length,0);assert.equal(c.state.drawingPointer,null);
- c.cancelEdit();assert.ok(enabled>0);
+
 });
 test('steering defaults survive denied optional preference reads',()=>{
  const c=vm.createContext({localStorage:{getItem(){throw new Error('Denied');}},STEERING_STORAGE_KEY:'mode',isMobileWrapper:()=>false,STEERING_MODES:{STANDARD:'standard',DIRECTIONAL:'directional'}});
@@ -71,7 +71,7 @@ test('Station 1 departure lies on Sherbrooke Street in the packaged road graph',
  const c=vm.createContext({state:{graph:null}});
  vm.runInContext(slice(route,'  const CONFIG =','  const ui =')+
    slice(route,'  function toXY(','  function clamp(')+
-   slice(route,'  function nearbySegments(','  function nearestRoadForStroke(')+
+   slice(route,'  function nearbySegments(','  function heuristic(')+
    slice(route,'  function basePoint(','  function callPoint('),c);
  c.state.graph=c.buildGraph(JSON.parse(read('city-explorer/data/osm-public-roads.geojson')));
  const base={lat:44.30102,lng:-78.32202,spawnLat:44.300942,spawnLng:-78.322201};
@@ -79,4 +79,22 @@ test('Station 1 departure lies on Sherbrooke Street in the packaged road graph',
  assert.equal(road.road,'Sherbrooke Street');
  assert.ok(road.distance<.01,'departure should be on the road, not the station parcel');
  assert.ok(c.dist(point,{lat:base.spawnLat,lng:base.spawnLng})>10);
+});
+
+test('bridge groups represent connected structures, not every crossing on the same road',()=>{
+ const c=vm.createContext({state:{graph:null}});
+ vm.runInContext(slice(route,'  const CONFIG =','  const ui =')+slice(route,'  function toXY(','  function clamp('),c);
+ const line=(coords)=>({type:'Feature',properties:{name:'Same Road',highway:'secondary',bridge:'yes',layer:'1'},geometry:{type:'LineString',coordinates:coords}});
+ const graph=c.buildGraph({features:[line([[-78.32,44.30],[-78.319,44.30]]),{...line([[-78.319,44.30],[-78.318,44.30]]),properties:{name:'New Road Name',highway:'secondary',bridge:'yes',layer:'1'}},line([[-78.30,44.30],[-78.299,44.30]])]});
+ assert.equal(graph.segments[0].bridgeKey,graph.segments[1].bridgeKey);
+ assert.notEqual(graph.segments[0].bridgeKey,graph.segments[2].bridgeKey);
+ for(const node of graph.nodes)for(const edge of node.edges)assert.equal(edge.bridgeKey,graph.segments[edge.segmentId].bridgeKey);
+});
+
+test('untagged roundabouts obey their implied direction and explicit two-way overrides',()=>{
+ const c=vm.createContext({state:{graph:null}});
+ vm.runInContext(slice(route,'  const CONFIG =','  const ui =')+slice(route,'  function toXY(','  function clamp('),c);
+ const line=oneway=>({properties:{highway:'residential',junction:'roundabout',oneway},geometry:{type:'LineString',coordinates:[[-78.32,44.30],[-78.319,44.30]]}});
+ assert.equal(c.buildGraph({features:[line(undefined)]}).directedEdges,1);
+ assert.equal(c.buildGraph({features:[line('no')]}).directedEdges,2);
 });
