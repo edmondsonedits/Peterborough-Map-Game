@@ -84,6 +84,9 @@ jobs:
           cat /tmp/ptbo-http.log
           exit 1
 
+      - name: Check road startup and report browser errors
+        run: node tools/check-road-preview-smoke.cjs http://127.0.0.1:4174
+
       - name: Run authored scene fail-open integration QA
         run: node tools/check-authored-scene.cjs http://127.0.0.1:4174
 
