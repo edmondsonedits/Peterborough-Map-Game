@@ -225,12 +225,12 @@ test('city selector keeps the shared mobile and desktop wrapper URLs', () => {
 
 test('main menu exposes the locally locked Dispatch Editor and keeps secure analytics separately gated', () => {
   const source=read('index.html');
-  const editorTag=source.match(/<a id="dispatch-editor-link"[^>]*>/)?.[0]||'';
-  assert.match(editorTag,/locked-card/);
-  assert.match(source,/Local editor lock/);
-  assert.match(source,/edits stay local until exported and published/);
+  const editorTag=source.match(/<a\b[^>]*\bid="dispatch-editor-link"[^>]*>/)?.[0]||'';
+  assert.match(editorTag,/aria-label="Unlock the shared Dispatch Editor with the local access check"/);
+  assert.match(source,/editorLink\?\.addEventListener\('click',async event=>\{[\s\S]*?event\.preventDefault\(\);event\.stopImmediatePropagation\(\);[\s\S]*?if\(!await verifyPassword\('Dispatch Editor password:'\)\)return;/);
+  assert.match(source,/edits stay local until exported and published/i);
   assert.doesNotMatch(editorTag,/\shidden(?:\s|>)/);
-  assert.match(source,/<a id="site-stats-link"[^>]*hidden/);
+  assert.match(source,/<a\b[^>]*\bid="site-stats-link"[^>]*\bhidden\b/);
   assert.match(source,/const accessHash='435c554a2e9cd54d2d3431b8af2b5d7ba740c64f1dca92b7af8a76b05d484ef3'/);
   assert.match(source,/Dispatch Editor password:/);
   assert.match(source,/Convenience gate only: the Dispatch Editor saves locally and cannot publish directly/);
