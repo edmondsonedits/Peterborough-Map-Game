@@ -3529,7 +3529,7 @@ async function loadCityOpenData() {
 
 async function loadOfficialRoadSurfaces() {
   // Retain an explicit escape hatch for low-memory devices.
-  if (lowPowerProfile && new URLSearchParams(location.search).get('municipalRoads') === '0') {
+  if (lowPowerProfile && new URLSearchParams(location.search).get('municipalRoads') !== '1') {
     state.officialRoadSurfacesAvailable = false;
     document.documentElement.dataset.officialRoadDetail = 'osm-compatibility-fallback';
     return null;
