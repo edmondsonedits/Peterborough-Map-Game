@@ -26,7 +26,7 @@ import {
   createPeterboroughLandmarks,
 } from './landmark-models.js?v=1.5.5-streets4';
 import { ROAD_SURFACE_CLEARANCE, RoadSurfaceIndex, laneCountFor, reconcileRoadNetworkElevations, roadProfile, roadRibbonCrossSections, resampleRoadLine } from './road-network.js?v=1.5.5-r10';
-import { solveFallbackJunctions, polygonArea } from './fallback-junction-geometry.js';
+import { solveFallbackJunctions, polygonArea as junctionPolygonArea } from './fallback-junction-geometry.js';
 import { officialRoadMeshEdgeLength, officialCurbDisplayMode, nearbyMunicipalRoadHeight, municipalCurbTop } from './citywide-road-quality.js';
 import { sampleTruckWheelContacts, truckIsOnRoad } from './road-wheel-contact.js';
 import { OfficialDrivableSurfaceIndex, RenderedPavementIndex, officialSurfaceStatusActive, officialBridgeIsVehicular } from './official-road-surfaces.js?v=1.5.6-bridge-use1';
@@ -2485,7 +2485,7 @@ function buildFallbackPolygonJunctionMeshes(polygons) {
   for (const polygon of polygons) {
     const surface = batchFor(polygon, false);
     const foundation = batchFor(polygon, true);
-    const flip = polygonArea(polygon.points) > 0;
+    const flip = junctionPolygonArea(polygon.points) > 0;
     for (let i = 0; i < polygon.triangles.length; i += 3) {
       const ids = polygon.triangles.slice(i, i + 3);
       if (flip) [ids[1], ids[2]] = [ids[2], ids[1]]; // XZ area -> upward-facing Y normal
