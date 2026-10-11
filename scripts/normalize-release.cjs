@@ -6,6 +6,7 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const canonicalSurfaces = [
   'index.html',
+  'route-mapping/index.html',
   'response-simulator/play/index.html',
   'response-simulator/mobile/index.html',
   'response-simulator/index.html',
@@ -106,6 +107,10 @@ for (const file of canonicalSurfaces) {
     );
   }
 
+  if(['response-simulator/play/index.html','response-simulator/mobile/index.html'].includes(file))html=html.replace(/const VERSION\s*=\s*'\d+\.\d+\.\d+'/,`const VERSION='${VERSION}'`);
+
+  // Every active surface uses the canonical cache token, including import maps.
+  html=html.replace(/([?&](?:amp;)?v=)\d+\.\d+\.\d+/g, `$1${VERSION}`);
   write(file, html);
 }
 

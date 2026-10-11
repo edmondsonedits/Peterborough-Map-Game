@@ -3,6 +3,7 @@
   const VERSION = '1.6.13';
   const sourceUrl = document.currentScript?.src;
   if (!sourceUrl) return;
+  const CACHE_VERSION = new URL(sourceUrl, location.href).searchParams.get('v') || VERSION;
 
   const params = new URLSearchParams(location.search);
   const stored = (() => { try { return localStorage.getItem('ptboSelectedCity'); } catch (_) { return null; } })();
@@ -12,13 +13,26 @@
   // package.js owns PTBO_STATIONS/getPtboStation. Insert it synchronously so the
   // wrapper's following inline script can consume station data immediately.
   if (!window.PTBO_CITY_PACKAGE || window.PTBO_CITY_PACKAGE.id !== cityId) {
-    const packageUrl = new URL(`../cities/${cityId}/package.js?v=${VERSION}`, sourceUrl).href;
-    if (document.readyState === 'loading') document.write(`<script src="${packageUrl.replace(/&/g,'&amp;')}"><\/script>`);
-    else {
-      const script = document.createElement('script');
-      script.src = packageUrl;
-      script.dataset.ptboCityPackage = cityId;
-      document.head.appendChild(script);
+    const packageUrl = new URL(`../cities/${cityId}/package.js?v=${CACHE_VERSION}`, sourceUrl).href;
+    const factoryUrl = new URL(`../cities/preview-package-factory.js?v=${CACHE_VERSION}`, sourceUrl).href;
+    const needsFactory = cityId !== 'peterborough' && window.PTBO_PREVIEW_CITY_FACTORY?.version !== VERSION;
+    const scriptTag = url => `<script src="${url.replace(/&/g,'&amp;').replace(/"/g,'&quot;')}"><\/script>`;
+    if (document.readyState === 'loading') {
+      document.write((needsFactory ? scriptTag(factoryUrl) : '') + scriptTag(packageUrl));
+    } else {
+      const loadPackage = () => {
+        const script = document.createElement('script');
+        script.src = packageUrl;
+        script.dataset.ptboCityPackage = cityId;
+        document.head.appendChild(script);
+      };
+      if (needsFactory) {
+        const factory = document.createElement('script');
+        factory.src = factoryUrl;
+        factory.onload = loadPackage;
+        factory.onerror = () => console.error('Unable to load base-training city package factory.');
+        document.head.appendChild(factory);
+      } else loadPackage();
     }
   }
 
@@ -34,7 +48,7 @@
       const script = document.createElement('script');
       const url = new URL('./dispatch-locations.js', sourceUrl);
       url.searchParams.set('city',cityId);
-      url.searchParams.set('v',VERSION);
+      url.searchParams.set('v',CACHE_VERSION);
       script.src = url.href;
       script.dataset.ptboDispatchStore = 'true';
       script.onload = () => resolve(window.PTBO_DISPATCH_STORE);

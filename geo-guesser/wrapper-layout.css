@@ -1,0 +1,8 @@
+body.station-practice-active .back { display:none; }
+body.station-practice-active #ptbo-training-use-notice {
+  top:auto!important; right:auto!important; bottom:8px!important; left:12px!important;
+  max-width:none; padding:4px 7px; font-size:9px;
+}
+body.station-practice-active #ptbo-training-use-notice span { display:none; }
+body.station-practice-active #ptbo-training-use-notice strong { margin:0; font-size:9px; }
+body.station-practice-active #ptbo-training-use-notice:focus-visible { outline:3px solid #6de8dc; outline-offset:3px; }

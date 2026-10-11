@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.98';
+  const VERSION = '1.6.101';
   const CONFIG = Object.freeze({
     roadUrl: '../city-explorer/data/osm-public-roads.geojson',
     centerLat: 44.3091,
@@ -9,20 +9,6 @@
     gridSize: 120,
     roadSearchRadius: 130,
     destinationSearchRadius: 520,
-    strokeAnchorSpacing: 170,
-    strokeTolerance: 22,
-    straightAssistTolerance: 52,
-    straightAssistRatio: 0.78,
-    straightAssistMaxDeviation: 95,
-    weakTurnDeviation: 48,
-    weakTurnAngle: 32,
-    loopCollapseSavings: 120,
-    loopCollapseRatio: 0.82,
-    detourAnchorSavings: 90,
-    detourAnchorRatio: 0.84,
-    destinationApproachRadius: 260,
-    strokeDirectionPenalty: 85,
-    strokeRoadContinuityBonus: 24,
     canonicalCallCount: 100,
     advancedCallCount: 100,
     advancedMinSpacing: 190,
@@ -37,20 +23,16 @@
     adaptiveStretchChance: 0.16,
     adaptiveBreatherChance: 0.10,
     progressionStorageKey: 'ptboRouteMappingProgressionV1',
+    tuningStorageKey: 'ptboRouteMappingTuningV1',
     callsPerStationPhase: 20,
     peterboroughCallProximity: 1400,
     continuousMinNextCallDistance: 850,
-    decisionCandidateCount: 6,
-    decisionAnalyzeNodes: 3,
     decisionMeaningfulPenalty: 160,
-    decisionStrongPenalty: 1300,
     decisionEqualRouteRatio: 0.035,
     decisionWeaknessMinAge: 2,
     decisionWeaknessMaxAge: 18,
     decisionWeaknessMaxCount: 30,
-    maxIntermediateAnchors: 9,
     maxVisitedNodes: 120000,
-    routeTapZoom: 16,
     recentCalls: 10,
   });
 
@@ -72,15 +54,18 @@
     extraDistance:document.getElementById('extra-distance'), resultNote:document.getElementById('result-note'), next:document.getElementById('next-button'),
     settingsButton:document.getElementById('settings-button'), settingsSheet:document.getElementById('settings-sheet'), settingsForm:document.getElementById('settings-form'),
     settingsClose:document.getElementById('settings-close'), serviceSelect:document.getElementById('service-select'), baseSelect:document.getElementById('base-select'),
-    error:document.getElementById('loading-error'), errorMessage:document.getElementById('loading-error-message'), retry:document.getElementById('retry-button')
+    streetForgiveness:document.getElementById('street-forgiveness'), streetForgivenessValue:document.getElementById('street-forgiveness-value'),
+    straightPreference:document.getElementById('straight-preference'), straightPreferenceValue:document.getElementById('straight-preference-value'),
+    arrivalDistance:document.getElementById('arrival-distance'), arrivalDistanceValue:document.getElementById('arrival-distance-value'),
+    challengeFrequency:document.getElementById('challenge-frequency'), challengeFrequencyValue:document.getElementById('challenge-frequency-value'), settingsReset:document.getElementById('settings-reset'),
+    error:document.getElementById('loading-error'), errorMessage:document.getElementById('loading-error-message'), retry:document.getElementById('retry-button'), zoomIn:document.getElementById('zoom-in'), zoomOut:document.getElementById('zoom-out'), phaseNote:document.getElementById('phase-note')
   };
 
   const state = {
-    map:null, graph:null, calls:[], originalCalls:[], advancedCalls:[], difficultyIndex:null, service:'fire', base:null, call:null, callCount:0, recentCallIds:[], mode:'loading',
-    skillProfiles:null, skillProfile:null, adaptiveTarget:null, progression:null, phase:null, lastDecisionAnalysis:null,
-    rawPoints:[], rawLine:null, drawingPointer:null, originAnchor:null, destinationAnchor:null, anchors:[], history:[], playerRoute:null,
-    shortestRoute:null, recommendedRoute:null, playerLayers:[], referenceLayers:[], startMarker:null, callMarker:null, editMarker:null, previewLine:null,
-    interactiveLine:null, editDraft:null, lastPreviewAt:0, firstSnapShown:false
+    map:null, graph:null, traceCore:null, endpointMarker:null, calls:[], originalCalls:[], advancedCalls:[], difficultyIndex:null, service:'fire', base:null, call:null, callCount:0, recentCallIds:[], mode:'loading', mapZooming:false,
+    skillProfiles:null, skillProfile:null, adaptiveTarget:null, progression:null, phase:null, lastDecisionAnalysis:null, tuning:null,
+    rawPoints:[], rawLine:null, drawingPointer:null, originAnchor:null, destinationAnchor:null, history:[], playerRoute:null,
+    shortestRoute:null, playerLayers:[], referenceLayers:[], startMarker:null, callMarker:null, mapGestureSnapshot:null
   };
 
   function toXY(lat,lng){ return {x:(lng-CONFIG.centerLng)*METERS_PER_LNG,y:(lat-CONFIG.centerLat)*METERS_PER_LAT}; }
@@ -89,7 +74,7 @@
   function formatDistance(m){ if(!Number.isFinite(m))return '—'; return m<1000?Math.round(m)+' m':(m/1000).toFixed(m<10000?1:0)+' km'; }
   function keyCoord(lng,lat){ return Number(lng).toFixed(7)+','+Number(lat).toFixed(7); }
   function roadProfile(p){ const h=String(p&&p.highway||'road').toLowerCase(); return Object.assign({highway:h},ROAD_PROFILE[h]||ROAD_PROFILE.road); }
-  function forwardOnly(p){ const v=String(p&&p.oneway||'').toLowerCase(); return v==='yes'||v==='true'||v==='1'; }
+  function forwardOnly(p){ const v=String(p?.oneway??'').toLowerCase(); return v==='yes'||v==='true'||v==='1'||(p?.junction==='roundabout'&&!['no','false','0','-1'].includes(v)); }
   function reverseOnly(p){ return String(p&&p.oneway||'').toLowerCase()==='-1'; }
   function roadName(p){ return String(p&&p.name||p&&p.ref||'Unnamed road').trim()||'Unnamed road'; }
 
@@ -108,15 +93,47 @@
   function buildGraph(geojson){
     const nodes=[],nodeByCoord=new Map(),nodeGrid=new Map(),segments=[],segmentGrid=new Map();let directedEdges=0;
     function nodeFor(c){const lng=Number(c&&c[0]),lat=Number(c&&c[1]);if(!Number.isFinite(lat)||!Number.isFinite(lng))return -1;const k=keyCoord(lng,lat);if(nodeByCoord.has(k))return nodeByCoord.get(k);const xy=toXY(lat,lng),id=nodes.length;nodes.push({id,lat,lng,x:xy.x,y:xy.y,edges:[]});nodeByCoord.set(k,id);const cell=Math.floor(xy.x/CONFIG.gridSize)+','+Math.floor(xy.y/CONFIG.gridSize),bucket=nodeGrid.get(cell);if(bucket)bucket.push(id);else nodeGrid.set(cell,[id]);return id;}
-    function edge(from,to,p){if(from<0||to<0||from===to)return;const a=nodes[from],b=nodes[to],distance=Math.hypot(b.x-a.x,b.y-a.y);if(distance<.2)return;const profile=roadProfile(p),duration=distance/(profile.speed/3.6);a.edges.push({from,to,distance,duration,weight:duration*profile.priority,highway:profile.highway,name:roadName(p),ref:String(p&&p.ref||'')});directedEdges+=1;}
-    function segment(from,to,p){const a=nodes[from],b=nodes[to],dx=b.x-a.x,dy=b.y-a.y,lengthSq=dx*dx+dy*dy;if(lengthSq<.25)return;const idx=segments.length;segments.push({from,to,ax:a.x,ay:a.y,bx:b.x,by:b.y,dx,dy,lengthSq,length:Math.sqrt(lengthSq),name:roadName(p),highway:String(p&&p.highway||'road')});addGrid(segmentGrid,(a.x+b.x)/2,(a.y+b.y)/2,idx,Math.sqrt(lengthSq)/2+12);}
-    function addLine(coords,p){if(!Array.isArray(coords)||coords.length<2)return;const ids=coords.map(nodeFor);for(let i=1;i<ids.length;i+=1){const from=ids[i-1],to=ids[i];if(from<0||to<0)continue;segment(from,to,p);if(reverseOnly(p))edge(to,from,p);else{edge(from,to,p);if(!forwardOnly(p))edge(to,from,p);}}}
+    function edge(from,to,p,segmentId,reverse){if(from<0||to<0||from===to)return;const a=nodes[from],b=nodes[to],distance=Math.hypot(b.x-a.x,b.y-a.y);if(distance<.2)return;const profile=roadProfile(p),duration=distance/(profile.speed/3.6);a.edges.push({from,to,distance,duration,weight:duration*profile.priority,highway:profile.highway,name:roadName(p),ref:String(p&&p.ref||''),segmentId,reverse:Boolean(reverse),bridgeKey:''});directedEdges+=1;}
+    function segment(from,to,p){const a=nodes[from],b=nodes[to],dx=b.x-a.x,dy=b.y-a.y,lengthSq=dx*dx+dy*dy;if(lengthSq<.25)return;const idx=segments.length;segments.push({id:idx,forward:!reverseOnly(p),backward:reverseOnly(p)||!forwardOnly(p),bridgeKey:'',bridge:Boolean(p.bridge&&p.bridge!=='no'),layer:String(p.layer||'0'),from,to,ax:a.x,ay:a.y,bx:b.x,by:b.y,dx,dy,lengthSq,length:Math.sqrt(lengthSq),name:roadName(p),highway:String(p&&p.highway||'road')});addGrid(segmentGrid,(a.x+b.x)/2,(a.y+b.y)/2,idx,Math.sqrt(lengthSq)/2+12);return idx;}
+    function addLine(coords,p){if(!Array.isArray(coords)||coords.length<2)return;const ids=coords.map(nodeFor);for(let i=1;i<ids.length;i+=1){const from=ids[i-1],to=ids[i];if(from<0||to<0)continue;const segmentId=segment(from,to,p);if(segmentId===undefined)continue;if(reverseOnly(p))edge(to,from,p,segmentId,true);else{edge(from,to,p,segmentId,false);if(!forwardOnly(p))edge(to,from,p,segmentId,true);}}}
     const features=Array.isArray(geojson&&geojson.features)?geojson.features:[];features.forEach(f=>{const g=f&&f.geometry,p=f&&f.properties||{};if(g&&g.type==='LineString')addLine(g.coordinates,p);if(g&&g.type==='MultiLineString')g.coordinates.forEach(line=>addLine(line,p));});
+    // A road may cross several bridges. Block only its contiguous tagged structure.
+    const atNode=new Map();
+    for(const s of segments)if(s.bridge)for(const id of [s.from,s.to]){
+      const group=atNode.get(id)||[];group.push(s.id);atNode.set(id,group);
+    }
+    for(const seed of segments){
+      if(!seed.bridge||seed.bridgeKey)continue;
+      const bridgeKey='bridge-'+seed.id,stack=[seed];seed.bridgeKey=bridgeKey;
+      while(stack.length){
+        const s=stack.pop();
+        for(const nodeId of [s.from,s.to])for(const id of atNode.get(nodeId)||[]){
+          const next=segments[id];
+          if(next.bridgeKey||next.layer!==seed.layer)continue;
+          next.bridgeKey=bridgeKey;stack.push(next);
+        }
+      }
+    }
+    for(const node of nodes)for(const edge of node.edges)edge.bridgeKey=segments[edge.segmentId].bridgeKey;
     if(!nodes.length||!directedEdges||!segments.length)throw new Error('Peterborough road data did not contain usable roads.');
-    return {nodes,nodeGrid,segments,segmentGrid,directedEdges};
+    return {nodes,nodeGrid,segments,segmentGrid,directedEdges,gridSize:CONFIG.gridSize};
   }
 
   function clamp(value,min,max){ return Math.max(min,Math.min(max,value)); }
+  const DEFAULT_TUNING=Object.freeze({streetForgiveness:12,straightPreference:35,arrivalDistance:40,challengeFrequency:80});
+  function normalizeTuning(raw){
+    const source=raw&&typeof raw==='object'?raw:{};
+    const bounded=(key,min,max)=>{if(source[key]===null||source[key]===''||source[key]===undefined)return DEFAULT_TUNING[key];const value=Number(source[key]);return Number.isFinite(value)?Math.round(clamp(value,min,max)):DEFAULT_TUNING[key];};
+    return {streetForgiveness:bounded('streetForgiveness',6,24),straightPreference:bounded('straightPreference',0,100),arrivalDistance:bounded('arrivalDistance',10,60),challengeFrequency:bounded('challengeFrequency',50,100)};
+  }
+  function loadTuning(){
+    try{return normalizeTuning(JSON.parse(localStorage.getItem(CONFIG.tuningStorageKey)||'null'));}
+    catch(_){return normalizeTuning(null);}
+  }
+  function saveTuning(tuning){
+    state.tuning=normalizeTuning(tuning);
+    try{localStorage.setItem(CONFIG.tuningStorageKey,JSON.stringify(state.tuning));}catch(_){}
+  }
   function percentile(values,fraction){
     const sorted=values.filter(Number.isFinite).slice().sort((a,b)=>a-b);
     if(!sorted.length)return 0;
@@ -124,28 +141,23 @@
     return sorted[index];
   }
 
-  function buildDifficultyIndex(){
+  function buildDifficultyIndex(startBase){
     const nodes=state.graph.nodes,distances=new Float64Array(nodes.length),previous=new Int32Array(nodes.length),previousEdge=new Array(nodes.length),sourceStation=new Int16Array(nodes.length),heap=new MinHeap();
     distances.fill(Infinity);previous.fill(-1);sourceStation.fill(-1);
-    const stations=basesForService('fire');
+    const stations=startBase?[startBase]:basesForService(state.service||'fire');
     stations.forEach((base,stationIndex)=>{
-      const point=basePoint(base),road=nearestRoad(point.lat,point.lng,260);
-      if(!road)return;
-      distances[road.nodeId]=0;
-      sourceStation[road.nodeId]=stationIndex;
-      heap.push({id:road.nodeId,score:0});
+      const point=basePoint(base),road=state.traceCore?.snap(point,260),segment=road&&state.graph.segments[road.segmentId];
+      const starts=segment?[
+        ...(segment.forward?[{id:segment.to,distance:(1-road.t)*segment.length}]:[]),
+        ...(segment.backward?[{id:segment.from,distance:road.t*segment.length}]:[])
+      ]:[{id:nearestRoad(point.lat,point.lng,260)?.nodeId,distance:0}];
+      for(const start of starts){if(!Number.isInteger(start.id)||start.distance>=distances[start.id])continue;distances[start.id]=start.distance;sourceStation[start.id]=stationIndex;heap.push({id:start.id,score:start.distance});}
     });
     while(heap.size){
-      const current=heap.pop();
-      if(!current||current.score>distances[current.id]+1e-7)continue;
+      const current=heap.pop();if(current.score>distances[current.id]+1e-7)continue;
       for(const edge of nodes[current.id].edges){
-        const next=distances[current.id]+edge.distance;
-        if(next+1e-7>=distances[edge.to])continue;
-        distances[edge.to]=next;
-        previous[edge.to]=current.id;
-        previousEdge[edge.to]=edge;
-        sourceStation[edge.to]=sourceStation[current.id];
-        heap.push({id:edge.to,score:next});
+        const next=distances[current.id]+edge.distance;if(next+1e-7>=distances[edge.to])continue;
+        distances[edge.to]=next;previous[edge.to]=current.id;previousEdge[edge.to]=edge;sourceStation[edge.to]=sourceStation[current.id];heap.push({id:edge.to,score:next});
       }
     }
     state.difficultyIndex={distances,previous,previousEdge,sourceStation,stations};
@@ -234,7 +246,7 @@
   function scoreCall(call){
     const point=callPoint(call),road=nearestRoad(point.lat,point.lng,650);
     if(!road){
-      const stations=basesForService('fire'),nearest=Math.min(...stations.map(base=>dist(point,basePoint(base))));
+      const stations=state.base?[state.base]:basesForService(state.service),nearest=Math.min(...stations.map(base=>dist(point,basePoint(base))));
       const score=Math.round(clamp((nearest-700)/6500*48+16,0,100));
       return {...call,difficulty:score,difficultyDistance:nearest,difficultyRoadClass:'unknown',decisionPotential:0,decisionForks:0};
     }
@@ -377,25 +389,22 @@
 
   function loadProgression(){
     let parsed=null;
-    try{parsed=JSON.parse(localStorage.getItem(CONFIG.progressionStorageKey)||'null');}catch(_){}
+    try{parsed=JSON.parse(localStorage.getItem(CONFIG.progressionStorageKey+(state.service==='ems'?':ems':''))||'null');}catch(_){}
     state.progression=normalizeProgression(parsed&&parsed.version===1?parsed.progression:null);
   }
 
   function saveProgression(){
     if(!state.progression)return;
-    try{localStorage.setItem(CONFIG.progressionStorageKey,JSON.stringify({version:1,progression:state.progression}));}catch(_){}
+    try{localStorage.setItem(CONFIG.progressionStorageKey+(state.service==='ems'?':ems':''),JSON.stringify({version:1,progression:state.progression}));}catch(_){}
   }
 
   function progressionPhase(){
-    const completed=Math.max(0,Number(state.progression?.completed)||0),size=CONFIG.callsPerStationPhase;
-    if(completed<size)return {index:0,key:'central',stationNumber:1,label:'Station 1',completedInPhase:completed,rankProgress:completed/size};
-    if(completed<size*2)return {index:1,key:'north',stationNumber:2,label:'North Station',completedInPhase:completed-size,rankProgress:(completed-size)/size};
-    if(completed<size*3)return {index:2,key:'west',stationNumber:3,label:'West Station',completedInPhase:completed-size*2,rankProgress:(completed-size*2)/size};
-    return {index:3,key:'continuous',stationNumber:null,label:'Previous Call',completedInPhase:completed-size*3,rankProgress:1};
+    const completed=Math.max(0,Number(state.progression?.completed)||0),size=CONFIG.callsPerStationPhase,stations=basesForService(state.service),count=Math.max(1,stations.length);
+    if(completed<size*count){const index=Math.floor(completed/size),base=stations[index];return {index,key:'station-'+index,stationNumber:base?.number,label:base?.shortName||base?.name||'Base',completedInPhase:completed-index*size,rankProgress:(completed-index*size)/size,continuous:false};}
+    return {index:count,key:'continuous',stationNumber:null,label:'Previous Call',completedInPhase:completed-size*count,rankProgress:1,continuous:true};
   }
-
   function stationForPhase(phase){
-    const stations=basesForService('fire');
+    const stations=basesForService(state.service);
     return stations.find(base=>Number(base.number)===Number(phase.stationNumber))||stations[Math.max(0,Math.min(stations.length-1,phase.index))]||null;
   }
 
@@ -418,7 +427,7 @@
   function applyProgressionStart(){
     const phase=progressionPhase();
     state.phase=phase;
-    if(phase.index<3){
+    if(!phase.continuous){
       const station=stationForPhase(phase);
       if(station)state.base=station;
       return phase;
@@ -426,7 +435,7 @@
     const previous=previousCallBase(state.progression?.lastCall);
     if(previous)state.base=previous;
     else{
-      const fallback=stationForPhase({index:2,stationNumber:3});
+      const fallback=stationForPhase({index:0,stationNumber:1});
       if(fallback)state.base=fallback;
     }
     return phase;
@@ -434,9 +443,9 @@
 
   function progressionDifficultyTarget(){
     const phase=state.phase||progressionPhase();
-    if(phase.index>=3)return null;
+    if(phase.continuous)return null;
     const step=Math.max(0,Math.min(CONFIG.callsPerStationPhase-1,phase.completedInPhase));
-    return 12+(step/(CONFIG.callsPerStationPhase-1))*82;
+    return 45+(step/(CONFIG.callsPerStationPhase-1))*40;
   }
 
   function recordProgressionCompletion(){
@@ -472,320 +481,80 @@
     return {lat:ll.lat,lng:ll.lng,distance:best.distance,nodeId:node.id,road:best.segment.name,highway:best.segment.highway};
   }
 
-  function nearestRoadForStroke(point,before,after,preferredRoad){
-    if(!state.graph||!point)return null;
-    const p=toXY(point.lat,point.lng),a=toXY((before||point).lat,(before||point).lng),b=toXY((after||point).lat,(after||point).lng);
-    const vx=b.x-a.x,vy=b.y-a.y,vLength=Math.hypot(vx,vy);
-    let best=null,bestScore=Infinity;
-    for(const index of nearbySegments(p.x,p.y,CONFIG.roadSearchRadius)){
-      const segment=state.graph.segments[index],projection=projectToSegment(p.x,p.y,segment);
-      if(projection.distance>CONFIG.roadSearchRadius)continue;
-      const segmentLength=Math.max(1,Math.hypot(segment.dx,segment.dy));
-      const alignment=vLength>1?Math.abs((vx*segment.dx+vy*segment.dy)/(vLength*segmentLength)):1;
-      const directionPenalty=(1-Math.max(0,Math.min(1,alignment)))*CONFIG.strokeDirectionPenalty;
-      const continuityBonus=preferredRoad&&segment.name===preferredRoad?CONFIG.strokeRoadContinuityBonus:0;
-      const score=projection.distance+directionPenalty-continuityBonus;
-      if(score>=bestScore)continue;
-      const nodeA=state.graph.nodes[segment.from],nodeB=state.graph.nodes[segment.to];
-      const distanceA=Math.hypot(projection.x-nodeA.x,projection.y-nodeA.y),distanceB=Math.hypot(projection.x-nodeB.x,projection.y-nodeB.y);
-      const node=distanceA<=distanceB?nodeA:nodeB,ll=toLatLng(projection.x,projection.y);
-      bestScore=score;
-      best={lat:ll.lat,lng:ll.lng,distance:projection.distance,nodeId:node.id,road:segment.name,highway:segment.highway,alignment};
-    }
-    return best;
-  }
+
 
   function heuristic(node,target,objective){const straight=Math.hypot(target.x-node.x,target.y-node.y);return objective==='distance'?straight:straight/(112/3.6)*.82;}
   function edgeCost(edge,objective){return objective==='distance'?edge.distance:edge.weight;}
 
-  function pathBetween(startId,endId,objective){
+  const routePathCache=new Map();
+  let cachedRouteGraph=null;
+  function pathBetween(startId,endId,objective,constraints={}){
+    const graph=state.graph;
+    if(graph!==cachedRouteGraph){routePathCache.clear();cachedRouteGraph=graph;}
+    if(!Number.isInteger(startId)||!Number.isInteger(endId)||!graph?.nodes[startId]||!graph.nodes[endId])return null;
+    const key=objective+':'+startId+':'+endId+':'+(constraints.avoidNode??'')+':'+(constraints.avoidBridge||'')+':'+(constraints.maxDistance??'');
+    let result;
+    if(routePathCache.has(key)){result=routePathCache.get(key);routePathCache.delete(key);}
+    else result=computePathBetween(startId,endId,objective,constraints);
+    routePathCache.set(key,result);
+    if(routePathCache.size>256)routePathCache.delete(routePathCache.keys().next().value);
+    return result?{...result,nodeIds:result.nodeIds.slice(),edges:result.edges.slice()}:null;
+  }
+  function computePathBetween(startId,endId,objective,constraints={}){
     if(startId===endId)return {nodeIds:[startId],edges:[],distance:0,duration:0};
     const nodes=state.graph.nodes,target=nodes[endId],scores=new Float64Array(nodes.length),previous=new Int32Array(nodes.length),previousEdge=new Array(nodes.length),heap=new MinHeap();
     scores.fill(Infinity);previous.fill(-1);scores[startId]=0;heap.push({id:startId,score:heuristic(nodes[startId],target,objective)});let visited=0,found=false;
-    while(heap.size&&visited<CONFIG.maxVisitedNodes){const cur=heap.pop();if(!cur)break;const expected=scores[cur.id]+heuristic(nodes[cur.id],target,objective);if(cur.score>expected+1e-7)continue;if(cur.id===endId){found=true;break;}visited+=1;for(const e of nodes[cur.id].edges){const next=scores[cur.id]+edgeCost(e,objective);if(next+1e-7>=scores[e.to])continue;scores[e.to]=next;previous[e.to]=cur.id;previousEdge[e.to]=e;heap.push({id:e.to,score:next+heuristic(nodes[e.to],target,objective)});}}
+    while(heap.size&&visited<CONFIG.maxVisitedNodes){const cur=heap.pop();if(!cur)break;const expected=scores[cur.id]+heuristic(nodes[cur.id],target,objective);if(cur.score>expected+1e-7)continue;if(cur.id===endId){found=true;break;}visited+=1;for(const e of nodes[cur.id].edges){if(e.to===constraints.avoidNode||constraints.avoidBridge&&e.bridgeKey===constraints.avoidBridge)continue;const next=scores[cur.id]+edgeCost(e,objective);if(next>(constraints.maxDistance??Infinity))continue;if(next+1e-7>=scores[e.to])continue;scores[e.to]=next;previous[e.to]=cur.id;previousEdge[e.to]=e;heap.push({id:e.to,score:next+heuristic(nodes[e.to],target,objective)});}}
     if(!found)return null;const nodeIds=[],edges=[];let cursor=endId;while(cursor>=0){nodeIds.push(cursor);if(previousEdge[cursor])edges.push(previousEdge[cursor]);if(cursor===startId)break;cursor=previous[cursor];if(cursor<0)return null;}nodeIds.reverse();edges.reverse();return {nodeIds,edges,distance:edges.reduce((s,e)=>s+e.distance,0),duration:edges.reduce((s,e)=>s+e.duration,0)};
   }
 
-  function eraseGraphLoops(edges){
-    if(!Array.isArray(edges)||!edges.length)return {edges:[],nodeIds:[],removedDistance:0};
-    const keptEdges=[],nodeIds=[edges[0].from],nodePosition=new Map([[edges[0].from,0]]);
-    let removedDistance=0;
-    for(const edge of edges){
-      const current=nodeIds[nodeIds.length-1];
-      if(current!==edge.from){
-        // A composed route should be connected. If an unexpected discontinuity
-        // appears, preserve it rather than inventing a shortcut.
-        keptEdges.push(edge);
-        if(!nodePosition.has(edge.from)){nodePosition.set(edge.from,nodeIds.length);nodeIds.push(edge.from);}
-        if(!nodePosition.has(edge.to)){nodePosition.set(edge.to,nodeIds.length);nodeIds.push(edge.to);}
-        continue;
-      }
-      if(nodePosition.has(edge.to)){
-        const keepNodeIndex=nodePosition.get(edge.to);
-        removedDistance+=edge.distance;
-        while(nodeIds.length-1>keepNodeIndex){
-          const removedNode=nodeIds.pop();
-          nodePosition.delete(removedNode);
-          const removedEdge=keptEdges.pop();
-          if(removedEdge)removedDistance+=removedEdge.distance;
-        }
-        continue;
-      }
-      keptEdges.push(edge);
-      nodeIds.push(edge.to);
-      nodePosition.set(edge.to,nodeIds.length-1);
+  function composeRoute(anchors){
+    if(!state.traceCore||anchors.length<2)return null;
+    let route=null;
+    for(let i=1;i<anchors.length;i++){
+      const leg=state.traceCore.between(anchors[i-1],anchors[i]);
+      if(!leg)return {failedLeg:i-1};
+      route=state.traceCore.combine(route,leg);
     }
-    return {edges:keptEdges,nodeIds,removedDistance};
+    return route;
+  }
+  function traceTolerance(value=state.tuning){
+    const tuning=normalizeTuning(value),map=state.map;
+    if(!map)return 24*tuning.streetForgiveness/10;
+    const pixels=tuning.streetForgiveness,a=map.containerPointToLatLng(L.point(0,0)),b=map.containerPointToLatLng(L.point(pixels,0));
+    return clamp(dist(a,b),12,90);
+  }
+  function traceOptions(value=state.tuning){const tuning=normalizeTuning(value);return {tolerance:traceTolerance(tuning),directionBias:tuning.straightPreference/100};}
+  function arrivalDistance(){return normalizeTuning(state.tuning).arrivalDistance;}
+  function updateDrawTarget(anchorOverride){
+    const surface=ui.drawSurface,map=state.map;
+    if(!surface||!map||!map.latLngToContainerPoint||!map.getSize||!map.getContainer){if(surface)surface.hidden=true;return;}
+    const anchor=anchorOverride||state.playerRoute?.endpoint||(state.base&&state.traceCore?.snap(basePoint(state.base),260));
+    const available=state.mode==='drawing'&&!state.mapZooming&&!ui.settingsSheet?.open&&!state.playerRoute?.complete&&Boolean(anchor);
+    if(!available){surface.hidden=true;return;}
+    const point=map.latLngToContainerPoint(anchor),size=map.getSize();
+    if(!point||!Number.isFinite(point.x)||!Number.isFinite(point.y)||point.x<0||point.y<0||point.x>size.x||point.y>size.y){surface.hidden=true;return;}
+    const rect=map.getContainer().getBoundingClientRect();
+    surface.style.left=(rect.left+point.x)+'px';surface.style.top=(rect.top+point.y)+'px';
+    surface.setAttribute('aria-label','Drag from '+(state.playerRoute?'END':'START')+' to draw the response route');
+    surface.hidden=false;
   }
 
-  function summarizeRoads(edges){const out=[];for(const edge of edges){const name=edge.name==='Unnamed road'?edge.ref:edge.name;if(!name)continue;const last=out[out.length-1];if(last&&last.name===name)last.distance+=edge.distance;else out.push({name,distance:edge.distance});}return out.filter(r=>r.distance>=35).slice(0,8).map(r=>r.name);}
-
-  function composeRoute(anchors,objective){
-    if(!Array.isArray(anchors)||anchors.length<2)return null;
-    const taggedEdges=[];
-    for(let i=0;i<anchors.length-1;i+=1){
-      const path=pathBetween(anchors[i].nodeId,anchors[i+1].nodeId,objective);
-      if(!path)return {failedLeg:i};
-      path.edges.forEach(edge=>taggedEdges.push(Object.assign({_legIndex:i},edge)));
+  function setMapGestureLock(locked){
+    if(locked){
+      if(state.mapGestureSnapshot||!state.map)return;
+      const names=['dragging','touchZoom','scrollWheelZoom','keyboard','doubleClickZoom','boxZoom'];
+      const handlers=Object.fromEntries(names.map(name=>{const handler=state.map[name];return[name,Boolean(handler?.enabled?.())];}));
+      state.mapGestureSnapshot={handlers,zoomInDisabled:Boolean(ui.zoomIn?.disabled),zoomOutDisabled:Boolean(ui.zoomOut?.disabled)};
+      for(const name of names)state.map[name]?.disable?.();
+      if(ui.zoomIn)ui.zoomIn.disabled=true;if(ui.zoomOut)ui.zoomOut.disabled=true;
+      return;
     }
-
-    const cleaned=eraseGraphLoops(taggedEdges),edges=cleaned.edges,coordinates=[],coordinateLegIndex=[];
-    const start=anchors[0],end=anchors[anchors.length-1];
-    coordinates.push([start.lat,start.lng]);
-    coordinateLegIndex.push(0);
-
-    if(edges.length){
-      const firstNode=state.graph.nodes[edges[0].from];
-      const firstCoordinate=[firstNode.lat,firstNode.lng];
-      const firstShown=coordinates[coordinates.length-1];
-      if(Math.abs(firstShown[0]-firstCoordinate[0])>1e-10||Math.abs(firstShown[1]-firstCoordinate[1])>1e-10){
-        coordinates.push(firstCoordinate);
-        coordinateLegIndex.push(edges[0]._legIndex||0);
-      }
-      for(const edge of edges){
-        const node=state.graph.nodes[edge.to],coordinate=[node.lat,node.lng],last=coordinates[coordinates.length-1];
-        if(last&&Math.abs(last[0]-coordinate[0])<1e-10&&Math.abs(last[1]-coordinate[1])<1e-10)continue;
-        coordinates.push(coordinate);
-        coordinateLegIndex.push(edge._legIndex||0);
-      }
-    }
-
-    const lastCoordinate=coordinates[coordinates.length-1];
-    if(!lastCoordinate||Math.abs(lastCoordinate[0]-end.lat)>1e-10||Math.abs(lastCoordinate[1]-end.lng)>1e-10){
-      coordinates.push([end.lat,end.lng]);
-      coordinateLegIndex.push(Math.max(0,anchors.length-2));
-    }
-
-    const firstNode=state.graph.nodes[start.nodeId],lastNode=state.graph.nodes[end.nodeId];
-    const firstConnector=dist(start,firstNode),lastConnector=dist(end,lastNode);
-    const edgeDistance=edges.reduce((sum,edge)=>sum+edge.distance,0),edgeDuration=edges.reduce((sum,edge)=>sum+edge.duration,0);
-    const distance=edgeDistance+(Number.isFinite(firstConnector)?firstConnector:0)+(Number.isFinite(lastConnector)?lastConnector:0);
-    const duration=edgeDuration+(Number.isFinite(firstConnector)?firstConnector/12:0)+(Number.isFinite(lastConnector)?lastConnector/9:0);
-    return {coordinates,coordinateLegIndex,edges,distance,duration,mainRoads:summarizeRoads(edges),objective,removedLoopDistance:cleaned.removedDistance};
+    const snapshot=state.mapGestureSnapshot;if(!snapshot)return;state.mapGestureSnapshot=null;
+    for(const [name,enabled] of Object.entries(snapshot.handlers)){const handler=state.map?.[name];if(enabled)handler?.enable?.();else handler?.disable?.();}
+    if(ui.zoomIn)ui.zoomIn.disabled=snapshot.zoomInDisabled;if(ui.zoomOut)ui.zoomOut.disabled=snapshot.zoomOutDisabled;
   }
 
-  function rdp(points,tolerance){
-    if(points.length<3)return points.slice();const xy=points.map(p=>Object.assign(toXY(p.lat,p.lng),{point:p})),keep=new Uint8Array(points.length);keep[0]=1;keep[points.length-1]=1;const stack=[[0,points.length-1]],tolSq=tolerance*tolerance;
-    while(stack.length){const pair=stack.pop(),first=pair[0],last=pair[1],a=xy[first],b=xy[last],dx=b.x-a.x,dy=b.y-a.y,lenSq=dx*dx+dy*dy;let maxSq=0,max=-1;for(let i=first+1;i<last;i+=1){const p=xy[i],t=lenSq?Math.max(0,Math.min(1,((p.x-a.x)*dx+(p.y-a.y)*dy)/lenSq)):0,px=a.x+dx*t,py=a.y+dy*t,d=(p.x-px)*(p.x-px)+(p.y-py)*(p.y-py);if(d>maxSq){maxSq=d;max=i;}}if(max>0&&maxSq>tolSq){keep[max]=1;stack.push([first,max],[max,last]);}}
-    return points.filter((p,i)=>keep[i]);
-  }
-
-  function resample(points,spacing){
-    if(points.length<2)return points.slice();const out=[points[0]];let last=points[0],carry=0;
-    for(let i=1;i<points.length;i+=1){let a=last,b=points[i],segment=dist(a,b);if(!Number.isFinite(segment)||segment===0){last=b;continue;}while(carry+segment>=spacing){const t=(spacing-carry)/segment,next={lat:a.lat+(b.lat-a.lat)*t,lng:a.lng+(b.lng-a.lng)*t};out.push(next);a=next;segment=dist(a,b);carry=0;}carry+=segment;last=b;}
-    out.push(points[points.length-1]);return out;
-  }
-
-  function pointSegmentDistanceMeters(point,start,end){
-    const p=toXY(point.lat,point.lng),a=toXY(start.lat,start.lng),b=toXY(end.lat,end.lng),dx=b.x-a.x,dy=b.y-a.y,lenSq=dx*dx+dy*dy;
-    if(lenSq<1e-6)return Math.hypot(p.x-a.x,p.y-a.y);
-    const t=Math.max(0,Math.min(1,((p.x-a.x)*dx+(p.y-a.y)*dy)/lenSq)),x=a.x+dx*t,y=a.y+dy*t;
-    return Math.hypot(p.x-x,p.y-y);
-  }
-
-  function strokeLength(points){
-    let total=0;
-    for(let i=1;i<points.length;i+=1){const d=dist(points[i-1],points[i]);if(Number.isFinite(d))total+=d;}
-    return total;
-  }
-
-  function turnAngleDegrees(a,b,c){
-    const aa=toXY(a.lat,a.lng),bb=toXY(b.lat,b.lng),cc=toXY(c.lat,c.lng),v1={x:bb.x-aa.x,y:bb.y-aa.y},v2={x:cc.x-bb.x,y:cc.y-bb.y};
-    const l1=Math.hypot(v1.x,v1.y),l2=Math.hypot(v2.x,v2.y);
-    if(l1<1||l2<1)return 0;
-    const cosine=Math.max(-1,Math.min(1,(v1.x*v2.x+v1.y*v2.y)/(l1*l2)));
-    return Math.acos(cosine)*180/Math.PI;
-  }
-
-  function simplifyStrokeIntent(points){
-    if(!Array.isArray(points)||points.length<3)return points.slice();
-    const start=points[0],end=points[points.length-1],direct=dist(start,end),travelled=strokeLength(points);
-    let maxDeviation=0;
-    for(let i=1;i<points.length-1;i+=1)maxDeviation=Math.max(maxDeviation,pointSegmentDistanceMeters(points[i],start,end));
-    const straightness=travelled>0?direct/travelled:1;
-    const allowedDeviation=Math.min(CONFIG.straightAssistMaxDeviation,Math.max(42,direct*0.045));
-
-    // A mostly straight finger stroke is treated as a straight intention. Small
-    // thumb/finger wobble should not become routing waypoints.
-    if(direct>180&&straightness>=CONFIG.straightAssistRatio&&maxDeviation<=allowedDeviation)return [start,end];
-
-    let simplified=rdp(points,CONFIG.straightAssistTolerance);
-    let changed=true;
-    while(changed&&simplified.length>2){
-      changed=false;
-      const next=[simplified[0]];
-      for(let i=1;i<simplified.length-1;i+=1){
-        const previous=next[next.length-1],current=simplified[i],following=simplified[i+1];
-        const deviation=pointSegmentDistanceMeters(current,previous,following),angle=turnAngleDegrees(previous,current,following);
-        const shortLeg=Math.min(dist(previous,current),dist(current,following))<125;
-        const weakBend=deviation<CONFIG.weakTurnDeviation&&(angle<CONFIG.weakTurnAngle||shortLeg);
-        if(weakBend){changed=true;continue;}
-        next.push(current);
-      }
-      next.push(simplified[simplified.length-1]);
-      simplified=next;
-    }
-    return simplified;
-  }
-
-  function pruneMappedAnchors(mapped){
-    if(mapped.length<3)return mapped;
-    let result=mapped.slice(),changed=true;
-    while(changed&&result.length>2){
-      changed=false;
-      const next=[result[0]];
-      for(let i=1;i<result.length-1;i+=1){
-        const previous=next[next.length-1],current=result[i],following=result[i+1];
-        const deviation=pointSegmentDistanceMeters(current,previous,following),angle=turnAngleDegrees(previous,current,following);
-        const sameRoad=previous.road&&current.road&&following.road&&previous.road===current.road&&current.road===following.road;
-        if(sameRoad||(deviation<CONFIG.weakTurnDeviation&&angle<CONFIG.weakTurnAngle)){changed=true;continue;}
-        next.push(current);
-      }
-      next.push(result[result.length-1]);
-      result=next;
-    }
-    return result;
-  }
-
-  function mappedAnchorsFromStroke(points){
-    const intent=simplifyStrokeIntent(points),samples=resample(intent,CONFIG.strokeAnchorSpacing),mapped=[];
-    for(let i=0;i<samples.length;i+=1){
-      const point=samples[i],before=samples[Math.max(0,i-1)],after=samples[Math.min(samples.length-1,i+1)],previous=mapped[mapped.length-1];
-      const road=nearestRoadForStroke(point,before,after,previous?.road||'');
-      if(!road)continue;
-      if(previous&&previous.nodeId===road.nodeId)continue;
-      if(previous&&dist(previous,road)<90&&previous.road===road.road)continue;
-      mapped.push(road);
-    }
-    const pruned=pruneMappedAnchors(mapped);
-    if(pruned.length<=CONFIG.maxIntermediateAnchors)return pruned;
-    const reduced=[];
-    for(let i=0;i<CONFIG.maxIntermediateAnchors;i+=1){
-      const index=Math.round(i*(pruned.length-1)/(CONFIG.maxIntermediateAnchors-1)),item=pruned[index];
-      if(!reduced.length||reduced[reduced.length-1].nodeId!==item.nodeId)reduced.push(item);
-    }
-    return reduced;
-  }
-
-  function collapseRepeatedNodeLoops(anchors){
-    if(!Array.isArray(anchors)||anchors.length<3)return anchors.slice();
-    const result=[],seen=new Map();
-    for(const anchor of anchors){
-      const key=String(anchor.nodeId);
-      if(seen.has(key)){
-        const keepIndex=seen.get(key);
-        result.splice(keepIndex+1);
-        for(const [seenKey,index] of [...seen.entries()])if(index>keepIndex)seen.delete(seenKey);
-        continue;
-      }
-      seen.set(key,result.length);
-      result.push(anchor);
-    }
-    return result;
-  }
-
-  function routeDistanceForAnchors(anchors){
-    const route=composeRoute(anchors,'distance');
-    return route&&route.failedLeg===undefined?route.distance:Infinity;
-  }
-
-  function collapseRepeatedRoadLoops(anchors){
-    if(!Array.isArray(anchors)||anchors.length<4)return anchors.slice();
-    let result=anchors.slice(),changed=true;
-    while(changed&&result.length>3){
-      changed=false;
-      outer:for(let i=1;i<result.length-2;i+=1){
-        const road=String(result[i].road||'').trim();
-        if(!road)continue;
-        for(let j=i+2;j<result.length-1;j+=1){
-          if(String(result[j].road||'').trim()!==road)continue;
-          const via=result.slice(i,j+1);
-          const direct=[result[i],result[j]];
-          const viaDistance=routeDistanceForAnchors(via),directDistance=routeDistanceForAnchors(direct);
-          const savings=viaDistance-directDistance;
-          if(Number.isFinite(viaDistance)&&Number.isFinite(directDistance)&&savings>=CONFIG.loopCollapseSavings&&directDistance<=viaDistance*CONFIG.loopCollapseRatio){
-            result.splice(i+1,j-i);
-            changed=true;
-            break outer;
-          }
-        }
-      }
-    }
-    return result;
-  }
-
-  function removeNeedlessDetourAnchors(anchors){
-    if(!Array.isArray(anchors)||anchors.length<3)return anchors.slice();
-    let result=anchors.slice(),changed=true;
-    while(changed&&result.length>2){
-      changed=false;
-      for(let i=1;i<result.length-1;i+=1){
-        const previous=result[i-1],current=result[i],next=result[i+1];
-        const viaDistance=routeDistanceForAnchors([previous,current,next]);
-        const directDistance=routeDistanceForAnchors([previous,next]);
-        const savings=viaDistance-directDistance;
-        const sharpBacktrack=turnAngleDegrees(previous,current,next)>118;
-        const obviousDetour=Number.isFinite(viaDistance)&&Number.isFinite(directDistance)&&savings>=CONFIG.detourAnchorSavings&&directDistance<=viaDistance*CONFIG.detourAnchorRatio;
-        if(sharpBacktrack||obviousDetour){
-          result.splice(i,1);
-          changed=true;
-          break;
-        }
-      }
-    }
-    return result;
-  }
-
-  function trimAfterClosestDestinationApproach(anchors,destinationPoint){
-    if(!Array.isArray(anchors)||anchors.length<2)return anchors.slice();
-    let closestIndex=-1,closestDistance=Infinity;
-    for(let i=0;i<anchors.length;i+=1){
-      const distance=dist(anchors[i],destinationPoint);
-      if(distance<closestDistance){closestDistance=distance;closestIndex=i;}
-    }
-    if(closestIndex<0||closestIndex===anchors.length-1)return anchors.slice();
-    const lastDistance=dist(anchors[anchors.length-1],destinationPoint);
-    const approachedCall=closestDistance<=CONFIG.destinationApproachRadius;
-    const obviousOvershoot=lastDistance>closestDistance+110;
-    return approachedCall&&obviousOvershoot?anchors.slice(0,closestIndex+1):anchors.slice();
-  }
-
-  function optimizeIntentAnchors(origin,middle,destination){
-    let working=[origin,...middle,destination];
-    working=collapseRepeatedNodeLoops(working);
-    working=collapseRepeatedRoadLoops(working);
-    working=removeNeedlessDetourAnchors(working);
-
-    // The origin and dispatch destination are authoritative even when pruning
-    // removes noisy anchors around them.
-    if(working[0]?.nodeId!==origin.nodeId)working.unshift(origin);
-    else working[0]=origin;
-    if(working[working.length-1]?.nodeId!==destination.nodeId)working.push(destination);
-    else working[working.length-1]=destination;
-    return working;
-  }
-
-  function cloneAnchors(list){return list.map(a=>({lat:a.lat,lng:a.lng,nodeId:a.nodeId,road:a.road||'',fixed:Boolean(a.fixed)}));}
   function clearLayer(layer){if(layer&&state.map)try{state.map.removeLayer(layer);}catch(_){}}
   function clearLayers(list){list.forEach(clearLayer);list.length=0;}
 
@@ -796,123 +565,128 @@
   }
 
   function renderPlayerRoute(){
-    clearLayers(state.playerLayers);clearLayer(state.interactiveLine);state.interactiveLine=null;if(!state.playerRoute||state.playerRoute.failedLeg!==undefined)return;
+    clearLayers(state.playerLayers);clearLayer(state.endpointMarker);state.endpointMarker=null;
+    if(!state.playerRoute)return;
     state.playerLayers.push(...drawCasedRoute(state.playerRoute,'#2563eb',{}));
-    if(state.mode!=='results'){
-      state.interactiveLine=L.polyline(state.playerRoute.coordinates,{color:'#2563eb',weight:30,opacity:.01,lineCap:'round',lineJoin:'round',interactive:true,bubblingMouseEvents:false}).addTo(state.map);
-      state.interactiveLine.on('click',onRouteClick);
+    if(!state.playerRoute.complete){
+      const end=state.playerRoute.endpoint;
+      state.endpointMarker=L.marker([end.lat,end.lng],{icon:icon('route-end-icon','END'),interactive:false}).addTo(state.map);
     }
   }
 
   function clearReference(){clearLayers(state.referenceLayers);}
-  function renderReference(){clearReference();if(state.recommendedRoute)state.referenceLayers.push(...drawCasedRoute(state.recommendedRoute,'#22c55e',{weight:5,weightCasing:9,opacity:.88,casingOpacity:.55,dashArray:'10 9'}));}
+  function renderReference(){clearReference();if(state.shortestRoute)state.referenceLayers.push(...drawCasedRoute(state.shortestRoute,'#22c55e',{weight:5,weightCasing:9,opacity:.88,casingOpacity:.55,dashArray:'10 9'}));}
 
-  function icon(className,label){return L.divIcon({className:'',html:'<div class="'+className+'">'+label+'</div>',iconSize:[27,27],iconAnchor:[13,13]});}
-  function handleIcon(invalid){return L.divIcon({className:'',html:'<div class="route-handle'+(invalid?' invalid':'')+'"></div>',iconSize:[30,30],iconAnchor:[15,15]});}
+  function icon(className,label){return L.divIcon({className:'',html:'<div class="'+className+'">'+label+'</div>',iconSize:[34,34],iconAnchor:[17,17]});}
 
-  function basePoint(base){return {lat:Number(base.spawnLat||base.lat),lng:Number(base.spawnLng||base.lng)};}
+  function basePoint(base){
+    const point={lat:Number(base.spawnLat??base.lat),lng:Number(base.spawnLng??base.lng)};
+    // Route drawing begins after leaving the yard, on the public road network.
+    const road=state.graph?nearestRoad(point.lat,point.lng,260):null;
+    return road?{lat:road.lat,lng:road.lng}:point;
+  }
   function callPoint(call){return {lat:Number(call.lat),lng:Number(call.lng)};}
+  function callAccessPoint(call){const point=callPoint(call),access=state.traceCore?.snap(point,CONFIG.destinationSearchRadius);return access?{lat:access.lat,lng:access.lng}:point;}
 
   function updateMarkers(){
-    clearLayer(state.startMarker);clearLayer(state.callMarker);state.startMarker=null;state.callMarker=null;if(!state.base||!state.call)return;const start=basePoint(state.base),end=callPoint(state.call);
+    clearLayer(state.startMarker);clearLayer(state.callMarker);state.startMarker=null;state.callMarker=null;if(!state.base||!state.call)return;const start=basePoint(state.base),end=callAccessPoint(state.call);
     state.startMarker=L.marker([start.lat,start.lng],{icon:icon('start-icon','START'),interactive:false}).addTo(state.map);
-    state.callMarker=L.marker([end.lat,end.lng],{icon:icon('call-icon','CALL'),interactive:false}).addTo(state.map);
+    state.callMarker=L.marker([end.lat,end.lng],{icon:icon('call-icon','CALL'),title:'Public-road access for '+(state.call.addr||state.call.name),interactive:false}).addTo(state.map);
   }
 
-  function fitExercise(){if(!state.base||!state.call)return;const s=basePoint(state.base),e=callPoint(state.call);state.map.fitBounds([[s.lat,s.lng],[e.lat,e.lng]],{paddingTopLeft:[45,100],paddingBottomRight:[45,115],maxZoom:15,animate:true});}
+  function fitExercise(){if(!state.base||!state.call)return;const s=basePoint(state.base),e=callAccessPoint(state.call);state.map.fitBounds([[s.lat,s.lng],[e.lat,e.lng]],{paddingTopLeft:[45,100],paddingBottomRight:[45,115],maxZoom:15,animate:!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches});}
   function setHint(text){ui.hint.textContent=text;}
-  function setMode(mode){state.mode=mode;document.body.classList.toggle('is-drawing-ready',mode==='drawing');ui.submit.disabled=!(mode==='editing'&&state.playerRoute);ui.undo.disabled=!(mode==='editing'&&state.history.length);ui.clear.disabled=mode==='loading'||mode==='snapping'||mode==='results';ui.results.hidden=mode!=='results';}
+  function setMode(mode){state.mode=mode;updateDrawTarget();ui.submit.disabled=!(mode==='editing'&&state.playerRoute?.complete);ui.undo.disabled=!(state.history.length&&(mode==='drawing'||mode==='editing'));ui.clear.disabled=mode==='loading'||mode==='snapping'||mode==='results';ui.results.hidden=mode!=='results';}
 
-  function clearRaw(){clearLayer(state.rawLine);state.rawLine=null;state.rawPoints=[];state.drawingPointer=null;}
-  function cancelEdit(){clearLayer(state.editMarker);clearLayer(state.previewLine);state.editMarker=null;state.previewLine=null;state.editDraft=null;}
+  function clearRaw(){const pointer=state.drawingPointer;state.drawingPointer=null;setMapGestureLock(false);if(pointer!==null&&ui.drawSurface.hasPointerCapture?.(pointer))ui.drawSurface.releasePointerCapture(pointer);clearLayer(state.rawLine);state.rawLine=null;state.rawPoints=[];}
 
   function resetDrawing(){
-    cancelEdit();clearRaw();clearReference();clearLayers(state.playerLayers);clearLayer(state.interactiveLine);state.interactiveLine=null;state.anchors=[];state.history=[];state.playerRoute=null;state.shortestRoute=null;state.recommendedRoute=null;setMode('drawing');setHint('Draw a route from your base to the call');ui.submit.disabled=true;fitExercise();
+    exerciseGeneration+=1;clearRaw();clearReference();clearLayers(state.playerLayers);clearLayer(state.endpointMarker);state.endpointMarker=null;
+    state.history=[];state.playerRoute=null;state.shortestRoute=null;
+    setMode('drawing');setHint('Drag from START to draw. Drag elsewhere to move the map.');fitExercise();
   }
 
   function pointerPoint(event){const rect=ui.map.getBoundingClientRect(),point=L.point(event.clientX-rect.left,event.clientY-rect.top),ll=state.map.containerPointToLatLng(point);return {lat:ll.lat,lng:ll.lng};}
 
   function onDrawStart(event){
-    if(state.mode!=='drawing'||state.drawingPointer!==null||event.button>0)return;event.preventDefault();state.drawingPointer=event.pointerId;ui.drawSurface.setPointerCapture&&ui.drawSurface.setPointerCapture(event.pointerId);const p=pointerPoint(event),start=basePoint(state.base);state.rawPoints=[start,p];state.rawLine=L.polyline([[start.lat,start.lng],[p.lat,p.lng]],{color:'#0ea5e9',weight:6,opacity:.72,dashArray:'5 7',lineCap:'round',lineJoin:'round',interactive:false}).addTo(state.map);setHint('Keep drawing toward the call');
+    if(state.mode!=='drawing'||ui.drawSurface.hidden||state.mapZooming||state.drawingPointer!==null||event.button>0||ui.settingsSheet.open)return;
+    let rect=ui.drawSurface.getBoundingClientRect();
+    if(Math.hypot(event.clientX-(rect.left+rect.width/2),event.clientY-(rect.top+rect.height/2))>28){setHint(state.playerRoute?'Continue from the blue END marker.':'Start your drawing at START.');return;}
+    state.map.stop?.();
+    const start=state.playerRoute?.endpoint||state.traceCore.snap(basePoint(state.base),260);
+    if(!start){setHint('Start your drawing at START.');return;}
+    updateDrawTarget(start);rect=ui.drawSurface.getBoundingClientRect();
+    if(ui.drawSurface.hidden||Math.hypot(event.clientX-(rect.left+rect.width/2),event.clientY-(rect.top+rect.height/2))>28){setHint(state.playerRoute?'Continue from the blue END marker.':'Start your drawing at START.');return;}
+    const p=pointerPoint(event);
+    event.preventDefault();state.drawingPointer=event.pointerId;ui.drawSurface.setPointerCapture?.(event.pointerId);setMapGestureLock(true);
+    state.rawPoints=[start,p];state.rawLine=L.polyline([[start.lat,start.lng],[p.lat,p.lng]],{color:'#0ea5e9',weight:5,opacity:.8,dashArray:'5 7',interactive:false}).addTo(state.map);
+    setHint('Release to stop. Your street choices will be kept.');
   }
-  function onDrawMove(event){if(state.mode!=='drawing'||event.pointerId!==state.drawingPointer)return;event.preventDefault();const p=pointerPoint(event),last=state.rawPoints[state.rawPoints.length-1];if(dist(last,p)<7)return;state.rawPoints.push(p);state.rawLine&&state.rawLine.addLatLng([p.lat,p.lng]);}
-  async function onDrawEnd(event){if(state.mode!=='drawing'||event.pointerId!==state.drawingPointer)return;event.preventDefault();state.drawingPointer=null;if(state.rawPoints.length<3){clearRaw();setHint('Draw a little farther along the streets');return;}await snapStroke();}
+  function onDrawMove(event){
+    if(state.mode!=='drawing'||event.pointerId!==state.drawingPointer)return;event.preventDefault();
+    const p=pointerPoint(event),last=state.rawPoints.at(-1);if(dist(last,p)<5)return;
+    state.rawPoints.push(p);state.rawLine?.addLatLng([p.lat,p.lng]);
+  }
+  async function onDrawEnd(event){
+    if(state.mode!=='drawing'||event.pointerId!==state.drawingPointer)return;event.preventDefault();
+    const p=pointerPoint(event);if(dist(state.rawPoints.at(-1),p)>.5)state.rawPoints.push(p);
+    state.drawingPointer=null;setMapGestureLock(false);await snapStroke();
+  }
 
+  function cancelDrawing(event){
+    if(state.drawingPointer===null||(event?.pointerId!==undefined&&event.pointerId!==state.drawingPointer))return;
+    clearRaw();setHint('Drawing cancelled · draw your route again');
+  }
+
+  let exerciseGeneration=0;
   async function snapStroke(){
-    setMode('snapping');setHint('Snapping your drawing to Peterborough roads…');await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+    const generation=exerciseGeneration,previous=state.playerRoute;setMode('snapping');setHint('Matching the streets you drew…');
+    await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+    if(generation!==exerciseGeneration||state.mode!=='snapping')return;
     try{
-      const mapped=mappedAnchorsFromStroke(state.rawPoints),startPoint=basePoint(state.base),endPoint=callPoint(state.call),origin=nearestRoad(startPoint.lat,startPoint.lng,220),destination=nearestRoad(endPoint.lat,endPoint.lng,CONFIG.destinationSearchRadius);
-      if(!origin||!destination)throw new Error('The start or call could not be matched to the Peterborough road network.');state.originAnchor=Object.assign({},origin,startPoint,{fixed:true});state.destinationAnchor=Object.assign({},destination,endPoint,{fixed:true});
-      let middle=mapped.filter(a=>a.nodeId!==origin.nodeId&&a.nodeId!==destination.nodeId);
-      middle=trimAfterClosestDestinationApproach(middle,endPoint);
-      if(middle.length>CONFIG.maxIntermediateAnchors)middle=middle.slice(0,CONFIG.maxIntermediateAnchors);
-      let anchors=optimizeIntentAnchors(state.originAnchor,middle,state.destinationAnchor);
-      let route=composeRoute(anchors,'distance');
-      while(route&&route.failedLeg!==undefined&&anchors.length>2){
-        const removeIndex=Math.min(Math.max(1,route.failedLeg+1),anchors.length-2);
-        anchors.splice(removeIndex,1);
-        anchors=removeNeedlessDetourAnchors(collapseRepeatedNodeLoops(anchors));
-        route=composeRoute(anchors,'distance');
-      }
-      if(!route||route.failedLeg!==undefined)throw new Error('That drawing could not be connected through the road network. Try drawing closer to the streets you want.');
-      state.anchors=cloneAnchors(anchors);state.playerRoute=route;state.history=[];clearRaw();renderPlayerRoute();setMode('editing');setHint('Route snapped · tap the blue route to adjust it · pinch to zoom');
-      if(!state.firstSnapShown){state.firstSnapShown=true;try{localStorage.setItem('ptboRouteMappingFirstSnap','1');}catch(_){}}
-      precomputeReferences();
-    }catch(error){console.warn('Route snap failed',error);clearRaw();setMode('drawing');setHint(error.message||'Could not snap that route. Try again.');}
+      const trace=state.traceCore.trace(state.rawPoints,traceOptions());
+      if(trace.distance<3)throw new Error('Draw a little farther along the street.');
+      const startPoint=basePoint(state.base),endPoint=callPoint(state.call);
+      state.originAnchor=state.traceCore.snap(startPoint,260);state.destinationAnchor=state.traceCore.snap(endPoint,CONFIG.destinationSearchRadius);
+      if(!state.destinationAnchor)throw new Error('This call has no road access in the training network.');
+      const route=state.traceCore.finish(state.traceCore.combine(previous,trace),state.destinationAnchor,arrivalDistance());
+      state.history.push(previous);if(state.history.length>30)state.history.shift();
+      state.playerRoute=route;state.shortestRoute=null;clearRaw();renderPlayerRoute();
+      setMode(route.complete?'editing':'drawing');
+      setHint(route.complete?'Call road access reached. Submit to compare your decisions.':'Continue from END. Drag elsewhere to move the map.');
+    }catch(error){
+      clearRaw();state.playerRoute=previous;setMode(previous?.complete?'editing':'drawing');setHint(error.message||'Trace closer to the streets you want.');
+    }
   }
-
   function precomputeReferences(){
-    const direct=[state.originAnchor,state.destinationAnchor];try{state.shortestRoute=composeRoute(direct,'distance');state.recommendedRoute=composeRoute(direct,'recommended');}catch(error){console.warn('Reference routing failed',error);state.shortestRoute=null;state.recommendedRoute=null;}
+    state.shortestRoute=state.traceCore.between(state.originAnchor,state.destinationAnchor);
   }
-
-  function closestRouteIndex(latlng){let best=-1,bestDistance=Infinity;const coords=state.playerRoute&&state.playerRoute.coordinates||[];for(let i=0;i<coords.length;i+=1){const d=state.map.distance(latlng,coords[i]);if(d<bestDistance){bestDistance=d;best=i;}}return best;}
-
-  function onRouteClick(event){
-    if(state.mode!=='editing'||!state.playerRoute)return;cancelEdit();const index=closestRouteIndex(event.latlng);if(index<0)return;const legIndex=Number(state.playerRoute.coordinateLegIndex[index]||0),insertAt=Math.max(1,Math.min(state.anchors.length-1,legIndex+1)),road=nearestRoad(event.latlng.lat,event.latlng.lng,120);if(!road)return;
-    state.editDraft={insertAt,candidate:road,route:null};state.editMarker=L.marker([road.lat,road.lng],{icon:handleIcon(false),draggable:true,zIndexOffset:2500}).addTo(state.map);if(state.map.getZoom()<CONFIG.routeTapZoom)state.map.flyTo([road.lat,road.lng],CONFIG.routeTapZoom,{duration:.28});setHint('Drag the blue handle onto the road you want');
-    state.editMarker.on('dragstart',()=>{state.map.dragging.disable();});
-    state.editMarker.on('drag',onEditDrag);
-    state.editMarker.on('dragend',onEditEnd);
+  function undo(){
+    if(!state.history.length||!['drawing','editing'].includes(state.mode))return;
+    clearRaw();state.playerRoute=state.history.pop();state.shortestRoute=null;
+    renderPlayerRoute();setMode('drawing');
+    setHint(state.playerRoute?'Last stroke undone. Continue from END.':'Last stroke undone. Start at START.');
   }
-
-  function previewEditedRoute(candidate){
-    if(!state.editDraft||!candidate)return false;const anchors=cloneAnchors(state.anchors);anchors.splice(state.editDraft.insertAt,0,{lat:candidate.lat,lng:candidate.lng,nodeId:candidate.nodeId,road:candidate.road,fixed:false});const route=composeRoute(anchors,'distance');state.editDraft.candidate=candidate;state.editDraft.anchors=anchors;state.editDraft.route=route&&route.failedLeg===undefined?route:null;clearLayer(state.previewLine);state.previewLine=null;
-    if(state.editDraft.route){state.previewLine=L.polyline(state.editDraft.route.coordinates,{color:'#60a5fa',weight:8,opacity:.52,lineCap:'round',lineJoin:'round',interactive:false}).addTo(state.map);state.editMarker.setIcon(handleIcon(false));return true;}state.editMarker.setIcon(handleIcon(true));return false;
-  }
-
-  function onEditDrag(event){
-    const now=performance.now();if(now-state.lastPreviewAt<110)return;state.lastPreviewAt=now;const ll=event.target.getLatLng(),candidate=nearestRoad(ll.lat,ll.lng,140);if(!candidate){event.target.setIcon(handleIcon(true));return;}event.target.setLatLng([candidate.lat,candidate.lng]);previewEditedRoute(candidate);
-  }
-
-  function onEditEnd(event){
-    state.map.dragging.enable();const ll=event.target.getLatLng(),candidate=nearestRoad(ll.lat,ll.lng,150);if(candidate)previewEditedRoute(candidate);if(state.editDraft&&state.editDraft.route){state.history.push(cloneAnchors(state.anchors));if(state.history.length>20)state.history.shift();state.anchors=cloneAnchors(state.editDraft.anchors);state.playerRoute=state.editDraft.route;cancelEdit();renderPlayerRoute();setMode('editing');setHint('Route updated · tap another section or Submit Route');}else{cancelEdit();setHint('That road could not make a connected route. Your previous route was kept.');}
-  }
-
-  function undo(){if(state.mode!=='editing'||!state.history.length)return;cancelEdit();const anchors=state.history.pop(),route=composeRoute(anchors,'distance');if(route&&route.failedLeg===undefined){state.anchors=cloneAnchors(anchors);state.playerRoute=route;renderPlayerRoute();setHint('Last route adjustment undone');}setMode('editing');}
 
   function submitRoute(){
-    if(state.mode!=='editing'||!state.playerRoute)return;cancelEdit();if(!state.shortestRoute||state.shortestRoute.failedLeg!==undefined||!state.recommendedRoute||state.recommendedRoute.failedLeg!==undefined)precomputeReferences();
+    if(state.mode!=='editing'||!state.playerRoute?.complete)return;if(!state.shortestRoute)precomputeReferences();
     const shortest=state.shortestRoute&&state.shortestRoute.distance,player=state.playerRoute.distance,eff=Number.isFinite(shortest)&&player>0?Math.min(100,shortest/player*100):NaN,extra=Number.isFinite(shortest)?Math.max(0,player-shortest):NaN;
     ui.efficiency.textContent=Number.isFinite(eff)?Math.round(eff)+'% efficient':'Route complete';ui.playerDistance.textContent=formatDistance(player);ui.shortestDistance.textContent=formatDistance(shortest);ui.extraDistance.textContent=Number.isFinite(extra)?'+'+formatDistance(extra):'—';
-    const playerRoads=state.playerRoute.mainRoads||[],recommendedRoads=state.recommendedRoute&&state.recommendedRoute.mainRoads||[],different=recommendedRoads.find(name=>name&&!playerRoads.includes(name));
-    if(Number.isFinite(eff)&&eff>=97)ui.resultNote.textContent='Very close to the shortest available road route. Green shows the recommended response route.';else if(different)ui.resultNote.textContent='Compare where the green route uses '+different+' instead. Green favours major roads and estimated travel time.';else ui.resultNote.textContent='Blue is your route. Green is the recommended response route.';
+    const playerRoads=state.playerRoute.mainRoads||[],recommendedRoads=state.shortestRoute&&state.shortestRoute.mainRoads||[],different=recommendedRoads.find(name=>name&&!playerRoads.includes(name));
+    if(Number.isFinite(eff)&&eff>=97)ui.resultNote.textContent='Efficient route. Green shows a shortest legal route; close alternatives are valid.';else if(different)ui.resultNote.textContent='Compare where the green route uses '+different+' instead. Green shows the shortest legal road route.';else ui.resultNote.textContent='Blue is your route. Green is a shortest legal route.';
     let decisionLearning=null;
     if(Number.isFinite(eff)){
       updateHiddenSkill(eff);
-      decisionLearning=updateDecisionLearning(eff,extra);
+      decisionLearning=updateDecisionLearning();
     }
     if(decisionLearning&&Number.isFinite(extra)){
-      ui.resultNote.textContent='Key decision: '+decisionLearning.correctRoad+'. Your route added '+formatDistance(extra)+' overall.';
+      ui.resultNote.textContent='Use '+decisionLearning.correctRoad+' instead of '+decisionLearning.chosenRoad+'. That section added '+formatDistance(decisionLearning.extraDistance)+'.';
     }
     recordProgressionCompletion();
-    clearLayer(state.interactiveLine);state.interactiveLine=null;renderReference();setMode('results');setHint('');
+    renderReference();setMode('results');setHint('');
   }
 
-  function decisionKey(nodeId,correctRoad){
-    const node=state.graph?.nodes?.[nodeId];
-    if(!node)return '';
-    return node.lat.toFixed(5)+','+node.lng.toFixed(5)+'|'+String(correctRoad||'').trim().toLowerCase();
-  }
+  function decisionKey(edge){return window.PTBO_ROUTE_LEARNING.decisionKey(edge);}
 
   function roadChoicePlausibility(edge,node,destinationNode){
     const altNode=state.graph.nodes[edge.to];
@@ -927,93 +701,64 @@
   }
 
   function analyzeDecisionDifficulty(call,startBase){
-    const baseDifficulty=clamp(Number(call?.difficulty)||0,0,100);
-    if(!call||!startBase||!state.graph)return {score:baseDifficulty,decisionScore:Number(call?.decisionPotential)||0,traps:[],meaningfulForks:0,equalAlternatives:0};
-    const startPoint=basePoint(startBase),endPoint=callPoint(call);
-    const origin=nearestRoad(startPoint.lat,startPoint.lng,260),destination=nearestRoad(endPoint.lat,endPoint.lng,CONFIG.destinationSearchRadius);
-    if(!origin||!destination)return {score:baseDifficulty,decisionScore:Number(call.decisionPotential)||0,traps:[],meaningfulForks:0,equalAlternatives:0};
-
-    const optimal=pathBetween(origin.nodeId,destination.nodeId,'distance');
-    if(!optimal||!optimal.edges?.length)return {score:baseDifficulty,decisionScore:Number(call.decisionPotential)||0,traps:[],meaningfulForks:0,equalAlternatives:0};
-
-    const edges=optimal.edges,destinationNode=state.graph.nodes[destination.nodeId],suffix=new Float64Array(edges.length+1),prefix=new Float64Array(edges.length+1);
-    for(let i=edges.length-1;i>=0;i-=1)suffix[i]=suffix[i+1]+edges[i].distance;
-    for(let i=0;i<edges.length;i+=1)prefix[i+1]=prefix[i]+edges[i].distance;
-
-    const forkCandidates=[];
-    for(let i=0;i<edges.length;i+=1){
-      const correct=edges[i],node=state.graph.nodes[correct.from];
+    const baseDifficulty=clamp(Number(call?.difficulty)||0,0,100),fallback={score:baseDifficulty,decisionScore:0,traps:[],meaningfulForks:0};
+    if(!state.traceCore||!call||!startBase)return fallback;
+    const origin=state.traceCore.snap(basePoint(startBase),260),destination=state.traceCore.snap(callPoint(call),CONFIG.destinationSearchRadius);
+    const optimal=state.traceCore.between(origin,destination);
+    if(!optimal?.edges.length)return fallback;
+    const edges=optimal.edges,traps=[],tolerance=Math.max(CONFIG.decisionMeaningfulPenalty,optimal.distance*CONFIG.decisionEqualRouteRatio);
+    function add(correct,penalty,kind,alternateRoad,progress=0){
+      if(!Number.isFinite(penalty)||penalty<=tolerance)return;
+      const trapScore=clamp((penalty-tolerance)/1100*100*(progress<.3?1.2:1),0,100);
+      traps.push({key:decisionKey(correct),nodeId:correct.from,correctRoad:window.PTBO_ROUTE_LEARNING.describe(correct),alternateRoad,penalty,trapScore,progress,kind});
+    }
+    // A departure is a direction, even when both choices have the same street name.
+    const segment=state.graph.segments[origin.segmentId],first=edges[0];
+    for(const reverse of [false,true]){
+      if(reverse===Boolean(first.reverse)||!(reverse?segment.backward:segment.forward))continue;
+      const exitId=reverse?segment.from:segment.to,blockedId=reverse?segment.to:segment.from,exit=state.graph.nodes[exitId];
+      const committed={...exit,segmentId:origin.segmentId,t:reverse?0:1};
+      const remaining=state.traceCore.between(committed,destination,{avoidNode:blockedId});
+      if(remaining)add(first,(reverse?origin.t:1-origin.t)*segment.length+remaining.distance-optimal.distance,'departure',segment.name+' (opposite direction)');
+    }
+    // Compare whole bridge corridors, rather than assuming an immediate U-turn.
+    const bridges=new Set();
+    for(let i=0;i<edges.length;i++){
+      const edge=edges[i];if(!edge.bridgeKey||bridges.has(edge.bridgeKey))continue;bridges.add(edge.bridgeKey);
+      const alternative=state.traceCore.between(origin,destination,{avoidBridge:edge.bridgeKey});
+      if(alternative)add(edge,alternative.distance-optimal.distance,'bridge',alternative.edges.find(e=>e.bridgeKey)?.name||'another crossing',i/edges.length);
+    }
+    const suffix=new Float64Array(edges.length+1);for(let i=edges.length-1;i>=0;i--)suffix[i]=suffix[i+1]+edges[i].distance;
+    const candidates=[];
+    for(let i=1;i<edges.length;i++){
+      const correct=edges[i],node=state.graph.nodes[correct.from],prev=edges[i-1].from;
       if(!node||suffix[i]<220)continue;
-      const previousNodeId=i>0?edges[i-1].from:-1,seenRoads=new Set(),alternatives=[];
       for(const alt of node.edges){
-        if(alt.to===correct.to||alt.to===previousNodeId)continue;
-        const altName=String(alt.name||alt.ref||'').trim();
-        const correctName=String(correct.name||correct.ref||'').trim();
-        if(altName&&correctName&&altName===correctName)continue;
-        const roadKey=altName||String(alt.to);
-        if(seenRoads.has(roadKey))continue;
-        seenRoads.add(roadKey);
-        const plausibility=roadChoicePlausibility(alt,node,destinationNode);
-        if(plausibility<.34)continue;
-        alternatives.push({edge:alt,plausibility});
+        if(alt.to===correct.to||alt.to===prev)continue;
+        const plausibility=roadChoicePlausibility(alt,node,state.graph.nodes[destination.nodeId??state.graph.segments[destination.segmentId].to]);
+        if(plausibility<.45)continue;
+        candidates.push({correct,alt,index:i,score:plausibility*(i<edges.length*.35?1.2:1)});
       }
-      if(!alternatives.length)continue;
-      alternatives.sort((a,b)=>b.plausibility-a.plausibility);
-      const progress=optimal.distance>0?prefix[i]/optimal.distance:0;
-      const earlyBonus=progress<.38?1.18:progress<.7?1.07:1;
-      forkCandidates.push({
-        index:i,nodeId:correct.from,correct,alternatives,
-        quickScore:alternatives[0].plausibility*earlyBonus*(1+Math.min(2,alternatives.length)*.18),
-        progress
-      });
     }
-
-    forkCandidates.sort((a,b)=>b.quickScore-a.quickScore);
-    const traps=[];let meaningfulForks=0,equalAlternatives=0;
-    for(const fork of forkCandidates.slice(0,CONFIG.decisionAnalyzeNodes)){
-      const alternate=fork.alternatives[0],altPath=pathBetween(alternate.edge.to,destination.nodeId,'distance');
-      if(!altPath)continue;
-      const alternateRemaining=alternate.edge.distance+altPath.distance,correctRemaining=suffix[fork.index];
-      const penalty=Math.max(0,alternateRemaining-correctRemaining);
-      const equalTolerance=Math.max(CONFIG.decisionMeaningfulPenalty,optimal.distance*CONFIG.decisionEqualRouteRatio);
-      if(penalty<=equalTolerance){equalAlternatives+=1;continue;}
-      meaningfulForks+=1;
-      const earlyBonus=fork.progress<.38?1.15:fork.progress<.7?1.06:1;
-      const strength=clamp((penalty-equalTolerance)/Math.max(1,CONFIG.decisionStrongPenalty-equalTolerance)*100,0,100);
-      const trapScore=clamp(strength*(.68+alternate.plausibility*.32)*earlyBonus,0,100);
-      traps.push({
-        key:decisionKey(fork.nodeId,fork.correct.name||fork.correct.ref),
-        nodeId:fork.nodeId,
-        correctRoad:String(fork.correct.name||fork.correct.ref||'the preferred road'),
-        alternateRoad:String(alternate.edge.name||alternate.edge.ref||'the alternate road'),
-        penalty,
-        trapScore,
-        progress:fork.progress,
-        plausibility:alternate.plausibility
-      });
+    candidates.sort((a,b)=>b.score-a.score);
+    const seen=new Set();
+    for(const candidate of candidates.slice(0,4)){
+      const {correct,alt,index}=candidate,key=decisionKey(correct);if(seen.has(key))continue;seen.add(key);
+      const tailAnchor=state.traceCore.snap(state.graph.nodes[alt.to],1);
+      const tail=state.traceCore.between(tailAnchor,destination,{avoidNode:correct.from});
+      if(tail)add(correct,alt.distance+tail.distance-suffix[index],'turn',alt.name,index/edges.length);
     }
-
     traps.sort((a,b)=>b.trapScore-a.trapScore);
-    const decisionScore=clamp(
-      (traps[0]?.trapScore||0)*.52+
-      (traps[1]?.trapScore||0)*.29+
-      (traps[2]?.trapScore||0)*.15+
-      meaningfulForks*5,
-      0,100
-    );
-    const score=Math.round(clamp(Math.max(baseDifficulty*.62,baseDifficulty*.45+decisionScore*.55),0,100));
-    return {score,baseDifficulty,decisionScore,traps,meaningfulForks,equalAlternatives,optimalDistance:optimal.distance,optimal};
+    const unique=[];const uniqueKeys=new Set();
+    for(const trap of traps)if(!uniqueKeys.has(trap.key)){uniqueKeys.add(trap.key);unique.push(trap);}
+    const decisionScore=clamp((unique[0]?.trapScore||0)*.65+(unique[1]?.trapScore||0)*.25+unique.length*6,0,100);
+    return {score:Math.round(clamp(baseDifficulty*.35+decisionScore*.65,0,100)),decisionScore,traps:unique,meaningfulForks:unique.length,optimalDistance:optimal.distance,optimal};
   }
 
   function decisionShortlist(calls,target){
-    const rating=Number(state.skillProfile?.rating)||CONFIG.adaptiveDefaultRating;
-    const decisionPreference=clamp((rating-25)/70,0,1);
-    return calls.map(call=>{
-      const difficulty=Number(call.difficulty)||0,decision=Number(call.decisionPotential)||0;
-      const jitter=Math.random()*7;
-      const score=Math.abs(difficulty-target)-decision*decisionPreference*.055+jitter;
-      return {call,score};
-    }).sort((a,b)=>a.score-b.score).slice(0,CONFIG.decisionCandidateCount).map(item=>item.call);
+    const ranked=calls.map(call=>({call,score:Math.abs((Number(call.difficulty)||0)-target)-(Number(call.decisionPotential)||0)*.16+Math.random()*4})).sort((a,b)=>a.score-b.score);
+    const decisionCalls=calls.slice().sort((a,b)=>(Number(b.decisionPotential)||0)-(Number(a.decisionPotential)||0));
+    return [...new Map([...ranked.slice(0,8).map(x=>x.call),...decisionCalls.slice(0,4)].map(call=>[call.id,call])).values()];
   }
 
   function weaknessBoostForAnalysis(analysis){
@@ -1046,9 +791,10 @@
 
   function callsForService(){const target=state.service==='ems'?'medical':'fire',filtered=state.calls.filter(c=>String(c.main||'').toLowerCase()===target);return filtered.length?filtered:state.calls;}
   function chooseCall(){
-    const pool=callsForService(),recent=new Set(state.recentCallIds);
+    buildDifficultyIndex(state.base);
+    const pool=callsForService().map(scoreCall).filter(call=>Number.isFinite(call.difficultyDistance)&&call.difficultyDistance>0),recent=new Set(state.recentCallIds);
     let fresh=pool.filter(call=>!recent.has(call.id));
-    if(state.phase?.index>=3&&state.base){
+    if(state.phase?.continuous&&state.base){
       const start=basePoint(state.base);
       const spaced=fresh.filter(call=>dist(start,callPoint(call))>=CONFIG.continuousMinNextCallDistance);
       if(spaced.length>=4)fresh=spaced;
@@ -1065,22 +811,20 @@
   }
 
   function newCall(){
-    cancelEdit();clearRaw();clearReference();clearLayers(state.playerLayers);clearLayer(state.interactiveLine);state.interactiveLine=null;
+    exerciseGeneration+=1;clearRaw();clearReference();clearLayers(state.playerLayers);
+    clearLayer(state.endpointMarker);state.endpointMarker=null;
     const previousPhase=state.phase?.index;
     const phase=applyProgressionStart();
-    state.call=chooseCall();state.callCount+=1;state.playerRoute=null;state.shortestRoute=null;state.recommendedRoute=null;state.anchors=[];state.history=[];ui.callNumber.textContent='CALL '+state.callCount;ui.baseLabel.textContent=state.base.shortName||state.base.name;ui.callType.textContent=state.call.sub||state.call.main||'Dispatch Call';ui.callAddress.textContent=state.call.addr||state.call.name;
+    state.call=chooseCall();state.callCount+=1;state.playerRoute=null;state.shortestRoute=null;state.history=[];ui.callNumber.textContent='CALL '+state.callCount;ui.baseLabel.textContent=state.base.shortName||state.base.name;ui.callType.textContent=state.call.sub||state.call.main||'Dispatch Call';ui.callAddress.textContent=state.call.addr||state.call.name;
     const difficulty=clamp(Math.round(Number(state.call.sessionDifficulty??state.call.difficulty)||0),0,100);
-    ui.difficultyLabel.textContent='DIFFICULTY '+difficulty;
+    ui.difficultyLabel.textContent=state.call.decisionAnalysis?.traps?.length?'DECISION CHALLENGE':'ROUTE REFRESHER';
     ui.difficultyLabel.dataset.level=difficulty>=80?'extreme':difficulty>=60?'hard':difficulty>=35?'medium':'easy';
     updateMarkers();fitExercise();setMode('drawing');
     if(previousPhase!==undefined&&previousPhase!==phase.index){
-      const message=phase.index===1?'North Station unlocked · routes now start from Station 2'
-        :phase.index===2?'West Station unlocked · routes now start from Station 3'
-        :phase.index===3?'City mastery mode unlocked · each call now starts at the previous dispatch'
-        :'Draw a route to the call';
+      const message=phase.continuous?'Each route now starts at the previous call.':'Routes now start from '+phase.label+'.';
       setHint(message);
     }else{
-      setHint('Draw a route from '+(state.base.shortName||state.base.name)+' to the call');
+      setHint('Drag from START to draw. Drag elsewhere to move the map.');
     }
   }
 
@@ -1127,7 +871,8 @@
   function loadSkillProfiles(){
     let parsed=null;
     try{parsed=JSON.parse(localStorage.getItem(CONFIG.adaptiveSkillStorageKey)||'null');}catch(_){}
-    const profiles=parsed&&parsed.version===1&&parsed.profiles?parsed.profiles:{};
+    const profiles=parsed&&[1,2].includes(parsed.version)&&parsed.profiles?parsed.profiles:{};
+    if(parsed?.version!==2)for(const profile of Object.values(profiles))if(profile&&typeof profile==='object')profile.weakDecisions={};
     state.skillProfiles={
       fire:normalizeSkillProfile(profiles.fire),
       ems:normalizeSkillProfile(profiles.ems)
@@ -1139,7 +884,7 @@
     if(!state.skillProfiles)return;
     try{
       localStorage.setItem(CONFIG.adaptiveSkillStorageKey,JSON.stringify({
-        version:1,
+        version:2,
         profiles:state.skillProfiles
       }));
     }catch(_){}
@@ -1200,23 +945,7 @@
     saveSkillProfiles();
   }
 
-  function routeEdgeSame(a,b){
-    return Boolean(a&&b&&a.from===b.from&&a.to===b.to);
-  }
 
-  function firstMeaningfulRouteDivergence(){
-    const reference=state.shortestRoute?.edges||[],player=state.playerRoute?.edges||[];
-    if(!reference.length||!player.length)return null;
-    let index=0;
-    while(index<reference.length&&index<player.length&&routeEdgeSame(reference[index],player[index]))index+=1;
-    if(index>=reference.length)return null;
-    const correct=reference[index];
-    let chosen=player[index]||null;
-    if(!chosen||chosen.from!==correct.from){
-      chosen=player.slice(Math.max(0,index-2),Math.min(player.length,index+5)).find(edge=>edge.from===correct.from)||chosen;
-    }
-    return {index,correct,chosen};
-  }
 
   function pruneWeakDecisions(profile){
     const entries=Object.entries(profile.weakDecisions||{});
@@ -1226,55 +955,20 @@
     for(const key of Object.keys(profile.weakDecisions))if(!keep.has(key))delete profile.weakDecisions[key];
   }
 
-  function updateDecisionLearning(efficiency,extraDistance){
-    const profile=state.skillProfile;
-    if(!profile||!Number.isFinite(efficiency)||!state.shortestRoute?.edges?.length)return null;
+  function updateDecisionLearning(){
+    const profile=state.skillProfile;if(!profile||!state.shortestRoute)return null;
+    const review=window.PTBO_ROUTE_LEARNING.compareChoices(state.playerRoute,state.shortestRoute);
     profile.weakDecisions=profile.weakDecisions||{};
-
-    // Correctly navigating a previously weak decision reduces its priority.
-    if(efficiency>=93){
-      for(const edge of state.shortestRoute.edges){
-        const key=decisionKey(edge.from,edge.name||edge.ref);
-        const memory=profile.weakDecisions[key];
-        if(!memory)continue;
-        memory.score*=efficiency>=98?.62:.76;
-        if(memory.score<.18)delete profile.weakDecisions[key];
-      }
+    for(const edge of review.correctDecisions){
+      const key=decisionKey(edge),memory=profile.weakDecisions[key];if(!memory)continue;
+      memory.score*=.65;if(memory.score<.18)delete profile.weakDecisions[key];
     }
-
-    const tolerance=Math.max(CONFIG.decisionMeaningfulPenalty,(Number(state.shortestRoute.distance)||0)*CONFIG.decisionEqualRouteRatio);
-    if(!Number.isFinite(extraDistance)||extraDistance<=tolerance||efficiency>=96){
-      pruneWeakDecisions(profile);saveSkillProfiles();return null;
+    for(const regret of review.regrets){
+      const key=regret.key,existing=profile.weakDecisions[key]||{score:0,exposures:0};
+      profile.weakDecisions[key]={score:clamp(existing.score*.72+.5+regret.extra/900,0,3),lastPlay:profile.plays,exposures:existing.exposures+1,correctRoad:window.PTBO_ROUTE_LEARNING.describe(regret.correct),chosenRoad:window.PTBO_ROUTE_LEARNING.describe(regret.chosen),lat:regret.correct.start.lat,lng:regret.correct.start.lng};
     }
-
-    const divergence=firstMeaningfulRouteDivergence();
-    if(!divergence?.correct)return null;
-    const correctRoad=String(divergence.correct.name||divergence.correct.ref||'the preferred road');
-    const chosenRoad=String(divergence.chosen?.name||divergence.chosen?.ref||'the alternate road');
-    const key=decisionKey(divergence.correct.from,correctRoad);
-    if(!key)return null;
-    const node=state.graph.nodes[divergence.correct.from];
-    const knownTrap=state.call?.decisionAnalysis?.traps?.find(trap=>trap.key===key)||null;
-    const severity=clamp(
-      .35+
-      Math.min(1.45,extraDistance/900)+
-      Math.max(0,95-efficiency)/22+
-      (knownTrap?knownTrap.trapScore/220:0),
-      .35,3
-    );
-    const existing=profile.weakDecisions[key]||{score:0,exposures:0};
-    profile.weakDecisions[key]={
-      score:clamp((Number(existing.score)||0)*.72+severity,0,3),
-      lastPlay:Number(profile.plays)||0,
-      exposures:(Number(existing.exposures)||0)+1,
-      correctRoad,
-      chosenRoad,
-      lat:Number(node?.lat)||0,
-      lng:Number(node?.lng)||0
-    };
-    pruneWeakDecisions(profile);
-    saveSkillProfiles();
-    return {key,correctRoad,chosenRoad,extraDistance,trap:knownTrap};
+    pruneWeakDecisions(profile);saveSkillProfiles();
+    const strongest=review.regrets[0];return strongest?{correctRoad:window.PTBO_ROUTE_LEARNING.describe(strongest.correct),chosenRoad:window.PTBO_ROUTE_LEARNING.describe(strongest.chosen),extraDistance:strongest.extra}:null;
   }
 
   function adaptiveDifficultyTarget(){
@@ -1327,6 +1021,9 @@
 
   function weightedCallChoice(calls,target){
     if(!calls.length)return null;
+    const challenges=calls.filter(call=>call.decisionAnalysis?.traps?.length);
+    const refreshers=calls.filter(call=>!call.decisionAnalysis?.traps?.length);
+    if(challenges.length&&Math.random()<normalizeTuning(state.tuning).challengeFrequency/100)calls=challenges;else if(refreshers.length)calls=refreshers;
     const profile=state.skillProfile||defaultSkillProfile();
     const calibration=profile.plays<CONFIG.adaptiveCalibrationCalls;
     const band=calibration?18:CONFIG.adaptiveCallBand;
@@ -1364,23 +1061,47 @@
 
   function basesForService(service){const store=window.PTBO_BASE_STORE;if(store&&typeof store.getBases==='function')return store.getBases(service);const profiles=window.PTBO_SERVICE_CONFIG&&window.PTBO_SERVICE_CONFIG.profiles;return profiles&&profiles[service]?profiles[service].bases||[]:[];}
   function fillBases(service,preferredId){const bases=basesForService(service);ui.baseSelect.innerHTML='';bases.forEach(base=>{const option=document.createElement('option');option.value=base.id;option.textContent=(base.shortName||base.name)+' · '+base.address;ui.baseSelect.appendChild(option);});const wanted=bases.find(b=>b.id===preferredId)||bases[0];if(wanted)ui.baseSelect.value=wanted.id;return wanted;}
-  function loadPreferences(){let service='fire';try{service=localStorage.getItem('ptboRouteMappingService')||service;}catch(_){}if(!['fire','ems'].includes(service))service='fire';state.service=service;ui.serviceSelect.value=service;fillBases(service,null);loadSkillProfiles();loadProgression();applyProgressionStart();}
-  function savePreferences(){try{localStorage.setItem('ptboRouteMappingService',state.service);localStorage.setItem('ptboRouteMappingBase',state.base.id);}catch(_){}}
-  function openSettings(){ui.serviceSelect.value=state.service;fillBases(state.service,state.base&&state.base.id);ui.settingsSheet.hidden=false;}
-  function closeSettings(){ui.settingsSheet.hidden=true;}
+  function draftTuning(){return normalizeTuning({streetForgiveness:ui.streetForgiveness?.value,straightPreference:ui.straightPreference?.value,arrivalDistance:ui.arrivalDistance?.value,challengeFrequency:ui.challengeFrequency?.value});}
+  function displayTuning(tuning=state.tuning){
+    const values=normalizeTuning(tuning);
+    for(const [input,value] of [[ui.streetForgiveness,values.streetForgiveness],[ui.straightPreference,values.straightPreference],[ui.arrivalDistance,values.arrivalDistance],[ui.challengeFrequency,values.challengeFrequency]])if(input)input.value=String(value);
+    if(ui.streetForgivenessValue){const tolerance=traceTolerance(values);ui.streetForgivenessValue.textContent=values.streetForgiveness+' px · '+Math.round(tolerance)+' m at this zoom';}
+    if(ui.straightPreferenceValue)ui.straightPreferenceValue.textContent=values.straightPreference+'%';
+    if(ui.arrivalDistanceValue)ui.arrivalDistanceValue.textContent=values.arrivalDistance+' m';
+    if(ui.challengeFrequencyValue)ui.challengeFrequencyValue.textContent=values.challengeFrequency+'%';
+  }
+  function applySettings(service,tuning){
+    const serviceChanged=service!==state.service;
+    saveTuning(tuning);
+    if(serviceChanged){state.service=service;loadProgression();state.skillProfile=state.skillProfiles?.[service]||normalizeSkillProfile(null);if(state.skillProfiles&&!state.skillProfiles[service])state.skillProfiles[service]=state.skillProfile;savePreferences();}
+    return serviceChanged;
+  }
+  function loadPreferences(){state.tuning=loadTuning();displayTuning(state.tuning);let service='fire';try{service=localStorage.getItem('ptboRouteMappingService')||service;}catch(_){}if(!['fire','ems'].includes(service))service='fire';state.service=service;ui.serviceSelect.value=service;fillBases(service,null);loadSkillProfiles();loadProgression();applyProgressionStart();}
+  function savePreferences(){try{localStorage.setItem('ptboRouteMappingService',state.service);}catch(_){}}
+  function openSettings(){cancelDrawing();ui.serviceSelect.value=state.service;fillBases(state.service,state.base&&state.base.id);displayTuning(state.tuning);ui.phaseNote.textContent=basesForService(state.service).map(b=>b.shortName||b.name).join(' → ')+' → previous call. Each base phase lasts 20 completed calls. CALL marks the nearest mapped public-road access to the address.';if(!ui.settingsSheet.open)ui.settingsSheet.showModal();updateDrawTarget();}
+  function closeSettings(){if(ui.settingsSheet.open)ui.settingsSheet.close();updateDrawTarget();}
 
   function initMap(){
     state.map=L.map('map',{zoomControl:false,attributionControl:true,preferCanvas:true,minZoom:11,maxZoom:19,worldCopyJump:false}).setView([CONFIG.centerLat,CONFIG.centerLng],13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{subdomains:'abc',maxZoom:19,attribution:'&copy; OpenStreetMap contributors'}).addTo(state.map);
-    L.control.zoom({position:'bottomright'}).addTo(state.map);state.map.doubleClickZoom.disable();
+    state.map.doubleClickZoom.disable();
+    state.map.on('zoomstart',()=>{state.mapZooming=true;updateDrawTarget();});
+    state.map.on('zoomend',()=>{state.mapZooming=false;updateDrawTarget();});
+    state.map.on('move resize',()=>updateDrawTarget());
+    const reduced=window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;if(reduced)state.map.options.zoomAnimation=false;
   }
 
   function bindUi(){
-    ui.drawSurface.addEventListener('pointerdown',onDrawStart);ui.drawSurface.addEventListener('pointermove',onDrawMove);ui.drawSurface.addEventListener('pointerup',onDrawEnd);ui.drawSurface.addEventListener('pointercancel',onDrawEnd);
+    ui.drawSurface.addEventListener('pointerdown',onDrawStart);ui.drawSurface.addEventListener('pointermove',onDrawMove);ui.drawSurface.addEventListener('pointerup',onDrawEnd);ui.drawSurface.addEventListener('pointercancel',cancelDrawing);ui.drawSurface.addEventListener('lostpointercapture',cancelDrawing);
+    window.addEventListener('blur',()=>{cancelDrawing();});document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelDrawing();}});
+    ui.zoomIn.addEventListener('click',()=>state.map.zoomIn());ui.zoomOut.addEventListener('click',()=>state.map.zoomOut());
     ui.clear.addEventListener('click',resetDrawing);ui.undo.addEventListener('click',undo);ui.submit.addEventListener('click',submitRoute);ui.next.addEventListener('click',newCall);ui.settingsButton.addEventListener('click',openSettings);ui.settingsClose.addEventListener('click',closeSettings);ui.retry.addEventListener('click',()=>location.reload());
-    ui.serviceSelect.addEventListener('change',()=>fillBases(ui.serviceSelect.value,null));
-    ui.settingsForm.addEventListener('submit',event=>{event.preventDefault();const service=ui.serviceSelect.value;state.service=service;state.skillProfile=state.skillProfiles?.[service]||normalizeSkillProfile(null);if(state.skillProfiles&&!state.skillProfiles[service])state.skillProfiles[service]=state.skillProfile;savePreferences();closeSettings();newCall();});
+    ui.serviceSelect.addEventListener('change',()=>{fillBases(ui.serviceSelect.value,null);ui.phaseNote.textContent=basesForService(ui.serviceSelect.value).map(b=>b.shortName||b.name).join(' → ')+' → previous call. Each base phase lasts 20 completed calls. CALL marks the nearest mapped public-road access to the address.';});
+    for(const input of [ui.streetForgiveness,ui.straightPreference,ui.arrivalDistance,ui.challengeFrequency])input?.addEventListener('input',()=>displayTuning(draftTuning()));
+    ui.settingsReset?.addEventListener('click',()=>displayTuning(DEFAULT_TUNING));
+    ui.settingsForm.addEventListener('submit',event=>{event.preventDefault();const changed=applySettings(ui.serviceSelect.value,draftTuning());closeSettings();if(changed)newCall();});
     ui.settingsSheet.addEventListener('click',event=>{if(event.target===ui.settingsSheet)closeSettings();});
+    ui.settingsSheet.addEventListener('close',()=>updateDrawTarget());
   }
 
   async function loadData(){
@@ -1392,6 +1113,7 @@
     if(!response.ok)throw new Error('Peterborough road data failed to load ('+response.status+').');
     const geojson=await response.json();
     state.graph=buildGraph(geojson);
+    state.traceCore=window.PTBO_ROUTE_TRACE.createTraceCore({graph:state.graph,toXY,toLatLng,search:(from,to,options)=>pathBetween(from,to,'distance',options)});
     buildDifficultyIndex();
 
     const canonical=sharedCalls.slice(0,CONFIG.canonicalCallCount).map(scoreCall);

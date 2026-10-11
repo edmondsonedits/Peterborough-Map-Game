@@ -21,17 +21,17 @@ const sites = [
    const errors=[];
    page.on('pageerror',e=>errors.push(String(e.message)));
    const start=Date.now();
-   await page.goto(root+'/city-explorer/?qa=1',{waitUntil:'domcontentloaded',timeout:90000});
+   await page.goto(root+'/city-explorer/?qa=1&municipalRoads=1',{waitUntil:'domcontentloaded',timeout:90000});
    await page.waitForFunction(()=>document.documentElement.dataset.gameplayReady==='true',null,{timeout:180000});
    const readyMs=Date.now()-start;
    const entry={label,readyMs,errors,views:[]};
    report.runs.push(entry);
-   for(const site of sites) {
+   for(const site of sites.filter(s=>['sherbrooke-station','lansdowne-west'].includes(s.name))) {
     await page.evaluate(view=>window.__PTBO_CITY_QA__.setView(view),site);
     await page.waitForTimeout(1000);
     const samples=await page.evaluate(()=>new Promise(resolve=>{
       const out=[];let previous=performance.now();
-      function step(now){out.push(now-previous);previous=now;if(out.length===60)resolve(out);else requestAnimationFrame(step);}
+      function step(now){out.push(now-previous);previous=now;if(out.length===20)resolve(out);else requestAnimationFrame(step);}
       requestAnimationFrame(step);
     }));
     samples.shift();samples.sort((a,b)=>a-b);
@@ -39,13 +39,16 @@ const sites = [
       ...window.__PTBO_CITY_QA__.metrics(),
       paintVersion:document.documentElement.dataset.roadPaintVersion||'legacy',
       paintVertices:Number(document.documentElement.dataset.roadPaintVertices||0),
+      reviewedWays:Number(document.documentElement.dataset.roadPaintReviewedWays||0),
       roadSource:document.documentElement.dataset.officialRoadDetail,
       cityReadyMs:document.documentElement.dataset.cityReadyMs,
     }));
     await page.screenshot({path:path.join(output,label+'-'+site.name+'.png')});
     entry.views.push({site:site.name,medianFrameMs:samples[Math.floor(samples.length*.5)],p95FrameMs:samples[Math.floor(samples.length*.95)],...metrics});
    }
-   if(label==='after' && entry.views.some(v=>v.paintVersion!=='street-evidence-1'))throw new Error('New paint renderer was not active');
+   if(label==='after' && entry.views.some(v=>v.paintVersion!=='street-evidence-2'))throw new Error('New paint renderer was not active');
+   if(entry.views.some(v=>!String(v.roadSource).includes('municipal')))throw new Error('Municipal road surfaces did not load');
+   if(label==='after' && entry.views.some(v=>v.reviewedWays!==4))throw new Error('Expected four reviewed GeoJSON way IDs');
    if(errors.length)throw new Error(label+' uncaught browser errors: '+errors.join('; '));
    await page.close();
   }

@@ -19,7 +19,7 @@
   L.control.scale({metric:true,imperial:false,position:'bottomleft'}).addTo(map);
   const layer=L.layerGroup().addTo(map);
   const subcategories={Fire:['Water & Ice Rescue','Structure Fire','Motor Vehicle Collision','Auto Alarm / Vehicle Fire','Burning Complaint','Alarms No Apparent Problem'],Medical:['Chest Pain / Cardiac Emergency','Difficulty Breathing','Unconscious Patient / Substance Overdose','Rectal Bleed / Gastrointestinal Emergency','Lift Assist / Public Service','Request for Access / Wellness Check']};
-  const escapeHtml=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[c]));
+  const escapeHtml=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const status=message=>{$('save-status').textContent=message;};
   const nearestDistrict=(lat,lng)=>[...window.PTBO_STATIONS].sort((a,b)=>map.distance([lat,lng],[a.lat,a.lng])-map.distance([lat,lng],[b.lat,b.lng]))[0].number;
   const normalizeCalls=list=>list.map(item=>({...item,confirmed:Boolean(item.confirmed),district:item.district||nearestDistrict(item.lat,item.lng)}));
@@ -45,8 +45,8 @@
     $('call-list').querySelectorAll('[data-id]').forEach(button=>button.onclick=()=>select(button.dataset.id));
   }
   function clearPreview(){if(preview)preview.remove();preview=null;}
-  function closeEditor(){selectedId=null;draft=null;placing=null;clearPreview();$('editor').classList.add('hidden');$('base-editor').classList.add('hidden');$('base-editor').classList.remove('placing');$('placement-banner').classList.add('hidden');$('add-map').classList.remove('active');render();}
-  function setMode(next){closeEditor();mode=next;$('search').value='';document.querySelectorAll('[data-mode]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.mode===mode)));$('main-filter').hidden=mode!=='calls';$('sub-filter').hidden=mode!=='calls';$('hide-confirmed').closest('label').hidden=mode!=='calls';$('add-call').hidden=mode==='hospital';$('add-map').hidden=mode==='hospital';$('add-call').textContent=mode==='bases'?'Add Base':'Add Call';$('editor-notice').textContent=mode==='calls'?'Verify call positions and mark accurate locations as confirmed.':mode==='bases'?'Edit Fire and EMS bases. Drag and resize the drivable area box, then place the vehicle spawn inside it.':'Move the EMS hospital drop-off and adjust its arrival radius. Keep it on a reachable road.';render();fit();}
+  function closeEditor(renderNow=true){selectedId=null;draft=null;placing=null;clearPreview();$('editor').classList.add('hidden');$('base-editor').classList.add('hidden');$('base-editor').classList.remove('placing');$('placement-banner').classList.add('hidden');$('add-map').classList.remove('active');if(renderNow)render();}
+  function setMode(next){closeEditor(false);mode=next;$('search').value='';document.querySelectorAll('[data-mode]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.mode===mode)));$('main-filter').hidden=mode!=='calls';$('sub-filter').hidden=mode!=='calls';$('hide-confirmed').closest('label').hidden=mode!=='calls';$('add-call').hidden=mode==='hospital';$('add-map').hidden=mode==='hospital';$('add-call').textContent=mode==='bases'?'Add Base':'Add Call';$('editor-notice').textContent=mode==='calls'?'Verify call positions and mark accurate locations as confirmed.':mode==='bases'?'Edit Fire and EMS bases. Drag and resize the drivable area box, then place the vehicle spawn inside it.':'Move the EMS hospital drop-off and adjust its arrival radius. Keep it on a reachable road.';render();fit();}
   function fit(){const list=filtered();if(list.length)map.fitBounds(L.latLngBounds(list.flatMap(x=>mode==='bases'?bases.corners(x):[[x.lat,x.lng]])).pad(.15),{maxZoom:18});}
   function select(id,pan=true){
     if(selectionBusy)return;

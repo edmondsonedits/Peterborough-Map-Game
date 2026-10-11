@@ -56,8 +56,9 @@
   const requested = String(params.get('city') || stored || 'peterborough').toLowerCase();
   const cityId = /^[a-z0-9-]+$/.test(requested) ? requested : 'peterborough';
   const sourceUrl = new URL(document.currentScript.src, location.href);
-  const packageUrl = new URL(`../cities/${cityId}/package.js?v=${VERSION}`, sourceUrl).href;
-  const previewFactoryUrl = new URL(`../cities/preview-package-factory.js?v=${VERSION}`, sourceUrl).href;
+  const CACHE_VERSION = sourceUrl.searchParams.get('v') || VERSION;
+  const packageUrl = new URL(`../cities/${cityId}/package.js?v=${CACHE_VERSION}`, sourceUrl).href;
+  const previewFactoryUrl = new URL(`../cities/preview-package-factory.js?v=${CACHE_VERSION}`, sourceUrl).href;
   window.PTBO_REQUESTED_CITY = cityId;
 
   const scriptTag = url => `<script src="${url.replace(/&/g,'&amp;')}"><\/script>`;

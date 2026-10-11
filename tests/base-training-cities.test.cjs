@@ -49,8 +49,7 @@ test('all cities launch through the same Peterborough desktop and mobile simulat
   for(const id of cities){
     const city=c.PTBO_CITIES.find(item=>item.id===id);
     assert.equal(city.status,'base-training',id);
-    assert.match(city.note,/Peterborough controls/i,id);
-    assert.match(city.note,/Calls unavailable/i,id);
+    assert.equal(city.note,'calls unavailable',id);
   }
 });
 
@@ -218,19 +217,19 @@ test('compact settings accepts the base-training Incident Types label instead of
 test('city selector keeps the shared mobile and desktop wrapper URLs', () => {
   const source=read('shared/city-selector.js');
   assert.match(source,/const VERSION = '\d+\.\d+\.\d+'/);
-  assert.match(source,/same Peterborough driving controls/);
+  assert.match(source,/Peterborough for the full game/);
   assert.match(source,/url\.searchParams\.set\('surface', mobile \? 'mobile' : 'desktop'\)/);
   assert.match(source,/url\.searchParams\.set\('fresh', String\(Date\.now\(\)\)\)/);
 });
 
 test('main menu exposes the locally locked Dispatch Editor and keeps secure analytics separately gated', () => {
   const source=read('index.html');
-  const editorTag=source.match(/<a id="dispatch-editor-link"[^>]*>/)?.[0]||'';
-  assert.match(editorTag,/locked-card/);
-  assert.match(source,/Local editor lock/);
-  assert.match(source,/edits stay local until exported and published/);
+  const editorTag=source.match(/<a\b[^>]*\bid="dispatch-editor-link"[^>]*>/)?.[0]||'';
+  assert.match(editorTag,/aria-label="Unlock the shared Dispatch Editor with the local access check"/);
+  assert.match(source,/editorLink\?\.addEventListener\('click',async event=>\{[\s\S]*?event\.preventDefault\(\);event\.stopImmediatePropagation\(\);[\s\S]*?if\(!await verifyPassword\('Dispatch Editor password:'\)\)return;/);
+  assert.match(source,/edits stay local until exported and published/i);
   assert.doesNotMatch(editorTag,/\shidden(?:\s|>)/);
-  assert.match(source,/<a id="site-stats-link"[^>]*hidden/);
+  assert.match(source,/<a\b[^>]*\bid="site-stats-link"[^>]*\bhidden\b/);
   assert.match(source,/const accessHash='435c554a2e9cd54d2d3431b8af2b5d7ba740c64f1dca92b7af8a76b05d484ef3'/);
   assert.match(source,/Dispatch Editor password:/);
   assert.match(source,/Convenience gate only: the Dispatch Editor saves locally and cannot publish directly/);
@@ -371,7 +370,7 @@ test('inner simulator loads Leaflet locally without a blocking CDN dependency', 
   const source=read('response-simulator/index.html');
   assert.doesNotMatch(source,/unpkg\.com\/leaflet/);
   for(const file of ['leaflet.js','leaflet.css','leaflet.edgebuffer.js','leaflet.rotatedMarker.js']){
-    assert.ok(source.includes(`vendor/leaflet-1.9.4/${file}?v=1.6.13`),file);
+    assert.ok(source.includes(`vendor/leaflet-1.9.4/${file}?v=${canonicalBuildVersion}`),file);
     assert.ok(fs.statSync(path.join(root,'response-simulator/vendor/leaflet-1.9.4',file)).size>100,file);
   }
 });

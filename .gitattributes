@@ -1,0 +1,2 @@
+# Tunnel payload integrity must be reproducible on Windows and Linux.
+tools/tunnel-break/game.html text eol=lf

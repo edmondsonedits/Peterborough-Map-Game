@@ -19,7 +19,7 @@
       }
       const script = document.createElement('script');
       script.id = id;
-      script.src = new URL(`../shared/hospital-dropoff-store-1.6.49.js?v=${VERSION}`,source).href;
+      script.src = new URL(`../shared/hospital-dropoff-store-1.6.49.js?v=${new URL(source).searchParams.get('v')||VERSION}`,source).href;
       script.onload = () => window.PTBO_HOSPITAL_DROPOFF ? resolve(window.PTBO_HOSPITAL_DROPOFF) : reject(new Error('Hospital drop-off store did not initialize.'));
       script.onerror = () => reject(new Error('Hospital drop-off store failed to load.'));
       (document.body || document.head || document.documentElement).appendChild(script);

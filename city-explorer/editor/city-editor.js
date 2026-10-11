@@ -578,7 +578,8 @@ export function createCityEditor(adapter) {
     const rect = canvas.getBoundingClientRect();
     cameraNavigation = createEditorCameraNavigation(THREE, camera, { width: rect.width, height: rect.height });
     raycaster.layers.enable(31);
-    camera.layers.enable(31);
+    // Picking proxies belong to the raycaster only; rendering their invisible
+    // materials still submits thousands of building/road draw calls.
     transform.enabled = false;
     transform.getHelper().visible = false;
     scene.add(transform.getHelper());

@@ -146,7 +146,13 @@ export function stepFireTruckKinematics(current, input, delta, onRoad = true) {
 
   const forwardLimit = onRoad ? TRUCK_TUNING.maximumForwardSpeed : TRUCK_TUNING.offRoadSpeed;
   const reverseLimit = onRoad ? TRUCK_TUNING.maximumReverseSpeed : TRUCK_TUNING.maximumReverseSpeed * 0.65;
-  speed = clamp(speed, -reverseLimit, forwardLimit);
+  // A lower surface limit is approached through braking, never an instant
+  // speed cut at the pavement edge. Opposing input can still brake normally.
+  if(previousSpeed>forwardLimit){
+    speed=Math.max(forwardLimit,Math.min(speed,previousSpeed-TRUCK_TUNING.serviceBrake*dt));
+  }else if(previousSpeed < -reverseLimit){
+    speed=Math.min(-reverseLimit,Math.max(speed,previousSpeed+TRUCK_TUNING.serviceBrake*dt));
+  }else speed=clamp(speed,-reverseLimit,forwardLimit);
 
   // Preserve the truck's speed-sensitive steering limit, but make the response
   // progressive. Near-centre input stays gentle; larger input reaches full lock.

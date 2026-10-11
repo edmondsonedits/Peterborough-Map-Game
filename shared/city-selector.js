@@ -57,9 +57,9 @@
   dialog.innerHTML = `
     <p class="city-kicker">Emergency Response Simulator</p>
     <h2 id="ptbo-city-title">Choose a city</h2>
-    <p class="city-intro">Every city now uses the same Peterborough driving controls, camera behavior, gears, speedometer, vehicle UI, and mobile/desktop layout. Peterborough has full dispatch calls; the other cities currently use the same simulator for Fire/EMS base spawning and driving practice while their call databases and road-boundary packages are built.</p>
+    <p class="city-intro">Choose Peterborough for the full game, including dispatch calls. All other cities are available for free driving only.</p>
     <div class="city-grid"></div>
-    <div class="city-foot"><span>“Calls unavailable” only disables dispatch missions. It does not change the driving controls or simulator UI.</span><button class="city-close" type="button">Cancel</button></div>`;
+    <div class="city-foot"><span>Calls unavailable means the dispatch system is offline. Free driving mode is still enabled.</span><button class="city-close" type="button">Cancel</button></div>`;
 
   const grid = dialog.querySelector('.city-grid');
   cities.forEach(city => {

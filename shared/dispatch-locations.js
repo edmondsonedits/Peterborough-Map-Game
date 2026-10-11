@@ -8,7 +8,7 @@
   const scriptUrl = new URL(document.currentScript?.src || location.href, location.href);
   const currentUrl = new URL(typeof location !== 'undefined' && location.href ? location.href : scriptUrl.href);
   const storedCity = (() => { try { return localStorage.getItem('ptboSelectedCity'); } catch (_) { return null; } })();
-  const requestedCity = String(currentUrl.searchParams.get('city') || storedCity || 'peterborough').toLowerCase();
+  const requestedCity = String(scriptUrl.searchParams.get('city') || currentUrl.searchParams.get('city') || storedCity || 'peterborough').toLowerCase();
   const CITY_ID = /^[a-z0-9-]+$/.test(requestedCity) ? requestedCity : 'peterborough';
   const STORAGE_KEY = `ptboSharedDispatchLocationsV3:${CITY_ID}`;
   const LEGACY_STORAGE_KEY = CITY_ID === 'peterborough' ? 'ptboSharedDispatchLocationsV2' : null;

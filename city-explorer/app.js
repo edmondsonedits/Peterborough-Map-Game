@@ -14,7 +14,7 @@ import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runt
 import { createCatalogObject } from './editor/asset-catalog.js';
 import { createCommandHistory } from './editor/command-history.js';
 import { createDraftStore } from './editor/draft-store.js';
-import { createCityEditor } from './editor/city-editor.js';
+import { createCityEditor } from './editor/city-editor.js?v=1.6.101';
 import { createEmptySceneDocument, sanitizeRenderableSceneDocument } from './editor/scene-document.js';
 import { createGeneratedRegistry } from './editor/generated-registry.js';
 import { applyOverrides } from './editor/override-runtime.js';
@@ -25,18 +25,18 @@ import {
   createBuildingFootprintPlacement,
   createPeterboroughLandmarks,
 } from './landmark-models.js?v=1.5.5-streets4';
-import { ROAD_SURFACE_CLEARANCE, RoadSurfaceIndex, laneCountFor, reconcileRoadNetworkElevations, roadProfile, roadRibbonCrossSections, resampleRoadLine } from './road-network.js?v=street-evidence-1';
+import { ROAD_SURFACE_CLEARANCE, RoadSurfaceIndex, laneCountFor, reconcileRoadNetworkElevations, roadProfile, roadRibbonCrossSections, resampleRoadLine } from './road-network.js?v=street-evidence-2';
 import { solveFallbackJunctions, polygonArea as junctionPolygonArea } from './fallback-junction-geometry.js';
 import { officialRoadMeshEdgeLength, officialCurbDisplayMode, nearbyMunicipalRoadHeight, municipalCurbTop } from './citywide-road-quality.js';
 import { sampleTruckWheelContacts, truckIsOnRoad } from './road-wheel-contact.js';
-import { reviewedPaintTags, drapePaintStrip } from './street-paint.js?v=street-evidence-1';
-import { OfficialDrivableSurfaceIndex, RenderedPavementIndex, officialSurfaceStatusActive, officialBridgeIsVehicular } from './official-road-surfaces.js?v=1.5.6-bridge-use1';
+import { reviewedPaintTags, drapePaintStrip } from './street-paint.js?v=street-evidence-2';
+import { OfficialDrivableSurfaceIndex, RenderedPavementIndex, officialSurfaceStatusActive, officialBridgeIsVehicular } from './official-road-surfaces.js?v=1.6.101';
 import { FLY_TUNING, adjustFlySpeedScale, applyFlyLookDelta, dampingFactors, flyAxesFromKeys, flySpeedFor, flyYawToward, isFlyControlCode, wrapFlyYaw } from './fly-controls.js?v=1.5.5-fly4';
 import { clearLandCoverRaster, paintLandCoverPolygon } from './land-cover-raster.js?v=1.5.5-raster1';
 import { sampleOfficialTerrainElevation, validOfficialTerrainMetadata } from './terrain-heightmap.js?v=1.5.5-lidar1';
 import { sampleTriangulatedTerrainHeight } from './terrain-surface.js?v=1.5.5-terrain1';
 import { HydroSurfaceIndex, WATER_SURFACE_CLEARANCE, WATER_TERRAIN_RECESS, createWaterStageSampler, relativeWaterElevation, robustFallbackWaterHeight, subdivideWaterTriangle, watercourseWidth } from './water-system.js?v=1.5.5-hydro2';
-import { CitySplatLayer } from './city-splat-layer.js?v=1.5.5-hybrid1';
+import { CitySplatLayer } from './city-splat-layer.js?v=1.6.101';
 import {
   estimatedBuildingFloors,
   facadeDetailClass,
@@ -45,7 +45,7 @@ import {
   roadLaneMarkingBoundaries,
   selectStreetSignIntersections,
   shouldRenderUrbanCurb,
-} from './city-detail-rules.js?v=street-evidence-1';
+} from './city-detail-rules.js?v=street-evidence-2';
 import {
   createSkyAtmosphere,
   installWorldSurfaceDetail,
@@ -336,6 +336,8 @@ const streetLabelGroup = new THREE.Group();
 const semanticSurveyGroup = new THREE.Group();
 const surveyMarkerGroup = new THREE.Group();
 const authoredDetailGroup = new THREE.Group();
+// Pick-only proxies stay outside the render tree. The editor raycasts the
+// registry directly; traversing these 40,000+ objects every frame is wasted work.
 const generatedEditorProxyGroup = new THREE.Group();
 generatedEditorProxyGroup.name = 'city-editor-generated-proxies';
 const generatedRegistry = createGeneratedRegistry(THREE);
@@ -374,7 +376,7 @@ function prepareGeneratedInstances(objects) {
     object.userData.cityEditorColorFactory ||= () => new THREE.Color();
   });
 }
-world.add(terrainGroup, roadGroup, mapRoadGroup, buildingGroup, vegetationGroup, streetscapeGroup, landmarkGroup, gameplayGroup, semanticSurveyGroup, surveyMarkerGroup, streetLabelGroup, authoredDetailGroup, generatedEditorProxyGroup);
+world.add(terrainGroup, roadGroup, mapRoadGroup, buildingGroup, vegetationGroup, streetscapeGroup, landmarkGroup, gameplayGroup, semanticSurveyGroup, surveyMarkerGroup, streetLabelGroup, authoredDetailGroup);
 mapRoadGroup.visible = false;
 streetLabelGroup.visible = false;
 surveyMarkerGroup.visible = false;
@@ -2476,7 +2478,7 @@ function attachRoadInstance(lineId, object, instanceIndex) {
  */
 function buildFallbackPolygonJunctionMeshes(polygons) {
   const batches = new Map();
-  const index = new RenderedPavementIndex();
+  const index = state.fallbackJunctionSurfaceIndex || new RenderedPavementIndex();
   const batchFor = (polygon, foundation) => {
     const tile = roadRenderTileCoordinates(polygon.x, polygon.z);
     const kind = foundation ? 'foundation' : 'surface';
@@ -2582,6 +2584,16 @@ function buildRoadJunctions(segments) {
   const dummy = new THREE.Object3D();
   const buildGroups = (groups, foundation) => {
     const geometry = new THREE.CylinderGeometry(0.5, 0.5, foundation ? 0.025 : 0.018, 14);
+    const positions = geometry.getAttribute('position'), normals = geometry.getAttribute('normal');
+    const indices = geometry.getIndex().array;
+    const topFaces = [];
+    if (!foundation) {
+      state.fallbackJunctionSurfaceIndex ||= new RenderedPavementIndex();
+      for (let i = 0; i < indices.length; i += 3) {
+        const face = [indices[i], indices[i + 1], indices[i + 2]];
+        if (face.every(v => normals.getY(v) > 0.5)) topFaces.push(face);
+      }
+    }
     groups.forEach(({ materialKey, tile, vertices: grouped }) => {
       const mesh = new THREE.InstancedMesh(geometry, materials[materialKey] || materials.roadLocal, grouped.length);
       grouped.forEach((vertex, index) => {
@@ -2591,6 +2603,16 @@ function buildRoadJunctions(segments) {
         dummy.scale.set(diameter, 1, diameter);
         dummy.updateMatrix();
         mesh.setMatrixAt(index, dummy.matrix);
+        if (!foundation) {
+          // Match actual Float32 instance transforms and top vertices.
+          // The legacy cap top is 18 mm above its centreline ribbon.
+          const transform = new THREE.Matrix4(); mesh.getMatrixAt(index, transform);
+          for (const face of topFaces) {
+            const [a, b, c] = face.map(v => new THREE.Vector3().fromBufferAttribute(positions, v).applyMatrix4(transform));
+            state.fallbackJunctionSurfaceIndex.addTriangle(a.x,a.y,a.z,b.x,b.y,b.z,c.x,c.y,c.z,
+              { layer: 'road_surfaces', id: `fallback-cap:${vertex.key}` });
+          }
+        }
         vertex.lines.forEach((lineId) => attachRoadInstance(lineId, mesh, index));
       });
       mesh.instanceMatrix.needsUpdate = true;
@@ -2761,6 +2783,7 @@ function buildMapRoadLines(segments) {
 
 function buildRoadMarkings(segments) {
   const groups = new Map();
+  const reviewedWayIds = new Set();
   const roadNodes = new Map();
   const nodeKey = (point, height) => `${Math.round(point.x * 20)}:${Math.round(point.y * 20)}:${Math.round(height * 4)}`;
   const recordPublicRoadNode = (segment, endpoint) => {
@@ -2795,6 +2818,7 @@ function buildRoadMarkings(segments) {
 
   for (const segment of segments) {
     const tags = reviewedPaintTags(segment.tags || {}, segment.lineId);
+    if (tags !== segment.tags) reviewedWayIds.add(segment.lineId);
     const profile = segment.profile || roadProfile(tags);
     if (!profile || profile.unpaved || profile.tunnel || tags.junction === 'roundabout' || tags.lane_markings === 'no') continue;
     const dx = segment.b.x - segment.a.x;
@@ -2922,7 +2946,8 @@ function buildRoadMarkings(segments) {
     markingCount += ranges.length; vertexCount += positions.length/3;
   });
   document.documentElement.dataset.roadPaintVertices = String(vertexCount);
-  document.documentElement.dataset.roadPaintVersion = 'street-evidence-1';
+  document.documentElement.dataset.roadPaintVersion = 'street-evidence-2';
+  document.documentElement.dataset.roadPaintReviewedWays = String(reviewedWayIds.size);
   state.objectCount += markingCount;
 }
 
@@ -4615,6 +4640,7 @@ async function buildCity() {
   buildLandmarkMapLabels();
   await initializeSemanticSurvey();
   await initializeCapturedDetailLayer();
+  generatedEditorProxyGroup.updateMatrixWorld(true);
   initializeGameplay();
   await Promise.all([fireTruckActor.userData.truck.ready, playerActor.userData.animation.ready]);
   cityVisualLod = '';
@@ -4935,56 +4961,6 @@ function resetGameplay() {
   return true;
 }
 
-function setModeLegacy(mode) {
-  if (mode === state.mode) {
-    if (mode === 'fly') updateFlyHint();
-    return;
-  }
-  stopFlyMotion();
-  state.dragLooking = false;
-  state.dragPointerId = null;
-  state.previousPointer = null;
-  if (mode === 'map') {
-    state.lastFlyPosition.copy(camera.position);
-    state.lastFlyYaw = state.yaw;
-    state.lastFlyPitch = state.pitch;
-    document.exitPointerLock?.();
-    state.mode = 'map';
-    els.app.classList.add('is-map');
-    camera.near = 30;
-    camera.updateProjectionMatrix();
-    mapRoadGroup.visible = true;
-    const mapAltitude = Math.max(5600, CITY.terrainSize * 0.95);
-    camera.position.set(
-      CITY.terrainCenter.x,
-      mapAltitude,
-      CITY.terrainCenter.z,
-    );
-    camera.up.set(0, 0, -1);
-    camera.lookAt(CITY.terrainCenter.x, terrainHeightAtWorld(CITY.terrainCenter.x, CITY.terrainCenter.z), CITY.terrainCenter.z);
-    streetLabelGroup.visible = innerWidth >= 760;
-    updateMapGuide();
-    els.flyMode.classList.remove('is-active');
-    els.mapMode.classList.add('is-active');
-    els.modeHint.innerHTML = '<strong>Map mode.</strong> Scroll to zoom · WASD or arrows to pan · select Fly mode to return.';
-  } else {
-    state.mode = 'fly';
-    els.app.classList.remove('is-map');
-    camera.near = 0.5;
-    camera.updateProjectionMatrix();
-    mapRoadGroup.visible = false;
-    streetLabelGroup.visible = false;
-    camera.up.set(0, 1, 0);
-    camera.position.copy(state.lastFlyPosition);
-    state.yaw = state.lastFlyYaw;
-    state.pitch = state.lastFlyPitch;
-    els.flyMode.classList.add('is-active');
-    els.mapMode.classList.remove('is-active');
-    updateFlyHint();
-  }
-  updateMouseLookUi();
-}
-
 function setMode(mode, force = false) {
   if (cityEditor?.active) return;
   const resolvedMode = mode === 'play' ? (state.lastNonMapMode === 'driving' ? 'driving' : 'onFoot') : mode;
@@ -5150,7 +5126,8 @@ function cycleGameplayCameraDistance() {
 }
 
 function currentGameplayAxes(delta) {
-  const keyboard = gameplayAxesFromKeys(state.keys);
+  const modalOpen=Boolean(document.querySelector('dialog[open]'));
+  const keyboard = modalOpen ? {forward:0,strafe:0,steering:0,sprinting:false} : gameplayAxesFromKeys(state.keys);
   const pads = navigator.getGamepads?.() || [];
   const gamepad = Array.from(pads).find((candidate) => candidate?.connected && candidate.mapping === 'standard')
     || Array.from(pads).find((candidate) => candidate?.connected);
@@ -5161,6 +5138,7 @@ function currentGameplayAxes(delta) {
     return keyboard;
   }
   document.documentElement.dataset.gamepadConnected = 'true';
+  if(modalOpen){gamepadActionDown=Boolean(gamepad.buttons?.[0]?.pressed);gamepadCameraDown=Boolean(gamepad.buttons?.[3]?.pressed);return keyboard;}
   const deadzone = (value, threshold = 0.16) => {
     const magnitude = Math.abs(Number(value) || 0);
     return magnitude <= threshold ? 0 : Math.sign(value) * (magnitude - threshold) / (1 - threshold);
@@ -5357,15 +5335,19 @@ function updateGameplayHud() {
   const surface = gameplaySurfaceAt(focus.x, focus.z, driving ? truckState.y : playerActor.position.y);
   const nearStation = Math.hypot(focus.x - fireStationWorld.x, focus.z - fireStationWorld.z) < 80;
   const label = !surface.onRoad && nearStation
-    ? 'Fire Station 1 apron'
+    ? `Fire Station ${FIRE_STATION_ONE.number} apron`
     : surface.name || (surface.onRoad ? 'Peterborough street' : 'Off road');
   if (label !== lastRoadLabel) {
     lastRoadLabel = label;
     els.gameplayRoad.textContent = label;
   }
-  els.gameplayRole.textContent = driving ? 'Fire Rescue Engine 1' : 'Firefighter · On foot';
-  els.gameplaySpeed.textContent = String(Math.round(Math.abs(truckState.speed) * 3.6)).padStart(3, '0');
-  els.gameplayGear.textContent = Math.abs(truckState.speed) < 0.18 ? 'N' : truckState.speed < 0 ? 'R' : 'D';
+  const role=driving?'Fire Rescue Engine 1':'Firefighter · On foot';
+  const speedKmh=String(Math.round(Math.abs(truckState.speed)*3.6));
+  const speedText=speedKmh.padStart(3,'0');
+  const gear=Math.abs(truckState.speed)<0.18?'N':truckState.speed<0?'R':'D';
+  if(els.gameplayRole.textContent!==role)els.gameplayRole.textContent=role;
+  if(els.gameplaySpeed.textContent!==speedText)els.gameplaySpeed.textContent=speedText;
+  if(els.gameplayGear.textContent!==gear)els.gameplayGear.textContent=gear;
   let prompt = '';
   if (state.mode === 'onFoot') {
     const distance = Math.hypot(playerActor.position.x - truckState.x, playerActor.position.z - truckState.z);
@@ -5373,10 +5355,13 @@ function updateGameplayHud() {
   } else if (driving && Math.abs(truckState.speed) <= TRUCK_TUNING.exitSpeed) {
     prompt = '<kbd>E</kbd> Exit fire truck';
   }
-  els.interactionPrompt.innerHTML = prompt;
-  els.interactionPrompt.classList.toggle('is-visible', Boolean(prompt));
-  document.documentElement.dataset.gameplaySpeedKmh = String(Math.round(Math.abs(truckState.speed) * 3.6));
-  document.documentElement.dataset.gameplayOnRoad = String(surface.onRoad);
+  if(els.interactionPrompt.innerHTML!==prompt){
+    els.interactionPrompt.innerHTML=prompt;
+    els.interactionPrompt.classList.toggle('is-visible',Boolean(prompt));
+  }
+  const rootData=document.documentElement.dataset;
+  if(rootData.gameplaySpeedKmh!==speedKmh)rootData.gameplaySpeedKmh=speedKmh;
+  if(rootData.gameplayOnRoad!==String(surface.onRoad))rootData.gameplayOnRoad=String(surface.onRoad);
   if (pavementQA) {
     document.documentElement.dataset.gameplayContact = JSON.stringify({
       mode: state.mode, x: focus.x, z: focus.z, y: focus.y,
@@ -5831,7 +5816,8 @@ function animate() {
   }
   const delta = Math.min(clock.getDelta(), 0.05);
   if (!captureFrame) {
-    if (cityEditor?.active) cityEditor.update(delta);
+    if(document.querySelector('dialog[open]')){state.keys.clear();currentGameplayAxes(0);}
+    else if (cityEditor?.active) cityEditor.update(delta);
     else if (state.mode === 'fly') updateFlyControls(delta);
     else if (state.mode === 'map') updateMapControls(delta);
     else {
@@ -5973,16 +5959,37 @@ function populateLandmarks() {
   });
 }
 
+let citySearchGeneration = 0;
+let citySearchController = null;
+
+function cancelCitySearch() {
+  citySearchGeneration += 1;
+  citySearchController?.abort();
+  citySearchController = null;
+}
+
 async function searchLocations(query) {
+  cancelCitySearch();
+  const generation = citySearchGeneration;
   const normalized = query.trim().toLowerCase();
   els.searchResults.innerHTML = '';
-  const localMatches = [...LANDMARKS, ...state.localPlaces]
-    .filter((landmark, index, entries) => entries.findIndex((candidate) => candidate.name === landmark.name && candidate.lat === landmark.lat && candidate.lon === landmark.lon) === index)
-    .filter((landmark) => `${landmark.name} ${landmark.category} ${landmark.address || ''}`.toLowerCase().includes(normalized))
-    .slice(0, 12);
+  const localMatches = [];
+  const seen = new Set();
+  for (const landmark of [...LANDMARKS, ...state.localPlaces]) {
+    const key = JSON.stringify([landmark.name, landmark.lat, landmark.lon]);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    if (!`${landmark.name} ${landmark.category} ${landmark.address || ''}`.toLowerCase().includes(normalized)) continue;
+    localMatches.push(landmark);
+    if (localMatches.length === 12) break;
+  }
   localMatches.forEach(addSearchResult);
   if (localMatches.length >= 4) return;
 
+  const controller = new AbortController();
+  citySearchController = controller;
+  const timeout = setTimeout(() => controller.abort(), 12000);
+  const ownsResults = () => generation === citySearchGeneration && els.searchDialog.open;
   const url = new URL('https://nominatim.openstreetmap.org/search');
   url.searchParams.set('format', 'jsonv2');
   url.searchParams.set('limit', '6');
@@ -5991,25 +5998,38 @@ async function searchLocations(query) {
   url.searchParams.set('bounded', '1');
   url.searchParams.set('q', `${query}, Peterborough, Ontario`);
   try {
-    const response = await fetch(url, { headers: { Accept: 'application/json' } });
+    const response = await fetch(url, { headers: { Accept: 'application/json' }, signal: controller.signal });
+    if (!ownsResults()) return;
     if (!response.ok) throw new Error(`Search returned ${response.status}`);
     const results = await response.json();
-    const known = new Set(localMatches.map((item) => item.name.toLowerCase()));
-    results.forEach((result) => {
-      const name = result.display_name?.split(',').slice(0, 3).join(', ') || 'Search result';
-      if (known.has(name.toLowerCase())) return;
+    if (!ownsResults()) return;
+    if (!Array.isArray(results)) throw new Error('Search returned an invalid result list');
+    const knownNames = new Set(localMatches.map((item) => item.name.toLowerCase()));
+    const remoteKeys = new Set();
+    for (const result of results) {
+      if (!result || !['number', 'string'].includes(typeof result.lat) || !['number', 'string'].includes(typeof result.lon)
+        || String(result.lat).trim() === '' || String(result.lon).trim() === '') continue;
+      const lat = Number(result.lat), lon = Number(result.lon);
+      if (![lat, lon].every(Number.isFinite) || Math.abs(lat) > 90 || Math.abs(lon) > 180) continue;
+      const name = typeof result.display_name === 'string'
+        ? result.display_name.split(',').slice(0, 3).join(', ') || 'Search result' : 'Search result';
+      const key = JSON.stringify([name, lat, lon]);
+      if (knownNames.has(name.toLowerCase()) || remoteKeys.has(key)) continue;
+      remoteKeys.add(key);
       addSearchResult({
         name,
         category: result.type || result.class || 'OpenStreetMap result',
-        lat: Number.parseFloat(result.lat),
-        lon: Number.parseFloat(result.lon),
-        altitude: 32,
+        lat, lon, altitude: 32,
       });
-    });
+    }
     if (!els.searchResults.children.length) els.searchResults.innerHTML = '<p>No matching Peterborough locations were found.</p>';
   } catch (error) {
+    if (!ownsResults()) return;
     console.warn(error);
     if (!els.searchResults.children.length) els.searchResults.innerHTML = '<p>Address search is temporarily unavailable. Try one of the built-in landmarks.</p>';
+  } finally {
+    clearTimeout(timeout);
+    if (citySearchController === controller) citySearchController = null;
   }
 }
 
@@ -6260,6 +6280,7 @@ function wireEvents() {
 
   [els.searchDialog, els.landmarksDialog].forEach((dialog) => {
     dialog.addEventListener('close', () => {
+      if (dialog === els.searchDialog) cancelCitySearch();
       stopFlyMotion();
       if (state.mode !== 'map') els.canvas.focus({ preventScroll: true });
     });
@@ -6397,7 +6418,7 @@ function wireEvents() {
   window.addEventListener('resize', () => {
     camera.aspect = innerWidth / innerHeight;
     camera.updateProjectionMatrix();
-    renderer.setPixelRatio(Math.min(devicePixelRatio, innerWidth < 760 ? 1.25 : 1.65));
+    renderer.setPixelRatio(Math.min(devicePixelRatio, lowPowerProfile ? 1.2 : innerWidth < 760 ? 1.25 : 1.65));
     renderer.setSize(innerWidth, innerHeight, false);
     streetLabelGroup.visible = state.mode === 'map' && innerWidth >= 760;
     updateMapGuide();

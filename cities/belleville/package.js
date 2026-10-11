@@ -2,6 +2,7 @@
   'use strict';
   const VERSION='1.6.13';
   const sourceUrl=new URL(document.currentScript?.src || location.href,location.href);
+  const CACHE_VERSION=sourceUrl.searchParams.get('v') || VERSION;
   const config={
     id:'belleville',name:'Belleville',
     map:{defaultCenter:[44.1628,-77.3832],defaultHeading:180,defaultZoom:15,minZoom:10,maxZoom:19,bounds:[[44.08,-77.50],[44.28,-77.25]]},
@@ -21,10 +22,13 @@
   };
   const start=()=>window.PTBO_PREVIEW_CITY_FACTORY.create({...config,sourceUrl});
   if(window.PTBO_PREVIEW_CITY_FACTORY?.version===VERSION){start();return;}
-  const factoryUrl=new URL('../preview-package-factory.js?v='+VERSION,sourceUrl).href;
+  const factoryUrl=new URL('../preview-package-factory.js?v='+CACHE_VERSION,sourceUrl).href;
   if(document.readyState==='loading'&&typeof document.write==='function'){
-    document.write('<script src="'+factoryUrl.replace(/&/g,'&amp;')+'"><'+'/script>');
-    start();
+    // The inserted external script runs after this script returns. Queue its
+    // initializer after it so following parser scripts see the city package.
+    const payload=JSON.stringify({...config,sourceUrl:sourceUrl.href}).replace(/</g,'\\u003c');
+    document.write('<script src="'+factoryUrl.replace(/&/g,'&amp;').replace(/"/g,'&quot;')+'"><'+'/script>'+
+      '<script>window.PTBO_PREVIEW_CITY_FACTORY.create('+payload+');<'+'/script>');
     return;
   }
   const script=document.createElement('script');script.src=factoryUrl;script.onload=start;script.onerror=()=>console.error('Unable to load base-training city package factory.');document.head.appendChild(script);

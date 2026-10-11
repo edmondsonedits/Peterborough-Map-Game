@@ -2,25 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#07111f">
   <meta name="description" content="Rapid Peterborough route-learning practice. Draw a response route, snap it to real roads, compare it, and move to the next call.">
   <title>Route Mapping · Peterborough Emergency Games</title>
-  <link rel="stylesheet" href="../response-simulator/vendor/leaflet-1.9.4/leaflet.css?v=1.6.98">
-  <link rel="stylesheet" href="./styles.css?v=1.6.98">
+  <link rel="stylesheet" href="../response-simulator/vendor/leaflet-1.9.4/leaflet.css?v=1.6.101">
+  <link rel="stylesheet" href="./styles.css?v=1.6.101">
 </head>
 <body>
   <main id="route-app" aria-busy="true">
     <div id="map" aria-label="Peterborough route training map"></div>
-    <div id="draw-surface" aria-label="Draw your response route"></div>
+    <div id="draw-surface" role="region" hidden aria-label="Drag from START to draw the response route"></div>
 
     <a class="back-button glass" href="../" aria-label="Return to all games">←</a>
     <button id="settings-button" class="settings-button glass" type="button" aria-label="Route Mapping settings">⚙</button>
 
     <section class="dispatch-card glass" aria-live="polite">
       <div class="dispatch-topline"><span id="call-number">CALL 1</span><span id="difficulty-label" data-level="easy">DIFFICULTY —</span><span id="base-label">Station 1</span></div>
-      <strong id="call-type">Loading route training…</strong>
-      <span id="call-address">Preparing Peterborough road data</span>
+      <strong id="call-address">Preparing Peterborough road data</strong>
+      <span id="call-type">Loading route training…</span>
     </section>
 
     <div id="hint" class="hint glass" role="status" aria-live="polite">Loading roads…</div>
@@ -31,26 +31,48 @@
       <button id="submit-button" class="primary" type="button" disabled>Submit Route</button>
     </section>
 
+    <nav class="map-nav" aria-label="Map zoom">
+      <button id="zoom-in" type="button" aria-label="Zoom in">+</button>
+      <button id="zoom-out" type="button" aria-label="Zoom out">−</button>
+    </nav>
+
     <section id="results" class="results glass" hidden aria-live="polite">
       <div class="result-heading"><span>ROUTE REVIEW</span><strong id="efficiency-value">—</strong></div>
       <div class="result-grid">
         <div><span>Your route</span><strong id="player-distance">—</strong></div>
-        <div><span>Shortest</span><strong id="shortest-distance">—</strong></div>
+        <div><span>Shortest legal route</span><strong id="shortest-distance">—</strong></div>
         <div><span>Extra</span><strong id="extra-distance">—</strong></div>
       </div>
-      <p id="result-note">Blue is your route. Green is the recommended response route.</p>
+      <p id="result-note">Blue is your route. Green is a shortest legal route.</p>
       <button id="next-button" class="primary next" type="button">Next Call</button>
     </section>
 
-    <section id="settings-sheet" class="sheet-backdrop" hidden>
+    <dialog id="settings-sheet" class="sheet-backdrop" aria-labelledby="settings-title">
       <form id="settings-form" class="sheet glass">
-        <div class="sheet-head"><div><span>ROUTE MAPPING</span><strong>Starting unit</strong></div><button id="settings-close" type="button" aria-label="Close settings">×</button></div>
+        <div class="sheet-head"><div><span>ROUTE MAPPING</span><strong id="settings-title">Route settings</strong></div><button id="settings-close" type="button" aria-label="Close settings">×</button></div>
         <label>Service<select id="service-select"><option value="fire">Fire</option><option value="ems">EMS</option></select></label>
         <label hidden>Base<select id="base-select"></select></label>
-        <p>Starting points advance automatically: Station 1 → North Station → West Station → previous dispatch. Each station phase lasts 20 completed calls.</p>
-        <button class="primary" type="submit">Use this base</button>
+        <p id="phase-note">Starting points advance automatically: Station 1 → North Station → West Station → previous dispatch. Each station phase lasts 20 completed calls. CALL marks the nearest mapped public-road access to the address.</p>
+        <section class="tuning-controls" aria-label="Gameplay tuning">
+          <label for="street-forgiveness">Street forgiveness <output id="street-forgiveness-value" for="street-forgiveness">12 px</output></label>
+          <input id="street-forgiveness" type="range" min="6" max="24" step="1" value="12" aria-describedby="street-forgiveness-help">
+          <small id="street-forgiveness-help">How far your drawn line may sit from a street before it is rejected.</small>
+
+          <label for="straight-preference">Straight-street preference <output id="straight-preference-value" for="straight-preference">35%</output></label>
+          <input id="straight-preference" type="range" min="0" max="100" step="1" value="35" aria-describedby="straight-preference-help">
+          <small id="straight-preference-help">Keep turns close to your sketch while favoring the direction you drew.</small>
+
+          <label for="arrival-distance">Call arrival distance <output id="arrival-distance-value" for="arrival-distance">40 m</output></label>
+          <input id="arrival-distance" type="range" min="10" max="60" step="1" value="40" aria-describedby="arrival-distance-help">
+          <small id="arrival-distance-help">How close your traced route must get to the call access point.</small>
+
+          <label for="challenge-frequency">Decision challenge frequency <output id="challenge-frequency-value" for="challenge-frequency">80%</output></label>
+          <input id="challenge-frequency" type="range" min="50" max="100" step="1" value="80" aria-describedby="challenge-frequency-help">
+          <small id="challenge-frequency-help">How often dispatch favors calls with route decision challenges.</small>
+        </section>
+        <div class="settings-actions"><button id="settings-reset" class="secondary" type="button">Reset defaults</button><button class="primary" type="submit">Apply settings</button></div>
       </form>
-    </section>
+    </dialog>
 
     <div id="loading-error" class="loading-error" hidden>
       <strong>Route Mapping could not start.</strong>
@@ -59,12 +81,14 @@
     </div>
   </main>
 
-  <script src="../shared/build-version.js?v=1.6.98"></script>
-  <script src="../response-simulator/vendor/leaflet-1.9.4/leaflet.js?v=1.6.98"></script>
-  <script src="../response-simulator/service-config.js?v=1.6.98"></script>
-  <script src="../shared/location-changes.js?v=1.6.98"></script>
-  <script src="../shared/base-locations.js?v=1.6.98"></script>
-  <script src="../shared/dispatch-locations.js?city=peterborough&amp;v=1.6.98"></script>
-  <script src="./app.js?v=1.6.98"></script>
+  <script src="../shared/build-version.js?v=1.6.101"></script>
+  <script src="../response-simulator/vendor/leaflet-1.9.4/leaflet.js?v=1.6.101"></script>
+  <script src="../response-simulator/service-config.js?v=1.6.101"></script>
+  <script src="../shared/location-changes.js?v=1.6.101"></script>
+  <script src="../shared/base-locations.js?v=1.6.101"></script>
+  <script src="../shared/dispatch-locations.js?city=peterborough&amp;v=1.6.101"></script>
+  <script src="./trace-core.js?v=1.6.101"></script>
+  <script src="./learning-core.js?v=1.6.101"></script>
+  <script src="./app.js?v=1.6.101"></script>
 </body>
 </html>
