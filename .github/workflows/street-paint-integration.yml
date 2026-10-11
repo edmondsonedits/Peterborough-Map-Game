@@ -22,87 +22,23 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Preserve concurrent main changes and apply verified cap-height correction
+      - name: Integrate current main with reviewed conflict resolution
         shell: bash
         run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git fetch origin main
-          git worktree add --detach "$RUNNER_TEMP/current-main" origin/main
           python - <<'PY'
-          import subprocess,re
-          from pathlib import Path
-          result=subprocess.run(['git','merge','--no-commit','--no-ff','origin/main'])
-          if result.returncode:
-              conflicts=subprocess.check_output(['git','diff','--name-only','--diff-filter=U'],text=True).splitlines()
-              allowed={'city-explorer/index.html','city-explorer/road-orientation-fix.js'}
-              if not conflicts or not set(conflicts)<=allowed:
-                  subprocess.run(['git','diff','--cc'])
-                  raise RuntimeError('Unreviewed merge conflict: '+repr(conflicts))
-              # Only these two cache-entrypoint conflicts have been reviewed.
-              # Preserve all of main's current bootstrap/release logic.
-              for file in conflicts:
-                  subprocess.run(['git','checkout','--theirs','--',file],check=True)
-                  subprocess.run(['git','add',file],check=True)
-          p=Path('city-explorer/road-orientation-fix.js');s=p.read_text()
-          old="await import('./app.js?v=' + encodeURIComponent(appVersion));"
-          if old not in s: raise RuntimeError('Main bootstrap logic changed; do not replace it blindly')
-          s=s.replace(old,"await import('./app.js?v=' + encodeURIComponent(appVersion + '-street-evidence-2'));")
-          p.write_text(s)
-          p=Path('city-explorer/index.html');s=p.read_text()
-          s,n=re.subn(r'(road-orientation-fix\.js\?v=[^"&]+)(?:&streetEvidence=\d+)?',r'\1&streetEvidence=2',s)
-          if n!=1: raise RuntimeError('Unexpected HTML bootstrap')
-          p.write_text(s)
-          p=Path('city-explorer/app.js');s=p.read_text()
-          old='function buildFallbackPolygonJunctionMeshes(polygons) {\n  const batches = new Map();\n  const index = new RenderedPavementIndex();'
-          new='function buildFallbackPolygonJunctionMeshes(polygons) {\n  const batches = new Map();\n  const index = state.fallbackJunctionSurfaceIndex || new RenderedPavementIndex();'
-          if s.count(old)!=1: raise RuntimeError('Prototype surface-index source changed')
-          s=s.replace(old,new)
-          a=s.index('function buildRoadJunctions(');b=s.index('\nfunction buildUrbanCurbs',a);f=s[a:b]
-          old='    const geometry = new THREE.CylinderGeometry(0.5, 0.5, foundation ? 0.025 : 0.018, 14);'
-          new=old+'''
-              const positions = geometry.getAttribute('position'), normals = geometry.getAttribute('normal');
-              const indices = geometry.getIndex().array;
-              const topFaces = [];
-              if (!foundation) {
-                state.fallbackJunctionSurfaceIndex ||= new RenderedPavementIndex();
-                for (let i = 0; i < indices.length; i += 3) {
-                  const face = [indices[i], indices[i + 1], indices[i + 2]];
-                  if (face.every(v => normals.getY(v) > 0.5)) topFaces.push(face);
-                }
-              }'''
-          if f.count(old)!=1: raise RuntimeError('Legacy cap geometry source changed')
-          f=f.replace(old,new)
-          old='        mesh.setMatrixAt(index, dummy.matrix);'
-          new=old+'''
-                  if (!foundation) {
-                    // Match actual Float32 instance transforms and top vertices.
-                    // The legacy cap top is 18 mm above its centreline ribbon.
-                    const transform = new THREE.Matrix4(); mesh.getMatrixAt(index, transform);
-                    for (const face of topFaces) {
-                      const [a, b, c] = face.map(v => new THREE.Vector3().fromBufferAttribute(positions, v).applyMatrix4(transform));
-                      state.fallbackJunctionSurfaceIndex.addTriangle(a.x,a.y,a.z,b.x,b.y,b.z,c.x,c.y,c.z,
-                        { layer: 'road_surfaces', id: `fallback-cap:${vertex.key}` });
-                    }
-                  }'''
-          if f.count(old)!=1: raise RuntimeError('Cap transform source changed')
-          f=f.replace(old,new);s=s[:a]+f+s[b:]
-          a=s.index('function buildRoadMarkings(');b=s.index('\nfunction turnArrowGeometry',a);f=s[a:b]
-          f=f.replace('  const groups = new Map();','  const groups = new Map();\n  const reviewedWayIds = new Set();',1)
-          old='    const tags = reviewedPaintTags(segment.tags || {}, segment.lineId);'
-          if f.count(old)!=1: raise RuntimeError('Reviewed paint hook missing')
-          f=f.replace(old,old+'\n    if (tags !== segment.tags) reviewedWayIds.add(segment.lineId);')
-          old="  document.documentElement.dataset.roadPaintVersion = 'street-evidence-1';"
-          if f.count(old)!=1: raise RuntimeError('Paint diagnostics missing')
-          f=f.replace(old,old+'\n  document.documentElement.dataset.roadPaintReviewedWays = String(reviewedWayIds.size);')
-          s=s[:a]+f+s[b:];s=s.replace('street-evidence-1','street-evidence-2');p.write_text(s)
-          p=Path('tools/check-street-paint-comparison.cjs');s=p.read_text()
-          s=s.replace("root+'/city-explorer/?qa=1'","root+'/city-explorer/?qa=1&municipalRoads=1'")
-          s=s.replace('for(const site of sites)',"for(const site of sites.filter(s=>['sherbrooke-station','lansdowne-west'].includes(s.name)))")
-          s=s.replace('out.length===60','out.length===20').replace('street-evidence-1','street-evidence-2')
-          s=s.replace("paintVertices:Number(document.documentElement.dataset.roadPaintVertices||0),","paintVertices:Number(document.documentElement.dataset.roadPaintVertices||0),\n      reviewedWays:Number(document.documentElement.dataset.roadPaintReviewedWays||0),")
-          s=s.replace("   if(errors.length)throw", "   if(entry.views.some(v=>!String(v.roadSource).includes('municipal')))throw new Error('Municipal road surfaces did not load');\n   if(label==='after' && entry.views.some(v=>v.reviewedWays!==4))throw new Error('Expected four reviewed GeoJSON way IDs');\n   if(errors.length)throw")
-          p.write_text(s)
+          import subprocess
+          # Reuse the immutable, reviewed cap/contact patch recipe. Only the
+          # inspected merge-conflict handler changes; no source is discarded.
+          source=subprocess.check_output(['git','show','f0296dceb90e07010197cde64d115283c3862a20:.github/workflows/street-paint-integration.yml'],text=True)
+          rows=source.splitlines()
+          start=next(i for i,s in enumerate(rows) if s.strip()=='- name: Preserve concurrent main changes and apply verified cap-height correction')
+          begin=next(i for i in range(start,len(rows)) if rows[i].strip()=='run: |')+1
+          end=next(i for i in range(begin,len(rows)) if rows[i].startswith('      - name:'))
+          command='\n'.join(s[10:] for s in rows[begin:end])+'\n'
+          first=command.index("result=subprocess.run(['git','merge','--no-commit','--no-ff','origin/main'])")
+          last=command.index("p=Path('city-explorer/road-orientation-fix.js')",first)
+          command=command[:first]+"subprocess.run(['python','tools/resolve_street_merge.py'],check=True)\n"+command[last:]
+          subprocess.run(['bash','-e','-o','pipefail','-c',command],check=True)
           PY
       - name: Test combined source, geometry and runtime edge cases
         run: |
@@ -145,7 +81,7 @@ jobs:
       - name: Commit tested integration on the feature branch
         run: |
           git add city-explorer/app.js city-explorer/road-orientation-fix.js city-explorer/index.html tools/check-street-paint-comparison.cjs docs/street-audit/
-          git rm .github/workflows/street-paint-integration.yml
+          git rm .github/workflows/street-paint-integration.yml tools/resolve_street_merge.py
           git commit -m 'Merge current main and verify evidence-correct street paint on actual municipal surfaces'
           git push origin HEAD:fix/street-marking-evidence-2026-10-10
       - uses: actions/upload-artifact@v4
