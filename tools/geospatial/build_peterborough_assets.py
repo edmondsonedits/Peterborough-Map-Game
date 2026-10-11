@@ -658,7 +658,9 @@ def filter_city_building_gap_fill(
     metadata = dict(collection.get("metadata") or {})
     metadata.update({
         "usage": "Desktop municipal building gap-fill over the complete OSM building layer",
-        "source_feature_count": len(source_features),
+        # A reused collection already contains only gap-fill footprints. Keep
+        # its original municipal-source receipt instead of counting the subset.
+        "source_feature_count": metadata.get("source_feature_count", len(source_features)),
         "gap_fill_feature_count": len(retained),
         "gap_filter": {
             "comparison": "nearest projected OSM building footprint",

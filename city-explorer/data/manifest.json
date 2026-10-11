@@ -42,7 +42,7 @@
     ],
     "simplification_tolerance_m": 0.08,
     "source": "City of Peterborough Basedata",
-    "source_feature_count": 5325,
+    "source_feature_count": 37349,
     "source_url": "https://citymaps.peterborough.ca/arcgis/rest/services/Basedata/MapServer",
     "spatial_reference": "EPSG:4326"
   },

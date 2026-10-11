@@ -99,6 +99,9 @@ jobs:
       - name: Install geospatial dependencies
         run: python -m pip install --disable-pip-version-check -r tools/geospatial/requirements.txt
 
+      - name: Test cached building provenance
+        run: python tools/geospatial/test_city_building_provenance.py
+
       - name: Build cached Peterborough assets
         run: >-
           python tools/geospatial/build_peterborough_assets.py
@@ -157,6 +160,7 @@ jobs:
           node --check city-explorer/road-orientation-fix.js
           node tools/geospatial/test_road_network.mjs
           node tools/geospatial/test_official_road_surfaces.mjs
+          node tools/geospatial/test_official_buildings.mjs
           node tools/geospatial/test_water_system.mjs
           node tools/geospatial/test_road_terrain_clearance.mjs
           node tools/test_land_surface.mjs
