@@ -232,7 +232,30 @@ def overpass_query() -> str:
 );out body geom;"""
 
 
-def fetch_osm(session: requests.Session) -> dict[str, Any]:
+def osm_snapshot_timestamp(payload: dict[str, Any]) -> dt.datetime:
+    """Require a nonempty, dated snapshot before trusting remote or cached OSM."""
+    if not isinstance(payload, dict) or payload.get("remark"):
+        raise RuntimeError("OSM response is invalid or reports an incomplete query")
+    elements = payload.get("elements")
+    if not isinstance(elements, list) or not elements or any(
+        not isinstance(item, dict) or item.get("type") not in {"node", "way", "relation"}
+        or type(item.get("id")) is not int or item["id"] <= 0 for item in elements
+    ):
+        raise RuntimeError("OSM snapshot must contain a nonempty OSM element array")
+    metadata = payload.get("osm3s")
+    value = metadata.get("timestamp_osm_base") if isinstance(metadata, dict) else None
+    if not isinstance(value, str) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})", value):
+        raise RuntimeError("OSM snapshot timestamp is missing or is not timezone-aware ISO 8601")
+    if value[-6:-5] in {"+", "-"} and (int(value[-5:-3]) > 23 or int(value[-2:]) > 59):
+        raise RuntimeError("OSM snapshot timestamp has an invalid UTC offset")
+    try:
+        timestamp = dt.datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError as exc:
+        raise RuntimeError("OSM snapshot timestamp is malformed") from exc
+    return timestamp.astimezone(dt.timezone.utc)
+
+
+def fetch_osm(session: requests.Session, minimum_timestamp: dt.datetime | None = None) -> dict[str, Any]:
     query = overpass_query()
     last_error: Exception | None = None
     for endpoint in OVERPASS_ENDPOINTS:
@@ -241,8 +264,9 @@ def fetch_osm(session: requests.Session) -> dict[str, Any]:
             response = session.post(endpoint, data={"data": query}, timeout=210)
             response.raise_for_status()
             payload = response.json()
-            if not payload.get("elements"):
-                raise RuntimeError("Overpass response contained no elements")
+            timestamp = osm_snapshot_timestamp(payload)
+            if minimum_timestamp is not None and timestamp < minimum_timestamp:
+                raise RuntimeError(f"Overpass snapshot {timestamp.isoformat()} is older than cached {minimum_timestamp.isoformat()}")
             return payload
         except Exception as exc:  # noqa: BLE001 - endpoint failover is intentional.
             last_error = exc
@@ -269,21 +293,25 @@ def load_cached_osm(output_dir: Path) -> dict[str, Any]:
     if not cached_path.exists():
         raise RuntimeError(f"No cached OSM extract exists at {cached_path}")
     cached = json.loads(cached_path.read_text(encoding="utf-8"))
-    if not cached.get("elements"):
-        raise RuntimeError(f"Cached OSM extract has no elements: {cached_path}")
+    osm_snapshot_timestamp(cached)
     return cached
 
 
 def fetch_or_reuse_osm(session: requests.Session, output_dir: Path) -> dict[str, Any]:
-    """Prefer a fresh OSM extract, but keep a validated local city usable during outages."""
+    """Try every usable endpoint without regressing a validated cached snapshot."""
+    cached = None
+    minimum_timestamp = None
     try:
-        return clean_osm_payload(fetch_osm(session))
-    except Exception as exc:  # noqa: BLE001 - fallback is intentional and auditable.
-        try:
-            cached = load_cached_osm(output_dir)
-        except Exception:  # noqa: BLE001
+        cached = load_cached_osm(output_dir)
+        minimum_timestamp = osm_snapshot_timestamp(cached)
+    except Exception as exc:  # noqa: BLE001 - invalid cache cannot authorize fallback.
+        log(f"No verified cached OSM snapshot available: {exc}")
+    try:
+        return clean_osm_payload(fetch_osm(session, minimum_timestamp=minimum_timestamp))
+    except Exception as exc:  # noqa: BLE001 - fallback retains the exact verified cache.
+        if cached is None:
             raise exc
-        log(f"OSM download unavailable; reusing cached extract from {cached.get('osm3s', {}).get('timestamp_osm_base', 'unknown date')}")
+        log(f"No usable newer OSM download; reusing cached extract from {cached['osm3s']['timestamp_osm_base']}")
         return cached
 
 

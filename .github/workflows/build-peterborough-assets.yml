@@ -102,6 +102,7 @@ jobs:
       - name: Test cached building provenance and timestamp-only change guard
         run: |
           python tools/geospatial/test_city_building_provenance.py
+          python tools/geospatial/test_osm_source_freshness.py
           python tools/geospatial/test_generated_asset_changes.py
 
       - name: Build cached Peterborough assets
