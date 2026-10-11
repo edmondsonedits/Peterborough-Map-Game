@@ -5,7 +5,11 @@ const { chromium } = require('playwright');
 const before = process.argv[2] || 'http://127.0.0.1:4175';
 const after = process.argv[3] || 'http://127.0.0.1:4174';
 const output = path.resolve(process.env.PTBO_QA_ARTIFACT_DIR || 'artifacts/street-paint-qa');
+const hospitalOnly = process.env.PTBO_PAINT_QA_SITES === 'hospital';
 const sites = [
+ {name:'hospital-overhead',lat:44.301005,lon:-78.34631,altitude:75,distance:1,bearing:0,pitch:-1.5},
+ {name:'hospital-eastbound',lat:44.301005,lon:-78.34631,altitude:12,distance:42,bearing:285,pitch:-0.24},
+ {name:'hospital-westbound',lat:44.301005,lon:-78.34631,altitude:12,distance:42,bearing:105,pitch:-0.24},
  {name:'sherbrooke-station',lat:44.30080,lon:-78.32212,altitude:36,distance:42,bearing:180,pitch:-0.70},
  {name:'george-downtown',lat:44.3045,lon:-78.3200,altitude:40,distance:36,bearing:105,pitch:-0.80},
  {name:'lansdowne-west',lat:44.2742,lon:-78.3777,altitude:40,distance:42,bearing:180,pitch:-0.72},
@@ -26,7 +30,7 @@ const sites = [
    const readyMs=Date.now()-start;
    const entry={label,readyMs,errors,views:[]};
    report.runs.push(entry);
-   for(const site of sites.filter(s=>['sherbrooke-station','lansdowne-west'].includes(s.name))) {
+   for(const site of sites.filter(s=>hospitalOnly ? s.name.startsWith('hospital-') : ['sherbrooke-station','lansdowne-west'].includes(s.name))) {
     await page.evaluate(view=>window.__PTBO_CITY_QA__.setView(view),site);
     await page.waitForTimeout(1000);
     const samples=await page.evaluate(()=>new Promise(resolve=>{
@@ -48,7 +52,7 @@ const sites = [
    }
    if(label==='after' && entry.views.some(v=>v.paintVersion!=='street-evidence-2'))throw new Error('New paint renderer was not active');
    if(entry.views.some(v=>!String(v.roadSource).includes('municipal')))throw new Error('Municipal road surfaces did not load');
-   if(label==='after' && entry.views.some(v=>v.reviewedWays!==4))throw new Error('Expected four reviewed GeoJSON way IDs');
+   if(label==='after' && entry.views.some(v=>v.reviewedWays!==5))throw new Error('Expected five reviewed GeoJSON way IDs');
    if(errors.length)throw new Error(label+' uncaught browser errors: '+errors.join('; '));
    await page.close();
   }

@@ -126,6 +126,23 @@ class AuditIntegrationTests(unittest.TestCase):
             row = json.loads((fixture/'docs/street-audit/network-audit.json').read_text())['roads'][0]
             self.assertEqual(row['visualReview'], 'sherbrooke-park-george-reference')
             self.assertEqual(row['paintOverride'], 'not-applied')
+            way['id'] = 250811912
+            way['tags'] = {'name':'Hospital Drive','lanes':'2'}
+            properties['official_names'] = ['Hospital Drive']
+            (data/'orn-roads.geojson').write_text(json.dumps({'features':[feature]}))
+            (data/'peterborough-osm.json').write_text(json.dumps({'elements':[way]}))
+            for name in ('osm-roads.geojson','osm-public-roads.geojson'):
+                (data/name).write_text(json.dumps({'features':[{'properties':{'osm_id':250811912}}]}))
+            receipt.write_text(json.dumps({'events':[{'ORN_ROAD_NET_ELEMENT_ID':4460288,'FROM_MEASURE':0,'TO_MEASURE':1000,'NUMBER_OF_LANES':3}]}))
+            subprocess.run([sys.executable,str(fixture/'tools/audit_street_lane_evidence.py'),str(receipt)],check=True,capture_output=True)
+            report = json.loads((fixture/'docs/street-audit/network-audit.json').read_text())
+            row = report['roads'][0]
+            self.assertEqual(row['visualReview'], 'hospital-drive-shared-turn-2023-reference')
+            self.assertEqual(row['paintOverride'], 'hospital-drive-shared-turn-2023')
+            self.assertEqual(row['status'], 'lane-count-conflict')
+            self.assertEqual(row['comparisonReview'], 'lane-count-review')
+            self.assertEqual(row['osmLanes'], 2)
+            self.assertEqual(report['summary']['reviewedCorrectionWays'], 1)
 
 if __name__ == '__main__':
     unittest.main()

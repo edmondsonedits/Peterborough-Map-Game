@@ -34,7 +34,11 @@ def tangent(line, distance):
     return x/length, z/length
 applied_paint = paint_overrides(ROOT, [way for way in osm if way.get('type') == 'way' and str(way['id']) in rendered_ids])
 # Historical visual evidence is distinct from current paint-guard applicability.
-reviewed = {'739159886','737434011','650896572','460581459'}
+reviewed = {way_id: ('sherbrooke-park-george-reference',
+    'single-solid-yellow-centre; no extra through-lane dividers in reviewed span')
+    for way_id in ('739159886','737434011','650896572','460581459')}
+reviewed['250811912'] = ('hospital-drive-shared-turn-2023-reference',
+    'one through lane each direction plus central shared turn lane; yellow solid outside/broken inside; no inferred arrows or stop bars')
 rows = []
 for way in osm:
     if way.get('type') != 'way' or str(way['id']) not in rendered_ids: continue
@@ -83,7 +87,7 @@ for way in osm:
     if coverage>=.9 and len(values)==1:
         status = 'lane-count-agrees' if lanes==values[0] else 'missing-OSM-count' if lanes is None else 'lane-count-conflict'
     elif matched: status = 'partial-or-varying-evidence'
-    visual = str(way['id']) in reviewed
+    visual, pattern = reviewed.get(str(way['id']), ('not-reviewed', 'unknown'))
     rows.append({'osmId':str(way['id']),'name':tags.get('name',''),'public':str(way['id']) in public_ids,
         'lengthM':round(line.length,2),'osmLanes':lanes,'ornLaneValues':values,'matchedFraction':round(coverage,3),
         'ornIds':sorted(road_ids),'maxMatchedDistanceM':round(maximum_distance,2),'ornEffectiveDates':sorted(dates),
@@ -91,8 +95,7 @@ for way in osm:
         'matchedSamples':matched,'sampleCount':count,'directionCompatibility':dict(sorted(compatibility.items())),
         'ornTrafficFlows':flows,'paintOverride':applied_paint.get(str(way['id']), 'not-applied'),
         'tags':{k:v for k,v in tags.items() if k in ['highway','oneway','source','lanes','lanes:forward','lanes:backward','lanes:both_ways','lane_markings','cycleway','cycleway:left','cycleway:right','sidewalk','parking:both','width','overtaking','surface','junction'] or k.startswith('oneway:')},
-        'visualReview':'sherbrooke-park-george-reference' if visual else 'not-reviewed',
-        'paintPattern':'single-solid-yellow-centre; no extra through-lane dividers in reviewed span' if visual else 'unknown'})
+        'visualReview':visual, 'paintPattern':pattern})
 summary = {'renderedWays':len(rows),'publicWays':sum(r['public'] for r in rows),
     'namedStreets':len({r['name'] for r in rows if r['name']}),
     'status':dict(collections.Counter(r['status'] for r in rows)),

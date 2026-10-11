@@ -122,3 +122,48 @@ jobs:
             /tmp/ptbo-http.log
           if-no-files-found: warn
           retention-days: 14
+
+  hospital-paint-comparison:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Prepare exact pre-Hospital baseline
+        run: |
+          git fetch origin 2496b157ebeb1d995278373297d5790b60a4150a
+          git worktree add /tmp/ptbo-before 2496b157ebeb1d995278373297d5790b60a4150a
+      - name: Install browser runtime
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install --no-save --no-package-lock playwright@1.55.0
+          npx playwright install chromium
+      - name: Start comparison servers
+        run: |
+          python3 -m http.server 4174 --bind 127.0.0.1 > /tmp/ptbo-after.log 2>&1 &
+          python3 -m http.server 4175 --bind 127.0.0.1 --directory /tmp/ptbo-before > /tmp/ptbo-before.log 2>&1 &
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:4174/city-explorer/ >/dev/null && curl --fail --silent http://127.0.0.1:4175/city-explorer/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          exit 1
+      - name: Capture Hospital overhead and both travel directions
+        env:
+          PTBO_QA_ARTIFACT_DIR: artifacts/hospital-paint-qa
+          PTBO_PAINT_QA_SITES: hospital
+        run: node tools/check-street-paint-comparison.cjs http://127.0.0.1:4175 http://127.0.0.1:4174
+      - name: Preserve Hospital comparison evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hospital-paint-qa-${{ github.run_id }}
+          path: |
+            artifacts/hospital-paint-qa/
+            /tmp/ptbo-before.log
+            /tmp/ptbo-after.log
+          if-no-files-found: warn
+          retention-days: 14

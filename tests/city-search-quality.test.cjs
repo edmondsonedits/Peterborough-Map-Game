@@ -134,7 +134,7 @@ test('the city bootstrap requests app.js with the active build token', async () 
     loadModule: async url => { imports.push(url); },
   });
   await vm.runInContext('(async () => {' + loader.replace(/\bimport\(/g, 'loadModule(') + '})()', context);
-  assert.equal(imports.at(-1), './app.js?v=9.8.7');
+  assert.equal(imports.at(-1), './app.js?v=9.8.7&hospitalPaint=1');
   assert.equal(failures.length, 0);
 });
 

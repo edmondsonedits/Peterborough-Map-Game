@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "baseline": "ae711377f46fda285c5b0211f4c0992ddb9b754e",
+  "baseline": "2496b157ebeb1d995278373297d5790b60a4150a",
   "baselineMeaning": "Checkout HEAD only; file hashes identify the exact inputs, including local modifications.",
   "scope": "Every packaged renderable way, including service roads. NOT photographic review of every road. ORN provides lane-count evidence, not paint pattern.",
   "method": "NAD83/UTM17N; ~12 m samples; exact normalized names, <=8 m offset, <=20 degree heading difference; >=90% coverage and one count for raw numeric comparison; interpret only after the compatibility gate. Near-parallel conflicting counts rejected; event measure ranges respected. Raw status preserves numeric comparisons; comparisonReview separately gates direction/carriageway compatibility including signed local geometry. Paint override is evaluated from the actual renderer guard, not proof of field accuracy. No automatic OSM edits.",
@@ -22,15 +22,15 @@
     "matchedRoadIds": 3179
   },
   "hashes": {
-    "city-explorer/data/peterborough-osm.json": "617ae444e1a2bff02743ce85436a5f307678c7e156fff0af8a32c416e79d7feb",
+    "city-explorer/data/peterborough-osm.json": "39e2288a75619b79b745a546acc6d29a8197bdcfd21619b0037127448b9f3dff",
     "city-explorer/data/orn-roads.geojson": "2115a7fa61b535b6bcbdadcfe5f1e857bd13db8d2453610848c7b5fa91de9209",
     "city-explorer/data/osm-roads.geojson": "6ac5fc5e6a437e4c748f6b1add34d1dbd764e72dfdd9c597a7f3a016469c7e06",
     "city-explorer/data/osm-public-roads.geojson": "a4e1a67c1435d2f9e19618793ef802139be4850faef79125dd7bf7763f95b6ec",
-    "city-explorer/street-paint.js": "6ee5ae8500265ec75843b0a8e27b4b0642b87de79c22ff2fa0b0a4e00f7153a0",
+    "city-explorer/street-paint.js": "97bd2d0543d152eebce9532e3342ba9b4a2dfb24a55b10ab3b6f92ee65da02ad",
     "docs/street-audit/orn-lane-events.json": "f0d207bcf630b864c7a6eeb8d5ba3fc7f9102a12b98e6dfeee396ecd6ee513a3"
   },
   "codeHashes": {
-    "tools/audit_street_lane_evidence.py": "a38496e6705cc49262a7552cf9788cdd0b1dc78418b2bb7b9cf7e0fccd4fa481",
+    "tools/audit_street_lane_evidence.py": "a3c257565d5fabb2bb900d969e42e0224123e802719fa14f7fe8eb0717981b08",
     "tools/street_lane_compatibility.py": "38f048966cea2202af2796f7e0b1eb12f70bbbc9cb28a1d4ca8538bae427a7f7"
   },
   "summary": {
@@ -52,10 +52,11 @@
       "lane-count-review": 132
     },
     "paintOverride": {
-      "not-applied": 5957,
+      "not-applied": 5956,
+      "hospital-drive-shared-turn-2023": 1,
       "sherbrooke-park-george": 4
     },
-    "reviewedCorrectionWays": 4
+    "reviewedCorrectionWays": 5
   },
   "roads": [
     {
@@ -77457,14 +77458,14 @@
       "ornTrafficFlows": {
         "4460243": "Both"
       },
-      "paintOverride": "not-applied",
+      "paintOverride": "hospital-drive-shared-turn-2023",
       "tags": {
         "highway": "tertiary",
         "lanes": "2",
         "source": "Geobase_Import_2009"
       },
-      "visualReview": "not-reviewed",
-      "paintPattern": "unknown"
+      "visualReview": "hospital-drive-shared-turn-2023-reference",
+      "paintPattern": "one through lane each direction plus central shared turn lane; yellow solid outside/broken inside; no inferred arrows or stop bars"
     },
     {
       "osmId": "250811914",
