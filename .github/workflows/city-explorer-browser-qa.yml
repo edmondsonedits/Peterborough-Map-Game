@@ -14,6 +14,8 @@ on:
       - 'tools/check-mobile-controls.cjs'
       - 'tools/check-authored-scene.cjs'
       - 'tools/test_authored_scene_runtime.mjs'
+      - 'tools/test_authored_scene_qa.cjs'
+      - 'tools/authored-scene-qa.cjs'
       - 'tools/test_street_*.mjs'
       - 'city-explorer/app.js'
       - 'city-explorer/street-paint.js'
@@ -52,7 +54,9 @@ jobs:
           node-version: 22
 
       - name: Run authored scene runtime unit tests
-        run: node tools/test_authored_scene_runtime.mjs
+        run: |
+          node tools/test_authored_scene_runtime.mjs
+          node --test tools/test_authored_scene_qa.cjs
 
       - name: Verify road geometry and driver contact regressions
         run: |

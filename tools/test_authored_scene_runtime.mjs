@@ -57,3 +57,15 @@ assert.equal((browserQaSource.match(/browser\.newPage\(/g) || []).length, 2, 'br
 assert.match(browserQaSource, /for \(const mode of \['missing', 'corrupt', 'invalid'\]\)/);
 assert.match(browserQaSource, /await validPage\.unroute\(handoffRoute\)/);
 assert.match(browserQaSource, /did not recover after fail-open checks/);
+
+// Query strings are part of ES module identity: the bootstrap must patch the
+// same CitySplatLayer constructor that the app actually instantiates.
+const appSource = await fs.readFile(path.resolve(here, '../city-explorer/app.js'), 'utf8');
+const bootstrapSource = await fs.readFile(path.resolve(here, '../city-explorer/authored-scene-bootstrap.js'), 'utf8');
+const citySplatImport = source => source.match(/import\s*\{\s*CitySplatLayer\s*\}\s*from\s*['"]([^'"]+)['"]/)[1];
+assert.equal(citySplatImport(bootstrapSource), citySplatImport(appSource),
+  'bootstrap and app must share the exact CitySplatLayer module URL, including cache key');
+const orientationSource = await fs.readFile(path.resolve(here, '../city-explorer/road-orientation-fix.js'), 'utf8');
+const entrySource = await fs.readFile(path.resolve(here, '../city-explorer/index.html'), 'utf8');
+assert.match(orientationSource, /authored-scene-bootstrap\.js\?v=1\.6\.101/, 'invalidate the pre-fix bootstrap cache');
+assert.match(entrySource, /road-orientation-fix\.js\?v=[^"']*&authoredBridge=1/, 'invalidate the cached loader that imported the broken bootstrap');

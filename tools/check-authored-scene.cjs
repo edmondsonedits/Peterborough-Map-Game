@@ -1,6 +1,7 @@
 'use strict';
 
 const { chromium } = require('playwright');
+const { diagnostics, waitForAuthoredScene } = require('./authored-scene-qa.cjs');
 
 const [base = 'http://127.0.0.1:4174'] = process.argv.slice(2);
 const rootUrl = `${base.replace(/\/$/, '')}/city-explorer/`;
@@ -8,16 +9,6 @@ const handoffRoute = '**/data/authored/peterborough-details.handoff.json';
 
 async function waitForBaseGameplay(page) {
   await page.waitForFunction(() => document.documentElement.dataset.gameplayReady === 'true', null, { timeout: 180000 });
-}
-
-async function diagnostics(page) {
-  return page.evaluate(() => ({
-    status: document.documentElement.dataset.authoredSceneStatus || '',
-    enabled: document.documentElement.dataset.authoredSceneEnabled || '',
-    count: Number(document.documentElement.dataset.authoredSceneCount || 0),
-    gameplayReady: document.documentElement.dataset.gameplayReady || '',
-    api: globalThis.__PTBO_AUTHORED_SCENE__?.status?.() || null,
-  }));
 }
 
 async function reloadAuthoredScene(page) {
@@ -72,7 +63,7 @@ async function installFailureRoute(page, mode) {
     const validPage = await browser.newPage({ viewport: { width: 720, height: 720 } });
     await validPage.goto(`${rootUrl}?lite=1&authored=1`, { waitUntil: 'domcontentloaded', timeout: 90000 });
     await waitForBaseGameplay(validPage);
-    await validPage.waitForFunction(() => document.documentElement.dataset.authoredSceneStatus === 'ready', null, { timeout: 30000 });
+    await waitForAuthoredScene(validPage, 'ready', 30000);
 
     let valid = await diagnostics(validPage);
     if (valid.count !== 1 || valid.api?.groupChildren !== 1 || !valid.api?.bridgeReady) {
@@ -80,7 +71,7 @@ async function installFailureRoute(page, mode) {
     }
 
     await reloadAuthoredScene(validPage);
-    await validPage.waitForFunction(() => document.documentElement.dataset.authoredSceneStatus === 'ready', null, { timeout: 15000 });
+    await waitForAuthoredScene(validPage, 'ready', 15000);
     valid = await diagnostics(validPage);
     if (valid.count !== 1 || valid.api?.groupChildren !== 1) {
       throw new Error(`Reload duplicated authored proxies: ${JSON.stringify(valid)}`);
@@ -95,7 +86,7 @@ async function installFailureRoute(page, mode) {
     for (const mode of ['missing', 'corrupt', 'invalid']) {
       await installFailureRoute(validPage, mode);
       await reloadAuthoredScene(validPage);
-      await validPage.waitForFunction(() => document.documentElement.dataset.authoredSceneStatus === 'failed', null, { timeout: 15000 });
+      await waitForAuthoredScene(validPage, 'failed', 15000);
       const failed = await diagnostics(validPage);
       if (failed.gameplayReady !== 'true' || failed.count !== 0 || failed.api?.groupChildren !== 0) {
         throw new Error(`${mode} authored scene did not fail open: ${JSON.stringify(failed)}`);
@@ -106,7 +97,7 @@ async function installFailureRoute(page, mode) {
     // recover after repeated optional-layer failures.
     await validPage.unroute(handoffRoute);
     await reloadAuthoredScene(validPage);
-    await validPage.waitForFunction(() => document.documentElement.dataset.authoredSceneStatus === 'ready', null, { timeout: 15000 });
+    await waitForAuthoredScene(validPage, 'ready', 15000);
     valid = await diagnostics(validPage);
     if (valid.count !== 1 || valid.api?.groupChildren !== 1 || valid.gameplayReady !== 'true') {
       throw new Error(`Authored scene did not recover after fail-open checks: ${JSON.stringify(valid)}`);
