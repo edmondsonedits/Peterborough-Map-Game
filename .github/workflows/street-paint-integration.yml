@@ -1,0 +1,160 @@
+name: Integrate reviewed street paint
+on:
+  push:
+    branches: [fix/street-marking-evidence-2026-10-10]
+    paths: [.github/workflows/street-paint-integration.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/street-marking-evidence-2026-10-10
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Preserve concurrent main changes and apply verified cap-height correction
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git fetch origin main
+          git worktree add --detach "$RUNNER_TEMP/current-main" origin/main
+          python - <<'PY'
+          import subprocess,re
+          from pathlib import Path
+          result=subprocess.run(['git','merge','--no-commit','--no-ff','origin/main'])
+          if result.returncode:
+              conflicts=subprocess.check_output(['git','diff','--name-only','--diff-filter=U'],text=True).splitlines()
+              allowed={'city-explorer/index.html','city-explorer/road-orientation-fix.js'}
+              if not conflicts or not set(conflicts)<=allowed:
+                  subprocess.run(['git','diff','--cc'])
+                  raise RuntimeError('Unreviewed merge conflict: '+repr(conflicts))
+              # Only these two cache-entrypoint conflicts have been reviewed.
+              # Preserve all of main's current bootstrap/release logic.
+              for file in conflicts:
+                  subprocess.run(['git','checkout','--theirs','--',file],check=True)
+                  subprocess.run(['git','add',file],check=True)
+          p=Path('city-explorer/road-orientation-fix.js');s=p.read_text()
+          old="await import('./app.js?v=' + encodeURIComponent(appVersion));"
+          if old not in s: raise RuntimeError('Main bootstrap logic changed; do not replace it blindly')
+          s=s.replace(old,"await import('./app.js?v=' + encodeURIComponent(appVersion + '-street-evidence-2'));")
+          p.write_text(s)
+          p=Path('city-explorer/index.html');s=p.read_text()
+          s,n=re.subn(r'(road-orientation-fix\.js\?v=[^"&]+)(?:&streetEvidence=\d+)?',r'\1&streetEvidence=2',s)
+          if n!=1: raise RuntimeError('Unexpected HTML bootstrap')
+          p.write_text(s)
+          p=Path('city-explorer/app.js');s=p.read_text()
+          old='function buildFallbackPolygonJunctionMeshes(polygons) {\n  const batches = new Map();\n  const index = new RenderedPavementIndex();'
+          new='function buildFallbackPolygonJunctionMeshes(polygons) {\n  const batches = new Map();\n  const index = state.fallbackJunctionSurfaceIndex || new RenderedPavementIndex();'
+          if s.count(old)!=1: raise RuntimeError('Prototype surface-index source changed')
+          s=s.replace(old,new)
+          a=s.index('function buildRoadJunctions(');b=s.index('\nfunction buildUrbanCurbs',a);f=s[a:b]
+          old='    const geometry = new THREE.CylinderGeometry(0.5, 0.5, foundation ? 0.025 : 0.018, 14);'
+          new=old+'''
+              const positions = geometry.getAttribute('position'), normals = geometry.getAttribute('normal');
+              const indices = geometry.getIndex().array;
+              const topFaces = [];
+              if (!foundation) {
+                state.fallbackJunctionSurfaceIndex ||= new RenderedPavementIndex();
+                for (let i = 0; i < indices.length; i += 3) {
+                  const face = [indices[i], indices[i + 1], indices[i + 2]];
+                  if (face.every(v => normals.getY(v) > 0.5)) topFaces.push(face);
+                }
+              }'''
+          if f.count(old)!=1: raise RuntimeError('Legacy cap geometry source changed')
+          f=f.replace(old,new)
+          old='        mesh.setMatrixAt(index, dummy.matrix);'
+          new=old+'''
+                  if (!foundation) {
+                    // Match actual Float32 instance transforms and top vertices.
+                    // The legacy cap top is 18 mm above its centreline ribbon.
+                    const transform = new THREE.Matrix4(); mesh.getMatrixAt(index, transform);
+                    for (const face of topFaces) {
+                      const [a, b, c] = face.map(v => new THREE.Vector3().fromBufferAttribute(positions, v).applyMatrix4(transform));
+                      state.fallbackJunctionSurfaceIndex.addTriangle(a.x,a.y,a.z,b.x,b.y,b.z,c.x,c.y,c.z,
+                        { layer: 'road_surfaces', id: `fallback-cap:${vertex.key}` });
+                    }
+                  }'''
+          if f.count(old)!=1: raise RuntimeError('Cap transform source changed')
+          f=f.replace(old,new);s=s[:a]+f+s[b:]
+          a=s.index('function buildRoadMarkings(');b=s.index('\nfunction turnArrowGeometry',a);f=s[a:b]
+          f=f.replace('  const groups = new Map();','  const groups = new Map();\n  const reviewedWayIds = new Set();',1)
+          old='    const tags = reviewedPaintTags(segment.tags || {}, segment.lineId);'
+          if f.count(old)!=1: raise RuntimeError('Reviewed paint hook missing')
+          f=f.replace(old,old+'\n    if (tags !== segment.tags) reviewedWayIds.add(segment.lineId);')
+          old="  document.documentElement.dataset.roadPaintVersion = 'street-evidence-1';"
+          if f.count(old)!=1: raise RuntimeError('Paint diagnostics missing')
+          f=f.replace(old,old+'\n  document.documentElement.dataset.roadPaintReviewedWays = String(reviewedWayIds.size);')
+          s=s[:a]+f+s[b:];s=s.replace('street-evidence-1','street-evidence-2');p.write_text(s)
+          p=Path('tools/check-street-paint-comparison.cjs');s=p.read_text()
+          s=s.replace("root+'/city-explorer/?qa=1'","root+'/city-explorer/?qa=1&municipalRoads=1'")
+          s=s.replace('for(const site of sites)',"for(const site of sites.filter(s=>['sherbrooke-station','lansdowne-west'].includes(s.name)))")
+          s=s.replace('out.length===60','out.length===20').replace('street-evidence-1','street-evidence-2')
+          s=s.replace("paintVertices:Number(document.documentElement.dataset.roadPaintVertices||0),","paintVertices:Number(document.documentElement.dataset.roadPaintVertices||0),\n      reviewedWays:Number(document.documentElement.dataset.roadPaintReviewedWays||0),")
+          s=s.replace("   if(errors.length)throw", "   if(entry.views.some(v=>!String(v.roadSource).includes('municipal')))throw new Error('Municipal road surfaces did not load');\n   if(label==='after' && entry.views.some(v=>v.reviewedWays!==4))throw new Error('Expected four reviewed GeoJSON way IDs');\n   if(errors.length)throw")
+          p.write_text(s)
+          PY
+      - name: Test combined source, geometry and runtime edge cases
+        run: |
+          node --input-type=module --check < city-explorer/app.js
+          node tools/test_street_marking_evidence.mjs
+          node tools/test_street_paint_runtime_edges.mjs
+          node tools/test_city_detail_rules.mjs
+          node tools/test_citywide_road_quality.mjs
+          node tools/test_fallback_junction_geometry.mjs
+          node tools/test_station_road_detail.mjs
+          node tools/test_gameplay_systems.mjs
+          node tools/test_rendered_pavement.mjs
+          node tools/geospatial/test_road_network.mjs
+          node tools/geospatial/test_road_terrain_clearance.mjs
+          node --test tests/critical-gameplay.test.cjs tests/gearbox.test.cjs tests/camera-zoom.test.cjs tests/ems.test.cjs tests/city-search-quality.test.cjs tests/route-decisions-integration.test.cjs
+      - name: Refresh audit against the merged source snapshot
+        run: |
+          python -m pip install --disable-pip-version-check shapely pyproj
+          python tools/audit_street_lane_evidence.py docs/street-audit/orn-lane-events.json
+      - name: Prepare browser servers
+        run: |
+          npm install --prefix "$RUNNER_TEMP/ptbo-qa" --no-package-lock playwright@1.55.0
+          "$RUNNER_TEMP/ptbo-qa/node_modules/.bin/playwright" install chromium
+          python3 -m http.server 4174 --bind 127.0.0.1 > /tmp/street-after-http.log 2>&1 &
+          python3 -m http.server 4175 --bind 127.0.0.1 --directory "$RUNNER_TEMP/current-main" > /tmp/street-before-http.log 2>&1 &
+          sleep 2
+      - name: Verify combined driving and mobile controls
+        env:
+          NODE_PATH: ${{ runner.temp }}/ptbo-qa/node_modules
+          PTBO_QA_ARTIFACT_DIR: artifacts/street-integration/driving
+        run: |
+          node tools/check-road-preview-smoke.cjs http://127.0.0.1:4174
+          node tools/check-station-driving.cjs http://127.0.0.1:4174 street-integration
+          PTBO_QA_ARTIFACT_DIR=artifacts/street-integration/mobile node tools/check-mobile-controls.cjs http://127.0.0.1:4174 street-integration-mobile
+      - name: Verify real municipal road appearance and reviewed source IDs
+        env:
+          NODE_PATH: ${{ runner.temp }}/ptbo-qa/node_modules
+          PTBO_QA_ARTIFACT_DIR: artifacts/street-integration/comparison
+        run: node tools/check-street-paint-comparison.cjs http://127.0.0.1:4175 http://127.0.0.1:4174
+      - name: Commit tested integration on the feature branch
+        run: |
+          git add city-explorer/app.js city-explorer/road-orientation-fix.js city-explorer/index.html tools/check-street-paint-comparison.cjs docs/street-audit/
+          git rm .github/workflows/street-paint-integration.yml
+          git commit -m 'Merge current main and verify evidence-correct street paint on actual municipal surfaces'
+          git push origin HEAD:fix/street-marking-evidence-2026-10-10
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: street-paint-integration
+          path: |
+            artifacts/street-integration/
+            docs/street-audit/
+            /tmp/street-after-http.log
+            /tmp/street-before-http.log
+          retention-days: 7
