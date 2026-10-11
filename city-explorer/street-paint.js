@@ -9,7 +9,7 @@ export const REVIEWED_STREET_PAINT = Object.freeze({
   '460581459': 'sherbrooke-park-george',
 });
 export function reviewedPaintTags(tags, lineId) {
-  const id = String(lineId || '').replace(/^way\//, '');
+  const id = /^(?:way\/)?(\d+)(?::\d+)?$/.exec(String(lineId || ''))?.[1];
   if (!REVIEWED_STREET_PAINT[id] || tags.name !== 'Sherbrooke Street'
     || String(tags.lanes) !== '4' || ['yes','1','-1'].includes(tags.oneway)
     || tags.lane_markings === 'no') return tags;
