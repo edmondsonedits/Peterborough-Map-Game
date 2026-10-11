@@ -22,13 +22,20 @@ test('route cache stays bounded during many distinct exercises',()=>{
  const{c}=routeContext();c.state.graph={nodes:Array.from({length:300},(_,id)=>({id,x:id,y:0,edges:id<299?[{from:id,to:id+1,distance:1,duration:1,weight:1}]:[]}))};
  for(let i=1;i<299;i++)c.pathBetween(0,i,'distance');assert.ok(vm.runInContext('routePathCache.size',c)<=256);
 });
-test('a cancelled route pointer discards its stroke and never snaps it',async()=>{
- const listeners={};const control={addEventListener(type,fn){listeners[type]=fn;}},noop={addEventListener(){}};
- let snaps=0,enabled=0;
- const c=vm.createContext({state:{mode:'drawing',drawingPointer:7,rawPoints:[{},{},{}],map:{removeLayer(){},dragging:{enable(){enabled++;}}},rawLine:{},editMarker:null,previewLine:null},ui:{drawSurface:{...control,hasPointerCapture:()=>true,releasePointerCapture(){}},clear:noop,undo:noop,submit:noop,next:noop,settingsButton:noop,settingsClose:noop,retry:noop,serviceSelect:noop,settingsForm:noop,settingsSheet:noop,zoomIn:noop,zoomOut:noop},clearLayer(){},setMapGestureLock(){},updateDrawTarget(){},snapStroke:async()=>{snaps++;},setHint(){},setMode(){},resetDrawing(){},undo(){},submitRoute(){},newCall(){},openSettings(){},closeSettings(){},fillBases(){},window:{addEventListener(){}},document:{addEventListener(){}}});
- vm.runInContext(slice(route,'  function clearRaw()','  async function snapStroke()')+slice(route,'  function bindUi()','  async function loadData()'),c);
- c.bindUi();await listeners.pointercancel({pointerId:7,preventDefault(){}});assert.equal(snaps,0);assert.equal(c.state.rawPoints.length,0);assert.equal(c.state.drawingPointer,null);
-
+test('a cancelled route pointer flushes valid work without automatic arrival or lost progress',()=>{
+ const{harness}=require('./helpers/route-gesture-harness.cjs');
+ const{api,listeners,pointer,frames,capture}=harness();api.bindUi();api.updateDrawTarget();
+ listeners['draw-surface:pointerdown'](pointer(80));
+ listeners['draw-surface:pointermove'](pointer(230));assert.equal(frames.size,1);
+ listeners['draw-surface:pointercancel']({pointerId:7});
+ assert.equal(api.state.playerRoute.distance,150);
+ assert.equal(api.state.playerRoute.complete,false,'interruptions must not auto-complete the last 20 metres');
+ assert.equal(api.state.playerRoute.endpoint.lng,230);assert.equal(api.state.mode,'drawing');
+ assert.equal(api.state.history.length,1);assert.equal(api.state.drawingPointer,null);
+ assert.equal(api.state.stroke,null);assert.equal(frames.size,0);assert.equal(capture.has(7),false);
+ assert.equal(api.state.map.dragging.enabled(),true);
+ const saved=api.state.playerRoute;listeners['draw-surface:lostpointercapture']({pointerId:7});
+ assert.equal(api.state.playerRoute,saved);assert.equal(api.state.history.length,1);
 });
 test('steering defaults survive denied optional preference reads',()=>{
  const c=vm.createContext({localStorage:{getItem(){throw new Error('Denied');}},STEERING_STORAGE_KEY:'mode',isMobileWrapper:()=>false,STEERING_MODES:{STANDARD:'standard',DIRECTIONAL:'directional'}});
