@@ -64,13 +64,16 @@ export function isRoadOneWay(tags = {}) {
 }
 
 export function mappedLaneCount(tags = {}) {
-  const lanes = Number.parseFloat(tags.lanes);
-  if (Number.isFinite(lanes) && lanes > 0) return Math.max(1, Math.round(lanes));
-  const forward = Number.parseFloat(tags['lanes:forward']);
-  const backward = Number.parseFloat(tags['lanes:backward']);
-  if (Number.isFinite(forward) || Number.isFinite(backward)) {
-    return Math.max(1, Math.round((forward || 0) + (backward || 0)));
-  }
+  const count = value => value !== undefined && value !== '' && Number.isInteger(Number(value)) && Number(value) >= 0
+    ? Number(value) : null;
+  const total = count(tags.lanes);
+  if (total > 0) return total;
+  const forward = count(tags['lanes:forward']);
+  const backward = count(tags['lanes:backward']);
+  const shared = count(tags['lanes:both_ways']) || 0;
+  if (forward !== null && backward !== null) return forward + backward + shared || null;
+  // A partial directional tag is not a total. Preserve class-width fallback.
+  if (isRoadOneWay(tags)) return forward || backward || null;
   return null;
 }
 

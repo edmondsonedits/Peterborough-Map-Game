@@ -25,10 +25,11 @@ import {
   createBuildingFootprintPlacement,
   createPeterboroughLandmarks,
 } from './landmark-models.js?v=1.5.5-streets4';
-import { ROAD_SURFACE_CLEARANCE, RoadSurfaceIndex, laneCountFor, reconcileRoadNetworkElevations, roadProfile, roadRibbonCrossSections, resampleRoadLine } from './road-network.js?v=1.5.5-r10';
+import { ROAD_SURFACE_CLEARANCE, RoadSurfaceIndex, laneCountFor, reconcileRoadNetworkElevations, roadProfile, roadRibbonCrossSections, resampleRoadLine } from './road-network.js?v=street-evidence-2';
 import { solveFallbackJunctions, polygonArea as junctionPolygonArea } from './fallback-junction-geometry.js';
 import { officialRoadMeshEdgeLength, officialCurbDisplayMode, nearbyMunicipalRoadHeight, municipalCurbTop } from './citywide-road-quality.js';
 import { sampleTruckWheelContacts, truckIsOnRoad } from './road-wheel-contact.js';
+import { reviewedPaintTags, drapePaintStrip } from './street-paint.js?v=street-evidence-2';
 import { OfficialDrivableSurfaceIndex, RenderedPavementIndex, officialSurfaceStatusActive, officialBridgeIsVehicular } from './official-road-surfaces.js?v=1.6.101';
 import { FLY_TUNING, adjustFlySpeedScale, applyFlyLookDelta, dampingFactors, flyAxesFromKeys, flySpeedFor, flyYawToward, isFlyControlCode, wrapFlyYaw } from './fly-controls.js?v=1.5.5-fly4';
 import { clearLandCoverRaster, paintLandCoverPolygon } from './land-cover-raster.js?v=1.5.5-raster1';
@@ -44,7 +45,7 @@ import {
   roadLaneMarkingBoundaries,
   selectStreetSignIntersections,
   shouldRenderUrbanCurb,
-} from './city-detail-rules.js?v=1.5.5-streets3';
+} from './city-detail-rules.js?v=street-evidence-2';
 import {
   createSkyAtmosphere,
   installWorldSurfaceDetail,
@@ -2130,12 +2131,14 @@ function buildBufferedRoadBatches(batches) {
 }
 
 function finalizeRoadLines(roadLines, buckets, roadBatches) {
+  state.roadPaintRanges = new Map();
   applyBridgeElevationProfiles(roadLines);
   reconcileRoadElevationProfiles(roadLines);
   roadLines.forEach((line) => {
     const rangeStarts = captureBatchLengths(roadBatches);
     appendRoadRibbon(line, roadBatches);
     line.generatedBatchRanges = namespacedRanges(roadBatches, rangeStarts);
+    state.roadPaintRanges.set(String(line.id), line.generatedBatchRanges);
     for (let index = 1; index < line.samples.length; index += 1) {
       const a = line.samples[index - 1];
       const b = line.samples[index];
@@ -2475,7 +2478,7 @@ function attachRoadInstance(lineId, object, instanceIndex) {
  */
 function buildFallbackPolygonJunctionMeshes(polygons) {
   const batches = new Map();
-  const index = new RenderedPavementIndex();
+  const index = state.fallbackJunctionSurfaceIndex || new RenderedPavementIndex();
   const batchFor = (polygon, foundation) => {
     const tile = roadRenderTileCoordinates(polygon.x, polygon.z);
     const kind = foundation ? 'foundation' : 'surface';
@@ -2581,6 +2584,16 @@ function buildRoadJunctions(segments) {
   const dummy = new THREE.Object3D();
   const buildGroups = (groups, foundation) => {
     const geometry = new THREE.CylinderGeometry(0.5, 0.5, foundation ? 0.025 : 0.018, 14);
+    const positions = geometry.getAttribute('position'), normals = geometry.getAttribute('normal');
+    const indices = geometry.getIndex().array;
+    const topFaces = [];
+    if (!foundation) {
+      state.fallbackJunctionSurfaceIndex ||= new RenderedPavementIndex();
+      for (let i = 0; i < indices.length; i += 3) {
+        const face = [indices[i], indices[i + 1], indices[i + 2]];
+        if (face.every(v => normals.getY(v) > 0.5)) topFaces.push(face);
+      }
+    }
     groups.forEach(({ materialKey, tile, vertices: grouped }) => {
       const mesh = new THREE.InstancedMesh(geometry, materials[materialKey] || materials.roadLocal, grouped.length);
       grouped.forEach((vertex, index) => {
@@ -2590,6 +2603,16 @@ function buildRoadJunctions(segments) {
         dummy.scale.set(diameter, 1, diameter);
         dummy.updateMatrix();
         mesh.setMatrixAt(index, dummy.matrix);
+        if (!foundation) {
+          // Match actual Float32 instance transforms and top vertices.
+          // The legacy cap top is 18 mm above its centreline ribbon.
+          const transform = new THREE.Matrix4(); mesh.getMatrixAt(index, transform);
+          for (const face of topFaces) {
+            const [a, b, c] = face.map(v => new THREE.Vector3().fromBufferAttribute(positions, v).applyMatrix4(transform));
+            state.fallbackJunctionSurfaceIndex.addTriangle(a.x,a.y,a.z,b.x,b.y,b.z,c.x,c.y,c.z,
+              { layer: 'road_surfaces', id: `fallback-cap:${vertex.key}` });
+          }
+        }
         vertex.lines.forEach((lineId) => attachRoadInstance(lineId, mesh, index));
       });
       mesh.instanceMatrix.needsUpdate = true;
@@ -2760,14 +2783,15 @@ function buildMapRoadLines(segments) {
 
 function buildRoadMarkings(segments) {
   const groups = new Map();
+  const reviewedWayIds = new Set();
   const roadNodes = new Map();
-  const nodeKey = (point) => `${Math.round(point.x * 20)}:${Math.round(point.y * 20)}`;
+  const nodeKey = (point, height) => `${Math.round(point.x * 20)}:${Math.round(point.y * 20)}:${Math.round(height * 4)}`;
   const recordPublicRoadNode = (segment, endpoint) => {
     const profile = segment.profile || roadProfile(segment.tags || {});
     const sourceVertex = endpoint === 'a' ? segment.aSourceVertex : segment.bSourceVertex;
     if (!sourceVertex || !profile || profile.renderClass === 'service') return;
     const point = endpoint === 'a' ? segment.a : segment.b;
-    const key = nodeKey(point);
+    const key = nodeKey(point, endpoint === 'a' ? segment.aY : segment.bY);
     if (!roadNodes.has(key)) roadNodes.set(key, { lines: new Set(), names: new Set() });
     const node = roadNodes.get(key);
     node.lines.add(segment.lineId);
@@ -2782,7 +2806,7 @@ function buildRoadMarkings(segments) {
     const sourceVertex = endpoint === 'a' ? segment.aSourceVertex : segment.bSourceVertex;
     if (!sourceVertex) return false;
     const point = endpoint === 'a' ? segment.a : segment.b;
-    const node = roadNodes.get(nodeKey(point));
+    const node = roadNodes.get(nodeKey(point, endpoint === 'a' ? segment.aY : segment.bY));
     return Boolean(node && (node.names.size > 1 || node.lines.size >= 3));
   };
   const addMarking = (marking, materialKey, kind, lineId) => {
@@ -2793,7 +2817,8 @@ function buildRoadMarkings(segments) {
   };
 
   for (const segment of segments) {
-    const tags = segment.tags || {};
+    const tags = reviewedPaintTags(segment.tags || {}, segment.lineId);
+    if (tags !== segment.tags) reviewedWayIds.add(segment.lineId);
     const profile = segment.profile || roadProfile(tags);
     if (!profile || profile.unpaved || profile.tunnel || tags.junction === 'roundabout' || tags.lane_markings === 'no') continue;
     const dx = segment.b.x - segment.a.x;
@@ -2805,8 +2830,8 @@ function buildRoadMarkings(segments) {
     const dy = segment.bY - segment.aY;
     const direction = new THREE.Vector3(dx, dy, dz).normalize();
 
-    // Only render cycle-lane separators where OSM explicitly maps a lane,
-    // track, shoulder, or bus-shared lane. Untagged streets are never guessed.
+    // Only an explicit on-carriageway bike lane implies this separator.
+    // A shoulder, separate track or shared bus lane is not a white stripe.
     mappedCycleLaneSides(tags).forEach((mappedSide) => {
       const side = mappedSide === 'left' ? 1 : -1;
       const offset = side * Math.max(0.45, segment.width / 2 - 1.52);
@@ -2821,7 +2846,7 @@ function buildRoadMarkings(segments) {
 
     const lanes = laneCountFor(tags);
     const boundaries = roadLaneMarkingBoundaries(tags, { ...profile, lanes });
-    if (!boundaries.length) continue;
+
     const period = 10.5;
     const dashLength = 4.2;
     const chainStart = segment.chainStart || 0;
@@ -2833,7 +2858,8 @@ function buildRoadMarkings(segments) {
     if (localMaximum - localMinimum < 0.35) continue;
 
     for (const boundaryRule of boundaries) {
-      const offset = -segment.width / 2 + segment.width * boundaryRule.boundary / lanes;
+      const offset = segment.width / 2 - segment.width * boundaryRule.boundary / lanes
+        + (boundaryRule.offsetMetres || 0);
       if (boundaryRule.pattern === 'solid') {
         const localMiddle = (localMinimum + localMaximum) / 2;
         const t = localMiddle / planarLength;
@@ -2873,42 +2899,55 @@ function buildRoadMarkings(segments) {
           x: (segment.a.x + segment.b.x) / 2 + sideX * offset,
           y: (segment.aY + segment.bY) / 2 + 0.017,
           z: (segment.a.y + segment.b.y) / 2 + sideZ * offset,
-        }, 'roadPaintWhite', 'edge', segment.lineId);
+        }, profile.oneWay && side === (tags.oneway === '-1' ? -1 : 1)
+          ? 'roadPaintYellow' : 'roadPaintWhite', 'edge', segment.lineId);
       });
     }
   }
 
-  const dashGeometry = new THREE.BoxGeometry(0.15, 0.025, 1);
-  const edgeGeometry = new THREE.BoxGeometry(0.13, 0.024, 1);
-  const dummy = new THREE.Object3D();
-  let markingCount = 0;
-  groups.forEach(({ kind, markings, materialKey, tile }) => {
-    const mesh = new THREE.InstancedMesh(kind === 'dash' ? dashGeometry : edgeGeometry, materials[materialKey], markings.length);
-    markings.forEach((marking, index) => {
-      dummy.position.set(marking.x, marking.y, marking.z);
-      setRoadQuaternion(dummy, marking.direction);
-      dummy.scale.set(1, 1, marking.length);
-      dummy.updateMatrix();
-      mesh.setMatrixAt(index, dummy.matrix);
-      attachRoadInstance(marking.lineId, mesh, index);
-    });
-    mesh.instanceMatrix.needsUpdate = true;
-    mesh.computeBoundingSphere();
+  let markingCount = 0, vertexCount = 0;
+  groups.forEach(({ kind, markings, materialKey, tile }, groupKey) => {
+    const positions = [], ranges = [];
+    for (const marking of markings) {
+      const direction = marking.direction.clone().setY(0).normalize();
+      const half = marking.length / 2;
+      const a = { x: marking.x-direction.x*half, z: marking.z-direction.z*half };
+      const b = { x: marking.x+direction.x*half, z: marking.z+direction.z*half };
+      const startVertex = positions.length / 3;
+      const vertices = drapePaintStrip(a, b, kind === 'dash' ? 0.15 : 0.13, (x,z) => {
+        const hit = gameplaySurfaceAt(x,z,marking.y);
+        return hit.onRoad ? hit.height : null;
+      }, { spacing: lowPowerProfile ? 4 : 2 });
+      for (const v of vertices) positions.push(v);
+      if (vertices.length) ranges.push({ lineId: marking.lineId, startVertex, vertexCount: vertices.length/3 });
+    }
+    if (!positions.length) return;
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.Float32BufferAttribute(new Float32Array(positions.length).fill(1), 3));
+    geometry.computeVertexNormals(); geometry.computeBoundingSphere();
+    const material = materials[materialKey].clone();
+    material.vertexColors = true;
+    material.polygonOffset = true; material.polygonOffsetFactor = -1; material.polygonOffsetUnits = -1;
+    const mesh = new THREE.Mesh(geometry, material);
     mesh.renderOrder = 6;
-    mesh.userData = {
-      type: kind === 'dash'
-        ? 'road-lane-dashes'
-        : kind === 'solid'
-          ? 'road-centre-lines'
-          : kind === 'cycle-edge' ? 'mapped-cycle-lane-edges' : 'road-edge-lines',
-      material: materialKey,
-      tile,
-      tileSize: ROAD_RENDER_TILE_SIZE,
-      count: markings.length,
-    };
+    mesh.userData = { type: kind === 'dash' ? 'road-lane-dashes' : kind === 'solid'
+      ? 'road-centre-lines' : kind === 'cycle-edge' ? 'mapped-cycle-lane-edges' : 'road-edge-lines',
+      material: materialKey, tile, tileSize: ROAD_RENDER_TILE_SIZE, count: ranges.length,
+      paintSurface: 'final-pavement', paintLiftMetres: 0.008 };
+    const key = `paint:${groupKey}`;
+    generatedRoadMeshes.set(key, mesh);
+    for (const range of ranges) {
+      // Existing editor bindings retain these arrays by reference.
+      state.roadPaintRanges?.get(String(range.lineId))?.push({key,
+        startVertex:range.startVertex, vertexCount:range.vertexCount});
+    }
     streetscapeGroup.add(mesh);
-    markingCount += markings.length;
+    markingCount += ranges.length; vertexCount += positions.length/3;
   });
+  document.documentElement.dataset.roadPaintVertices = String(vertexCount);
+  document.documentElement.dataset.roadPaintVersion = 'street-evidence-2';
+  document.documentElement.dataset.roadPaintReviewedWays = String(reviewedWayIds.size);
   state.objectCount += markingCount;
 }
 
@@ -4229,7 +4268,7 @@ async function parseOsmWithGeoJson(data) {
     const fallbackTrims = buildRoadJunctions(roadSegments);
     buildUrbanCurbs(roadSegments, fallbackTrims);
   }
-  buildRoadMarkings(roadSegments);
+  state.roadMarkingSegments = roadSegments;
   buildMappedTurnArrows(roadSegments);
   buildCrossings(crossings);
   buildBridgeDetails(roadSegments);
@@ -4314,7 +4353,7 @@ function parseOsmWayFallback(data) {
     const fallbackTrims = buildRoadJunctions(roadSegments);
     buildUrbanCurbs(roadSegments, fallbackTrims);
   }
-  buildRoadMarkings(roadSegments);
+  state.roadMarkingSegments = roadSegments;
   buildMappedTurnArrows(roadSegments);
   buildCrossings(crossings);
   buildBridgeDetails(roadSegments);
@@ -4392,7 +4431,7 @@ function buildFallbackCity() {
     const fallbackTrims = buildRoadJunctions(roadSegments);
     buildUrbanCurbs(roadSegments, fallbackTrims);
   }
-  buildRoadMarkings(roadSegments);
+  state.roadMarkingSegments = roadSegments;
   buildMappedTurnArrows(roadSegments);
   buildStreetNameSigns(roadSegments);
 
@@ -4565,6 +4604,8 @@ async function buildCity() {
     await nextFrame();
     summary.cityOpenData = buildCityOpenData(cityOpenData);
   }
+  // Drape paint only after the final municipal and station pavement exists.
+  buildRoadMarkings(state.roadMarkingSegments || []);
   // All OSM and municipal polygons are now available. Paint once in a fixed
   // class-priority order so overlaps do not depend on source feature order.
   flushLandCoverRaster();

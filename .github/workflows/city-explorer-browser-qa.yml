@@ -14,7 +14,11 @@ on:
       - 'tools/check-mobile-controls.cjs'
       - 'tools/check-authored-scene.cjs'
       - 'tools/test_authored_scene_runtime.mjs'
+      - 'tools/test_street_*.mjs'
       - 'city-explorer/app.js'
+      - 'city-explorer/street-paint.js'
+      - 'city-explorer/city-detail-rules.js'
+      - 'city-explorer/road-network.js'
       - 'city-explorer/feature-utils.js'
       - 'city-explorer/authored-scene-*.js'
       - 'city-explorer/data/authored/**'
@@ -52,10 +56,13 @@ jobs:
 
       - name: Verify road geometry and driver contact regressions
         run: |
-          node --check city-explorer/app.js
+          node --input-type=module --check < city-explorer/app.js
           node --check city-explorer/citywide-road-quality.js
           node --check city-explorer/fallback-junction-geometry.js
           node --check city-explorer/road-wheel-contact.js
+          node tools/test_street_marking_evidence.mjs
+          node tools/test_street_paint_runtime_edges.mjs
+          node tools/test_city_detail_rules.mjs
           node tools/test_citywide_road_quality.mjs
           node tools/test_fallback_junction_geometry.mjs
           node tools/test_station_road_detail.mjs
