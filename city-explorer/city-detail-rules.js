@@ -17,52 +17,58 @@ export function shouldRenderUrbanCurb(tags = {}, profile = {}) {
 }
 
 export function mappedCycleLaneSides(tags = {}) {
-  const sides = new Set();
-  const both = String(tags.cycleway || tags['cycleway:both'] || '').toLowerCase();
-  const left = String(tags['cycleway:left'] || '').toLowerCase();
-  const right = String(tags['cycleway:right'] || '').toLowerCase();
-  // A mapped `shared_lane` is a sharrow rather than a continuous cycle-lane
-  // boundary, so it must not generate a misleading solid edge line.
-  const lane = (value) => /^(lane|track|share_busway|shoulder)$/.test(value);
-  if (lane(both)) { sides.add('left'); sides.add('right'); }
-  if (lane(left)) sides.add('left');
-  if (lane(right)) sides.add('right');
-  return [...sides];
+  const both = tags['cycleway:both'] ?? tags.cycleway;
+  // Separate tracks, shoulders and shared bus lanes are not painted bike lanes.
+  return ['left', 'right'].filter(side =>
+    String(tags[`cycleway:${side}`] ?? both ?? '').toLowerCase() === 'lane');
 }
 
 /**
  * Return the paint boundaries between mapped vehicle lanes.
  *
- * Ontario convention uses yellow to divide opposing traffic and white between
- * lanes moving in the same direction. Urban opposing-traffic boundaries are
- * continuous by default; OSM `overtaking=yes` is treated as explicit evidence
- * that a broken centre line is appropriate.
+ * Yellow separates opposing traffic and white separates same-direction lanes.
+ * Defaults are inferred, not photographic confirmation. Passing permission is
+ * not proof of dashed paint. Explicit dividers and shared-turn lanes win.
  */
 export function roadLaneMarkingBoundaries(tags = {}, profile = {}) {
   if (profile.unpaved || profile.tunnel || profile.parkingAisle) return [];
   if (tags.junction === 'roundabout' || String(tags.lane_markings || '').toLowerCase() === 'no') return [];
   const highway = String(profile.highway || tags.highway || '').toLowerCase();
-  const markableClass = /^(motorway|trunk|primary|secondary|tertiary)(?:_link)?$/.test(highway)
-    || String(tags.lane_markings || '').toLowerCase() === 'yes';
-  const lanes = Math.max(1, Math.round(Number(profile.lanes) || Number(tags.lanes) || 1));
-  if (!markableClass || lanes < 2) return [];
-
+  const markable = /^(motorway|trunk|primary|secondary|tertiary)(?:_link)?$/.test(highway)
+    || tags.lane_markings === 'yes' || Boolean(tags.divider);
+  const lanes = Number(profile.lanes || tags.lanes);
+  if (!markable || !Number.isInteger(lanes) || lanes < 2) return [];
   const twoWay = !profile.oneWay;
-  const mappedBackward = Number.parseFloat(tags['lanes:backward']);
-  const centerBoundary = twoWay
-    ? Number.isFinite(mappedBackward) && mappedBackward > 0 ? Math.round(mappedBackward) : Math.floor(lanes / 2)
-    : -1;
-  const brokenOpposingBoundary = /^(yes|permissive)$/i.test(String(tags.overtaking || ''));
-  const boundaries = [];
-  for (let boundary = 1; boundary < lanes; boundary += 1) {
-    const opposing = twoWay && boundary === centerBoundary;
-    boundaries.push({
-      boundary,
-      materialKey: opposing ? 'roadPaintYellow' : 'roadPaintWhite',
-      pattern: opposing && !brokenOpposingBoundary ? 'solid' : 'dash',
-    });
+  const count = value => value !== undefined && value !== '' && Number.isInteger(Number(value)) && Number(value) >= 0
+    ? Number(value) : null;
+  const shared = count(tags['lanes:both_ways']) || 0;
+  let backward = count(tags['lanes:backward']);
+  const forward = count(tags['lanes:forward']);
+  if (twoWay) {
+    if (backward === null && forward !== null) backward = lanes - forward - shared;
+    if (backward === null && (lanes - shared) % 2 === 0) backward = (lanes - shared) / 2;
+    // An unallocated odd total may include a turn pocket; don't invent its side.
+    if (backward === null || backward <= 0 || backward + shared >= lanes
+      || (forward !== null && forward + backward + shared !== lanes)) return [];
   }
-  return boundaries;
+  const result = [];
+  for (let boundary = 1; boundary < lanes; boundary++) {
+    const opposing = twoWay && (boundary === backward || (shared > 0 && boundary === backward + shared));
+    const materialKey = opposing ? 'roadPaintYellow' : 'roadPaintWhite';
+    if (opposing && shared === 1) {
+      // Solid outside the centre lane, dashed inside. Offset is positive left.
+      const sign = boundary === backward ? 1 : -1;
+      result.push({ boundary, materialKey, pattern: 'solid', offsetMetres: sign * 0.12 });
+      result.push({ boundary, materialKey, pattern: 'dash', offsetMetres: -sign * 0.12 });
+    } else if (opposing && tags.divider === 'no') {
+      continue;
+    } else if (opposing && tags.divider === 'double_solid_line') {
+      for (const offsetMetres of [-0.12, 0.12]) result.push({ boundary, materialKey, pattern: 'solid', offsetMetres });
+    } else {
+      result.push({ boundary, materialKey, pattern: opposing && tags.divider !== 'dashed_line' ? 'solid' : 'dash' });
+    }
+  }
+  return result;
 }
 
 const TURN_SYMBOLS = new Set(['left', 'slight_left', 'sharp_left', 'through', 'right', 'slight_right', 'sharp_right', 'reverse', 'merge_to_left', 'merge_to_right']);

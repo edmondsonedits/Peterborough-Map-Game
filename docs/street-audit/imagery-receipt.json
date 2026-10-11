@@ -1,0 +1,106 @@
+[
+  {
+    "name": "sherbrooke-station",
+    "bbox": [
+      -78.32372,
+      44.29995,
+      -78.32052,
+      44.30165
+    ],
+    "source": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_Imagery/Ontario_Imagery_Web_Map_Service/MapServer",
+    "request": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_Imagery/Ontario_Imagery_Web_Map_Service/MapServer/export?f=image&bbox=-78.32372%2C44.29995%2C-78.32052%2C44.30165&bboxSR=4326&imageSR=3857&size=1400%2C1000&format=jpg&transparent=false",
+    "imageryDate": "Service mosaic; inspect source metadata, not guaranteed 2026",
+    "status": "downloaded"
+  },
+  {
+    "name": "george-downtown",
+    "bbox": [
+      -78.32159999999999,
+      44.30365,
+      -78.3184,
+      44.30535
+    ],
+    "source": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_Imagery/Ontario_Imagery_Web_Map_Service/MapServer",
+    "request": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_Imagery/Ontario_Imagery_Web_Map_Service/MapServer/export?f=image&bbox=-78.32159999999999%2C44.30365%2C-78.3184%2C44.30535&bboxSR=4326&imageSR=3857&size=1400%2C1000&format=jpg&transparent=false",
+    "imageryDate": "Service mosaic; inspect source metadata, not guaranteed 2026",
+    "status": "downloaded"
+  },
+  {
+    "name": "water-downtown",
+    "bbox": [
+      -78.3201,
+      44.30235,
+      -78.3169,
+      44.30405
+    ],
+    "source": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_Imagery/Ontario_Imagery_Web_Map_Service/MapServer",
+    "request": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_Imagery/Ontario_Imagery_Web_Map_Service/MapServer/export?f=image&bbox=-78.3201%2C44.30235%2C-78.3169%2C44.30405&bboxSR=4326&imageSR=3857&size=1400%2C1000&format=jpg&transparent=false",
+    "imageryDate": "Service mosaic; inspect source metadata, not guaranteed 2026",
+    "status": "downloaded"
+  },
+  {
+    "name": "lansdowne-west",
+    "bbox": [
+      -78.3793,
+      44.27335,
+      -78.37610000000001,
+      44.27505
+    ],
+    "source": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_Imagery/Ontario_Imagery_Web_Map_Service/MapServer",
+    "request": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_Imagery/Ontario_Imagery_Web_Map_Service/MapServer/export?f=image&bbox=-78.3793%2C44.27335%2C-78.37610000000001%2C44.27505&bboxSR=4326&imageSR=3857&size=1400%2C1000&format=jpg&transparent=false",
+    "imageryDate": "Service mosaic; inspect source metadata, not guaranteed 2026",
+    "status": "downloaded"
+  },
+  {
+    "name": "chemong",
+    "bbox": [
+      -78.3344,
+      44.31975,
+      -78.33120000000001,
+      44.32145
+    ],
+    "source": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_Imagery/Ontario_Imagery_Web_Map_Service/MapServer",
+    "request": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_Imagery/Ontario_Imagery_Web_Map_Service/MapServer/export?f=image&bbox=-78.3344%2C44.31975%2C-78.33120000000001%2C44.32145&bboxSR=4326&imageSR=3857&size=1400%2C1000&format=jpg&transparent=false",
+    "imageryDate": "Service mosaic; inspect source metadata, not guaranteed 2026",
+    "status": "downloaded"
+  },
+  {
+    "name": "parkhill-west",
+    "bbox": [
+      -78.33829999999999,
+      44.31085,
+      -78.3351,
+      44.31255
+    ],
+    "source": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_Imagery/Ontario_Imagery_Web_Map_Service/MapServer",
+    "request": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_Imagery/Ontario_Imagery_Web_Map_Service/MapServer/export?f=image&bbox=-78.33829999999999%2C44.31085%2C-78.3351%2C44.31255&bboxSR=4326&imageSR=3857&size=1400%2C1000&format=jpg&transparent=false",
+    "imageryDate": "Service mosaic; inspect source metadata, not guaranteed 2026",
+    "status": "downloaded"
+  },
+  {
+    "name": "aylmer",
+    "bbox": [
+      -78.3257,
+      44.30135,
+      -78.3225,
+      44.30305
+    ],
+    "source": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_Imagery/Ontario_Imagery_Web_Map_Service/MapServer",
+    "request": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_Imagery/Ontario_Imagery_Web_Map_Service/MapServer/export?f=image&bbox=-78.3257%2C44.30135%2C-78.3225%2C44.30305&bboxSR=4326&imageSR=3857&size=1400%2C1000&format=jpg&transparent=false",
+    "imageryDate": "Service mosaic; inspect source metadata, not guaranteed 2026",
+    "status": "downloaded"
+  },
+  {
+    "name": "park-street",
+    "bbox": [
+      -78.32939999999999,
+      44.30315,
+      -78.3262,
+      44.30485
+    ],
+    "source": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_Imagery/Ontario_Imagery_Web_Map_Service/MapServer",
+    "request": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_Imagery/Ontario_Imagery_Web_Map_Service/MapServer/export?f=image&bbox=-78.32939999999999%2C44.30315%2C-78.3262%2C44.30485&bboxSR=4326&imageSR=3857&size=1400%2C1000&format=jpg&transparent=false",
+    "imageryDate": "Service mosaic; inspect source metadata, not guaranteed 2026",
+    "status": "downloaded"
+  }
+]
