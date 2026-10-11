@@ -157,3 +157,13 @@ Local build: **1.6.100**. Q26–Q29 are fixed without adding modes or changing a
 Reproduce the additional browser checks with `node tools/check-quality-search.cjs` and `node tools/check-quality-geo-extended.cjs` after starting the existing preview server. Final receipts, baseline comparisons and screenshots remain in ignored `test-artifacts/quality-audit/continuation/`. The Geo wrapper check deliberately simulates an unavailable Firebase SDK; it establishes usable local gameplay rather than successful live scoreboard access.
 
 The changes remain local and unpublished. Successful production Firebase access, physical phones and human recruit playtesting remain outside this evidence.
+
+## GitHub release preparation — October 10, 2026
+
+Publication was authorized for the combined **1.6.101** release. The earlier local-only statements describe the audit checkpoints above. This release preserves the newer main-menu and citywide road work through `2caa037`, plus continuous Fire/EMS Geo Guesser practice and iframe-readiness fixes from `66eb56b`. Authoritative city data matches the incoming main branch.
+
+- Final application suite: **289 passed, 0 failed**. The added route tracing, decision, tuning and gesture regressions now run in the Pages deployment workflow alongside the incoming Geo station-practice checks.
+- Nine road, truck-contact, terrain and authored-runtime verification scripts passed after the road merge.
+- Source inventory: **601 files, 328 JavaScript modules/scripts, 27 inline scripts and 37 JSON/GeoJSON files**, with zero syntax errors or missing local HTML resources. Release normalization is idempotent; diff whitespace checks pass.
+- Local browser verification confirms menu help/city availability text, direct route-map panning, release-point drawing without auto-completion, all four tuning sliders, and the merged desktop Geo station-practice startup.
+- Publication is through the existing main-branch Pages workflow. Its deployment result and served-source hashes are checked independently after pushing; local checks alone are not evidence of a live release.

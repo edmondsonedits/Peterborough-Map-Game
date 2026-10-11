@@ -23,6 +23,7 @@
 /* The game iframe fills the phone; wrapper controls and loading sit above it. */
 html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#121218;font-family:system-ui,sans-serif}#game-frame{position:fixed;inset:0;width:100%;height:100%;border:0}.back{position:fixed;top:calc(19px + env(safe-area-inset-top));left:18px;z-index:7001;width:50px;height:50px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.3);border-radius:16px;background:linear-gradient(145deg,rgba(15,23,42,.98),rgba(30,41,59,.94));box-shadow:0 10px 24px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.13);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#fff;text-decoration:none;transition:transform .14s ease,box-shadow .14s ease,border-color .14s ease}.back svg{width:26px;height:26px;display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,.4))}.back:active{transform:scale(.94);box-shadow:0 5px 14px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.1)}.back:focus-visible{outline:3px solid #60a5fa;outline-offset:3px;border-color:#93c5fd}.loading{position:fixed;inset:0;z-index:8000;display:grid;place-items:center;padding:24px;background:#121218;color:#fff;text-align:center;transition:opacity .18s}.loading.hidden{opacity:0;pointer-events:none}.loading span{display:block;margin-top:7px;color:#94a3b8;font-size:14px}
 </style>
+<link rel="stylesheet" href="../wrapper-layout.css?v=1.6.101">
 </head>
 <body>
 <!-- v1.6.43 forces the mobile wrapper to embed the current shared game HTML. -->
@@ -35,5 +36,6 @@ html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#121218;fon
 <script src="../../shared/dispatch-override-1.4.4.js?v=1.6.101"></script>
 <script>const VERSION = '1.6.101';</script>
 <script src="../wrapper.js?v=1.6.101" data-geo-surface="mobile"></script>
+<script src="../wrapper-layout.js?v=1.6.101"></script>
 </body>
 </html>

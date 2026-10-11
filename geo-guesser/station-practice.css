@@ -1,0 +1,113 @@
+:root { --practice-ink:#f4fbff; --practice-muted:#a7bfcd; --practice-teal:#48d6c6; --practice-navy:#071b2a; }
+#menu .practice-launch { border-color:#48d6c699; background:linear-gradient(110deg,#0d726b,#16445a); box-shadow:0 12px 34px #26b7a72b; }
+#menu .menu-btn:not(.practice-launch) { background:#ffffff08; }
+.review-label { margin:0 0 10px; padding:6px 10px; border:1px solid #63d6cb55; border-radius:999px; background:#0c746d24; color:#9ce7dc; font-size:.72rem; font-weight:800; letter-spacing:.05em; text-transform:uppercase; }
+.service-options { width:min(92vw,760px); display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.service-options .mode-card { width:100%; min-height:104px; margin:0; border-color:#ffffff20; }
+.service-fire strong { color:#ffb2a2; }.service-ems strong { color:#83ead2; }
+.service-options .selected { border-color:#52dfd0; background:#0a5d58; box-shadow:0 0 0 2px #52dfd033; }
+.practice-stations { width:min(92vw,760px); display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr)); gap:10px; margin:16px 0 2px; }
+.practice-stations h2 { grid-column:1/-1; margin:5px 0 0; color:var(--practice-ink); }
+.practice-station { width:100%; min-height:68px; margin:0; text-align:left; border-color:#48d6c655; background:#071b2acc; }
+.practice-empty { grid-column:1/-1; color:var(--practice-muted); }
+#station-practice.screen { background:radial-gradient(ellipse at 50% 5%,#17435a 0,#0d2233 42%,#07131e 100%); }
+#game #practice-finish, #game #practice-return { position:absolute; z-index:1102; top:14px; min-width:48px; min-height:46px; padding:9px 13px; color:var(--practice-ink); border:1px solid #ffffff35; border-radius:11px; background:#071b2aeb; font-weight:800; box-shadow:0 5px 18px #0006; }
+#game #practice-finish { right:14px; }
+#game #practice-return { left:14px; }
+#practice-controls { position:absolute; z-index:1100; left:50%; bottom:calc(13px + env(safe-area-inset-bottom)); transform:translateX(-50%); width:min(calc(100% - 24px),620px); padding:10px 12px; }
+.practice-map-actions { display:flex; justify-content:center; gap:8px; }
+.practice-map-actions button { min-width:48px; min-height:48px; padding:9px 13px; color:#f4fbff; border:1px solid #ffffff26; border-radius:10px; background:#102d40; font-weight:800; }
+.practice-map-actions button:last-child { flex:1; max-width:220px; border-color:#48d6c688; background:#08786f; }
+.practice-map-actions #practice-continue { min-width:98px; }
+#practice-controls p { margin:7px 3px 0; color:var(--practice-muted); font-size:.78rem; text-align:center; }
+#practice-feedback { display:none; margin-top:7px; color:#a9eee4; font-size:.82rem; font-weight:650; line-height:1.35; }
+.practice-review { margin:9px -3px 0; padding:9px 11px; border:1px solid #ffffff24; border-left:5px solid #ff6874; border-radius:10px; background:#07131deF; text-align:left; }
+#practice-review { --review-accent:#ff6874; border-left-color:var(--review-accent); }
+#practice-review.review-correct { --review-accent:#48d6c6; }
+#practice-review-result { display:inline-block; margin-bottom:2px; color:var(--review-accent,#ff6874); font-size:.68rem; font-weight:900; letter-spacing:.13em; }
+#practice-review { border-left-color:var(--review-accent,#ff6874); }
+#practice-review-title { margin:0 0 4px; color:#fff; font-size:1.35rem; line-height:1.12; text-align:left; }
+#practice-review-detail, #practice-review-radius { margin:3px 0 0; color:#e5f0f5; font-size:.85rem; font-weight:750; line-height:1.3; }
+#practice-review-radius { color:#9ce7dc; }
+.practice-review-label { border:1px solid #ffffffcc; border-radius:7px; background:#071b2a; color:#fff; box-shadow:0 3px 12px #000b; font-size:12px; font-weight:900; }
+.practice-review-label.actual { border-color:#ff6874; }
+.practice-review-label.guess { border-color:#76a4ff; }
+.practice-review-label:before { border-top-color:#071b2a; }
+.practice-review-distance { padding:4px 7px; border:1px solid #ff6874; border-radius:999px; background:#4b1720; color:#fff; font-size:12px; font-weight:900; box-shadow:0 2px 9px #000b; }
+#game:has(#practice-controls:not(.hidden)) #header { top:70px; width:min(calc(100% - 28px),510px); padding:10px 14px; }
+#game.screen:has(#practice-controls:not(.hidden)) { padding:0; }
+#game:has(#practice-controls:not(.hidden)) #confirm { bottom:calc(112px + env(safe-area-inset-bottom)); min-height:48px; padding:12px 27px; font-size:1rem; }
+body:has(#practice-controls:not(.hidden)) #game-home { display:none!important; }
+body:has(#practice-controls:not(.hidden)) #ptbo-training-use-notice { display:block!important; top:auto!important; right:auto!important; bottom:8px!important; left:12px!important; max-width:max-content!important; padding:5px 9px!important; font-size:8px!important; }
+body:has(#practice-controls:not(.hidden)) #ptbo-training-use-notice span { display:none!important; }
+body:has(#practice-controls:not(.hidden)) #ptbo-training-use-notice strong { margin:0!important; font-size:8px!important; }
+body:has(#practice-controls:not(.hidden)) #ptbo-training-use-notice:focus-visible { outline:3px solid #6de8dc!important; outline-offset:3px; }
+#game:has(#practice-controls:not(.hidden)) #timer { margin-top:5px; padding-top:5px; font-size:.76rem; }
+#game:has(#practice-controls:not(.hidden)) #practice-feedback { display:block; }
+#game:has(#practice-review:not(.hidden)) #practice-feedback { display:none; }
+.practice-summary { max-width:min(92vw,600px); color:#bcece5; text-align:center; line-height:1.5; }
+#practice-result-actions { display:flex; flex-direction:column; align-items:center; }
+button:focus-visible, a:focus-visible { outline:3px solid #6de8dc; outline-offset:3px; }
+@media (max-width:600px) {
+  .service-options { grid-template-columns:1fr; gap:8px; }
+  .service-options .mode-card { min-height:78px; padding:13px 15px; }
+  #game:has(#practice-controls:not(.hidden)) #header { top:67px; width:calc(100% - 22px); padding:8px 12px; }
+  #game:has(#practice-controls:not(.hidden)) #confirm { bottom:calc(138px + env(safe-area-inset-bottom)); }
+  #game:has(#practice-controls:not(.hidden)) #call-name { font-size:.95rem; }
+  #practice-review { margin-top:7px; padding:7px 9px; }
+  #practice-review-title { font-size:1.15rem; }
+  #practice-review-detail, #practice-review-radius { font-size:.78rem; }
+  #practice-controls { bottom:calc(35px + env(safe-area-inset-bottom)); width:calc(100% - 18px); padding:8px; }
+  .practice-map-actions { gap:6px; }
+  .practice-map-actions button { min-width:46px; min-height:48px; padding:8px 11px; }
+  #practice-controls p { font-size:.73rem; }
+  #game #practice-finish, #game #practice-return { top:10px; min-height:44px; }
+  #game #practice-return { left:14px; }
+}
+@media (max-width:340px) {
+  #game:has(#practice-controls:not(.hidden)) #header { top:61px; }
+  #game:has(#practice-controls:not(.hidden)) #call-address { font-size:.77rem; }
+  #game:has(#practice-controls:not(.hidden)) #confirm { bottom:calc(132px + env(safe-area-inset-bottom)); }
+  #practice-controls p { margin-top:4px; font-size:.68rem; }
+  #practice-controls { padding:6px; }
+  .practice-map-actions button { min-width:43px; min-height:44px; padding:7px; }
+}
+@media (max-height:500px) and (orientation:landscape) {
+  #game:has(#practice-controls:not(.hidden)) #header { top:60px; left:14px; transform:none; width:min(42vw,410px); text-align:left; }
+  #game:has(#practice-controls:not(.hidden)) #practice-feedback { font-size:.74rem; }
+  #game:has(#practice-controls:not(.hidden)) #confirm { bottom:auto; top:50%; left:auto; right:12px; transform:translateY(-50%); }
+  #practice-controls { left:auto; right:12px; bottom:35px; transform:none; width:min(48vw,490px); }
+  #practice-controls p { display:none; }
+}
+@media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; animation-duration:.01ms!important; animation-iteration-count:1!important; transition-duration:.01ms!important; } }
+
+/* Keep the answer card compact so the fitted target and guess remain visible. */
+#game:has(#practice-review:not(.hidden)) #header { top:10px; left:50%; right:auto; transform:translateX(-50%); width:min(calc(100% - 108px),510px); padding:8px 11px; text-align:left; }
+#game:has(#practice-review:not(.hidden)) #header > div:first-child,
+#game:has(#practice-review:not(.hidden)) #progress,
+#game:has(#practice-review:not(.hidden)) #practice-feedback { display:none!important; }
+#game:has(#practice-review:not(.hidden)) #call-name { margin:0; font-size:.9rem; line-height:1.2; }
+#game:has(#practice-review:not(.hidden)) #call-address { display:block; font-size:.74rem; line-height:1.2; }
+#game:has(#practice-review:not(.hidden)) #timer { margin-top:4px; padding-top:4px; font-size:.7rem; line-height:1.2; }
+#game:has(#practice-review:not(.hidden)) #practice-review-result { display:none; }
+#game:has(#practice-review:not(.hidden)) .practice-review { margin:5px 0 0; padding:6px 8px; }
+#game:has(#practice-review:not(.hidden)) #practice-review-title { margin:0; font-size:1.08rem; }
+#game:has(#practice-review:not(.hidden)) #practice-review-detail,
+#game:has(#practice-review:not(.hidden)) #practice-review-radius { margin-top:2px; font-size:.73rem; line-height:1.2; }
+#game:has(#practice-review:not(.hidden)) #practice-controls { display:none!important; }
+#game:has(#practice-review:not(.hidden)) #confirm { top:auto; right:auto; bottom:calc(18px + env(safe-area-inset-bottom)); left:50%; transform:translateX(-50%); min-height:48px; padding:12px 24px; }
+@media (max-width:600px) {
+  #game:has(#practice-review:not(.hidden)) #header { top:58px; width:calc(100% - 104px); padding:6px 8px; }
+  #game:has(#practice-review:not(.hidden)) #call-name { font-size:.8rem; }
+  #game:has(#practice-review:not(.hidden)) #call-address { font-size:.68rem; }
+  #game:has(#practice-review:not(.hidden)) #timer { font-size:.65rem; }
+  #game:has(#practice-review:not(.hidden)) .practice-review { margin-top:3px; padding:5px 7px; }
+  #game:has(#practice-review:not(.hidden)) #practice-review-title { font-size:.98rem; }
+  #game:has(#practice-review:not(.hidden)) #practice-review-detail,
+  #game:has(#practice-review:not(.hidden)) #practice-review-radius { font-size:.66rem; }
+  #game:has(#practice-review:not(.hidden)) #confirm { bottom:calc(18px + env(safe-area-inset-bottom)); }
+}
+@media (max-height:500px) and (orientation:landscape) {
+  #game:has(#practice-review:not(.hidden)) #header { top:8px; left:50%; right:auto; transform:translateX(-50%); width:min(58vw,510px); text-align:left; }
+  #game:has(#practice-review:not(.hidden)) #confirm { top:auto; right:auto; bottom:12px; left:50%; transform:translateX(-50%); }
+}

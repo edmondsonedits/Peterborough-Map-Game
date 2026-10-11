@@ -236,10 +236,14 @@
       blocker.textContent = message;
     };
 
+    let installingDocument = null;
     const install = async () => {
       const doc = frame.contentDocument;
       const game = frame.contentWindow;
-      if (!doc || !game) return;
+      // An iframe initially exposes a complete about:blank document. Its scripts
+      // disappear on navigation and must never determine the game's readiness.
+      if (!doc || !game || doc.URL === 'about:blank' || doc === installingDocument) return;
+      installingDocument = doc;
       frame.style.pointerEvents = 'none';
       try {
         if (window.PTBO_DEPLOYMENT) game.PTBO_DEPLOYMENT = window.PTBO_DEPLOYMENT;
@@ -249,6 +253,7 @@
           ...(game.PTBO_MAP_CONFIG || {}),
         };
         await injectScript(doc, 'ptbo-geo-commercial-map-policy', `../response-simulator/carto-basemap-policy-1.6.36.js?v=${VERSION}`, '', 6000);
+        if (doc !== frame.contentDocument) return;
         const policy = game.PTBO_COMMERCIAL_MAP_POLICY;
         policy?.enforce?.();
         const coreStatus = game.PTBO_GEO_MAP_PROVIDER?.readiness?.();
@@ -263,6 +268,7 @@
         frame.dataset.ptboMapPolicyReady = 'true';
         frame.style.pointerEvents = '';
       } catch (error) {
+        if (doc !== frame.contentDocument) return;
         frame.dataset.ptboMapPolicyReady = 'false';
         traceWarn('Geo Guesser map-provider policy failed', error);
         showBlocked(error?.message || 'Geo Guesser map-provider configuration failed.');

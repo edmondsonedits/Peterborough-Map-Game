@@ -38,6 +38,7 @@ jobs:
           for file in shared/release-bootstrap-*.js; do node --check "$file"; done
           node --test tests/critical-gameplay.test.cjs tests/gearbox.test.cjs tests/camera-zoom.test.cjs tests/ems.test.cjs tests/incident-formatting.test.cjs tests/training-history.test.cjs tests/geo-map-policy.test.cjs tests/analytics-authority.test.cjs tests/analytics-bootstrap.test.cjs tests/analytics-adversarial.test.cjs tests/release-bootstrap-consistency.test.cjs tests/tablet-dispatch-minimize.test.cjs tests/tablet-button-stability.test.cjs tests/base-editor-freeze.test.cjs tests/ci-workflow-scope.test.cjs
           node --test tests/base-training-cities.test.cjs tests/desktop-editor-steering-regression.test.cjs tests/mode-quality.test.mjs tests/route-response-quality.test.cjs tests/async-release-quality.test.cjs tests/city-search-quality.test.cjs tests/analytics-transport-quality.test.cjs tests/route-tracing.test.cjs tests/route-learning.test.cjs tests/route-decisions-integration.test.cjs tests/route-tuning.test.cjs tests/route-gestures.test.cjs
+          node --test tests/geo-station-practice.test.cjs tests/geo-station-integration.test.cjs tests/geo-station-flow.test.cjs tests/geo-wrapper-readiness.test.cjs
 
       - name: Check streetscape regressions
         run: node --test tests/sherbrooke-plan.test.mjs tests/sherbrooke-fallback.test.mjs tests/station-reference-details.test.mjs tests/streetscape-assets.test.mjs tests/vegetation-variants.test.mjs tests/city-feature-utils.test.mjs
