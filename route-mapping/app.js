@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.101';
+  const VERSION = window.PTBO_BUILD?.version || '1.6.101';
   const CONFIG = Object.freeze({
     roadUrl: '../city-explorer/data/osm-public-roads.geojson',
     centerLat: 44.3091,
@@ -64,7 +64,7 @@
   const state = {
     map:null, graph:null, traceCore:null, endpointMarker:null, calls:[], originalCalls:[], advancedCalls:[], difficultyIndex:null, service:'fire', base:null, call:null, callCount:0, recentCallIds:[], mode:'loading', mapZooming:false,
     skillProfiles:null, skillProfile:null, adaptiveTarget:null, progression:null, phase:null, lastDecisionAnalysis:null, tuning:null,
-    rawPoints:[], rawLine:null, drawingPointer:null, originAnchor:null, destinationAnchor:null, history:[], playerRoute:null,
+    stroke:null, drawingPointer:null, originAnchor:null, destinationAnchor:null, history:[], playerRoute:null,
     shortestRoute:null, playerLayers:[], referenceLayers:[], startMarker:null, callMarker:null, mapGestureSnapshot:null
   };
 
@@ -529,6 +529,7 @@
   function updateDrawTarget(anchorOverride){
     const surface=ui.drawSurface,map=state.map;
     if(!surface||!map||!map.latLngToContainerPoint||!map.getSize||!map.getContainer){if(surface)surface.hidden=true;return;}
+    if(state.drawingPointer!==null)return; // Keep the capture target stable until release.
     const anchor=anchorOverride||state.playerRoute?.endpoint||(state.base&&state.traceCore?.snap(basePoint(state.base),260));
     const available=state.mode==='drawing'&&!state.mapZooming&&!ui.settingsSheet?.open&&!state.playerRoute?.complete&&Boolean(anchor);
     if(!available){surface.hidden=true;return;}
@@ -565,13 +566,15 @@
   }
 
   function renderPlayerRoute(){
-    clearLayers(state.playerLayers);clearLayer(state.endpointMarker);state.endpointMarker=null;
-    if(!state.playerRoute)return;
-    state.playerLayers.push(...drawCasedRoute(state.playerRoute,'#2563eb',{}));
-    if(!state.playerRoute.complete){
-      const end=state.playerRoute.endpoint;
-      state.endpointMarker=L.marker([end.lat,end.lng],{icon:icon('route-end-icon','END'),interactive:false}).addTo(state.map);
-    }
+    const route=state.playerRoute;
+    if(!route){clearLayers(state.playerLayers);clearLayer(state.endpointMarker);state.endpointMarker=null;return;}
+    // Reuse the two line layers during live drawing instead of rebuilding Leaflet
+    // objects for every pointer sample. Rendering is scheduled once per frame.
+    if(state.playerLayers.length)state.playerLayers.forEach(layer=>layer.setLatLngs(route.coordinates));
+    else state.playerLayers.push(...drawCasedRoute(route,'#2563eb',{}));
+    if(route.complete){clearLayer(state.endpointMarker);state.endpointMarker=null;}
+    else if(state.endpointMarker)state.endpointMarker.setLatLng(route.endpoint);
+    else state.endpointMarker=L.marker(route.endpoint,{icon:icon('route-end-icon','END'),interactive:false}).addTo(state.map);
   }
 
   function clearReference(){clearLayers(state.referenceLayers);}
@@ -596,14 +599,20 @@
 
   function fitExercise(){if(!state.base||!state.call)return;const s=basePoint(state.base),e=callAccessPoint(state.call);state.map.fitBounds([[s.lat,s.lng],[e.lat,e.lng]],{paddingTopLeft:[45,100],paddingBottomRight:[45,115],maxZoom:15,animate:!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches});}
   function setHint(text){ui.hint.textContent=text;}
-  function setMode(mode){state.mode=mode;updateDrawTarget();ui.submit.disabled=!(mode==='editing'&&state.playerRoute?.complete);ui.undo.disabled=!(state.history.length&&(mode==='drawing'||mode==='editing'));ui.clear.disabled=mode==='loading'||mode==='snapping'||mode==='results';ui.results.hidden=mode!=='results';}
+  function setMode(mode){state.mode=mode;updateDrawTarget();ui.submit.disabled=!(mode==='editing'&&state.playerRoute?.complete);ui.undo.disabled=!(state.history.length&&(mode==='drawing'||mode==='editing'));ui.clear.disabled=mode==='loading'||mode==='results';ui.results.hidden=mode!=='results';}
 
-  function clearRaw(){const pointer=state.drawingPointer;state.drawingPointer=null;setMapGestureLock(false);if(pointer!==null&&ui.drawSurface.hasPointerCapture?.(pointer))ui.drawSurface.releasePointerCapture(pointer);clearLayer(state.rawLine);state.rawLine=null;state.rawPoints=[];}
+  function clearRaw(){
+    const pointer=state.drawingPointer,stroke=state.stroke;
+    state.drawingPointer=null;state.stroke=null;
+    if(stroke?.frame!==null&&stroke?.frame!==undefined)cancelAnimationFrame(stroke.frame);
+    setMapGestureLock(false);
+    if(pointer!==null&&ui.drawSurface.hasPointerCapture?.(pointer))ui.drawSurface.releasePointerCapture(pointer);
+  }
 
   function resetDrawing(){
-    exerciseGeneration+=1;clearRaw();clearReference();clearLayers(state.playerLayers);clearLayer(state.endpointMarker);state.endpointMarker=null;
+    clearRaw();clearReference();clearLayers(state.playerLayers);clearLayer(state.endpointMarker);state.endpointMarker=null;
     state.history=[];state.playerRoute=null;state.shortestRoute=null;
-    setMode('drawing');setHint('Drag from START to draw. Drag elsewhere to move the map.');fitExercise();
+    setMode('drawing');setHint('Drag from START. Backtrack to erase. Release to pause.');fitExercise();
   }
 
   function pointerPoint(event){const rect=ui.map.getBoundingClientRect(),point=L.point(event.clientX-rect.left,event.clientY-rect.top),ll=state.map.containerPointToLatLng(point);return {lat:ll.lat,lng:ll.lng};}
@@ -617,47 +626,69 @@
     if(!start){setHint('Start your drawing at START.');return;}
     updateDrawTarget(start);rect=ui.drawSurface.getBoundingClientRect();
     if(ui.drawSurface.hidden||Math.hypot(event.clientX-(rect.left+rect.width/2),event.clientY-(rect.top+rect.height/2))>28){setHint(state.playerRoute?'Continue from the blue END marker.':'Start your drawing at START.');return;}
-    const p=pointerPoint(event);
-    event.preventDefault();state.drawingPointer=event.pointerId;ui.drawSurface.setPointerCapture?.(event.pointerId);setMapGestureLock(true);
-    state.rawPoints=[start,p];state.rawLine=L.polyline([[start.lat,start.lng],[p.lat,p.lng]],{color:'#0ea5e9',weight:5,opacity:.8,dashArray:'5 7',interactive:false}).addTo(state.map);
-    setHint('Release to stop. Your street choices will be kept.');
+    const destination=state.traceCore.snap(callPoint(state.call),CONFIG.destinationSearchRadius);
+    if(!destination){setHint('This call has no road access in the training network.');return;}
+    event.preventDefault();
+    state.originAnchor=state.traceCore.snap(basePoint(state.base),260);state.destinationAnchor=destination;
+    // The grab target is larger than the line: a click within it is not a stroke.
+    state.stroke={before:state.playerRoute,point:pointerPoint(event),queue:[],frame:null,changed:false,blocked:false};
+    state.playerRoute=state.playerRoute||state.traceCore.begin(start);
+    state.drawingPointer=event.pointerId;ui.drawSurface.setPointerCapture?.(event.pointerId);setMapGestureLock(true);
+    setHint('Follow streets. Backtrack to erase. Release to pause.');
+  }
+
+  function flushStroke(){
+    const stroke=state.stroke;if(!stroke)return;
+    if(stroke.frame!==null){cancelAnimationFrame(stroke.frame);stroke.frame=null;}
+    let changed=false,action='hold';
+    for(const point of stroke.queue.splice(0)){
+      const result=state.traceCore.advance(state.playerRoute,point,{...traceOptions(),previousPoint:stroke.point});
+      stroke.point=point;stroke.blocked=result.blocked;
+      if(result.changed){state.playerRoute=result.route;changed=true;stroke.changed=true;state.shortestRoute=null;}
+      if(result.action!=='hold')action=result.action;
+    }
+    if(changed)renderPlayerRoute();
+    setHint(stroke.blocked?'Route held at END. Return to a connected street.':action==='erase'?'Erasing the last section. Release to pause.':'Follow streets. Backtrack to erase. Release to pause.');
+  }
+
+  function queuePointer(event){
+    const stroke=state.stroke;if(!stroke)return;
+    const coalesced=event.getCoalescedEvents?.()||[];
+    // Preserve the order of high-frequency samples, including turns between frames.
+    for(const sample of coalesced.length?coalesced:[event]){
+      const point=pointerPoint(sample),last=stroke.queue.at(-1)||stroke.point;
+      if(Number.isFinite(point.lat)&&Number.isFinite(point.lng)&&dist(last,point)>.2)stroke.queue.push(point);
+    }
+    if(stroke.queue.length&&stroke.frame===null)stroke.frame=requestAnimationFrame(flushStroke);
   }
   function onDrawMove(event){
-    if(state.mode!=='drawing'||event.pointerId!==state.drawingPointer)return;event.preventDefault();
-    const p=pointerPoint(event),last=state.rawPoints.at(-1);if(dist(last,p)<5)return;
-    state.rawPoints.push(p);state.rawLine?.addLatLng([p.lat,p.lng]);
-  }
-  async function onDrawEnd(event){
-    if(state.mode!=='drawing'||event.pointerId!==state.drawingPointer)return;event.preventDefault();
-    const p=pointerPoint(event);if(dist(state.rawPoints.at(-1),p)>.5)state.rawPoints.push(p);
-    state.drawingPointer=null;setMapGestureLock(false);await snapStroke();
+    if(state.mode!=='drawing'||event.pointerId!==state.drawingPointer)return;
+    event.preventDefault();queuePointer(event);
   }
 
+  function stopStroke(allowArrival){
+    const stroke=state.stroke;if(!stroke)return;
+    flushStroke();
+    if(stroke.changed){
+      let route=state.playerRoute;
+      if(allowArrival&&route.distance>.35)route=state.traceCore.finish(route,state.destinationAnchor,arrivalDistance());
+      state.history.push(stroke.before);if(state.history.length>30)state.history.shift();
+      state.playerRoute=route.distance>.35?route:null;state.shortestRoute=null;
+    }else state.playerRoute=stroke.before;
+    clearRaw();renderPlayerRoute();setMode(state.playerRoute?.complete?'editing':'drawing');
+    setHint(state.playerRoute?.complete?'Call road access reached. Submit to compare your decisions.':state.playerRoute?'Paused. Drag END to continue; drag elsewhere to move the map.':'Drag from START. Backtrack to erase. Release to pause.');
+  }
+  function onDrawEnd(event){
+    if(state.mode!=='drawing'||event.pointerId!==state.drawingPointer)return;
+    event.preventDefault();queuePointer(event);stopStroke(true);
+  }
   function cancelDrawing(event){
     if(state.drawingPointer===null||(event?.pointerId!==undefined&&event.pointerId!==state.drawingPointer))return;
-    clearRaw();setHint('Drawing cancelled · draw your route again');
+    // OS interruptions, lost capture and opening settings pause valid work rather
+    // than discarding the entire stroke. Clear / Next Call still explicitly reset it.
+    stopStroke(false);
   }
 
-  let exerciseGeneration=0;
-  async function snapStroke(){
-    const generation=exerciseGeneration,previous=state.playerRoute;setMode('snapping');setHint('Matching the streets you drew…');
-    await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
-    if(generation!==exerciseGeneration||state.mode!=='snapping')return;
-    try{
-      const trace=state.traceCore.trace(state.rawPoints,traceOptions());
-      if(trace.distance<3)throw new Error('Draw a little farther along the street.');
-      const startPoint=basePoint(state.base),endPoint=callPoint(state.call);
-      state.originAnchor=state.traceCore.snap(startPoint,260);state.destinationAnchor=state.traceCore.snap(endPoint,CONFIG.destinationSearchRadius);
-      if(!state.destinationAnchor)throw new Error('This call has no road access in the training network.');
-      const route=state.traceCore.finish(state.traceCore.combine(previous,trace),state.destinationAnchor,arrivalDistance());
-      state.history.push(previous);if(state.history.length>30)state.history.shift();
-      state.playerRoute=route;state.shortestRoute=null;clearRaw();renderPlayerRoute();
-      setMode(route.complete?'editing':'drawing');
-      setHint(route.complete?'Call road access reached. Submit to compare your decisions.':'Continue from END. Drag elsewhere to move the map.');
-    }catch(error){
-      clearRaw();state.playerRoute=previous;setMode(previous?.complete?'editing':'drawing');setHint(error.message||'Trace closer to the streets you want.');
-    }
-  }
   function precomputeReferences(){
     state.shortestRoute=state.traceCore.between(state.originAnchor,state.destinationAnchor);
   }
@@ -811,7 +842,7 @@
   }
 
   function newCall(){
-    exerciseGeneration+=1;clearRaw();clearReference();clearLayers(state.playerLayers);
+    clearRaw();clearReference();clearLayers(state.playerLayers);
     clearLayer(state.endpointMarker);state.endpointMarker=null;
     const previousPhase=state.phase?.index;
     const phase=applyProgressionStart();
@@ -824,7 +855,7 @@
       const message=phase.continuous?'Each route now starts at the previous call.':'Routes now start from '+phase.label+'.';
       setHint(message);
     }else{
-      setHint('Drag from START to draw. Drag elsewhere to move the map.');
+      setHint('Drag from START. Backtrack to erase. Release to pause.');
     }
   }
 

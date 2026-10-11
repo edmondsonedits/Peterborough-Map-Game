@@ -15,18 +15,31 @@
       for(let x=-cells;x<=cells;x++)for(let y=-cells;y<=cells;y++)for(const id of graph.segmentGrid.get((cx+x)+','+(cy+y))||[])out.add(id);
       return out;
     }
-    function snap(point,tolerance=30,direction,previous,directionBias=.35){
-      const p=toXY(point.lat,point.lng),bias=Number.isFinite(directionBias)?Math.max(0,Math.min(1,directionBias)):.35;let best=null,bestScore=Infinity;
+    function snapCandidates(point,tolerance=30,direction,previous,directionBias=.35){
+      const p=toXY(point.lat,point.lng),bias=Number.isFinite(directionBias)?Math.max(0,Math.min(1,directionBias)):.35;const candidates=[];
       for(const id of indexes(p,tolerance)){
         const s=graph.segments[id],t=Math.max(0,Math.min(1,((p.x-s.ax)*s.dx+(p.y-s.ay)*s.dy)/s.lengthSq));
         const xy={x:s.ax+s.dx*t,y:s.ay+s.dy*t},gap=Math.hypot(xy.x-p.x,xy.y-p.y);
         if(gap>tolerance)continue;
         const v=direction,alignment=v&&Math.hypot(v.x,v.y)>0?Math.abs((v.x*s.dx+v.y*s.dy)/(Math.hypot(v.x,v.y)*s.length)):1;
         const score=gap+(1-alignment)*tolerance*bias-(previous?.segmentId===id?2:0);
-        if(score>=bestScore)continue;
-        bestScore=score;best={...pointAt(s,t),segmentId:id,t,road:s.name||'Road',highway:s.highway,distance:gap};
+        candidates.push({score,anchor:{...pointAt(s,t),segmentId:id,t,road:s.name||'Road',highway:s.highway,distance:gap}});
       }
-      return best;
+      return candidates.sort((a,b)=>a.score-b.score||a.anchor.segmentId-b.anchor.segmentId);
+    }
+    function steadyJunction(candidates,previous,tolerance){
+      const best=candidates[0],held=candidates.find(candidate=>candidate.anchor.segmentId===previous.segmentId);
+      if(!best||!held||best===held)return;
+      const a=graph.segments[held.anchor.segmentId],b=graph.segments[best.anchor.segmentId];
+      // Leave ordinary road curves/straight continuations responsive. A turn at
+      // a shared graph junction needs a few pixels of displacement, not jitter.
+      if(Math.abs(a.dx*b.dx+a.dy*b.dy)/(a.length*b.length)>=.85)return;
+      const junction=[a.from,a.to].find(id=>id===b.from||id===b.to),deadband=Math.max(.75,tolerance*.2);
+      if(junction===undefined||distance(held.anchor,graph.nodes[junction])>deadband||distance(best.anchor,graph.nodes[junction])>deadband)return;
+      candidates.splice(candidates.indexOf(held),1);candidates.unshift(held);
+    }
+    function snap(point,tolerance=30,direction,previous,directionBias=.35){
+      return snapCandidates(point,tolerance,direction,previous,directionBias)[0]?.anchor||null;
     }
     function slice(s,fromT,toT){
       const reverse=toT<fromT,edge=graph.nodes[reverse?s.to:s.from].edges.find(e=>e.segmentId===s.id&&Boolean(e.reverse)===reverse);
@@ -79,7 +92,7 @@
       const out=[];
       for(const edge of edges){
         if(!edge||edge.distance<1e-7)continue;
-        const copy={...edge,start:edge.start||{lat:graph.nodes[edge.from].lat,lng:graph.nodes[edge.from].lng},end:edge.end||{lat:graph.nodes[edge.to].lat,lng:graph.nodes[edge.to].lng}};
+        const copy={...edge,t0:edge.t0??(edge.reverse?1:0),t1:edge.t1??(edge.reverse?0:1),start:edge.start||{lat:graph.nodes[edge.from].lat,lng:graph.nodes[edge.from].lng},end:edge.end||{lat:graph.nodes[edge.to].lat,lng:graph.nodes[edge.to].lng}};
         const last=out[out.length-1];
         if(last&&last.segmentId===copy.segmentId&&Boolean(last.reverse)===Boolean(copy.reverse)&&distance(last.end,copy.start)<.05){
           last.end=copy.end;last.t1=copy.t1;last.distance+=copy.distance;last.duration+=copy.duration||0;
@@ -166,13 +179,91 @@
       if(distance(first.endpoint,next.start)>1)throw new Error('Continue from the end of your blue route.');
       return route([...first.edges,...next.edges],first.start,next.endpoint);
     }
+    // An editor starts at an exact road fraction, not at a distant graph vertex.
+    function begin(anchor){
+      if(!anchor||!Number.isInteger(anchor.segmentId)||!graph.segments[anchor.segmentId])throw new Error('Start on a mapped street.');
+      return route([],anchor,anchor);
+    }
+    function retreat(current,target,options){
+      let removed=0;
+      const a=toXY(options.corridorStart.lat,options.corridorStart.lng),b=toXY(options.corridorEnd.lat,options.corridorEnd.lng);
+      for(let i=current.edges.length-1;i>=0;i--){
+        const edge=current.edges[i],s=graph.segments[edge.segmentId];
+        const t0=edge.t0??(edge.reverse?1:0),t1=edge.t1??(edge.reverse?0:1);
+        if(edge.segmentId===target.segmentId&&target.t>=Math.min(t0,t1)-1e-9&&target.t<=Math.max(t0,t1)+1e-9){
+          const amount=removed+Math.abs(t1-target.t)*s.length;
+          if(amount>options.maxDistance)return null;
+          // Remove only the contiguous tail under the reverse gesture. Revisiting
+          // a distant earlier intersection must not delete a deliberately drawn loop.
+          if([edge.end,target].some(p=>segmentGap(toXY(p.lat,p.lng),a,b)>options.corridorWidth))return null;
+          if(amount<.35)return current;
+          const kept=slice(s,t0,target.t);
+          return route([...current.edges.slice(0,i),...(kept?[kept]:[])],current.start,target);
+        }
+        removed+=edge.distance;
+        if(removed>options.maxDistance||[edge.start,edge.end].some(p=>segmentGap(toXY(p.lat,p.lng),a,b)>options.corridorWidth))return null;
+      }
+      return null;
+    }
+    // Joining a different street can implicitly retrace the open tail. Treat
+    // that travel as an edit, including on one-way streets, not extra mileage.
+    // Compare removed + added distance (never the total route score), and only
+    // inspect the nearby, contiguous tail inside this gesture's corridor.
+    function connectEdited(current,target,options){
+      const retracted=retreat(current,target,options);
+      if(retracted)return retracted;
+      const direct=between(current.endpoint,target,options);
+      let best=direct?combine(current,direct):null;
+      let bestCost=direct?direct.distance:options.maxDistance,removed=0;
+      const a=toXY(options.corridorStart.lat,options.corridorStart.lng),b=toXY(options.corridorEnd.lat,options.corridorEnd.lng);
+      for(let i=current.edges.length-1;i>=0;i--){
+        const edge=current.edges[i];removed+=edge.distance;
+        if(removed>bestCost+1e-7||[edge.start,edge.end].some(p=>segmentGap(toXY(p.lat,p.lng),a,b)>options.corridorWidth))break;
+        const segment=graph.segments[edge.segmentId],t=edge.t0??(edge.reverse?1:0);
+        const junction={...pointAt(segment,t),segmentId:segment.id,t,road:segment.name||'Road'};
+        const leg=between(junction,target,{...options,maxDistance:Math.max(0,bestCost-removed)+1e-7});
+        if(!leg||removed+leg.distance>bestCost+1e-7)continue;
+        bestCost=removed+leg.distance;
+        best=route([...current.edges.slice(0,i),...leg.edges],current.start,target);
+      }
+      return best;
+    }
+    function advance(current,point,{tolerance=30,directionBias=.35,previousPoint=current?.endpoint}={}){
+      if(!current||!point||!Number.isFinite(point.lat)||!Number.isFinite(point.lng))throw new Error('A route and a finite pointer position are required.');
+      const spacing=Math.max(3,Math.min(10,tolerance/3)),points=samples([previousPoint||current.endpoint,point],spacing);
+      let result=current,blocked=false,action='hold';
+      for(let i=1;i<points.length;i++){
+        const before=points[i-1],p=points[i],a=toXY(before.lat,before.lng),b=toXY(p.lat,p.lng);
+        const candidates=snapCandidates(p,tolerance,{x:b.x-a.x,y:b.y-a.y},result.endpoint,directionBias);
+        steadyJunction(candidates,result.endpoint,tolerance);
+        if(!candidates.length){blocked=true;break;}
+        const nearest=Math.min(...candidates.map(candidate=>candidate.anchor.distance));
+        let accepted=null,nextAction='hold';
+        for(const {anchor} of candidates.slice(0,8)){
+          // Reachability may break a tie, but must not magnetize a clearly farther street.
+          if(anchor.distance>nearest+Math.max(3,tolerance*.25))continue;
+          const gap=distance(result.endpoint,anchor);
+          // After an off-road gap, return near the open end; never teleport to a
+          // distant part of the same street just because it is connected somewhere.
+          if(gap>tolerance*2+spacing*2)continue;
+          const options={local:true,maxDistance:Math.max(.5,gap*1.8+1),corridorStart:before,corridorEnd:p,corridorWidth:tolerance};
+          if(gap<.35){accepted=result;break;}
+          const edited=connectEdited(result,anchor,options);
+          if(!edited)continue;
+          accepted=edited;nextAction=edited===result?'hold':edited.distance<result.distance?'erase':'draw';break;
+        }
+        if(!accepted){blocked=true;break;}
+        result=accepted;if(nextAction!=='hold')action=nextAction;
+      }
+      return {route:result,changed:result!==current,blocked,action};
+    }
     function finish(current,target,radius=40){
       if(distance(current.endpoint,target)>radius)return current;
-      const arrival=between(current.endpoint,target,{maxDistance:radius});
+      const arrival=connectEdited(current,target,{local:true,maxDistance:radius,corridorStart:current.endpoint,corridorEnd:target,corridorWidth:radius});
       if(!arrival)return current;
-      return {...combine(current,arrival),complete:true};
+      return {...arrival,complete:true};
     }
-    return {snap,trace,between,combine,finish,distance};
+    return {snap,trace,between,combine,begin,advance,finish,distance};
   }
   return {createTraceCore};
 });
