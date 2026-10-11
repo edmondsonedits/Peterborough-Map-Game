@@ -3955,10 +3955,17 @@ async function buildOfficialRoadSurfaces(collection, osmBuildingIndex = null) {
   }
 
   buildBufferedRoadBatches(batches);
+  const sourceRangesByMesh = new Map();
+  for (const ranges of state.roadPaintRanges?.values() || []) for (const range of ranges) {
+    const mesh=generatedRoadMeshes.get(range.key);
+    if (!mesh || !['road-surface-batch','road-foundation-batch'].includes(mesh.userData?.type)) continue;
+    if (!sourceRangesByMesh.has(mesh)) sourceRangesByMesh.set(mesh,[]);
+    sourceRangesByMesh.get(mesh).push(range);
+  }
   const stationCenter = project(44.3010, -78.32212);
   if (new URLSearchParams(location.search).get('pavementContinuity') !== '0') {
     try {
-      const result = reconcileStationPavement({ THREE, group: roadGroup, polygons: pavementPolygons,
+      const result = reconcileStationPavement({ THREE, group: roadGroup, polygons: pavementPolygons, sourceRanges:sourceRangesByMesh,
         center: { x: stationCenter.x, z: stationCenter.y }, terrainHeight: terrainHeightAtWorld,
         roadIndex: state.roadSurfaceIndex, Index: RenderedPavementIndex });
       if (result) {
@@ -3978,7 +3985,7 @@ async function buildOfficialRoadSurfaces(collection, osmBuildingIndex = null) {
     // actual rendered contact index. Station keeps its original defaults.
     try {
       const hospitalCenter = project(44.301005, -78.34631);
-      const result = reconcileStationPavement({ THREE, group: roadGroup, polygons: pavementPolygons,
+      const result = reconcileStationPavement({ THREE, group: roadGroup, polygons: pavementPolygons, sourceRanges:sourceRangesByMesh,
         center: { x: hospitalCenter.x, z: hospitalCenter.y }, terrainHeight: terrainHeightAtWorld,
         roadIndex: state.roadSurfaceIndex, Index: RenderedPavementIndex, radius: 120, heightSmoothing: 4 });
       if (result) {

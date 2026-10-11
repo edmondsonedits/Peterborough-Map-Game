@@ -2,20 +2,7 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
 const root=path.resolve(__dirname,'..'),read=f=>fs.readFileSync(path.join(root,f),'utf8');
 const source=read('route-mapping/app.js'),html=read('route-mapping/index.html'),css=read('route-mapping/styles.css');
-function harness(){
- const els=new Map(),listeners={},capture=new Set(),attributes={};
- const element=id=>{if(!els.has(id))els.set(id,{id,style:{},textContent:'',disabled:false,hidden:false,open:false,dataset:{},classList:{add(){},remove(){},toggle(){}},showModal(){this.open=true;},close(){this.open=false;},setAttribute(k,v){attributes[k]=v;},getBoundingClientRect(){if(id==='draw-surface'){const left=parseFloat(this.style.left)||0,top=parseFloat(this.style.top)||0;return{id,left:left-28,top:top-28,width:56,height:56,right:left+28,bottom:top+28};}return{id,left:100,top:40,width:300,height:200,right:400,bottom:240};},addEventListener(type,fn){listeners[id+':'+type]=fn;},setPointerCapture(id){capture.add(id);},hasPointerCapture(id){return capture.has(id);},releasePointerCapture(id){capture.delete(id);}});return els.get(id);};
- const c=vm.createContext({document:{body:{classList:{toggle(){}}},getElementById:element,createElement:()=>({}),addEventListener(){}},window:{addEventListener(){},PTBO_SERVICE_CONFIG:{profiles:{fire:{bases:[{id:'s1',name:'Station 1',address:'Main Street'}]}}}},L:{point:(x,y)=>({x,y}),polyline:()=>({addTo(){return this;},addLatLng(){}})},console,requestAnimationFrame:fn=>fn(),Math,Number,String,Object,Boolean,Array,Promise});
- const exports=['state','ui','updateDrawTarget','setMapGestureLock','onDrawStart','onDrawMove','onDrawEnd','cancelDrawing','setMode','initMap','bindUi','pointerPoint','openSettings','closeSettings'];
- vm.runInContext(source.replace('  initialize();','  globalThis.routeGestureTest={'+exports.join(',')+'};'),c);
- const api=c.routeGestureTest,draw=element('draw-surface');
- const handlers=Object.fromEntries(['dragging','touchZoom','scrollWheelZoom','keyboard','doubleClickZoom','boxZoom'].map(name=>[name,{active:true,enabled(){return this.active;},enable(){this.active=true;},disable(){this.active=false;}}]));
- api.state.map={...handlers,latLngToContainerPoint:p=>({x:p.lng,y:p.lat}),getSize:()=>({x:300,y:200}),getContainer:()=>element('map'),containerPointToLatLng:p=>({lat:p.y,lng:p.x})};
- api.ui.map=element('map');api.ui.drawSurface=draw;api.ui.submit=element('submit-button');api.ui.undo=element('undo-button');api.ui.clear=element('clear-button');api.ui.results=element('results');api.ui.settingsSheet=element('settings-sheet');api.ui.hint=element('hint');api.ui.zoomIn=element('zoom-in');api.ui.zoomOut=element('zoom-out');api.ui.baseSelect=element('base-select');api.ui.baseSelect.appendChild=()=>{};api.ui.serviceSelect=element('service-select');api.ui.phaseNote=element('phase-note');api.ui.next=element('next-button');api.ui.settingsButton=element('settings-button');api.ui.settingsClose=element('settings-close');api.ui.retry=element('retry-button');api.ui.settingsForm=element('settings-form');
- for(const id of ['street-forgiveness','straight-preference','arrival-distance','challenge-frequency','street-forgiveness-value','straight-preference-value','arrival-distance-value','challenge-frequency-value'])api.ui[id]=element(id);
- api.state.base={id:'s1',name:'Station 1',lat:70,lng:80};api.state.tuning={streetForgiveness:12,straightPreference:35,arrivalDistance:40,challengeFrequency:80};api.state.traceCore={snap:p=>p};api.state.mode='drawing';
- return{api,draw,element,listeners,capture,attributes,c};
-}
+const {harness}=require('./helpers/route-gesture-harness.cjs');
 test('draw hotspot follows the active endpoint in viewport coordinates',()=>{
  const{api,draw,attributes}=harness();api.state.playerRoute={endpoint:{lat:90,lng:120},complete:false};api.updateDrawTarget();
  assert.equal(draw.style.left,'220px');assert.equal(draw.style.top,'130px');assert.equal(attributes['aria-label'],'Drag from END to draw the response route');
@@ -29,37 +16,48 @@ test('hotspot hides when drawing is unavailable or its active anchor is offscree
 test('drawing surface is a local hotspot and the Pan/Draw toggle is removed',()=>{
  assert.doesNotMatch(css,/#draw-surface\s*\{[^}]*inset\s*:\s*0/s);
  assert.match(css,/#draw-surface\s*\{[^}]*width\s*:\s*56px/s);assert.match(css,/#draw-surface\s*\{[^}]*height\s*:\s*56px/s);
- assert.doesNotMatch(html,/id="interaction-button"/);assert.match(source,/Drag from START to draw\. Drag elsewhere to move the map\./);
+ assert.doesNotMatch(html,/id="interaction-button"/);assert.match(source,/Drag from START\. Backtrack to erase\. Release to pause\./);
  assert.match(html,/id="clear-button"[\s\S]*id="undo-button"[\s\S]*id="submit-button"/);
 });
-test('captured drawing continues outside the hotspot and cancellation releases capture',()=>{
- const{api,draw,capture}=harness();let prevented=0;api.state.playerRoute=null;api.updateDrawTarget();
- api.onDrawStart({clientX:180,clientY:110,button:0,pointerId:7,preventDefault(){prevented++;}});
- assert.equal(capture.has(7),true);assert.equal(api.state.rawPoints.length,2);
- assert.ok(Object.values(api.state.map).filter(value=>value&&typeof value==='object'&&'active'in value).every(handler=>handler.active===false));assert.equal(api.ui.zoomIn.disabled,true);assert.equal(api.ui.zoomOut.disabled,true);
- api.onDrawMove({clientX:350,clientY:180,pointerId:7,preventDefault(){prevented++;}});
- assert.equal(api.state.rawPoints.length,3);assert.equal(prevented,2);
- api.cancelDrawing({pointerId:7});assert.equal(capture.has(7),false);assert.equal(api.state.drawingPointer,null);assert.equal(api.state.rawPoints.length,0);
- assert.ok(Object.values(api.state.map).filter(value=>value&&typeof value==='object'&&'active'in value).every(handler=>handler.active===true));assert.equal(api.ui.zoomIn.disabled,false);assert.equal(api.ui.zoomOut.disabled,false);
+test('captured drawing updates the snapped line before release and cancellation preserves it',()=>{
+ const{api,draw,capture,flushFrames,pointer}=harness();api.updateDrawTarget();
+ api.onDrawStart(pointer(80));assert.equal(capture.has(7),true);assert.equal(api.state.playerRoute.distance,0);
+ assert.ok(Object.values(api.state.map).filter(value=>value&&typeof value==='object'&&'active'in value).every(handler=>!handler.active));
+ assert.equal(api.ui.zoomIn.disabled,true);assert.equal(api.ui.zoomOut.disabled,true);
+ api.onDrawMove(pointer(160));flushFrames();
+ assert.equal(api.state.playerRoute.distance,80,'line is snapped before releasing outside the hotspot');
+ assert.deepEqual(JSON.parse(JSON.stringify(api.state.playerLayers[1].coordinates)),[[70,80],[70,150],[70,160]]);
+ const saved=api.state.playerRoute;api.cancelDrawing({pointerId:7});
+ assert.equal(api.state.playerRoute,saved);assert.equal(api.state.playerRoute.complete,false);
+ assert.equal(capture.has(7),false);assert.equal(api.state.drawingPointer,null);assert.equal(api.state.stroke,null);
+ assert.equal(api.state.history.length,1);assert.equal(draw.hidden,false);
+ assert.ok(Object.values(api.state.map).filter(value=>value&&typeof value==='object'&&'active'in value).every(handler=>handler.active));
+ assert.equal(api.ui.zoomIn.disabled,false);assert.equal(api.ui.zoomOut.disabled,false);
 });
 test('accepted drawing stops native pan animation before route sampling and capture',()=>{
  const{api,draw}=harness(),order=[];api.updateDrawTarget();
- api.state.map.stop=()=>order.push('stop');api.state.traceCore.snap=p=>{order.push('snap');return p;};
+ api.state.map.stop=()=>order.push('stop');const snap=api.state.traceCore.snap;api.state.traceCore.snap=(...args)=>{order.push('snap');return snap(...args);};
  api.state.map.containerPointToLatLng=p=>{order.push('pointer');return{lat:p.y,lng:p.x};};
  const capture=draw.setPointerCapture.bind(draw);draw.setPointerCapture=id=>{order.push('capture');capture(id);};
  api.onDrawStart({clientX:180,clientY:110,button:0,pointerId:11,preventDefault(){}});
- assert.deepEqual(order,['stop','snap','pointer','capture']);assert.equal(api.state.drawingPointer,11);
+ assert.equal(order[0],'stop');assert.ok(order.indexOf('snap')>0);assert.ok(order.indexOf('pointer')>order.indexOf('snap'));assert.equal(order.at(-1),'capture');assert.equal(api.state.drawingPointer,11);
 });
 test('gesture lock restores handlers and controls to their previous states',()=>{
  const{api}=harness();api.state.map.dragging.disable();api.ui.zoomOut.disabled=true;api.setMapGestureLock(true);
  assert.equal(api.state.map.scrollWheelZoom.active,false);api.setMapGestureLock(false);
  assert.equal(api.state.map.dragging.active,false);assert.equal(api.state.map.scrollWheelZoom.active,true);assert.equal(api.ui.zoomIn.disabled,false);assert.equal(api.ui.zoomOut.disabled,true);
 });
-test('pointerup restores map gestures before asynchronous street matching',async()=>{
- const sourceFunction=source.slice(source.indexOf('  async function onDrawEnd(event){'),source.indexOf('\n  function cancelDrawing(',source.indexOf('  async function onDrawEnd(event){')));
- const calls=[],c=vm.createContext({state:{mode:'drawing',drawingPointer:9,rawPoints:[{lat:0,lng:0}]},pointerPoint:()=>({lat:1,lng:1}),dist:()=>1,setMapGestureLock:locked=>calls.push(locked?'lock':'unlock'),snapStroke:async()=>calls.push('snap')});
- vm.runInContext(sourceFunction+'\nglobalThis.finishStroke=onDrawEnd;',c);
- await c.finishStroke({pointerId:9,preventDefault(){}});assert.deepEqual(calls,['unlock','snap']);assert.equal(c.state.drawingPointer,null);
+test('pointerup flushes pending samples once, preserves the route and restores map gestures',()=>{
+ const{api,draw,capture,frames,pointer}=harness();api.updateDrawTarget();
+ api.onDrawStart(pointer(80));api.onDrawMove(pointer(130));assert.equal(frames.size,1);
+ api.onDrawEnd(pointer(160));
+ assert.equal(api.state.playerRoute.distance,80);assert.equal(api.state.history.length,1);
+ assert.equal(api.state.drawingPointer,null);assert.equal(api.state.stroke,null);assert.equal(frames.size,0);
+ assert.equal(capture.has(7),false);assert.equal(api.state.map.dragging.enabled(),true);
+ assert.equal(draw.hidden,false);assert.equal(draw.style.left,'260px');
+ const paused=api.state.playerRoute;api.onDrawEnd(pointer(160));assert.equal(api.state.playerRoute,paused);
+ api.onDrawStart(pointer(160));api.onDrawEnd(pointer(180));assert.equal(api.state.playerRoute.distance,100);
+ api.undo();assert.equal(api.state.playerRoute,paused);assert.equal(api.state.mode,'drawing');
 });
 test('clear, undo, and completion modes refresh or remove the drawing hotspot',()=>{
  const{api,draw}=harness();api.state.playerRoute={endpoint:{lat:90,lng:120},complete:false};api.setMode('drawing');assert.equal(draw.hidden,false);
@@ -90,4 +88,13 @@ test('native map movement events refresh the target without becoming coordinates
  map.latLngToContainerPoint=p=>{assert.ok(Number.isFinite(p.lat)&&Number.isFinite(p.lng),'map events must not be projected as coordinates');return{x:p.lng,y:p.lat};};
  api.initMap();callbacks.get('move resize')({type:'move',target:map});
  assert.equal(draw.hidden,false);assert.equal(draw.style.left,'180px');assert.equal(draw.style.top,'110px');
+});
+
+test('off-centre click does not add distance and another pointer cannot cancel active drawing',()=>{
+ const{api,capture,pointer,flushFrames}=harness();api.updateDrawTarget();
+ api.onDrawStart(pointer(88));api.onDrawEnd(pointer(88));
+ assert.equal(api.state.playerRoute,null);assert.equal(api.state.history.length,0);
+ api.onDrawStart(pointer(80));api.onDrawMove(pointer(130));flushFrames();
+ api.cancelDrawing({pointerId:99});assert.equal(api.state.drawingPointer,7);assert.equal(capture.has(7),true);
+ api.onDrawEnd(pointer(130));assert.equal(api.state.playerRoute.distance,50);
 });

@@ -36,15 +36,16 @@ test('visibility probe failure still records the screenshot and failed metrics b
  assert.equal(calls.length,1);assert.match(calls[0],/after-compound-left-through\.png$/);assert.match(view.arrowVisibilityError,/QA probe unavailable/);
  assert.throws(()=>validateRun({label:'after',views:[view],errors:[]}),/visibility/i);
 });
-test('CI pins exact baseline for all three comparison captures and runs new tests after declared dependencies',()=>{
+test('CI reuses one scene per profile for every camera and pins both exact baselines',()=>{
  const yml=fs.readFileSync(path.join(__dirname,'../.github/workflows/city-explorer-browser-qa.yml'),'utf8');
- assert.equal((yml.match(/PTBO_PAINT_QA_BEFORE_COMMIT: 2496b157ebeb1d995278373297d5790b60a4150a/g)||[]).length,3);
+ assert.equal((yml.match(/PTBO_PAINT_QA_BEFORE_COMMIT: 2496b157ebeb1d995278373297d5790b60a4150a/g)||[]).length,2);
  assert.match(yml,/PTBO_PAINT_QA_LOW_POWER: '1'/);
- assert.match(yml,/artifacts\/compound-arrow-low-power-qa\//);
+ assert.match(yml,/artifacts\/paint-low-power-qa\//);
  for(const test of ['test_mobile_input_lifecycle.cjs','test_historical_paint_*.mjs','test_mapped_arrow_*.mjs','test_street_paint_capture_contract.cjs','test_road_review_tracker.py','test_street_lane_audit.py','test_fallback_arrow_*.mjs','test_fallback_arrow_runtime.mjs --desktop'])assert(yml.includes(test),test);
  assert.match(yml,/pip install.*shapely==2\.0\.7.*pyproj==3\.7\.0/);
  assert(yml.indexOf('pip install')<yml.indexOf('python tools/test_street_lane_audit.py'));
- assert.match(yml,/PTBO_PAINT_QA_SITES: hospital,medical/);assert.match(yml,/PTBO_PAINT_QA_SITES: compound-arrows/);
+ assert.equal((yml.match(/PTBO_PAINT_QA_SITES: hospital,medical,compound-arrows/g)||[]).length,2);
+ assert.match(yml,/artifacts\/paint-desktop-qa\//);
 });
 test('capture provenance binds before to exact approved baseline and candidate to actual HEAD reader',()=>{
  const {commitMetadata,BEFORE_COMMIT}=contract();let reads=0;const head='b'.repeat(40);
@@ -95,4 +96,33 @@ test('ready-for-review browser validation binds the final generated-asset head w
  assert.match(yml,/pull_request:\s*types:\s*\[opened, synchronize, reopened, ready_for_review\]/);
  const geo=fs.readFileSync(path.join(__dirname,'../.github/workflows/build-peterborough-assets.yml'),'utf8');
  assert.doesNotMatch(geo,/ready_for_review/,'ready transition must not trigger another asset timestamp commit');
+});
+
+test('slow software-rendered screenshots have a bounded capture budget independent of readiness',async()=>{
+ const {captureSite,selectSites}=contract();let evaluates=0,options;
+ const page={evaluate:async()=>{evaluates++;if(evaluates===1)return undefined;if(evaluates===2)return Array(20).fill(16);return {paintVersion:'legacy',roadSource:'municipal',reviewedWays:4};},waitForTimeout:async()=>{},screenshot:async value=>{options=value;}};
+ await captureSite(page,selectSites('baseline')[0],{label:'before',output:'/tmp/capture-contract'});
+ assert.equal(options.timeout,90000);
+ const source=fs.readFileSync(path.join(__dirname,'check-street-paint-comparison.cjs'),'utf8');
+ assert.match(source,/gameplayReady==='true',null,\{timeout:180000\}/,'screenshot budget must not relax startup readiness');
+});
+
+test('CI checks post-reconciliation source ranges and the final dependency graph',()=>{
+ const workflow=fs.readFileSync(path.join(__dirname,'../.github/workflows/city-explorer-browser-qa.yml'),'utf8');
+ assert.match(workflow,/node --test tools\/test_reconciled_road_ranges\.mjs tools\/test_city_editor_release\.mjs/);
+ assert.match(workflow,/node tools\/test_production_paint_reconciliation\.mjs\n/);
+ assert.match(workflow,/node tools\/test_production_paint_reconciliation\.mjs --desktop/);
+});
+
+
+test('combined cameras use the same ready page and preserve completed view evidence on failure',async()=>{
+ const {captureSites,selectSites}=contract();assert.equal(typeof captureSites,'function');
+ const sites=selectSites('hospital,medical,compound-arrows');assert.equal(sites.length,8);
+ const views=[],screens=[];let phase=0;
+ const page={evaluate:async()=>{phase++;if(phase%3===1)return undefined;if(phase%3===2)return Array(20).fill(16);return {roadSource:'municipal'};},waitForTimeout:async()=>{},screenshot:async o=>screens.push(o.path)};
+ await captureSites(page,sites,{label:'before',output:'/tmp/capture-contract'},views);
+ assert.deepEqual(views.map(v=>v.site),sites.map(s=>s.name));assert.equal(screens.length,8);
+ let captures=0;page.screenshot=async()=>{if(++captures===3)throw Error('capture stalled');};phase=0;const partial=[];
+ await assert.rejects(captureSites(page,sites,{label:'before',output:'/tmp/capture-contract'},partial),/capture stalled/);
+ assert.equal(partial.length,2,'completed frames remain in the failure report');
 });

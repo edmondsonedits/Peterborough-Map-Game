@@ -42,6 +42,8 @@ for (const filename of ['city-detail-rules.js', 'station-pavement-layer.js', 'hi
   const specifier = [...appSource.matchAll(/from ['"]([^'"]+)['"]/g)].map(match => match[1]).find(value => value.startsWith('./' + filename + '?'));
   assert.equal(new URL(specifier, appURL).searchParams.get('simulatorTasks'), '20261011b', filename + ' cache invalidation');
 }
+const pavementSource = await readFile(path.join(city, 'station-pavement-layer.js'), 'utf8');
+assert.match(pavementSource, /from ['"]\.\/reconciled-road-ranges\.js\?v=1['"]/, 'final source-range transform has its initial scoped cache identity');
 const arrowSource = await readFile(path.join(city, 'mapped-arrow-paint.js'), 'utf8');
 const nestedRules = arrowSource.match(/from ['"]([^'"]*city-detail-rules\.js[^'"]*)['"]/)[1];
 assert.equal(nestedRules, appSource.match(/from ['"]([^'"]*city-detail-rules\.js[^'"]*)['"]/)[1], 'arrow and app share the same current detail-rules module');

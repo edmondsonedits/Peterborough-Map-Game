@@ -60,16 +60,38 @@ export function selectMappedArrowSupportIndex({ THREE, municipalIndex, roadGroup
       index.addTriangle(a.x,a.y,a.z,b.x,b.y,b.z,c.x,c.y,c.z,metadata);
     }
   }
-  const seen = new Set();
+  const seen = new Set(), coveredRanges = new Map();
   for(const [lineId,bridge] of bridgeByLine)for(const range of roadPaintRanges.get(lineId)||[]){
     const mesh=generatedRoadMeshes.get(range.key),identity=`${range.key}:${range.startVertex}:${range.vertexCount}`;
     if(!allowed.has(mesh)||mesh?.userData?.type!=='road-surface-batch'||seen.has(identity))continue;
+    if ((range.roadGeometryRevision??0)!==(mesh.userData.roadGeometryRevision??0)
+      || !Number.isInteger(range.startVertex)||!Number.isInteger(range.vertexCount)
+      ||range.startVertex<0||range.vertexCount<0||range.startVertex%3||range.vertexCount%3
+      ||range.startVertex+range.vertexCount>mesh.geometry.attributes.position.count)continue;
+    if(!coveredRanges.has(mesh))coveredRanges.set(mesh,[]);
+    coveredRanges.get(mesh).push([range.startVertex,range.startVertex+range.vertexCount]);
     seen.add(identity);
     if(mesh.isInstancedMesh){
       for(let i=0;i<mesh.count;i++){mesh.getMatrixAt(i,instance);matrix.multiplyMatrices(mesh.matrixWorld,instance);append(mesh,range.startVertex,range.vertexCount,bridge,matrix,false,{lineId,sourceDeck:sourceDeckByLine.get(lineId),sourceRoad:roadKindByLine.get(lineId)});}
     }else append(mesh,range.startVertex,range.vertexCount,bridge,mesh.matrixWorld,false,{lineId,sourceDeck:sourceDeckByLine.get(lineId),sourceRoad:roadKindByLine.get(lineId)});
   }
   roadGroup.traverseVisible(mesh=>{
+    if(mesh.userData?.type==='road-surface-batch') {
+      // Final faces outside verified current source ranges are occluders only.
+      // Never infer their bridge/deck ownership from a shared material batch.
+      const ranges=(coveredRanges.get(mesh)||[]).sort((a,b)=>a[0]-b[0]);
+      let cursor=0;
+      const unknown=(start,end)=>{
+        if(end<=start)return;
+        const provenance={unclassifiedSource:true};
+        if(mesh.isInstancedMesh)for(let i=0;i<mesh.count;i++){
+          mesh.getMatrixAt(i,instance);matrix.multiplyMatrices(mesh.matrixWorld,instance);
+          append(mesh,start,end-start,false,matrix,false,provenance);
+        }else append(mesh,start,end-start,false,mesh.matrixWorld,false,provenance);
+      };
+      for(const [start,end] of ranges){unknown(cursor,start);cursor=Math.max(cursor,end);}
+      unknown(cursor,mesh.geometry.attributes.position.count);
+    }
     if(mesh.userData?.type==='road-junction-surfaces'&&mesh.isInstancedMesh){
       for(let i=0;i<mesh.count;i++){
         // Unclassified caps cannot safely support either bridge or street paint.
@@ -111,6 +133,7 @@ export function selectMappedArrowSupportIndex({ THREE, municipalIndex, roadGroup
     const decksOf=hit=>hit.sourceDeck?[hit.sourceDeck]:hit.sourceDecks||[];
     let selected=municipalHit,best=Infinity;
     for(const hit of municipalHit ? [] : hits){
+      if(hit.unclassifiedSource)continue;
       if(options?.includeBridges===false&&hit.bridge)continue;
       if(sourceDeck&&!decksOf(hit).includes(sourceDeck))continue;
       const distance=Number.isFinite(referenceHeight)?Math.abs(hit.height-referenceHeight):0;
@@ -128,7 +151,7 @@ export function selectMappedArrowSupportIndex({ THREE, municipalIndex, roadGroup
     const topHeight=hits[at].height;
     const decks=sourceDeck?[sourceDeck]:decksOf(selected);
     const compatible=hit=>{
-      if(hit.forbiddenParking || hit.bridge!==selected.bridge)return false;
+      if(hit.unclassifiedSource || hit.forbiddenParking || hit.bridge!==selected.bridge)return false;
       const other=decksOf(hit);
       return !decks.length||!other.length||decks.some(deck=>other.includes(deck));
     };

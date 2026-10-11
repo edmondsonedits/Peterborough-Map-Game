@@ -1,4 +1,6 @@
 {
+  "evidenceStatus": "superseded_wrong_reconciliation_order",
+  "supersededBy": "PRODUCTION-ORDER-QA.md",
   "desktop": {
     "profile": "desktop",
     "reports": [

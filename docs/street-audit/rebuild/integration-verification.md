@@ -1,5 +1,7 @@
 # Approved simulator batch: rebuilt integration verification
 
+> Verification correction: the earlier municipal-plus-OSM contact and cost fixtures assembled OSM buffers after pavement reconciliation. Their composed-surface results and plots are retained as diagnostic history, not final production-order acceptance. See [final reconciled source provenance](reconciled-road-provenance.md) and the actual production-order regression for superseding evidence. Source trace topology and municipal-absent default-lite tests are separate.
+
 This is a newly reconstructed batch based on PR54 commit `f8818548ad903b14b22ee5a48a88f3abcd92f582`. It is not recovery of the lost earlier implementation. Source data and all 5,961 original raw audit lane/comparison fields are unchanged.
 
 ## Local verification, 2026-10-11

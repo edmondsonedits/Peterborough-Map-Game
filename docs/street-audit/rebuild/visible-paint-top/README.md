@@ -1,3 +1,7 @@
+> **Superseded municipal-composition evidence:** these original combined geometry and CPU fixtures appended OSM ribbons after municipal reconciliation. Production clips/replaces those ribbons during Station and Hospital reconciliation. Their source ranges were therefore stale in production, a condition these fixtures omitted. Use `../reconciled-road-provenance.md` and the later actual-app-order orchestration evidence for final composition/CPU claims. The old numbers remain as diagnostic history, not proof of the published scene. Default-lite without municipal reconciliation is a separate path.
+
+> Verification correction: the earlier municipal-plus-OSM contact and cost fixtures assembled OSM buffers after pavement reconciliation. Their composed-surface results and plots are retained as diagnostic history, not final production-order acceptance. See [final reconciled source provenance](../reconciled-road-provenance.md) and the actual production-order regression for superseding evidence. Source trace topology and municipal-absent default-lite tests are separate.
+
 # Municipal eligibility and final visible paint height
 
 ## Reproduced defect

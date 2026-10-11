@@ -1,4 +1,11 @@
+> SUPERSEDED: the contact counts, CPU timings, JSON and desktop/low-power plots below
+> used a fixture that appended OSM ribbons after municipal reconciliation. They
+> remain a record of that earlier experiment, not current production evidence.
+> Use `PRODUCTION-ORDER-QA.md` and its actual-builder reports for final geometry.
+
 # Visible road contact correction, 2026-10-11
+
+> Verification correction: the earlier municipal-plus-OSM contact and cost fixtures assembled OSM buffers after pavement reconciliation. Their composed-surface results and plots are retained as diagnostic history, not final production-order acceptance. See [final reconciled source provenance](../rebuild/reconciled-road-provenance.md) and the actual production-order regression for superseding evidence. Source trace topology and municipal-absent default-lite tests are separate.
 
 This is authored regression evidence, not independent review or browser QA.
 Independent reviewer is assigned separately. Source geographic geometry, inferred

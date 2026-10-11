@@ -151,3 +151,16 @@ test('municipal visible-top query scans its cell once while preserving exact eli
   assert.deepEqual(index.eligibilitySample(0,0,height,options),f.municipalIndex.sample(0,0,height,options));
  }
 });
+test('stale replaced-geometry ranges cannot manufacture source or bridge support',()=>{
+ const f=fixture();f.generatedRoadMeshes.get('mixed').userData.roadGeometryRevision=1;
+ const index=helper.selectMappedArrowSupportIndex(f);
+ assert.equal(mappedArrowSupport(index.forSource({},{}),0,0,2,{},{}),null);
+ assert.equal(mappedArrowSupport(index.forSource({bridge:'yes'},{bridge:true}),0,0,12,{bridge:'yes'},{bridge:true}),null);
+});
+test('unknown higher actual road slices occlude municipal paint but never become eligible',()=>{
+ const f=fixture();municipalRectangle(f.municipalIndex,1.96);
+ f.generatedRoadMeshes.get('mixed').userData.roadGeometryRevision=1;
+ const index=helper.selectMappedArrowSupportIndex(f).forSource({},{});
+ assert.equal(index.sample(0,0,1.96,{includeParking:false,includeBridges:false}),null);
+ assert.ok(index.eligibilitySample(0,0,1.96,{includeParking:false,includeBridges:false}));
+});

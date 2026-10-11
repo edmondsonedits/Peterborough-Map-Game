@@ -9,7 +9,7 @@ function app(){
   localStorage:{getItem:k=>storage.get(k)??null,setItem:(k,v)=>storage.set(k,v)},
   console,requestAnimationFrame:fn=>fn()
  });
- const exportNames=['state','CONFIG','toXY','toLatLng','buildGraph','basePoint','callPoint','pathBetween','buildDifficultyIndex','scoreCall','analyzeDecisionDifficulty','chooseCall','progressionPhase','applyProgressionStart','loadProgression','saveProgression','loadSkillProfiles','weightedCallChoice','weaknessBoostForAnalysis','undo','snapStroke','submitRoute','newCall','updateMarkers'];
+ const exportNames=['state','CONFIG','toXY','toLatLng','buildGraph','basePoint','callPoint','pathBetween','buildDifficultyIndex','scoreCall','analyzeDecisionDifficulty','chooseCall','progressionPhase','applyProgressionStart','loadProgression','saveProgression','loadSkillProfiles','weightedCallChoice','weaknessBoostForAnalysis','undo','stopStroke','submitRoute','newCall','updateMarkers'];
  vm.runInContext(read('route-mapping/app.js').replace('  initialize();','  globalThis.routeTest={'+exportNames.join(',')+'};'),c);
  const a=c.routeTest;
  a.state.graph=a.buildGraph(JSON.parse(read('city-explorer/data/osm-public-roads.geojson')));
@@ -77,25 +77,36 @@ test('a recent weakness waits for intervening calls before boosting a retest',()
 });
 module.exports={app,calls,services};
 
-test('partial continuation, invalid-stroke preservation, Undo, submission, and next-call state stay coherent',async()=>{
+test('partial continuation, off-road hold, Undo, submission, and next-call state stay coherent',async()=>{
  const {a,c}=app();
  c.document.body={classList:{toggle(){}}};
- c.L={divIcon:o=>o,polyline:()=>({addTo:()=>({})}),marker:()=>({addTo:()=>({})})};
+ c.L={divIcon:o=>o,polyline:()=>({addTo(){return this;},setLatLngs(){}}),marker:()=>({addTo(){return this;},setLatLng(){}})};
  a.state.base=services.profiles.fire.bases[0];a.state.call=calls.find(x=>x.addr==='353 Hunter St E');a.state.mode='drawing';
  a.loadSkillProfiles();a.state.progression={completed:0};
  const core=a.state.traceCore,origin=core.snap(a.basePoint(a.state.base),260),target=core.snap(a.state.call,520),reference=core.between(origin,target);
  let remaining=50,last=origin;const firstPoints=[origin];
  for(const e of reference.edges){const take=Math.min(remaining,e.distance),p=a.toXY(e.start.lat,e.start.lng),q=a.toXY(e.end.lat,e.end.lng);last=a.toLatLng(p.x+(q.x-p.x)*take/e.distance,p.y+(q.y-p.y)*take/e.distance);firstPoints.push(last);remaining-=take;if(remaining<.01)break;}
- a.state.rawPoints=firstPoints;await a.snapStroke();
+ // Exercise the live stroke lifecycle; rendering surfaces alone are stubbed.
+ a.state.originAnchor=origin;a.state.destinationAnchor=target;
+ const draw=(points,allowArrival=true)=>{
+  const before=a.state.playerRoute;
+  a.state.playerRoute=before||core.begin(origin);
+  a.state.stroke={before,point:points[0],queue:points.slice(1),frame:null,changed:false,blocked:false};
+  a.stopStroke(allowArrival);
+ };
+ draw(firstPoints);
  assert.equal(a.state.mode,'drawing');assert.equal(a.state.playerRoute.complete,false);assert.equal(a.state.history.length,1);
- const partial=a.state.playerRoute;
- a.state.rawPoints=[partial.endpoint,{lat:44.9,lng:-78.9}];await a.snapStroke();
+ assert.ok(Math.abs(a.state.playerRoute.distance-50)<1);
+ const partial=a.state.playerRoute,unchanged=JSON.stringify(partial);
+ // Off-road re-entry far from END must not teleport or discard the saved route.
+ draw([{lat:44.9,lng:-78.9},{lat:44.9001,lng:-78.9001}],false);
  assert.equal(a.state.playerRoute,partial);assert.equal(a.state.history.length,1);
+ assert.equal(JSON.stringify(partial),unchanged);
  const tail=core.between(partial.endpoint,target);
- a.state.rawPoints=[partial.endpoint,...tail.edges.map(e=>e.end)];await a.snapStroke();
+ draw([partial.endpoint,...tail.edges.map(e=>e.end)]);
  assert.equal(a.state.mode,'editing');assert.equal(a.state.playerRoute.complete,true);
  a.undo();assert.equal(a.state.playerRoute,partial);assert.equal(a.state.mode,'drawing');
- a.state.rawPoints=[partial.endpoint,...tail.edges.map(e=>e.end)];await a.snapStroke();a.submitRoute();
+ draw([partial.endpoint,...tail.edges.map(e=>e.end)]);a.submitRoute();
  assert.equal(a.state.mode,'results');assert.equal(a.state.progression.completed,1);assert.equal(a.state.skillProfile.plays,1);
  assert.ok(a.state.shortestRoute.distance>500);
  a.state.calls=calls.slice(0,100);a.state.map={removeLayer(){},fitBounds(){}};a.newCall();

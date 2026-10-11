@@ -72,8 +72,15 @@ async function captureSite(page, site, {label,output}) {
  // Always capture pixels before any assertion about renderer or visibility.
  // The QA probe restores arrow meshes and rerenders in its own finally block.
  view.screenshot=label+'-'+site.name+'.png';
- await page.screenshot({path:path.join(output,view.screenshot)});
+ // The unchanged full-desktop baseline can render slowly in SwiftShader.
+ // Bound capture separately; startup readiness keeps its existing limit.
+ await page.screenshot({path:path.join(output,view.screenshot),timeout:90000});
  return view;
+}
+
+async function captureSites(page,sites,options,views=[]) {
+ for(const site of sites) views.push(await captureSite(page,site,options));
+ return views;
 }
 
 function validateRun(entry) {
@@ -133,7 +140,7 @@ async function main() {
    await page.goto(entryURL(root,report.lowPower),{waitUntil:'domcontentloaded',timeout:90000});
    await page.waitForFunction(()=>document.documentElement.dataset.gameplayReady==='true',null,{timeout:180000});
    entry.readyMs=Date.now()-start;
-   for(const site of sites) entry.views.push(await captureSite(page,site,{label,output}));
+   await captureSites(page,sites,{label,output},entry.views);
    validateRun(entry);
    await page.close();
   }
@@ -146,5 +153,5 @@ async function main() {
   await browser.close();
  }
 }
-module.exports={configureCapabilities,entryURL,BEFORE_COMMIT,SITES,selectSites,commitMetadata,captureSite,validateRun};
+module.exports={configureCapabilities,entryURL,BEFORE_COMMIT,SITES,selectSites,commitMetadata,captureSite,captureSites,validateRun};
 if(require.main===module)main().catch(error=>{console.error(error);process.exitCode=1;});
