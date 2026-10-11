@@ -1,0 +1,40 @@
+'use strict';
+// Execute the complete production controllers in a minimal DOM/event harness.
+const { test } = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const vm = require('node:vm');
+const path = require('node:path');
+function harness(mode = 'onFoot') {
+  class Target {
+    constructor() { this.listeners = {}; this.dataset = {}; this.style = {}; this.classes = new Set(); this.classList = { add: (...v) => v.forEach(x=>this.classes.add(x)), remove: (...v)=>v.forEach(x=>this.classes.delete(x)), contains:x=>this.classes.has(x), toggle:(x,b)=>b?this.classes.add(x):this.classes.delete(x) }; }
+    addEventListener(type, fn, capture) { (this.listeners[type] ||= []).push({ fn, capture: capture === true }); }
+    dispatchEvent(e) { e.target ||= this; e.preventDefault ||= ()=>{}; e.stopImmediatePropagation ||= ()=>{ e.stopped = true; }; for (const h of [...(this.listeners[e.type]||[])].sort((a,b)=>Number(b.capture)-Number(a.capture))) { h.fn(e); if (e.stopped) break; } return true; }
+    setAttribute() {} removeAttribute(name) { delete this.dataset[name.replace(/^data-/, '').replace(/-([a-z])/g,(_,c)=>c.toUpperCase())]; }
+    setPointerCapture() {} getBoundingClientRect() { return {left:0, top:0, width:100, height:100}; }
+    querySelector() { return this.knob; } closest() { return null; } querySelectorAll() { return this.commands || []; }
+  }
+  const ids = Object.fromEntries(['touch-controls','movement-joystick','mobile-action-button','mobile-action-label','mobile-action-detail','mobile-menu-toggle','mobile-menu-scrim','interaction-prompt','app'].map(id=>[id,new Target()]));
+  ids['movement-joystick'].knob = new Target();
+  const down = new Target(), up = new Target(); down.dataset.mobileCommand = 'KeyQ'; up.dataset.mobileCommand = 'KeyE'; ids['touch-controls'].commands = [down, up];
+  const document = new Target(), window = new Target(); document.documentElement = new Target(); document.documentElement.dataset = {gameplayMode:mode, gameplayReady:'true'}; document.getElementById = id=>ids[id]; document.querySelector = ()=>null;
+  const observers = [], timers = []; window.setTimeout = fn=>{ timers.push(fn); return timers.length; }; window.clearTimeout = id=>{ timers[id-1] = ()=>{}; };
+  class Event { constructor(type, values={}) { this.type=type; Object.assign(this,values); } }
+  const navigator = { getGamepads:()=>[] };
+  const context = vm.createContext({document, window, navigator, KeyboardEvent:Event, Event, CustomEvent:Event, MutationObserver:class {constructor(fn){observers.push(fn);} observe(){}}, matchMedia:()=>({matches:true}), performance:{now:()=>1}, addEventListener:window.addEventListener.bind(window)});
+  for (const file of ['mobile-controls-1.6.68.js','driving-refinement-1.6.69.js']) vm.runInContext(fs.readFileSync(path.join(__dirname,'../city-explorer',file),'utf8'),context);
+  const held = new Set(), events=[];
+  for (const type of ['keydown','keyup']) window.addEventListener(type,e=>{ events.push([type,e.code]); type === 'keydown' ? held.add(e.code) : held.delete(e.code); });
+  return {ids,down,up,document,window,navigator,held,events,timers, setMode(value){document.documentElement.dataset.gameplayMode=value; observers.forEach(fn=>fn());}, pointer(target,type,id=1,x=50,y=0){target.dispatchEvent(new Event(type,{pointerId:id, clientX:x, clientY:y,cancelable:true}));}, fire(target,type){target.dispatchEvent(new Event(type));}};
+}
+test('a second pointer cannot steal the movement joystick',()=>{const h=harness(), j=h.ids['movement-joystick']; h.pointer(j,'pointerdown',1); h.pointer(j,'pointerdown',2,100,50); h.pointer(j,'pointerup',2); assert(h.held.has('KeyW')); h.pointer(j,'pointerup',1); assert.equal(h.held.size,0);});
+test('flight buttons retain separate pointer ownership',()=>{const h=harness('fly'); h.pointer(h.down,'pointerdown',1); h.pointer(h.up,'pointerdown',2); h.pointer(h.down,'pointerup',2); assert(h.held.has('KeyQ')); h.pointer(h.down,'pointerup',1); assert.deepEqual([...h.held],['KeyE']); h.pointer(h.up,'pointerup',2); assert.equal(h.held.size,0);});
+for(const type of ['pointercancel','lostpointercapture']) test(`${type} cancels all controls once, and stale movement cannot restart them`,()=>{const h=harness('fly'),j=h.ids['movement-joystick']; h.pointer(j,'pointerdown',1); h.pointer(h.down,'pointerdown',2); h.pointer(h.down,type,2); assert.equal(h.held.size,0); const count=h.events.length; h.pointer(h.down,type,2); h.pointer(j,'pointermove',1); assert.equal(h.events.length,count);});
+for(const type of ['blur','pagehide','visibilitychange']) test(`${type} cancels digital and analog input and permits fresh start`,()=>{const h=harness('driving'),j=h.ids['movement-joystick']; for(let i=0;i<3;i++){ h.pointer(j,'pointerdown',1); assert.equal(h.navigator.getGamepads().length,1); h.pointer(h.down,'pointerdown',2); if(type==='visibilitychange')h.document.hidden=true; h.fire(type==='visibilitychange'?h.document:h.window,type); assert.equal(h.navigator.getGamepads().length,0); assert.equal(h.held.size,0); assert(!h.down.classList.contains('is-pressed')); h.pointer(j,'pointermove',1); assert.equal(h.navigator.getGamepads().length,0); h.document.hidden=false; }});
+test('mode changes clear digital, analog and command ownership',()=>{const h=harness(),j=h.ids['movement-joystick']; h.pointer(j,'pointerdown'); assert(h.held.has('KeyW')); h.setMode('driving'); assert.equal(h.held.size,0); h.pointer(j,'pointerdown',2); assert.equal(h.navigator.getGamepads().length,1); h.setMode('fly'); assert.equal(h.navigator.getGamepads().length,0); h.pointer(h.down,'pointerdown',3); h.setMode('map'); assert.equal(h.held.size,0);});
+test('ordinary movement release does not release a separate command',()=>{const h=harness('fly'),j=h.ids['movement-joystick']; h.pointer(j,'pointerdown',1); h.pointer(h.down,'pointerdown',2); h.pointer(j,'pointerup',1); assert.deepEqual([...h.held],['KeyQ']); h.pointer(h.down,'pointerup',2); assert.equal(h.held.size,0);});
+test('analog second pointer cannot steal active steering',()=>{const h=harness('driving'),j=h.ids['movement-joystick']; h.pointer(j,'pointerdown',1,80,20); const axes=[...h.navigator.getGamepads()[0].axes]; h.pointer(j,'pointerdown',2,0,50); assert.deepEqual([...h.navigator.getGamepads()[0].axes],axes); h.pointer(j,'pointerup',2); assert.equal(h.navigator.getGamepads().length,1); h.pointer(j,'pointerup',1); assert.equal(h.navigator.getGamepads().length,0);});
+for(const type of ['pointercancel','lostpointercapture']) test(`driving ${type} also clears independently held flight command`,()=>{const h=harness('driving'),j=h.ids['movement-joystick']; h.pointer(j,'pointerdown',1); h.pointer(h.down,'pointerdown',2); h.pointer(j,type,1); assert.equal(h.navigator.getGamepads().length,0); assert.equal(h.held.size,0); assert(!h.down.classList.contains('is-pressed'));});
+test('action tap expiry cannot release a held fly-up command with the same key',()=>{const h=harness('fly'); h.ids['mobile-action-button'].disabled=false; h.pointer(h.ids['mobile-action-button'],'pointerdown',1); h.pointer(h.up,'pointerdown',2); h.timers.forEach(fn=>fn()); assert(h.held.has('KeyE')); h.pointer(h.up,'pointerup',2); assert.equal(h.held.size,0);});
+test('repeated ordinary starts and interleaved releases have balanced digital events',()=>{const h=harness('fly'),j=h.ids['movement-joystick']; for(let n=0;n<10;n++){ h.pointer(j,'pointerdown',1); h.pointer(h.down,'pointerdown',2); h.pointer(j,'pointerup',1); h.pointer(j,'lostpointercapture',1); assert(h.held.has('KeyQ')); h.pointer(h.down,'pointerup',2); assert.equal(h.held.size,0); } assert.equal(h.events.filter(e=>e[0]==='keydown').length,h.events.filter(e=>e[0]==='keyup').length);});
+test('stale action cancellation cannot interrupt a newer movement gesture',()=>{const h=harness(),a=h.ids['mobile-action-button'],j=h.ids['movement-joystick']; a.disabled=false; h.pointer(a,'pointerdown',1); h.pointer(a,'pointerup',1); h.pointer(j,'pointerdown',2); h.pointer(a,'pointercancel',1); assert(h.held.has('KeyW')); h.pointer(j,'pointerup',2);});

@@ -1,7 +1,12 @@
+import { hospitalInferredCurbTop, hospitalCurbNeedsDetail } from './hospital-curb-detail.js?simulatorTasks=20261011b';
+import { selectMappedArrowSupportIndex } from './fallback-arrow-support.js?simulatorTasks=20261011b';
+import { measureMappedArrowVisibility } from './mapped-arrow-visibility.js?simulatorTasks=20261011b';
+import { historicalPaintProfile, renderHistoricalPaintProfile } from './historical-paint-profiles.js?simulatorTasks=20261011b';
+import { mappedArrowLaneOffsets, mappedArrowTriangles, drapeMappedArrowTriangles, mappedArrowSupport } from './mapped-arrow-paint.js?simulatorTasks=20261011b';
 import { recordSherbrookeBuilding, recordSherbrookeSidewalk, sherbrookeBuildings } from './sherbrooke-plan.js';
 import { installSherbrookeDetails } from './sherbrooke-details.js';
 import * as THREE from 'three';
-import { reconcileStationPavement } from './station-pavement-layer.js?v=1.6.57';
+import { reconcileStationPavement } from './station-pavement-layer.js?v=1.6.57&simulatorTasks=20261011b';
 import { CURB_REVEAL, curbIsRaised, stationRoadWeight, splitRoadDetailSegment, pavementSupportBottom } from './station-road-detail.js?v=1.6.58';
 import { installQualityCapture } from './quality-capture.js?v=sherbrooke-20260915';
 import { buildingFacadePlan } from './building-archetypes.js?v=1.6.56';
@@ -29,7 +34,7 @@ import { ROAD_SURFACE_CLEARANCE, RoadSurfaceIndex, laneCountFor, reconcileRoadNe
 import { solveFallbackJunctions, polygonArea as junctionPolygonArea } from './fallback-junction-geometry.js';
 import { officialRoadMeshEdgeLength, officialCurbDisplayMode, nearbyMunicipalRoadHeight, municipalCurbTop } from './citywide-road-quality.js';
 import { sampleTruckWheelContacts, truckIsOnRoad } from './road-wheel-contact.js';
-import { reviewedPaintTags, drapePaintStrip } from './street-paint.js?v=street-evidence-2';
+import { reviewedPaintTags, drapePaintStrip } from './street-paint.js?v=street-evidence-2&hospitalPaint=1';
 import { OfficialDrivableSurfaceIndex, RenderedPavementIndex, officialSurfaceStatusActive, officialBridgeIsVehicular } from './official-road-surfaces.js?v=1.6.101';
 import { FLY_TUNING, adjustFlySpeedScale, applyFlyLookDelta, dampingFactors, flyAxesFromKeys, flySpeedFor, flyYawToward, isFlyControlCode, wrapFlyYaw } from './fly-controls.js?v=1.5.5-fly4';
 import { clearLandCoverRaster, paintLandCoverPolygon } from './land-cover-raster.js?v=1.5.5-raster1';
@@ -45,7 +50,7 @@ import {
   roadLaneMarkingBoundaries,
   selectStreetSignIntersections,
   shouldRenderUrbanCurb,
-} from './city-detail-rules.js?v=street-evidence-2';
+} from './city-detail-rules.js?v=street-evidence-2&simulatorTasks=20261011b';
 import {
   createSkyAtmosphere,
   installWorldSurfaceDetail,
@@ -93,6 +98,15 @@ import {
 const RENDER_TILE_SIZE = 1800;
 const ROAD_RENDER_TILE_SIZE = 3600;
 const explorerStartedAt = performance.now();
+// Opt-in, bounded startup diagnostics; no work scheduling or rendering changes.
+if (new URLSearchParams(location.search).get('roadStartupQA') === '1') {
+  globalThis.__PTBO_ROAD_STARTUP_QA__ = { startedAt: explorerStartedAt, phases: [] };
+}
+function recordRoadStartupPhase(phase) {
+  const report = globalThis.__PTBO_ROAD_STARTUP_QA__;
+  if (!report || report.phases.length >= 64) return;
+  report.phases.push({ phase, elapsedMilliseconds: performance.now() - report.startedAt });
+}
 let captureFrame = null;
 const captureRequested = new URLSearchParams(location.search).has('capture');
 // Freeze interaction only in the explicit evidence mode. No saved settings change.
@@ -2157,6 +2171,7 @@ function finalizeRoadLines(roadLines, buckets, roadBatches) {
         lineLength: line.samples.at(-1).distance,
         name: line.tags.name || line.tags.ref || '',
         profile: line.profile,
+        historicalPaintProfile: line.historicalPaintProfile,
         tags: line.tags,
         width: line.profile.width,
       });
@@ -2184,16 +2199,18 @@ function finalizeRoadLines(roadLines, buckets, roadBatches) {
   });
 }
 
-function queueProjectedLine(points, tags, buckets, roadLines, lineId) {
+function queueProjectedLine(points, tags, buckets, roadLines, lineId, sourceGeometryComplete = true) {
   if (points.length < 2) return 0;
   const bucket = roadBucket(tags);
   if (!bucket) return 0;
   const width = getRoadWidth(tags);
   if (bucket === 'major' || bucket === 'minor') {
     const profile = roadProfile(tags);
+    const paintProfile = sourceGeometryComplete ? historicalPaintProfile(points, tags, lineId) : null;
     const samples = resampleRoadLine(points, tags, terrainHeightAtWorld, lowPowerProfile);
     if (!profile || samples.length < 2) return 0;
-    roadLines.push({ bucket, id: lineId, profile, samples, tags });
+    roadLines.push({ bucket, id: lineId, profile, samples, tags,
+      historicalPaintProfile: paintProfile });
     return samples.length - 1;
   }
   let count = 0;
@@ -2218,7 +2235,9 @@ function addLineSegments(coordinates, tags, buckets, roadLines, lineId) {
   const points = coordinates
     .filter((coordinate) => Array.isArray(coordinate) && coordinate.length >= 2)
     .map(([lon, lat]) => project(lat, lon));
-  return queueProjectedLine(points, tags, buckets, roadLines, lineId);
+  return queueProjectedLine(points, tags, buckets, roadLines, lineId,
+    coordinates.every((coordinate) => Array.isArray(coordinate) && coordinate.length >= 2
+      && Number.isFinite(coordinate[0]) && Number.isFinite(coordinate[1])));
 }
 
 function isCrossingWay(tags = {}) {
@@ -2388,7 +2407,7 @@ function buildStationSidewalkRibbons(segments) {
 
 function buildOfficialCurbRibbons(segments) {
   segments = segments.flatMap(segment => splitRoadDetailSegment(
-    segment, segment.stationDetail ? 2 : lowPowerProfile ? 12 : 8,
+    segment, segment.stationDetail || hospitalCurbNeedsDetail(segment, state.hospitalPavementField) ? 2 : lowPowerProfile ? 12 : 8,
   ));
   const batches = new Map();
   for (const segment of segments) {
@@ -2412,8 +2431,10 @@ function buildOfficialCurbRibbons(segments) {
     // section rather than erasing every curb until a new asset refresh.
     const inferred = segment.curbMode !== 'raised';
     const aTop = segment.stationDetail ? stationCurbTop(segment.a, segment.aY)
+      : inferred && !segment.bridge ? hospitalInferredCurbTop(segment.a, segment.aY, aPavement, state.hospitalPavementField)
       : municipalCurbTop(aPavement, segment.aY, { raised: !inferred });
     const bTop = segment.stationDetail ? stationCurbTop(segment.b, segment.bY)
+      : inferred && !segment.bridge ? hospitalInferredCurbTop(segment.b, segment.bY, bPavement, state.hospitalPavementField)
       : municipalCurbTop(bPavement, segment.bY, { raised: !inferred });
     const depth = inferred && !segment.stationDetail ? 0.11 : CURB_REVEAL + 0.03;
     const aBottom = segment.stationDetail ? pavementSupportBottom(aTop, Math.min(
@@ -2484,12 +2505,13 @@ function buildFallbackPolygonJunctionMeshes(polygons) {
     const kind = foundation ? 'foundation' : 'surface';
     const materialKey = foundation ? polygon.edgeKey : polygon.materialKey;
     const key = `${tile.x}:${tile.z}:${kind}:${materialKey}`;
-    if (!batches.has(key)) batches.set(key, { tile, kind, materialKey, positions: [], count: 0 });
+    if (!batches.has(key)) batches.set(key, { tile, kind, materialKey, positions: [], count: 0, surfaceRanges: [] });
     return batches.get(key);
   };
   for (const polygon of polygons) {
     const surface = batchFor(polygon, false);
     const foundation = batchFor(polygon, true);
+    const startVertex = surface.positions.length / 3;
     const flip = junctionPolygonArea(polygon.points) > 0;
     for (let i = 0; i < polygon.triangles.length; i += 3) {
       const ids = polygon.triangles.slice(i, i + 3);
@@ -2500,6 +2522,8 @@ function buildFallbackPolygonJunctionMeshes(polygons) {
       index.addTriangle(a.x, a.y + 0.018, a.z, b.x, b.y + 0.018, b.z, c.x, c.y + 0.018, c.z,
         { layer: 'road_surfaces', id: `fallback-junction:${polygon.key}`, name: 'Junction' });
     }
+    surface.surfaceRanges.push({startVertex,vertexCount:surface.positions.length/3-startVertex,
+      bridge:Boolean(polygon.bridge),lineIds:polygon.lines.map(String)});
     surface.count += 1;
     foundation.count += 1;
   }
@@ -2512,7 +2536,7 @@ function buildFallbackPolygonJunctionMeshes(polygons) {
     const mesh = new THREE.Mesh(geometry, materials[batch.materialKey] || materials.roadLocal);
     mesh.renderOrder = batch.kind === 'foundation' ? 2 : 4;
     mesh.receiveShadow = !lowPowerProfile;
-    mesh.userData = { type: `prototype-junction-${batch.kind}`, count: batch.count, tile: batch.tile, material: batch.materialKey };
+    mesh.userData = { type: `prototype-junction-${batch.kind}`, count: batch.count, tile: batch.tile, material: batch.materialKey, surfaceRanges: batch.surfaceRanges };
     roadGroup.add(mesh);
   }
   state.fallbackJunctionSurfaceIndex = index;
@@ -2521,6 +2545,7 @@ function buildFallbackPolygonJunctionMeshes(polygons) {
 }
 
 function buildRoadJunctions(segments) {
+  const bridgeLineIds = new Set(segments.filter(segment => segment.profile?.bridge || segment.bridge).map(segment => String(segment.lineId)));
   const prototype = new URLSearchParams(location.search).get('junctionPrototype') === '1'
     ? solveFallbackJunctions(segments) : null;
   const vertices = new Map();
@@ -2618,14 +2643,18 @@ function buildRoadJunctions(segments) {
       mesh.instanceMatrix.needsUpdate = true;
       mesh.computeBoundingSphere();
       mesh.renderOrder = foundation ? 2 : 4;
-      mesh.userData = { type: foundation ? 'road-junction-foundations' : 'road-junction-surfaces', material: materialKey, tile, tileSize: ROAD_RENDER_TILE_SIZE, count: grouped.length };
+      mesh.userData = { type: foundation ? 'road-junction-foundations' : 'road-junction-surfaces', material: materialKey, tile, tileSize: ROAD_RENDER_TILE_SIZE, count: grouped.length,
+        ...(foundation ? {} : {
+          bridgeInstances: grouped.map(vertex => [...vertex.lines].some(id => bridgeLineIds.has(String(id)))),
+          sourceLinesByInstance: grouped.map(vertex => [...vertex.lines].map(String)) }) };
       roadGroup.add(mesh);
     });
   };
   buildGroups(foundationGroups, true);
   buildGroups(surfaceGroups, false);
   state.objectCount += junctions.length * 2;
-  if (prototype?.polygons.length) buildFallbackPolygonJunctionMeshes(prototype.polygons);
+  if (prototype?.polygons.length) buildFallbackPolygonJunctionMeshes(prototype.polygons.map(polygon => ({ ...polygon,
+    bridge: polygon.lines.some(id => bridgeLineIds.has(String(id))) })));
   return prototype?.trimBySegment || null;
 }
 
@@ -2784,6 +2813,7 @@ function buildMapRoadLines(segments) {
 function buildRoadMarkings(segments) {
   const groups = new Map();
   const reviewedWayIds = new Set();
+  const historicalWays = new Map();
   const roadNodes = new Map();
   const nodeKey = (point, height) => `${Math.round(point.x * 20)}:${Math.round(point.y * 20)}:${Math.round(height * 4)}`;
   const recordPublicRoadNode = (segment, endpoint) => {
@@ -2817,8 +2847,12 @@ function buildRoadMarkings(segments) {
   };
 
   for (const segment of segments) {
-    const tags = reviewedPaintTags(segment.tags || {}, segment.lineId);
-    if (tags !== segment.tags) reviewedWayIds.add(segment.lineId);
+    // Hospital's historical tag override is superseded by whole-source geometry.
+    const rawTags = segment.tags || {};
+    const historical = segment.historicalPaintProfile;
+    const hospitalId = /^(?:way\/)?250811912(?::\d+)?$/.test(String(segment.lineId));
+    const tags = historical || hospitalId ? rawTags : reviewedPaintTags(rawTags, segment.lineId);
+    if (tags !== rawTags) reviewedWayIds.add(segment.lineId);
     const profile = segment.profile || roadProfile(tags);
     if (!profile || profile.unpaved || profile.tunnel || tags.junction === 'roundabout' || tags.lane_markings === 'no') continue;
     const dx = segment.b.x - segment.a.x;
@@ -2855,6 +2889,16 @@ function buildRoadMarkings(segments) {
     const junctionTrim = Math.max(2.8, segment.width * 0.62);
     const localMinimum = isTrueIntersection(segment, 'a') ? Math.min(planarLength / 2, junctionTrim) : 0;
     const localMaximum = planarLength - (isTrueIntersection(segment, 'b') ? Math.min(planarLength / 2, junctionTrim) : 0);
+    if (historical) {
+      const key = String(segment.lineId);
+      if (!historicalWays.has(key)) historicalWays.set(key, {profile:historical, exclusions:[], referenceHeight:segment.aY, tags:segment.tags, roadProfile:segment.profile});
+      const entry = historicalWays.get(key);
+      const canonical = (c) => historical.sourceReversed ? historical.coverage.sourceLength - c : c;
+      for (const [a,b] of [[chainStart,chainStart+localMinimum],[chainStart+localMaximum,chainEnd]]) {
+        if (b > a) entry.exclusions.push([canonical(a),canonical(b)].sort((x,y)=>x-y));
+      }
+      continue;
+    }
     if (localMaximum - localMinimum < 0.35) continue;
 
     for (const boundaryRule of boundaries) {
@@ -2945,46 +2989,70 @@ function buildRoadMarkings(segments) {
     streetscapeGroup.add(mesh);
     markingCount += ranges.length; vertexCount += positions.length/3;
   });
+  // One paint-only visible-top index for historical strokes and mapped arrows.
+  // Municipal samples remain mandatory eligibility gates inside the helper.
+  state.finalVisiblePaintIndex = null;
+  state.visiblePaintSupportBuild = null;
+  state.historicalPaintContact = [];
+  if (historicalWays.size && state.renderedPavementIndex?.triangleCount > 0) {
+    const supportBuildStarted = performance.now();
+    state.finalVisiblePaintIndex = selectMappedArrowSupportIndex({ THREE,
+      municipalIndex:state.renderedPavementIndex, roadGroup, segments,
+      roadPaintRanges:state.roadPaintRanges, generatedRoadMeshes,
+      bounds:segments.filter(segment => segment.historicalPaintProfile
+        || mappedTurnLaneGroups(segment.tags,segment.profile).length).map(segment => {
+          const pad=segment.width/2+3;
+          return [Math.min(segment.a.x,segment.b.x)-pad,Math.min(segment.a.y,segment.b.y)-pad,
+            Math.max(segment.a.x,segment.b.x)+pad,Math.max(segment.a.y,segment.b.y)+pad];
+        }),
+    });
+    state.visiblePaintSupportBuild = {cpuMilliseconds:performance.now()-supportBuildStarted,
+      fallbackTriangles:state.finalVisiblePaintIndex.triangleCount};
+  }
+  for (const [lineId, entry] of historicalWays) {
+    const visibleIndex = state.finalVisiblePaintIndex?.forSource?.(entry.tags,entry.roadProfile)
+      || state.renderedPavementIndex;
+    const rendered = renderHistoricalPaintProfile(entry.profile, visibleIndex, {
+      referenceHeight:entry.referenceHeight, excludedStationIntervals:entry.exclusions,
+    });
+    const {omittedPatches: _omittedPatches, ...contact} = rendered.contact || {};
+    state.historicalPaintContact.push({lineId,profileId:entry.profile.id,
+      emittedStrokes:rendered.strokes.length,kinds:[...new Set(rendered.strokes.map(range=>range.kind))],...contact});
+    if (!rendered.reviewed) continue;
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(rendered.positions, 3));
+    geometry.setAttribute('color', new THREE.Float32BufferAttribute(new Float32Array(rendered.positions.length).fill(1), 3));
+    geometry.computeVertexNormals(); geometry.computeBoundingSphere();
+    const material = materials.roadPaintYellow.clone();
+    material.vertexColors = true;
+    material.polygonOffset = true; material.polygonOffsetFactor = -1; material.polygonOffsetUnits = -1;
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.renderOrder = 6;
+    mesh.userData = {type:'historical-road-paint', profileId:entry.profile.id, lineId,
+      coverage:entry.profile.coverage, currentVerified:false, paintSurface:'final-road-only', paintLiftMetres:0.008, contact};
+    const key = `paint:historical:${lineId}`;
+    generatedRoadMeshes.set(key, mesh);
+    for (const range of rendered.strokes) state.roadPaintRanges?.get(lineId)?.push({key,
+      startVertex:range.startVertex, vertexCount:range.vertexCount, kind:range.kind});
+    streetscapeGroup.add(mesh);
+    reviewedWayIds.add(lineId);
+    markingCount += rendered.strokes.length; vertexCount += rendered.positions.length / 3;
+  }
   document.documentElement.dataset.roadPaintVertices = String(vertexCount);
   document.documentElement.dataset.roadPaintVersion = 'street-evidence-2';
   document.documentElement.dataset.roadPaintReviewedWays = String(reviewedWayIds.size);
   state.objectCount += markingCount;
 }
 
-function turnArrowGeometry(kind) {
-  const positions = [];
-  const addTriangle2d = (a, b, c) => positions.push(a[0], 0, a[1], b[0], 0, b[1], c[0], 0, c[1]);
-  const addQuad2d = (a, b, c, d) => {
-    addTriangle2d(a, b, c);
-    addTriangle2d(a, c, d);
-  };
-  const turnLeft = /left|reverse/.test(kind);
-  const turnRight = /right/.test(kind);
-  if (!turnLeft && !turnRight) {
-    addQuad2d([-0.14, -1.8], [0.14, -1.8], [0.14, 0.62], [-0.14, 0.62]);
-    addTriangle2d([-0.68, 0.52], [0.68, 0.52], [0, 1.72]);
-  } else {
-    const side = turnLeft ? -1 : 1;
-    addQuad2d([-0.14, -1.75], [0.14, -1.75], [0.14, 0.48], [-0.14, 0.48]);
-    addQuad2d([0, 0.24], [side * 1.02, 0.24], [side * 1.02, 0.52], [0, 0.52]);
-    addTriangle2d([side * 1.58, 0.38], [side * 0.82, -0.25], [side * 0.82, 1.01]);
-  }
-  const geometry = new THREE.BufferGeometry();
-  geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-  geometry.computeVertexNormals();
-  geometry.computeBoundingSphere();
-  return geometry;
-}
-
 function buildMappedTurnArrows(segments) {
+  const buildStarted = performance.now();
   const lines = new Map();
   segments.forEach((segment) => {
     if (!segment.lineId || !mappedTurnLaneGroups(segment.tags, segment.profile).length) return;
     if (!lines.has(segment.lineId)) lines.set(segment.lineId, []);
     lines.get(segment.lineId).push(segment);
   });
-  const arrows = { left: [], right: [], through: [] };
-  const normalizedKind = (symbol) => /left|reverse/.test(symbol) ? 'left' : /right/.test(symbol) ? 'right' : 'through';
+  const arrows = {};
   for (const lineSegments of lines.values()) {
     lineSegments.sort((a, b) => (a.chainStart || 0) - (b.chainStart || 0));
     const exemplar = lineSegments[0];
@@ -3008,43 +3076,76 @@ function buildMappedTurnArrows(segments) {
       const direction = new THREE.Vector3(dx, dy, dz).normalize();
       const sideX = dz / Math.max(0.001, Math.hypot(dx, dz));
       const sideZ = -dx / Math.max(0.001, Math.hypot(dx, dz));
-      const totalLanes = Math.max(group.symbols.length * (group.oneWay ? 1 : 2), laneCountFor(segment.tags));
-      const laneWidth = segment.width / totalLanes;
+      const offsets = mappedArrowLaneOffsets(segment.tags, segment.profile, group, segment.width);
       group.symbols.forEach((symbol, laneIndex) => {
         if (!symbol) return;
-        const offset = group.oneWay
-          ? -segment.width / 2 + laneWidth * (laneIndex + 0.5)
-          : laneWidth * (laneIndex + 0.5);
-        arrows[normalizedKind(symbol)].push({
+        const offset = offsets[laneIndex];
+        if (!Number.isFinite(offset)) return;
+        (arrows[symbol] ||= []).push({
+          tags: segment.tags, profile: segment.profile,
           direction,
           lineId: segment.lineId,
           x: THREE.MathUtils.lerp(segment.a.x, segment.b.x, t) + sideX * offset,
-          y: THREE.MathUtils.lerp(segment.aY, segment.bY, t) + 0.026,
+          y: THREE.MathUtils.lerp(segment.aY, segment.bY, t),
           z: THREE.MathUtils.lerp(segment.a.y, segment.b.y, t) + sideZ * offset,
         });
       });
     });
   }
+  const supportIndexStarted = globalThis.__PTBO_ROAD_STARTUP_QA__ ? performance.now() : null;
+  const arrowSupportIndex = state.finalVisiblePaintIndex || selectMappedArrowSupportIndex({ THREE,
+    municipalIndex: state.renderedPavementIndex, roadGroup, segments,
+    roadPaintRanges: state.roadPaintRanges, generatedRoadMeshes,
+    bounds: Object.values(arrows).flat().map(entry => [entry.x-3,entry.z-3,entry.x+3,entry.z+3]),
+  });
+  const supportIndexCpuMilliseconds = supportIndexStarted === null ? null : performance.now() - supportIndexStarted;
   const dummy = new THREE.Object3D();
-  let count = 0;
+  let count = 0, vertexCount = 0;
   Object.entries(arrows).forEach(([kind, entries]) => {
     if (!entries.length) return;
-    const mesh = new THREE.InstancedMesh(turnArrowGeometry(kind), materials.roadPaintWhite, entries.length);
-    entries.forEach((entry, index) => {
-      dummy.position.set(entry.x, entry.y, entry.z);
-      setRoadQuaternion(dummy, entry.direction);
+    const positions = [], ranges = [];
+    const local = mappedArrowTriangles(kind);
+    for (const entry of entries) {
+      dummy.position.set(entry.x, 0, entry.z);
+      setRoadQuaternion(dummy, entry.direction.clone().setY(0).normalize());
       dummy.scale.setScalar(1);
       dummy.updateMatrix();
-      mesh.setMatrixAt(index, dummy.matrix);
-      attachRoadInstance(entry.lineId, mesh, index);
-    });
-    mesh.instanceMatrix.needsUpdate = true;
-    mesh.computeBoundingSphere();
+      const world = [];
+      for (let i = 0; i < local.length; i += 3) {
+        const p = new THREE.Vector3(...local.slice(i, i + 3)).applyMatrix4(dummy.matrix);
+        world.push(p.x, p.y, p.z);
+      }
+      const entrySupportIndex = arrowSupportIndex.forSource?.(entry.tags, entry.profile) || arrowSupportIndex;
+      const vertices = drapeMappedArrowTriangles(world, (x,z) =>
+        mappedArrowSupport(entrySupportIndex, x,z,entry.y,entry.tags,entry.profile));
+      if (!vertices.length) continue;
+      ranges.push({lineId:entry.lineId,startVertex:positions.length/3,vertexCount:vertices.length/3});
+      for (const value of vertices) positions.push(value);
+    }
+    if (!positions.length) return;
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.Float32BufferAttribute(new Float32Array(positions.length).fill(1), 3));
+    geometry.computeVertexNormals(); geometry.computeBoundingSphere();
+    const material = materials.roadPaintWhite.clone(); material.vertexColors = true;
+    material.polygonOffset = true; material.polygonOffsetFactor = -1; material.polygonOffsetUnits = -1;
+    const mesh = new THREE.Mesh(geometry, material);
+    const key = `mapped-arrow:${kind}`;
+    generatedRoadMeshes.set(key, mesh);
+    for (const range of ranges) state.roadPaintRanges?.get(String(range.lineId))?.push({
+      key, startVertex: range.startVertex, vertexCount: range.vertexCount });
     mesh.renderOrder = 7;
-    mesh.userData = { type: 'mapped-turn-arrows', kind, count: entries.length };
+    mesh.userData = { type: 'mapped-turn-arrows', kind, count: ranges.length,
+      paintSurface: 'final-pavement', paintLiftMetres: 0.008 };
     streetscapeGroup.add(mesh);
-    count += entries.length;
+    count += ranges.length; vertexCount += positions.length / 3;
   });
+  state.mappedArrowBuild = {count, vertices:vertexCount, triangles:vertexCount / 3,
+    cpuMilliseconds:performance.now() - buildStarted, lowPowerProfile,
+    ...(supportIndexCpuMilliseconds === null ? {} : {supportIndexCpuMilliseconds})};
+  if (globalThis.__PTBO_ROAD_STARTUP_QA__) {
+    globalThis.__PTBO_ROAD_STARTUP_QA__.mappedArrowBuild = {...state.mappedArrowBuild};
+  }
   document.documentElement.dataset.mappedTurnArrows = String(count);
   state.objectCount += count;
 }
@@ -3854,10 +3955,17 @@ async function buildOfficialRoadSurfaces(collection, osmBuildingIndex = null) {
   }
 
   buildBufferedRoadBatches(batches);
+  const sourceRangesByMesh = new Map();
+  for (const ranges of state.roadPaintRanges?.values() || []) for (const range of ranges) {
+    const mesh=generatedRoadMeshes.get(range.key);
+    if (!mesh || !['road-surface-batch','road-foundation-batch'].includes(mesh.userData?.type)) continue;
+    if (!sourceRangesByMesh.has(mesh)) sourceRangesByMesh.set(mesh,[]);
+    sourceRangesByMesh.get(mesh).push(range);
+  }
   const stationCenter = project(44.3010, -78.32212);
   if (new URLSearchParams(location.search).get('pavementContinuity') !== '0') {
     try {
-      const result = reconcileStationPavement({ THREE, group: roadGroup, polygons: pavementPolygons,
+      const result = reconcileStationPavement({ THREE, group: roadGroup, polygons: pavementPolygons, sourceRanges:sourceRangesByMesh,
         center: { x: stationCenter.x, z: stationCenter.y }, terrainHeight: terrainHeightAtWorld,
         roadIndex: state.roadSurfaceIndex, Index: RenderedPavementIndex });
       if (result) {
@@ -3873,6 +3981,19 @@ async function buildOfficialRoadSurfaces(collection, osmBuildingIndex = null) {
         }
       }
     } catch (error) { console.warn('Station pavement continuity retained original geometry:', error); }
+    // A bounded Hospital/Medical pilot shares the same surveyed ownership and
+    // actual rendered contact index. Station keeps its original defaults.
+    try {
+      const hospitalCenter = project(44.301005, -78.34631);
+      const result = reconcileStationPavement({ THREE, group: roadGroup, polygons: pavementPolygons, sourceRanges:sourceRangesByMesh,
+        center: { x: hospitalCenter.x, z: hospitalCenter.y }, terrainHeight: terrainHeightAtWorld,
+        roadIndex: state.roadSurfaceIndex, Index: RenderedPavementIndex, radius: 120, heightSmoothing: 4 });
+      if (result) {
+        state.renderedPavementIndex = result.index;
+        state.hospitalPavementField = result.field;
+        document.documentElement.dataset.hospitalPavementContinuity = JSON.stringify(result.diagnostics);
+      }
+    } catch (error) { console.warn('Hospital pavement continuity retained original geometry:', error); }
   }
   buildOfficialCurbRibbons(curbs);
   buildBufferedBuildingBatches(municipalBuildingBatches);
@@ -4269,7 +4390,6 @@ async function parseOsmWithGeoJson(data) {
     buildUrbanCurbs(roadSegments, fallbackTrims);
   }
   state.roadMarkingSegments = roadSegments;
-  buildMappedTurnArrows(roadSegments);
   buildCrossings(crossings);
   buildBridgeDetails(roadSegments);
   buildTunnelStructures(roadSegments);
@@ -4298,11 +4418,16 @@ function parseOsmWayFallback(data) {
   let land = 0;
   for (const way of ways) {
     const tags = way.tags || {};
-    let points = (way.nodes || []).map((id) => nodes.get(id)).filter(Boolean);
+    const sourceNodes = (way.nodes || []).map((id) => nodes.get(id));
+    let sourceGeometryComplete = sourceNodes.length >= 2 && sourceNodes.every(point => point
+      && Number.isFinite(point.x) && Number.isFinite(point.y));
+    let points = sourceNodes.filter(Boolean);
     // Prepared Overpass snapshots use `out geom`, so most ways carry inline
     // coordinates instead of a complete node table. Honour both representations
     // to keep the no-osmtogeojson recovery path capable of rebuilding the city.
     if (points.length < 2 && Array.isArray(way.geometry)) {
+      sourceGeometryComplete = way.geometry.every(coordinate => Number.isFinite(coordinate?.lat)
+        && Number.isFinite(coordinate?.lon));
       points = way.geometry
         .filter((coordinate) => Number.isFinite(coordinate?.lat) && Number.isFinite(coordinate?.lon))
         .map((coordinate) => project(coordinate.lat, coordinate.lon));
@@ -4331,7 +4456,7 @@ function parseOsmWayFallback(data) {
       continue;
     }
     if (tags.highway || tags.railway) {
-      roads += queueProjectedLine(points, tags, lineBuckets, roadLines, `way/${way.id}`);
+      roads += queueProjectedLine(points, tags, lineBuckets, roadLines, `way/${way.id}`, sourceGeometryComplete);
       continue;
     }
     const closed = points[0].distanceToSquared(points.at(-1)) < 0.01;
@@ -4354,7 +4479,6 @@ function parseOsmWayFallback(data) {
     buildUrbanCurbs(roadSegments, fallbackTrims);
   }
   state.roadMarkingSegments = roadSegments;
-  buildMappedTurnArrows(roadSegments);
   buildCrossings(crossings);
   buildBridgeDetails(roadSegments);
   buildTunnelStructures(roadSegments);
@@ -4432,7 +4556,6 @@ function buildFallbackCity() {
     buildUrbanCurbs(roadSegments, fallbackTrims);
   }
   state.roadMarkingSegments = roadSegments;
-  buildMappedTurnArrows(roadSegments);
   buildStreetNameSigns(roadSegments);
 
   const river = [
@@ -4520,6 +4643,7 @@ function setReadyStatus(summary) {
 }
 
 async function buildCity() {
+  recordRoadStartupPhase('city:before');
   setProgress(4, 'Reading the full Peterborough map extent…');
   await hydrateWorldBounds();
   setProgress(7, 'Loading official Peterborough lidar terrain and map geometry…');
@@ -4602,15 +4726,25 @@ async function buildCity() {
   if (cityOpenData) {
     setProgress(92, 'Adding official parks, trails, sidewalks, civic places, and transit stops...');
     await nextFrame();
+    recordRoadStartupPhase('cityOpenData:before');
     summary.cityOpenData = buildCityOpenData(cityOpenData);
+    recordRoadStartupPhase('cityOpenData:after');
   }
   // Drape paint only after the final municipal and station pavement exists.
+  recordRoadStartupPhase('roadPaint:before');
   buildRoadMarkings(state.roadMarkingSegments || []);
+  recordRoadStartupPhase('roadPaint:after');
+  recordRoadStartupPhase('mappedArrows:before');
+  buildMappedTurnArrows(state.roadMarkingSegments || []);
+  recordRoadStartupPhase('mappedArrows:after');
   // All OSM and municipal polygons are now available. Paint once in a fixed
   // class-priority order so overlaps do not depend on source feature order.
+  recordRoadStartupPhase('landRaster:before');
   flushLandCoverRaster();
+  recordRoadStartupPhase('landRaster:after');
   buildVerticalSliceRooftopEquipment();
 
+  recordRoadStartupPhase('landmarks:before');
   const landmarkSummary = createPeterboroughLandmarks({
     THREE,
     group: landmarkGroup,
@@ -4638,8 +4772,13 @@ async function buildCity() {
   state.objectCount += landmarkSummary.objects;
   animatedFountain = landmarkGroup.children.find((child) => child.userData?.animatedWater) || null;
   buildLandmarkMapLabels();
+  recordRoadStartupPhase('landmarks:after');
+  recordRoadStartupPhase('semanticSurvey:before');
   await initializeSemanticSurvey();
+  recordRoadStartupPhase('semanticSurvey:after');
+  recordRoadStartupPhase('capturedDetail:before');
   await initializeCapturedDetailLayer();
+  recordRoadStartupPhase('capturedDetail:after');
   generatedEditorProxyGroup.updateMatrixWorld(true);
   initializeGameplay();
   await Promise.all([fireTruckActor.userData.truck.ready, playerActor.userData.animation.ready]);
@@ -4652,6 +4791,7 @@ async function buildCity() {
   });
   setProgress(100, 'Peterborough is ready');
   setReadyStatus(summary);
+  recordRoadStartupPhase('city:ready');
   globalThis.__PTBO_EXPLORER_BOOTSTRAP__?.ready?.();
   const qaParams = new URLSearchParams(location.search);
   if (qaParams.has('qaLat') && qaParams.has('qaLon')) {
@@ -4907,6 +5047,7 @@ function initializeGameplay() {
   updateGameplayHint();
   snapGameplayCamera();
   document.documentElement.dataset.gameplayReady = 'true';
+  recordRoadStartupPhase('gameplay:ready');
   globalThis.__PTBO_GAMEPLAY__ = Object.freeze({
     station: { ...FIRE_STATION_ONE },
     state() {
@@ -5913,8 +6054,25 @@ function exposeCityQualityQa() {
   };
   window.__PTBO_CITY_QA__ = Object.freeze({
     setView,
+    mappedArrowVisibility(wayId) {
+      const id = String(wayId).replace(/^way\//, '').replace(/:\d+$/, '');
+      const ranges = [...(state.roadPaintRanges || new Map())].filter(([key]) =>
+        String(key).replace(/^way\//, '').replace(/:\d+$/, '') === id).flatMap(([,value]) => value);
+      return measureMappedArrowVisibility({THREE,renderer,scene,camera,meshes:generatedRoadMeshes,ranges,
+        createCanvas:() => document.createElement('canvas')});
+    },
+    historicalPaintVisibility(wayId) {
+      const id = String(wayId).replace(/^way\//, '').replace(/:\d+$/, '');
+      const ranges = [...(state.roadPaintRanges || new Map())].filter(([key]) =>
+        String(key).replace(/^way\//, '').replace(/:\d+$/, '') === id).flatMap(([,value]) => value);
+      return measureMappedArrowVisibility({THREE,renderer,scene,camera,meshes:generatedRoadMeshes,ranges,
+        meshType:'historical-road-paint',createCanvas:() => document.createElement('canvas')});
+    },
     metrics() {
       return {
+        mappedArrowBuild: state.mappedArrowBuild ? {...state.mappedArrowBuild} : null,
+        visiblePaintSupportBuild: state.visiblePaintSupportBuild ? {...state.visiblePaintSupportBuild} : null,
+        historicalPaintContact: (state.historicalPaintContact || []).map(entry=>({...entry})),
         drawCalls: renderer.info.render.calls,
         geometries: renderer.info.memory.geometries,
         textures: renderer.info.memory.textures,

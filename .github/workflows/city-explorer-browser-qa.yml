@@ -3,6 +3,7 @@ name: City Explorer Browser QA
 on:
   workflow_dispatch:
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
     paths:
       - 'city-explorer/**'
       - 'tools/**'
@@ -12,11 +13,38 @@ on:
     paths:
       - 'tools/check-station-driving.cjs'
       - 'tools/check-mobile-controls.cjs'
+      - 'tools/check-street-paint-comparison.cjs'
       - 'tools/check-authored-scene.cjs'
       - 'tools/test_authored_scene_runtime.mjs'
+      - 'tools/test_authored_scene_qa.cjs'
+      - 'tools/authored-scene-qa.cjs'
       - 'tools/test_street_*.mjs'
+      - 'tools/test_street_paint_capture_contract.cjs'
+      - 'tools/test_mobile_input_lifecycle.cjs'
+      - 'tools/test_hospital_*.mjs'
+      - 'tools/hospital-surface-fixture.mjs'
+      - 'city-explorer/station-pavement-layer.js'
+      - 'tools/evaluate_historical_paint.mjs'
+      - 'tools/test_current_street_audit.py'
+      - 'tools/test_fallback_arrow_*.mjs'
+      - 'tools/test_municipal_arrow_visible_top.mjs'
+      - 'tools/test_historical_visible_road_top.mjs'
+      - 'tools/test_road_startup_phases.mjs'
+      - 'tools/test_road_preview_smoke.cjs'
+      - 'tools/check-road-preview-smoke.cjs'
+      - 'city-explorer/fallback-arrow-support.js'
+      - 'tools/test_historical_paint_*.mjs'
+      - 'tools/test_mapped_arrow_*.mjs'
+      - 'tools/audit_street_lane_evidence.py'
+      - 'tools/street_lane_compatibility.py'
+      - 'tools/build_road_review_tracker.py'
+      - 'tools/test_road_review_tracker.py'
+      - 'tools/test_street_lane_audit.py'
+      - 'docs/street-audit/**'
       - 'city-explorer/app.js'
       - 'city-explorer/street-paint.js'
+      - 'city-explorer/historical-paint-*.js'
+      - 'city-explorer/mapped-arrow-*.js'
       - 'city-explorer/city-detail-rules.js'
       - 'city-explorer/road-network.js'
       - 'city-explorer/feature-utils.js'
@@ -45,14 +73,36 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
 
+      - name: Set up pinned audit runtime
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install pinned audit dependencies
+        run: python -m pip install shapely==2.0.7 pyproj==3.7.0
+
+      - name: Validate audit and deterministic review tracker
+        run: |
+          python tools/test_current_street_audit.py
+          python tools/test_street_lane_audit.py
+          python tools/test_road_review_tracker.py
+          python tools/build_road_review_tracker.py --check
+
+      - name: Verify current Route Mapping integration
+        run: node --test tests/route-*.test.cjs tests/live-route-tracing.test.cjs
+
       - name: Run authored scene runtime unit tests
-        run: node tools/test_authored_scene_runtime.mjs
+        run: |
+          node tools/test_authored_scene_runtime.mjs
+          node --test tools/test_authored_scene_qa.cjs
 
       - name: Verify road geometry and driver contact regressions
         run: |
@@ -62,6 +112,19 @@ jobs:
           node --check city-explorer/road-wheel-contact.js
           node tools/test_street_marking_evidence.mjs
           node tools/test_street_paint_runtime_edges.mjs
+          node --test tools/test_mobile_input_lifecycle.cjs tools/test_street_paint_capture_contract.cjs
+          node --test tools/test_road_preview_smoke.cjs tools/test_road_startup_phases.mjs
+          node --test tools/test_reconciled_road_ranges.mjs tools/test_city_editor_release.mjs
+          node tools/test_production_paint_reconciliation.mjs
+          node tools/test_production_paint_reconciliation.mjs --desktop
+          node --test --test-concurrency=2 tools/test_historical_paint_*.mjs tools/test_mapped_arrow_*.mjs tools/test_hospital_*.mjs tools/test_fallback_arrow_*.mjs
+          node tools/test_fallback_arrow_runtime.mjs --desktop
+          node tools/test_municipal_arrow_visible_top.mjs
+          node tools/test_municipal_arrow_visible_top.mjs --desktop
+          node tools/test_municipal_arrow_visible_top.mjs --south
+          node tools/test_municipal_arrow_visible_top.mjs --south --desktop
+          node tools/test_historical_visible_road_top.mjs
+          node tools/test_historical_visible_road_top.mjs --desktop
           node tools/test_city_detail_rules.mjs
           node tools/test_citywide_road_quality.mjs
           node tools/test_fallback_junction_geometry.mjs
@@ -78,12 +141,18 @@ jobs:
           npm install --no-save --no-package-lock playwright@1.55.0
           npx playwright install chromium
 
+      - name: Prepare exact startup baseline
+        run: |
+          git fetch origin f8818548ad903b14b22ee5a48a88f3abcd92f582
+          git worktree add /tmp/ptbo-startup-before f8818548ad903b14b22ee5a48a88f3abcd92f582
+
       - name: Start local simulator server
         run: |
           python3 -m http.server 4174 --bind 127.0.0.1 > /tmp/ptbo-http.log 2>&1 &
           echo $! > /tmp/ptbo-http.pid
+          python3 -m http.server 4176 --bind 127.0.0.1 --directory /tmp/ptbo-startup-before > /tmp/ptbo-startup-before.log 2>&1 &
           for attempt in $(seq 1 30); do
-            if curl --fail --silent http://127.0.0.1:4174/city-explorer/ >/dev/null; then
+            if curl --fail --silent http://127.0.0.1:4174/city-explorer/ >/dev/null && curl --fail --silent http://127.0.0.1:4176/city-explorer/ >/dev/null; then
               exit 0
             fi
             sleep 1
@@ -92,7 +161,13 @@ jobs:
           exit 1
 
       - name: Check road startup and report browser errors
-        run: node tools/check-road-preview-smoke.cjs http://127.0.0.1:4174
+        run: |
+          set +e
+          PTBO_STARTUP_REPORT=artifacts/startup-qa/before.json node tools/check-road-preview-smoke.cjs http://127.0.0.1:4176
+          before_status=$?
+          PTBO_STARTUP_REPORT=artifacts/startup-qa/after.json node tools/check-road-preview-smoke.cjs http://127.0.0.1:4174
+          after_status=$?
+          test $before_status -eq 0 && test $after_status -eq 0
 
       - name: Run authored scene fail-open integration QA
         run: node tools/check-authored-scene.cjs http://127.0.0.1:4174
@@ -113,8 +188,66 @@ jobs:
         with:
           name: city-explorer-browser-qa-${{ github.run_id }}
           path: |
+            artifacts/startup-qa/
             artifacts/driving-qa/
             artifacts/mobile-qa/
             /tmp/ptbo-http.log
+          if-no-files-found: warn
+          retention-days: 14
+
+  hospital-paint-comparison:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Prepare exact pre-Hospital baseline
+        run: |
+          git fetch origin 2496b157ebeb1d995278373297d5790b60a4150a
+          git worktree add /tmp/ptbo-before 2496b157ebeb1d995278373297d5790b60a4150a
+      - name: Install browser runtime
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install --no-save --no-package-lock playwright@1.55.0
+          npx playwright install chromium
+      - name: Start comparison servers
+        run: |
+          python3 -m http.server 4174 --bind 127.0.0.1 > /tmp/ptbo-after.log 2>&1 &
+          python3 -m http.server 4175 --bind 127.0.0.1 --directory /tmp/ptbo-before > /tmp/ptbo-before.log 2>&1 &
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:4174/city-explorer/ >/dev/null && curl --fail --silent http://127.0.0.1:4175/city-explorer/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          exit 1
+      - name: Capture all historical and compound sites on one desktop scene
+        env:
+          PTBO_QA_ARTIFACT_DIR: artifacts/paint-desktop-qa
+          PTBO_PAINT_QA_SITES: hospital,medical,compound-arrows
+          PTBO_PAINT_QA_BEFORE_COMMIT: 2496b157ebeb1d995278373297d5790b60a4150a
+        run: node tools/check-street-paint-comparison.cjs http://127.0.0.1:4175 http://127.0.0.1:4174
+      - name: Capture all historical and compound sites on one low-power scene
+        if: success() || failure()
+        env:
+          PTBO_QA_ARTIFACT_DIR: artifacts/paint-low-power-qa
+          PTBO_PAINT_QA_SITES: hospital,medical,compound-arrows
+          PTBO_PAINT_QA_LOW_POWER: '1'
+          PTBO_PAINT_QA_BEFORE_COMMIT: 2496b157ebeb1d995278373297d5790b60a4150a
+        run: node tools/check-street-paint-comparison.cjs http://127.0.0.1:4175 http://127.0.0.1:4174
+      - name: Preserve Hospital, Medical and compound-arrow comparison evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hospital-paint-qa-${{ github.run_id }}
+          path: |
+            artifacts/paint-desktop-qa/
+            artifacts/paint-low-power-qa/
+            /tmp/ptbo-before.log
+            /tmp/ptbo-after.log
           if-no-files-found: warn
           retention-days: 14

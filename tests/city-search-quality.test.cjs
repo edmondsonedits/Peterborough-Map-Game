@@ -134,7 +134,11 @@ test('the city bootstrap requests app.js with the active build token', async () 
     loadModule: async url => { imports.push(url); },
   });
   await vm.runInContext('(async () => {' + loader.replace(/\bimport\(/g, 'loadModule(') + '})()', context);
-  assert.equal(imports.at(-1), './app.js?v=9.8.7');
+  const appURL = new URL(imports.at(-1), 'https://simulator.test/city-explorer/');
+  assert.equal(appURL.pathname, '/city-explorer/app.js');
+  assert.equal(appURL.searchParams.get('v'), '9.8.7');
+  assert.equal(appURL.searchParams.get('hospitalPaint'), '1');
+  assert.equal(appURL.searchParams.get('simulatorTasks'), '20261011b');
   assert.equal(failures.length, 0);
 });
 

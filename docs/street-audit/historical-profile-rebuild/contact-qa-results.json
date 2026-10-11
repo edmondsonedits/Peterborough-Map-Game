@@ -1,0 +1,198 @@
+{
+  "evidenceStatus": "superseded_wrong_reconciliation_order",
+  "supersededBy": "PRODUCTION-ORDER-QA.md",
+  "desktop": {
+    "profile": "desktop",
+    "reports": [
+      {
+        "id": "way/250810393:0",
+        "lowPower": false,
+        "emittedKinds": {
+          "solid": 3,
+          "hatch": 5
+        },
+        "baselineKinds": {
+          "solid": 3,
+          "hatch": 5
+        },
+        "contact": {
+          "omittedPatchCount": 0,
+          "omittedAreaM2": 0,
+          "equivalentLengthM": 0,
+          "maxAffectedStationSpanM": 0,
+          "maxPatchSpanM": 0,
+          "eligibleAreaM2": 8.89652594923973,
+          "emittedAreaM2": 8.89652594923973,
+          "quantizationAreaResidualM2": 0
+        },
+        "baselineTriangles": 1384,
+        "triangles": 1378,
+        "probes": 9646,
+        "buried": 0,
+        "unsupported": 0,
+        "invalidFaces": 0,
+        "maxBurial": 0,
+        "maxError": 0.0011945575987466553
+      },
+      {
+        "id": "way/250811912:0",
+        "lowPower": false,
+        "emittedKinds": {
+          "solid": 2,
+          "dash": 16
+        },
+        "baselineKinds": {
+          "solid": 2,
+          "dash": 16
+        },
+        "contact": {
+          "omittedPatchCount": 4254,
+          "omittedAreaM2": 0.0004424974322319031,
+          "equivalentLengthM": 0.0034038264017838696,
+          "maxAffectedStationSpanM": 0.05074491279069093,
+          "maxPatchSpanM": 0.0008301678777304348,
+          "eligibleAreaM2": 29.574855491518974,
+          "emittedAreaM2": 29.574437871575356,
+          "quantizationAreaResidualM2": -2.4877488613128662e-05
+        },
+        "baselineTriangles": 4616,
+        "triangles": 12872,
+        "probes": 90104,
+        "buried": 0,
+        "unsupported": 0,
+        "invalidFaces": 0,
+        "maxBurial": 0,
+        "maxError": 0.0014117693118249688
+      }
+    ],
+    "unionAccounting": [
+      {
+        "id": "way/250810393:0",
+        "lowPower": false,
+        "eligibleUnionAreaM2": 8.763180363908063,
+        "emittedUnionAreaM2": 8.76318933068181,
+        "missingUnionAreaM2": 1.5314062133929953e-14,
+        "outsideReferenceAreaM2": 8.966773763073147e-06,
+        "missingEquivalentLengthAt013mM": 1.1780047795330733e-13,
+        "maxStrokeCenterlineGapM": 0,
+        "totalStrokeCenterlineGapM": 0,
+        "missingComponents": 0,
+        "maxComponentShortSpanM": 0,
+        "maxComponentLongSpanM": 0,
+        "notes": "Union accounting includes quantization slivers and local contact omissions; reference uses same intersection exclusions. Component span is not a full-width break."
+      },
+      {
+        "id": "way/250811912:0",
+        "lowPower": false,
+        "eligibleUnionAreaM2": 29.574847355484962,
+        "emittedUnionAreaM2": 29.574239592468757,
+        "missingUnionAreaM2": 0.0006273838088794484,
+        "outsideReferenceAreaM2": 1.962079267473446e-05,
+        "missingEquivalentLengthAt013mM": 0.00482602929907268,
+        "maxStrokeCenterlineGapM": 0.0013477979446847833,
+        "totalStrokeCenterlineGapM": 0.0057398455614924,
+        "missingComponents": 885,
+        "maxComponentShortSpanM": 0.099247067833354,
+        "maxComponentLongSpanM": 0.16662096604979681,
+        "notes": "Union accounting includes quantization slivers and local contact omissions; reference uses same intersection exclusions. Component span is not a full-width break."
+      }
+    ]
+  },
+  "low-power": {
+    "profile": "low-power",
+    "reports": [
+      {
+        "id": "way/250810393:0",
+        "lowPower": true,
+        "emittedKinds": {
+          "solid": 3,
+          "hatch": 5
+        },
+        "baselineKinds": {
+          "solid": 3,
+          "hatch": 5
+        },
+        "contact": {
+          "omittedPatchCount": 0,
+          "omittedAreaM2": 0,
+          "equivalentLengthM": 0,
+          "maxAffectedStationSpanM": 0,
+          "maxPatchSpanM": 0,
+          "eligibleAreaM2": 8.684158891439438,
+          "emittedAreaM2": 8.684158891439438,
+          "quantizationAreaResidualM2": 0
+        },
+        "baselineTriangles": 1344,
+        "triangles": 1344,
+        "probes": 9408,
+        "buried": 0,
+        "unsupported": 0,
+        "invalidFaces": 0,
+        "maxBurial": 0,
+        "maxError": 0.00041182174700705315
+      },
+      {
+        "id": "way/250811912:0",
+        "lowPower": true,
+        "emittedKinds": {
+          "solid": 2,
+          "dash": 16
+        },
+        "baselineKinds": {
+          "solid": 2,
+          "dash": 16
+        },
+        "contact": {
+          "omittedPatchCount": 4254,
+          "omittedAreaM2": 0.0004424974322319031,
+          "equivalentLengthM": 0.0034038264017838696,
+          "maxAffectedStationSpanM": 0.05074491279069093,
+          "maxPatchSpanM": 0.0008301678777304348,
+          "eligibleAreaM2": 29.574855491518974,
+          "emittedAreaM2": 29.574437871575356,
+          "quantizationAreaResidualM2": -2.4877488613128662e-05
+        },
+        "baselineTriangles": 4610,
+        "triangles": 12866,
+        "probes": 90062,
+        "buried": 0,
+        "unsupported": 0,
+        "invalidFaces": 0,
+        "maxBurial": 0,
+        "maxError": 0.0011724705113520598
+      }
+    ],
+    "unionAccounting": [
+      {
+        "id": "way/250810393:0",
+        "lowPower": true,
+        "eligibleUnionAreaM2": 8.550809448329733,
+        "emittedUnionAreaM2": 8.550809448329733,
+        "missingUnionAreaM2": 0.0,
+        "outsideReferenceAreaM2": 0.0,
+        "missingEquivalentLengthAt013mM": 0.0,
+        "maxStrokeCenterlineGapM": 0,
+        "totalStrokeCenterlineGapM": 0,
+        "missingComponents": 0,
+        "maxComponentShortSpanM": 0,
+        "maxComponentLongSpanM": 0,
+        "notes": "Union accounting includes quantization slivers and local contact omissions; reference uses same intersection exclusions. Component span is not a full-width break."
+      },
+      {
+        "id": "way/250811912:0",
+        "lowPower": true,
+        "eligibleUnionAreaM2": 29.574855491518974,
+        "emittedUnionAreaM2": 29.57424772850279,
+        "missingUnionAreaM2": 0.0006273838088817197,
+        "outsideReferenceAreaM2": 1.962079267473446e-05,
+        "missingEquivalentLengthAt013mM": 0.004826029299090151,
+        "maxStrokeCenterlineGapM": 0.0013477979446847833,
+        "totalStrokeCenterlineGapM": 0.0057398455614924,
+        "missingComponents": 884,
+        "maxComponentShortSpanM": 0.099247067833354,
+        "maxComponentLongSpanM": 0.16662096604979681,
+        "notes": "Union accounting includes quantization slivers and local contact omissions; reference uses same intersection exclusions. Component span is not a full-width break."
+      }
+    ]
+  }
+}

@@ -26,12 +26,22 @@
   });
   const movementCodes = ['KeyW', 'KeyA', 'KeyS', 'KeyD', 'ShiftLeft'];
   const activeKeys = new Set();
+  const keyOwners = new Map();
+  const commandPointers = new Map();
+  let actionTimer = null;
+  let actionPointerId = null;
+  let lastMode = null;
   let pointerId = null;
   let menuOpen = false;
   let lastDirection = '';
 
-  function emitKey(code, down) {
+  function emitKey(code, down, owner = 'movement') {
     if (!keyNames[code]) return;
+    const owners = keyOwners.get(code) || new Set();
+    down ? owners.add(owner) : owners.delete(owner);
+    if (owners.size) keyOwners.set(code, owners);
+    else keyOwners.delete(code);
+    down = owners.size > 0;
     if (down && activeKeys.has(code)) return;
     if (!down && !activeKeys.has(code)) return;
     down ? activeKeys.add(code) : activeKeys.delete(code);
@@ -129,7 +139,7 @@
   }
 
   joystick.addEventListener('pointerdown', event => {
-    if (app?.classList.contains('is-map')) return;
+    if (pointerId !== null || app?.classList.contains('is-map')) return;
     event.preventDefault();
     closeMenu();
     pointerId = event.pointerId;
@@ -150,48 +160,86 @@
     resetJoystick();
   };
   joystick.addEventListener('pointerup', finishJoystick);
-  joystick.addEventListener('pointercancel', finishJoystick);
-  joystick.addEventListener('lostpointercapture', finishJoystick);
+  const interruptJoystick = event => {
+    if (pointerId === null || event.pointerId !== pointerId) return;
+    releaseAll();
+  };
+  joystick.addEventListener('pointercancel', interruptJoystick);
+  joystick.addEventListener('lostpointercapture', interruptJoystick);
 
   function tapKey(code) {
-    emitKey(code, true);
-    window.setTimeout(() => emitKey(code, false), 70);
+    if (actionTimer !== null) window.clearTimeout(actionTimer);
+    emitKey(code, true, 'action');
+    actionTimer = window.setTimeout(() => { emitKey(code, false, 'action'); actionTimer = null; }, 70);
   }
 
   actionButton.addEventListener('pointerdown', event => {
     event.preventDefault();
-    if (actionButton.disabled) return;
+    if (actionButton.disabled || actionPointerId !== null) return;
+    actionPointerId = event.pointerId;
+    actionButton.setPointerCapture?.(event.pointerId);
     tapKey('KeyE');
     actionButton.classList.add('is-pressed');
   });
-  const releaseAction = () => actionButton.classList.remove('is-pressed');
-  actionButton.addEventListener('pointerup', releaseAction);
-  actionButton.addEventListener('pointercancel', releaseAction);
-  actionButton.addEventListener('pointerleave', releaseAction);
+  const releaseAction = () => {
+    actionPointerId = null;
+    actionButton.classList.remove('is-pressed');
+  };
+  actionButton.addEventListener('pointerup', event => {
+    if (event.pointerId === actionPointerId) releaseAction();
+  });
+  const interruptAction = event => {
+    if (actionPointerId !== null && event.pointerId === actionPointerId) releaseAll();
+  };
+  actionButton.addEventListener('pointercancel', interruptAction);
+  actionButton.addEventListener('lostpointercapture', interruptAction);
 
   flightButtons.forEach(button => {
     const code = button.dataset.mobileCommand;
     const start = event => {
+      if (commandPointers.has(button)) return;
       event.preventDefault();
-      emitKey(code, true);
+      commandPointers.set(button, event.pointerId);
+      button.setPointerCapture?.(event.pointerId);
+      emitKey(code, true, button);
       button.classList.add('is-pressed');
     };
     const end = event => {
+      if (!commandPointers.has(button) || commandPointers.get(button) !== event.pointerId) return;
       if (event.cancelable) event.preventDefault();
-      emitKey(code, false);
+      commandPointers.delete(button);
+      emitKey(code, false, button);
       button.classList.remove('is-pressed');
+    };
+    const interrupt = event => {
+      if (commandPointers.has(button) && commandPointers.get(button) === event.pointerId) releaseAll();
     };
     button.addEventListener('pointerdown', start);
     button.addEventListener('pointerup', end);
-    button.addEventListener('pointercancel', end);
-    button.addEventListener('pointerleave', end);
+    button.addEventListener('pointercancel', interrupt);
+    button.addEventListener('lostpointercapture', interrupt);
   });
+
+  // Only lifecycle interruptions clear other controls' ownership. Clear the
+  // analog bridge first so synthetic keyup events cannot be suppressed.
+  function releaseAll() {
+    window.dispatchEvent(new Event('ptbo-mobile-input-cancel'));
+    resetJoystick();
+    if (actionTimer !== null) window.clearTimeout(actionTimer);
+    actionTimer = null;
+    for (const [code, owners] of [...keyOwners]) {
+      for (const owner of [...owners]) emitKey(code, false, owner);
+    }
+    commandPointers.clear();
+    flightButtons.forEach(button => button.classList.remove('is-pressed'));
+    releaseAction();
+  }
 
   function setMenu(open) {
     menuOpen = Boolean(open);
     app?.classList.toggle('mobile-menu-open', menuOpen);
     menuToggle?.setAttribute('aria-expanded', String(menuOpen));
-    if (menuOpen) resetJoystick();
+    if (menuOpen) releaseAll();
   }
   function closeMenu() { if (menuOpen) setMenu(false); }
   menuToggle?.addEventListener('click', event => {
@@ -237,6 +285,9 @@
     const mapMode = app?.classList.contains('is-map') || mode === 'map';
     const flyMode = app?.classList.contains('is-fly') || mode === 'fly';
 
+    const modeState = `${mode}:${ready}:${mapMode}:${flyMode}`;
+    if (lastMode !== null && lastMode !== modeState) releaseAll();
+    lastMode = modeState;
     root.classList.toggle('is-map-mode', mapMode);
     root.classList.toggle('is-fly-mode', flyMode);
     root.classList.toggle('is-driving-mode', mode === 'driving');
@@ -253,14 +304,13 @@
 
   window.addEventListener('blur', () => {
     closeMenu();
-    resetJoystick();
-    [...activeKeys].forEach(code => emitKey(code, false));
+    releaseAll();
   });
+  window.addEventListener('pagehide', releaseAll);
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
       closeMenu();
-      resetJoystick();
-      [...activeKeys].forEach(code => emitKey(code, false));
+      releaseAll();
     }
   });
 })();

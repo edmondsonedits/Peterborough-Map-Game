@@ -62,7 +62,7 @@ import * as THREE from '../city-explorer/vendor/three-r180/build/three.module.mi
 import { laneCountFor } from '../city-explorer/road-network.js';
 import { createFeatureBatchBinding } from '../city-explorer/editor/feature-batch-binding.js';
 const app = fs.readFileSync(new URL('../city-explorer/app.js',import.meta.url),'utf8');
-function renderPaint(tags, lineId = 'way/460581459') {
+function renderPaint(tags, lineId = 'way/460581459', {reverse=false, junction=false, hole=false}={}) {
  const state={roadPaintRanges:new Map([[lineId,[]]]),objectCount:0};
  const group=new THREE.Group(), meshes=new Map();
  const fn=app.match(/^function buildRoadMarkings\([^]*?^\}/m)[0];
@@ -71,11 +71,17 @@ function renderPaint(tags, lineId = 'way/460581459') {
   reviewedPaintTags:helper.reviewedPaintTags,drapePaintStrip:helper.drapePaintStrip,
   roadRenderTileCoordinates:()=>({x:0,z:0}),lowPowerProfile:false,ROAD_RENDER_TILE_SIZE:400,
   materials:{roadPaintYellow:new THREE.MeshBasicMaterial(),roadPaintWhite:new THREE.MeshBasicMaterial()},
-  document:{documentElement:{dataset:{}}},gameplaySurfaceAt:(x,z)=>({height:10+.02*x+.01*z,onRoad:true})};
+  document:{documentElement:{dataset:{}}},gameplaySurfaceAt:(x,z)=>({height:10+.02*x+.01*z,onRoad:!hole||x<8||x>12})};
  const run=Function(...Object.keys(env), fn+';return buildRoadMarkings;')(...Object.values(env));
- run([{a:new THREE.Vector2(0,0),b:new THREE.Vector2(20,0),aY:1,bY:2,
+ const segments=[{a:new THREE.Vector2(reverse?20:0,0),b:new THREE.Vector2(reverse?0:20,0),aY:reverse?2:1,bY:reverse?1:2,
    aSourceVertex:true,bSourceVertex:true,lineId,chainStart:0,width:9,name:tags.name,
-   profile:roadProfile(tags),tags}]);
+   profile:roadProfile(tags),tags}];
+ if(junction)segments.push({a:new THREE.Vector2(0,0),b:new THREE.Vector2(0,20),aY:1,bY:2,
+  aSourceVertex:true,bSourceVertex:true,lineId:'way/cross',width:6,name:'Cross Street',
+  profile:roadProfile({highway:'residential'}),tags:{highway:'residential'}});
+ const before=JSON.stringify(segments);
+ run(segments);
+ assert.equal(JSON.stringify(segments),before,'paint rendering must not mutate routing/profile/geometry inputs');
  return {state,group,meshes};
 }
 test('actual app renderer draws only one solid yellow centre on reviewed Sherbrooke',()=>{
@@ -103,4 +109,49 @@ test('existing road editor bindings can hide and restore final draped paint',()=
 test('source road paint is built once after municipal surfaces rather than during OSM parsing',()=>{
  assert.equal((app.match(/buildRoadMarkings\(roadSegments\)/g)||[]).length,0);
  assert.match(app,/buildRoadMarkings\(state\.roadMarkingSegments \|\| \[\]\)/);
+});
+
+test('Hospital shared-turn paint is bounded, guarded and leaves original geometry inputs intact',()=>{
+ const tags={name:'Hospital Drive',highway:'tertiary',lanes:'2'};
+ const before=JSON.stringify(tags), profile=roadProfile(tags);
+ for(const id of ['250811912','way/250811912','way/250811912:0']) {
+  const result=helper.reviewedPaintTags(tags,id);
+  assert.equal(result.lanes,'3');
+  assert.equal(result['lanes:forward'],'1');assert.equal(result['lanes:backward'],'1');
+  assert.equal(result['lanes:both_ways'],'1');
+ }
+ assert.equal(JSON.stringify(tags),before);assert.deepEqual(roadProfile(tags),profile);
+ for(const id of ['way/123164463','way/2508119120','relation/250811912','way/250811912:x'])assert.equal(helper.reviewedPaintTags(tags,id),tags);
+ for(const changed of [{name:'Other Road'},{lanes:'3'},{lane_markings:'no'},
+  ...['yes','1','-1','true','YES','reversible','alternating'].map(oneway=>({oneway})),
+  {junction:'roundabout'},{'oneway:conditional':'yes @ (Mo-Fr)'}]) {
+  const input={...tags,...changed};assert.equal(helper.reviewedPaintTags(input,'way/250811912'),input);
+ }
+ for(const id of ['739159886','737434011','650896572','460581459'])assert.equal(helper.reviewedPaintTags({name:'Sherbrooke Street',highway:'secondary',lanes:'4'},id).lanes,'2');
+});
+test('synthetic Hospital identity cannot receive the historical multi-line profile',()=>{
+ const {group}=renderPaint({highway:'tertiary',name:'Hospital Drive',lanes:'2'},'way/250811912:0');
+ assert.equal(group.children.length,1);
+ const mesh=group.children[0];assert.equal(mesh.userData.type,'road-centre-lines');
+ const p=mesh.geometry.getAttribute('position');
+ for(let i=0;i<p.count;i++) assert.ok(Math.abs(p.getZ(i))<=.065001,'only original generic two-lane centre remains');
+});
+
+test('generic fallback for unvalidated Hospital geometry respects junction trims and support',()=>{
+ for(const reverse of [false,true]) {
+  const {group}=renderPaint({highway:'tertiary',name:'Hospital Drive',lanes:'2'},'way/250811912:0',{reverse,junction:true,hole:true});
+  assert.equal(group.children.length,1);
+  for(const mesh of group.children) {
+   const p=mesh.geometry.getAttribute('position');
+   for(let i=0;i<p.count;i++) {
+    const x=p.getX(i);
+    assert.ok(x>=5.57999,'no paint in cross-street junction trim');
+    assert.ok(x<8||x>12,'no vertices on unsupported asphalt');
+   }
+   for(let i=0;i<p.count;i+=3) {
+    const xs=[p.getX(i),p.getX(i+1),p.getX(i+2)];
+    assert.ok(Math.max(...xs)<8||Math.min(...xs)>12,'no triangles bridge the missing pavement');
+   }
+  }
+ }
 });

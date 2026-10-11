@@ -1,0 +1,13 @@
+{
+  "lowPower": true,
+  "target": "way/364843830:0",
+  "ranges": 2,
+  "triangles": 680,
+  "probes": 4760,
+  "hidden": 0,
+  "unsupported": 0,
+  "maxError": 0.001931723872995221,
+  "indexMilliseconds": 61.89509700000008,
+  "buildMilliseconds": 346.07043299999987,
+  "municipalOnlyAblation": false
+}

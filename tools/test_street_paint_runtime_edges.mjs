@@ -34,3 +34,26 @@ test('legacy fallback junction contact follows its actual cap top, not the lower
  assert.ok(hit.height>1.0179 && hit.height<1.0181);
  assert.equal(state.fallbackJunctionSurfaceIndex.sample(3.2,0),null,'Foundation is not pavement');
 });
+test('Hospital paint cache invalidation reaches loader, app and changed paint module',async()=>{
+ const entry=fs.readFileSync(new URL('../city-explorer/index.html',import.meta.url),'utf8');
+ const loader=fs.readFileSync(new URL('../city-explorer/road-orientation-fix.js',import.meta.url),'utf8');
+ const loaderUrl=entry.match(/src="(road-orientation-fix\.js[^"\s]*)"/)[1];
+ assert.equal(new URL(loaderUrl,'https://example.test/').searchParams.get('hospitalPaint'),'1');
+ const loads=[];
+ const AsyncFunction=Object.getPrototypeOf(async function(){}).constructor;
+ await new AsyncFunction('globalThis','load',loader.replace(/\bimport\(/g,'load('))(
+  {PTBO_BUILD:{version:'1.6.101'}},async url=>loads.push(url));
+ const appUrl=loads.find(url=>url.startsWith('./app.js?'));
+ assert.equal(new URL(appUrl,'https://example.test/').searchParams.get('hospitalPaint'),'1');
+ const paintUrl=app.match(/from ['"]([^'"]*street-paint\.js[^'"]*)['"]/)[1];
+ assert.equal(new URL(paintUrl,'https://example.test/').searchParams.get('hospitalPaint'),'1');
+ assert.equal(loads[0],'./authored-scene-bootstrap.js?v=1.6.101','preserve readiness fix identity');
+});
+test('CI captures bounded Hospital before/after overhead and both travel views',()=>{
+ const harness=fs.readFileSync(new URL('./check-street-paint-comparison.cjs',import.meta.url),'utf8');
+ const workflow=fs.readFileSync(new URL('../.github/workflows/city-explorer-browser-qa.yml',import.meta.url),'utf8');
+ for(const name of ['hospital-overhead','hospital-eastbound','hospital-westbound'])assert.ok(harness.includes(name));
+ assert.match(workflow,/PTBO_PAINT_QA_SITES: hospital/);
+ assert.match(workflow,/2496b157ebeb1d995278373297d5790b60a4150a/);
+ assert.match(workflow,/node tools\/check-street-paint-comparison.cjs http:\/\/127.0.0.1:4175 http:\/\/127.0.0.1:4174/);
+});

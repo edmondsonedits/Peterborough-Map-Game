@@ -50,3 +50,12 @@ test('Pages deployment stages only the production-facing artifact', () => {
   }
   assert.match(deploy, /test -f _site\/docs\/ANALYTICS-PRIVACY-SECURITY\.md/);
 });
+
+test('combined release CI runs current live-route and junction regressions', () => {
+  const browser = read('.github/workflows/city-explorer-browser-qa.yml');
+  const deploy = read('.github/workflows/deploy-pages.yml');
+  assert.match(browser, /node --test tests\/route-\*\.test\.cjs tests\/live-route-tracing\.test\.cjs/);
+  for (const file of ['tests/live-route-tracing.test.cjs', 'tests/route-junction-regression.test.cjs']) {
+    assert.ok(deploy.split('\n').some(line => /node --test /.test(line) && line.includes(file)), file);
+  }
+});

@@ -1,0 +1,38 @@
+{
+  "profile": "default-lite-mobile",
+  "sourceWays": 5953,
+  "candidates": 185,
+  "baselineMunicipalOnlyEmitted": 0,
+  "emitted": 185,
+  "omissions": [],
+  "triangles": 57358,
+  "probes": 401506,
+  "unsupported": 0,
+  "nonUpward": 0,
+  "maxLiftErrorMetres": 0.0019951545053542644,
+  "boundedSupportTriangles": 886,
+  "buildMilliseconds": 1195.0124260000011,
+  "bridgeStats": {
+    "total": 52,
+    "raised": 12,
+    "crossings": 16,
+    "maximumLift": 6.473378912569791
+  },
+  "municipalIndexUnchanged": true,
+  "gameplayIndexUnchanged": true,
+  "limitations": [
+    "Actual Three.js renderer builders and source geometry; not a browser startup/frame-rate measurement",
+    "Packaged lidar terrain fixture omits water recess",
+    "Seven finite probes per emitted triangle cannot prove absence of arbitrarily microscopic gaps"
+  ]
+}
+{
+  "independentActualVisibleTop": {
+    "rawFaces": 573,
+    "covered": 401506,
+    "missing": 0,
+    "hidden": 0,
+    "maximumBurial": 0,
+    "worst": []
+  }
+}

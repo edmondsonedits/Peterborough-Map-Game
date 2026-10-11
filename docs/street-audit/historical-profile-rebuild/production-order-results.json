@@ -1,0 +1,625 @@
+{
+  "candidateCommit": "b497947a8d41332351a94dc7ea45ad493310d612",
+  "evidenceStatus": "author_regression_actual_production_order",
+  "limitations": [
+    "No water recess, curbs, buildings, bridge accessories or generic lane-paint output",
+    "Node observations in shared environment, not browser load or frame-rate benchmark",
+    "Bounded low-power report predates additional winding/lift and causal stale assertions; final full-network runs execute every committed assertion in both profiles"
+  ],
+  "runs": {
+    "bounded-low-power": {
+      "paintMeshCosts": {
+        "historical-road-paint": {
+          "triangles": 5954,
+          "positionBytes": 214344
+        },
+        "mapped-turn-arrows": {
+          "triangles": 10998,
+          "positionBytes": 395928
+        }
+      },
+      "historicalContact": [
+        {
+          "lineId": "way/250810393:0",
+          "profileId": "250810393",
+          "emittedStrokes": 8,
+          "kinds": [
+            "solid",
+            "hatch"
+          ],
+          "omittedPatchCount": 0,
+          "omittedAreaM2": 0,
+          "equivalentLengthM": 0,
+          "maxAffectedStationSpanM": 0,
+          "maxPatchSpanM": 0,
+          "eligibleAreaM2": 8.684158891439438,
+          "emittedAreaM2": 8.684158891439438,
+          "quantizationAreaResidualM2": 0
+        },
+        {
+          "lineId": "way/250811912:0",
+          "profileId": "250811912",
+          "emittedStrokes": 18,
+          "kinds": [
+            "solid",
+            "dash"
+          ],
+          "omittedPatchCount": 0,
+          "omittedAreaM2": 0,
+          "equivalentLengthM": 0,
+          "maxAffectedStationSpanM": 0,
+          "maxPatchSpanM": 0,
+          "eligibleAreaM2": 29.574855491518974,
+          "emittedAreaM2": 29.574855491518974,
+          "quantizationAreaResidualM2": 0
+        }
+      ],
+      "lowPower": true,
+      "fullNetwork": false,
+      "indexMilliseconds": 162.71039700000256,
+      "indexBuilds": 1,
+      "staleRejectedSamples": 18,
+      "roadRenderTileSize": 3600,
+      "worldBounds": {
+        "minX": -7314.8756672725685,
+        "minZ": -8909.98599999969
+      },
+      "staleFaces": 13849,
+      "misclassifiedStaleFaces": 0,
+      "officialMillisecondsWithControl": 80425.078597,
+      "historicalMilliseconds": 2356.790024999995,
+      "arrowsMilliseconds": 1316.1460899999947,
+      "mappedCandidates": 185,
+      "emittedMapped": 35,
+      "meshPositionBytes": 18463392,
+      "municipalSourceFeatures": 308,
+      "reconciliationChecks": [
+        {
+          "center": {
+            "x": -192.7737293646428,
+            "z": 895.3739999998768
+          },
+          "radius": 240,
+          "byteIdentical": true,
+          "controlMilliseconds": 36020.517301,
+          "candidateMilliseconds": 36913.929641999996,
+          "hadSourceRanges": true
+        },
+        {
+          "center": {
+            "x": -2119.7144373522865,
+            "z": 894.8212999997014
+          },
+          "radius": 120,
+          "byteIdentical": true,
+          "controlMilliseconds": 3186.275649000003,
+          "candidateMilliseconds": 3068.640008999995,
+          "hadSourceRanges": true
+        }
+      ],
+      "remappedRanges": 4763,
+      "reports": [
+        {
+          "id": "way/250810393:0",
+          "lowPower": true,
+          "kinds": {
+            "solid": 3,
+            "hatch": 5,
+            "left": 2
+          },
+          "probes": 13496,
+          "buried": 0,
+          "foundationBuried": 0,
+          "unsupported": 0,
+          "maxBurial": 0
+        },
+        {
+          "id": "way/250811912:0",
+          "lowPower": true,
+          "kinds": {
+            "solid": 2,
+            "dash": 16
+          },
+          "probes": 32270,
+          "buried": 0,
+          "foundationBuried": 0,
+          "unsupported": 0,
+          "maxBurial": 0
+        },
+        {
+          "id": "way/1414147320:0",
+          "lowPower": true,
+          "kinds": {
+            "left": 1,
+            "through;right": 1
+          },
+          "probes": 4830,
+          "buried": 0,
+          "foundationBuried": 0,
+          "unsupported": 0,
+          "maxBurial": 0
+        },
+        {
+          "id": "way/364843830:0",
+          "lowPower": true,
+          "kinds": {
+            "right": 1,
+            "left;through": 1
+          },
+          "probes": 4760,
+          "buried": 0,
+          "foundationBuried": 0,
+          "unsupported": 0,
+          "maxBurial": 0
+        }
+      ],
+      "unchangedPaintGeometry": true,
+      "unchangedSourceProfiles": true
+    },
+    "fullNetwork-low-power": {
+      "paintMeshCosts": {
+        "historical-road-paint": {
+          "triangles": 5954,
+          "positionBytes": 214344
+        },
+        "mapped-turn-arrows": {
+          "triangles": 54046,
+          "positionBytes": 1945656
+        }
+      },
+      "historicalContact": [
+        {
+          "lineId": "way/250810393:0",
+          "profileId": "250810393",
+          "emittedStrokes": 8,
+          "kinds": [
+            "solid",
+            "hatch"
+          ],
+          "omittedPatchCount": 0,
+          "omittedAreaM2": 0,
+          "equivalentLengthM": 0,
+          "maxAffectedStationSpanM": 0,
+          "maxPatchSpanM": 0,
+          "eligibleAreaM2": 8.684158891439438,
+          "emittedAreaM2": 8.684158891439438,
+          "quantizationAreaResidualM2": 0
+        },
+        {
+          "lineId": "way/250811912:0",
+          "profileId": "250811912",
+          "emittedStrokes": 18,
+          "kinds": [
+            "solid",
+            "dash"
+          ],
+          "omittedPatchCount": 0,
+          "omittedAreaM2": 0,
+          "equivalentLengthM": 0,
+          "maxAffectedStationSpanM": 0,
+          "maxPatchSpanM": 0,
+          "eligibleAreaM2": 29.574855491518974,
+          "emittedAreaM2": 29.574855491518974,
+          "quantizationAreaResidualM2": 0
+        }
+      ],
+      "lowPower": true,
+      "fullNetwork": true,
+      "indexMilliseconds": 61.111063999996986,
+      "indexBuilds": 1,
+      "staleRejectedSamples": 10,
+      "freshSupportedStaleRejected": 10,
+      "roadRenderTileSize": 3600,
+      "worldBounds": {
+        "minX": -7314.8756672725685,
+        "minZ": -8909.98599999969
+      },
+      "staleFaces": 13849,
+      "misclassifiedStaleFaces": 0,
+      "officialMillisecondsWithControl": 18666.040113,
+      "historicalMilliseconds": 1030.3248029999995,
+      "arrowsMilliseconds": 1244.4490069999993,
+      "mappedCandidates": 185,
+      "emittedMapped": 173,
+      "meshPositionBytes": 29439000,
+      "municipalSourceFeatures": 6587,
+      "reconciliationChecks": [
+        {
+          "center": {
+            "x": -192.7737293646428,
+            "z": 895.3739999998768
+          },
+          "candidateMilliseconds": 13445.880143999999,
+          "controlSkipped": true,
+          "hadSourceRanges": true
+        },
+        {
+          "center": {
+            "x": -2119.7144373522865,
+            "z": 894.8212999997014
+          },
+          "candidateMilliseconds": 1925.0675530000008,
+          "controlSkipped": true,
+          "hadSourceRanges": true
+        }
+      ],
+      "remappedRanges": 4763,
+      "reports": [
+        {
+          "id": "way/250810393:0",
+          "lowPower": true,
+          "kinds": {
+            "solid": 3,
+            "hatch": 5,
+            "left": 2
+          },
+          "probes": 13496,
+          "buried": 0,
+          "foundationBuried": 0,
+          "unsupported": 0,
+          "maxBurial": 0,
+          "maxLiftResidual": 0.0008873021182056393,
+          "degenerateOrDownward": 0
+        },
+        {
+          "id": "way/250811912:0",
+          "lowPower": true,
+          "kinds": {
+            "solid": 2,
+            "dash": 16
+          },
+          "probes": 32270,
+          "buried": 0,
+          "foundationBuried": 0,
+          "unsupported": 0,
+          "maxBurial": 0,
+          "maxLiftResidual": 0.0011724705113520598,
+          "degenerateOrDownward": 0
+        },
+        {
+          "id": "way/1414147320:0",
+          "lowPower": true,
+          "kinds": {
+            "left": 1,
+            "through;right": 1
+          },
+          "probes": 4830,
+          "buried": 0,
+          "foundationBuried": 0,
+          "unsupported": 0,
+          "maxBurial": 0,
+          "maxLiftResidual": 0.00043707252303892136,
+          "degenerateOrDownward": 0
+        },
+        {
+          "id": "way/364843830:0",
+          "lowPower": true,
+          "kinds": {
+            "right": 1,
+            "left;through": 1
+          },
+          "probes": 4760,
+          "buried": 0,
+          "foundationBuried": 0,
+          "unsupported": 0,
+          "maxBurial": 0,
+          "maxLiftResidual": 0.001931723872995221,
+          "degenerateOrDownward": 0
+        }
+      ],
+      "unchangedPaintGeometry": true,
+      "unchangedSourceProfiles": true
+    },
+    "bounded-desktop": {
+      "paintMeshCosts": {
+        "historical-road-paint": {
+          "triangles": 6000,
+          "positionBytes": 216000
+        },
+        "mapped-turn-arrows": {
+          "triangles": 11163,
+          "positionBytes": 401868
+        }
+      },
+      "historicalContact": [
+        {
+          "lineId": "way/250810393:0",
+          "profileId": "250810393",
+          "emittedStrokes": 8,
+          "kinds": [
+            "solid",
+            "hatch"
+          ],
+          "omittedPatchCount": 0,
+          "omittedAreaM2": 0,
+          "equivalentLengthM": 0,
+          "maxAffectedStationSpanM": 0,
+          "maxPatchSpanM": 0,
+          "eligibleAreaM2": 8.89652594923973,
+          "emittedAreaM2": 8.896516982465982,
+          "quantizationAreaResidualM2": 8.966773748397827e-06
+        },
+        {
+          "lineId": "way/250811912:0",
+          "profileId": "250811912",
+          "emittedStrokes": 18,
+          "kinds": [
+            "solid",
+            "dash"
+          ],
+          "omittedPatchCount": 0,
+          "omittedAreaM2": 0,
+          "equivalentLengthM": 0,
+          "maxAffectedStationSpanM": 0,
+          "maxPatchSpanM": 0,
+          "eligibleAreaM2": 29.574855491518974,
+          "emittedAreaM2": 29.574855491518974,
+          "quantizationAreaResidualM2": 0
+        }
+      ],
+      "lowPower": false,
+      "fullNetwork": false,
+      "indexMilliseconds": 76.20392400000128,
+      "indexBuilds": 1,
+      "staleRejectedSamples": 16,
+      "roadRenderTileSize": 3600,
+      "worldBounds": {
+        "minX": -7314.8756672725685,
+        "minZ": -8909.98599999969
+      },
+      "staleFaces": 14715,
+      "misclassifiedStaleFaces": 0,
+      "officialMillisecondsWithControl": 37158.986906,
+      "historicalMilliseconds": 1195.5668120000046,
+      "arrowsMilliseconds": 565.7918690000006,
+      "mappedCandidates": 185,
+      "emittedMapped": 35,
+      "meshPositionBytes": 22699368,
+      "municipalSourceFeatures": 308,
+      "reconciliationChecks": [
+        {
+          "center": {
+            "x": -192.7737293646428,
+            "z": 895.3739999998768
+          },
+          "radius": 240,
+          "byteIdentical": true,
+          "controlMilliseconds": 18259.356592000004,
+          "candidateMilliseconds": 15069.904457,
+          "hadSourceRanges": true
+        },
+        {
+          "center": {
+            "x": -2119.7144373522865,
+            "z": 894.8212999997014
+          },
+          "radius": 120,
+          "byteIdentical": true,
+          "controlMilliseconds": 1699.8209260000003,
+          "candidateMilliseconds": 1442.4876250000016,
+          "hadSourceRanges": true
+        }
+      ],
+      "remappedRanges": 4769,
+      "reports": [
+        {
+          "id": "way/250810393:0",
+          "lowPower": false,
+          "kinds": {
+            "solid": 3,
+            "hatch": 5,
+            "left": 2
+          },
+          "probes": 13776,
+          "buried": 0,
+          "foundationBuried": 0,
+          "unsupported": 0,
+          "maxBurial": 0,
+          "maxLiftResidual": 0.001407869231239374,
+          "degenerateOrDownward": 0
+        },
+        {
+          "id": "way/250811912:0",
+          "lowPower": false,
+          "kinds": {
+            "solid": 2,
+            "dash": 16
+          },
+          "probes": 32312,
+          "buried": 0,
+          "foundationBuried": 0,
+          "unsupported": 0,
+          "maxBurial": 0,
+          "maxLiftResidual": 0.001122576158823392,
+          "degenerateOrDownward": 0
+        },
+        {
+          "id": "way/1414147320:0",
+          "lowPower": false,
+          "kinds": {
+            "left": 1,
+            "through;right": 1
+          },
+          "probes": 4760,
+          "buried": 0,
+          "foundationBuried": 0,
+          "unsupported": 0,
+          "maxBurial": 0,
+          "maxLiftResidual": 1.9071588868088685e-06,
+          "degenerateOrDownward": 0
+        },
+        {
+          "id": "way/364843830:0",
+          "lowPower": false,
+          "kinds": {
+            "right": 1,
+            "left;through": 1
+          },
+          "probes": 4760,
+          "buried": 0,
+          "foundationBuried": 0,
+          "unsupported": 0,
+          "maxBurial": 0,
+          "maxLiftResidual": 4.754500428846842e-07,
+          "degenerateOrDownward": 0
+        }
+      ],
+      "unchangedPaintGeometry": true,
+      "unchangedSourceProfiles": true
+    },
+    "fullNetwork-desktop": {
+      "paintMeshCosts": {
+        "historical-road-paint": {
+          "triangles": 6000,
+          "positionBytes": 216000
+        },
+        "mapped-turn-arrows": {
+          "triangles": 55146,
+          "positionBytes": 1985256
+        }
+      },
+      "historicalContact": [
+        {
+          "lineId": "way/250810393:0",
+          "profileId": "250810393",
+          "emittedStrokes": 8,
+          "kinds": [
+            "solid",
+            "hatch"
+          ],
+          "omittedPatchCount": 0,
+          "omittedAreaM2": 0,
+          "equivalentLengthM": 0,
+          "maxAffectedStationSpanM": 0,
+          "maxPatchSpanM": 0,
+          "eligibleAreaM2": 8.89652594923973,
+          "emittedAreaM2": 8.896516982465982,
+          "quantizationAreaResidualM2": 8.966773748397827e-06
+        },
+        {
+          "lineId": "way/250811912:0",
+          "profileId": "250811912",
+          "emittedStrokes": 18,
+          "kinds": [
+            "solid",
+            "dash"
+          ],
+          "omittedPatchCount": 0,
+          "omittedAreaM2": 0,
+          "equivalentLengthM": 0,
+          "maxAffectedStationSpanM": 0,
+          "maxPatchSpanM": 0,
+          "eligibleAreaM2": 29.574855491518974,
+          "emittedAreaM2": 29.574855491518974,
+          "quantizationAreaResidualM2": 0
+        }
+      ],
+      "lowPower": false,
+      "fullNetwork": true,
+      "indexMilliseconds": 71.2912290000022,
+      "indexBuilds": 1,
+      "staleRejectedSamples": 10,
+      "freshSupportedStaleRejected": 10,
+      "roadRenderTileSize": 3600,
+      "worldBounds": {
+        "minX": -7314.8756672725685,
+        "minZ": -8909.98599999969
+      },
+      "staleFaces": 14715,
+      "misclassifiedStaleFaces": 0,
+      "officialMillisecondsWithControl": 22119.139625999996,
+      "historicalMilliseconds": 1258.6187520000021,
+      "arrowsMilliseconds": 1450.7869509999982,
+      "mappedCandidates": 185,
+      "emittedMapped": 173,
+      "meshPositionBytes": 38840616,
+      "municipalSourceFeatures": 6587,
+      "reconciliationChecks": [
+        {
+          "center": {
+            "x": -192.7737293646428,
+            "z": 895.3739999998768
+          },
+          "candidateMilliseconds": 14969.959392,
+          "controlSkipped": true,
+          "hadSourceRanges": true
+        },
+        {
+          "center": {
+            "x": -2119.7144373522865,
+            "z": 894.8212999997014
+          },
+          "candidateMilliseconds": 2268.1661380000005,
+          "controlSkipped": true,
+          "hadSourceRanges": true
+        }
+      ],
+      "remappedRanges": 4769,
+      "reports": [
+        {
+          "id": "way/250810393:0",
+          "lowPower": false,
+          "kinds": {
+            "solid": 3,
+            "hatch": 5,
+            "left": 2
+          },
+          "probes": 13776,
+          "buried": 0,
+          "foundationBuried": 0,
+          "unsupported": 0,
+          "maxBurial": 0,
+          "maxLiftResidual": 0.001407869231239374,
+          "degenerateOrDownward": 0
+        },
+        {
+          "id": "way/250811912:0",
+          "lowPower": false,
+          "kinds": {
+            "solid": 2,
+            "dash": 16
+          },
+          "probes": 32312,
+          "buried": 0,
+          "foundationBuried": 0,
+          "unsupported": 0,
+          "maxBurial": 0,
+          "maxLiftResidual": 0.001122576158823392,
+          "degenerateOrDownward": 0
+        },
+        {
+          "id": "way/1414147320:0",
+          "lowPower": false,
+          "kinds": {
+            "left": 1,
+            "through;right": 1
+          },
+          "probes": 4760,
+          "buried": 0,
+          "foundationBuried": 0,
+          "unsupported": 0,
+          "maxBurial": 0,
+          "maxLiftResidual": 1.9071588868088685e-06,
+          "degenerateOrDownward": 0
+        },
+        {
+          "id": "way/364843830:0",
+          "lowPower": false,
+          "kinds": {
+            "right": 1,
+            "left;through": 1
+          },
+          "probes": 4760,
+          "buried": 0,
+          "foundationBuried": 0,
+          "unsupported": 0,
+          "maxBurial": 0,
+          "maxLiftResidual": 4.754500428846842e-07,
+          "degenerateOrDownward": 0
+        }
+      ],
+      "unchangedPaintGeometry": true,
+      "unchangedSourceProfiles": true
+    }
+  }
+}

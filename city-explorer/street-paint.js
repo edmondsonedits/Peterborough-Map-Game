@@ -1,15 +1,26 @@
 /** Reviewed paint corrections, independent of geographic/physics road widths.
  * Evidence and uncertainty: docs/street-audit/README.md. No external live fetch.
- * These four way IDs cover Park Street to George Street, not all Sherbrooke.
+ * Four Sherbrooke IDs cover Park Street to George Street; Hospital is one 118 m way.
  */
 export const REVIEWED_STREET_PAINT = Object.freeze({
   '739159886': 'sherbrooke-park-george',
   '737434011': 'sherbrooke-park-george',
   '650896572': 'sherbrooke-park-george',
   '460581459': 'sherbrooke-park-george',
+  '250811912': 'hospital-drive-shared-turn-2023',
 });
 export function reviewedPaintTags(tags, lineId) {
   const id = /^(?:way\/)?(\d+)(?::\d+)?$/.exec(String(lineId || ''))?.[1];
+  // Historical imagery supports only this way. Do not propagate to the adjacent
+  // 27 m transition or treat a directional/conditional road as bidirectional.
+  if (id === '250811912') {
+    if (tags.name !== 'Hospital Drive' || String(tags.lanes) !== '2'
+      || !['', 'no', '0', 'false'].includes(String(tags.oneway ?? '').toLowerCase())
+      || Object.keys(tags).some(key => key.startsWith('oneway:'))
+      || tags.junction === 'roundabout' || tags.lane_markings === 'no') return tags;
+    return { ...tags, lanes: '3', 'lanes:forward': '1', 'lanes:backward': '1',
+      'lanes:both_ways': '1', 'sim:paint:evidence': REVIEWED_STREET_PAINT[id] };
+  }
   if (!REVIEWED_STREET_PAINT[id] || tags.name !== 'Sherbrooke Street'
     || String(tags.lanes) !== '4' || ['yes','1','-1'].includes(tags.oneway)
     || tags.lane_markings === 'no') return tags;
