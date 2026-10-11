@@ -1,21 +1,24 @@
 import { RenderedPavementIndex } from './official-road-surfaces.js';
 
 /** Paint-only index of actual rendered fallback road tops. Municipal ownership
- * wins globally whenever it exists; its holes never gain inferred fallback.
+ * gates eligibility whenever it exists; its holes never gain inferred fallback.
+ * Eligible paint may follow a higher actual compatible top within its local deck.
  * Ribbon bridge provenance comes from source/editor batch ranges, not material.
  * Foundations, curbs, sides, hidden meshes and unknown ribbon ranges are excluded.
  */
 export function selectMappedArrowSupportIndex({ THREE, municipalIndex, roadGroup,
   segments = [], roadPaintRanges = new Map(), generatedRoadMeshes = new Map(), bounds } = {}) {
-  if (municipalIndex?.triangleCount > 0) return municipalIndex;
+  const municipalOwned = municipalIndex?.triangleCount > 0;
   const index = new RenderedPavementIndex();
-  if (!roadGroup || (bounds && !bounds.length)) return index;
+  if (!roadGroup || (bounds && !bounds.length)) return municipalOwned ? municipalIndex : index;
   roadGroup.updateWorldMatrix(true, true);
   const allowed = new Set(); roadGroup.traverseVisible(mesh => allowed.add(mesh));
-  const bridgeByLine = new Map(), sourceDeckByLine = new Map();
+  const bridgeByLine = new Map(), sourceDeckByLine = new Map(), roadKindByLine = new Map();
   for (const segment of segments) {
     const id=String(segment.lineId),bridge=Boolean(segment.profile?.bridge || segment.bridge),tunnel=Boolean(segment.profile?.tunnel);
     bridgeByLine.set(id,bridge);
+    roadKindByLine.set(id,{highway:segment.tags?.highway,service:segment.tags?.service,
+      parkingAisle:Boolean(segment.profile?.parkingAisle || segment.tags?.service==='parking_aisle')});
     sourceDeckByLine.set(id,`${bridge?'bridge':tunnel?'tunnel':'road'}:${segment.tags?.layer??(bridge?1:tunnel?-1:0)}`);
   }
   const capProvenance=(ids=[])=>({lineIds:ids.map(String),sourceDecks:[...new Set(ids.map(id=>sourceDeckByLine.get(String(id))).filter(Boolean))]});
@@ -63,8 +66,8 @@ export function selectMappedArrowSupportIndex({ THREE, municipalIndex, roadGroup
     if(!allowed.has(mesh)||mesh?.userData?.type!=='road-surface-batch'||seen.has(identity))continue;
     seen.add(identity);
     if(mesh.isInstancedMesh){
-      for(let i=0;i<mesh.count;i++){mesh.getMatrixAt(i,instance);matrix.multiplyMatrices(mesh.matrixWorld,instance);append(mesh,range.startVertex,range.vertexCount,bridge,matrix,false,{lineId,sourceDeck:sourceDeckByLine.get(lineId)});}
-    }else append(mesh,range.startVertex,range.vertexCount,bridge,mesh.matrixWorld,false,{lineId,sourceDeck:sourceDeckByLine.get(lineId)});
+      for(let i=0;i<mesh.count;i++){mesh.getMatrixAt(i,instance);matrix.multiplyMatrices(mesh.matrixWorld,instance);append(mesh,range.startVertex,range.vertexCount,bridge,matrix,false,{lineId,sourceDeck:sourceDeckByLine.get(lineId),sourceRoad:roadKindByLine.get(lineId)});}
+    }else append(mesh,range.startVertex,range.vertexCount,bridge,mesh.matrixWorld,false,{lineId,sourceDeck:sourceDeckByLine.get(lineId),sourceRoad:roadKindByLine.get(lineId)});
   }
   roadGroup.traverseVisible(mesh=>{
     if(mesh.userData?.type==='road-junction-surfaces'&&mesh.isInstancedMesh){
@@ -80,15 +83,34 @@ export function selectMappedArrowSupportIndex({ THREE, municipalIndex, roadGroup
     }
   });
   const visibleSample=(x,z,referenceHeight,options,sourceDeck=null)=>{
+    if (!Number.isFinite(x)||!Number.isFinite(z)) return null;
     const hits=[];
-    for(const face of index.cells.get(`${Math.floor(x/index.cellSize)}:${Math.floor(z/index.cellSize)}`)||[]){
+    // Select municipal eligibility with the exact RenderedPavementIndex rules,
+    // while collecting actual top faces in the same single cell scan.
+    let municipalHit=null,municipalDistance=Infinity;
+    for(const sourceIndex of municipalOwned ? [index,municipalIndex] : [index])
+    for(const face of sourceIndex.cells.get(`${Math.floor(x/sourceIndex.cellSize)}:${Math.floor(z/sourceIndex.cellSize)}`)||[]){
       const dx=x-face.ax,dz=z-face.az,b=(dx*face.vz-dz*face.vx)*face.inverse,c=(face.ux*dz-face.uz*dx)*face.inverse;
       if(b< -1e-8||c< -1e-8||b+c>1+1e-8)continue;
-      hits.push({...face.metadata,height:face.ay+b*face.dyB+c*face.dyC,heightSource:'rendered-pavement-triangle'});
+      const municipalFace=sourceIndex===municipalIndex;
+      const hit={...face.metadata,
+        ...(municipalFace?{bridge:face.metadata.layer==='bridges',
+          forbiddenParking:options?.includeParking===false&&face.metadata.layer==='parking_surfaces'}:{}),
+        height:face.ay+b*face.dyB+c*face.dyC,heightSource:'rendered-pavement-triangle'};
+      hits.push(hit);
+      if (municipalFace && !hit.forbiddenParking && !(options?.includeBridges===false&&hit.bridge)) {
+        const distance=Number.isFinite(referenceHeight)?Math.abs(hit.height-referenceHeight):0;
+        if (!municipalHit || distance<municipalDistance-1e-8
+          || (Math.abs(distance-municipalDistance)<=1e-8&&hit.height>municipalHit.height)) {
+          municipalHit=hit;municipalDistance=distance;
+        }
+      }
     }
+    if (municipalOwned && (!municipalHit
+      || (sourceDeck?.startsWith('bridge:')&&municipalHit.layer!=='bridges'))) return null;
     const decksOf=hit=>hit.sourceDeck?[hit.sourceDeck]:hit.sourceDecks||[];
-    let selected=null,best=Infinity;
-    for(const hit of hits){
+    let selected=municipalHit,best=Infinity;
+    for(const hit of municipalHit ? [] : hits){
       if(options?.includeBridges===false&&hit.bridge)continue;
       if(sourceDeck&&!decksOf(hit).includes(sourceDeck))continue;
       const distance=Number.isFinite(referenceHeight)?Math.abs(hit.height-referenceHeight):0;
@@ -106,17 +128,23 @@ export function selectMappedArrowSupportIndex({ THREE, municipalIndex, roadGroup
     const topHeight=hits[at].height;
     const decks=sourceDeck?[sourceDeck]:decksOf(selected);
     const compatible=hit=>{
-      if(hit.bridge!==selected.bridge)return false;
+      if(hit.forbiddenParking || hit.bridge!==selected.bridge)return false;
       const other=decksOf(hit);
       return !decks.length||!other.length||decks.some(deck=>other.includes(deck));
     };
     return hits.find(hit=>Math.abs(hit.height-topHeight)<1e-8&&compatible(hit))||null;
   };
   index.sample=visibleSample;
+  index.eligibilitySample=(x,z,referenceHeight,options)=>municipalOwned
+    ? municipalIndex.sample(x,z,referenceHeight,options) : null;
   index.forSource=(tags={},profile={})=>{
     const bridge=Boolean(profile.bridge||(tags.bridge&&tags.bridge!=='no')),tunnel=Boolean(profile.tunnel||(tags.tunnel&&tags.tunnel!=='no'));
     const deck=`${bridge?'bridge':tunnel?'tunnel':'road'}:${tags.layer??(bridge?1:tunnel?-1:0)}`;
-    return {sample:(x,z,referenceHeight,options)=>visibleSample(x,z,referenceHeight,options,deck)};
+    return {sample:(x,z,referenceHeight,options)=>visibleSample(x,z,referenceHeight,options,deck),
+      eligibilitySample:(x,z,referenceHeight,options)=>{
+        const hit=index.eligibilitySample(x,z,referenceHeight,options);
+        return bridge && hit?.layer!=='bridges' ? null : hit;
+      }};
   };
   return index;
 }

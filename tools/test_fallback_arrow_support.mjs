@@ -1,3 +1,4 @@
+import {drapeHistoricalStroke} from '../city-explorer/historical-paint-profiles.js';
 import assert from 'node:assert/strict';
 import {test} from 'node:test';
 import * as THREE from '../city-explorer/vendor/three-r180/build/three.module.min.js';
@@ -22,9 +23,9 @@ test('mixed surface batches preserve exact source bridge provenance and transfor
  assert.equal(mappedArrowSupport(index,20,30,2,{bridge:'yes'},{bridge:true}),null,'Bridge-tagged paint cannot select underlying ordinary face');
  assert.equal(index.sample(100,100),null);
 });
-test('municipal index wins globally and its holes never use fallback',()=>{
+test('municipal eligibility gates globally and its holes never use fallback',()=>{
  const f=fixture();f.municipalIndex.addTriangle(100,5,100,100,5,101,101,5,100,{layer:'road_surfaces'});
- const selected=helper.selectMappedArrowSupportIndex(f);assert.equal(selected,f.municipalIndex);assert.equal(selected.sample(0,0),null);
+ const selected=helper.selectMappedArrowSupportIndex(f);assert.equal(selected.sample(0,0),null);
 });
 test('only visible pavement top faces count, including transformed instanced cap tops',()=>{
  const f=fixture();f.generatedRoadMeshes.clear();f.roadPaintRanges.clear();f.roadGroup.clear();
@@ -85,4 +86,68 @@ test('separate stacked bridge decks retain height selection and explicit layer c
  assert.equal(mappedArrowSupport(index,0,0,12,{bridge:'yes'},{bridge:true}),12);
  assert.equal(mappedArrowSupport(index,0,0,18,{bridge:'yes'},{bridge:true}),18);
  assert.equal(mappedArrowSupport(index,0,0,2,{},{}),null,'Do not guess which conflicting source layer owns a near-coincident deck');
+});
+
+const municipalRectangle=(index,y,layer='road_surfaces')=>{const p=rectangle(y);for(let i=0;i<p.length;i+=9)index.addTriangle(...p.slice(i,i+9),{layer});};
+test('eligible municipal road paint follows higher actual compatible ribbon without filling holes',()=>{
+ const f=fixture();municipalRectangle(f.municipalIndex,1.96);
+ const index=helper.selectMappedArrowSupportIndex(f).forSource({},{});
+ assert.equal(mappedArrowSupport(index,0,0,1.96,{},{}),2);
+ assert.equal(mappedArrowSupport(index,8,0,1.96,{},{}),null);
+ assert.equal(f.municipalIndex.sample(0,0).height,Math.fround(1.96));
+});
+test('municipal parking and bridge eligibility remain mandatory before actual-top reconciliation',()=>{
+ const f=fixture();municipalRectangle(f.municipalIndex,1.96,'parking_surfaces');
+ const index=helper.selectMappedArrowSupportIndex(f);
+ assert.equal(mappedArrowSupport(index.forSource({},{}),0,0,2,{},{}),null);
+ const tags={highway:'service','turn:lanes':'left'};
+ assert.equal(mappedArrowSupport(index.forSource(tags,{}),0,0,2,tags,{}),2);
+ assert.equal(mappedArrowSupport(index.forSource({bridge:'yes'},{bridge:true}),0,0,12,{bridge:'yes'},{bridge:true}),null);
+});
+test('municipal same-deck rule excludes distant bridge and omits conflicting near source layers',()=>{
+ const f=fixture();municipalRectangle(f.municipalIndex,1.96);
+ let index=helper.selectMappedArrowSupportIndex(f);assert.equal(mappedArrowSupport(index.forSource({},{}),0,0,2,{},{}),2);
+ f.segments[0].tags={layer:'2'};
+ index=helper.selectMappedArrowSupportIndex(f);assert.equal(mappedArrowSupport(index.forSource({},{}),0,0,2,{},{}),null);
+});
+test('municipal overlapping road tops reconcile visibly while forbidden parking occlusion fails closed',()=>{
+ const f=fixture();f.generatedRoadMeshes.clear();f.roadPaintRanges.clear();f.roadGroup.clear();
+ municipalRectangle(f.municipalIndex,2);municipalRectangle(f.municipalIndex,2.1);
+ let index=helper.selectMappedArrowSupportIndex(f).forSource({},{});
+ assert.ok(Math.abs(mappedArrowSupport(index,0,0,2,{},{} )-2.1)<1e-6);
+ municipalRectangle(f.municipalIndex,2.2,'parking_surfaces');
+ index=helper.selectMappedArrowSupportIndex(f).forSource({},{});
+ assert.equal(mappedArrowSupport(index,0,0,2,{},{}),null);
+});
+
+test('actual mapped parking-aisle road may supply historical Y only inside municipal ROAD footprint',()=>{
+ const f=fixture();municipalRectangle(f.municipalIndex,1.7);
+ f.generatedRoadMeshes.get('mixed').userData.material='parking';
+ f.segments[0].tags={highway:'service',service:'parking_aisle'};
+ const index=helper.selectMappedArrowSupportIndex(f).forSource({highway:'residential'},{});
+ const inside={width:.15,points:[{x:-1,z:0},{x:1,z:0}]};
+ const p=drapeHistoricalStroke(inside,index,1.7);assert.ok(p.length>0);
+ for(let i=1;i<p.length;i+=3)assert.ok(Math.abs(p[i]-2.008)<1e-6);
+ assert.deepEqual(drapeHistoricalStroke({width:.15,points:[{x:3,z:0},{x:5,z:0}]},index,1.7),[]);
+});
+
+test('explicit historical eligibility API never substitutes inferred ribbon height or footprint',()=>{
+ const f=fixture();let index=helper.selectMappedArrowSupportIndex(f).forSource({},{});
+ assert.equal(index.eligibilitySample(0,0,2,{includeParking:false,includeBridges:false}),null);
+ municipalRectangle(f.municipalIndex,1.7);index=helper.selectMappedArrowSupportIndex(f).forSource({},{});
+ assert.ok(Math.abs(index.eligibilitySample(0,0,2,{includeParking:false,includeBridges:false}).height-1.7)<1e-6);
+ assert.equal(index.sample(0,0,2,{includeParking:false,includeBridges:false}).height,2);
+ assert.equal(index.eligibilitySample(5,0,2,{includeParking:false,includeBridges:false}),null);
+});
+test('municipal visible-top query scans its cell once while preserving exact eligibility selection',()=>{
+ const f=fixture();municipalRectangle(f.municipalIndex,1.96);municipalRectangle(f.municipalIndex,12,'bridges');
+ const original=f.municipalIndex.cells.get.bind(f.municipalIndex.cells);let queries=0;
+ f.municipalIndex.cells.get=(key)=>{queries++;return original(key);};
+ const index=helper.selectMappedArrowSupportIndex(f).forSource({},{});
+ assert.equal(index.sample(0,0,1.96,{includeParking:false,includeBridges:false}).height,2);
+ assert.equal(queries,1,'One exact municipal face scan per contact query');
+ for(const height of [1,2,10,12])for(const includeBridges of [true,false]){
+  const options={includeBridges,includeParking:false};
+  assert.deepEqual(index.eligibilitySample(0,0,height,options),f.municipalIndex.sample(0,0,height,options));
+ }
 });

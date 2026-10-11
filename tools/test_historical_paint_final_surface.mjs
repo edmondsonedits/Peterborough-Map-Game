@@ -1,3 +1,5 @@
+import {selectMappedArrowSupportIndex} from '../city-explorer/fallback-arrow-support.js';
+import {mappedTurnLaneGroups} from '../city-explorer/city-detail-rules.js';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -25,7 +27,7 @@ function queue(fixture,id,mutate=x=>x){
 function runtime(fixture,index=fixture.index){
  const state={renderedPavementIndex:index,roadSurfaceIndex:fixture.roadIndex,roadPaintRanges:new Map(),objectCount:0};
  const generatedRoadMeshes=new Map(),streetscapeGroup=new THREE.Group(),document={documentElement:{dataset:{}}};
- const env={THREE,state,generatedRoadMeshes,streetscapeGroup,document,historicalPaintProfile,renderHistoricalPaintProfile,
+ const env={THREE,state,generatedRoadMeshes,streetscapeGroup,document,roadGroup:new THREE.Group(),selectMappedArrowSupportIndex,mappedTurnLaneGroups,historicalPaintProfile,renderHistoricalPaintProfile,
   roadProfile,laneCountFor,mappedCycleLaneSides,roadLaneMarkingBoundaries,reviewedPaintTags,lowPowerProfile:false,
   roadRenderTileCoordinates:()=>({x:0,z:0}),ROAD_RENDER_TILE_SIZE:400,terrainHeightAtWorld:fixture.terrainHeight,
   materials:{roadPaintYellow:new THREE.MeshBasicMaterial(),roadPaintWhite:new THREE.MeshBasicMaterial()},drapePaintStrip:()=>[]};

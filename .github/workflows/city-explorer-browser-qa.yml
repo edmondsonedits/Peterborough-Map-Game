@@ -3,6 +3,7 @@ name: City Explorer Browser QA
 on:
   workflow_dispatch:
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
     paths:
       - 'city-explorer/**'
       - 'tools/**'
@@ -26,6 +27,11 @@ on:
       - 'tools/evaluate_historical_paint.mjs'
       - 'tools/test_current_street_audit.py'
       - 'tools/test_fallback_arrow_*.mjs'
+      - 'tools/test_municipal_arrow_visible_top.mjs'
+      - 'tools/test_historical_visible_road_top.mjs'
+      - 'tools/test_road_startup_phases.mjs'
+      - 'tools/test_road_preview_smoke.cjs'
+      - 'tools/check-road-preview-smoke.cjs'
       - 'city-explorer/fallback-arrow-support.js'
       - 'tools/test_historical_paint_*.mjs'
       - 'tools/test_mapped_arrow_*.mjs'
@@ -104,8 +110,15 @@ jobs:
           node tools/test_street_marking_evidence.mjs
           node tools/test_street_paint_runtime_edges.mjs
           node --test tools/test_mobile_input_lifecycle.cjs tools/test_street_paint_capture_contract.cjs
+          node --test tools/test_road_preview_smoke.cjs tools/test_road_startup_phases.mjs
           node --test --test-concurrency=2 tools/test_historical_paint_*.mjs tools/test_mapped_arrow_*.mjs tools/test_hospital_*.mjs tools/test_fallback_arrow_*.mjs
           node tools/test_fallback_arrow_runtime.mjs --desktop
+          node tools/test_municipal_arrow_visible_top.mjs
+          node tools/test_municipal_arrow_visible_top.mjs --desktop
+          node tools/test_municipal_arrow_visible_top.mjs --south
+          node tools/test_municipal_arrow_visible_top.mjs --south --desktop
+          node tools/test_historical_visible_road_top.mjs
+          node tools/test_historical_visible_road_top.mjs --desktop
           node tools/test_city_detail_rules.mjs
           node tools/test_citywide_road_quality.mjs
           node tools/test_fallback_junction_geometry.mjs
@@ -122,12 +135,18 @@ jobs:
           npm install --no-save --no-package-lock playwright@1.55.0
           npx playwright install chromium
 
+      - name: Prepare exact startup baseline
+        run: |
+          git fetch origin f8818548ad903b14b22ee5a48a88f3abcd92f582
+          git worktree add /tmp/ptbo-startup-before f8818548ad903b14b22ee5a48a88f3abcd92f582
+
       - name: Start local simulator server
         run: |
           python3 -m http.server 4174 --bind 127.0.0.1 > /tmp/ptbo-http.log 2>&1 &
           echo $! > /tmp/ptbo-http.pid
+          python3 -m http.server 4176 --bind 127.0.0.1 --directory /tmp/ptbo-startup-before > /tmp/ptbo-startup-before.log 2>&1 &
           for attempt in $(seq 1 30); do
-            if curl --fail --silent http://127.0.0.1:4174/city-explorer/ >/dev/null; then
+            if curl --fail --silent http://127.0.0.1:4174/city-explorer/ >/dev/null && curl --fail --silent http://127.0.0.1:4176/city-explorer/ >/dev/null; then
               exit 0
             fi
             sleep 1
@@ -136,7 +155,13 @@ jobs:
           exit 1
 
       - name: Check road startup and report browser errors
-        run: node tools/check-road-preview-smoke.cjs http://127.0.0.1:4174
+        run: |
+          set +e
+          PTBO_STARTUP_REPORT=artifacts/startup-qa/before.json node tools/check-road-preview-smoke.cjs http://127.0.0.1:4176
+          before_status=$?
+          PTBO_STARTUP_REPORT=artifacts/startup-qa/after.json node tools/check-road-preview-smoke.cjs http://127.0.0.1:4174
+          after_status=$?
+          test $before_status -eq 0 && test $after_status -eq 0
 
       - name: Run authored scene fail-open integration QA
         run: node tools/check-authored-scene.cjs http://127.0.0.1:4174
@@ -157,6 +182,7 @@ jobs:
         with:
           name: city-explorer-browser-qa-${{ github.run_id }}
           path: |
+            artifacts/startup-qa/
             artifacts/driving-qa/
             artifacts/mobile-qa/
             /tmp/ptbo-http.log

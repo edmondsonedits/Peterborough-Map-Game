@@ -1,3 +1,5 @@
+import {selectMappedArrowSupportIndex} from '../city-explorer/fallback-arrow-support.js';
+import {mappedTurnLaneGroups} from '../city-explorer/city-detail-rules.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -29,7 +31,7 @@ test('runtime resolves historical eligibility before filtering and resampling wh
 function runtime(index){
  const state={renderedPavementIndex:index,roadPaintRanges:new Map(),objectCount:0};
  const generatedRoadMeshes=new Map(),streetscapeGroup=new THREE.Group(),document={documentElement:{dataset:{}}};
- const env={THREE,state,generatedRoadMeshes,streetscapeGroup,document,historicalPaintProfile,renderHistoricalPaintProfile,roadProfile,laneCountFor,mappedCycleLaneSides,roadLaneMarkingBoundaries,reviewedPaintTags,lowPowerProfile:false,roadRenderTileCoordinates:()=>({x:0,z:0}),ROAD_RENDER_TILE_SIZE:400,materials:{roadPaintYellow:new THREE.MeshBasicMaterial(),roadPaintWhite:new THREE.MeshBasicMaterial()},drapePaintStrip:()=>[]};
+ const env={THREE,state,generatedRoadMeshes,streetscapeGroup,document,roadGroup:new THREE.Group(),selectMappedArrowSupportIndex,mappedTurnLaneGroups,historicalPaintProfile,renderHistoricalPaintProfile,roadProfile,laneCountFor,mappedCycleLaneSides,roadLaneMarkingBoundaries,reviewedPaintTags,lowPowerProfile:false,roadRenderTileCoordinates:()=>({x:0,z:0}),ROAD_RENDER_TILE_SIZE:400,materials:{roadPaintYellow:new THREE.MeshBasicMaterial(),roadPaintWhite:new THREE.MeshBasicMaterial()},drapePaintStrip:()=>[]};
  return {run:Function(...Object.keys(env),fn('buildRoadMarkings')+';return buildRoadMarkings')(...Object.values(env)),state,generatedRoadMeshes,streetscapeGroup,document};
 }
 test('runtime emits once per validated whole way, strict support and editor ranges determine review count',()=>{
@@ -44,7 +46,7 @@ test('runtime emits once per validated whole way, strict support and editor rang
  }
  const good=runtime(index);for(const s of segments)good.state.roadPaintRanges.set(s.lineId,[]);good.run(segments);
  assert.equal(good.document.documentElement.dataset.roadPaintReviewedWays,'2');assert.equal(good.generatedRoadMeshes.size,2);
- for(const ranges of good.state.roadPaintRanges.values())assert.ok(ranges.length);
+ for(const ranges of good.state.roadPaintRanges.values()){assert.ok(ranges.length);assert.ok(ranges.every(r=>['solid','dash','hatch'].includes(r.kind)));}
  const absent=runtime(new RenderedPavementIndex());absent.run(segments);assert.equal(absent.document.documentElement.dataset.roadPaintReviewedWays,'0');
  const changed=runtime(index);changed.run(segments.map(s=>({...s,historicalPaintProfile:null})));assert.equal(changed.document.documentElement.dataset.roadPaintReviewedWays,'0','old Hospital tag-only override cannot bypass full geometry');
 });
@@ -62,4 +64,12 @@ test('actual fallback parser rejects incomplete chosen source geometry and accep
   run({elements:[...nodes,{...way,nodes:nodes.map(n=>n.id)}]});assert.ok(results.pop());
   run({elements:[...nodes,{...way,nodes:[...nodes.map(n=>n.id),999]}]});assert.equal(results.pop(),null);
  }
+});
+
+test('historical QA visibility selects historical meshes and source range kinds',()=>{
+ const qa=fn('exposeCityQualityQa');
+ assert.match(qa,/historicalPaintVisibility\(wayId\)/);
+ assert.match(qa,/meshType:'historical-road-paint'/);
+ assert.match(fn('buildRoadMarkings'),/kind:range.kind/);
+ assert.match(fn('buildMappedTurnArrows'),/state.finalVisiblePaintIndex \|\| selectMappedArrowSupportIndex/);
 });

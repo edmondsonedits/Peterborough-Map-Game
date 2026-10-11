@@ -75,3 +75,24 @@ test('browser jobs test the exact triggering head rather than an implicit merge 
  const yml=fs.readFileSync(path.join(__dirname,'../.github/workflows/city-explorer-browser-qa.yml'),'utf8');
  assert.equal((yml.match(/ref: \$\{\{ github.event.pull_request.head.sha \|\| github.sha \}\}/g)||[]).length,2);
 });
+test('historical overhead checks require all visible strokes and both expected paint kinds',()=>{
+ const {validateRun}=contract();const view={site:'hospital-overhead',paintVersion:'street-evidence-2',roadSource:'municipal',reviewedWays:6,expectedHistoricalKinds:['solid','dash'],historicalVisibility:{targets:[{kind:'solid',changedPixels:12,brighterPixels:12},{kind:'dash',changedPixels:0,brighterPixels:0}]}};
+ assert.throws(()=>validateRun({label:'after',errors:[],views:[view]}),/historical.*visibility/i);
+ view.historicalVisibility.targets[1].changedPixels=8;view.historicalVisibility.targets[1].brighterPixels=8;validateRun({label:'after',errors:[],views:[view]});
+ view.historicalVisibility.targets.pop();assert.throws(()=>validateRun({label:'after',errors:[],views:[view]}),/historical.*visibility/i);
+});
+test('capture deliberately selects desktop capabilities and rejects an unintended effective profile',async()=>{
+ const api=contract();assert.equal(typeof api.configureCapabilities,'function');let init;
+ await api.configureCapabilities({addInitScript:async fn=>{init=fn;}});
+ const navigator={};require('node:vm').runInNewContext('('+init.toString()+')()',{navigator,Object});
+ assert.equal(navigator.deviceMemory,8);assert.equal(navigator.hardwareConcurrency,8);
+ const entry={label:'after',requestedLowPower:false,errors:[],views:[{site:'fixture',paintVersion:'street-evidence-2',roadSource:'municipal',reviewedWays:6,mappedArrowBuild:{lowPowerProfile:true}}]};
+ assert.throws(()=>api.validateRun(entry),/profile/i);
+ entry.views[0].mappedArrowBuild.lowPowerProfile=false;api.validateRun(entry);
+});
+test('ready-for-review browser validation binds the final generated-asset head without a new source mutation',()=>{
+ const yml=fs.readFileSync(path.join(__dirname,'../.github/workflows/city-explorer-browser-qa.yml'),'utf8');
+ assert.match(yml,/pull_request:\s*types:\s*\[opened, synchronize, reopened, ready_for_review\]/);
+ const geo=fs.readFileSync(path.join(__dirname,'../.github/workflows/build-peterborough-assets.yml'),'utf8');
+ assert.doesNotMatch(geo,/ready_for_review/,'ready transition must not trigger another asset timestamp commit');
+});

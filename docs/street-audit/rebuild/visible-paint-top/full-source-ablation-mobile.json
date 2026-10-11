@@ -1,0 +1,35 @@
+{
+  "lowPower": true,
+  "sourceWays": 5953,
+  "segments": 55928,
+  "municipalTriangles": 477776,
+  "boundedFallbackFaces": 477776,
+  "indexMilliseconds": 0.0020830000012210803,
+  "historicalAndStubbedGenericMilliseconds": 1777.797305,
+  "arrowMilliseconds": 1166.785915999997,
+  "cpuMilliseconds": 3299.089,
+  "mappedArrowBuild": {
+    "count": 173,
+    "vertices": 162903,
+    "triangles": 54301,
+    "cpuMilliseconds": 1166.543029999997,
+    "lowPowerProfile": true
+  },
+  "historical": [
+    {
+      "lineId": "way/250810393:0",
+      "triangles": 1344
+    },
+    {
+      "lineId": "way/250811912:0",
+      "triangles": 4610
+    }
+  ],
+  "paintBufferBytes": 6507540,
+  "peakRssBytes": 1606987776,
+  "limitations": [
+    "Approximate full-source municipal fixture omits global bridge lifts and water recess in municipal heights; actual OSM bridge lifts/ribbons are built",
+    "Generic paint draping stubbed, so this measures historical/support/arrow work, not complete paint or browser startup",
+    "CPU Node only; RSS is entirefixtureprocess not incrementalpaint/browsermemory"
+  ]
+}

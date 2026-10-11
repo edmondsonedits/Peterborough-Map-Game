@@ -87,11 +87,12 @@ export function historicalPaintProfile(sourcePoints, tags, lineId) {
  * and interior at <=0.1 m along/across each mitered quadrilateral. This is finite
  * sampling, not exact polygon clipping: sub-0.1 m holes can remain undetected.
  * Triangle edge midpoints/centroids adapt to <=1.5 mm lift residual (8 levels
- * maximum); unresolved support or curvature omits the whole stroke. Coordinates
+ * maximum); missing support omits the whole stroke. With full support, only
+ * unresolved local height-step or collapsed Float32 leaf triangles are omitted. Coordinates
  * are sampled after Float32 XZ rounding. Index inclusion tolerance is 1e-8.
  * No terrain/parking/bridge fallback.
  */
-export function drapeHistoricalStroke(stroke, index, referenceHeight=null) {
+export function drapeHistoricalStroke(stroke, index, referenceHeight=null, contact=null) {
   const points=stroke?.points,width=stroke?.width;
   if(!Array.isArray(points)||points.length<2||!Number.isFinite(width)||width<=0||width>1
     ||!points.every(p=>p && [p.x,p.z].every(Number.isFinite)) || !index?.sample) return [];
@@ -104,7 +105,7 @@ export function drapeHistoricalStroke(stroke, index, referenceHeight=null) {
       if(denom<.25)return null;
       n={x:(a.x+b.x)/denom,z:(a.z+b.z)/denom};
     }
-    return [off(p,n,width/2),off(p,n,-width/2)];
+    return [{...off(p,n,width/2),station:p.station},{...off(p,n,-width/2),station:p.station}];
   });
   if(sections.some(s=>!s))return [];
   const cache=new Map();
@@ -119,25 +120,38 @@ export function drapeHistoricalStroke(stroke, index, referenceHeight=null) {
   const sample=p=> {
     // Sample the XZ that the final Float32 GPU buffer will actually contain.
     const point={x:Math.fround(p.x),z:Math.fround(p.z)},y=height(point);
-    return y===null||Math.abs(Math.fround(y+.008)-y-.008)>.0015?null:[point.x,Math.fround(y+.008),point.z];
+    if(y===null||Math.abs(Math.fround(y+.008)-y-.008)>.0015)return null;
+    const result=[point.x,Math.fround(y+.008),point.z];if(Number.isFinite(p.station))result.station=p.station;return result;
   };
+  const omittedPatches=[];
+  const area=(a,b,c)=>((b[2]-a[2])*(c[0]-a[0])-(b[0]-a[0])*(c[2]-a[2]))/2;
+  function omit(a,b,c,reason) {
+    const stations=[a.station,b.station,c.station];
+    omittedPatches.push({kind:stroke.kind,reason,positionsXZ:[a[0],a[2],b[0],b[2],c[0],c[2]],
+      stationFrom:stations.every(Number.isFinite)?Math.min(...stations):null,
+      stationTo:stations.every(Number.isFinite)?Math.max(...stations):null,
+      areaM2:Math.abs(area(a,b,c)),spanM:Math.max(Math.hypot(a[0]-b[0],a[2]-b[2]),Math.hypot(a[0]-c[0],a[2]-c[2]),Math.hypot(b[0]-c[0],b[2]-c[2]))});
+    return true;
+  }
   function adaptiveTriangle(a,b,c,output,depth=0) {
     const blend=(u,v,w)=>({x:a[0]*u+b[0]*v+c[0]*w,z:a[2]*u+b[2]*v+c[2]*w,
-      y:a[1]*u+b[1]*v+c[1]*w});
+      y:a[1]*u+b[1]*v+c[1]*w,station:a.station*u+b.station*v+c.station*w});
     const probes=[blend(.5,.5,0),blend(0,.5,.5),blend(.5,0,.5),blend(1/3,1/3,1/3)];
     let error=0;
     for(const p of probes) {
       const y=height(p);if(y===null)return false;
       error=Math.max(error,Math.abs(p.y-y-.008));
     }
+    if(area(a,b,c)<=1e-12)return omit(a,b,c,'Float32-collapsed-or-downward');
     if(error<=.0015) {output.push(...a,...b,...c);return true;}
-    if(depth>=8)return false; // No inaccurate or partly unsupported stroke escapes.
+    if(depth>=8)return omit(a,b,c,'unresolved-visible-height-step');
     const ab=sample(probes[0]),bc=sample(probes[1]),ca=sample(probes[2]);
     if(!ab||!bc||!ca)return false;
     return adaptiveTriangle(a,ab,ca,output,depth+1)&&adaptiveTriangle(ab,b,bc,output,depth+1)
       &&adaptiveTriangle(ca,bc,c,output,depth+1)&&adaptiveTriangle(ab,bc,ca,output,depth+1);
   }
-  const positions=[];
+  const positions=[],baseTriangles=[];
+  // Preflight the entire stroke support grid before accepting any local Y gaps.
   for(let i=1;i<sections.length;i++) {
     const a=sections[i-1],b=sections[i],steps=Math.max(1,Math.ceil(Math.max(distance(a[0],b[0]),distance(a[1],b[1]))/.1));
     let previous=null;
@@ -149,10 +163,25 @@ export function drapeHistoricalStroke(stroke, index, referenceHeight=null) {
         const v=sample(lerp(left,right,c/crossSteps));if(!v)return [];
         if(c===0)first=v;if(c===crossSteps)last=v;
       }
-      if(previous && (!adaptiveTriangle(previous[0],previous[1],last,positions)
-        ||!adaptiveTriangle(previous[0],last,first,positions)))return [];
+      if(previous)baseTriangles.push([previous[0],previous[1],last],[previous[0],last,first]);
       previous=[first,last];
     }
+  }
+  for(const triangle of baseTriangles)if(!adaptiveTriangle(...triangle,positions))return [];
+  if(contact) {
+    contact.omittedPatches=omittedPatches;
+    contact.omittedPatchCount=omittedPatches.length;
+    contact.omittedAreaM2=omittedPatches.reduce((sum,p)=>sum+p.areaM2,0);
+    contact.equivalentLengthM=contact.omittedAreaM2/width;
+    contact.maxPatchSpanM=Math.max(0,...omittedPatches.map(p=>p.spanM));
+    const intervals=omittedPatches.filter(p=>p.stationFrom!==null).map(p=>[p.stationFrom,p.stationTo]).sort((a,b)=>a[0]-b[0]);
+    let end=-Infinity,start=-Infinity,maxGap=0;
+    for(const [a,b] of intervals){if(a>end+1e-8){start=a;end=b;}else end=Math.max(end,b);maxGap=Math.max(maxGap,end-start);}
+    // Affected station projection is not an actual full-width stripe gap.
+    contact.maxAffectedStationSpanM=maxGap;
+    contact.eligibleAreaM2=baseTriangles.reduce((sum,t)=>sum+Math.abs(area(...t)),0);
+    contact.emittedAreaM2=0;for(let i=0;i<positions.length;i+=9)contact.emittedAreaM2+=Math.abs(area(positions.slice(i,i+3),positions.slice(i+3,i+6),positions.slice(i+6,i+9)));
+    contact.quantizationAreaResidualM2=contact.eligibleAreaM2-contact.emittedAreaM2-contact.omittedAreaM2;
   }
   return positions;
 }
@@ -160,8 +189,8 @@ export function drapeHistoricalStroke(stroke, index, referenceHeight=null) {
  * Convert reversed source chain c to coverage.sourceLength - c at the caller.
  */
 export function renderHistoricalPaintProfile(profile,index,{referenceHeight=null,excludedStationIntervals=[]}={}) {
-  const positions=[],strokes=[];
-  if(!Array.isArray(excludedStationIntervals)||excludedStationIntervals.some(v=>!Array.isArray(v)||v.length!==2||!v.every(Number.isFinite)||v[1]<v[0])) return {positions,strokes,reviewed:false};
+  const positions=[],strokes=[],contact={omittedPatchCount:0,omittedAreaM2:0,equivalentLengthM:0,maxAffectedStationSpanM:0,maxPatchSpanM:0,eligibleAreaM2:0,emittedAreaM2:0,quantizationAreaResidualM2:0,omittedPatches:[]};
+  if(!Array.isArray(excludedStationIntervals)||excludedStationIntervals.some(v=>!Array.isArray(v)||v.length!==2||!v.every(Number.isFinite)||v[1]<v[0])) return {positions,strokes,contact,reviewed:false};
   for(const s of profile?.strokes??[]) {
     let intervals=[[s.points[0].station,s.points.at(-1).station]];
     for(const [a,b] of excludedStationIntervals) intervals=intervals.flatMap(([lo,hi])=>b<=lo||a>=hi?[[lo,hi]]:[[lo,Math.min(hi,a)],[Math.max(lo,b),hi]].filter(([x,y])=>y>x));
@@ -169,10 +198,15 @@ export function renderHistoricalPaintProfile(profile,index,{referenceHeight=null
       const at=station=>{let i=0;while(i<s.points.length-2 && s.points[i+1].station<station)i++;
         const a=s.points[i],b=s.points[i+1];return lerp(a,b,(station-a.station)/(b.station-a.station));};
       const clipped={...s,points:[at(from),...s.points.filter(p=>p.station>from && p.station<to),at(to)]};
-      const vertices=drapeHistoricalStroke(clipped,index,referenceHeight);if(!vertices.length)continue;
-      strokes.push({startVertex:positions.length/3,vertexCount:vertices.length/3,kind:s.kind,from,to});
+      const localContact={};
+      const vertices=drapeHistoricalStroke(clipped,index,referenceHeight,localContact);if(!localContact.omittedPatches)continue;
+      for(const key of ['omittedPatchCount','omittedAreaM2','equivalentLengthM','eligibleAreaM2','emittedAreaM2','quantizationAreaResidualM2'])contact[key]+=localContact[key];
+      for(const key of ['maxAffectedStationSpanM','maxPatchSpanM'])contact[key]=Math.max(contact[key],localContact[key]);
+      contact.omittedPatches.push(...localContact.omittedPatches);
+      if(!vertices.length)continue;
+      strokes.push({startVertex:positions.length/3,vertexCount:vertices.length/3,kind:s.kind,from,to,contact:localContact});
       for(const v of vertices)positions.push(v);
     }
   }
-  return {positions,strokes,reviewed:positions.length>0};
+  return {positions,strokes,contact,reviewed:positions.length>0};
 }

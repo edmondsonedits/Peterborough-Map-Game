@@ -4,10 +4,10 @@ const path = require('node:path');
 const { execFileSync } = require('node:child_process');
 const BEFORE_COMMIT = '2496b157ebeb1d995278373297d5790b60a4150a';
 const SITES = [
- {name:'hospital-overhead',group:'hospital',lat:44.301005,lon:-78.34631,altitude:75,distance:1,bearing:0,pitch:-1.5},
+ {name:'hospital-overhead',group:'hospital',historicalWayId:'250811912',expectedHistoricalKinds:['solid','dash'],lat:44.301005,lon:-78.34631,altitude:75,distance:1,bearing:0,pitch:-1.5},
  {name:'hospital-eastbound',group:'hospital',lat:44.301005,lon:-78.34631,altitude:12,distance:42,bearing:285,pitch:-0.24},
  {name:'hospital-westbound',group:'hospital',lat:44.301005,lon:-78.34631,altitude:12,distance:42,bearing:105,pitch:-0.24},
- {name:'medical-overhead',group:'medical',lat:44.30171,lon:-78.34518,altitude:85,distance:1,bearing:0,pitch:-1.5},
+ {name:'medical-overhead',group:'medical',historicalWayId:'250810393',expectedHistoricalKinds:['solid','hatch'],lat:44.30171,lon:-78.34518,altitude:85,distance:1,bearing:0,pitch:-1.5},
  {name:'medical-northbound',group:'medical',lat:44.30171,lon:-78.34518,altitude:20,distance:55,bearing:180,pitch:-0.24},
  {name:'medical-southbound',group:'medical',lat:44.30171,lon:-78.34518,altitude:20,distance:55,bearing:0,pitch:-0.24},
  {name:'compound-left-through',group:'compound-arrows',wayId:'364843830',expectedCompoundKind:'left;through',lat:44.27218,lon:-78.341218,altitude:35,distance:1,bearing:0,pitch:-1.5},
@@ -64,6 +64,11 @@ async function captureSite(page, site, {label,output}) {
    } catch(error) {view.arrowVisibilityError=String(error.message);}
   }
  }
+ if(site.historicalWayId && label==='after') {
+  view.historicalWayId=site.historicalWayId;view.expectedHistoricalKinds=site.expectedHistoricalKinds;
+  try {view.historicalVisibility=await page.evaluate(wayId=>window.__PTBO_CITY_QA__.historicalPaintVisibility(wayId),site.historicalWayId);}
+  catch(error){view.historicalVisibilityError=String(error.message);}
+ }
  // Always capture pixels before any assertion about renderer or visibility.
  // The QA probe restores arrow meshes and rerenders in its own finally block.
  view.screenshot=label+'-'+site.name+'.png';
@@ -74,8 +79,15 @@ async function captureSite(page, site, {label,output}) {
 function validateRun(entry) {
  if(entry.views.some(view=>!String(view.roadSource).includes('municipal'))) throw new Error('Municipal road surfaces did not load');
  if(entry.label==='after') {
+  if(typeof entry.requestedLowPower==='boolean' && entry.views.some(view=>view.mappedArrowBuild?.lowPowerProfile!==entry.requestedLowPower)) throw new Error('Effective renderer profile did not match requested synthetic QA profile');
   if(entry.views.some(view=>view.paintVersion!=='street-evidence-2')) throw new Error('New paint renderer was not active');
   if(entry.views.some(view=>view.reviewedWays!==6)) throw new Error('Expected six reviewed GeoJSON way IDs; inspect actual support and captured screenshots');
+  for(const view of entry.views.filter(view=>view.expectedHistoricalKinds)) {
+   const targets=view.historicalVisibility?.targets || [];
+   if(view.historicalVisibilityError || !targets.length || view.expectedHistoricalKinds.some(kind=>!targets.some(t=>t.kind===kind)) || targets.some(t=>!Number.isFinite(t.changedPixels)||!Number.isFinite(t.brighterPixels)||t.changedPixels<3||t.brighterPixels<3)) {
+    throw new Error(`Candidate historical paint visibility failed at ${view.site}: ${view.historicalVisibilityError || JSON.stringify(view.historicalVisibility)}`);
+   }
+  }
   for(const view of entry.views.filter(view=>view.expectedCompoundKind)) {
    const normalize=kind=>String(kind).split(';').sort().join(';');
    const targets=view.arrowVisibility?.targets?.filter(target=>normalize(target.kind)===normalize(view.expectedCompoundKind)) || [];
@@ -91,6 +103,14 @@ function validateRun(entry) {
 function entryURL(root, lowPower=false) {
  return root+'/city-explorer/?qa=1&municipalRoads=1'+(lowPower?'&lite=1':'');
 }
+async function configureCapabilities(page) {
+ // Synthetic capability values select the full renderer deterministically.
+ // Explicit lite=1 still selects low-power; this is not physical GPU evidence.
+ await page.addInitScript(()=>{
+  Object.defineProperty(navigator,'deviceMemory',{configurable:true,get:()=>8});
+  Object.defineProperty(navigator,'hardwareConcurrency',{configurable:true,get:()=>8});
+ });
+}
 async function main() {
  const {chromium}=require('playwright');
  const before=process.argv[2]||'http://127.0.0.1:4175';
@@ -100,13 +120,14 @@ async function main() {
  const commits=commitMetadata();
  fs.mkdirSync(output,{recursive:true});
  const browser=await chromium.launch({headless:true,args:['--use-gl=angle','--use-angle=swiftshader','--enable-webgl']});
- const report={method:'Same headless software-rendered Chromium, viewport and cameras. Before commit is the declared exact baseline; candidate commit is actual local git HEAD. Not real phone GPU benchmarking, current-condition verification or survey accuracy.',commits,lowPower:process.env.PTBO_PAINT_QA_LOW_POWER==='1',runs:[]};
+ const report={method:'Same headless software-rendered Chromium, synthetic 8 GB/8-thread capability values, viewport and cameras. Explicit lite selects the low-power renderer; actual effective profile is asserted. Before commit is the declared exact baseline; candidate commit is actual local git HEAD. Not real phone GPU benchmarking, current-condition verification or survey accuracy.',commits,lowPower:process.env.PTBO_PAINT_QA_LOW_POWER==='1',runs:[]};
  try {
   for(const [label,root] of [['before',before],['after',after]]) {
    const page=await browser.newPage({viewport:{width:1280,height:720},deviceScaleFactor:1});
+   await configureCapabilities(page);
    const errors=[];
    page.on('pageerror',error=>errors.push(String(error.message)));
-   const entry={label,root,commit:commits[label],errors,views:[]};
+   const entry={label,root,commit:commits[label],requestedLowPower:report.lowPower,errors,views:[]};
    report.runs.push(entry);
    const start=Date.now();
    await page.goto(entryURL(root,report.lowPower),{waitUntil:'domcontentloaded',timeout:90000});
@@ -125,5 +146,5 @@ async function main() {
   await browser.close();
  }
 }
-module.exports={entryURL,BEFORE_COMMIT,SITES,selectSites,commitMetadata,captureSite,validateRun};
+module.exports={configureCapabilities,entryURL,BEFORE_COMMIT,SITES,selectSites,commitMetadata,captureSite,validateRun};
 if(require.main===module)main().catch(error=>{console.error(error);process.exitCode=1;});

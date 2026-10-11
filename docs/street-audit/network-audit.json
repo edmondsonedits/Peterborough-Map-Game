@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "baseline": "c10144ebdded6bda30e338d30883467c37e08123",
+  "baseline": "8761278c307ee627f979baa803bc9ef78a1bee0d",
   "baselineMeaning": "Checkout HEAD only; file hashes identify the exact inputs, including local modifications.",
   "scope": "Every packaged renderable way, including service roads. NOT photographic review of every road. ORN provides lane-count evidence, not paint pattern.",
   "method": "NAD83/UTM17N; ~12 m samples; exact normalized names, <=8 m offset, <=20 degree heading difference; >=90% coverage and one count for raw numeric comparison; interpret only after the compatibility gate. Near-parallel conflicting counts rejected; event measure ranges respected. Raw status preserves numeric comparisons; comparisonReview separately gates direction/carriageway compatibility including signed local geometry. Paint override means eligibility evaluated using the actual historical whole-source geometry and road-profile guards (or existing Sherbrooke guard). Final rendered triangle support and emitted paint are not evaluated by this data audit; eligibility is not field accuracy. No automatic OSM edits.",
@@ -34,7 +34,7 @@
     "tools/street_lane_compatibility.py": "bf5368f18ff5681f2643150e7fd43405c6439d2ad38bf69a25fa7afd6ba88f67",
     "tools/evaluate_historical_paint.mjs": "414a43d56859468d0609ce71042f3924915ba9d875694f7ea27fb8f8ec77afd1",
     "city-explorer/street-paint.js": "97bd2d0543d152eebce9532e3342ba9b4a2dfb24a55b10ab3b6f92ee65da02ad",
-    "city-explorer/historical-paint-profiles.js": "c89833f0f0469ed411e2f857c11d89f817b1d8cd072795b4d8b1f3ddde0bec8c",
+    "city-explorer/historical-paint-profiles.js": "3babf2fa4a61af3712d3d7e19dc8f5e87bd28a24739af22e2cf543455983bce8",
     "city-explorer/road-network.js": "eaa01c8b6774980c2b59de2efecb89df4de07d98ca9e45e55679685c5241974b"
   },
   "summary": {
