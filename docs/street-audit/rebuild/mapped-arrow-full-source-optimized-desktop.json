@@ -1,0 +1,54 @@
+{
+  "scope": "Approximate full packaged-source workload; not browser-equivalent",
+  "limitations": [
+    "Global bridge elevation profiles omitted",
+    "Water recess omitted",
+    "Global app bridge lifts and water effects are not reproduced by this source fixture",
+    "CPU and memory are local Node measurements, not browser frame time or GPU memory",
+    "Support uses finite seven-probe samples, not proof against arbitrarily microscopic gaps"
+  ],
+  "profile": "desktop",
+  "sourceRoadWays": 5953,
+  "sourceRoadSegments": 77915,
+  "sourcePavementPolygons": 6502,
+  "finalApproximatePavementTriangles": 633588,
+  "eligibleMappedWays": 140,
+  "emittedMappedWays": 134,
+  "nonUpwardTriangles": 0,
+  "emittedArrows": 173,
+  "meshCount": 5,
+  "vertices": 162792,
+  "triangles": 54264,
+  "attributeBufferBytes": 5860512,
+  "buildWallMilliseconds": 1308.0733230000005,
+  "buildCpuMilliseconds": 1487.677,
+  "processPeakRssBytes": 1908748288,
+  "fixtureMilliseconds": 17260.773258,
+  "kinds": [
+    {
+      "kind": "left",
+      "arrows": 132,
+      "vertices": 123984
+    },
+    {
+      "kind": "right",
+      "arrows": 28,
+      "vertices": 26649
+    },
+    {
+      "kind": "through",
+      "arrows": 11,
+      "vertices": 9831
+    },
+    {
+      "kind": "left;through",
+      "arrows": 1,
+      "vertices": 1164
+    },
+    {
+      "kind": "through;right",
+      "arrows": 1,
+      "vertices": 1164
+    }
+  ]
+}

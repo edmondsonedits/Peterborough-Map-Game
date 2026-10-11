@@ -1,0 +1,16 @@
+{
+ "href": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/directories/arcgisoutput/LIO_Imagery/Ontario_Imagery_Web_Map_Service_MapServer/_ags_map666f36964a394a2b99a007bb29a75d33.jpg",
+ "width": 2000,
+ "height": 1400,
+ "extent": {
+  "xmin": -8721626.0688241608,
+  "ymin": 5512078.9546998581,
+  "xmax": -8721292.1103517823,
+  "ymax": 5512312.7256305227,
+  "spatialReference": {
+   "wkid": 102100,
+   "latestWkid": 3857
+  }
+ },
+ "scale": 631.10136276209232
+}

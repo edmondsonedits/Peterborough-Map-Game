@@ -41,27 +41,18 @@ def comparison_review(raw_status, counts):
     return 'insufficient-evidence'
 
 
-def paint_overrides(root, ways):
-    """Evaluate the actual renderer guard, not a duplicate list of reviewed IDs.
+def paint_eligibility(root, ways):
+    """Evaluate real whole-source runtime guards; final pavement support is unknown.
 
-    Data-URL import keeps the standalone ESM module usable without changing the
-    repository's module mode. Fail loudly rather than label an unchecked paint
-    override as applied. No renderer file is modified.
+    Fail loudly if Node or any evaluator dependency fails. Eligibility never
+    means paint was emitted or that current field conditions were verified.
     """
-    script = """
-import fs from 'node:fs';
-const source = fs.readFileSync(process.argv[1], 'utf8');
-const { reviewedPaintTags } = await import('data:text/javascript;base64,' + Buffer.from(source).toString('base64'));
-const ways = JSON.parse(fs.readFileSync(0, 'utf8'));
-const result = {};
-for (const way of ways) {
-  const tags = reviewedPaintTags(way.tags || {}, String(way.id));
-  if (tags !== way.tags && tags['sim:paint:evidence']) result[String(way.id)] = tags['sim:paint:evidence'];
-}
-process.stdout.write(JSON.stringify(result));
-"""
-    result = subprocess.run(['node', '--input-type=module', '-e', script,
-                             str(root / 'city-explorer/street-paint.js')],
+    result = subprocess.run(['node', str(root / 'tools/evaluate_historical_paint.mjs')],
                             input=json.dumps(ways), capture_output=True, text=True,
                             check=True)
     return json.loads(result.stdout)
+
+
+def paint_overrides(root, ways):
+    """Compatibility view of eligible evidence IDs, not renderer emission."""
+    return {key: value['evidence'] for key, value in paint_eligibility(root, ways).items()}

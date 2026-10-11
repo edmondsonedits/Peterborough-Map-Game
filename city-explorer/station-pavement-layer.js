@@ -3,8 +3,9 @@ import { createPavementField, conformPavementTriangles } from './pavement-contin
 
 /** Local reconstruction only. The municipal outlines remain the ownership mask;
  * all resulting pieces use the same metric triangulated height field. */
-export function reconcileStationPavement({ THREE, group, polygons, center, terrainHeight, roadIndex, Index }) {
-  const radius = 240;
+export function reconcileStationPavement({ THREE, group, polygons, center, terrainHeight, roadIndex, Index, radius = 240, heightSmoothing = 0 }) {
+  if (!Number.isFinite(radius) || radius <= 0 || !Number.isFinite(heightSmoothing) || heightSmoothing < 0)
+    throw new TypeError('Invalid pavement radius or heightSmoothing options');
   const bounds = [center.x - radius, center.z - radius, center.x + radius, center.z + radius];
   const box = [[[bounds[0], bounds[1]], [bounds[2], bounds[1]], [bounds[2], bounds[3]], [bounds[0], bounds[3]], [bounds[0], bounds[1]]]];
   const intersects = (a, b) => a[0] <= b[2] && a[2] >= b[0] && a[1] <= b[3] && a[3] >= b[1];
@@ -16,7 +17,12 @@ export function reconcileStationPavement({ THREE, group, polygons, center, terra
   if (!roadPolygons.length) return null;
   const roads = clipping.intersection(clipping.union(...roadPolygons), box);
   const owned = clipping.intersection(clipping.union(...allPolygons), box);
-  const field = createPavementField({ center, radius, spacing: 4, heightAt(x, z) {
+  // Smoothing taps share raw samples across adjacent lattice nodes. Keep the
+  // default Station datum byte-for-byte equivalent to the unsmoothed path.
+  const heightCache = new Map();
+  function rawHeight(x, z) {
+    const key = `${x}:${z}`;
+    if (heightCache.has(key)) return heightCache.get(key);
     const ground = terrainHeight(x, z) + 0.148;
     let sum = ground, weights = 1;
     for (const road of roadIndex.sampleAll(x, z, 24)) {
@@ -27,7 +33,18 @@ export function reconcileStationPavement({ THREE, group, polygons, center, terra
       sum += Math.max(ground, road.height + 0.008) * weight;
       weights += weight;
     }
-    return Math.max(ground, sum / weights);
+    const height = Math.max(ground, sum / weights);
+    heightCache.set(key, height);
+    return height;
+  }
+  const field = createPavementField({ center, radius, spacing: 4, heightAt(x, z) {
+    if (!heightSmoothing) return rawHeight(x, z);
+    let total = 0;
+    for (let dx = -1; dx <= 1; dx++) for (let dz = -1; dz <= 1; dz++) {
+      const weight = (dx === 0 ? 2 : 1) * (dz === 0 ? 2 : 1);
+      total += rawHeight(x + dx * heightSmoothing, z + dz * heightSmoothing) * weight;
+    }
+    return Math.max(terrainHeight(x, z) + 0.148, total / 16);
   } });
   const index = new Index();
   const snapshot = [];
@@ -90,7 +107,7 @@ export function reconcileStationPavement({ THREE, group, polygons, center, terra
       replacements.push({ mesh, replacement });
       changedMeshes++;
       for (let i = 0; i < original.length; i += 3) {
-        if (Math.hypot(original[i] - center.x, original[i + 2] - center.z) < 200)
+        if (Math.hypot(original[i] - center.x, original[i + 2] - center.z) < Math.min(200, radius * 5 / 6))
           maximumHeightChange = Math.max(maximumHeightChange, Math.abs(field.sample(original[i], original[i + 2]) + offset - original[i + 1]));
       }
     } else reusedMeshes++;
@@ -101,5 +118,5 @@ export function reconcileStationPavement({ THREE, group, polygons, center, terra
     }
   }
   for (const { mesh, replacement } of replacements) { mesh.geometry.dispose(); mesh.geometry = replacement; }
-  return { index, field, snapshot, diagnostics: { changedMeshes, reusedMeshes, maximumHeightChange, spacing: 4, radius, triangles: index.triangleCount } };
+  return { index, field, snapshot, diagnostics: { changedMeshes, reusedMeshes, maximumHeightChange, spacing: 4, radius, heightSmoothing, triangles: index.triangleCount } };
 }

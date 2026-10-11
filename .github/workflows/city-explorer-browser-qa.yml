@@ -12,13 +12,33 @@ on:
     paths:
       - 'tools/check-station-driving.cjs'
       - 'tools/check-mobile-controls.cjs'
+      - 'tools/check-street-paint-comparison.cjs'
       - 'tools/check-authored-scene.cjs'
       - 'tools/test_authored_scene_runtime.mjs'
       - 'tools/test_authored_scene_qa.cjs'
       - 'tools/authored-scene-qa.cjs'
       - 'tools/test_street_*.mjs'
+      - 'tools/test_street_paint_capture_contract.cjs'
+      - 'tools/test_mobile_input_lifecycle.cjs'
+      - 'tools/test_hospital_*.mjs'
+      - 'tools/hospital-surface-fixture.mjs'
+      - 'city-explorer/station-pavement-layer.js'
+      - 'tools/evaluate_historical_paint.mjs'
+      - 'tools/test_current_street_audit.py'
+      - 'tools/test_fallback_arrow_*.mjs'
+      - 'city-explorer/fallback-arrow-support.js'
+      - 'tools/test_historical_paint_*.mjs'
+      - 'tools/test_mapped_arrow_*.mjs'
+      - 'tools/audit_street_lane_evidence.py'
+      - 'tools/street_lane_compatibility.py'
+      - 'tools/build_road_review_tracker.py'
+      - 'tools/test_road_review_tracker.py'
+      - 'tools/test_street_lane_audit.py'
+      - 'docs/street-audit/**'
       - 'city-explorer/app.js'
       - 'city-explorer/street-paint.js'
+      - 'city-explorer/historical-paint-*.js'
+      - 'city-explorer/mapped-arrow-*.js'
       - 'city-explorer/city-detail-rules.js'
       - 'city-explorer/road-network.js'
       - 'city-explorer/feature-utils.js'
@@ -47,11 +67,28 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
+
+      - name: Set up pinned audit runtime
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install pinned audit dependencies
+        run: python -m pip install shapely==2.0.7 pyproj==3.7.0
+
+      - name: Validate audit and deterministic review tracker
+        run: |
+          python tools/test_current_street_audit.py
+          python tools/test_street_lane_audit.py
+          python tools/test_road_review_tracker.py
+          python tools/build_road_review_tracker.py --check
 
       - name: Run authored scene runtime unit tests
         run: |
@@ -66,6 +103,9 @@ jobs:
           node --check city-explorer/road-wheel-contact.js
           node tools/test_street_marking_evidence.mjs
           node tools/test_street_paint_runtime_edges.mjs
+          node --test tools/test_mobile_input_lifecycle.cjs tools/test_street_paint_capture_contract.cjs
+          node --test --test-concurrency=2 tools/test_historical_paint_*.mjs tools/test_mapped_arrow_*.mjs tools/test_hospital_*.mjs tools/test_fallback_arrow_*.mjs
+          node tools/test_fallback_arrow_runtime.mjs --desktop
           node tools/test_city_detail_rules.mjs
           node tools/test_citywide_road_quality.mjs
           node tools/test_fallback_junction_geometry.mjs
@@ -125,9 +165,11 @@ jobs:
 
   hospital-paint-comparison:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -151,18 +193,36 @@ jobs:
             sleep 1
           done
           exit 1
-      - name: Capture Hospital overhead and both travel directions
+      - name: Capture Hospital and Medical overhead and both travel directions
         env:
           PTBO_QA_ARTIFACT_DIR: artifacts/hospital-paint-qa
-          PTBO_PAINT_QA_SITES: hospital
+          PTBO_PAINT_QA_SITES: hospital,medical
+          PTBO_PAINT_QA_BEFORE_COMMIT: 2496b157ebeb1d995278373297d5790b60a4150a
         run: node tools/check-street-paint-comparison.cjs http://127.0.0.1:4175 http://127.0.0.1:4174
-      - name: Preserve Hospital comparison evidence
+      - name: Capture both compound-arrow sites
+        if: success() || failure()
+        env:
+          PTBO_QA_ARTIFACT_DIR: artifacts/compound-arrow-qa
+          PTBO_PAINT_QA_SITES: compound-arrows
+          PTBO_PAINT_QA_BEFORE_COMMIT: 2496b157ebeb1d995278373297d5790b60a4150a
+        run: node tools/check-street-paint-comparison.cjs http://127.0.0.1:4175 http://127.0.0.1:4174
+      - name: Capture compound arrows with low-power municipal rendering
+        if: success() || failure()
+        env:
+          PTBO_QA_ARTIFACT_DIR: artifacts/compound-arrow-low-power-qa
+          PTBO_PAINT_QA_SITES: compound-arrows
+          PTBO_PAINT_QA_LOW_POWER: '1'
+          PTBO_PAINT_QA_BEFORE_COMMIT: 2496b157ebeb1d995278373297d5790b60a4150a
+        run: node tools/check-street-paint-comparison.cjs http://127.0.0.1:4175 http://127.0.0.1:4174
+      - name: Preserve Hospital, Medical and compound-arrow comparison evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: hospital-paint-qa-${{ github.run_id }}
           path: |
             artifacts/hospital-paint-qa/
+            artifacts/compound-arrow-qa/
+            artifacts/compound-arrow-low-power-qa/
             /tmp/ptbo-before.log
             /tmp/ptbo-after.log
           if-no-files-found: warn

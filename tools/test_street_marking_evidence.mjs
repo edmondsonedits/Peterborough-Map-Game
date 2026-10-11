@@ -129,28 +129,18 @@ test('Hospital shared-turn paint is bounded, guarded and leaves original geometr
  }
  for(const id of ['739159886','737434011','650896572','460581459'])assert.equal(helper.reviewedPaintTags({name:'Sherbrooke Street',highway:'secondary',lanes:'4'},id).lanes,'2');
 });
-test('actual Hospital paint has solid outer edges, broken inner edges, and stays on surface',()=>{
+test('synthetic Hospital identity cannot receive the historical multi-line profile',()=>{
  const {group}=renderPaint({highway:'tertiary',name:'Hospital Drive',lanes:'2'},'way/250811912:0');
- assert.equal(group.children.length,2);
- for(const mesh of group.children) {
-  assert.equal(mesh.userData.material,'roadPaintYellow');
-  const solid=mesh.userData.type==='road-centre-lines';
-  const p=mesh.geometry.getAttribute('position');
-  const expected=solid?1.62:1.38, halfWidth=solid?.065:.075;
-  for(let i=0;i<p.count;i++) {
-   assert.ok(Math.abs(Math.abs(p.getZ(i))-expected)<=halfWidth+1e-6,'solid outside; broken inside');
-   assert.ok(Math.abs(p.getY(i)-(10+.02*p.getX(i)+.01*p.getZ(i)+.008))<2e-6);
-  }
-  const xs=Array.from({length:p.count},(_,i)=>p.getX(i));
-  assert.ok(xs.every(x=>x>=0&&x<=20));
-  if(!solid)assert.ok(xs.every(x=>x<=4.200001||x>=10.499999&&x<=14.700001),'dashes retain real gaps');
- }
+ assert.equal(group.children.length,1);
+ const mesh=group.children[0];assert.equal(mesh.userData.type,'road-centre-lines');
+ const p=mesh.geometry.getAttribute('position');
+ for(let i=0;i<p.count;i++) assert.ok(Math.abs(p.getZ(i))<=.065001,'only original generic two-lane centre remains');
 });
 
-test('Hospital actual paint respects junction trims and unsupported surfaces in both geometry directions',()=>{
+test('generic fallback for unvalidated Hospital geometry respects junction trims and support',()=>{
  for(const reverse of [false,true]) {
   const {group}=renderPaint({highway:'tertiary',name:'Hospital Drive',lanes:'2'},'way/250811912:0',{reverse,junction:true,hole:true});
-  assert.equal(group.children.length,2);
+  assert.equal(group.children.length,1);
   for(const mesh of group.children) {
    const p=mesh.geometry.getAttribute('position');
    for(let i=0;i<p.count;i++) {

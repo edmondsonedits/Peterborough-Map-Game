@@ -1,0 +1,199 @@
+{
+  "status": "pass",
+  "reports": [
+    {
+      "lowPower": false,
+      "key": "paint:historical:way/250810393:0",
+      "triangles": 1858,
+      "probes": 13006,
+      "maxLiftErrorMetres": 0.0014924719885867146,
+      "minLiftMetres": 0.006538696785391096
+    },
+    {
+      "lowPower": false,
+      "key": "paint:historical:way/250811912:0",
+      "triangles": 4616,
+      "probes": 32312,
+      "maxLiftErrorMetres": 0.001122576158823392,
+      "minLiftMetres": 0.007602978230156765
+    },
+    {
+      "lowPower": false,
+      "outerLaneGameplayQueries": 12,
+      "outerLaneQueries": [
+        {
+          "lat": 44.30090804117174,
+          "lon": -78.34570938127123,
+          "pavementHeight": 19.60575595550759,
+          "osmRibbonOnRoad": false
+        },
+        {
+          "lat": 44.30096625443943,
+          "lon": -78.34594714121971,
+          "pavementHeight": 20.61058899545089,
+          "osmRibbonOnRoad": false
+        },
+        {
+          "lat": 44.300989359966565,
+          "lon": -78.34604492202479,
+          "pavementHeight": 21.147880025512304,
+          "osmRibbonOnRoad": false
+        },
+        {
+          "lat": 44.30099402302935,
+          "lon": -78.34607087495426,
+          "pavementHeight": 21.29931622328573,
+          "osmRibbonOnRoad": false
+        },
+        {
+          "lat": 44.30101419496385,
+          "lon": -78.3461932565425,
+          "pavementHeight": 22.05140567295989,
+          "osmRibbonOnRoad": false
+        },
+        {
+          "lat": 44.301034363004504,
+          "lon": -78.34631565028292,
+          "pavementHeight": 22.424649090317374,
+          "osmRibbonOnRoad": false
+        },
+        {
+          "lat": 44.301050998340095,
+          "lon": -78.34643920488666,
+          "pavementHeight": 22.76238878237647,
+          "osmRibbonOnRoad": false
+        },
+        {
+          "lat": 44.30083526668101,
+          "lon": -78.34574143531512,
+          "pavementHeight": 19.967756893189744,
+          "osmRibbonOnRoad": false
+        },
+        {
+          "lat": 44.30085544874363,
+          "lon": -78.34581880060325,
+          "pavementHeight": 20.094878369543366,
+          "osmRibbonOnRoad": false
+        },
+        {
+          "lat": 44.30086609493191,
+          "lon": -78.34585957826846,
+          "pavementHeight": 20.21516825173827,
+          "osmRibbonOnRoad": false
+        },
+        {
+          "lat": 44.30089865905667,
+          "lon": -78.34597694086304,
+          "pavementHeight": 20.745912143648553,
+          "osmRibbonOnRoad": false
+        },
+        {
+          "lat": 44.301034497662314,
+          "lon": -78.34670802307136,
+          "pavementHeight": 23.78407665470734,
+          "osmRibbonOnRoad": false
+        }
+      ],
+      "partialExclusions": true,
+      "countOnlyEmitted": true
+    },
+    {
+      "lowPower": true,
+      "key": "paint:historical:way/250810393:0",
+      "triangles": 1810,
+      "probes": 12670,
+      "maxLiftErrorMetres": 0.0014167155879656265,
+      "minLiftMetres": 0.006583284412034374
+    },
+    {
+      "lowPower": true,
+      "key": "paint:historical:way/250811912:0",
+      "triangles": 4610,
+      "probes": 32270,
+      "maxLiftErrorMetres": 0.0011724705113520598,
+      "minLiftMetres": 0.007588641948398589
+    },
+    {
+      "lowPower": true,
+      "outerLaneGameplayQueries": 12,
+      "outerLaneQueries": [
+        {
+          "lat": 44.30090804117174,
+          "lon": -78.34570938127123,
+          "pavementHeight": 20.481117592969788,
+          "osmRibbonOnRoad": false
+        },
+        {
+          "lat": 44.300966518869195,
+          "lon": -78.34594846074212,
+          "pavementHeight": 21.266842034875413,
+          "osmRibbonOnRoad": false
+        },
+        {
+          "lat": 44.300989359966565,
+          "lon": -78.34604492202479,
+          "pavementHeight": 21.590200620170883,
+          "osmRibbonOnRoad": false
+        },
+        {
+          "lat": 44.30099402302935,
+          "lon": -78.34607087495426,
+          "pavementHeight": 21.683754216459526,
+          "osmRibbonOnRoad": false
+        },
+        {
+          "lat": 44.30101419557859,
+          "lon": -78.34619326010926,
+          "pavementHeight": 22.216280170346334,
+          "osmRibbonOnRoad": false
+        },
+        {
+          "lat": 44.301034363004504,
+          "lon": -78.34631565028292,
+          "pavementHeight": 22.490467838751073,
+          "osmRibbonOnRoad": false
+        },
+        {
+          "lat": 44.301050998340095,
+          "lon": -78.34643920488666,
+          "pavementHeight": 22.924479225995018,
+          "osmRibbonOnRoad": false
+        },
+        {
+          "lat": 44.30083526668101,
+          "lon": -78.34574143531512,
+          "pavementHeight": 20.77672593096765,
+          "osmRibbonOnRoad": false
+        },
+        {
+          "lat": 44.30085544874363,
+          "lon": -78.34581880060325,
+          "pavementHeight": 20.901349360228362,
+          "osmRibbonOnRoad": false
+        },
+        {
+          "lat": 44.30086609493191,
+          "lon": -78.34585957826846,
+          "pavementHeight": 20.998545570114224,
+          "osmRibbonOnRoad": false
+        },
+        {
+          "lat": 44.300898394626905,
+          "lon": -78.34597562134061,
+          "pavementHeight": 21.38976600295818,
+          "osmRibbonOnRoad": false
+        },
+        {
+          "lat": 44.301034497662314,
+          "lon": -78.34670802307136,
+          "pavementHeight": 23.89626850113097,
+          "osmRibbonOnRoad": false
+        }
+      ],
+      "partialExclusions": true,
+      "countOnlyEmitted": true
+    }
+  ],
+  "failedProbeCount": 0,
+  "worst": []
+}

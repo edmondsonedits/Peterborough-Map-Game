@@ -1,0 +1,85 @@
+{
+  "status": "pass",
+  "reports": [
+    {
+      "lowPower": false,
+      "site": "hospital",
+      "id": 250811909,
+      "ranges": 1,
+      "triangles": 292,
+      "maxLiftErrorMetres": 0.00003519994305901247,
+      "minLiftMetres": 0.007999068478103055,
+      "buildMilliseconds": 85.0785780000001
+    },
+    {
+      "lowPower": false,
+      "site": "hospital",
+      "id": 1414147337,
+      "ranges": 1,
+      "triangles": 292,
+      "maxLiftErrorMetres": 0.0007142570596334677,
+      "minLiftMetres": 0.007855047670936699,
+      "buildMilliseconds": 85.0785780000001
+    },
+    {
+      "lowPower": false,
+      "site": "hospital",
+      "id": 1414147320,
+      "ranges": 2,
+      "triangles": 680,
+      "maxLiftErrorMetres": 0.0000019071588868088685,
+      "minLiftMetres": 0.007998092841113191,
+      "buildMilliseconds": 85.0785780000001
+    },
+    {
+      "lowPower": false,
+      "site": "south-combined",
+      "id": 364843830,
+      "ranges": 2,
+      "triangles": 680,
+      "maxLiftErrorMetres": 4.754500428846842e-7,
+      "minLiftMetres": 0.007999524549957115,
+      "buildMilliseconds": 16.816811000000143
+    },
+    {
+      "lowPower": true,
+      "site": "hospital",
+      "id": 250811909,
+      "ranges": 1,
+      "triangles": 292,
+      "maxLiftErrorMetres": 0.00017031168079296305,
+      "minLiftMetres": 0.00799907261553301,
+      "buildMilliseconds": 78.68397800000002
+    },
+    {
+      "lowPower": true,
+      "site": "hospital",
+      "id": 1414147337,
+      "ranges": 1,
+      "triangles": 292,
+      "maxLiftErrorMetres": 0.0000500752779073535,
+      "minLiftMetres": 0.007996141759054609,
+      "buildMilliseconds": 78.68397800000002
+    },
+    {
+      "lowPower": true,
+      "site": "hospital",
+      "id": 1414147320,
+      "ranges": 2,
+      "triangles": 680,
+      "maxLiftErrorMetres": 0.0000019066789702718023,
+      "minLiftMetres": 0.007998099302859885,
+      "buildMilliseconds": 78.68397800000002
+    },
+    {
+      "lowPower": true,
+      "site": "south-combined",
+      "id": 364843830,
+      "ranges": 2,
+      "triangles": 680,
+      "maxLiftErrorMetres": 4.761385854409883e-7,
+      "minLiftMetres": 0.00799952386141456,
+      "buildMilliseconds": 14.691533000000163
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+# Independent historical-profile final-terrain verification
+
+The test `tools/test_historical_paint_final_surface.mjs` independently extracts the real app source-queue, road-marking and gameplay-surface functions. It uses the full packaged-source Hospital fixture with desktop and low-power terrain resolutions. By default it reads this repository's app and historical profile helper; `HISTORICAL_APP_ROOT` supports read-only checking of an integration worktree.
+
+Coverage includes whole original source eligibility before filtering/resampling, reverse source acceptance, all corners/edge-midpoints/centroids of emitted Float32 triangles, strict final-road support, intended 8 mm paint lift (2.2 mm residual limit), partial intersection exclusions, counts based on emitted geometry, and actual surveyed-footprint gameplay queries outside Hospital's unchanged 6.7 m source ribbon.
+
+The initial independent run found 22 out-of-tolerance probes on desktop Medical Drive, with worst lift 5.1343 mm (2.8657 mm below the intended 8 mm). Both Hospital profiles and low-power Medical remained within the limit; no unsupported probes occurred. The pre-fix result is retained in `historical-final-surface-before.json`. The issue was reported for correction rather than weakening the threshold.
+
+After the helper's adaptive Float32 triangle correction, the identical test passes with zero failed probes. Maximum observed residual is 1.4925 mm. Each profile retains 12 independently queried outer-lane points whose actual municipal surface is drivable although the unchanged source ribbon does not mark them on-road. The after JSON records their coordinates and contact heights. The supported-profile-only case counts one, no-support counts zero, and a genuine injected public intersection removes part of Hospital paint while preserving both reviewed ways. This is finite seven-probe triangle verification, not proof against arbitrarily microscopic pavement gaps.

@@ -1,0 +1,2206 @@
+{
+  "scope": "520m municipal fixture; residual outer-window bumps are explicitly retained",
+  "reports": [
+    {
+      "profile": "desktop",
+      "windowMetres": 520,
+      "radius": 120,
+      "heightSmoothing": 4,
+      "sourcePolygonDigest": "0e30d273c63bebb9ff3f5c7593b4c64fddcdf92d42a26b3ff29c3dd9f7094823",
+      "sourcePolygonCount": 68,
+      "before": {
+        "triangleCount": 4245,
+        "candidatePairCount": 61520,
+        "bridgeTrianglesExcluded": true,
+        "heightTolerance": 0.025,
+        "gapTolerance": 0.02,
+        "sharedEdgePairs": 5374,
+        "sharedEdgeLengthMetres": 70204.80850703426,
+        "maximumSharedEdgeHeightDeltaMetres": 0.10033330496347403,
+        "overlappingTrianglePairs": 140,
+        "overlappingAreaSumSquareMetres": 9.348621955664566,
+        "maximumOverlapHeightDeltaMetres": 1.526392617522614,
+        "heightViolationCount": 49,
+        "nearGapCandidateCount": 0,
+        "maximumNearGapMetres": 0,
+        "layerPairs": {
+          "parking_surfaces / parking_surfaces": {
+            "sharedEdgePairs": 2527,
+            "overlappingTrianglePairs": 28,
+            "maximumSharedEdgeHeightDeltaMetres": 0.06951909724319094,
+            "maximumOverlapHeightDeltaMetres": 0.5849993289428816
+          },
+          "road_surfaces / road_surfaces": {
+            "sharedEdgePairs": 2847,
+            "overlappingTrianglePairs": 63,
+            "maximumSharedEdgeHeightDeltaMetres": 0.10033330496347403,
+            "maximumOverlapHeightDeltaMetres": 0.10033317875156911
+          },
+          "parking_surfaces / road_surfaces": {
+            "sharedEdgePairs": 0,
+            "overlappingTrianglePairs": 49,
+            "maximumSharedEdgeHeightDeltaMetres": 0,
+            "maximumOverlapHeightDeltaMetres": 1.526392617522614
+          }
+        },
+        "worst": [
+          {
+            "kind": "overlap",
+            "metres": 1.526392617522614,
+            "triangleIds": [
+              2567,
+              4158
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -2074.41845703125,
+              "z": 916.049560546875
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 1.526392617522614,
+            "triangleIds": [
+              2567,
+              4159
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -2074.41845703125,
+              "z": 916.049560546875
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 1.1604930319134574,
+            "triangleIds": [
+              2589,
+              4158
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -2073.6007080078125,
+              "z": 918.3271179199219
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 1.1277783046588006,
+            "triangleIds": [
+              2602,
+              4158
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -2073.53125,
+              "z": 919.23779296875
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 1.1277783046588006,
+            "triangleIds": [
+              2610,
+              4158
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -2073.53125,
+              "z": 919.23779296875
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.5849993289428816,
+            "triangleIds": [
+              790,
+              1013
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "parking_surfaces"
+            ],
+            "location": {
+              "x": -2232.7423095703125,
+              "z": 868.4618225097656
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.28867909559691185,
+            "triangleIds": [
+              170,
+              4426
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -1935.138671875,
+              "z": 946.0927429199219
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.1769810032689776,
+            "triangleIds": [
+              2566,
+              4374
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -2105.8109130859375,
+              "z": 903.5529174804688
+            }
+          }
+        ],
+        "status": "fail",
+        "scope": "Projected triangle geometry only; near-gap candidates need source-boundary review. Overlap area is pairwise, not union area. No visual or citywide claim."
+      },
+      "after": {
+        "triangleCount": 29501,
+        "candidatePairCount": 1585315,
+        "bridgeTrianglesExcluded": true,
+        "heightTolerance": 0.025,
+        "gapTolerance": 0.02,
+        "sharedEdgePairs": 42312,
+        "sharedEdgeLengthMetres": 110191.31964321167,
+        "maximumSharedEdgeHeightDeltaMetres": 0.21561205770665026,
+        "overlappingTrianglePairs": 210,
+        "overlappingAreaSumSquareMetres": 7.753820842227729,
+        "maximumOverlapHeightDeltaMetres": 0.28867909559691185,
+        "heightViolationCount": 35,
+        "nearGapCandidateCount": 3,
+        "maximumNearGapMetres": 0.00005805180124491426,
+        "layerPairs": {
+          "parking_surfaces / parking_surfaces": {
+            "sharedEdgePairs": 20475,
+            "overlappingTrianglePairs": 51,
+            "maximumSharedEdgeHeightDeltaMetres": 0.21561205770665026,
+            "maximumOverlapHeightDeltaMetres": 0.2223628878032642
+          },
+          "road_surfaces / road_surfaces": {
+            "sharedEdgePairs": 21815,
+            "overlappingTrianglePairs": 135,
+            "maximumSharedEdgeHeightDeltaMetres": 0.10033330496347403,
+            "maximumOverlapHeightDeltaMetres": 0.10033317875156911
+          },
+          "parking_surfaces / road_surfaces": {
+            "sharedEdgePairs": 22,
+            "overlappingTrianglePairs": 24,
+            "maximumSharedEdgeHeightDeltaMetres": 0.00002288818359375,
+            "maximumOverlapHeightDeltaMetres": 0.28867909559691185
+          }
+        },
+        "worst": [
+          {
+            "kind": "overlap",
+            "metres": 0.28867909559691185,
+            "triangleIds": [
+              3455,
+              28233
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -1935.138671875,
+              "z": 946.0927429199219
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.2223628878032642,
+            "triangleIds": [
+              8126,
+              8711
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "parking_surfaces"
+            ],
+            "location": {
+              "x": -2226.158935546875,
+              "z": 865.5933227539062
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.22236288780326063,
+            "triangleIds": [
+              8126,
+              8710
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "parking_surfaces"
+            ],
+            "location": {
+              "x": -2226.158935546875,
+              "z": 865.5933227539062
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.22235378987307897,
+            "triangleIds": [
+              8125,
+              8710
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "parking_surfaces"
+            ],
+            "location": {
+              "x": -2226.158935546875,
+              "z": 865.5933227539062
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.22235378987307897,
+            "triangleIds": [
+              8125,
+              8711
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "parking_surfaces"
+            ],
+            "location": {
+              "x": -2226.158935546875,
+              "z": 865.5933227539062
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.22234143002458495,
+            "triangleIds": [
+              8125,
+              8713
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "parking_surfaces"
+            ],
+            "location": {
+              "x": -2226.4283447265625,
+              "z": 865.8937683105469
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.2223412360207071,
+            "triangleIds": [
+              8128,
+              8713
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "parking_surfaces"
+            ],
+            "location": {
+              "x": -2225.4810791015625,
+              "z": 865.4810180664062
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.22230424209883637,
+            "triangleIds": [
+              8128,
+              8712
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "parking_surfaces"
+            ],
+            "location": {
+              "x": -2225.4810791015625,
+              "z": 865.4810180664062
+            }
+          }
+        ],
+        "status": "fail",
+        "scope": "Projected triangle geometry only; near-gap candidates need source-boundary review. Overlap area is pairwise, not union area. No visual or citywide claim."
+      },
+      "coreBefore": {
+        "triangleCount": 461,
+        "candidatePairCount": 7967,
+        "bridgeTrianglesExcluded": true,
+        "heightTolerance": 0.025,
+        "gapTolerance": 0.02,
+        "sharedEdgePairs": 557,
+        "sharedEdgeLengthMetres": 7139.567807118796,
+        "maximumSharedEdgeHeightDeltaMetres": 0.04559394483119661,
+        "overlappingTrianglePairs": 23,
+        "overlappingAreaSumSquareMetres": 0.9482515184307828,
+        "maximumOverlapHeightDeltaMetres": 1.526392617522614,
+        "heightViolationCount": 19,
+        "nearGapCandidateCount": 0,
+        "maximumNearGapMetres": 0,
+        "layerPairs": {
+          "parking_surfaces / parking_surfaces": {
+            "sharedEdgePairs": 302,
+            "overlappingTrianglePairs": 0,
+            "maximumSharedEdgeHeightDeltaMetres": 0.04559394483119661,
+            "maximumOverlapHeightDeltaMetres": 0
+          },
+          "parking_surfaces / road_surfaces": {
+            "sharedEdgePairs": 0,
+            "overlappingTrianglePairs": 23,
+            "maximumSharedEdgeHeightDeltaMetres": 0,
+            "maximumOverlapHeightDeltaMetres": 1.526392617522614
+          },
+          "road_surfaces / road_surfaces": {
+            "sharedEdgePairs": 255,
+            "overlappingTrianglePairs": 0,
+            "maximumSharedEdgeHeightDeltaMetres": 0,
+            "maximumOverlapHeightDeltaMetres": 0
+          }
+        },
+        "worst": [
+          {
+            "kind": "overlap",
+            "metres": 1.526392617522614,
+            "triangleIds": [
+              2567,
+              4159
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -2074.41845703125,
+              "z": 916.049560546875
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.1769810032689776,
+            "triangleIds": [
+              2566,
+              4374
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -2105.8109130859375,
+              "z": 903.5529174804688
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.1588406691784776,
+            "triangleIds": [
+              2566,
+              4354
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -2101.8271484375,
+              "z": 904.9244384765625
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.11377993787945329,
+            "triangleIds": [
+              322,
+              4149
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -2126.3238525390625,
+              "z": 887.7653503417969
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.11377993787945329,
+            "triangleIds": [
+              322,
+              4150
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -2115.2274169921875,
+              "z": 890.1134643554688
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.0962109780846312,
+            "triangleIds": [
+              2565,
+              4374
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -2109.6385498046875,
+              "z": 903.0274963378906
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.0962109780846312,
+            "triangleIds": [
+              2587,
+              4374
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -2108.83984375,
+              "z": 904.0603637695312
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.0962109780846312,
+            "triangleIds": [
+              2600,
+              4374
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -2108.3597412109375,
+              "z": 905.1422424316406
+            }
+          }
+        ],
+        "status": "fail",
+        "scope": "Projected triangle geometry only; near-gap candidates need source-boundary review. Overlap area is pairwise, not union area. No visual or citywide claim."
+      },
+      "coreAfter": {
+        "triangleCount": 9204,
+        "candidatePairCount": 600896,
+        "bridgeTrianglesExcluded": true,
+        "heightTolerance": 0.025,
+        "gapTolerance": 0.02,
+        "sharedEdgePairs": 13313,
+        "sharedEdgeLengthMetres": 19668.690261779877,
+        "maximumSharedEdgeHeightDeltaMetres": 0.000005321843449479502,
+        "overlappingTrianglePairs": 12,
+        "overlappingAreaSumSquareMetres": 0.00014240663166726882,
+        "maximumOverlapHeightDeltaMetres": 0.000009959163900674639,
+        "heightViolationCount": 0,
+        "nearGapCandidateCount": 2,
+        "maximumNearGapMetres": 0.00005805180124491426,
+        "layerPairs": {
+          "parking_surfaces / parking_surfaces": {
+            "sharedEdgePairs": 7745,
+            "overlappingTrianglePairs": 3,
+            "maximumSharedEdgeHeightDeltaMetres": 0.000005321843449479502,
+            "maximumOverlapHeightDeltaMetres": 0.000004408973101277525
+          },
+          "road_surfaces / road_surfaces": {
+            "sharedEdgePairs": 5555,
+            "overlappingTrianglePairs": 0,
+            "maximumSharedEdgeHeightDeltaMetres": 0,
+            "maximumOverlapHeightDeltaMetres": 0
+          },
+          "parking_surfaces / road_surfaces": {
+            "sharedEdgePairs": 13,
+            "overlappingTrianglePairs": 9,
+            "maximumSharedEdgeHeightDeltaMetres": 0.000003814697265625,
+            "maximumOverlapHeightDeltaMetres": 0.000009959163900674639
+          }
+        },
+        "worst": [
+          {
+            "kind": "near-boundary-gap-candidate",
+            "metres": 0.00005805180124491426,
+            "triangleIds": [
+              12845,
+              26499
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -2092,
+              "z": 908.8581848144531
+            }
+          },
+          {
+            "kind": "near-boundary-gap-candidate",
+            "metres": 0.000012879492770497982,
+            "triangleIds": [
+              13642,
+              26945
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -2100,
+              "z": 906.9223022460938
+            }
+          }
+        ],
+        "status": "pass",
+        "scope": "Projected triangle geometry only; near-gap candidates need source-boundary review. Overlap area is pairwise, not union area. No visual or citywide claim."
+      },
+      "targetProbe": {
+        "method": "New equivalent probe at centroid of worst pre-repair core overlap, four headings and both directions; exact historical target path unavailable",
+        "lat": 44.30080159864325,
+        "lon": -78.3456751462504,
+        "maximumBeforeStep": 1.4368779963614315,
+        "maximumAfterStep": 0.0012508293461692688,
+        "crossings": [
+          {
+            "angle": 0,
+            "direction": -1,
+            "initial": 18.920317960295442,
+            "before": {
+              "maxStep": 1.433538940675831,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0011050388280224865,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 0,
+            "direction": -1,
+            "initial": 19.920317960295442,
+            "before": {
+              "maxStep": 1.433538940675831,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0011050388280224865,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 0,
+            "direction": -1,
+            "initial": 21.920317960295442,
+            "before": {
+              "maxStep": 1.433538940675831,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0011050388280224865,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 0,
+            "direction": 1,
+            "initial": 18.920317960295442,
+            "before": {
+              "maxStep": 1.434946205769915,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0011050388280224865,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 0,
+            "direction": 1,
+            "initial": 19.920317960295442,
+            "before": {
+              "maxStep": 1.434946205769915,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0011050388280224865,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 0,
+            "direction": 1,
+            "initial": 21.920317960295442,
+            "before": {
+              "maxStep": 1.434946205769915,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0011050388280224865,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 0.7853981633974483,
+            "direction": -1,
+            "initial": 18.920317960295442,
+            "before": {
+              "maxStep": 1.4311604475731734,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0003113714358562447,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 0.7853981633974483,
+            "direction": -1,
+            "initial": 19.920317960295442,
+            "before": {
+              "maxStep": 1.4311604475731734,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0003113714358562447,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 0.7853981633974483,
+            "direction": -1,
+            "initial": 21.920317960295442,
+            "before": {
+              "maxStep": 1.4311604475731734,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0003113714358562447,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 0.7853981633974483,
+            "direction": 1,
+            "initial": 18.920317960295442,
+            "before": {
+              "maxStep": 1.4368779963614315,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0003113714358562447,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 0.7853981633974483,
+            "direction": 1,
+            "initial": 19.920317960295442,
+            "before": {
+              "maxStep": 1.4368779963614315,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0003113714358562447,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 0.7853981633974483,
+            "direction": 1,
+            "initial": 21.920317960295442,
+            "before": {
+              "maxStep": 1.4368779963614315,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0003113714358562447,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 1.5707963267948966,
+            "direction": -1,
+            "initial": 18.920317960295442,
+            "before": {
+              "maxStep": 1.4323917779029998,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0008411465381499283,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 1.5707963267948966,
+            "direction": -1,
+            "initial": 19.920317960295442,
+            "before": {
+              "maxStep": 1.4323917779029998,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0008411465381499283,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 1.5707963267948966,
+            "direction": -1,
+            "initial": 21.920317960295442,
+            "before": {
+              "maxStep": 1.4323917779029998,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0008411465381499283,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 1.5707963267948966,
+            "direction": 1,
+            "initial": 18.920317960295442,
+            "before": {
+              "maxStep": 1.4346179678849253,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0008411465381499283,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 1.5707963267948966,
+            "direction": 1,
+            "initial": 19.920317960295442,
+            "before": {
+              "maxStep": 1.4346179678849253,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0008411465381499283,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 1.5707963267948966,
+            "direction": 1,
+            "initial": 21.920317960295442,
+            "before": {
+              "maxStep": 1.4346179678849253,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0008411465381499283,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 2.356194490192345,
+            "direction": -1,
+            "initial": 18.920317960295442,
+            "before": {
+              "maxStep": 1.4329761587787893,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0012508293461692688,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 2.356194490192345,
+            "direction": -1,
+            "initial": 19.920317960295442,
+            "before": {
+              "maxStep": 1.4329761587787893,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0012508293461692688,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 2.356194490192345,
+            "direction": -1,
+            "initial": 21.920317960295442,
+            "before": {
+              "maxStep": 1.4329761587787893,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0012508293461692688,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 2.356194490192345,
+            "direction": 1,
+            "initial": 18.920317960295442,
+            "before": {
+              "maxStep": 1.434218617247577,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0012508293461692688,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 2.356194490192345,
+            "direction": 1,
+            "initial": 19.920317960295442,
+            "before": {
+              "maxStep": 1.434218617247577,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0012508293461692688,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 2.356194490192345,
+            "direction": 1,
+            "initial": 21.920317960295442,
+            "before": {
+              "maxStep": 1.434218617247577,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0012508293461692688,
+              "samples": 101,
+              "missing": 0
+            }
+          }
+        ]
+      },
+      "knownCrossings": [
+        {
+          "direction": -1,
+          "before": {
+            "maxStep": 0.5487666154888693,
+            "samples": 101,
+            "missing": 0
+          },
+          "after": {
+            "maxStep": 0.214950336796349,
+            "samples": 101,
+            "missing": 0
+          }
+        },
+        {
+          "direction": 1,
+          "before": {
+            "maxStep": 0.5423591018195388,
+            "samples": 101,
+            "missing": 0
+          },
+          "after": {
+            "maxStep": 0.21640102847921483,
+            "samples": 101,
+            "missing": 0
+          }
+        }
+      ],
+      "flaggedEdgeCount": 11,
+      "traceCount": 198,
+      "maximumDeterioration": 0,
+      "worst": null,
+      "gradeRegressions": 0,
+      "maxGradeWorsening": 0.07225127292349483,
+      "reconcileMilliseconds": 306.2320910000001,
+      "heightQueries": 2170
+    },
+    {
+      "profile": "low-power",
+      "windowMetres": 520,
+      "radius": 120,
+      "heightSmoothing": 4,
+      "sourcePolygonDigest": "0e30d273c63bebb9ff3f5c7593b4c64fddcdf92d42a26b3ff29c3dd9f7094823",
+      "sourcePolygonCount": 68,
+      "before": {
+        "triangleCount": 3011,
+        "candidatePairCount": 38955,
+        "bridgeTrianglesExcluded": true,
+        "heightTolerance": 0.025,
+        "gapTolerance": 0.02,
+        "sharedEdgePairs": 3576,
+        "sharedEdgeLengthMetres": 60919.70972775855,
+        "maximumSharedEdgeHeightDeltaMetres": 0.24244512597472578,
+        "overlappingTrianglePairs": 94,
+        "overlappingAreaSumSquareMetres": 9.345141101485563,
+        "maximumOverlapHeightDeltaMetres": 0.46384657390476036,
+        "heightViolationCount": 54,
+        "nearGapCandidateCount": 0,
+        "maximumNearGapMetres": 0,
+        "layerPairs": {
+          "parking_surfaces / parking_surfaces": {
+            "sharedEdgePairs": 1770,
+            "overlappingTrianglePairs": 25,
+            "maximumSharedEdgeHeightDeltaMetres": 0.0996522979397163,
+            "maximumOverlapHeightDeltaMetres": 0.46384657390476036
+          },
+          "road_surfaces / road_surfaces": {
+            "sharedEdgePairs": 1806,
+            "overlappingTrianglePairs": 25,
+            "maximumSharedEdgeHeightDeltaMetres": 0.24244512597472578,
+            "maximumOverlapHeightDeltaMetres": 0.04209037581391328
+          },
+          "parking_surfaces / road_surfaces": {
+            "sharedEdgePairs": 0,
+            "overlappingTrianglePairs": 44,
+            "maximumSharedEdgeHeightDeltaMetres": 0,
+            "maximumOverlapHeightDeltaMetres": 0.31032021612136873
+          }
+        },
+        "worst": [
+          {
+            "kind": "overlap",
+            "metres": 0.46384657390476036,
+            "triangleIds": [
+              572,
+              744
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "parking_surfaces"
+            ],
+            "location": {
+              "x": -2232.7423095703125,
+              "z": 868.4618225097656
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.31032021612136873,
+            "triangleIds": [
+              91,
+              3041
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -1935.138671875,
+              "z": 946.0927429199219
+            }
+          },
+          {
+            "kind": "shared-edge",
+            "metres": 0.24244512597472578,
+            "triangleIds": [
+              4187,
+              4200
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "road_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -1898.0084838867188,
+              "z": 866.0615539550781
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.1829738267309331,
+            "triangleIds": [
+              366,
+              997
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "parking_surfaces"
+            ],
+            "location": {
+              "x": -2202.7431640625,
+              "z": 1136.4478149414062
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.1696640794893618,
+            "triangleIds": [
+              208,
+              2874
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -2126.3238525390625,
+              "z": 887.7653503417969
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.16966407948934048,
+            "triangleIds": [
+              208,
+              2892
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -2126.3238525390625,
+              "z": 887.7653503417969
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.16966407948934048,
+            "triangleIds": [
+              208,
+              2893
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -2115.2274169921875,
+              "z": 890.1134643554688
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.16966407948933693,
+            "triangleIds": [
+              208,
+              2875
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -2115.208984375,
+              "z": 889.723388671875
+            }
+          }
+        ],
+        "status": "fail",
+        "scope": "Projected triangle geometry only; near-gap candidates need source-boundary review. Overlap area is pairwise, not union area. No visual or citywide claim."
+      },
+      "after": {
+        "triangleCount": 25867,
+        "candidatePairCount": 1246617,
+        "bridgeTrianglesExcluded": true,
+        "heightTolerance": 0.025,
+        "gapTolerance": 0.02,
+        "sharedEdgePairs": 36891,
+        "sharedEdgeLengthMetres": 99622.68883742251,
+        "maximumSharedEdgeHeightDeltaMetres": 0.24244512597472578,
+        "overlappingTrianglePairs": 204,
+        "overlappingAreaSumSquareMetres": 7.7501937548691915,
+        "maximumOverlapHeightDeltaMetres": 0.31032021612136873,
+        "heightViolationCount": 44,
+        "nearGapCandidateCount": 13,
+        "maximumNearGapMetres": 0.005967714095593171,
+        "layerPairs": {
+          "parking_surfaces / parking_surfaces": {
+            "sharedEdgePairs": 18015,
+            "overlappingTrianglePairs": 69,
+            "maximumSharedEdgeHeightDeltaMetres": 0.16818066215803285,
+            "maximumOverlapHeightDeltaMetres": 0.1829738267309331
+          },
+          "road_surfaces / road_surfaces": {
+            "sharedEdgePairs": 18854,
+            "overlappingTrianglePairs": 109,
+            "maximumSharedEdgeHeightDeltaMetres": 0.24244512597472578,
+            "maximumOverlapHeightDeltaMetres": 0.042093946550114225
+          },
+          "parking_surfaces / road_surfaces": {
+            "sharedEdgePairs": 22,
+            "overlappingTrianglePairs": 26,
+            "maximumSharedEdgeHeightDeltaMetres": 0.0000133514404296875,
+            "maximumOverlapHeightDeltaMetres": 0.31032021612136873
+          }
+        },
+        "worst": [
+          {
+            "kind": "overlap",
+            "metres": 0.31032021612136873,
+            "triangleIds": [
+              2624,
+              24520
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -1935.138671875,
+              "z": 946.0927429199219
+            }
+          },
+          {
+            "kind": "shared-edge",
+            "metres": 0.24244512597472578,
+            "triangleIds": [
+              27088,
+              27101
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "road_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -1898.0084838867188,
+              "z": 866.0615539550781
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.1829738267309331,
+            "triangleIds": [
+              6524,
+              8952
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "parking_surfaces"
+            ],
+            "location": {
+              "x": -2202.7431640625,
+              "z": 1136.4478149414062
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.1681806621580364,
+            "triangleIds": [
+              6945,
+              7479
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "parking_surfaces"
+            ],
+            "location": {
+              "x": -2225.4810791015625,
+              "z": 865.4810180664062
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.1681806621580364,
+            "triangleIds": [
+              6946,
+              7479
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "parking_surfaces"
+            ],
+            "location": {
+              "x": -2225.4810791015625,
+              "z": 865.4810180664062
+            }
+          },
+          {
+            "kind": "shared-edge",
+            "metres": 0.16818066215803285,
+            "triangleIds": [
+              6950,
+              7479
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "parking_surfaces"
+            ],
+            "location": {
+              "x": -2224.4283447265625,
+              "z": 865.0223083496094
+            }
+          },
+          {
+            "kind": "shared-edge",
+            "metres": 0.16818066215803285,
+            "triangleIds": [
+              6945,
+              7481
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "parking_surfaces"
+            ],
+            "location": {
+              "x": -2225.052734375,
+              "z": 865.3340148925781
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.16818066215803285,
+            "triangleIds": [
+              6950,
+              7481
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "parking_surfaces"
+            ],
+            "location": {
+              "x": -2224,
+              "z": 864.8753051757812
+            }
+          }
+        ],
+        "status": "fail",
+        "scope": "Projected triangle geometry only; near-gap candidates need source-boundary review. Overlap area is pairwise, not union area. No visual or citywide claim."
+      },
+      "coreBefore": {
+        "triangleCount": 331,
+        "candidatePairCount": 4714,
+        "bridgeTrianglesExcluded": true,
+        "heightTolerance": 0.025,
+        "gapTolerance": 0.02,
+        "sharedEdgePairs": 367,
+        "sharedEdgeLengthMetres": 6541.189884800186,
+        "maximumSharedEdgeHeightDeltaMetres": 0.0996522979397163,
+        "overlappingTrianglePairs": 28,
+        "overlappingAreaSumSquareMetres": 1.0366895716249618,
+        "maximumOverlapHeightDeltaMetres": 0.1696640794893618,
+        "heightViolationCount": 26,
+        "nearGapCandidateCount": 0,
+        "maximumNearGapMetres": 0,
+        "layerPairs": {
+          "parking_surfaces / parking_surfaces": {
+            "sharedEdgePairs": 237,
+            "overlappingTrianglePairs": 3,
+            "maximumSharedEdgeHeightDeltaMetres": 0.0996522979397163,
+            "maximumOverlapHeightDeltaMetres": 0.09965198576404077
+          },
+          "parking_surfaces / road_surfaces": {
+            "sharedEdgePairs": 0,
+            "overlappingTrianglePairs": 25,
+            "maximumSharedEdgeHeightDeltaMetres": 0,
+            "maximumOverlapHeightDeltaMetres": 0.1696640794893618
+          },
+          "road_surfaces / road_surfaces": {
+            "sharedEdgePairs": 130,
+            "overlappingTrianglePairs": 0,
+            "maximumSharedEdgeHeightDeltaMetres": 0,
+            "maximumOverlapHeightDeltaMetres": 0
+          }
+        },
+        "worst": [
+          {
+            "kind": "overlap",
+            "metres": 0.1696640794893618,
+            "triangleIds": [
+              208,
+              2874
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -2126.3238525390625,
+              "z": 887.7653503417969
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.16966407948934048,
+            "triangleIds": [
+              208,
+              2892
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -2126.3238525390625,
+              "z": 887.7653503417969
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.16966407948934048,
+            "triangleIds": [
+              208,
+              2893
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -2115.2274169921875,
+              "z": 890.1134643554688
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.16966407948933693,
+            "triangleIds": [
+              208,
+              2875
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -2115.208984375,
+              "z": 889.723388671875
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.1608484355590285,
+            "triangleIds": [
+              1825,
+              2897
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -2068.4874267578125,
+              "z": 918.1254577636719
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.1608484355590285,
+            "triangleIds": [
+              1847,
+              2897
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -2067.669677734375,
+              "z": 920.4030151367188
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.1608484355590285,
+            "triangleIds": [
+              1860,
+              2897
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -2067.6002197265625,
+              "z": 921.3136901855469
+            }
+          },
+          {
+            "kind": "overlap",
+            "metres": 0.1608484355590285,
+            "triangleIds": [
+              1868,
+              2897
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -2067.6002197265625,
+              "z": 921.3136901855469
+            }
+          }
+        ],
+        "status": "fail",
+        "scope": "Projected triangle geometry only; near-gap candidates need source-boundary review. Overlap area is pairwise, not union area. No visual or citywide claim."
+      },
+      "coreAfter": {
+        "triangleCount": 7994,
+        "candidatePairCount": 436510,
+        "bridgeTrianglesExcluded": true,
+        "heightTolerance": 0.025,
+        "gapTolerance": 0.02,
+        "sharedEdgePairs": 11507,
+        "sharedEdgeLengthMetres": 17881.578275990578,
+        "maximumSharedEdgeHeightDeltaMetres": 0.0000036992380749722997,
+        "overlappingTrianglePairs": 12,
+        "overlappingAreaSumSquareMetres": 0.00015943905197354487,
+        "maximumOverlapHeightDeltaMetres": 0.000008111966405266458,
+        "heightViolationCount": 0,
+        "nearGapCandidateCount": 2,
+        "maximumNearGapMetres": 0.00005805180124491426,
+        "layerPairs": {
+          "parking_surfaces / parking_surfaces": {
+            "sharedEdgePairs": 7108,
+            "overlappingTrianglePairs": 3,
+            "maximumSharedEdgeHeightDeltaMetres": 0.0000036992380749722997,
+            "maximumOverlapHeightDeltaMetres": 0.0000030824709433829867
+          },
+          "road_surfaces / road_surfaces": {
+            "sharedEdgePairs": 4386,
+            "overlappingTrianglePairs": 0,
+            "maximumSharedEdgeHeightDeltaMetres": 0,
+            "maximumOverlapHeightDeltaMetres": 0
+          },
+          "parking_surfaces / road_surfaces": {
+            "sharedEdgePairs": 13,
+            "overlappingTrianglePairs": 9,
+            "maximumSharedEdgeHeightDeltaMetres": 0.000002145179205825798,
+            "maximumOverlapHeightDeltaMetres": 0.000008111966405266458
+          }
+        },
+        "worst": [
+          {
+            "kind": "near-boundary-gap-candidate",
+            "metres": 0.00005805180124491426,
+            "triangleIds": [
+              11019,
+              22980
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -2092,
+              "z": 908.8581848144531
+            }
+          },
+          {
+            "kind": "near-boundary-gap-candidate",
+            "metres": 0.000012879492770497982,
+            "triangleIds": [
+              11816,
+              23364
+            ],
+            "featureIds": [
+              null,
+              null
+            ],
+            "layers": [
+              "parking_surfaces",
+              "road_surfaces"
+            ],
+            "location": {
+              "x": -2100,
+              "z": 906.9223022460938
+            }
+          }
+        ],
+        "status": "pass",
+        "scope": "Projected triangle geometry only; near-gap candidates need source-boundary review. Overlap area is pairwise, not union area. No visual or citywide claim."
+      },
+      "targetProbe": {
+        "method": "New equivalent probe at centroid of worst pre-repair core overlap, four headings and both directions; exact historical target path unavailable",
+        "lat": 44.30105265732023,
+        "lon": -78.34633953565363,
+        "maximumBeforeStep": 0.1414130756662253,
+        "maximumAfterStep": 0.00045364353898591503,
+        "crossings": [
+          {
+            "angle": 0,
+            "direction": -1,
+            "initial": 22.299583937566215,
+            "before": {
+              "maxStep": 0.1390610383584061,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.00045364353898591503,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 0,
+            "direction": -1,
+            "initial": 23.299583937566215,
+            "before": {
+              "maxStep": 0.1390610383584061,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.00045364353898591503,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 0,
+            "direction": -1,
+            "initial": 25.299583937566215,
+            "before": {
+              "maxStep": 0.1390610383584061,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.00045364353898591503,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 0,
+            "direction": 1,
+            "initial": 22.299583937566215,
+            "before": {
+              "maxStep": 0.11398191361028864,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.00045364353898591503,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 0,
+            "direction": 1,
+            "initial": 23.299583937566215,
+            "before": {
+              "maxStep": 0.11398191361028864,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.00045364353898591503,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 0,
+            "direction": 1,
+            "initial": 25.299583937566215,
+            "before": {
+              "maxStep": 0.11398191361028864,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.00045364353898591503,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 0.7853981633974483,
+            "direction": -1,
+            "initial": 22.299583937566215,
+            "before": {
+              "maxStep": 0.11293695685797545,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0002694827457219162,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 0.7853981633974483,
+            "direction": -1,
+            "initial": 23.299583937566215,
+            "before": {
+              "maxStep": 0.11293695685797545,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0002694827457219162,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 0.7853981633974483,
+            "direction": -1,
+            "initial": 25.299583937566215,
+            "before": {
+              "maxStep": 0.11293695685797545,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0002694827457219162,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 0.7853981633974483,
+            "direction": 1,
+            "initial": 22.299583937566215,
+            "before": {
+              "maxStep": 0.1414130756662253,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0002694827457219162,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 0.7853981633974483,
+            "direction": 1,
+            "initial": 23.299583937566215,
+            "before": {
+              "maxStep": 0.1414130756662253,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0002694827457219162,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 0.7853981633974483,
+            "direction": 1,
+            "initial": 25.299583937566215,
+            "before": {
+              "maxStep": 0.1414130756662253,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0002694827457219162,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 1.5707963267948966,
+            "direction": -1,
+            "initial": 22.299583937566215,
+            "before": {
+              "maxStep": 0.11738130883273712,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.00007572876688044516,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 1.5707963267948966,
+            "direction": -1,
+            "initial": 23.299583937566215,
+            "before": {
+              "maxStep": 0.11738130883273712,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.00007572876688044516,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 1.5707963267948966,
+            "direction": -1,
+            "initial": 25.299583937566215,
+            "before": {
+              "maxStep": 0.11738130883273712,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.00007572876688044516,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 1.5707963267948966,
+            "direction": 1,
+            "initial": 22.299583937566215,
+            "before": {
+              "maxStep": 0.14118300997299116,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.00007572876688044516,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 1.5707963267948966,
+            "direction": 1,
+            "initial": 23.299583937566215,
+            "before": {
+              "maxStep": 0.14118300997299116,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.00007572876688044516,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 1.5707963267948966,
+            "direction": 1,
+            "initial": 25.299583937566215,
+            "before": {
+              "maxStep": 0.14118300997299116,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.00007572876688044516,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 2.356194490192345,
+            "direction": -1,
+            "initial": 22.299583937566215,
+            "before": {
+              "maxStep": 0.11326558351310823,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0003758911793987352,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 2.356194490192345,
+            "direction": -1,
+            "initial": 23.299583937566215,
+            "before": {
+              "maxStep": 0.11326558351310823,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0003758911793987352,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 2.356194490192345,
+            "direction": -1,
+            "initial": 25.299583937566215,
+            "before": {
+              "maxStep": 0.11326558351310823,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0003758911793987352,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 2.356194490192345,
+            "direction": 1,
+            "initial": 22.299583937566215,
+            "before": {
+              "maxStep": 0.14039849755080525,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0003758911793987352,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 2.356194490192345,
+            "direction": 1,
+            "initial": 23.299583937566215,
+            "before": {
+              "maxStep": 0.14039849755080525,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0003758911793987352,
+              "samples": 101,
+              "missing": 0
+            }
+          },
+          {
+            "angle": 2.356194490192345,
+            "direction": 1,
+            "initial": 25.299583937566215,
+            "before": {
+              "maxStep": 0.14039849755080525,
+              "samples": 101,
+              "missing": 0
+            },
+            "after": {
+              "maxStep": 0.0003758911793987352,
+              "samples": 101,
+              "missing": 0
+            }
+          }
+        ]
+      },
+      "knownCrossings": [
+        {
+          "direction": -1,
+          "before": {
+            "maxStep": 0.42584292807324076,
+            "samples": 101,
+            "missing": 0
+          },
+          "after": {
+            "maxStep": 0.16691249550783027,
+            "samples": 101,
+            "missing": 0
+          }
+        },
+        {
+          "direction": 1,
+          "before": {
+            "maxStep": 0.42231099853108134,
+            "samples": 101,
+            "missing": 0
+          },
+          "after": {
+            "maxStep": 0.16865499440507037,
+            "samples": 101,
+            "missing": 0
+          }
+        }
+      ],
+      "flaggedEdgeCount": 19,
+      "traceCount": 342,
+      "maximumDeterioration": 0.00016446309840389972,
+      "worst": {
+        "lat": 44.30174220349371,
+        "lon": -78.34751872829703,
+        "direction": 1,
+        "initial": 26.79732352234048,
+        "baseline": {
+          "maxStep": 0.03614158767049247,
+          "samples": 101,
+          "missing": 0
+        },
+        "current": {
+          "maxStep": 0.03630605076889637,
+          "samples": 101,
+          "missing": 0
+        }
+      },
+      "gradeRegressions": 0,
+      "maxGradeWorsening": 0.08216459170647623,
+      "reconcileMilliseconds": 191.47349699999995,
+      "heightQueries": 2168
+    }
+  ]
+}

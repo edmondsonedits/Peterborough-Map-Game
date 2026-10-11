@@ -1,0 +1,56 @@
+{
+  "retrievedAtUtc": "2026-10-11T17:17:34.612410+00:00",
+  "catalogueUrl": "https://data.ontario.ca/api/3/action/package_show?id=open-ontario-imagery",
+  "licenseTitle": "Open Government Licence \u2013 Ontario",
+  "licenseUrl": "https://www.ontario.ca/page/open-government-licence-ontario",
+  "scoop2023Resource": {
+    "cache_last_updated": null,
+    "cache_url": null,
+    "created": "2024-11-29T15:42:18.515162",
+    "data_range_end": "2024-04-24",
+    "data_range_start": "2023-04-08",
+    "datastore_active": false,
+    "datastore_contains_all_records_of_source_file": false,
+    "description": "The SCOOP 2023 was acquired in the spring of 2023, fall of 2023, and spring of 2024 under the best conditions possible to achieve cloud free, snow free, ice free, smoke free and leaf off/low leaf captures. The orthophotography has a pixel resolution of 16 centimetres and a stated accuracy of 50 centimetres on the ground. \r\n\r\n* Time of Capture: April 8th, 2023 - May 20, 2023, October 23, 2023 - November 3rd, 2023, April 24th 2024 \r\n* Coverage: 43,692 square kilometres\r\n* Canopy Coverage: Leaf-Off/Low-Leaf",
+    "description_translated": {
+      "en": "The SCOOP 2023 was acquired in the spring of 2023, fall of 2023, and spring of 2024 under the best conditions possible to achieve cloud free, snow free, ice free, smoke free and leaf off/low leaf captures. The orthophotography has a pixel resolution of 16 centimetres and a stated accuracy of 50 centimetres on the ground. \r\n\r\n* Time of Capture: April 8th, 2023 - May 20, 2023, October 23, 2023 - November 3rd, 2023, April 24th 2024 \r\n* Coverage: 43,692 square kilometres\r\n* Canopy Coverage: Leaf-Off/Low-Leaf",
+      "fr": "The SCOOP 2023 was acquired in the spring of 2023, fall of 2023, and spring of 2024 under the best conditions possible to achieve cloud free, snow free, ice free, smoke free and leaf off/low leaf captures. The orthophotography has a pixel resolution of 16 centimetres and a stated accuracy of 50 centimetres on the ground. \r\n\r\n* Time of Capture: April 8th, 2023 - May 20, 2023, October 23, 2023 - November 3rd, 2023, April 24th 2024 \r\n* Coverage: 43,692 square kilometres\r\n* Canopy Coverage: Leaf-Off/Low-Leaf"
+    },
+    "format": "WEB",
+    "hash": "",
+    "id": "7a637818-08d9-4951-936e-c1adb0d858e1",
+    "language": "english",
+    "last_modified": null,
+    "metadata_modified": "2024-11-29T15:52:59.865021",
+    "mimetype": null,
+    "mimetype_inner": null,
+    "name": "South Central Ontario Orthophotography Project (SCOOP) 2023",
+    "name_translated": {
+      "en": "South Central Ontario Orthophotography Project (SCOOP) 2023",
+      "fr": "South Central Ontario Orthophotography Project (SCOOP) 2023"
+    },
+    "package_id": "a3ebafa1-bda6-4fc4-b91f-b3fbd8d49c1a",
+    "position": 22,
+    "publically_available_date": "2022-05-30",
+    "resource_type": null,
+    "schema": "",
+    "size": null,
+    "state": "active",
+    "type": "data",
+    "url": "https://geohub.lio.gov.on.ca/maps/5ce3ba3176564c46969f064453742f1a/about",
+    "url_type": null,
+    "validation_options": "",
+    "validation_status": "",
+    "validation_timestamp": ""
+  },
+  "mosaicExportUrl": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_Imagery/Ontario_Imagery_Web_Map_Service/MapServer/export?f=image&bbox=-78.3477%2C44.3006%2C-78.3447%2C44.3021&bboxSR=4326&imageSR=3857&size=2000%2C1400&format=jpg&transparent=false",
+  "imageSHA256": "986dfdcaa139c8ec21b6d2ff2a872fe552a501ffc1a84d315f84e04305457143",
+  "imageSize": [
+    2000,
+    1400
+  ],
+  "visualInspection": "Medical taper/hatching and Hospital shared-turn layout qualitatively consistent; not an independent centimetre-level remeasurement.",
+  "pixelAcquisitionDateVerified": false,
+  "currentVerified": false,
+  "imageRedistributed": false
+}

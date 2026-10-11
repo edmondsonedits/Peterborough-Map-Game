@@ -96,6 +96,8 @@ const angleDelta = (a, b) => Math.abs(Math.atan2(
       gameplayMode: document.documentElement.dataset.gameplayMode || null,
       gameplayReady: document.documentElement.dataset.gameplayReady || null,
       explorerBuild: window.PTBO_CITY_EXPLORER_BUILD?.version || null,
+      mappedArrowBuild: window.__PTBO_CITY_QA__?.metrics()?.mappedArrowBuild || null,
+      mappedTurnArrows: Number(document.documentElement.dataset.mappedTurnArrows || 0),
       mobileControlsVersion: document.documentElement.dataset.cityExplorerMobileControls || null,
       mobileAnalogDriving: document.documentElement.dataset.mobileAnalogDriving || null,
       mobileSteering: document.documentElement.dataset.mobileSteering || null,
@@ -121,7 +123,7 @@ const angleDelta = (a, b) => Math.abs(Math.atan2(
   });
 
   try {
-    const url = `${base.replace(/\/$/, '')}/city-explorer/?lite=1&pavementQA=1`;
+    const url = `${base.replace(/\/$/, '')}/city-explorer/?lite=1&pavementQA=1&qa=1`;
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 90000 });
     await page.waitForFunction(() => document.documentElement.dataset.gameplayReady === 'true', null, { timeout: 180000 });
     await page.waitForFunction(() => Boolean(globalThis.__PTBO_GAMEPLAY__?.state), null, { timeout: 10000 });
@@ -255,6 +257,8 @@ const angleDelta = (a, b) => Math.abs(Math.atan2(
 
     report.assertions = {
       buildIdentified: /^\d+\.\d+\.\d+$/.test(String(report.build || '')),
+      mappedArrowsRetained: portraitReadyToEnter.mappedTurnArrows > 0
+        && portraitReadyToEnter.mappedArrowBuild?.triangles > 0,
       coarsePointerEmulated: portraitInitial.coarsePointer === true,
       mobileControlsLoaded: Boolean(portraitInitial.mobileControlsVersion),
       portraitOrientationDetected: portraitInitial.portrait === true,

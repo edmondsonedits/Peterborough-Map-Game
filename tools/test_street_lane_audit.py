@@ -44,6 +44,44 @@ class CompatibilityTests(unittest.TestCase):
             {'id':123,'tags':{'name':'Sherbrooke Street','lanes':'4'}}])
         self.assertEqual(rows, {'739159886':'sherbrooke-park-george'})
 
+    def test_historical_profiles_require_whole_geometry_and_runtime_road_guards(self):
+        import json, copy
+        root = Path(__file__).resolve().parents[1]
+        osm = json.loads((root/'city-explorer/data/peterborough-osm.json').read_text())['elements']
+        for way_id in (250810393, 250811912):
+            original = next(w for w in osm if w.get('type') == 'way' and w['id'] == way_id)
+            result = audit.paint_eligibility(root, [original])[str(way_id)]
+            self.assertEqual(result['paintEligibility'], 'eligible-not-render-verified')
+            self.assertFalse(result['currentVerified'])
+            self.assertEqual(result['paintSupport'], 'not-evaluated')
+            self.assertGreater(result['paintCoverage']['sourceLength'], 40)
+            self.assertTrue(result['paintCoverage']['partialAppearance'])
+            self.assertEqual(result['profileId'], result['evidence'])
+            self.assertIn('generalized', ' '.join(result['paintCoverage']['limitations']))
+            self.assertEqual(result['paintCoverage']['longitudinalPartial'], way_id == 250811912)
+            if way_id == 250811912:
+                self.assertEqual(result['paintCoverage']['from'], 10)
+                self.assertEqual(result['paintCoverage']['to'], 90)
+                self.assertTrue(result['paintCoverage']['partial'])
+            for delta in ({'bridge':'yes'}, {'tunnel':'yes'}, {'bridge:conditional':'yes @ (Mo)'},
+                          {'tunnel:conditional':'yes @ (Mo)'}, {'lanes:forward':'1'},
+                          {'turn:lanes:forward':'through'}, {'surface':'gravel'}):
+                changed = copy.deepcopy(original)
+                changed['tags'].update(delta)
+                self.assertEqual(audit.paint_eligibility(root, [changed]), {}, delta)
+            changed = copy.deepcopy(original)
+            changed['geometry'][1]['lat'] += .000001
+            self.assertEqual(audit.paint_eligibility(root, [changed]), {})
+            changed = copy.deepcopy(original)
+            changed['geometry'].append({'lat':None,'lon':None})
+            self.assertEqual(audit.paint_eligibility(root, [changed]), {})
+            changed = copy.deepcopy(original)
+            changed['geometry'].reverse()
+            self.assertIn(str(way_id), audit.paint_eligibility(root, [changed]))
+        synthetic = {'id':250811912, 'tags':{'name':'Hospital Drive','lanes':'2','highway':'tertiary'},
+                     'geometry':[{'lat':44.3,'lon':-78.32},{'lat':44.3,'lon':-78.319}]}
+        self.assertEqual(audit.paint_eligibility(root, [synthetic]), {})
+
 class AuditIntegrationTests(unittest.TestCase):
     def test_cli_preserves_raw_conflict_and_classifies_direction(self):
         import json, shutil, subprocess, sys, tempfile
@@ -51,10 +89,11 @@ class AuditIntegrationTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             fixture = Path(temp)
             (fixture/'tools').mkdir()
-            for name in ('audit_street_lane_evidence.py','street_lane_compatibility.py'):
+            for name in ('audit_street_lane_evidence.py','street_lane_compatibility.py','evaluate_historical_paint.mjs'):
                 shutil.copy(root/'tools'/name, fixture/'tools'/name)
             (fixture/'city-explorer').mkdir()
-            shutil.copy(root/'city-explorer/street-paint.js', fixture/'city-explorer/street-paint.js')
+            for name in ('street-paint.js','historical-paint-profiles.js','road-network.js'):
+                shutil.copy(root/'city-explorer'/name, fixture/'city-explorer'/name)
             data = fixture/'city-explorer/data'
             data.mkdir(exist_ok=True)
             coordinates = [[-78.32,44.3],[-78.319,44.3]]
@@ -76,7 +115,7 @@ class AuditIntegrationTests(unittest.TestCase):
             self.assertEqual(row['paintOverride'], 'not-applied')
             self.assertNotEqual(report.get('baseline'), '3a9f333270bd8d832e5651d6b4cda4125e90d32c')
             self.assertEqual(len(report['hashes']), 6)
-            self.assertEqual(len(report.get('codeHashes', {})), 2)
+            self.assertEqual(set(report['codeHashes']), {'tools/audit_street_lane_evidence.py','tools/street_lane_compatibility.py','tools/evaluate_historical_paint.mjs','city-explorer/street-paint.js','city-explorer/historical-paint-profiles.js','city-explorer/road-network.js'})
             way['tags']['lanes'] = '2'
             (data/'peterborough-osm.json').write_text(json.dumps({'elements':[way]}))
             subprocess.run([sys.executable,str(fixture/'tools/audit_street_lane_evidence.py'),str(receipt)],check=True,capture_output=True)
@@ -137,12 +176,36 @@ class AuditIntegrationTests(unittest.TestCase):
             subprocess.run([sys.executable,str(fixture/'tools/audit_street_lane_evidence.py'),str(receipt)],check=True,capture_output=True)
             report = json.loads((fixture/'docs/street-audit/network-audit.json').read_text())
             row = report['roads'][0]
-            self.assertEqual(row['visualReview'], 'hospital-drive-shared-turn-2023-reference')
-            self.assertEqual(row['paintOverride'], 'hospital-drive-shared-turn-2023')
+            self.assertEqual(row['visualReview'], 'not-reviewed')
+            self.assertEqual(row['paintOverride'], 'not-applied')
+            self.assertEqual(row['paintEligibility'], 'not-eligible')
+            self.assertIsNone(row['paintCoverage'])
+            self.assertFalse(row['currentVerified'])
             self.assertEqual(row['status'], 'lane-count-conflict')
             self.assertEqual(row['comparisonReview'], 'lane-count-review')
             self.assertEqual(row['osmLanes'], 2)
-            self.assertEqual(report['summary']['reviewedCorrectionWays'], 1)
+            self.assertEqual(report['summary']['reviewedCorrectionWays'], 0)
+            # Use the actual seven original Hospital vertices, not a fabricated ID match.
+            original = next(w for w in json.loads((root/'city-explorer/data/peterborough-osm.json').read_text())['elements'] if w.get('type') == 'way' and w['id'] == 250811912)
+            (data/'peterborough-osm.json').write_text(json.dumps({'elements':[original]}))
+            feature['geometry']['coordinates'] = [[p['lon'],p['lat']] for p in original['geometry']]
+            (data/'orn-roads.geojson').write_text(json.dumps({'features':[feature]}))
+            subprocess.run([sys.executable,str(fixture/'tools/audit_street_lane_evidence.py'),str(receipt)],check=True,capture_output=True)
+            report = json.loads((fixture/'docs/street-audit/network-audit.json').read_text())
+            row = report['roads'][0]
+            self.assertEqual(row['paintOverride'], 'hospital-historical-shared-turn')
+            self.assertEqual(row['paintEligibility'], 'eligible-not-render-verified')
+            self.assertEqual(row['paintSupport'], 'not-evaluated')
+            self.assertEqual(row['paintCoverage']['from'], 10)
+            self.assertEqual(row['paintCoverage']['to'], 90)
+            self.assertAlmostEqual(row['paintCoverage']['sourceLength'], 117.79052149748662)
+            self.assertTrue(row['paintCoverage']['partial'])
+            self.assertFalse(row['currentVerified'])
+            self.assertEqual(row['status'], 'lane-count-conflict')
+            self.assertEqual(row['osmLanes'], 2)
+            import hashlib
+            for name, digest in report['codeHashes'].items():
+                self.assertEqual(digest, hashlib.sha256((fixture/name).read_bytes()).hexdigest())
 
 if __name__ == '__main__':
     unittest.main()

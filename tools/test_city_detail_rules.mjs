@@ -60,7 +60,7 @@ assert.deepEqual(
     { oneway: 'yes', 'turn:lanes': 'left|none|through;right' },
     { oneWay: true },
   ),
-  [{ direction: 'forward', symbols: ['left', null, 'through'], oneWay: true }],
+  [{ direction: 'forward', symbols: ['left', null, 'through;right'], oneWay: true }],
 );
 assert.deepEqual(
   mappedTurnLaneGroups(

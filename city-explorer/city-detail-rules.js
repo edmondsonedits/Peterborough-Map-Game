@@ -76,21 +76,43 @@ const TURN_SYMBOLS = new Set(['left', 'slight_left', 'sharp_left', 'through', 'r
 function turnLaneSymbols(value) {
   return String(value || '').split('|').map((lane) => {
     const choices = lane.split(';').map((choice) => choice.trim().toLowerCase()).filter(Boolean);
-    return choices.find((choice) => TURN_SYMBOLS.has(choice)) || null;
+    return [...new Set(choices.filter((choice) => TURN_SYMBOLS.has(choice)))].join(';') || null;
   });
 }
 
 /** Return only explicitly mapped turn arrows; blank/`none` lanes stay unpainted. */
 export function mappedTurnLaneGroups(tags = {}, profile = {}) {
   const groups = [];
-  const oneWay = Boolean(profile.oneWay);
+  const oneWay = Boolean(profile.oneWay) || ['yes', '1', '-1'].includes(String(tags.oneway).toLowerCase());
   const oneWayDirection = String(tags.oneway || '').toLowerCase() === '-1' ? 'backward' : 'forward';
-  const generic = turnLaneSymbols(tags['turn:lanes']);
-  if (generic.some(Boolean) && oneWay) groups.push({ direction: oneWayDirection, symbols: generic, oneWay: true });
-  const forward = turnLaneSymbols(tags['turn:lanes:forward']);
-  if (forward.some(Boolean)) groups.push({ direction: 'forward', symbols: forward, oneWay: false });
-  const backward = turnLaneSymbols(tags['turn:lanes:backward']);
-  if (backward.some(Boolean)) groups.push({ direction: 'backward', symbols: backward, oneWay: false });
+  const count = key => tags[key] === undefined || tags[key] === '' ? null
+    : Number.isInteger(Number(tags[key])) && Number(tags[key]) >= 0 ? Number(tags[key]) : NaN;
+  const total = count('lanes'), forwardCount = count('lanes:forward'), backwardCount = count('lanes:backward');
+  const shared = count('lanes:both_ways') ?? 0;
+  const inferredForward = forwardCount ?? (tags['turn:lanes:forward'] ? turnLaneSymbols(tags['turn:lanes:forward']).length : null);
+  const inferredBackward = backwardCount ?? (tags['turn:lanes:backward'] ? turnLaneSymbols(tags['turn:lanes:backward']).length : null);
+  if (!oneWay && total !== null && inferredForward !== null && inferredBackward !== null
+    && inferredForward + inferredBackward + shared !== total) return [];
+  if ([total, forwardCount, backwardCount, shared].some(Number.isNaN)) return [];
+  if (total !== null && (total < 1 || (forwardCount !== null && backwardCount !== null
+    && forwardCount + backwardCount + shared !== total))) return [];
+  const add = (direction, value) => {
+    const symbols = turnLaneSymbols(value);
+    const directionalCount = direction === 'forward' ? forwardCount : backwardCount;
+    if (!symbols.some(Boolean) || (directionalCount !== null && directionalCount !== symbols.length)
+      || (oneWay && total !== null && total !== symbols.length)
+      || (!oneWay && total !== null && symbols.length + shared >= total)) return;
+    groups.push({ direction, symbols, oneWay });
+  };
+  if (oneWay) {
+    const directional = tags[`turn:lanes:${oneWayDirection}`];
+    // Even a blank directional tag overrides generic evidence: don't invent a
+    // second group or send arrows against a reverse one-way restriction.
+    add(oneWayDirection, directional !== undefined ? directional : tags['turn:lanes']);
+  } else {
+    add('forward', tags['turn:lanes:forward']);
+    add('backward', tags['turn:lanes:backward']);
+  }
   return groups;
 }
 

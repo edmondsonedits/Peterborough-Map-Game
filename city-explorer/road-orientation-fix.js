@@ -51,7 +51,7 @@ try {
   await import('./authored-scene-bootstrap.js?v=1.6.101');
   globalThis.__PTBO_EXPLORER_BOOTSTRAP__?.touch?.('loading 3D city module');
   const appVersion = globalThis.PTBO_BUILD?.version || 'city-editor-20260925';
-  await import('./app.js?v=' + encodeURIComponent(appVersion) + '&hospitalPaint=1');
+  await import('./app.js?v=' + encodeURIComponent(appVersion) + '&hospitalPaint=1&simulatorTasks=20261011b');
 } catch (error) {
   showFatalError(error);
 }

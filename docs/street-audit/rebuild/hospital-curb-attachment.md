@@ -1,0 +1,9 @@
+# Bounded inferred-curb attachment
+
+The packaged curb edges have no CURBTYPE. Their existing inferred top was cached before Hospital pavement reconciliation; the surface repair could leave those tops buried or floating. This is a rendering attachment fix, not evidence that any specific edge is raised or flush.
+
+After successful Hospital reconciliation only, unclassified non-bridge curbs inside the pilot blend toward actual nearby final road pavement plus the existing 0.07 m reveal. The same smooth radial field weight blends back to the original legacy top over 100–120 m, reaching the original value exactly at the boundary. It does not snap every positive-weight point to a different height. Station behavior, unsupported points, bridges and outside heights retain their previous paths. Intersecting curb segments receive 2 m subdivision. Municipal XY and source attributes are unchanged.
+
+`tools/test_hospital_curb_geometry.mjs` runs the actual app curb builder with packaged curb paths, reconstructed terrain and the final pavement index in both power profiles. Seven probes per emitted Float32 top triangle within the conservative 99 m core check top burial and the existing 0.11 m underside; the low-power renderer emits top faces only. Each profile checks 3,741 points. No sampled top is buried more than 25 mm and no sampled underside floats more than 25 mm. Minimum top clearance is 16.606 mm desktop / 7.137 mm low-power; maximum underside gap is 10.290 mm desktop / no positive gap low-power. These are finite samples, not proof against microscopic holes or a surveyed curb height.
+
+Unit tests separately verify the seven-centimetre target, continuous original-height feather limit, crossing-segment selection, and Station/bridge/outside exclusions. Browser and real-phone visual validation remain pending.

@@ -1,0 +1,152 @@
+{
+  "status": "fail",
+  "reports": [
+    {
+      "lowPower": false,
+      "key": "paint:historical:way/250810393:0",
+      "triangles": 1792,
+      "probes": 12544,
+      "maxLiftErrorMetres": 0.0028657033560444065,
+      "minLiftMetres": 0.005134296643955594
+    },
+    {
+      "lowPower": false,
+      "key": "paint:historical:way/250811912:0",
+      "triangles": 4610,
+      "probes": 32270,
+      "maxLiftErrorMetres": 0.001858613558311191,
+      "minLiftMetres": 0.007602024555840359
+    },
+    {
+      "lowPower": false,
+      "outerLaneGameplayQueries": 12,
+      "partialExclusions": true,
+      "countOnlyEmitted": true
+    },
+    {
+      "lowPower": true,
+      "key": "paint:historical:way/250810393:0",
+      "triangles": 1792,
+      "probes": 12544,
+      "maxLiftErrorMetres": 0.0016825327500891094,
+      "minLiftMetres": 0.006317467249910891
+    },
+    {
+      "lowPower": true,
+      "key": "paint:historical:way/250811912:0",
+      "triangles": 4610,
+      "probes": 32270,
+      "maxLiftErrorMetres": 0.0011715168370356535,
+      "minLiftMetres": 0.007589595622714995
+    },
+    {
+      "lowPower": true,
+      "outerLaneGameplayQueries": 12,
+      "partialExclusions": true,
+      "countOnlyEmitted": true
+    }
+  ],
+  "failedProbeCount": 22,
+  "worst": [
+    {
+      "lowPower": false,
+      "key": "paint:historical:way/250810393:0",
+      "lift": 0.005134296643955594,
+      "point": [
+        -2039.1472778320312,
+        18.853367805480957,
+        798.6802062988281
+      ]
+    },
+    {
+      "lowPower": false,
+      "key": "paint:historical:way/250810393:0",
+      "lift": 0.005134296643955594,
+      "point": [
+        -2039.1472778320312,
+        18.853367805480957,
+        798.6802062988281
+      ]
+    },
+    {
+      "lowPower": false,
+      "key": "paint:historical:way/250810393:0",
+      "lift": 0.005430161357740104,
+      "point": [
+        -2039.110107421875,
+        18.853012084960938,
+        798.7728881835938
+      ]
+    },
+    {
+      "lowPower": false,
+      "key": "paint:historical:way/250810393:0",
+      "lift": 0.005430161357740104,
+      "point": [
+        -2039.110107421875,
+        18.853012084960938,
+        798.7728881835938
+      ]
+    },
+    {
+      "lowPower": false,
+      "key": "paint:historical:way/250810393:0",
+      "lift": 0.005431012836840665,
+      "point": [
+        -2039.128662109375,
+        18.853342056274414,
+        798.7265319824219
+      ]
+    },
+    {
+      "lowPower": false,
+      "key": "paint:historical:way/250810393:0",
+      "lift": 0.005431012836840665,
+      "point": [
+        -2039.128662109375,
+        18.853342056274414,
+        798.7265319824219
+      ]
+    },
+    {
+      "lowPower": false,
+      "key": "paint:historical:way/250810393:0",
+      "lift": 0.005438970638596885,
+      "point": [
+        -2039.1844482421875,
+        18.853724479675293,
+        798.5875549316406
+      ]
+    },
+    {
+      "lowPower": false,
+      "key": "paint:historical:way/250810393:0",
+      "lift": 0.005438970638596885,
+      "point": [
+        -2039.1844482421875,
+        18.853724479675293,
+        798.5875549316406
+      ]
+    },
+    {
+      "lowPower": false,
+      "key": "paint:historical:way/250810393:0",
+      "lift": 0.005440306849362031,
+      "point": [
+        -2039.1658935546875,
+        18.853697776794434,
+        798.6338806152344
+      ]
+    },
+    {
+      "lowPower": false,
+      "key": "paint:historical:way/250810393:0",
+      "lift": 0.005440306849362031,
+      "point": [
+        -2039.1658935546875,
+        18.853697776794434,
+        798.6338806152344
+      ]
+    }
+  ]
+}
