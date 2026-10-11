@@ -6,7 +6,7 @@ This pass compares **every packaged renderable OSM road way** with the available
 
 The source snapshot contains 5,961 renderable ways, 2,778 public ways and 923 distinct nonblank name strings. These are segments/name strings, not an official count of municipal streets. The complete per-way inventory is `network-audit.json` and the original ORN attribute receipt is `orn-lane-events.json`.
 
-Initial matching results: 2,081 lane-count agreements; 232 conflicts needing review; 64 ways with missing OSM counts and usable ORN evidence; 195 partial/varying matches; 3,389 without a reliable ORN match. Many unmatched ways are service roads or unnamed ways. A data conflict does **not** establish which source is wrong. No 232-way automatic replacement was performed.
+Initial raw numeric categories (interpret only after direction/carriageway compatibility checks): 2,081 lane-count agreements; 232 raw numeric conflicts (see direction-aware triage below); 64 ways with missing OSM counts and matched ORN evidence; 195 partial/varying matches; 3,389 without a reliable ORN match. Many unmatched ways are service roads or unnamed ways. A data conflict does **not** establish which source is wrong. No 232-way automatic replacement was performed.
 
 ## Source evidence
 
@@ -36,7 +36,7 @@ The correction is scoped by **way ID, street name and the old four-lane tag**, n
 
 ## Reproduce
 
-`python tools/audit_street_lane_evidence.py path/to/orn-lane-events.json` (shapely + pyproj) compares the packaged datasets. It uses NAD83/UTM17N, approximately 12 m samples, matching normalized names, <=8 m offset and <=20° direction difference. A single lane count with >=90% sample coverage is required for a definitive data comparison. Conflicting nearby parallel matches are rejected and ORN event measure ranges are respected. This still is not a substitute for field verification.
+`python tools/audit_street_lane_evidence.py path/to/orn-lane-events.json` (Python 3.12+, shapely 2.0.7, pyproj 3.7.0 and Node.js 22+) compares the packaged datasets. It uses NAD83/UTM17N, approximately 12 m samples, matching normalized names, <=8 m offset and <=20° direction difference. A single lane count with >=90% sample coverage is required for a raw numeric comparison; direction/carriageway compatibility must be checked before interpreting it. Conflicting nearby parallel matches are rejected and ORN event measure ranges are respected. This still is not a substitute for field verification.
 
 `node tools/test_street_marking_evidence.mjs` tests semantics, actual Three.js paint output, surface following, asymmetric offsets, reviewed-way bounds, missing support and existing editor bindings.
 
@@ -44,6 +44,55 @@ The correction is scoped by **way ID, street name and the old four-lane tag**, n
 
 ## Remaining work, explicitly not claimed complete
 
-All other roads remain `visualReview: not-reviewed` in the audit. Eight aerial areas do not validate eight complete roads, much less the entire city. Resolve the 232 conflicts individually against dated imagery/municipal plans/current observations before changing lane counts. Check turn-lane transitions, parking/bike-lane widths, hatching, stop bars, sidewalk gaps, actual curb presence and dropped curbs. Preserve private/service-road distinctions and bridge decks. The current paint defaults are still inferred outside explicit tags or reviewed overrides.
+All other roads remain `visualReview: not-reviewed` in the audit. Eight aerial areas do not validate eight complete roads, much less the entire city. Resolve source compatibility before interpreting the 232 raw conflicts, then review comparable candidates against dated imagery/municipal plans/current observations before changing lane counts. Check turn-lane transitions, parking/bike-lane widths, hatching, stop bars, sidewalk gaps, actual curb presence and dropped curbs. Preserve private/service-road distinctions and bridge decks. The current paint defaults are still inferred outside explicit tags or reviewed overrides.
 
 No source terrain, road footprint, lane database or municipal curb geometry is rewritten by this paint release. `network-audit.json` is the review queue, not a certificate of whole-city visual accuracy.
+
+
+## Direction-aware triage — 2026-10-11
+
+Regenerated from packaged main `ae711377f46fda285c5b0211f4c0992ddb9b754e`,
+using the existing ORN lane-event receipt retrieved on October 10. This is a fresh
+computation, **not a fresh field survey or new ORN event download**. Geographic
+inputs and the renderer are unchanged.
+
+The raw `status` is preserved for traceability. Do not treat it alone as a usable
+lane comparison. The new `comparisonReview` classifies every matched way:
+
+- `source-compatibility-review`: one or more accepted samples have a carriageway
+  mismatch, opposite travel direction, unknown direction or ambiguous nearby
+  candidates. Resolve this before comparing totals.
+- `lane-count-review`: numeric conflict with compatible sampled directions;
+  still requires independent dated evidence, not an automatic correction.
+- `count-agrees-not-field-verified`: compatible numeric agreement; not certification.
+- `missing-count-review` / `insufficient-evidence`: retain uncertainty and coverage.
+
+ORN `Both` describes both traffic directions; OSM one-way lane counts describe
+that mapped carriageway. Never halve ORN totals. ORN `Positive`/`Negative` is
+relative to ORN geometry, so signed local tangent alignment and OSM `oneway=-1`
+are respected. Implicit or conditional OSM direction is conservatively unknown.
+See [Ontario's ORN standard](https://files.ontario.ca/tbs-go-its-29-ontario-road-network-orn-en-2022-09-29.pdf)
+for direction and lane-count semantics. Compatibility alone does not prove that
+two differently represented lines describe the same carriageway.
+
+Current snapshot: all 232 raw conflicts remain recorded. 100 first need source
+compatibility review; 132 remain direction-compatible lane review candidates.
+Of the latter, four already have the bounded Sherbrooke paint override, leaving
+128 without that override. Across all raw statuses, 247 ways need compatibility
+review. These counts describe this input snapshot, not acceptance thresholds.
+
+`directionCompatibility` counts accepted samples, `ornTrafficFlows` retains
+selected ORN attributes, and `matchedSamples` / `sampleCount` expose coverage.
+Historical `visualReview` is independent of `paintOverride`: the latter evaluates
+the actual `reviewedPaintTags` guard using current IDs/tags. It means the configured
+paint interpretation applies, not that a browser or current street was surveyed.
+The four original visual-review records are historical bounded evidence.
+
+`baseline` is the checkout HEAD, not a claim that local files are unmodified.
+`hashes` identifies all six input files; `codeHashes` identifies both Python audit
+sources. A non-Git checkout reports a null baseline. No timestamps are invented;
+the receipt's retrieval and event-effective dates remain distinct.
+
+Regression command: `python -m unittest discover -s tools -p 'test_street_lane_audit.py'`.
+The audit also requires `node` on PATH to evaluate the unchanged paint guard. A
+missing/failing Node process aborts instead of silently calling paint handled.
