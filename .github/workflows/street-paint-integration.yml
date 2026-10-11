@@ -38,6 +38,10 @@ jobs:
           first=command.index("result=subprocess.run(['git','merge','--no-commit','--no-ff','origin/main'])")
           last=command.index("p=Path('city-explorer/road-orientation-fix.js')",first)
           command=command[:first]+"subprocess.run(['python','tools/resolve_street_merge.py'],check=True)\n"+command[last:]
+          # Keep main's tested canonical build-token contract, not a parallel
+          # app version scheme. The HTML entrypoint and helper imports version
+          # the changed street renderer without discarding release behaviour.
+          command=command.replace("encodeURIComponent(appVersion + '-street-evidence-2')", "encodeURIComponent(appVersion)")
           subprocess.run(['bash','-e','-o','pipefail','-c',command],check=True)
           PY
       - name: Test combined source, geometry and runtime edge cases
