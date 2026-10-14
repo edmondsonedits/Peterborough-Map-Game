@@ -358,9 +358,12 @@
   }
 
   function installControls() {
-    const panel = document.querySelector('.panel-scroll');
+    // Current learners see calibration/diagnostics only when opening Advanced.
+    // A cached older core still receives its original working Options controls.
+    const advanced = document.getElementById('ptbo-advanced-settings');
+    const panel = advanced || document.querySelector('.panel-scroll');
     if (!panel || document.getElementById('road-lock-enabled')) return;
-    const firstTitle = panel.querySelector('.section-title');
+    const firstTitle = advanced ? null : panel.querySelector('.section-title');
     const title = document.createElement('div');
     title.className = 'section-title';
     title.textContent = 'Road Boundaries';

@@ -123,3 +123,5 @@ html.ptbo-response-history-open body.ptbo-response-ui :is(.mobile-controls,.mobi
 body.ptbo-response-ui #control-panel .incident-category {font-size:14px;font-weight:700;line-height:1.4;margin-bottom:8px}
 body.ptbo-response-ui #control-panel .incident-fire {color:var(--ptbo-danger,#fda4af)}
 body.ptbo-response-ui #control-panel .incident-medical {color:var(--ptbo-success,#86efac)}
+body.ptbo-response-ui #control-panel :is(#ptbo-arcade-note,#road-lock-status) {font-size:14px;line-height:1.5;color:var(--ptbo-muted,#b4c3d4)}
+body.ptbo-response-ui #control-panel #road-lock-status {background:var(--ptbo-elevated,#1b2c44)!important;color:var(--ptbo-muted,#b4c3d4)!important;font-size:14px!important;line-height:1.5!important}

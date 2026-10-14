@@ -139,3 +139,49 @@ test('driving keys cannot restart a vehicle behind Options or history',()=>{
   settingsOpen=false;historyOpen=true;press();assert.equal(context.keys.ArrowUp,false,'history keeps movement released');
   historyOpen=false;press();assert.equal(context.keys.ArrowUp,true,'driving resumes after closing overlays');
 });
+
+function settingsInjectionHarness(advancedPresent) {
+  const nodes=new Map();
+  class Element {
+    constructor(tag='div'){this.tagName=tag.toUpperCase();this.children=[];this.style={};this.dataset={};this.listeners={};this.textContent='';this.value='';this.className='';}
+    appendChild(node){if(node.parentElement)node.parentElement.children=node.parentElement.children.filter(x=>x!==node);this.children.push(node);node.parentElement=this;if(node.id)nodes.set(node.id,node);return node;}
+    append(...items){items.forEach(node=>this.appendChild(node));}
+    insertBefore(node,reference){if(reference===null||reference===undefined)return this.appendChild(node);const index=this.children.indexOf(reference);assert.notEqual(index,-1,'insertion reference belongs to selected parent');this.children.splice(index,0,node);node.parentElement=this;if(node.id)nodes.set(node.id,node);return node;}
+    addEventListener(type,fn){(this.listeners[type]||=[]).push(fn);}
+    dispatch(type){for(const fn of this.listeners[type]||[])fn({target:this});}
+    set innerHTML(value){
+      this.markup=value;
+      // Enough tree structure for the real calibration range and road controls.
+      for(const match of value.matchAll(/<(input|select|span|div)\b([^>]*)>/g)){
+        const node=new Element(match[1]);const attrs=Object.fromEntries([...match[2].matchAll(/([\w-]+)="([^"]*)"/g)].map(m=>[m[1],m[2]]));Object.assign(node,attrs);node.checked=/\bchecked\b/.test(match[2]);this.appendChild(node);
+      }
+    }
+    querySelectorAll(selector){const descendants=this.children.flatMap(node=>[node,...node.querySelectorAll('*')]);return selector==='*'?descendants:descendants.filter(node=>selector==='.section-title'?node.className==='section-title':false);}
+    querySelector(selector){if(selector==='input')return this.children.find(node=>node.tagName==='INPUT');if(selector==='label span:last-child')return this.children.filter(node=>node.tagName==='SPAN').at(-1);if(selector==='.section-title')return this.querySelectorAll(selector)[0]||null;return null;}
+  }
+  const panel=new Element();const serviceTitle=new Element();serviceTitle.className='section-title';serviceTitle.textContent='Emergency Service';panel.appendChild(serviceTitle);const drivingTitle=new Element();drivingTitle.className='section-title';drivingTitle.textContent='Driving Modifiers';panel.appendChild(drivingTitle);
+  const advanced=new Element('details');advanced.id='ptbo-advanced-settings';if(advancedPresent)panel.appendChild(advanced);
+  const document={querySelector:selector=>selector==='.panel-scroll'?panel:null,getElementById:id=>nodes.get(id)||null,createElement:tag=>new Element(tag),head:new Element('head')};
+  const context=vm.createContext({document,console,VERSION:'test',DESKTOP_MANUAL_MAP:false,PRESETS:{},state:{enabled:true,status:'loading',segments:[],laneAssist:.6,settings:{preset:'classic',responseMs:45,lowSpeedTurnRate:245,highSpeedTurnRate:72,highSpeedReferenceKmh:190,steeringCurve:1.1,cornerAssist:58,zoomOutLevels:2,cameraLookAheadMeters:38,speedZoomEnabled:true}},controlNodes:new Map(),presetSelect:null,CONFIG:{spawnSnapDistance:120},saveSettings(){},snapVehicleToRoad(){},toggleDebugLayer(){}});
+  return {context,nodes,panel,advanced,serviceTitle,drivingTitle};
+}
+
+for(const advancedPresent of [true,false]) {
+  test(`road calibration installs into ${advancedPresent?'Advanced':'legacy Options'} with live controls`,()=>{
+    const h=settingsInjectionHarness(advancedPresent);const source=read('response-simulator/road-collision-core.js');
+    vm.runInContext(source.slice(source.indexOf('  function updateStatusText()'),source.indexOf('  function toggleDebugLayer(')),h.context);h.context.installControls();
+    const target=advancedPresent?h.advanced:h.panel;
+    assert.ok(h.nodes.get('road-lock-status').parentElement===target,'road diagnostics use the intended settings parent');
+    assert.equal(h.nodes.get('road-assist').parentElement.parentElement,target);
+    h.nodes.get('road-assist').value='35';h.nodes.get('road-assist').dispatch('input');assert.equal(h.context.state.laneAssist,.35);assert.equal(h.nodes.get('road-assist-value').textContent,'35%');
+    assert.equal(h.panel.children[0],advancedPresent?h.serviceTitle:target.children[0]);
+  });
+  test(`arcade calibration installs into ${advancedPresent?'Advanced':'legacy Options'} with live controls`,()=>{
+    const h=settingsInjectionHarness(advancedPresent);const source=read('response-simulator/arcade-handling-1.5.1.js');
+    vm.runInContext(source.slice(source.indexOf('  function formatSetting('),source.indexOf('  function migrateDefaultMode(')),h.context);h.context.installSettingsPanel();
+    const section=h.nodes.get('ptbo-arcade-handling-section');assert.ok(section.parentElement===(advancedPresent?h.advanced:h.panel),'arcade calibration uses the intended settings parent');
+    assert.equal(h.nodes.get('ptbo-arcade-range-controls').children.length,8);
+    const response=h.nodes.get('ptbo-arcade-responseMs');assert.equal(response.value,'45');response.value='80';response.dispatch('input');assert.equal(h.context.state.settings.responseMs,80);assert.equal(h.context.state.settings.preset,'custom');
+    assert.equal(h.nodes.get('ptbo-arcade-preset').listeners.change.length,1);
+  });
+}

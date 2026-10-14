@@ -32,7 +32,7 @@ test('Practice and Timed Games open accurately grouped modes directly with repla
 });
 function wrapper({core=false,store=Promise.resolve()}={}){
  const timers=new Map(),events={},listeners={},nodes=new Map();let seq=0,clients=0;
- const node=id=>{if(nodes.has(id))return nodes.get(id);const n={id,hidden:false,textContent:'',classList:{add(){},remove(){}},setAttribute(){},focus(){n.focused=true},addEventListener(name,fn){listeners[id+':'+name]=fn}};nodes.set(id,n);return n};
+ const node=id=>{if(nodes.has(id))return nodes.get(id);const n={id,hidden:false,textContent:'',attrs:{},classList:{add(){},remove(){}},setAttribute(name,value){this.attrs[name]=value},focus(){n.focused=true},addEventListener(name,fn){listeners[id+':'+name]=fn}};nodes.set(id,n);return n};
  const doc=()=>({readyState:'complete',URL:'https://example.test/geo-guesser/index.html',body:{appendChild(){clients++}},head:{appendChild(){}},createElement:()=>({dataset:{},remove(){}})});
  const game={show:core?()=>{}:undefined,__ptboGeoCoreReady:core};const frame=node('game-frame');frame.contentDocument=doc();frame.contentWindow=game;frame.src='../index.html';frame.addEventListener=(name,fn)=>events[name]=fn;
  const context=vm.createContext({URL,console:{error(){},warn(){}},location:{href:'https://example.test/geo-guesser/desktop/'},document:{currentScript:{dataset:{geoSurface:'desktop'}},getElementById:node},setTimeout(fn,delay){const id=++seq;timers.set(id,{fn,delay});return id},clearTimeout:id=>timers.delete(id),setInterval(){},clearInterval(){},PTBO_DISPATCH_STORE:{ready:()=>store},addEventListener:(name,fn)=>events['window:'+name]=fn});context.window=context;
@@ -118,4 +118,18 @@ test('BFCache restore keeps live scoreboard handlers and shares the installed cl
  await child.showCityTenScores();assert.match(node('city-ten-list').innerHTML,/No online scores/);
  visible='results';await child.shareOnlineScore();assert.equal(writes,1,'restored explicit sharing still uploads once');
  assert.equal(bridgeExecutions,1);assert.equal(clientExecutions,1);assert.equal(frame.inert,false);
+});
+
+test('the ready cover leaves accessibility and returns for a replacement document recovery',async()=>{
+ const h=wrapper({core:true});await flush();const cover=h.node('loading');
+ assert.equal(cover.hidden,true,'ready cover must be semantically hidden');
+ assert.equal(cover.attrs['aria-hidden'],'true');assert.equal(cover.inert,true);
+ h.frame.contentDocument=h.doc();h.game.show=undefined;h.events.load();
+ assert.equal(cover.hidden,false,'replacement startup must restore the cover');
+ assert.equal(cover.attrs['aria-hidden'],'false');assert.equal(cover.inert,false);
+ h.tick(20000);await flush();assert.equal(h.node('startup-recovery').hidden,false);
+ assert.equal(cover.hidden,false);assert.equal(cover.attrs['aria-hidden'],'false');assert.equal(cover.inert,false);
+ h.listeners['startup-retry:click']();assert.equal(cover.hidden,false);assert.equal(cover.inert,false);
+ h.frame.contentDocument=h.doc();h.game.show=()=>{};h.events.load();await flush();
+ assert.equal(cover.hidden,true);assert.equal(cover.attrs['aria-hidden'],'true');assert.equal(cover.inert,true);
 });

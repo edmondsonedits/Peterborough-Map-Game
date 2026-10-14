@@ -18,7 +18,10 @@
     clearTimeout(probe);
   }
   function cover(message) {
-    loading?.classList.remove('hidden');
+    if (loading) {
+      loading.hidden=false;loading.inert=false;loading.setAttribute('aria-hidden','false');
+      loading.classList.remove('hidden');
+    }
     if (status) status.textContent = message;
     frame.inert = true;frame.setAttribute('aria-hidden','true');
   }
@@ -124,7 +127,10 @@
     catch(error) { console.error('Unable to load shared dispatch data.',error); }
     if(!owns(token))return;
     clearTimeout(deadline);clearTimeout(probe);
-    loading?.classList.add('hidden');frame.inert=false;frame.setAttribute('aria-hidden','false');
+    if (loading) {
+      loading.classList.add('hidden');loading.hidden=true;loading.inert=true;loading.setAttribute('aria-hidden','true');
+    }
+    frame.inert=false;frame.setAttribute('aria-hidden','false');
     frame.contentWindow.focus?.();
     void installClients(token).catch(error=>{
       if(owns(token))frame.contentWindow.geoScoreboardFailure?.(error);

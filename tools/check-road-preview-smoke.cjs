@@ -14,7 +14,7 @@ const { chromium } = require('playwright');
     response=await page.goto(root+'/city-explorer/?lite=1&roadStartupQA=1',{waitUntil:'domcontentloaded',timeout:30000});
     await page.waitForFunction(()=>document.documentElement.dataset.gameplayReady==='true'
       || Boolean(document.querySelector('.error-card, #loading-screen.has-error'))
-      || document.documentElement.dataset.explorerBoot==='failed',{timeout:65000}).catch(()=>null);
+      || document.documentElement.dataset.explorerBoot==='failed',null,{timeout:65000}).catch(()=>null);
     const snapshot=await page.evaluate(()=>({
       ready:document.documentElement.dataset.gameplayReady,
       dataset:Object.fromEntries(Object.entries(document.documentElement.dataset)

@@ -202,7 +202,10 @@
   }
 
   function installSettingsPanel() {
-    const panel = document.querySelector('.panel-scroll');
+    // Current learners see calibration/diagnostics only when opening Advanced.
+    // A cached older core still receives its original working Options controls.
+    const advanced = document.getElementById('ptbo-advanced-settings');
+    const panel = advanced || document.querySelector('.panel-scroll');
     if (!panel || document.getElementById('ptbo-arcade-handling-section')) return Boolean(panel);
 
     const section = document.createElement('div');

@@ -13,13 +13,13 @@
     .station-shortcuts{position:fixed;top:68px;left:15px;z-index:5000;width:min(215px,calc(100vw - 30px));display:grid;grid-template-columns:repeat(3,minmax(65px,1fr));gap:6px;pointer-events:auto;scrollbar-width:none}.station-shortcuts::-webkit-scrollbar{display:none}.station-button{min-width:0;height:38px;padding:0 7px;color:#e5e7eb;border:1px solid var(--border);border-radius:10px;background:rgba(8,13,24,.94);box-shadow:0 5px 16px rgba(0,0,0,.34);font:inherit;font-size:10px;font-weight:850;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}.station-button:hover{background:rgba(30,41,59,.98)}.station-button.active{color:#fff;border-color:rgba(239,68,68,.8);background:rgba(185,28,28,.96)}html[data-service=ems] .station-button.active{border-color:#38bdf8;background:#075985}
     #loading{position:fixed;inset:0;z-index:6000;display:grid;place-items:center;padding:24px;color:var(--ink);background:#111827;text-align:center;transition:opacity .18s ease}#loading.hidden{opacity:0;pointer-events:none}#loading strong{display:block;font-size:1.15rem}#loading span{display:block;margin-top:6px;color:var(--muted);font-size:.9rem;line-height:1.45}#loading .diagnostic{margin-top:10px;padding:8px 10px;border:1px solid #ffffff1f;border-radius:8px;background:#050b14;color:#fca5a5;font:600 10px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace}#loading button{margin-top:16px;padding:10px 18px;color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:9px;background:#dc2626;font:inherit;font-weight:800;cursor:pointer}@media(max-width:900px),(pointer:coarse){.desktop-action,.station-shortcuts{display:none!important}}
   </style>
-  <link rel="stylesheet" href="../../shared/training-ui.css?v=1.6.102">
-  <link rel="stylesheet" href="../response-interface.css?v=1.6.102">
+  <link rel="stylesheet" href="../../shared/training-ui.css?v=1.6.103">
+  <link rel="stylesheet" href="../response-interface.css?v=1.6.103">
 </head>
 <body class="ptbo-ui ptbo-response-ui ptbo-response-wrapper">
   <iframe id="simulator" title="Fire and EMS Emergency Response Simulator"></iframe>
   <script>
-    (()=>{const VERSION='1.6.102',params=new URLSearchParams(location.search);let stored=null;try{stored=localStorage.getItem('ptboSelectedCity')}catch(_){}const requested=String(params.get('city')||stored||'peterborough').toLowerCase(),city=/^[a-z0-9-]+$/.test(requested)?requested:'peterborough';try{localStorage.setItem('ptboSelectedCity',city)}catch(_){}const url=new URL('../index.html',location.href);url.searchParams.set('city',city);url.searchParams.set('v',VERSION);url.searchParams.set('fresh',params.get('fresh')||String(Date.now()));const frame=document.getElementById('simulator');frame.dataset.ptboCity=city;frame.dataset.ptboCityUrlVersion=VERSION;frame.src=url.href})();
+    (()=>{const VERSION='1.6.103',params=new URLSearchParams(location.search);let stored=null;try{stored=localStorage.getItem('ptboSelectedCity')}catch(_){}const requested=String(params.get('city')||stored||'peterborough').toLowerCase(),city=/^[a-z0-9-]+$/.test(requested)?requested:'peterborough';try{localStorage.setItem('ptboSelectedCity',city)}catch(_){}const url=new URL('../index.html',location.href);url.searchParams.set('city',city);url.searchParams.set('v',VERSION);url.searchParams.set('fresh',params.get('fresh')||String(Date.now()));const frame=document.getElementById('simulator');frame.dataset.ptboCity=city;frame.dataset.ptboCityUrlVersion=VERSION;frame.src=url.href})();
   </script>
   <div class="station-shortcuts" aria-label="Quick response bases"></div>
   <button class="desktop-action" id="siren-button" type="button" aria-label="Toggle emergency lights" aria-pressed="true" title="Emergency lights"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 14V9a5 5 0 0 1 10 0v5M5 18h14M8 14h8l1 4H7l1-4ZM4 7 2 6M20 7l2-1M12 3V1"/></svg></button>
@@ -27,15 +27,15 @@
   <button class="desktop-action" id="recenter-button" type="button" aria-label="Recenter and follow vehicle" title="Recenter and follow vehicle"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></button>
   <div id="loading"><div><strong id="loading-title">Loading simulator</strong><span id="loading-status" role="status" aria-live="polite">Preparing city package, vehicle controls, and map…</span><a class="startup-home" href="../../?focus=dispatch#dispatch-start">All games</a></div></div>
 
-  <script src="../startup-trace-1.6.17.js?v=1.6.102"></script>
-  <script src="../desktop-keyboard.js?v=1.6.102"></script>
-  <script src="../../shared/build-version.js?v=1.6.102"></script>
-  <script src="../../shared/release-bootstrap.js?v=1.6.102"></script>
-  <script src="../../shared/dispatch-locations.js?v=1.6.102"></script>
-  <script src="../../shared/dispatch-data-1.4.4.js?v=1.6.102"></script>
-  <script src="../../shared/dispatch-override-1.4.4.js?v=1.6.102"></script>
-  <script src="../../shared/stations.js?v=1.6.102"></script>
-  <script src="../service-selection.js?v=1.6.102"></script>
+  <script src="../startup-trace-1.6.17.js?v=1.6.103"></script>
+  <script src="../desktop-keyboard.js?v=1.6.103"></script>
+  <script src="../../shared/build-version.js?v=1.6.103"></script>
+  <script src="../../shared/release-bootstrap.js?v=1.6.103"></script>
+  <script src="../../shared/dispatch-locations.js?v=1.6.103"></script>
+  <script src="../../shared/dispatch-data-1.4.4.js?v=1.6.103"></script>
+  <script src="../../shared/dispatch-override-1.4.4.js?v=1.6.103"></script>
+  <script src="../../shared/stations.js?v=1.6.103"></script>
+  <script src="../service-selection.js?v=1.6.103"></script>
   <script>
     (()=>{
       'use strict';
