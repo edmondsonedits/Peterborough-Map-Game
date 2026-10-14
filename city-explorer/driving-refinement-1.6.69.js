@@ -113,7 +113,7 @@
   window.addEventListener('keyup', suppressDigitalDriving, true);
 
   joystick.addEventListener('pointerdown', event => {
-    if (!bridgeInstalled || !driving() || document.documentElement.dataset.explorerInteraction !== 'ready') return;
+    if (!bridgeInstalled || !driving()) return;
     analog.active = true;
     analog.pointerId = event.pointerId;
     updateFromPointer(event.clientX, event.clientY);
@@ -138,7 +138,6 @@
   });
   observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-gameplay-mode'] });
 
-  addEventListener('ptbo-explorer-stop', clearAnalog);
   addEventListener('blur', clearAnalog);
   document.addEventListener('visibilitychange', () => { if (document.hidden) clearAnalog(); });
 })();

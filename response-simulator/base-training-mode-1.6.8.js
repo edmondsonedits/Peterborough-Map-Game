@@ -24,7 +24,7 @@
   function disableDispatchControls() {
     const action=document.getElementById('hud-action-btn');
     if(action){
-      action.textContent='Free driving';
+      action.textContent='Calls Unavailable';
       action.disabled=true;
       action.className='hud-btn';
       action.style.opacity='0.55';
@@ -51,13 +51,13 @@
   }
 
   function updateCallSectionLabels() {
-    const unavailableLabel='Incident Types — Coming later';
+    const unavailableLabel='Incident Types — Calls Unavailable';
     const incidentHeading=[...document.querySelectorAll('.section-title')].find(node=>node.textContent.trim().startsWith('Incident Types'));
     if(incidentHeading) incidentHeading.textContent=unavailableLabel;
     const compactLabel=document.getElementById('ptbo-incident-types-summary-label');
     if(compactLabel) compactLabel.textContent=unavailableLabel;
     const customHeading=[...document.querySelectorAll('.section-title')].find(node=>node.textContent.trim()==='Custom Dispatch Logging');
-    if(customHeading) customHeading.textContent='Dispatch Logging — Coming later';
+    if(customHeading) customHeading.textContent='Dispatch Logging — Unavailable';
   }
 
   function showHud() {
@@ -69,14 +69,14 @@
     const base=selected?service.getBase?.():null;
     if(selected&&profile&&base){
       content.innerHTML=`
-        <div class="hud-title">${escapeText(profile.label.toUpperCase())} / FREE DRIVING · ${escapeText(city.name.toUpperCase())}</div>
+        <div class="hud-title">${escapeText(profile.label.toUpperCase())} / BASE TRAINING · ${escapeText(city.name.toUpperCase())}</div>
         <p class="hud-address">${escapeText(base.name)}</p>
-        <div class="hud-meta">${escapeText(base.address)} · Peterborough simulator controls · Dispatch scenarios coming later.</div>`;
+        <div class="hud-meta">${escapeText(base.address)} · Peterborough simulator controls · Dispatch calls unavailable.</div>`;
     } else {
       content.innerHTML=`
-        <div class="hud-title">FREE DRIVING · ${escapeText(city.name.toUpperCase())}</div>
+        <div class="hud-title">BASE TRAINING · ${escapeText(city.name.toUpperCase())}</div>
         <p class="hud-address">Choose Fire or EMS</p>
-        <div class="hud-meta">Uses the same Peterborough vehicle, camera, controls, gears and UI. Free driving is available; dispatch scenarios are coming later.</div>`;
+        <div class="hud-meta">Uses the same Peterborough vehicle, camera, controls, gears and UI. Dispatch calls are not available yet.</div>`;
     }
     const hud=document.getElementById('dispatch-hud');
     if(hud)hud.className='';

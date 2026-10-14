@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Peterborough Fire & Emergency Dispatch Simulator</title>
     
-    <link rel="stylesheet" href="vendor/leaflet-1.9.4/leaflet.css?v=1.6.103" />
+    <link rel="stylesheet" href="vendor/leaflet-1.9.4/leaflet.css?v=1.6.104" />
     
     <style>
         html, body, #map {
@@ -103,11 +103,9 @@
         .leaflet-map-pane { will-change:transform,rotate; }
         .leaflet-control-attribution, .leaflet-control-attribution a { pointer-events:none!important; user-select:none; color:inherit; text-decoration:none; }
     </style>
-  <link rel="stylesheet" href="../shared/training-ui.css?v=1.6.103">
-  <link rel="stylesheet" href="response-interface.css?v=1.6.103">
 </head>
-<body class="ptbo-ui ptbo-response-ui ptbo-response-core">
-    <a id="game-home" href="../?focus=dispatch#dispatch-start" target="_top" aria-label="Return to the game selection page">← All Games</a>
+<body>
+    <a id="game-home" href="../" target="_top" aria-label="Return to the game selection page">← All Games</a>
 
     <div id="dispatch-hud">
         <div class="hud-main" id="hud-content">
@@ -125,10 +123,10 @@
 
     <div id="control-panel" class="minimized" inert aria-hidden="true">
         <div class="panel-scroll">
-            <h2>Simulator options</h2>
-            <div class="subtitle">Choose your service, base and practice controls.</div>
+            <h2>Simulation Config</h2>
+            <div class="subtitle">Driving and call settings</div>
 
-            <div class="category-heading">Service &amp; calls</div>
+            <div class="category-heading">Calls &amp; Deployment</div>
             <div class="section-title">Emergency Service</div>
             <div class="control-row">
                 <label for="service-select">Service</label>
@@ -136,7 +134,7 @@
             </div>
             <p class="service-note">Changing service or base ends the current call and returns you to base.</p>
             <div class="section-title">Incident Types</div>
-            <div class="incident-category incident-fire">Primary: Fire &amp; Rescue</div>
+            <div style="font-size: 11px; font-weight: bold; color: #c62828; margin-bottom: 6px; text-transform: uppercase;">Primary: Fire & Rescue</div>
             <div class="sub-cat-group">
                 <label class="checkbox-row"><input type="checkbox" class="filter-chk" data-sub="Water & Ice Rescue" checked> Water & Ice Rescue</label>
                 <label class="checkbox-row"><input type="checkbox" class="filter-chk" data-sub="Structure Fire" checked> Structure Fire</label>
@@ -146,7 +144,7 @@
                 <label class="checkbox-row"><input type="checkbox" class="filter-chk" data-sub="Alarms No Apparent Problem" checked> Alarms (No Apparent Problem)</label>
             </div>
 
-            <div class="incident-category incident-medical">Primary: Medical Emergencies</div>
+            <div style="font-size: 11px; font-weight: bold; color: #2e7d32; margin-bottom: 6px; text-transform: uppercase;">Primary: Medical Emergencies</div>
             <div class="sub-cat-group">
                 <label class="checkbox-row"><input type="checkbox" class="filter-chk" data-sub="Chest Pain / Cardiac Emergency" checked> Chest Pain / Cardiac</label>
                 <label class="checkbox-row"><input type="checkbox" class="filter-chk" data-sub="Difficulty Breathing" checked> Difficulty Breathing</label>
@@ -159,14 +157,29 @@
             <div class="section-title" id="service-spawns-title">Fire Stations</div>
             <div id="service-spawns"></div>
 
+            <div class="section-title">Custom Dispatch Logging</div>
+            <button class="station-spawn-box" style="border-color: #f0ad4e;" onclick="recordCurrentLocation()">Record Current Position</button>
+            <button class="station-spawn-box" style="border-color: #00bcd4;" onclick="exportUpdatedDatabase()">Export Master Dispatch Database</button>
+
+            <div class="category-heading">Vehicle &amp; Camera</div>
+            <div class="section-title">Vehicle Calibration</div>
+            <div class="control-row">
+                <label><span id="vehicle-size-label">Vehicle display size</span><span id="lbl-size">10px</span></label>
+                <input type="range" id="sld-size" min="2" max="70" value="10" oninput="updateVehicleChassis()">
+            </div>
+            <div class="control-row">
+                <label><span>Acceleration setting</span><span id="lbl-speed">5</span></label>
+                <input type="range" id="sld-speed" min="1" max="50" value="5" oninput="updateVehiclePhysics()">
+            </div>
+
             <div class="section-title">Driving Modifiers</div>
             <label class="checkbox-row"><input type="checkbox" id="chk-siren" onchange="updateVehicleChassis()" checked> Emergency lights</label>
             <label class="checkbox-row"><input type="checkbox" id="chk-camera"> Follow Truck Automatically</label>
 
-            <div class="category-heading">Map &amp; controls</div>
+            <div class="category-heading">Map &amp; Diagnostics</div>
             <div class="section-title">Map Layers & Overlays</div>
             <div class="control-row">
-                <select id="layer-select" aria-label="Map style" onchange="changeBasemap()">
+                <select id="layer-select" onchange="changeBasemap()">
                     <option value="positron">CartoDB Positron (Clean Layout)</option>
                     <option value="dark">CartoDB Dark Matter (Night Simulation)</option>
                     <option value="osm" selected>OpenStreetMap Standard</option>
@@ -174,47 +187,29 @@
             </div>
             <button class="station-spawn-box" id="btn-toggle-locations" style="border-color: #5bc0de; margin-top: 5px;" onclick="toggleAllLocations()">Show All Dispatch Locations</button>
 
-            <details id="ptbo-advanced-settings">
-                <summary>Advanced / Developer settings</summary>
-                <p class="service-note">Vehicle calibration, local dispatch exports and diagnostic data.</p>
-                <div class="section-title">Vehicle Calibration</div>
-                <div class="control-row">
-                    <label><span id="vehicle-size-label">Vehicle display size</span><span id="lbl-size">10px</span></label>
-                    <input type="range" id="sld-size" min="2" max="70" value="10" oninput="updateVehicleChassis()">
-                </div>
-                <div class="control-row">
-                    <label><span>Acceleration setting</span><span id="lbl-speed">5</span></label>
-                    <input type="range" id="sld-speed" min="1" max="50" value="5" oninput="updateVehiclePhysics()">
-                </div>
-
-                <div class="section-title">Custom Dispatch Logging</div>
-                <button class="station-spawn-box" style="border-color: #f0ad4e;" onclick="recordCurrentLocation()">Record Current Position</button>
-                <button class="station-spawn-box" style="border-color: #00bcd4;" onclick="exportUpdatedDatabase()">Export Master Dispatch Database</button>
-
-                <div class="section-title">Telemetry & System Stats</div>
-                <div class="telemetry-box">
-                    LAT: <span id="tel-lat">44.300871</span><br>
-                    LNG: <span id="tel-lng">-78.322206</span><br>
-                    HEADING: <span id="tel-hdg">180°</span><br>
-                    DIST TO RUN: <span id="tel-dist">--</span><br>
-                    COMPLETED RUNS: <span id="tel-total-calls">0</span>
-                </div>
-            </details>
+            <div class="section-title">Telemetry & System Stats</div>
+            <div class="telemetry-box">
+                LAT: <span id="tel-lat">44.300871</span><br>
+                LNG: <span id="tel-lng">-78.322206</span><br>
+                HEADING: <span id="tel-hdg">180°</span><br>
+                DIST TO RUN: <span id="tel-dist">--</span><br>
+                COMPLETED RUNS: <span id="tel-total-calls">0</span>
+            </div>
         </div>
     </div>
 
-    <div id="map" tabindex="-1" aria-label="Driving map"></div>
+    <div id="map"></div>
 
-    <script src="../shared/build-version.js?v=1.6.103"></script>
-    <script src="vendor/leaflet-1.9.4/leaflet.js?v=1.6.103"></script>
-    <script src="vendor/leaflet-1.9.4/leaflet.edgebuffer.js?v=1.6.103"></script>
-    <script src="vendor/leaflet-1.9.4/leaflet.rotatedMarker.js?v=1.6.103"></script>
+    <script src="../shared/build-version.js?v=1.6.104"></script>
+    <script src="vendor/leaflet-1.9.4/leaflet.js?v=1.6.104"></script>
+    <script src="vendor/leaflet-1.9.4/leaflet.edgebuffer.js?v=1.6.104"></script>
+    <script src="vendor/leaflet-1.9.4/leaflet.rotatedMarker.js?v=1.6.104"></script>
     
-    <script src="service-config.js?v=1.6.103"></script>
-    <script src="../shared/location-changes.js?v=1.6.103"></script>
-    <script src="../shared/base-locations.js?v=1.6.103"></script>
-    <script src="service-selection.js?v=1.6.103"></script>
-    <script src="gearbox-core.js?v=1.6.103"></script>
+    <script src="service-config.js?v=1.6.104"></script>
+    <script src="../shared/location-changes.js?v=1.6.104"></script>
+    <script src="../shared/base-locations.js?v=1.6.104"></script>
+    <script src="service-selection.js?v=1.6.104"></script>
+    <script src="gearbox-core.js?v=1.6.104"></script>
     <script>
         const dispatchDatabase = [
             { main:"Fire", sub:"Water & Ice Rescue", name:"Beavermead Park Beach", addr:"2015 Ashburnham Dr", lat:44.295749, lng:-78.303611 },
@@ -413,20 +408,12 @@
         function togglePanel() {
             const panel = document.getElementById('control-panel');
             const button = document.getElementById('menu-toggle');
-            const wasClosed = panel.classList.contains('minimized');
-            if (wasClosed) {
-                let opener = document.activeElement;
-                try { if (parent !== window && parent.document.activeElement?.id !== 'simulator') opener = parent.document.activeElement; } catch (_) {}
-                panel.ptboOptionsOpener = opener;
-            }
             const closed = panel.classList.toggle('minimized');
             panel.inert = closed;
-            document.documentElement?.classList?.toggle('ptbo-response-options-open', !closed);
-            try { if (parent !== window) parent.document.documentElement?.classList?.toggle('ptbo-response-options-open', !closed); } catch (_) {}
             panel.setAttribute('aria-hidden', String(closed));
             button.innerText = closed ? 'Options Menu' : 'Close Options';
             button.setAttribute('aria-expanded', String(!closed));
-            if (closed) (panel.ptboOptionsOpener?.isConnected ? panel.ptboOptionsOpener : button).focus();
+            if (closed) button.focus();
             else panel.querySelector('input,select,button')?.focus();
             releaseDrivingInput();
             setTimeout(() => { if (mapInstance) mapInstance.invalidateSize(); }, 320);
@@ -705,7 +692,7 @@
         window.PTBO_FIXED_STEP = FIXED_STEP_MS / 1000;
 
         function simulationStep() {
-            if (window.PTBO_SERVICE?.state.selected === false || window.ptboDrivingInputBlocked?.() || simulationState === STATES.ONSCENE) {
+            if (window.PTBO_SERVICE?.state.selected === false || simulationState === STATES.ONSCENE) {
                 velocity = 0;
                 return;
             }
@@ -765,20 +752,8 @@
             const codes = { KeyW: 'w', KeyA: 'a', KeyS: 's', KeyD: 'd' };
             return codes[event.code] || (event.key?.length === 1 ? event.key.toLowerCase() : event.key);
         }
-        function drivingInputBlocked() {
-            const panel = document.getElementById('control-panel');
-            const history = document.getElementById('ptbo-training-history-modal');
-            if (window.PTBO_SERVICE?.state.selected === false || panel?.classList?.contains('minimized') === false || (history?.hidden === false) || document.querySelector?.('dialog[open]')) return true;
-            try { if (parent !== window && parent.document.querySelector?.('dialog[open]')) return true; } catch (_) {}
-            return false;
-        }
-        window.ptboDrivingInputBlocked = drivingInputBlocked;
         window.addEventListener("keydown", e => {
-            if (drivingInputBlocked()) {
-                if (e.key === 'Escape' && !document.getElementById('control-panel').classList.contains('minimized')) togglePanel();
-                releaseDrivingInput();
-                return;
-            }
+            if (e.key === 'Escape' && !document.getElementById('control-panel').classList.contains('minimized')) { togglePanel(); return; }
             if (e.ctrlKey || e.altKey || e.metaKey || e.target?.closest?.('input,textarea,select,[contenteditable]:not([contenteditable="false"])')) return;
             const key = drivingKey(e);
             if (Object.hasOwn(keys, key)) { e.preventDefault(); keys[key] = true; }
@@ -789,7 +764,6 @@
         });
         function releaseDrivingInput() {
             Object.keys(keys).forEach(key => { keys[key] = false; });
-            try { if (parent !== window) parent.ptboReleaseDrivingControls?.(); } catch (_) {}
             window.PTBO_DIRECTIONAL_DRIVE_ZOOM?.releaseInput?.();
             velocity = 0;
             lastTimestamp = null;
@@ -1021,6 +995,6 @@
 
         window.onload = initializeSimulator;
     </script>
-    <script src="service-mode.js?v=1.6.103"></script>
+    <script src="service-mode.js?v=1.6.104"></script>
 </body>
 </html>

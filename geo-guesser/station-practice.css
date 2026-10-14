@@ -38,6 +38,10 @@
 #game.screen:has(#practice-controls:not(.hidden)) { padding:0; }
 #game:has(#practice-controls:not(.hidden)) #confirm { bottom:calc(112px + env(safe-area-inset-bottom)); min-height:48px; padding:12px 27px; font-size:1rem; }
 body:has(#practice-controls:not(.hidden)) #game-home { display:none!important; }
+body:has(#practice-controls:not(.hidden)) #ptbo-training-use-notice { display:block!important; top:auto!important; right:auto!important; bottom:8px!important; left:12px!important; max-width:max-content!important; padding:5px 9px!important; font-size:8px!important; }
+body:has(#practice-controls:not(.hidden)) #ptbo-training-use-notice span { display:none!important; }
+body:has(#practice-controls:not(.hidden)) #ptbo-training-use-notice strong { margin:0!important; font-size:8px!important; }
+body:has(#practice-controls:not(.hidden)) #ptbo-training-use-notice:focus-visible { outline:3px solid #6de8dc!important; outline-offset:3px; }
 #game:has(#practice-controls:not(.hidden)) #timer { margin-top:5px; padding-top:5px; font-size:.76rem; }
 #game:has(#practice-controls:not(.hidden)) #practice-feedback { display:block; }
 #game:has(#practice-review:not(.hidden)) #practice-feedback { display:none; }

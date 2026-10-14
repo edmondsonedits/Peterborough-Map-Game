@@ -13,8 +13,6 @@
   const memory = [];
   const state = {
     storageAvailable: true,
-    readError: false,
-    returnFocus: null,
     pending: [],
     installed: false,
     drainTimer: 0,
@@ -63,15 +61,13 @@
     try {
       const raw = localStorage?.getItem?.(STORAGE_KEY);
       const parsed = raw ? JSON.parse(raw) : [];
-      if (!Array.isArray(parsed)) throw new Error('Invalid training history.');
+      if (!Array.isArray(parsed)) return [];
       const clean = parsed.slice(0, MAX_ENTRIES);
       state.storageAvailable = true;
-      state.readError = false;
       memory.splice(0, memory.length, ...clean);
       return clean;
     } catch (_) {
       state.storageAvailable = false;
-      state.readError = true;
       return memory.slice();
     }
   }
@@ -81,7 +77,6 @@
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(clean));
       state.storageAvailable = true;
-      state.readError = false;
       memory.splice(0, memory.length, ...clean);
       return true;
     } catch (_) {
@@ -265,15 +260,6 @@
       modal.setAttribute('aria-label', 'Training History');
       modal.innerHTML = '<div class="ptbo-history-card" id="ptbo-training-history-card"></div>';
       modal.addEventListener('click', event => { if (event.target === modal) closeHistory(); });
-      modal.addEventListener('keydown', event => {
-        if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); closeHistory(); return; }
-        if (event.key !== 'Tab') return;
-        const controls = [...modal.querySelectorAll('button:not([disabled]),a[href],input:not([disabled]),select:not([disabled]),[tabindex="0"]')];
-        const first = controls[0], last = controls[controls.length - 1];
-        if (!first) return;
-        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
-        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
-      });
       document.body.appendChild(modal);
     }
 
@@ -287,9 +273,8 @@
     if (!card) return;
     const entries = loadEntries();
     const stats = summary(entries);
-    const storageNote = state.readError
-      ? 'Saved history could not be read. Available entries are shown for this page.'
-      : state.storageAvailable ? 'Saved only in this browser.'
+    const storageNote = state.storageAvailable
+      ? 'Saved only in this browser.'
       : 'Browser storage is unavailable; history will last only for this page.';
     const rows = entries.map(entry => {
       const service = entry.service === 'ems' ? 'EMS' : 'Fire';
@@ -306,7 +291,7 @@
       <div class="ptbo-history-head"><div><h2>Training History</h2><div class="ptbo-history-sub">${escapeHtml(storageNote)} No route traces, account identifiers, or cloud analytics are stored here.</div></div><button type="button" id="ptbo-history-close" aria-label="Close history">✕</button></div>
       <div class="ptbo-history-stats"><div class="ptbo-history-stat"><strong>${stats.calls}</strong>Calls</div><div class="ptbo-history-stat"><strong>${stats.sessions}</strong>Sessions</div><div class="ptbo-history-stat"><strong>${stats.averageResponseSeconds.toFixed(1)}s</strong>Avg response</div><div class="ptbo-history-stat"><strong>${stats.emsTransports}</strong>EMS transports</div></div>
       <div class="ptbo-history-actions"><button type="button" id="ptbo-history-export">Export JSON</button><button type="button" id="ptbo-history-clear">Clear History</button></div>
-      <div class="ptbo-history-list">${rows || '<div class="ptbo-history-empty">No completed assignments yet. Complete a Fire scene or an EMS scene and hospital trip to add a result here.</div>'}</div>`;
+      <div class="ptbo-history-list">${rows || '<div class="ptbo-history-empty">Complete a Fire or EMS assignment to add it here.</div>'}</div>`;
 
     document.getElementById('ptbo-history-close')?.addEventListener('click', closeHistory);
     document.getElementById('ptbo-history-export')?.addEventListener('click', exportHistory);
@@ -319,24 +304,17 @@
     ensureUi();
     const modal = document.getElementById('ptbo-training-history-modal');
     if (!modal) return;
-    state.returnFocus = document.activeElement;
-    window.releaseDrivingInput?.();
     renderHistory();
     modal.hidden = false;
-    try { window.parent.document.documentElement.classList.add('ptbo-response-history-open'); } catch (_) {}
-    document.getElementById('ptbo-history-close')?.focus();
   }
 
   function closeHistory() {
     const modal = document.getElementById('ptbo-training-history-modal');
     if (modal) modal.hidden = true;
-    try { window.parent.document.documentElement.classList.remove('ptbo-response-history-open'); } catch (_) {}
-    if (state.returnFocus?.isConnected) state.returnFocus.focus();
-    state.returnFocus = null;
   }
 
   function clear() {
-    try { localStorage.removeItem(STORAGE_KEY); state.storageAvailable = true; state.readError = false; } catch (_) { state.storageAvailable = false; }
+    try { localStorage.removeItem(STORAGE_KEY); state.storageAvailable = true; } catch (_) { state.storageAvailable = false; }
     memory.length = 0;
     refreshUi();
   }

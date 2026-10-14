@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.103';
+  const VERSION = '1.6.104';
   const CITY_RUNTIME_VERSION = '1.6.17';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
@@ -14,7 +14,6 @@
     label:LABEL,
     channel:'production',
     cityRuntimeVersion:CITY_RUNTIME_VERSION,
-    refreshBadge:installBadge,
   });
   window.PTBO_BUILD_ERRORS = window.PTBO_BUILD_ERRORS || [];
   document.documentElement.dataset.ptboBuild = VERSION;
@@ -69,7 +68,6 @@
 
   function installBadge() {
     if (!document.body) return;
-    document.getElementById('ptbo-version-badge')?.remove();
     if (window.top !== window) {
       document.getElementById('ptbo-build-badge')?.remove();
       document.getElementById('ptbo-build-style')?.remove();
@@ -79,7 +77,7 @@
     if (!style) {
       style = document.createElement('style');
       style.id = 'ptbo-build-style';
-      style.textContent = '#ptbo-build-badge{position:fixed;top:max(4px,env(safe-area-inset-top));left:50%;z-index:2147483647;padding:3px 8px;color:#e2e8f0;border:1px solid rgba(255,255,255,.28);border-radius:999px;background:rgba(15,23,42,.88);box-shadow:0 3px 10px rgba(0,0,0,.25);font:650 11px/1.3 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.05em;white-space:nowrap;transform:translate3d(-50%,0,0);backface-visibility:hidden;contain:layout paint style;pointer-events:none;animation:none!important;transition:none!important}@media(max-width:420px){#ptbo-build-badge{top:max(2px,env(safe-area-inset-top));padding:3px 7px;font-size:10px}}';
+      style.textContent = '#ptbo-build-badge{position:fixed;top:max(4px,env(safe-area-inset-top));left:50%;z-index:2147483647;padding:3px 8px;color:#e2e8f0;border:1px solid rgba(255,255,255,.28);border-radius:999px;background:rgba(15,23,42,.88);box-shadow:0 3px 10px rgba(0,0,0,.25);font:800 9px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.05em;white-space:nowrap;transform:translate3d(-50%,0,0);backface-visibility:hidden;contain:layout paint style;pointer-events:none;animation:none!important;transition:none!important}@media(max-width:420px){#ptbo-build-badge{top:max(2px,env(safe-area-inset-top));padding:2px 6px;font-size:7px}}';
       document.head.appendChild(style);
     }
     let badge = document.getElementById('ptbo-build-badge');
@@ -93,8 +91,29 @@
     badge.setAttribute('aria-label', `Production version ${VERSION}`);
   }
 
-  // Activities own an in-flow Training use link or the existing tutorial/Options
-  // notice. A fixed legal overlay must never intercept the map or mobile controls.
+  function installTrainingNotice() {
+    if (!document.body || window.top !== window || document.getElementById('ptbo-training-use-notice')) return;
+    const path = location.pathname;
+    const playerSurface = /(?:\/Peterborough-Map-Game\/?$|\/response-simulator\/|\/geo-guesser\/|\/city-explorer\/|\/route-mapping\/)/.test(path);
+    const excluded = /\/(?:dispatch-editor|site-stats|legal)\//.test(path);
+    if (!playerSurface || excluded) return;
+    let style = document.getElementById('ptbo-training-use-style');
+    if (!style) {
+      style = document.createElement('style');
+      style.id = 'ptbo-training-use-style';
+      style.textContent = '#ptbo-training-use-notice{position:fixed;top:max(8px,env(safe-area-inset-top));right:8px;z-index:2147483646;max-width:190px;padding:7px 9px;border:1px solid rgba(251,113,133,.48);border-radius:10px;background:rgba(69,10,10,.86);box-shadow:0 4px 14px rgba(0,0,0,.28);color:#fff;text-decoration:none;font:700 10px/1.22 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.01em;-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px)}#ptbo-training-use-notice strong{display:block;margin-bottom:2px;color:#fecdd3;font-size:9px;letter-spacing:.08em;text-transform:uppercase}#ptbo-training-use-notice span{color:#f8fafc;font-weight:650}#ptbo-training-use-notice:hover,#ptbo-training-use-notice:focus-visible{border-color:#fda4af;background:rgba(69,10,10,.96);outline:none}@media(max-width:520px){#ptbo-training-use-notice{top:max(5px,env(safe-area-inset-top));right:5px;max-width:145px;padding:5px 7px;font-size:8px}#ptbo-training-use-notice strong{font-size:7px}}';
+      document.head.appendChild(style);
+    }
+    const notice = document.createElement('a');
+    notice.id = 'ptbo-training-use-notice';
+    if(/\/route-mapping\//.test(path))notice.style.top='calc(76px + env(safe-area-inset-top))';
+    else if(/\/geo-guesser\//.test(path))notice.style.top='calc(90px + env(safe-area-inset-top))';
+    else if(/\/city-explorer\//.test(path))notice.style.top='calc(148px + env(safe-area-inset-top))';
+    notice.href = new URL('../legal/', SCRIPT_URL).href;
+    notice.innerHTML = '<strong>Training use only</strong><span>Not for live response, navigation, dispatch, or operational decisions.</span>';
+    notice.setAttribute('aria-label', 'Training use only. Not for live response, navigation, dispatch, or operational decisions. Open the full training use notice.');
+    document.body.appendChild(notice);
+  }
 
   function injectScript(targetDocument, id, relativeUrl, marker = '', timeoutMs = SCRIPT_TIMEOUT_MS) {
     const expected = new URL(relativeUrl, SCRIPT_URL).href;
@@ -389,6 +408,7 @@
   function installPageEnhancements() {
     installDeviceSurfaceApi();
     installBadge();
+    installTrainingNotice();
     installMapAttribution();
     installGeoGuesserMapPolicy();
     void installSiteAnalytics();

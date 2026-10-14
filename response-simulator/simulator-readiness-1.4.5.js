@@ -17,7 +17,23 @@
   }
 
   function installVersionBadge() {
-    return window.PTBO_BUILD?.refreshBadge?.();
+    const panel = document.querySelector('.panel-scroll');
+    if (!panel) return false;
+    let badge = document.getElementById('ptbo-version-badge');
+    if (!badge) {
+      badge = document.createElement('div');
+      badge.id = 'ptbo-version-badge';
+      panel.appendChild(badge);
+    }
+    badge.textContent = `v${VERSION}`;
+    let style = document.getElementById('ptbo-version-148-style');
+    if (!style) {
+      style = document.createElement('style');
+      style.id = 'ptbo-version-148-style';
+      document.head.appendChild(style);
+    }
+    style.textContent = '#ptbo-version-badge{margin-top:18px!important;color:#9ca3af!important;font-size:8px!important;font-weight:700!important;letter-spacing:.08em!important;text-align:right!important;opacity:.58!important}';
+    return true;
   }
 
   function injectScript(filename, marker) {

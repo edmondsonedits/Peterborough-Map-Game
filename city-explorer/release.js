@@ -14,10 +14,11 @@
   document.title = document.title.replace(/v\d+\.\d+\.\d+/i, `v${VERSION}`);
 
   const syncBadge = () => {
-    window.PTBO_BUILD?.refreshBadge?.();
     const badge = document.getElementById('ptbo-build-badge');
     if (!badge) return false;
+    badge.textContent = `v${VERSION}`;
     badge.dataset.cityExplorerBuild = VERSION;
+    badge.setAttribute('aria-label', `City Explorer version ${VERSION}`);
     return true;
   };
 

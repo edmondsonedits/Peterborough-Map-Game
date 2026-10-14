@@ -516,7 +516,12 @@
   }
 
   function keepVersionBadgeCurrent() {
-    return window.PTBO_BUILD?.refreshBadge?.();
+    const update = () => {
+      const badge = document.getElementById('ptbo-version-badge');
+      if (badge) badge.textContent = `v${VERSION}`;
+    };
+    update();
+    [250, 750, 1500, 3000].forEach(delay => setTimeout(update, delay));
   }
 
   async function initialize() {

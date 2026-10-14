@@ -21,17 +21,13 @@
     <meta name="city-editor-publisher" content="">
     <meta name="description" content="A playable full-city 3D simulation of Peterborough, Ontario, generated from validated road, building, land-cover, and elevation data.">
     <meta name="road-release" content="citywide-road-2026-10-09">
-    <title>Peterborough 3D Simulator — v1.6.103</title>
+    <title>Peterborough 3D Simulator — v1.6.104</title>
 
     <!-- Terrain has an optional live fallback; the rendering runtime is shipped locally. -->
     <link rel="preconnect" href="https://s3.amazonaws.com">
-    <link rel="icon" href="../shared/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="../shared/training-ui.css?v=1.6.103">
-  <link rel="stylesheet" href="styles.css?v=city-editor-20260925">
-    <link rel="stylesheet" href="mobile-controls-1.6.68.css?v=1.6.103">
-    <link rel="stylesheet" href="current-street-hud-1.6.77.css?v=1.6.103">
-
-    <link rel="stylesheet" href="interface.css?v=1.6.103">
+    <link rel="stylesheet" href="styles.css?v=city-editor-20260925">
+    <link rel="stylesheet" href="mobile-controls-1.6.68.css?v=1.6.104">
+    <link rel="stylesheet" href="current-street-hud-1.6.77.css?v=1.6.104">
 
     <!--
     IMPORT MAP:
@@ -44,12 +40,12 @@
           "three": "./vendor/three-r180/build/three.module.min.js",
           "three/addons/": "./vendor/three-r180/examples/jsm/",
           "@sparkjsdev/spark": "./vendor/spark-2.1.0/spark.module.min.js",
-          "./gameplay-systems.js?v=firefighter4": "./gameplay-systems-1.6.69.js?v=1.6.103"
+          "./gameplay-systems.js?v=firefighter4": "./gameplay-systems-1.6.69.js?v=1.6.104"
         }
       }
     </script>
   </head>
-  <body class="ptbo-ui">
+  <body>
     <div id="app" aria-label="Peterborough 3D Simulator">
       <!-- Three.js draws every 3D frame into this canvas. -->
       <canvas id="city-canvas" tabindex="0" aria-label="Interactive 3D view of Peterborough"></canvas>
@@ -66,20 +62,15 @@
       <!-- Buttons switch explorer modes or open dialogs; JavaScript owns behaviour. -->
       <nav class="control-panel" aria-label="Simulator controls">
         <a class="hud-button menu-link" href="../" aria-label="Return to all games">Main menu</a>
-        <button id="play-mode" class="hud-button is-active" type="button" aria-pressed="true">Play</button>
-        <button id="fly-mode" class="hud-button" type="button" aria-pressed="false">Fly mode</button>
-        <button id="map-mode" class="hud-button" type="button" aria-pressed="false">Map</button>
+        <button id="play-mode" class="hud-button is-active" type="button">Play</button>
+        <button id="fly-mode" class="hud-button" type="button">Fly mode</button>
+        <button id="map-mode" class="hud-button" type="button">Map</button>
         <button id="editor-mode" class="hud-button" type="button" aria-label="Open city editor">Editor</button>
         <button id="search-button" class="hud-button" type="button">Search</button>
         <button id="landmarks-button" class="hud-button" type="button">Landmarks</button>
         <button id="time-button" class="hud-button" type="button">Dusk</button>
-        <button id="sound-button" class="hud-button" type="button" aria-pressed="false">Sound off</button>
-        <button id="camera-button" class="hud-button" type="button">Camera distance</button>
-        <button id="lights-button" class="hud-button" type="button" aria-pressed="false" disabled>Emergency lights</button>
-        <button id="controls-button" class="hud-button" type="button">Controls &amp; help</button>
-        <button id="movement-buttons-toggle" class="hud-button" type="button" aria-pressed="false" aria-controls="movement-buttons">Movement buttons</button>
+        <button id="sound-button" class="hud-button" type="button">Sound off</button>
         <button id="splat-toggle" class="hud-button is-active" type="button" aria-pressed="true" title="Toggle licensed captured landmark detail">Detail on</button>
-        <a class="hud-button menu-link" href="../legal/">Training use notice</a>
       </nav>
 
       <!-- Live location and loading/ready information. -->
@@ -94,16 +85,6 @@
         <div class="north-arrow"><strong>N</strong><span aria-hidden="true">↑</span></div>
         <div class="map-scale"><span id="map-scale-line"></span><small id="map-scale-label">1 km</small></div>
       </aside>
-
-      <nav id="map-controls" aria-label="Map navigation">
-        <button type="button" data-map-action="zoom-in" aria-label="Zoom map in">＋</button>
-        <button type="button" data-map-action="zoom-out" aria-label="Zoom map out">−</button>
-        <button type="button" data-map-action="reset">Reset map</button>
-        <button type="button" data-map-action="north" aria-label="Pan map north">↑</button>
-        <button type="button" data-map-action="west" aria-label="Pan map west">←</button>
-        <button type="button" data-map-action="south" aria-label="Pan map south">↓</button>
-        <button type="button" data-map-action="east" aria-label="Pan map east">→</button>
-      </nav>
 
       <section class="help-panel hud-panel">
         <p id="mode-hint"><strong>Loading selected fire station.</strong> WASD or arrows move · Shift sprints · E enters the truck · mouse controls the camera.</p>
@@ -131,23 +112,23 @@
           <strong>Open geospatial city model</strong>
           <span>© OpenStreetMap contributors · City of Peterborough Open Data · Ontario lidar terrain, hydrography, and road validation · unofficial project</span>
         </div>
-        <details class="runtime-details"><summary>Runtime details</summary><div class="stats-values"><span id="object-count">0 features</span><span id="fps-counter">-- FPS</span><span id="altitude-counter">0 m AGL</span></div></details>
+        <div class="stats-values"><span id="object-count">0 features</span><span id="fps-counter">-- FPS</span><span id="altitude-counter">0 m AGL</span></div>
       </footer>
 
       <!-- Blocks interaction until terrain and city geometry have been prepared. -->
-      <div id="loading-screen" class="loading-screen" role="dialog" aria-modal="true" aria-labelledby="loading-title" aria-describedby="loading-message" tabindex="-1">
+      <div id="loading-screen" class="loading-screen" role="status" aria-live="polite">
         <div class="loading-card">
           <div class="loading-logo">P</div>
-          <h2 id="loading-title" class="loading-title">Building Peterborough</h2>
-          <div class="loading-track"><span id="loading-progress" role="progressbar" aria-label="Preparing city" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></span></div>
-          <p id="loading-message" role="status">Loading cached terrain and street geometry…</p>
+          <p class="loading-title">Building Peterborough</p>
+          <div class="loading-track"><span id="loading-progress"></span></div>
+          <p id="loading-message">Loading cached terrain and street geometry…</p>
         </div>
       </div>
 
       <!-- Search supports instant local landmarks and optional online geocoding. -->
-      <dialog id="search-dialog" class="explorer-dialog" aria-labelledby="search-title">
+      <dialog id="search-dialog" class="explorer-dialog">
         <form method="dialog" class="dialog-shell" id="search-form">
-          <header><div><p>City navigation</p><h2 id="search-title">Search Peterborough</h2></div><button class="close-button" value="cancel" aria-label="Close search">×</button></header>
+          <header><div><p>City navigation</p><h2>Search Peterborough</h2></div><button class="close-button" value="cancel" aria-label="Close search">×</button></header>
           <label for="search-input">Address, landmark, park, or street</label>
           <div class="search-row"><input id="search-input" type="search" autocomplete="off" placeholder="Try Peterborough Lift Lock"><button id="search-submit" value="default">Find</button></div>
           <p id="search-note">Local landmarks are instant. Address search uses OpenStreetMap's Nominatim service.</p>
@@ -155,19 +136,10 @@
         </form>
       </dialog>
 
-      <dialog id="landmarks-dialog" class="explorer-dialog" aria-labelledby="landmarks-title">
+      <dialog id="landmarks-dialog" class="explorer-dialog">
         <form method="dialog" class="dialog-shell">
-          <header><div><p>Quick travel</p><h2 id="landmarks-title">Peterborough landmarks</h2></div><button class="close-button" value="cancel" aria-label="Close landmarks">×</button></header>
+          <header><div><p>Quick travel</p><h2>Peterborough landmarks</h2></div><button class="close-button" value="cancel" aria-label="Close landmarks">×</button></header>
           <div id="landmark-list" class="result-list landmark-list"></div>
-        </form>
-      </dialog>
-
-      <dialog id="controls-dialog" class="explorer-dialog" aria-labelledby="controls-title">
-        <form method="dialog" class="dialog-shell">
-          <header><h2 id="controls-title">Simulator controls</h2><button class="close-button" aria-label="Close controls">×</button></header>
-          <p>Touch: drag the city to look around. Drag the joystick to move, or turn on Movement buttons in the menu. Use Enter / Exit near the truck.</p>
-          <p>Movement and altitude buttons: hold a pointer, Enter or Space to move; release to stop. Assistive activation gives a short step. Movement buttons replace the joystick.</p>
-          <dl class="controls-list"><dt>Move / drive</dt><dd>W A S D or arrow keys</dd><dt>Sprint / fly boost</dt><dd>Shift</dd><dt>Enter / exit truck</dt><dd>E (stop before exiting)</dd><dt>Fly altitude</dt><dd>Q down / E up</dd><dt>Fly mode / map</dt><dd>F / M</dd><dt>Look around</dt><dd>Drag the city, or click for mouse steering. Esc releases it.</dd><dt>Camera distance / lights</dt><dd>C / L; also available in the menu</dd><dt>Map</dt><dd>Touch-drag to pan, scroll or use zoom buttons. Arrow buttons pan in steps. North stays up.</dd></dl>
         </form>
       </dialog>
 
@@ -179,12 +151,6 @@
           </div>
           <span class="mobile-control-caption">Move</span>
         </div>
-        <div id="movement-buttons" aria-label="Movement buttons" hidden>
-          <button type="button" data-mobile-command="KeyW" aria-label="Move forward; hold to move">↑</button>
-          <button type="button" data-mobile-command="KeyA" aria-label="Move left; hold to move">←</button>
-          <button type="button" data-mobile-command="KeyS" aria-label="Move backward; hold to move">↓</button>
-          <button type="button" data-mobile-command="KeyD" aria-label="Move right; hold to move">→</button>
-        </div>
         <div class="mobile-action-wrap">
           <button id="mobile-action-button" type="button" aria-label="Enter fire truck" disabled>
             <span id="mobile-action-label">Enter</span>
@@ -193,11 +159,11 @@
           <span class="mobile-control-caption">Action</span>
         </div>
         <div class="mobile-flight-pad" aria-label="Fly mode altitude controls">
-          <button type="button" data-mobile-command="KeyQ" aria-label="Fly down; hold to descend">− Down</button>
-          <button type="button" data-mobile-command="KeyE" aria-label="Fly up; hold to ascend">＋ Up</button>
+          <button type="button" data-mobile-command="KeyQ" aria-label="Fly down">− Down</button>
+          <button type="button" data-mobile-command="KeyE" aria-label="Fly up">＋ Up</button>
         </div>
         <button id="mobile-menu-toggle" type="button" aria-label="Open simulator menu" aria-expanded="false">
-          <span class="menu-icon" aria-hidden="true">☰</span>
+          <span class="menu-icon" aria-hidden="true">☠</span>
           <span class="menu-label">Menu</span>
         </button>
         <button id="mobile-menu-scrim" type="button" tabindex="-1" aria-label="Close simulator menu"></button>
@@ -320,12 +286,6 @@
             document.documentElement.dataset.explorerBootPhase = this.phase;
           },
           ready() {
-            if (this.failed) return;
-            document.querySelector('#loading-screen')?.classList.add('is-hidden');
-            document.documentElement.dataset.explorerInteraction = 'ready';
-            for (const [node, wasInert] of this.blockedNodes) node.inert = wasInert;
-            document.querySelector('#city-canvas')?.setAttribute('aria-busy', 'false');
-            (this.returnFocus?.focus ? this.returnFocus : document.querySelector('#city-canvas'))?.focus({ preventScroll: true });
             this.phase = 'ready';
             this.lastActivityAt = Date.now();
             document.documentElement.dataset.explorerBootPhase = 'ready';
@@ -333,10 +293,6 @@
           fail(reason) {
             if (this.failed || this.phase === 'ready') return;
             this.failed = true;
-            document.documentElement.dataset.explorerInteraction = 'failed';
-            document.querySelector('#city-canvas')?.setAttribute('aria-busy', 'false');
-            window.dispatchEvent(new CustomEvent('ptbo-explorer-stop'));
-            document.exitPointerLock?.();
             document.documentElement.dataset.explorerBootPhase = 'failed';
             const loading = document.querySelector('#loading-screen');
             if (!loading) return;
@@ -348,18 +304,13 @@
             const logo = document.createElement('div');
             logo.className = 'loading-logo';
             logo.textContent = '!';
-            const title = document.createElement('h2');
-            title.id = 'loading-title';
-            title.tabIndex = -1;
+            const title = document.createElement('p');
             title.className = 'loading-title';
-            const missingGraphics = /webgl|graphics context|context creation/i.test(String(reason));
-            title.textContent = missingGraphics ? '3D graphics unavailable' : 'Simulator needs a restart';
+            title.textContent = 'Simulator needs a restart';
             const explanation = document.createElement('p');
             explanation.className = 'error-explanation';
-            explanation.id = 'loading-message';
             explanation.textContent = location.protocol === 'file:'
               ? 'This 3D simulator cannot run by opening index.html directly. Open it from the GitHub Pages website or a local web server.'
-              : missingGraphics ? 'This browser could not start WebGL graphics. Try another browser or enable graphics acceleration, or continue with a 2D game below.'
               : 'The city did not finish starting on this device. Retry normally, or use compatibility mode to load a lighter version of the same city.';
             const details = document.createElement('pre');
             details.className = 'error-details';
@@ -384,45 +335,10 @@
               });
               actions.append(lite);
             }
-            const diagnostic = document.createElement('details');
-            const summary = document.createElement('summary');
-            summary.textContent = 'Startup details';
-            diagnostic.append(summary, details);
-            for (const [label, href] of [['Play 2D Dispatch', '../response-simulator/play/'], ['All games', '../']]) {
-              const link = document.createElement('a');
-              link.className = 'error-retry';
-              link.textContent = label;
-              link.setAttribute('href', href);
-              actions.append(link);
-            }
-            card.append(logo, title, explanation, diagnostic, actions);
+            card.append(logo, title, explanation, details, actions);
             loading.replaceChildren(card);
-            title.focus({ preventScroll: true });
           },
         };
-
-        const app = document.querySelector('#app');
-        boot.returnFocus = document.activeElement !== document.body ? document.activeElement : null;
-        boot.blockedNodes = new Map();
-        for (const node of app?.children || []) {
-          if (node.id === 'loading-screen' || node === document.querySelector('#loading-screen')) continue;
-          boot.blockedNodes.set(node, node.inert);
-          node.inert = true;
-        }
-        document.querySelector('#city-canvas')?.setAttribute('aria-busy', 'true');
-        document.documentElement.dataset.explorerInteraction = 'blocked';
-        document.querySelector('#loading-screen')?.focus({ preventScroll: true });
-        document.addEventListener('keydown', event => {
-          if (document.documentElement.dataset.explorerInteraction === 'ready' || event.key !== 'Tab') return;
-          const loading = document.querySelector('#loading-screen');
-          const items = Array.from(loading.querySelectorAll('button:not([disabled]), a[href], summary'));
-          if (!items.length) { event.preventDefault(); loading.focus(); return; }
-          const index = items.indexOf(document.activeElement);
-          if (index < 0 || (event.shiftKey && index === 0) || (!event.shiftKey && index === items.length - 1)) {
-            event.preventDefault();
-            items[event.shiftKey ? items.length - 1 : 0].focus();
-          }
-        }, true);
 
         window.addEventListener('error', (event) => {
           const source = event.target?.src || event.filename || '';
@@ -449,12 +365,12 @@
         }, 2000);
       })();
     </script>
-    <script src="../shared/build-version.js?v=1.6.103"></script>
-    <script src="release.js?v=1.6.103"></script>
+    <script src="../shared/build-version.js?v=1.6.104"></script>
+    <script src="release.js?v=1.6.104"></script>
     <script type="module" src="data-loader.js?v=city-editor-20260925"></script>
     <script src="vendor/osmtogeojson-3.0.0-beta.5/osmtogeojson.js?v=city-editor-20260925"></script>
-    <script type="module" src="road-orientation-fix.js?v=1.6.103&streetEvidence=2"></script>
-    <script src="mobile-controls-1.6.68.js?v=1.6.103"></script>
-    <script src="driving-refinement-1.6.69.js?v=1.6.103"></script>
+    <script type="module" src="road-orientation-fix.js?v=1.6.104&streetEvidence=2"></script>
+    <script src="mobile-controls-1.6.68.js?v=1.6.104"></script>
+    <script src="driving-refinement-1.6.69.js?v=1.6.104"></script>
   </body>
 </html>

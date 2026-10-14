@@ -263,29 +263,7 @@
       if(!arrival)return current;
       return {...arrival,complete:true};
     }
-    // Explicit connected-road authoring uses the same fractions and route shape
-    // as tracing. Each step names one segment, never a destination path search.
-    function follow(current,steps){
-      if(!current)throw new Error('Start on a mapped street.');
-      const edges=[...current.edges];let anchor=current.endpoint;
-      for(const step of steps){
-        const s=graph.segments[step.segmentId],previous=graph.segments[anchor.segmentId];
-        if(!s||!Number.isFinite(step.t)||step.t<0||step.t>1)throw new Error('Choose a legal street section.');
-        let fromT=anchor.t;
-        if(s.id!==anchor.segmentId){
-          const nodeId=anchor.t<1e-9?previous.from:anchor.t>1-1e-9?previous.to:null;
-          if(nodeId===null||nodeId!==s.from&&nodeId!==s.to)throw new Error('Choose a street connected at this junction.');
-          fromT=nodeId===s.from?0:1;
-        }
-        if(Math.abs(fromT-step.t)<1e-9)continue;
-        if(!allowed(s,step.t<fromT))throw new Error('That street direction is not legal.');
-        const edge=slice(s,fromT,step.t);
-        if(!edge)throw new Error('That street direction is not legal.');
-        edges.push(edge);anchor={...pointAt(s,step.t),segmentId:s.id,t:step.t,road:s.name||'Road'};
-      }
-      return route(edges,current.start,anchor);
-    }
-    return {snap,trace,between,combine,begin,advance,finish,distance,follow};
+    return {snap,trace,between,combine,begin,advance,finish,distance};
   }
   return {createTraceCore};
 });

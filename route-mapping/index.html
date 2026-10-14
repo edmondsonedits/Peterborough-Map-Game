@@ -6,17 +6,15 @@
   <meta name="theme-color" content="#07111f">
   <meta name="description" content="Rapid Peterborough route-learning practice. Trace a route on real streets, backtrack to erase, pause and resume, then compare your response route.">
   <title>Route Mapping · Peterborough Emergency Games</title>
-  <link rel="stylesheet" href="../response-simulator/vendor/leaflet-1.9.4/leaflet.css?v=1.6.103">
-  <link rel="stylesheet" href="./styles.css?v=1.6.103">
-  <link rel="stylesheet" href="../shared/training-ui.css?v=1.6.103">
-<link rel="icon" href="../shared/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../response-simulator/vendor/leaflet-1.9.4/leaflet.css?v=1.6.104">
+  <link rel="stylesheet" href="./styles.css?v=1.6.104">
 </head>
-<body class="ptbo-ui">
+<body>
   <main id="route-app" aria-busy="true">
     <div id="map" aria-label="Peterborough route training map"></div>
     <div id="draw-surface" role="region" hidden aria-label="Drag from START to draw the response route"></div>
 
-    <a class="back-button glass" href="../" aria-label="Return to all games">← <span>All games</span></a>
+    <a class="back-button glass" href="../" aria-label="Return to all games">←</a>
     <button id="settings-button" class="settings-button glass" type="button" aria-label="Route Mapping settings">⚙</button>
 
     <section class="dispatch-card glass" aria-live="polite">
@@ -25,27 +23,20 @@
       <span id="call-type">Loading route training…</span>
     </section>
 
+    <div id="hint" class="hint glass" role="status" aria-live="polite">Loading roads…</div>
+
+    <section id="controls" class="controls glass" aria-label="Route controls">
+      <button id="clear-button" class="secondary" type="button">Clear</button>
+      <button id="undo-button" class="secondary" type="button" disabled>Undo</button>
+      <button id="submit-button" class="primary" type="button" disabled>Submit Route</button>
+    </section>
+
     <nav class="map-nav" aria-label="Map zoom">
       <button id="zoom-in" type="button" aria-label="Zoom in">+</button>
       <button id="zoom-out" type="button" aria-label="Zoom out">−</button>
     </nav>
 
-    <div class="route-dock">
-      <div id="hint" class="hint" role="status" aria-live="polite">Loading roads…</div>
-      <section class="authoring-tools" aria-label="Route input method">
-        <button id="authoring-toggle" class="secondary" type="button" aria-pressed="false" aria-controls="connected-panel" disabled>Choose streets · tap or keyboard</button>
-        <details class="route-help"><summary>How to play</summary><p>Trace streets from START to CALL. Release to pause; drag elsewhere to pan the map. Backtrack along your blue route to erase, or use Undo.</p><p>For tap or keyboard input, choose streets and select a direction at each connected junction. Each choice follows that street to its next decision. Undo removes the last choice. Selecting a return direction adds travel.</p><p>CALL marks public-road access to the address. Routes must obey mapped one-way streets. Review compares distance with a shortest legal route.</p><p class="training-notice"><a href="../legal/">Training use only — read the notice</a></p></details>
-      </section>
-      <section id="connected-panel" class="connected-panel" aria-label="Connected street choices" hidden>
-        <p id="connected-status" role="status" aria-live="polite"></p>
-        <div id="road-choices" class="road-choices" role="group" aria-label="Choose the next connected street"></div>
-      </section>
-      <section id="controls" class="controls" aria-label="Route controls">
-        <button id="clear-button" class="secondary" type="button">Clear</button>
-        <button id="undo-button" class="secondary" type="button" disabled>Undo</button>
-        <button id="submit-button" class="primary" type="button" disabled>Submit Route</button>
-      </section>
-    <section id="results" class="results" hidden aria-live="polite" tabindex="-1" aria-label="Route review">
+    <section id="results" class="results glass" hidden aria-live="polite">
       <div class="result-heading"><span>ROUTE REVIEW</span><strong id="efficiency-value">—</strong></div>
       <div class="result-grid">
         <div><span>Your route</span><strong id="player-distance">—</strong></div>
@@ -53,10 +44,8 @@
         <div><span>Extra</span><strong id="extra-distance">—</strong></div>
       </div>
       <p id="result-note">Blue is your route. Green is a shortest legal route.</p>
-      <p class="route-legend"><span class="legend-player">Blue solid: your route</span><span class="legend-reference">Green dashed: shortest legal distance</span></p>
       <button id="next-button" class="primary next" type="button">Next Call</button>
     </section>
-    </div>
 
     <dialog id="settings-sheet" class="sheet-backdrop" aria-labelledby="settings-title">
       <form id="settings-form" class="sheet glass">
@@ -85,24 +74,21 @@
       </form>
     </dialog>
 
-    <div id="loading-error" class="loading-error" hidden role="alert" aria-labelledby="loading-error-title">
-      <strong id="loading-error-title">Road data is unavailable right now.</strong>
-      <span id="loading-error-message">Please try again.</span>
+    <div id="loading-error" class="loading-error" hidden>
+      <strong>Route Mapping could not start.</strong>
+      <span id="loading-error-message">Refresh and try again.</span>
       <button id="retry-button" class="primary" type="button">Retry</button>
-      <a href="../">All games</a>
     </div>
   </main>
 
-  <script src="../shared/build-version.js?v=1.6.103"></script>
-  <script src="../response-simulator/vendor/leaflet-1.9.4/leaflet.js?v=1.6.103"></script>
-  <script src="../response-simulator/service-config.js?v=1.6.103"></script>
-  <script src="../shared/location-changes.js?v=1.6.103"></script>
-  <script src="../shared/base-locations.js?v=1.6.103"></script>
-  <script src="../shared/dispatch-locations.js?city=peterborough&amp;v=1.6.103"></script>
-  <script src="./trace-core.js?v=1.6.103&amp;edit=live-trace-2"></script>
-  <script src="./connected-authoring.js?v=1.6.103"></script>
-  <script src="./startup-loader.js?v=1.6.103"></script>
-  <script src="./learning-core.js?v=1.6.103"></script>
-  <script src="./app.js?v=1.6.103&amp;edit=live-trace-2"></script>
+  <script src="../shared/build-version.js?v=1.6.104"></script>
+  <script src="../response-simulator/vendor/leaflet-1.9.4/leaflet.js?v=1.6.104"></script>
+  <script src="../response-simulator/service-config.js?v=1.6.104"></script>
+  <script src="../shared/location-changes.js?v=1.6.104"></script>
+  <script src="../shared/base-locations.js?v=1.6.104"></script>
+  <script src="../shared/dispatch-locations.js?city=peterborough&amp;v=1.6.104"></script>
+  <script src="./trace-core.js?v=1.6.104&amp;edit=live-trace-2"></script>
+  <script src="./learning-core.js?v=1.6.104"></script>
+  <script src="./app.js?v=1.6.104&amp;edit=live-trace-2"></script>
 </body>
 </html>

@@ -128,8 +128,7 @@
         .sort((a, b) => Number(a.responseTimeSeconds) - Number(b.responseTimeSeconds));
       renderRows('score-list', scores, score => score.callType);
     } catch (error) {
-      console.warn('Online scores could not load.',error);
-      setListMessage('score-list', 'Online scores could not load. Check your connection and select this scoreboard again. Device scores remain available.');
+      setListMessage('score-list', `Scoreboard error: ${errorText(error)}`);
     }
   };
 
@@ -149,8 +148,7 @@
       const best = [...bestByPlayer.values()].sort((a, b) => Number(a.responseTimeSeconds) - Number(b.responseTimeSeconds));
       renderRows('city-ten-list', best, score => score.station || 'Unknown Station');
     } catch (error) {
-      console.warn('Online City Ten scores could not load.',error);
-      setListMessage('city-ten-list', 'Online scores could not load. Check your connection and select this scoreboard again. Device scores remain available.');
+      setListMessage('city-ten-list', `Scoreboard error: ${errorText(error)}`);
     }
   };
 
@@ -163,7 +161,7 @@
   const uploadedSessions = new Set();
   const scoreDocuments = new Map();
   window.saveScore = async () => {
-    const saveButton = byId('online-save') || byId('score-row')?.querySelector('button');
+    const saveButton = byId('score-row')?.querySelector('button');
     const scoreContext = context();
     const sessionKey = scoreContext.sessionId || [scoreContext.station, scoreContext.callType, scoreContext.responseTimeSeconds].join('|');
     if (saving || uploadedSessions.has(sessionKey)) return;
@@ -206,12 +204,12 @@
         else await window.showPersonalScores(scoreContext.station);
       }
     } catch (error) {
-      if(ownsResults()){const status=byId('score-status');if(status)status.textContent='Online sharing failed. Your device scores are still available. Try sharing again when connected.';else alert(`Scoreboard error: ${errorText(error)}`);}
+      if(ownsResults())alert(`Scoreboard error: ${errorText(error)}`);
     } finally {
       saving = false;
       if (saveButton && context().sessionId === scoreContext.sessionId) {
         saveButton.disabled = uploadedSessions.has(sessionKey);
-        saveButton.textContent = uploadedSessions.has(sessionKey) ? 'Shared' : 'Share online';
+        saveButton.textContent = uploadedSessions.has(sessionKey) ? 'Saved' : 'Save';
       }
     }
   };
@@ -219,6 +217,12 @@
   const nameInput = byId('player');
   if (nameInput) {
     try { nameInput.value = localStorage.getItem('geoPlayerName') || ''; } catch {}
+    nameInput.addEventListener('keydown', event => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        window.saveScore();
+      }
+    });
   }
 
   window.__geoScoreboardReady = true;

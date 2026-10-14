@@ -11,7 +11,6 @@ on:
     branches: [main]
     paths:
       - 'tools/check-station-driving.cjs'
-      - 'tools/check-road-preview-smoke.cjs'
       - 'tools/check-mobile-controls.cjs'
       - 'tools/check-authored-scene.cjs'
       - 'tools/test_authored_scene_runtime.mjs'

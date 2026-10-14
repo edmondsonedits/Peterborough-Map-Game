@@ -117,7 +117,16 @@
   }
 
   function installVersionBadge() {
-    return window.PTBO_BUILD?.refreshBadge?.();
+    const panel = document.querySelector('.panel-scroll');
+    if (!panel) return;
+    let badge = document.getElementById('ptbo-version-badge');
+    if (!badge) {
+      badge = document.createElement('div');
+      badge.id = 'ptbo-version-badge';
+      panel.appendChild(badge);
+    }
+    const nextText = `v${VERSION}`;
+    if (badge.textContent !== nextText) badge.textContent = nextText;
   }
 
   function installUi() {

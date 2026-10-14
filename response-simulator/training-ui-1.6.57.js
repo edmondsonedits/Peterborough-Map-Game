@@ -54,9 +54,12 @@
       doc.head?.appendChild(style);
     }
 
-    const build = hostWindow().PTBO_BUILD;
-    build?.refreshBadge?.();
-    if (build?.version) doc.documentElement.dataset.ptboRelease = build.version;
+    const badge = doc.getElementById('ptbo-build-badge');
+    if (badge) {
+      badge.textContent = `v${VERSION}`;
+      badge.setAttribute('aria-label', `Production version ${VERSION}`);
+    }
+    doc.documentElement.dataset.ptboRelease = VERSION;
   }
 
   function appendNoticeToOpenTutorial() {
