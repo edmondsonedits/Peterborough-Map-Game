@@ -10,7 +10,7 @@
   if (!document.getElementById('ptbo-launcher-access-1-6-47')) {
     const accessScript = document.createElement('script');
     accessScript.id = 'ptbo-launcher-access-1-6-47';
-    accessScript.src = new URL('./launcher-access-1.6.47.js?v=1.6.47', document.currentScript?.src || new URL('shared/city-selector.js', location.href)).href;
+    accessScript.src = new URL(`./launcher-access-1.6.47.js?v=${window.PTBO_BUILD?.version || VERSION}`, document.currentScript?.src || new URL('shared/city-selector.js', location.href)).href;
     accessScript.async = false;
     document.head.appendChild(accessScript);
   }

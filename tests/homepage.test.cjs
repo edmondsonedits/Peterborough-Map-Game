@@ -290,3 +290,66 @@ test('missing, throwing or rejected analytics cannot block city preference or ca
     await Promise.resolve();
   }
 });
+
+function launcherAccessFixture(version) {
+  const document = new Target(), window = new Target(), elements = new Map(), timers = [];
+  const ids = ['dispatch-editor-link', 'ptbo-build-badge', 'ptbo-editor-unlock-form', 'ptbo-editor-password',
+    'ptbo-editor-unlock-error', 'ptbo-editor-unlock-cancel', 'ptbo-editor-unlock-submit'];
+  ids.forEach(id => elements.set(id, new Element(id)));
+  document.getElementById = id => elements.get(id) || null;
+  document.documentElement = new Element(); document.head = new Element(); document.body = new Element();
+  document.createElement = () => new Element();
+  if (version) window.PTBO_BUILD = { version };
+  const badge = elements.get('ptbo-build-badge');
+  // The canonical release listener is installed first; the access patch runs afterward on browser back.
+  window.addEventListener('pageshow', () => { if (window.PTBO_BUILD) badge.textContent = 'v' + window.PTBO_BUILD.version; });
+  const context = vm.createContext({ window, document, Element,
+    addEventListener: window.addEventListener.bind(window), setTimeout: fn => timers.push(fn), console });
+  vm.runInContext(fs.readFileSync(path.join(root, 'shared/launcher-access-1.6.47.js'), 'utf8'), context);
+  return { window, document, badge, timers };
+}
+
+test('launcher access preserves the canonical release badge initially, after its timer and on browser back', () => {
+  const h = launcherAccessFixture('1.6.107');
+  assert.equal(h.badge.textContent, 'v1.6.107');
+  assert.equal(h.badge.getAttribute('aria-label'), 'Production launcher version 1.6.107');
+  h.timers.forEach(fn => fn());
+  assert.equal(h.badge.textContent, 'v1.6.107');
+  h.window.PTBO_BUILD = { version: '1.6.108' };
+  h.window.emit('pageshow');
+  assert.equal(h.badge.textContent, 'v1.6.108');
+  assert.equal(h.badge.getAttribute('aria-label'), 'Production launcher version 1.6.108');
+  assert.equal(h.window.PTBO_LAUNCHER_PATCH.version, '1.6.47');
+  assert.equal(h.document.documentElement.dataset.ptboLauncherVersion, '1.6.47');
+});
+
+test('launcher access falls back to its module version only when no canonical authority is loaded', () => {
+  const h = launcherAccessFixture();
+  assert.equal(h.badge.textContent, 'v1.6.47');
+  h.window.emit('pageshow');
+  assert.equal(h.badge.textContent, 'v1.6.47');
+  h.window.PTBO_BUILD = { version: '1.6.107' };
+  h.window.emit('pageshow');
+  assert.equal(h.badge.textContent, 'v1.6.107');
+});
+
+test('city selector cache-busts the stable access patch with the canonical release', () => {
+  const h = fixture({ initialize: false });
+  h.window.PTBO_BUILD = { version: '1.6.107' };
+  h.runSelector();
+  const script = h.document.head.children.find(node => node.id === 'ptbo-launcher-access-1-6-47');
+  const url = new URL(script.src);
+  assert.equal(url.pathname, '/game/shared/launcher-access-1.6.47.js');
+  assert.equal(url.searchParams.get('v'), '1.6.107');
+  assert.equal(h.window.PTBO_CITY_SELECTOR.version, '1.6.47');
+});
+
+test('city selector retains the access patch module cache token without canonical release authority', () => {
+  const h = fixture({ initialize: false });
+  delete h.window.PTBO_BUILD;
+  h.runSelector();
+  const script = h.document.head.children.find(node => node.id === 'ptbo-launcher-access-1-6-47');
+  const url = new URL(script.src);
+  assert.equal(url.pathname, '/game/shared/launcher-access-1.6.47.js');
+  assert.equal(url.searchParams.get('v'), '1.6.47');
+});

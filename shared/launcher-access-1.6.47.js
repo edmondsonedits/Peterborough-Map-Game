@@ -10,11 +10,12 @@
   window.PTBO_LAUNCHER_PATCH = Object.freeze({ version: VERSION, editorPasswordModal: true });
 
   const refreshVersionMarker = () => {
+    const releaseVersion = window.PTBO_BUILD?.version || VERSION;
     document.documentElement.dataset.ptboLauncherVersion = VERSION;
     const badge = document.getElementById('ptbo-build-badge');
     if (badge) {
-      badge.textContent = `v${VERSION}`;
-      badge.setAttribute('aria-label', `Production launcher version ${VERSION}`);
+      badge.textContent = `v${releaseVersion}`;
+      badge.setAttribute('aria-label', `Production launcher version ${releaseVersion}`);
     }
   };
   refreshVersionMarker();
