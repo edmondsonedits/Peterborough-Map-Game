@@ -17,6 +17,19 @@
 
   if (!dispatchLink || !cities.length) return;
 
+  // The redesigned homepage already has a remembered city selector and direct launch links.
+  // Keep the access patch above, while leaving the legacy dialog available on other launchers.
+  if (document.body?.dataset.homepage === 'cinematic' && window.PTBO_HOMEPAGE?.init?.({ cities }) === true) {
+    window.PTBO_CITY_SELECTOR = Object.freeze({
+      version: VERSION,
+      homepage: true,
+      open: () => document.getElementById('home-city-select')?.focus(),
+      preferredSurface: () => wantsMobileSurface() ? 'mobile' : 'desktop',
+      cities,
+    });
+    return;
+  }
+
   function wantsMobileSurface() {
     if (typeof window.PTBO_DEVICE_SURFACE?.isMobile === 'function') {
       return window.PTBO_DEVICE_SURFACE.isMobile();

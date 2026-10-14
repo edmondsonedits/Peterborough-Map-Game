@@ -1,66 +1,97 @@
 <!doctype html>
-<!-- =========================================================
-     BEGINNER CODE GUIDE — MAIN GAME LAUNCHER
-
-     PURPOSE:
-     This is the first page of Peterborough Emergency Games. It presents links to
-     the driving simulator, Geo Guesser, 3D Simulator, password-protected Dispatch
-     Editor, and a hidden website-statistics tool.
-
-     Dispatch Simulator opens a city selector before Fire/EMS selection.
-     ========================================================= -->
+<!-- Main launcher. Gameplay is provided by the existing game pages. -->
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="#0b1220">
-    <meta name="description" content="Peterborough street and response training for Fire and EMS.">
-    <title>Peterborough Street &amp; Response Training</title>
-    <style>
-      :root { color-scheme:dark; --navy:#10243b; --navy-deep:#0b1b2d; --ink:#f8fafc; --muted:#b4c3d4; --paper:#0b1220; --card:#142136; --line:#2b3e56; --cyan:#38bdf8; --cyan-dark:#7dd3fc; --focus:#7dd3fc; }
-      * { box-sizing:border-box; } [hidden] { display:none!important; } html { min-height:100%; }
-      body { min-height:100vh; margin:0; overflow-x:hidden; font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; color:var(--ink); background:var(--paper); }
-      main { width:min(calc(100% - 2rem),66rem); margin:0 auto; padding:clamp(1.4rem,4vw,3rem) 0 calc(1.2rem + env(safe-area-inset-bottom)); }
-      header { margin-bottom:1.2rem; -webkit-tap-highlight-color:transparent; } .eyebrow { margin:0 0 .35rem; color:var(--cyan-dark); font-size:.73rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; user-select:none; }
-      h1 { margin:0; color:var(--ink); font-size:clamp(1.8rem,4vw,2.55rem); line-height:1.12; letter-spacing:-.035em; user-select:none; }
-      .games { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.75rem; } .game-card { position:relative; min-width:0; padding:.85rem; border:1px solid var(--line); border-radius:.8rem; background:var(--card); box-shadow:0 2px 5px rgba(16,36,59,.05); }
-      .game-link { min-height:7rem; display:flex; flex-direction:column; align-items:flex-start; gap:.7rem; color:inherit; text-decoration:none; } .game-link:focus-visible,.help-button:focus-visible,.secondary-link:focus-visible { outline:3px solid var(--focus); outline-offset:3px; } .game-link:hover h2 { color:var(--cyan-dark); }
-      .game-head { width:100%; padding-right:3rem; display:flex; align-items:center; gap:.65rem; } .icon { width:2.65rem; height:2.65rem; display:grid; place-items:center; flex:0 0 auto; color:var(--cyan); border:1px solid var(--line); border-radius:.65rem; background:#1b2c44; } .icon svg { width:1.55rem; height:1.55rem; stroke:currentColor; }
-      h2 { margin:0; color:var(--ink); font-size:1.03rem; line-height:1.2; letter-spacing:-.015em; } .card-actions { width:100%; display:flex; align-items:center; justify-content:space-between; gap:.45rem; margin-top:auto; }
-      .start-link { min-height:2.75rem; padding:.62rem .85rem; display:inline-flex; align-items:center; gap:.4rem; color:#07111f; border-radius:.55rem; background:var(--cyan); font-size:.88rem; font-weight:750; } .start-link svg { width:1rem; height:1rem; stroke:currentColor; } .game-link:hover .start-link { background:var(--cyan-dark); }
-      .help-button { width:2.75rem; height:2.75rem; display:grid; place-items:center; flex:0 0 auto; padding:0; color:var(--muted); border:1px solid var(--line); border-radius:50%; background:var(--card); font:700 1rem/1 system-ui,sans-serif; cursor:pointer; } .help-button:hover,.help-button[aria-expanded="true"] { color:var(--ink); border-color:var(--cyan); background:var(--navy); }
-      .game-card>.help-button { position:absolute; top:.85rem; right:.85rem; }
-      .help-popover { position:absolute; z-index:5; top:calc(100% + .4rem); right:.65rem; width:min(20rem,calc(100% - 1.3rem)); padding:.8rem .9rem; color:#f7fafc; border:1px solid #31485f; border-radius:.65rem; background:var(--navy-deep); box-shadow:0 8px 22px rgba(11,27,45,.2); font-size:.88rem; line-height:1.45; }
-      .help-popover::before { position:absolute; top:-.35rem; right:1.4rem; width:.6rem; height:.6rem; content:""; transform:rotate(45deg); border-top:1px solid #31485f; border-left:1px solid #31485f; background:var(--navy-deep); }
-      .section-label { margin:1.2rem 0 .5rem; color:var(--muted); font-size:.7rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; } .secondary-games { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.6rem; }
-      .secondary-card { position:relative; min-width:0; padding:.55rem .7rem; display:flex; align-items:center; gap:.55rem; border:1px solid var(--line); border-radius:.65rem; background:var(--card); } .secondary-card .icon { width:2.3rem; height:2.3rem; border-radius:.5rem; } .secondary-card .icon svg { width:1.3rem; height:1.3rem; }
-      .secondary-link { min-width:0; min-height:2.75rem; flex:1; display:flex; align-items:center; color:var(--ink); text-decoration:none; font-size:.93rem; font-weight:720; } .secondary-link:hover { color:var(--cyan-dark); } .secondary-card .help-button { width:2.75rem; height:2.75rem; } .secondary-card .help-popover { right:.5rem; } .secondary-card .help-popover::before { right:1.15rem; }
-      .launch-status { min-height:1.35rem; margin:.6rem 0 0; color:var(--muted); font-size:.82rem; } .game-link.is-launching,.secondary-link.is-launching { color:var(--cyan-dark); } footer { margin-top:.5rem; color:#94a3b8; font-size:.76rem; line-height:1.4; }
-      #ptbo-speedometer,#ptbo-speedometer-value,#ptbo-speedometer-unit,[data-ptbo-speedometer] { display:none!important; visibility:hidden!important; }
-      @media(max-width:48rem) { main{width:min(calc(100% - 1.25rem),38rem);padding-top:1.2rem}.games{grid-template-columns:1fr;gap:.5rem}.game-card{padding:.6rem .7rem}.game-link{min-height:0;display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto;align-items:center;gap:.55rem}.game-head{grid-column:1/-1}.card-actions{grid-column:1/-1}.start-link{flex:1;justify-content:center}.secondary-games{grid-template-columns:1fr} }
-      @media(prefers-reduced-motion:reduce) { *,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important} }
-    </style>
+    <meta name="theme-color" content="#07121c">
+    <meta name="description" content="Learn Peterborough streets, plan your route, and practise Fire and EMS response. Choose a city for free driving across Ontario.">
+    <title>Street &amp; Response Training · Peterborough</title>
+    <link rel="preload" href="homepage/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="homepage/styles.css?v=1.6.105">
   </head>
-  <body>
-    <main>
-      <header id="developer-trigger" aria-label="Peterborough training menu"><p class="eyebrow">Peterborough / Fire &amp; EMS</p><h1>Street &amp; Response Training</h1></header>
-      <section class="games" aria-label="Choose a training mode">
-        <article class="game-card geo"><a  id="geo-game-link" href="geo-guesser/desktop/" aria-label="Play Peterborough Geo Guesser" data-analytics-target="geo-guesser" class="game-link"><span class="game-head"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></span><h2>Geo Guesser</h2></span><span class="card-actions"><span class="start-link">Start<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span></span></a><button class="help-button" type="button" aria-label="About Geo Guesser" aria-expanded="false" aria-controls="help-geo" data-help-toggle>?</button><div class="help-popover" id="help-geo" role="region" aria-label="Geo Guesser help" hidden>Find dispatch locations by street knowledge. Practise untimed or take timed 10-call shifts.</div></article>
-        <article class="game-card route"><a  id="route-game-link" href="route-mapping/?v=1.6.104" aria-label="Play Route Mapping" data-analytics-target="route-mapping" class="game-link"><span class="game-head"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c4-2 2-7 7-8s3-5 7-6"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="5" r="2"/><path d="M8 6h4M10 4v4"/></svg></span><h2>Route Mapping</h2></span><span class="card-actions"><span class="start-link">Start<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span></span></a><button class="help-button" type="button" aria-label="About Route Mapping" aria-expanded="false" aria-controls="help-route" data-help-toggle>?</button><div class="help-popover" id="help-route" role="region" aria-label="Route Mapping help" hidden>Draw a response route, then compare it with the shortest and recommended routes.</div></article>
-        <article class="game-card dispatch"><a  id="dispatch-game-link" href="response-simulator/play/" aria-label="Open the Emergency Response Simulator and choose a city" data-analytics-target="dispatch-simulator" class="game-link"><span class="game-head"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h11v7H3z"/><path d="M14 13h3.5l2.5 2.5V18h-6z"/><path d="M6 11V7h5v4"/><path d="M7.5 7V4.5h2V7"/><path d="M5.5 18a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"/><path d="M17.5 18a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"/><path d="M3 14h11"/></svg></span><h2>Dispatch Simulator</h2></span><span class="card-actions"><span class="start-link">Choose city<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span></span></a><button class="help-button" type="button" aria-label="About Dispatch Simulator" aria-expanded="false" aria-controls="help-dispatch" data-help-toggle>?</button><div class="help-popover" id="help-dispatch" role="region" aria-label="Dispatch Simulator help" hidden>Dispatch calls are available in Peterborough only. Other supported cities provide Fire/EMS driving practice.</div></article>
-      </section>
-      <p class="section-label">Explore &amp; Tools</p>
-      <section class="secondary-games" aria-label="Explore and tools">
-        <article class="secondary-card"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 7 5-3 5 3 5-3 3 2v11l-5 3-5-3-5 3-3-2Z"/><path d="M8 4v13M13 7v13M18 4v13"/></svg></span><a  id="city-explorer-link" href="city-explorer/?release=v1.5.6&amp;accuracy=district1" aria-label="Play the Peterborough 3D Simulator" data-analytics-target="city-explorer" class="secondary-link">3D Simulator</a><button class="help-button" type="button" aria-label="About 3D Simulator" aria-expanded="false" aria-controls="help-explorer" data-help-toggle>?</button><div class="help-popover" id="help-explorer" role="region" aria-label="3D Simulator help" hidden>Explore Peterborough streets, landmarks and Fire Station 1, then practise driving.</div></article>
-        <article class="secondary-card"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v2"/></svg></span><a  id="dispatch-editor-link" href="dispatch-editor/" aria-label="Unlock the shared Dispatch Editor with the local access check" data-analytics-target="dispatch-editor" class="secondary-link">Dispatch Editor</a><button class="help-button" type="button" aria-label="About Dispatch Editor" aria-expanded="false" aria-controls="help-editor" data-help-toggle>?</button><div class="help-popover" id="help-editor" role="region" aria-label="Dispatch Editor help" hidden>Add, move or remove calls and locations. Edits stay local until exported and published.</div></article>
-        <article class="secondary-card" id="stats-card" hidden><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg></span><a  id="site-stats-link" href="site-stats/" aria-label="Open website statistics" data-analytics-target="website-stats" hidden class="secondary-link">Website Stats</a><button class="help-button" type="button" aria-label="About Website Stats" aria-expanded="false" aria-controls="help-stats" data-help-toggle>?</button><div class="help-popover" id="help-stats" role="region" aria-label="Website Stats help" hidden>View anonymous aggregate use and reliability information.</div></article>
-      </section>
-      <p id="launch-status" class="launch-status" role="status" aria-live="polite"></p>
-      <footer>Unofficial project; not affiliated with any municipal fire or paramedic service.</footer>
-    </main>
-
-    <script src="shared/build-version.js?v=1.6.104"></script>
-    <script src="shared/release-bootstrap.js?v=1.6.104"></script>
+  <body data-homepage="cinematic" data-home-motion="off">
+    <a class="skip-link" href="#training">Skip to training</a>
+    <div class="page-shell">
+      <header class="site-header">
+        <div class="brand" id="developer-trigger" aria-label="Street and response training"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="1.5"/><path d="M12 1v5m0 12v5M1 12h5m12 0h5"/></svg><span class="brand-title">Street &amp; Response</span><span class="brand-kicker">Training</span></div>
+        <div class="city-field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.5"/></svg><div><label for="home-city-select">Department / city</label><select id="home-city-select" aria-describedby="home-city-status">
+          <option value="peterborough">Peterborough, ON</option><option value="oshawa">Oshawa, ON</option><option value="belleville">Belleville, ON</option><option value="scarborough">Scarborough, ON</option><option value="pickering">Pickering, ON</option><option value="markham">Markham, ON</option><option value="toronto">Toronto, ON</option>
+        </select></div></div>
+      </header>
+      <main>
+        <section class="hero" aria-labelledby="home-title">
+          <p class="eyebrow"><span data-selected-city-name>Peterborough</span> <span aria-hidden="true">•</span> Fire &amp; EMS</p>
+          <h1 id="home-title"><span>Learn the city.</span><span>Take the next call.</span></h1>
+          <p class="hero-copy">Choose a challenge. Build your street knowledge.</p>
+          <p class="hero-photo-label">Peterborough waterfront</p>
+        </section>
+        <section class="training-section" id="training" aria-labelledby="training-heading">
+          <div class="section-heading"><h2 id="training-heading">Choose your training</h2><p id="home-city-status" role="status" aria-live="polite">Peterborough · All training modes</p></div>
+          <div class="training-layout"><div class="games">
+          <article class="game-card geo">
+            <a id="geo-game-link" class="game-link is-active" href="geo-guesser/desktop/" data-preview="geo" data-analytics-target="geo-guesser" aria-label="Play Peterborough Geo Guesser" aria-describedby="home-geo-description">
+              <span class="game-number" aria-hidden="true">01</span><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="1.5"/><path d="M12 1v5m0 12v5M1 12h5m12 0h5"/></svg></span>
+              <div class="game-copy"><h3>Geo Guesser</h3><p id="home-geo-description">Find the call location.</p><span class="game-meta">Location recall</span><span class="city-badge" data-peterborough-only hidden>Peterborough</span></div>
+              <span class="game-thumb" aria-hidden="true"><img src="homepage/media/geo-preview.jpg" alt="" width="1363" height="936" decoding="async"></span>
+              <span class="launch-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span>
+            </a>
+            <button class="help-button" type="button" aria-label="About Geo Guesser" aria-expanded="false" aria-controls="help-geo" data-help-toggle>?</button>
+            <div class="help-popover" id="help-geo" role="region" aria-label="Geo Guesser help" hidden>Find dispatch locations by street knowledge. Practise untimed or take timed 10-call shifts.</div>
+          </article>
+          <article class="game-card route">
+            <a id="route-game-link" class="game-link" href="route-mapping/?v=1.6.105" data-preview="route" data-analytics-target="route-mapping" aria-label="Play Peterborough Route Mapping" aria-describedby="home-route-description">
+              <span class="game-number" aria-hidden="true">02</span><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="route-stroke" d="M6 18c0-6 12-4 12-12"/><path d="M9 16a3 3 0 1 0-6 0c0 2 3 5 3 5s3-3 3-5ZM21 5a3 3 0 0 0-6 0c0 2 3 5 3 5s3-3 3-5Z"/></svg></span>
+              <div class="game-copy"><h3>Route Mapping</h3><p id="home-route-description">Choose and trace your route.</p><span class="game-meta">Route planning</span><span class="city-badge" data-peterborough-only hidden>Peterborough</span></div>
+              <span class="game-thumb" aria-hidden="true"><img src="homepage/media/route-preview.jpg" alt="" width="1363" height="936" decoding="async"></span>
+              <span class="launch-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span>
+            </a>
+            <button class="help-button" type="button" aria-label="About Route Mapping" aria-expanded="false" aria-controls="help-route" data-help-toggle>?</button>
+            <div class="help-popover" id="help-route" role="region" aria-label="Route Mapping help" hidden>Draw a response route, then compare its distance with the shortest legal route.</div>
+          </article>
+          <article class="game-card dispatch">
+            <a id="dispatch-game-link" class="game-link" href="response-simulator/play/" data-preview="dispatch" data-analytics-target="dispatch-simulator" aria-label="Play Peterborough Dispatch Simulator" aria-describedby="home-dispatch-description">
+              <span class="game-number" aria-hidden="true">03</span><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9h12v10H2zM14 12h4l4 4v3h-8M5 9V5h6v4M7 5V3h2v2M2 13h12M5 16h3m-1.5-1.5v3"/><circle cx="6" cy="20" r="2"/><circle cx="18" cy="20" r="2"/><path class="beacon" d="M16 5h3m-1.5-1.5v3"/></svg></span>
+              <div class="game-copy"><h3 id="home-dispatch-title">Dispatch Simulator</h3><p id="home-dispatch-description">Drive Fire & EMS responses.</p><span class="game-meta">Driving & response</span></div>
+              <span class="game-thumb" aria-hidden="true"><img src="homepage/media/dispatch-preview.jpg" alt="" width="1363" height="936" decoding="async"></span>
+              <span class="launch-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span>
+            </a>
+            <button class="help-button" type="button" aria-label="About Dispatch Simulator" aria-expanded="false" aria-controls="help-dispatch" data-help-toggle>?</button>
+            <div class="help-popover" id="help-dispatch" role="region" aria-label="Dispatch Simulator help" hidden>Dispatch calls are available in Peterborough only. Other supported cities provide Fire/EMS free driving. Choose Fire or EMS after launching.</div>
+          </article>
+          </div>
+          <div id="home-preview" class="preview-stage" aria-label="Training preview">
+            <button id="home-motion-toggle" class="motion-toggle" type="button" aria-pressed="true" aria-label="Turn motion on"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path class="motion-pause" d="M7 5h4v14H7zm6 0h4v14h-4z"/><path class="motion-play" d="m8 5 11 7-11 7z"/></svg><span data-motion-label>Motion off</span></button>
+          <figure class="preview-panel" data-preview-panel="geo">
+            <img class="preview-image" src="homepage/media/geo-preview.jpg" alt="Geo Guesser gameplay on the Peterborough street map" width="1363" height="936" decoding="async" fetchpriority="high">
+            <span class="preview-kicker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="1.5"/><path d="M12 1v5m0 12v5M1 12h5m12 0h5"/></svg> Geo Guesser</span>
+            <figcaption class="preview-overlay"><span class="preview-copy"><span class="preview-title">Know where to go.</span><span class="preview-description">Peterborough · Build your street knowledge, one call at a time.</span></span><a class="preview-launch" href="geo-guesser/desktop/" data-preview-launch="geo" data-analytics-target="geo-guesser">Play Geo Guesser<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></figcaption>
+          </figure>
+          <figure class="preview-panel" data-preview-panel="route" hidden>
+            <img class="preview-image" src="homepage/media/route-preview.jpg" alt="Route Mapping gameplay on the Peterborough street map" width="1363" height="936" decoding="async">
+            <span class="preview-kicker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="route-stroke" d="M6 18c0-6 12-4 12-12"/><path d="M9 16a3 3 0 1 0-6 0c0 2 3 5 3 5s3-3 3-5ZM21 5a3 3 0 0 0-6 0c0 2 3 5 3 5s3-3 3-5Z"/></svg> Route Mapping</span>
+            <figcaption class="preview-overlay"><span class="preview-copy"><span class="preview-title">Make every turn count.</span><span class="preview-description">Peterborough · Trace your response and review the route.</span></span><a class="preview-launch" href="route-mapping/?v=1.6.105" data-preview-launch="route" data-analytics-target="route-mapping">Play Route Mapping<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></figcaption>
+          </figure>
+          <figure class="preview-panel" data-preview-panel="dispatch" hidden>
+            <img class="preview-image" src="homepage/media/dispatch-preview.jpg" alt="Dispatch Simulator gameplay on the Peterborough street map" width="1363" height="936" decoding="async">
+            <span class="preview-kicker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9h12v10H2zM14 12h4l4 4v3h-8M5 9V5h6v4M7 5V3h2v2M2 13h12M5 16h3m-1.5-1.5v3"/><circle cx="6" cy="20" r="2"/><circle cx="18" cy="20" r="2"/><path class="beacon" d="M16 5h3m-1.5-1.5v3"/></svg> <span data-dispatch-mode-label>Dispatch Simulator</span></span>
+            <figcaption class="preview-overlay"><span class="preview-copy"><span class="preview-title" data-dispatch-preview-title>Take the next call.</span><span class="preview-description"><span data-dispatch-city>Peterborough</span> · <span data-dispatch-preview-description>Choose Fire or EMS and practise your response.</span></span></span><a class="preview-launch" href="response-simulator/play/" data-preview-launch="dispatch" data-analytics-target="dispatch-simulator"><span data-launch-label>Play Dispatch Simulator</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></figcaption>
+          </figure>
+            <p class="preview-attribution">Peterborough gameplay previews · © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a></p>
+          </div></div>
+        </section>
+        <section class="extras" aria-label="Explore and tools"><div class="secondary-games">
+          <article class="secondary-card"><span class="tool-visual" aria-hidden="true"><img src="city-explorer/screenshots/station-1-player-view-v1.5.6.jpg" width="1280" height="720" alt="" loading="lazy" decoding="async"></span><a id="city-explorer-link" class="secondary-link" href="city-explorer/?release=v1.5.6&amp;accuracy=district1" data-analytics-target="city-explorer" aria-label="Explore the Peterborough 3D Simulator"><strong>Explore 3D</strong><small>Drive through Peterborough streets.</small></a><button class="help-button" type="button" aria-label="About 3D Simulator" aria-expanded="false" aria-controls="help-explorer" data-help-toggle>?</button><div class="help-popover" id="help-explorer" role="region" aria-label="3D Simulator help" hidden>Explore Peterborough streets, landmarks and Fire Station 1, then practise driving.</div></article>
+          <article class="secondary-card"><span class="tool-visual tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 5v2"/></svg></span><a id="dispatch-editor-link" class="secondary-link" href="dispatch-editor/" data-analytics-target="dispatch-editor" aria-label="Unlock the shared Dispatch Editor with the local access check"><strong>Dispatch Editor</strong><small>Create and edit local scenarios.</small></a><button class="help-button" type="button" aria-label="About Dispatch Editor" aria-expanded="false" aria-controls="help-editor" data-help-toggle>?</button><div class="help-popover" id="help-editor" role="region" aria-label="Dispatch Editor help" hidden>Add, move or remove calls and locations. Edits stay local until exported and published. Password required.</div></article>
+          <article class="secondary-card" id="stats-card" hidden><span class="tool-visual tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 7 6-3 6 3 6-3v14l-6 3-6-3-6 3V7ZM9 4v14m6-11v14"/></svg></span><a id="site-stats-link" href="site-stats/" aria-label="Open website statistics" data-analytics-target="website-stats" hidden class="secondary-link"><strong>Website Stats</strong><small>Aggregate use and reliability</small></a><button class="help-button" type="button" aria-label="About Website Stats" aria-expanded="false" aria-controls="help-stats" data-help-toggle>?</button><div class="help-popover" id="help-stats" role="region" aria-label="Website Stats help" hidden>View anonymous aggregate use and reliability information.</div></article>
+        </div></section>
+        <p id="launch-status" class="launch-status" role="status" aria-live="polite"></p>
+      </main>
+      <footer class="site-footer"><p>Unofficial training project. Not affiliated with any municipal fire or paramedic service.</p><details class="media-credits"><summary>Media credits</summary><p>Peterborough waterfront photo by <a href="https://commons.wikimedia.org/wiki/File:Peteborough_Skyline_Sunset.jpg" target="_blank" rel="noopener">Jkentrandall</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a>. Displayed with cropping and a dark overlay. Game map captures: © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>. All game previews show Peterborough. <a href="homepage/fonts/OFL.txt">Inter font license</a>.</p></details></footer>
+    </div>
+    <script src="homepage/app.js?v=1.6.105"></script>
+    <script src="shared/build-version.js?v=1.6.105"></script>
+    <script src="shared/release-bootstrap.js?v=1.6.105"></script>
     <script>
       (()=>{
         const editorKey='ptbo-emergency-developer-mode';
@@ -102,8 +133,8 @@
         helpButtons.forEach(button=>button.addEventListener('click',event=>{event.stopPropagation();const opening=button.getAttribute('aria-expanded')!=='true';closeHelp();if(opening){button.setAttribute('aria-expanded','true');const panel=document.getElementById(button.getAttribute('aria-controls'));if(panel)panel.hidden=false}}));
         document.addEventListener('click',event=>{if(!event.target.closest('[data-help-toggle],.help-popover'))closeHelp()});
         document.addEventListener('keydown',event=>{if(event.key==='Escape'){const button=helpButtons.find(item=>item.getAttribute('aria-expanded')==='true');if(button){closeHelp();button.focus()}}});
-        const touchMobile=window.PTBO_DEVICE_SURFACE?.isMobile?.()===true,dispatchLink=document.getElementById('dispatch-game-link'),geoLink=document.getElementById('geo-game-link');if(touchMobile){if(dispatchLink)dispatchLink.href='response-simulator/mobile/';if(geoLink){geoLink.href='geo-guesser/mobile/';geoLink.setAttribute('aria-label','Open Peterborough Geo Guesser with the mobile interface')}}
-        const playerLinks=[dispatchLink,document.getElementById('route-game-link'),geoLink,document.getElementById('city-explorer-link')].filter(Boolean);playerLinks.forEach(link=>link.addEventListener('click',()=>{playerLinks.forEach(item=>item.classList.toggle('is-launching',item===link));if(launchStatus)launchStatus.textContent=link===dispatchLink?'Choose a city to continue.':`Opening ${link.closest('.game-card')?.querySelector('h2')?.textContent||link.textContent.trim()||'game'}…`}));addEventListener('pageshow',()=>{playerLinks.forEach(link=>link.classList.remove('is-launching'));if(launchStatus)launchStatus.textContent=''})
+        const touchMobile=window.PTBO_DEVICE_SURFACE?.isMobile?.()===true,dispatchLink=document.getElementById('dispatch-game-link'),geoLink=document.getElementById('geo-game-link');if(touchMobile){if(geoLink){geoLink.href='geo-guesser/mobile/';geoLink.setAttribute('aria-label','Open Peterborough Geo Guesser with the mobile interface')}}
+        const playerLinks=[dispatchLink,document.getElementById('route-game-link'),geoLink,document.getElementById('city-explorer-link')].filter(Boolean);playerLinks.forEach(link=>link.addEventListener('click',()=>{playerLinks.forEach(item=>item.classList.toggle('is-launching',item===link));if(launchStatus)launchStatus.textContent=`Opening ${link.closest('.game-card')?.querySelector('h2')?.textContent||link.textContent.trim()||'game'}…`}));addEventListener('pageshow',()=>{playerLinks.forEach(link=>link.classList.remove('is-launching'));if(launchStatus)launchStatus.textContent=''})
       })();
     </script>
   </body>
