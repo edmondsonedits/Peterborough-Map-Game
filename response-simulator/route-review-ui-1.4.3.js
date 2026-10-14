@@ -51,7 +51,7 @@
       #ptbo-route-legend .ptbo-review-copy{margin-top:4px;color:#aebdd0;font-size:9.5px;line-height:1.4}
       #ptbo-route-legend .ptbo-review-leg{margin-top:10px;padding:10px;border:1px solid rgba(148,163,184,.16);border-radius:12px;background:rgba(255,255,255,.035)}
       #ptbo-route-legend .ptbo-review-leg-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
-      #ptbo-route-legend .ptbo-review-leg-title{color:#e2e8f0;font-size:9px;font-weight:900;letter-spacing:.075em;text-transform:uppercase}
+      #ptbo-route-legend .ptbo-review-leg-title{color:#e2e8f0;font-size:14px;font-weight:900;letter-spacing:.075em;text-transform:uppercase}
       #ptbo-route-legend .ptbo-review-time{color:#94a3b8;font:800 9px/1 ui-monospace,SFMono-Regular,Consolas,monospace}
       #ptbo-route-legend .ptbo-review-routes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:8px}
       #ptbo-route-legend .ptbo-review-route{min-width:0;padding:8px;color:#f8fafc;border:1px solid rgba(255,255,255,.12);border-radius:10px;background:rgba(15,23,42,.72);cursor:pointer;text-align:left;transition:opacity .15s,transform .15s,border-color .15s,background .15s}
@@ -61,26 +61,25 @@
       #ptbo-route-legend .ptbo-review-route:disabled{cursor:default;opacity:.35}
       #ptbo-route-legend .ptbo-review-route-top{display:flex;align-items:center;gap:7px}
       #ptbo-route-legend .ptbo-review-swatch{flex:0 0 auto;width:26px;height:6px;border:2px solid rgba(248,250,252,.92);border-radius:999px;box-shadow:0 1px 4px rgba(0,0,0,.46)}
-      #ptbo-route-legend .ptbo-review-name{min-width:0;overflow:hidden;color:#cbd5e1;font-size:9px;font-weight:850;text-overflow:ellipsis;white-space:nowrap}
+      #ptbo-route-legend .ptbo-review-name{min-width:0;overflow:hidden;color:#cbd5e1;font-size:14px;font-weight:850;text-overflow:ellipsis;white-space:nowrap}
       #ptbo-route-legend .ptbo-review-distance{display:block;margin-top:5px;color:#fff;font-size:14px;font-weight:950;line-height:1}
-      #ptbo-route-legend .ptbo-review-action{display:block;margin-top:5px;color:#7dd3fc;font-size:8px;font-weight:900;letter-spacing:.06em;text-transform:uppercase}
+      #ptbo-route-legend .ptbo-review-action{display:block;margin-top:5px;color:#7dd3fc;font-size:12px;font-weight:900;letter-spacing:.06em;text-transform:uppercase}
       #ptbo-route-legend .ptbo-review-summary{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:6px;margin-top:8px}
-      #ptbo-route-legend .ptbo-review-pill{min-width:0;padding:7px 8px;color:#cbd5e1;border:1px solid rgba(148,163,184,.18);border-radius:9px;background:rgba(2,6,23,.36);font-size:8.5px;font-weight:800;line-height:1.25}
-      #ptbo-route-legend .ptbo-review-pill strong{display:block;margin-top:2px;color:#f8fafc;font-size:10px;font-weight:950}
+      #ptbo-route-legend .ptbo-review-pill{min-width:0;padding:7px 8px;color:#cbd5e1;border:1px solid rgba(148,163,184,.18);border-radius:9px;background:rgba(2,6,23,.36);font-size:13px;font-weight:800;line-height:1.25}
+      #ptbo-route-legend .ptbo-review-pill strong{display:block;margin-top:2px;color:#f8fafc;font-size:14px;font-weight:950}
       #ptbo-route-legend .ptbo-review-pill.good strong{color:#86efac}#ptbo-route-legend .ptbo-review-pill.warn strong{color:#fdba74}
-      #ptbo-route-legend .ptbo-review-detail{margin-top:6px;color:#94a3b8;font-size:8.5px;line-height:1.35}
-      #ptbo-route-legend .ptbo-review-status{margin-top:7px;color:#fbbf24;font-size:8.5px;line-height:1.35}
-      #ptbo-route-legend .ptbo-review-tip{margin-top:10px;padding-top:9px;color:#94a3b8;border-top:1px solid rgba(148,163,184,.14);font-size:8.5px;line-height:1.4}
-      #ptbo-route-legend .ptbo-review-done{width:100%;margin-top:10px;padding:9px;color:#fff;border:1px solid rgba(148,163,184,.3);border-radius:10px;background:#334155;font:inherit;font-size:9px;font-weight:900;cursor:pointer}
+      #ptbo-route-legend .ptbo-review-detail{margin-top:6px;color:#94a3b8;font-size:13px;line-height:1.35}
+      #ptbo-route-legend .ptbo-review-status{margin-top:7px;color:#fbbf24;font-size:13px;line-height:1.35}
+      #ptbo-route-legend .ptbo-review-tip{margin-top:10px;padding-top:9px;color:#94a3b8;border-top:1px solid rgba(148,163,184,.14);font-size:13px;line-height:1.4}
+      #ptbo-route-legend .ptbo-review-done{width:100%;margin-top:10px;padding:9px;color:#fff;border:1px solid rgba(148,163,184,.3);border-radius:10px;background:#334155;font:inherit;font-size:14px;font-weight:900;cursor:pointer}
       #ptbo-route-legend .ptbo-review-done:hover{background:#475569}
-      .ptbo-route-marker-label{padding:3px 6px!important;color:#f8fafc!important;border:1px solid rgba(255,255,255,.28)!important;border-radius:6px!important;background:rgba(15,23,42,.9)!important;box-shadow:0 4px 12px rgba(0,0,0,.3)!important;font-size:8px!important;font-weight:850!important}.ptbo-route-marker-label:before{display:none!important}
-      #ptbo-version-badge{font-size:0!important}#ptbo-version-badge::after{content:'v${VERSION}';font-size:8px;font-weight:700;letter-spacing:.08em}
+      .ptbo-route-marker-label{padding:3px 6px!important;color:#f8fafc!important;border:1px solid rgba(255,255,255,.28)!important;border-radius:6px!important;background:rgba(15,23,42,.9)!important;box-shadow:0 4px 12px rgba(0,0,0,.3)!important;font-size:12px!important;font-weight:850!important}.ptbo-route-marker-label:before{display:none!important}
       @media(max-width:900px),(pointer:coarse){
         html.ptbo-mobile-route-review #dispatch-hud,html.ptbo-mobile-route-review #game-home,html.ptbo-mobile-route-review #menu-toggle,html.ptbo-mobile-route-review #map-orientation-controls,html.ptbo-mobile-route-review #ptbo-speedometer,html.ptbo-mobile-route-review .leaflet-control-zoom,html.ptbo-mobile-route-review .leaflet-control-scale{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
         html.ptbo-mobile-route-review #ptbo-route-legend{position:fixed!important;top:max(8px,env(safe-area-inset-top))!important;left:8px!important;right:8px!important;width:auto!important;max-width:520px!important;max-height:calc(100dvh - 18px - env(safe-area-inset-top))!important;margin:0 auto!important;padding:11px!important;overflow:auto!important;border-radius:14px!important}
         #ptbo-route-legend .ptbo-review-leg{padding:8px;margin-top:8px}#ptbo-route-legend .ptbo-review-route{padding:7px}#ptbo-route-legend .ptbo-review-distance{font-size:12px}#ptbo-route-legend .ptbo-review-tip{display:none}
       }
-      @media(max-width:360px){html.ptbo-mobile-route-review #ptbo-route-legend{left:5px!important;right:5px!important;padding:8px!important}#ptbo-route-legend .ptbo-review-routes{gap:5px}#ptbo-route-legend .ptbo-review-name{font-size:8px}#ptbo-route-legend .ptbo-review-summary{grid-template-columns:1fr 82px}}
+      @media(max-width:360px){html.ptbo-mobile-route-review #ptbo-route-legend{left:5px!important;right:5px!important;padding:8px!important}#ptbo-route-legend .ptbo-review-routes{gap:5px}#ptbo-route-legend .ptbo-review-name{font-size:12px}#ptbo-route-legend .ptbo-review-summary{grid-template-columns:1fr 82px}}
     `;
     if (!isMobileHost) return;
     try {

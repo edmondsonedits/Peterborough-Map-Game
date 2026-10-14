@@ -11,11 +11,7 @@
   document.documentElement.dataset.ptboRelease = VERSION;
 
   function syncBuildMarker() {
-    const badge = document.getElementById('ptbo-build-badge');
-    if (badge) {
-      badge.textContent = release.label;
-      badge.setAttribute('aria-label', `Production version ${VERSION}`);
-    }
+    window.PTBO_BUILD?.refreshBadge?.();
     document.documentElement.dataset.ptboRelease = VERSION;
     document.getElementById('ptbo-training-use-notice')?.remove();
     document.getElementById('ptbo-training-use-style')?.remove();

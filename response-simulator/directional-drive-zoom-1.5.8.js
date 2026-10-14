@@ -232,6 +232,9 @@
 
   function syncParentUi() {
     const directional = isDirectional();
+    const steeringLabel = steering?.querySelector?.('.joystick-label');
+    if (steeringLabel) steeringLabel.textContent = directional ? 'Point + drive' : 'Steer';
+    steering?.setAttribute?.('aria-label', directional ? 'Point and hold to steer and drive' : 'Steering wheel');
     if (gas) {
       const atMax = state.currentGear >= GEAR_SPEEDS_KMH.length;
       const gearText = `Gear ${state.currentGear}`;
@@ -259,7 +262,7 @@
     }
     if (hint) {
       hint.textContent = directional
-        ? `Point and hold to drive · Gear ${state.currentGear}: ${currentGearSpeed()} km/h · Use Up / Down to shift`
+        ? `Point and hold to drive · Gear ${state.currentGear}: ${currentGearSpeed()} km/h · Tap Gear / Down to shift`
         : 'Drag the wheel to steer · Hold Gas to drive · Hold Reverse to back up';
     }
 

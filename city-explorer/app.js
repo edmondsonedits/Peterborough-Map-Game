@@ -290,7 +290,13 @@ const lowPowerProfile = compatibilityMode
   || (Number(navigator.deviceMemory) > 0 && Number(navigator.deviceMemory) <= 4)
   || (Number(navigator.hardwareConcurrency) > 0 && Number(navigator.hardwareConcurrency) <= 4);
 document.documentElement.dataset.cityCompatibilityMode = compatibilityMode ? 'forced' : lowPowerProfile ? 'automatic' : 'full';
-const renderer = new THREE.WebGLRenderer({ canvas: els.canvas, antialias: !lowPowerProfile, powerPreference: 'high-performance' });
+let renderer;
+try {
+  renderer = new THREE.WebGLRenderer({ canvas: els.canvas, antialias: !lowPowerProfile, powerPreference: 'high-performance' });
+} catch (error) {
+  globalThis.__PTBO_EXPLORER_BOOTSTRAP__?.fail?.(`WebGL context creation failed: ${error.message}`);
+  throw error;
+}
 renderer.setPixelRatio(Math.min(devicePixelRatio, lowPowerProfile ? 1.2 : 1.65));
 renderer.setSize(innerWidth, innerHeight, false);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -586,6 +592,7 @@ document.documentElement.dataset.qualityShadows = sun.castShadow ? 'pcf-soft-204
 
 function setProgress(percent, message) {
   els.loadingProgress.style.width = `${Math.max(4, Math.min(percent, 100))}%`;
+  els.loadingProgress.setAttribute('aria-valuenow', String(Math.max(0, Math.min(percent, 100))));
   if (message) els.loadingMessage.textContent = message;
   globalThis.__PTBO_EXPLORER_BOOTSTRAP__?.touch?.(message || `loading ${percent}%`);
 }
@@ -4667,7 +4674,7 @@ async function buildCity() {
   if (qaParams.get('survey') === '1') activateSemanticSurveyMode(true);
   captureFrame = installQualityCapture({ THREE, renderer, camera, state, project, terrainHeightAtWorld, stopMotion: stopFlyMotion, preparePlayerSpawn: resetGameplay, overlay: semanticSurveyOverlay, lowPower: lowPowerProfile, startedAt: explorerStartedAt,
     lighting: () => ({ theme:state.theme, exposure:renderer.toneMappingExposure, toneMapping:renderer.toneMapping, sunPosition:sun.position.toArray(), sunTarget:sunTarget.position.toArray(), sunIntensity:sun.intensity, shadows:sun.castShadow }) });
-  setTimeout(() => els.loading.classList.add('is-hidden'), 420);
+  // Bootstrap readiness closes the blocking overlay and restores interaction together.
 }
 
 async function loadPublishedAuthoredDetails() {
@@ -4786,7 +4793,11 @@ function updateMapGuide() {
 
 function stopFlyMotion(clearKeys = true) {
   velocity.set(0, 0, 0);
-  if (clearKeys) state.keys.clear();
+  if (clearKeys) {
+    state.keys.clear();
+    state.previousTouch = null;
+    window.dispatchEvent(new CustomEvent('ptbo-explorer-stop'));
+  }
 }
 
 function updateFlyHint() {
@@ -4811,7 +4822,7 @@ function updateMouseLookUi() {
 }
 
 function keyboardInputIsBlocked(event) {
-  if (event.defaultPrevented || document.querySelector('dialog[open]')) return true;
+  if (document.documentElement.dataset.explorerInteraction !== 'ready' || event.defaultPrevented || document.querySelector('dialog[open]')) return true;
   const target = event.target;
   return target instanceof Element && Boolean(target.closest('input, textarea, select, button, [contenteditable="true"]'));
 }
@@ -4850,12 +4861,16 @@ function syncGameplayRootClasses() {
   els.playMode?.classList.toggle('is-active', state.mode === 'onFoot' || state.mode === 'driving');
   els.flyMode.classList.toggle('is-active', state.mode === 'fly');
   els.mapMode.classList.toggle('is-active', state.mode === 'map');
+  els.playMode?.setAttribute('aria-pressed', String(state.mode === 'onFoot' || state.mode === 'driving'));
+  els.flyMode.setAttribute('aria-pressed', String(state.mode === 'fly'));
+  els.mapMode.setAttribute('aria-pressed', String(state.mode === 'map'));
+  syncDrivingActions();
   document.documentElement.dataset.gameplayMode = state.mode;
 }
 
 function updateGameplayHint() {
   if (state.mode === 'onFoot') {
-    els.modeHint.innerHTML = '<strong>On foot at Fire Station 1.</strong> WASD or arrows move · Shift sprints · mouse looks · E enters the fire truck · F free camera.';
+    els.modeHint.innerHTML = `<strong>On foot at ${FIRE_STATION_ONE.name}.</strong> WASD or arrows move · Shift sprints · drag the city to look · E enters the fire truck · F free camera.`;
   } else if (state.mode === 'driving') {
     els.modeHint.innerHTML = '<strong>Driving Fire Rescue Engine 1.</strong> W/S throttle and brake · A/D steer · E exits when stopped · C camera · L emergency lights.';
   }
@@ -4970,6 +4985,7 @@ function setMode(mode, force = false) {
     return;
   }
   stopFlyMotion();
+  if (state.mode === 'map') state.savedMapView = { x: camera.position.x, y: camera.position.y, z: camera.position.z };
   state.dragLooking = false;
   state.dragPointerId = null;
   state.previousPointer = null;
@@ -4983,15 +4999,17 @@ function setMode(mode, force = false) {
     document.exitPointerLock?.();
     state.mode = 'map';
     camera.near = 30;
+    camera.fov = 58;
     camera.updateProjectionMatrix();
     mapRoadGroup.visible = true;
-    const mapAltitude = Math.max(5600, CITY.terrainSize * 0.95);
-    camera.position.set(CITY.terrainCenter.x, mapAltitude, CITY.terrainCenter.z);
-    camera.up.set(0, 0, -1);
-    camera.lookAt(CITY.terrainCenter.x, terrainHeightAtWorld(CITY.terrainCenter.x, CITY.terrainCenter.z), CITY.terrainCenter.z);
+    if (state.savedMapView) {
+      const view = state.savedMapView;
+      camera.position.set(view.x, view.y, view.z);
+      panMap(0, 0);
+    } else resetMapView();
     streetLabelGroup.visible = innerWidth >= 760;
     updateMapGuide();
-    els.modeHint.innerHTML = '<strong>Map mode.</strong> Scroll to zoom · WASD or arrows pan · M returns to play.';
+    els.modeHint.innerHTML = '<strong>Map mode.</strong> Touch-drag to pan · zoom and arrow buttons navigate · WASD or arrows pan · M returns to play.';
   } else if (resolvedMode === 'fly') {
     state.mode = 'fly';
     state.lastNonMapMode = 'fly';
@@ -5064,6 +5082,36 @@ function updateFlyControls(delta) {
   state.lastFlyPitch = state.pitch;
 }
 
+// Touch drag, keyboard pan and visible tap controls share city bounds and north-up orientation.
+function panMap(dx, dz) {
+  if (state.mode !== 'map') return;
+  camera.position.x = THREE.MathUtils.clamp(camera.position.x + dx, CITY.worldBounds.minX, CITY.worldBounds.maxX);
+  camera.position.z = THREE.MathUtils.clamp(camera.position.z + dz, CITY.worldBounds.minZ, CITY.worldBounds.maxZ);
+  camera.up.set(0, 0, -1);
+  camera.lookAt(camera.position.x, 0, camera.position.z);
+  updateMapGuide();
+}
+
+function panMapFromPixels(dx, dy) {
+  const rect = els.canvas.getBoundingClientRect();
+  const height = 2 * camera.position.y * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+  panMap(-dx * height * camera.aspect / Math.max(1, rect.width), -dy * height / Math.max(1, rect.height));
+}
+
+function zoomMap(delta) {
+  if (state.mode !== 'map') return;
+  camera.position.y = THREE.MathUtils.clamp(camera.position.y + delta, 500, Math.max(9000, CITY.terrainSize * 1.05));
+  panMap(0, 0);
+}
+
+function resetMapView() {
+  if (state.mode !== 'map') return;
+  camera.position.x = CITY.terrainCenter.x;
+  camera.position.z = CITY.terrainCenter.z;
+  camera.position.y = Math.min(Math.max(5600, CITY.terrainSize * 0.95), Math.max(9000, CITY.terrainSize * 1.05));
+  panMap(0, 0);
+}
+
 function updateMapControls(delta) {
   moveVector.set(0, 0, 0);
   if (state.keys.has('KeyW') || state.keys.has('ArrowUp')) moveVector.z -= 1;
@@ -5072,8 +5120,7 @@ function updateMapControls(delta) {
   if (state.keys.has('KeyD') || state.keys.has('ArrowRight')) moveVector.x += 1;
   if (moveVector.lengthSq() > 0) {
     moveVector.normalize().multiplyScalar(900 * delta * Math.max(0.55, camera.position.y / 4000));
-    camera.position.x += moveVector.x;
-    camera.position.z += moveVector.z;
+    panMap(moveVector.x, moveVector.z);
   }
   camera.position.x = THREE.MathUtils.clamp(camera.position.x, CITY.worldBounds.minX, CITY.worldBounds.maxX);
   camera.position.z = THREE.MathUtils.clamp(camera.position.z, CITY.worldBounds.minZ, CITY.worldBounds.maxZ);
@@ -5126,7 +5173,7 @@ function cycleGameplayCameraDistance() {
 }
 
 function currentGameplayAxes(delta) {
-  const modalOpen=Boolean(document.querySelector('dialog[open]'));
+  const modalOpen = ['blocked', 'failed'].includes(document.documentElement?.dataset?.explorerInteraction) || Boolean(document.querySelector('dialog[open]'));
   const keyboard = modalOpen ? {forward:0,strafe:0,steering:0,sprinting:false} : gameplayAxesFromKeys(state.keys);
   const pads = navigator.getGamepads?.() || [];
   const gamepad = Array.from(pads).find((candidate) => candidate?.connected && candidate.mapping === 'standard')
@@ -5816,7 +5863,7 @@ function animate() {
   }
   const delta = Math.min(clock.getDelta(), 0.05);
   if (!captureFrame) {
-    if(document.querySelector('dialog[open]')){state.keys.clear();currentGameplayAxes(0);}
+    if (document.documentElement.dataset.explorerInteraction !== 'ready' || document.querySelector('dialog[open]')) { state.keys.clear(); currentGameplayAxes(0); }
     else if (cityEditor?.active) cityEditor.update(delta);
     else if (state.mode === 'fly') updateFlyControls(delta);
     else if (state.mode === 'map') updateMapControls(delta);
@@ -5855,6 +5902,7 @@ function animate() {
 function jumpTo(lat, lon, altitude = 105, name = 'Selected location') {
   const p = project(lat, lon);
   const groundY = terrainHeightAtWorld(p.x, p.y);
+  if (state.mode === 'map') state.savedMapView = { x: camera.position.x, y: camera.position.y, z: camera.position.z };
   state.mode = 'fly';
   state.lastNonMapMode = 'fly';
   els.app.classList.remove('is-map');
@@ -6139,6 +6187,7 @@ function toggleSound() {
     oscillator.start();
     ambientAudio = { context, gain, oscillator, enabled: true };
     els.soundButton.textContent = 'Sound on';
+    els.soundButton.setAttribute('aria-pressed', 'true');
     ensureVehicleAudio();
     showToast('Ambient city sound enabled');
     return;
@@ -6148,6 +6197,7 @@ function toggleSound() {
   if (ambientAudio.enabled) ensureVehicleAudio();
   updateVehicleAudio();
   els.soundButton.textContent = ambientAudio.enabled ? 'Sound on' : 'Sound off';
+  els.soundButton.setAttribute('aria-pressed', String(ambientAudio.enabled));
 }
 
 function showToast(message) {
@@ -6234,8 +6284,7 @@ function onWheel(event) {
   if (cityEditor?.active) { event.preventDefault(); return; }
   if (state.mode === 'map') {
     event.preventDefault();
-    camera.position.y = THREE.MathUtils.clamp(camera.position.y + event.deltaY * 2.2, 500, Math.max(9000, CITY.terrainSize * 1.05));
-    updateMapGuide();
+    zoomMap(event.deltaY * 2.2);
   } else if (state.mode === 'fly') {
     event.preventDefault();
     const pixelDelta = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? innerHeight : 1);
@@ -6253,15 +6302,75 @@ function onWheel(event) {
   }
 }
 
+function syncDrivingActions() {
+  const cameraButton = document.querySelector('#camera-button');
+  const lightsButton = document.querySelector('#lights-button');
+  if (cameraButton) cameraButton.disabled = !['onFoot', 'driving'].includes(state.mode);
+  if (lightsButton) {
+    lightsButton.disabled = state.mode !== 'driving';
+    lightsButton.setAttribute('aria-pressed', String(state.emergencyLights));
+  }
+}
+
+function runExplorerCommand(command) {
+  if (document.documentElement.dataset.explorerInteraction !== 'ready' || cityEditor?.active || document.querySelector('dialog[open]')) return false;
+  if (command === 'vehicle' && ['onFoot', 'driving'].includes(state.mode)) enterOrExitVehicle();
+  else if (command === 'camera' && ['onFoot', 'driving'].includes(state.mode)) cycleGameplayCameraDistance();
+  else if (command === 'sound') toggleSound();
+  else if (command === 'lights' && state.mode === 'driving') {
+    state.emergencyLights = !state.emergencyLights;
+    syncDrivingActions();
+    showToast(state.emergencyLights ? 'Emergency lights on' : 'Emergency lights off');
+  } else return false;
+  return true;
+}
+
+function openExplorerDialog(dialog, invoker) {
+  if (document.documentElement.dataset.explorerInteraction !== 'ready') return;
+  stopFlyMotion();
+  document.exitPointerLock?.();
+  dialog.explorerInvoker = invoker;
+  dialog.showModal();
+}
+
+function restoreExplorerDialogFocus(dialog) {
+  const invoker = dialog.explorerInvoker;
+  const visibleInvoker = invoker && invoker.getClientRects().length && getComputedStyle(invoker).visibility !== 'hidden';
+  const menu = document.querySelector('#mobile-menu-toggle');
+  (visibleInvoker ? invoker : menu?.getClientRects().length ? menu : els.canvas).focus({ preventScroll: true });
+}
+
 function wireEvents() {
   els.playMode?.addEventListener('click', () => { setMode('play'); els.canvas.focus({ preventScroll: true }); });
   els.flyMode.addEventListener('click', () => { setMode('fly'); els.canvas.focus({ preventScroll: true }); });
   els.mapMode.addEventListener('click', () => { setMode('map'); els.canvas.focus({ preventScroll: true }); });
   els.editorMode?.addEventListener('click', () => cityEditor?.enter());
-  els.searchButton.addEventListener('click', () => { stopFlyMotion(); document.exitPointerLock?.(); els.searchDialog.showModal(); setTimeout(() => els.searchInput.focus(), 50); });
-  els.landmarksButton.addEventListener('click', () => { stopFlyMotion(); document.exitPointerLock?.(); els.landmarksDialog.showModal(); });
+  els.searchButton.addEventListener('click', () => { openExplorerDialog(els.searchDialog, els.searchButton); els.searchInput.focus(); });
+  els.landmarksButton.addEventListener('click', () => openExplorerDialog(els.landmarksDialog, els.landmarksButton));
   els.timeButton.addEventListener('click', cycleTheme);
-  els.soundButton.addEventListener('click', toggleSound);
+  els.soundButton.addEventListener('click', () => runExplorerCommand('sound'));
+  document.querySelector('#camera-button')?.addEventListener('click', () => runExplorerCommand('camera'));
+  document.querySelector('#lights-button')?.addEventListener('click', () => runExplorerCommand('lights'));
+  const controlsDialog = document.querySelector('#controls-dialog');
+  const controlsButton = document.querySelector('#controls-button');
+  controlsButton?.addEventListener('click', () => openExplorerDialog(controlsDialog, controlsButton));
+  window.__PTBO_EXPLORER_COMMANDS__ = Object.freeze({
+    activate: runExplorerCommand,
+    hold(code, down) {
+      if (!down) { state.keys.delete(code); return; }
+      if (document.documentElement.dataset.explorerInteraction !== 'ready' || cityEditor?.active || document.querySelector('dialog[open]')) return;
+      if (['KeyW', 'KeyA', 'KeyS', 'KeyD'].includes(code) || (state.mode === 'fly' && ['KeyQ', 'KeyE'].includes(code))) state.keys.add(code);
+    },
+  });
+  document.querySelectorAll('[data-map-action]').forEach(button => button.addEventListener('click', () => {
+    if (document.documentElement.dataset.explorerInteraction !== 'ready' || document.querySelector('dialog[open]')) return;
+    const action = button.dataset.mapAction;
+    const step = camera.position.y * 0.18;
+    if (action === 'reset') resetMapView();
+    else if (action === 'zoom-in') zoomMap(-camera.position.y * 0.25);
+    else if (action === 'zoom-out') zoomMap(camera.position.y * 0.25);
+    else panMap(action === 'west' ? -step : action === 'east' ? step : 0, action === 'north' ? -step : action === 'south' ? step : 0);
+  }));
   els.splatToggle?.addEventListener('click', () => {
     if (!citySplatLayer) return;
     citySplatLayer.setEnabled(!citySplatLayer.enabled);
@@ -6278,11 +6387,11 @@ function wireEvents() {
     if (query) searchLocations(query);
   });
 
-  [els.searchDialog, els.landmarksDialog].forEach((dialog) => {
+  [els.searchDialog, els.landmarksDialog, controlsDialog].forEach((dialog) => {
     dialog.addEventListener('close', () => {
       if (dialog === els.searchDialog) cancelCitySearch();
       stopFlyMotion();
-      if (state.mode !== 'map') els.canvas.focus({ preventScroll: true });
+      restoreExplorerDialogFocus(dialog);
     });
   });
 
@@ -6327,16 +6436,15 @@ function wireEvents() {
       els.canvas.focus({ preventScroll: true });
     }
     if (!event.repeat && event.code === 'KeyE' && (state.mode === 'onFoot' || state.mode === 'driving')) {
-      enterOrExitVehicle();
+      runExplorerCommand('vehicle');
       event.preventDefault();
     }
     if (!event.repeat && event.code === 'KeyC' && (state.mode === 'onFoot' || state.mode === 'driving')) {
-      cycleGameplayCameraDistance();
+      runExplorerCommand('camera');
       event.preventDefault();
     }
     if (!event.repeat && event.code === 'KeyL' && state.mode === 'driving') {
-      state.emergencyLights = !state.emergencyLights;
-      showToast(state.emergencyLights ? 'Emergency lights on' : 'Emergency lights off');
+      runExplorerCommand('lights');
       event.preventDefault();
     }
     if (!event.repeat && event.code === 'Slash') els.searchButton.click();
@@ -6394,16 +6502,18 @@ function wireEvents() {
 
   els.canvas.addEventListener('touchstart', (event) => {
     if (cityEditor?.active) return;
-    if (event.touches.length !== 1 || state.mode === 'map') return;
+    if (document.documentElement.dataset.explorerInteraction !== 'ready' || document.querySelector('dialog[open]') || event.touches.length !== 1) { state.previousTouch = null; return; }
     state.previousTouch = { x: event.touches[0].clientX, y: event.touches[0].clientY };
   }, { passive: true });
   els.canvas.addEventListener('touchmove', (event) => {
     if (cityEditor?.active) return;
-    if (!state.previousTouch || event.touches.length !== 1 || state.mode === 'map') return;
+    if (!state.previousTouch || event.touches.length !== 1) { state.previousTouch = null; return; }
     const touch = event.touches[0];
     const dx = touch.clientX - state.previousTouch.x;
     const dy = touch.clientY - state.previousTouch.y;
-    if (state.mode === 'fly') {
+    if (state.mode === 'map') {
+      panMapFromPixels(dx, dy);
+    } else if (state.mode === 'fly') {
       state.yaw = wrapFlyYaw(state.yaw - dx * 0.004);
       state.pitch = THREE.MathUtils.clamp(state.pitch - dy * 0.0035, FLY_TUNING.pitchMinimum, FLY_TUNING.pitchMaximum);
     } else {
@@ -6414,6 +6524,7 @@ function wireEvents() {
     state.previousTouch = { x: touch.clientX, y: touch.clientY };
   }, { passive: true });
   els.canvas.addEventListener('touchend', () => { state.previousTouch = null; }, { passive: true });
+  els.canvas.addEventListener('touchcancel', () => { state.previousTouch = null; }, { passive: true });
 
   window.addEventListener('resize', () => {
     camera.aspect = innerWidth / innerHeight;

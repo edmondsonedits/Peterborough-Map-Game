@@ -153,45 +153,75 @@
   joystick.addEventListener('pointercancel', finishJoystick);
   joystick.addEventListener('lostpointercapture', finishJoystick);
 
-  function tapKey(code) {
-    emitKey(code, true);
-    window.setTimeout(() => emitKey(code, false), 70);
-  }
-
-  actionButton.addEventListener('pointerdown', event => {
-    event.preventDefault();
-    if (actionButton.disabled) return;
-    tapKey('KeyE');
-    actionButton.classList.add('is-pressed');
+  // Native click covers pointer, keyboard and assistive activation exactly once.
+  actionButton.addEventListener('click', () => {
+    if (!actionButton.disabled) window.__PTBO_EXPLORER_COMMANDS__?.activate('vehicle');
   });
-  const releaseAction = () => actionButton.classList.remove('is-pressed');
-  actionButton.addEventListener('pointerup', releaseAction);
-  actionButton.addEventListener('pointercancel', releaseAction);
-  actionButton.addEventListener('pointerleave', releaseAction);
 
+  const heldReleases = [];
   flightButtons.forEach(button => {
     const code = button.dataset.mobileCommand;
-    const start = event => {
-      event.preventDefault();
-      emitKey(code, true);
-      button.classList.add('is-pressed');
-    };
-    const end = event => {
-      if (event.cancelable) event.preventDefault();
-      emitKey(code, false);
+    let held = false;
+    let pulseTimer = null;
+    const end = () => {
+      window.clearTimeout(pulseTimer);
+      if (held) window.__PTBO_EXPLORER_COMMANDS__?.hold(code, false);
+      held = false;
       button.classList.remove('is-pressed');
     };
-    button.addEventListener('pointerdown', start);
-    button.addEventListener('pointerup', end);
-    button.addEventListener('pointercancel', end);
-    button.addEventListener('pointerleave', end);
+    const start = () => {
+      if (held || button.disabled || document.documentElement.dataset.explorerInteraction !== 'ready') return;
+      window.clearTimeout(pulseTimer);
+      held = true;
+      window.__PTBO_EXPLORER_COMMANDS__?.hold(code, true);
+      button.classList.add('is-pressed');
+    };
+    button.addEventListener('pointerdown', event => {
+      event.preventDefault();
+      button.setPointerCapture?.(event.pointerId);
+      start();
+    });
+    ['pointerup', 'pointercancel', 'pointerleave', 'lostpointercapture', 'blur'].forEach(type => button.addEventListener(type, end));
+    button.addEventListener('keydown', event => {
+      if (!['Enter', ' '].includes(event.key)) return;
+      event.preventDefault();
+      if (!event.repeat) start();
+    });
+    button.addEventListener('keyup', event => {
+      if (!['Enter', ' '].includes(event.key)) return;
+      event.preventDefault();
+      end();
+    });
+    // Prevented keyboard defaults do not synthesize click. AT click gives a bounded step.
+    button.addEventListener('click', event => {
+      if (event.detail !== 0 || held) return;
+      start();
+      pulseTimer = window.setTimeout(end, 140);
+    });
+    heldReleases.push(end);
+  });
+
+  function releaseAll() {
+    resetJoystick();
+    heldReleases.forEach(end => end());
+    [...activeKeys].forEach(code => emitKey(code, false));
+  }
+  window.addEventListener('ptbo-explorer-stop', releaseAll);
+  const movementButtons = document.getElementById('movement-buttons');
+  const movementToggle = document.getElementById('movement-buttons-toggle');
+  movementToggle?.addEventListener('click', () => {
+    window.dispatchEvent(new CustomEvent('ptbo-explorer-stop'));
+    const enabled = movementButtons.hidden;
+    movementButtons.hidden = !enabled;
+    root.classList.toggle('uses-movement-buttons', enabled);
+    movementToggle.setAttribute('aria-pressed', String(enabled));
   });
 
   function setMenu(open) {
     menuOpen = Boolean(open);
     app?.classList.toggle('mobile-menu-open', menuOpen);
     menuToggle?.setAttribute('aria-expanded', String(menuOpen));
-    if (menuOpen) resetJoystick();
+    if (menuOpen) window.dispatchEvent(new CustomEvent('ptbo-explorer-stop'));
   }
   function closeMenu() { if (menuOpen) setMenu(false); }
   menuToggle?.addEventListener('click', event => {
@@ -233,7 +263,7 @@
 
   function syncMode() {
     const mode = document.documentElement.dataset.gameplayMode || 'onFoot';
-    const ready = document.documentElement.dataset.gameplayReady === 'true';
+    const ready = document.documentElement.dataset.gameplayReady === 'true' && document.documentElement.dataset.explorerInteraction === 'ready';
     const mapMode = app?.classList.contains('is-map') || mode === 'map';
     const flyMode = app?.classList.contains('is-fly') || mode === 'fly';
 
@@ -242,25 +272,23 @@
     root.classList.toggle('is-driving-mode', mode === 'driving');
     if (joystickCaption && pointerId === null) joystickCaption.textContent = mode === 'driving' ? 'Drive' : flyMode ? 'Fly' : 'Move';
     syncActionButton(mode, ready, mapMode, flyMode);
-    if (mapMode) resetJoystick();
+    if (mapMode || !ready) releaseAll();
   }
 
   const observer = new MutationObserver(syncMode);
-  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-gameplay-mode', 'data-gameplay-ready'] });
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-gameplay-mode', 'data-gameplay-ready', 'data-explorer-interaction'] });
   if (app) observer.observe(app, { attributes: true, attributeFilter: ['class'] });
   if (interactionPrompt) observer.observe(interactionPrompt, { attributes: true, childList: true, subtree: true, characterData: true });
   syncMode();
 
   window.addEventListener('blur', () => {
     closeMenu();
-    resetJoystick();
-    [...activeKeys].forEach(code => emitKey(code, false));
+    releaseAll();
   });
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
       closeMenu();
-      resetJoystick();
-      [...activeKeys].forEach(code => emitKey(code, false));
+      releaseAll();
     }
   });
 })();

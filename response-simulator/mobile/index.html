@@ -25,12 +25,14 @@
     @media(max-width:390px){.mobile-topbar{left:7px;right:7px;gap:5px;grid-template-columns:44px minmax(0,1fr) 93px}.station-shortcuts{gap:4px}.station-button{height:38px;padding:0 3px;font-size:8.5px}.top-button{width:44px;height:44px}.top-actions{gap:5px}.mobile-controls{grid-template-columns:126px 48px 142px;gap:7px}.joystick{width:126px;height:126px}.pedal{width:68px}}
     @media(orientation:landscape) and (max-height:560px){.mobile-controls{min-height:136px;grid-template-columns:120px 52px 176px;justify-content:space-between}.joystick{width:112px;height:112px}.joystick-thumb{width:54px;height:54px}.pedal{width:70px;height:98px}.pedal.reverse{height:78px}.utility-zone{flex-direction:row;padding-bottom:0}.control-hint{bottom:calc(142px + env(safe-area-inset-bottom))}}
   </style>
+  <link rel="stylesheet" href="../../shared/training-ui.css?v=1.6.102">
+  <link rel="stylesheet" href="../response-interface.css?v=1.6.102">
 </head>
-<body>
+<body class="ptbo-ui ptbo-response-ui ptbo-response-wrapper">
   <iframe id="simulator" title="Fire and EMS Emergency Response Simulator"></iframe>
   <script>
     (()=>{
-      const VERSION='1.6.101';
+      const VERSION='1.6.102';
       const params=new URLSearchParams(location.search);
       let stored=null;try{stored=localStorage.getItem('ptboSelectedCity')}catch(_){}
       const requested=String(params.get('city')||stored||'peterborough').toLowerCase();
@@ -45,7 +47,7 @@
   </script>
 
   <nav class="mobile-topbar" aria-label="Simulator navigation, audio, and station spawns">
-    <div class="top-actions"><a class="top-button" href="../../" aria-label="Return to all games"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></a></div>
+    <div class="top-actions"><a class="top-button" href="../../?focus=dispatch#dispatch-start" aria-label="Return to all games"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></a></div>
     <div class="station-shortcuts"><button class="station-button active" type="button" data-station="1">Station 1</button><button class="station-button" type="button" data-station="2">Station 2</button><button class="station-button" type="button" data-station="3">Station 3</button></div>
     <div class="top-actions">
       <button class="top-button" id="audio-button" type="button" aria-label="Mute dispatch voice"><svg class="speaker-on" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15 9a4 4 0 0 1 0 6M17.5 6.5a7.5 7.5 0 0 1 0 11"/></svg><svg class="speaker-off" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="m16 9 5 5M21 9l-5 5"/></svg></button>
@@ -60,15 +62,15 @@
   </section>
 
   <div class="control-hint">Drag the wheel to steer · Hold Gas to drive · Hold Reverse to back up</div>
-  <div class="loading-cover" id="loading-cover"><div><strong id="loading-title">Loading mobile simulator</strong><span id="loading-status">Preparing city package, vehicle controls, and map…</span><button type="button" id="loading-refresh">Refresh Page</button></div></div>
+  <div class="loading-cover" id="loading-cover"><div><strong id="loading-title">Loading mobile simulator</strong><span id="loading-status" role="status" aria-live="polite">Preparing city package, vehicle controls, and map…</span><button type="button" id="loading-refresh">Refresh Page</button><a class="startup-home" href="../../?focus=dispatch#dispatch-start">All games</a></div></div>
 
-  <script src="../startup-trace-1.6.17.js?v=1.6.101"></script>
-  <script src="../../shared/build-version.js?v=1.6.101"></script>
-  <script src="../../shared/dispatch-locations.js?v=1.6.101"></script>
-  <script src="../../shared/dispatch-data-1.4.4.js?v=1.6.101"></script>
-  <script src="../../shared/dispatch-override-1.4.4.js?v=1.6.101"></script>
-  <script src="../../shared/stations.js?v=1.6.101"></script>
-  <script src="../service-selection.js?v=1.6.101"></script>
+  <script src="../startup-trace-1.6.17.js?v=1.6.102"></script>
+  <script src="../../shared/build-version.js?v=1.6.102"></script>
+  <script src="../../shared/dispatch-locations.js?v=1.6.102"></script>
+  <script src="../../shared/dispatch-data-1.4.4.js?v=1.6.102"></script>
+  <script src="../../shared/dispatch-override-1.4.4.js?v=1.6.102"></script>
+  <script src="../../shared/stations.js?v=1.6.102"></script>
+  <script src="../service-selection.js?v=1.6.102"></script>
   <script>
     (() => {
       const VERSION='1.6.17';
@@ -94,14 +96,14 @@
       function releaseSteering(event){if(steeringPointer!==null&&event?.pointerId!==undefined&&event.pointerId!==steeringPointer)return;steeringPointer=null;steering.classList.remove('active');thumb.style.transform='translate(-50%,-50%)';setFallbackSteering(0);sim()?.PTBO_VEHICLE_INSTRUMENTS?.setAnalogSteering?.(0)}
 
       audio.addEventListener('click',()=>{voiceEnabled=!voiceEnabled;localStorage.setItem(AUDIO_KEY,String(voiceEnabled));if(!voiceEnabled)sim()?.speechSynthesis?.cancel?.();updateAudio();haptic(10)});
-      options.addEventListener('click',()=>{sim()?.togglePanel?.();haptic()});
+      options.addEventListener('click',()=>{options.focus();releaseAll();sim()?.togglePanel?.();haptic()});
       siren.addEventListener('click',()=>{const checkbox=frame.contentDocument?.getElementById('chk-siren');if(!checkbox)return;checkbox.checked=!checkbox.checked;sim()?.updateVehicleChassis?.();siren.classList.toggle('active',checkbox.checked);haptic(12)});
       recenter.addEventListener('click',()=>{sim()?.mobileRecenter?.();haptic()});
       steering.addEventListener('pointerdown',event=>{event.preventDefault();steeringPointer=event.pointerId;steering.setPointerCapture(event.pointerId);steering.classList.add('active');setSteering(event.clientX)});
       steering.addEventListener('pointermove',event=>{if(event.pointerId!==steeringPointer)return;event.preventDefault();setSteering(event.clientX)});steering.addEventListener('pointerup',releaseSteering);steering.addEventListener('pointercancel',releaseSteering);steering.addEventListener('lostpointercapture',releaseSteering);bindPedal(gas,'gas');bindPedal(reverse,'reverse');
 
-      function injectScript(doc,filename,marker,timeoutMs=6000){trace?.mark('Loading inner module',filename);return new Promise((resolve,reject)=>{let settled=false;const finish=(error,script)=>{if(settled)return;settled=true;clearTimeout(timer);error?reject(error):resolve(script)},timer=setTimeout(()=>finish(new Error(`Timed out loading ${filename} after ${timeoutMs} ms.`)),timeoutMs);const existing=doc.querySelector(`script[${marker}]`);if(existing){if(existing.dataset.ptboLoaded==='true'){trace?.ok('Inner module already loaded',filename);finish(null,existing);return}existing.remove()}const script=doc.createElement('script');script.src=new URL(`../${filename}?v=1.6.101`,location.href).href;script.setAttribute(marker,'true');script.onload=()=>{script.dataset.ptboLoaded='true';trace?.ok('Inner module loaded',filename);finish(null,script)};script.onerror=()=>finish(new Error(`Unable to load ${filename}.`));doc.body.appendChild(script)})}
-      function showStartupError(error,generation){if(generation!==frameGeneration)return;console.error('Mobile simulator startup failed.',error);const cityName=sim()?.PTBO_CITY_PACKAGE?.name||frame.dataset.ptboCity||'selected city';const reason=String(error?.message||error||'Unknown startup error');trace?.fail('Mobile wrapper startup failed',error);const shell=loading.firstElementChild||loading;const title=document.getElementById('loading-title')||shell.querySelector('strong');if(title)title.textContent='Simulator did not finish loading';if(loadingStatus)loadingStatus.textContent=`${cityName} could not finish startup.`;let diagnostic=shell.querySelector('.diagnostic');if(!diagnostic){diagnostic=document.createElement('div');diagnostic.className='diagnostic';shell.insertBefore(diagnostic,document.getElementById('ptbo-startup-trace')||null)}diagnostic.textContent=`v${VERSION} · ${reason}`;let button=document.getElementById('startup-retry');if(!button){button=document.createElement('button');button.id='startup-retry';button.type='button';button.textContent='Refresh Page';shell.appendChild(button)}button.addEventListener('click',refreshPage,{once:true})}
+      function injectScript(doc,filename,marker,timeoutMs=6000){trace?.mark('Loading inner module',filename);return new Promise((resolve,reject)=>{let settled=false;const finish=(error,script)=>{if(settled)return;settled=true;clearTimeout(timer);error?reject(error):resolve(script)},timer=setTimeout(()=>finish(new Error(`Timed out loading ${filename} after ${timeoutMs} ms.`)),timeoutMs);const existing=doc.querySelector(`script[${marker}]`);if(existing){if(existing.dataset.ptboLoaded==='true'){trace?.ok('Inner module already loaded',filename);finish(null,existing);return}existing.remove()}const script=doc.createElement('script');script.src=new URL(`../${filename}?v=1.6.102`,location.href).href;script.setAttribute(marker,'true');script.onload=()=>{script.dataset.ptboLoaded='true';trace?.ok('Inner module loaded',filename);finish(null,script)};script.onerror=()=>finish(new Error(`Unable to load ${filename}.`));doc.body.appendChild(script)})}
+      function showStartupError(error,generation){if(generation!==frameGeneration)return;console.error('Mobile simulator startup failed.',error);const cityName=sim()?.PTBO_CITY_PACKAGE?.name||frame.dataset.ptboCity||'selected city';const reason=String(error?.message||error||'Unknown startup error');trace?.fail('Mobile wrapper startup failed',error);const shell=loading.firstElementChild||loading;const title=document.getElementById('loading-title')||shell.querySelector('strong');if(title)title.textContent='Simulator did not finish loading';if(loadingStatus)loadingStatus.textContent=`${cityName} could not finish startup.`;let diagnostic=shell.querySelector('.diagnostic');if(!diagnostic){diagnostic=document.createElement('div');diagnostic.className='diagnostic';const details=document.createElement('details');details.className='startup-details';const summary=document.createElement('summary');summary.textContent='Technical details';details.append(summary,diagnostic);shell.insertBefore(details,document.getElementById('ptbo-startup-trace')||null)}diagnostic.textContent=`v${VERSION} · ${reason}`;let button=document.getElementById('startup-retry');if(!button){button=document.createElement('button');button.id='startup-retry';button.type='button';button.textContent='Refresh Page';shell.appendChild(button)}button.addEventListener('click',refreshPage,{once:true});button.focus()}
 
       function initializeFrame(){const doc=frame.contentDocument,game=frame.contentWindow;if(!doc||!game||typeof game.initializeSimulator!=='function'||doc.documentElement.dataset.ptboMobileWrapperInitialized===VERSION)return;const generation=++frameGeneration;trace?.mark('Mobile wrapper attached to iframe',`generation=${generation}`);doc.documentElement.dataset.ptboMobileWrapperInitialized=VERSION;
         try{const boot=doc.createElement('script');boot.textContent=`if(typeof mapInstance!=='undefined'&&!mapInstance&&typeof initializeSimulator==='function')initializeSimulator();`;doc.body.appendChild(boot);trace?.mark('initializeSimulator() boot requested')}catch(error){trace?.warn('Unable to request immediate inner simulator start',error);console.warn('Unable to start the inner simulator immediately.',error)}
@@ -120,6 +122,7 @@
       const startupPoll=setInterval(()=>{initializeFrame();if(frame.contentDocument?.documentElement?.dataset.ptboMobileWrapperInitialized===VERSION)clearInterval(startupPoll)},100);
       setTimeout(()=>{clearInterval(startupPoll);if(!loading.isConnected||loading.classList.contains('hidden'))return;const game=sim(),doc=frame.contentDocument;const errors=(game?.PTBO_BUILD_ERRORS||[]).map(item=>item.message).filter(Boolean).slice(-2).join(' | ');showStartupError(new Error(errors||`Inner simulator state: ${doc?.readyState||'missing'}; initializeSimulator: ${typeof game?.initializeSimulator}; city runtime: ${game?.PTBO_CITY_RUNTIME_READY_VERSION||'not started'}; startup stage: ${game?.PTBO_STARTUP_STAGE?.stage||'unknown'}.`),frameGeneration)},30000);
       function releaseAll(){[...pressed].forEach(name=>sendKey(name,false));setFallbackSteering(0);releaseSteering();gas.classList.remove('pressed');reverse.classList.remove('pressed')}
+      window.ptboReleaseDrivingControls=releaseAll;
       window.addEventListener('blur',releaseAll);document.addEventListener('visibilitychange',()=>{if(document.hidden)releaseAll()});window.addEventListener('pagehide',releaseAll);updateAudio();
     })();
   </script>

@@ -33,17 +33,11 @@
 
   function markReleaseVersion() {
     document.documentElement.dataset.ptboRelease = VERSION;
-    const localBadge = document.getElementById('ptbo-version-badge');
-    if (localBadge) localBadge.textContent = `v${VERSION}`;
+    window.PTBO_BUILD?.refreshBadge?.();
     try {
       if (window.parent !== window) {
-        const parentDoc = window.parent.document;
-        parentDoc.documentElement.dataset.ptboRelease = VERSION;
-        const badge = parentDoc.getElementById('ptbo-build-badge');
-        if (badge) {
-          badge.textContent = `v${VERSION}`;
-          badge.setAttribute('aria-label', `Production version ${VERSION}`);
-        }
+        window.parent.document.documentElement.dataset.ptboRelease = VERSION;
+        window.parent.PTBO_BUILD?.refreshBadge?.();
       }
     } catch (_) {}
   }

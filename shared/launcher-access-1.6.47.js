@@ -11,11 +11,7 @@
 
   const refreshVersionMarker = () => {
     document.documentElement.dataset.ptboLauncherVersion = VERSION;
-    const badge = document.getElementById('ptbo-build-badge');
-    if (badge) {
-      badge.textContent = `v${VERSION}`;
-      badge.setAttribute('aria-label', `Production launcher version ${VERSION}`);
-    }
+    window.PTBO_BUILD?.refreshBadge?.();
   };
   refreshVersionMarker();
   setTimeout(refreshVersionMarker, 0);

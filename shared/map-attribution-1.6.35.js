@@ -61,7 +61,7 @@
         pointer-events:auto!important;user-select:text!important;max-width:min(74vw,560px)!important;
         padding:3px 6px!important;border-radius:4px 0 0 0!important;
         background:rgba(255,255,255,.90)!important;color:#1f2937!important;
-        font:600 10px/1.35 system-ui,-apple-system,"Segoe UI",sans-serif!important;
+        font:400 11px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif!important;
         white-space:normal!important;text-align:right!important;
       }
       .leaflet-control-attribution a{
@@ -73,17 +73,17 @@
       }
       @media(max-width:520px){
         .leaflet-control-attribution{
-          max-width:min(43vw,250px)!important;
+          max-width:min(70vw,300px)!important;
           margin:0 7px 1px 0!important;
           padding:1px 3px!important;
           border:0!important;
           border-radius:3px!important;
-          background:rgba(8,13,24,.24)!important;
+          background:rgba(255,255,255,.94)!important;
           box-shadow:none!important;
-          color:rgba(248,250,252,.58)!important;
-          font-size:5px!important;
+          color:#1f2937!important;
+          font-size:11px!important;
           font-weight:600!important;
-          line-height:1.08!important;
+          line-height:1.35!important;
           text-align:right!important;
           white-space:normal!important;
         }
