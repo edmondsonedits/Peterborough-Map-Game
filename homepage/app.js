@@ -177,13 +177,13 @@
     const version = window.PTBO_BUILD?.version || document.documentElement?.dataset.ptboBuild;
     const editor=document.getElementById('dispatch-editor-link');
     if(editor){
-      const editorCity=state.city.modes?.dispatch ? state.city : state.cityMap.get('peterborough');
+      const editorCity=state.city;
       const url=new URL('dispatch-editor/',location.href);url.searchParams.set('city',editorCity.id);
       if(version)url.searchParams.set('v',version);editor.href=url.href;
       editor.setAttribute('aria-label',`Open ${editorCity.name} Dispatch Editor`);
       const label=document.getElementById('home-editor-name'),description=document.getElementById('home-editor-description');
-      if(label)label.textContent=editorCity.id!==state.city.id?'Peterborough Dispatch Editor':'Dispatch Editor';
-      if(description)description.textContent=editorCity.id==='peterborough'?'Create and edit Peterborough scenarios.':`Edit ${editorCity.name} bases.`;
+      if(label)label.textContent='Dispatch Editor';
+      if(description)description.textContent=`Edit ${editorCity.name} locations.`;
     }
     const routes = {
       geo: `geo-guesser/${mobile ? 'mobile' : 'desktop'}/`,

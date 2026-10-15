@@ -535,9 +535,9 @@ test('a failed pending request updates an immediately reopened dialog so it can 
  h.get('route-game-link').emit('click');h.get('home-demo-submit').emit('click');h.get('home-demo-close').emit('click');h.get('route-game-link').emit('click');
  finish(false);await new Promise(r=>setImmediate(r));assert.equal(h.get('home-demo-submit').disabled,false);assert.match(h.get('home-demo-status').textContent,/could not be saved/);
 });
-test('editor utility links always select a city whose editor package exists and label its scope',()=>{
+test('editor utility links preserve the selected city for every registered catalog',()=>{
  const h=fixture({stored:'ottawa'}),link=h.get('dispatch-editor-link');
- assert.match(link.href,/dispatch-editor\/\?city=peterborough/);assert.match(link.getAttribute('aria-label'),/Peterborough/);
+ assert.match(link.href,/dispatch-editor\/\?city=ottawa/);assert.match(link.getAttribute('aria-label'),/Ottawa/);
  h.changeCity('markham');assert.equal(new URL(link.href).searchParams.get('city'),'markham');
  h.changeCity('peterborough');assert.equal(new URL(link.href).searchParams.get('city'),'peterborough');
 });

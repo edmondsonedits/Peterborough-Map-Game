@@ -31,3 +31,6 @@ test('future bases are visible as unavailable information without becoming start
  g.api.chooseService('fire');g.api.chooseDifficulty('easy');assert.equal(g.node('future-base-details').hidden,false);assert.equal(g.node('future-base-list').children.length,1);assert.match(g.node('future-base-list').children[0].textContent,/Station 9.*under construction.*2027/i);assert.equal(g.node('practice-stations').children.length,1);
  g.api.chooseService('ems');g.api.chooseDifficulty('easy');assert.match(g.node('future-base-list').children[0].textContent,/EMS 9.*unconfirmed/i);
 });
+test('unlocked Geo settings open the selected demo city in the shared editor',async()=>{
+ const g=await game({cityPackage:{id:'toronto',name:'Toronto'},developerMode:true});assert.equal(g.node('developer-settings').hidden,false);assert.match(g.node('developer-settings').href,/dispatch-editor\/\?city=toronto/);
+});

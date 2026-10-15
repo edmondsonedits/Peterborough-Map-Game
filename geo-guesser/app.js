@@ -128,12 +128,12 @@
       $('geo-city-label').textContent=city.name+' · '+(demo?'Geo Guesser demo':'street practice');
       document.title=city.name+' Geo Guesser'+(demo?' Demo':'');
       const back=new URL('../',location.href);back.searchParams.set('city',city.id);$('game-home').href=back.href;
-      if(demo)$('developer-settings').href='../dispatch-editor/?city='+encodeURIComponent(city.id);
+      $('developer-settings').href='../dispatch-editor/?city='+encodeURIComponent(city.id);
     }
     state.locations=window.PTBO_DISPATCH_STORE.getAll();state.ready=true;
     for(const tier of tiers)$('count-'+tier).textContent=String(window.PTBO_STATION_PRACTICE.serviceLocations(state.locations,'fire',tier).length);
     $('show-cross-streets').checked=state.showCrossStreets;$('practice-setup-status').textContent='';renderBases();
-    $('developer-settings').hidden=window.PTBO_CITY_PACKAGE?.id!=='peterborough'||read('ptbo-emergency-developer-mode','')!=='enabled';
+    $('developer-settings').hidden=read('ptbo-emergency-developer-mode','')!=='enabled';
     return api;
   }).catch(error=>{console.error('Unable to load Geo Guesser locations.',error);$('practice-setup-status').textContent=error?.message || 'Locations could not load. Check your connection and try again.';$('load-retry').hidden=false;return false;});
   window.addEventListener('ptbo-bases-updated',renderBases);

@@ -283,3 +283,14 @@ test('the shared 200-address catalog dispatches Fire and EMS while retaining the
     else assert.equal(g.run('totalTrackedCalls'),1);
   }
 });
+
+test('hospital export snapshot excludes staged geometry until it is saved',()=>{
+  const g=game();vm.runInContext(read('shared/hospital-dropoff-store-1.6.49.js'),g.c);
+  const store=g.c.PTBO_BASE_STORE,area=g.c.PTBO_HOSPITAL_DROPOFF;
+  const saved=store.getHospital();area.stage({...area.getSavedArea(),areaWidth:saved.areaWidth+10});
+  assert.equal(store.getHospital().areaWidth,saved.areaWidth+10,'map preview uses the draft');
+  assert.equal(typeof store.getSavedHospital,'function');
+  assert.equal(store.getSavedHospital().areaWidth,saved.areaWidth,'export snapshot uses persisted geometry');
+  store.saveHospital(store.getHospital());
+  assert.equal(store.getSavedHospital().areaWidth,saved.areaWidth+10,'Save makes the geometry exportable');
+});

@@ -244,7 +244,9 @@ test('main menu exposes the locally locked Dispatch Editor and keeps secure anal
   assert.match(editorPage,/Local edits only · export changes for publishing/);
   assert.match(editorPage,/this page cannot publish to the live game/);
   assert.equal((editorCode.match(/\bfetch\s*\(/g)||[]).length,1);
-  assert.match(editorCode,/fetch\('\.\.\/city-explorer\/data\/osm-public-roads\.geojson'\)/);
+  assert.match(editorCode,/if\(capabilities\.bases\|\|capabilities\.hospital\)/);
+  assert.match(editorCode,/const roadUrl=city\.roads\?\.dataUrl/);
+  assert.match(editorCode,/fetch\(roadUrl\)/);
   assert.doesNotMatch(editorCode,/fetch\([^\n]*(?:POST|PUT|PATCH|DELETE)/i);
 });
 

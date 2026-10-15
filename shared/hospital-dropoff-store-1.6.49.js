@@ -177,6 +177,7 @@
     ...originalStore,
     version:VERSION,
     getHospital:() => mergedHospital(),
+    getSavedHospital:() => mergedHospital(current),
     getHospitalSeed:seedHospital,
     saveHospital:save,
     getAll:() => {
