@@ -9,10 +9,9 @@
       Number.isFinite(Number(location?.radius)) && Number(location.radius) > 0;
   }
 
-  function serviceLocations(locations, service) {
-    const expected = service === 'ems' ? 'Medical' : 'Fire';
+  function serviceLocations(locations, service, difficulty) {
     return (Array.isArray(locations) ? locations : []).filter(location =>
-      location?.main === expected && isValidLocation(location));
+      (!difficulty || location.recognitionDifficulty === difficulty) && isValidLocation(location));
   }
 
   function shuffledCycle(pool, random = Math.random) {
@@ -37,12 +36,9 @@
 
   function createSession(options = {}) {
     const cycle = shuffledCycle(options.locations || [], options.random || Math.random);
-    const schedule = options.setTimeout || setTimeout;
-    const cancel = options.clearTimeout || clearTimeout;
     const onNext = options.onNext || (() => {});
-    const delay = Number.isFinite(options.delay) ? options.delay : 1000;
     const stats = { completed: 0, firstTry: 0, assisted: 0, misses: 0, streak: 0, bestStreak: 0 };
-    let timer = null, generation = 0, attempts = 0;
+    let generation = 0, attempts = 0;
     const state = { target: cycle.next(), revealed: false, pending: false, ended: false };
 
     function advance(token = generation) {
@@ -56,8 +52,6 @@
     }
     function clearPending() {
       generation++;
-      if (timer !== null) cancel(timer);
-      timer = null;
       state.pending = false;
     }
 
@@ -76,8 +70,6 @@
         stats.bestStreak = Math.max(stats.bestStreak, stats.streak);
         if (attempts === 1) stats.firstTry++;
         state.pending = true;
-        const token = ++generation;
-        timer = schedule(() => { timer = null; advance(token); }, delay);
         return { accepted: true, correct: true, firstTry: attempts === 1, stats: { ...stats } };
       },
       reveal() {
@@ -90,6 +82,11 @@
       },
       continueRevealed() {
         if (state.ended || !state.revealed) return false;
+        state.pending = true;
+        return advance(generation);
+      },
+      next() {
+        if (state.ended || (!state.pending && !state.revealed)) return false;
         state.pending = true;
         return advance(generation);
       },

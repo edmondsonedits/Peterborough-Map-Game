@@ -267,3 +267,19 @@ test('Fire comparison remains two routes and stale asynchronous reviews cannot r
   const review=compare.open();compare.reset();resolve();await review;
   assert.equal(compare.state.reviewOpen,false);assert.equal(compare.state.layers.length,0);
 });
+
+test('the shared 200-address catalog dispatches Fire and EMS while retaining the hospital workflow',()=>{
+  const zlib=require('node:zlib');
+  const payload=read('shared/dispatch-data-1.4.4.js').match(/const PAYLOAD = '([^']+)'/)[1];
+  const calls=JSON.parse(zlib.gunzipSync(Buffer.from(payload,'base64')));
+  for(const mode of ['fire','ems']){
+    const g=game();g.c.catalog=calls;g.run('dispatchDatabase.splice(0,dispatchDatabase.length,...catalog);');
+    g.service.select(mode);g.run('triggerDispatchWorkflow()');
+    assert.equal(g.run('dispatchDatabase.length'),200);
+    assert.ok(calls.some(c=>c.id===g.run('activeIncident.id')));
+    assert.equal(g.run('activeIncident.main'),mode==='ems'?'Medical':'Fire');
+    g.arrive();g.transition();
+    if(mode==='ems')assert.equal(g.run('activeIncident.sub'),'Hospital Transport');
+    else assert.equal(g.run('totalTrackedCalls'),1);
+  }
+});

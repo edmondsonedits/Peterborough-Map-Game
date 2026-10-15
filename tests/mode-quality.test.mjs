@@ -14,28 +14,11 @@ test('explicit dispatch script city wins over a previously selected city',async(
  const c=sandbox({document:{currentScript:{src:'https://example.test/shared/dispatch-locations.js?city=peterborough'}},location:{href:'https://example.test/route-mapping/'},localStorage:{getItem:()=> 'toronto',setItem(){}},PTBO_DISPATCH_DATA_READY:Promise.resolve([{name:'Call',lat:44.3,lng:-78.3}]),dispatchEvent(){}});
  vm.runInContext(read('shared/dispatch-locations.js'),c);await c.PTBO_DISPATCH_STORE.ready();assert.equal(c.PTBO_DISPATCH_STORE.cityId,'peterborough');
 });
-test('Geo timer reuses progress nodes until round identity changes',()=>{
- let writes=0;const progress={dataset:{},classList:{toggle(){}},set innerHTML(v){writes++;}},timer={textContent:''};
- const c=sandbox({gameMode:'random',index:0,targets:Array(10).fill({}),elapsed:0,$:id=>id==='progress'?progress:timer});
- vm.runInContext(section(geo,'function drawProgress()','function filterGroups()'),c);
- vm.runInContext(section(geo,'function drawTimer()','function prepareDispatch()'),c);
- for(let i=0;i<100;i++){c.elapsed=i/10;c.drawTimer();}assert.equal(writes,1);
- c.index=1;c.drawTimer();assert.equal(writes,2);c.gameMode='open';c.drawTimer();assert.equal(writes,3);
-});
-test('Geo eligible-call pool reads filters once',()=>{
- let reads=0;const c=sandbox({locations:Array.from({length:135},(_,i)=>({sub:i%2?'Fire':'Medical'})),localStorage:{getItem(){reads++;return '["Fire"]';}}});
- vm.runInContext('let sessionCallFilters=null;'+section(geo,'function enabledCallTypes()','function saveCallFilters()'),c);
- assert.equal(c.eligibleCalls().length,67);assert.equal(reads,1);
-});
-test('Geo filter preferences remain usable when browser storage is denied',()=>{
- const c=sandbox({locations:[{sub:'Fire'},{sub:'Medical'}],document:{querySelectorAll:()=>[{value:'Fire'}]},localStorage:{getItem(){throw new Error('Denied');},setItem(){throw new Error('Denied');},removeItem(){throw new Error('Denied');}},alert(){}});
- vm.runInContext((geo.includes('let sessionCallFilters')?'let sessionCallFilters=null;':'')+section(geo,'function enabledCallTypes()','function renderCallFilters()'),c);
- assert.doesNotThrow(()=>c.saveCallFilters());assert.deepEqual(Array.from(c.enabledCallTypes()),['Fire']);assert.equal(c.eligibleCalls().length,1);
-});
-test('invalid local score rows are excluded rather than interpolated into markup',()=>{
- const c=sandbox({localStorage:{getItem:()=>JSON.stringify([{name:'Good',time:20,mode:'Random Shift'},{name:'Bad',time:'<img>'},null,{time:-1}])}});
- vm.runInContext(section(geo,'function readLocalScores()','function editorSubcategories('),c);
- assert.equal(c.readLocalScores().length,1);assert.equal(c.readLocalScores()[0].time,20);
+test('Geo player entry removes timed modes, filters and scoreboard clients',()=>{
+ const wrapper=read('geo-guesser/wrapper.js');
+ assert.doesNotMatch(geo,/Timed Games|Scoreboards|geoCallFilters|score-row|id="timer"/);
+ assert.doesNotMatch(wrapper,/firebase|scoreboard/i);
+ assert.match(geo,/id="call-cross-streets"/);assert.match(geo,/id="show-cross-streets"/);
 });
 
 test('surveyed pavement supports very large valid rings without stack overflow',()=>{

@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.4.20';
+  const VERSION = '1.6.108';
   const ANALYTICS_VERSION = '1.4.20';
   const baseStore = window.PTBO_DISPATCH_STORE;
   const dataReady = window.PTBO_DISPATCH_DATA_READY;
@@ -23,43 +23,21 @@
     return;
   }
 
-  const readyPromise = Promise.all([baseStore.ready(), dataReady]).then(([, locations]) => {
-    if (baseStore.dataVersion !== VERSION) {
-      baseStore.replaceAll(locations.map(location => ({
-        ...location,
-        sources: [...(location.sources || [])]
-      })));
-    }
-    console.info(`Dispatch database v${VERSION} loaded: ${baseStore.getAll().length} calls.`);
-    return baseStore.getAll();
-  });
-
-  window.PTBO_DISPATCH_STORE = Object.freeze({
-    ready: () => readyPromise,
-    getAll: baseStore.getAll.bind(baseStore),
-    replaceAll: baseStore.replaceAll.bind(baseStore),
-    upsert: baseStore.upsert.bind(baseStore),
-    remove: baseStore.remove.bind(baseStore),
-    createId: baseStore.createId.bind(baseStore),
-    reset: baseStore.reset.bind(baseStore),
-    exportText: baseStore.exportText.bind(baseStore),
-    storageKey: baseStore.storageKey,
-    dataVersion: VERSION
-  });
-
+  const readyPromise = baseStore.ready();
+  // The shared store owns migration and metadata. Never replace it with a second API.
   function patchGeoGuesser(frame) {
     const doc = frame?.contentDocument;
+    if (frame?.contentWindow?.PTBO_GEO_READY) return;
     if (!doc || doc.documentElement.dataset.dispatchDataVersion === VERSION) return;
     doc.documentElement.dataset.dispatchDataVersion = VERSION;
 
     readyPromise.then(() => {
       const shared = window.PTBO_DISPATCH_STORE
-        .getAll()
-        .filter(location => location.custom || (location.sources || []).some(source => ['geo-guesser', 'shared-editor', 'editor'].includes(source)));
+        .getAll();
 
       const helper = doc.createElement('script');
       helper.textContent = `(() => {
-        const shared = ${JSON.stringify(shared)};
+        const shared = ${JSON.stringify(shared).replace(/</g,'\\u003c')};
         if (typeof locations !== 'undefined' && Array.isArray(locations)) {
           locations.splice(0, locations.length, ...shared.map(location => ({ ...location })));
           if (typeof initializeDistricts === 'function') initializeDistricts();

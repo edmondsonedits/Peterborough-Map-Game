@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Peterborough Fire & Emergency Dispatch Simulator</title>
     
-    <link rel="stylesheet" href="vendor/leaflet-1.9.4/leaflet.css?v=1.6.107" />
+    <link rel="stylesheet" href="vendor/leaflet-1.9.4/leaflet.css?v=1.6.108" />
     
     <style>
         html, body, #map {
@@ -200,16 +200,16 @@
 
     <div id="map"></div>
 
-    <script src="../shared/build-version.js?v=1.6.107"></script>
-    <script src="vendor/leaflet-1.9.4/leaflet.js?v=1.6.107"></script>
-    <script src="vendor/leaflet-1.9.4/leaflet.edgebuffer.js?v=1.6.107"></script>
-    <script src="vendor/leaflet-1.9.4/leaflet.rotatedMarker.js?v=1.6.107"></script>
+    <script src="../shared/build-version.js?v=1.6.108"></script>
+    <script src="vendor/leaflet-1.9.4/leaflet.js?v=1.6.108"></script>
+    <script src="vendor/leaflet-1.9.4/leaflet.edgebuffer.js?v=1.6.108"></script>
+    <script src="vendor/leaflet-1.9.4/leaflet.rotatedMarker.js?v=1.6.108"></script>
     
-    <script src="service-config.js?v=1.6.107"></script>
-    <script src="../shared/location-changes.js?v=1.6.107"></script>
-    <script src="../shared/base-locations.js?v=1.6.107"></script>
-    <script src="service-selection.js?v=1.6.107"></script>
-    <script src="gearbox-core.js?v=1.6.107"></script>
+    <script src="service-config.js?v=1.6.108"></script>
+    <script src="../shared/location-changes.js?v=1.6.108"></script>
+    <script src="../shared/base-locations.js?v=1.6.108"></script>
+    <script src="service-selection.js?v=1.6.108"></script>
+    <script src="gearbox-core.js?v=1.6.108"></script>
     <script>
         const dispatchDatabase = [
             { main:"Fire", sub:"Water & Ice Rescue", name:"Beavermead Park Beach", addr:"2015 Ashburnham Dr", lat:44.295749, lng:-78.303611 },
@@ -867,7 +867,11 @@
                 return;
             }
 
-            const filteredPool = dispatchDatabase.filter(item => activeSubCategories.includes(item.sub) && resolveIncidentArrival(item));
+            const selectedService = window.PTBO_SERVICE?.state.mode || 'fire';
+            const filteredPool = dispatchDatabase.map(item => {
+                const profile = item.incidentProfiles?.[selectedService];
+                return profile ? {...item, main:selectedService === 'ems' ? 'Medical' : 'Fire', sub:profile.sub} : item;
+            }).filter(item => activeSubCategories.includes(item.sub) && resolveIncidentArrival(item));
             if (filteredPool.length === 0) { alert('No reachable calls match these filters. Check road loading or select another call type.'); return; }
 
             const ems = window.PTBO_SERVICE?.state.mode === 'ems';
@@ -995,6 +999,6 @@
 
         window.onload = initializeSimulator;
     </script>
-    <script src="service-mode.js?v=1.6.107"></script>
+    <script src="service-mode.js?v=1.6.108"></script>
 </body>
 </html>

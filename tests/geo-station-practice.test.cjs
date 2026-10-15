@@ -16,10 +16,10 @@ const targets = [
   {main:'Fire',name:'null coordinate',lat:null,lng:-78.3,radius:30}
 ];
 
-test('practice target pools are service-specific and reject invalid coordinates or radii', () => {
+test('practice target pools are shared across services and reject invalid coordinates or radii', () => {
   const practice = api();
-  assert.deepEqual(Array.from(practice.serviceLocations(targets,'fire'), x => x.name), ['F1','F2']);
-  assert.deepEqual(Array.from(practice.serviceLocations(targets,'ems'), x => x.name), ['M1']);
+  assert.deepEqual(Array.from(practice.serviceLocations(targets,'fire'), x => x.name), ['F1','M1','F2']);
+  assert.deepEqual(Array.from(practice.serviceLocations(targets,'ems'), x => x.name), ['F1','M1','F2']);
   assert.equal(practice.serviceLocations([], 'fire').length, 0);
 });
 
@@ -34,40 +34,19 @@ test('radius check uses raw metres at and just beyond the boundary; misses retai
   assert.equal(retry.stats.completed, 0);
 });
 
-test('a correct guess advances after a short delay and cancellation blocks stale callbacks', () => {
-  const practice = api(), callbacks = [], timers = new Map(); let timerId = 0;
-  const session = practice.createSession({ locations:[targets[0],targets[2]], random:() => 0,
-    setTimeout:fn => { const id=++timerId;timers.set(id,fn);return id; }, clearTimeout:id => timers.delete(id),
-    onNext:target => callbacks.push(target) });
-  const first = session.state.target;
-  const result = session.guess(0,first.radius);
-  assert.equal(result.correct,true);
-  assert.equal(session.stats.completed,1);
-  assert.equal(session.stats.firstTry,1);
-  assert.equal(session.state.target,first);
-  const stale = [...timers.values()][0];
-  session.cancel();
-  stale();
-  assert.equal(callbacks.length,0);
-  assert.equal(session.state.target,first);
-});
-
-test('a successful retry counts once and calls the reset hook only after the delay', () => {
-  const practice=api(), callbacks=[], pending=[];
-  const session=practice.createSession({locations:[targets[0],targets[2]],random:() => 0,
-    setTimeout:fn => { pending.push(fn);return pending.length; },clearTimeout() {},
-    onNext:(target,stats) => callbacks.push({target,stats}) });
+test('correct guesses advance only on Next Call, and cancellation blocks further advancement', () => {
+  const practice=api(),callbacks=[];
+  const session=practice.createSession({locations:[targets[0],targets[2]],random:()=>0,onNext:t=>callbacks.push(t)});
   const first=session.state.target;
+  assert.equal(session.guess(0,first.radius).correct,true);assert.equal(session.state.target,first);
+  assert.equal(callbacks.length,0);assert.equal(session.next(),true);assert.equal(callbacks.length,1);
+  session.cancel();assert.equal(session.next(),false);
+});
+test('a successful retry counts once and waits for the next-call command',()=>{
+  const session=api().createSession({locations:[targets[0],targets[2]],random:()=>0}),first=session.state.target;
   assert.equal(session.guess(first.radius+1,first.radius).correct,false);
-  const success=session.guess(first.radius,first.radius);
-  assert.equal(success.firstTry,false);
-  assert.equal(session.stats.completed,1);
-  assert.equal(session.stats.firstTry,0);
-  assert.equal(callbacks.length,0);
-  pending[0]();
-  assert.equal(callbacks.length,1);
-  assert.notEqual(session.state.target,first);
-  assert.equal(callbacks[0].stats.completed,1);
+  assert.equal(session.guess(first.radius,first.radius).firstTry,false);assert.equal(session.stats.completed,1);
+  assert.equal(session.state.target,first);assert.equal(session.next(),true);assert.notEqual(session.state.target,first);
 });
 
 test('shuffled cycles avoid repeats at boundaries and reveal is counted as assisted', () => {

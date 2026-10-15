@@ -3,7 +3,7 @@
    normalization/editing behaviour shared and namespaces browser edits by city. */
 (() => {
   'use strict';
-  const BUILD_VERSION = '1.6.13';
+  const BUILD_VERSION = '1.6.108';
   const STORE_VERSION = 3;
   const scriptUrl = new URL(document.currentScript?.src || location.href, location.href);
   const currentUrl = new URL(typeof location !== 'undefined' && location.href ? location.href : scriptUrl.href);
@@ -42,7 +42,7 @@
       id:normalizeText(raw?.id),
       main:normalizeText(raw?.main) || 'Fire',
       sub:normalizeText(raw?.sub) || 'Structure Fire',
-      name:normalizeText(raw?.name) || 'Unnamed Location',
+      name:normalizeText(raw?.name),
       addr:normalizeText(raw?.addr ?? raw?.address) || 'Unknown Address',
       lat:Number(raw?.lat ?? raw?.latitude),
       lng:Number(raw?.lng ?? raw?.longitude),
@@ -52,13 +52,25 @@
       confirmed:Boolean(raw?.confirmed),
       sources:Array.isArray(raw?.sources) ? [...new Set(raw.sources.map(normalizeText).filter(Boolean))] : [source].filter(Boolean),
       custom:Boolean(raw?.custom),
+      recognitionDifficulty:['easy','medium','hard'].includes(raw?.recognitionDifficulty) ? raw.recognitionDifficulty : null,
+      crossStreets:Array.isArray(raw?.crossStreets) ? [...new Set(raw.crossStreets.map(normalizeText).filter(Boolean))].slice(0,2) : [],
+      sourceCallIds:Array.isArray(raw?.sourceCallIds) ? raw.sourceCallIds.map(normalizeText).filter(Boolean) : [],
+      incidentProfiles:raw?.incidentProfiles ? JSON.parse(JSON.stringify(raw.incidentProfiles)) : undefined,
     };
     if (!Number.isFinite(location.lat) || !Number.isFinite(location.lng) || Math.abs(location.lat)>90 || Math.abs(location.lng)>180) return null;
     if (!location.id) location.id = makeId(location);
     return location;
   }
 
-  function clone(list) { return list.map(location => ({...location,sources:[...(location.sources || [])]})); }
+  function clone(list) { return JSON.parse(JSON.stringify(list)); }
+
+  // Addresses are shared; scenario labels belong to the selected simulator service.
+  function forService(service) {
+    return getAll().map(item => {
+      const profile=item.incidentProfiles?.[service];
+      return profile ? {...item,main:service==='ems'?'Medical':'Fire',sub:profile.sub} : item;
+    });
+  }
 
   function normalizeList(list, source) {
     const usedIds = new Set();
@@ -119,10 +131,40 @@
     } catch (error) { console.warn(`Dispatch edits for ${CITY_ID} could not be read.`,error); }
     for (const parsed of candidates) {
       const compatibleVersion = parsed.version === STORE_VERSION || (CITY_ID === 'peterborough' && parsed.version === 2);
-      if (!compatibleVersion || parsed.dataVersion !== dataVersion || !Array.isArray(parsed.items)) continue;
-      return normalizeList(parsed.items,'saved');
+      if (!compatibleVersion || !Array.isArray(parsed.items)) continue;
+      if (parsed.dataVersion === dataVersion) return normalizeList(parsed.items,'saved');
+      if (CITY_ID === 'peterborough' && parsed.dataVersion === '1.4.20' && window.PTBO_DISPATCH_LEGACY_LOCATIONS) {
+        return migrateLegacy(parsed);
+      }
     }
     return null;
+  }
+
+  function migrateLegacy(saved) {
+    const baseline=normalizeList(window.PTBO_DISPATCH_LEGACY_LOCATIONS,'source');
+    const originals=new Map(baseline.map(item=>[item.id,item]));
+    const previous=normalizeList(saved.items,'saved'), byId=new Map(previous.map(item=>[item.id,item]));
+    const next=clone(seed), byAlias=new Map();
+    for(const item of next)for(const alias of item.sourceCallIds)byAlias.set(alias,item);
+    const deleted=new Set();
+    for(const original of baseline){
+      const edited=byId.get(original.id), destination=byAlias.get(original.id);
+      if(!edited){if(destination&&destination.sourceCallIds.every(alias=>!byId.has(alias)))deleted.add(destination.id);continue;}
+      const changes=Object.fromEntries(Object.keys(edited).filter(key=>!['id','sourceCallIds','sources'].includes(key)&&JSON.stringify(edited[key])!==JSON.stringify(original[key])).map(key=>[key,edited[key]]));
+      if(!Object.keys(changes).length)continue;
+      if(destination){
+        Object.assign(destination,changes);
+        if(changes.main||changes.sub){
+          const service=destination.main==='Medical'?'ems':'fire';
+          destination.incidentProfiles={...destination.incidentProfiles,[service]:{sub:destination.sub}};
+        }
+      }
+      else next.push({...edited,custom:true});
+    }
+    for(const edited of previous)if(!originals.has(edited.id))next.push(edited);
+    // Original snapshot remains recoverable before the first subsequent save.
+    try{localStorage.setItem(`${STORAGE_KEY}:before-${dataVersion}`,JSON.stringify(saved));}catch(_){/* The original key is still untouched. */}
+    return normalizeList(next.filter(item=>!deleted.has(item.id)),'saved');
   }
 
   function persist(nextItems = items) {
@@ -146,12 +188,12 @@
   function ready() { if (!readyPromise) readyPromise = initialize(); return readyPromise; }
   function getAll() { return clone(items); }
   function replaceAll(nextItems) { const next=normalizeList(nextItems,'editor');persist(next);items=next;announce();return getAll(); }
-  function upsert(raw) { const location=normalizeLocation(raw,'editor');if(!location)throw new Error('A dispatch location needs valid latitude and longitude values.');const index=items.findIndex(item=>item.id===location.id),next=clone(items);if(index>=0)next[index]=location;else next.push(location);persist(next);items=next;announce();return {...location,sources:[...location.sources]}; }
+  function upsert(raw) { const location=normalizeLocation(raw,'editor');if(!location)throw new Error('A dispatch location needs valid latitude and longitude values.');const index=items.findIndex(item=>item.id===location.id),next=clone(items);if(index>=0)next[index]=location;else next.push(location);persist(next);items=next;announce();return clone([location])[0]; }
   function remove(id) { const next=items.filter(item=>item.id!==id);persist(next);items=next;announce();return getAll(); }
   function createId(raw) { const normalized=normalizeLocation({...raw,id:''},'editor');const base=normalized?makeId(normalized):`call-custom-${Date.now().toString(36)}`;let candidate=base,suffix=2;while(items.some(item=>item.id===candidate))candidate=`${base}-${suffix++}`;return candidate; }
   function reset() { const next=clone(seed);persist(next);items=next;announce();return getAll(); }
   function exportText(exportItems=items) { const data=normalizeList(exportItems,'editor');return `window.PTBO_DISPATCH_DATA_VERSION = ${JSON.stringify(dataVersion)};\nwindow.PTBO_DISPATCH_DATA_READY = Promise.resolve(${JSON.stringify(data,null,2)});\n`; }
 
-  window.PTBO_DISPATCH_STORE = Object.freeze({cityId:CITY_ID,ready,getAll,replaceAll,upsert,remove,createId,reset,exportText,storageKey:STORAGE_KEY,get dataVersion(){return dataVersion;}});
+  window.PTBO_DISPATCH_STORE = Object.freeze({cityId:CITY_ID,ready,getAll,getSeed:()=>clone(seed),forService,replaceAll,upsert,remove,createId,reset,exportText,storageKey:STORAGE_KEY,get dataVersion(){return dataVersion;}});
   window.PTBO_DISPATCH_STORE_READY = ready();
 })();

@@ -60,7 +60,7 @@
   const dispatch = Object.freeze({
     available:true,
     controlName:'Peterborough Control',
-    dataVersion:'1.4.20',
+    dataVersion:'1.6.108',
     descriptorUrl:new URL('./dispatch-data.js', sourceUrl).href,
     legacyAsset:'shared/dispatch-data-1.4.4.js',
   });

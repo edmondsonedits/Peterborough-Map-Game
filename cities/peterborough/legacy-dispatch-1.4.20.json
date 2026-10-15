@@ -1,0 +1,2347 @@
+[
+  {
+    "id": "call-beavermead-park-beach-13e5qro",
+    "main": "Fire",
+    "sub": "Water & Ice Rescue",
+    "name": "Beavermead Park Beach",
+    "addr": "2015 Ashburnham Dr",
+    "lat": 44.29573,
+    "lng": -78.303444,
+    "radius": 270,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-peterborough-lift-lock-canal-d1yolo",
+    "main": "Fire",
+    "sub": "Water & Ice Rescue",
+    "name": "Peterborough Lift Lock 21",
+    "addr": "353 Hunter St E",
+    "lat": 44.307956,
+    "lng": -78.30054,
+    "radius": 20,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-trent-university-faryon-bridge-1rtqzab",
+    "main": "Fire",
+    "sub": "Water & Ice Rescue",
+    "name": "Trent University Faryon Bridge",
+    "addr": "1600 West Bank Dr",
+    "lat": 44.358266,
+    "lng": -78.289864,
+    "radius": 45,
+    "district": 2,
+    "cityTen": false,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-del-crary-park-marina-3ovqwx",
+    "main": "Fire",
+    "sub": "Water & Ice Rescue",
+    "name": "Del Crary Park Marina",
+    "addr": "100 George St N",
+    "lat": 44.296375,
+    "lng": -78.318159,
+    "radius": 100,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-little-lake-cemetery-18gnqsf",
+    "main": "Fire",
+    "sub": "Water & Ice Rescue",
+    "name": "Little Lake Cemetery",
+    "addr": "915 Haggart St",
+    "lat": 44.294071,
+    "lng": -78.308551,
+    "radius": 250,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-millennium-park-dock-1ndr22p",
+    "main": "Fire",
+    "sub": "Water & Ice Rescue",
+    "name": "Millennium Park Dock",
+    "addr": "130 King St",
+    "lat": 44.301539,
+    "lng": -78.317657,
+    "radius": 60,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-lansdowne-place-mall-4ao3em",
+    "main": "Fire",
+    "sub": "Structure Fire",
+    "name": "Lansdowne Place Mall",
+    "addr": "645 Lansdowne St W",
+    "lat": 44.283292,
+    "lng": -78.331372,
+    "radius": 200,
+    "district": 3,
+    "cityTen": true,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-quaker-oats-14dnk6d",
+    "main": "Fire",
+    "sub": "Structure Fire",
+    "name": "Quaker Oats North Entrance",
+    "addr": "London St",
+    "lat": 44.308273,
+    "lng": -78.314313,
+    "radius": 120,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-holiday-inn-waterfront-1wxz7kz",
+    "main": "Fire",
+    "sub": "Structure Fire",
+    "name": "Holiday Inn Waterfront",
+    "addr": "150 George St N",
+    "lat": 44.298049,
+    "lng": -78.319023,
+    "radius": 70,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-general-electric-building-1yk1t22",
+    "main": "Fire",
+    "sub": "Structure Fire",
+    "name": "General Electric Building",
+    "addr": "107 Park St N",
+    "lat": 44.295488,
+    "lng": -78.330116,
+    "radius": 300,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-peterborough-public-library-1ov4qod",
+    "main": "Fire",
+    "sub": "Structure Fire",
+    "name": "Peterborough Public Library",
+    "addr": "345 Aylmer St N",
+    "lat": 44.303992,
+    "lng": -78.323751,
+    "radius": 45,
+    "district": 1,
+    "cityTen": true,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-market-plaza-strip-mall-61g316",
+    "main": "Fire",
+    "sub": "Structure Fire",
+    "name": "Market Plaza Strip Mall",
+    "addr": "91 George St N",
+    "lat": 44.296314,
+    "lng": -78.320879,
+    "radius": 75,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-east-city-commercial-block-g0n8pt",
+    "main": "Fire",
+    "sub": "Motor Vehicle Collision",
+    "name": "Intersection",
+    "addr": "Driscoll Terrace & Cricket Place",
+    "lat": 44.30699,
+    "lng": -78.312011,
+    "radius": 20,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-gzowski-college-student-residence-l9sd96",
+    "main": "Fire",
+    "sub": "Structure Fire",
+    "name": "Gzowski College Student Residence",
+    "addr": "2510 Pioneer Rd",
+    "lat": 44.356682,
+    "lng": -78.286997,
+    "radius": 120,
+    "district": 2,
+    "cityTen": false,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-brock-mission-emergency-shelter-uz38l4",
+    "main": "Fire",
+    "sub": "Structure Fire",
+    "name": "Brock Mission Emergency Shelter",
+    "addr": "217 Murray St",
+    "lat": 44.308035,
+    "lng": -78.32266,
+    "radius": 30,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-intersection-5755nt",
+    "main": "Fire",
+    "sub": "Motor Vehicle Collision",
+    "name": "Intersection",
+    "addr": "Lansdowne St W & Monaghan Rd",
+    "lat": 44.285898,
+    "lng": -78.329714,
+    "radius": 30,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-intersection-57awaq",
+    "main": "Fire",
+    "sub": "Motor Vehicle Collision",
+    "name": "Intersection",
+    "addr": "Chemong Rd & Towerhill Rd",
+    "lat": 44.327089,
+    "lng": -78.339247,
+    "radius": 30,
+    "district": 2,
+    "cityTen": false,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-intersection-o07xbi",
+    "main": "Fire",
+    "sub": "Motor Vehicle Collision",
+    "name": "Intersection",
+    "addr": "The Parkway & Clonsilla Ave",
+    "lat": 44.287461,
+    "lng": -78.347465,
+    "radius": 30,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-intersection-1tbldz2",
+    "main": "Fire",
+    "sub": "Motor Vehicle Collision",
+    "name": "Intersection",
+    "addr": "George St N & Rink St",
+    "lat": 44.295872,
+    "lng": -78.319334,
+    "radius": 30,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-hwy-115-off-ramp-1vkf6u6",
+    "main": "Fire",
+    "sub": "Motor Vehicle Collision",
+    "name": "Hwy 115 Off-Ramp",
+    "addr": "Hwy 115 & Bensfort Rd",
+    "lat": 44.27433,
+    "lng": -78.308345,
+    "radius": 30,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-intersection-56p737",
+    "main": "Fire",
+    "sub": "Motor Vehicle Collision",
+    "name": "Intersection",
+    "addr": "Parkhill Rd E & Television Rd",
+    "lat": 44.322319,
+    "lng": -78.293209,
+    "radius": 30,
+    "district": 2,
+    "cityTen": false,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-intersection-bviap1",
+    "main": "Fire",
+    "sub": "Motor Vehicle Collision",
+    "name": "Intersection",
+    "addr": "Water St & Nassau Mills Rd",
+    "lat": 44.353082,
+    "lng": -78.298109,
+    "radius": 30,
+    "district": 2,
+    "cityTen": false,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-intersection-nbvooh",
+    "main": "Fire",
+    "sub": "Motor Vehicle Collision",
+    "name": "Intersection",
+    "addr": "Ashburnham Dr & Maria St",
+    "lat": 44.300971,
+    "lng": -78.30227,
+    "radius": 30,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-intersection-2zt2mj",
+    "main": "Fire",
+    "sub": "Motor Vehicle Collision",
+    "name": "Intersection",
+    "addr": "Sherbrooke St & Medical Dr",
+    "lat": 44.296283,
+    "lng": -78.342648,
+    "radius": 40,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-intersection-1wj9y48",
+    "main": "Fire",
+    "sub": "Motor Vehicle Collision",
+    "name": "Intersection",
+    "addr": "Borden Ave & High St",
+    "lat": 44.283302,
+    "lng": -78.333531,
+    "radius": 50,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-costco-wholesale-parking-lot-q5bgdi",
+    "main": "Fire",
+    "sub": "Auto Alarm / Vehicle Fire",
+    "name": "Costco Wholesale Parking Lot",
+    "addr": "485 The Parkway",
+    "lat": 44.272212,
+    "lng": -78.340625,
+    "radius": 50,
+    "district": 3,
+    "cityTen": true,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-peterborough-memorial-centre-1v7v0sm",
+    "main": "Fire",
+    "sub": "Auto Alarm / Vehicle Fire",
+    "name": "Peterborough Memorial Centre",
+    "addr": "151 Lansdowne St W",
+    "lat": 44.288561,
+    "lng": -78.315675,
+    "radius": 60,
+    "district": 1,
+    "cityTen": true,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-real-canadian-superstore-lot-1e8thjz",
+    "main": "Fire",
+    "sub": "Auto Alarm / Vehicle Fire",
+    "name": "Real Canadian Superstore Lot",
+    "addr": "769 Borden Ave",
+    "lat": 44.281357,
+    "lng": -78.333035,
+    "radius": 80,
+    "district": 3,
+    "cityTen": true,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-king-street-parking-garage-12i4840",
+    "main": "Fire",
+    "sub": "Auto Alarm / Vehicle Fire",
+    "name": "King Street Parkade",
+    "addr": "202 King St",
+    "lat": 44.302234,
+    "lng": -78.321201,
+    "radius": 70,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-trent-athletics-centre-1sb125r",
+    "main": "Fire",
+    "sub": "Auto Alarm / Vehicle Fire",
+    "name": "Trent Athletics Centre",
+    "addr": "1650 W Bank Dr",
+    "lat": 44.355566,
+    "lng": -78.292689,
+    "radius": 80,
+    "district": 2,
+    "cityTen": false,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-lansdowne-car-dealership-cqkqkj",
+    "main": "Fire",
+    "sub": "Auto Alarm / Vehicle Fire",
+    "name": "Lansdowne Car Dealership",
+    "addr": "2212 Lansdowne St W",
+    "lat": 44.271774,
+    "lng": -78.385123,
+    "radius": 75,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-residential-backyard-subdivision-ppkstk",
+    "main": "Fire",
+    "sub": "Burning Complaint",
+    "name": "Residential Backyard",
+    "addr": "31 Kingan & Benson",
+    "lat": 44.316679,
+    "lng": -78.322365,
+    "radius": 50,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-west-end-suburban-property-1l76xvx",
+    "main": "Fire",
+    "sub": "Burning Complaint",
+    "name": "West End Suburban Property",
+    "addr": "1422 Woodglade Blvd & Kawartha Heights",
+    "lat": 44.286753,
+    "lng": -78.366833,
+    "radius": 50,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-ashburnham-residential-lot-1kbjvhm",
+    "main": "Fire",
+    "sub": "Burning Complaint",
+    "name": "Ashburnham Residential Lot",
+    "addr": "512 Rogers St & Douro",
+    "lat": 44.309747,
+    "lng": -78.308565,
+    "radius": 50,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": true,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-central-urban-grid-property-1t31oqu",
+    "main": "Fire",
+    "sub": "Burning Complaint",
+    "name": "Central Urban Grid Property",
+    "addr": "275 Mcdonnel St",
+    "lat": 44.309286,
+    "lng": -78.325664,
+    "radius": 50,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-north-end-residential-fringe-8skave",
+    "main": "Fire",
+    "sub": "Burning Complaint",
+    "name": "North End Residential Fringe",
+    "addr": "1815 Chemong Rd",
+    "lat": 44.347591,
+    "lng": -78.360565,
+    "radius": 50,
+    "district": 2,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-clonsilla-residential-corridor-c0uz8l",
+    "main": "Fire",
+    "sub": "Burning Complaint",
+    "name": "Clonsilla Residential Corridor",
+    "addr": "1205 Clonsilla Ave",
+    "lat": 44.2922,
+    "lng": -78.3458,
+    "radius": 50,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-empress-gardens-senior-living-3sg5ay",
+    "main": "Fire",
+    "sub": "Alarms No Apparent Problem",
+    "name": "Empress Gardens Senior Living",
+    "addr": "131 Charlotte St",
+    "lat": 44.303113,
+    "lng": -78.31928,
+    "radius": 40,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-applewood-retirement-residence-3p064b",
+    "main": "Fire",
+    "sub": "Alarms No Apparent Problem",
+    "name": "Applewood Retirement Residence",
+    "addr": "1500 Lansdowne St W",
+    "lat": 44.278576,
+    "lng": -78.362464,
+    "radius": 70,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-brock-towers-high-rise-housing-16729za",
+    "main": "Fire",
+    "sub": "Alarms No Apparent Problem",
+    "name": "Brock Towers High-Rise Housing",
+    "addr": "221 Brock St",
+    "lat": 44.307209,
+    "lng": -78.322429,
+    "radius": 30,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-liftlock-manor-apartments-126m4eu",
+    "main": "Fire",
+    "sub": "Alarms No Apparent Problem",
+    "name": "Liftlock Manor Apartments",
+    "addr": "815 Dutton Rd",
+    "lat": 44.326807,
+    "lng": -78.317091,
+    "radius": 50,
+    "district": 2,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-sunrise-seniors-living-facility-6s88gm",
+    "main": "Fire",
+    "sub": "Alarms No Apparent Problem",
+    "name": "Sunrise Seniors Living Facility",
+    "addr": "1165 Chemong Rd",
+    "lat": 44.3298,
+    "lng": -78.3262,
+    "radius": 50,
+    "district": 2,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-hillmar-apartments-1o0odpo",
+    "main": "Fire",
+    "sub": "Alarms No Apparent Problem",
+    "name": "Hillmar Apartments",
+    "addr": "181 Marina Blvd",
+    "lat": 44.332819,
+    "lng": -78.322544,
+    "radius": 50,
+    "district": 2,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-monaghan-multi-unit-complex-1m8oo9i",
+    "main": "Fire",
+    "sub": "Alarms No Apparent Problem",
+    "name": "Monaghan Multi-Unit Complex",
+    "addr": "610 Monaghan Rd",
+    "lat": 44.278292,
+    "lng": -78.3259,
+    "radius": 50,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-commercial-office-infrastructure-ouudpq",
+    "main": "Fire",
+    "sub": "Alarms No Apparent Problem",
+    "name": "Commercial Office Infrastructure",
+    "addr": "360 George St N",
+    "lat": 44.293599,
+    "lng": -78.31898,
+    "radius": 50,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-towerhill-townhouse-complex-dcm13r",
+    "main": "Fire",
+    "sub": "Alarms No Apparent Problem",
+    "name": "Towerhill Townhouse Complex",
+    "addr": "1000 Towerhill Rd",
+    "lat": 44.322451,
+    "lng": -78.351102,
+    "radius": 50,
+    "district": 2,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-ymca-community-gym-facility-lva5yi",
+    "main": "Medical",
+    "sub": "Chest Pain / Cardiac Emergency",
+    "name": "YMCA Community Gym Facility",
+    "addr": "123 Aylmer St S",
+    "lat": 44.289709,
+    "lng": -78.322166,
+    "radius": 50,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-peterborough-sport-wellness-centre-t5p0c8",
+    "main": "Medical",
+    "sub": "Chest Pain / Cardiac Emergency",
+    "name": "Peterborough Sport & Wellness Centre",
+    "addr": "775 Brealey Dr",
+    "lat": 44.2905,
+    "lng": -78.3665,
+    "radius": 50,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-peterborough-golf-country-club-x7gtoh",
+    "main": "Medical",
+    "sub": "Chest Pain / Cardiac Emergency",
+    "name": "Peterborough Golf & Country Club",
+    "addr": "1030 Water St",
+    "lat": 44.332162,
+    "lng": -78.307165,
+    "radius": 40,
+    "district": 2,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-shoppers-drug-mart-pharmacy-1wes8ze",
+    "main": "Medical",
+    "sub": "Chest Pain / Cardiac Emergency",
+    "name": "Shoppers Drug Mart Pharmacy",
+    "addr": "971 Lansdowne St W",
+    "lat": 44.2842,
+    "lng": -78.3411,
+    "radius": 50,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-galaxy-cinemas-theater-complex-u0f0kf",
+    "main": "Medical",
+    "sub": "Chest Pain / Cardiac Emergency",
+    "name": "Galaxy Cinemas Theater Complex",
+    "addr": "320 Water St",
+    "lat": 44.303958,
+    "lng": -78.318304,
+    "radius": 60,
+    "district": 1,
+    "cityTen": true,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-kawartha-heights-residential-bungalow-n3chmr",
+    "main": "Medical",
+    "sub": "Chest Pain / Cardiac Emergency",
+    "name": "Kawartha Heights Residential Bungalow",
+    "addr": "1400 Kawartha Heights Blvd",
+    "lat": 44.2858,
+    "lng": -78.3685,
+    "radius": 50,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-south-end-suburban-residence-1axqokb",
+    "main": "Medical",
+    "sub": "Chest Pain / Cardiac Emergency",
+    "name": "South End Suburban Residence",
+    "addr": "625 Spillsbury Dr",
+    "lat": 44.270115,
+    "lng": -78.361938,
+    "radius": 50,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-scotiabank-downtown-branch-1pcv574",
+    "main": "Medical",
+    "sub": "Chest Pain / Cardiac Emergency",
+    "name": "Scotiabank Downtown Branch",
+    "addr": "374 George St N",
+    "lat": 44.305033,
+    "lng": -78.319892,
+    "radius": 50,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-st-josephs-at-fleming-long-term-care-89y6cj",
+    "main": "Medical",
+    "sub": "Difficulty Breathing",
+    "name": "St. Joseph's at Fleming Long-Term Care",
+    "addr": "359 Brealey Dr",
+    "lat": 44.2968,
+    "lng": -78.367,
+    "radius": 50,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-fairhaven-senior-care-facility-25p63y",
+    "main": "Medical",
+    "sub": "Difficulty Breathing",
+    "name": "Fairhaven Senior Care Facility",
+    "addr": "881 Dutton Rd",
+    "lat": 44.32721,
+    "lng": -78.318277,
+    "radius": 50,
+    "district": 2,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-riverview-manor-nursing-home-kppnpw",
+    "main": "Medical",
+    "sub": "Difficulty Breathing",
+    "name": "Riverview Manor Nursing Home",
+    "addr": "1155 Water St",
+    "lat": 44.336108,
+    "lng": -78.315085,
+    "radius": 50,
+    "district": 2,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-the-peterborough-clinic-medical-hub-gj809i",
+    "main": "Medical",
+    "sub": "Difficulty Breathing",
+    "name": "The Peterborough Clinic Medical Hub",
+    "addr": "26 Hospital Dr",
+    "lat": 44.301159,
+    "lng": -78.34555,
+    "radius": 40,
+    "district": 1,
+    "cityTen": true,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-mcdonnel-street-apartment-suite-1wrlg85",
+    "main": "Medical",
+    "sub": "Difficulty Breathing",
+    "name": "Mcdonnel Street Apartment Suite",
+    "addr": "435 Mcdonnel St",
+    "lat": 44.3055,
+    "lng": -78.3298,
+    "radius": 50,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-stewart-homes-residential-facility-l3oi0z",
+    "main": "Medical",
+    "sub": "Difficulty Breathing",
+    "name": "Stewart Homes Residential Facility",
+    "addr": "521 Mcdonnel St",
+    "lat": 44.308169,
+    "lng": -78.336741,
+    "radius": 50,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-west-end-detached-residence-bjcsaz",
+    "main": "Medical",
+    "sub": "Difficulty Breathing",
+    "name": "West End Detached Residence",
+    "addr": "1555 Parkhill Rd W",
+    "lat": 44.299128,
+    "lng": -78.390648,
+    "radius": 50,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-otonabee-district-detached-residence-15i2lx1",
+    "main": "Medical",
+    "sub": "Difficulty Breathing",
+    "name": "Otonabee District Detached Residence",
+    "addr": "491 Wylie St",
+    "lat": 44.2782,
+    "lng": -78.3092,
+    "radius": 50,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-peterborough-downtown-transit-terminal-1lpl6ub",
+    "main": "Medical",
+    "sub": "Unconscious Patient / Substance Overdose",
+    "name": "Peterborough Downtown Transit Terminal",
+    "addr": "190 Simcoe St",
+    "lat": 44.304818,
+    "lng": -78.321887,
+    "radius": 50,
+    "district": 1,
+    "cityTen": true,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-commercial-motel-corridor-unit-4qbwum",
+    "main": "Medical",
+    "sub": "Unconscious Patient / Substance Overdose",
+    "name": "Commercial Motel Corridor Unit",
+    "addr": "1112 Lansdowne St W",
+    "lat": 44.2818,
+    "lng": -78.3482,
+    "radius": 50,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-victoria-park-public-greenspace-jqvkkx",
+    "main": "Medical",
+    "sub": "Unconscious Patient / Substance Overdose",
+    "name": "Victoria Park Public Greenspace",
+    "addr": "212 Water St",
+    "lat": 44.300414,
+    "lng": -78.3184,
+    "radius": 50,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-george-street-alleyway-105kwtf",
+    "main": "Medical",
+    "sub": "Unconscious Patient / Substance Overdose",
+    "name": "George Street Alleyway",
+    "addr": "383 George St N",
+    "lat": 44.305524,
+    "lng": -78.320149,
+    "radius": 50,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-hunter-street-cafe-restroom-874tg0",
+    "main": "Medical",
+    "sub": "Unconscious Patient / Substance Overdose",
+    "name": "Hunter Street Cafe Restroom",
+    "addr": "130 Hunter St W",
+    "lat": 44.306027,
+    "lng": -78.319173,
+    "radius": 50,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-bethune-housing-unit-g06jju",
+    "main": "Medical",
+    "sub": "Unconscious Patient / Substance Overdose",
+    "name": "Bethune Housing Unit",
+    "addr": "580 Bethune St",
+    "lat": 44.311309,
+    "lng": -78.324838,
+    "radius": 50,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-industrial-rail-corridor-interface-o7bxyo",
+    "main": "Medical",
+    "sub": "Unconscious Patient / Substance Overdose",
+    "name": "Industrial Rail Corridor Interface",
+    "addr": "640 Rink St",
+    "lat": 44.295626,
+    "lng": -78.324548,
+    "radius": 50,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-del-crary-park-public-pavilion-1mbsixo",
+    "main": "Medical",
+    "sub": "Unconscious Patient / Substance Overdose",
+    "name": "Del Crary Park Public Pavilion",
+    "addr": "2 Romaine St",
+    "lat": 44.295354,
+    "lng": -78.318669,
+    "radius": 50,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-boston-pizza-dining-facility-rvum0r",
+    "main": "Medical",
+    "sub": "Rectal Bleed / Gastrointestinal Emergency",
+    "name": "Boston Pizza Dining Facility",
+    "addr": "1164 Chemong Rd",
+    "lat": 44.330101,
+    "lng": -78.340137,
+    "radius": 30,
+    "district": 2,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-tim-hortons-commercial-unit-oplads",
+    "main": "Medical",
+    "sub": "Rectal Bleed / Gastrointestinal Emergency",
+    "name": "Tim Hortons Commercial Unit",
+    "addr": "898 Monaghan Rd",
+    "lat": 44.2862,
+    "lng": -78.3452,
+    "radius": 50,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-high-street-residential-bungalow-1h7p6ob",
+    "main": "Medical",
+    "sub": "Rectal Bleed / Gastrointestinal Emergency",
+    "name": "High Street Residential Bungalow",
+    "addr": "1235 High St",
+    "lat": 44.288131,
+    "lng": -78.335052,
+    "radius": 50,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-charlotte-street-mid-rise-suite-1omtu73",
+    "main": "Medical",
+    "sub": "Rectal Bleed / Gastrointestinal Emergency",
+    "name": "Charlotte Street Mid-Rise Suite",
+    "addr": "250 Charlotte St",
+    "lat": 44.303378,
+    "lng": -78.32391,
+    "radius": 50,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-downtown-diner-property-1ckllt5",
+    "main": "Medical",
+    "sub": "Rectal Bleed / Gastrointestinal Emergency",
+    "name": "Downtown Diner Property",
+    "addr": "172 Charlotte St",
+    "lat": 44.303543,
+    "lng": -78.320739,
+    "radius": 50,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-armour-road-residential-home-4jq7bf",
+    "main": "Medical",
+    "sub": "Rectal Bleed / Gastrointestinal Emergency",
+    "name": "Armour Road Residential Home",
+    "addr": "995 Armour Rd",
+    "lat": 44.329267,
+    "lng": -78.309603,
+    "radius": 50,
+    "district": 2,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-parkhill-west-single-family-residence-1fwm8t0",
+    "main": "Medical",
+    "sub": "Lift Assist / Public Service",
+    "name": "Parkhill West Single-Family Residence",
+    "addr": "1180 Parkhill Rd W",
+    "lat": 44.304779,
+    "lng": -78.368719,
+    "radius": 50,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-cherryhill-suburban-residence-1r2xq0o",
+    "main": "Medical",
+    "sub": "Lift Assist / Public Service",
+    "name": "Cherryhill Suburban Residence",
+    "addr": "745 Cherryhill Rd",
+    "lat": 44.282747,
+    "lng": -78.363939,
+    "radius": 50,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-cumberland-avenue-residential-home-15emi0y",
+    "main": "Medical",
+    "sub": "Lift Assist / Public Service",
+    "name": "Cumberland Avenue Residential Home",
+    "addr": "1925 Cumberland Ave",
+    "lat": 44.341683,
+    "lng": -78.325031,
+    "radius": 50,
+    "district": 2,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-hamilton-street-residential-lot-i2ij50",
+    "main": "Medical",
+    "sub": "Lift Assist / Public Service",
+    "name": "Hamilton Street Residential Lot",
+    "addr": "540 Hamilton St",
+    "lat": 44.280619,
+    "lng": -78.32473,
+    "radius": 50,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-otonabee-drive-single-family-residence-l9kcuh",
+    "main": "Medical",
+    "sub": "Lift Assist / Public Service",
+    "name": "Otonabee Drive Single-Family Residence",
+    "addr": "812 Otonabee Dr",
+    "lat": 44.277221,
+    "lng": -78.307258,
+    "radius": 50,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-ravenwood-development-detached-home-5l2vus",
+    "main": "Medical",
+    "sub": "Lift Assist / Public Service",
+    "name": "Ravenwood Development Detached Home",
+    "addr": "1540 Ravenwood Dr",
+    "lat": 44.2915,
+    "lng": -78.3718,
+    "radius": 50,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-weller-street-residential-area-1sazrrf",
+    "main": "Medical",
+    "sub": "Lift Assist / Public Service",
+    "name": "Weller Street Residential Area",
+    "addr": "910 Weller St",
+    "lat": 44.300955,
+    "lng": -78.351445,
+    "radius": 50,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-spillsbury-drive-subdivision-home-1mzik3b",
+    "main": "Medical",
+    "sub": "Lift Assist / Public Service",
+    "name": "Spillsbury Drive Subdivision Home",
+    "addr": "715 Spillsbury Dr",
+    "lat": 44.268943,
+    "lng": -78.361359,
+    "radius": 50,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-george-street-high-density-housing-11drr5k",
+    "main": "Medical",
+    "sub": "Request for Access / Wellness Check",
+    "name": "George Street High-Density Housing",
+    "addr": "545 George St N",
+    "lat": 44.310361,
+    "lng": -78.32023,
+    "radius": 50,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-central-city-residential-structure-ipxk3u",
+    "main": "Medical",
+    "sub": "Request for Access / Wellness Check",
+    "name": "Central City Residential Structure",
+    "addr": "612 Stewart St",
+    "lat": 44.312334,
+    "lng": -78.325953,
+    "radius": 50,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-glenforest-boulevard-split-level-home-5elh19",
+    "main": "Medical",
+    "sub": "Request for Access / Wellness Check",
+    "name": "Glenforest Boulevard Split-Level Home",
+    "addr": "1385 Glenforest Blvd",
+    "lat": 44.2932,
+    "lng": -78.3615,
+    "radius": 50,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-talbot-street-multi-unit-residence-14vr5ca",
+    "main": "Medical",
+    "sub": "Request for Access / Wellness Check",
+    "name": "Talbot Street Multi-Unit Residence",
+    "addr": "1180 Talbot St",
+    "lat": 44.2882,
+    "lng": -78.3415,
+    "radius": 50,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator",
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-park-street-north-residential-home-fnmuy4",
+    "main": "Medical",
+    "sub": "Request for Access / Wellness Check",
+    "name": "Park Street North Residential Home",
+    "addr": "472 Park St N",
+    "lat": 44.3052,
+    "lng": -78.3292,
+    "radius": 50,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-hedonics-road-industrial-edge-unit-17m460a",
+    "main": "Medical",
+    "sub": "Request for Access / Wellness Check",
+    "name": "Hedonics Road Industrial Edge Unit",
+    "addr": "315 Hedonics Rd",
+    "lat": 44.309006,
+    "lng": -78.343409,
+    "radius": 50,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-hilliard-street-multi-family-triplex-1dtf7jy",
+    "main": "Medical",
+    "sub": "Request for Access / Wellness Check",
+    "name": "Hilliard Street Multi-Family Triplex",
+    "addr": "884 Hilliard St",
+    "lat": 44.326101,
+    "lng": -78.321099,
+    "radius": 50,
+    "district": 2,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-aylmer-street-core-apartment-te3tb1",
+    "main": "Medical",
+    "sub": "Request for Access / Wellness Check",
+    "name": "Aylmer Street Core Apartment",
+    "addr": "502 Aylmer St N",
+    "lat": 44.308875,
+    "lng": -78.323448,
+    "radius": 50,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-reid-street-residential-unit-3odih8",
+    "main": "Medical",
+    "sub": "Request for Access / Wellness Check",
+    "name": "Reid Street Residential Unit",
+    "addr": "650 Reid St",
+    "lat": 44.313309,
+    "lng": -78.328539,
+    "radius": 50,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-bonaccord-high-density-block-u15wkm",
+    "main": "Medical",
+    "sub": "Request for Access / Wellness Check",
+    "name": "Bonaccord High-Density Block",
+    "addr": "555 Bonaccord St",
+    "lat": 44.309297,
+    "lng": -78.337229,
+    "radius": 50,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "driving-simulator"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-quaker-oats-south-entrance-3x8i8e",
+    "main": "Fire",
+    "sub": "Structure Fire",
+    "name": "Quaker Oats South Entrance",
+    "addr": "34 Hunter St W",
+    "lat": 44.30625,
+    "lng": -78.315847,
+    "radius": 50,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-charlotte-towers-high-rise-10hqygd",
+    "main": "Fire",
+    "sub": "Structure Fire",
+    "name": "Charlotte Towers High-Rise",
+    "addr": "245 Charlotte St",
+    "lat": 44.302541,
+    "lng": -78.323781,
+    "radius": 70,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-east-city-circle-k-wwam87",
+    "main": "Fire",
+    "sub": "Structure Fire",
+    "name": "East City Circle K",
+    "addr": "33 Hunter St E",
+    "lat": 44.305777,
+    "lng": -78.311376,
+    "radius": 30,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-trent-dna-building-zazkyq",
+    "main": "Fire",
+    "sub": "Structure Fire",
+    "name": "Trent DNA Building",
+    "addr": "2151 East Bank Dr",
+    "lat": 44.358417,
+    "lng": -78.284926,
+    "radius": 50,
+    "district": 2,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-residential-triplex-conversions-tjicql",
+    "main": "Fire",
+    "sub": "Structure Fire",
+    "name": "Residential Triplex Home",
+    "addr": "465 Wellington St & Stormont St",
+    "lat": 44.314572,
+    "lng": -78.3365,
+    "radius": 40,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": true,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-peterborough-curling-club-1fdeos5",
+    "main": "Fire",
+    "sub": "Auto Alarm / Vehicle Fire",
+    "name": "Peterborough Curling Club",
+    "addr": "2195 Lansdowne St W",
+    "lat": 44.269335,
+    "lng": -78.387966,
+    "radius": 60,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-residential-backyard-subdivision-8g8w2",
+    "main": "Fire",
+    "sub": "Burning Complaint",
+    "name": "Residential Backyard Subdivision",
+    "addr": "796 George St N & Barnardo Ave",
+    "lat": 44.318497,
+    "lng": -78.318958,
+    "radius": 50,
+    "district": 2,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-westclox-apartment-building-mmv6m3",
+    "main": "Fire",
+    "sub": "Burning Complaint",
+    "name": "Westclox Apartment Building",
+    "addr": "380 Armour Rd",
+    "lat": 44.307098,
+    "lng": -78.304319,
+    "radius": 70,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-residential-home-ddn6pw",
+    "main": "Fire",
+    "sub": "Burning Complaint",
+    "name": "Residential Home",
+    "addr": "377 Mcdonnel St & Donegal",
+    "lat": 44.309136,
+    "lng": -78.330258,
+    "radius": 40,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-fairhaven-home-11liha8",
+    "main": "Fire",
+    "sub": "Alarms No Apparent Problem",
+    "name": "Fairhaven Home",
+    "addr": "881 Dutton Rd",
+    "lat": 44.327447,
+    "lng": -78.318443,
+    "radius": 50,
+    "district": 2,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-st-paul-school-11zqcv2",
+    "main": "Fire",
+    "sub": "Alarms No Apparent Problem",
+    "name": "St Paul School",
+    "addr": "1101 Hilliard St",
+    "lat": 44.332846,
+    "lng": -78.325519,
+    "radius": 60,
+    "district": 2,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-peterborough-police-station-hw5vfh",
+    "main": "Fire",
+    "sub": "Alarms No Apparent Problem",
+    "name": "Peterborough Police Station",
+    "addr": "500 Water St",
+    "lat": 44.309353,
+    "lng": -78.318846,
+    "radius": 40,
+    "district": 1,
+    "cityTen": true,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-hillmar-apartments-1fyand3",
+    "main": "Fire",
+    "sub": "Alarms No Apparent Problem",
+    "name": "Hillmar Apartments",
+    "addr": "184 Marina Blvd",
+    "lat": 44.333242,
+    "lng": -78.323464,
+    "radius": 80,
+    "district": 2,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-monaghan-multi-unit-complex-rgizl8",
+    "main": "Fire",
+    "sub": "Alarms No Apparent Problem",
+    "name": "Monaghan Multi-Unit Complex",
+    "addr": "610 Monaghan Rd & Ardon Ave",
+    "lat": 44.278292,
+    "lng": -78.3259,
+    "radius": 50,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-towerhill-townhouse-complex-1bsz5od",
+    "main": "Fire",
+    "sub": "Alarms No Apparent Problem",
+    "name": "Towerhill Townhouse Complex",
+    "addr": "1000 Towerhill Rd & Hilliard St",
+    "lat": 44.334462,
+    "lng": -78.329617,
+    "radius": 50,
+    "district": 2,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-gas-station-qu0r7o",
+    "main": "Medical",
+    "sub": "Chest Pain / Cardiac Emergency",
+    "name": "Gas Station",
+    "addr": "971 Lansdowne St W & The Parkway",
+    "lat": 44.281927,
+    "lng": -78.343171,
+    "radius": 50,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-trinity-united-church-lft9hm",
+    "main": "Medical",
+    "sub": "Difficulty Breathing",
+    "name": "Trinity United Church",
+    "addr": "360 Reid St",
+    "lat": 44.304158,
+    "lng": -78.327278,
+    "radius": 50,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-peterborough-housing-wd135t",
+    "main": "Medical",
+    "sub": "Difficulty Breathing",
+    "name": "Peterborough Housing",
+    "addr": "521 Mcdonnel St",
+    "lat": 44.308215,
+    "lng": -78.336774,
+    "radius": 50,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-residence-home-1ew3lln",
+    "main": "Medical",
+    "sub": "Difficulty Breathing",
+    "name": "Residence Home",
+    "addr": "1757 Ravenwood Dr & Parkhill Rd W",
+    "lat": 44.305023,
+    "lng": -78.365328,
+    "radius": 50,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-quality-inn-1w7pq14",
+    "main": "Medical",
+    "sub": "Unconscious Patient / Substance Overdose",
+    "name": "Quality Inn",
+    "addr": "1074 Lansdowne St W",
+    "lat": 44.282332,
+    "lng": -78.346767,
+    "radius": 80,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-victoria-park-no-frills-17bka7q",
+    "main": "Medical",
+    "sub": "Unconscious Patient / Substance Overdose",
+    "name": "Victoria Park & No Frills",
+    "addr": "212 Water St",
+    "lat": 44.300435,
+    "lng": -78.318368,
+    "radius": 50,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-george-street-alleyway-15f0lyb",
+    "main": "Medical",
+    "sub": "Unconscious Patient / Substance Overdose",
+    "name": "George Street Alleyway",
+    "addr": "383 George St N & Hunter St W",
+    "lat": 44.305585,
+    "lng": -78.32016,
+    "radius": 50,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-bethune-housing-unit-1joinnn",
+    "main": "Medical",
+    "sub": "Unconscious Patient / Substance Overdose",
+    "name": "Bethune Housing Unit",
+    "addr": "597 Bethune St & Dublin St",
+    "lat": 44.311765,
+    "lng": -78.325114,
+    "radius": 30,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-tim-hortons-mv4a01",
+    "main": "Medical",
+    "sub": "Rectal Bleed / Gastrointestinal Emergency",
+    "name": "Tim Hortons",
+    "addr": "1140 Lansdowne St W",
+    "lat": 44.281142,
+    "lng": -78.350308,
+    "radius": 40,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-shoppers-drug-mart-1m21pz1",
+    "main": "Medical",
+    "sub": "Rectal Bleed / Gastrointestinal Emergency",
+    "name": "Shoppers Drug Mart",
+    "addr": "250 Charlotte St",
+    "lat": 44.303441,
+    "lng": -78.323843,
+    "radius": 40,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-mcthirstys-pint-wvq8x5",
+    "main": "Medical",
+    "sub": "Rectal Bleed / Gastrointestinal Emergency",
+    "name": "McThirsty's Pint",
+    "addr": "172 Charlotte St",
+    "lat": 44.303526,
+    "lng": -78.320538,
+    "radius": 40,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-tass-1vs40se",
+    "main": "Medical",
+    "sub": "Rectal Bleed / Gastrointestinal Emergency",
+    "name": "TASS",
+    "addr": "1009 Armour Rd",
+    "lat": 44.330785,
+    "lng": -78.309925,
+    "radius": 100,
+    "district": 2,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-westmount-public-school-1lly127",
+    "main": "Medical",
+    "sub": "Lift Assist / Public Service",
+    "name": "Westmount Public School",
+    "addr": "1520 Sherwood Crescent",
+    "lat": 44.304664,
+    "lng": -78.352523,
+    "radius": 90,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-cherryhill-suburban-residence-1g93mlb",
+    "main": "Medical",
+    "sub": "Lift Assist / Public Service",
+    "name": "Cherryhill Suburban Residence",
+    "addr": "1847 Cherryhill Rd & Dainard Dr",
+    "lat": 44.277886,
+    "lng": -78.375553,
+    "radius": 50,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-cumberland-avenue-residential-home-1xoss9e",
+    "main": "Medical",
+    "sub": "Lift Assist / Public Service",
+    "name": "Cumberland Avenue Residential Home",
+    "addr": "Cumberland Ave & Franklin Drive",
+    "lat": 44.34107,
+    "lng": -78.327284,
+    "radius": 50,
+    "district": 2,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-chandler-suburban-home-s1703h",
+    "main": "Medical",
+    "sub": "Lift Assist / Public Service",
+    "name": "Chandler Suburban Home",
+    "addr": "Chandler Crescent & Emery Way",
+    "lat": 44.306919,
+    "lng": -78.375639,
+    "radius": 30,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-otonabee-valley-public-school-1c1sqip",
+    "main": "Medical",
+    "sub": "Lift Assist / Public Service",
+    "name": "Otonabee Valley Public School",
+    "addr": "580 River Rd S",
+    "lat": 44.282322,
+    "lng": -78.308637,
+    "radius": 100,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-weller-street-residential-area-19qpfx3",
+    "main": "Medical",
+    "sub": "Lift Assist / Public Service",
+    "name": "Weller Street Residential Area",
+    "addr": "910 Weller St & Sherwood Crescent",
+    "lat": 44.300955,
+    "lng": -78.351445,
+    "radius": 50,
+    "district": 3,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-george-street-housing-11lwl9c",
+    "main": "Medical",
+    "sub": "Request for Access / Wellness Check",
+    "name": "George Street Housing",
+    "addr": "548 George St N & London St",
+    "lat": 44.310604,
+    "lng": -78.320224,
+    "radius": 40,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-residential-home-6qx9tw",
+    "main": "Medical",
+    "sub": "Request for Access / Wellness Check",
+    "name": "Residential Home",
+    "addr": "449 Stewart St & Brock St",
+    "lat": 44.307117,
+    "lng": -78.325894,
+    "radius": 40,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-brooklawn-apartment-1hyko81",
+    "main": "Medical",
+    "sub": "Request for Access / Wellness Check",
+    "name": "Brooklawn Apartment",
+    "addr": "486 Donegal St",
+    "lat": 44.308233,
+    "lng": -78.3301,
+    "radius": 30,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-hedonics-appartments-lphvpf",
+    "main": "Medical",
+    "sub": "Request for Access / Wellness Check",
+    "name": "Hedonics Appartments",
+    "addr": "315 Hedonics Rd",
+    "lat": 44.308964,
+    "lng": -78.34349,
+    "radius": 110,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-adam-scott-highschool-15r955w",
+    "main": "Medical",
+    "sub": "Request for Access / Wellness Check",
+    "name": "Adam Scott Highschool",
+    "addr": "175 Langton St",
+    "lat": 44.327501,
+    "lng": -78.321061,
+    "radius": 100,
+    "district": 2,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-freshco-yn2ysh",
+    "main": "Medical",
+    "sub": "Request for Access / Wellness Check",
+    "name": "FreshCo",
+    "addr": "181 Brock St",
+    "lat": 44.306795,
+    "lng": -78.321399,
+    "radius": 50,
+    "district": 1,
+    "cityTen": true,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-reid-street-residential-unit-1x7uwsa",
+    "main": "Medical",
+    "sub": "Request for Access / Wellness Check",
+    "name": "Reid Street Residential Unit",
+    "addr": "650 Reid St & Parkhill Road W",
+    "lat": 44.313376,
+    "lng": -78.32844,
+    "radius": 50,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  },
+  {
+    "id": "call-bonaccord-appartment-1c76vop",
+    "main": "Medical",
+    "sub": "Request for Access / Wellness Check",
+    "name": "Bonaccord Appartment",
+    "addr": "555 Bonaccord St",
+    "lat": 44.309317,
+    "lng": -78.337439,
+    "radius": 50,
+    "district": 1,
+    "cityTen": false,
+    "confirmed": false,
+    "sources": [
+      "geo-guesser"
+    ],
+    "custom": false
+  }
+]

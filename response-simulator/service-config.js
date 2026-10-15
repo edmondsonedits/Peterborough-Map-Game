@@ -28,7 +28,7 @@
       features:{baseTraining:false,dispatch:true,roadBoundaries:true,routeGuidance:true,hospitalTransport:true},
       map:{defaultCenter:[44.30102,-78.32202],defaultHeading:180,defaultZoom:15,minZoom:10,maxZoom:19,bounds:[[44.20,-78.45],[44.45,-78.20]]},
       roads:{available:true,dataUrl:'../city-explorer/data/osm-public-roads.geojson',center:[44.3091,-78.3197],gridSize:80,sweepStep:1.35,shoulderTolerance:1.35,spawnSnapDistance:120,stationExitSearchDistance:120,stationExitCorridorHalfWidth:8,stationExitStartPadding:4,defaultLaneAssist:0.60,collisionVelocityRetention:0.42},
-      dispatch:{available:true,controlName:'Peterborough Control',dataVersion:'1.4.20'},serviceConfig,
+      dispatch:{available:true,controlName:'Peterborough Control',dataVersion:'1.6.108'},serviceConfig,
     };
     return {serviceConfig,cityPackage};
   }

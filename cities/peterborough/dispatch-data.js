@@ -6,7 +6,7 @@
   const sourceUrl = new URL(document.currentScript?.src || location.href, location.href);
   window.PTBO_CITY_DISPATCH_SOURCE = Object.freeze({
     cityId:'peterborough',
-    version:'1.4.20',
-    url:new URL('../../shared/dispatch-data-1.4.4.js', sourceUrl).href,
+    version:'1.6.108',
+    url:new URL('../../shared/dispatch-data-1.4.4.js?v=1.6.108', sourceUrl).href,
   });
 })();

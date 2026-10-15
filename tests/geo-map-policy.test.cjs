@@ -82,7 +82,7 @@ test('Geo Guesser core loads shared commercial policy and core provider before g
   const leaflet = html.indexOf('leaflet.js');
   const policy = html.indexOf('carto-basemap-policy-1.6.36.js');
   const provider = html.indexOf('map-provider-1.6.46.js');
-  const stations = html.indexOf('const stations=');
+  const stations = html.indexOf('app.js?v=');
   assert.ok(leaflet >= 0, 'Leaflet script must exist');
   assert.ok(policy > leaflet, 'commercial map policy must load after Leaflet');
   assert.ok(provider > policy, 'Geo core provider must load after commercial map policy');
@@ -90,10 +90,10 @@ test('Geo Guesser core loads shared commercial policy and core provider before g
 });
 
 test('Geo Guesser gameplay and editor maps use the provider boundary instead of direct OSM tile creation', () => {
-  const html = coreSource();
+  const html = coreSource() + fs.readFileSync(path.join(root,'geo-guesser/app.js'),'utf8');
   assert.doesNotMatch(html, /L\.tileLayer\(['\"]https:\/\/\{s\}\.tile\.openstreetmap\.org/);
   assert.ok(html.includes('PTBO_GEO_MAP_PROVIDER.createStreetLayer'), 'Geo Guesser maps must be created through PTBO_GEO_MAP_PROVIDER');
   assert.ok(html.includes('PTBO_GEO_MAP_PROVIDER?.requireReady'), 'Geo Guesser entry paths must require provider readiness before map use');
   const uses = [...html.matchAll(/PTBO_GEO_MAP_PROVIDER\.createStreetLayer/g)];
-  assert.ok(uses.length >= 2, 'both gameplay and editor maps must use the shared provider boundary');
+  assert.ok(uses.length === 1, 'the gameplay map must use the shared provider boundary');
 });

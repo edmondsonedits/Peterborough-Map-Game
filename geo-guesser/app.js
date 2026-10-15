@@ -1,0 +1,126 @@
+/* Address-only Geo Guesser. Recognition tiers never depend on a base or distance. */
+(() => {
+  'use strict';
+  const $=id=>document.getElementById(id);
+  const tiers=['easy','medium','hard'];
+  const title=t=>t[0].toUpperCase()+t.slice(1);
+  const read=(key,fallback)=>{try{return localStorage.getItem(key)??fallback;}catch(_){return fallback;}};
+  const save=(key,value)=>{try{localStorage.setItem(key,String(value));}catch(_){/* Preferences still work for this visit. */}};
+  const state={ready:false,service:null,difficulty:null,base:null,bases:[],locations:[],pool:[],session:null,target:null,map:null,layers:null,review:null,showCrossStreets:read('geoShowCrossStreets','true')!=='false'};
+  function screen(id){for(const name of ['station-practice','settings','game'])$(name).hidden=name!==id;$('game-home').hidden=id==='game';$('practice-controls').classList[id==='game'?'remove':'add']('hidden');}
+  function bases(){return window.PTBO_BASE_STORE?.getBases(state.service)||window.PTBO_CITY_PACKAGE?.serviceConfig?.profiles?.[state.service]?.bases||[];}
+  function chooseService(service){
+    if(!['fire','ems'].includes(service))return;
+    state.service=service;state.difficulty=null;
+    for(const s of ['fire','ems'])$('service-'+s).setAttribute('aria-pressed',String(s===service));
+    for(const tier of tiers)$('difficulty-'+tier).setAttribute('aria-pressed','false');
+    $('difficulty-step').hidden=false;$('base-step').hidden=true;
+  }
+  function chooseDifficulty(tier){
+    if(!state.service||!tiers.includes(tier))return;
+    state.difficulty=tier;
+    for(const t of tiers)$('difficulty-'+t).setAttribute('aria-pressed',String(t===tier));
+    renderBases();
+  }
+  function renderBases(){
+    if(!state.difficulty)return;
+    state.bases=bases();const host=$('practice-stations');
+    host.replaceChildren(...state.bases.map((base,index)=>{
+      const button=document.createElement('button');button.className='base-button';button.disabled=!state.ready;
+      const name=document.createElement('strong');name.textContent=base.name;
+      const address=document.createElement('span');address.textContent=base.address;
+      button.appendChild(name);button.appendChild(address);button.addEventListener('click',()=>start(index));return button;
+    }));
+    $('base-step').hidden=false;
+    if(state.ready)$('practice-setup-status').textContent=state.bases.length?'':'No bases are available for this service.';
+  }
+  function clearReview(){
+    if(state.layers){state.layers.clearLayers();state.map.removeLayer(state.layers);state.layers=null;}
+    state.review=null;$('practice-review').hidden=true;
+  }
+  function updateCrossStreets(reveal=false){
+    const streets=state.target?.crossStreets||[],visible=state.showCrossStreets||reveal;
+    $('call-cross-streets').textContent=streets.length?'Cross streets: '+streets.join(' · '):'Cross streets unavailable';
+    $('call-cross-streets').hidden=!visible;
+    $('reveal-cross-streets').hidden=visible||!streets.length;
+  }
+  function setCrossStreets(value){state.showCrossStreets=Boolean(value);save('geoShowCrossStreets',state.showCrossStreets);$('show-cross-streets').checked=state.showCrossStreets;updateCrossStreets();}
+  function loadTarget(target){
+    clearReview();state.target=target;
+    $('call-type').textContent=title(state.difficulty);
+    $('call-name').textContent=target.name;$('call-name').hidden=!target.name;
+    $('call-address').textContent=target.addr;updateCrossStreets();
+    $('practice-feedback').textContent='Pan and zoom to place the crosshair over this address.';
+    $('confirm').textContent='Check location';$('confirm').hidden=false;
+    $('reticle').hidden=false;$('practice-reveal').hidden=false;$('practice-continue').hidden=true;
+    state.map.stop().setView([state.base.lat,state.base.lng],18,{animate:false});
+  }
+  function start(index){
+    if(!state.ready||!state.service||!state.difficulty||!window.PTBO_GEO_MAP_PROVIDER?.requireReady?.())return false;
+    const chosen=bases()[index];if(!chosen)return false;
+    const pool=window.PTBO_STATION_PRACTICE.serviceLocations(state.locations,state.service,state.difficulty);
+    if(!pool.length){$('practice-setup-status').textContent='No locations are ranked in this difficulty yet.';return false;}
+    state.session?.cancel();clearReview();state.base=chosen;state.pool=pool;
+    if(!state.map){
+      state.map=L.map('map',{zoomControl:false,inertia:false});state.map.attributionControl.setPrefix(false);
+      window.PTBO_GEO_MAP_PROVIDER.createStreetLayer({maxZoom:19}).addTo(state.map);
+      state.map.getContainer().addEventListener('keydown',event=>{if(event.key==='Enter'&&!event.repeat){event.preventDefault();check();}});
+    }
+    state.session=window.PTBO_STATION_PRACTICE.createSession({locations:pool,onNext:loadTarget});
+    screen('game');state.map.invalidateSize();loadTarget(state.session.state.target);
+    state.map.getContainer().focus({preventScroll:true});return true;
+  }
+  function review(outcome,guess,distance){
+    const center=state.map.getCenter(),zoom=state.map.getZoom();clearReview();state.review={outcome,center,zoom};
+    state.layers=L.layerGroup().addTo(state.map);
+    const target=[state.target.lat,state.target.lng],circle=L.circle(target,{radius:state.target.radius,color:'#15a58c',weight:3,fillOpacity:.15}).addTo(state.layers);
+    L.circleMarker(target,{radius:8,color:'#fff',weight:3,fillColor:'#15a58c',fillOpacity:1}).bindTooltip('Address location',{permanent:true,direction:'top'}).addTo(state.layers);
+    if(guess){L.circleMarker(guess,{radius:8,color:'#fff',weight:3,fillColor:'#dc2626',fillOpacity:1}).bindTooltip('Your guess',{permanent:true,direction:'top'}).addTo(state.layers);L.polyline([guess,target],{color:'#334155',weight:3,dashArray:'7 7'}).addTo(state.layers);}
+    $('reticle').hidden=true;$('practice-reveal').hidden=true;$('practice-review').hidden=false;
+    $('practice-feedback').textContent='';
+    $('practice-review-title').textContent=outcome==='correct'?'Location found':outcome==='incorrect'?'Try again':'Location revealed';
+    $('practice-review-detail').textContent=guess?`${Math.round(distance)} m from the address · Target radius ${state.target.radius} m`:'Explore the area, then choose Next Call.';
+    $('confirm').hidden=outcome!=='incorrect';$('confirm').textContent='Try again';$('practice-continue').hidden=outcome==='incorrect';
+    const bounds=circle.getBounds();if(guess)bounds.extend(guess);
+    // Recalculate after the review text changes the header height.
+    const currentReview=state.review;
+    (window.requestAnimationFrame||setTimeout)(()=>{
+      if(state.review!==currentReview)return;
+      const rect=$('header').getBoundingClientRect(),area=state.map.getContainer().getBoundingClientRect();
+      const bottom=area.height<560?110:175;
+      let left=42,top=rect.bottom-area.top+30;
+      if(area.height-top-bottom<100&&area.width-rect.right>260){left=rect.right-area.left+30;top=65;}
+      top=Math.max(24,Math.min(top,area.height-bottom-100));
+      state.map.stop();state.map.invalidateSize();
+      state.map.fitBounds(bounds,{paddingTopLeft:[left,top],paddingBottomRight:[42,bottom],maxZoom:17,animate:false});
+    });
+  }
+  function retry(){
+    if(state.review?.outcome!=='incorrect')return false;
+    const previous=state.review;clearReview();state.map.stop().setView([previous.center.lat,previous.center.lng],previous.zoom,{animate:false});
+    $('reticle').hidden=false;$('practice-reveal').hidden=false;$('confirm').hidden=false;$('confirm').textContent='Check location';
+    $('practice-feedback').textContent='Adjust your guess, then check the location again.';return true;
+  }
+  function check(){
+    if(!state.session)return false;if(state.review?.outcome==='incorrect')return retry();
+    const guess=state.map.getCenter(),distance=state.map.distance([guess.lat,guess.lng],[state.target.lat,state.target.lng]);
+    const result=state.session.guess(distance,state.target.radius);if(!result.accepted)return false;
+    review(result.correct?'correct':'incorrect',[guess.lat,guess.lng],distance);return result.correct;
+  }
+  function reveal(){if(!state.session?.reveal())return false;review('revealed');return true;}
+  function next(){return state.session?.next()||false;}
+  function returnToBase(){if(!state.session)return;if(state.review?.outcome==='incorrect')retry();state.map.stop().setView([state.base.lat,state.base.lng],18,{animate:false});}
+  function finish(){state.session?.cancel();state.session=null;clearReview();screen('station-practice');$('practice-setup-status').textContent='Choose a base to practise again.';}
+  function openSettings(){$('show-cross-streets').checked=state.showCrossStreets;screen('settings');}
+  function closeSettings(){screen('station-practice');}
+  const api=Object.freeze({state,chooseService,chooseDifficulty,start,check,retry,reveal,next,returnToBase,finish,setCrossStreets,revealCrossStreets:()=>updateCrossStreets(true),openSettings,closeSettings,zoom:amount=>{if(state.map)state.map.setZoom(Math.max(10,Math.min(19,state.map.getZoom()+amount)));}});
+  window.PTBO_GEO=api;
+  window.PTBO_GEO_READY=window.PTBO_DISPATCH_STORE.ready().then(()=>{
+    state.locations=window.PTBO_DISPATCH_STORE.getAll();state.ready=true;
+    for(const tier of tiers)$('count-'+tier).textContent=String(window.PTBO_STATION_PRACTICE.serviceLocations(state.locations,'fire',tier).length);
+    $('show-cross-streets').checked=state.showCrossStreets;$('practice-setup-status').textContent='';renderBases();
+    $('developer-settings').hidden=read('ptbo-emergency-developer-mode','')!=='enabled';
+    return api;
+  }).catch(error=>{console.error('Unable to load Geo Guesser locations.',error);$('practice-setup-status').textContent='Locations could not load. Check your connection and try again.';$('load-retry').hidden=false;return false;});
+  window.addEventListener('ptbo-bases-updated',renderBases);
+})();

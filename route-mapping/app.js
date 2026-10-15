@@ -9,7 +9,6 @@
     gridSize: 120,
     roadSearchRadius: 130,
     destinationSearchRadius: 520,
-    canonicalCallCount: 100,
     advancedCallCount: 100,
     advancedMinSpacing: 190,
     difficultyApproachDistance: 700,
@@ -820,7 +819,7 @@
     });
   }
 
-  function callsForService(){const target=state.service==='ems'?'medical':'fire',filtered=state.calls.filter(c=>String(c.main||'').toLowerCase()===target);return filtered.length?filtered:state.calls;}
+  function callsForService(){const main=state.service==='ems'?'Medical':'Fire';return state.calls.filter(call=>call.incidentProfiles?.[state.service]||call.main===main).map(call=>{const profile=call.incidentProfiles?.[state.service];return profile?{...call,main,sub:profile.sub}:call;});}
   function chooseCall(){
     buildDifficultyIndex(state.base);
     const pool=callsForService().map(scoreCall).filter(call=>Number.isFinite(call.difficultyDistance)&&call.difficultyDistance>0),recent=new Set(state.recentCallIds);
@@ -1147,7 +1146,7 @@
     state.traceCore=window.PTBO_ROUTE_TRACE.createTraceCore({graph:state.graph,toXY,toLatLng,search:(from,to,options)=>pathBetween(from,to,'distance',options)});
     buildDifficultyIndex();
 
-    const canonical=sharedCalls.slice(0,CONFIG.canonicalCallCount).map(scoreCall);
+    const canonical=sharedCalls.map(scoreCall);
     state.originalCalls=canonical;
     state.advancedCalls=buildAdvancedCalls(canonical);
     state.calls=[...state.originalCalls,...state.advancedCalls];

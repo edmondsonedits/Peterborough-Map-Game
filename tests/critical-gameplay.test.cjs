@@ -41,20 +41,6 @@ test('all production HTML inline scripts and changed gameplay modules parse', ()
   }
 });
 
-test('random shifts draw ten unique calls even with no home-district calls', () => {
-  const c = context();
-  vm.runInContext(section(geo, 'function pickRandom(', '    initializeDistricts();'), c);
-  for (const districts of [[2], [1,2,3]]) {
-    const pool = Array.from({ length: 10 }, (_, i) => ({ id:i, district:districts[i % districts.length] }));
-    for (let attempt = 0; attempt < 100; attempt++) {
-      const chosen = c.chooseCalls(0, 10, pool);
-      assert.equal(chosen.length, 10);
-      assert.equal(new Set(chosen.map(x => x.id)).size, 10);
-      assert.equal(pool.length, 10);
-    }
-  }
-});
-
 function drive(fps, mode) {
   const mobile = mode !== 'desktop';
   const c = context({ simLat:44.3091, simLng:-78.3197, velocity:0, currentHeading:0,
@@ -167,7 +153,7 @@ test('editor-created calls are included when the Geo Guesser wrapper refreshes i
   await Promise.resolve();
   const game = context({locations:[]});
   vm.runInContext(injected,game);
-  assert.deepEqual(Array.from(game.locations,x=>x.id),['geo','old-custom','custom']);
+  assert.deepEqual(Array.from(game.locations,x=>x.id),['geo','old-custom','custom','driving-only']);
 });
 
 test('collision and arrival checks run per physics step, including free-driving mode', async () => {

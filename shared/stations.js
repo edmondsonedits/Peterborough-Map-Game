@@ -132,7 +132,7 @@
       const shared = store.getAll();
       const helper = doc.createElement('script');
       helper.textContent = `(() => {
-        const shared = ${JSON.stringify(shared)};
+        const shared = ${JSON.stringify(shared).replace(/</g,'\\u003c')};
         dispatchDatabase.splice(0, dispatchDatabase.length, ...shared.map(item => ({ ...item })));
         const sync = () => {
           dispatchDatabase.forEach(item => {
