@@ -239,6 +239,7 @@
       if(!Object.keys(changes).length)continue;
       if(destination){
         Object.assign(destination,changes);
+        if (['lat','lng','radius'].some(field=>Object.hasOwn(changes,field))) invalidateLocation(destination);
         if(changes.main||changes.sub){
           const service=destination.main==='Medical'?'ems':'fire';
           destination.incidentProfiles={...destination.incidentProfiles,[service]:{sub:destination.sub}};
@@ -282,7 +283,7 @@
   function reset() { const next=clone(seed);persist(next);items=next;announce();return getAll(); }
   function exportText(exportItems=items) { const data=normalizeList(exportItems,'editor');return `window.PTBO_DISPATCH_DATA_VERSION = ${JSON.stringify(dataVersion)};\nwindow.PTBO_DISPATCH_DATA_READY = Promise.resolve(${JSON.stringify(data,null,2)});\n`; }
 
-  window.addEventListener('ptbo-bases-updated',event=>{if(event.detail?.cityId && event.detail.cityId!==CITY_ID)return;if(invalidateBaseRoutes()){persist();announce();}});
+  window.addEventListener?.('ptbo-bases-updated',event=>{if(event.detail?.cityId && event.detail.cityId!==CITY_ID)return;if(invalidateBaseRoutes()){persist();announce();}});
   window.PTBO_DISPATCH_STORE = Object.freeze({cityId:CITY_ID,ready,getAll,getSeed:()=>clone(seed),forService,replaceAll,upsert,remove,createId,reset,exportText,storageKey:STORAGE_KEY,get dataVersion(){return dataVersion;}});
   window.PTBO_DISPATCH_STORE_READY = ready();
 })();

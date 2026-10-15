@@ -41,13 +41,39 @@
     if(values?.includes(value))select.value=value;
   }
   function allItems(){return mode==='calls'?locations:mode==='bases'?bases.getAll():[bases.getHospital()].filter(Boolean);}
+  const matchesBase=(challenge,base)=>challenge.service===base.service&&(challenge.baseId===base.id||`${challenge.service}-${challenge.baseId}`===base.id);
+  const routeBases=()=>bases.getAll().filter(base=>base.status!=='inactive'&&base.selectionEligible!==false);
+  const challengesFor=(item,base)=> (item.routeChallenges||[]).filter(challenge=>!base||matchesBase(challenge,base));
+  const validChallenge=challenge=>['verified','map-derived'].includes(challenge.reviewStatus)&&(!city.route?.graphVersion||challenge.graphVersion===city.route.graphVersion)&&(!city.route?.costProfileVersion||challenge.costProfileVersion===city.route.costProfileVersion);
+  function updateRouteControls(){
+    const select=$('base-filter'),value=select.value,list=routeBases();
+    select.innerHTML='<option value="">All route bases</option>'+list.map(base=>`<option value="${escapeHtml(base.id)}">${escapeHtml(base.service==='ems'?'EMS':'Fire')} · ${escapeHtml(base.name)}</option>`).join('');
+    if(list.some(base=>base.id===value))select.value=value;
+    const chosen=list.find(base=>base.id===select.value),rows=chosen?[chosen]:list;
+    const summary=rows.map(base=>{
+      const available=locations.filter(item=>challengesFor(item,base).length),valid=available.filter(item=>challengesFor(item,base).some(validChallenge));
+      return `${base.service==='ems'?'EMS':'Fire'} · ${base.name}: ${valid.length} of 3 valid${available.length>valid.length?` · ${available.length-valid.length} need review`:''}`;
+    });
+    $('route-coverage').hidden=mode!=='calls'||!summary.length;
+    $('route-coverage-text').textContent=summary.join('\n');
+    $('route-coverage-summary').textContent=chosen?summary[0]:`${list.length} route bases · coverage`;
+  }
+  function routeDetails(item){
+    const base=routeBases().find(x=>x.id===$('base-filter').value),list=challengesFor(item,base);
+    $('route-details').hidden=!list.length;
+    $('route-details-body').innerHTML=list.map(challenge=>{
+      const station=routeBases().find(x=>matchesBase(challenge,x)),name=station?.name||challenge.baseId;
+      const metrics=entry=>[['estimatedSeconds','s'],['responseSeconds','s'],['cost','cost'],['distance','m']].filter(([key])=>Number.isFinite(entry[key])).map(([key,unit])=>`${Math.round(entry[key])} ${unit}`).join(' · ');
+      return `<section><h3>${escapeHtml(challenge.service==='ems'?'EMS':'Fire')} · ${escapeHtml(name)}</h3><p>${escapeHtml(challenge.decisionType)} · ${challenge.difficulty}/100 · ${escapeHtml(challenge.reviewStatus)}</p><p>${escapeHtml(challenge.reason)}</p><p><strong>Preferred roads:</strong> ${challenge.preferredRoads.map(escapeHtml).join(' → ')||'Review needed'}${metrics(challenge)?` · ${metrics(challenge)}`:''}</p>${challenge.alternatives.map(alternative=>`<p><strong>Alternative:</strong> ${alternative.roads.map(escapeHtml).join(' → ')}${metrics(alternative)?` · ${metrics(alternative)}`:''}<br>${escapeHtml(alternative.reason)}</p>`).join('')}<p class="route-provenance">${escapeHtml(challenge.graphVersion)} · ${escapeHtml(challenge.costProfileVersion)}</p></section>`;
+    }).join('');
+  }
   function filtered(){
-    const q=$('search').value.trim().toLowerCase(),tier=$('difficulty-filter').value;
-    return allItems().filter(x=>(!q||`${x.name} ${x.addr||x.address||''} ${(x.crossStreets||[]).join(' ')} ${x.service||''} ${scenarioFields?x.sub||'':''}`.toLowerCase().includes(q))&&(mode!=='calls'||((!tier||tierOf(x)===tier)&&(!$('hide-confirmed').checked||!x.confirmed)&&(!scenarioFields||((!$('main-filter').value||x.main===$('main-filter').value)&&(!$('sub-filter').value||x.sub===$('sub-filter').value))))));
+    const q=$('search').value.trim().toLowerCase(),tier=$('difficulty-filter').value,base=routeBases().find(x=>x.id===$('base-filter').value);
+    return allItems().filter(x=>(!q||`${x.name} ${x.addr||x.address||''} ${(x.crossStreets||[]).join(' ')} ${x.service||''} ${scenarioFields?x.sub||'':''}`.toLowerCase().includes(q))&&(mode!=='calls'||((!base||challengesFor(x,base).length)&&(!tier||tierOf(x)===tier)&&(!$('hide-confirmed').checked||!x.confirmed)&&(!scenarioFields||((!$('main-filter').value||x.main===$('main-filter').value)&&(!$('sub-filter').value||x.sub===$('sub-filter').value))))));
   }
   function icon(item){return L.divIcon({className:'',html:`<div class="dot ${mode==='bases'?'base-dot':''} ${mode==='calls'&&!scenarioFields?'shared':item.service==='ems'||item.main==='Medical'?'medical':'fire'}"></div>`,iconSize:[18,18],iconAnchor:[9,9]});}
   function updateCounts(){
-    const registry=window.PTBO_CITIES||[],published=isPeterborough?200:registry.find(x=>x.id===cityId)?.modes?.geo?20:0;
+    const registry=window.PTBO_CITIES||[],published=registry.find(x=>x.id===cityId)?.callCount??callSeed.length;
     $('city-summary').textContent=`${locations.length} calls on this device · ${published} published`;
     const value=$('difficulty-filter').value;
     $('difficulty-filter').innerHTML=`<option value="">All difficulties (${locations.length})</option>`+tiers.map(tier=>`<option value="${tier}">${tierNames[tier]} (${locations.filter(x=>tierOf(x)===tier).length})</option>`).join('');
@@ -55,11 +81,12 @@
   }
   function callRow(x){
     const call=mode==='calls',tier=tierOf(x),address=x.addr||x.address||'';
-    const detail=call?`<span class="badges"><small>${escapeHtml(cityName)}</small><small class="difficulty-${tier}">${tierNames[tier]}</small><small class="shared">Shared address · Fire / EMS</small><small class="${x.confirmed?'verified':'pending'}">${x.confirmed?'Confirmed':'Needs review'}</small></span>${scenarioFields?`<span class="scenario">${escapeHtml(x.main)} · ${escapeHtml(x.sub)}</span>`:''}${x.crossStreets?.length?`<span class="cross-streets">Cross streets: ${x.crossStreets.map(escapeHtml).join(' · ')}</span>`:''}`:`<span>${escapeHtml(cityName)} · ${mode==='bases'?`${x.service==='ems'?'EMS':'Fire'}${capabilities.bases?` · ${Math.round(baseWidth(x))} × ${Math.round(baseLength(x))} m area`:' · Reference only'}`:`${x.radius} m arrival radius`}</span>`;
+    const routeList=call?challengesFor(x,routeBases().find(base=>base.id===$('base-filter').value)):[],routeBadge=routeList.length?`<small class="route-badge ${routeList.every(validChallenge)?'route-ready':'route-stale'}">Route · ${routeList.filter(validChallenge).length}/${routeList.length} valid</small>`:'';
+    const detail=call?`<span class="badges"><small>${escapeHtml(cityName)}</small><small class="difficulty-${tier}">${tierNames[tier]}</small><small class="shared">Shared address · Fire / EMS</small><small class="${x.confirmed?'verified':'pending'}">${x.confirmed?'Confirmed':'Needs review'}</small>${routeBadge}</span>${scenarioFields?`<span class="scenario">${escapeHtml(x.main)} · ${escapeHtml(x.sub)}</span>`:''}${x.crossStreets?.length?`<span class="cross-streets">Cross streets: ${x.crossStreets.map(escapeHtml).join(' · ')}</span>`:''}`:`<span>${escapeHtml(cityName)} · ${mode==='bases'?`${x.service==='ems'?'EMS':'Fire'}${capabilities.bases?` · ${Math.round(baseWidth(x))} × ${Math.round(baseLength(x))} m area`:' · Reference only'}`:`${x.radius} m arrival radius`}</span>`;
     return `<button type="button" class="call-item ${x.id===selectedId?'active':''} ${x.confirmed?'confirmed':''}" data-id="${escapeHtml(x.id)}"><strong>${escapeHtml(x.name)}</strong><span>${escapeHtml(address)}</span>${detail}</button>`;
   }
   function render(){
-    layer.clearLayers();const list=filtered();updateCounts();
+    layer.clearLayers();updateRouteControls();const list=filtered();updateCounts();
     $('visible-count').textContent=`${list.length} of ${allItems().length} ${mode==='calls'?'calls':mode==='bases'?'bases':'destinations'}`;
     $('review-count').textContent=mode==='calls'?`${locations.filter(x=>!x.confirmed).length} awaiting review`:mode==='bases'?(capabilities.bases?'Box = drivable area':'Reference locations'):'EMS destination';
     if(!list.length){const message=allItems().length?'No matching locations. Clear filters to see this city.':mode==='calls'?`${cityName} has no published calls. You can add a local call on the map.`:`No ${mode==='bases'?'bases':'hospital destination'} available for ${cityName}.`;$('call-list').innerHTML=`<p id="empty-state" class="empty-state">${escapeHtml(message)}</p>`;}
@@ -77,13 +104,13 @@
   function clearPreview(){if(preview)preview.remove();preview=null;}
   function closeEditor(renderNow=true){selectedId=null;draft=null;newDraft=false;placing=null;cleanSnapshot='';formTouched=false;clearPreview();$('editor').classList.add('hidden');$('base-editor').classList.add('hidden');$('base-editor').classList.remove('placing');$('placement-banner').classList.add('hidden');$('add-map').classList.remove('active');if(renderNow)render();}
   function updateModeControls(){
-    $('main-filter').hidden=mode!=='calls'||!scenarioFields;$('sub-filter').hidden=mode!=='calls'||!scenarioFields;$('difficulty-filter').hidden=mode!=='calls';$('hide-confirmed').closest('label').hidden=mode!=='calls';
+    $('main-filter').hidden=mode!=='calls'||!scenarioFields;$('sub-filter').hidden=mode!=='calls'||!scenarioFields;$('difficulty-filter').hidden=mode!=='calls';$('base-filter').hidden=mode!=='calls';$('hide-confirmed').closest('label').hidden=mode!=='calls';
     const add=mode!=='hospital'&&editableMode();$('add-call').hidden=!add;$('add-map').hidden=!add;$('add-call').textContent=mode==='bases'?'Add Base':'Add Call';
     const hospitalButton=document.querySelector('[data-mode="hospital"]');hospitalButton.disabled=!capabilities.hospital;hospitalButton.title=capabilities.hospital?'Edit this city’s hospital drop-off':'Hospital editing is unavailable for this city';
     document.querySelectorAll('[data-mode]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.mode===mode)));
     $('editor-notice').textContent=mode==='calls'?`${cityName} calls share addresses between Fire and EMS. Verify positions, choose familiarity difficulty and save on this device.`:mode==='bases'?capabilities.bases?'Edit Fire and EMS bases. Drag and resize the drivable area box, then place the vehicle spawn inside it.':`${cityName} bases are reference locations. Select a base to view it on the map. Base editing requires verified road data.`:'Move the EMS hospital drop-off and adjust its arrival radius. Keep it on a reachable road.';
   }
-  function clearFilters(){ $('search').value='';$('difficulty-filter').value='';$('main-filter').value='';$('sub-filter').value='';$('hide-confirmed').checked=false;updateSubs($('sub-filter'),'');render(); }
+  function clearFilters(){ $('search').value='';$('difficulty-filter').value='';$('base-filter').value='';$('main-filter').value='';$('sub-filter').value='';$('hide-confirmed').checked=false;updateSubs($('sub-filter'),'');render(); }
   function setMode(next){if(!ready||next===mode||next==='hospital'&&!capabilities.hospital||!canDiscard())return;closeEditor(false);mode=next;clearFilters();updateModeControls();fit();}
   function fit(){const list=filtered();if(list.length)map.fitBounds(L.latLngBounds(list.flatMap(x=>mode==='bases'&&capabilities.bases?bases.corners(x):[[x.lat,x.lng]])).pad(.15),{maxZoom:18});else if(city.map?.bounds)map.fitBounds(city.map.bounds,{maxZoom:city.map.defaultZoom||15});}
   function fillCall(x){
@@ -92,7 +119,7 @@
     for(const field of ['name','addr','lat','lng','radius','district'])$('f-'+field).value=x[field]??'';
     $('f-recognition').value=x.recognitionDifficulty||'';$('f-cross-1').value=x.crossStreets?.[0]||'';$('f-cross-2').value=x.crossStreets?.[1]||'';$('f-confirmed').checked=Boolean(x.confirmed);
     for(const id of ['f-main','f-sub','f-district']){$(id).closest('label').hidden=!scenarioFields;$(id).disabled=!scenarioFields;}
-    $('delete-call').hidden=newDraft;$('editor').classList.remove('hidden');previewCall();
+    routeDetails(x);$('delete-call').hidden=newDraft;$('editor').classList.remove('hidden');previewCall();
   }
   function select(id,pan=true){
     if(selectionBusy)return false;const x=allItems().find(item=>item.id===id);if(!x||!canDiscard())return false;
@@ -151,7 +178,7 @@
   document.querySelectorAll('[data-mode]').forEach(button=>button.onclick=()=>setMode(button.dataset.mode));
   $('add-call').onclick=$('add-map').onclick=()=>beginPlacement('add');$('move-base').onclick=()=>beginPlacement('move');$('fit-all').onclick=fit;
   $('close-editor').onclick=$('close-base').onclick=$('cancel-base').onclick=()=>{if(canDiscard())closeEditor();};
-  $('search').oninput=render;$('main-filter').onchange=()=>{updateSubs($('sub-filter'),$('main-filter').value);render();};$('sub-filter').onchange=render;$('difficulty-filter').onchange=render;$('hide-confirmed').onchange=render;$('clear-filters').onclick=clearFilters;
+  $('search').oninput=render;$('main-filter').onchange=()=>{updateSubs($('sub-filter'),$('main-filter').value);render();};$('sub-filter').onchange=render;$('difficulty-filter').onchange=render;$('base-filter').onchange=()=>{render();if(draft&&mode==='calls')routeDetails(draft);};$('hide-confirmed').onchange=render;$('clear-filters').onclick=clearFilters;
   $('f-main').onchange=()=>updateSubs($('f-sub'),$('f-main').value);for(const field of ['f-lat','f-lng','f-radius'])$(field).oninput=previewCall;
   for(const field of ['b-lat','b-lng','b-size','b-rotation','b-radius','b-area-width','b-area-length'])if($(field))$(field).oninput=previewBase;
   for(const form of [$('editor'),$('base-editor')])for(const event of ['input','change'])form.addEventListener(event,()=>{formTouched=true;});
@@ -162,6 +189,7 @@
     if(!(window.PTBO_CITIES||[]).some(x=>x.id===id)||!canDiscard()){$('city-select').value=cityId;return;}
     const url=new URL(location.href);url.searchParams.set('city',id);if(!url.searchParams.has('v')&&window.PTBO_BUILD?.version)url.searchParams.set('v',window.PTBO_BUILD.version);leavingCity=true;location.assign(url.href);
   };
+  window.addEventListener('ptbo-dispatch-updated',event=>{if(!ready||event.detail?.cityId!==cityId)return;locations=normalizeCalls(calls.getAll());render();if(draft&&mode==='calls'){const current=locations.find(x=>x.id===draft.id);if(current)routeDetails(current);}});
   window.addEventListener('beforeunload',event=>{if(!leavingCity&&hasUnsavedChanges()){event.preventDefault();event.returnValue='';}});
   document.addEventListener('keydown',event=>{if(event.key==='Escape'&&placing){placing=null;$('placement-banner').classList.add('hidden');$('base-editor').classList.remove('placing');$('add-map').classList.remove('active');status('Map placement cancelled.');}});
   if(capabilities.bases||capabilities.hospital){
@@ -172,7 +200,7 @@
     locations=normalizeCalls(calls.getAll());callSeed=normalizeCalls(calls.getSeed?.()||locations);
     $('city-title').textContent=`${cityName} · Dispatch Editor`;document.title=`${cityName} Dispatch Editor`;
     const registry=[...(window.PTBO_CITIES||[])].sort((a,b)=>a.id==='peterborough'?-1:b.id==='peterborough'?1:a.name.localeCompare(b.name));
-    $('city-select').innerHTML=registry.map(x=>`<option value="${escapeHtml(x.id)}">${escapeHtml(x.name)} · ${x.id==='peterborough'?200:x.modes?.geo?20:0} published calls</option>`).join('');$('city-select').value=cityId;
+    $('city-select').innerHTML=registry.map(x=>`<option value="${escapeHtml(x.id)}">${escapeHtml(x.name)} · ${x.callCount??(x.id===cityId?callSeed.length:0)} published calls</option>`).join('');$('city-select').value=cityId;
     ready=true;document.querySelectorAll('[data-editor-control]').forEach(control=>control.disabled=false);updateSubs($('sub-filter'),'');updateModeControls();render();fit();status(`${cityName} ready · Edits stay on this device`);return city;
   }).catch(error=>{status(error.message);$('editor-load-retry').hidden=false;throw error;});
   window.PTBO_EDITOR_UI_READY.catch(()=>{});

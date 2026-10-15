@@ -67,7 +67,7 @@
       await script(`cities/${city.id}/package.js`);
       await window.PTBO_CITY_PACKAGE_READY;
     }
-    if(context==='route'){
+    if(context==='route'||context==='editor'){
       const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),30000);let manifest;
       try{const response=await fetch(asset(city.routeDataUrl),{signal:controller.signal});if(!response.ok)throw new Error('City route manifest could not load.');manifest=await response.json();}finally{clearTimeout(timer);}
       if(manifest?.schemaVersion!==1||manifest.cityId!==city.id||!manifest.graphVersion||!manifest.costProfileVersion||!Array.isArray(manifest.coverage)||!manifest.baseAccess||typeof manifest.baseAccess!=='object'||!manifest.networkUrl)throw new Error('The selected city route data could not be verified.');

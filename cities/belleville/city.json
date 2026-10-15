@@ -6,13 +6,23 @@
   "country": "Canada",
   "status": "base-training",
   "playable": true,
-  "note": "Fire and EMS base training available. Dispatch calls unavailable.",
+  "note": "Fire and EMS base training available. Source-verified locations support route practice; Geo Guesser remains unavailable.",
   "map": {
-    "defaultCenter": [
-      44.1628,
-      -77.3832
+    "bounds": [
+      [
+        44.12,
+        -77.5
+      ],
+      [
+        44.37,
+        -77.23
+      ]
     ],
-    "defaultZoom": 15,
+    "defaultCenter": [
+      44.18,
+      -77.38
+    ],
+    "defaultZoom": 12,
     "minZoom": 10,
     "maxZoom": 19
   },
@@ -28,7 +38,7 @@
     "roads": null,
     "dispatchLocations": "dispatch-data.js",
     "serviceConfig": "package.js",
-    "bases": "package.js",
+    "bases": "geo-data.json",
     "hospitals": null
   }
 }

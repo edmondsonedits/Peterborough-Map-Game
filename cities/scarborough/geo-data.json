@@ -1,0 +1,936 @@
+{
+  "schemaVersion": 1,
+  "id": "scarborough",
+  "name": "Scarborough",
+  "map": {
+    "bounds": [
+      [
+        43.66,
+        -79.355
+      ],
+      [
+        43.87,
+        -79.1
+      ]
+    ],
+    "defaultCenter": [
+      43.7764,
+      -79.2318
+    ],
+    "defaultZoom": 12,
+    "minZoom": 10,
+    "maxZoom": 19
+  },
+  "bases": [
+    {
+      "id": "scarborough-ems-mfs-02",
+      "number": 2,
+      "officialNumber": "02",
+      "service": "ems",
+      "name": "Multi-Function Paramedic Station 02",
+      "shortName": "Multi-Function Paramedic Station 02",
+      "address": "300 Progress Avenue, Scarborough, ON",
+      "lat": 43.77699071683014,
+      "lng": -79.26848590683471,
+      "status": "planned",
+      "selectionEligible": false,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://www.toronto.ca/news/city-of-toronto-breaks-ground-on-90000-square-foot-state-of-the-art-paramedic-station/",
+      "notes": "Official September 4, 2025 groundbreaking and 2026 capital budget confirm construction at 300 Progress Avenue. Future facility remains ineligible until operational; no opening date assumed. Coordinate retained from Toronto canonical pack municipal structure point, not a verified future deployment entrance.",
+      "constructionStage": "under-construction",
+      "expectedOpening": null,
+      "constructionProjectIds": [
+        "scarborough-ems-mfs-02"
+      ],
+      "legacyIds": [
+        "toronto-ems-mfs-02"
+      ],
+      "sources": [
+        "https://www.toronto.ca/news/city-of-toronto-breaks-ground-on-90000-square-foot-state-of-the-art-paramedic-station/",
+        "https://www.toronto.ca/legdocs/mmis/2026/bu/bgrd/backgroundfile-261037.pdf"
+      ]
+    },
+    {
+      "id": "scarborough-ems-3311695",
+      "number": 20,
+      "officialNumber": "20",
+      "service": "ems",
+      "name": "Station 20, District 2 Office",
+      "shortName": "Station 20, District 2 Office",
+      "address": "2430 Lawrence Ave E, Scarborough, ON",
+      "lat": 43.75089720638386,
+      "lng": -79.27135957631407,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://gis.toronto.ca/arcgis/rest/services/cot_geospatial25/FeatureServer/1",
+      "notes": "Official City ambulance facility GIS: MUNICIPALITY=Scarborough, OBJECTID 3311695. Named station retained when co-located with a district office or fire station.",
+      "legacyIds": [
+        "ems-ambulance-station-20-20"
+      ]
+    },
+    {
+      "id": "scarborough-ems-3311716",
+      "number": 21,
+      "officialNumber": "21",
+      "service": "ems",
+      "name": "Station 21",
+      "shortName": "Station 21",
+      "address": "887 Pharmacy Ave, Scarborough, ON",
+      "lat": 43.72955370341101,
+      "lng": -79.29852884106218,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://gis.toronto.ca/arcgis/rest/services/cot_geospatial25/FeatureServer/1",
+      "notes": "Official City ambulance facility GIS: MUNICIPALITY=Scarborough, OBJECTID 3311716. Named station retained when co-located with a district office or fire station.",
+      "legacyIds": [
+        "ems-ambulance-station-21-21"
+      ]
+    },
+    {
+      "id": "scarborough-ems-3311701",
+      "number": 22,
+      "officialNumber": "22",
+      "service": "ems",
+      "name": "Station 22",
+      "shortName": "Station 22",
+      "address": "3100 Eglinton Ave E, Scarborough, ON",
+      "lat": 43.74200035565319,
+      "lng": -79.22625845845992,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://gis.toronto.ca/arcgis/rest/services/cot_geospatial25/FeatureServer/1",
+      "notes": "Official City ambulance facility GIS: MUNICIPALITY=Scarborough, OBJECTID 3311701. Named station retained when co-located with a district office or fire station.",
+      "legacyIds": [
+        "ems-ambulance-station-22-22"
+      ]
+    },
+    {
+      "id": "scarborough-ems-3331452",
+      "number": 24,
+      "officialNumber": "24",
+      "service": "ems",
+      "name": "Station 24",
+      "shortName": "Station 24",
+      "address": "3061 Birchmount Rd, Scarborough, ON",
+      "lat": 43.80279737480081,
+      "lng": -79.30815774616198,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://gis.toronto.ca/arcgis/rest/services/cot_geospatial25/FeatureServer/1",
+      "notes": "Official City ambulance facility GIS: MUNICIPALITY=Scarborough, OBJECTID 3331452. Named station retained when co-located with a district office or fire station.",
+      "legacyIds": [
+        "ems-ambulance-station-24-24"
+      ]
+    },
+    {
+      "id": "scarborough-ems-2303629",
+      "number": 25,
+      "officialNumber": "25",
+      "service": "ems",
+      "name": "Station 25",
+      "shortName": "Station 25",
+      "address": "8500 Sheppard Ave E, Scarborough, ON",
+      "lat": 43.80493224157932,
+      "lng": -79.18862000612295,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://gis.toronto.ca/arcgis/rest/services/cot_geospatial25/FeatureServer/1",
+      "notes": "Official City ambulance facility GIS: MUNICIPALITY=Scarborough, OBJECTID 2303629. Named station retained when co-located with a district office or fire station.",
+      "legacyIds": [
+        "ems-ambulance-station-25-25"
+      ]
+    },
+    {
+      "id": "scarborough-ems-3824182",
+      "number": 26,
+      "officialNumber": "26",
+      "service": "ems",
+      "name": "Station 26",
+      "shortName": "Station 26",
+      "address": "4331 Lawrence Ave E, Scarborough, ON",
+      "lat": 43.77082674064299,
+      "lng": -79.17405340914407,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://gis.toronto.ca/arcgis/rest/services/cot_geospatial25/FeatureServer/1",
+      "notes": "Official City ambulance facility GIS: MUNICIPALITY=Scarborough, OBJECTID 3824182. Named station retained when co-located with a district office or fire station.",
+      "legacyIds": [
+        "ems-ambulance-station-26-26"
+      ]
+    },
+    {
+      "id": "scarborough-ems-1520443",
+      "number": 27,
+      "officialNumber": "27",
+      "service": "ems",
+      "name": "Station 27",
+      "shortName": "Station 27",
+      "address": "900 Tapscott Rd, Scarborough, ON",
+      "lat": 43.82399272520154,
+      "lng": -79.24287003538682,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://gis.toronto.ca/arcgis/rest/services/cot_geospatial25/FeatureServer/1",
+      "notes": "Official City ambulance facility GIS: MUNICIPALITY=Scarborough, OBJECTID 1520443. Named station retained when co-located with a district office or fire station.",
+      "legacyIds": [
+        "ems-ambulance-station-27-27"
+      ]
+    },
+    {
+      "id": "scarborough-ems-2807376",
+      "number": 28,
+      "officialNumber": "28",
+      "service": "ems",
+      "name": "Station 28",
+      "shortName": "Station 28",
+      "address": "2900 Lawrence Ave E, Scarborough, ON",
+      "lat": 43.75417044660114,
+      "lng": -79.25338351971146,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://gis.toronto.ca/arcgis/rest/services/cot_geospatial25/FeatureServer/1",
+      "notes": "Official City ambulance facility GIS: MUNICIPALITY=Scarborough, OBJECTID 2807376. Named station retained when co-located with a district office or fire station.",
+      "legacyIds": [
+        "ems-ambulance-station-28-28"
+      ]
+    },
+    {
+      "id": "scarborough-ems-2236216",
+      "number": 29,
+      "officialNumber": "29",
+      "service": "ems",
+      "name": "Station 29",
+      "shortName": "Station 29",
+      "address": "4560 Sheppard Ave E, Scarborough, ON",
+      "lat": 43.78913691711762,
+      "lng": -79.2629602053098,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://gis.toronto.ca/arcgis/rest/services/cot_geospatial25/FeatureServer/1",
+      "notes": "Official City ambulance facility GIS: MUNICIPALITY=Scarborough, OBJECTID 2236216. Named station retained when co-located with a district office or fire station.",
+      "legacyIds": [
+        "ems-ambulance-station-29-29"
+      ]
+    },
+    {
+      "id": "scarborough-ems-3311686",
+      "number": 42,
+      "officialNumber": "42",
+      "service": "ems",
+      "name": "Station 42, District 4 Office",
+      "shortName": "Station 42, District 4 Office",
+      "address": "1535 Kingston Rd, Scarborough, ON",
+      "lat": 43.688967036148306,
+      "lng": -79.26855090900895,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://gis.toronto.ca/arcgis/rest/services/cot_geospatial25/FeatureServer/1",
+      "notes": "Official City ambulance facility GIS: MUNICIPALITY=Scarborough, OBJECTID 3311686. Named station retained when co-located with a district office or fire station.",
+      "legacyIds": [
+        "ems-ambulance-station-42-42"
+      ]
+    },
+    {
+      "id": "scarborough-ems-3175714",
+      "number": 47,
+      "officialNumber": "47",
+      "service": "ems",
+      "name": "Station 47",
+      "shortName": "Station 47",
+      "address": "3600 St Clair Ave E, Scarborough, ON",
+      "lat": 43.718005193356724,
+      "lng": -79.25623717137962,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://gis.toronto.ca/arcgis/rest/services/cot_geospatial25/FeatureServer/1",
+      "notes": "Official City ambulance facility GIS: MUNICIPALITY=Scarborough, OBJECTID 3175714. Named station retained when co-located with a district office or fire station.",
+      "legacyIds": [
+        "ems-ambulance-station-47-47"
+      ]
+    },
+    {
+      "id": "scarborough-ems-2489114",
+      "number": 10026,
+      "officialNumber": "26",
+      "service": "ems",
+      "name": "26 Post",
+      "shortName": "26 Post",
+      "address": "5316 Lawrence Ave E, Scarborough, ON",
+      "lat": 43.777357054492995,
+      "lng": -79.14821464794156,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://gis.toronto.ca/arcgis/rest/services/cot_geospatial25/FeatureServer/1",
+      "notes": "Official City ambulance facility GIS: MUNICIPALITY=Scarborough, OBJECTID 2489114. Operational post 26 is distinct from Station 26 at 4331 Lawrence Avenue East.",
+      "legacyIds": []
+    },
+    {
+      "id": "scarborough-ems-post-04",
+      "number": 10055,
+      "officialNumber": "",
+      "service": "ems",
+      "name": "Ambulance Post 04 – Finch Avenue East",
+      "shortName": "Ambulance Post 04 – Finch Avenue East",
+      "address": "4610 Finch Avenue East, Scarborough, ON",
+      "lat": null,
+      "lng": null,
+      "status": "planned",
+      "selectionEligible": false,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://www.toronto.ca/legdocs/mmis/2026/bu/bgrd/backgroundfile-261037.pdf",
+      "notes": "Approved future ambulance post at 4610 Finch Avenue East; 2026 capital budget records expanded scope and future funding. Zoning approval permits an ambulance depot with long-term care and medical offices. Neither source confirms an operational response base or a unique deployment entrance; coordinates and opening date remain unresolved.",
+      "constructionStage": "design",
+      "expectedOpening": null,
+      "constructionProjectIds": [
+        "scarborough-ems-post-04"
+      ],
+      "legacyIds": [
+        "toronto-ems-post-04"
+      ],
+      "sources": [
+        "https://www.toronto.ca/legdocs/mmis/2026/bu/bgrd/backgroundfile-261037.pdf",
+        "https://secure.toronto.ca/council/agenda-item.do?item=2025.SC24.1"
+      ]
+    },
+    {
+      "id": "scarborough-fire-211",
+      "number": 211,
+      "officialNumber": "211",
+      "service": "fire",
+      "name": "Fire Station 211",
+      "shortName": "Stn 211",
+      "address": "900 Tapscott Rd, Scarborough, ON",
+      "lat": 43.82399272520154,
+      "lng": -79.24287003538682,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://gis.toronto.ca/arcgis/rest/services/cot_geospatial25/FeatureServer/3",
+      "notes": "Official City fire facility GIS: MUNICIPALITY_NAME=Scarborough, TYPE_DESC=Fire Station, OBJECTID 1520443. Geographic subset of Toronto, not every 2xx command-district station.",
+      "legacyIds": [
+        "fire-station-211-211",
+        "fire-station-211"
+      ]
+    },
+    {
+      "id": "scarborough-fire-212",
+      "number": 212,
+      "officialNumber": "212",
+      "service": "fire",
+      "name": "Fire Station 212",
+      "shortName": "Stn 212",
+      "address": "8500 Sheppard Ave E, Scarborough, ON",
+      "lat": 43.80490579237686,
+      "lng": -79.18874082377098,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://gis.toronto.ca/arcgis/rest/services/cot_geospatial25/FeatureServer/3",
+      "notes": "Official City fire facility GIS: MUNICIPALITY_NAME=Scarborough, TYPE_DESC=Fire Station, OBJECTID 5138239. Geographic subset of Toronto, not every 2xx command-district station.",
+      "legacyIds": [
+        "fire-station-212-212",
+        "fire-station-212"
+      ]
+    },
+    {
+      "id": "scarborough-fire-213",
+      "number": 213,
+      "officialNumber": "213",
+      "service": "fire",
+      "name": "Fire Station 213",
+      "shortName": "Stn 213",
+      "address": "7 Lapsley Rd, Scarborough, ON",
+      "lat": 43.795406608873364,
+      "lng": -79.22596190861587,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://gis.toronto.ca/arcgis/rest/services/cot_geospatial25/FeatureServer/3",
+      "notes": "Official City fire facility GIS: MUNICIPALITY_NAME=Scarborough, TYPE_DESC=Fire Station, OBJECTID 4683861. Geographic subset of Toronto, not every 2xx command-district station.",
+      "legacyIds": [
+        "fire-station-213-213",
+        "fire-station-213"
+      ]
+    },
+    {
+      "id": "scarborough-fire-214",
+      "number": 214,
+      "officialNumber": "214",
+      "service": "fire",
+      "name": "Fire Station 214",
+      "shortName": "Stn 214",
+      "address": "745 Meadowvale Rd, Scarborough, ON",
+      "lat": 43.794210766943564,
+      "lng": -79.16360160417264,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://gis.toronto.ca/arcgis/rest/services/cot_geospatial25/FeatureServer/3",
+      "notes": "Official City fire facility GIS: MUNICIPALITY_NAME=Scarborough, TYPE_DESC=Fire Station, OBJECTID 1567567. Geographic subset of Toronto, not every 2xx command-district station.",
+      "legacyIds": [
+        "fire-station-214-214",
+        "fire-station-214"
+      ]
+    },
+    {
+      "id": "scarborough-fire-215",
+      "number": 215,
+      "officialNumber": "215",
+      "service": "fire",
+      "name": "Fire Station 215",
+      "shortName": "Stn 215",
+      "address": "5318 Lawrence Ave E, Scarborough, ON",
+      "lat": 43.77739193506365,
+      "lng": -79.14806589221874,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://gis.toronto.ca/arcgis/rest/services/cot_geospatial25/FeatureServer/3",
+      "notes": "Official City fire facility GIS: MUNICIPALITY_NAME=Scarborough, TYPE_DESC=Fire Station, OBJECTID 4597878. Geographic subset of Toronto, not every 2xx command-district station.",
+      "legacyIds": [
+        "fire-station-215-215",
+        "fire-station-215"
+      ]
+    },
+    {
+      "id": "scarborough-fire-221",
+      "number": 221,
+      "officialNumber": "221",
+      "service": "fire",
+      "name": "Fire Station 221",
+      "shortName": "Stn 221",
+      "address": "2575 Eglinton Ave E, Scarborough, ON",
+      "lat": 43.73479014329829,
+      "lng": -79.25506270350353,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://gis.toronto.ca/arcgis/rest/services/cot_geospatial25/FeatureServer/3",
+      "notes": "Official City fire facility GIS: MUNICIPALITY_NAME=Scarborough, TYPE_DESC=Fire Station, OBJECTID 2048861. Geographic subset of Toronto, not every 2xx command-district station.",
+      "legacyIds": [
+        "fire-station-221-221",
+        "fire-station-221"
+      ]
+    },
+    {
+      "id": "scarborough-fire-222",
+      "number": 222,
+      "officialNumber": "222",
+      "service": "fire",
+      "name": "Fire Station 222",
+      "shortName": "Stn 222",
+      "address": "755 Warden Ave, Scarborough, ON",
+      "lat": 43.72039942742826,
+      "lng": -79.2840906320077,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://gis.toronto.ca/arcgis/rest/services/cot_geospatial25/FeatureServer/3",
+      "notes": "Official City fire facility GIS: MUNICIPALITY_NAME=Scarborough, TYPE_DESC=Fire Station, OBJECTID 4928967. Geographic subset of Toronto, not every 2xx command-district station.",
+      "legacyIds": [
+        "fire-station-222-222",
+        "fire-station-222"
+      ]
+    },
+    {
+      "id": "scarborough-fire-223",
+      "number": 223,
+      "officialNumber": "223",
+      "service": "fire",
+      "name": "Fire Station 223",
+      "shortName": "Stn 223",
+      "address": "116 Dorset Rd, Scarborough, ON",
+      "lat": 43.723956761795435,
+      "lng": -79.23326107765529,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://gis.toronto.ca/arcgis/rest/services/cot_geospatial25/FeatureServer/3",
+      "notes": "Official City fire facility GIS: MUNICIPALITY_NAME=Scarborough, TYPE_DESC=Fire Station, OBJECTID 2172861. Geographic subset of Toronto, not every 2xx command-district station.",
+      "legacyIds": [
+        "fire-station-223-223",
+        "fire-station-223"
+      ]
+    },
+    {
+      "id": "scarborough-fire-225",
+      "number": 225,
+      "officialNumber": "225",
+      "service": "fire",
+      "name": "Fire Station 225",
+      "shortName": "Stn 225",
+      "address": "3600 Danforth Ave, Scarborough, ON",
+      "lat": 43.69591687317466,
+      "lng": -79.26849460456525,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://gis.toronto.ca/arcgis/rest/services/cot_geospatial25/FeatureServer/3",
+      "notes": "Official City fire facility GIS: MUNICIPALITY_NAME=Scarborough, TYPE_DESC=Fire Station, OBJECTID 2642292. Geographic subset of Toronto, not every 2xx command-district station.",
+      "legacyIds": [
+        "fire-station-225-225",
+        "fire-station-225"
+      ]
+    },
+    {
+      "id": "scarborough-fire-231",
+      "number": 231,
+      "officialNumber": "231",
+      "service": "fire",
+      "name": "Fire Station 231",
+      "shortName": "Stn 231",
+      "address": "740 Markham Rd, Scarborough, ON",
+      "lat": 43.7646440088669,
+      "lng": -79.22778766284232,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://gis.toronto.ca/arcgis/rest/services/cot_geospatial25/FeatureServer/3",
+      "notes": "Official City fire facility GIS: MUNICIPALITY_NAME=Scarborough, TYPE_DESC=Fire Station, OBJECTID 2175731. Geographic subset of Toronto, not every 2xx command-district station.",
+      "legacyIds": [
+        "fire-station-231-231",
+        "fire-station-231"
+      ]
+    },
+    {
+      "id": "scarborough-fire-232",
+      "number": 232,
+      "officialNumber": "232",
+      "service": "fire",
+      "name": "Fire Station 232",
+      "shortName": "Stn 232",
+      "address": "1550 Midland Ave, Scarborough, ON",
+      "lat": 43.75496694557759,
+      "lng": -79.26685107132796,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://gis.toronto.ca/arcgis/rest/services/cot_geospatial25/FeatureServer/3",
+      "notes": "Official City fire facility GIS: MUNICIPALITY_NAME=Scarborough, TYPE_DESC=Fire Station, OBJECTID 5127178. Geographic subset of Toronto, not every 2xx command-district station.",
+      "legacyIds": [
+        "fire-station-232-232",
+        "fire-station-232"
+      ]
+    },
+    {
+      "id": "scarborough-fire-234",
+      "number": 234,
+      "officialNumber": "234",
+      "service": "fire",
+      "name": "Fire Station 234",
+      "shortName": "Stn 234",
+      "address": "40 Coronation Dr, Scarborough, ON",
+      "lat": 43.761068166342255,
+      "lng": -79.19152202912737,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://gis.toronto.ca/arcgis/rest/services/cot_geospatial25/FeatureServer/3",
+      "notes": "Official City fire facility GIS: MUNICIPALITY_NAME=Scarborough, TYPE_DESC=Fire Station, OBJECTID 2004920. Geographic subset of Toronto, not every 2xx command-district station.",
+      "legacyIds": [
+        "fire-station-234-234",
+        "fire-station-234"
+      ]
+    },
+    {
+      "id": "scarborough-fire-241",
+      "number": 241,
+      "officialNumber": "241",
+      "service": "fire",
+      "name": "Fire Station 241",
+      "shortName": "Stn 241",
+      "address": "3325 Warden Ave, Scarborough, ON",
+      "lat": 43.81404197971089,
+      "lng": -79.3238025417745,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://gis.toronto.ca/arcgis/rest/services/cot_geospatial25/FeatureServer/3",
+      "notes": "Official City fire facility GIS: MUNICIPALITY_NAME=Scarborough, TYPE_DESC=Fire Station, OBJECTID 3174616. Geographic subset of Toronto, not every 2xx command-district station.",
+      "legacyIds": [
+        "fire-station-241-241",
+        "fire-station-241"
+      ]
+    },
+    {
+      "id": "scarborough-fire-242",
+      "number": 242,
+      "officialNumber": "242",
+      "service": "fire",
+      "name": "Fire Station 242",
+      "shortName": "Stn 242",
+      "address": "2733 Brimley Rd, Scarborough, ON",
+      "lat": 43.80691964458345,
+      "lng": -79.27725628028892,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://gis.toronto.ca/arcgis/rest/services/cot_geospatial25/FeatureServer/3",
+      "notes": "Official City fire facility GIS: MUNICIPALITY_NAME=Scarborough, TYPE_DESC=Fire Station, OBJECTID 4308527. Geographic subset of Toronto, not every 2xx command-district station.",
+      "legacyIds": [
+        "fire-station-242-242",
+        "fire-station-242"
+      ]
+    },
+    {
+      "id": "scarborough-fire-243",
+      "number": 243,
+      "officialNumber": "243",
+      "service": "fire",
+      "name": "Fire Station 243",
+      "shortName": "Stn 243",
+      "address": "4560 Sheppard Ave E, Scarborough, ON",
+      "lat": 43.78913691711762,
+      "lng": -79.2629602053098,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://gis.toronto.ca/arcgis/rest/services/cot_geospatial25/FeatureServer/3",
+      "notes": "Official City fire facility GIS: MUNICIPALITY_NAME=Scarborough, TYPE_DESC=Fire Station, OBJECTID 2236216. Geographic subset of Toronto, not every 2xx command-district station.",
+      "legacyIds": [
+        "fire-station-243-243",
+        "fire-station-243"
+      ]
+    },
+    {
+      "id": "scarborough-fire-244",
+      "number": 244,
+      "officialNumber": "244",
+      "service": "fire",
+      "name": "Fire Station 244",
+      "shortName": "Stn 244",
+      "address": "2340 Birchmount Rd, Scarborough, ON",
+      "lat": 43.781682495272456,
+      "lng": -79.2991153286616,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://gis.toronto.ca/arcgis/rest/services/cot_geospatial25/FeatureServer/3",
+      "notes": "Official City fire facility GIS: MUNICIPALITY_NAME=Scarborough, TYPE_DESC=Fire Station, OBJECTID 2063805. Geographic subset of Toronto, not every 2xx command-district station.",
+      "legacyIds": [
+        "fire-station-244-244",
+        "fire-station-244"
+      ]
+    },
+    {
+      "id": "scarborough-fire-245",
+      "number": 245,
+      "officialNumber": "245",
+      "service": "fire",
+      "name": "Fire Station 245",
+      "shortName": "Stn 245",
+      "address": "1600 Birchmount Rd, Scarborough, ON",
+      "lat": 43.76269182180581,
+      "lng": -79.29151840526467,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://gis.toronto.ca/arcgis/rest/services/cot_geospatial25/FeatureServer/3",
+      "notes": "Official City fire facility GIS: MUNICIPALITY_NAME=Scarborough, TYPE_DESC=Fire Station, OBJECTID 3093030. Geographic subset of Toronto, not every 2xx command-district station.",
+      "legacyIds": [
+        "fire-station-245-245",
+        "fire-station-245"
+      ]
+    }
+  ],
+  "locations": [
+    {
+      "id": "scarborough-call-1",
+      "name": "Albert Campbell Library",
+      "addr": "496 Birchmount Rd, Scarborough, ON",
+      "lat": 43.70805619872107,
+      "lng": -79.26934818163747,
+      "radius": 45,
+      "recognitionDifficulty": null,
+      "crossStreets": [
+        "BIRCHMOUNT ROAD",
+        "SADLER DRIVE"
+      ],
+      "sources": [
+        "https://services3.arcgis.com/b9WvedVPoizGfvfD/arcgis/rest/services/COTGEO_TPL_FACILITY/FeatureServer/0",
+        "https://www.tpl.ca/albertcampbell",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "difficultyReason": "Unranked public-library seed. Recognition difficulty awaits local review; travel distance does not set difficulty."
+    },
+    {
+      "id": "scarborough-call-2",
+      "name": "Agincourt Library",
+      "addr": "155 Bonis Ave, Scarborough, ON",
+      "lat": 43.78521906367543,
+      "lng": -79.29341395402852,
+      "radius": 45,
+      "recognitionDifficulty": null,
+      "crossStreets": [
+        "BONIS AVENUE",
+        "KENNEDY ROAD"
+      ],
+      "sources": [
+        "https://services3.arcgis.com/b9WvedVPoizGfvfD/arcgis/rest/services/COTGEO_TPL_FACILITY/FeatureServer/0",
+        "https://www.tpl.ca/agincourt",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "difficultyReason": "Unranked public-library seed. Recognition difficulty awaits local review; travel distance does not set difficulty."
+    },
+    {
+      "id": "scarborough-call-3",
+      "name": "Bendale Library",
+      "addr": "1515 Danforth Rd, Scarborough, ON",
+      "lat": 43.75107380022321,
+      "lng": -79.24402409784344,
+      "radius": 45,
+      "recognitionDifficulty": null,
+      "crossStreets": [
+        "MCCOWAN ROAD",
+        "DANFORTH ROAD"
+      ],
+      "sources": [
+        "https://services3.arcgis.com/b9WvedVPoizGfvfD/arcgis/rest/services/COTGEO_TPL_FACILITY/FeatureServer/0",
+        "https://www.tpl.ca/bendale",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "difficultyReason": "Unranked public-library seed. Recognition difficulty awaits local review; travel distance does not set difficulty."
+    },
+    {
+      "id": "scarborough-call-4",
+      "name": "Bridlewood Library",
+      "addr": "2900 Warden Ave, Scarborough, ON",
+      "lat": 43.79854619635219,
+      "lng": -79.31836422375807,
+      "radius": 45,
+      "recognitionDifficulty": null,
+      "crossStreets": [
+        "BRIDLETOWNE CIRCLE",
+        "WARDEN AVENUE"
+      ],
+      "sources": [
+        "https://services3.arcgis.com/b9WvedVPoizGfvfD/arcgis/rest/services/COTGEO_TPL_FACILITY/FeatureServer/0",
+        "https://www.tpl.ca/bridlewood",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "difficultyReason": "Unranked public-library seed. Recognition difficulty awaits local review; travel distance does not set difficulty."
+    },
+    {
+      "id": "scarborough-call-5",
+      "name": "Burrows Hall Library",
+      "addr": "1081 Progress Ave, Scarborough, ON",
+      "lat": 43.79404739001674,
+      "lng": -79.23436701509452,
+      "radius": 45,
+      "recognitionDifficulty": null,
+      "crossStreets": [
+        "PROGRESS AVENUE",
+        "ORCHID PLACE DRIVE"
+      ],
+      "sources": [
+        "https://services3.arcgis.com/b9WvedVPoizGfvfD/arcgis/rest/services/COTGEO_TPL_FACILITY/FeatureServer/0",
+        "https://www.tpl.ca/burrowshall",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "difficultyReason": "Unranked public-library seed. Recognition difficulty awaits local review; travel distance does not set difficulty."
+    },
+    {
+      "id": "scarborough-call-6",
+      "name": "Cliffcrest Library",
+      "addr": "3017 Kingston Rd, Scarborough, ON",
+      "lat": 43.725672332190314,
+      "lng": -79.23045505476786,
+      "radius": 45,
+      "recognitionDifficulty": null,
+      "crossStreets": [
+        "KINGSTON ROAD",
+        "SCARBOROUGH HEIGHTS BOULEVARD"
+      ],
+      "sources": [
+        "https://services3.arcgis.com/b9WvedVPoizGfvfD/arcgis/rest/services/COTGEO_TPL_FACILITY/FeatureServer/0",
+        "https://www.tpl.ca/cliffcrest",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "difficultyReason": "Unranked public-library seed. Recognition difficulty awaits local review; travel distance does not set difficulty."
+    },
+    {
+      "id": "scarborough-call-7",
+      "name": "Cedarbrae Library",
+      "addr": "545 Markham Rd, Scarborough, ON",
+      "lat": 43.75754874209226,
+      "lng": -79.2239652440723,
+      "radius": 45,
+      "recognitionDifficulty": null,
+      "crossStreets": [
+        "GREENCREST CIRCUIT",
+        "MARKHAM ROAD"
+      ],
+      "sources": [
+        "https://services3.arcgis.com/b9WvedVPoizGfvfD/arcgis/rest/services/COTGEO_TPL_FACILITY/FeatureServer/0",
+        "https://www.tpl.ca/cedarbrae",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "difficultyReason": "Unranked public-library seed. Recognition difficulty awaits local review; travel distance does not set difficulty."
+    },
+    {
+      "id": "scarborough-call-8",
+      "name": "Goldhawk Park Library",
+      "addr": "295 Alton Towers Crcl, Scarborough, ON",
+      "lat": 43.8240800839822,
+      "lng": -79.27819134335816,
+      "radius": 45,
+      "recognitionDifficulty": null,
+      "crossStreets": [
+        "ALTON TOWERS CIRCLE",
+        "GOLDHAWK TRAIL"
+      ],
+      "sources": [
+        "https://services3.arcgis.com/b9WvedVPoizGfvfD/arcgis/rest/services/COTGEO_TPL_FACILITY/FeatureServer/0",
+        "https://www.tpl.ca/goldhawkpark",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "difficultyReason": "Unranked public-library seed. Recognition difficulty awaits local review; travel distance does not set difficulty."
+    },
+    {
+      "id": "scarborough-call-9",
+      "name": "Guildwood Library",
+      "addr": "123 Guildwood Pkwy, Scarborough, ON",
+      "lat": 43.747009015441996,
+      "lng": -79.19954024303348,
+      "radius": 45,
+      "recognitionDifficulty": null,
+      "crossStreets": [
+        "LIVINGSTON ROAD",
+        "GUILDWOOD PARKWAY"
+      ],
+      "sources": [
+        "https://services3.arcgis.com/b9WvedVPoizGfvfD/arcgis/rest/services/COTGEO_TPL_FACILITY/FeatureServer/0",
+        "https://www.tpl.ca/guildwood",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "difficultyReason": "Unranked public-library seed. Recognition difficulty awaits local review; travel distance does not set difficulty."
+    },
+    {
+      "id": "scarborough-call-10",
+      "name": "Highland Creek Library",
+      "addr": "3550 Ellesmere Rd, Scarborough, ON",
+      "lat": 43.79006064454749,
+      "lng": -79.17523464174519,
+      "radius": 45,
+      "recognitionDifficulty": null,
+      "crossStreets": [
+        "ELLESMERE ROAD",
+        "FISHERY ROAD"
+      ],
+      "sources": [
+        "https://services3.arcgis.com/b9WvedVPoizGfvfD/arcgis/rest/services/COTGEO_TPL_FACILITY/FeatureServer/0",
+        "https://www.tpl.ca/highlandcreek",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "difficultyReason": "Unranked public-library seed. Recognition difficulty awaits local review; travel distance does not set difficulty."
+    },
+    {
+      "id": "scarborough-call-11",
+      "name": "Malvern Library",
+      "addr": "30 Sewells Rd, Scarborough, ON",
+      "lat": 43.808567705749375,
+      "lng": -79.21638623722843,
+      "radius": 45,
+      "recognitionDifficulty": null,
+      "crossStreets": [
+        "SEWELLS ROAD",
+        "BRENYON WAY"
+      ],
+      "sources": [
+        "https://services3.arcgis.com/b9WvedVPoizGfvfD/arcgis/rest/services/COTGEO_TPL_FACILITY/FeatureServer/0",
+        "https://www.tpl.ca/malvern",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "difficultyReason": "Unranked public-library seed. Recognition difficulty awaits local review; travel distance does not set difficulty."
+    },
+    {
+      "id": "scarborough-call-12",
+      "name": "Port Union Library",
+      "addr": "5450 Lawrence Ave E, Scarborough, ON",
+      "lat": 43.77951256814745,
+      "lng": -79.14021345332216,
+      "radius": 45,
+      "recognitionDifficulty": null,
+      "crossStreets": [
+        "CHARLOTTETOWN BOULEVARD",
+        "LAWRENCE AVENUE EAST"
+      ],
+      "sources": [
+        "https://services3.arcgis.com/b9WvedVPoizGfvfD/arcgis/rest/services/COTGEO_TPL_FACILITY/FeatureServer/0",
+        "https://www.tpl.ca/portunion",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "difficultyReason": "Unranked public-library seed. Recognition difficulty awaits local review; travel distance does not set difficulty."
+    }
+  ],
+  "constructionProjects": [
+    {
+      "id": "scarborough-ems-mfs-02",
+      "service": "ems",
+      "name": "Multi-Function Paramedic Station 02",
+      "address": "300 Progress Avenue, Toronto, ON",
+      "lat": 43.77699071683014,
+      "lng": -79.26848590683471,
+      "status": "planned",
+      "constructionStage": "under-construction",
+      "expectedOpening": null,
+      "projectType": "new-base",
+      "linkedBaseId": "scarborough-ems-mfs-02",
+      "replacesBaseId": null,
+      "historyOnly": false,
+      "createsResponseBase": true,
+      "sourceUrl": "https://www.toronto.ca/news/city-of-toronto-breaks-ground-on-90000-square-foot-state-of-the-art-paramedic-station/",
+      "notes": "Official September 4, 2025 groundbreaking and 2026 capital budget confirm construction at 300 Progress Avenue. Future facility remains ineligible until operational; no opening date assumed. Coordinate retained from Toronto canonical pack municipal structure point, not a verified future deployment entrance.",
+      "sources": [
+        "https://www.toronto.ca/news/city-of-toronto-breaks-ground-on-90000-square-foot-state-of-the-art-paramedic-station/",
+        "https://www.toronto.ca/legdocs/mmis/2026/bu/bgrd/backgroundfile-261037.pdf"
+      ]
+    },
+    {
+      "id": "scarborough-ems-post-04",
+      "service": "ems",
+      "name": "Ambulance Post 04 – Finch Avenue East",
+      "address": "4610 Finch Avenue East, Toronto, ON",
+      "lat": null,
+      "lng": null,
+      "status": "planned",
+      "constructionStage": "design",
+      "expectedOpening": null,
+      "projectType": "new-base",
+      "linkedBaseId": "scarborough-ems-post-04",
+      "replacesBaseId": null,
+      "historyOnly": false,
+      "createsResponseBase": true,
+      "sourceUrl": "https://www.toronto.ca/legdocs/mmis/2026/bu/bgrd/backgroundfile-261037.pdf",
+      "notes": "Approved future ambulance post at 4610 Finch Avenue East; 2026 capital budget records expanded scope and future funding. Zoning approval permits an ambulance depot with long-term care and medical offices. Neither source confirms an operational response base or a unique deployment entrance; coordinates and opening date remain unresolved.",
+      "sources": [
+        "https://www.toronto.ca/legdocs/mmis/2026/bu/bgrd/backgroundfile-261037.pdf",
+        "https://secure.toronto.ca/council/agenda-item.do?item=2025.SC24.1"
+      ]
+    }
+  ]
+}

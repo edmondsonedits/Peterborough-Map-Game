@@ -32,7 +32,7 @@ SNAPSHOT = '2026-10-14T20:21:12Z'
 GRAPH_VERSION = 'ontario-osm-2026-10-14-v2'
 ISLAND_POLICY = 'https://www.toronto.ca/explore-enjoy/toronto-island-ferries/commercial-emergency-vehicles/'
 HIGHWAYS = set('motorway trunk primary secondary tertiary unclassified residential living_street service road track busway escape motorway_link trunk_link primary_link secondary_link tertiary_link'.split())
-CONTROL_KEYS = {'barrier', 'ford', 'traffic_signals', 'crossing', 'railway', 'traffic_calming', 'highway', 'access', 'vehicle', 'motor_vehicle', 'motorcar', 'emergency', 'maxheight', 'maxwidth', 'maxweight', 'maxaxleload', 'locked', 'bollard'}
+CONTROL_KEYS = {'barrier', 'ford', 'traffic_signals', 'crossing', 'railway', 'traffic_calming', 'highway', 'access', 'vehicle', 'motor_vehicle', 'motorcar', 'emergency', 'maxheight', 'maxwidth', 'maxweight', 'maxaxleload', 'locked', 'bollard', 'maxheight:physical', 'maxwidth:physical', 'maxweight:physical', 'maxaxleload:physical', 'maxlength', 'width', 'height', 'hgv', 'goods', 'bus', 'psv', 'access:conditional', 'vehicle:conditional', 'motor_vehicle:conditional', 'motorcar:conditional', 'emergency:conditional', 'hgv:conditional', 'maxweight:conditional', 'maxheight:conditional', 'maxwidth:conditional'}
 ISLAND_NAMES = {'cibola avenue', 'lakeshore avenue', 'the mall', 'lagoon road', 'beach road', 'terry kimball lane', 'withrow street', 'pontiac avenue'}
 
 
@@ -185,7 +185,8 @@ def extract_config(root, bases_path=None):
         (south, west), (north, east) = bounds
         lat_pad = 8000 / 111320
         lng_pad = lat_pad / math.cos(math.radians((south + north) / 2))
-        bases = [{'lat': float(lat), 'lng': float(lng)} for lat, lng in re.findall(r'\blat:\s*([\d.\-]+)\s*,\s*lng:\s*([\d.\-]+)', text)]
+        base_text = text.split('const hospital')[0] if city_id == 'peterborough' else text
+        bases = [{'lat': float(lat), 'lng': float(lng)} for lat, lng in re.findall(r'\blat:\s*([\d.\-]+)\s*,\s*lng:\s*([\d.\-]+)', base_text)]
         # Canonical curated data supersedes preview fallbacks when available.
         if isinstance(geo.get('bases'), list):
             bases = [base for base in geo['bases'] if base.get('active', True) and base.get('status') not in ('planned', 'closed', 'inactive') and base.get('selectionEligible', True)]
@@ -244,6 +245,17 @@ def build(args):
         city_ways = {city: set(ids) for city, ids in metadata['cityWays'].items()}
         restrictions = metadata['restrictions']
         controls = {int(key): value for key, value in metadata['controls'].items()}
+        if metadata.get('controlKeys') != sorted(CONTROL_KEYS):
+            class RefreshControls(osmium.SimpleHandler):
+                def node(self, node):
+                    controls[int(node.id)] = dict(node.tags)
+            log('Refreshing cached node controls with the complete access/physical key set')
+            reader = osmium.io.Reader(str(pbf), osmium.osm.NODE)
+            osmium.apply(reader, osmium.filter.KeyFilter(*sorted(CONTROL_KEYS)), RefreshControls())
+            reader.close()
+            metadata['controls'] = controls
+            metadata['controlKeys'] = sorted(CONTROL_KEYS)
+            metadata_path.write_text(compact(metadata))
     else:
         city_ways = {city: set() for city in configs}
         restrictions = {city: [] for city in configs}
@@ -268,7 +280,15 @@ def build(args):
                 if len(refs) < 2 or any(not node.location.valid() for node in refs):
                     return
                 coords = [[round(node.location.lon, 7), round(node.location.lat, 7)] for node in refs]
-                matches = [city for city, config in configs.items() if intersects(coords, config['bufferedBounds']) and way_admission(tags, coords, config['bases'])]
+                west = min(point[0] for point in coords)
+                east = max(point[0] for point in coords)
+                south = min(point[1] for point in coords)
+                north = max(point[1] for point in coords)
+                matches = [city for city, config in configs.items()
+                           if west <= config['bufferedBounds'][2] and east >= config['bufferedBounds'][0]
+                           and south <= config['bufferedBounds'][3] and north >= config['bufferedBounds'][1]
+                           and intersects(coords, config['bufferedBounds'])
+                           and way_admission(tags, coords, config['bases'])]
                 if not matches:
                     return
                 way_id = int(way.id)
@@ -333,7 +353,7 @@ def build(args):
             db.commit()
         if missing:
             raise ValueError(f'Missing restriction member ways: {sorted(missing)[:20]}')
-        metadata = {'sourceSha256': digest, 'configs': configs, 'cityWays': {city: sorted(ids) for city, ids in city_ways.items()}, 'restrictions': restrictions, 'controls': controls}
+        metadata = {'sourceSha256': digest, 'configs': configs, 'cityWays': {city: sorted(ids) for city, ids in city_ways.items()}, 'restrictions': restrictions, 'controls': controls, 'controlKeys': sorted(CONTROL_KEYS)}
         metadata_path.write_text(compact(metadata))
         del index, locations
     report = {'graphVersion': GRAPH_VERSION, 'sourceUrl': SOURCE_URL, 'sourceBytes': SOURCE_BYTES, 'sourceSha256': digest, 'snapshot': SNAPSHOT, 'bufferMetres': 8000, 'simplificationMetres': 1.9, 'cities': {}}
@@ -341,6 +361,7 @@ def build(args):
     for city, ids in sorted(city_ways.items(), key=lambda item: (priority.get(item[0], 10), item[0])):
         log(f'Building {city}: {len(ids):,} complete source ways')
         ways = [json.loads(zlib.decompress(db.execute('SELECT payload FROM ways WHERE id=?', (way_id,)).fetchone()[0])) for way_id in sorted(ids)]
+        way_lookup = {way['id']: way for way in ways}
         counts = Counter(node_id for way in ways for node_id in way['nodeIds'])
         city_controls = {node_id: tags for node_id, tags in controls.items() if node_id in counts}
         protected = {node_id for node_id, count in counts.items() if count > 1} | set(city_controls)
@@ -350,13 +371,15 @@ def build(args):
             protected.update(restriction.get('viaNodeIds', []))
             for via_id in restriction.get('viaWayIds', []):
                 # All via-way nodes are retained, making ordered restriction traversal explicit.
-                protected.update(node_id for way in ways if way['id'] == via_id for node_id in way['nodeIds'])
+                protected.update(way_lookup[via_id]['nodeIds'])
         features = []
         raw_nodes = 0
         for way in ways:
             raw_nodes += len(way['nodeIds'])
             node_ids, coords = simplify(way['nodeIds'], way['coords'], protected)
             properties = {**way['tags'], 'osm_id': way['id'], 'nodeIds': node_ids}
+            if not way_admission(way['tags'], way['coords'], configs[city]['bases']):
+                properties['restrictionMemberOnly'] = True
             if 'driveway' in tokens(way['tags'].get('service')):
                 properties['routeAccess'] = 'base-only'
                 if not near_base(way['coords'], configs[city]['bases']):

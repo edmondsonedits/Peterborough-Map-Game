@@ -28,7 +28,8 @@ test('registry declares each mode independently for Peterborough, researched dem
     assert.ok(Object.isFrozen(city.modes),`${city.id}: immutable capabilities`);
     assert.equal(city.modes.geo,city.id === 'peterborough' || ids.includes(city.id),city.id);
     assert.equal(city.modes.dispatch,city.id === 'peterborough' || previews.includes(city.id),city.id);
-    assert.equal(city.modes.route,city.id === 'peterborough',city.id);
+    assert.equal(city.modes.route,true,city.id);
+    assert.equal(city.routeDataUrl,`cities/${city.id}/route-data.json`);
     assert.equal(city.modes.explorer,city.id === 'peterborough',city.id);
     if (ids.includes(city.id)) assert.equal(city.geoDataUrl,`cities/${city.id}/geo-data.json`);
     assert.equal(city.dispatch.desktop,'response-simulator/play/');
@@ -40,8 +41,9 @@ test('each compact city pack has one shared twenty-call pool with ten easy, five
   let total = 0;
   for (const pack of packs()) {
     assert.equal(pack.schemaVersion,1,pack.id);
-    assert.equal(pack.locations.length,20,pack.id);
-    assert.equal(new Set(pack.locations.map(row => row.id)).size,20,pack.id);
+    const ranked=pack.locations.filter(row=>['easy','medium','hard'].includes(row.recognitionDifficulty));
+    assert.equal(ranked.length,20,pack.id);
+    assert.equal(new Set(pack.locations.map(row => row.id)).size,pack.locations.length,pack.id);
     assert.equal(pack.population.year,2025,pack.id);
     assert.ok(pack.population.value > 0,pack.id);
     assert.equal(pack.map.defaultZoom,18,pack.id);
@@ -56,7 +58,7 @@ test('each compact city pack has one shared twenty-call pool with ten easy, five
     assert.ok(coordinate(pack.map.defaultCenter[0],south,north),pack.id);
     assert.ok(coordinate(pack.map.defaultCenter[1],west,east),pack.id);
     for (const row of pack.locations) {
-      tiers[row.recognitionDifficulty]++;
+      if(row.recognitionDifficulty)tiers[row.recognitionDifficulty]++;
       assert.ok(coordinate(row.lat,south,north),`${row.id}: latitude`);
       assert.ok(coordinate(row.lng,west,east),`${row.id}: longitude`);
       assert.ok(row.name && row.addr && row.radius > 0 && row.difficultyReason,row.id);
@@ -67,7 +69,7 @@ test('each compact city pack has one shared twenty-call pool with ten easy, five
       assert.equal('crossStreetEvidence' in row,false,'runtime omits road-graph evidence');
     }
     assert.deepEqual(tiers,{easy:10,medium:5,hard:5},pack.id);
-    total += pack.locations.length;
+    total += ranked.length;
   }
   assert.equal(total,600);
 });
@@ -199,7 +201,7 @@ test('manifests add Geo data without inventing roads or enabling new driving cit
     const manifest = json(`cities/${id}/city.json`);
     assert.equal(manifest.features.geoGuesser,false,id);
     assert.equal(manifest.features.baseTraining,true,id);
-    assert.equal(manifest.data.bases,'package.js',id);
+    assert.equal(manifest.data.bases,'geo-data.json',id);
   }
 });
 

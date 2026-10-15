@@ -1,0 +1,350 @@
+{
+  "schemaVersion": 1,
+  "id": "belleville",
+  "name": "Belleville",
+  "map": {
+    "bounds": [
+      [
+        44.12,
+        -77.5
+      ],
+      [
+        44.37,
+        -77.23
+      ]
+    ],
+    "defaultCenter": [
+      44.18,
+      -77.38
+    ],
+    "defaultZoom": 12,
+    "minZoom": 10,
+    "maxZoom": 19
+  },
+  "bases": [
+    {
+      "id": "belleville-fire-1",
+      "number": 1,
+      "officialNumber": "1",
+      "service": "fire",
+      "name": "Fire Station 1",
+      "shortName": "Stn 1",
+      "address": "60 Bettes St, Belleville, ON",
+      "lat": 44.178547363987015,
+      "lng": -77.37422592077385,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://www.belleville.ca/home-and-property/fire-and-emergency-services/about-belleville-fire-and-emergency-services/",
+      "sources": [
+        "https://www.belleville.ca/home-and-property/fire-and-emergency-services/about-belleville-fire-and-emergency-services/",
+        "https://gis.belleville.ca/arcgis/rest/services/BV_GIS/Address_Points/MapServer/1"
+      ],
+      "notes": "Official City fire service lists this operating station. Coordinate is municipal Address Points OBJECTID 9263, not the hypothetical Fire_Stations_Proposed layer.",
+      "legacyIds": [
+        "fire-fire-station-1-1"
+      ]
+    },
+    {
+      "id": "belleville-fire-2",
+      "number": 2,
+      "officialNumber": "2",
+      "service": "fire",
+      "name": "Fire Station 2",
+      "shortName": "Stn 2",
+      "address": "72 Moira St W, Belleville, ON",
+      "lat": 44.16791177695602,
+      "lng": -77.3911950494537,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://www.belleville.ca/home-and-property/fire-and-emergency-services/about-belleville-fire-and-emergency-services/",
+      "sources": [
+        "https://www.belleville.ca/home-and-property/fire-and-emergency-services/about-belleville-fire-and-emergency-services/",
+        "https://gis.belleville.ca/arcgis/rest/services/BV_GIS/Address_Points/MapServer/1"
+      ],
+      "notes": "Official City fire service lists this operating station. Coordinate is municipal Address Points OBJECTID 2915, not the hypothetical Fire_Stations_Proposed layer.",
+      "legacyIds": [
+        "fire-fire-station-2-2"
+      ]
+    },
+    {
+      "id": "belleville-fire-3",
+      "number": 3,
+      "officialNumber": "3",
+      "service": "fire",
+      "name": "Fire Station 3",
+      "shortName": "Stn 3",
+      "address": "4867 Old Highway 2, Belleville, ON",
+      "lat": 44.18267087400826,
+      "lng": -77.2780568648666,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://www.belleville.ca/home-and-property/fire-and-emergency-services/about-belleville-fire-and-emergency-services/",
+      "sources": [
+        "https://www.belleville.ca/home-and-property/fire-and-emergency-services/about-belleville-fire-and-emergency-services/",
+        "https://gis.belleville.ca/arcgis/rest/services/BV_GIS/Address_Points/MapServer/1"
+      ],
+      "notes": "Official City fire service lists this operating station. Coordinate is municipal Address Points OBJECTID 18661, not the hypothetical Fire_Stations_Proposed layer.",
+      "legacyIds": [
+        "fire-fire-station-3-3"
+      ]
+    },
+    {
+      "id": "belleville-fire-4",
+      "number": 4,
+      "officialNumber": "4",
+      "service": "fire",
+      "name": "Fire Station 4",
+      "shortName": "Stn 4",
+      "address": "516 Harmony Rd, Belleville, ON",
+      "lat": 44.239580379264275,
+      "lng": -77.39149726275552,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://www.belleville.ca/home-and-property/fire-and-emergency-services/about-belleville-fire-and-emergency-services/",
+      "sources": [
+        "https://www.belleville.ca/home-and-property/fire-and-emergency-services/about-belleville-fire-and-emergency-services/",
+        "https://gis.belleville.ca/arcgis/rest/services/BV_GIS/Address_Points/MapServer/1"
+      ],
+      "notes": "Official City fire service lists this operating station. Coordinate is municipal Address Points OBJECTID 13195, not the hypothetical Fire_Stations_Proposed layer.",
+      "legacyIds": [
+        "fire-fire-station-4-4"
+      ]
+    },
+    {
+      "id": "belleville-fire-5",
+      "number": 5,
+      "officialNumber": "5",
+      "service": "fire",
+      "name": "Fire Station 5",
+      "shortName": "Stn 5",
+      "address": "26 Hoskin Rd, Belleville, ON",
+      "lat": 44.290420543984595,
+      "lng": -77.35116759810465,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://www.belleville.ca/home-and-property/fire-and-emergency-services/about-belleville-fire-and-emergency-services/",
+      "sources": [
+        "https://www.belleville.ca/home-and-property/fire-and-emergency-services/about-belleville-fire-and-emergency-services/",
+        "https://gis.belleville.ca/arcgis/rest/services/BV_GIS/Address_Points/MapServer/1"
+      ],
+      "notes": "Official City fire service lists this operating station. Coordinate is municipal Address Points OBJECTID 19112, not the hypothetical Fire_Stations_Proposed layer.",
+      "legacyIds": [
+        "fire-fire-station-5-5"
+      ]
+    },
+    {
+      "id": "belleville-ems-00",
+      "number": 1,
+      "officialNumber": "00",
+      "service": "ems",
+      "name": "Base 00 — Headquarters",
+      "shortName": "Base 00",
+      "address": "111 Millennium Pkwy, Belleville, ON",
+      "lat": 44.19281552659254,
+      "lng": -77.4058714420806,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://www.hastingscounty.com/communities/services/emergency-services",
+      "sources": [
+        "https://www.hastingscounty.com/communities/services/emergency-services",
+        "https://gis.belleville.ca/arcgis/rest/services/BV_GIS/Address_Points/MapServer/1"
+      ],
+      "notes": "County official operating-base list; municipal Address Points OBJECTID 14375. Headquarters is co-located with an operating ambulance base.",
+      "legacyIds": [
+        "ems-base-00-headquarters-1"
+      ]
+    },
+    {
+      "id": "belleville-ems-01",
+      "number": 2,
+      "officialNumber": "01",
+      "service": "ems",
+      "name": "Base 01 — Farley",
+      "shortName": "Base 01",
+      "address": "38 Farley Ave, Belleville, ON",
+      "lat": 44.16680243665393,
+      "lng": -77.3491454191396,
+      "status": "active",
+      "selectionEligible": true,
+      "facilityRole": "station / post",
+      "sourceUrl": "https://www.hastingscounty.com/communities/services/emergency-services",
+      "sources": [
+        "https://www.hastingscounty.com/communities/services/emergency-services",
+        "https://gis.belleville.ca/arcgis/rest/services/BV_GIS/Address_Points/MapServer/1"
+      ],
+      "notes": "County official operating-base list; municipal Address Points OBJECTID 11119. Farley coordinate corrects the old fallback point roughly 900 m north of its official civic address.",
+      "legacyIds": [
+        "ems-base-01-farley-2"
+      ]
+    }
+  ],
+  "locations": [
+    {
+      "id": "belleville-call-1",
+      "name": "City Hall",
+      "addr": "169 Front St, Belleville, ON",
+      "lat": 44.16271342070341,
+      "lng": -77.38345684631634,
+      "radius": 45,
+      "recognitionDifficulty": null,
+      "crossStreets": [
+        "FRONT ST",
+        "MARKET ST"
+      ],
+      "sources": [
+        "https://www.belleville.ca/files/MAP_Appendix_2_-_List_of_Municipal_Sites_and_Facilities.pdf",
+        "https://gis.belleville.ca/arcgis/rest/services/BV_GIS/Address_Points/MapServer/1",
+        "https://gis.belleville.ca/arcgis/rest/services/BV_Building/CityviewMap/MapServer/19"
+      ],
+      "custom": false,
+      "difficultyReason": "Unranked civic-place seed. Recognition difficulty awaits local review; travel distance does not set difficulty."
+    },
+    {
+      "id": "belleville-call-2",
+      "name": "Belleville Public Library and John M. Parrott Art Gallery",
+      "addr": "254 Pinnacle St, Belleville, ON",
+      "lat": 44.16522151300741,
+      "lng": -77.38333482278043,
+      "radius": 45,
+      "recognitionDifficulty": null,
+      "crossStreets": [
+        "PINNACLE ST",
+        "CAMPBELL ST"
+      ],
+      "sources": [
+        "https://www.bellevillelibrary.ca/about-us/contact-us/",
+        "https://gis.belleville.ca/arcgis/rest/services/BV_GIS/Address_Points/MapServer/1",
+        "https://gis.belleville.ca/arcgis/rest/services/BV_Building/CityviewMap/MapServer/19"
+      ],
+      "custom": false,
+      "difficultyReason": "Unranked civic-place seed. Recognition difficulty awaits local review; travel distance does not set difficulty."
+    },
+    {
+      "id": "belleville-call-3",
+      "name": "Glanmore National Historic Site",
+      "addr": "257 Bridge St E, Belleville, ON",
+      "lat": 44.167037363031874,
+      "lng": -77.36776376309311,
+      "radius": 45,
+      "recognitionDifficulty": null,
+      "crossStreets": [
+        "DUFFERIN AVE",
+        "BRIDGE ST E"
+      ],
+      "sources": [
+        "https://www.glanmore.ca/plan-your-visit/directions-and-parking/",
+        "https://gis.belleville.ca/arcgis/rest/services/BV_GIS/Address_Points/MapServer/1",
+        "https://gis.belleville.ca/arcgis/rest/services/BV_Building/CityviewMap/MapServer/19"
+      ],
+      "custom": false,
+      "difficultyReason": "Unranked civic-place seed. Recognition difficulty awaits local review; travel distance does not set difficulty."
+    },
+    {
+      "id": "belleville-call-4",
+      "name": "Quinte Sports and Wellness Centre",
+      "addr": "265 Cannifton Rd, Belleville, ON",
+      "lat": 44.18802840536305,
+      "lng": -77.38410985415861,
+      "radius": 45,
+      "recognitionDifficulty": null,
+      "crossStreets": [
+        "CANNIFTON RD",
+        "MOIRA ST E"
+      ],
+      "sources": [
+        "https://www.belleville.ca/learn-and-play/recreation/quinte-sports-and-wellness-centre/",
+        "https://gis.belleville.ca/arcgis/rest/services/BV_GIS/Address_Points/MapServer/1",
+        "https://gis.belleville.ca/arcgis/rest/services/BV_Building/CityviewMap/MapServer/19"
+      ],
+      "custom": false,
+      "difficultyReason": "Unranked civic-place seed. Recognition difficulty awaits local review; travel distance does not set difficulty."
+    },
+    {
+      "id": "belleville-call-5",
+      "name": "Public Works Yards",
+      "addr": "75 Wallbridge Cr, Belleville, ON",
+      "lat": 44.17072763957932,
+      "lng": -77.39506156211239,
+      "radius": 45,
+      "recognitionDifficulty": null,
+      "crossStreets": [
+        "WALLBRIDGE CR",
+        "PURDY ST"
+      ],
+      "sources": [
+        "https://www.belleville.ca/files/MAP_Appendix_2_-_List_of_Municipal_Sites_and_Facilities.pdf",
+        "https://gis.belleville.ca/arcgis/rest/services/BV_GIS/Address_Points/MapServer/1",
+        "https://gis.belleville.ca/arcgis/rest/services/BV_Building/CityviewMap/MapServer/19"
+      ],
+      "custom": false,
+      "difficultyReason": "Unranked civic-place seed. Recognition difficulty awaits local review; travel distance does not set difficulty."
+    },
+    {
+      "id": "belleville-call-6",
+      "name": "Robert E. Ladoucier Transit Terminal",
+      "addr": "165 Pinnacle St, Belleville, ON",
+      "lat": 44.162710297619554,
+      "lng": -77.38176220130232,
+      "radius": 45,
+      "recognitionDifficulty": null,
+      "crossStreets": [
+        "PINNACLE ST",
+        "MARKET ST"
+      ],
+      "sources": [
+        "https://www.belleville.ca/walk-ride-and-drive/transit/regional-transit/",
+        "https://gis.belleville.ca/arcgis/rest/services/BV_GIS/Address_Points/MapServer/1",
+        "https://gis.belleville.ca/arcgis/rest/services/BV_Building/CityviewMap/MapServer/19"
+      ],
+      "custom": false,
+      "difficultyReason": "Unranked civic-place seed. Recognition difficulty awaits local review; travel distance does not set difficulty."
+    },
+    {
+      "id": "belleville-call-7",
+      "name": "Parkdale Community Centre",
+      "addr": "119 Birch St, Belleville, ON",
+      "lat": 44.18005425231422,
+      "lng": -77.40580482021603,
+      "radius": 45,
+      "recognitionDifficulty": null,
+      "crossStreets": [
+        "BIRCH ST",
+        "MAPLE DR"
+      ],
+      "sources": [
+        "https://www.belleville.ca/files/MAP_Appendix_2_-_List_of_Municipal_Sites_and_Facilities.pdf",
+        "https://gis.belleville.ca/arcgis/rest/services/BV_GIS/Address_Points/MapServer/1",
+        "https://gis.belleville.ca/arcgis/rest/services/BV_Building/CityviewMap/MapServer/19"
+      ],
+      "custom": false,
+      "difficultyReason": "Unranked civic-place seed. Recognition difficulty awaits local review; travel distance does not set difficulty."
+    },
+    {
+      "id": "belleville-call-8",
+      "name": "Loyalist College",
+      "addr": "376 Wallbridge-Loyalist Rd, Belleville, ON",
+      "lat": 44.155437630335506,
+      "lng": -77.43091156656527,
+      "radius": 45,
+      "recognitionDifficulty": null,
+      "crossStreets": [
+        "WALLBRIDGE-LOYALIST RD",
+        "AVONLOUGH RD"
+      ],
+      "sources": [
+        "https://loyalistcollege.com/our-locations/",
+        "https://gis.belleville.ca/arcgis/rest/services/BV_GIS/Address_Points/MapServer/1",
+        "https://gis.belleville.ca/arcgis/rest/services/BV_Building/CityviewMap/MapServer/19"
+      ],
+      "custom": false,
+      "difficultyReason": "Unranked civic-place seed. Recognition difficulty awaits local review; travel distance does not set difficulty."
+    }
+  ],
+  "constructionProjects": []
+}

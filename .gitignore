@@ -4,3 +4,6 @@ artifacts/visual-qa/
 test-artifacts/
 
 .superpowers/
+outputs/
+__pycache__/
+*.pyc

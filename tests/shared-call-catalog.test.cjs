@@ -76,9 +76,9 @@ test('editor export can compare saved edits against the immutable published seed
  const saved=api.upsert({...original,name:'User edit'});saved.crossStreets[0]='Mutated';
  assert.equal(api.getSeed()[0].name,original.name);assert.equal(api.getAll()[0].crossStreets[0],original.crossStreets[0]);
 });
-test('EMS route mapping excludes Fire-only generated challenges while sharing canonical addresses',()=>{
+test('EMS route mapping shares every canonical address regardless of legacy scenario labels',()=>{
  const app=source('route-mapping/app.js'),fn=app.match(/  function callsForService\(\)\{[^\n]+/)[0];
- const calls=[...payload().locations,{id:'advanced-fire',main:'Fire',sub:'Advanced Street Address'}];
+ const calls=[...payload().locations,{id:'extra-address',main:'Fire',sub:'Training address'}];
  const c=vm.createContext({state:{service:'ems',calls}});vm.runInContext(fn,c);
- const pool=c.callsForService();assert.equal(pool.length,200);assert.ok(pool.every(call=>call.main==='Medical'));
+ const pool=c.callsForService();assert.equal(pool.length,calls.length);assert.ok(pool.every(call=>call.main==='Medical'));
 });

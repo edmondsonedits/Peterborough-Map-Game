@@ -33,12 +33,14 @@
         <div class="filters">
           <input id="search" aria-label="Search locations" class="field-control wide" type="search" placeholder="Search name, address or cross streets" disabled data-editor-control>
           <select id="difficulty-filter" aria-label="Difficulty filter" class="field-control wide" disabled data-editor-control><option value="">All difficulties</option><option value="easy">Easy</option><option value="medium">Medium</option><option value="hard">Hard</option><option value="unranked">Unranked</option></select>
+          <select id="base-filter" aria-label="Route base filter" class="field-control wide" disabled data-editor-control><option value="">All route bases</option></select>
           <select id="main-filter" aria-label="Division filter" class="field-control" disabled data-editor-control><option value="">All divisions</option><option>Fire</option><option>Medical</option></select>
           <select id="sub-filter" aria-label="Call type filter" class="field-control" disabled data-editor-control><option value="">All call types</option></select>
           <label class="filter-toggle"><input id="hide-confirmed" type="checkbox" disabled data-editor-control> Hide confirmed calls</label>
           <button id="clear-filters" type="button" class="clear-filters wide" disabled data-editor-control>Clear filters</button>
         </div>
         <div class="list-head"><span id="visible-count">0 calls</span><span id="review-count">0 awaiting review</span></div>
+        <details id="route-coverage" class="route-coverage" hidden><summary id="route-coverage-summary">Route base coverage</summary><p id="route-coverage-text"></p></details>
         <div id="call-list" class="call-list"></div>
         <section class="permanent"><strong>Changes only</strong><p>Save edits on this device to test them. Export only your changes and send the file back to update the public game.</p><div class="permanent-actions"><button id="download-source" type="button" disabled data-editor-control>Download changes</button><button id="copy-source" type="button" disabled data-editor-control>Copy changes</button></div></section>
       </aside>
@@ -64,6 +66,7 @@
             <label><span>Cross street 2 (when available)</span><input id="f-cross-2" class="field-control"></label>
             <label class="check confirm-check full"><input id="f-confirmed" type="checkbox"> Location confirmed accurate</label>
           </div>
+          <details id="route-details" class="route-details" hidden><summary>Route rationale and alternatives · read only</summary><div id="route-details-body"></div></details>
           <div class="editor-actions"><button class="primary" type="submit">Save on This Device</button><button class="danger" id="delete-call" type="button">Delete Call</button></div>
         </form>
 
