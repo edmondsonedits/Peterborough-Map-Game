@@ -18,7 +18,8 @@
     "source_records_retained_for_review": 48,
     "locations_with_two_cross_streets": 198,
     "locations_with_one_cross_street": 2,
-    "locations_without_cross_streets": 0
+    "locations_without_cross_streets": 0,
+    "routeOnly": 0
   },
   "settingsDefaults": {
     "showCrossStreets": true
@@ -248,7 +249,56 @@
       "sourceCallIds": [
         "call-tass-1vs40se"
       ],
-      "notes": []
+      "notes": [],
+      "routeChallenges": [
+        {
+          "baseId": "station-2",
+          "service": "fire",
+          "difficulty": 72,
+          "decisionType": "bridge-choice",
+          "preferredRoads": [
+            "Marina Boulevard",
+            "Water Street",
+            "George Street North",
+            "Parkhill Road West",
+            "Parkhill Road East",
+            "Armour Road"
+          ],
+          "alternatives": [
+            {
+              "roads": [
+                "Marina Boulevard",
+                "Water Street",
+                "Nassau Mills Road",
+                "Armour Road"
+              ],
+              "reason": "Marina Boulevard / Water Street / Nassau Mills Road / Armour Road models 562.2 seconds, 100.6 seconds more than the preferred route; 5290 m of changed named public-road geometry.",
+              "estimatedSeconds": 562.21,
+              "cost": 562.21,
+              "distance": 5527.12
+            }
+          ],
+          "reason": "From Station 2 to Thomas A. Stewart Secondary, the crossing choice via Marina Boulevard / Water Street / George Street North / Parkhill Road West models 461.6 seconds, compared with 562.2 seconds via Nassau Mills Road: 100.6 modeled seconds saved. Turn/control delay is 98 versus 94 seconds; roadway suitability cost is 14.4 versus 20 seconds.",
+          "reviewStatus": "map-derived",
+          "graphVersion": "ontario-osm-2026-10-14-v2",
+          "costProfileVersion": "apparatus-response-2026-10-15-v1",
+          "id": "station-2:ptbo-location-8d5de3e709a34b",
+          "responseSeconds": 461.61,
+          "cost": 461.61,
+          "distance": 4574.88
+        }
+      ],
+      "routeAccess": {
+        "lat": 44.330561370405256,
+        "lng": -78.30861378515333,
+        "sourceLat": 44.3309442,
+        "sourceLng": -78.3099086,
+        "reviewStatus": "map-derived",
+        "wayId": "33964111",
+        "graphVersion": "ontario-osm-2026-10-14-v2",
+        "nodeId": "1873940880",
+        "sourceUrl": "https://www.openstreetmap.org/way/33964111"
+      }
     },
     {
       "id": "ptbo-location-4ab2e83a0adbe9",
@@ -495,7 +545,51 @@
       "sourceCallIds": [
         "call-tim-hortons-mv4a01"
       ],
-      "notes": []
+      "notes": [],
+      "routeChallenges": [
+        {
+          "baseId": "station-3",
+          "service": "fire",
+          "difficulty": 59,
+          "decisionType": "corridor-choice",
+          "preferredRoads": [
+            "Clonsilla Avenue",
+            "Webber Avenue",
+            "Lansdowne Street West"
+          ],
+          "alternatives": [
+            {
+              "roads": [
+                "Clonsilla Avenue",
+                "Lansdowne Street West"
+              ],
+              "reason": "Clonsilla Avenue / Lansdowne Street West models 184.3 seconds, 37 seconds more than the preferred route; 1222 m of changed named public-road geometry.",
+              "estimatedSeconds": 184.3,
+              "cost": 184.3,
+              "distance": 1339.43
+            }
+          ],
+          "reason": "From Station 3 to Tim Hortons, the corridor choice via Clonsilla Avenue / Webber Avenue / Lansdowne Street West models 147.3 seconds, compared with 184.3 seconds via Clonsilla Avenue / Lansdowne Street West: 37 modeled seconds saved. Turn/control delay is 54 versus 84 seconds; roadway suitability cost is 16.3 versus 3.9 seconds.",
+          "reviewStatus": "map-derived",
+          "graphVersion": "ontario-osm-2026-10-14-v2",
+          "costProfileVersion": "apparatus-response-2026-10-15-v1",
+          "id": "station-3:ptbo-location-e9b5c1759b3e50",
+          "responseSeconds": 147.26,
+          "cost": 147.26,
+          "distance": 782.33
+        }
+      ],
+      "routeAccess": {
+        "lat": 44.28080704028627,
+        "lng": -78.35016805180494,
+        "sourceLat": 44.2811655,
+        "sourceLng": -78.3503302,
+        "reviewStatus": "map-derived",
+        "wayId": "58425619",
+        "graphVersion": "ontario-osm-2026-10-14-v2",
+        "nodeId": "724315975",
+        "sourceUrl": "https://www.openstreetmap.org/way/58425619"
+      }
     },
     {
       "id": "ptbo-location-949889a0ff4a03",
@@ -531,7 +625,50 @@
       ],
       "placeNameSource": "https://citymaps.peterborough.ca/arcgis/rest/services/eMaps2_0_Operational/MapServer/29",
       "sourceCallIds": [],
-      "notes": []
+      "notes": [],
+      "routeChallenges": [
+        {
+          "baseId": "station-3",
+          "service": "fire",
+          "difficulty": 69,
+          "decisionType": "corridor-choice",
+          "preferredRoads": [
+            "Clonsilla Avenue"
+          ],
+          "alternatives": [
+            {
+              "roads": [
+                "Clonsilla Avenue",
+                "Webber Avenue",
+                "Lansdowne Street West"
+              ],
+              "reason": "Clonsilla Avenue / Webber Avenue / Lansdowne Street West models 243 seconds, 170.9 seconds more than the preferred route; 772 m of changed named public-road geometry.",
+              "estimatedSeconds": 242.99,
+              "cost": 242.99,
+              "distance": 989.81
+            }
+          ],
+          "reason": "From Station 3 to Sobeys - Lansdowne St W, the corridor choice via Clonsilla Avenue models 72.1 seconds, compared with 243 seconds via Webber Avenue / Lansdowne Street West: 170.9 modeled seconds saved. Turn/control delay is 12 versus 80 seconds; roadway suitability cost is 20.6 versus 46.7 seconds.",
+          "reviewStatus": "map-derived",
+          "graphVersion": "ontario-osm-2026-10-14-v2",
+          "costProfileVersion": "apparatus-response-2026-10-15-v1",
+          "id": "station-3:ptbo-location-949889a0ff4a03",
+          "responseSeconds": 72.09,
+          "cost": 72.09,
+          "distance": 326.88
+        }
+      ],
+      "routeAccess": {
+        "lat": 44.28233220039325,
+        "lng": -78.35125514085009,
+        "sourceLat": 44.2824603,
+        "sourceLng": -78.3506554,
+        "reviewStatus": "map-derived",
+        "wayId": "130283209",
+        "graphVersion": "ontario-osm-2026-10-14-v2",
+        "nodeId": "7252148059",
+        "sourceUrl": "https://www.openstreetmap.org/way/130283209"
+      }
     },
     {
       "id": "ptbo-location-7d7426b218ffff",
@@ -1124,7 +1261,52 @@
       ],
       "placeNameSource": "https://citymaps.peterborough.ca/arcgis/rest/services/eMaps2_0_Operational/MapServer/29",
       "sourceCallIds": [],
-      "notes": []
+      "notes": [],
+      "routeChallenges": [
+        {
+          "baseId": "ems-armour",
+          "service": "ems",
+          "difficulty": 69,
+          "decisionType": "corridor-choice",
+          "preferredRoads": [
+            "Armour Road",
+            "Hunter Street East"
+          ],
+          "alternatives": [
+            {
+              "roads": [
+                "Armour Road",
+                "St. Luke's Avenue",
+                "Rogers Street",
+                "Hunter Street East"
+              ],
+              "reason": "Armour Road / St. Luke's Avenue / Rogers Street / Hunter Street East models 93 seconds, 23.4 seconds more than the preferred route; 443 m of changed named public-road geometry.",
+              "estimatedSeconds": 93.02,
+              "cost": 93.02,
+              "distance": 527.93
+            }
+          ],
+          "reason": "From Armour to Foodland - Hunter St E, the corridor choice via Armour Road / Hunter Street East models 69.6 seconds, compared with 93 seconds via St. Luke's Avenue / Rogers Street: 23.4 modeled seconds saved. Turn/control delay is 31 versus 30 seconds; roadway suitability cost is 0.8 versus 7.1 seconds.",
+          "reviewStatus": "map-derived",
+          "graphVersion": "ontario-osm-2026-10-14-v2",
+          "costProfileVersion": "apparatus-response-2026-10-15-v1",
+          "id": "ems-armour:ptbo-location-ba5e1233af2fdf",
+          "responseSeconds": 69.64,
+          "cost": 69.64,
+          "distance": 526.16
+        }
+      ],
+      "routeAccess": {
+        "lat": 44.30684298780756,
+        "lng": -78.30788690860255,
+        "sourceLat": 44.3070734,
+        "sourceLng": -78.3079836,
+        "reviewStatus": "map-derived",
+        "wayId": "33942600",
+        "graphVersion": "ontario-osm-2026-10-14-v2",
+        "nodeId": "7722577679",
+        "sourceUrl": "https://www.openstreetmap.org/way/33942600"
+      }
     },
     {
       "id": "ptbo-location-f91e1c01bd6d4e",
@@ -1938,7 +2120,54 @@
       "sourceCallIds": [
         "call-charlotte-towers-high-rise-10hqygd"
       ],
-      "notes": []
+      "notes": [],
+      "routeChallenges": [
+        {
+          "baseId": "station-1",
+          "service": "fire",
+          "difficulty": 71,
+          "decisionType": "corridor-choice",
+          "preferredRoads": [
+            "Sherbrooke Street",
+            "Aylmer Street North",
+            "Charlotte Street"
+          ],
+          "alternatives": [
+            {
+              "roads": [
+                "Sherbrooke Street",
+                "Water Street",
+                "King Street",
+                "Aylmer Street North",
+                "Charlotte Street"
+              ],
+              "reason": "Sherbrooke Street / Water Street / King Street / Aylmer Street North models 190.4 seconds, 102.3 seconds more than the preferred route; 695 m of changed named public-road geometry.",
+              "estimatedSeconds": 190.42,
+              "cost": 190.42,
+              "distance": 929.1
+            }
+          ],
+          "reason": "From Station 1 to Charlotte Towers High-Rise, the corridor choice via Sherbrooke Street / Aylmer Street North / Charlotte Street models 88.1 seconds, compared with 190.4 seconds via Water Street / King Street: 102.4 modeled seconds saved. Turn/control delay is 52 versus 98 seconds; roadway suitability cost is 2.8 versus 10 seconds.",
+          "reviewStatus": "map-derived",
+          "graphVersion": "ontario-osm-2026-10-14-v2",
+          "costProfileVersion": "apparatus-response-2026-10-15-v1",
+          "id": "station-1:ptbo-location-656fac9ebc0035",
+          "responseSeconds": 88.07,
+          "cost": 88.07,
+          "distance": 406.13
+        }
+      ],
+      "routeAccess": {
+        "lat": 44.30326863070486,
+        "lng": -78.3238021992452,
+        "sourceLat": 44.3029601,
+        "sourceLng": -78.3237733,
+        "reviewStatus": "map-derived",
+        "wayId": "460582089",
+        "graphVersion": "ontario-osm-2026-10-14-v2",
+        "nodeId": "7722482387",
+        "sourceUrl": "https://www.openstreetmap.org/way/460582089"
+      }
     },
     {
       "id": "ptbo-location-9303fb23f0cec8",
@@ -2087,7 +2316,54 @@
       ],
       "placeNameSource": "https://citymaps.peterborough.ca/arcgis/rest/services/eMaps2_0_Operational/MapServer/29",
       "sourceCallIds": [],
-      "notes": []
+      "notes": [],
+      "routeChallenges": [
+        {
+          "baseId": "station-1",
+          "service": "fire",
+          "difficulty": 69,
+          "decisionType": "corridor-choice",
+          "preferredRoads": [
+            "Sherbrooke Street",
+            "Aylmer Street North",
+            "Charlotte Street",
+            "George Street North"
+          ],
+          "alternatives": [
+            {
+              "roads": [
+                "Sherbrooke Street",
+                "Water Street",
+                "Charlotte Street",
+                "George Street North"
+              ],
+              "reason": "Sherbrooke Street / Water Street / Charlotte Street / George Street North models 176.1 seconds, 44.6 seconds more than the preferred route; 626 m of changed named public-road geometry.",
+              "estimatedSeconds": 176.05,
+              "cost": 176.05,
+              "distance": 745.62
+            }
+          ],
+          "reason": "From Station 1 to Showplace Performance Centre, the corridor choice via Sherbrooke Street / Aylmer Street North / Charlotte Street / George Street North models 131.5 seconds, compared with 176.1 seconds via Water Street: 44.6 modeled seconds saved. Turn/control delay is 66 versus 112 seconds; roadway suitability cost is 4 versus 2.5 seconds.",
+          "reviewStatus": "map-derived",
+          "graphVersion": "ontario-osm-2026-10-14-v2",
+          "costProfileVersion": "apparatus-response-2026-10-15-v1",
+          "id": "station-1:ptbo-location-9a345c070a71b2",
+          "responseSeconds": 131.48,
+          "cost": 131.48,
+          "distance": 710.84
+        }
+      ],
+      "routeAccess": {
+        "lat": 44.30266615992165,
+        "lng": -78.3198304681098,
+        "sourceLat": 44.3026758,
+        "sourceLng": -78.3195376,
+        "reviewStatus": "map-derived",
+        "wayId": "40793460",
+        "graphVersion": "ontario-osm-2026-10-14-v2",
+        "nodeId": "7722492860",
+        "sourceUrl": "https://www.openstreetmap.org/way/40793460"
+      }
     },
     {
       "id": "ptbo-location-5bd3360f21c495",
@@ -2385,7 +2661,52 @@
       "sourceCallIds": [
         "call-peterborough-lift-lock-canal-d1yolo"
       ],
-      "notes": []
+      "notes": [],
+      "routeChallenges": [
+        {
+          "baseId": "ems-armour",
+          "service": "ems",
+          "difficulty": 69,
+          "decisionType": "corridor-choice",
+          "preferredRoads": [
+            "Armour Road",
+            "Hunter Street East"
+          ],
+          "alternatives": [
+            {
+              "roads": [
+                "Armour Road",
+                "Maria Street",
+                "Ashburnham Drive",
+                "Hunter Street East"
+              ],
+              "reason": "Armour Road / Maria Street / Ashburnham Drive / Hunter Street East models 193.5 seconds, 115.3 seconds more than the preferred route; 1426 m of changed named public-road geometry.",
+              "estimatedSeconds": 193.53,
+              "cost": 193.53,
+              "distance": 1551.68
+            }
+          ],
+          "reason": "From Armour to Peterborough Lift Lock 21, the corridor choice via Armour Road / Hunter Street East models 78.2 seconds, compared with 193.5 seconds via Maria Street / Ashburnham Drive: 115.3 modeled seconds saved. Turn/control delay is 20 versus 60 seconds; roadway suitability cost is 2.7 versus 6.7 seconds.",
+          "reviewStatus": "map-derived",
+          "graphVersion": "ontario-osm-2026-10-14-v2",
+          "costProfileVersion": "apparatus-response-2026-10-15-v1",
+          "id": "ems-armour:ptbo-location-ed5b4ee447617e",
+          "responseSeconds": 78.21,
+          "cost": 78.21,
+          "distance": 690.02
+        }
+      ],
+      "routeAccess": {
+        "lat": 44.307507,
+        "lng": -78.3016565,
+        "sourceLat": 44.3069332,
+        "sourceLng": -78.3014642,
+        "reviewStatus": "map-derived",
+        "wayId": "987259740",
+        "graphVersion": "ontario-osm-2026-10-14-v2",
+        "nodeId": "1770937147",
+        "sourceUrl": "https://www.openstreetmap.org/way/987259740"
+      }
     },
     {
       "id": "ptbo-location-d5e619a119f282",
@@ -3621,7 +3942,51 @@
       "sourceCallIds": [
         "call-intersection-nbvooh"
       ],
-      "notes": []
+      "notes": [],
+      "routeChallenges": [
+        {
+          "baseId": "ems-armour",
+          "service": "ems",
+          "difficulty": 74,
+          "decisionType": "bridge-choice",
+          "preferredRoads": [
+            "Armour Road",
+            "Maria Street"
+          ],
+          "alternatives": [
+            {
+              "roads": [
+                "Armour Road",
+                "Hunter Street East",
+                "Ashburnham Drive"
+              ],
+              "reason": "Armour Road / Hunter Street East / Ashburnham Drive models 174.6 seconds, 121.7 seconds more than the preferred route; 1498 m of changed named public-road geometry.",
+              "estimatedSeconds": 174.57,
+              "cost": 174.57,
+              "distance": 1573.56
+            }
+          ],
+          "reason": "From Armour to Ashburnham Drive & Maria Street, the crossing choice via Armour Road / Maria Street models 52.9 seconds, compared with 174.6 seconds via Hunter Street East / Ashburnham Drive: 121.7 modeled seconds saved. Turn/control delay is 11 versus 36 seconds; roadway suitability cost is 0.8 versus 7.4 seconds.",
+          "reviewStatus": "map-derived",
+          "graphVersion": "ontario-osm-2026-10-14-v2",
+          "costProfileVersion": "apparatus-response-2026-10-15-v1",
+          "id": "ems-armour:ptbo-location-81a31eb6de3b0b",
+          "responseSeconds": 52.85,
+          "cost": 52.85,
+          "distance": 569.91
+        }
+      ],
+      "routeAccess": {
+        "lat": 44.3009722,
+        "lng": -78.3022676,
+        "sourceLat": 44.3009722,
+        "sourceLng": -78.3022676,
+        "reviewStatus": "map-derived",
+        "wayId": "477862963",
+        "graphVersion": "ontario-osm-2026-10-14-v2",
+        "nodeId": "388671481",
+        "sourceUrl": "https://www.openstreetmap.org/way/477862963"
+      }
     },
     {
       "id": "ptbo-location-e7c3e71fd00519",
@@ -4273,7 +4638,51 @@
       ],
       "placeNameSource": "https://citymaps.peterborough.ca/arcgis/rest/services/eMaps2_0_Operational/MapServer/29",
       "sourceCallIds": [],
-      "notes": []
+      "notes": [],
+      "routeChallenges": [
+        {
+          "baseId": "station-2",
+          "service": "fire",
+          "difficulty": 73,
+          "decisionType": "corridor-choice",
+          "preferredRoads": [
+            "Marina Boulevard"
+          ],
+          "alternatives": [
+            {
+              "roads": [
+                "Marina Boulevard",
+                "Water Street",
+                "Langton Street",
+                "Hilliard Street"
+              ],
+              "reason": "Marina Boulevard / Water Street / Langton Street / Hilliard Street models 253.3 seconds, 208.6 seconds more than the preferred route; 1666 m of changed named public-road geometry.",
+              "estimatedSeconds": 253.27,
+              "cost": 253.27,
+              "distance": 1810.55
+            }
+          ],
+          "reason": "From Station 2 to Edmison Heights Baptist Church, the corridor choice via Marina Boulevard models 44.7 seconds, compared with 253.3 seconds via Water Street / Langton Street / Hilliard Street: 208.6 modeled seconds saved. Turn/control delay is 0 versus 65 seconds; roadway suitability cost is 4.1 versus 25 seconds.",
+          "reviewStatus": "map-derived",
+          "graphVersion": "ontario-osm-2026-10-14-v2",
+          "costProfileVersion": "apparatus-response-2026-10-15-v1",
+          "id": "station-2:ptbo-location-12684f1f90d0f6",
+          "responseSeconds": 44.65,
+          "cost": 44.65,
+          "distance": 473.55
+        }
+      ],
+      "routeAccess": {
+        "lat": 44.33340731154329,
+        "lng": -78.32149121865548,
+        "sourceLat": 44.3337794,
+        "sourceLng": -78.3218987,
+        "reviewStatus": "map-derived",
+        "wayId": "1013175935",
+        "graphVersion": "ontario-osm-2026-10-14-v2",
+        "nodeId": "388811405",
+        "sourceUrl": "https://www.openstreetmap.org/way/1013175935"
+      }
     },
     {
       "id": "ptbo-location-12419e1c3e8d87",
@@ -4537,7 +4946,53 @@
       ],
       "placeNameSource": "https://citymaps.peterborough.ca/arcgis/rest/services/eMaps2_0_Operational/MapServer/29",
       "sourceCallIds": [],
-      "notes": []
+      "notes": [],
+      "routeChallenges": [
+        {
+          "baseId": "ems-clonsilla",
+          "service": "ems",
+          "difficulty": 73,
+          "decisionType": "corridor-choice",
+          "preferredRoads": [
+            "Clonsilla Avenue",
+            "Goodfellow Road"
+          ],
+          "alternatives": [
+            {
+              "roads": [
+                "Clonsilla Avenue",
+                "Goodfellow Road",
+                "Chamberlain Street",
+                "Western Avenue",
+                "Sherbrooke Street"
+              ],
+              "reason": "Clonsilla Avenue / Goodfellow Road / Chamberlain Street / Western Avenue models 296.1 seconds, 245 seconds more than the preferred route; 2046 m of changed named public-road geometry.",
+              "estimatedSeconds": 296.08,
+              "cost": 296.08,
+              "distance": 2293.15
+            }
+          ],
+          "reason": "From Clonsilla to Cephas Christian Reformed Church, the corridor choice via Clonsilla Avenue / Goodfellow Road models 51.1 seconds, compared with 296.1 seconds via Chamberlain Street / Western Avenue / Sherbrooke Street: 245 modeled seconds saved. Turn/control delay is 23 versus 88 seconds; roadway suitability cost is 1 versus 13.3 seconds.",
+          "reviewStatus": "map-derived",
+          "graphVersion": "ontario-osm-2026-10-14-v2",
+          "costProfileVersion": "apparatus-response-2026-10-15-v1",
+          "id": "ems-clonsilla:ptbo-location-b4a83b483aba3f",
+          "responseSeconds": 51.05,
+          "cost": 51.05,
+          "distance": 350.51
+        }
+      ],
+      "routeAccess": {
+        "lat": 44.29172235335042,
+        "lng": -78.34434390116705,
+        "sourceLat": 44.2918227,
+        "sourceLng": -78.3440005,
+        "reviewStatus": "map-derived",
+        "wayId": "460579768",
+        "graphVersion": "ontario-osm-2026-10-14-v2",
+        "nodeId": "7706476875",
+        "sourceUrl": "https://www.openstreetmap.org/way/460579768"
+      }
     },
     {
       "id": "ptbo-location-24dfb5625d6654",
@@ -4647,7 +5102,51 @@
       ],
       "placeNameSource": "https://citymaps.peterborough.ca/arcgis/rest/services/eMaps2_0_Operational/MapServer/29",
       "sourceCallIds": [],
-      "notes": []
+      "notes": [],
+      "routeChallenges": [
+        {
+          "baseId": "station-1",
+          "service": "fire",
+          "difficulty": 73,
+          "decisionType": "corridor-choice",
+          "preferredRoads": [
+            "Sherbrooke Street"
+          ],
+          "alternatives": [
+            {
+              "roads": [
+                "Sherbrooke Street",
+                "George Street North",
+                "Dalhousie Street",
+                "Bethune Street"
+              ],
+              "reason": "Sherbrooke Street / George Street North / Dalhousie Street / Bethune Street models 180.3 seconds, 128.9 seconds more than the preferred route; 800 m of changed named public-road geometry.",
+              "estimatedSeconds": 180.25,
+              "cost": 180.25,
+              "distance": 1036.26
+            }
+          ],
+          "reason": "From Station 1 to All Saints Anglican Church, the corridor choice via Sherbrooke Street models 51.3 seconds, compared with 180.3 seconds via George Street North / Dalhousie Street / Bethune Street: 129 modeled seconds saved. Turn/control delay is 24 versus 69 seconds; roadway suitability cost is 1.1 versus 16.3 seconds.",
+          "reviewStatus": "map-derived",
+          "graphVersion": "ontario-osm-2026-10-14-v2",
+          "costProfileVersion": "apparatus-response-2026-10-15-v1",
+          "id": "station-1:ptbo-location-59e8a9212dd698",
+          "responseSeconds": 51.3,
+          "cost": 51.3,
+          "distance": 364.64
+        }
+      ],
+      "routeAccess": {
+        "lat": 44.30048386998119,
+        "lng": -78.32674839462602,
+        "sourceLat": 44.300335,
+        "sourceLng": -78.3267316,
+        "reviewStatus": "map-derived",
+        "wayId": "737434011",
+        "graphVersion": "ontario-osm-2026-10-14-v2",
+        "nodeId": "7393941202",
+        "sourceUrl": "https://www.openstreetmap.org/way/737434011"
+      }
     },
     {
       "id": "ptbo-location-ea7883f193a584",
@@ -5505,7 +6004,52 @@
       ],
       "placeNameSource": "https://citymaps.peterborough.ca/arcgis/rest/services/eMaps2_0_Operational/MapServer/29",
       "sourceCallIds": [],
-      "notes": []
+      "notes": [],
+      "routeChallenges": [
+        {
+          "baseId": "ems-clonsilla",
+          "service": "ems",
+          "difficulty": 69,
+          "decisionType": "corridor-choice",
+          "preferredRoads": [
+            "Clonsilla Avenue",
+            "Goodfellow Road"
+          ],
+          "alternatives": [
+            {
+              "roads": [
+                "Clonsilla Avenue",
+                "The Parkway",
+                "Lansdowne Street West",
+                "Goodfellow Road"
+              ],
+              "reason": "Clonsilla Avenue / The Parkway / Lansdowne Street West / Goodfellow Road models 212.4 seconds, 147.5 seconds more than the preferred route; 1539 m of changed named public-road geometry.",
+              "estimatedSeconds": 212.43,
+              "cost": 212.43,
+              "distance": 1626.5
+            }
+          ],
+          "reason": "From Clonsilla to Keith Wightman Public, the corridor choice via Clonsilla Avenue / Goodfellow Road models 65 seconds, compared with 212.4 seconds via The Parkway / Lansdowne Street West: 147.5 modeled seconds saved. Turn/control delay is 8 versus 86 seconds; roadway suitability cost is 3.1 versus 3.8 seconds.",
+          "reviewStatus": "map-derived",
+          "graphVersion": "ontario-osm-2026-10-14-v2",
+          "costProfileVersion": "apparatus-response-2026-10-15-v1",
+          "id": "ems-clonsilla:ptbo-location-c6e6fe10a005ed",
+          "responseSeconds": 64.96,
+          "cost": 64.96,
+          "distance": 650.4
+        }
+      ],
+      "routeAccess": {
+        "lat": 44.28667297105347,
+        "lng": -78.34181849149417,
+        "sourceLat": 44.286804,
+        "sourceLng": -78.3412264,
+        "reviewStatus": "map-derived",
+        "wayId": "460579779",
+        "graphVersion": "ontario-osm-2026-10-14-v2",
+        "nodeId": "388655090",
+        "sourceUrl": "https://www.openstreetmap.org/way/460579779"
+      }
     },
     {
       "id": "ptbo-location-12463d8e8e48ff",
@@ -5865,7 +6409,55 @@
       ],
       "placeNameSource": null,
       "sourceCallIds": [],
-      "notes": []
+      "notes": [],
+      "routeChallenges": [
+        {
+          "baseId": "station-2",
+          "service": "fire",
+          "difficulty": 75,
+          "decisionType": "corridor-choice",
+          "preferredRoads": [
+            "Marina Boulevard",
+            "Royal Drive",
+            "Olympus Avenue"
+          ],
+          "alternatives": [
+            {
+              "roads": [
+                "Marina Boulevard",
+                "Water Street",
+                "Carnegie Avenue",
+                "Cumberland Avenue",
+                "Royal Drive",
+                "Olympus Avenue"
+              ],
+              "reason": "Marina Boulevard / Water Street / Carnegie Avenue / Cumberland Avenue models 391.2 seconds, 241.9 seconds more than the preferred route; 2766 m of changed named public-road geometry.",
+              "estimatedSeconds": 391.19,
+              "cost": 391.19,
+              "distance": 2790.93
+            }
+          ],
+          "reason": "From Station 2 to 1248 Olympus Ave, the corridor choice via Marina Boulevard / Royal Drive / Olympus Avenue models 149.3 seconds, compared with 391.2 seconds via Water Street / Carnegie Avenue / Cumberland Avenue: 241.9 modeled seconds saved. Turn/control delay is 22 versus 116 seconds; roadway suitability cost is 23.6 versus 33.2 seconds.",
+          "reviewStatus": "map-derived",
+          "graphVersion": "ontario-osm-2026-10-14-v2",
+          "costProfileVersion": "apparatus-response-2026-10-15-v1",
+          "id": "station-2:ptbo-location-07916f924159d2",
+          "responseSeconds": 149.29,
+          "cost": 149.29,
+          "distance": 992.33
+        }
+      ],
+      "routeAccess": {
+        "lat": 44.33974316224244,
+        "lng": -78.32201343209685,
+        "sourceLat": 44.3397086,
+        "sourceLng": -78.3217304,
+        "reviewStatus": "map-derived",
+        "wayId": "33949372",
+        "graphVersion": "ontario-osm-2026-10-14-v2",
+        "nodeId": "388785316",
+        "sourceUrl": "https://www.openstreetmap.org/way/33949372"
+      }
     },
     {
       "id": "ptbo-location-d1c7e80d99b20f",
@@ -5901,7 +6493,100 @@
       ],
       "placeNameSource": null,
       "sourceCallIds": [],
-      "notes": []
+      "notes": [],
+      "routeChallenges": [
+        {
+          "baseId": "station-3",
+          "service": "fire",
+          "difficulty": 77,
+          "decisionType": "corridor-choice",
+          "preferredRoads": [
+            "Clonsilla Avenue",
+            "Goodfellow Road",
+            "Sherbrooke Street",
+            "Wallis Drive",
+            "Danita Boulevard",
+            "Bridle Drive"
+          ],
+          "alternatives": [
+            {
+              "roads": [
+                "Clonsilla Avenue",
+                "Goodfellow Road",
+                "Chamberlain Street",
+                "Western Avenue",
+                "Sherbrooke Street",
+                "Wallis Drive",
+                "Danita Boulevard",
+                "Bridle Drive"
+              ],
+              "reason": "Clonsilla Avenue / Goodfellow Road / Chamberlain Street / Western Avenue models 516.4 seconds, 156.7 seconds more than the preferred route; 1642 m of changed named public-road geometry.",
+              "estimatedSeconds": 516.39,
+              "cost": 516.39,
+              "distance": 3519.32
+            }
+          ],
+          "reason": "From Station 3 to 1261 Bridle Dr, the corridor choice via Clonsilla Avenue / Goodfellow Road / Sherbrooke Street / Wallis Drive models 359.7 seconds, compared with 516.4 seconds via Chamberlain Street / Western Avenue: 156.7 modeled seconds saved. Turn/control delay is 129 versus 177 seconds; roadway suitability cost is 24.8 versus 40 seconds.",
+          "reviewStatus": "map-derived",
+          "graphVersion": "ontario-osm-2026-10-14-v2",
+          "costProfileVersion": "apparatus-response-2026-10-15-v1",
+          "id": "station-3:ptbo-location-d1c7e80d99b20f",
+          "responseSeconds": 359.69,
+          "cost": 359.69,
+          "distance": 2442.46
+        },
+        {
+          "baseId": "ems-clonsilla",
+          "service": "ems",
+          "difficulty": 72,
+          "decisionType": "corridor-choice",
+          "preferredRoads": [
+            "Clonsilla Avenue",
+            "Goodfellow Road",
+            "Sherbrooke Street",
+            "Wallis Drive",
+            "Danita Boulevard",
+            "Bridle Drive"
+          ],
+          "alternatives": [
+            {
+              "roads": [
+                "Clonsilla Avenue",
+                "Goodfellow Road",
+                "Talwood Drive",
+                "Whitefield Drive",
+                "Sherbrooke Street",
+                "Wallis Drive",
+                "Danita Boulevard",
+                "Bridle Drive"
+              ],
+              "reason": "Clonsilla Avenue / Goodfellow Road / Talwood Drive / Whitefield Drive models 329.9 seconds, 60.2 seconds more than the preferred route; 612 m of changed named public-road geometry.",
+              "estimatedSeconds": 329.89,
+              "cost": 329.89,
+              "distance": 1952.63
+            }
+          ],
+          "reason": "From Clonsilla to 1261 Bridle Dr, the corridor choice via Clonsilla Avenue / Goodfellow Road / Sherbrooke Street / Wallis Drive models 269.7 seconds, compared with 329.9 seconds via Talwood Drive / Whitefield Drive: 60.2 modeled seconds saved. Turn/control delay is 97 versus 116 seconds; roadway suitability cost is 12.4 versus 20.7 seconds.",
+          "reviewStatus": "map-derived",
+          "graphVersion": "ontario-osm-2026-10-14-v2",
+          "costProfileVersion": "apparatus-response-2026-10-15-v1",
+          "id": "ems-clonsilla:ptbo-location-d1c7e80d99b20f",
+          "responseSeconds": 269.7,
+          "cost": 269.7,
+          "distance": 1809.23
+        }
+      ],
+      "routeAccess": {
+        "lat": 44.2956148700834,
+        "lng": -78.35495507837334,
+        "sourceLat": 44.2954135,
+        "sourceLng": -78.354854,
+        "reviewStatus": "map-derived",
+        "wayId": "33951457",
+        "graphVersion": "ontario-osm-2026-10-14-v2",
+        "nodeId": "388887343",
+        "sourceUrl": "https://www.openstreetmap.org/way/33951457"
+      }
     },
     {
       "id": "ptbo-location-5b331eebc8d955",

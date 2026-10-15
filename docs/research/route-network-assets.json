@@ -1,0 +1,203 @@
+{
+  "snapshot": "2026-10-14",
+  "assets": [
+    {
+      "path": "cities/ajax/route-network.js",
+      "bytes": 2511385,
+      "gitBlobSha": "e5dad02196d05154d79a71ed9ddf0abd5ba96fde",
+      "sha256": "f82a71a5950faaa4cf20cb658a21de8ff5bb60561a443e523d34096cf7630968"
+    },
+    {
+      "path": "cities/barrie/route-network.js",
+      "bytes": 1017829,
+      "gitBlobSha": "f548847984fce0d5d23d87bf9009a52786440989",
+      "sha256": "d29f01e97317e01ed09e9304fa70616d5845038036bee5bc4117c658d73347ef"
+    },
+    {
+      "path": "cities/belleville/route-network.js",
+      "bytes": 602793,
+      "gitBlobSha": "3727c79d3c624b0f55346fb2667b8fd183028625",
+      "sha256": "445a08a9302893fc1b44243856bb70c321bc3fea268d811729fa7d04d934c0f6"
+    },
+    {
+      "path": "cities/brampton/route-network.js",
+      "bytes": 7136409,
+      "gitBlobSha": "145d2e944141b656ec967c10fa35baf91665c5fe",
+      "sha256": "c25d31eef0e34056444856826940f8aa851c42ae624f0ca438abb79a4a87dc86"
+    },
+    {
+      "path": "cities/brantford/route-network.js",
+      "bytes": 567649,
+      "gitBlobSha": "9a5979c05489c02d2cb54b399743681bf2899cab",
+      "sha256": "2d0073d3db65803d5d45f19047bd6ecafbf6e733025dd6aa2021445abec6b1a5"
+    },
+    {
+      "path": "cities/burlington/route-network.js",
+      "bytes": 4442289,
+      "gitBlobSha": "25f0b83bf5fb7478e52bdfd1c4c62580cfd668dc",
+      "sha256": "5a091462a1b6b3a87db7f74ea5ec6bb5654847e6829c59040f37b8256bc97052"
+    },
+    {
+      "path": "cities/cambridge/route-network.js",
+      "bytes": 2696913,
+      "gitBlobSha": "a27b5bb4be82f884424e8518d0377c1929498070",
+      "sha256": "c0c36a1965ff5703f15af108a5a15edc1828568b6c5e6073d505d2658bf9b666"
+    },
+    {
+      "path": "cities/chatham-kent/route-network.js",
+      "bytes": 1537105,
+      "gitBlobSha": "0eeb5f76727a2cd9025e9aa5c2423ecfab275cb5",
+      "sha256": "3651c5fdac108da20cb32ab6d43d3d592e867c881c0d25c6716e38c64a0fc9a4"
+    },
+    {
+      "path": "cities/clarington/route-network.js",
+      "bytes": 1981537,
+      "gitBlobSha": "8d57eae999bc02e4d7caa06dc56529976827c916",
+      "sha256": "d332beec98764d3a7a9ee10ac09ed58487657955dd880f2e4830bd2b0338f5ae"
+    },
+    {
+      "path": "cities/greater-sudbury/route-network.js",
+      "bytes": 1981777,
+      "gitBlobSha": "c3b83f99a1bf459b08f95973fa13d7e6f9ad7666",
+      "sha256": "02afd0c770aace3bb5fe52be40e1f12b1a9c80e4de1813a9cc383ea752d1bd1c"
+    },
+    {
+      "path": "cities/guelph/route-network.js",
+      "bytes": 1501765,
+      "gitBlobSha": "fd61e3f82fea2cce7753a0316ea80a8481c251f3",
+      "sha256": "75c8921acf16078846aa34329ca32d967870f4b40b1f1393c5aef40446761801"
+    },
+    {
+      "path": "cities/hamilton/route-network.js",
+      "bytes": 6747493,
+      "gitBlobSha": "8c32e388ef916bfcab8402fdf16bda5f835e3a92",
+      "sha256": "a180aa044857f73398eb12ebe7ee0bc00646dbb2e09c00ffab35a0cd71eb342e"
+    },
+    {
+      "path": "cities/kingston/route-network.js",
+      "bytes": 1139129,
+      "gitBlobSha": "9f2766caed77732bc9cd18f6b1946bdf324e8b07",
+      "sha256": "a1c5f423912da7e698460681cc44b43aa9c6904a0497f3c82d32ce1e37d41351"
+    },
+    {
+      "path": "cities/kitchener/route-network.js",
+      "bytes": 3103581,
+      "gitBlobSha": "dc3ed50b22cb69d4978e7683c0a314d0a13ee8e4",
+      "sha256": "c24d924f8b4e77ab06549b431ba8751c3be4feac695cc98a7e8f816509411738"
+    },
+    {
+      "path": "cities/london/route-network.js",
+      "bytes": 2151665,
+      "gitBlobSha": "b29d8df496a673f68261a77e9196ea04762f183e",
+      "sha256": "42d04e8b91d7f7fa550fed6f0a792e34f218e103d0fbe87fdd8a57d39b63e50b"
+    },
+    {
+      "path": "cities/markham/route-network.js",
+      "bytes": 6665029,
+      "gitBlobSha": "26574717374a566b585e77603b07424af2b74661",
+      "sha256": "ad15a113115040caf12389c16c6b8bda826209a22181b9df238d1b37daff2a1d"
+    },
+    {
+      "path": "cities/milton/route-network.js",
+      "bytes": 5747037,
+      "gitBlobSha": "99dcd3b7318c7d1eddc676c5d7693448ee4dc727",
+      "sha256": "960da3d82024c407a01435e66be220c75a024f769a2d104a284584d1dfabf81f"
+    },
+    {
+      "path": "cities/mississauga/route-network.js",
+      "bytes": 13182677,
+      "gitBlobSha": "a87d013aada29cd4746daf1cae68a97f0fa6f71f",
+      "sha256": "14af7d7eb2bb280839b9d1cf33e38bf31b9a6b044448106b1f6937dd62962866"
+    },
+    {
+      "path": "cities/niagara-falls/route-network.js",
+      "bytes": 2179061,
+      "gitBlobSha": "a614f9d1327256a499d06dcb3eca0a2d1f03b538",
+      "sha256": "4b431f158067ebb6da19f2c1ef9df8c97ba7489ed04ac0230a1e1e1078d2147c"
+    },
+    {
+      "path": "cities/oakville/route-network.js",
+      "bytes": 4403877,
+      "gitBlobSha": "3dfe0faf0ebd0e9e6ffb3e7d6a642f45563079a8",
+      "sha256": "eba0dbb4983af5fb4d0fe06c7b5891597ca15451d5f6a55dfe16ad0ff744a943"
+    },
+    {
+      "path": "cities/oshawa/route-network.js",
+      "bytes": 2227789,
+      "gitBlobSha": "83c23a19eaa775bf1127e91ae3fcc2f5b18bdff4",
+      "sha256": "fdefabc7e50831e9af7a16fbee58e0874de8bd5850618864ec57f02839b334c4"
+    },
+    {
+      "path": "cities/ottawa/route-network.js",
+      "bytes": 6143745,
+      "gitBlobSha": "f6d58f66a3104e3d4a4cab48b5a075374f6dcfcd",
+      "sha256": "1bb65efb9ff53dc1db58f0e994a4bdee9b505f9479ddbd7892fcac7b04f27d5f"
+    },
+    {
+      "path": "cities/peterborough/route-network.js",
+      "bytes": 743985,
+      "gitBlobSha": "94844dd64e1b86df37e3adf12a908952739088b6",
+      "sha256": "be34a3cf07d8f64b115f36234652a8d740048ccd50cd4da40fa7ed6bb05ad84c"
+    },
+    {
+      "path": "cities/pickering/route-network.js",
+      "bytes": 5256301,
+      "gitBlobSha": "e981dd7ebc61288a09d8385eb3dd8a818e71a216",
+      "sha256": "edae81354a6990bd396e97b8d0653e3e9fca28a203de58b62df103379073387f"
+    },
+    {
+      "path": "cities/richmond-hill/route-network.js",
+      "bytes": 4599501,
+      "gitBlobSha": "cafc78fe132dd845a00a5d37b3754b257fa13c86",
+      "sha256": "0e6be7ecf2bd8b1808f94d95f2ef83e1d33c9dae4b9e9ebe9a17ad95dcb6be44"
+    },
+    {
+      "path": "cities/scarborough/route-network.js",
+      "bytes": 7913049,
+      "gitBlobSha": "102e9f35fc893a19dd13e4d3652f218d9afb00a6",
+      "sha256": "e5f48fd96dfcd03f082173dfb660c56532980fecebf46d7b2beb65caff9a1c12"
+    },
+    {
+      "path": "cities/st-catharines/route-network.js",
+      "bytes": 1645257,
+      "gitBlobSha": "a3b5154ac2db415c0ff8d8cf0bab5f9d8c5016ff",
+      "sha256": "da28af2a315d587764f55ca9d58cd66819715f95804760988a807c60e189ca0b"
+    },
+    {
+      "path": "cities/thunder-bay/route-network.js",
+      "bytes": 566961,
+      "gitBlobSha": "8ad56137aabc5b1ae302f062d24e0e3ebc29a80d",
+      "sha256": "b6bb9157451d19c0e27b9278d7cef49eb2f000da34ea45929fc00588de1123fb"
+    },
+    {
+      "path": "cities/toronto/route-network.js",
+      "bytes": 16406825,
+      "gitBlobSha": "dcaeffbea1aff4781a3d75aa6fdb51f227b5ff66",
+      "sha256": "da41d9321af447a482b0657943683b6188256d7e7b8cfcb2f88d51066336bd7b"
+    },
+    {
+      "path": "cities/vaughan/route-network.js",
+      "bytes": 8093769,
+      "gitBlobSha": "f62e605cef73a27339d5cab5a9eb44725a084dc8",
+      "sha256": "94a78c2b8b02c5b3707ca36a0f8cfa607776398d8575e1909563564773b1cf5b"
+    },
+    {
+      "path": "cities/waterloo/route-network.js",
+      "bytes": 2288821,
+      "gitBlobSha": "3e494fec7864f67ac1e0db91f9fb58a0e36a9b7e",
+      "sha256": "d7fd47f034e8e37b8c5f1f8633e2e5fa8c50714165b4b8328a379c3816ee5d68"
+    },
+    {
+      "path": "cities/whitby/route-network.js",
+      "bytes": 2591381,
+      "gitBlobSha": "2ee6df16d71528846d5b939d2e7054754f9d474b",
+      "sha256": "9f3154e5c874951465333e9e7a563bb86b562f31b19903f2d893e59524489d00"
+    },
+    {
+      "path": "cities/windsor/route-network.js",
+      "bytes": 1472377,
+      "gitBlobSha": "17ccbb5ac66961bdf0d185a7f35836924aaa3edb",
+      "sha256": "82873bc66bd4613d7861bea111de4db9417d609154b0ab1339fc056c22ea30b5"
+    }
+  ]
+}

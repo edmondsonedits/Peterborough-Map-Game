@@ -489,7 +489,7 @@
   function responseRouter(){if(!window.PTBO_ROUTE_COST||!state.graph)return null;if(!state.router||state.router.graph!==state.graph||state.routerService!==state.service){const router=window.PTBO_ROUTE_COST.createRouter({graph:state.graph,toLatLng,profile:responseProfile()});router.graph=state.graph;state.router=router;state.routerService=state.service;}return state.router;}
   function snapRoadAccess(point,radius=650,options={}){
     if(!state.graph)return null;const p=toXY(Number(point.lat),Number(point.lng)),cost=typeof window!=='undefined'?window.PTBO_ROUTE_COST:null;let best=null;
-    for(const index of nearbySegments(p.x,p.y,radius)){const s=state.graph.segments[index];if(s.roadAccessEligible===false||cost&&!cost.feasible(s,responseProfile()))continue;if(options.base&&s.highway==='service'&&(!s.tags?.name||['driveway','parking_aisle','drive-through'].includes(s.tags?.service)))continue;if(cost?.restricted(s)&&!options.base)continue;const candidate=projectToSegment(p.x,p.y,s);if(candidate.distance>radius)continue;const yard=s.highway==='service'&&(!s.tags?.name||['driveway','parking_aisle','drive-through'].includes(s.tags?.service)),score=candidate.distance+(yard?55:0);if(!best||score<best.score)best={...candidate,score};}
+    for(const index of nearbySegments(p.x,p.y,radius)){const s=state.graph.segments[index];if(options.wayId!=null&&String(options.wayId)!==String(s.wayId))continue;if(s.roadAccessEligible===false||cost&&!cost.feasible(s,responseProfile()))continue;if(options.base&&s.highway==='service'&&(!s.tags?.name||['driveway','parking_aisle','drive-through'].includes(s.tags?.service)))continue;if(cost?.restricted(s)&&!options.base)continue;const candidate=projectToSegment(p.x,p.y,s);if(candidate.distance>radius)continue;const yard=s.highway==='service'&&(!s.tags?.name||['driveway','parking_aisle','drive-through'].includes(s.tags?.service)),score=candidate.distance+(yard?55:0);if(!best||score<best.score)best={...candidate,score};}
     if(!best)return null;const s=best.segment,node=state.graph.nodes[best.t<=.5?s.from:s.to],ll=toLatLng(best.x,best.y);return {...ll,segmentId:s.id,t:best.t,nodeId:node.id,road:s.name,highway:s.highway,distance:best.distance,wayId:s.wayId};
   }
   function referenceBetween(a,b,options={}){const router=responseRouter();return router?router.between(a,b,{baseAccess:true,...options}):state.traceCore?.between(a,b,options);}
@@ -596,8 +596,8 @@
 
   function currentAccess(record,source){return Boolean(record&&state.graph&&record.graphVersion===state.graph.graphVersion&&['map-derived','facility-reviewed','verified'].includes(record.reviewStatus)&&Number.isFinite(Number(record.lat))&&Number.isFinite(Number(record.lng))&&Math.abs(Number(record.sourceLat)-Number(source.lat))<1e-7&&Math.abs(Number(record.sourceLng)-Number(source.lng))<1e-7);}
   function baseIdMatches(raw,base=state.base){return Boolean(base&&(String(raw)===String(base.id)||state.service+'-'+raw===String(base.id)));}
-  function curatedBaseAccess(base,source){const entries=state.routeManifest?.baseAccess||{};for(const [id,record] of Object.entries(entries))if(baseIdMatches(id,base)&&currentAccess(record,source))return snapRoadAccess(record,30,{base:true});return null;}
-  function callAnchor(call){const point=callPoint(call),record=call.routeAccess;if(!state.graph)return state.traceCore?.snap(point,CONFIG.destinationSearchRadius)||null;if(currentAccess(record,point)){const anchor=snapRoadAccess(record,35);if(anchor)return anchor;}return snapRoadAccess(point,CONFIG.destinationSearchRadius);}
+  function curatedBaseAccess(base,source){const entries=state.routeManifest?.baseAccess||{};for(const [id,record] of Object.entries(entries))if(baseIdMatches(id,base)&&currentAccess(record,source))return snapRoadAccess(record,30,{base:true,wayId:record.wayId});return null;}
+  function callAnchor(call){const point=callPoint(call),record=call.routeAccess;if(!state.graph)return state.traceCore?.snap(point,CONFIG.destinationSearchRadius)||null;if(currentAccess(record,point)){const anchor=snapRoadAccess(record,35,{wayId:record.wayId});if(anchor)return anchor;}return snapRoadAccess(point,CONFIG.destinationSearchRadius);}
   function basePoint(base){
     const point={lat:Number(base.spawnLat??base.lat),lng:Number(base.spawnLng??base.lng)};
     // Route drawing begins after leaving the yard, on the public road network.
@@ -777,11 +777,15 @@
       const alternative=referenceBetween(origin,destination,{avoidBridge:edge.bridgeKey});
       if(alternative)add(edge,(alternative.seconds??alternative.distance)-(optimal.seconds??optimal.distance),'bridge',alternative.edges.find(e=>e.bridgeKey)?.name||'another crossing',i/edges.length);
     }
-    const suffix=new Float64Array(edges.length+1);for(let i=edges.length-1;i>=0;i--)suffix[i]=suffix[i+1]+(window.PTBO_ROUTE_COST?window.PTBO_ROUTE_COST.edgeMetrics(edges[i],responseProfile()).seconds:edges[i].distance);
+    const responseCost=window.PTBO_ROUTE_COST,profile=responseCost?responseProfile():null,prefixContexts=new Array(edges.length),edgeSeconds=new Array(edges.length);
+    let accessOptions={},context=null;
+    if(responseCost){const a=state.graph.segments[origin.segmentId],b=state.graph.segments[destination.segmentId];accessOptions=responseRouter().endpointOptions(responseCost.restricted(a)?[a.from,a.to]:[],responseCost.restricted(b)?[b.from,b.to]:[],{baseAccess:true});}
+    for(let i=0;i<edges.length;i++){prefixContexts[i]=context;if(responseCost){const step=responseCost.transitionStep(state.graph,context,edges[i],profile,accessOptions);if(!step)return fallback;edgeSeconds[i]=step.seconds;context=step;}else edgeSeconds[i]=edges[i].distance;}
+    const suffix=new Float64Array(edges.length+1);for(let i=edges.length-1;i>=0;i--)suffix[i]=suffix[i+1]+edgeSeconds[i];
     const candidates=[];
     for(let i=1;i<edges.length;i++){
       const correct=edges[i],node=state.graph.nodes[correct.from],prev=edges[i-1].from;
-      if(!node||suffix[i]<220)continue;
+      if(!node||suffix[i]<(responseCost?20:220))continue;
       for(const alt of node.edges){
         if(alt.to===correct.to||alt.to===prev)continue;
         const plausibility=roadChoicePlausibility(alt,node,state.graph.nodes[destination.nodeId??state.graph.segments[destination.segmentId].to]);
@@ -794,8 +798,10 @@
     for(const candidate of candidates.slice(0,4)){
       const {correct,alt,index}=candidate,key=decisionKey(correct);if(seen.has(key))continue;seen.add(key);
       const altSegment=state.graph.segments[alt.segmentId],tailAnchor={...state.graph.nodes[alt.to],segmentId:alt.segmentId,t:alt.reverse?0:1};
-      const tail=referenceBetween(tailAnchor,destination,{avoidNode:correct.from,incoming:[...edges.slice(0,index),alt]});
-      if(tail)add(correct,(window.PTBO_ROUTE_COST?window.PTBO_ROUTE_COST.edgeMetrics(alt,responseProfile()).seconds:alt.distance)+(tail.seconds??tail.distance)-suffix[index],'turn',alt.name,index/edges.length);
+      const entry=responseCost?responseCost.transitionStep(state.graph,prefixContexts[index],alt,profile,accessOptions):null;
+      if(responseCost&&!entry)continue;
+      const tail=referenceBetween(tailAnchor,destination,{avoidNode:correct.from,incoming:entry||[...edges.slice(0,index),alt]});
+      if(tail)add(correct,(entry?entry.seconds:alt.distance)+(tail.seconds??tail.distance)-suffix[index],'turn',alt.name,index/edges.length);
     }
     traps.sort((a,b)=>b.trapScore-a.trapScore);
     const unique=[];const uniqueKeys=new Set();

@@ -146,6 +146,25 @@ class RouteBuilderTests(unittest.TestCase):
                     if 'viaNodeId' in restriction:
                         self.assertIn(restriction['viaNodeId'], node_locations)
 
+    def test_province_edge_supplement_requires_snapshot_compatible_versions(self):
+        with tempfile.TemporaryDirectory() as directory:
+            cache = Path(directory)
+            (cache / 'supplements').mkdir()
+            path = cache / 'supplements/way-55.osm'
+            xml = '<osm><node id="1" version="2" timestamp="2020-01-01T00:00:00Z" lon="-79" lat="44"><tag k="barrier" v="gate"/></node><node id="2" version="1" timestamp="2020-01-01T00:00:00Z" lon="-78.999" lat="44"/><way id="55" version="3" timestamp="2026-10-06T00:00:00Z"><nd ref="1"/><nd ref="2"/><tag k="highway" v="secondary"/><tag k="access" v="no"/></way></osm>'
+            path.write_text(xml)
+            payload, evidence, controls = builder.supplement_missing_way(55, cache)
+            self.assertEqual(payload['nodeIds'], [1, 2])
+            self.assertEqual(payload['tags']['access'], 'no')
+            self.assertEqual(evidence['wayVersion'], 3)
+            self.assertEqual(controls[1]['barrier'], 'gate')
+            path.write_text(xml.replace('2020-01-01T00:00:00Z', '2026-10-15T00:00:00Z', 1))
+            with self.assertRaises(ValueError):
+                builder.supplement_missing_way(55, cache)
+            path.write_text(xml.replace('2026-10-06T00:00:00Z', '2026-10-15T00:00:00Z'))
+            with self.assertRaises(ValueError):
+                builder.supplement_missing_way(55, cache)
+
     def test_native_location_index_preserves_node_identity_and_controls(self):
         import osmium
         with tempfile.TemporaryDirectory() as directory:

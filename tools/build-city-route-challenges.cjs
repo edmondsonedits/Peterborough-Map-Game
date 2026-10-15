@@ -3,6 +3,7 @@
 // Curate base-dependent road choices using exactly the browser game's graph and
 // response router. The output is map-derived evidence, not facility inspection.
 const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),zlib=require('node:zlib'),crypto=require('node:crypto');
+const {normalizeRouteMetadata}=require('../shared/dispatch-locations.js');
 const ROOT=path.resolve(__dirname,'..');
 const readJSON=file=>JSON.parse(fs.readFileSync(file,'utf8'));
 const round=(n,p=2)=>Math.round(Number(n)*10**p)/10**p;
@@ -38,6 +39,7 @@ function loadCity(cityId){
   return {file,script,calls,bases,catalogFile,catalog,map:window.PTBO_CITY_PACKAGE.map};
 }
 function saveCalls(city){
+  for(const call of city.calls)Object.assign(call,normalizeRouteMetadata(call));
   if(city.geo){city.geo.locations=city.calls;fs.writeFileSync(city.file,JSON.stringify(city.geo)+'\n');return;}
   const payload=zlib.gzipSync(JSON.stringify(city.calls),{level:9}).toString('base64');
   fs.writeFileSync(city.file,city.script.replace(/const PAYLOAD = '[^']+'/,'const PAYLOAD = '+JSON.stringify(payload).replace(/^"|"$/g,"'")));
@@ -72,7 +74,7 @@ function assessAlternative(best,alternative){
   if(routeSignature(best)===routeSignature(alternative))return null;
   const geometry=changedGeometry(best,alternative),penalty=alternative.seconds-best.seconds,threshold=Math.max(18,best.seconds*.035);
   if(penalty<=threshold)return null;
-  if(!(geometry.changedDistance>=120&&geometry.newNamedCorridorDistance>0||geometry.oppositeDeparture&&geometry.namedChangedDistance>=180))return null;
+  if(!(geometry.changedDistance>=120&&geometry.namedChangedDistance>=120&&geometry.newNamedCorridorDistance>0||geometry.oppositeDeparture&&geometry.namedChangedDistance>=180))return null;
   // A modest local detour can be credible even when the reference is short;
   // otherwise reject broad circuits that merely manufacture a bad choice.
   if(alternative.seconds>Math.max(best.seconds*2.8,best.seconds+300))return null;
@@ -87,6 +89,22 @@ function challengeDifficulty(best,alternative,quality,decisionType){
 function summarizeRoute(route){
   const values={distance:route.distance,seconds:route.seconds,cost:route.cost??route.seconds,travelSeconds:route.travelSeconds,turnSeconds:route.turnSeconds,controlSeconds:route.controlSeconds,suitabilitySeconds:route.suitabilitySeconds};
   return Object.fromEntries(Object.entries(values).filter(([,v])=>Number.isFinite(v)).map(([k,v])=>[k,round(v)]));
+}
+function challengeReason(base,call,best,alternative,decisionType){
+  const preferred=best.roads||routeRoads(best),other=alternative.roads||routeRoads(alternative),names=new Set(preferred.map(roadKey)),newRoads=other.filter(n=>!names.has(roadKey(n)));
+  const label={'departure-direction':'departure direction','bridge-choice':'crossing','corridor-choice':'corridor'}[decisionType]||'road';
+  const delay=r=>round((r.turnSeconds||0)+(r.controlSeconds||0),1);
+  return `From ${base.shortName||base.name||base.id} to ${call.name||call.addr}, the ${label} choice via ${preferred.slice(0,4).join(' / ')} models ${round(best.seconds,1)} seconds, compared with ${round(alternative.seconds,1)} seconds via ${(newRoads.length?newRoads:other).slice(0,4).join(' / ')}: ${round(alternative.seconds-best.seconds,1)} modeled seconds saved. Turn/control delay is ${delay(best)} versus ${delay(alternative)} seconds; roadway suitability cost is ${round(best.suitabilitySeconds||0,1)} versus ${round(alternative.suitabilitySeconds||0,1)} seconds.`;
+}
+function finalizeCityMetadata(cityId){
+  const city=loadCity(cityId),report=readJSON(path.join(ROOT,'outputs/ontario-route-curation',cityId+'.json')),bases=new Map(city.bases.map(b=>[b.id,b])),calls=new Map(city.calls.map(c=>[c.id,c]));
+  for(const row of report.routes){
+    const call=calls.get(row.callId),base=bases.get(row.baseId),challenge=call?.routeChallenges?.find(c=>c.baseId===row.baseId&&c.service===row.service);
+    if(!call||!base||!challenge)throw new Error(`${cityId}: evidence/metadata association missing: ${row.baseId}/${row.callId}`);
+    challenge.reason=challengeReason(base,call,row.reference,row.alternatives[0].route,row.decisionType);
+    challenge.alternatives.forEach((a,i)=>{const e=row.alternatives[i];if(e)a.reason=`${(e.route.roads||[]).slice(0,4).join(' / ')} models ${round(e.route.seconds,1)} seconds, ${round(e.quality.penalty,1)} seconds more than the preferred route; ${Math.round(e.quality.namedChangedDistance)} m of changed named public-road geometry.`;});
+  }
+  saveCalls(city);return {cityId,callCount:city.calls.length,challengeCount:report.routes.length};
 }
 function evidenceRoute(route,graph){
   return {...summarizeRoute(route),roads:routeRoads(route),geometry:route.coordinates,edges:route.edges.map(e=>({from:e.from,to:e.to,fromOsmId:graph.nodes[e.from]?.osmId,toOsmId:graph.nodes[e.to]?.osmId,wayId:e.wayId,segmentId:e.segmentId,reverse:Boolean(e.reverse),t0:e.t0??(e.reverse?1:0),t1:e.t1??(e.reverse?0:1),distance:round(e.distance,4),name:e.name,highway:e.highway,start:e.start||{lat:graph.nodes[e.from].lat,lng:graph.nodes[e.from].lng},end:e.end||{lat:graph.nodes[e.to].lat,lng:graph.nodes[e.to].lng}}))};
@@ -187,7 +205,7 @@ function buildCity(cityId,{write=false,networkFile}={}){
     for(const result of selected){
       let call=city.calls.find(c=>c.id===result.call.id);if(!call){call=result.call;city.calls.push(call);}
       const alternatives=result.alternatives.map(a=>({roads:routeRoads(a.route),estimatedSeconds:round(a.route.seconds),cost:round(a.route.cost??a.route.seconds),distance:round(a.route.distance),reason:`${a.label}; ${round(a.quality.penalty)} modeled seconds slower; ${Math.round(a.quality.changedDistance)} m of changed geometry`}));
-      const challenge={id:`${base.id}:${call.id}`,baseId:base.id,service:base.service,difficulty:result.difficulty,decisionType:result.decisionType,preferredRoads:routeRoads(result.best),alternatives,responseSeconds:round(result.best.seconds),cost:round(result.best.cost??result.best.seconds),distance:round(result.best.distance),reason:'Base-dependent modeled response choice between legal named-road corridors.',reviewStatus:'map-derived',graphVersion,costProfileVersion:engine.cost.VERSION};
+      const challenge={id:`${base.id}:${call.id}`,baseId:base.id,service:base.service,difficulty:result.difficulty,decisionType:result.decisionType,preferredRoads:routeRoads(result.best),alternatives,responseSeconds:round(result.best.seconds),cost:round(result.best.cost??result.best.seconds),distance:round(result.best.distance),reason:challengeReason(base,call,result.best,result.alternatives[0].route,result.decisionType),reviewStatus:'map-derived',graphVersion,costProfileVersion:engine.cost.VERSION};
       (call.routeChallenges??=[]).push(challenge);call.routeAccess=accessRecord(result.destination,call,graph,graphVersion);
       evidence.push({baseId:base.id,service:base.service,callId:call.id,decisionType:result.decisionType,difficulty:result.difficulty,origin:result.origin,destination:result.destination,reference:evidenceRoute(result.best,graph),alternatives:result.alternatives.map(a=>({decisionType:a.type,probe:a.options,quality:Object.fromEntries(Object.entries(a.quality).map(([k,v])=>[k,typeof v==='number'?round(v,4):v])),route:evidenceRoute(a.route,graph)}))});
     }
@@ -204,8 +222,8 @@ function main(){
   const args=process.argv.slice(2),value=flag=>args[args.indexOf(flag)+1],cityId=args.includes('--city')?value('--city'):'all',write=args.includes('--write');
   const ids=cityId==='all'?fs.readdirSync(path.join(ROOT,'cities')).filter(id=>fs.existsSync(path.join(ROOT,'cities',id,'geo-data.json'))||id==='peterborough'):[cityId];
   let errors=0;
-  for(const id of ids){try{const report=buildCity(id,{write,networkFile:args.includes('--network')?path.resolve(value('--network')):undefined});console.log(JSON.stringify({cityId:id,bases:report.baseCount,covered:report.coverage.length,challenges:report.challengeCount,calls:report.callCount,exceptions:report.exceptions,elapsedSeconds:report.elapsedSeconds}));if(report.exceptions.length)errors++;}catch(error){console.error(id+': '+error.stack);errors++;}}
+  for(const id of ids){try{if(args.includes('--finalize-only')){console.log(JSON.stringify(finalizeCityMetadata(id)));continue;}const report=buildCity(id,{write,networkFile:args.includes('--network')?path.resolve(value('--network')):undefined});console.log(JSON.stringify({cityId:id,bases:report.baseCount,covered:report.coverage.length,challenges:report.challengeCount,calls:report.callCount,exceptions:report.exceptions,elapsedSeconds:report.elapsedSeconds}));if(report.exceptions.length)errors++;}catch(error){console.error(id+': '+error.stack);errors++;}}
   if(errors)process.exitCode=1;
 }
 if(require.main===module)main();
-module.exports={loadEngine,loadCity,buildCity,changedGeometry,assessAlternative,challengeDifficulty,chooseChallenges,routeRoads,probeOptions};
+module.exports={loadEngine,loadCity,saveCalls,buildCity,finalizeCityMetadata,challengeReason,changedGeometry,assessAlternative,challengeDifficulty,chooseChallenges,routeRoads,probeOptions};

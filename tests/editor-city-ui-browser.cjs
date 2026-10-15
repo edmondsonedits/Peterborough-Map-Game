@@ -33,17 +33,19 @@ const server=http.createServer((req,res)=>{
  }
  try{
   // Every city uses the normal loader, stores and compiled published files.
-  const registryPage=await boot();const registry=await registryPage.page.evaluate(()=>PTBO_CITIES.map(city=>({id:city.id,callCount:city.callCount})));assert.equal(registry.length,33);
+  const selectedCities=process.env.PTBO_EDITOR_QA_CITIES?.split(',').filter(Boolean);
+  const registryPage=await boot('peterborough');const registry=await registryPage.page.evaluate(()=>PTBO_CITIES.map(city=>({id:city.id,callCount:city.callCount})));assert.equal(registry.length,33);
   assert.equal(await registryPage.page.locator('#city-select option').count(),33);await registryPage.context.close();
-  for(const city of registry){const h=await boot(city.id);assert.equal(await h.page.locator('.call-item').count(),city.callCount,city.id+' published count');assert.match(await h.page.locator('#city-summary').innerText(),new RegExp(city.callCount+' published'));await coverage(h.page,city.id);assert.deepEqual(h.errors,[]);await h.context.close();}
+  for(const city of registry.filter(city=>!selectedCities||selectedCities.includes(city.id))){const h=await boot(city.id);assert.equal(await h.page.locator('.call-item').count(),city.callCount,city.id+' published count');assert.match(await h.page.locator('#city-summary').innerText(),new RegExp(city.callCount+' published'));await coverage(h.page,city.id);assert.deepEqual(h.errors,[]);await h.context.close();}
   // Actual Peterborough production content must leave a usable record list in both orientations.
-  for(const [width,height] of [[1280,720],[1366,768],[390,844],[844,390],[667,375]]){
+  for(const [width,height] of [[1365,900],[1280,720],[1366,768],[390,844],[844,390],[667,375]]){
    const h=await boot('peterborough',{width,height}),p=h.page;
    const layout=await p.evaluate(()=>({listHeight:document.getElementById('call-list').clientHeight,overflow:document.documentElement.scrollWidth>innerWidth}));console.log(JSON.stringify({city:'peterborough',width,height,...layout}));
    assert.ok(layout.listHeight>=100,`Peterborough ${width}x${height}: list height ${layout.listHeight}`);assert.equal(layout.overflow,false);
    await p.locator('.call-item').first().click();assert.equal(await p.locator('#editor').isVisible(),true);await p.locator('#close-editor').click();await p.locator('.call-item').last().click();assert.equal(await p.locator('#editor').isVisible(),true);await p.locator('#close-editor').click();
-   assert.deepEqual(h.errors,[]);if(process.env.PTBO_EDITOR_QA_OUTPUT)await p.screenshot({path:path.join(process.env.PTBO_EDITOR_QA_OUTPUT,`peterborough-${width}x${height}.png`)});await h.context.close();
+   assert.deepEqual(h.errors,[]);await p.locator('#call-list').evaluate(node=>node.scrollTop=0);if(process.env.PTBO_EDITOR_QA_OUTPUT)await p.screenshot({path:path.join(process.env.PTBO_EDITOR_QA_OUTPUT,`peterborough-${width}x${height}.png`)});await h.context.close();
   }
+  if(!selectedCities||selectedCities.includes('ottawa')){
   const h=await boot(),p=h.page;
   const pristine=await exportData(p);for(const type of ['calls','bases','hospital'])assert.deepEqual(pristine[type],{added:[],updated:[],deleted:[]});
   const selected=await p.evaluate(()=>PTBO_DISPATCH_STORE.getAll().find(item=>item.routeChallenges?.length));assert.ok(selected);
@@ -51,17 +53,22 @@ const server=http.createServer((req,res)=>{
   await p.fill('#f-name','My Ottawa name');await p.locator('#editor button[type="submit"]').click();const renamed=await exportData(p);assert.equal(renamed.calls.updated.length,1);assert.deepEqual(renamed.calls.updated[0].changes,{name:'My Ottawa name'});assert.equal(renamed.calls.added.length,0);assert.equal(renamed.calls.deleted.length,0);
   await p.reload();await p.evaluate(()=>PTBO_EDITOR_READY);const restored=await p.evaluate(id=>PTBO_DISPATCH_STORE.getAll().find(item=>item.id===id),selected.id);assert.equal(restored.name,'My Ottawa name');assert.deepEqual(restored.routeChallenges,selected.routeChallenges);assert.deepEqual(restored.routeAccess,selected.routeAccess);
   await p.selectOption('#city-select','toronto');await p.waitForURL('**/?city=toronto');await p.evaluate(()=>PTBO_EDITOR_READY);assert.equal(await p.evaluate(()=>PTBO_DISPATCH_STORE.getAll().some(item=>item.name==='My Ottawa name')),false);assert.deepEqual(h.errors,[]);await h.context.close();
+  }
   // The former empty catalogs must retain user-created calls through their first canonical upgrade.
-  for(const city of ['belleville','scarborough']){
+  for(const city of ['belleville','scarborough'].filter(city=>!selectedCities||selectedCities.includes(city))){
    const key='ptboSharedDispatchLocationsV3:'+city,custom={id:'local-custom',name:'My saved custom',addr:'Local address',lat:44.17,lng:-77.38,radius:50,recognitionDifficulty:'hard',custom:true};
    const legacy=await boot(city,undefined,{[key]:{version:3,dataVersion:'1.6.8',items:[custom]}});assert.ok(await legacy.page.evaluate(()=>PTBO_DISPATCH_STORE.getAll().some(item=>item.id==='local-custom'&&item.name==='My saved custom'&&item.recognitionDifficulty==='hard')));assert.equal(await legacy.page.evaluate(key=>JSON.parse(localStorage.getItem(key)).routeMetadataVersion,key),1);await legacy.page.reload();await legacy.page.evaluate(()=>PTBO_EDITOR_READY);assert.ok(await legacy.page.evaluate(()=>PTBO_DISPATCH_STORE.getAll().some(item=>item.id==='local-custom')));assert.deepEqual(legacy.errors,[]);await legacy.context.close();
   }
   const pb=await boot('peterborough'),b=pb.page;const pristinePb=await exportData(b);for(const type of ['calls','bases','hospital'])assert.deepEqual(pristinePb[type],{added:[],updated:[],deleted:[]},'Peterborough pristine '+type);
   const station=await b.evaluate(()=>PTBO_BASE_STORE.getAll().find(base=>PTBO_DISPATCH_STORE.getAll().some(call=>(call.routeChallenges||[]).some(challenge=>challenge.service===base.service&&(challenge.baseId===base.id||challenge.service+'-'+challenge.baseId===base.id)))));assert.ok(station);
+  await b.selectOption('#base-filter',station.id);const pbCallId=await b.locator('.call-item').first().getAttribute('data-id');await b.locator('.call-item').first().click();const pbName=await b.inputValue('#f-name');
+  if(process.env.PTBO_EDITOR_QA_OUTPUT){await b.locator('#route-details summary').click();await b.locator('#route-details').scrollIntoViewIfNeeded();await b.screenshot({path:path.join(process.env.PTBO_EDITOR_QA_OUTPUT,'peterborough-route-rationale.png')});}
+  await b.fill('#f-name',pbName+' local name');await b.locator('#editor button[type="submit"]').click();const nameOnlyPb=await exportData(b);assert.equal(nameOnlyPb.calls.updated.length,1);assert.equal(nameOnlyPb.calls.updated[0].id,pbCallId);assert.deepEqual(nameOnlyPb.calls.updated[0].changes,{name:pbName+' local name'});
+  await b.fill('#f-name',pbName);await b.locator('#editor button[type="submit"]').click();await b.locator('#close-editor').click();assert.deepEqual((await exportData(b)).calls,{added:[],updated:[],deleted:[]});
   await b.evaluate(id=>PTBO_BASE_STORE.replaceAll(PTBO_BASE_STORE.getAll().map(base=>base.id===id?{...base,name:base.name+' local'}:base)),station.id);await b.selectOption('#base-filter',station.id);assert.match(await b.locator('#route-coverage-summary').innerText(),/3 of 3 valid/);
   await b.evaluate(id=>PTBO_BASE_STORE.replaceAll(PTBO_BASE_STORE.getAll().map(base=>base.id===id?{...base,spawnLat:base.spawnLat+0.00001}:base)),station.id);assert.match(await b.locator('#route-coverage-summary').innerText(),/0 of 3 valid/);assert.match(await b.locator('#route-coverage-summary').innerText(),/need review/);
   const stale=await exportData(b);assert.equal(stale.calls.updated.length,3);assert.ok(stale.calls.updated.every(row=>row.changes.routeChallenges.some(challenge=>challenge.reviewStatus==='stale')));
   await b.reload();await b.evaluate(()=>PTBO_EDITOR_READY);await b.selectOption('#base-filter',station.id);assert.match(await b.locator('#route-coverage-summary').innerText(),/0 of 3 valid/);assert.deepEqual(pb.errors,[]);await pb.context.close();
-  console.log('Production editor: all 33 cities, manifest/base coverage, responsive Peterborough lists, pristine/name-only exports, reload evidence, city isolation, legacy custom migration and base invalidation passed.');
+  console.log('Production editor checks passed for '+(selectedCities?.join(', ')||'all 33 cities')+'.');
  }finally{await browser.close();await new Promise(resolve=>server.close(resolve));}
 })().catch(error=>{console.error(error);server.close();process.exitCode=1;});

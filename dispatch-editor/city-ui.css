@@ -6,7 +6,7 @@
 @media(max-width:760px){.save-status{top:10px;bottom:auto;max-width:calc(100% - 120px);padding:7px 9px;font-size:.65rem;line-height:1.35}.map-tools{bottom:90px}}
 
 /* Reserve the sidebar for records on ordinary laptop screens. Export remains in the top bar. */
-@media(min-width:761px) and (max-height:850px){
+@media(min-width:761px) and (max-height:1050px){
   .notice,.permanent{display:none}
   .city-picker{padding:6px 12px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:3px 9px;align-items:center}
   .city-picker label{margin:0}.city-picker select{min-height:38px;padding:7px 9px;font-size:.82rem}

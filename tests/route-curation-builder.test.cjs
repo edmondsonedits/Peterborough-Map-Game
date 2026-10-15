@@ -29,5 +29,5 @@ test('same corridor incurs a selection penalty only with same decision type and 
 test('the builder exports the browser game graph and response functions without initializing UI',()=>{
  const engine=loadEngine('peterborough');
  for(const key of ['buildGraph','toXY','toLatLng','snapRoadAccess','referenceBetween','basePoint','callPoint'])assert.equal(typeof engine[key],'function');
- const city=loadCity('peterborough');assert.equal(city.bases.length,5);assert.equal(city.calls.length,200);
+ const city=loadCity('peterborough');assert.equal(city.bases.length,5);assert.equal(city.calls.filter(c=>c.recognitionDifficulty!==null).length,200);
 });

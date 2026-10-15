@@ -223,10 +223,10 @@ def supplement_missing_way(way_id, cache_dir):
     tree = ET.fromstring(raw)
     nodes = {int(node.attrib['id']): node for node in tree.findall('node')}
     way = next((way for way in tree.findall('way') if int(way.attrib['id']) == way_id), None)
-    if way is None or way.attrib.get('timestamp', '') > SNAPSHOT:
+    if way is None or not way.attrib.get('timestamp') or way.attrib.get('visible') == 'false' or way.attrib['timestamp'] > SNAPSHOT:
         raise ValueError(f'Supplement way {way_id} is unavailable at source cutoff')
     refs = [int(node.attrib['ref']) for node in way.findall('nd')]
-    if any(node_id not in nodes or nodes[node_id].attrib.get('timestamp', '') > SNAPSHOT for node_id in refs):
+    if any(node_id not in nodes or not nodes[node_id].attrib.get('timestamp') or nodes[node_id].attrib.get('visible') == 'false' or nodes[node_id].attrib['timestamp'] > SNAPSHOT for node_id in refs):
         raise ValueError(f'Supplement nodes for way {way_id} changed after source cutoff')
     tags = {tag.attrib['k']: tag.attrib['v'] for tag in way.findall('tag')}
     evidence = {'url': url, 'sha256': hashlib.sha256(raw).hexdigest(), 'wayId': way_id,
@@ -519,7 +519,15 @@ def main():
     parser.add_argument('--cities', help='Comma-separated city IDs; default all city packages')
     parser.add_argument('--bases-json', help='City ID → active base coordinate list, superseding package fallbacks')
     args = parser.parse_args()
-    build(args)
+    import fcntl
+    lock_dir = Path(args.cache_dir).resolve()
+    lock_dir.mkdir(parents=True, exist_ok=True)
+    with (lock_dir / 'build.lock').open('w') as lock:
+        try:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError as error:
+            raise RuntimeError('Another route network builder is using this cache directory') from error
+        build(args)
 
 
 if __name__ == '__main__':

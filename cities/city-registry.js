@@ -37,7 +37,7 @@
     if (!originalIds.has(id)) cities.push({id,name,province:'Ontario',status:'geo-demo',playable:true,
       note:'Geo Guesser demo available',packageUrl:`cities/${id}/city.json`});
   }
-  const catalogCounts = {"ajax":20,"barrie":20,"belleville":8,"brampton":20,"brantford":20,"burlington":20,"cambridge":20,"chatham-kent":20,"clarington":20,"greater-sudbury":20,"guelph":20,"hamilton":20,"kingston":20,"kitchener":20,"london":20,"markham":20,"milton":20,"mississauga":20,"niagara-falls":20,"oakville":20,"oshawa":20,"ottawa":20,"peterborough":200,"pickering":20,"richmond-hill":20,"scarborough":12,"st-catharines":20,"thunder-bay":20,"toronto":20,"vaughan":20,"waterloo":20,"whitby":20,"windsor":20};
+  const catalogCounts = {"ajax":20,"barrie":20,"belleville":9,"brampton":20,"brantford":20,"burlington":20,"cambridge":20,"chatham-kent":20,"clarington":20,"greater-sudbury":20,"guelph":20,"hamilton":20,"kingston":20,"kitchener":20,"london":20,"markham":20,"milton":20,"mississauga":20,"niagara-falls":20,"oakville":20,"oshawa":20,"ottawa":20,"peterborough":200,"pickering":20,"richmond-hill":20,"scarborough":12,"st-catharines":20,"thunder-bay":20,"toronto":20,"vaughan":20,"waterloo":20,"whitby":20,"windsor":20};
   window.PTBO_CITIES = Object.freeze(cities.map(city => Object.freeze({
     ...city,dispatch:simulatorRoutes,callCount:catalogCounts[city.id]??0,
     routeDataUrl:`cities/${city.id}/route-data.json`,
