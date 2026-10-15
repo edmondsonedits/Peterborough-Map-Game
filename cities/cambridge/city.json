@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 2,
+  "id": "cambridge",
+  "name": "Cambridge",
+  "province": "Ontario",
+  "country": "Canada",
+  "status": "geo-demo",
+  "playable": true,
+  "note": "Geo Guesser demo with 20 shared Fire and EMS call locations.",
+  "map": {
+    "bounds": [
+      [
+        43.33252048463954,
+        -80.4138008860393
+      ],
+      [
+        43.47421461023125,
+        -80.25132343209673
+      ]
+    ],
+    "defaultCenter": [
+      43.3986282,
+      -80.3057941
+    ],
+    "defaultZoom": 18,
+    "minZoom": 7,
+    "maxZoom": 19
+  },
+  "features": {
+    "baseTraining": false,
+    "dispatch": false,
+    "roadBoundaries": false,
+    "routeGuidance": false,
+    "geoGuesser": true
+  },
+  "data": {
+    "boundaries": null,
+    "roads": null,
+    "dispatchLocations": null,
+    "bases": "geo-data.json",
+    "hospitals": null,
+    "geoGuesser": "geo-data.json"
+  }
+}

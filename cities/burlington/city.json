@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 2,
+  "id": "burlington",
+  "name": "Burlington",
+  "province": "Ontario",
+  "country": "Canada",
+  "status": "geo-demo",
+  "playable": true,
+  "note": "Geo Guesser demo with 20 shared Fire and EMS call locations.",
+  "map": {
+    "bounds": [
+      [
+        43.26801300112401,
+        -79.95928964637378
+      ],
+      [
+        43.47654603016583,
+        -79.63034733192568
+      ]
+    ],
+    "defaultCenter": [
+      43.33113882611392,
+      -79.81819737571415
+    ],
+    "defaultZoom": 18,
+    "minZoom": 7,
+    "maxZoom": 19
+  },
+  "features": {
+    "baseTraining": false,
+    "dispatch": false,
+    "roadBoundaries": false,
+    "routeGuidance": false,
+    "geoGuesser": true
+  },
+  "data": {
+    "boundaries": null,
+    "roads": null,
+    "dispatchLocations": null,
+    "bases": "geo-data.json",
+    "hospitals": null,
+    "geoGuesser": "geo-data.json"
+  }
+}

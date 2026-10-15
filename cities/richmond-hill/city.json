@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 2,
+  "id": "richmond-hill",
+  "name": "Richmond Hill",
+  "province": "Ontario",
+  "country": "Canada",
+  "status": "geo-demo",
+  "playable": true,
+  "note": "Geo Guesser demo with 20 shared Fire and EMS call locations.",
+  "map": {
+    "bounds": [
+      [
+        43.829270412593175,
+        -79.48559824366056
+      ],
+      [
+        43.97754774129366,
+        -79.3714957973409
+      ]
+    ],
+    "defaultCenter": [
+      43.867171820603346,
+      -79.44249767296054
+    ],
+    "defaultZoom": 18,
+    "minZoom": 7,
+    "maxZoom": 19
+  },
+  "features": {
+    "baseTraining": false,
+    "dispatch": false,
+    "roadBoundaries": false,
+    "routeGuidance": false,
+    "geoGuesser": true
+  },
+  "data": {
+    "boundaries": null,
+    "roads": null,
+    "dispatchLocations": null,
+    "bases": "geo-data.json",
+    "hospitals": null,
+    "geoGuesser": "geo-data.json"
+  }
+}

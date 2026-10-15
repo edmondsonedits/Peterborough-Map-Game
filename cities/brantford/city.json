@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 2,
+  "id": "brantford",
+  "name": "Brantford",
+  "province": "Ontario",
+  "country": "Canada",
+  "status": "geo-demo",
+  "playable": true,
+  "note": "Geo Guesser demo with 20 shared Fire and EMS call locations.",
+  "map": {
+    "bounds": [
+      [
+        43.094072144874396,
+        -80.3535853481985
+      ],
+      [
+        43.20851486570947,
+        -80.18967939749706
+      ]
+    ],
+    "defaultCenter": [
+      43.14202450140971,
+      -80.25947528700333
+    ],
+    "defaultZoom": 18,
+    "minZoom": 7,
+    "maxZoom": 19
+  },
+  "features": {
+    "baseTraining": false,
+    "dispatch": false,
+    "roadBoundaries": false,
+    "routeGuidance": false,
+    "geoGuesser": true
+  },
+  "data": {
+    "boundaries": null,
+    "roads": null,
+    "dispatchLocations": null,
+    "bases": "geo-data.json",
+    "hospitals": null,
+    "geoGuesser": "geo-data.json"
+  }
+}

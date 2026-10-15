@@ -10,6 +10,9 @@
     :root{color-scheme:dark;--bg:#0b1220;--panel:#142039;--ink:#f8fafc;--muted:#aebed3;--border:rgba(255,255,255,.14);--cyan:#38bdf8;--red:#fb7185;--green:#34d399}
     *{box-sizing:border-box}html,body{min-height:100%;margin:0}body{padding:calc(22px + env(safe-area-inset-top)) 16px calc(34px + env(safe-area-inset-bottom));background:radial-gradient(circle at 10% 0,rgba(56,189,248,.15),transparent 28rem),var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.shell{width:min(980px,100%);margin:auto}.top{display:flex;align-items:center;gap:12px;margin-bottom:18px}.back,.button{min-height:44px;padding:0 14px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--border);border-radius:12px;background:rgba(20,32,57,.92);color:var(--ink);font:inherit;font-weight:850;text-decoration:none;cursor:pointer}.back{width:44px;padding:0}.title{flex:1}.eyebrow{margin:0 0 4px;color:var(--cyan);font-size:.72rem;font-weight:900;letter-spacing:.13em;text-transform:uppercase}.title h1{margin:0;font-size:clamp(1.9rem,6vw,3.2rem);letter-spacing:-.045em}.panel{padding:18px;border:1px solid var(--border);border-radius:17px;background:rgba(15,26,46,.9);box-shadow:0 18px 48px rgba(0,0,0,.2)}.status{margin:0;color:var(--muted);line-height:1.6}.status strong{color:var(--ink)}.status.error{color:#fecdd3}.status.ok{color:#bbf7d0}.setup{margin-top:14px;padding:14px;border:1px solid rgba(251,113,133,.3);border-radius:13px;background:rgba(127,29,29,.14)}.setup h2{margin:0 0 8px;font-size:1rem}.setup p,.setup li{color:var(--muted);line-height:1.55}.setup ul{margin:8px 0 0;padding-left:1.25rem}.setup code{color:#bae6fd}.grid{display:none;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}.grid.ready{display:grid}.stat{padding:14px;border:1px solid var(--border);border-radius:14px;background:rgba(20,32,57,.88)}.stat span{display:block;color:var(--muted);font-size:.68rem;font-weight:850;letter-spacing:.08em;text-transform:uppercase}.stat strong{display:block;margin-top:7px;font-size:1.8rem}.rows{display:none;margin-top:14px;padding:16px;border:1px solid var(--border);border-radius:14px;background:rgba(20,32,57,.8)}.rows.ready{display:block}.rows h2{margin:0 0 10px;font-size:1rem}.row{display:flex;justify-content:space-between;gap:14px;padding:8px 0;border-top:1px solid rgba(255,255,255,.07);color:var(--muted)}.row:first-of-type{border-top:0}.row b{color:var(--ink)}.foot{margin-top:16px;color:#8294ac;font-size:.75rem;line-height:1.5}.foot a{color:#7dd3fc}@media(max-width:720px){.grid{grid-template-columns:1fr 1fr}.top{align-items:flex-start;flex-wrap:wrap}.button{width:100%}}@media(max-width:420px){.grid{grid-template-columns:1fr}.stat strong{font-size:1.5rem}}
   </style>
+  <style>
+    .demand-table{width:100%;border-collapse:collapse;font-size:.82rem}.demand-scroll{overflow-x:auto}.demand-table th,.demand-table td{padding:10px 8px;text-align:right;border-top:1px solid var(--border);white-space:nowrap}.demand-table th:first-child{text-align:left}.demand-table thead th{color:var(--muted);font-size:.72rem}.device-note{color:var(--muted);line-height:1.6;font-size:.85rem}.demand-count{font-size:1.6rem;color:var(--cyan)}.local-demand{margin-bottom:18px}
+  </style>
 </head>
 <body>
 <main class="shell">
@@ -18,6 +21,13 @@
     <div class="title"><p class="eyebrow">Authenticated admin area</p><h1>Secure Analytics</h1></div>
     <button class="button" id="refresh" type="button">Refresh</button>
   </header>
+
+  <section class="panel local-demand" aria-labelledby="local-demo-heading">
+    <h2 id="local-demo-heading">Demo requests on this device</h2>
+    <p class="device-note">Explicit requests saved in this browser only. These counts do not include other players or devices. Clearing browser storage removes them.</p>
+    <p><strong class="demand-count" id="local-demo-requests-total">0</strong> requests</p>
+    <div class="demand-scroll"><table class="demand-table"><thead><tr><th scope="col">City</th><th scope="col">Geo Guesser</th><th scope="col">Route Mapping</th><th scope="col">Dispatch</th><th scope="col">City Explorer</th><th scope="col">Total</th></tr></thead><tbody id="local-demo-request-rows"></tbody></table></div>
+  </section>
 
   <section class="panel" aria-live="polite">
     <p class="status" id="status"><strong>Checking secure analytics access…</strong></p>
@@ -43,19 +53,22 @@
     </section>
 
     <section class="rows" id="department-section"><h2>Department usage</h2><div id="department-rows"></div></section>
+    <section class="rows" id="demo-request-section"><h2>Shared demo demand</h2><p class="device-note">Aggregate submitted requests returned by the authenticated backend.</p><p><strong class="demand-count" id="demo-requests-total">—</strong> requests</p><div class="demand-scroll"><table class="demand-table"><thead><tr><th scope="col">City</th><th scope="col">Geo Guesser</th><th scope="col">Route Mapping</th><th scope="col">Dispatch</th><th scope="col">City Explorer</th><th scope="col">Total</th></tr></thead><tbody id="demo-request-rows"></tbody></table></div></section>
   </section>
 
-  <p class="foot">Release v1.6.37 · Direct browser Firestore reads are disabled for administrative analytics. See <a href="../docs/ANALYTICS-PRIVACY-SECURITY.md">Analytics Privacy &amp; Security</a> for deployment requirements.</p>
+  <p class="foot">Release v1.6.109 · Direct browser Firestore reads are disabled for administrative analytics. See <a href="../docs/ANALYTICS-PRIVACY-SECURITY.md">Analytics Privacy &amp; Security</a> for deployment requirements.</p>
 </main>
+<script src="../shared/demo-requests.js?v=1.6.109"></script>
 <script>
 (() => {
   'use strict';
-  const VERSION = '1.6.37';
+  const VERSION = '1.6.109';
   const byId = id => document.getElementById(id);
   const status = byId('status');
   const setup = byId('setup');
   const grid = byId('grid');
   const departmentSection = byId('department-section');
+  const demandSection = byId('demo-request-section');
   const number = value => Number.isFinite(Number(value)) ? Number(value) : 0;
   const fmt = value => Math.round(number(value)).toLocaleString();
   const duration = seconds => {
@@ -97,6 +110,35 @@
     });
   }
 
+  function renderDemand(demand, prefix = '') {
+    const rows = byId(`${prefix}demo-request-rows`);
+    rows.replaceChildren();
+    byId(`${prefix}demo-requests-total`).textContent = demand ? fmt(demand.total) : '—';
+    const entries = Object.entries(demand?.byCityMode || {}).sort((a, b) => Object.values(b[1]).reduce((sum, count) => sum + number(count), 0) - Object.values(a[1]).reduce((sum, count) => sum + number(count), 0) || a[0].localeCompare(b[0]));
+    if (!entries.length) {
+      const row = document.createElement('tr');
+      const cell = document.createElement('td');
+      cell.setAttribute('colspan', '6');
+      cell.textContent = demand ? (prefix ? 'No requests saved on this device yet.' : 'No shared requests yet.') : 'Demo demand has not been returned by the secure backend.';
+      row.appendChild(cell); rows.appendChild(row);
+      return;
+    }
+    for (const [city, modes] of entries) {
+      const row = document.createElement('tr');
+      const label = document.createElement('th');
+      label.setAttribute('scope', 'row');
+      label.textContent = city.replace(/[-_]/g, ' ').replace(/\b\w/g, letter => letter.toUpperCase());
+      row.appendChild(label);
+      let total = 0;
+      for (const mode of ['geo', 'route', 'dispatch', 'explorer']) {
+        const cell = document.createElement('td');
+        const count = number(modes[mode]);
+        total += count; cell.textContent = fmt(count); row.appendChild(cell);
+      }
+      const sum = document.createElement('td'); sum.textContent = fmt(total); row.appendChild(sum); rows.appendChild(row);
+    }
+  }
+
   function render(stats) {
     const counters = stats.counters || {};
     byId('departments').textContent = fmt(stats.departmentCount ?? Object.keys(stats.departments || {}).filter(key => key !== 'public_demo').length);
@@ -108,16 +150,20 @@
     byId('ems').textContent = fmt(stats.emsCalls ?? counters.emsCalls);
     byId('failures').textContent = fmt(stats.startupFailures ?? counters.startupFailures);
     renderDepartments(stats);
+    renderDemand(stats.demoRequests);
     grid.classList.add('ready');
     departmentSection.classList.add('ready');
+    demandSection.classList.add('ready');
     setup.hidden = true;
     status.className = 'status ok';
     status.textContent = `Secure analytics loaded successfully · v${VERSION}`;
   }
 
   async function load() {
+    renderDemand(window.PTBO_DEMO_REQUESTS?.loadLocalStats?.().demoRequests, 'local-');
     grid.classList.remove('ready');
     departmentSection.classList.remove('ready');
+    demandSection.classList.remove('ready');
     setup.hidden = true;
     status.className = 'status';
     status.textContent = 'Checking secure analytics access…';

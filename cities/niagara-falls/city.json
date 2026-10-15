@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 2,
+  "id": "niagara-falls",
+  "name": "Niagara Falls",
+  "province": "Ontario",
+  "country": "Canada",
+  "status": "geo-demo",
+  "playable": true,
+  "note": "Geo Guesser demo with 20 shared Fire and EMS call locations.",
+  "map": {
+    "bounds": [
+      [
+        42.95957477184699,
+        -79.17728197415228
+      ],
+      [
+        43.147930911173624,
+        -78.99966731055994
+      ]
+    ],
+    "defaultCenter": [
+      43.070105467000076,
+      -79.11242146399996
+    ],
+    "defaultZoom": 18,
+    "minZoom": 7,
+    "maxZoom": 19
+  },
+  "features": {
+    "baseTraining": false,
+    "dispatch": false,
+    "roadBoundaries": false,
+    "routeGuidance": false,
+    "geoGuesser": true
+  },
+  "data": {
+    "boundaries": null,
+    "roads": null,
+    "dispatchLocations": null,
+    "bases": "geo-data.json",
+    "hospitals": null,
+    "geoGuesser": "geo-data.json"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 2,
+  "id": "ottawa",
+  "name": "Ottawa",
+  "province": "Ontario",
+  "country": "Canada",
+  "status": "geo-demo",
+  "playable": true,
+  "note": "Geo Guesser demo with 20 shared Fire and EMS call locations.",
+  "map": {
+    "bounds": [
+      [
+        44.96178267078443,
+        -76.35558815499778
+      ],
+      [
+        45.53766048961865,
+        -75.24658048377195
+      ]
+    ],
+    "defaultCenter": [
+      45.37278981498543,
+      -75.68984164908812
+    ],
+    "defaultZoom": 18,
+    "minZoom": 7,
+    "maxZoom": 19
+  },
+  "features": {
+    "baseTraining": false,
+    "dispatch": false,
+    "roadBoundaries": false,
+    "routeGuidance": false,
+    "geoGuesser": true
+  },
+  "data": {
+    "boundaries": null,
+    "roads": null,
+    "dispatchLocations": null,
+    "bases": "geo-data.json",
+    "hospitals": null,
+    "geoGuesser": "geo-data.json"
+  }
+}

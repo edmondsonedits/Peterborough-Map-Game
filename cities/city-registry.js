@@ -1,4 +1,4 @@
-/* Lightweight city index. Every city uses the same response-simulator UI and driving runtime. */
+/* Lightweight city index. Capability flags gate shared runtimes independently. */
 (() => {
   'use strict';
   const simulatorRoutes = Object.freeze({
@@ -21,5 +21,26 @@
     { id:'toronto', name:'Toronto', province:'Ontario', status:'base-training', playable:true,
       note:'calls unavailable', packageUrl:'cities/toronto/city.json', dispatch:simulatorRoutes },
   ];
-  window.PTBO_CITIES = Object.freeze(cities.map(city => Object.freeze({ ...city, dispatch: simulatorRoutes })));
+  const geoDemos = [
+    ['ajax','Ajax'],['barrie','Barrie'],['brampton','Brampton'],['brantford','Brantford'],
+    ['burlington','Burlington'],['cambridge','Cambridge'],['chatham-kent','Chatham-Kent'],
+    ['clarington','Clarington'],['greater-sudbury','Greater Sudbury'],['guelph','Guelph'],
+    ['hamilton','Hamilton'],['kingston','Kingston'],['kitchener','Kitchener'],['london','London'],
+    ['markham','Markham'],['milton','Milton'],['mississauga','Mississauga'],['niagara-falls','Niagara Falls'],
+    ['oakville','Oakville'],['oshawa','Oshawa'],['ottawa','Ottawa'],['pickering','Pickering'],
+    ['richmond-hill','Richmond Hill'],['st-catharines','St. Catharines'],['thunder-bay','Thunder Bay'],
+    ['toronto','Toronto'],['vaughan','Vaughan'],['waterloo','Waterloo'],['whitby','Whitby'],['windsor','Windsor'],
+  ];
+  const originalIds = new Set(cities.map(city => city.id));
+  const geoIds = new Set(geoDemos.map(([id]) => id));
+  for (const [id,name] of geoDemos) {
+    if (!originalIds.has(id)) cities.push({id,name,province:'Ontario',status:'geo-demo',playable:true,
+      note:'Geo Guesser demo available',packageUrl:`cities/${id}/city.json`});
+  }
+  window.PTBO_CITIES = Object.freeze(cities.map(city => Object.freeze({
+    ...city,dispatch:simulatorRoutes,
+    ...(geoIds.has(city.id) ? {geoDataUrl:`cities/${city.id}/geo-data.json`} : {}),
+    modes:Object.freeze({geo:city.id === 'peterborough' || geoIds.has(city.id),
+      route:city.id === 'peterborough',dispatch:originalIds.has(city.id),explorer:city.id === 'peterborough'}),
+  })));
 })();

@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 2,
+  "id": "windsor",
+  "name": "Windsor",
+  "province": "Ontario",
+  "country": "Canada",
+  "status": "geo-demo",
+  "playable": true,
+  "note": "Geo Guesser demo with 20 shared Fire and EMS call locations.",
+  "map": {
+    "bounds": [
+      [
+        42.23416616074525,
+        -83.11485732707514
+      ],
+      [
+        42.3567820867277,
+        -82.89114076347133
+      ]
+    ],
+    "defaultCenter": [
+      42.3118656218,
+      -83.0334707359
+    ],
+    "defaultZoom": 18,
+    "minZoom": 7,
+    "maxZoom": 19
+  },
+  "features": {
+    "baseTraining": false,
+    "dispatch": false,
+    "roadBoundaries": false,
+    "routeGuidance": false,
+    "geoGuesser": true
+  },
+  "data": {
+    "boundaries": null,
+    "roads": null,
+    "dispatchLocations": null,
+    "bases": "geo-data.json",
+    "hospitals": null,
+    "geoGuesser": "geo-data.json"
+  }
+}

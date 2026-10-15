@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 2,
+  "id": "london",
+  "name": "London",
+  "province": "Ontario",
+  "country": "Canada",
+  "status": "geo-demo",
+  "playable": true,
+  "note": "Geo Guesser demo with 20 shared Fire and EMS call locations.",
+  "map": {
+    "bounds": [
+      [
+        42.82452364815259,
+        -81.3906594566655
+      ],
+      [
+        43.07305519722224,
+        -81.10708216489755
+      ]
+    ],
+    "defaultCenter": [
+      42.98193272492747,
+      -81.23798246175798
+    ],
+    "defaultZoom": 18,
+    "minZoom": 7,
+    "maxZoom": 19
+  },
+  "features": {
+    "baseTraining": false,
+    "dispatch": false,
+    "roadBoundaries": false,
+    "routeGuidance": false,
+    "geoGuesser": true
+  },
+  "data": {
+    "boundaries": null,
+    "roads": null,
+    "dispatchLocations": null,
+    "bases": "geo-data.json",
+    "hospitals": null,
+    "geoGuesser": "geo-data.json"
+  }
+}

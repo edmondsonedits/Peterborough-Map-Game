@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 2,
+  "id": "st-catharines",
+  "name": "St. Catharines",
+  "province": "Ontario",
+  "country": "Canada",
+  "status": "geo-demo",
+  "playable": true,
+  "note": "Geo Guesser demo with 20 shared Fire and EMS call locations.",
+  "map": {
+    "bounds": [
+      [
+        43.10667039328994,
+        -79.32093332328418
+      ],
+      [
+        43.44759965664617,
+        -79.17783387431142
+      ]
+    ],
+    "defaultCenter": [
+      43.163031150051,
+      -79.239771514153
+    ],
+    "defaultZoom": 18,
+    "minZoom": 7,
+    "maxZoom": 19
+  },
+  "features": {
+    "baseTraining": false,
+    "dispatch": false,
+    "roadBoundaries": false,
+    "routeGuidance": false,
+    "geoGuesser": true
+  },
+  "data": {
+    "boundaries": null,
+    "roads": null,
+    "dispatchLocations": null,
+    "bases": "geo-data.json",
+    "hospitals": null,
+    "geoGuesser": "geo-data.json"
+  }
+}

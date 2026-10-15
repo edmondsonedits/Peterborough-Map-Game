@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 2,
+  "id": "oakville",
+  "name": "Oakville",
+  "province": "Ontario",
+  "country": "Canada",
+  "status": "geo-demo",
+  "playable": true,
+  "note": "Geo Guesser demo with 20 shared Fire and EMS call locations.",
+  "map": {
+    "bounds": [
+      [
+        43.3021701117181,
+        -79.81094940084876
+      ],
+      [
+        43.528255347215165,
+        -79.46145258337704
+      ]
+    ],
+    "defaultCenter": [
+      43.470748970897404,
+      -79.75469654706342
+    ],
+    "defaultZoom": 18,
+    "minZoom": 7,
+    "maxZoom": 19
+  },
+  "features": {
+    "baseTraining": false,
+    "dispatch": false,
+    "roadBoundaries": false,
+    "routeGuidance": false,
+    "geoGuesser": true
+  },
+  "data": {
+    "boundaries": null,
+    "roads": null,
+    "dispatchLocations": null,
+    "bases": "geo-data.json",
+    "hospitals": null,
+    "geoGuesser": "geo-data.json"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 2,
+  "id": "greater-sudbury",
+  "name": "Greater Sudbury",
+  "province": "Ontario",
+  "country": "Canada",
+  "status": "geo-demo",
+  "playable": true,
+  "note": "Geo Guesser demo with 20 shared Fire and EMS call locations.",
+  "map": {
+    "bounds": [
+      [
+        46.19584441021693,
+        -81.59843186607993
+      ],
+      [
+        46.973065066084374,
+        -80.54882726163908
+      ]
+    ],
+    "defaultCenter": [
+      46.48744001132133,
+      -80.99004528426735
+    ],
+    "defaultZoom": 18,
+    "minZoom": 7,
+    "maxZoom": 19
+  },
+  "features": {
+    "baseTraining": false,
+    "dispatch": false,
+    "roadBoundaries": false,
+    "routeGuidance": false,
+    "geoGuesser": true
+  },
+  "data": {
+    "boundaries": null,
+    "roads": null,
+    "dispatchLocations": null,
+    "bases": "geo-data.json",
+    "hospitals": null,
+    "geoGuesser": "geo-data.json"
+  }
+}

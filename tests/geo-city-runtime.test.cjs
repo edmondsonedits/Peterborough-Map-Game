@@ -1,0 +1,58 @@
+'use strict';
+const test=require('node:test'),assert=require('node:assert/strict'),vm=require('node:vm'),fs=require('node:fs'),path=require('node:path');
+const root=path.resolve(__dirname,'..'),read=f=>fs.readFileSync(path.join(root,f),'utf8');
+function runtime({search='?city=toronto',stored=null,fail=false,delayed=false,denied=false,pack}={}){
+ const requested=[],events=[],storage=new Map(stored?[['ptboSelectedCity',stored]]:[]);let release;
+ const data=pack||{schemaVersion:1,id:'toronto',name:'Toronto',map:{bounds:[[43,-80],[44,-79]],defaultCenter:[43.7,-79.4],minZoom:7,maxZoom:19},bases:[{id:'station-1',number:1,name:'Fire One',address:'1 Main St',service:'fire',lat:43.7,lng:-79.4,status:'active',selectionEligible:true},{id:'ems-1',number:1,name:'EMS One',address:'2 Main St',service:'ems',lat:43.71,lng:-79.4,status:'active',selectionEligible:true},{id:'future',number:2,name:'Future',address:'TBA',service:'fire',lat:null,lng:null,status:'planned',selectionEligible:false}],locations:[{id:'call',name:'Mall',addr:'3 Main St',lat:43.72,lng:-79.4,radius:100,recognitionDifficulty:'easy',crossStreets:['A','B']}]};
+ const nodes=[];
+ const c=vm.createContext({URL,URLSearchParams,console,AbortController,setTimeout,clearTimeout,CustomEvent:class{constructor(type,o){this.type=type;this.detail=o?.detail;}},
+ location:{href:'https://example.test/game/geo-guesser/index.html'+search},
+ localStorage:{getItem:k=>{if(denied)throw Error('Denied');return storage.get(k)||null;},setItem:(k,v)=>{if(denied)throw Error('Denied');storage.set(k,v);}},
+ fetch:async url=>{requested.push(String(url));if(delayed)await new Promise(r=>release=r);if(fail)throw Error('Offline');return {ok:true,json:async()=>structuredClone(data)};},
+ addEventListener(){},dispatchEvent:e=>events.push(e),
+ document:{documentElement:{dataset:{}},scripts:[],currentScript:{src:'https://example.test/game/geo-guesser/city-loader.js?v=preview'},createElement:()=>({dataset:{},addEventListener(){},remove(){}}),head:{appendChild(node){nodes.push(node);Promise.resolve().then(()=>{try{c.document.currentScript={src:node.src};const file=new URL(node.src).pathname.replace('/game/','');vm.runInContext(read(file),c);node.onload();}catch(e){console.error(node.src, e);node.onerror?.(e);}});}}}});
+ c.window=c;vm.runInContext(read('cities/city-registry.js'),c);vm.runInContext(read('shared/location-changes.js'),c);
+ if(fs.existsSync(path.join(root,'geo-guesser/city-loader.js')))vm.runInContext(read('geo-guesser/city-loader.js'),c);
+ return{c,requested,events,storage,data,nodes,release:()=>release?.()};
+}
+test('explicit Geo city wins over remembered city and loads only selected static data',async()=>{
+ const h=runtime({stored:'oshawa'});assert.ok(h.c.PTBO_GEO_CITY_READY,'shared city loader supplies readiness');await h.c.PTBO_GEO_CITY_READY;
+ assert.equal(h.c.PTBO_CITY_PACKAGE.id,'toronto');assert.equal(h.c.PTBO_BASE_STORE.cityId,'toronto');assert.equal(h.c.PTBO_DISPATCH_STORE.cityId,'toronto');
+ assert.equal(h.requested.length,1);assert.match(h.requested[0],/cities\/toronto\/geo-data.json/);
+ assert.equal(h.c.PTBO_BASE_STORE.getBases('fire').length,1);assert.equal(h.c.PTBO_BASE_STORE.getBases('ems').length,1);assert.equal(h.c.PTBO_BASE_STORE.getHospital(),null);
+ assert.equal(h.c.PTBO_DISPATCH_STORE.getAll()[0].addr,'3 Main St');assert.equal(h.storage.get('ptboSelectedCity'),'toronto');
+});
+test('city loading readiness waits for data and both shared stores',async()=>{
+ const h=runtime({delayed:true});assert.ok(h.c.PTBO_GEO_CITY_READY);let ready=false;h.c.PTBO_GEO_CITY_READY.then(()=>ready=true);
+ await new Promise(r=>setImmediate(r));assert.equal(ready,false);assert.equal(h.c.PTBO_BASE_STORE,undefined);h.release();await h.c.PTBO_GEO_CITY_READY;assert.equal(ready,true);assert.equal(h.c.PTBO_DISPATCH_STORE.getAll().length,1);
+});
+test('unknown or unsupported explicit Geo city fails rather than launching Peterborough',async()=>{
+ for(const city of ['not-a-city','<script>','belleville','scarborough']){const h=runtime({search:'?city='+encodeURIComponent(city),stored:'peterborough'});assert.ok(h.c.PTBO_GEO_CITY_READY);await assert.rejects(h.c.PTBO_GEO_CITY_READY,/city|demo|available/i);assert.equal(h.requested.length,0);assert.equal(h.c.PTBO_CITY_PACKAGE,undefined);}
+});
+test('missing explicit city uses a supported remembered city and handles denied storage',async()=>{
+ const h=runtime({search:'',stored:'toronto'});assert.ok(h.c.PTBO_GEO_CITY_READY);await h.c.PTBO_GEO_CITY_READY;assert.equal(h.c.PTBO_CITY_PACKAGE.id,'toronto');
+ const denied=runtime({denied:true});await denied.c.PTBO_GEO_CITY_READY;assert.equal(denied.c.PTBO_CITY_PACKAGE.id,'toronto');
+});
+test('Peterborough keeps its existing package, shared 200 catalog and saved storage namespace',async()=>{
+ const h=runtime({search:'?city=peterborough',stored:'toronto'});assert.ok(h.c.PTBO_GEO_CITY_READY);
+ // The compressed production payload needs standard browser decompression facilities.
+ h.c.atob=s=>Buffer.from(s,'base64').toString('binary');h.c.Uint8Array=Uint8Array;h.c.Response=Response;h.c.Blob=Blob;h.c.DecompressionStream=DecompressionStream;
+ await h.c.PTBO_GEO_CITY_READY;assert.equal(h.c.PTBO_CITY_PACKAGE.id,'peterborough');assert.equal(h.c.PTBO_DISPATCH_STORE.getAll().length,200);assert.equal(h.requested.length,0);assert.match(h.c.PTBO_BASE_STORE.storageKey,/:peterborough$/);
+});
+test('failed fetch and wrong city payload reject readiness without installing stores',async()=>{
+ const offline=runtime({fail:true});assert.ok(offline.c.PTBO_GEO_CITY_READY);await assert.rejects(offline.c.PTBO_GEO_CITY_READY,/Offline|load/i);assert.equal(offline.c.PTBO_BASE_STORE,undefined);
+ const wrong=runtime({pack:{id:'oshawa'}});await assert.rejects(wrong.c.PTBO_GEO_CITY_READY,/city|data/i);assert.equal(wrong.c.PTBO_BASE_STORE,undefined);
+});
+test('null/blank call coordinates are rejected by the shared store',async()=>{
+ const h=runtime();assert.ok(h.c.PTBO_GEO_CITY_READY);h.data.locations.push({...h.data.locations[0],id:'bad-null',lat:null},{...h.data.locations[0],id:'bad-empty',lng:''});await h.c.PTBO_GEO_CITY_READY;
+ assert.deepEqual(Array.from(h.c.PTBO_DISPATCH_STORE.getAll(),r=>r.id),['call']);
+});
+test('saved base edits follow verified legacy IDs without rewriting the saved delta',async()=>{
+ const h=runtime();assert.ok(h.c.PTBO_GEO_CITY_READY);h.data.bases[0].legacyIds=['fire-old-station-1'];
+ const saved=JSON.stringify({schema:1,updated:[{id:'fire-old-station-1',changes:{lat:43.701,name:'My existing station edit'}}],added:[],deleted:[]});h.storage.set('ptboBaseLocationChangesV1:toronto',saved);
+ await h.c.PTBO_GEO_CITY_READY;const fire=h.c.PTBO_BASE_STORE.getBases('fire');assert.equal(fire[0].name,'My existing station edit');assert.equal(fire[0].lat,43.701);assert.equal(fire[0].id,'fire-station-1');assert.equal(h.storage.get('ptboBaseLocationChangesV1:toronto'),saved);
+});
+test('null saved base coordinates fall back to the verified base instead of becoming zero',async()=>{
+ const h=runtime();h.storage.set('ptboBaseLocationChangesV1:toronto',JSON.stringify({schema:1,updated:[{id:'fire-station-1',changes:{lat:null}}],added:[],deleted:[]}));await h.c.PTBO_GEO_CITY_READY;
+ assert.equal(h.c.PTBO_BASE_STORE.getBases('fire')[0].lat,43.7);
+});

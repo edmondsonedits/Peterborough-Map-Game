@@ -306,6 +306,38 @@
     return recordEvent('city_select', { city:value });
   };
 
+  const DEMO_MODES = new Set(['geo', 'route', 'dispatch', 'explorer']);
+  const validDemoCity = city => typeof city === 'string' && city.length <= 60 && /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/.test(city) && !Object.prototype.hasOwnProperty.call(Object.prototype, city);
+  const pendingDemoRequests = new Map();
+  const confirmedDemoRequests = new Set();
+
+  async function recordDemoRequest(city, mode) {
+    if (!trackingAllowed() || !validDemoCity(city) || !DEMO_MODES.has(mode)) return false;
+    // The menu registry is the authority for selectable cities. Do not turn
+    // arbitrary text or malformed URLs into analytics dimensions.
+    if (!window.PTBO_CITIES?.some(item => item.id === city)) return false;
+    const eventId = `demo_request_${sessionId}_${city}_${mode}`;
+    const marker = `ptbo-demo-request-v1:${eventId}`;
+    if (confirmedDemoRequests.has(eventId) || safeGet(sessionStorage, marker) === 'saved') return true;
+    if (pendingDemoRequests.has(eventId)) return pendingDemoRequests.get(eventId);
+
+    // A deterministic PATCH document survives ambiguous network failures and
+    // retries without incrementing demand twice. Mark saved only after transport
+    // confirmation; sessionStorage alone is never submission success.
+    const request = writeRecord({
+      recordType:'demo_request', eventId, build:VERSION, surface:state.surface,
+      sessionId, createdAt:nowIso(), city, mode,
+    }, `event_${eventId}`).then(ok => {
+      if (ok) {
+        confirmedDemoRequests.add(eventId);
+        safeSet(sessionStorage, marker, 'saved');
+      }
+      return ok === true;
+    }).catch(() => false).finally(() => pendingDemoRequests.delete(eventId));
+    pendingDemoRequests.set(eventId, request);
+    return request;
+  }
+
   let lastTick = performance.now();
   let wasVisible = document.visibilityState === 'visible';
   function accountPageTime() {
@@ -529,7 +561,7 @@
   }
 
   document.addEventListener('click', event => {
-    if (!event.isTrusted || !trackingAllowed()) return;
+    if (!event.isTrusted || event.defaultPrevented || !trackingAllowed()) return;
     const target = event.target instanceof Element ? event.target.closest('[data-analytics-target]') : null;
     if (target) void recordLaunch(target.dataset.analyticsTarget);
     const city = event.target instanceof Element ? event.target.closest('.city-option[data-city]') : null;
@@ -560,7 +592,7 @@
       };
       if (actions[id]) mark(actions[id]);
     }
-  }, true);
+  });
 
   document.addEventListener('pointerdown', event => {
     if (!event.isTrusted || !trackingAllowed()) return;
@@ -677,13 +709,31 @@
     return result;
   }
 
+  function collectDemoRequests(records) {
+    const demand = { total:0, byCity:{}, byMode:{}, byCityMode:{} };
+    const sessions = new Set();
+    for (const record of dedupeEvents(records.filter(item => item.recordType === 'demo_request'))) {
+      const { city, mode } = record;
+      if (!validDemoCity(city) || !DEMO_MODES.has(mode)) continue;
+      const key = record.sessionId ? `${record.sessionId}:${city}:${mode}` : null;
+      if (key && sessions.has(key)) continue;
+      if (key) sessions.add(key);
+      demand.total += 1;
+      demand.byCity[city] = (demand.byCity[city] || 0) + 1;
+      demand.byMode[mode] = (demand.byMode[mode] || 0) + 1;
+      const modes = demand.byCityMode[city] ||= {};
+      modes[mode] = (modes[mode] || 0) + 1;
+    }
+    return demand;
+  }
+
   async function loadStats() {
     const settled = await Promise.allSettled([fetchCollection(PRIMARY_COLLECTION), fetchCollection(FALLBACK_COLLECTION)]);
     const all = [];
     settled.forEach(result => { if (result.status === 'fulfilled') all.push(...result.value); });
     if (!all.length && settled.every(result => result.status === 'rejected')) throw new Error('Analytics database is unavailable.');
 
-    const analyticsRecords = all.filter(record => ['visitor','session','session_summary','menu_view','launch','city_select'].includes(record.recordType));
+    const analyticsRecords = all.filter(record => ['visitor','session','session_summary','menu_view','launch','city_select','demo_request'].includes(record.recordType));
     const summaryMap = new Map();
     analyticsRecords.filter(record => record.recordType === 'session_summary').forEach(record => {
       const key = record.sessionId || record.id;
@@ -749,6 +799,7 @@
       pageSeconds:{ menu:sum(summaries,'menuSeconds'), dispatch:sum(summaries,'dispatchSeconds'), geoguesser:sum(summaries,'geoguesserSeconds'), explorer:sum(summaries,'explorerSeconds') },
       launches,
       cities,
+      demoRequests:collectDemoRequests(analyticsRecords),
       citySeconds:collectDynamic(summaries, 'city_seconds_'),
       devices,
       browsers,
@@ -791,6 +842,7 @@
     loadStats,
     recordLaunch,
     recordCity,
+    recordDemoRequest,
     trackingAllowed,
     flush:flushSummary,
     health:() => Object.freeze({ version:VERSION, tracking:trackingAllowed(), sessionId, page:pageType() }),

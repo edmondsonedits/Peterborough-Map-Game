@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 2,
+  "id": "thunder-bay",
+  "name": "Thunder Bay",
+  "province": "Ontario",
+  "country": "Canada",
+  "status": "geo-demo",
+  "playable": true,
+  "note": "Geo Guesser demo with 20 shared Fire and EMS call locations.",
+  "map": {
+    "bounds": [
+      [
+        48.26835354064214,
+        -89.42757863595611
+      ],
+      [
+        48.51500506527655,
+        -89.06077480177011
+      ]
+    ],
+    "defaultCenter": [
+      48.38867738806357,
+      -89.25080703242487
+    ],
+    "defaultZoom": 18,
+    "minZoom": 7,
+    "maxZoom": 19
+  },
+  "features": {
+    "baseTraining": false,
+    "dispatch": false,
+    "roadBoundaries": false,
+    "routeGuidance": false,
+    "geoGuesser": true
+  },
+  "data": {
+    "boundaries": null,
+    "roads": null,
+    "dispatchLocations": null,
+    "bases": "geo-data.json",
+    "hospitals": null,
+    "geoGuesser": "geo-data.json"
+  }
+}

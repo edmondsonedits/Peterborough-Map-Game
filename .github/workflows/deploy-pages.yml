@@ -41,6 +41,9 @@ jobs:
           node --test tests/homepage.test.cjs
           node --test tests/shared-call-catalog.test.cjs tests/geo-station-practice.test.cjs tests/geo-station-integration.test.cjs tests/geo-station-flow.test.cjs tests/geo-wrapper-readiness.test.cjs
 
+      - name: Check Ontario city demos and demo requests
+        run: node --test tests/ontario-city-data.test.cjs tests/geo-city-runtime.test.cjs tests/geo-city-flow.test.cjs tests/demo-requests.test.cjs
+
       - name: Check streetscape regressions
         run: node --test tests/sherbrooke-plan.test.mjs tests/sherbrooke-fallback.test.mjs tests/station-reference-details.test.mjs tests/streetscape-assets.test.mjs tests/vegetation-variants.test.mjs tests/city-feature-utils.test.mjs
 

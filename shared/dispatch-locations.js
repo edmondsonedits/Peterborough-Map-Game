@@ -37,6 +37,8 @@
   }
 
   function normalizeLocation(raw, source) {
+    const latValue=raw?.lat ?? raw?.latitude, lngValue=raw?.lng ?? raw?.longitude;
+    if (latValue == null || lngValue == null || String(latValue).trim() === '' || String(lngValue).trim() === '') return null;
     const districtValue = Number(raw?.district);
     const location = {
       id:normalizeText(raw?.id),

@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 2,
+  "id": "ajax",
+  "name": "Ajax",
+  "province": "Ontario",
+  "country": "Canada",
+  "status": "geo-demo",
+  "playable": true,
+  "note": "Geo Guesser demo with 20 shared Fire and EMS call locations.",
+  "map": {
+    "bounds": [
+      [
+        43.548364587676005,
+        -79.08813331174792
+      ],
+      [
+        43.92240514955695,
+        -78.86023960978459
+      ]
+    ],
+    "defaultCenter": [
+      43.84540501890784,
+      -79.02694560796613
+    ],
+    "defaultZoom": 18,
+    "minZoom": 7,
+    "maxZoom": 19
+  },
+  "features": {
+    "baseTraining": false,
+    "dispatch": false,
+    "roadBoundaries": false,
+    "routeGuidance": false,
+    "geoGuesser": true
+  },
+  "data": {
+    "boundaries": null,
+    "roads": null,
+    "dispatchLocations": null,
+    "bases": "geo-data.json",
+    "hospitals": null,
+    "geoGuesser": "geo-data.json"
+  }
+}

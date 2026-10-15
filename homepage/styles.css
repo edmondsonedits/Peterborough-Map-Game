@@ -314,15 +314,26 @@ h1 > span { display: block; }
   font-size: 10px;
   line-height: 1.3;
 }
-[data-peterborough-only] {
-  display: inline-block;
-  margin-top: 6px;
-  color: #c2d3df;
+[data-home-demo="true"] .game-link { border-color: #30434e; background: linear-gradient(105deg, #0a1821, #08151d); }
+[data-home-demo="true"] .game-link.is-active { border-color: #6c9daa; background: linear-gradient(105deg, #0b2530, #0a1d26); }
+[data-home-demo="true"] .game-thumb img, [data-home-demo="true"] .tool-visual img { opacity: .72; }
+[data-home-demo="true"] .game-number, [data-home-demo="true"] .icon { opacity: .8; }
+[data-home-demo="true"]::after {
+  position: absolute;
+  z-index: 1;
+  top: 8px;
+  right: 13px;
+  content: "DEMO";
+  color: #92aebc;
   font-size: 9px;
-  font-weight: 550;
-  line-height: 1.3;
-  letter-spacing: .02em;
+  font-weight: 650;
+  letter-spacing: .19em;
+  opacity: .65;
+  pointer-events: none;
 }
+.secondary-card[data-home-demo="true"]::after { top: 2px; right: 52px; }
+[data-mode-available="false"] { cursor: pointer; }
+[data-mode-available="false"] .launch-arrow { color: #a8c1cf; border-color: #526e7e; background: #102631; }
 .game-thumb { display: none; }
 .launch-arrow {
   display: grid;
@@ -607,6 +618,28 @@ h1 > span { display: block; }
   white-space: nowrap !important;
   border: 0 !important;
 }
+.demo-dialog {
+  width: min(480px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  padding: clamp(23px, 5vw, 32px);
+  border: 1px solid #466b7c;
+  border-radius: 10px;
+  color: var(--ink);
+  background: var(--panel);
+  box-shadow: 0 24px 90px #0009;
+}
+.demo-dialog::backdrop { background: #020a12cc; backdrop-filter: blur(4px); }
+.demo-dialog h2 { margin: 0; font-size: clamp(27px, 6vw, 34px); line-height: 1.15; letter-spacing: -.045em; }
+.demo-dialog .eyebrow { margin-bottom: 12px; font-size: 9px; letter-spacing: .17em; }
+.demo-selection { margin: 20px 0 9px; color: var(--cyan-soft); font-size: 15px; line-height: 1.6; }
+#home-demo-description { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
+.demo-status { min-height: 42px; margin: 17px 0 0; color: var(--ink); font-size: 12px; line-height: 1.6; }
+.demo-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+.demo-actions button { min-height: 46px; padding: 10px 16px; border: 1px solid #526e7e; border-radius: 6px; font-size: 12px; font-weight: 650; }
+.demo-close { color: var(--ink); background: #132d3b; }
+.demo-submit { color: #03202d; border-color: var(--cyan) !important; background: var(--cyan); }
+.demo-submit:disabled { color: #9bb9c9; border-color: #3b5968 !important; background: #15303c; }
 #ptbo-speedometer, #ptbo-speedometer-value, #ptbo-speedometer-unit, [data-ptbo-speedometer] { display: none !important; visibility: hidden !important; }
 
 /* Motion never carries information and is fully governed by the page control. */
@@ -684,7 +717,6 @@ body[data-home-motion="off"] *, body[data-home-motion="off"] *::before, body[dat
   .game-copy h3 { font-size: clamp(17px, 4.9vw, 21px); line-height: 1.1; letter-spacing: -.04em; }
   .game-copy p { margin-top: 6px; font-size: 11px; line-height: 1.35; }
   .game-meta { margin-top: 5px; font-size: 8px; }
-  [data-peterborough-only] { font-size: 8px; }
   .game-thumb {
     position: absolute;
     top: 0;

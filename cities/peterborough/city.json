@@ -10,12 +10,24 @@
   "note": "Production city package. Peterborough-specific configuration is owned here and consumed through the shared city-aware simulator.",
   "runtime": "./package.js",
   "map": {
-    "defaultCenter": [44.300871, -78.322206],
+    "defaultCenter": [
+      44.300871,
+      -78.322206
+    ],
     "defaultHeading": 180,
     "defaultZoom": 15,
     "minZoom": 10,
     "maxZoom": 19,
-    "bounds": [[44.20, -78.45], [44.45, -78.20]]
+    "bounds": [
+      [
+        44.2,
+        -78.45
+      ],
+      [
+        44.45,
+        -78.2
+      ]
+    ]
   },
   "data": {
     "dispatchDescriptor": "./dispatch-data.js",
@@ -24,5 +36,8 @@
     "services": "./package.js",
     "bases": "./package.js",
     "hospital": "./package.js"
+  },
+  "features": {
+    "geoGuesser": true
   }
 }

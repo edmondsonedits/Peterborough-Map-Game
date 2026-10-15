@@ -59,6 +59,7 @@
     const ids = new Set();
     const numbers = new Set();
     return list.map(raw => {
+      if (raw.lat == null || raw.lng == null || String(raw.lat).trim() === '' || String(raw.lng).trim() === '') throw new Error('Use valid base coordinates.');
       const lat = Number(raw.lat);
       const lng = Number(raw.lng);
       const legacySize = Number(raw.yardSize ?? 160);
@@ -112,9 +113,14 @@
       const delta = readJson(storageKey, legacyStorageKey);
       if (!delta || delta.schema !== 1) return validate(copy(seed));
       const records = new Map(seed.map(base => [base.id,{...base}]));
-      for (const update of delta.updated || []) if (records.has(update.id)) Object.assign(records.get(update.id), update.changes, {id:update.id});
+      const aliases=new Map(seed.flatMap(base=>(base.legacyIds||[]).map(alias=>[alias,base.id])));
+      const canonical=id=>records.has(id)?id:aliases.get(id)||id;
+      for (const update of delta.updated || []) {
+        const id=canonical(update.id);
+        if (records.has(id)) Object.assign(records.get(id), update.changes, {id});
+      }
       for (const base of delta.added || []) if (!records.has(base.id)) records.set(base.id, base);
-      for (const entry of delta.deleted || []) records.delete(entry.id);
+      for (const entry of delta.deleted || []) records.delete(canonical(entry.id));
       return validate([...records.values()]);
     } catch (error) {
       console.warn(`Unable to restore ${cityId} base edits.`, error);
@@ -125,6 +131,7 @@
   let items = readSaved();
 
   function validateHospital(raw) {
+    if (!config.hospital) throw new Error('Hospital transport is unavailable for this city.');
     const source = raw || {};
     const h = {...config.hospital,...source,id:config.hospital.id,name:String(source.name ?? config.hospital.name).trim(),addr:String(source.addr ?? config.hospital.addr).trim(),lat:Number(source.lat ?? config.hospital.lat),lng:Number(source.lng ?? config.hospital.lng),radius:Number(source.radius ?? config.hospital.radius)};
     if (!h.name || !h.addr || ![h.lat,h.lng,h.radius].every(Number.isFinite) || Math.abs(h.lat)>85 || Math.abs(h.lng)>180 || h.radius<10 || h.radius>200) throw new Error('Enter a hospital name, address, valid coordinates, and arrival radius of 10–200 m.');
@@ -132,6 +139,7 @@
   }
 
   function readHospital() {
+    if (!config.hospital) return null;
     try {
       const saved = readJson(hospitalKey, legacyHospitalKey) || {};
       return validateHospital({...config.hospital,...saved.changes});
@@ -219,7 +227,7 @@
     return false;
   }
 
-  const api = Object.freeze({version:VERSION,cityId,getAll:()=>copy(items),getSeed:()=>copy(seed),getHospital:()=>({...hospital}),getHospitalSeed:()=>({...config.hospital}),saveHospital,getBases:service=>copy(items.filter(base=>base.service===service).sort((a,b)=>a.number-b.number)),replaceAll,refreshFromCityPackage,corners,contains,roadAccess,storageKey,hospitalKey});
+  const api = Object.freeze({version:VERSION,cityId,getAll:()=>copy(items),getSeed:()=>copy(seed),getHospital:()=>hospital ? {...hospital} : null,getHospitalSeed:()=>config.hospital ? {...config.hospital} : null,saveHospital,getBases:service=>copy(items.filter(base=>base.service===service).sort((a,b)=>a.number-b.number)),replaceAll,refreshFromCityPackage,corners,contains,roadAccess,storageKey,hospitalKey});
   window.PTBO_BASE_STORE = api;
   window.PTBO_BASE_STORE_VERSION = VERSION;
 

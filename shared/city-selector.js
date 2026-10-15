@@ -30,6 +30,9 @@
     return;
   }
 
+  // The legacy dialog launches driving only; Geo-only cities have no driving package.
+  const dispatchCities = cities.filter(city => city.modes?.dispatch === true);
+
   function wantsMobileSurface() {
     if (typeof window.PTBO_DEVICE_SURFACE?.isMobile === 'function') {
       return window.PTBO_DEVICE_SURFACE.isMobile();
@@ -75,7 +78,7 @@
     <div class="city-foot"><span>Calls unavailable means the dispatch system is offline. Free driving mode is still enabled.</span><button class="city-close" type="button">Cancel</button></div>`;
 
   const grid = dialog.querySelector('.city-grid');
-  cities.forEach(city => {
+  dispatchCities.forEach(city => {
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'city-option';
@@ -88,6 +91,7 @@
   });
 
   function launch(city) {
+    if (city.modes?.dispatch !== true) return;
     const mobile = wantsMobileSurface();
     const route = mobile ? city.dispatch?.mobile : city.dispatch?.desktop;
     if (!route) return;
@@ -120,6 +124,6 @@
     version:VERSION,
     open:() => { if (!dialog.open) dialog.showModal(); },
     preferredSurface:() => wantsMobileSurface() ? 'mobile' : 'desktop',
-    cities,
+    cities: dispatchCities,
   });
 })();

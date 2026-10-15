@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 2,
+  "id": "brampton",
+  "name": "Brampton",
+  "province": "Ontario",
+  "country": "Canada",
+  "status": "geo-demo",
+  "playable": true,
+  "note": "Geo Guesser demo with 20 shared Fire and EMS call locations.",
+  "map": {
+    "bounds": [
+      [
+        43.601818057083655,
+        -79.88887284692828
+      ],
+      [
+        43.84810650458384,
+        -79.63017326996615
+      ]
+    ],
+    "defaultCenter": [
+      43.7479915849621,
+      -79.71232290339097
+    ],
+    "defaultZoom": 18,
+    "minZoom": 7,
+    "maxZoom": 19
+  },
+  "features": {
+    "baseTraining": false,
+    "dispatch": false,
+    "roadBoundaries": false,
+    "routeGuidance": false,
+    "geoGuesser": true
+  },
+  "data": {
+    "boundaries": null,
+    "roads": null,
+    "dispatchLocations": null,
+    "bases": "geo-data.json",
+    "hospitals": null,
+    "geoGuesser": "geo-data.json"
+  }
+}

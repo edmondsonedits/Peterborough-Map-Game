@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 2,
+  "id": "chatham-kent",
+  "name": "Chatham-Kent",
+  "province": "Ontario",
+  "country": "Canada",
+  "status": "geo-demo",
+  "playable": true,
+  "note": "Geo Guesser demo with 20 shared Fire and EMS call locations.",
+  "map": {
+    "bounds": [
+      [
+        41.6765674895705,
+        -82.80334914415752
+      ],
+      [
+        42.65148318982502,
+        -81.37929928143433
+      ]
+    ],
+    "defaultCenter": [
+      42.40458100516701,
+      -82.19165049253854
+    ],
+    "defaultZoom": 18,
+    "minZoom": 7,
+    "maxZoom": 19
+  },
+  "features": {
+    "baseTraining": false,
+    "dispatch": false,
+    "roadBoundaries": false,
+    "routeGuidance": false,
+    "geoGuesser": true
+  },
+  "data": {
+    "boundaries": null,
+    "roads": null,
+    "dispatchLocations": null,
+    "bases": "geo-data.json",
+    "hospitals": null,
+    "geoGuesser": "geo-data.json"
+  }
+}

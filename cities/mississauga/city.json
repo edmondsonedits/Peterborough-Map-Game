@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 2,
+  "id": "mississauga",
+  "name": "Mississauga",
+  "province": "Ontario",
+  "country": "Canada",
+  "status": "geo-demo",
+  "playable": true,
+  "note": "Geo Guesser demo with 20 shared Fire and EMS call locations.",
+  "map": {
+    "bounds": [
+      [
+        43.361099429953754,
+        -79.81010111417292
+      ],
+      [
+        43.73703438782441,
+        -79.41785747084073
+      ]
+    ],
+    "defaultCenter": [
+      43.69232288253442,
+      -79.62549081534043
+    ],
+    "defaultZoom": 18,
+    "minZoom": 7,
+    "maxZoom": 19
+  },
+  "features": {
+    "baseTraining": false,
+    "dispatch": false,
+    "roadBoundaries": false,
+    "routeGuidance": false,
+    "geoGuesser": true
+  },
+  "data": {
+    "boundaries": null,
+    "roads": null,
+    "dispatchLocations": null,
+    "bases": "geo-data.json",
+    "hospitals": null,
+    "geoGuesser": "geo-data.json"
+  }
+}

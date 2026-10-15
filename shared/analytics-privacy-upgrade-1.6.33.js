@@ -99,7 +99,7 @@
     const guardedMethods = {};
     for (const [name, value] of Object.entries(base)) {
       if (typeof value === 'function' && TRACKING_METHOD.test(name)) {
-        guardedMethods[name] = (...args) => analyticsEnabled() ? value(...args) : false;
+        guardedMethods[name] = (...args) => analyticsEnabled() ? value(...args) : (name === 'recordDemoRequest' ? Promise.resolve(false) : false);
       }
     }
 

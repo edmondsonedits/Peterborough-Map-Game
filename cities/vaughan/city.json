@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 2,
+  "id": "vaughan",
+  "name": "Vaughan",
+  "province": "Ontario",
+  "country": "Canada",
+  "status": "geo-demo",
+  "playable": true,
+  "note": "Geo Guesser demo with 20 shared Fire and EMS call locations.",
+  "map": {
+    "bounds": [
+      [
+        43.74984489006835,
+        -79.71074950812054
+      ],
+      [
+        43.924220528062754,
+        -79.42011140852456
+      ]
+    ],
+    "defaultCenter": [
+      43.82434676861765,
+      -79.60771870225449
+    ],
+    "defaultZoom": 18,
+    "minZoom": 7,
+    "maxZoom": 19
+  },
+  "features": {
+    "baseTraining": false,
+    "dispatch": false,
+    "roadBoundaries": false,
+    "routeGuidance": false,
+    "geoGuesser": true
+  },
+  "data": {
+    "boundaries": null,
+    "roads": null,
+    "dispatchLocations": null,
+    "bases": "geo-data.json",
+    "hospitals": null,
+    "geoGuesser": "geo-data.json"
+  }
+}

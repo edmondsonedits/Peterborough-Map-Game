@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 2,
+  "id": "kingston",
+  "name": "Kingston",
+  "province": "Ontario",
+  "country": "Canada",
+  "status": "geo-demo",
+  "playable": true,
+  "note": "Geo Guesser demo with 20 shared Fire and EMS call locations.",
+  "map": {
+    "bounds": [
+      [
+        44.16052099827343,
+        -76.71278388218718
+      ],
+      [
+        44.48015286878591,
+        -76.23417972205655
+      ]
+    ],
+    "defaultCenter": [
+      44.3197869168625,
+      -76.50204335478855
+    ],
+    "defaultZoom": 18,
+    "minZoom": 7,
+    "maxZoom": 19
+  },
+  "features": {
+    "baseTraining": false,
+    "dispatch": false,
+    "roadBoundaries": false,
+    "routeGuidance": false,
+    "geoGuesser": true
+  },
+  "data": {
+    "boundaries": null,
+    "roads": null,
+    "dispatchLocations": null,
+    "bases": "geo-data.json",
+    "hospitals": null,
+    "geoGuesser": "geo-data.json"
+  }
+}

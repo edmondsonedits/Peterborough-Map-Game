@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 2,
+  "id": "waterloo",
+  "name": "Waterloo",
+  "province": "Ontario",
+  "country": "Canada",
+  "status": "geo-demo",
+  "playable": true,
+  "note": "Geo Guesser demo with 20 shared Fire and EMS call locations.",
+  "map": {
+    "bounds": [
+      [
+        43.43223549018835,
+        -80.62609406300471
+      ],
+      [
+        43.53121851196465,
+        -80.46736521643916
+      ]
+    ],
+    "defaultCenter": [
+      43.4771548,
+      -80.5182471
+    ],
+    "defaultZoom": 18,
+    "minZoom": 7,
+    "maxZoom": 19
+  },
+  "features": {
+    "baseTraining": false,
+    "dispatch": false,
+    "roadBoundaries": false,
+    "routeGuidance": false,
+    "geoGuesser": true
+  },
+  "data": {
+    "boundaries": null,
+    "roads": null,
+    "dispatchLocations": null,
+    "bases": "geo-data.json",
+    "hospitals": null,
+    "geoGuesser": "geo-data.json"
+  }
+}

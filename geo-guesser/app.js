@@ -31,6 +31,12 @@
       const address=document.createElement('span');address.textContent=base.address;
       button.appendChild(name);button.appendChild(address);button.addEventListener('click',()=>start(index));return button;
     }));
+    const future=(window.PTBO_CITY_PACKAGE?.futureBases||[]).filter(base=>base.service===state.service);
+    $('future-base-details').hidden=!future.length;
+    $('future-base-list').replaceChildren(...future.map(base=>{
+      const row=document.createElement('li'),status=base.status==='planned'?(base.constructionStage||'planned').replace(/-/g,' '):'unconfirmed';
+      row.textContent=`${base.name} · ${base.address || 'Address pending'} · ${status}${base.expectedOpening?' · Expected: '+base.expectedOpening:''}`;return row;
+    }));
     $('base-step').hidden=false;
     if(state.ready)$('practice-setup-status').textContent=state.bases.length?'':'No bases are available for this service.';
   }
@@ -62,7 +68,7 @@
     if(!pool.length){$('practice-setup-status').textContent='No locations are ranked in this difficulty yet.';return false;}
     state.session?.cancel();clearReview();state.base=chosen;state.pool=pool;
     if(!state.map){
-      state.map=L.map('map',{zoomControl:false,inertia:false});state.map.attributionControl.setPrefix(false);
+      state.map=L.map('map',{zoomControl:false,inertia:false,minZoom:window.PTBO_CITY_PACKAGE?.map?.minZoom??10,maxZoom:19});state.map.attributionControl.setPrefix(false);
       window.PTBO_GEO_MAP_PROVIDER.createStreetLayer({maxZoom:19}).addTo(state.map);
       state.map.getContainer().addEventListener('keydown',event=>{if(event.key==='Enter'&&!event.repeat){event.preventDefault();check();}});
     }
@@ -113,14 +119,22 @@
   function finish(){state.session?.cancel();state.session=null;clearReview();screen('station-practice');$('practice-setup-status').textContent='Choose a base to practise again.';}
   function openSettings(){$('show-cross-streets').checked=state.showCrossStreets;screen('settings');}
   function closeSettings(){screen('station-practice');}
-  const api=Object.freeze({state,chooseService,chooseDifficulty,start,check,retry,reveal,next,returnToBase,finish,setCrossStreets,revealCrossStreets:()=>updateCrossStreets(true),openSettings,closeSettings,zoom:amount=>{if(state.map)state.map.setZoom(Math.max(10,Math.min(19,state.map.getZoom()+amount)));}});
+  const api=Object.freeze({state,chooseService,chooseDifficulty,start,check,retry,reveal,next,returnToBase,finish,setCrossStreets,revealCrossStreets:()=>updateCrossStreets(true),openSettings,closeSettings,zoom:amount=>{if(state.map)state.map.setZoom(Math.max(window.PTBO_CITY_PACKAGE?.map?.minZoom??10,Math.min(19,state.map.getZoom()+amount)));}});
   window.PTBO_GEO=api;
-  window.PTBO_GEO_READY=window.PTBO_DISPATCH_STORE.ready().then(()=>{
+  window.PTBO_GEO_READY=Promise.resolve(window.PTBO_GEO_CITY_READY).then(()=>window.PTBO_DISPATCH_STORE.ready()).then(()=>{
+    const city=window.PTBO_CITY_PACKAGE;
+    if(city){
+      const demo=city.id!=='peterborough';
+      $('geo-city-label').textContent=city.name+' · '+(demo?'Geo Guesser demo':'street practice');
+      document.title=city.name+' Geo Guesser'+(demo?' Demo':'');
+      const back=new URL('../',location.href);back.searchParams.set('city',city.id);$('game-home').href=back.href;
+      if(demo)$('developer-settings').href='../dispatch-editor/?city='+encodeURIComponent(city.id);
+    }
     state.locations=window.PTBO_DISPATCH_STORE.getAll();state.ready=true;
     for(const tier of tiers)$('count-'+tier).textContent=String(window.PTBO_STATION_PRACTICE.serviceLocations(state.locations,'fire',tier).length);
     $('show-cross-streets').checked=state.showCrossStreets;$('practice-setup-status').textContent='';renderBases();
-    $('developer-settings').hidden=read('ptbo-emergency-developer-mode','')!=='enabled';
+    $('developer-settings').hidden=window.PTBO_CITY_PACKAGE?.id!=='peterborough'||read('ptbo-emergency-developer-mode','')!=='enabled';
     return api;
-  }).catch(error=>{console.error('Unable to load Geo Guesser locations.',error);$('practice-setup-status').textContent='Locations could not load. Check your connection and try again.';$('load-retry').hidden=false;return false;});
+  }).catch(error=>{console.error('Unable to load Geo Guesser locations.',error);$('practice-setup-status').textContent=error?.message || 'Locations could not load. Check your connection and try again.';$('load-retry').hidden=false;return false;});
   window.addEventListener('ptbo-bases-updated',renderBases);
 })();

@@ -14,7 +14,7 @@ const registrySource = fs.readFileSync(path.join(root, 'cities/city-registry.js'
 class Target {
   constructor() { this.listeners = new Map(); }
   addEventListener(type, fn) { if (!this.listeners.has(type)) this.listeners.set(type, []); this.listeners.get(type).push(fn); }
-  emit(type, detail = {}) { const event = { type, target: this, ...detail }; for (const fn of this.listeners.get(type) || []) fn(event); return event; }
+  emit(type, detail = {}) { const event = { type, target: this, defaultPrevented: false, preventDefault() { this.defaultPrevented = true; }, ...detail }; for (const fn of this.listeners.get(type) || []) fn(event); return event; }
 }
 class Element extends Target {
   constructor(id = '') {
@@ -22,17 +22,20 @@ class Element extends Target {
     this.value = ''; this.href = ''; this.textContent = ''; this.children = []; this.classes = new Set();
     this.classList = { toggle: (name, on) => on ? this.classes.add(name) : this.classes.delete(name), contains: name => this.classes.has(name) };
   }
-  setAttribute(name, value) { this.attributes[name] = String(value); }
+  setAttribute(name, value) { this.attributes[name] = String(value); if (name === 'href') this.href = String(value); }
   getAttribute(name) { return this.attributes[name] ?? null; }
-  removeAttribute(name) { delete this.attributes[name]; }
+  removeAttribute(name) { delete this.attributes[name]; if (name === 'href') this.href = ''; }
   appendChild(child) { this.children.push(child); return child; }
   querySelector(selector) { if (selector === '[data-motion-label]') return this.motionLabel || null; if (!this.parts) this.parts = new Map(); if (!this.parts.has(selector)) this.parts.set(selector, new Element()); return this.parts.get(selector); }
   contains(node) { return node === this || this.children.includes(node); }
-  focus() { this.focused = true; }
+  focus() { this.focused = true; if (this.ownerDocument) this.ownerDocument.activeElement = this; }
+  showModal() { this.open = true; }
+  close() { this.open = false; this.emit('close'); }
+  getBoundingClientRect() { return { left: 20, top: 20, right: 500, bottom: 350 }; }
 }
-function fixture({ stored, requested = '', mobile = false, reduced = false, denied = false, motion, initialize = true, cinematic = true, analytics } = {}) {
+function fixture({ stored, requested = '', mobile = false, reduced = false, denied = false, motion, initialize = true, cinematic = true, analytics, demoRequests } = {}) {
   const document = new Target(), window = new Target(), elements = new Map();
-  const get = id => { if (!elements.has(id)) elements.set(id, new Element(id)); return elements.get(id); };
+  const get = id => { if (!elements.has(id)) { const node = new Element(id); node.ownerDocument = document; elements.set(id, node); } return elements.get(id); };
   document.body = new Element('body'); document.body.dataset = { homepage: cinematic ? 'cinematic' : '', homeMotion: 'off' };
   document.head = new Element('head'); document.hidden = false; document.activeElement = null;
   document.currentScript = { src: 'https://example.test/game/shared/city-selector.js?v=1.6.105' };
@@ -43,15 +46,18 @@ function fixture({ stored, requested = '', mobile = false, reduced = false, deni
   choices[1].href = 'https://example.test/game/route-mapping/?v=1.6.105';
   choices[2].href = 'https://example.test/game/response-simulator/play/';
   get('city-explorer-link').href = 'https://example.test/game/city-explorer/';
-  const launches = ['geo', 'route', 'dispatch'].map(mode => { const node = new Element(); node.dataset.previewLaunch = mode; return node; });
+  const launches = ['geo', 'route', 'dispatch'].map(mode => { const node = new Element(); node.dataset.previewLaunch = mode; node.ownerDocument = document; return node; });
   const panels = ['geo', 'route', 'dispatch'].map((mode, i) => { const node = new Element(); node.dataset.previewPanel = mode; node.appendChild(launches[i]); node.hidden = i > 0; return node; });
   const badges = [new Element(), new Element()]; badges.forEach(node => { node.dataset.peterboroughOnly = ''; node.hidden = true; });
   const cityNames = [new Element()], dispatchNames = [new Element()];
   const dispatchPreviewTitles = [new Element()], dispatchPreviewDescriptions = [new Element()], dispatchModeLabels = [new Element()];
   panels[2].querySelector('img').alt = 'Peterborough Dispatch Simulator gameplay';
-  ['home-city-select', 'home-city-status', 'home-dispatch-title', 'home-dispatch-description', 'home-motion-toggle', 'home-preview'].forEach(get);
+  const cards = ['geo', 'route', 'dispatch', 'explorer'].map(mode => { const node = new Element(); node.dataset.demoCard = mode; return node; });
+  const previewCityNames = [new Element(), new Element(), new Element()];
+  const demoLabels = [new Element(), new Element(), new Element()];
+  ['home-city-select', 'home-city-status', 'home-dispatch-title', 'home-dispatch-description', 'home-motion-toggle', 'home-preview', 'home-demo-dialog', 'home-demo-city', 'home-demo-mode', 'home-demo-status', 'home-demo-submit', 'home-demo-close', 'home-explorer-description','dispatch-editor-link','home-editor-name','home-editor-description'].forEach(get);
   get('home-motion-toggle').motionLabel = new Element();
-  const groups = { '[data-preview]': choices, '[data-preview-panel]': panels, '[data-preview-launch]': launches,
+  const groups = { '[data-demo-card]': cards, '[data-preview-city-name]': previewCityNames, '[data-demo-label]': demoLabels, '[data-preview]': choices, '[data-preview-panel]': panels, '[data-preview-launch]': launches,
     '[data-peterborough-only]': badges, '[data-selected-city-name]': cityNames, '[data-dispatch-city]': dispatchNames,
     '[data-dispatch-preview-title]': dispatchPreviewTitles, '[data-dispatch-preview-description]': dispatchPreviewDescriptions,
     '[data-dispatch-mode-label]': dispatchModeLabels };
@@ -62,6 +68,7 @@ function fixture({ stored, requested = '', mobile = false, reduced = false, deni
   const media = new Target(); media.matches = reduced;
   window.matchMedia = () => media;
   window.PTBO_SITE_ANALYTICS = analytics;
+  window.PTBO_DEMO_REQUESTS = demoRequests;
   window.PTBO_BUILD = { version: '1.6.105' }; window.PTBO_DEVICE_SURFACE = { isMobile: () => mobile };
   const location = { href: 'https://example.test/game/' + requested, search: requested, pathname: '/game/' };
   Object.assign(window, { document, location, localStorage });
@@ -69,7 +76,7 @@ function fixture({ stored, requested = '', mobile = false, reduced = false, deni
   vm.runInContext(registrySource, context);
   vm.runInContext(source, context);
   if (initialize) window.PTBO_HOMEPAGE?.init({ cities: window.PTBO_CITIES });
-  return { window, document, context, get, choices, launches, panels, badges, cityNames, dispatchNames, dispatchPreviewTitles, dispatchPreviewDescriptions, dispatchModeLabels, storage, media, writes: () => writes,
+  return { window, document, context, get, cards, previewCityNames, demoLabels, choices, launches, panels, badges, cityNames, dispatchNames, dispatchPreviewTitles, dispatchPreviewDescriptions, dispatchModeLabels, storage, media, writes: () => writes,
     changeCity(id, event = {}) { get('home-city-select').value = id; get('home-city-select').emit('change', event); },
     runSelector() { vm.runInContext(selectorSource, context); } };
 }
@@ -85,16 +92,20 @@ test('defaults to Peterborough and keeps the three games and 3D entry reachable'
   assert.ok(h.badges.every(node => node.hidden));
 });
 
-test('restores a valid city and describes non-Peterborough mode as free driving', () => {
+test('restores a valid city, keeps its Geo demo local, and blocks unavailable modes', () => {
   const h = fixture({ stored: 'oshawa' });
   assert.equal(h.get('home-city-select').value, 'oshawa');
   assert.equal(h.get('home-dispatch-title').textContent, 'Free Driving');
   assert.match(h.get('home-dispatch-description').textContent, /Oshawa/);
-  assert.match(h.get('home-city-status').textContent, /Peterborough/);
-  assert.ok(h.badges.every(node => !node.hidden));
-  assert.equal(h.panels.find(node => !node.hidden).dataset.previewPanel, 'dispatch');
-  assert.equal(h.get('geo-game-link').href, 'https://example.test/game/geo-guesser/desktop/');
-  assert.equal(h.get('route-game-link').href, 'https://example.test/game/route-mapping/?v=1.6.105');
+  assert.match(h.get('home-city-status').textContent, /Oshawa.*demo/i);
+  assert.ok(h.badges.every(node => node.hidden));
+  assert.equal(h.panels.find(node => !node.hidden).dataset.previewPanel, 'geo');
+  assert.equal(new URL(h.get('geo-game-link').href).searchParams.get('city'), 'oshawa');
+  assert.equal(h.get('route-game-link').href, '');
+  assert.equal(h.get('route-game-link').getAttribute('role'), 'button');
+  assert.equal(h.get('route-game-link').getAttribute('tabindex'), '0');
+  assert.ok(h.cards.every(card => card.dataset.homeDemo === 'true'));
+  assert.ok(h.demoLabels.every(label => !label.hidden));
 });
 
 test('explicit valid city wins; corrupt IDs fall back to a valid stored city or Peterborough', () => {
@@ -207,6 +218,15 @@ test('existing launcher keeps its city dialog when the new homepage controller i
   assert.equal(h.document.listeners.get('click')?.length, 1);
 });
 
+test('legacy Dispatch fallback exposes only the seven cities with driving data', () => {
+  const h = fixture({ initialize: false }); h.window.PTBO_HOMEPAGE = undefined;
+  h.runSelector();
+  assert.deepEqual(Array.from(h.window.PTBO_CITY_SELECTOR.cities, city => city.id), ['peterborough', 'oshawa', 'belleville', 'scarborough', 'pickering', 'markham', 'toronto']);
+  assert.equal(h.document.body.children.find(node => node.id === 'ptbo-city-dialog').querySelector('.city-grid').children.length, 7);
+  const home = fixture({ initialize: false }); home.runSelector();
+  assert.equal(home.window.PTBO_CITY_SELECTOR.cities.length, 33);
+});
+
 test('returning from a game refreshes city and motion preferences changed while the homepage was frozen', () => {
   const h = fixture();
   h.storage.set('ptboSelectedCity', 'scarborough');
@@ -244,7 +264,7 @@ test('Dispatch preview distinguishes calls from free driving and keeps screensho
   assert.equal(h.get('home-dispatch-description').textContent, 'Drive Fire & EMS in Toronto.');
   assert.equal(h.dispatchPreviewTitles[0].textContent, 'Get to know the streets.');
   assert.equal(h.dispatchModeLabels[0].textContent, 'Free Driving');
-  assert.equal(h.dispatchPreviewDescriptions[0].textContent, 'Choose Fire or EMS for free driving. Dispatch calls are in Peterborough.');
+  assert.equal(h.dispatchPreviewDescriptions[0].textContent, 'Choose Fire or EMS for free driving.');
   assert.equal(h.launches[2].querySelector('[data-launch-label]').textContent, 'Start free driving');
   assert.equal(h.panels[2].querySelector('img').alt, 'Peterborough Dispatch Simulator gameplay');
   h.changeCity('peterborough');
@@ -289,6 +309,153 @@ test('missing, throwing or rejected analytics cannot block city preference or ca
     assert.equal(dispatchURL(h).searchParams.get('city'), 'oshawa');
     await Promise.resolve();
   }
+});
+
+test('city options are built from every registered capability entry', () => {
+  const h = fixture();
+  assert.equal(h.get('home-city-select').children.length, h.window.PTBO_CITIES.length);
+  assert.ok(h.get('home-city-select').children.some(option => option.value === 'london'));
+});
+
+test('homepage markup provides the native request dialog and DEMO treatment for every mode', () => {
+  const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  assert.match(html, /<dialog[^>]+id="home-demo-dialog"[^>]+aria-labelledby="home-demo-title"/);
+  assert.match(html, /id="home-demo-title">Request a demo/);
+  for (const mode of ['geo', 'route', 'dispatch', 'explorer']) assert.match(html, new RegExp('data-demo-card="' + mode + '"'));
+  assert.doesNotMatch(html, /data-peterborough-only/);
+  assert.match(html, /event\.defaultPrevented/);
+  assert.match(html, /script src="shared\/demo-requests\.js\?v=/);
+});
+
+test('all Geo demo links preserve the selected city, canonical version, surface wrapper and hosted subdirectory', () => {
+  for (const mobile of [false, true]) {
+    const h = fixture({ mobile, stored: 'london' });
+    const url = new URL(h.get('geo-game-link').href);
+    assert.equal(url.pathname, '/game/geo-guesser/' + (mobile ? 'mobile/' : 'desktop/'));
+    assert.equal(url.searchParams.get('city'), 'london');
+    assert.equal(url.searchParams.get('v'), '1.6.105');
+    assert.equal(h.launches[0].href, url.href);
+    const click = h.choices[0].emit('click', { ctrlKey: true, button: 0 });
+    assert.equal(click.defaultPrevented, false);
+    assert.equal(h.get('home-demo-dialog').open, undefined);
+    assert.equal(h.get('dispatch-game-link').href, '');
+    assert.equal(h.get('city-explorer-link').href, '');
+    assert.ok(h.previewCityNames.every(node => node.textContent === 'London'));
+    h.changeCity('peterborough');
+    assert.ok(h.cards.every(card => card.dataset.homeDemo === 'false'));
+    assert.equal(h.get('route-game-link').getAttribute('role'), null);
+    assert.equal(new URL(h.get('route-game-link').href).searchParams.get('city'), 'peterborough');
+  }
+});
+
+test('unavailable mode card and preview launches have no redirect and open a named keyboard accessible request dialog without counting', () => {
+  const recorded = [];
+  const h = fixture({ stored: 'london', analytics: { recordDemoRequest: (...args) => recorded.push(args) } });
+  for (const [link, modeName] of [[h.choices[1], 'Route Mapping'], [h.launches[2], 'Dispatch Simulator'], [h.get('city-explorer-link'), 'Explore 3D']]) {
+    assert.equal(link.href, '');
+    assert.equal(link.getAttribute('tabindex'), '0');
+    const click = link.emit('click');
+    assert.equal(click.defaultPrevented, true);
+    assert.equal(h.get('home-demo-dialog').open, true);
+    assert.equal(h.get('home-demo-city').textContent, 'London');
+    assert.equal(h.get('home-demo-mode').textContent, modeName);
+    assert.deepEqual(recorded, []);
+    h.get('home-demo-close').emit('click');
+    assert.equal(h.get('home-demo-dialog').open, false);
+    assert.equal(h.document.activeElement, link);
+  }
+  const key = h.choices[1].emit('keydown', { key: 'Enter' });
+  assert.equal(key.defaultPrevented, true);
+  assert.equal(h.get('home-demo-dialog').open, true);
+  h.get('home-demo-dialog').emit('cancel');
+  assert.equal(h.get('home-demo-dialog').open, false);
+  assert.equal(h.document.activeElement, h.choices[1]);
+  h.choices[1].emit('keydown', { key: ' ' });
+  h.get('home-demo-dialog').emit('click', { clientX: 5, clientY: 5 });
+  assert.equal(h.get('home-demo-dialog').open, false);
+  assert.deepEqual(recorded, []);
+});
+
+test('request submission waits for a confirmed write, disables duplicate clicks, and keeps success for that city and mode', async () => {
+  let resolve; const recorded = [];
+  const h = fixture({ stored: 'london', analytics: { recordDemoRequest(city, mode) { recorded.push([city, mode]); return new Promise(done => { resolve = done; }); } } });
+  h.choices[1].emit('click');
+  const button = h.get('home-demo-submit');
+  button.emit('click'); button.emit('click');
+  assert.equal(button.disabled, true);
+  assert.deepEqual(recorded, [['london', 'route']]);
+  assert.doesNotMatch(h.get('home-demo-status').textContent, /request sent/i);
+  resolve(true); await new Promise(done => setImmediate(done));
+  assert.match(h.get('home-demo-status').textContent, /request sent/i);
+  assert.equal(button.disabled, true);
+  h.get('home-demo-close').emit('click'); h.choices[1].emit('click');
+  assert.match(h.get('home-demo-status').textContent, /request sent/i);
+  button.emit('click');
+  assert.equal(recorded.length, 1);
+});
+
+test('failed requests offer a retry and do not claim success; excluded tracking is explained neutrally', async () => {
+  for (const first of [false, new Error('offline')]) {
+    let count = 0;
+    const h = fixture({ stored: 'london', analytics: { async recordDemoRequest() { count++; if (count > 1) return true; if (first instanceof Error) throw first; return first; } } });
+    h.choices[1].emit('click'); h.get('home-demo-submit').emit('click');
+    await new Promise(done => setImmediate(done));
+    assert.match(h.get('home-demo-status').textContent, /try again|retry/i);
+    assert.doesNotMatch(h.get('home-demo-status').textContent, /request sent/i);
+    assert.equal(h.get('home-demo-submit').disabled, false);
+    h.get('home-demo-submit').emit('click'); await new Promise(done => setImmediate(done));
+    assert.match(h.get('home-demo-status').textContent, /request sent/i);
+    assert.equal(count, 2);
+  }
+  let count = 0;
+  const h = fixture({ stored: 'london', analytics: { trackingAllowed: () => false, recordDemoRequest() { count++; return true; } } });
+  h.choices[1].emit('click'); h.get('home-demo-submit').emit('click');
+  await new Promise(done => setImmediate(done));
+  assert.match(h.get('home-demo-status').textContent, /tracking.*disabled/i);
+  assert.doesNotMatch(h.get('home-demo-status').textContent, /request sent/i);
+  assert.equal(count, 0);
+});
+
+test('request city and mode are captured when opened and late replies cannot overwrite a different dialog', async () => {
+  const recorded = []; let resolve;
+  const h = fixture({ stored: 'london', analytics: { recordDemoRequest(city, mode) { recorded.push([city, mode]); return new Promise(done => { resolve = done; }); } } });
+  h.choices[1].emit('click'); h.changeCity('oshawa');
+  assert.equal(h.get('home-demo-city').textContent, 'London');
+  h.get('home-demo-submit').emit('click');
+  assert.deepEqual(recorded, [['london', 'route']]);
+  h.get('home-demo-close').emit('click'); h.choices[1].emit('click');
+  assert.equal(h.get('home-demo-city').textContent, 'Oshawa');
+  resolve(true); await new Promise(done => setImmediate(done));
+  assert.doesNotMatch(h.get('home-demo-status').textContent, /request sent/i);
+  assert.equal(h.get('home-demo-submit').disabled, false);
+});
+
+test('device request persistence uses precise local confirmation and bypasses remote tracking exclusion', async () => {
+  let localSaved = false; let remoteCalls = 0; let localCalls = 0;
+  const demoRequests = {
+    async recordDemoRequest(city, mode) { assert.equal(city, 'london'); assert.equal(mode, 'route'); localCalls++; localSaved = true; return true; },
+    requestStatus() { return { localSaved, remoteSaved: false }; },
+  };
+  const h = fixture({ stored: 'london', demoRequests, analytics: { trackingAllowed: () => false, recordDemoRequest() { remoteCalls++; return false; } } });
+  h.choices[1].emit('click'); h.get('home-demo-submit').emit('click');
+  await new Promise(done => setImmediate(done));
+  assert.equal(localCalls, 1); assert.equal(remoteCalls, 0);
+  assert.match(h.get('home-demo-status').textContent, /request recorded on this device/i);
+  assert.doesNotMatch(h.get('home-demo-status').textContent, /request sent/i);
+  assert.equal(h.get('home-demo-submit').disabled, true);
+  const restored = fixture({ stored: 'london', demoRequests }); restored.choices[1].emit('click');
+  assert.match(restored.get('home-demo-status').textContent, /request recorded on this device/i);
+  assert.equal(restored.get('home-demo-submit').disabled, true);
+});
+
+test('device adapter failure remains retryable and remote confirmation is only shown for a saved shared request', async () => {
+  let saved = false;
+  const h = fixture({ stored: 'london', demoRequests: { async recordDemoRequest() { return saved; }, requestStatus() { return { localSaved: saved, remoteSaved: saved }; } } });
+  h.choices[1].emit('click'); h.get('home-demo-submit').emit('click'); await new Promise(done => setImmediate(done));
+  assert.match(h.get('home-demo-status').textContent, /try again/i);
+  assert.equal(h.get('home-demo-submit').disabled, false);
+  saved = true; h.get('home-demo-submit').emit('click'); await new Promise(done => setImmediate(done));
+  assert.match(h.get('home-demo-status').textContent, /request sent/i);
 });
 
 function launcherAccessFixture(version) {
@@ -352,4 +519,25 @@ test('city selector retains the access patch module cache token without canonica
   const url = new URL(script.src);
   assert.equal(url.pathname, '/game/shared/launcher-access-1.6.47.js');
   assert.equal(url.searchParams.get('v'), '1.6.47');
+});
+
+test('a queued close event cannot erase an immediately reopened demo request',async()=>{
+ const calls=[],h=fixture({stored:'ottawa',demoRequests:{recordDemoRequest:async(...args)=>{calls.push(args);return true;},requestStatus:()=>({localSaved:calls.length>0,remoteSaved:false})}});
+ // Model the browser: dialog.close() queues its close event, rather than dispatching synchronously.
+ const dialog=h.get('home-demo-dialog');dialog.close=function(){this.open=false;};
+ h.get('route-game-link').emit('click');h.get('home-demo-close').emit('click');
+ h.get('route-game-link').emit('keydown',{key:'Enter'});dialog.emit('close');
+ h.get('home-demo-submit').emit('click');await new Promise(r=>setImmediate(r));
+ assert.equal(calls.length,1);assert.equal(calls[0][0],'ottawa');assert.equal(dialog.open,true);assert.match(h.get('home-demo-status').textContent,/recorded on this device/);
+});
+test('a failed pending request updates an immediately reopened dialog so it can retry',async()=>{
+ let finish;const h=fixture({stored:'ottawa',demoRequests:{recordDemoRequest:()=>new Promise(r=>finish=r),requestStatus:()=>({localSaved:false,remoteSaved:false})}});
+ h.get('route-game-link').emit('click');h.get('home-demo-submit').emit('click');h.get('home-demo-close').emit('click');h.get('route-game-link').emit('click');
+ finish(false);await new Promise(r=>setImmediate(r));assert.equal(h.get('home-demo-submit').disabled,false);assert.match(h.get('home-demo-status').textContent,/could not be saved/);
+});
+test('editor utility links always select a city whose editor package exists and label its scope',()=>{
+ const h=fixture({stored:'ottawa'}),link=h.get('dispatch-editor-link');
+ assert.match(link.href,/dispatch-editor\/\?city=peterborough/);assert.match(link.getAttribute('aria-label'),/Peterborough/);
+ h.changeCity('markham');assert.equal(new URL(link.href).searchParams.get('city'),'markham');
+ h.changeCity('peterborough');assert.equal(new URL(link.href).searchParams.get('city'),'peterborough');
 });

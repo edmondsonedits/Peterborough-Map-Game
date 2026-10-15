@@ -2,3 +2,5 @@ tools/runtime/
 artifacts/visual-qa/
 
 test-artifacts/
+
+.superpowers/

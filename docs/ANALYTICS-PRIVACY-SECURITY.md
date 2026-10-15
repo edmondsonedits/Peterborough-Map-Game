@@ -19,6 +19,7 @@ Approved analytics categories:
 - feature, control and settings usage
 - device surface/browser family/screen-size bucket
 - startup success/failure and aggregate reliability events
+- explicit demo demand grouped by city and game mode
 
 Do not collect for product analytics:
 
@@ -120,6 +121,12 @@ window.PTBO_SECURE_ANALYTICS = {
     fireCalls: 310,
     emsCalls: 150,
     startupFailures: 2,
+    demoRequests: {
+      total: 3,
+      byCity: { toronto: 2, ottawa: 1 },
+      byMode: { dispatch: 2, route: 1 },
+      byCityMode: { toronto: { dispatch: 1, route: 1 }, ottawa: { dispatch: 1 } }
+    },
     departments: {
       peterborough_fire: 120
     }
@@ -128,6 +135,16 @@ window.PTBO_SECURE_ANALYTICS = {
 ```
 
 `authorized` must represent real server-backed authentication/authorization, not a hidden URL, localStorage value or JavaScript-only password.
+
+### Explicit demo requests
+
+`shared/demo-requests.js` saves only aggregate city/mode counts in this browser. Website Stats always shows these under **Demo requests on this device**, even while administrative analytics is locked. This is device-scoped application state, not an aggregate of all players. No names, contact details, text, routes, or persistent player identifiers are stored. Session-only markers prevent repeated submissions from increasing the device total. Clearing browser storage removes the device counts.
+
+The coordinator's `PTBO_DEMO_REQUESTS.recordDemoRequest(city, mode)` returns whether device or shared persistence succeeded. Its synchronous `requestStatus(city, mode)` distinguishes `localSaved` and `remoteSaved`; the menu says **Request recorded on this device** when only device persistence succeeded. Opening/cancelling a dialog never saves a request. If both writes fail the submission remains retryable.
+
+When telemetry is permitted, `PTBO_SITE_ANALYTICS.recordDemoRequest(city, mode)` attempts the existing `siteAnalytics` transport and returns true only after confirmed remote success. Owner, stats, deployment and opt-out exclusions still block remote analytics. New writes never fall back to the leaderboard collection. A deterministic event/document ID per session/city/mode makes retries idempotent; historical aggregate reads deduplicate both event IDs across collections and repeated session/city/mode requests. Modes are restricted to `geo`, `route`, `dispatch`, and `explorer`; submissions must use a registered city.
+
+**Shared demo demand** is shown only from the authenticated integration's `demoRequests` aggregate shown above. A missing field is displayed as unavailable, rather than a zero. This repository contains no deployed authenticated analytics endpoint; connecting Cloudflare or another secure backend remains deployment work. Device requests work independently, and this change does not deploy database rules, expose raw records, or claim that a device-only request reached a shared backend.
 
 ## Firestore rules
 

@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 2,
+  "id": "milton",
+  "name": "Milton",
+  "province": "Ontario",
+  "country": "Canada",
+  "status": "geo-demo",
+  "playable": true,
+  "note": "Geo Guesser demo with 20 shared Fire and EMS call locations.",
+  "map": {
+    "bounds": [
+      [
+        43.41728321670602,
+        -80.1611422232313
+      ],
+      [
+        43.62895564788874,
+        -79.7248216817283
+      ]
+    ],
+    "defaultCenter": [
+      43.52601331966486,
+      -79.88986174439137
+    ],
+    "defaultZoom": 18,
+    "minZoom": 7,
+    "maxZoom": 19
+  },
+  "features": {
+    "baseTraining": false,
+    "dispatch": false,
+    "roadBoundaries": false,
+    "routeGuidance": false,
+    "geoGuesser": true
+  },
+  "data": {
+    "boundaries": null,
+    "roads": null,
+    "dispatchLocations": null,
+    "bases": "geo-data.json",
+    "hospitals": null,
+    "geoGuesser": "geo-data.json"
+  }
+}

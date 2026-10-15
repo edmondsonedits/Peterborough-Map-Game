@@ -37,11 +37,11 @@ const noChangesDiff = (before,after) => ({
   schema:1,updated:[],added:after.filter(item=>!before.some(seed=>seed.id===item.id)),deleted:[],
 });
 
-test('all cities launch through the same Peterborough desktop and mobile simulator wrappers', () => {
+test('existing driving cities launch through the same shared desktop and mobile simulator wrappers', () => {
   const c=browserContext();
   vm.runInContext(read('cities/city-registry.js'),c);
-  assert.equal(c.PTBO_CITIES.length,7);
-  for(const city of c.PTBO_CITIES){
+  assert.equal(c.PTBO_CITIES.filter(city=>city.modes.dispatch).length,7);
+  for(const city of c.PTBO_CITIES.filter(city=>city.modes.dispatch)){
     assert.equal(city.playable,true,city.id);
     assert.equal(city.dispatch.desktop,'response-simulator/play/',`${city.id} desktop route`);
     assert.equal(city.dispatch.mobile,'response-simulator/mobile/',`${city.id} mobile route`);
