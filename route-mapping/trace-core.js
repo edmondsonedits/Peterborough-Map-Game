@@ -5,7 +5,11 @@
   else root.PTBO_ROUTE_TRACE=api;
 })(typeof globalThis!=='undefined'?globalThis:this,function(){
   'use strict';
-  function createTraceCore({graph,toXY,toLatLng,search}){
+  function createTraceCore({graph,toXY,toLatLng,search,cost,profile}){
+    const responseProfile=()=>typeof profile==='function'?profile():(profile||cost?.createProfile('fire'));
+    let currentRouter=null,routerService=null;
+    function router(){if(!cost)return null;const p=responseProfile();if(!currentRouter||routerService!==p.service){currentRouter=cost.createRouter({graph,toLatLng,profile:p});routerService=p.service;}return currentRouter;}
+    function metricOptions(start,end){const r=router();const a=graph.segments[start.segmentId],b=graph.segments[end.segmentId];return r?r.endpointOptions(cost.restricted(a)?[a.from,a.to]:[],cost.restricted(b)?[b.from,b.to]:[],{baseAccess:true}):{};}
     const distance=(a,b)=>{const p=toXY(a.lat,a.lng),q=toXY(b.lat,b.lng);return Math.hypot(q.x-p.x,q.y-p.y);};
     const pointAt=(s,t)=>toLatLng(s.ax+s.dx*t,s.ay+s.dy*t);
     const allowed=(s,reverse)=>reverse?s.backward!==false:s.forward!==false;
@@ -18,7 +22,7 @@
     function snapCandidates(point,tolerance=30,direction,previous,directionBias=.35){
       const p=toXY(point.lat,point.lng),bias=Number.isFinite(directionBias)?Math.max(0,Math.min(1,directionBias)):.35;const candidates=[];
       for(const id of indexes(p,tolerance)){
-        const s=graph.segments[id],t=Math.max(0,Math.min(1,((p.x-s.ax)*s.dx+(p.y-s.ay)*s.dy)/s.lengthSq));
+        const s=graph.segments[id];if(cost&&!cost.feasible(s,responseProfile()))continue;const t=Math.max(0,Math.min(1,((p.x-s.ax)*s.dx+(p.y-s.ay)*s.dy)/s.lengthSq));
         const xy={x:s.ax+s.dx*t,y:s.ay+s.dy*t},gap=Math.hypot(xy.x-p.x,xy.y-p.y);
         if(gap>tolerance)continue;
         const v=direction,alignment=v&&Math.hypot(v.x,v.y)>0?Math.abs((v.x*s.dx+v.y*s.dy)/(Math.hypot(v.x,v.y)*s.length)):1;
@@ -109,7 +113,8 @@
         cursor=e.end;
       }
       if(distance(cursor,end)>.2)throw new Error('This street section has no continuous connection.');
-      return {edges,coordinates,start,endpoint:end,distance:edges.reduce((sum,e)=>sum+e.distance,0),duration:edges.reduce((sum,e)=>sum+(e.duration||0),0),complete:false,mainRoads:[...new Set(edges.map(e=>e.name).filter(Boolean))]};
+      const metrics=cost?cost.evaluateRoute(graph,edges,responseProfile(),null,metricOptions(start,end)):{};
+      return {edges,coordinates,start,endpoint:end,distance:edges.reduce((sum,e)=>sum+e.distance,0),duration:edges.reduce((sum,e)=>sum+(e.duration||0),0),...metrics,complete:false,mainRoads:[...new Set(edges.map(e=>e.name).filter(Boolean))]};
     }
     function fitsCorridor(candidate,options){
       if(!options.local||!options.corridorStart||!options.corridorEnd)return true;
@@ -118,6 +123,7 @@
     }
     function between(a,b,options={}){
       if(!a||!b)return null;
+      const r=router();if(r){const aa=options.corridorStart&&toXY(options.corridorStart.lat,options.corridorStart.lng),bb=options.corridorEnd&&toXY(options.corridorEnd.lat,options.corridorEnd.lng),corridorTest=aa&&bb?edge=>{const p=graph.nodes[edge.from],q=graph.nodes[edge.to];return [p,q,{x:(p.x+q.x)/2,y:(p.y+q.y)/2}].every(p=>segmentGap(p,aa,bb)<=options.corridorWidth);}:null;const candidate=r.between(a,b,{baseAccess:true,...options,objective:'distance',maxVisitedNodes:options.local?2500:1500000,corridorTest});return candidate&&fitsCorridor(candidate,options)?candidate:null;}
       let best=null,bestDistance=options.maxDistance??Infinity;
       if(a.segmentId===b.segmentId){
         const s=graph.segments[a.segmentId];
@@ -166,7 +172,7 @@
         if(!start)start=current;
         if(previous&&(previous.segmentId!==current.segmentId||distance(previous,current)>.05)){
           const gap=distance(previous,current),maxDistance=Math.max(.5,gap*1.8+1);
-          const leg=between(previous,current,{local:true,maxDistance,corridorStart:before,corridorEnd:p,corridorWidth:tolerance});
+          const leg=between(previous,current,{local:true,maxDistance,corridorStart:before,corridorEnd:p,corridorWidth:tolerance,incoming:edges});
           if(!leg)throw new Error('Those streets are not connected in that direction. Trace the junction or bridge you want.');
           edges.push(...leg.edges);
         }
@@ -177,7 +183,7 @@
     function combine(first,next){
       if(!first)return next;
       if(distance(first.endpoint,next.start)>1)throw new Error('Continue from the end of your blue route.');
-      return route([...first.edges,...next.edges],first.start,next.endpoint);
+      const combined=route([...first.edges,...next.edges],first.start,next.endpoint);if(combined.feasible===false)return null;return combined;
     }
     // An editor starts at an exact road fraction, not at a distant graph vertex.
     function begin(anchor){
@@ -212,7 +218,7 @@
     function connectEdited(current,target,options){
       const retracted=retreat(current,target,options);
       if(retracted)return retracted;
-      const direct=between(current.endpoint,target,options);
+      const direct=between(current.endpoint,target,{...options,incoming:current.edges});
       let best=direct?combine(current,direct):null;
       let bestCost=direct?direct.distance:options.maxDistance,removed=0;
       const a=toXY(options.corridorStart.lat,options.corridorStart.lng),b=toXY(options.corridorEnd.lat,options.corridorEnd.lng);
@@ -221,10 +227,9 @@
         if(removed>bestCost+1e-7||[edge.start,edge.end].some(p=>segmentGap(toXY(p.lat,p.lng),a,b)>options.corridorWidth))break;
         const segment=graph.segments[edge.segmentId],t=edge.t0??(edge.reverse?1:0);
         const junction={...pointAt(segment,t),segmentId:segment.id,t,road:segment.name||'Road'};
-        const leg=between(junction,target,{...options,maxDistance:Math.max(0,bestCost-removed)+1e-7});
+        const leg=between(junction,target,{...options,incoming:current.edges.slice(0,i),maxDistance:Math.max(0,bestCost-removed)+1e-7});
         if(!leg||removed+leg.distance>bestCost+1e-7)continue;
-        bestCost=removed+leg.distance;
-        best=route([...current.edges.slice(0,i),...leg.edges],current.start,target);
+        const candidate=route([...current.edges.slice(0,i),...leg.edges],current.start,target);if(candidate.feasible===false)continue;bestCost=removed+leg.distance;best=candidate;
       }
       return best;
     }

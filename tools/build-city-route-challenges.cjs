@@ -11,9 +11,10 @@ const roadKey=name=>String(name||'').trim().toLowerCase().replace(/\s+/g,' ');
 const publicNamed=edge=>named(edge.name)&&edge.highway!=='service';
 const unique=values=>[...new Set(values)];
 const hash=text=>crypto.createHash('sha256').update(text).digest('hex');
-function loadEngine(cityId){
+function loadEngine(cityId,cityMap){
   const cost=require('../route-mapping/cost-core.js');
-  const window={PTBO_ROUTE_COST:cost,PTBO_CITY_PACKAGE:{id:cityId,route:{baseAccess:{}}},PTBO_BUILD:{version:'curation'}};
+  if(!cityMap){const city=loadCity(cityId);cityMap=city.geo?.map||city.map;}
+  const window={PTBO_ROUTE_COST:cost,PTBO_CITY_PACKAGE:{id:cityId,map:cityMap,route:{baseAccess:{}}},PTBO_BUILD:{version:'curation'}};
   const context=vm.createContext({window,document:{getElementById:()=>null},console,URL,Math,Number,String,Object,Boolean,Array,Map,Set,Float64Array,Int32Array,Int16Array,Uint8Array,localStorage:{getItem:()=>null},performance:{now:()=>Date.now()}});
   const source=fs.readFileSync(path.join(ROOT,'route-mapping/app.js'),'utf8');
   const exports=['state','buildGraph','toXY','toLatLng','snapRoadAccess','referenceBetween','basePoint','callPoint'];
@@ -33,12 +34,23 @@ function loadCity(cityId){
   window.dispatchEvent=()=>{};
   vm.runInNewContext(fs.readFileSync(path.join(ROOT,'cities/peterborough/package.js'),'utf8'),{window,document,location:{href:'https://local/'},URL,CustomEvent:class{}});
   const bases=Object.entries(window.PTBO_SERVICE_CONFIG.profiles).flatMap(([service,p])=>p.bases.map(b=>({...b,service,status:'active',selectionEligible:true})));
-  return {file,script,calls,bases};
+  const catalogFile=path.join(ROOT,'cities/peterborough/locations.json'),catalog=readJSON(catalogFile);
+  return {file,script,calls,bases,catalogFile,catalog,map:window.PTBO_CITY_PACKAGE.map};
 }
 function saveCalls(city){
   if(city.geo){city.geo.locations=city.calls;fs.writeFileSync(city.file,JSON.stringify(city.geo)+'\n');return;}
   const payload=zlib.gzipSync(JSON.stringify(city.calls),{level:9}).toString('base64');
   fs.writeFileSync(city.file,city.script.replace(/const PAYLOAD = '[^']+'/,'const PAYLOAD = '+JSON.stringify(payload).replace(/^"|"$/g,"'")));
+  const byId=new Map(city.calls.map(c=>[c.id,c]));
+  city.catalog.locations=city.catalog.locations.filter(c=>!String(c.id).includes('-route-osm-node-')).map(c=>{
+    const call=byId.get(c.id),copy={...c};delete copy.routeChallenges;delete copy.routeAccess;
+    if(call?.routeChallenges)copy.routeChallenges=call.routeChallenges;if(call?.routeAccess)copy.routeAccess=call.routeAccess;
+    return copy;
+  });
+  const readableIds=new Set(city.catalog.locations.map(c=>c.id));
+  for(const call of city.calls)if(!readableIds.has(call.id))city.catalog.locations.push({id:call.id,city:'peterborough',name:call.name,address:call.addr,lat:call.lat,lng:call.lng,radiusMeters:call.radius,difficulty:null,crossStreets:call.crossStreets,sourceCallIds:[],sources:call.sources,origin:'Route-only OSM junction',addressVerification:'OSM named road junction; no civic number asserted',addressSource:call.sources[0],routeChallenges:call.routeChallenges,routeAccess:call.routeAccess});
+  if(city.catalog.totals){city.catalog.totals.total=city.catalog.locations.length;city.catalog.totals.routeOnly=city.catalog.locations.filter(c=>c.difficulty===null).length;}
+  fs.writeFileSync(city.catalogFile,JSON.stringify(city.catalog,null,2)+'\n');
 }
 function routeRoads(route){return unique((route?.edges||[]).filter(publicNamed).map(e=>e.name));}
 function routeSignature(route){return (route?.edges||[]).map(e=>e.segmentId+':'+Number(Boolean(e.reverse))).join(',');}
@@ -79,8 +91,8 @@ function summarizeRoute(route){
 function evidenceRoute(route,graph){
   return {...summarizeRoute(route),roads:routeRoads(route),geometry:route.coordinates,edges:route.edges.map(e=>({from:e.from,to:e.to,fromOsmId:graph.nodes[e.from]?.osmId,toOsmId:graph.nodes[e.to]?.osmId,wayId:e.wayId,segmentId:e.segmentId,reverse:Boolean(e.reverse),t0:e.t0??(e.reverse?1:0),t1:e.t1??(e.reverse?0:1),distance:round(e.distance,4),name:e.name,highway:e.highway,start:e.start||{lat:graph.nodes[e.from].lat,lng:graph.nodes[e.from].lng},end:e.end||{lat:graph.nodes[e.to].lat,lng:graph.nodes[e.to].lng}}))};
 }
-function candidateOrder(calls,base,engine){
-  const origin=engine.toXY(base.lat,base.lng),ordered=calls.map(call=>{const p=engine.toXY(Number(call.lat),Number(call.lng));return {call,d:Math.hypot(p.x-origin.x,p.y-origin.y),angle:Math.atan2(p.y-origin.y,p.x-origin.x)};}).filter(x=>Number.isFinite(x.d)&&x.d>200).sort((a,b)=>a.d-b.d||String(a.call.id).localeCompare(String(b.call.id)));
+function candidateOrder(calls,base,engine,maxDistance=35000){
+  const origin=engine.toXY(base.lat,base.lng),ordered=calls.map(call=>{const p=engine.toXY(Number(call.lat),Number(call.lng));return {call,d:Math.hypot(p.x-origin.x,p.y-origin.y),angle:Math.atan2(p.y-origin.y,p.x-origin.x)};}).filter(x=>Number.isFinite(x.d)&&x.d>200&&x.d<=maxDistance).sort((a,b)=>a.d-b.d||String(a.call.id).localeCompare(String(b.call.id)));
   // Begin with destinations in several directions, then exhaust the existing
   // sourced catalog before considering a new OSM junction.
   const out=[],seen=new Set(),add=x=>{if(x&&!seen.has(x.call.id)){seen.add(x.call.id);out.push(x.call);}};
@@ -99,15 +111,16 @@ function probeOptions(best,graph){
   for(const fork of picks)add({avoidNode:fork.edge.from},'corridor-choice','a different named corridor');
   return result.slice(0,3);
 }
-function analyzeCall(base,call,engine){
-  const origin=engine.snapRoadAccess(engine.basePoint(base),850,{base:true}),destination=engine.snapRoadAccess(engine.callPoint(call),850);
+function analyzeCall(base,call,engine,origin){
+  origin??=engine.snapRoadAccess(engine.basePoint(base),260,{base:true});
+  const destination=engine.snapRoadAccess(engine.callPoint(call),520);
   if(!origin||!destination)return null;
   const best=engine.referenceBetween(origin,destination,{baseAccess:true});
   if(!best||!best.edges?.length||!Number.isFinite(best.seconds))return null;
   const alternatives=[];
   for(const probe of probeOptions(best,engine.state.graph)){
     const route=engine.referenceBetween(origin,destination,{baseAccess:true,...probe.options}),quality=assessAlternative(best,route);
-    if(quality)alternatives.push({...probe,route,quality});
+    if(quality){alternatives.push({...probe,route,quality});break;}
   }
   if(!alternatives.length)return null;
   alternatives.sort((a,b)=>b.quality.newNamedCorridorDistance-a.quality.newNamedCorridorDistance||b.quality.penalty-a.quality.penalty);
@@ -144,7 +157,7 @@ function accessRecord(anchor,source,graph,graphVersion){
   return {lat:anchor.lat,lng:anchor.lng,sourceLat:Number(source.spawnLat??source.lat),sourceLng:Number(source.spawnLng??source.lng),wayId:Number(wayId),...(nearest.osmId?{nodeId:Number(nearest.osmId)}:{}),graphVersion,reviewStatus:'map-derived',sourceUrl:`https://www.openstreetmap.org/way/${wayId}`};
 }
 function buildCity(cityId,{write=false,networkFile}={}){
-  const start=Date.now(),city=loadCity(cityId),engine=loadEngine(cityId);
+  const start=Date.now(),city=loadCity(cityId),engine=loadEngine(cityId,city.geo?.map||city.map);
   // Generated junction rows belong to this deterministic build. Reconsider
   // them from their OSM graph each time rather than accumulating stale picks.
   city.calls=city.calls.filter(c=>!String(c.id).includes('-route-osm-node-'));
@@ -161,12 +174,13 @@ function buildCity(cityId,{write=false,networkFile}={}){
     const source={lat:Number(base.spawnLat??base.lat),lng:Number(base.spawnLng??base.lng)},anchor=engine.snapRoadAccess(source,1200,{base:true});
     if(!anchor){exceptions.push({baseId:base.id,reason:'No connected named public-road access within 1200 m'});continue;}
     baseAccess[base.id]=accessRecord(anchor,base,graph,graphVersion);
+    const origin=engine.snapRoadAccess(engine.basePoint(base),260,{base:true});
     const candidates=[],order=candidateOrder(city.calls.filter(c=>!String(c.id).includes('-route-osm-node-')),base,engine);let tried=0;
-    for(const call of order){const result=analyzeCall(base,call,engine);tried++;if(result)candidates.push(result);if(tried>=5&&candidates.length>=3)break;}
+    for(const call of order){const result=analyzeCall(base,call,engine,origin);tried++;if(result)candidates.push(result);if(tried>=5&&candidates.length>=3)break;}
     if(candidates.length<3){
       junctions??=osmJunctions(engine,cityId,city.calls);
-      const nearby=candidateOrder(junctions,base,engine).filter(c=>{const a=engine.toXY(base.lat,base.lng),b=engine.toXY(c.lat,c.lng);return Math.hypot(a.x-b.x,a.y-b.y)<=18000;});
-      for(const call of nearby){const result=analyzeCall(base,call,engine);tried++;if(result)candidates.push(result);if(candidates.length>=3)break;}
+      const nearby=candidateOrder(junctions,base,engine,18000);
+      for(const call of nearby){const result=analyzeCall(base,call,engine,origin);tried++;if(result)candidates.push(result);if(tried>=5&&candidates.length>=3)break;}
     }
     const selected=chooseChallenges(candidates);
     if(selected.length!==3){exceptions.push({baseId:base.id,service:base.service,reason:'Fewer than 3 meaningful legal named-road alternatives',candidateCount:tried,meaningfulCount:selected.length});continue;}

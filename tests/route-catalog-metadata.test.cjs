@@ -33,9 +33,9 @@ test('coordinate or radius edits stale route decisions while familiarity and ord
  const moved=await store();moved.api.replaceAll([{...moved.api.getAll()[0],lat:44.002}]);assert.equal(moved.api.getAll()[0].routeChallenges[0].reviewStatus,'stale');
 });
 test('same-version migration fills absent route metadata once and preserves user edits, tiers, coordinates and deletions',async()=>{
- const seed=[location(),location('deleted','medium'),location('new-route',null)],old={...location(),name:'My name',lat:44.002,recognitionDifficulty:'hard'};delete old.routeChallenges;delete old.routeAccess;
+ const seed=[location(),location('deleted','medium'),location('new-route',null)],old={...location(),name:'My name',lat:44.002,recognitionDifficulty:'hard'};delete old.routeChallenges;delete old.routeAccess;delete old.difficultyReason;
  const h=await store({seeds:seed,saved:{version:3,dataVersion:'ontario-geo-1',items:[old,{id:'custom',name:'Custom',addr:'Address',lat:44,lng:-78,radius:50}]}});
- const migrated=h.api.getAll();assert.deepEqual(Array.from(migrated,x=>x.id),['old','custom','new-route']);assert.equal(migrated[0].name,'My name');assert.equal(migrated[0].lat,44.002);assert.equal(migrated[0].recognitionDifficulty,'hard');assert.equal(migrated[0].routeChallenges[0].reviewStatus,'stale');
+ const migrated=h.api.getAll();assert.deepEqual(Array.from(migrated,x=>x.id),['old','custom','new-route']);assert.equal(migrated[0].name,'My name');assert.equal(migrated[0].difficultyReason,'Distinct landmark');assert.equal(migrated[0].lat,44.002);assert.equal(migrated[0].recognitionDifficulty,'hard');assert.equal(migrated[0].routeChallenges[0].reviewStatus,'stale');
  const saved=JSON.parse(h.storage.get(h.api.storageKey));assert.equal(saved.routeMetadataVersion,1);h.api.remove('new-route');h.api.upsert({...h.api.getAll()[0],routeChallenges:[],routeAccess:undefined});
  const reload=await store({seeds:seed,storage:h.storage});assert.deepEqual(Array.from(reload.api.getAll(),x=>x.id),['old','custom']);assert.deepEqual(plain(reload.api.getAll()[0].routeChallenges),[]);assert.equal(reload.api.getAll()[0].routeAccess,undefined);
 });
@@ -47,6 +47,21 @@ test('empty legacy Belleville and Scarborough catalogs keep custom calls during 
 test('base coordinate and spawn changes invalidate every dependent route, including saved base edits on reload',async()=>{
  const baseSeed=[{id:'fire-station-1',service:'fire',lat:44,lng:-78,spawnLat:44,spawnLng:-78,spawnHeading:180},{id:'ems-1',service:'ems',lat:44,lng:-78,spawnLat:44,spawnLng:-78,spawnHeading:180}],seeds=[{...location(),routeChallenges:[challenge(),challenge('ems-1','ems')]}];
  const h=await store({baseSeed,seeds});h.setBases(baseSeed.map(base=>({...base,name:'Name only'})));assert.ok(h.api.getAll()[0].routeChallenges.every(x=>x.reviewStatus==='map-derived'));
- h.setBases(baseSeed.map(base=>({...base,lat:44.001})));assert.ok(h.api.getAll()[0].routeChallenges.every(x=>x.reviewStatus==='stale'));assert.match(h.api.exportText(),/stale/);assert.ok(JSON.parse(h.storage.get(h.api.storageKey)).items[0].routeChallenges.every(x=>x.reviewStatus==='stale'));
+ h.setBases(baseSeed.map(base=>({...base,lat:44.001})));assert.ok(h.api.getAll()[0].routeChallenges.every(x=>x.reviewStatus==='stale'));assert.match(h.api.exportText(),/stale/);h.api.upsert({...h.api.getAll()[0],routeChallenges:[challenge(),challenge('ems-1','ems')]});assert.ok(h.api.getAll()[0].routeChallenges.every(x=>x.reviewStatus==='stale'));h.api.reset();assert.ok(h.api.getAll()[0].routeChallenges.every(x=>x.reviewStatus==='stale'));assert.ok(JSON.parse(h.storage.get(h.api.storageKey)).items[0].routeChallenges.every(x=>x.reviewStatus==='stale'));
  const reload=await store({baseSeed,seeds,currentBases:baseSeed.map(base=>({...base,spawnLng:-78.001}))});assert.ok(reload.api.getAll()[0].routeChallenges.every(x=>x.reviewStatus==='stale'));
+});
+
+test('Peterborough compiler retains route metadata and null-tier additions without changing the ranked pool',()=>{
+ const zlib=require('node:zlib'),compiled=[];
+ const rows=Array.from({length:200},(_,i)=>({id:'ranked-'+i,name:'Location '+i,address:'Address',lat:44,lng:-78,radiusMeters:50,difficulty:i<100?'easy':i<150?'medium':'hard',crossStreets:[],sourceCallIds:[],...(i===0?{routeChallenges:[challenge()],routeAccess:access}:{})}));
+ rows.push({id:'route-only',name:'Junction',address:'Main / Other',lat:44,lng:-78,radiusMeters:50,difficulty:null,crossStreets:['Main','Other'],sourceCallIds:[],sources:['https://example.test/node/42'],routeChallenges:[challenge()],routeAccess:access});
+ const context={__dirname:path.join(__dirname,'../scripts'),console:{log(){}},require:name=>name==='node:fs'?{readFileSync:file=>JSON.stringify(String(file).endsWith('locations.json')?{locations:rows}:[]),writeFileSync:(file,text)=>compiled.push(text)}:name==='../shared/dispatch-locations.js'?{normalizeRouteMetadata}:require(name)};
+ vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../scripts/build-dispatch-catalog.cjs'),'utf8'),context);
+ assert.equal(compiled.length,1);const payload=compiled[0].match(/const PAYLOAD = '([^']+)'/)[1],data=JSON.parse(zlib.gunzipSync(Buffer.from(payload,'base64')));
+ assert.equal(data.length,201);assert.deepEqual(['easy','medium','hard'].map(tier=>data.filter(item=>item.recognitionDifficulty===tier).length),[100,50,50]);assert.deepEqual(data[0].routeChallenges,normalizeRouteMetadata(location()).routeChallenges);assert.equal(data[200].recognitionDifficulty,null);assert.equal(data[200].routeAccess.wayId,'42');assert.deepEqual(data[200].sources,['https://example.test/node/42']);
+});
+test('route metadata migration keeps an old saved name edit as a name-only export delta',async()=>{
+ const diff=require('../shared/location-changes.js').diff,seeds=[location(),location('added-route',null)],old={...location(),name:'Saved name'};delete old.routeChallenges;delete old.routeAccess;delete old.difficultyReason;
+ const h=await store({seeds,saved:{version:3,dataVersion:'ontario-geo-1',items:[old]}}),delta=diff(plain(h.api.getSeed()),plain(h.api.getAll()));
+ assert.deepEqual(delta.added,[]);assert.deepEqual(delta.deleted,[]);assert.equal(delta.updated.length,1);assert.deepEqual(delta.updated[0].changes,{name:'Saved name'});
 });

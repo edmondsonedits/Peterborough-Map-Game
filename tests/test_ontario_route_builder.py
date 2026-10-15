@@ -97,6 +97,55 @@ class RouteBuilderTests(unittest.TestCase):
         self.assertEqual(len(configs['scarborough']['bases']), 29)
         self.assertTrue(all(base.get('status') != 'planned' for value in configs.values() for base in value['bases']))
 
+    def test_generated_assets_have_complete_topology_and_provenance(self):
+        root = BUILDER.parents[2]
+        city_ids = list(builder.extract_config(root))
+        if not all((root / 'cities' / city / 'route-network.js').exists() for city in city_ids):
+            self.skipTest('All-city generated assets not present yet')
+        for city in city_ids:
+            with self.subTest(city=city):
+                source = (root / 'cities' / city / 'route-network.js').read_text()
+                encoded = re.search(r"const encoded='([^']+)'", source)[1]
+                payload = json.loads(gzip.decompress(base64.b64decode(encoded)))
+                self.assertEqual(payload['cityId'], city)
+                self.assertEqual(payload['graphVersion'], builder.GRAPH_VERSION)
+                self.assertEqual(payload['source']['sha256'], builder.SOURCE_SHA256)
+                self.assertEqual(payload['source']['snapshot'], builder.SNAPSHOT)
+                self.assertGreater(len(payload['features']), 100)
+                ways = {}
+                node_locations = {}
+                for feature in payload['features']:
+                    props = feature['properties']
+                    coords = feature['geometry']['coordinates']
+                    ids = props['nodeIds']
+                    self.assertEqual(len(ids), len(coords))
+                    self.assertGreaterEqual(len(ids), 2)
+                    ways[props['osm_id']] = feature
+                    for node_id, coord in zip(ids, coords):
+                        self.assertIsInstance(node_id, int)
+                        self.assertGreater(node_id, 0)
+                        if node_id in node_locations:
+                            self.assertEqual(node_locations[node_id], coord)
+                        node_locations[node_id] = coord
+                    service = builder.tokens(props.get('service'))
+                    if service & {'parking_aisle', 'drive-through', 'drive_through'}:
+                        self.assertTrue(builder.emergency_explicit(props) or props.get('restrictionMemberOnly'))
+                    if 'driveway' in service:
+                        self.assertEqual(props['routeAccess'], 'base-only')
+                    if props.get('emergencyAccess'):
+                        self.assertEqual(props['surface'], 'asphalt')
+                        self.assertEqual(props['highway'], 'service')
+                        self.assertIn(props.get('bridge'), (None, 'no'))
+                for node_id in payload['controls']:
+                    self.assertIn(int(node_id), node_locations)
+                for restriction in payload['turnRestrictions']:
+                    self.assertIn(restriction['fromWayId'], ways)
+                    self.assertIn(restriction['toWayId'], ways)
+                    for way_id in restriction.get('viaWayIds', []):
+                        self.assertIn(way_id, ways)
+                    if 'viaNodeId' in restriction:
+                        self.assertIn(restriction['viaNodeId'], node_locations)
+
     def test_native_location_index_preserves_node_identity_and_controls(self):
         import osmium
         with tempfile.TemporaryDirectory() as directory:

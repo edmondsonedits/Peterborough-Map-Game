@@ -26,7 +26,8 @@
     for(const edge of r){const key=decisionKey(edge);if(credited.has(key))continue;
       const chosen=firstChoices.get(position(edge));if(chosen&&sameTraversal(chosen,edge)){credited.add(key);correctDecisions.push(edge);}
     }
-    const tolerance=Math.max(160,(reference.distance||0)*.035);
+    const modeled=Number.isFinite(reference.seconds)&&Number.isFinite(player.seconds),tolerance=modeled?Math.max(18,reference.seconds*.035):Math.max(160,(reference.distance||0)*.035);
+    const sectionCost=(route,start,end)=>modeled?(route.edgeSeconds?.slice(start,end).reduce((n,v)=>n+v,0)??route.edges.slice(start,end).reduce((n,e)=>n+(e.responseSeconds??e.weight??e.duration??0),0)):route.edges.slice(start,end).reduce((n,e)=>n+e.distance,0);
     let pi=0,ri=0;
     while(pi<p.length&&ri<r.length){
       if(sameTraversal(p[pi],r[ri])){pi++;ri++;continue;}
@@ -39,11 +40,11 @@
         if(pLocation===rLocation){joinP=nextP;joinR=nextR;break outer;}
       }
       if(joinP<0)break;
-      const playerDistance=p.slice(pi,joinP).reduce((n,e)=>n+e.distance,0),referenceDistance=r.slice(ri,joinR).reduce((n,e)=>n+e.distance,0),extra=playerDistance-referenceDistance;
+      const playerDistance=sectionCost(player,pi,joinP),referenceDistance=sectionCost(reference,ri,joinR),extra=playerDistance-referenceDistance;
       if(extra>tolerance)regrets.push({key:decisionKey(r[ri]),correct:r[ri],chosen:p[pi],extra,playerDistance,referenceDistance});
       pi=joinP;ri=joinR;
     }
-    return {regrets:regrets.sort((a,b)=>b.extra-a.extra),correctDecisions,tolerance};
+    return {regrets:regrets.sort((a,b)=>b.extra-a.extra),correctDecisions,tolerance,unit:modeled?'seconds':'metres'};
   }
   return {compareChoices,decisionKey,describe,heading};
 });

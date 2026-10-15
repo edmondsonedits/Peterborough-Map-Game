@@ -23,6 +23,7 @@ import sys
 import time
 import urllib.request
 import zlib
+import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[2]
 SOURCE_URL = 'https://download.geofabrik.de/north-america/canada/ontario-261014.osm.pbf'
@@ -206,6 +207,92 @@ def write_asset(path, payload):
     return len(source.encode())
 
 
+def supplement_missing_way(way_id, cache_dir):
+    """Complete a province-edge member using snapshot-compatible official OSM data.
+
+    Current API content is accepted only when the way AND every node predate the
+    source cutoff. Cached XML and its digest make this small supplement auditable.
+    """
+    url = f'https://api.openstreetmap.org/api/0.6/way/{way_id}/full'
+    supplement_dir = cache_dir / 'supplements'
+    supplement_dir.mkdir(exist_ok=True)
+    path = supplement_dir / f'way-{way_id}.osm'
+    if not path.exists():
+        urllib.request.urlretrieve(url, path)
+    raw = path.read_bytes()
+    tree = ET.fromstring(raw)
+    nodes = {int(node.attrib['id']): node for node in tree.findall('node')}
+    way = next((way for way in tree.findall('way') if int(way.attrib['id']) == way_id), None)
+    if way is None or way.attrib.get('timestamp', '') > SNAPSHOT:
+        raise ValueError(f'Supplement way {way_id} is unavailable at source cutoff')
+    refs = [int(node.attrib['ref']) for node in way.findall('nd')]
+    if any(node_id not in nodes or nodes[node_id].attrib.get('timestamp', '') > SNAPSHOT for node_id in refs):
+        raise ValueError(f'Supplement nodes for way {way_id} changed after source cutoff')
+    tags = {tag.attrib['k']: tag.attrib['v'] for tag in way.findall('tag')}
+    evidence = {'url': url, 'sha256': hashlib.sha256(raw).hexdigest(), 'wayId': way_id,
+                'wayVersion': int(way.attrib['version']), 'wayTimestamp': way.attrib['timestamp'],
+                'allNodeVersionsAtOrBeforeSnapshot': True, 'reason': 'Ontario extract boundary restriction member'}
+    payload = {'id': way_id, 'tags': tags, 'nodeIds': refs,
+               'coords': [[float(nodes[node_id].attrib['lon']), float(nodes[node_id].attrib['lat'])] for node_id in refs],
+               'sourceEvidence': evidence}
+    controls = {node_id: {tag.attrib['k']: tag.attrib['v'] for tag in node.findall('tag')} for node_id, node in nodes.items() if len(node)}
+    return payload, evidence, controls
+
+
+def recover_metadata(db, pbf, configs, cache_dir):
+    """Recover a committed raw-way cache after interruption before metadata write."""
+    import osmium
+    log('Recovering city membership from committed raw ways')
+    controls_cache = cache_dir / 'complete-node-controls.json'
+    if controls_cache.exists():
+        controls = {int(key): tags for key, tags in json.loads(controls_cache.read_text())['controls'].items()}
+    else:
+        controls = {}
+    restrictions = []
+    class Relations(osmium.SimpleHandler):
+        def node(self, node):
+            controls[int(node.id)] = dict(node.tags)
+        def relation(self, relation):
+            parsed = parse_restriction(relation)
+            if parsed:
+                restrictions.extend(parsed)
+    reader = osmium.io.Reader(str(pbf), osmium.osm.RELATION if controls_cache.exists() else osmium.osm.NODE | osmium.osm.RELATION)
+    osmium.apply(reader, osmium.filter.KeyFilter(*sorted(CONTROL_KEYS | {'type'})), Relations())
+    reader.close()
+    city_ways = {city: set() for city in configs}
+    available = set()
+    for way_id, blob in db.execute('SELECT id,payload FROM ways'):
+        available.add(way_id)
+        way = json.loads(zlib.decompress(blob))
+        coords = way['coords']
+        west, east = min(p[0] for p in coords), max(p[0] for p in coords)
+        south, north = min(p[1] for p in coords), max(p[1] for p in coords)
+        for city, config in configs.items():
+            box = config['bufferedBounds']
+            if west <= box[2] and east >= box[0] and south <= box[3] and north >= box[1] and intersects(coords, box) and way_admission(way['tags'], coords, config['bases']):
+                city_ways[city].add(way_id)
+    per_city = {}
+    for city, ids in city_ways.items():
+        changed, chosen = True, set()
+        while changed:
+            changed = False
+            for ordinal, restriction in enumerate(restrictions):
+                members = {restriction['fromWayId'], restriction['toWayId'], *restriction.get('viaWayIds', [])}
+                if ordinal not in chosen and members & ids:
+                    chosen.add(ordinal)
+                    ids.update(members)
+                    changed = True
+        per_city[city] = [restrictions[i] for i in sorted(chosen)]
+    supplements = []
+    for way_id in sorted(set().union(*city_ways.values()) - available):
+        payload, evidence, added_controls = supplement_missing_way(way_id, cache_dir)
+        db.execute('INSERT OR REPLACE INTO ways VALUES (?, ?)', (way_id, zlib.compress(compact(payload).encode(), 1)))
+        controls.update(added_controls)
+        supplements.append(evidence)
+    db.commit()
+    return {'sourceSha256': SOURCE_SHA256, 'configs': configs, 'cityWays': {city: sorted(ids) for city, ids in city_ways.items()}, 'restrictions': per_city, 'controls': controls, 'controlKeys': sorted(CONTROL_KEYS), 'supplements': supplements}
+
+
 def verify_source(path):
     if path.stat().st_size != SOURCE_BYTES:
         raise ValueError(f'PBF size is {path.stat().st_size}, expected {SOURCE_BYTES}')
@@ -239,6 +326,8 @@ def build(args):
     db.execute('CREATE TABLE IF NOT EXISTS ways (id INTEGER PRIMARY KEY, payload BLOB NOT NULL)')
     metadata_path = cache_dir / 'extraction-metadata.json'
     if args.resume:
+        if not metadata_path.exists():
+            metadata_path.write_text(compact(recover_metadata(db, pbf, configs, cache_dir)))
         metadata = json.loads(metadata_path.read_text())
         if metadata['sourceSha256'] != digest or metadata['configs'] != configs:
             raise ValueError('Resume cache does not match source/configuration; rebuild without --resume')
@@ -275,6 +364,8 @@ def build(args):
             def way(self, way):
                 tags = dict(way.tags)
                 if tags.get('highway') not in HIGHWAYS:
+                    return
+                if tokens(tags.get('service')) & {'parking_aisle', 'drive-through', 'drive_through'} and not emergency_explicit(tags):
                     return
                 refs = list(way.nodes)
                 if len(refs) < 2 or any(not node.location.valid() for node in refs):
@@ -351,9 +442,15 @@ def build(args):
                 db.executemany('INSERT OR REPLACE INTO ways VALUES (?, ?)', pending)
                 pending.clear()
             db.commit()
-        if missing:
-            raise ValueError(f'Missing restriction member ways: {sorted(missing)[:20]}')
-        metadata = {'sourceSha256': digest, 'configs': configs, 'cityWays': {city: sorted(ids) for city, ids in city_ways.items()}, 'restrictions': restrictions, 'controls': controls, 'controlKeys': sorted(CONTROL_KEYS)}
+        supplements = []
+        for way_id in sorted(missing):
+            log(f'Completing province-edge member {way_id} from snapshot-compatible official OSM API data')
+            payload, evidence, added_controls = supplement_missing_way(way_id, cache_dir)
+            db.execute('INSERT OR REPLACE INTO ways VALUES (?, ?)', (way_id, zlib.compress(compact(payload).encode(), 1)))
+            controls.update(added_controls)
+            supplements.append(evidence)
+        db.commit()
+        metadata = {'sourceSha256': digest, 'configs': configs, 'cityWays': {city: sorted(ids) for city, ids in city_ways.items()}, 'restrictions': restrictions, 'controls': controls, 'controlKeys': sorted(CONTROL_KEYS), 'supplements': supplements}
         metadata_path.write_text(compact(metadata))
         del index, locations
     report = {'graphVersion': GRAPH_VERSION, 'sourceUrl': SOURCE_URL, 'sourceBytes': SOURCE_BYTES, 'sourceSha256': digest, 'snapshot': SNAPSHOT, 'bufferMetres': 8000, 'simplificationMetres': 1.9, 'cities': {}}
@@ -378,6 +475,8 @@ def build(args):
             raw_nodes += len(way['nodeIds'])
             node_ids, coords = simplify(way['nodeIds'], way['coords'], protected)
             properties = {**way['tags'], 'osm_id': way['id'], 'nodeIds': node_ids}
+            if way.get('sourceEvidence'):
+                properties['sourceEvidence'] = way['sourceEvidence']
             if not way_admission(way['tags'], way['coords'], configs[city]['bases']):
                 properties['restrictionMemberOnly'] = True
             if 'driveway' in tokens(way['tags'].get('service')):
@@ -389,7 +488,7 @@ def build(args):
                 properties['emergencyAccess'] = emergency
             features.append({'type': 'Feature', 'properties': properties, 'geometry': {'type': 'LineString', 'coordinates': coords}})
         payload = {'type': 'FeatureCollection', 'schemaVersion': 1, 'cityId': city, 'graphVersion': GRAPH_VERSION,
-                   'source': {'url': SOURCE_URL, 'snapshot': SNAPSHOT, 'sha256': digest, 'attribution': '© OpenStreetMap contributors', 'license': 'ODbL-1.0', 'licenseUrl': 'https://opendatacommons.org/licenses/odbl/1-0/'},
+                   'source': {'url': SOURCE_URL, 'snapshot': SNAPSHOT, 'sha256': digest, 'attribution': '© OpenStreetMap contributors', 'license': 'ODbL-1.0', 'licenseUrl': 'https://opendatacommons.org/licenses/odbl/1-0/', 'supplements': [way['sourceEvidence'] for way in ways if way.get('sourceEvidence')]},
                    'bounds': configs[city]['bounds'], 'bufferMetres': 8000, 'simplificationMetres': 1.9,
                    'features': features, 'controls': city_controls, 'turnRestrictions': restrictions[city]}
         network_dir = cache_dir / 'networks'

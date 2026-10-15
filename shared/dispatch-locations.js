@@ -33,6 +33,7 @@
     const access = raw?.routeAccess;
     if (access && ['lat','lng','sourceLat','sourceLng'].every(field => finiteNumber(access[field])) && Math.abs(access.lat)<=90 && Math.abs(access.sourceLat)<=90 && Math.abs(access.lng)<=180 && Math.abs(access.sourceLng)<=180 && textValue(access.wayId,160) && textValue(access.graphVersion,160)) {
       metadata.routeAccess = Object.fromEntries(['lat','lng','sourceLat','sourceLng'].map(field => [field,access[field]]));
+      if (reviewStatuses.includes(access.reviewStatus)) metadata.routeAccess.reviewStatus = access.reviewStatus;
       for (const field of ['wayId','graphVersion','nodeId','sourceUrl','snapshot']) if (access[field] != null) metadata.routeAccess[field] = textValue(access[field],field === 'sourceUrl' ? 2000 : 160);
     }
     return metadata;
@@ -198,7 +199,7 @@
     for (const item of previous) {
       const original = originals.get(item.id), raw = rawById.get(item.id);
       if (!original || !raw) continue;
-      for (const field of ['routeChallenges','routeAccess']) if (!Object.hasOwn(raw,field) && original[field]) item[field] = clone(original[field]);
+      for (const field of ['routeChallenges','routeAccess','difficultyReason']) if (!Object.hasOwn(raw,field) && Object.hasOwn(original,field)) item[field] = clone(original[field]);
       // An earlier coordinate edit cannot inherit fresh road-access evidence.
       if (['lat','lng','radius'].some(field => item[field] !== original[field])) invalidateLocation(item);
     }
@@ -212,13 +213,13 @@
   }
 
   const baseGeometry = base => ['lat','lng','spawnLat','spawnLng','spawnHeading'].map(field => base?.[field] ?? (field === 'spawnLat' ? base?.lat : field === 'spawnLng' ? base?.lng : field === 'spawnHeading' ? 180 : null));
-  function invalidateBaseRoutes() {
+  function invalidateBaseRoutes(list = items) {
     const store = window.PTBO_BASE_STORE;
     if (!store?.getSeed || !store?.getAll) return false;
     const current = new Map(store.getAll().map(base => [base.id,base]));
     const changed = store.getSeed().filter(base => JSON.stringify(baseGeometry(base)) !== JSON.stringify(baseGeometry(current.get(base.id))));
     let dirty = false;
-    for (const item of items) for (const challenge of item.routeChallenges || []) {
+    for (const item of list) for (const challenge of item.routeChallenges || []) {
       if (challenge.reviewStatus === 'stale') continue;
       if (changed.some(base => base.service === challenge.service && (base.id === challenge.baseId || base.id === `${challenge.service}-${challenge.baseId}`))) { challenge.reviewStatus='stale'; dirty=true; }
     }
@@ -275,13 +276,13 @@
 
   function ready() { if (!readyPromise) readyPromise = initialize(); return readyPromise; }
   function getAll() { return clone(items); }
-  function prepare(nextItems) { return normalizeList(nextItems,'editor').map(item=>{const previous=items.find(old=>old.id===item.id);return previous&&['lat','lng','radius'].some(field=>previous[field]!==item[field])?invalidateLocation(item):item;}); }
+  function prepare(nextItems) { const next=normalizeList(nextItems,'editor').map(item=>{const previous=items.find(old=>old.id===item.id);return previous&&['lat','lng','radius'].some(field=>previous[field]!==item[field])?invalidateLocation(item):item;});invalidateBaseRoutes(next);return next; }
   function replaceAll(nextItems) { const next=prepare(nextItems);persist(next);items=next;announce();return getAll(); }
   function upsert(raw) { const location=prepare([raw])[0];if(!location)throw new Error('A dispatch location needs valid latitude and longitude values.');const index=items.findIndex(item=>item.id===location.id),next=clone(items);if(index>=0)next[index]=location;else next.push(location);persist(next);items=next;announce();return clone([location])[0]; }
   function remove(id) { const next=items.filter(item=>item.id!==id);persist(next);items=next;announce();return getAll(); }
   function createId(raw) { const normalized=normalizeLocation({...raw,id:''},'editor');const base=normalized?makeId(normalized):`call-custom-${Date.now().toString(36)}`;let candidate=base,suffix=2;while(items.some(item=>item.id===candidate))candidate=`${base}-${suffix++}`;return candidate; }
-  function reset() { const next=clone(seed);persist(next);items=next;announce();return getAll(); }
-  function exportText(exportItems=items) { const data=normalizeList(exportItems,'editor');return `window.PTBO_DISPATCH_DATA_VERSION = ${JSON.stringify(dataVersion)};\nwindow.PTBO_DISPATCH_DATA_READY = Promise.resolve(${JSON.stringify(data,null,2)});\n`; }
+  function reset() { const next=clone(seed);invalidateBaseRoutes(next);persist(next);items=next;announce();return getAll(); }
+  function exportText(exportItems=items) { const data=prepare(exportItems);return `window.PTBO_DISPATCH_DATA_VERSION = ${JSON.stringify(dataVersion)};\nwindow.PTBO_DISPATCH_DATA_READY = Promise.resolve(${JSON.stringify(data,null,2)});\n`; }
 
   window.addEventListener?.('ptbo-bases-updated',event=>{if(event.detail?.cityId && event.detail.cityId!==CITY_ID)return;if(invalidateBaseRoutes()){persist();announce();}});
   window.PTBO_DISPATCH_STORE = Object.freeze({cityId:CITY_ID,ready,getAll,getSeed:()=>clone(seed),forService,replaceAll,upsert,remove,createId,reset,exportText,storageKey:STORAGE_KEY,get dataVersion(){return dataVersion;}});

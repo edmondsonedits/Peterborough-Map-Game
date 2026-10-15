@@ -13,20 +13,21 @@ const root=path.resolve(__dirname,'..'),out=path.join(root,'test-artifacts/city-
   const tile=r=>r.fulfill({status:200,contentType:'image/svg+xml',body:'<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256"><rect width="256" height="256" fill="#dbe4de"/><path d="M0 90H256M90 0V256" stroke="white" stroke-width="16"/><text x="105" y="150" font-size="11" fill="#68776a">QA tile fixture</text></svg>'});
   await ctx.route('https://tile.openstreetmap.org/**',tile);await ctx.route('https://server.arcgisonline.com/**',tile);
   const page=await ctx.newPage(),requests=[];page.on('pageerror',e=>result.errors.push(e.message));page.on('request',r=>requests.push(r.url()));page.on('response',r=>{if(r.url().startsWith('http://127.0.0.1:4190/')&&r.status()>=400)result.missing.push(r.url());});
-  const cityIds=['peterborough',...fs.readdirSync(path.join(root,'cities')).filter(id=>fs.existsSync(path.join(root,'cities',id,'geo-data.json'))),'belleville','scarborough'];
+  await page.goto('http://127.0.0.1:4190/dispatch-editor/?city=peterborough&analytics=off');await page.waitForFunction(()=>window.PTBO_EDITOR_UI_READY);await page.evaluate(()=>PTBO_EDITOR_UI_READY);
+  const registry=await page.evaluate(()=>PTBO_CITIES.map(city=>({id:city.id,callCount:city.callCount,geo:city.modes?.geo===true}))),cityIds=registry.map(city=>city.id);
   let total=0;
   for(const id of cityIds){
    requests.length=0;await page.goto(`http://127.0.0.1:4190/dispatch-editor/?city=${id}&analytics=off`);await page.waitForFunction(()=>window.PTBO_EDITOR_UI_READY);await page.evaluate(()=>PTBO_EDITOR_UI_READY);
-   const expected=id==='peterborough'?200:['belleville','scarborough'].includes(id)?0:20;
+   const city=registry.find(city=>city.id===id),expected=city.callCount;
    assert.equal(await page.locator('.call-item').count(),expected,id);assert.equal(await page.locator('.leaflet-marker-icon').count(),expected,id);assert.equal(await page.inputValue('#city-select'),id);
    assert.equal(await page.locator('#city-select option').count(),33);const store=await page.evaluate(()=>({city:PTBO_DISPATCH_STORE.cityId,ids:PTBO_DISPATCH_STORE.getAll().map(x=>x.id),count:PTBO_DISPATCH_STORE.getAll().length}));assert.equal(store.city,id);assert.equal(store.count,expected);total+=expected;
-   for(const [tier,count]of [['easy',id==='peterborough'?100:expected?10:0],['medium',id==='peterborough'?50:expected?5:0],['hard',id==='peterborough'?50:expected?5:0]]){await page.selectOption('#difficulty-filter',tier);assert.equal(await page.locator('.call-item').count(),count,`${id} ${tier}`);assert.equal(await page.locator('.leaflet-marker-icon').count(),count);}
+   for(const [tier,count]of [['easy',id==='peterborough'?100:city.geo?10:0],['medium',id==='peterborough'?50:city.geo?5:0],['hard',id==='peterborough'?50:city.geo?5:0]]){await page.selectOption('#difficulty-filter',tier);assert.equal(await page.locator('.call-item').count(),count,`${id} ${tier}`);assert.equal(await page.locator('.leaflet-marker-icon').count(),count);}
    await page.locator('#clear-filters').click();await page.locator('#export-changes').click();const exported=JSON.parse(await page.locator('.export-dialog textarea').inputValue());assert.equal(exported.cityId,id);for(const key of ['calls','bases','hospital'])assert.deepEqual(exported[key],{added:[],updated:[],deleted:[]},`${id} untouched ${key}`);await page.locator('[data-close]').click();
    if(id!=='peterborough')assert.ok(!requests.some(url=>url.includes('osm-public-roads.geojson')),id+' cannot load Peterborough roads');
-   const fetched=requests.filter(url=>url.includes('/geo-data.json'));if(expected===20){assert.equal(fetched.length,1);assert.ok(fetched[0].includes(`/cities/${id}/`));}
+   const fetched=requests.filter(url=>url.includes('/geo-data.json'));if(id!=='peterborough'){assert.equal(fetched.length,1);assert.ok(fetched[0].includes(`/cities/${id}/`));}
    result.cities.push({id,count:expected,isolated:true});
   }
-  assert.equal(total,800);
+  assert.equal(total,registry.reduce((sum,city)=>sum+city.callCount,0));
   await page.goto('http://127.0.0.1:4190/dispatch-editor/?city=peterborough&analytics=off');await page.waitForFunction(()=>window.PTBO_EDITOR_UI_READY);await page.evaluate(()=>PTBO_EDITOR_UI_READY);
   await page.locator('[data-mode="hospital"]').click();await page.locator('.call-item').click();const width=Number(await page.inputValue('#h-area-width'));await page.fill('#h-area-width',String(width+1));await page.waitForFunction(w=>PTBO_BASE_STORE.getHospital().areaWidth===w,width+1);
   await page.locator('#export-changes').click();const draftExport=JSON.parse(await page.locator('.export-dialog textarea').inputValue());assert.deepEqual(draftExport.hospital,{added:[],updated:[],deleted:[]},'export excludes unsaved hospital preview');assert.equal(await page.inputValue('#h-area-width'),String(width+1),'export preserves draft');await page.locator('[data-close]').click();page.once('dialog',d=>d.accept());await page.locator('#cancel-base').click();
