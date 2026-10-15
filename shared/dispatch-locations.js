@@ -3,7 +3,42 @@
    normalization/editing behaviour shared and namespaces browser edits by city. */
 (() => {
   'use strict';
-  const BUILD_VERSION = '1.6.108';
+  const textValue = (value, limit = 1000) => String(value ?? '').trim().replace(/\s+/g, ' ').slice(0,limit);
+  const finiteNumber = value => typeof value === 'number' && Number.isFinite(value);
+  const nonnegative = value => finiteNumber(value) && value >= 0;
+  const roadNames = value => Array.isArray(value) ? [...new Set(value.map(x => textValue(x,160)).filter(Boolean))].slice(0,32) : [];
+  const reviewStatuses = ['verified','map-derived','stale','needs-review','unreviewed'];
+
+  // Also used by the static data compiler. Requiring this file never starts a browser store.
+  function normalizeRouteMetadata(raw) {
+    const metadata = {};
+    if (Array.isArray(raw?.routeChallenges)) metadata.routeChallenges = raw.routeChallenges.slice(0,256).map(item => {
+      if (!item || !['fire','ems'].includes(item.service) || !textValue(item.baseId,160) || !textValue(item.graphVersion,160) || !textValue(item.costProfileVersion,160)) return null;
+      if (!finiteNumber(item.difficulty) || item.difficulty < 0 || item.difficulty > 100) return null;
+      const challenge = {
+        baseId:textValue(item.baseId,160),service:item.service,difficulty:item.difficulty,
+        decisionType:textValue(item.decisionType,100),preferredRoads:roadNames(item.preferredRoads),
+        alternatives:(Array.isArray(item.alternatives) ? item.alternatives : []).slice(0,8).filter(x => x && typeof x === 'object').map(alternative => {
+          const output = {roads:roadNames(alternative.roads),reason:textValue(alternative.reason,3000)};
+          for (const field of ['estimatedSeconds','cost','distance']) if (nonnegative(alternative[field])) output[field] = alternative[field];
+          return output;
+        }),
+        reason:textValue(item.reason,5000),reviewStatus:reviewStatuses.includes(item.reviewStatus) ? item.reviewStatus : 'unreviewed',
+        graphVersion:textValue(item.graphVersion,160),costProfileVersion:textValue(item.costProfileVersion,160),
+      };
+      for (const field of ['id','sourceUrl','reviewedAt','reviewedBy','source']) if (item[field] != null) challenge[field] = textValue(item[field],field === 'sourceUrl' ? 2000 : 1000);
+      for (const field of ['responseSeconds','cost','distance','qualityMargin']) if (nonnegative(item[field])) challenge[field] = item[field];
+      return challenge;
+    }).filter(Boolean);
+    const access = raw?.routeAccess;
+    if (access && ['lat','lng','sourceLat','sourceLng'].every(field => finiteNumber(access[field])) && Math.abs(access.lat)<=90 && Math.abs(access.sourceLat)<=90 && Math.abs(access.lng)<=180 && Math.abs(access.sourceLng)<=180 && textValue(access.wayId,160) && textValue(access.graphVersion,160)) {
+      metadata.routeAccess = Object.fromEntries(['lat','lng','sourceLat','sourceLng'].map(field => [field,access[field]]));
+      for (const field of ['wayId','graphVersion','nodeId','sourceUrl','snapshot']) if (access[field] != null) metadata.routeAccess[field] = textValue(access[field],field === 'sourceUrl' ? 2000 : 160);
+    }
+    return metadata;
+  }
+  if (typeof module !== 'undefined' && module.exports) { module.exports = {normalizeRouteMetadata}; return; }
+  const BUILD_VERSION = '1.6.111';
   const STORE_VERSION = 3;
   const scriptUrl = new URL(document.currentScript?.src || location.href, location.href);
   const currentUrl = new URL(typeof location !== 'undefined' && location.href ? location.href : scriptUrl.href);
@@ -18,6 +53,7 @@
   let seed = [];
   let items = [];
   let readyPromise;
+  let migrationNeeded = false;
 
   const normalizeText = value => String(value ?? '').trim().replace(/\s+/g, ' ');
   const keyText = value => normalizeText(value).toLowerCase().replace(/[’']/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
@@ -58,6 +94,8 @@
       crossStreets:Array.isArray(raw?.crossStreets) ? [...new Set(raw.crossStreets.map(normalizeText).filter(Boolean))].slice(0,2) : [],
       sourceCallIds:Array.isArray(raw?.sourceCallIds) ? raw.sourceCallIds.map(normalizeText).filter(Boolean) : [],
       incidentProfiles:raw?.incidentProfiles ? JSON.parse(JSON.stringify(raw.incidentProfiles)) : undefined,
+      ...(raw?.difficultyReason != null ? {difficultyReason:textValue(raw.difficultyReason,3000)} : {}),
+      ...normalizeRouteMetadata(raw),
     };
     if (!Number.isFinite(location.lat) || !Number.isFinite(location.lng) || Math.abs(location.lat)>90 || Math.abs(location.lng)>180) return null;
     if (!location.id) location.id = makeId(location);
@@ -134,12 +172,57 @@
     for (const parsed of candidates) {
       const compatibleVersion = parsed.version === STORE_VERSION || (CITY_ID === 'peterborough' && parsed.version === 2);
       if (!compatibleVersion || !Array.isArray(parsed.items)) continue;
-      if (parsed.dataVersion === dataVersion) return normalizeList(parsed.items,'saved');
+      if (parsed.dataVersion === dataVersion) return migrateRouteMetadata(parsed);
+      // These cities previously published an empty catalog. Keep every local call when
+      // the first canonical route catalog arrives; all canonical records are new seeds.
+      if (['belleville','scarborough'].includes(CITY_ID) && parsed.dataVersion === '1.6.8' && dataVersion === 'ontario-geo-1') {
+        migrationNeeded = true;
+        const previous = normalizeList(parsed.items,'saved'), ids = new Set(previous.map(item=>item.id));
+        return normalizeList([...previous,...seed.filter(item=>!ids.has(item.id))],'saved');
+      }
       if (CITY_ID === 'peterborough' && parsed.dataVersion === '1.4.20' && window.PTBO_DISPATCH_LEGACY_LOCATIONS) {
+        migrationNeeded = true;
         return migrateLegacy(parsed);
       }
     }
     return null;
+  }
+
+  function migrateRouteMetadata(saved) {
+    const previous = normalizeList(saved.items,'saved');
+    if (saved.routeMetadataVersion === 1) return previous;
+    migrationNeeded = true;
+    const originals = new Map(seed.map(item => [item.id,item]));
+    const rawById = new Map(saved.items.map(item => [item.id,item]));
+    const ids = new Set(previous.map(item => item.id));
+    for (const item of previous) {
+      const original = originals.get(item.id), raw = rawById.get(item.id);
+      if (!original || !raw) continue;
+      for (const field of ['routeChallenges','routeAccess']) if (!Object.hasOwn(raw,field) && original[field]) item[field] = clone(original[field]);
+      // An earlier coordinate edit cannot inherit fresh road-access evidence.
+      if (['lat','lng','radius'].some(field => item[field] !== original[field])) invalidateLocation(item);
+    }
+    for (const original of seed) if (!ids.has(original.id) && original.recognitionDifficulty === null && original.routeChallenges?.length) previous.push(clone(original));
+    return previous;
+  }
+
+  function invalidateLocation(item) {
+    if (item.routeChallenges?.length) item.routeChallenges = item.routeChallenges.map(challenge => ({...challenge,reviewStatus:'stale'}));
+    return item;
+  }
+
+  const baseGeometry = base => ['lat','lng','spawnLat','spawnLng','spawnHeading'].map(field => base?.[field] ?? (field === 'spawnLat' ? base?.lat : field === 'spawnLng' ? base?.lng : field === 'spawnHeading' ? 180 : null));
+  function invalidateBaseRoutes() {
+    const store = window.PTBO_BASE_STORE;
+    if (!store?.getSeed || !store?.getAll) return false;
+    const current = new Map(store.getAll().map(base => [base.id,base]));
+    const changed = store.getSeed().filter(base => JSON.stringify(baseGeometry(base)) !== JSON.stringify(baseGeometry(current.get(base.id))));
+    let dirty = false;
+    for (const item of items) for (const challenge of item.routeChallenges || []) {
+      if (challenge.reviewStatus === 'stale') continue;
+      if (changed.some(base => base.service === challenge.service && (base.id === challenge.baseId || base.id === `${challenge.service}-${challenge.baseId}`))) { challenge.reviewStatus='stale'; dirty=true; }
+    }
+    return dirty;
   }
 
   function migrateLegacy(saved) {
@@ -171,7 +254,7 @@
 
   function persist(nextItems = items) {
     try {
-      localStorage.setItem(STORAGE_KEY,JSON.stringify({version:STORE_VERSION,cityId:CITY_ID,dataVersion,savedAt:new Date().toISOString(),items:nextItems}));
+      localStorage.setItem(STORAGE_KEY,JSON.stringify({version:STORE_VERSION,cityId:CITY_ID,dataVersion,routeMetadataVersion:1,savedAt:new Date().toISOString(),items:nextItems}));
     } catch (error) {
       throw new Error('Changes could not be saved on this device. Free browser storage and try again, or export your edits.',{cause:error});
     }
@@ -183,19 +266,23 @@
     const supplied = await loadData();
     seed = normalizeList(await supplied,'source');
     items = readSaved() || clone(seed);
+    const invalidated = invalidateBaseRoutes();
+    if (migrationNeeded || invalidated) persist();
     console.info(`${CITY_ID} dispatch database v${dataVersion} loaded: ${items.length} calls.`);
     return clone(items);
   }
 
   function ready() { if (!readyPromise) readyPromise = initialize(); return readyPromise; }
   function getAll() { return clone(items); }
-  function replaceAll(nextItems) { const next=normalizeList(nextItems,'editor');persist(next);items=next;announce();return getAll(); }
-  function upsert(raw) { const location=normalizeLocation(raw,'editor');if(!location)throw new Error('A dispatch location needs valid latitude and longitude values.');const index=items.findIndex(item=>item.id===location.id),next=clone(items);if(index>=0)next[index]=location;else next.push(location);persist(next);items=next;announce();return clone([location])[0]; }
+  function prepare(nextItems) { return normalizeList(nextItems,'editor').map(item=>{const previous=items.find(old=>old.id===item.id);return previous&&['lat','lng','radius'].some(field=>previous[field]!==item[field])?invalidateLocation(item):item;}); }
+  function replaceAll(nextItems) { const next=prepare(nextItems);persist(next);items=next;announce();return getAll(); }
+  function upsert(raw) { const location=prepare([raw])[0];if(!location)throw new Error('A dispatch location needs valid latitude and longitude values.');const index=items.findIndex(item=>item.id===location.id),next=clone(items);if(index>=0)next[index]=location;else next.push(location);persist(next);items=next;announce();return clone([location])[0]; }
   function remove(id) { const next=items.filter(item=>item.id!==id);persist(next);items=next;announce();return getAll(); }
   function createId(raw) { const normalized=normalizeLocation({...raw,id:''},'editor');const base=normalized?makeId(normalized):`call-custom-${Date.now().toString(36)}`;let candidate=base,suffix=2;while(items.some(item=>item.id===candidate))candidate=`${base}-${suffix++}`;return candidate; }
   function reset() { const next=clone(seed);persist(next);items=next;announce();return getAll(); }
   function exportText(exportItems=items) { const data=normalizeList(exportItems,'editor');return `window.PTBO_DISPATCH_DATA_VERSION = ${JSON.stringify(dataVersion)};\nwindow.PTBO_DISPATCH_DATA_READY = Promise.resolve(${JSON.stringify(data,null,2)});\n`; }
 
+  window.addEventListener('ptbo-bases-updated',event=>{if(event.detail?.cityId && event.detail.cityId!==CITY_ID)return;if(invalidateBaseRoutes()){persist();announce();}});
   window.PTBO_DISPATCH_STORE = Object.freeze({cityId:CITY_ID,ready,getAll,getSeed:()=>clone(seed),forService,replaceAll,upsert,remove,createId,reset,exportText,storageKey:STORAGE_KEY,get dataVersion(){return dataVersion;}});
   window.PTBO_DISPATCH_STORE_READY = ready();
 })();

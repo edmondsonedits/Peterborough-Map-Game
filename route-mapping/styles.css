@@ -2,6 +2,7 @@
   color-scheme:dark; --bg:#07111f; --panel:rgba(10,20,35,.95);
   --border:rgba(255,255,255,.2); --ink:#f8fafc; --muted:#b8c5d5;
 }
+.route-city-label{margin-bottom:4px;color:#aebdd1;font-size:.62rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
 * { box-sizing:border-box; }
 [hidden] { display:none!important; }
 html,body,#route-app,#map { width:100%;height:100%;margin:0; }

@@ -6,6 +6,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
+const {normalizeRouteMetadata} = require('../shared/dispatch-locations.js');
 const legacyCityIds = ['oshawa','pickering','markham','toronto'];
 
 async function loadLegacyBases(cityId) {
@@ -93,6 +94,7 @@ function compactCityPack(source,legacyBases = []) {
       radius:location.radius,recognitionDifficulty:location.recognitionDifficulty,
       crossStreets:location.crossStreetDisplay?.length ? location.crossStreetDisplay : (location.crossStreets ?? []),
       custom:false,sources:location.sources ?? [],difficultyReason:location.difficultyReason ?? '',
+      ...normalizeRouteMetadata(location),
     };
   });
   const pack = {

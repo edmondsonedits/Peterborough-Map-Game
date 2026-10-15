@@ -1,4 +1,4 @@
-/* Shared city location data boundary for Geo Guesser and Dispatch Editor. */
+/* Shared city location boundary for Geo Guesser, Route Mapping and the editor. */
 (() => {
   'use strict';
   const source = new URL(document.currentScript?.src || location.href, location.href);
@@ -22,8 +22,9 @@
     const explicit=params.has('city');
     const requested=String(explicit?params.get('city'):stored || 'peterborough').toLowerCase();
     let city=cities.find(item=>item.id===requested);
-    if(!explicit && (!city || (context==='geo'&&!city.modes?.geo))) city=cities.find(item=>item.id==='peterborough');
-    if(!city || (context==='geo'&&!city.modes?.geo)) throw new Error('This city is not available here. Choose a city from All Games.');
+    const usable=city=>city&&(context==='editor'||city.modes?.[context]===true);
+    if(!explicit && !usable(city)) city=cities.find(item=>item.id==='peterborough');
+    if(!usable(city)) throw new Error('This city is not available here. Choose a city from All Games.');
     return city;
   }
   const coordinate = value => value !== null && String(value).trim() !== '' && value !== undefined && Number.isFinite(Number(value));
@@ -38,7 +39,7 @@
     const serviceConfig={profiles,hospital:null,alarmCategories:[]};
     window.PTBO_SERVICE_CONFIG=serviceConfig;
     window.PTBO_CITY_PACKAGE={schemaVersion:3,version,id:city.id,name:city.name,status:'demo',playable:true,
-      features:{geoGuesser:true,dispatch:false,baseTraining:false,hospitalTransport:false},map:pack.map,
+      features:{geoGuesser:city.modes?.geo===true,dispatch:false,baseTraining:false,hospitalTransport:false},map:pack.map,
       serviceConfig,futureBases:pack.bases.filter(base=>base.status!=='active' || !base.selectionEligible),constructionProjects:pack.constructionProjects || []};
     window.PTBO_ACTIVE_CITY=window.PTBO_CITY_PACKAGE;
     window.PTBO_STATIONS=profiles.fire.bases;
@@ -47,16 +48,16 @@
   }
   let loading=null;
   function load({context='geo'}={}) {
-    if(!['geo','editor'].includes(context))return Promise.reject(new Error('Unknown location workspace.'));
+    if(!['geo','editor','route'].includes(context))return Promise.reject(new Error('Unknown location workspace.'));
     if(loading)return loading;
     loading=(async()=>{
     const city=selectedCity(context);
     window.PTBO_REQUESTED_CITY=city.id;
     if(city.id==='peterborough')await script('cities/peterborough/package.js');
-    else if(city.geoDataUrl) {
+    else if(city.locationDataUrl||city.geoDataUrl) {
       const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),20000);
       try {
-        const response=await fetch(asset(city.geoDataUrl),{signal:controller.signal});
+        const response=await fetch(asset(city.locationDataUrl||city.geoDataUrl),{signal:controller.signal});
         if(!response.ok)throw new Error('City locations could not load.');
         installPack(await response.json(),city);
       } finally{clearTimeout(timer);}
@@ -65,6 +66,17 @@
       await script('cities/preview-package-factory.js');
       await script(`cities/${city.id}/package.js`);
       await window.PTBO_CITY_PACKAGE_READY;
+    }
+    if(context==='route'){
+      const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),30000);let manifest;
+      try{const response=await fetch(asset(city.routeDataUrl),{signal:controller.signal});if(!response.ok)throw new Error('City route manifest could not load.');manifest=await response.json();}finally{clearTimeout(timer);}
+      if(manifest?.schemaVersion!==1||manifest.cityId!==city.id||!manifest.graphVersion||!manifest.costProfileVersion||!Array.isArray(manifest.coverage)||!manifest.baseAccess||typeof manifest.baseAccess!=='object'||!manifest.networkUrl)throw new Error('The selected city route data could not be verified.');
+      const network=new URL(manifest.networkUrl,asset(city.routeDataUrl)),allowed=new URL(`cities/${city.id}/`,root);
+      if(network.origin!==allowed.origin||!network.pathname.startsWith(allowed.pathname)||!network.pathname.endsWith('/route-network.js'))throw new Error('The selected city road network could not be verified.');
+      network.searchParams.set('v',version);
+      const pack=window.PTBO_CITY_PACKAGE;
+      window.PTBO_CITY_PACKAGE={...pack,features:{...pack.features,routeMapping:true},route:{...manifest,available:true,networkUrl:network.href}};
+      window.PTBO_ACTIVE_CITY=window.PTBO_CITY_PACKAGE;
     }
     await script('shared/base-locations.js');
     // An explicit script city prevents another tab's preference changing this namespace.

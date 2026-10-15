@@ -1,0 +1,98 @@
+/* Static training response model. No live traffic or emergency exemptions are inferred. */
+(function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.PTBO_ROUTE_COST=api;})(typeof globalThis!=='undefined'?globalThis:this,function(){
+ 'use strict';
+ const VERSION='apparatus-response-2026-10-15-v1';
+ const SPEED={motorway:100,motorway_link:55,trunk:80,trunk_link:50,primary:60,primary_link:40,secondary:50,secondary_link:35,tertiary:42,tertiary_link:32,unclassified:35,residential:32,living_street:15,service:18,road:28,busway:25};
+ const FIRE={motorway:1,motorway_link:1.04,trunk:1,primary:1,secondary:1.04,tertiary:1.10,unclassified:1.22,residential:1.27,living_street:1.65,service:1.8,road:1.32,busway:1.3};
+ const EMS={motorway:1,motorway_link:1.02,trunk:1,primary:1,secondary:1.02,tertiary:1.06,unclassified:1.12,residential:1.14,living_street:1.4,service:1.48,road:1.2,busway:1.2};
+ const text=v=>String(v??'').trim().toLowerCase(),yes=v=>['yes','designated','official','permissive'].includes(text(v));
+ function tags(edge){return edge?.tags||edge?.properties||edge||{};}
+ function createProfile(service='fire',dimensions={}){return Object.freeze({service:service==='ems'?'ems':'fire',heightM:positive(dimensions.heightM??dimensions.height),widthM:positive(dimensions.widthM??dimensions.width),weightTonnes:positive(dimensions.weightTonnes??dimensions.weightT??dimensions.weight),conditionalPolicy:'conservative-active',version:VERSION});}
+ function positive(v){const n=Number(v);return Number.isFinite(n)&&n>0?n:null;}
+ function number(v){if(typeof v==='number')return v;const s=text(v);if(!s)return NaN;const n=parseFloat(s);if(!Number.isFinite(n))return NaN;if(/mph/.test(s))return n*1.609344;if(/\b(ft|feet)\b|['′]/.test(s)){const a=s.match(/([\d.]+)\s*(?:ft|feet|'|′)(?:\s*([\d.]+)\s*(?:in|"|″))?/);return a?(Number(a[1])+Number(a[2]||0)/12)*.3048:n*.3048;}return n;}
+ function emergencyPermission(t){return yes(t.emergency)||yes(t['motor_vehicle:emergency'])||yes(t['access:emergency'])||Boolean(t.emergencyAccess?.allowed===true&&t.emergencyAccess?.verified===true&&/^https:\/\//.test(t.emergencyAccess.sourceUrl||''));}
+ function accessValue(t){for(const k of ['motorcar','motor_vehicle','vehicle','access'])if(t[k]!==undefined&&text(t[k])!=='')return text(t[k]);return '';}
+ function restricted(edge){const t=tags(edge);return ['destination','customers','delivery'].includes(accessValue(t))||text(t.routeAccess)==='base-only';}
+ function feasible(edge,profile=createProfile(),options={}){
+  const t=tags(edge),access=accessValue(t),permission=emergencyPermission(t),h=text(t.highway||edge?.highway||'road');
+  if(['construction','proposed','footway','path','cycleway','steps','pedestrian','bridleway','track'].includes(h)&&!permission)return false;
+  if(['no','private','agricultural','forestry'].includes(access)&&!permission)return false;
+  if(h==='busway'&&!permission)return false;
+  if(text(t.emergency)==='no')return false;
+  const limits=[['maxheight',profile.heightM],['maxwidth',profile.widthM],['maxweight',profile.weightTonnes]];
+  for(const [key,value] of limits){const limit=number(t[key]??t[key+':physical']);if(value&&Number.isFinite(limit)&&value>limit+1e-8)return false;}
+  if(['impassable','very_horrible'].includes(text(t.smoothness)))return false;
+  const barrier=text(t.barrier);if(barrier&&barrier!=='no'&&!['cattle_grid','toll_booth','border_control','entrance'].includes(barrier)&&!yes(t.emergency)&&!yes(t['access:emergency']))return false;
+  if(options.disallowRestricted&&restricted(edge))return false;
+  return true;
+ }
+ const metricsCache=new WeakMap();
+ function edgeMetrics(edge,profile=createProfile()){
+  const t=tags(edge),h=text(t.highway||edge?.highway||'road'),distance=Math.max(0,Number(edge?.distance)||0);let byProfile=metricsCache.get(t);if(!byProfile){byProfile=new Map();metricsCache.set(t,byProfile);}const key=profile.service;
+  let per=byProfile.get(key);if(!per){let speed=SPEED[h]||SPEED.road;const mapped=number(t.maxspeed);if(Number.isFinite(mapped)&&mapped>0)speed=Math.min(speed,mapped);const override=t.emergencyAccess?.allowed&&t.emergencyAccess?.verified&&/^https:\/\//.test(t.emergencyAccess.sourceUrl||'')?number(t.emergencyAccess.maxspeedKph):NaN;if(Number.isFinite(override)&&override>0)speed=Math.min(speed,override);
+   let suitability=(profile.service==='ems'?EMS:FIRE)[h]||1.18;if(['unpaved','gravel','dirt','ground','sand','mud','cobblestone'].includes(text(t.surface)))suitability+=profile.service==='fire'?.55:.38;if(['parking_aisle','driveway','drive-through'].includes(text(t.service)))suitability+=.3;
+   const width=number(t.width);if(Number.isFinite(width)&&width<4)suitability+=profile.service==='fire'?.24:.10;per={speedKph:speed,travelPerM:3.6/speed,suitability};byProfile.set(key,per);}
+  const travelSeconds=distance*per.travelPerM,suitabilitySeconds=travelSeconds*(per.suitability-1);return {distance,travelSeconds,suitabilitySeconds,seconds:travelSeconds+suitabilitySeconds,cost:travelSeconds+suitabilitySeconds,speedKph:per.speedKph};
+ }
+ function way(e){return String(e?.wayId??tags(e).osm_id??e?.osm_id??'segment:'+e?.segmentId);}
+ function controls(graph,id){const n=graph?.nodes?.[id];return n?.controls||graph?.controls?.[n?.osmId??id]||{};}
+ function exceptionApplies(r,p){const except=text(r.except).split(/[;, ]+/);return except.includes('emergency')||except.includes(p.service)||p.service==='ems'&&except.includes('ambulance')||p.service==='fire'&&except.includes('fire_truck');}
+ function restrictionType(r){return text(r.restriction||r.conditional?.split('@')[0]||r['restriction:conditional']?.split('@')[0]).split('@')[0].trim();}
+ function normalizeContext(incoming){if(!incoming)return {history:[],accessPhase:0};if(incoming.history)return incoming;return {history:Array.isArray(incoming)?incoming:[incoming],accessPhase:0};}
+ function activeMatch(graph,context,next,r){
+  const hist=context.history||[],previous=hist.at(-1);if(!previous)return false;const from=String(r.fromWayId??r.from),to=String(r.toWayId??r.to),via=r.viaWayIds||[];
+  if(via.length){const seq=[from,...via.map(String)],ways=[];for(const e of hist){const w=way(e);if(ways.at(-1)!==w)ways.push(w);}if(ways.length<seq.length||!seq.every((w,i)=>w===ways[ways.length-seq.length+i]))return false;return {type:restrictionType(r),to,previous};}
+  if(way(previous)!==from)return false;const viaNode=r.viaNodeId??r.via;if(viaNode!==undefined&&String(graph.nodes[previous.to]?.osmId??previous.to)!==String(viaNode))return false;
+  return {type:restrictionType(r),to,previous};
+ }
+ function transitionAllowed(graph,incoming,next,profile=createProfile(),options={}){
+  const context=normalizeContext(incoming),previous=context.history.at(-1);if(!next||!feasible(next,profile,options))return false;
+  if(previous){const control=controls(graph,next.from);if(!feasible(control,profile))return false;}
+  if(restricted(next)){
+   if(text(tags(next).routeAccess)==='base-only'&&!options.baseAccess&&!options.baseAccessSegmentIds?.has(next.segmentId))return false;
+   const allowed=options.endpointAccessSegmentIds;if(allowed&&!allowed.has(next.segmentId))return false;if(!allowed&&!options.allowRestrictedAccess)return false;
+  }else if(context.accessPhase===2)return false;
+  for(const r of graph.turnRestrictions||[]){if(exceptionApplies(r,profile))continue;const match=activeMatch(graph,context,next,r);if(!match)continue;const target=way(next)===match.to;
+   if(match.type.startsWith('only_')&&!target){const via=r.viaWayIds||[];if(via.length&&way(next)===String(via.at(-1)))continue;return false;}
+   if(match.type.startsWith('no_')&&target){if(match.type==='no_u_turn'&&way(match.previous)===way(next)){
+     const a=graph.nodes[match.previous.from],b=graph.nodes[match.previous.to],c=graph.nodes[next.to],dot=a&&b&&c?(b.x-a.x)*(c.x-b.x)+(b.y-a.y)*(c.y-b.y):-1;if(next.to!==match.previous.from&&dot>=0)continue;
+    }return false;}
+  }
+  return true;
+ }
+ function transitionMetrics(graph,incoming,next,profile=createProfile()){
+  const context=normalizeContext(incoming),previous=context.history.at(-1);if(!previous)return {turnSeconds:0,controlSeconds:0,seconds:0,cost:0};
+  if(previous.segmentId===next.segmentId&&Boolean(previous.reverse)===Boolean(next.reverse))return {turnSeconds:0,controlSeconds:0,seconds:0,cost:0};
+  const a=graph.nodes[previous.from],b=graph.nodes[previous.to],c=graph.nodes[next.to];let turnSeconds=0;
+  if(a&&b&&c){const ux=b.x-a.x,uy=b.y-a.y,vx=c.x-b.x,vy=c.y-b.y,angle=Math.atan2(ux*vy-uy*vx,ux*vx+uy*vy)*180/Math.PI,abs=Math.abs(angle);if(abs>155)turnSeconds=profile.service==='fire'?24:17;else if(abs>35)turnSeconds=angle>0?(profile.service==='fire'?10:7):(profile.service==='fire'?6:4);else if(abs>15)turnSeconds=2;}
+  const t=controls(graph,next.from),highway=text(t.highway),controlSeconds=highway==='traffic_signals'||text(t.traffic_signals)==='yes'?12:highway==='stop'||text(t.stop)==='all'?5:highway==='give_way'?3:0;
+  return {turnSeconds,controlSeconds,seconds:turnSeconds+controlSeconds,cost:turnSeconds+controlSeconds};
+ }
+ function transitionStep(graph,incoming,next,profile=createProfile(),options={}){const context=normalizeContext(incoming);if(!transitionAllowed(graph,context,next,profile,options))return null;const edge=edgeMetrics(next,profile),turn=transitionMetrics(graph,context,next,profile),maxHistory=Math.max(3,...(graph.turnRestrictions||[]).map(r=>(r.viaWayIds?.length||0)+3));let history=[...context.history,next];
+  // Preserve all edges of the last relevant way sequence, not an arbitrary edge count.
+  let changes=0,cut=history.length-1;for(;cut>0;cut--)if(way(history[cut])!==way(history[cut-1])&&++changes>=maxHistory)break;history=history.slice(cut);
+  return {history,accessPhase:restricted(next)?(context.accessPhase===1?2:context.accessPhase):1,seconds:edge.seconds+turn.seconds,cost:edge.seconds+turn.seconds,edgeMetrics:edge,transitionMetrics:turn};}
+ function evaluateRoute(graph,edges,profile=createProfile(),incoming=null,options={}){let context=normalizeContext(incoming),distance=0,travelSeconds=0,turnSeconds=0,controlSeconds=0,suitabilitySeconds=0;for(let i=0;i<(edges||[]).length;i++){const edge=edges[i],step=transitionStep(graph,context,edge,profile,options);if(!step)return {feasible:false,seconds:Infinity,cost:Infinity,failedEdge:i,context};context=step;distance+=edge.distance||0;travelSeconds+=step.edgeMetrics.travelSeconds;suitabilitySeconds+=step.edgeMetrics.suitabilitySeconds;turnSeconds+=step.transitionMetrics.turnSeconds;controlSeconds+=step.transitionMetrics.controlSeconds;}const seconds=travelSeconds+suitabilitySeconds+turnSeconds+controlSeconds;return {feasible:true,distance,travelSeconds,suitabilitySeconds,turnSeconds,controlSeconds,seconds,cost:seconds,context};}
+ class Heap{constructor(){this.a=[];}push(v){let i=this.a.length;this.a.push(v);while(i){const p=(i-1)>>1;if(this.a[p].f<=v.f)break;this.a[i]=this.a[p];i=p;}this.a[i]=v;}pop(){const a=this.a,r=a[0],v=a.pop();if(a.length){let i=0;while(i*2+1<a.length){let c=i*2+1;if(c+1<a.length&&a[c+1].f<a[c].f)c++;if(a[c].f>=v.f)break;a[i]=a[c];i=c;}a[i]=v;}return r;}get size(){return this.a.length;}}
+ function contextKey(c){const h=c.history||[],last=h.at(-1),ways=[];for(const e of h){const w=way(e);if(ways.at(-1)!==w)ways.push(w);}return (last?last.segmentId+':'+Boolean(last.reverse):'')+'|'+ways.join(',')+'|'+c.accessPhase;}
+ function createRouter({graph,toLatLng,profile=createProfile()}){
+  const cache=new Map(),minPerM=3.6/100;
+  function endpointOptions(startIds,endIds,options){const allowed=new Set(options.endpointAccessSegmentIds||[]),baseAllowed=new Set(options.baseAccessSegmentIds||[]),queue=[...startIds,...endIds],seen=new Set();while(queue.length){const id=queue.pop();if(seen.has(id))continue;seen.add(id);for(const e of graph.nodes[id]?.edges||[])if(restricted(e)&&feasible(e,profile)){allowed.add(e.segmentId);if(options.baseAccess)baseAllowed.add(e.segmentId);queue.push(e.to);}}return {...options,endpointAccessSegmentIds:allowed,baseAccessSegmentIds:baseAllowed};}
+  function pathBetween(start,end,options={}){if(!graph.nodes[start]||!graph.nodes[end])return null;const incoming=normalizeContext(options.context||options.incoming),opts=options.endpointAccessSegmentIds?options:endpointOptions([start],[end],options),objective=options.objective||'response',distanceMode=objective==='distance',target=graph.nodes[end],key=[start,end,objective,contextKey(incoming),options.avoidNode??'',options.avoidBridge||'',options.maxDistance??'',Boolean(options.baseAccess)].join(':');if(!options.local&&cache.has(key)){const r=cache.get(key);return r?{...r,edges:r.edges.slice(),nodeIds:r.nodeIds.slice()}:null;}
+   const heap=new Heap(),best=new Map(),startKey=start+'|'+contextKey(incoming),initial={node:start,key:startKey,g:0,distance:0,context:incoming,prev:null,edge:null};best.set(startKey,0);heap.push({...initial,f:0});let result=null,visited=0;
+   while(heap.size&&visited++<(options.maxVisitedNodes||1500000)){const cur=heap.pop();if(cur.g>best.get(cur.key)+1e-8)continue;if(cur.node===end){if(options.finalEdge&&!transitionAllowed(graph,cur.context,options.finalEdge,profile,opts))continue;const edges=[],nodeIds=[end];for(let c=cur;c.edge;c=c.prev){edges.push(c.edge);nodeIds.push(c.edge.from);}edges.reverse();nodeIds.reverse();const evaluated=evaluateRoute(graph,edges,profile,incoming,opts);result={edges,nodeIds,...evaluated,duration:evaluated.travelSeconds,context:cur.context};break;}
+    for(const edge of graph.nodes[cur.node].edges){if(edge.to===options.avoidNode||options.avoidBridge&&edge.bridgeKey===options.avoidBridge)continue;const distance=cur.distance+edge.distance;if(distance>(options.maxDistance??Infinity))continue;if(options.corridorTest&&!options.corridorTest(edge))continue;const step=transitionStep(graph,cur.context,edge,profile,opts);if(!step)continue;const g=cur.g+(distanceMode?edge.distance:step.seconds),k=edge.to+'|'+contextKey(step);if(g>=((best.get(k)??Infinity)-1e-8))continue;best.set(k,g);const n=graph.nodes[edge.to],h=Math.hypot(target.x-n.x,target.y-n.y)*(distanceMode?1:minPerM);heap.push({node:edge.to,key:k,g,distance,context:step,prev:cur,edge,f:g+h});}
+   }if(!options.local){cache.set(key,result);if(cache.size>256)cache.delete(cache.keys().next().value);}return result?{...result,edges:result.edges.slice(),nodeIds:result.nodeIds.slice()}:null;
+  }
+  function point(s,t){return toLatLng(s.ax+s.dx*t,s.ay+s.dy*t);}
+  function slice(s,a,b){if(Math.abs(a-b)<1e-9)return null;const reverse=b<a,e=graph.nodes[reverse?s.to:s.from].edges.find(e=>e.segmentId===s.id&&Boolean(e.reverse)===reverse);return e?{...e,t0:a,t1:b,start:point(s,a),end:point(s,b),distance:s.length*Math.abs(b-a),duration:(e.duration||0)*Math.abs(b-a)}:null;}
+  function between(a,b,options={}){if(!a||!b)return null;const sa=graph.segments[a.segmentId],sb=graph.segments[b.segmentId];if(!sa||!sb)return null;const opts=endpointOptions([sa.from,sa.to],[sb.from,sb.to],options),incoming=options.context||options.incoming;let best=null;
+   const candidates=[];if(a.segmentId===b.segmentId&&(b.t>=a.t?sa.forward:sa.backward))candidates.push([slice(sa,a.t,b.t)]);
+   const exits=[...(sa.forward||a.t===1?[{node:sa.to,e:slice(sa,a.t,1)}]:[]),...(sa.backward||a.t===0?[{node:sa.from,e:slice(sa,a.t,0)}]:[])],entries=[...(sb.forward||b.t===0?[{node:sb.from,e:slice(sb,0,b.t)}]:[]),...(sb.backward||b.t===1?[{node:sb.to,e:slice(sb,1,b.t)}]:[])];
+   for(const from of exits)for(const to of entries){let context=normalizeContext(incoming);if(from.e){context=transitionStep(graph,context,from.e,profile,opts);if(!context)continue;}const remaining=(options.maxDistance??Infinity)-(from.e?.distance||0)-(to.e?.distance||0);if(remaining<0)continue;const path=pathBetween(from.node,to.node,{...opts,context,finalEdge:to.e,maxDistance:remaining});if(path)candidates.push([from.e,...path.edges,to.e]);}
+   for(const raw of candidates){const edges=raw.filter(Boolean),m=evaluateRoute(graph,edges,profile,incoming,opts);if(!m.feasible||m.distance>(options.maxDistance??Infinity))continue;const score=options.objective==='distance'?m.distance:m.seconds;if(best&&score>=best.score-1e-8)continue;best={...m,edges,start:a,endpoint:b,coordinates:[[a.lat,a.lng],...edges.map(e=>{const p=e.end||graph.nodes[e.to];return [p.lat,p.lng];})],duration:m.travelSeconds,mainRoads:[...new Set(edges.map(e=>e.name).filter(Boolean))],complete:false,score};}return best;
+  }
+  return {pathBetween,between,endpointOptions,profile,clearCache:()=>cache.clear()};
+ }
+ return {VERSION,createProfile,feasible,edgeMetrics,transitionStep,transitionAllowed,transitionMetrics,evaluateRoute,createRouter,restricted,emergencyPermission,conditionalPolicy:'Conditional no/only restrictions are treated as active for static training.'};
+});
