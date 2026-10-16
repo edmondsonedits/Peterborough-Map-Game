@@ -86,7 +86,7 @@ test('native map movement events refresh the target without becoming coordinates
  const{api,c,draw}=harness(),callbacks=new Map(),map=api.state.map;map.options={};map.on=(name,fn)=>callbacks.set(name,fn);
  c.L.map=()=>({setView:()=>map});c.L.tileLayer=()=>({addTo(){}});
  map.latLngToContainerPoint=p=>{assert.ok(Number.isFinite(p.lat)&&Number.isFinite(p.lng),'map events must not be projected as coordinates');return{x:p.lng,y:p.lat};};
- api.initMap();callbacks.get('move resize')({type:'move',target:map});
+ api.initMap();callbacks.get('move')({type:'move',target:map});callbacks.get('resize')({type:'resize',target:map});
  assert.equal(draw.hidden,false);assert.equal(draw.style.left,'180px');assert.equal(draw.style.top,'110px');
 });
 

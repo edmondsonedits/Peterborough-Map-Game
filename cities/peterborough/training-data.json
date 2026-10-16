@@ -1,0 +1,168 @@
+{
+  "schemaVersion": 1,
+  "id": "peterborough",
+  "name": "Peterborough",
+  "careHomes": [
+    {
+      "id": "moh-ltc-1771",
+      "name": "Springdale Country Manor",
+      "addr": "2698 Clifford Line",
+      "lat": 44.23096549905709,
+      "lng": -78.39675079999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790044"
+      ],
+      "providerId": "1771",
+      "community": "Peterborough"
+    },
+    {
+      "id": "moh-ltc-3304",
+      "name": "Riverview Manor Nursing Home",
+      "addr": "1155 Water Street",
+      "lat": 44.336057899056996,
+      "lng": -78.31531539999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790037"
+      ],
+      "providerId": "3304",
+      "community": "Peterborough"
+    },
+    {
+      "id": "moh-ltc-1764",
+      "name": "Extendicare Peterborough",
+      "addr": "860 Alexander Court",
+      "lat": 44.29854499905705,
+      "lng": -78.34563889999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789970"
+      ],
+      "providerId": "1764",
+      "community": "Peterborough"
+    },
+    {
+      "id": "moh-ltc-1765",
+      "name": "Fairhaven",
+      "addr": "881 Dutton Road",
+      "lat": 44.32759879905702,
+      "lng": -78.31816139999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789974"
+      ],
+      "providerId": "1765",
+      "community": "Peterborough"
+    },
+    {
+      "id": "moh-ltc-4479",
+      "name": "St. Joseph's at Fleming",
+      "addr": "659 Brealey Drive",
+      "lat": 44.26875819905707,
+      "lng": -78.36982019999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790045"
+      ],
+      "providerId": "4479",
+      "community": "Peterborough"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://www.openstreetmap.org/copyright",
+    "metadataUrl": "city-explorer/data/manifest.json",
+    "rawDataUrl": "city-explorer/data/peterborough-osm.json",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors",
+    "note": "Existing public-road extract maintained by the Peterborough geospatial workflow; source timestamp and query metadata accompany that asset."
+  },
+  "bounds": [
+    [
+      44.2,
+      -78.45
+    ],
+    [
+      44.45,
+      -78.2
+    ]
+  ],
+  "center": [
+    44.3091,
+    -78.3197
+  ],
+  "roadsUrl": "city-explorer/data/osm-public-roads.geojson"
+}

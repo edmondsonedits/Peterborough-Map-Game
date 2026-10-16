@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 1,
+  "id": "guelph",
+  "name": "Guelph",
+  "careHomes": [
+    {
+      "id": "moh-ltc-1943",
+      "name": "The Elliott Long Term Care Residence",
+      "addr": "170 Metcalfe Street",
+      "lat": 43.55808699905788,
+      "lng": -80.25226709999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789894"
+      ],
+      "providerId": "1943",
+      "community": "Guelph"
+    },
+    {
+      "id": "moh-ltc-3632",
+      "name": "Eden House Nursing Home",
+      "addr": "5016 Wellington County Road 29",
+      "lat": 43.581061999057866,
+      "lng": -80.1667296,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789766"
+      ],
+      "providerId": "3632",
+      "community": "Guelph"
+    },
+    {
+      "id": "moh-ltc-4444",
+      "name": "The Village of Riverside Glen",
+      "addr": "60 Woodlawn Road East",
+      "lat": 43.56980889905786,
+      "lng": -80.27472599999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789905"
+      ],
+      "providerId": "4444",
+      "community": "Guelph"
+    },
+    {
+      "id": "moh-ltc-1950",
+      "name": "St. Joseph's Health Centre, Guelph",
+      "addr": "100 Westmount Road",
+      "lat": 43.55020339905793,
+      "lng": -80.27188489999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789880"
+      ],
+      "providerId": "1950",
+      "community": "Guelph"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "bounds": [
+    [
+      43.47383021580297,
+      -80.32691267333436
+    ],
+    [
+      43.594361533143115,
+      -80.15350481534446
+    ]
+  ],
+  "center": [
+    43.5435157,
+    -80.243612
+  ],
+  "roadsUrl": "cities/guelph/roads.geojson.gz",
+  "roadFeatureCount": 17063,
+  "roadDataSha256": "32b365aef67c63338a61965188d867df3ab66f15fd7f3c699313fdf163f4cb19"
+}

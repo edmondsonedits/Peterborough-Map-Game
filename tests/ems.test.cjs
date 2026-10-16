@@ -41,6 +41,7 @@ function game({random=0}={}) {
     alert:message=>alerts.push(message),fetch:async()=>({ok:true,json:async()=>roads}),
   });
   c.window=c;
+  vm.runInContext(read('shared/ems-priority.js'),c);
   vm.runInContext(read('response-simulator/service-config.js'),c);
   vm.runInContext(read('shared/location-changes.js'),c);
   vm.runInContext(read('shared/base-locations.js'),c);

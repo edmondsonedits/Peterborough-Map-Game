@@ -1,0 +1,169 @@
+{
+  "schemaVersion": 1,
+  "id": "oakville",
+  "name": "Oakville",
+  "careHomes": [
+    {
+      "id": "moh-ltc-4373",
+      "name": "West Oak Village",
+      "addr": "2370 Third Line",
+      "lat": 43.4470663990581,
+      "lng": -79.75632529999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790227"
+      ],
+      "providerId": "4373",
+      "community": "Oakville"
+    },
+    {
+      "id": "moh-ltc-4491",
+      "name": "Post Inn Village",
+      "addr": "203 Georgian Drive",
+      "lat": 43.48024329905806,
+      "lng": -79.7167455,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790198"
+      ],
+      "providerId": "4491",
+      "community": "Oakville"
+    },
+    {
+      "id": "moh-ltc-4347",
+      "name": "Northridge",
+      "addr": "496 Postridge Drive",
+      "lat": 43.489586299058026,
+      "lng": -79.71426119999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790193"
+      ],
+      "providerId": "4347",
+      "community": "Oakville"
+    },
+    {
+      "id": "moh-ltc-4449",
+      "name": "Wyndham Manor Long Term Care Centre",
+      "addr": "291 Reynolds Street",
+      "lat": 43.452433199058085,
+      "lng": -79.6726837,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790231"
+      ],
+      "providerId": "4449",
+      "community": "Oakville"
+    },
+    {
+      "id": "moh-ltc-4443",
+      "name": "AgeCare Glen Oaks",
+      "addr": "2140 Baronwood Drive",
+      "lat": 43.4271391990581,
+      "lng": -79.7630274,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790153"
+      ],
+      "providerId": "4443",
+      "community": "Oakville"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "bounds": [
+    [
+      43.3021701117181,
+      -79.81094940084876
+    ],
+    [
+      43.528255347215165,
+      -79.46145258337704
+    ]
+  ],
+  "center": [
+    43.470748970897404,
+    -79.75469654706342
+  ],
+  "roadsUrl": "cities/oakville/roads.geojson.gz",
+  "roadFeatureCount": 27925,
+  "roadDataSha256": "fe76de8c4e857179e3b8209c025018860e2831071820b1c6fdaec4c2a8d17a90"
+}

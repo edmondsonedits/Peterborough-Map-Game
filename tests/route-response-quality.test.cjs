@@ -58,7 +58,7 @@ test('hospital base failure rolls back the area write and retains its draft',()=
 
 test('route starts project the selected spawn onto the public road without changing the base',()=>{
  const base={lat:44.300942,lng:-78.322201,spawnLat:44.301,spawnLng:-78.322},street={lat:44.30055,lng:-78.322,road:'Sherbrooke Street'},seen=[];
- const c=vm.createContext({state:{graph:{}},nearestRoad:(lat,lng)=>{seen.push({lat,lng});return street;}});
+ const c=vm.createContext({baseAnchor:value=>{seen.push({lat:value.spawnLat,lng:value.spawnLng});return street;}});
  vm.runInContext(slice(route,'  function basePoint(','  function callPoint('),c);
  const point=c.basePoint(base);
  assert.equal(point.lat,street.lat);assert.equal(point.lng,street.lng);
@@ -68,7 +68,7 @@ test('route starts project the selected spawn onto the public road without chang
 
 test('route start retains the selected coordinate until road data is ready or a match exists',()=>{
  const base={lat:44.3,lng:-78.32};
- const c=vm.createContext({state:{graph:null},nearestRoad:()=>null});
+ const c=vm.createContext({state:{graph:null},baseAnchor:()=>null});
  vm.runInContext(slice(route,'  function basePoint(','  function callPoint('),c);
  assert.equal(c.basePoint(base).lat,base.lat);assert.equal(c.basePoint(base).lng,base.lng);
  c.state.graph={};assert.equal(c.basePoint(base).lat,base.lat);
@@ -79,8 +79,9 @@ test('Station 1 departure lies on Sherbrooke Street in the packaged road graph',
  vm.runInContext(slice(route,'  const CONFIG =','  const ui =')+
    slice(route,'  function toXY(','  function clamp(')+
    slice(route,'  function nearbySegments(','  function heuristic(')+
-   slice(route,'  function basePoint(','  function callPoint('),c);
+   slice(route,'  let baseAccessCache=','  function callPoint('),c);
  c.state.graph=c.buildGraph(JSON.parse(read('city-explorer/data/osm-public-roads.geojson')));
+ c.state.traceCore=require('../route-mapping/trace-core.js').createTraceCore({graph:c.state.graph,toXY:c.toXY,toLatLng:c.toLatLng});
  const base={lat:44.30102,lng:-78.32202,spawnLat:44.300942,spawnLng:-78.322201};
  const point=c.basePoint(base),road=c.nearestRoad(point.lat,point.lng,260);
  assert.equal(road.road,'Sherbrooke Street');

@@ -1,0 +1,169 @@
+{
+  "schemaVersion": 1,
+  "id": "kingston",
+  "name": "Kingston",
+  "careHomes": [
+    {
+      "id": "moh-ltc-7611",
+      "name": "Extendicare Limestone Ridge",
+      "addr": "1306 Demers Avenue",
+      "lat": 44.246279699057055,
+      "lng": -76.56448239999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789964"
+      ],
+      "providerId": "7611",
+      "community": "Kingston"
+    },
+    {
+      "id": "moh-ltc-1108",
+      "name": "Providence Manor",
+      "addr": "275 Sydenham Street",
+      "lat": 44.23552049905707,
+      "lng": -76.48545839999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790031"
+      ],
+      "providerId": "1108",
+      "community": "Kingston"
+    },
+    {
+      "id": "moh-ltc-4724",
+      "name": "Arbour Heights",
+      "addr": "564 Tanner Drive",
+      "lat": 44.239289399057064,
+      "lng": -76.55890409999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789935"
+      ],
+      "providerId": "4724",
+      "community": "Kingston"
+    },
+    {
+      "id": "moh-ltc-3670",
+      "name": "Trillium Community and Retirement Living",
+      "addr": "800 Edgar Street",
+      "lat": 44.250385199057085,
+      "lng": -76.55202019999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790062"
+      ],
+      "providerId": "3670",
+      "community": "Kingston"
+    },
+    {
+      "id": "moh-ltc-1111",
+      "name": "Rideaucrest Home",
+      "addr": "175 Rideau Street",
+      "lat": 44.23805969905706,
+      "lng": -76.48232349999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790036"
+      ],
+      "providerId": "1111",
+      "community": "Kingston"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "bounds": [
+    [
+      44.16052099827343,
+      -76.71278388218718
+    ],
+    [
+      44.48015286878591,
+      -76.23417972205655
+    ]
+  ],
+  "center": [
+    44.3197869168625,
+    -76.50204335478855
+  ],
+  "roadsUrl": "cities/kingston/roads.geojson.gz",
+  "roadFeatureCount": 10552,
+  "roadDataSha256": "1737dd27b6eec8660543774658273b8a55edc5e07be26e73c7b595ce121dd21f"
+}

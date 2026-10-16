@@ -5,3 +5,5 @@ test-artifacts/
 
 .superpowers/
 debug.log
+__pycache__/
+*.pyc

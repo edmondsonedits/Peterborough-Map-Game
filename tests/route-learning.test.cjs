@@ -25,7 +25,7 @@ function context(){
  const source=fs.readFileSync(path.resolve(__dirname,'../route-mapping/app.js'),'utf8');
  function slice(a,b){const x=source.indexOf(a),y=source.indexOf(b,x);assert.ok(x>=0&&y>x,a);return source.slice(x,y);}
  const c=vm.createContext({state:{service:'fire',graph:null},window:{PTBO_ROUTE_LEARNING:learning,PTBO_BASE_STORE:{getBases:()=>[]}}});
- vm.runInContext(slice('  const CONFIG =','  const ui =')+slice('  function toXY(','  function drawCasedRoute(')+slice('  function basePoint(','  function updateMarkers(')+slice('  function decisionKey(','  function callsForService(')+slice('  function basesForService(','  function fillBases('),c);
+ vm.runInContext(slice('  const CONFIG =','  const ui =')+slice('  function toXY(','  function drawCasedRoute(')+slice('  let baseAccessCache=','  function updateMarkers(')+slice('  function decisionKey(','  function callsForService(')+slice('  function basesForService(','  function fillBases('),c);
  return c;
 }
 test('same-name departure directions and committed bridge alternatives count as decisions',()=>{

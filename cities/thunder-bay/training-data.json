@@ -1,0 +1,195 @@
+{
+  "schemaVersion": 1,
+  "id": "thunder-bay",
+  "name": "Thunder Bay",
+  "careHomes": [
+    {
+      "id": "moh-ltc-4383",
+      "name": "Southbridge Roseview",
+      "addr": "99 Shuniah Street",
+      "lat": 48.45036549906382,
+      "lng": -89.21554989999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790136"
+      ],
+      "providerId": "4383",
+      "community": "Thunder Bay"
+    },
+    {
+      "id": "moh-ltc-4632",
+      "name": "Southbridge Pinewood",
+      "addr": "2625 Walsh Street East",
+      "lat": 48.37509469906352,
+      "lng": -89.27442819999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790135"
+      ],
+      "providerId": "4632",
+      "community": "Thunder Bay"
+    },
+    {
+      "id": "moh-ltc-4472",
+      "name": "Hogarth Riverview Manor",
+      "addr": "300 Lillie Street",
+      "lat": 48.38803549906354,
+      "lng": -89.26913909999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790125"
+      ],
+      "providerId": "4472",
+      "community": "Thunder Bay"
+    },
+    {
+      "id": "moh-ltc-3743",
+      "name": "Pioneer Ridge",
+      "addr": "750 Tungsten Street",
+      "lat": 48.41723729906367,
+      "lng": -89.25623759999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790129"
+      ],
+      "providerId": "3743",
+      "community": "Thunder Bay"
+    },
+    {
+      "id": "moh-ltc-3159",
+      "name": "Bethammi Nursing Home",
+      "addr": "63 Carrie Street",
+      "lat": 48.44146239906379,
+      "lng": -89.24133949999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790122"
+      ],
+      "providerId": "3159",
+      "community": "Thunder Bay"
+    },
+    {
+      "id": "moh-ltc-2181",
+      "name": "Southbridge Lakehead",
+      "addr": "135 South Vickers Street",
+      "lat": 48.38272969906353,
+      "lng": -89.25159359999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790134"
+      ],
+      "providerId": "2181",
+      "community": "Thunder Bay"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "bounds": [
+    [
+      48.26835354064214,
+      -89.42757863595611
+    ],
+    [
+      48.51500506527655,
+      -89.06077480177011
+    ]
+  ],
+  "center": [
+    48.38867738806357,
+    -89.25080703242487
+  ],
+  "roadsUrl": "cities/thunder-bay/roads.geojson.gz",
+  "roadFeatureCount": 11945,
+  "roadDataSha256": "9d9cedacf62b4f5f8aed9dba8a571bf3212a3f9e9225aeb534526b811c65041f"
+}

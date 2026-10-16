@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#07111f">
   <meta name="description" content="Rapid Peterborough route-learning practice. Trace a route on real streets, backtrack to erase, pause and resume, then compare your response route.">
   <title>Route Mapping · Peterborough Emergency Games</title>
-  <link rel="stylesheet" href="../response-simulator/vendor/leaflet-1.9.4/leaflet.css?v=1.6.112">
-  <link rel="stylesheet" href="./styles.css?v=1.6.112">
+  <link rel="stylesheet" href="../response-simulator/vendor/leaflet-1.9.4/leaflet.css?v=1.6.113">
+  <link rel="stylesheet" href="./styles.css?v=1.6.113">
 </head>
 <body>
   <main id="route-app" aria-busy="true">
@@ -17,9 +17,9 @@
     <a class="back-button glass" href="../" aria-label="Return to all games">←</a>
     <button id="settings-button" class="settings-button glass" type="button" aria-label="Route Mapping settings">⚙</button>
 
-    <section class="dispatch-card glass" aria-live="polite">
+    <section id="dispatch-card" class="dispatch-card glass" aria-live="polite">
       <div class="dispatch-topline"><span id="call-number">CALL 1</span><span id="difficulty-label" data-level="easy">DIFFICULTY —</span><span id="base-label">Station 1</span></div>
-      <strong id="call-address">Preparing Peterborough road data</strong>
+      <strong id="call-address">Preparing city road data</strong>
       <span id="call-type">Loading route training…</span>
     </section>
 
@@ -31,7 +31,7 @@
       <button id="submit-button" class="primary" type="button" disabled>Submit Route</button>
     </section>
 
-    <nav class="map-nav" aria-label="Map zoom">
+    <nav id="map-nav" class="map-nav" aria-label="Map zoom">
       <button id="zoom-in" type="button" aria-label="Zoom in">+</button>
       <button id="zoom-out" type="button" aria-label="Zoom out">−</button>
     </nav>
@@ -40,10 +40,10 @@
       <div class="result-heading"><span>ROUTE REVIEW</span><strong id="efficiency-value">—</strong></div>
       <div class="result-grid">
         <div><span>Your route</span><strong id="player-distance">—</strong></div>
-        <div><span>Shortest legal route</span><strong id="shortest-distance">—</strong></div>
+        <div><span>Shortest mapped route</span><strong id="shortest-distance">—</strong></div>
         <div><span>Extra</span><strong id="extra-distance">—</strong></div>
       </div>
-      <p id="result-note">Blue is your route. Green is a shortest legal route.</p>
+      <p id="result-note">Blue is your route. Green is a shortest mapped route.</p>
       <button id="next-button" class="primary next" type="button">Next Call</button>
     </section>
 
@@ -81,22 +81,13 @@
     </div>
   </main>
 
-  <script data-route-city-bootstrap>
-    (() => {
-      const url = new URL(location.href);
-      if (url.searchParams.get('city') === 'peterborough') return;
-      url.searchParams.set('city', 'peterborough');
-      history.replaceState(history.state, '', url);
-    })();
-  </script>
-  <script src="../shared/build-version.js?v=1.6.112"></script>
-  <script src="../response-simulator/vendor/leaflet-1.9.4/leaflet.js?v=1.6.112"></script>
-  <script src="../response-simulator/service-config.js?v=1.6.112"></script>
-  <script src="../shared/location-changes.js?v=1.6.112"></script>
-  <script src="../shared/base-locations.js?v=1.6.112"></script>
-  <script src="../shared/dispatch-locations.js?city=peterborough&amp;v=1.6.112"></script>
-  <script src="./trace-core.js?v=1.6.112&amp;edit=live-trace-2"></script>
-  <script src="./learning-core.js?v=1.6.112"></script>
-  <script src="./app.js?v=1.6.112&amp;edit=live-trace-2"></script>
+  <script src="../shared/build-version.js?v=1.6.113"></script>
+  <script src="../response-simulator/vendor/leaflet-1.9.4/leaflet.js?v=1.6.113"></script>
+  <script src="../cities/city-registry.js?v=1.6.113"></script>
+  <script src="../shared/location-changes.js?v=1.6.113"></script>
+  <script src="../shared/city-location-runtime.js?v=1.6.113"></script>
+  <script src="./trace-core.js?v=1.6.113&amp;edit=live-trace-2"></script>
+  <script src="./learning-core.js?v=1.6.113"></script>
+  <script src="./app.js?v=1.6.113&amp;edit=live-trace-2"></script>
 </body>
 </html>

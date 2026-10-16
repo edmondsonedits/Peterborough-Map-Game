@@ -35,9 +35,11 @@
     "roadsOwnership": "shared-asset-referenced-by-city-package",
     "services": "./package.js",
     "bases": "./package.js",
-    "hospital": "./package.js"
+    "hospital": "./package.js",
+    "routeMapping": "training-data.json"
   },
   "features": {
-    "geoGuesser": true
+    "geoGuesser": true,
+    "routeMapping": true
   }
 }

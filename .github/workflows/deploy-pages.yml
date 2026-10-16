@@ -48,6 +48,9 @@ jobs:
       - name: Check Ontario city demos and demo requests
         run: node --test tests/ontario-city-data.test.cjs tests/editor-city-runtime.test.cjs tests/geo-city-runtime.test.cjs tests/geo-city-flow.test.cjs tests/demo-requests.test.cjs
 
+      - name: Check every city road asset and shared EMS priority
+        run: node --test tests/city-training-data.test.cjs tests/ems-priority.test.cjs tests/ems-training-store.test.cjs tests/route-base-access.test.cjs
+
       - name: Check streetscape regressions
         run: node --test tests/sherbrooke-plan.test.mjs tests/sherbrooke-fallback.test.mjs tests/station-reference-details.test.mjs tests/streetscape-assets.test.mjs tests/vegetation-variants.test.mjs tests/city-feature-utils.test.mjs
 
@@ -82,6 +85,7 @@ jobs:
           test ! -e _site/tools
           test ! -e _site/scripts
           test ! -e _site/test-artifacts
+          node -e "const fs=require('node:fs'); for(const city of fs.readdirSync('cities')) { const file='cities/'+city+'/training-data.json'; if(!fs.existsSync(file)) continue; const data=JSON.parse(fs.readFileSync(file)); for(const asset of [file,data.roadsUrl,'shared/ems-priority.js']) if(!fs.existsSync('_site/'+asset)) throw Error('Missing published training asset: '+asset); }"
 
       - name: Configure Pages
         uses: actions/configure-pages@v5

@@ -1,0 +1,715 @@
+{
+  "schemaVersion": 1,
+  "id": "hamilton",
+  "name": "Hamilton",
+  "careHomes": [
+    {
+      "id": "moh-ltc-1992",
+      "name": "Macassa  Lodge",
+      "addr": "701 Upper Sherman Avenue",
+      "lat": 43.22554489905853,
+      "lng": -79.84805239999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789819"
+      ],
+      "providerId": "1992",
+      "community": "Hamilton"
+    },
+    {
+      "id": "moh-ltc-3303",
+      "name": "Madison Village",
+      "addr": "337 Highway 8",
+      "lat": 43.220018799058536,
+      "lng": -79.72888709999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789749"
+      ],
+      "providerId": "3303",
+      "community": "Stoney Creek"
+    },
+    {
+      "id": "moh-ltc-3446",
+      "name": "Pine Villa Nursing Home",
+      "addr": "490 Highway 8",
+      "lat": 43.21626149905853,
+      "lng": -79.7161567,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789852"
+      ],
+      "providerId": "3446",
+      "community": "Stoney Creek"
+    },
+    {
+      "id": "moh-ltc-4365",
+      "name": "Extendicare Hamilton",
+      "addr": "90 Chedmac Drive",
+      "lat": 43.23724439905846,
+      "lng": -79.92145289999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789772"
+      ],
+      "providerId": "4365",
+      "community": "Hamilton"
+    },
+    {
+      "id": "moh-ltc-1968",
+      "name": "Orchard Terrace Care Centre",
+      "addr": "199 Glover Road",
+      "lat": 43.210342699058515,
+      "lng": -79.68330759999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789843"
+      ],
+      "providerId": "1968",
+      "community": "Stoney Creek"
+    },
+    {
+      "id": "moh-ltc-4463",
+      "name": "St. Peter's Residence at Chedoke",
+      "addr": "125 Redfern Avenue",
+      "lat": 43.240114099058474,
+      "lng": -79.92005369999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789883"
+      ],
+      "providerId": "4463",
+      "community": "Hamilton"
+    },
+    {
+      "id": "moh-ltc-3259",
+      "name": "Hamilton Continuing Care",
+      "addr": "125 Wentworth Street South",
+      "lat": 43.24785549905844,
+      "lng": -79.85052199999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789795"
+      ],
+      "providerId": "3259",
+      "community": "Hamilton"
+    },
+    {
+      "id": "moh-ltc-4375",
+      "name": "Alexander Place",
+      "addr": "329 Parkside Drive",
+      "lat": 43.3423283990583,
+      "lng": -79.90081249999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789710"
+      ],
+      "providerId": "4375",
+      "community": "Waterdown"
+    },
+    {
+      "id": "moh-ltc-3401",
+      "name": "Dundurn Place Care Centre",
+      "addr": "39 Mary Street",
+      "lat": 43.25640939905841,
+      "lng": -79.86393619999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789764"
+      ],
+      "providerId": "3401",
+      "community": "Hamilton"
+    },
+    {
+      "id": "moh-ltc-1969",
+      "name": "BayWoods Place",
+      "addr": "330 Main Street East",
+      "lat": 43.251744699058435,
+      "lng": -79.8569354,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789716"
+      ],
+      "providerId": "1969",
+      "community": "Hamilton"
+    },
+    {
+      "id": "moh-ltc-3251",
+      "name": "Parkview Nursing Centre",
+      "addr": "545 King Street West",
+      "lat": 43.261015499058445,
+      "lng": -79.88485709999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789845"
+      ],
+      "providerId": "3251",
+      "community": "Hamilton"
+    },
+    {
+      "id": "moh-ltc-4330",
+      "name": "Ridgeview",
+      "addr": "385 Highland Road West",
+      "lat": 43.18764429905859,
+      "lng": -79.8031858,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789861"
+      ],
+      "providerId": "4330",
+      "community": "Stoney Creek"
+    },
+    {
+      "id": "moh-ltc-3619",
+      "name": "Shalom Village Long-Term Care",
+      "addr": "70 Macklin Street North",
+      "lat": 43.26420389905844,
+      "lng": -79.89517049999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789873"
+      ],
+      "providerId": "3619",
+      "community": "Hamilton"
+    },
+    {
+      "id": "moh-ltc-4457",
+      "name": "Regina Gardens",
+      "addr": "536 Upper Paradise Road",
+      "lat": 43.23100699905851,
+      "lng": -79.91358219999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789859"
+      ],
+      "providerId": "4457",
+      "community": "Hamilton"
+    },
+    {
+      "id": "moh-ltc-3631",
+      "name": "Heritage Green Nursing Home",
+      "addr": "353 Isaac Brock Drive",
+      "lat": 43.19350479905856,
+      "lng": -79.78959039999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789801"
+      ],
+      "providerId": "3631",
+      "community": "Stoney Creek"
+    },
+    {
+      "id": "moh-ltc-4321",
+      "name": "The Meadows",
+      "addr": "12 Tranquility Avenue",
+      "lat": 43.21113209905854,
+      "lng": -80.00728599999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789898"
+      ],
+      "providerId": "4321",
+      "community": "Ancaster"
+    },
+    {
+      "id": "moh-ltc-1967",
+      "name": "Wentworth Lodge",
+      "addr": "41 South Street West",
+      "lat": 43.259847499058445,
+      "lng": -79.9489514,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789926"
+      ],
+      "providerId": "1967",
+      "community": "Dundas"
+    },
+    {
+      "id": "moh-ltc-4358",
+      "name": "Queen's Garden",
+      "addr": "80 Queen Street North",
+      "lat": 43.26113409905845,
+      "lng": -79.8769671,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789855"
+      ],
+      "providerId": "4358",
+      "community": "Hamilton"
+    },
+    {
+      "id": "moh-ltc-1990",
+      "name": "Idlewyld Manor",
+      "addr": "449 Sanatorium Road",
+      "lat": 43.236172099058486,
+      "lng": -79.91485029999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789807"
+      ],
+      "providerId": "1990",
+      "community": "Hamilton"
+    },
+    {
+      "id": "moh-ltc-2009",
+      "name": "Victoria Gardens Long Term Care",
+      "addr": "176 Victoria Avenue North",
+      "lat": 43.258168399058455,
+      "lng": -79.85428189999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789920"
+      ],
+      "providerId": "2009",
+      "community": "Hamilton"
+    },
+    {
+      "id": "moh-ltc-3642",
+      "name": "The Wellington Nursing Home",
+      "addr": "1430 Upper Wellington Street",
+      "lat": 43.20929759905853,
+      "lng": -79.87951099999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789910"
+      ],
+      "providerId": "3642",
+      "community": "Hamilton"
+    },
+    {
+      "id": "moh-ltc-4474",
+      "name": "Arbour Creek Long-Term Care Centre",
+      "addr": "2717 King Street East",
+      "lat": 43.221440099058476,
+      "lng": -79.77682429999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789712"
+      ],
+      "providerId": "4474",
+      "community": "Hamilton"
+    },
+    {
+      "id": "moh-ltc-3409",
+      "name": "Grace Villa Nursing Home",
+      "addr": "45 Lockton Crescent",
+      "lat": 43.211459299058504,
+      "lng": -79.8470896,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789791"
+      ],
+      "providerId": "3409",
+      "community": "Hamilton"
+    },
+    {
+      "id": "moh-ltc-4314",
+      "name": "The Village of Wentworth Heights",
+      "addr": "1620 Upper Wentworth Street",
+      "lat": 43.19885639905855,
+      "lng": -79.87369269999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789907"
+      ],
+      "providerId": "4314",
+      "community": "Hamilton"
+    },
+    {
+      "id": "moh-ltc-4464",
+      "name": "AgeCare Willowgrove",
+      "addr": "1217 Old Mohawk Road",
+      "lat": 43.23322949905851,
+      "lng": -79.93526879999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789746"
+      ],
+      "providerId": "4464",
+      "community": "Ancaster"
+    },
+    {
+      "id": "moh-ltc-1966",
+      "name": "St. Joseph's Villa, Dundas",
+      "addr": "56 Governor's Road",
+      "lat": 43.26174189905841,
+      "lng": -79.95769409999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789882"
+      ],
+      "providerId": "1966",
+      "community": "Dundas"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "bounds": [
+    [
+      43.05051496130627,
+      -80.24857873056794
+    ],
+    [
+      43.47070652259478,
+      -79.58213581808178
+    ]
+  ],
+  "center": [
+    43.25708912544889,
+    -79.86618024180544
+  ],
+  "roadsUrl": "cities/hamilton/roads.geojson.gz",
+  "roadFeatureCount": 61057,
+  "roadDataSha256": "8dfd70824798a30860780a78896e2c8ea77b2f07d9be698b852191b172f8e9f3"
+}

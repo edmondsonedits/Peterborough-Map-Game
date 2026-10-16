@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "id": "clarington",
+  "name": "Clarington",
+  "careHomes": [
+    {
+      "id": "moh-ltc-1617",
+      "name": "Glen Hill Strathaven",
+      "addr": "264 King Street East",
+      "lat": 43.912346799057396,
+      "lng": -78.67350969999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789987"
+      ],
+      "providerId": "1617",
+      "community": "Bowmanville"
+    },
+    {
+      "id": "moh-ltc-1624",
+      "name": "Fosterbrooke",
+      "addr": "330 King Street West",
+      "lat": 43.916486199057395,
+      "lng": -78.59522249999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789980"
+      ],
+      "providerId": "1624",
+      "community": "Newcastle"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "bounds": [
+    [
+      43.628934512235816,
+      -78.8720704544943
+    ],
+    [
+      44.098806602887926,
+      -78.32381944306856
+    ]
+  ],
+  "center": [
+    43.91101074419609,
+    -78.77688318358734
+  ],
+  "roadsUrl": "cities/clarington/roads.geojson.gz",
+  "roadFeatureCount": 14827,
+  "roadDataSha256": "164fc12a4356aabb611ad632220cd8c5eed6350e6da3a6480272e12c33613e71"
+}

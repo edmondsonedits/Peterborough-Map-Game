@@ -497,6 +497,12 @@
     map.setView = function guardedSetView(center, zoom, options) {
       const perform = () => state.originalZoomMethods.setView.call(this, center, zoom, options);
       if (typeof zoom !== 'number') return perform();
+      // Tile readiness may defer a zoom, never the truck's geographic follow.
+      // Desktop submits centre + target zoom together on every driving frame.
+      // Keep panning at the current tile level while that target is prepared.
+      if (state.mode === 'satellite' && !state.bypassZoomGuard && zoom !== this.getZoom()) {
+        state.originalZoomMethods.setView.call(this, center, this.getZoom(), { ...options, animate:false, reset:false });
+      }
       return queueZoom(center, zoom, perform);
     };
 

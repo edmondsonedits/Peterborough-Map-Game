@@ -10,8 +10,14 @@
   }
 
   function serviceLocations(locations, service, difficulty) {
-    return (Array.isArray(locations) ? locations : []).filter(location =>
-      (!difficulty || location.recognitionDifficulty === difficulty) && isValidLocation(location));
+    const candidates=Array.isArray(locations) ? locations : [];
+    const eligible=root.PTBO_EMS_PRIORITY?.eligibleCandidates
+      ? root.PTBO_EMS_PRIORITY.eligibleCandidates(candidates,service)
+      : candidates.filter(location=>!Array.isArray(location?.trainingServices)||location.trainingServices.includes(service));
+    return eligible.filter(location => {
+      const priorityCareHome=service==='ems'&&location.facilityType==='long-term-care';
+      return ((!difficulty || location.recognitionDifficulty === difficulty) || priorityCareHome) && isValidLocation(location);
+    });
   }
 
   function shuffledCycle(pool, random = Math.random) {
@@ -35,18 +41,29 @@
   }
 
   function createSession(options = {}) {
-    const cycle = shuffledCycle(options.locations || [], options.random || Math.random);
+    const random = typeof options.random === 'function' ? options.random : Math.random;
+    const locations = Array.isArray(options.locations) ? options.locations : [];
+    const cycle = shuffledCycle(locations, random);
     const onNext = options.onNext || (() => {});
     const stats = { completed: 0, firstTry: 0, assisted: 0, misses: 0, streak: 0, bestStreak: 0 };
-    let generation = 0, attempts = 0;
-    const state = { target: cycle.next(), revealed: false, pending: false, ended: false };
+    let generation = 0, attempts = 0, nextAllowedAt = 0;
+    let lastTarget=null;
+    function nextTarget(){
+      const picker=root.PTBO_EMS_PRIORITY?.pick;
+      const target=options.service==='ems'&&typeof picker==='function'
+        ? picker(locations,{service:'ems',random,lastId:lastTarget?.id,careWeight:options.careWeight})
+        : cycle.next();
+      lastTarget=target||null;
+      return target;
+    }
+    const state = { target: nextTarget(), revealed: false, pending: false, ended: false };
 
     function advance(token = generation) {
       if (state.ended || token !== generation || !state.pending) return false;
       state.pending = false;
       state.revealed = false;
       attempts = 0;
-      state.target = cycle.next();
+      state.target = nextTarget();
       onNext(state.target, { ...stats });
       return true;
     }
@@ -86,9 +103,11 @@
         return advance(generation);
       },
       next() {
-        if (state.ended || (!state.pending && !state.revealed)) return false;
+        if (state.ended || !state.target || Date.now() < nextAllowedAt) return false;
         state.pending = true;
-        return advance(generation);
+        const advanced = advance(generation);
+        if (advanced) nextAllowedAt = Date.now() + 300;
+        return advanced;
       },
       finish() { state.ended = true; clearPending(); },
       cancel() { state.ended = true; clearPending(); }

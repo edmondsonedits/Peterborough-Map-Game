@@ -41,6 +41,6 @@
     ...city,dispatch:simulatorRoutes,
     ...(geoIds.has(city.id) ? {geoDataUrl:`cities/${city.id}/geo-data.json`} : {}),
     modes:Object.freeze({geo:city.id === 'peterborough' || geoIds.has(city.id),
-      route:city.id === 'peterborough',dispatch:originalIds.has(city.id),explorer:city.id === 'peterborough'}),
+      route:true,dispatch:originalIds.has(city.id),explorer:city.id === 'peterborough'}),
   })));
 })();

@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "id": "pickering",
+  "name": "Pickering",
+  "careHomes": [
+    {
+      "id": "moh-ltc-3235",
+      "name": "Orchard Villa",
+      "addr": "1955 Valley Farm Road",
+      "lat": 43.84622139905752,
+      "lng": -79.08268189999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790022"
+      ],
+      "providerId": "3235",
+      "community": "Pickering"
+    },
+    {
+      "id": "moh-ltc-4396",
+      "name": "Bay Ridges",
+      "addr": "900 Sandy Beach Road",
+      "lat": 43.82845279905751,
+      "lng": -79.07712429999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789936"
+      ],
+      "providerId": "4396",
+      "community": "Pickering"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "bounds": [
+    [
+      43.52090297921865,
+      -79.2201502599527
+    ],
+    [
+      44.010808363156336,
+      -78.92430742831354
+    ]
+  ],
+  "center": [
+    43.829866376437806,
+    -79.09724117714009
+  ],
+  "roadsUrl": "cities/pickering/roads.geojson.gz",
+  "roadFeatureCount": 32912,
+  "roadDataSha256": "e27a138e88178db775dbe6a4bedfe9298be3e40af800e7c1c71794961adb0ff3"
+}

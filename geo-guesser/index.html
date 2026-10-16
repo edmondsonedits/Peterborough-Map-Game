@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#121218">
   <title>Peterborough Geo Guesser</title>
-  <link rel="stylesheet" href="../response-simulator/vendor/leaflet-1.9.4/leaflet.css?v=1.6.112">
-  <link rel="stylesheet" href="app.css?v=1.6.112">
+  <link rel="stylesheet" href="../response-simulator/vendor/leaflet-1.9.4/leaflet.css?v=1.6.113">
+  <link rel="stylesheet" href="app.css?v=1.6.113">
 </head>
 <body>
 <a id="game-home" href="../" target="_top">← All Games</a>
@@ -24,6 +24,7 @@
     <div id="difficulty-step" hidden>
       <h2>2 · Choose your difficulty</h2>
       <p class="muted">Ranked by how familiar the place and streets are.</p>
+      <p id="ems-priority-note" class="muted" hidden>EMS includes priority care-home practice at every difficulty.</p>
       <div class="choices difficulty-options">
         <button id="difficulty-easy" onclick="PTBO_GEO.chooseDifficulty('easy')" aria-pressed="false"><strong>Easy <small id="count-easy">…</small></strong><span>Main roads &amp; familiar places</span></button>
         <button id="difficulty-medium" onclick="PTBO_GEO.chooseDifficulty('medium')" aria-pressed="false"><strong>Medium <small id="count-medium">…</small></strong><span>Quieter streets near familiar roads</span></button>
@@ -59,15 +60,15 @@
   </div>
   <button id="confirm" class="primary" onclick="PTBO_GEO.check()">Check location</button>
 </section>
-<script src="../shared/build-version.js?v=1.6.112"></script>
-<script src="../response-simulator/vendor/leaflet-1.9.4/leaflet.js?v=1.6.112"></script>
-<script src="../response-simulator/carto-basemap-policy-1.6.36.js?v=1.6.112"></script>
-<script src="map-provider-1.6.46.js?v=1.6.112"></script>
-<script src="../cities/city-registry.js?v=1.6.112"></script>
-<script src="../shared/location-changes.js?v=1.6.112"></script>
-<script src="../shared/city-location-runtime.js?v=1.6.112"></script>
-<script src="city-loader.js?v=1.6.112"></script>
-<script src="station-practice.js?v=1.6.112"></script>
-<script src="app.js?v=1.6.112"></script>
+<script src="../shared/build-version.js?v=1.6.113"></script>
+<script src="../response-simulator/vendor/leaflet-1.9.4/leaflet.js?v=1.6.113"></script>
+<script src="../response-simulator/carto-basemap-policy-1.6.36.js?v=1.6.113"></script>
+<script src="map-provider-1.6.46.js?v=1.6.113"></script>
+<script src="../cities/city-registry.js?v=1.6.113"></script>
+<script src="../shared/location-changes.js?v=1.6.113"></script>
+<script src="../shared/city-location-runtime.js?v=1.6.113"></script>
+<script src="city-loader.js?v=1.6.113"></script>
+<script src="station-practice.js?v=1.6.113"></script>
+<script src="app.js?v=1.6.113"></script>
 </body>
 </html>

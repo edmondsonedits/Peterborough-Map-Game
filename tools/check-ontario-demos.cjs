@@ -32,8 +32,8 @@ const expectedVersion=process.env.PTBO_EXPECTED_VERSION;fs.mkdirSync(out,{recurs
       a.reveal();a.next();a.finish();}
      results.push({service,tier,count:a.state.pool.length});
     }
-    return {city:c.id,calls:a.state.locations.length,bases:w.PTBO_BASE_STORE.getAll().length,results,title:document.title};
-   });assert.equal(state.city,id);assert.equal(state.calls,20);assert.equal(state.results.length,6);report.cities.push(state);
+    return {city:c.id,calls:a.state.locations.length,fireCalls:PTBO_STATION_PRACTICE.serviceLocations(a.state.locations,'fire').length,careHomes:a.state.locations.filter(x=>x.facilityType==='long-term-care').length,bases:w.PTBO_BASE_STORE.getAll().length,results,title:document.title};
+   });assert.equal(state.city,id);assert.equal(state.fireCalls,20);assert.ok(state.careHomes>0);assert.equal(state.results.length,6);report.cities.push(state);
   }
   for(const [width,height,surface] of [[1440,900,'desktop'],[390,844,'mobile'],[844,390,'mobile'],[768,1024,'desktop'],[320,740,'mobile']]){
    await page.setViewportSize({width,height});await page.goto(`${base}/geo-guesser/${surface}/?city=toronto&analytics=off`);
@@ -50,13 +50,13 @@ const expectedVersion=process.env.PTBO_EXPECTED_VERSION;fs.mkdirSync(out,{recurs
   }
   await page.setViewportSize({width:1440,height:900});await page.goto(`${base}/?city=ottawa&analytics=off`);await page.waitForFunction(()=>window.PTBO_HOMEPAGE&&document.body.dataset.homeCity==='ottawa');await captureVersions();
   assert.equal(await page.locator('#home-city-select option').count(),33);
-  assert.match(await page.locator('#geo-game-link').getAttribute('href'),/city=ottawa/);assert.equal(await page.locator('#route-game-link').getAttribute('href'),null);
-  await page.screenshot({path:path.join(out,'homepage-ottawa.png'),fullPage:true});await page.locator('#route-game-link').click();await page.locator('#home-demo-dialog').waitFor({state:'visible'});
+  assert.match(await page.locator('#geo-game-link').getAttribute('href'),/city=ottawa/);assert.match(await page.locator('#route-game-link').getAttribute('href'),/city=ottawa/);assert.equal(await page.locator('#city-explorer-link').getAttribute('href'),null);
+  await page.screenshot({path:path.join(out,'homepage-ottawa.png'),fullPage:true});await page.locator('#city-explorer-link').click();await page.locator('#home-demo-dialog').waitFor({state:'visible'});
   const before=await page.evaluate(()=>PTBO_DEMO_REQUESTS.loadLocalStats());assert.equal(before.demoRequests.total,0);
   await page.locator('#home-demo-close').click();assert.equal(await page.evaluate(()=>PTBO_DEMO_REQUESTS.loadLocalStats().demoRequests.total),0);
-  await page.locator('#route-game-link').press('Enter');await page.locator('#home-demo-submit').click();await page.waitForFunction(()=>document.getElementById('home-demo-submit').disabled&&/recorded|saved|sent/i.test(document.getElementById('home-demo-status').textContent));
+  await page.locator('#city-explorer-link').press('Enter');await page.locator('#home-demo-submit').click();await page.waitForFunction(()=>document.getElementById('home-demo-submit').disabled&&/recorded|saved|sent/i.test(document.getElementById('home-demo-status').textContent));
   const after=await page.evaluate(()=>PTBO_DEMO_REQUESTS.loadLocalStats());assert.equal(after.demoRequests.total,1);assert.match(await page.locator('#home-demo-status').innerText(),/device/i);
-  await page.screenshot({path:path.join(out,'request-recorded.png'),fullPage:true});await page.locator('#home-demo-close').click();assert.equal(await page.locator('#route-game-link').evaluate(n=>document.activeElement===n),true);
+  await page.screenshot({path:path.join(out,'request-recorded.png'),fullPage:true});await page.locator('#home-demo-close').click();assert.equal(await page.locator('#city-explorer-link').evaluate(n=>document.activeElement===n),true);
   await page.goto(`${base}/site-stats/`);await page.waitForFunction(()=>document.body.innerText.includes('Ottawa'));await page.screenshot({path:path.join(out,'stats-local.png'),fullPage:true});report.requests={before,after,visibleInStats:true};
   await page.goto(`${base}/geo-guesser/mobile/?city=made-up&analytics=off`);await page.frameLocator('#game-frame').locator('#load-retry').waitFor({state:'visible'});assert.match(await page.frameLocator('#game-frame').locator('#practice-setup-status').innerText(),/not available/);await captureVersions();
   // Unknown-city handled errors are expected console messages, not uncaught page errors.

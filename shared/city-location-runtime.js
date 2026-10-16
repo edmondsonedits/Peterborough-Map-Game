@@ -23,7 +23,7 @@
     const requested=String(explicit?params.get('city'):stored || 'peterborough').toLowerCase();
     let city=cities.find(item=>item.id===requested);
     if(!explicit && (!city || (context==='geo'&&!city.modes?.geo))) city=cities.find(item=>item.id==='peterborough');
-    if(!city || (context==='geo'&&!city.modes?.geo)) throw new Error('This city is not available here. Choose a city from All Games.');
+    if(!city || (context==='geo'&&!city.modes?.geo) || (context==='route'&&!city.modes?.route)) throw new Error('This city is not available here. Choose a city from All Games.');
     return city;
   }
   const coordinate = value => value !== null && String(value).trim() !== '' && value !== undefined && Number.isFinite(Number(value));
@@ -47,7 +47,7 @@
   }
   let loading=null;
   function load({context='geo'}={}) {
-    if(!['geo','editor'].includes(context))return Promise.reject(new Error('Unknown location workspace.'));
+    if(!['geo','editor','route'].includes(context))return Promise.reject(new Error('Unknown location workspace.'));
     if(loading)return loading;
     loading=(async()=>{
     const city=selectedCity(context);

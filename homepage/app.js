@@ -162,7 +162,7 @@
     if (explorerDescription) explorerDescription.textContent = available('explorer') ? `Drive through ${city.name} streets.` : `Request a ${city.name} 3D demo.`;
     if (state.status) state.status.textContent = fullDispatch
       ? 'All training modes available in Peterborough.'
-      : `${city.name} demos · ${available('geo') ? 'Geo Guesser ready' : 'Geo Guesser on request'}${freeDriving ? ' · Free driving ready' : ''}. Request other modes below.`;
+      : `${city.name} demos · ${available('geo') ? 'Geo Guesser ready' : 'Geo Guesser on request'}${available('route') ? ' · Route Mapping ready' : ''}${freeDriving ? ' · Free driving ready' : ''}. Request other modes below.`;
     updateLinks();
     if (changed) {
       // A background storage update must not hide the preview link someone is using.

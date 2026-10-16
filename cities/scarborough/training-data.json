@@ -1,0 +1,559 @@
+{
+  "schemaVersion": 1,
+  "id": "scarborough",
+  "name": "Scarborough",
+  "careHomes": [
+    {
+      "id": "moh-ltc-1358",
+      "name": "Rockcliffe Community",
+      "addr": "3015 Lawrence Avenue East",
+      "lat": 43.75466029905759,
+      "lng": -79.2478868,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790288"
+      ],
+      "providerId": "1358",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-4489",
+      "name": "Hellenic Home - Scarborough",
+      "addr": "2411 Lawrence Avenue East",
+      "lat": 43.74933069905762,
+      "lng": -79.27440149999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790269"
+      ],
+      "providerId": "4489",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-4500",
+      "name": "Mon Sheong Scarborough Long Term Care Centre",
+      "addr": "2030 McNicoll Avenue",
+      "lat": 43.81307889905756,
+      "lng": -79.29998419999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790283"
+      ],
+      "providerId": "4500",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-1349",
+      "name": "Extendicare Scarborough",
+      "addr": "3830 Lawrence Avenue East",
+      "lat": 43.76376019905761,
+      "lng": -79.21012239999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790260"
+      ],
+      "providerId": "1349",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-1345",
+      "name": "Bendale Acres",
+      "addr": "2920 Lawrence Avenue East",
+      "lat": 43.75492079905762,
+      "lng": -79.25183279999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790240"
+      ],
+      "providerId": "1345",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-4411",
+      "name": "AgeCare Trilogy",
+      "addr": "340 McCowan Road",
+      "lat": 43.738468099057656,
+      "lng": -79.2386358,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790245"
+      ],
+      "providerId": "4411",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-1408",
+      "name": "Ina Grafton Gage Home",
+      "addr": "40 Bell Estate Road",
+      "lat": 43.70574779905769,
+      "lng": -79.2771358,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790271"
+      ],
+      "providerId": "1408",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-3582",
+      "name": "Seven Oaks",
+      "addr": "9 Neilson Road",
+      "lat": 43.781733899057556,
+      "lng": -79.2032529,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790291"
+      ],
+      "providerId": "3582",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-1352",
+      "name": "Kennedy Lodge",
+      "addr": "1400 Kennedy Road",
+      "lat": 43.76262289905757,
+      "lng": -79.28054589999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790274"
+      ],
+      "providerId": "1352",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-4437",
+      "name": "Fieldstone Commons Community",
+      "addr": "1000 Ellesmere Road",
+      "lat": 43.767290199057605,
+      "lng": -79.2779377,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790262"
+      ],
+      "providerId": "4437",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-1351",
+      "name": "Extendicare Guildwood",
+      "addr": "60 Guildwood Parkway",
+      "lat": 43.746845899057625,
+      "lng": -79.20312459999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790258"
+      ],
+      "providerId": "1351",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-3118",
+      "name": "The Wexford",
+      "addr": "1860 Lawrence Avenue East",
+      "lat": 43.743986899057646,
+      "lng": -79.30319809999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790303"
+      ],
+      "providerId": "3118",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-3711",
+      "name": "Yee Hong Centre - Scarborough McNicoll",
+      "addr": "2311 McNicoll Avenue",
+      "lat": 43.8142109990575,
+      "lng": -79.2901751,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790315"
+      ],
+      "providerId": "3711",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-1348",
+      "name": "Craiglee Nursing Home",
+      "addr": "102 Craiglee Drive",
+      "lat": 43.706847699057676,
+      "lng": -79.25328509999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790250"
+      ],
+      "providerId": "1348",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-3731",
+      "name": "Ehatare Nursing Home",
+      "addr": "40 Old Kingston Road",
+      "lat": 43.77549689905757,
+      "lng": -79.18319829999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790256"
+      ],
+      "providerId": "3731",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-2795",
+      "name": "Tendercare Living Centre",
+      "addr": "1020 McNicoll Avenue",
+      "lat": 43.805753299057564,
+      "lng": -79.33599679999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790297"
+      ],
+      "providerId": "2795",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-1344",
+      "name": "Glen Rouge Community",
+      "addr": "92 Island Road",
+      "lat": 43.79886699905756,
+      "lng": -79.14013559999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790238"
+      ],
+      "providerId": "1344",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-4473",
+      "name": "Yee Hong Centre - Scarborough Finch",
+      "addr": "60 Scottfield Drive",
+      "lat": 43.808638999057536,
+      "lng": -79.25453479999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790314"
+      ],
+      "providerId": "4473",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-4863",
+      "name": "Providence Healthcare",
+      "addr": "3276 St. Clair Avenue East",
+      "lat": 43.71294669905767,
+      "lng": -79.28527829999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790287"
+      ],
+      "providerId": "4863",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-3659",
+      "name": "Midland Gardens Community",
+      "addr": "130 Midland Avenue",
+      "lat": 43.70832629905766,
+      "lng": -79.2478413,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790281"
+      ],
+      "providerId": "3659",
+      "community": "Scarborough"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "bounds": [
+    [
+      43.67,
+      -79.34
+    ],
+    [
+      43.86,
+      -79.11
+    ]
+  ],
+  "center": [
+    43.7764,
+    -79.2318
+  ],
+  "roadsUrl": "cities/scarborough/roads.geojson.gz",
+  "roadFeatureCount": 47069,
+  "roadDataSha256": "419d06eecc5c203317c04cab78ef126d24dce36d9f509f980204a0b7796e5f0c"
+}

@@ -8,7 +8,7 @@ import { CitySplatLayer, buildSplatPlacement } from '../city-explorer/city-splat
 const read=file=>fs.readFileSync(new URL('../'+file,import.meta.url),'utf8');
 const section=(source,start,end)=>{const a=source.indexOf(start),b=source.indexOf(end,a);assert.ok(a>=0&&b>a,'source section exists: '+start);return source.slice(a,b);};
 const geo=read('geo-guesser/index.html');
-function sandbox(extra={}){const c=vm.createContext({console:{info(){},warn(){}},URL,Promise,setTimeout,clearTimeout,CustomEvent:class{constructor(type,options){this.type=type;this.detail=options?.detail;}},...extra});c.window=c;return c;}
+function sandbox(extra={}){const c=vm.createContext({console:{info(){},warn(){}},URL,Promise,setTimeout,clearTimeout,CustomEvent:class{constructor(type,options){this.type=type;this.detail=options?.detail;}},fetch:async()=>({ok:true,json:async()=>({schemaVersion:1,id:'peterborough',careHomes:[]})}),...extra});c.window=c;vm.runInContext(read('shared/ems-priority.js'),c);return c;}
 
 test('explicit dispatch script city wins over a previously selected city',async()=>{
  const c=sandbox({document:{currentScript:{src:'https://example.test/shared/dispatch-locations.js?city=peterborough'}},location:{href:'https://example.test/route-mapping/'},localStorage:{getItem:()=> 'toronto',setItem(){}},PTBO_DISPATCH_DATA_READY:Promise.resolve([{name:'Call',lat:44.3,lng:-78.3}]),dispatchEvent(){}});

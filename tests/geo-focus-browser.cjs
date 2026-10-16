@@ -63,12 +63,45 @@ const { chromium, devices } = require('playwright');
           await frame.waitForFunction(lng => Math.abs(PTBO_GEO.state.map.getCenter().lng - lng) > 1e-7, before, { timeout: 2000 });
           result.checks.push(`${label}: ArrowRight pans map`);
         }
+        async function verifyPracticeControlsLayout(label) {
+          const layout = await frame.evaluate(() => {
+            const box = selector => {
+              const r = document.querySelector(selector).getBoundingClientRect();
+              return { left:r.left, right:r.right, top:r.top, bottom:r.bottom };
+            };
+            return { controls:box('#practice-controls'), next:box('#practice-continue'), confirm:box('#confirm'), width:innerWidth, height:innerHeight };
+          });
+          assert.ok(layout.next.left >= -1 && layout.next.right <= layout.width + 1, `${label}: Next Call stays inside the viewport`);
+          assert.ok(layout.controls.bottom <= layout.height + 1 && layout.controls.left >= -1 && layout.controls.right <= layout.width + 1,
+            `${label}: practice controls stay inside the viewport`);
+          const controlsOverlapConfirm = layout.controls.left < layout.confirm.right && layout.controls.right > layout.confirm.left
+            && layout.controls.top < layout.confirm.bottom && layout.controls.bottom > layout.confirm.top;
+          assert.equal(controlsOverlapConfirm, false, `${label}: Next Call controls do not overlap Check location`);
+        }
         await activate(frame.locator(`#service-${service}`));
         await activate(frame.locator('#difficulty-medium'));
         const startingBase = frame.locator('#practice-stations button').last();
         const startingBaseText = await startingBase.innerText();
         await activate(startingBase);
         await frame.locator('.leaflet-tile-loaded').first().waitFor({ timeout: 15000 });
+        const nextCall = frame.locator('#practice-continue');
+        assert.equal(await nextCall.isVisible(), true, 'Next Call is available before the first guess');
+        await verifyPracticeControlsLayout(name + ' before attempt');
+        const targetKey = () => frame.evaluate(() => {
+          const t = PTBO_GEO.state.target;
+          return JSON.stringify([t.id,t.name,t.addr,t.lat,t.lng]);
+        });
+        const beforeSkip = await targetKey();
+        const completedBeforeSkip = await frame.evaluate(() => PTBO_GEO.state.session.stats.completed);
+        await activate(nextCall);
+        const afterSkip = await targetKey();
+        assert.notEqual(afterSkip, beforeSkip, 'Next Call skips an unattempted address');
+        assert.equal(await frame.evaluate(() => PTBO_GEO.state.session.stats.completed), completedBeforeSkip,
+          'skipping does not count as a completed call');
+        await Promise.all([activate(nextCall), activate(nextCall)]);
+        assert.equal(await targetKey(), afterSkip, 'rapid duplicate activation cannot skip an additional call');
+        await verifyMapKeyboard('skip before guess');
+        await frame.waitForTimeout(320);
         await verifyMapKeyboard('start');
         await activate(frame.locator('#practice-reveal'));
         await activate(frame.locator('#practice-continue'));
@@ -81,7 +114,33 @@ const { chromium, devices } = require('playwright');
         });
         await activate(frame.locator('#confirm'));
         assert.equal(await frame.locator('#practice-review-title').innerText(), 'Try again');
+        assert.equal(await frame.locator('#confirm').innerText(), 'Try again');
+        assert.equal(await frame.locator('#confirm').isVisible(), true, 'Try again remains available after a miss');
+        assert.equal(await nextCall.isVisible(), true, 'Next Call coexists with Try again after a miss');
+        await verifyPracticeControlsLayout(name + ' after miss');
+        await page.waitForTimeout(900);
+        await frame.waitForFunction(() => !Object.values(PTBO_GEO.state.map._layers).some(layer => layer._loading === true) && document.querySelector('.leaflet-tile-loaded'));
+        await page.waitForTimeout(250);
+        await page.screenshot({ path: path.join(out, `${name}-miss-next-retry.png`) });
+        const missedTarget = await targetKey();
+        const completedBeforeMissSkip = await frame.evaluate(() => PTBO_GEO.state.session.stats.completed);
+        await frame.waitForTimeout(320);
+        await activate(nextCall);
+        assert.notEqual(await targetKey(), missedTarget, 'Next Call skips the missed address');
+        assert.equal(await frame.evaluate(() => PTBO_GEO.state.session.stats.completed), completedBeforeMissSkip,
+          'skipping a missed address does not create a completion');
+        await verifyMapKeyboard('Next after miss');
+
+        // A fresh miss keeps the same target when the trainee chooses Try again.
+        await frame.evaluate(() => {
+          const t = PTBO_GEO.state.target;
+          PTBO_GEO.state.map.setView([t.lat + 0.02, t.lng + 0.02], 17, { animate: false });
+        });
         await activate(frame.locator('#confirm'));
+        const retryTarget = await targetKey();
+        assert.equal(await frame.locator('#practice-continue').isVisible(), true);
+        await activate(frame.locator('#confirm'));
+        assert.equal(await targetKey(), retryTarget, 'Try again retains the current address');
         await verifyMapKeyboard('retry');
         await activate(frame.locator('#practice-return'));
         await verifyMapKeyboard('return to base');

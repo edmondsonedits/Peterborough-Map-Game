@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "st-catharines",
+  "name": "St. Catharines",
+  "careHomes": [
+    {
+      "id": "moh-ltc-5553",
+      "name": "Westhills Care Centre",
+      "addr": "179 Louth Street",
+      "lat": 43.142394899058644,
+      "lng": -79.26268669999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789928"
+      ],
+      "providerId": "5553",
+      "community": "St Catharines"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "bounds": [
+    [
+      43.10667039328994,
+      -79.32093332328418
+    ],
+    [
+      43.44759965664617,
+      -79.17783387431142
+    ]
+  ],
+  "center": [
+    43.163031150051,
+    -79.239771514153
+  ],
+  "roadsUrl": "cities/st-catharines/roads.geojson.gz",
+  "roadFeatureCount": 13546,
+  "roadDataSha256": "750029b3e0e54ef06a3d4fee8df39086d069e7eba0a64996a4e195d83b5dc737"
+}

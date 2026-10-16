@@ -1,0 +1,455 @@
+{
+  "schemaVersion": 1,
+  "id": "mississauga",
+  "name": "Mississauga",
+  "careHomes": [
+    {
+      "id": "moh-ltc-4300",
+      "name": "AgeCare Wenleigh",
+      "addr": "2065 Leanne Boulevard",
+      "lat": 43.52483929905793,
+      "lng": -79.65178179999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790154"
+      ],
+      "providerId": "4300",
+      "community": "Mississauga"
+    },
+    {
+      "id": "moh-ltc-4445",
+      "name": "Cawthra Gardens",
+      "addr": "590 Lolita Gardens",
+      "lat": 43.59300589905787,
+      "lng": -79.60361759999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790149"
+      ],
+      "providerId": "4445",
+      "community": "Mississauga"
+    },
+    {
+      "id": "moh-ltc-4440",
+      "name": "Malton Village Long Term Care Centre",
+      "addr": "7075 Rexwood Road",
+      "lat": 43.71846619905766,
+      "lng": -79.62439379999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790183"
+      ],
+      "providerId": "4440",
+      "community": "Mississauga"
+    },
+    {
+      "id": "moh-ltc-4362",
+      "name": "Villa Forum",
+      "addr": "175 Forum Drive",
+      "lat": 43.61179089905781,
+      "lng": -79.65152279999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790225"
+      ],
+      "providerId": "4362",
+      "community": "Mississauga"
+    },
+    {
+      "id": "moh-ltc-1729",
+      "name": "Cooksville Care Centre",
+      "addr": "55 The Queensway West",
+      "lat": 43.57327059905785,
+      "lng": -79.609782,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790158"
+      ],
+      "providerId": "1729",
+      "community": "Mississauga"
+    },
+    {
+      "id": "moh-ltc-4391",
+      "name": "The Village of Erin Meadows",
+      "addr": "2930 Erin Centre Boulevard",
+      "lat": 43.55319719905789,
+      "lng": -79.72171149999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790215"
+      ],
+      "providerId": "4391",
+      "community": "Mississauga"
+    },
+    {
+      "id": "moh-ltc-1736",
+      "name": "Mississauga Long Term Care Facility",
+      "addr": "26 Peter Street North",
+      "lat": 43.54968669905789,
+      "lng": -79.59093639999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790188"
+      ],
+      "providerId": "1736",
+      "community": "Mississauga"
+    },
+    {
+      "id": "moh-ltc-3337",
+      "name": "Erin Mills Lodge Nursing Home",
+      "addr": "2132 Dundas Street West",
+      "lat": 43.534728999057954,
+      "lng": -79.66735399999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790163"
+      ],
+      "providerId": "3337",
+      "community": "Mississauga"
+    },
+    {
+      "id": "moh-ltc-4508",
+      "name": "Silverthorn Community",
+      "addr": "4350 Mississauga Road",
+      "lat": 43.56230829905791,
+      "lng": -79.68857489999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790205"
+      ],
+      "providerId": "4508",
+      "community": "Mississauga"
+    },
+    {
+      "id": "moh-ltc-5509",
+      "name": "Wellbrook Place East",
+      "addr": "2180 Speakman Drive",
+      "lat": 43.52467549905795,
+      "lng": -79.65857729999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790236"
+      ],
+      "providerId": "5509",
+      "community": "Mississauga"
+    },
+    {
+      "id": "moh-ltc-5510",
+      "name": "Wellbrook Place West",
+      "addr": "2180 Speakman Drive",
+      "lat": 43.52467549905795,
+      "lng": -79.65857729999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790237"
+      ],
+      "providerId": "5510",
+      "community": "Mississauga"
+    },
+    {
+      "id": "moh-ltc-4458",
+      "name": "Yee Hong Centre - Mississauga",
+      "addr": "5510 Mavis Road",
+      "lat": 43.60447199905785,
+      "lng": -79.68695279999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790233"
+      ],
+      "providerId": "4458",
+      "community": "Mississauga"
+    },
+    {
+      "id": "moh-ltc-1457",
+      "name": "Tyndall Nursing Home",
+      "addr": "1060 Eglinton Avenue East",
+      "lat": 43.62833589905779,
+      "lng": -79.62744169999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790220"
+      ],
+      "providerId": "1457",
+      "community": "Mississauga"
+    },
+    {
+      "id": "moh-ltc-1735",
+      "name": "Sheridan Villa",
+      "addr": "2460 Truscott Drive",
+      "lat": 43.51042379905796,
+      "lng": -79.64836499999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790203"
+      ],
+      "providerId": "1735",
+      "community": "Mississauga"
+    },
+    {
+      "id": "moh-ltc-4394",
+      "name": "Extendicare Mississauga",
+      "addr": "855 John Watt Boulevard",
+      "lat": 43.63246289905778,
+      "lng": -79.72789039999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790166"
+      ],
+      "providerId": "4394",
+      "community": "Mississauga"
+    },
+    {
+      "id": "moh-ltc-1730",
+      "name": "Streetsville Community",
+      "addr": "1742 Bristol Road West",
+      "lat": 43.582110099057864,
+      "lng": -79.7053477,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790210"
+      ],
+      "providerId": "1730",
+      "community": "Mississauga"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "bounds": [
+    [
+      43.361099429953754,
+      -79.81010111417292
+    ],
+    [
+      43.73703438782441,
+      -79.41785747084073
+    ]
+  ],
+  "center": [
+    43.69232288253442,
+    -79.62549081534043
+  ],
+  "roadsUrl": "cities/mississauga/roads.geojson.gz",
+  "roadFeatureCount": 121715,
+  "roadDataSha256": "0fbacad38b1223c1b3a95e5cfb6313a1ee4c9cdcaa829c6daabe73820e72b9c4"
+}

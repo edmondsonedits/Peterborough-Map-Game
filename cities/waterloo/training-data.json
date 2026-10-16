@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "id": "waterloo",
+  "name": "Waterloo",
+  "careHomes": [
+    {
+      "id": "moh-ltc-4809",
+      "name": "The Village at University Gates",
+      "addr": "250 Laurelwood Drive",
+      "lat": 43.47672089905804,
+      "lng": -80.57031439999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789902"
+      ],
+      "providerId": "4809",
+      "community": "Waterloo"
+    },
+    {
+      "id": "moh-ltc-4345",
+      "name": "Columbia Forest",
+      "addr": "650 Mountain Maple Avenue",
+      "lat": 43.46492559905805,
+      "lng": -80.59135659999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789750"
+      ],
+      "providerId": "4345",
+      "community": "Waterloo"
+    },
+    {
+      "id": "moh-ltc-4512",
+      "name": "Parkwood Mennonite Home",
+      "addr": "726 New Hampshire Street",
+      "lat": 43.516384499057956,
+      "lng": -80.50225019999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789846"
+      ],
+      "providerId": "4512",
+      "community": "Waterloo"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "bounds": [
+    [
+      43.43223549018835,
+      -80.62609406300471
+    ],
+    [
+      43.53121851196465,
+      -80.46736521643916
+    ]
+  ],
+  "center": [
+    43.4771548,
+    -80.5182471
+  ],
+  "roadsUrl": "cities/waterloo/roads.geojson.gz",
+  "roadFeatureCount": 19231,
+  "roadDataSha256": "322f4ed7f2b36f41dcb9557c42fa80ee8f35556f144c16cf268a7c38ed8a0c86"
+}

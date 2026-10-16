@@ -1,0 +1,741 @@
+{
+  "schemaVersion": 1,
+  "id": "ottawa",
+  "name": "Ottawa",
+  "careHomes": [
+    {
+      "id": "moh-ltc-4588",
+      "name": "Garry J. Armstrong Home",
+      "addr": "200 Island Lodge Road",
+      "lat": 45.43783649905691,
+      "lng": -75.68320869999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789985"
+      ],
+      "providerId": "4588",
+      "community": "Ottawa"
+    },
+    {
+      "id": "moh-ltc-4393",
+      "name": "Garden Terrace",
+      "addr": "100 Aird Place",
+      "lat": 45.30985119905686,
+      "lng": -75.90195779999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789984"
+      ],
+      "providerId": "4393",
+      "community": "Kanata"
+    },
+    {
+      "id": "moh-ltc-1671",
+      "name": "Extendicare New Orchard Lodge",
+      "addr": "99 New Orchard Avenue",
+      "lat": 45.37524449905688,
+      "lng": -75.77907039999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789968"
+      ],
+      "providerId": "1671",
+      "community": "Ottawa"
+    },
+    {
+      "id": "moh-ltc-1651",
+      "name": "Saint-Louis Long-Term Care",
+      "addr": "879 Hiawatha Park Road",
+      "lat": 45.483046499056925,
+      "lng": -75.5463866,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790035"
+      ],
+      "providerId": "1651",
+      "community": "Ottawa"
+    },
+    {
+      "id": "moh-ltc-3859",
+      "name": "The Perley and Rideau Veterans' Health Centre",
+      "addr": "1750 Russell Road",
+      "lat": 45.40386099905689,
+      "lng": -75.63691139999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790056"
+      ],
+      "providerId": "3859",
+      "community": "Ottawa"
+    },
+    {
+      "id": "moh-ltc-2922",
+      "name": "Extendicare Laurier Manor",
+      "addr": "1715 Montreal Road",
+      "lat": 45.44637839905693,
+      "lng": -75.6108486,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789966"
+      ],
+      "providerId": "2922",
+      "community": "Gloucester"
+    },
+    {
+      "id": "moh-ltc-3536",
+      "name": "Élisabeth-Bruyère Long-Term Care",
+      "addr": "75 Bruyère Street",
+      "lat": 45.4322097990569,
+      "lng": -75.69602999999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789960"
+      ],
+      "providerId": "3536",
+      "community": "Ottawa"
+    },
+    {
+      "id": "moh-ltc-4301",
+      "name": "Forest Hill",
+      "addr": "6501 Campeau Drive",
+      "lat": 45.314349699056876,
+      "lng": -75.9098325,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789979"
+      ],
+      "providerId": "4301",
+      "community": "Kanata"
+    },
+    {
+      "id": "moh-ltc-4322",
+      "name": "Longfields Manor",
+      "addr": "330 Beatrice Drive",
+      "lat": 45.280247999056854,
+      "lng": -75.72981089999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790012"
+      ],
+      "providerId": "4322",
+      "community": "Nepean"
+    },
+    {
+      "id": "moh-ltc-4388",
+      "name": "Granite Ridge Community",
+      "addr": "5501 Abbott Street East",
+      "lat": 45.269856799056825,
+      "lng": -75.90497879999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789991"
+      ],
+      "providerId": "4388",
+      "community": "Stittsville"
+    },
+    {
+      "id": "moh-ltc-1660",
+      "name": "Hillel Lodge",
+      "addr": "10 Nadolny Sachs Private",
+      "lat": 45.37620869905688,
+      "lng": -75.75303129999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790000"
+      ],
+      "providerId": "1660",
+      "community": "Ottawa"
+    },
+    {
+      "id": "moh-ltc-4306",
+      "name": "Peter D. Clark Centre",
+      "addr": "9 Meridian Place",
+      "lat": 45.342907399056855,
+      "lng": -75.75885339999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790025"
+      ],
+      "providerId": "4306",
+      "community": "Ottawa"
+    },
+    {
+      "id": "moh-ltc-4111",
+      "name": "Villa Marconi",
+      "addr": "1026 Baseline Road",
+      "lat": 45.365556599056916,
+      "lng": -75.72716319999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790066"
+      ],
+      "providerId": "4111",
+      "community": "Ottawa"
+    },
+    {
+      "id": "moh-ltc-4384",
+      "name": "The Salvation Army Ottawa Grace Manor",
+      "addr": "1156 Wellington Street",
+      "lat": 45.400865799056916,
+      "lng": -75.72755339999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790057"
+      ],
+      "providerId": "4384",
+      "community": "Ottawa"
+    },
+    {
+      "id": "moh-ltc-1652",
+      "name": "Carlingview Manor",
+      "addr": "2330 Carling Avenue",
+      "lat": 45.3670834990569,
+      "lng": -75.7767174,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789948"
+      ],
+      "providerId": "1652",
+      "community": "Ottawa"
+    },
+    {
+      "id": "moh-ltc-1688",
+      "name": "St. Patrick's Home",
+      "addr": "2865 Riverside Drive",
+      "lat": 45.36982859905688,
+      "lng": -75.688581,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790048"
+      ],
+      "providerId": "1688",
+      "community": "Ottawa"
+    },
+    {
+      "id": "moh-ltc-3440",
+      "name": "Osgoode Care Centre",
+      "addr": "7650 Snake Island Road",
+      "lat": 45.221815799056806,
+      "lng": -75.5047419,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790023"
+      ],
+      "providerId": "3440",
+      "community": "Metcalfe"
+    },
+    {
+      "id": "moh-ltc-3882",
+      "name": "Glebe Centre",
+      "addr": "77 Monk Street",
+      "lat": 45.39824079905687,
+      "lng": -75.68590849999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789986"
+      ],
+      "providerId": "3882",
+      "community": "Ottawa"
+    },
+    {
+      "id": "moh-ltc-1655",
+      "name": "Carleton Lodge",
+      "addr": "55 Lodge Road",
+      "lat": 45.265579999056825,
+      "lng": -75.70705169999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789947"
+      ],
+      "providerId": "1655",
+      "community": "Nepean"
+    },
+    {
+      "id": "moh-ltc-4404",
+      "name": "Montfort",
+      "addr": "705 Montreal Road",
+      "lat": 45.44671119905695,
+      "lng": -75.64059099999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790020"
+      ],
+      "providerId": "4404",
+      "community": "Ottawa"
+    },
+    {
+      "id": "moh-ltc-1667",
+      "name": "Extendicare Medex",
+      "addr": "1865 Baseline Road",
+      "lat": 45.35434649905688,
+      "lng": -75.75833669999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789967"
+      ],
+      "providerId": "1667",
+      "community": "Ottawa"
+    },
+    {
+      "id": "moh-ltc-7610",
+      "name": "Extendicare Crossing Bridge",
+      "addr": "2510 Wellings Private",
+      "lat": 45.28257049905684,
+      "lng": -75.91505459999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789973"
+      ],
+      "providerId": "7610",
+      "community": "Ottawa"
+    },
+    {
+      "id": "moh-ltc-4482",
+      "name": "Royal Ottawa Place",
+      "addr": "1145 Carling Avenue",
+      "lat": 45.388529099056896,
+      "lng": -75.72979799999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790039"
+      ],
+      "providerId": "4482",
+      "community": "Ottawa"
+    },
+    {
+      "id": "moh-ltc-4378",
+      "name": "Manoir Marochel",
+      "addr": "949 Montreal Road",
+      "lat": 45.447835699056945,
+      "lng": -75.62820209999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790013"
+      ],
+      "providerId": "4378",
+      "community": "Ottawa"
+    },
+    {
+      "id": "moh-ltc-1693",
+      "name": "Centre d'Accueil Champlain",
+      "addr": "275 Perrier Street",
+      "lat": 45.443024399056924,
+      "lng": -75.66042239999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789952"
+      ],
+      "providerId": "1693",
+      "community": "Vanier"
+    },
+    {
+      "id": "moh-ltc-1658",
+      "name": "Extendicare Starwood",
+      "addr": "114 Starwood Road",
+      "lat": 45.35368889905686,
+      "lng": -75.7506583,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789972"
+      ],
+      "providerId": "1658",
+      "community": "Nepean"
+    },
+    {
+      "id": "moh-ltc-1692",
+      "name": "Sarsfield Colonial Home",
+      "addr": "2861 Colonial Road",
+      "lat": 45.4405586990569,
+      "lng": -75.34710559999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790041"
+      ],
+      "providerId": "1692",
+      "community": "Sarsfield"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "bounds": [
+    [
+      44.96178267078443,
+      -76.35558815499778
+    ],
+    [
+      45.53766048961865,
+      -75.24658048377195
+    ]
+  ],
+  "center": [
+    45.37278981498543,
+    -75.68984164908812
+  ],
+  "roadsUrl": "cities/ottawa/roads.geojson.gz",
+  "roadFeatureCount": 87819,
+  "roadDataSha256": "bc7f584b3085c88583184d021fa5c979b2976f352d2ff66fbefea99ab824d01f"
+}

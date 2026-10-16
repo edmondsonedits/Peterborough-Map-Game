@@ -1,0 +1,299 @@
+{
+  "schemaVersion": 1,
+  "id": "windsor",
+  "name": "Windsor",
+  "careHomes": [
+    {
+      "id": "moh-ltc-4673",
+      "name": "Riverside Place",
+      "addr": "3181 Meadowbrook Lane",
+      "lat": 42.299092599060806,
+      "lng": -82.92754579999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789864"
+      ],
+      "providerId": "4673",
+      "community": "Windsor"
+    },
+    {
+      "id": "moh-ltc-1074",
+      "name": "Berkshire Care Centre",
+      "addr": "350 Dougall Avenue",
+      "lat": 42.31629999906077,
+      "lng": -83.04161109999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789718"
+      ],
+      "providerId": "1074",
+      "community": "Windsor"
+    },
+    {
+      "id": "moh-ltc-4424",
+      "name": "Heron Terrace Long Term Care Community",
+      "addr": "11550 McNorton Street",
+      "lat": 42.3172319990608,
+      "lng": -82.89950929999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789802"
+      ],
+      "providerId": "4424",
+      "community": "Windsor"
+    },
+    {
+      "id": "moh-ltc-4319",
+      "name": "Extendicare Southwood Lakes",
+      "addr": "1255 North Talbot Road",
+      "lat": 42.24128569906103,
+      "lng": -82.97711669999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789775"
+      ],
+      "providerId": "4319",
+      "community": "Windsor"
+    },
+    {
+      "id": "moh-ltc-3267",
+      "name": "Chateau Park Long Term Care Home",
+      "addr": "2990 B Riverside Drive West",
+      "lat": 42.30803109906082,
+      "lng": -83.07407169999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789747"
+      ],
+      "providerId": "3267",
+      "community": "Windsor"
+    },
+    {
+      "id": "moh-ltc-4791",
+      "name": "The Village at St. Clair",
+      "addr": "1800 Talbot Road",
+      "lat": 42.24339649906099,
+      "lng": -83.01477409999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789901"
+      ],
+      "providerId": "4791",
+      "community": "Windsor"
+    },
+    {
+      "id": "moh-ltc-4727",
+      "name": "The Village of Aspen Lake",
+      "addr": "9855 McHugh Street",
+      "lat": 42.31811929906079,
+      "lng": -82.92002289999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789903"
+      ],
+      "providerId": "4727",
+      "community": "Windsor"
+    },
+    {
+      "id": "moh-ltc-3554",
+      "name": "Regency Park Long Term Care Home",
+      "addr": "567 Victoria Avenue",
+      "lat": 42.31361319906077,
+      "lng": -83.0393148,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789858"
+      ],
+      "providerId": "3554",
+      "community": "Windsor"
+    },
+    {
+      "id": "moh-ltc-1083",
+      "name": "Banwell Gardens Care Centre",
+      "addr": "3000 Banwell Road",
+      "lat": 42.31086639906078,
+      "lng": -82.89997169999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789714"
+      ],
+      "providerId": "1083",
+      "community": "Windsor"
+    },
+    {
+      "id": "moh-ltc-4670",
+      "name": "Huron Lodge Long Term Care Home",
+      "addr": "1881 Cabana Road West",
+      "lat": 42.25232299906101,
+      "lng": -83.0228318,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789804"
+      ],
+      "providerId": "4670",
+      "community": "Windsor"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "bounds": [
+    [
+      42.23416616074525,
+      -83.11485732707514
+    ],
+    [
+      42.3567820867277,
+      -82.89114076347133
+    ]
+  ],
+  "center": [
+    42.3118656218,
+    -83.0334707359
+  ],
+  "roadsUrl": "cities/windsor/roads.geojson.gz",
+  "roadFeatureCount": 17655,
+  "roadDataSha256": "b3a39b8022e5a4213d6f1d5f22a1d12a2ac4b729f61cf0ad8a984a315b3948ea"
+}

@@ -1,0 +1,169 @@
+{
+  "schemaVersion": 1,
+  "id": "markham",
+  "name": "Markham",
+  "careHomes": [
+    {
+      "id": "moh-ltc-2028",
+      "name": "Union Villa",
+      "addr": "4300 Highway 7",
+      "lat": 43.861198599057474,
+      "lng": -79.3145973,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790221"
+      ],
+      "providerId": "2028",
+      "community": "Unionville"
+    },
+    {
+      "id": "moh-ltc-2025",
+      "name": "Bethany Lodge",
+      "addr": "23 Second Street",
+      "lat": 43.86202349905746,
+      "lng": -79.30138389999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790144"
+      ],
+      "providerId": "2025",
+      "community": "Markham"
+    },
+    {
+      "id": "moh-ltc-4389",
+      "name": "Yee Hong Centre - Markham",
+      "addr": "2780 Bur Oak Avenue",
+      "lat": 43.89440499905741,
+      "lng": -79.23110199999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790232"
+      ],
+      "providerId": "4389",
+      "community": "Markham"
+    },
+    {
+      "id": "moh-ltc-4401",
+      "name": "AgeCare Woodhaven",
+      "addr": "380 Church Street",
+      "lat": 43.88584929905743,
+      "lng": -79.23092679999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790155"
+      ],
+      "providerId": "4401",
+      "community": "Markham"
+    },
+    {
+      "id": "moh-ltc-4480",
+      "name": "Markhaven",
+      "addr": "54 Parkway Avenue",
+      "lat": 43.88370699905744,
+      "lng": -79.2542072,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790186"
+      ],
+      "providerId": "4480",
+      "community": "Markham"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "bounds": [
+    [
+      43.79803520873777,
+      -79.4287925145521
+    ],
+    [
+      43.96257754689307,
+      -79.170274133742
+    ]
+  ],
+  "center": [
+    43.88468485724745,
+    -79.23575514385108
+  ],
+  "roadsUrl": "cities/markham/roads.geojson.gz",
+  "roadFeatureCount": 42418,
+  "roadDataSha256": "aa255c2af4e81fccf1da37014b23f051ccbceb08938d51a52a4d484f917cae74"
+}

@@ -12,6 +12,7 @@ const section = (text, start, end) => text.slice(text.indexOf(start), text.index
 function context(extra = {}) {
   const nodes = new Map();
   const ctx = vm.createContext({ console, URL, setTimeout: () => 0, clearTimeout() {},
+    fetch:async()=>({ok:true,json:async()=>({schemaVersion:1,id:'peterborough',careHomes:[]})}),
     requestAnimationFrame() {}, performance: { now: () => 0 },
     CustomEvent: class { constructor(type, options) { this.type = type; this.detail = options?.detail; } },
     document: { currentScript: { src: 'https://example.com/shared/dispatch-locations.js' },
@@ -23,6 +24,7 @@ function context(extra = {}) {
     location: { href: 'https://example.com/' }, dispatchEvent() {}, addEventListener() {},
     ...extra });
   ctx.window = ctx;
+  vm.runInContext(read('shared/ems-priority.js'),ctx);
   return ctx;
 }
 
@@ -39,6 +41,35 @@ test('all production HTML inline scripts and changed gameplay modules parse', ()
       if (!/^\s*(import |export )/m.test(source)) new vm.Script(source, { filename: name });
     }
   }
+});
+
+test('response dispatch priority applies service eligibility before choosing EMS care-home pool',()=>{
+  const c=context({});
+  vm.runInContext(section(sim,'function filterDispatchCandidates(','function fireRandomIncidentDispatch()'),c);
+  const calls=[{id:'ordinary',main:'Medical',sub:'Medical Assistance'},{id:'care',main:'Medical',sub:'Medical Assistance',facilityType:'long-term-care'},{id:'ems-only',main:'Medical',sub:'Medical Assistance',trainingServices:['ems']}];
+  c.resolveIncidentArrival=()=>({lat:1,lng:1,radius:65});
+  const filtered=c.filterDispatchCandidates(calls,'ems',['Medical Assistance']);
+  assert.deepEqual(Array.from(filtered,item=>item.id),['ordinary','care','ems-only']);
+  vm.runInContext(read('shared/ems-priority.js'),c);
+  assert.deepEqual(Array.from(c.selectDispatchPool(filtered,'ems','ordinary',()=>0.69).map(item=>item.id)),['care']);
+  assert.deepEqual(Array.from(c.selectDispatchPool(filtered,'fire','care',()=>0).map(item=>item.id)),['ordinary','care']);
+});
+
+test('published Peterborough care-home profile passes the simulator EMS filters and reaches dispatch selection',()=>{
+  const descriptor=JSON.parse(read('cities/peterborough/training-data.json'));
+  const official=descriptor.careHomes[0];
+  const activeCategories=Array.from(sim.matchAll(/data-sub="([^"]+)" checked/g),match=>match[1]);
+  assert.ok(activeCategories.includes(official.incidentProfiles.ems.sub),`EMS filter missing checked ${official.incidentProfiles.ems.sub} category`);
+  const c=context({});
+  c.resolveIncidentArrival=()=>({lat:official.lat,lng:official.lng,radius:official.radius});
+  vm.runInContext(section(sim,'function filterDispatchCandidates(','function fireRandomIncidentDispatch()'),c);
+  const filtered=c.filterDispatchCandidates([official],'ems',activeCategories);
+  assert.equal(filtered.length,1);
+  assert.equal(filtered[0].id,official.id);
+  vm.runInContext(read('shared/ems-priority.js'),c);
+  const dispatchPool=c.selectDispatchPool(filtered,'ems',null,()=>0);
+  assert.equal(dispatchPool[0].id,official.id,'eligible official LTC home should remain selectable for EMS dispatch');
+  assert.equal(c.filterDispatchCandidates([{id:'custom-ems',main:'Medical',sub:'Medical Assistance'}],'fire',activeCategories).length,0,'new EMS-only category must not introduce medical custom calls into Fire');
 });
 
 function drive(fps, mode) {

@@ -1,0 +1,455 @@
+{
+  "schemaVersion": 1,
+  "id": "london",
+  "name": "London",
+  "careHomes": [
+    {
+      "id": "moh-ltc-1510",
+      "name": "Chelsey Park",
+      "addr": "310 Oxford Street West",
+      "lat": 42.98759979905897,
+      "lng": -81.27666829999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789748"
+      ],
+      "providerId": "1510",
+      "community": "London"
+    },
+    {
+      "id": "moh-ltc-2919",
+      "name": "Elmwood Place",
+      "addr": "3400 Morgan Avenue",
+      "lat": 42.96946589905907,
+      "lng": -81.26520569999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789769"
+      ],
+      "providerId": "2919",
+      "community": "London"
+    },
+    {
+      "id": "moh-ltc-4785",
+      "name": "Henley Place",
+      "addr": "1961 Cedarhollow Boulevard",
+      "lat": 43.04600729905889,
+      "lng": -81.21564659999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789800"
+      ],
+      "providerId": "4785",
+      "community": "London"
+    },
+    {
+      "id": "moh-ltc-1485",
+      "name": "Extendicare London",
+      "addr": "860 Waterloo Street",
+      "lat": 43.00039929905898,
+      "lng": -81.24852919999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789773"
+      ],
+      "providerId": "1485",
+      "community": "London"
+    },
+    {
+      "id": "moh-ltc-4459",
+      "name": "AgeCare London",
+      "addr": "2000 Blackwater Road",
+      "lat": 43.04405189905884,
+      "lng": -81.26074139999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789742"
+      ],
+      "providerId": "4459",
+      "community": "London"
+    },
+    {
+      "id": "moh-ltc-4642",
+      "name": "McGarrell Place",
+      "addr": "355 McGarrell Drive",
+      "lat": 43.02382119905894,
+      "lng": -81.29613609999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789826"
+      ],
+      "providerId": "4642",
+      "community": "London"
+    },
+    {
+      "id": "moh-ltc-4792",
+      "name": "Earls Court Village",
+      "addr": "1390 Highbury Avenue North",
+      "lat": 43.026844199058914,
+      "lng": -81.21867939999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789765"
+      ],
+      "providerId": "4792",
+      "community": "London"
+    },
+    {
+      "id": "moh-ltc-4382",
+      "name": "Westmount Gardens Long Term Care Home",
+      "addr": "590 Longworth Road",
+      "lat": 42.95040509905908,
+      "lng": -81.3057005,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789929"
+      ],
+      "providerId": "4382",
+      "community": "London"
+    },
+    {
+      "id": "moh-ltc-3885",
+      "name": "Mount Hope Centre for Long Term Care",
+      "addr": "21 Grosvenor Street",
+      "lat": 42.998738099058976,
+      "lng": -81.2561872,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789833"
+      ],
+      "providerId": "3885",
+      "community": "London"
+    },
+    {
+      "id": "moh-ltc-2788",
+      "name": "Meadow Park (London)",
+      "addr": "1210 Southdale Road East",
+      "lat": 42.946661699059135,
+      "lng": -81.20204409999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789827"
+      ],
+      "providerId": "2788",
+      "community": "London"
+    },
+    {
+      "id": "moh-ltc-4714",
+      "name": "The Village of Glendale Crossing",
+      "addr": "3030 Singleton Avenue",
+      "lat": 42.93893109905913,
+      "lng": -81.27179589999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789904"
+      ],
+      "providerId": "4714",
+      "community": "London"
+    },
+    {
+      "id": "moh-ltc-7296",
+      "name": "Southbridge London",
+      "addr": "3715 Southbridge Ave",
+      "lat": 42.92769159905913,
+      "lng": -81.27089609999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789875"
+      ],
+      "providerId": "7296",
+      "community": "London"
+    },
+    {
+      "id": "moh-ltc-3330",
+      "name": "Kensington Village",
+      "addr": "1340 Huron Street",
+      "lat": 43.02139159905892,
+      "lng": -81.21449609999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789811"
+      ],
+      "providerId": "3330",
+      "community": "London"
+    },
+    {
+      "id": "moh-ltc-4629",
+      "name": "McCormick Home",
+      "addr": "2022 Kains Road",
+      "lat": 42.96885959905905,
+      "lng": -81.3541171,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789825"
+      ],
+      "providerId": "4629",
+      "community": "London"
+    },
+    {
+      "id": "moh-ltc-4715",
+      "name": "peopleCare Oakcrossing London",
+      "addr": "1242 Oakcrossing Road",
+      "lat": 42.990424199058985,
+      "lng": -81.31276759999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789850"
+      ],
+      "providerId": "4715",
+      "community": "London"
+    },
+    {
+      "id": "moh-ltc-1483",
+      "name": "Dearness Home for Senior Citizens",
+      "addr": "710 Southdale Road East",
+      "lat": 42.944091599059114,
+      "lng": -81.22419609999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789758"
+      ],
+      "providerId": "1483",
+      "community": "London"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "bounds": [
+    [
+      42.82452364815259,
+      -81.3906594566655
+    ],
+    [
+      43.07305519722224,
+      -81.10708216489755
+    ]
+  ],
+  "center": [
+    42.98193272492747,
+    -81.23798246175798
+  ],
+  "roadsUrl": "cities/london/roads.geojson.gz",
+  "roadFeatureCount": 25295,
+  "roadDataSha256": "2ab12a8e083efbc245a1fac40a8a7e24b1728ad4d901f465061f43cb36307e49"
+}

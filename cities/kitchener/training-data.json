@@ -1,0 +1,221 @@
+{
+  "schemaVersion": 1,
+  "id": "kitchener",
+  "name": "Kitchener",
+  "careHomes": [
+    {
+      "id": "moh-ltc-1922",
+      "name": "Trinity Village Care Centre",
+      "addr": "2727 Kingsway Drive",
+      "lat": 43.42979719905807,
+      "lng": -80.44176809999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789915"
+      ],
+      "providerId": "1922",
+      "community": "Kitchener"
+    },
+    {
+      "id": "moh-ltc-4431",
+      "name": "Lanark Heights Long Term Care Centre",
+      "addr": "46 Lanark Crescent",
+      "lat": 43.42396289905815,
+      "lng": -80.5352466,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789815"
+      ],
+      "providerId": "4431",
+      "community": "Kitchener"
+    },
+    {
+      "id": "moh-ltc-1923",
+      "name": "Sunnyside Home",
+      "addr": "247 Franklin Street North",
+      "lat": 43.44051979905809,
+      "lng": -80.44513429999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789891"
+      ],
+      "providerId": "1923",
+      "community": "Kitchener"
+    },
+    {
+      "id": "moh-ltc-1910",
+      "name": "Forest Heights",
+      "addr": "60 Westheights Drive",
+      "lat": 43.42862639905814,
+      "lng": -80.5299723,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789781"
+      ],
+      "providerId": "1910",
+      "community": "Kitchener"
+    },
+    {
+      "id": "moh-ltc-1920",
+      "name": "peopleCare A.R. Goudie Kitchener",
+      "addr": "369 Frederick Street",
+      "lat": 43.45647849905805,
+      "lng": -80.47446229999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789847"
+      ],
+      "providerId": "1920",
+      "community": "Kitchener"
+    },
+    {
+      "id": "moh-ltc-3638",
+      "name": "The Village of Winston Park",
+      "addr": "695 Block Line Road",
+      "lat": 43.40981329905813,
+      "lng": -80.49807919999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789908"
+      ],
+      "providerId": "3638",
+      "community": "Kitchener"
+    },
+    {
+      "id": "moh-ltc-4387",
+      "name": "AgeCare West Williams",
+      "addr": "200 David Bergey Drive",
+      "lat": 43.40611599905813,
+      "lng": -80.51775039999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789745"
+      ],
+      "providerId": "4387",
+      "community": "Kitchener"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "bounds": [
+    [
+      43.35386587967345,
+      -80.57357724212599
+    ],
+    [
+      43.50684540815559,
+      -80.37905517795065
+    ]
+  ],
+  "center": [
+    43.4235988,
+    -80.4893146
+  ],
+  "roadsUrl": "cities/kitchener/roads.geojson.gz",
+  "roadFeatureCount": 26849,
+  "roadDataSha256": "9fd229bac8dc4b9f5c321831ba1cab7d611f2f8882a604321a055e62a0b01031"
+}

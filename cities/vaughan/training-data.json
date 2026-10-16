@@ -1,0 +1,221 @@
+{
+  "schemaVersion": 1,
+  "id": "vaughan",
+  "name": "Vaughan",
+  "careHomes": [
+    {
+      "id": "moh-ltc-3904",
+      "name": "York Region Maple Health Centre",
+      "addr": "10424 Keele Street",
+      "lat": 43.86498929905749,
+      "lng": -79.51563749999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790234"
+      ],
+      "providerId": "3904",
+      "community": "Maple"
+    },
+    {
+      "id": "moh-ltc-4504",
+      "name": "Villa Leonardo Gambin",
+      "addr": "40 Friuli Court",
+      "lat": 43.766182199057575,
+      "lng": -79.57416699999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790226"
+      ],
+      "providerId": "4504",
+      "community": "Woodbridge"
+    },
+    {
+      "id": "moh-ltc-4502",
+      "name": "Villa Santa Maria Community",
+      "addr": "5400 Steeles Avenue West",
+      "lat": 43.759591499057585,
+      "lng": -79.597825,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790228"
+      ],
+      "providerId": "4502",
+      "community": "Woodbridge"
+    },
+    {
+      "id": "moh-ltc-3780",
+      "name": "AgeCare Pine Grove",
+      "addr": "8403 Islington Avenue North",
+      "lat": 43.79858319905751,
+      "lng": -79.5841322,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790152"
+      ],
+      "providerId": "3780",
+      "community": "Woodbridge"
+    },
+    {
+      "id": "moh-ltc-4397",
+      "name": "Sherwood Court Long Term Care Centre",
+      "addr": "300 Ravineview Drive",
+      "lat": 43.88948439905743,
+      "lng": -79.5187656,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790204"
+      ],
+      "providerId": "4397",
+      "community": "Maple"
+    },
+    {
+      "id": "moh-ltc-4650",
+      "name": "Villa Colombo Seniors Centre (Vaughan)",
+      "addr": "10443 Highway 27, Kleinburg",
+      "lat": 43.8401200990575,
+      "lng": -79.6308196,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790224"
+      ],
+      "providerId": "4650",
+      "community": "Vaughan"
+    },
+    {
+      "id": "moh-ltc-3523",
+      "name": "Kristus Darzs Latvian Home",
+      "addr": "11290 Pine Valley Drive",
+      "lat": 43.871547199057446,
+      "lng": -79.59578849999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790178"
+      ],
+      "providerId": "3523",
+      "community": "Woodbridge"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "bounds": [
+    [
+      43.74984489006835,
+      -79.71074950812054
+    ],
+    [
+      43.924220528062754,
+      -79.42011140852456
+    ]
+  ],
+  "center": [
+    43.82434676861765,
+    -79.60771870225449
+  ],
+  "roadsUrl": "cities/vaughan/roads.geojson.gz",
+  "roadFeatureCount": 51102,
+  "roadDataSha256": "6a0c71d0ae8325f2caf5a1f53612ca26959d82f53ee3832018615ab99566a0d3"
+}

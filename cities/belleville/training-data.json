@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 1,
+  "id": "belleville",
+  "name": "Belleville",
+  "careHomes": [
+    {
+      "id": "moh-ltc-2925",
+      "name": "E. J. McQuigge Lodge",
+      "addr": "38 Black Diamond Road",
+      "lat": 44.19801599905708,
+      "lng": -77.39028449999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789959"
+      ],
+      "providerId": "2925",
+      "community": "Cannifton"
+    },
+    {
+      "id": "moh-ltc-4434",
+      "name": "Belmont Long Term Care Facility",
+      "addr": "250 Bridge Street West",
+      "lat": 44.16005859905714,
+      "lng": -77.4039295,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789937"
+      ],
+      "providerId": "4434",
+      "community": "Belleville"
+    },
+    {
+      "id": "moh-ltc-1183",
+      "name": "Hastings Manor Home for the Aged",
+      "addr": "476 Dundas Street West",
+      "lat": 44.147495199057175,
+      "lng": -77.41249119999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789996"
+      ],
+      "providerId": "1183",
+      "community": "Belleville"
+    },
+    {
+      "id": "moh-ltc-1186",
+      "name": "Westgate Lodge Nursing Home",
+      "addr": "37 Wilkie Street",
+      "lat": 44.147003099057144,
+      "lng": -77.40619719999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790070"
+      ],
+      "providerId": "1186",
+      "community": "Belleville"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "bounds": [
+    [
+      44.08,
+      -77.5
+    ],
+    [
+      44.28,
+      -77.25
+    ]
+  ],
+  "center": [
+    44.1628,
+    -77.3832
+  ],
+  "roadsUrl": "cities/belleville/roads.geojson.gz",
+  "roadFeatureCount": 4997,
+  "roadDataSha256": "32dde86c81c5221019e3e7e9a82df05565b4e7ea21e5973624c50dbcab21ac20"
+}

@@ -27,7 +27,7 @@ for (const file of requiredFiles) {
 }
 
 const textExtensions = new Set(['.js', '.mjs', '.html', '.css', '.json', '.md', '.yml', '.yaml', '.txt', '.rules']);
-const ignoredDirectories = new Set(['.git', 'node_modules', 'dist', 'build', 'coverage']);
+const ignoredDirectories = new Set(['.git', 'node_modules', 'dist', 'build', 'coverage', 'test-artifacts']);
 
 function walk(directory, prefix = '') {
   const items = [];
@@ -78,6 +78,9 @@ const guardedLegacy = new Set([
   'response-simulator/satellite-map-1.5.6.js',
   'response-simulator/carto-basemap-policy-1.6.36.js',
   'response-simulator/index.html',
+  // Tablet providers use L.tileLayer, covered by the simulator's shared
+  // commercial map policy rather than direct image/network requests.
+  'response-simulator/response-tablet-1.6.48.js',
   'dispatch-editor/editor.js',
 ]);
 
@@ -137,7 +140,7 @@ if (fs.existsSync(path.join(ROOT, 'dispatch-editor/editor.js'))) {
 
 // Geo Guesser enforces map-provider policy inside the core itself; wrappers remain defense-in-depth.
 if (fs.existsSync(path.join(ROOT, 'geo-guesser/index.html'))) {
-  const geo = read('geo-guesser/index.html');
+  const geo = read('geo-guesser/index.html') + '\n' + (fs.existsSync(path.join(ROOT, 'geo-guesser/app.js')) ? read('geo-guesser/app.js') : '');
   const provider = fs.existsSync(path.join(ROOT, 'geo-guesser/map-provider-1.6.46.js')) ? read('geo-guesser/map-provider-1.6.46.js') : '';
   const build = fs.existsSync(path.join(ROOT, 'shared/build-version.js')) ? read('shared/build-version.js') : '';
   for (const term of ['carto-basemap-policy-1.6.36.js', 'map-provider-1.6.46.js', 'PTBO_GEO_MAP_PROVIDER.createStreetLayer', 'PTBO_GEO_MAP_PROVIDER?.requireReady']) {

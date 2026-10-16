@@ -1,0 +1,221 @@
+{
+  "schemaVersion": 1,
+  "id": "chatham-kent",
+  "name": "Chatham-Kent",
+  "careHomes": [
+    {
+      "id": "moh-ltc-4253",
+      "name": "Fairfield Park",
+      "addr": "1934 Dufferin Avenue",
+      "lat": 42.594185099059956,
+      "lng": -82.4132227,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789778"
+      ],
+      "providerId": "4253",
+      "community": "Wallaceburg"
+    },
+    {
+      "id": "moh-ltc-4637",
+      "name": "Riverview Gardens",
+      "addr": "519 King Street West",
+      "lat": 42.39925369906053,
+      "lng": -82.1953418,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789865"
+      ],
+      "providerId": "4637",
+      "community": "Chatham"
+    },
+    {
+      "id": "moh-ltc-3243",
+      "name": "Blenheim Community Village",
+      "addr": "10 Mary Avenue",
+      "lat": 42.33970019906072,
+      "lng": -81.98799099999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789720"
+      ],
+      "providerId": "3243",
+      "community": "Blenheim"
+    },
+    {
+      "id": "moh-ltc-3152",
+      "name": "Meadow Park Nursing Home (Chatham)",
+      "addr": "110 Sandys Street",
+      "lat": 42.40703549906049,
+      "lng": -82.19884489999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789828"
+      ],
+      "providerId": "3152",
+      "community": "Chatham"
+    },
+    {
+      "id": "moh-ltc-1236",
+      "name": "Tilbury Manor Nursing Home",
+      "addr": "16 Fort Street",
+      "lat": 42.25875499906093,
+      "lng": -82.43043649999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789912"
+      ],
+      "providerId": "1236",
+      "community": "Tilbury"
+    },
+    {
+      "id": "moh-ltc-3581",
+      "name": "Village on the Ridge",
+      "addr": "9 Myrtle Street",
+      "lat": 42.43529029906042,
+      "lng": -81.88025809999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789921"
+      ],
+      "providerId": "3581",
+      "community": "Ridgetown"
+    },
+    {
+      "id": "moh-ltc-1222",
+      "name": "Copper Terrace",
+      "addr": "91 Tecumseh Road",
+      "lat": 42.39846819906055,
+      "lng": -82.2008836,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789751"
+      ],
+      "providerId": "1222",
+      "community": "Chatham"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "bounds": [
+    [
+      41.6765674895705,
+      -82.80334914415752
+    ],
+    [
+      42.65148318982502,
+      -81.37929928143433
+    ]
+  ],
+  "center": [
+    42.40458100516701,
+    -82.19165049253854
+  ],
+  "roadsUrl": "cities/chatham-kent/roads.geojson.gz",
+  "roadFeatureCount": 20302,
+  "roadDataSha256": "d3ac8c45cd4e9d00c42dd6e84ecd2a12d2b3f845e35670886e4cb81e1801e3ed"
+}

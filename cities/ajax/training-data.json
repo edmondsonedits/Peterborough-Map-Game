@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "id": "ajax",
+  "name": "Ajax",
+  "careHomes": [
+    {
+      "id": "moh-ltc-1633",
+      "name": "Chartwell Ballycliffe Long Term Care Residence",
+      "addr": "70 Station Street",
+      "lat": 43.85102579905745,
+      "lng": -79.02537919999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789955"
+      ],
+      "providerId": "1633",
+      "community": "Ajax"
+    },
+    {
+      "id": "moh-ltc-4370",
+      "name": "Winbourne Park",
+      "addr": "1020 Westney Road North",
+      "lat": 43.877101899057436,
+      "lng": -79.04446249999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790071"
+      ],
+      "providerId": "4370",
+      "community": "Ajax"
+    },
+    {
+      "id": "moh-ltc-7368",
+      "name": "Lakeridge Gardens",
+      "addr": "680 Harwood Avenue South",
+      "lat": 43.83542519905751,
+      "lng": -79.01807539999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790007"
+      ],
+      "providerId": "7368",
+      "community": "Ajax"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "bounds": [
+    [
+      43.548364587676005,
+      -79.08813331174792
+    ],
+    [
+      43.92240514955695,
+      -78.86023960978459
+    ]
+  ],
+  "center": [
+    43.84540501890784,
+    -79.02694560796613
+  ],
+  "roadsUrl": "cities/ajax/roads.geojson.gz",
+  "roadFeatureCount": 23252,
+  "roadDataSha256": "8a8aced78d20eb1be30d3e14b6b8d73817710fe5c152f993c3889073bfbecb48"
+}

@@ -100,3 +100,45 @@ test('delayed satellite zoom uses the latest map centre while the truck moves',a
   const moved={lat:44.31,lng:-78.31};s.map.center=moved;
   s.finish();await s.flush();assert.equal(s.map.zoom,18);assert.equal(s.map.center,moved);
 });
+
+test('tile preloading never holds desktop pan updates behind a zoom request',async()=>{
+  const s=preloader();
+  s.map.setView({lat:44.31,lng:-78.31},18,{animate:false});
+  assert.equal(s.map.zoom,19,'keep the current imagery while the next level loads');
+  assert.equal(s.map.center.lat,44.31,'continue following immediately');
+  s.map.setView({lat:44.32,lng:-78.32},18,{animate:false});
+  assert.equal(s.map.center.lat,44.32,'repeated pending zoom calls still pan');
+  s.finish();await s.flush();
+  assert.equal(s.map.zoom,18);assert.equal(s.map.center.lat,44.32);
+});
+
+function zoomTransition(){
+  const js=source('smooth-driving-camera-1.4.19.js'),start=js.indexOf('  function createCameraZoomTransition('),end=js.indexOf('  async function initialize()',start);
+  assert.ok(start>=0&&end>start,'camera exposes its deterministic transition helper');
+  const c=vm.createContext({});vm.runInContext(js.slice(start,end),c);return c.createCameraZoomTransition();
+}
+
+test('integer tile changes ease continuously and converge without fractional Leaflet zoom writes',()=>{
+  const t=zoomTransition();t.begin(19,18,0);
+  assert.equal(t.sample(0),2);assert.ok(t.sample(100)>1&&t.sample(100)<2);assert.equal(t.sample(300),1);
+  t.begin(18,19,500);assert.equal(t.sample(500),.5);assert.ok(t.sample(600)>.5&&t.sample(600)<1);assert.equal(t.sample(800),1);
+});
+
+test('rapid stopping and restarting preserve visual scale continuity; reduced motion settles immediately',()=>{
+  const t=zoomTransition();t.begin(19,18,0);const halfway=t.sample(100);
+  t.begin(18,19,100);assert.equal(t.sample(100),halfway*.5);
+  t.begin(19,18,150);assert.ok(t.sample(150)>0);assert.equal(t.sample(500),1);
+  t.begin(18,19,600,true);assert.equal(t.sample(600),1);
+});
+
+test('zoom counter-scale affects vehicle artwork without scaling Leaflet positioning',()=>{
+  const artwork={style:{}},icon={style:{transform:'translate3d(720px,450px,0)'},querySelector:()=>artwork};
+  const c=vm.createContext({mapInstance:{latLngToLayerPoint:()=>({x:720,y:450})},state:{latestLatLng:{},mapBearing:0,visualHeading:90},
+    zoomTransition:{sample:()=>2},performance:{now:()=>0},world:{style:{}},vehicleMarker:{_icon:icon},
+    originalSetRotationAngle:()=>{},document:{getElementById:()=>null}});
+  const js=source('smooth-driving-camera-1.4.19.js');
+  vm.runInContext(js.slice(js.indexOf('    function cameraTransform('),js.indexOf('    function centerOnTruck(')),c);
+  c.applyCameraTransform();
+  assert.equal(icon.style.scale,undefined,'Leaflet translation must retain its own coordinate scale');
+  assert.equal(artwork.style.scale,'0.5','only the centered artwork counters the world zoom');
+});

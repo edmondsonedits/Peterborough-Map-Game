@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "id": "whitby",
+  "name": "Whitby",
+  "careHomes": [
+    {
+      "id": "moh-ltc-5515",
+      "name": "Glen Hill Terrace",
+      "addr": "80 Glen Hill Drive",
+      "lat": 43.88399139905743,
+      "lng": -78.91399669999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789988"
+      ],
+      "providerId": "5515",
+      "community": "Whitby"
+    },
+    {
+      "id": "moh-ltc-4425",
+      "name": "The Village of Taunton Mills",
+      "addr": "3800 Brock Street North",
+      "lat": 43.913109799057416,
+      "lng": -78.95825239999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790059"
+      ],
+      "providerId": "4425",
+      "community": "Whitby"
+    },
+    {
+      "id": "moh-ltc-1646",
+      "name": "Fairview Lodge",
+      "addr": "632 Dundas Street West",
+      "lat": 43.87846119905743,
+      "lng": -78.9506523,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789976"
+      ],
+      "providerId": "1646",
+      "community": "Whitby"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "bounds": [
+    [
+      43.571073994601214,
+      -79.04728690796199
+    ],
+    [
+      44.02890937043863,
+      -78.77584288535326
+    ]
+  ],
+  "center": [
+    43.92188290782409,
+    -78.9391260286899
+  ],
+  "roadsUrl": "cities/whitby/roads.geojson.gz",
+  "roadFeatureCount": 25712,
+  "roadDataSha256": "83823f8ebd9e590a38d3dc790fddb16b14dce4c4ac1f5d815a50e3e57608483b"
+}

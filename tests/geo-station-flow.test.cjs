@@ -10,6 +10,14 @@ test('Geo asks for service, difficulty and base, using the same ranked addresses
  assert.deepEqual(g.api.state.pool.map(c=>c.id).sort(),fire);assert.equal(g.map.center.lat,44.304776);
  assert.equal(g.node('call-type').textContent,'Easy');assert.doesNotMatch(g.node('call-type').textContent,/Fire|EMS|Medical/);
 });
+test('EMS setup discloses all-tier care-home practice and displays the sourced target rank',async()=>{
+ const care={id:'moh-ltc-9',name:'Sourced Care Home',addr:'9 Oak Road',lat:44.31,lng:-78.31,radius:65,recognitionDifficulty:'medium',facilityType:'long-term-care',trainingServices:['ems']};
+ const g=await game({locations:[care]});assert.ok(g.api);
+ g.node('ems-priority-note').hidden=true;g.api.chooseService('ems');
+ assert.equal(g.node('ems-priority-note').hidden,false,'EMS selection should disclose care-home practice at every difficulty');
+ g.api.chooseDifficulty('easy');assert.equal(g.api.start(0),true);
+ assert.equal(g.node('call-type').textContent,'Care home · Medium','the card should show the care home’s actual rank, not the selected tier');
+});
 test('correct answers wait for Next Call and each call resets to the chosen base',async()=>{
  const g=await game();assert.ok(g.api);g.api.chooseService('ems');g.api.chooseDifficulty('hard');g.api.start(0);
  const first=g.api.state.target;g.map.center={lat:first.lat,lng:first.lng};g.api.check();assert.equal(g.api.state.target,first);

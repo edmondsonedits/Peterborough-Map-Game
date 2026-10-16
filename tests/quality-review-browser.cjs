@@ -15,6 +15,7 @@ const only = process.env.PTBO_REVIEW_QA_ONLY?.split(',');
 const editorOrigin = 'https://peterborough-3d-map-editor-preview.dans-host.chatgpt.site';
 const editorLive = process.env.PTBO_EDITOR_LIVE === '1';
 const expectedVersion = process.env.PTBO_EXPECTED_VERSION;
+const routeCity = process.env.PTBO_ROUTE_QA_CITY || 'peterborough';
 fs.mkdirSync(out, { recursive: true });
 const rect = locator => locator.evaluate(n => {
   const r = n.getBoundingClientRect();
@@ -64,10 +65,10 @@ function disjoint(a, b, label) {
   try {
     for (const [service, mobile] of [['fire', false], ['ems', true]]) await check('route-' + service, mobile, async (page, context) => {
       await context.addInitScript(() => localStorage.setItem('ptboSelectedCity', 'toronto'));
-      await page.goto(base + '/route-mapping/');
+      await page.goto(base + '/route-mapping/?city=' + routeCity);
       await page.waitForFunction(() => window.PTBO_ROUTE_MAPPING);
-      assert.equal(await page.evaluate(() => PTBO_CITY_PACKAGE.id), 'peterborough');
-      assert.equal(await page.evaluate(() => localStorage.getItem('ptboSelectedCity')), 'toronto', 'bookmark does not rewrite remembered city');
+      assert.equal(await page.evaluate(() => PTBO_CITY_PACKAGE.id), routeCity);
+      assert.equal(await page.evaluate(() => localStorage.getItem('ptboSelectedCity')), routeCity, 'explicit city takes precedence and updates the remembered city');
       await page.locator('#settings-button').click();
       await page.locator('#service-select').selectOption(service);
       await page.locator('#settings-form button[type=submit]').click();
@@ -118,7 +119,7 @@ function disjoint(a, b, label) {
       assert.equal(await page.evaluate(() => PTBO_ROUTE_MAPPING.state.callCount), before.callCount + 1);
       await page.locator('#clear-button').click();
       assert.equal(await page.evaluate(() => PTBO_ROUTE_MAPPING.state.playerRoute), null);
-      return { ...before, review, notice, pointer: mobile ? 'emulated touch' : 'mouse', rememberedCity: 'toronto', loadedCity: 'peterborough' };
+      return { ...before, review, notice, pointer: mobile ? 'emulated touch' : 'mouse', rememberedCity: routeCity, loadedCity: routeCity };
     });
     await check('route-error-retry', false, async (page, context, report) => {
       await page.route('**/osm-public-roads.geojson*', r => r.abort());

@@ -21,7 +21,8 @@
     "dispatch": false,
     "roadBoundaries": false,
     "routeGuidance": false,
-    "geoGuesser": true
+    "geoGuesser": true,
+    "routeMapping": true
   },
   "data": {
     "boundaries": null,
@@ -30,6 +31,7 @@
     "serviceConfig": "package.js",
     "bases": "package.js",
     "hospitals": null,
-    "geoGuesser": "geo-data.json"
+    "geoGuesser": "geo-data.json",
+    "routeMapping": "training-data.json"
   }
 }

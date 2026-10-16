@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "milton",
+  "name": "Milton",
+  "careHomes": [
+    {
+      "id": "moh-ltc-1165",
+      "name": "Allendale",
+      "addr": "185 Ontario Street South",
+      "lat": 43.51572429905801,
+      "lng": -79.87211769999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790140"
+      ],
+      "providerId": "1165",
+      "community": "Milton"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "bounds": [
+    [
+      43.41728321670602,
+      -80.1611422232313
+    ],
+    [
+      43.62895564788874,
+      -79.7248216817283
+    ]
+  ],
+  "center": [
+    43.52601331966486,
+    -79.88986174439137
+  ],
+  "roadsUrl": "cities/milton/roads.geojson.gz",
+  "roadFeatureCount": 32486,
+  "roadDataSha256": "e378676e3f49d2cedecda5077b020bffa701e287a86906dc81d8597ca49f82ab"
+}

@@ -101,9 +101,8 @@ test('restores a valid city, keeps its Geo demo local, and blocks unavailable mo
   assert.ok(h.badges.every(node => node.hidden));
   assert.equal(h.panels.find(node => !node.hidden).dataset.previewPanel, 'geo');
   assert.equal(new URL(h.get('geo-game-link').href).searchParams.get('city'), 'oshawa');
-  assert.equal(h.get('route-game-link').href, '');
-  assert.equal(h.get('route-game-link').getAttribute('role'), 'button');
-  assert.equal(h.get('route-game-link').getAttribute('tabindex'), '0');
+  assert.equal(new URL(h.get('route-game-link').href).searchParams.get('city'), 'oshawa');
+  assert.equal(h.get('route-game-link').getAttribute('role'), null);
   assert.ok(h.cards.every(card => card.dataset.homeDemo === 'true'));
   assert.ok(h.demoLabels.every(label => !label.hidden));
 });
@@ -351,7 +350,7 @@ test('all Geo demo links preserve the selected city, canonical version, surface 
 test('unavailable mode card and preview launches have no redirect and open a named keyboard accessible request dialog without counting', () => {
   const recorded = [];
   const h = fixture({ stored: 'london', analytics: { recordDemoRequest: (...args) => recorded.push(args) } });
-  for (const [link, modeName] of [[h.choices[1], 'Route Mapping'], [h.launches[2], 'Dispatch Simulator'], [h.get('city-explorer-link'), 'Explore 3D']]) {
+  for (const [link, modeName] of [[h.launches[2], 'Dispatch Simulator'], [h.get('city-explorer-link'), 'Explore 3D']]) {
     assert.equal(link.href, '');
     assert.equal(link.getAttribute('tabindex'), '0');
     const click = link.emit('click');
@@ -364,13 +363,13 @@ test('unavailable mode card and preview launches have no redirect and open a nam
     assert.equal(h.get('home-demo-dialog').open, false);
     assert.equal(h.document.activeElement, link);
   }
-  const key = h.choices[1].emit('keydown', { key: 'Enter' });
+  const key = h.get('city-explorer-link').emit('keydown', { key: 'Enter' });
   assert.equal(key.defaultPrevented, true);
   assert.equal(h.get('home-demo-dialog').open, true);
   h.get('home-demo-dialog').emit('cancel');
   assert.equal(h.get('home-demo-dialog').open, false);
-  assert.equal(h.document.activeElement, h.choices[1]);
-  h.choices[1].emit('keydown', { key: ' ' });
+  assert.equal(h.document.activeElement, h.get('city-explorer-link'));
+  h.get('city-explorer-link').emit('keydown', { key: ' ' });
   h.get('home-demo-dialog').emit('click', { clientX: 5, clientY: 5 });
   assert.equal(h.get('home-demo-dialog').open, false);
   assert.deepEqual(recorded, []);
@@ -379,16 +378,16 @@ test('unavailable mode card and preview launches have no redirect and open a nam
 test('request submission waits for a confirmed write, disables duplicate clicks, and keeps success for that city and mode', async () => {
   let resolve; const recorded = [];
   const h = fixture({ stored: 'london', analytics: { recordDemoRequest(city, mode) { recorded.push([city, mode]); return new Promise(done => { resolve = done; }); } } });
-  h.choices[1].emit('click');
+  h.get('city-explorer-link').emit('click');
   const button = h.get('home-demo-submit');
   button.emit('click'); button.emit('click');
   assert.equal(button.disabled, true);
-  assert.deepEqual(recorded, [['london', 'route']]);
+  assert.deepEqual(recorded, [['london', 'explorer']]);
   assert.doesNotMatch(h.get('home-demo-status').textContent, /request sent/i);
   resolve(true); await new Promise(done => setImmediate(done));
   assert.match(h.get('home-demo-status').textContent, /request sent/i);
   assert.equal(button.disabled, true);
-  h.get('home-demo-close').emit('click'); h.choices[1].emit('click');
+  h.get('home-demo-close').emit('click'); h.get('city-explorer-link').emit('click');
   assert.match(h.get('home-demo-status').textContent, /request sent/i);
   button.emit('click');
   assert.equal(recorded.length, 1);
@@ -398,7 +397,7 @@ test('failed requests offer a retry and do not claim success; excluded tracking 
   for (const first of [false, new Error('offline')]) {
     let count = 0;
     const h = fixture({ stored: 'london', analytics: { async recordDemoRequest() { count++; if (count > 1) return true; if (first instanceof Error) throw first; return first; } } });
-    h.choices[1].emit('click'); h.get('home-demo-submit').emit('click');
+    h.get('city-explorer-link').emit('click'); h.get('home-demo-submit').emit('click');
     await new Promise(done => setImmediate(done));
     assert.match(h.get('home-demo-status').textContent, /try again|retry/i);
     assert.doesNotMatch(h.get('home-demo-status').textContent, /request sent/i);
@@ -409,7 +408,7 @@ test('failed requests offer a retry and do not claim success; excluded tracking 
   }
   let count = 0;
   const h = fixture({ stored: 'london', analytics: { trackingAllowed: () => false, recordDemoRequest() { count++; return true; } } });
-  h.choices[1].emit('click'); h.get('home-demo-submit').emit('click');
+  h.get('city-explorer-link').emit('click'); h.get('home-demo-submit').emit('click');
   await new Promise(done => setImmediate(done));
   assert.match(h.get('home-demo-status').textContent, /tracking.*disabled/i);
   assert.doesNotMatch(h.get('home-demo-status').textContent, /request sent/i);
@@ -419,11 +418,11 @@ test('failed requests offer a retry and do not claim success; excluded tracking 
 test('request city and mode are captured when opened and late replies cannot overwrite a different dialog', async () => {
   const recorded = []; let resolve;
   const h = fixture({ stored: 'london', analytics: { recordDemoRequest(city, mode) { recorded.push([city, mode]); return new Promise(done => { resolve = done; }); } } });
-  h.choices[1].emit('click'); h.changeCity('oshawa');
+  h.get('city-explorer-link').emit('click'); h.changeCity('oshawa');
   assert.equal(h.get('home-demo-city').textContent, 'London');
   h.get('home-demo-submit').emit('click');
-  assert.deepEqual(recorded, [['london', 'route']]);
-  h.get('home-demo-close').emit('click'); h.choices[1].emit('click');
+  assert.deepEqual(recorded, [['london', 'explorer']]);
+  h.get('home-demo-close').emit('click'); h.get('city-explorer-link').emit('click');
   assert.equal(h.get('home-demo-city').textContent, 'Oshawa');
   resolve(true); await new Promise(done => setImmediate(done));
   assert.doesNotMatch(h.get('home-demo-status').textContent, /request sent/i);
@@ -433,17 +432,17 @@ test('request city and mode are captured when opened and late replies cannot ove
 test('device request persistence uses precise local confirmation and bypasses remote tracking exclusion', async () => {
   let localSaved = false; let remoteCalls = 0; let localCalls = 0;
   const demoRequests = {
-    async recordDemoRequest(city, mode) { assert.equal(city, 'london'); assert.equal(mode, 'route'); localCalls++; localSaved = true; return true; },
+    async recordDemoRequest(city, mode) { assert.equal(city, 'london'); assert.equal(mode, 'explorer'); localCalls++; localSaved = true; return true; },
     requestStatus() { return { localSaved, remoteSaved: false }; },
   };
   const h = fixture({ stored: 'london', demoRequests, analytics: { trackingAllowed: () => false, recordDemoRequest() { remoteCalls++; return false; } } });
-  h.choices[1].emit('click'); h.get('home-demo-submit').emit('click');
+  h.get('city-explorer-link').emit('click'); h.get('home-demo-submit').emit('click');
   await new Promise(done => setImmediate(done));
   assert.equal(localCalls, 1); assert.equal(remoteCalls, 0);
   assert.match(h.get('home-demo-status').textContent, /request recorded on this device/i);
   assert.doesNotMatch(h.get('home-demo-status').textContent, /request sent/i);
   assert.equal(h.get('home-demo-submit').disabled, true);
-  const restored = fixture({ stored: 'london', demoRequests }); restored.choices[1].emit('click');
+  const restored = fixture({ stored: 'london', demoRequests }); restored.get('city-explorer-link').emit('click');
   assert.match(restored.get('home-demo-status').textContent, /request recorded on this device/i);
   assert.equal(restored.get('home-demo-submit').disabled, true);
 });
@@ -451,7 +450,7 @@ test('device request persistence uses precise local confirmation and bypasses re
 test('device adapter failure remains retryable and remote confirmation is only shown for a saved shared request', async () => {
   let saved = false;
   const h = fixture({ stored: 'london', demoRequests: { async recordDemoRequest() { return saved; }, requestStatus() { return { localSaved: saved, remoteSaved: saved }; } } });
-  h.choices[1].emit('click'); h.get('home-demo-submit').emit('click'); await new Promise(done => setImmediate(done));
+  h.get('city-explorer-link').emit('click'); h.get('home-demo-submit').emit('click'); await new Promise(done => setImmediate(done));
   assert.match(h.get('home-demo-status').textContent, /try again/i);
   assert.equal(h.get('home-demo-submit').disabled, false);
   saved = true; h.get('home-demo-submit').emit('click'); await new Promise(done => setImmediate(done));
@@ -525,14 +524,14 @@ test('a queued close event cannot erase an immediately reopened demo request',as
  const calls=[],h=fixture({stored:'ottawa',demoRequests:{recordDemoRequest:async(...args)=>{calls.push(args);return true;},requestStatus:()=>({localSaved:calls.length>0,remoteSaved:false})}});
  // Model the browser: dialog.close() queues its close event, rather than dispatching synchronously.
  const dialog=h.get('home-demo-dialog');dialog.close=function(){this.open=false;};
- h.get('route-game-link').emit('click');h.get('home-demo-close').emit('click');
- h.get('route-game-link').emit('keydown',{key:'Enter'});dialog.emit('close');
+ h.get('city-explorer-link').emit('click');h.get('home-demo-close').emit('click');
+ h.get('city-explorer-link').emit('keydown',{key:'Enter'});dialog.emit('close');
  h.get('home-demo-submit').emit('click');await new Promise(r=>setImmediate(r));
  assert.equal(calls.length,1);assert.equal(calls[0][0],'ottawa');assert.equal(dialog.open,true);assert.match(h.get('home-demo-status').textContent,/recorded on this device/);
 });
 test('a failed pending request updates an immediately reopened dialog so it can retry',async()=>{
  let finish;const h=fixture({stored:'ottawa',demoRequests:{recordDemoRequest:()=>new Promise(r=>finish=r),requestStatus:()=>({localSaved:false,remoteSaved:false})}});
- h.get('route-game-link').emit('click');h.get('home-demo-submit').emit('click');h.get('home-demo-close').emit('click');h.get('route-game-link').emit('click');
+ h.get('city-explorer-link').emit('click');h.get('home-demo-submit').emit('click');h.get('home-demo-close').emit('click');h.get('city-explorer-link').emit('click');
  finish(false);await new Promise(r=>setImmediate(r));assert.equal(h.get('home-demo-submit').disabled,false);assert.match(h.get('home-demo-status').textContent,/could not be saved/);
 });
 test('editor utility links preserve the selected city for every registered catalog',()=>{

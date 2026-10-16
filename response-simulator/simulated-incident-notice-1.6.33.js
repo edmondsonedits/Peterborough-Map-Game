@@ -5,6 +5,8 @@
   if (window.PTBO_SIMULATED_INCIDENT_NOTICE?.version === VERSION) return;
 
   const NOTICE_URL = new URL('../legal/simulated-incidents.html', document.currentScript?.src || location.href).href;
+  let installedHud = null;
+  let installedObserver = null;
 
   function ensureTrainingUi() {
     if (window.PTBO_TRAINING_UI?.version === '1.6.57' || document.getElementById('ptbo-training-ui-v1657-fallback')) return;
@@ -34,6 +36,10 @@
     const hud = document.getElementById('dispatch-hud');
     const content = document.getElementById('hud-content');
     if (!hud || !content) return false;
+    // The immediate install and startup retry must not retain separate detached
+    // notices when a new dispatch replaces hud-content's children.
+    if (installedHud === hud) return true;
+    installedObserver?.disconnect();
     ensureStyle();
 
     let disclosure = document.getElementById('ptbo-simulated-incident-disclosure');
@@ -60,6 +66,8 @@
 
     const observer = new MutationObserver(sync);
     observer.observe(hud, { attributes:true, attributeFilter:['class'], subtree:true, childList:true, characterData:true });
+    installedHud = hud;
+    installedObserver = observer;
     window.addEventListener('pagehide', () => observer.disconnect(), { once:true });
     return true;
   }

@@ -1,0 +1,169 @@
+{
+  "schemaVersion": 1,
+  "id": "richmond-hill",
+  "name": "Richmond Hill",
+  "careHomes": [
+    {
+      "id": "moh-ltc-4252",
+      "name": "Mackenzie Health Long Term Care Facility",
+      "addr": "10 Trench Street",
+      "lat": 43.87043689905745,
+      "lng": -79.450805,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790181"
+      ],
+      "providerId": "4252",
+      "community": "Richmond Hill"
+    },
+    {
+      "id": "moh-ltc-4346",
+      "name": "Elginwood",
+      "addr": "182 Yorkland Street",
+      "lat": 43.9017125990574,
+      "lng": -79.44168439999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790162"
+      ],
+      "providerId": "4346",
+      "community": "Richmond Hill"
+    },
+    {
+      "id": "moh-ltc-4438",
+      "name": "Langstaff Square Community",
+      "addr": "170 Red Maple Road",
+      "lat": 43.84482389905745,
+      "lng": -79.42493299999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790179"
+      ],
+      "providerId": "4438",
+      "community": "Richmond Hill"
+    },
+    {
+      "id": "moh-ltc-3266",
+      "name": "Mariann Home",
+      "addr": "9915 Yonge Street",
+      "lat": 43.86924859905749,
+      "lng": -79.43623329999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790185"
+      ],
+      "providerId": "3266",
+      "community": "Richmond Hill"
+    },
+    {
+      "id": "moh-ltc-4412",
+      "name": "Mon Sheong Richmond Hill Long Term Care Centre",
+      "addr": "11199 Yonge Street",
+      "lat": 43.901327499057444,
+      "lng": -79.44319509999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790189"
+      ],
+      "providerId": "4412",
+      "community": "Richmond Hill"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "bounds": [
+    [
+      43.829270412593175,
+      -79.48559824366056
+    ],
+    [
+      43.97754774129366,
+      -79.3714957973409
+    ]
+  ],
+  "center": [
+    43.867171820603346,
+    -79.44249767296054
+  ],
+  "roadsUrl": "cities/richmond-hill/roads.geojson.gz",
+  "roadFeatureCount": 20426,
+  "roadDataSha256": "fc422dcc631ef6f18c895b133679549ebf6cae13274d095938221c5d72488230"
+}

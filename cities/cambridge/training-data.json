@@ -1,0 +1,247 @@
+{
+  "schemaVersion": 1,
+  "id": "cambridge",
+  "name": "Cambridge",
+  "careHomes": [
+    {
+      "id": "moh-ltc-4371",
+      "name": "Stirling Heights",
+      "addr": "200 Stirling Macgregor Drive",
+      "lat": 43.3391396990583,
+      "lng": -80.33370969999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789884"
+      ],
+      "providerId": "4371",
+      "community": "Cambridge"
+    },
+    {
+      "id": "moh-ltc-1901",
+      "name": "peopleCare Hilltop Manor Cambridge",
+      "addr": "42 Elliott Street",
+      "lat": 43.35338819905827,
+      "lng": -80.30968589999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789848"
+      ],
+      "providerId": "1901",
+      "community": "Cambridge"
+    },
+    {
+      "id": "moh-ltc-1899",
+      "name": "Fairview Mennonite Home",
+      "addr": "515 Langs Drive",
+      "lat": 43.39853939905816,
+      "lng": -80.3431387,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789779"
+      ],
+      "providerId": "1899",
+      "community": "Cambridge"
+    },
+    {
+      "id": "moh-ltc-3526",
+      "name": "Riverbend Place",
+      "addr": "650 Coronation Boulevard",
+      "lat": 43.37690839905824,
+      "lng": -80.32574599999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789863"
+      ],
+      "providerId": "3526",
+      "community": "Cambridge"
+    },
+    {
+      "id": "moh-ltc-1900",
+      "name": "Golden Years Nursing Home",
+      "addr": "704 Eagle Street North",
+      "lat": 43.40426249905814,
+      "lng": -80.3545393,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789790"
+      ],
+      "providerId": "1900",
+      "community": "Cambridge"
+    },
+    {
+      "id": "moh-ltc-2850",
+      "name": "Saint Luke's Place",
+      "addr": "1624 Franklin Boulevard",
+      "lat": 43.425307599058094,
+      "lng": -80.31028379999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789869"
+      ],
+      "providerId": "2850",
+      "community": "Cambridge"
+    },
+    {
+      "id": "moh-ltc-4468",
+      "name": "St. Andrew's Terrace Long Term Care Community",
+      "addr": "255 St. Andrew's Street",
+      "lat": 43.34559869905829,
+      "lng": -80.3283571,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789879"
+      ],
+      "providerId": "4468",
+      "community": "Cambridge"
+    },
+    {
+      "id": "moh-ltc-1907",
+      "name": "Cambridge Country Manor",
+      "addr": "3680 Speedsville Road",
+      "lat": 43.45409129905807,
+      "lng": -80.35742209999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789729"
+      ],
+      "providerId": "1907",
+      "community": "Cambridge"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "bounds": [
+    [
+      43.33252048463954,
+      -80.4138008860393
+    ],
+    [
+      43.47421461023125,
+      -80.25132343209673
+    ]
+  ],
+  "center": [
+    43.3986282,
+    -80.3057941
+  ],
+  "roadsUrl": "cities/cambridge/roads.geojson.gz",
+  "roadFeatureCount": 14364,
+  "roadDataSha256": "4b950a4add63cd0a70451c964fd6400abf798f7c2428c29cd114fb5d51ffe3c5"
+}

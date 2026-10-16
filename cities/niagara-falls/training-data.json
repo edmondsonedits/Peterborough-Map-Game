@@ -1,0 +1,195 @@
+{
+  "schemaVersion": 1,
+  "id": "niagara-falls",
+  "name": "Niagara Falls",
+  "careHomes": [
+    {
+      "id": "moh-ltc-1540",
+      "name": "The Meadows of Dorchester",
+      "addr": "6623 Kalar Road",
+      "lat": 43.079209399058804,
+      "lng": -79.13694609999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789899"
+      ],
+      "providerId": "1540",
+      "community": "Niagara Falls"
+    },
+    {
+      "id": "moh-ltc-3338",
+      "name": "Valley Park Lodge",
+      "addr": "6400 Valley Way",
+      "lat": 43.09773049905875,
+      "lng": -79.10128879999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789918"
+      ],
+      "providerId": "3338",
+      "community": "Niagara Falls"
+    },
+    {
+      "id": "moh-ltc-1546",
+      "name": "R. H. Lawson Eventide Home",
+      "addr": "5050 Jepson Street",
+      "lat": 43.099729699058734,
+      "lng": -79.07747749999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789857"
+      ],
+      "providerId": "1546",
+      "community": "Niagara Falls"
+    },
+    {
+      "id": "moh-ltc-1545",
+      "name": "Oakwood Park Lodge",
+      "addr": "6747 Oakwood Drive",
+      "lat": 43.0772004990588,
+      "lng": -79.11793609999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789841"
+      ],
+      "providerId": "1545",
+      "community": "Niagara Falls"
+    },
+    {
+      "id": "moh-ltc-4403",
+      "name": "Bella Senior Care Residences",
+      "addr": "8720 Willoughby Drive",
+      "lat": 43.05105889905887,
+      "lng": -79.0453455,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789717"
+      ],
+      "providerId": "4403",
+      "community": "Niagara Falls"
+    },
+    {
+      "id": "moh-ltc-4501",
+      "name": "Millennium Trail Manor",
+      "addr": "6861 Oakwood Drive",
+      "lat": 43.075957299058814,
+      "lng": -79.1179472,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789831"
+      ],
+      "providerId": "4501",
+      "community": "Niagara Falls"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "bounds": [
+    [
+      42.95957477184699,
+      -79.17728197415228
+    ],
+    [
+      43.147930911173624,
+      -78.99966731055994
+    ]
+  ],
+  "center": [
+    43.070105467000076,
+    -79.11242146399996
+  ],
+  "roadsUrl": "cities/niagara-falls/roads.geojson.gz",
+  "roadFeatureCount": 13634,
+  "roadDataSha256": "38489580b148cfed82cb26b26e2823b38d5de7993aa9f71824fc3868911b1e71"
+}

@@ -56,10 +56,11 @@
 
     const badge = doc.getElementById('ptbo-build-badge');
     if (badge) {
-      badge.textContent = `v${VERSION}`;
-      badge.setAttribute('aria-label', `Production version ${VERSION}`);
+      const releaseVersion = hostWindow().PTBO_BUILD?.version || window.PTBO_BUILD?.version || VERSION;
+      badge.textContent = `v${releaseVersion}`;
+      badge.setAttribute('aria-label', `Production version ${releaseVersion}`);
     }
-    doc.documentElement.dataset.ptboRelease = VERSION;
+    doc.documentElement.dataset.ptboRelease = hostWindow().PTBO_BUILD?.version || window.PTBO_BUILD?.version || VERSION;
   }
 
   function appendNoticeToOpenTutorial() {

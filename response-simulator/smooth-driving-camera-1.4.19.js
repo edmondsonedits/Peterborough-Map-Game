@@ -57,6 +57,21 @@
     }
   }
 
+  function createCameraZoomTransition() {
+    let from = 1, startedAt = -Infinity;
+    const sample = now => {
+      const progress = Math.max(0,Math.min(1,(now-startedAt)/280));
+      return 1+(from-1)*(1-progress)**3;
+    };
+    return {
+      sample,
+      begin(oldZoom,newZoom,now,immediate=false) {
+        from = immediate ? 1 : sample(now)*2**(oldZoom-newZoom);
+        startedAt = now;
+      },
+    };
+  }
+
   async function initialize() {
     await waitFor(
       () => typeof mapInstance !== 'undefined' && mapInstance && typeof vehicleMarker !== 'undefined' && vehicleMarker?._icon,
@@ -84,6 +99,8 @@
 
     const mobileUi = isMobileWrapper();
     const startingMode = initialMode();
+    const zoomTransition = createCameraZoomTransition();
+    let zoomStartedAtLevel = mapInstance.getZoom(), nativeZoomAnimation = false;
     const errors = [];
     const state = {
       version: VERSION,
@@ -92,6 +109,7 @@
       transitioning: false,
       reviewActive: false,
       reviewSnapshot: null,
+      zoomScale: 1,
       rawHeading: wrap360(Number(currentHeading) || 0),
       visualHeading: wrap360(Number(currentHeading) || 0),
       mapBearing: startingMode === MODE.DRIVING ? wrap360(Number(currentHeading) || 0) : 0,
@@ -282,10 +300,10 @@
       }
     }
 
-    function cameraTransform(point, bearing) {
+    function cameraTransform(point, bearing, scale = 1) {
       const angle = -bearing * Math.PI / 180;
-      const cosine = Math.cos(angle);
-      const sine = Math.sin(angle);
+      const cosine = Math.cos(angle)*scale;
+      const sine = Math.sin(angle)*scale;
       const e = point.x - cosine * point.x + sine * point.y;
       const f = point.y - sine * point.x - cosine * point.y;
       return `matrix(${cosine},${sine},${-sine},${cosine},${e},${f})`;
@@ -293,7 +311,11 @@
 
     function applyCameraTransform() {
       const pivot = mapInstance.latLngToLayerPoint(state.latestLatLng);
-      world.style.transform = cameraTransform(pivot, state.mapBearing);
+      state.zoomScale = zoomTransition.sample(performance.now());
+      world.style.transform = cameraTransform(pivot, state.mapBearing, state.zoomScale);
+      // Tile zoom eases around the vehicle; its display size stays constant.
+      const artwork = vehicleMarker?._icon?.querySelector('.truck-rotation-wrapper');
+      if (artwork) artwork.style.scale = String(1/state.zoomScale);
       if (originalSetRotationAngle) originalSetRotationAngle(state.visualHeading - 90);
       const compassNeedle = document.getElementById('compass-needle');
       if (compassNeedle) compassNeedle.style.transform = `rotate(${-state.mapBearing}deg)`;
@@ -377,6 +399,14 @@
     recenterButton?.addEventListener('click', recenter);
     settingsToggle?.addEventListener('click', () => setMode(state.mode === MODE.FIXED ? MODE.DRIVING : MODE.FIXED));
     mapInstance.on('dragstart', () => { state.following = false; updateUi(); });
+    mapInstance.on('zoomstart', () => { zoomStartedAtLevel=mapInstance.getZoom();nativeZoomAnimation=false; });
+    mapInstance.on('zoomanim', () => { nativeZoomAnimation=true; });
+    mapInstance.on('zoomend', () => {
+      const zoom=mapInstance.getZoom();
+      const immediate=nativeZoomAnimation||state.reviewActive||!state.following||Math.abs(zoom-zoomStartedAtLevel)>2
+        || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+      zoomTransition.begin(zoomStartedAtLevel,zoom,performance.now(),immediate);
+    });
     mapInstance.on('zoomend resize', () => state.following ? centerOnTruck() : applyCameraTransform());
     window.mobileRecenter = recenter;
 
@@ -385,8 +415,8 @@
       const dx = layerPoint.x - pivot.x;
       const dy = layerPoint.y - pivot.y;
       return {
-        x: panePosition.x + pivot.x + Math.cos(angle) * dx - Math.sin(angle) * dy,
-        y: panePosition.y + pivot.y + Math.sin(angle) * dx + Math.cos(angle) * dy,
+        x: panePosition.x + pivot.x + state.zoomScale*(Math.cos(angle) * dx - Math.sin(angle) * dy),
+        y: panePosition.y + pivot.y + state.zoomScale*(Math.sin(angle) * dx + Math.cos(angle) * dy),
       };
     }
 
@@ -428,6 +458,7 @@
         rawVehicleHeading: state.rawHeading,
         smoothedVisualHeading: state.visualHeading,
         mapBearing: state.mapBearing,
+        cameraZoomScale: state.zoomScale,
         truckScreenCentreX: screenX,
         truckScreenCentreY: screenY,
         expectedAnchorX: expectedX,

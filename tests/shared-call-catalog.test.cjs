@@ -15,11 +15,12 @@ function payload() {
 }
 async function store(saved) {
   const data=payload(), storage=new Map(saved ? [['ptboSharedDispatchLocationsV3:peterborough',JSON.stringify(saved)]] : []);
-  const c=vm.createContext({console,URL,CustomEvent:class{},
+  const c=vm.createContext({console,URL,setTimeout,clearTimeout,AbortController,CustomEvent:class{},
     location:{href:'https://example.test/'},document:{currentScript:{src:'https://example.test/shared/dispatch-locations.js'}},
     localStorage:{getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v)},dispatchEvent(){},
+    fetch:async()=>({ok:true,json:async()=>({schemaVersion:1,id:'peterborough',careHomes:[]})}),
     PTBO_DISPATCH_DATA_VERSION:'1.6.108',PTBO_DISPATCH_DATA_READY:Promise.resolve(data.locations),PTBO_DISPATCH_LEGACY_LOCATIONS:data.legacy});
-  c.window=c;vm.runInContext(source('shared/dispatch-locations.js'),c);await c.PTBO_DISPATCH_STORE.ready();
+  c.window=c;vm.runInContext(source('shared/ems-priority.js'),c);vm.runInContext(source('shared/dispatch-locations.js'),c);await c.PTBO_DISPATCH_STORE.ready();
   return {api:c.PTBO_DISPATCH_STORE,storage};
 }
 test('production catalog contains 200 unique civic locations with 100/50/50 recognition tiers',()=>{
@@ -77,7 +78,7 @@ test('editor export can compare saved edits against the immutable published seed
  assert.equal(api.getSeed()[0].name,original.name);assert.equal(api.getAll()[0].crossStreets[0],original.crossStreets[0]);
 });
 test('EMS route mapping excludes Fire-only generated challenges while sharing canonical addresses',()=>{
- const app=source('route-mapping/app.js'),fn=app.match(/  function callsForService\(\)\{[^\n]+/)[0];
+ const app=source('route-mapping/app.js'),fn=app.match(/  function callsForService\([^)]*\)\{[^\n]+/)[0];
  const calls=[...payload().locations,{id:'advanced-fire',main:'Fire',sub:'Advanced Street Address'}];
  const c=vm.createContext({state:{service:'ems',calls}});vm.runInContext(fn,c);
  const pool=c.callsForService();assert.equal(pool.length,200);assert.ok(pool.every(call=>call.main==='Medical'));

@@ -36,7 +36,14 @@
   });
 
   const METERS_PER_LAT = 110540;
-  const METERS_PER_LNG = 111320 * Math.cos(CONFIG.centerLat * Math.PI / 180);
+  let METERS_PER_LNG = 111320 * Math.cos(CONFIG.centerLat * Math.PI / 180);
+  let cityData = {id:'peterborough',name:'Peterborough',centerLat:CONFIG.centerLat,centerLng:CONFIG.centerLng,roadUrl:CONFIG.roadUrl};
+  function cityStorageKey(key){return key+(cityData.id==='peterborough'?'':':'+cityData.id);}
+  function applyCityData(city,data){
+    if(!city?.id||data?.id!==city.id||!Array.isArray(data.center)||!data.center.every(Number.isFinite)||!data.roadsUrl)throw new Error('City road data does not match the selected city.');
+    cityData={id:city.id,name:city.name,centerLat:data.center[0],centerLng:data.center[1],roadUrl:'../'+data.roadsUrl};
+    METERS_PER_LNG=111320*Math.cos(cityData.centerLat*Math.PI/180);
+  }
   const ROAD_PROFILE = Object.freeze({
     motorway:{speed:100,priority:.86},motorway_link:{speed:55,priority:.94},trunk:{speed:80,priority:.88},trunk_link:{speed:50,priority:.96},
     primary:{speed:65,priority:.88},primary_link:{speed:45,priority:.96},secondary:{speed:55,priority:.92},secondary_link:{speed:40,priority:.98},
@@ -46,6 +53,7 @@
 
   const ui = {
     app:document.getElementById('route-app'), map:document.getElementById('map'), drawSurface:document.getElementById('draw-surface'),
+    dispatchCard:document.getElementById('dispatch-card'), controls:document.getElementById('controls'), mapNav:document.getElementById('map-nav'),
     callNumber:document.getElementById('call-number'), difficultyLabel:document.getElementById('difficulty-label'), baseLabel:document.getElementById('base-label'), callType:document.getElementById('call-type'),
     callAddress:document.getElementById('call-address'), hint:document.getElementById('hint'), clear:document.getElementById('clear-button'),
     undo:document.getElementById('undo-button'), submit:document.getElementById('submit-button'), results:document.getElementById('results'),
@@ -67,8 +75,8 @@
     shortestRoute:null, playerLayers:[], referenceLayers:[], startMarker:null, callMarker:null, mapGestureSnapshot:null
   };
 
-  function toXY(lat,lng){ return {x:(lng-CONFIG.centerLng)*METERS_PER_LNG,y:(lat-CONFIG.centerLat)*METERS_PER_LAT}; }
-  function toLatLng(x,y){ return {lat:y/METERS_PER_LAT+CONFIG.centerLat,lng:x/METERS_PER_LNG+CONFIG.centerLng}; }
+  function toXY(lat,lng){ return {x:(lng-cityData.centerLng)*METERS_PER_LNG,y:(lat-cityData.centerLat)*METERS_PER_LAT}; }
+  function toLatLng(x,y){ return {lat:y/METERS_PER_LAT+cityData.centerLat,lng:x/METERS_PER_LNG+cityData.centerLng}; }
   function dist(a,b){ if(!a||!b)return Infinity; const aa=toXY(a.lat,a.lng),bb=toXY(b.lat,b.lng); return Math.hypot(bb.x-aa.x,bb.y-aa.y); }
   function formatDistance(m){ if(!Number.isFinite(m))return '—'; return m<1000?Math.round(m)+' m':(m/1000).toFixed(m<10000?1:0)+' km'; }
   function keyCoord(lng,lat){ return Number(lng).toFixed(7)+','+Number(lat).toFixed(7); }
@@ -114,7 +122,7 @@
       }
     }
     for(const node of nodes)for(const edge of node.edges)edge.bridgeKey=segments[edge.segmentId].bridgeKey;
-    if(!nodes.length||!directedEdges||!segments.length)throw new Error('Peterborough road data did not contain usable roads.');
+    if(!nodes.length||!directedEdges||!segments.length)throw new Error(cityData.name+' road data did not contain usable roads.');
     return {nodes,nodeGrid,segments,segmentGrid,directedEdges,gridSize:CONFIG.gridSize};
   }
 
@@ -126,12 +134,12 @@
     return {streetForgiveness:bounded('streetForgiveness',6,24),straightPreference:bounded('straightPreference',0,100),arrivalDistance:bounded('arrivalDistance',10,60),challengeFrequency:bounded('challengeFrequency',50,100)};
   }
   function loadTuning(){
-    try{return normalizeTuning(JSON.parse(localStorage.getItem(CONFIG.tuningStorageKey)||'null'));}
+    try{return normalizeTuning(JSON.parse(localStorage.getItem(cityStorageKey(CONFIG.tuningStorageKey))||'null'));}
     catch(_){return normalizeTuning(null);}
   }
   function saveTuning(tuning){
     state.tuning=normalizeTuning(tuning);
-    try{localStorage.setItem(CONFIG.tuningStorageKey,JSON.stringify(state.tuning));}catch(_){}
+    try{localStorage.setItem(cityStorageKey(CONFIG.tuningStorageKey),JSON.stringify(state.tuning));}catch(_){}
   }
   function percentile(values,fraction){
     const sorted=values.filter(Number.isFinite).slice().sort((a,b)=>a-b);
@@ -145,11 +153,11 @@
     distances.fill(Infinity);previous.fill(-1);sourceStation.fill(-1);
     const stations=startBase?[startBase]:basesForService(state.service||'fire');
     stations.forEach((base,stationIndex)=>{
-      const point=basePoint(base),road=state.traceCore?.snap(point,260),segment=road&&state.graph.segments[road.segmentId];
+      const road=baseAnchor(base),segment=road&&state.graph.segments[road.segmentId];
       const starts=segment?[
         ...(segment.forward?[{id:segment.to,distance:(1-road.t)*segment.length}]:[]),
         ...(segment.backward?[{id:segment.from,distance:road.t*segment.length}]:[])
-      ]:[{id:nearestRoad(point.lat,point.lng,260)?.nodeId,distance:0}];
+      ]:[];
       for(const start of starts){if(!Number.isInteger(start.id)||start.distance>=distances[start.id])continue;distances[start.id]=start.distance;sourceStation[start.id]=stationIndex;heap.push({id:start.id,score:start.distance});}
     });
     while(heap.size){
@@ -247,7 +255,7 @@
     if(!road){
       const stations=state.base?[state.base]:basesForService(state.service),nearest=Math.min(...stations.map(base=>dist(point,basePoint(base))));
       const score=Math.round(clamp((nearest-700)/6500*48+16,0,100));
-      return {...call,difficulty:score,difficultyDistance:nearest,difficultyRoadClass:'unknown',decisionPotential:0,decisionForks:0};
+      return {...call,difficulty:score,difficultyDistance:Infinity,difficultyRoadClass:'unknown',decisionPotential:0,decisionForks:0};
     }
     const profile=difficultyProfileForNode(road.nodeId,road.highway);
     return {
@@ -388,37 +396,39 @@
 
   function loadProgression(){
     let parsed=null;
-    try{parsed=JSON.parse(localStorage.getItem(CONFIG.progressionStorageKey+(state.service==='ems'?':ems':''))||'null');}catch(_){}
+    try{parsed=JSON.parse(localStorage.getItem(cityStorageKey(CONFIG.progressionStorageKey)+(state.service==='ems'?':ems':''))||'null');}catch(_){}
     state.progression=normalizeProgression(parsed&&parsed.version===1?parsed.progression:null);
   }
 
   function saveProgression(){
     if(!state.progression)return;
-    try{localStorage.setItem(CONFIG.progressionStorageKey+(state.service==='ems'?':ems':''),JSON.stringify({version:1,progression:state.progression}));}catch(_){}
+    try{localStorage.setItem(cityStorageKey(CONFIG.progressionStorageKey)+(state.service==='ems'?':ems':''),JSON.stringify({version:1,progression:state.progression}));}catch(_){}
   }
 
   function progressionPhase(){
-    const completed=Math.max(0,Number(state.progression?.completed)||0),size=CONFIG.callsPerStationPhase,stations=basesForService(state.service),count=Math.max(1,stations.length);
+    const completed=Math.max(0,Number(state.progression?.completed)||0),size=CONFIG.callsPerStationPhase,stations=availableBasesForService(state.service),count=Math.max(1,stations.length);
     if(completed<size*count){const index=Math.floor(completed/size),base=stations[index];return {index,key:'station-'+index,stationNumber:base?.number,label:base?.shortName||base?.name||'Base',completedInPhase:completed-index*size,rankProgress:(completed-index*size)/size,continuous:false};}
     return {index:count,key:'continuous',stationNumber:null,label:'Previous Call',completedInPhase:completed-size*count,rankProgress:1,continuous:true};
   }
   function stationForPhase(phase){
-    const stations=basesForService(state.service);
+    const stations=availableBasesForService(state.service);
     return stations.find(base=>Number(base.number)===Number(phase.stationNumber))||stations[Math.max(0,Math.min(stations.length-1,phase.index))]||null;
   }
 
   function previousCallBase(lastCall){
     if(!lastCall)return null;
+    const access=callAccessPoint(lastCall);
     return {
       id:'previous-call',
+      sourceCallId:lastCall.id,
       number:0,
       name:'Previous Call',
       shortName:'Previous Call',
       address:lastCall.addr||lastCall.name||'Previous dispatch',
       lat:Number(lastCall.lat),
       lng:Number(lastCall.lng),
-      spawnLat:Number(lastCall.lat),
-      spawnLng:Number(lastCall.lng),
+      spawnLat:Number(access.lat),
+      spawnLng:Number(access.lng),
       spawnHeading:0
     };
   }
@@ -432,10 +442,11 @@
       return phase;
     }
     const previous=previousCallBase(state.progression?.lastCall);
-    if(previous)state.base=previous;
+    if(previous&&baseAnchor(previous))state.base=previous;
     else{
       const fallback=stationForPhase({index:0,stationNumber:1});
       if(fallback)state.base=fallback;
+      phase.originFallback=Boolean(previous);
     }
     return phase;
   }
@@ -529,7 +540,7 @@
     const surface=ui.drawSurface,map=state.map;
     if(!surface||!map||!map.latLngToContainerPoint||!map.getSize||!map.getContainer){if(surface)surface.hidden=true;return;}
     if(state.drawingPointer!==null)return; // Keep the capture target stable until release.
-    const anchor=anchorOverride||state.playerRoute?.endpoint||(state.base&&state.traceCore?.snap(basePoint(state.base),260));
+    const anchor=anchorOverride||state.playerRoute?.endpoint||(state.base&&baseAnchor(state.base));
     const available=state.mode==='drawing'&&!state.mapZooming&&!ui.settingsSheet?.open&&!state.playerRoute?.complete&&Boolean(anchor);
     if(!available){surface.hidden=true;return;}
     const point=map.latLngToContainerPoint(anchor),size=map.getSize();
@@ -581,22 +592,94 @@
 
   function icon(className,label){return L.divIcon({className:'',html:'<div class="'+className+'">'+label+'</div>',iconSize:[34,34],iconAnchor:[17,17]});}
 
-  function basePoint(base){
+  let baseAccessCache=null;
+  function accessReachability(service,excludeCallId=null){
+    const graph=state.graph;
+    if(!graph||!state.traceCore||!state.calls?.length)return null;
+    if(baseAccessCache?.graph!==graph){
+      const offsets=new Uint32Array(graph.nodes.length+1);
+      for(const node of graph.nodes)for(const edge of node.edges)offsets[edge.to+1]+=1;
+      for(let i=1;i<offsets.length;i++)offsets[i]+=offsets[i-1];
+      const from=new Uint32Array(offsets[offsets.length-1]),cursor=offsets.slice();
+      for(const node of graph.nodes)for(const edge of node.edges)from[cursor[edge.to]++]=node.id;
+      baseAccessCache={graph,offsets,from,calls:null,services:new Map(),bases:new Map()};
+    }
+    const cache=baseAccessCache;
+    if(cache.calls!==state.calls){cache.calls=state.calls;cache.services.clear();cache.bases.clear();}
+    // Keep only one changing previous-call index per service, in addition to
+    // its normal base index; long practice sessions cannot grow this cache.
+    const indexKey=service+(excludeCallId?':previous':'');
+    const cached=cache.services.get(indexKey);
+    if(cached&&cached.excludeCallId===excludeCallId)return cached.reachable;
+    const reachable=new Uint8Array(graph.nodes.length),queue=new Uint32Array(graph.nodes.length);let head=0,tail=0;
+    const seed=id=>{if(!reachable[id]){reachable[id]=1;queue[tail++]=id;}};
+    for(const call of callsForService(service)){
+      if(call.id===excludeCallId)continue;
+      const target=state.traceCore.snap(callPoint(call),CONFIG.destinationSearchRadius);if(!target)continue;
+      const segment=graph.segments[target.segmentId];
+      // Only legal incoming ends seed the reverse graph; weak connectivity is
+      // insufficient for a one-way driveway or a divided public road.
+      if(segment.forward||target.t===0)seed(segment.from);
+      if(segment.backward||target.t===1)seed(segment.to);
+    }
+    while(head<tail){const id=queue[head++];for(let i=cache.offsets[id];i<cache.offsets[id+1];i++)seed(cache.from[i]);}
+    cache.services.set(indexKey,{excludeCallId,reachable});return reachable;
+  }
+  function baseAnchor(base,service=base.service||state.service){
     const point={lat:Number(base.spawnLat??base.lat),lng:Number(base.spawnLng??base.lng)};
-    // Route drawing begins after leaving the yard, on the public road network.
-    const road=state.graph?nearestRoad(point.lat,point.lng,260):null;
-    return road?{lat:road.lat,lng:road.lng}:point;
+    if(!state.traceCore)return null;
+    if(!state.graph)return state.traceCore.snap(point,260);
+    const excludeCallId=base.id==='previous-call'?base.sourceCallId||null:null,reachable=accessReachability(service,excludeCallId);
+    // Before call data is installed, retain the existing nearest-road helper.
+    if(!reachable)return state.traceCore.snap(point,260);
+    const key=service+':'+(excludeCallId||'')+':'+point.lat+':'+point.lng;
+    if(baseAccessCache.bases.has(key))return baseAccessCache.bases.get(key);
+    const xy=toXY(point.lat,point.lng);let best=null,nearest=Infinity;
+    for(const id of nearbySegments(xy.x,xy.y,260)){
+      const segment=state.graph.segments[id],projection=projectToSegment(xy.x,xy.y,segment);
+      if(projection.distance>260)continue;nearest=Math.min(nearest,projection.distance);
+      if(!(segment.forward&&reachable[segment.to]||segment.backward&&reachable[segment.from]))continue;
+      if(best&&(projection.distance>best.distance+1e-7||Math.abs(projection.distance-best.distance)<=1e-7&&id>=best.segmentId))continue;
+      best={...toLatLng(projection.x,projection.y),segmentId:id,t:projection.t,road:segment.name,highway:segment.highway,distance:projection.distance};
+    }
+    if(best)best.alternate=best.distance>nearest+.2;
+    if(baseAccessCache.bases.size>=256)baseAccessCache.bases.delete(baseAccessCache.bases.keys().next().value);
+    baseAccessCache.bases.set(key,best);return best;
+  }
+  function basePoint(base){
+    // Identity/spawn coordinates stay canonical; START is an explicit public
+    // road access, bounded to 260 m and able to depart toward a service call.
+    return baseAnchor(base)||{lat:Number(base.spawnLat??base.lat),lng:Number(base.spawnLng??base.lng)};
   }
   function callPoint(call){return {lat:Number(call.lat),lng:Number(call.lng)};}
   function callAccessPoint(call){const point=callPoint(call),access=state.traceCore?.snap(point,CONFIG.destinationSearchRadius);return access?{lat:access.lat,lng:access.lng}:point;}
 
   function updateMarkers(){
     clearLayer(state.startMarker);clearLayer(state.callMarker);state.startMarker=null;state.callMarker=null;if(!state.base||!state.call)return;const start=basePoint(state.base),end=callAccessPoint(state.call);
-    state.startMarker=L.marker([start.lat,start.lng],{icon:icon('start-icon','START'),interactive:false}).addTo(state.map);
+    state.startMarker=L.marker([start.lat,start.lng],{icon:icon('start-icon','START'),title:'Public-road START for '+(state.base.name||'base')+(start.distance>2?' ('+Math.round(start.distance)+' m from base)':''),interactive:false}).addTo(state.map);
     state.callMarker=L.marker([end.lat,end.lng],{icon:icon('call-icon','CALL'),title:'Public-road access for '+(state.call.addr||state.call.name),interactive:false}).addTo(state.map);
   }
 
-  function fitExercise(){if(!state.base||!state.call)return;const s=basePoint(state.base),e=callAccessPoint(state.call);state.map.fitBounds([[s.lat,s.lng],[e.lat,e.lng]],{paddingTopLeft:[45,100],paddingBottomRight:[45,115],maxZoom:15,animate:!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches});}
+  function fitExercise(){
+    if(!state.base||!state.call)return;
+    const s=basePoint(state.base),e=callAccessPoint(state.call),mapBox=ui.map.getBoundingClientRect?.();
+    const markerClearance=30;
+    let topInset=100,bottomInset=115,rightInset=45;
+    if(mapBox&&mapBox.width>0&&mapBox.height>0){
+      const box=element=>{
+        if(!element||element.hidden)return null;
+        const rect=element.getBoundingClientRect?.();
+        return rect&&rect.width>0&&rect.height>0?rect:null;
+      };
+      const header=box(ui.dispatchCard);
+      if(header)topInset=Math.max(topInset,header.bottom-mapBox.top+markerClearance);
+      const lower=[box(ui.hint),box(ui.controls),box(ui.mapNav)].filter(Boolean);
+      if(lower.length)bottomInset=Math.max(bottomInset,mapBox.bottom-Math.min(...lower.map(rect=>rect.top))+markerClearance);
+      const nav=box(ui.mapNav);
+      if(nav)rightInset=Math.max(rightInset,mapBox.right-nav.left+markerClearance);
+    }
+    state.map.fitBounds([[s.lat,s.lng],[e.lat,e.lng]],{paddingTopLeft:[45,topInset],paddingBottomRight:[rightInset,bottomInset],maxZoom:15,animate:!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches});
+  }
   function setHint(text){ui.hint.textContent=text;}
   function setMode(mode){state.mode=mode;updateDrawTarget();ui.submit.disabled=!(mode==='editing'&&state.playerRoute?.complete);ui.undo.disabled=!(state.history.length&&(mode==='drawing'||mode==='editing'));ui.clear.disabled=mode==='loading'||mode==='results';ui.results.hidden=mode!=='results';}
 
@@ -621,14 +704,14 @@
     let rect=ui.drawSurface.getBoundingClientRect();
     if(Math.hypot(event.clientX-(rect.left+rect.width/2),event.clientY-(rect.top+rect.height/2))>28){setHint(state.playerRoute?'Continue from the blue END marker.':'Start your drawing at START.');return;}
     state.map.stop?.();
-    const start=state.playerRoute?.endpoint||state.traceCore.snap(basePoint(state.base),260);
+    const start=state.playerRoute?.endpoint||baseAnchor(state.base);
     if(!start){setHint('Start your drawing at START.');return;}
     updateDrawTarget(start);rect=ui.drawSurface.getBoundingClientRect();
     if(ui.drawSurface.hidden||Math.hypot(event.clientX-(rect.left+rect.width/2),event.clientY-(rect.top+rect.height/2))>28){setHint(state.playerRoute?'Continue from the blue END marker.':'Start your drawing at START.');return;}
     const destination=state.traceCore.snap(callPoint(state.call),CONFIG.destinationSearchRadius);
     if(!destination){setHint('This call has no road access in the training network.');return;}
     event.preventDefault();
-    state.originAnchor=state.traceCore.snap(basePoint(state.base),260);state.destinationAnchor=destination;
+    state.originAnchor=baseAnchor(state.base);state.destinationAnchor=destination;
     // The grab target is larger than the line: a click within it is not a stroke.
     state.stroke={before:state.playerRoute,point:pointerPoint(event),queue:[],frame:null,changed:false,blocked:false};
     state.playerRoute=state.playerRoute||state.traceCore.begin(start);
@@ -703,7 +786,7 @@
     const shortest=state.shortestRoute&&state.shortestRoute.distance,player=state.playerRoute.distance,eff=Number.isFinite(shortest)&&player>0?Math.min(100,shortest/player*100):NaN,extra=Number.isFinite(shortest)?Math.max(0,player-shortest):NaN;
     ui.efficiency.textContent=Number.isFinite(eff)?Math.round(eff)+'% efficient':'Route complete';ui.playerDistance.textContent=formatDistance(player);ui.shortestDistance.textContent=formatDistance(shortest);ui.extraDistance.textContent=Number.isFinite(extra)?'+'+formatDistance(extra):'—';
     const playerRoads=state.playerRoute.mainRoads||[],recommendedRoads=state.shortestRoute&&state.shortestRoute.mainRoads||[],different=recommendedRoads.find(name=>name&&!playerRoads.includes(name));
-    if(Number.isFinite(eff)&&eff>=97)ui.resultNote.textContent='Efficient route. Green shows a shortest legal route; close alternatives are valid.';else if(different)ui.resultNote.textContent='Compare where the green route uses '+different+' instead. Green shows the shortest legal road route.';else ui.resultNote.textContent='Blue is your route. Green is a shortest legal route.';
+    if(Number.isFinite(eff)&&eff>=97)ui.resultNote.textContent='Efficient route. Green shows a shortest mapped route; close alternatives are valid.';else if(different)ui.resultNote.textContent='Compare where the green route uses '+different+' instead. Green shows the shortest mapped road route.';else ui.resultNote.textContent='Blue is your route. Green is a shortest mapped route.';
     let decisionLearning=null;
     if(Number.isFinite(eff)){
       updateHiddenSkill(eff);
@@ -733,7 +816,7 @@
   function analyzeDecisionDifficulty(call,startBase){
     const baseDifficulty=clamp(Number(call?.difficulty)||0,0,100),fallback={score:baseDifficulty,decisionScore:0,traps:[],meaningfulForks:0};
     if(!state.traceCore||!call||!startBase)return fallback;
-    const origin=state.traceCore.snap(basePoint(startBase),260),destination=state.traceCore.snap(callPoint(call),CONFIG.destinationSearchRadius);
+    const origin=baseAnchor(startBase),destination=state.traceCore.snap(callPoint(call),CONFIG.destinationSearchRadius);
     const optimal=state.traceCore.between(origin,destination);
     if(!optimal?.edges.length)return fallback;
     const edges=optimal.edges,traps=[],tolerance=Math.max(CONFIG.decisionMeaningfulPenalty,optimal.distance*CONFIG.decisionEqualRouteRatio);
@@ -819,18 +902,20 @@
     });
   }
 
-  function callsForService(){const main=state.service==='ems'?'Medical':'Fire';return state.calls.filter(call=>call.incidentProfiles?.[state.service]||call.main===main).map(call=>{const profile=call.incidentProfiles?.[state.service];return profile?{...call,main,sub:profile.sub}:call;});}
+  function callsForService(service=state.service){const main=service==='ems'?'Medical':'Fire';return state.calls.filter(call=>(!call.trainingServices||call.trainingServices.includes(service))&&(call.incidentProfiles?.[service]||call.main===main)).map(call=>{const profile=call.incidentProfiles?.[service];return profile?{...call,main,sub:profile.sub}:call;});}
   function chooseCall(){
+    if(!baseAnchor(state.base))throw new Error('No connected public-road training access within 260 m of '+(state.base.name||'this base')+'. Choose another base or update the mapped training destinations.');
     buildDifficultyIndex(state.base);
     const pool=callsForService().map(scoreCall).filter(call=>Number.isFinite(call.difficultyDistance)&&call.difficultyDistance>0),recent=new Set(state.recentCallIds);
-    let fresh=pool.filter(call=>!recent.has(call.id));
+    let fresh=pool.filter(call=>!recent.has(call.id)||(state.service==='ems'&&call.facilityType==='long-term-care'&&call.id!==state.recentCallIds.at(-1)));
     if(state.phase?.continuous&&state.base){
       const start=basePoint(state.base);
       const spaced=fresh.filter(call=>dist(start,callPoint(call))>=CONFIG.continuousMinNextCallDistance);
       if(spaced.length>=4)fresh=spaced;
     }
-    const source=fresh.length?fresh:pool;
+    let source=fresh.length?fresh:pool;
     if(!source.length)throw new Error('No dispatch calls are available.');
+    if(state.service==='ems'&&window.PTBO_EMS_PRIORITY)source=window.PTBO_EMS_PRIORITY.chooseGroup(source,{service:'ems',lastId:state.recentCallIds.at(-1)});
     const target=adaptiveDifficultyTarget();
     const analyzed=analyzeCallShortlist(source,target);
     const call=weightedCallChoice(analyzed.length?analyzed:source,target)||(analyzed[0]||source[0]);
@@ -849,13 +934,16 @@
     const difficulty=clamp(Math.round(Number(state.call.sessionDifficulty??state.call.difficulty)||0),0,100);
     ui.difficultyLabel.textContent=state.call.decisionAnalysis?.traps?.length?'DECISION CHALLENGE':'ROUTE REFRESHER';
     ui.difficultyLabel.dataset.level=difficulty>=80?'extreme':difficulty>=60?'hard':difficulty>=35?'medium':'easy';
-    updateMarkers();fitExercise();setMode('drawing');
+    updateMarkers();setMode('drawing');
     if(previousPhase!==undefined&&previousPhase!==phase.index){
       const message=phase.continuous?'Each route now starts at the previous call.':'Routes now start from '+phase.label+'.';
       setHint(message);
     }else{
       setHint('Drag from START. Backtrack to erase. Release to pause.');
     }
+    const access=baseAnchor(state.base);if(access?.alternate)setHint('START uses '+access.road+' public-road access, '+Math.round(access.distance)+' m from '+(state.base.shortName||state.base.name)+'. '+ui.hint.textContent);
+    if(phase.originFallback)setHint('The previous call has no reachable next destination. START returns to '+(state.base.shortName||state.base.name)+'. Drag from START to plan this route.');
+    fitExercise();
   }
 
   function defaultSkillProfile(){
@@ -900,7 +988,7 @@
 
   function loadSkillProfiles(){
     let parsed=null;
-    try{parsed=JSON.parse(localStorage.getItem(CONFIG.adaptiveSkillStorageKey)||'null');}catch(_){}
+    try{parsed=JSON.parse(localStorage.getItem(cityStorageKey(CONFIG.adaptiveSkillStorageKey))||'null');}catch(_){}
     const profiles=parsed&&[1,2].includes(parsed.version)&&parsed.profiles?parsed.profiles:{};
     if(parsed?.version!==2)for(const profile of Object.values(profiles))if(profile&&typeof profile==='object')profile.weakDecisions={};
     state.skillProfiles={
@@ -913,7 +1001,7 @@
   function saveSkillProfiles(){
     if(!state.skillProfiles)return;
     try{
-      localStorage.setItem(CONFIG.adaptiveSkillStorageKey,JSON.stringify({
+      localStorage.setItem(cityStorageKey(CONFIG.adaptiveSkillStorageKey),JSON.stringify({
         version:2,
         profiles:state.skillProfiles
       }));
@@ -1090,7 +1178,12 @@
   }
 
   function basesForService(service){const store=window.PTBO_BASE_STORE;if(store&&typeof store.getBases==='function')return store.getBases(service);const profiles=window.PTBO_SERVICE_CONFIG&&window.PTBO_SERVICE_CONFIG.profiles;return profiles&&profiles[service]?profiles[service].bases||[]:[];}
-  function fillBases(service,preferredId){const bases=basesForService(service);ui.baseSelect.innerHTML='';bases.forEach(base=>{const option=document.createElement('option');option.value=base.id;option.textContent=(base.shortName||base.name)+' · '+base.address;ui.baseSelect.appendChild(option);});const wanted=bases.find(b=>b.id===preferredId)||bases[0];if(wanted)ui.baseSelect.value=wanted.id;return wanted;}
+  function availableBasesForService(service){return basesForService(service).filter(base=>!state.graph||!state.calls?.length||baseAnchor(base,service));}
+  function phaseNoteText(service){
+    const available=availableBasesForService(service),availableIds=new Set(available.map(base=>base.id)),unavailable=basesForService(service).filter(base=>!availableIds.has(base.id));
+    return available.map(b=>b.shortName||b.name).join(' → ')+' → previous call. Each base phase lasts 20 completed calls. CALL marks public-road access to the address.'+(unavailable.length?' No reachable training destination: '+unavailable.map(b=>b.shortName||b.name).join(', ')+'. These bases are skipped; their mapped locations are unchanged.':'');
+  }
+  function fillBases(service,preferredId){const bases=basesForService(service),available=availableBasesForService(service),availableIds=new Set(available.map(base=>base.id));ui.baseSelect.innerHTML='';bases.forEach(base=>{const option=document.createElement('option');option.value=base.id;option.disabled=!availableIds.has(base.id);option.textContent=(base.shortName||base.name)+' · '+base.address+(option.disabled?' — no reachable training destination':'');ui.baseSelect.appendChild(option);});const wanted=available.find(b=>b.id===preferredId)||available[0];if(wanted)ui.baseSelect.value=wanted.id;return wanted;}
   function draftTuning(){return normalizeTuning({streetForgiveness:ui.streetForgiveness?.value,straightPreference:ui.straightPreference?.value,arrivalDistance:ui.arrivalDistance?.value,challengeFrequency:ui.challengeFrequency?.value});}
   function displayTuning(tuning=state.tuning){
     const values=normalizeTuning(tuning);
@@ -1108,16 +1201,17 @@
   }
   function loadPreferences(){state.tuning=loadTuning();displayTuning(state.tuning);let service='fire';try{service=localStorage.getItem('ptboRouteMappingService')||service;}catch(_){}if(!['fire','ems'].includes(service))service='fire';state.service=service;ui.serviceSelect.value=service;fillBases(service,null);loadSkillProfiles();loadProgression();applyProgressionStart();}
   function savePreferences(){try{localStorage.setItem('ptboRouteMappingService',state.service);}catch(_){}}
-  function openSettings(){cancelDrawing();ui.serviceSelect.value=state.service;fillBases(state.service,state.base&&state.base.id);displayTuning(state.tuning);ui.phaseNote.textContent=basesForService(state.service).map(b=>b.shortName||b.name).join(' → ')+' → previous call. Each base phase lasts 20 completed calls. CALL marks the nearest mapped public-road access to the address.';if(!ui.settingsSheet.open)ui.settingsSheet.showModal();updateDrawTarget();}
+  function openSettings(){cancelDrawing();ui.serviceSelect.value=state.service;fillBases(state.service,state.base&&state.base.id);displayTuning(state.tuning);ui.phaseNote.textContent=phaseNoteText(state.service);if(!ui.settingsSheet.open)ui.settingsSheet.showModal();updateDrawTarget();}
   function closeSettings(){if(ui.settingsSheet.open)ui.settingsSheet.close();updateDrawTarget();}
 
   function initMap(){
-    state.map=L.map('map',{zoomControl:false,attributionControl:true,preferCanvas:true,minZoom:11,maxZoom:19,worldCopyJump:false}).setView([CONFIG.centerLat,CONFIG.centerLng],13);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{subdomains:'abc',maxZoom:19,attribution:'&copy; OpenStreetMap contributors'}).addTo(state.map);
+    state.map=L.map('map',{zoomControl:false,attributionControl:true,preferCanvas:true,minZoom:8,maxZoom:19,worldCopyJump:false}).setView([cityData.centerLat,cityData.centerLng],13);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap contributors'}).addTo(state.map);
     state.map.doubleClickZoom.disable();
     state.map.on('zoomstart',()=>{state.mapZooming=true;updateDrawTarget();});
     state.map.on('zoomend',()=>{state.mapZooming=false;updateDrawTarget();});
-    state.map.on('move resize',()=>updateDrawTarget());
+    state.map.on('move',()=>updateDrawTarget());
+    state.map.on('resize',()=>{fitExercise();updateDrawTarget();});
     const reduced=window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;if(reduced)state.map.options.zoomAnimation=false;
   }
 
@@ -1126,7 +1220,7 @@
     window.addEventListener('blur',()=>{cancelDrawing();});document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelDrawing();}});
     ui.zoomIn.addEventListener('click',()=>state.map.zoomIn());ui.zoomOut.addEventListener('click',()=>state.map.zoomOut());
     ui.clear.addEventListener('click',resetDrawing);ui.undo.addEventListener('click',undo);ui.submit.addEventListener('click',submitRoute);ui.next.addEventListener('click',newCall);ui.settingsButton.addEventListener('click',openSettings);ui.settingsClose.addEventListener('click',closeSettings);ui.retry.addEventListener('click',()=>location.reload());
-    ui.serviceSelect.addEventListener('change',()=>{fillBases(ui.serviceSelect.value,null);ui.phaseNote.textContent=basesForService(ui.serviceSelect.value).map(b=>b.shortName||b.name).join(' → ')+' → previous call. Each base phase lasts 20 completed calls. CALL marks the nearest mapped public-road access to the address.';});
+    ui.serviceSelect.addEventListener('change',()=>{fillBases(ui.serviceSelect.value,null);ui.phaseNote.textContent=phaseNoteText(ui.serviceSelect.value);});
     for(const input of [ui.streetForgiveness,ui.straightPreference,ui.arrivalDistance,ui.challengeFrequency])input?.addEventListener('input',()=>displayTuning(draftTuning()));
     ui.settingsReset?.addEventListener('click',()=>displayTuning(DEFAULT_TUNING));
     ui.settingsForm.addEventListener('submit',event=>{event.preventDefault();const changed=applySettings(ui.serviceSelect.value,draftTuning());closeSettings();if(changed)newCall();});
@@ -1137,19 +1231,24 @@
   async function loadData(){
     if(!window.PTBO_DISPATCH_STORE)throw new Error('Shared dispatch store did not load.');
     const calls=await window.PTBO_DISPATCH_STORE.ready();
-    const sharedCalls=Array.isArray(calls)?calls:window.PTBO_DISPATCH_STORE.getAll();
+    let sharedCalls=Array.isArray(calls)?calls:window.PTBO_DISPATCH_STORE.getAll();
+    // The two legacy base-training cities have no researched general-call catalog.
+    // Their verified stations provide useful public-road destinations for Fire.
+    if(['belleville','scarborough'].includes(cityData.id))sharedCalls=[...sharedCalls,...basesForService('fire').map(base=>({...base,id:'route-base-'+base.id,addr:base.address,radius:65,main:'Fire',sub:'Station familiarization',trainingServices:['fire']}))];
     if(!sharedCalls.length)throw new Error('The shared dispatch database is empty.');
-    const response=await fetch(CONFIG.roadUrl,{cache:'force-cache'});
-    if(!response.ok)throw new Error('Peterborough road data failed to load ('+response.status+').');
-    const geojson=await response.json();
+    const roadUrl=new URL(cityData.roadUrl,location.href);roadUrl.searchParams.set('v',VERSION);
+    const response=await fetch(roadUrl,{cache:'force-cache',signal:AbortSignal.timeout(60000)});
+    if(!response.ok)throw new Error(cityData.name+' road data failed to load ('+response.status+').');
+    const geojson=cityData.roadUrl.endsWith('.gz')?await new Response(response.body.pipeThrough(new DecompressionStream('gzip'))).json():await response.json();
     state.graph=buildGraph(geojson);
     state.traceCore=window.PTBO_ROUTE_TRACE.createTraceCore({graph:state.graph,toXY,toLatLng,search:(from,to,options)=>pathBetween(from,to,'distance',options)});
-    buildDifficultyIndex();
-
-    const canonical=sharedCalls.map(scoreCall);
+    const sourceCalls=sharedCalls.map(call=>cityData.id!=='peterborough'&&!call.incidentProfiles&&!call.trainingServices?{...call,incidentProfiles:{fire:{sub:'Structure Fire'},ems:{sub:'Medical Assistance'}}}:call);
+    state.calls=sourceCalls;buildDifficultyIndex();
+    const canonical=sourceCalls.map(scoreCall);
     state.originalCalls=canonical;
-    state.advancedCalls=buildAdvancedCalls(canonical);
+    state.advancedCalls=cityData.id==='peterborough'?buildAdvancedCalls(canonical):[];
     state.calls=[...state.originalCalls,...state.advancedCalls];
+    fillBases(state.service,state.base?.id);
     console.info('Route Mapping call set:',{
       original:state.originalCalls.length,
       advanced:state.advancedCalls.length,
@@ -1164,7 +1263,16 @@
   function showFailure(error){console.error(error);ui.app.setAttribute('aria-busy','false');ui.errorMessage.textContent=error&&error.message?error.message:String(error||'Unknown startup error');ui.error.hidden=false;setMode('loading');}
 
   async function initialize(){
-    try{initMap();bindUi();loadPreferences();await loadData();applyProgressionStart();if(!state.base)throw new Error('No starting base is available.');ui.app.setAttribute('aria-busy','false');newCall();window.PTBO_ROUTE_MAPPING=Object.freeze({version:VERSION,state,nearestRoad,composeRoute,pathBetween,newCall});}
+    ui.retry.onclick=()=>location.reload();
+    try{
+      const city=await window.PTBO_CITY_LOCATION_RUNTIME.load({context:'route'});
+      applyCityData(city,window.PTBO_DISPATCH_STORE.getTrainingData());
+      document.title='Route Mapping · '+cityData.name;
+      ui.map.setAttribute('aria-label',cityData.name+' route training map');
+      document.querySelector('.back-button').href='../?city='+encodeURIComponent(cityData.id);
+      ui.callAddress.textContent='Preparing '+cityData.name+' road data';
+      initMap();bindUi();loadPreferences();await loadData();applyProgressionStart();if(!state.base)throw new Error('No starting base is available.');ui.app.setAttribute('aria-busy','false');newCall();window.PTBO_ROUTE_MAPPING=Object.freeze({version:VERSION,cityId:cityData.id,state,nearestRoad,composeRoute,pathBetween,newCall});
+    }
     catch(error){showFailure(error);}
   }
 

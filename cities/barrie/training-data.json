@@ -1,0 +1,273 @@
+{
+  "schemaVersion": 1,
+  "id": "barrie",
+  "name": "Barrie",
+  "careHomes": [
+    {
+      "id": "moh-ltc-4145",
+      "name": "Woods Park Community and Retirement Living",
+      "addr": "110 Lillian Crescent",
+      "lat": 44.402649499056935,
+      "lng": -79.7167154,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790230"
+      ],
+      "providerId": "4145",
+      "community": "Barrie"
+    },
+    {
+      "id": "moh-ltc-4427",
+      "name": "Victoria Village Manor",
+      "addr": "78 Ross Street",
+      "lat": 44.39118729905696,
+      "lng": -79.69847759999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790223"
+      ],
+      "providerId": "4427",
+      "community": "Barrie"
+    },
+    {
+      "id": "moh-ltc-1824",
+      "name": "Owen Hill Community",
+      "addr": "130 Owen Street",
+      "lat": 44.39509939905698,
+      "lng": -79.69020899999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790195"
+      ],
+      "providerId": "1824",
+      "community": "Barrie"
+    },
+    {
+      "id": "moh-ltc-4716",
+      "name": "Mill Creek Care Centre",
+      "addr": "286 Hurst Drive",
+      "lat": 44.368975699056975,
+      "lng": -79.65609259999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790187"
+      ],
+      "providerId": "4716",
+      "community": "Barrie"
+    },
+    {
+      "id": "moh-ltc-4312",
+      "name": "Roberta Place",
+      "addr": "503 Essa Road",
+      "lat": 44.342107099056996,
+      "lng": -79.708506,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790200"
+      ],
+      "providerId": "4312",
+      "community": "Barrie"
+    },
+    {
+      "id": "moh-ltc-4634",
+      "name": "Bob Rumball Home for The Deaf",
+      "addr": "1 Royal Parkside Drive",
+      "lat": 44.36411889905701,
+      "lng": -79.62309619999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790146"
+      ],
+      "providerId": "4634",
+      "community": "Barrie"
+    },
+    {
+      "id": "moh-ltc-1822",
+      "name": "Grove Park Home For Senior Citizens",
+      "addr": "234 Cook Street",
+      "lat": 44.40600329905695,
+      "lng": -79.6694602,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790172"
+      ],
+      "providerId": "1822",
+      "community": "Barrie"
+    },
+    {
+      "id": "moh-ltc-1821",
+      "name": "Coleman Care Centre",
+      "addr": "140 Cundles Road West",
+      "lat": 44.40110169905696,
+      "lng": -79.7153568,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790156"
+      ],
+      "providerId": "1821",
+      "community": "Barrie"
+    },
+    {
+      "id": "moh-ltc-1823",
+      "name": "IOOF Seniors Home",
+      "addr": "10 Brooks Street",
+      "lat": 44.368607899056975,
+      "lng": -79.68747889999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790175"
+      ],
+      "providerId": "1823",
+      "community": "Barrie"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "bounds": [
+    [
+      44.29368978018843,
+      -79.75851847130781
+    ],
+    [
+      44.45002421043758,
+      -79.585910211136
+    ]
+  ],
+  "center": [
+    44.38577426192153,
+    -79.6964919501417
+  ],
+  "roadsUrl": "cities/barrie/roads.geojson.gz",
+  "roadFeatureCount": 10228,
+  "roadDataSha256": "7b7478ef56cf5cbe53a984679e76f378196045f00dec7e5c9e9b7043f07a8b4d"
+}

@@ -1,0 +1,221 @@
+{
+  "schemaVersion": 1,
+  "id": "greater-sudbury",
+  "name": "Greater Sudbury",
+  "careHomes": [
+    {
+      "id": "moh-ltc-2172",
+      "name": "Extendicare York",
+      "addr": "333 York Street",
+      "lat": 46.475097199058155,
+      "lng": -81.007631,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790089"
+      ],
+      "providerId": "2172",
+      "community": "Sudbury"
+    },
+    {
+      "id": "moh-ltc-4428",
+      "name": "St. Joseph's Villa, Sudbury",
+      "addr": "1250 South Bay Road",
+      "lat": 46.4665968990581,
+      "lng": -80.96676329999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790112"
+      ],
+      "providerId": "4428",
+      "community": "Sudbury"
+    },
+    {
+      "id": "moh-ltc-4725",
+      "name": "St. Gabriel's Villa of Sudbury",
+      "addr": "4690 Municipal Road 15",
+      "lat": 46.57569959905828,
+      "lng": -81.18343099999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790110"
+      ],
+      "providerId": "4725",
+      "community": "Chelmsford"
+    },
+    {
+      "id": "moh-ltc-2162",
+      "name": "Pioneer Manor",
+      "addr": "960 Notre Dame Avenue",
+      "lat": 46.51754639905818,
+      "lng": -80.98199799999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790106"
+      ],
+      "providerId": "2162",
+      "community": "Sudbury"
+    },
+    {
+      "id": "moh-ltc-4271",
+      "name": "Finlandia Hoivakoti Nursing Home",
+      "addr": "233 Fourth Avenue",
+      "lat": 46.484284199058166,
+      "lng": -80.92748089999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790091"
+      ],
+      "providerId": "4271",
+      "community": "Sudbury"
+    },
+    {
+      "id": "moh-ltc-4376",
+      "name": "Elizabeth Centre",
+      "addr": "2100 Main Street",
+      "lat": 46.611943099058365,
+      "lng": -81.02674059999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790080"
+      ],
+      "providerId": "4376",
+      "community": "Val Caron"
+    },
+    {
+      "id": "moh-ltc-7533",
+      "name": "Extendicare Countryside",
+      "addr": "2307 Algonquin Road",
+      "lat": 46.44102199905807,
+      "lng": -80.99620099999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790120"
+      ],
+      "providerId": "7533",
+      "community": "Sudbury"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "bounds": [
+    [
+      46.19584441021693,
+      -81.59843186607993
+    ],
+    [
+      46.973065066084374,
+      -80.54882726163908
+    ]
+  ],
+  "center": [
+    46.48744001132133,
+    -80.99004528426735
+  ],
+  "roadsUrl": "cities/greater-sudbury/roads.geojson.gz",
+  "roadFeatureCount": 11115,
+  "roadDataSha256": "8f09ed366cd9a9101e9a5022a4cf60073540e25b3fffcbe858c71582aae90257"
+}

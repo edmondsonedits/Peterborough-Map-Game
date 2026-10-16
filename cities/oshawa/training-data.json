@@ -1,0 +1,169 @@
+{
+  "schemaVersion": 1,
+  "id": "oshawa",
+  "name": "Oshawa",
+  "careHomes": [
+    {
+      "id": "moh-ltc-4400",
+      "name": "AgeCare Samac",
+      "addr": "451 Woodmount Drive",
+      "lat": 43.94671519905738,
+      "lng": -78.87267319999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789956"
+      ],
+      "providerId": "4400",
+      "community": "Oshawa"
+    },
+    {
+      "id": "moh-ltc-1627",
+      "name": "Extendicare Oshawa",
+      "addr": "82 Park Road North",
+      "lat": 43.89736009905742,
+      "lng": -78.87514599999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789969"
+      ],
+      "providerId": "1627",
+      "community": "Oshawa"
+    },
+    {
+      "id": "moh-ltc-1628",
+      "name": "Hillsdale Estates",
+      "addr": "590 Oshawa Boulevard North",
+      "lat": 43.913831199057384,
+      "lng": -78.8632973,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790001"
+      ],
+      "providerId": "1628",
+      "community": "Oshawa"
+    },
+    {
+      "id": "moh-ltc-4671",
+      "name": "Hillsdale Terraces",
+      "addr": "600 Oshawa Boulevard North",
+      "lat": 43.914984299057394,
+      "lng": -78.86453569999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790002"
+      ],
+      "providerId": "4671",
+      "community": "Oshawa"
+    },
+    {
+      "id": "moh-ltc-1631",
+      "name": "Thorntonview",
+      "addr": "186 Thornton Road South",
+      "lat": 43.885819099057464,
+      "lng": -78.89222039999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790060"
+      ],
+      "providerId": "1631",
+      "community": "Oshawa"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "bounds": [
+    [
+      43.6009699037119,
+      -78.95857818124192
+    ],
+    [
+      44.0474236775095,
+      -78.69666526240337
+    ]
+  ],
+  "center": [
+    43.93466545797818,
+    -78.85868565003685
+  ],
+  "roadsUrl": "cities/oshawa/roads.geojson.gz",
+  "roadFeatureCount": 20638,
+  "roadDataSha256": "80b471ac27ace7635518484bcdb138a267b4f6e6aa114d1a5c81417687ce46bd"
+}

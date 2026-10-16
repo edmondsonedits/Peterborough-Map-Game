@@ -1,0 +1,325 @@
+{
+  "schemaVersion": 1,
+  "id": "brampton",
+  "name": "Brampton",
+  "careHomes": [
+    {
+      "id": "moh-ltc-4492",
+      "name": "Grace Manor",
+      "addr": "45 Kingknoll Drive",
+      "lat": 43.65255789905776,
+      "lng": -79.74112309999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790171"
+      ],
+      "providerId": "4492",
+      "community": "Brampton"
+    },
+    {
+      "id": "moh-ltc-4399",
+      "name": "Hawthorn Woods Community",
+      "addr": "9257 Goreway Drive",
+      "lat": 43.75758509905761,
+      "lng": -79.6889797,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790173"
+      ],
+      "providerId": "4399",
+      "community": "Brampton"
+    },
+    {
+      "id": "moh-ltc-4494",
+      "name": "Burton Manor",
+      "addr": "5 Sterritt Drive",
+      "lat": 43.66166679905775,
+      "lng": -79.77341639999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790148"
+      ],
+      "providerId": "4494",
+      "community": "Brampton"
+    },
+    {
+      "id": "moh-ltc-4338",
+      "name": "Extendicare Brampton",
+      "addr": "7891 McLaughlin Road",
+      "lat": 43.655373399057744,
+      "lng": -79.73586539999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790164"
+      ],
+      "providerId": "4338",
+      "community": "Brampton"
+    },
+    {
+      "id": "moh-ltc-4475",
+      "name": "Woodhall Park Community",
+      "addr": "10260 Kennedy Road North",
+      "lat": 43.72034309905767,
+      "lng": -79.78370009999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790229"
+      ],
+      "providerId": "4475",
+      "community": "Brampton"
+    },
+    {
+      "id": "moh-ltc-3424",
+      "name": "Faith Manor",
+      "addr": "7934 Mclaughlin Road South",
+      "lat": 43.65490069905778,
+      "lng": -79.74147399999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790168"
+      ],
+      "providerId": "3424",
+      "community": "Brampton"
+    },
+    {
+      "id": "moh-ltc-4439",
+      "name": "Tall Pines Long Term Care Centre",
+      "addr": "1001 Peter Robertson Boulevard",
+      "lat": 43.75055589905758,
+      "lng": -79.74243999999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790212"
+      ],
+      "providerId": "4439",
+      "community": "Brampton"
+    },
+    {
+      "id": "moh-ltc-4446",
+      "name": "Maple Grove Community",
+      "addr": "215 Sunny Meadow Boulevard",
+      "lat": 43.75847649905761,
+      "lng": -79.75479209999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790184"
+      ],
+      "providerId": "4446",
+      "community": "Brampton"
+    },
+    {
+      "id": "moh-ltc-1722",
+      "name": "Tullamore Community",
+      "addr": "133 Kennedy Road South",
+      "lat": 43.6847854990577,
+      "lng": -79.73602359999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790219"
+      ],
+      "providerId": "1722",
+      "community": "Brampton"
+    },
+    {
+      "id": "moh-ltc-4350",
+      "name": "The Village of Sandalwood Park",
+      "addr": "425 Great Lakes Drive",
+      "lat": 43.741035599057646,
+      "lng": -79.77161239999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790216"
+      ],
+      "providerId": "4350",
+      "community": "Brampton"
+    },
+    {
+      "id": "moh-ltc-1719",
+      "name": "Peel Manor",
+      "addr": "525 Main Street North",
+      "lat": 43.69997789905768,
+      "lng": -79.78142279999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790197"
+      ],
+      "providerId": "1719",
+      "community": "Brampton"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "bounds": [
+    [
+      43.601818057083655,
+      -79.88887284692828
+    ],
+    [
+      43.84810650458384,
+      -79.63017326996615
+    ]
+  ],
+  "center": [
+    43.7479915849621,
+    -79.71232290339097
+  ],
+  "roadsUrl": "cities/brampton/roads.geojson.gz",
+  "roadFeatureCount": 59389,
+  "roadDataSha256": "0e0116078fab98a5d93b2066f2728a8ac6e4650a9fa1e263933ba2f070b16f37"
+}

@@ -1,0 +1,2119 @@
+{
+  "schemaVersion": 1,
+  "id": "toronto",
+  "name": "Toronto",
+  "careHomes": [
+    {
+      "id": "moh-ltc-1358",
+      "name": "Rockcliffe Community",
+      "addr": "3015 Lawrence Avenue East",
+      "lat": 43.75466029905759,
+      "lng": -79.2478868,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790288"
+      ],
+      "providerId": "1358",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-4586",
+      "name": "Wellesley Central Place",
+      "addr": "160 Wellesley Street East",
+      "lat": 43.66707809905774,
+      "lng": -79.37528249999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790309"
+      ],
+      "providerId": "4586",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-4395",
+      "name": "Extendicare Rouge Valley",
+      "addr": "551 Conlins Road",
+      "lat": 43.80322989905753,
+      "lng": -79.18899469999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790259"
+      ],
+      "providerId": "4395",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-1373",
+      "name": "Belmont House",
+      "addr": "55 Belmont Street",
+      "lat": 43.67462179905771,
+      "lng": -79.39094259999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790239"
+      ],
+      "providerId": "1373",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-3699",
+      "name": "Hellenic Care for Seniors (Toronto)",
+      "addr": "215 Tyrrel Avenue",
+      "lat": 43.67638959905776,
+      "lng": -79.43020619999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790268"
+      ],
+      "providerId": "3699",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-3527",
+      "name": "Sherbourne Place",
+      "addr": "345 Sherbourne Street",
+      "lat": 43.66272919905772,
+      "lng": -79.37237909999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790293"
+      ],
+      "providerId": "3527",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-1320",
+      "name": "Cheltenham Community",
+      "addr": "5935 Bathurst Street",
+      "lat": 43.78182299905759,
+      "lng": -79.44445379999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790247"
+      ],
+      "providerId": "1320",
+      "community": "North York"
+    },
+    {
+      "id": "moh-ltc-4489",
+      "name": "Hellenic Home - Scarborough",
+      "addr": "2411 Lawrence Avenue East",
+      "lat": 43.74933069905762,
+      "lng": -79.27440149999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790269"
+      ],
+      "providerId": "4489",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-4481",
+      "name": "Lakeside Long Term Care Centre",
+      "addr": "150 Dunn Avenue",
+      "lat": 43.636505899057795,
+      "lng": -79.43377169999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790278"
+      ],
+      "providerId": "4481",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-4500",
+      "name": "Mon Sheong Scarborough Long Term Care Centre",
+      "addr": "2030 McNicoll Avenue",
+      "lat": 43.81307889905756,
+      "lng": -79.29998419999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790283"
+      ],
+      "providerId": "4500",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-2799",
+      "name": "Villa Colombo Homes for the Aged",
+      "addr": "40 Playfair Avenue",
+      "lat": 43.710623599057655,
+      "lng": -79.45647819999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790308"
+      ],
+      "providerId": "2799",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-1324",
+      "name": "Downsview Long Term Care Centre",
+      "addr": "3595 Keele Street",
+      "lat": 43.7511669990576,
+      "lng": -79.48558889999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790254"
+      ],
+      "providerId": "1324",
+      "community": "North York"
+    },
+    {
+      "id": "moh-ltc-3686",
+      "name": "Dom Lipa",
+      "addr": "52 Neilson Drive",
+      "lat": 43.62905259905779,
+      "lng": -79.56565259999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790253"
+      ],
+      "providerId": "3686",
+      "community": "Etobicoke"
+    },
+    {
+      "id": "moh-ltc-1331",
+      "name": "Hawthorne Place Care Centre",
+      "addr": "2045 Finch Avenue West",
+      "lat": 43.75607239905763,
+      "lng": -79.5213425,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790267"
+      ],
+      "providerId": "1331",
+      "community": "North York"
+    },
+    {
+      "id": "moh-ltc-1456",
+      "name": "True Davidson Acres",
+      "addr": "200 Dawes Road",
+      "lat": 43.6960429990577,
+      "lng": -79.29839929999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790305"
+      ],
+      "providerId": "1456",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-2624",
+      "name": "Mon Sheong Home for the Aged",
+      "addr": "36 D'Arcy Street",
+      "lat": 43.65525779905774,
+      "lng": -79.39314099999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790282"
+      ],
+      "providerId": "2624",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-4263",
+      "name": "The Jewish Home for the Aged",
+      "addr": "3560 Bathurst Street",
+      "lat": 43.730535399057636,
+      "lng": -79.43366739999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790299"
+      ],
+      "providerId": "4263",
+      "community": "North York"
+    },
+    {
+      "id": "moh-ltc-1402",
+      "name": "The Heritage Nursing Home",
+      "addr": "1195 Queen Street East",
+      "lat": 43.66282959905772,
+      "lng": -79.33131879999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790298"
+      ],
+      "providerId": "1402",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-1307",
+      "name": "Ivan Franko Home (Etobicoke)",
+      "addr": "767 Royal York Road",
+      "lat": 43.63779659905776,
+      "lng": -79.50680839999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790273"
+      ],
+      "providerId": "1307",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-1401",
+      "name": "Fudger House",
+      "addr": "439 Sherbourne Street",
+      "lat": 43.66606499905773,
+      "lng": -79.37356689999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790264"
+      ],
+      "providerId": "1401",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-1349",
+      "name": "Extendicare Scarborough",
+      "addr": "3830 Lawrence Avenue East",
+      "lat": 43.76376019905761,
+      "lng": -79.21012239999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790260"
+      ],
+      "providerId": "1349",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-4456",
+      "name": "Norfinch Community",
+      "addr": "22 Norfinch Drive",
+      "lat": 43.7559912990576,
+      "lng": -79.52652979999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790285"
+      ],
+      "providerId": "4456",
+      "community": "North York"
+    },
+    {
+      "id": "moh-ltc-1325",
+      "name": "Chartwell Gibson Long Term Care Residence",
+      "addr": "1925 Steeles Avenue East",
+      "lat": 43.807653099057546,
+      "lng": -79.37379699999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790244"
+      ],
+      "providerId": "1325",
+      "community": "North York"
+    },
+    {
+      "id": "moh-ltc-1345",
+      "name": "Bendale Acres",
+      "addr": "2920 Lawrence Avenue East",
+      "lat": 43.75492079905762,
+      "lng": -79.25183279999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790240"
+      ],
+      "providerId": "1345",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-1341",
+      "name": "Better Living at Thompson House",
+      "addr": "1 Overland Drive",
+      "lat": 43.73248009905767,
+      "lng": -79.34667819999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790241"
+      ],
+      "providerId": "1341",
+      "community": "North York"
+    },
+    {
+      "id": "moh-ltc-1308",
+      "name": "Kipling Acres",
+      "addr": "2233 Kipling Avenue",
+      "lat": 43.72502569905763,
+      "lng": -79.5729629,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790275"
+      ],
+      "providerId": "1308",
+      "community": "Etobicoke"
+    },
+    {
+      "id": "moh-ltc-4411",
+      "name": "AgeCare Trilogy",
+      "addr": "340 McCowan Road",
+      "lat": 43.738468099057656,
+      "lng": -79.2386358,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790245"
+      ],
+      "providerId": "4411",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-3613",
+      "name": "Lakeshore Lodge",
+      "addr": "3197 Lakeshore Boulevard West",
+      "lat": 43.59720019905786,
+      "lng": -79.51844829999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790277"
+      ],
+      "providerId": "3613",
+      "community": "Etobicoke"
+    },
+    {
+      "id": "moh-ltc-1408",
+      "name": "Ina Grafton Gage Home",
+      "addr": "40 Bell Estate Road",
+      "lat": 43.70574779905769,
+      "lng": -79.2771358,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790271"
+      ],
+      "providerId": "1408",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-4691",
+      "name": "Arirang Korean Long Term Care",
+      "addr": "17 Maplewood Avenue",
+      "lat": 43.68590109905771,
+      "lng": -79.42165589999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790289"
+      ],
+      "providerId": "4691",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-3290",
+      "name": "Humber Valley Terrace",
+      "addr": "95 Humber College Boulevard",
+      "lat": 43.727176699057644,
+      "lng": -79.5966262,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790270"
+      ],
+      "providerId": "3290",
+      "community": "Etobicoke"
+    },
+    {
+      "id": "moh-ltc-3302",
+      "name": "St. Clair O'Connor Community Nursing Home",
+      "addr": "2701 St Clair Avenue East",
+      "lat": 43.70544759905767,
+      "lng": -79.31196969999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790294"
+      ],
+      "providerId": "3302",
+      "community": "East York"
+    },
+    {
+      "id": "moh-ltc-3333",
+      "name": "Harold and Grace Baker Centre",
+      "addr": "1 Northwestern Avenue",
+      "lat": 43.69823359905771,
+      "lng": -79.47016539999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790266"
+      ],
+      "providerId": "3333",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-3422",
+      "name": "Seniors' Health Centre",
+      "addr": "2 Buchan Court",
+      "lat": 43.77299889905756,
+      "lng": -79.36011159999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790290"
+      ],
+      "providerId": "3422",
+      "community": "North York"
+    },
+    {
+      "id": "moh-ltc-4587",
+      "name": "The Village of Humber Heights",
+      "addr": "2245 Lawrence Avenue West",
+      "lat": 43.69708689905771,
+      "lng": -79.52689559999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790302"
+      ],
+      "providerId": "4587",
+      "community": "Etobicoke"
+    },
+    {
+      "id": "moh-ltc-3582",
+      "name": "Seven Oaks",
+      "addr": "9 Neilson Road",
+      "lat": 43.781733899057556,
+      "lng": -79.2032529,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790291"
+      ],
+      "providerId": "3582",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-1374",
+      "name": "Main Street Terrace",
+      "addr": "77 Main Street",
+      "lat": 43.68159229905774,
+      "lng": -79.29859149999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790279"
+      ],
+      "providerId": "1374",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-4392",
+      "name": "Isabel and Arthur Meighen Manor",
+      "addr": "155 Millwood Road",
+      "lat": 43.699720999057675,
+      "lng": -79.39235809999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790272"
+      ],
+      "providerId": "4392",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-2621",
+      "name": "The O'Neill Centre",
+      "addr": "33 Christie Street",
+      "lat": 43.66476199905771,
+      "lng": -79.41864629999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790301"
+      ],
+      "providerId": "2621",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-4380",
+      "name": "Weston Terrace Community",
+      "addr": "2005 Lawrence Avenue West",
+      "lat": 43.70104179905771,
+      "lng": -79.5100127,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790312"
+      ],
+      "providerId": "4380",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-1419",
+      "name": "Maynard Nursing Home",
+      "addr": "28 Halton Street",
+      "lat": 43.648791699057746,
+      "lng": -79.41917469999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790280"
+      ],
+      "providerId": "1419",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-4337",
+      "name": "West Park Long Term Care Centre",
+      "addr": "150 Emmett Avenue",
+      "lat": 43.68937659905768,
+      "lng": -79.506978,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790311"
+      ],
+      "providerId": "4337",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-5513",
+      "name": "Runnymede Long-Term Care Home",
+      "addr": "621 Runnymede Road",
+      "lat": 43.663914199057736,
+      "lng": -79.48129069999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790319"
+      ],
+      "providerId": "5513",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-1316",
+      "name": "Extendicare Bayview",
+      "addr": "550 Cummer Avenue",
+      "lat": 43.793395299057586,
+      "lng": -79.39066559999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790257"
+      ],
+      "providerId": "1316",
+      "community": "North York"
+    },
+    {
+      "id": "moh-ltc-1416",
+      "name": "St. George Community",
+      "addr": "225 St. George Street",
+      "lat": 43.672518799057734,
+      "lng": -79.40153249999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790295"
+      ],
+      "providerId": "1416",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-1352",
+      "name": "Kennedy Lodge",
+      "addr": "1400 Kennedy Road",
+      "lat": 43.76262289905757,
+      "lng": -79.28054589999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790274"
+      ],
+      "providerId": "1352",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-1318",
+      "name": "Carefree Lodge",
+      "addr": "306 Finch Avenue East",
+      "lat": 43.78500109905758,
+      "lng": -79.39410859999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790242"
+      ],
+      "providerId": "1318",
+      "community": "North York"
+    },
+    {
+      "id": "moh-ltc-3316",
+      "name": "Fairview Nursing Home",
+      "addr": "14 Cross Street",
+      "lat": 43.64810359905776,
+      "lng": -79.42849579999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790261"
+      ],
+      "providerId": "3316",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-1425",
+      "name": "Norwood Nursing Home",
+      "addr": "122 Tyndall Avenue",
+      "lat": 43.6375057990578,
+      "lng": -79.4293753,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790286"
+      ],
+      "providerId": "1425",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-4437",
+      "name": "Fieldstone Commons Community",
+      "addr": "1000 Ellesmere Road",
+      "lat": 43.767290199057605,
+      "lng": -79.2779377,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790262"
+      ],
+      "providerId": "4437",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-1351",
+      "name": "Extendicare Guildwood",
+      "addr": "60 Guildwood Parkway",
+      "lat": 43.746845899057625,
+      "lng": -79.20312459999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790258"
+      ],
+      "providerId": "1351",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-1424",
+      "name": "Nisbet Lodge",
+      "addr": "740 Pape Avenue",
+      "lat": 43.68022459905772,
+      "lng": -79.3456817,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790284"
+      ],
+      "providerId": "1424",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-1321",
+      "name": "Cummer Lodge",
+      "addr": "205 Cummer Avenue",
+      "lat": 43.78814449905759,
+      "lng": -79.40755489999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790251"
+      ],
+      "providerId": "1321",
+      "community": "North York"
+    },
+    {
+      "id": "moh-ltc-3680",
+      "name": "Suomi-Koti Toronto Nursing Home",
+      "addr": "795 Eglinton Avenue East",
+      "lat": 43.713112699057646,
+      "lng": -79.36613469999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790296"
+      ],
+      "providerId": "3680",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-4653",
+      "name": "Chester Village",
+      "addr": "3555 Danforth Avenue",
+      "lat": 43.693631599057674,
+      "lng": -79.27484189999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790248"
+      ],
+      "providerId": "4653",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-2801",
+      "name": "Castleview Wychwood Towers",
+      "addr": "351 Christie Street",
+      "lat": 43.67322349905771,
+      "lng": -79.42156499999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790243"
+      ],
+      "providerId": "2801",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-3118",
+      "name": "The Wexford",
+      "addr": "1860 Lawrence Avenue East",
+      "lat": 43.743986899057646,
+      "lng": -79.30319809999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790303"
+      ],
+      "providerId": "3118",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-2920",
+      "name": "Westside",
+      "addr": "1145 Albion Road",
+      "lat": 43.73726859905766,
+      "lng": -79.56776449999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790313"
+      ],
+      "providerId": "2920",
+      "community": "Etobicoke"
+    },
+    {
+      "id": "moh-ltc-3711",
+      "name": "Yee Hong Centre - Scarborough McNicoll",
+      "addr": "2311 McNicoll Avenue",
+      "lat": 43.8142109990575,
+      "lng": -79.2901751,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790315"
+      ],
+      "providerId": "3711",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-4453",
+      "name": "Wesburn Manor",
+      "addr": "400 The West Mall",
+      "lat": 43.64387209905776,
+      "lng": -79.56745239999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790310"
+      ],
+      "providerId": "4453",
+      "community": "Etobicoke"
+    },
+    {
+      "id": "moh-ltc-1348",
+      "name": "Craiglee Nursing Home",
+      "addr": "102 Craiglee Drive",
+      "lat": 43.706847699057676,
+      "lng": -79.25328509999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790250"
+      ],
+      "providerId": "1348",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-2848",
+      "name": "Tony Stacey Centre for Veterans' Care",
+      "addr": "59 Lawson Road",
+      "lat": 43.783293799057574,
+      "lng": -79.1634479,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790304"
+      ],
+      "providerId": "2848",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-3637",
+      "name": "Shepherd Lodge",
+      "addr": "3760 Sheppard Avenue East",
+      "lat": 43.782907299057584,
+      "lng": -79.29395239999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790292"
+      ],
+      "providerId": "3637",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-1305",
+      "name": "Eatonville Care Centre",
+      "addr": "420 The East Mall",
+      "lat": 43.64748259905779,
+      "lng": -79.5605956,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790255"
+      ],
+      "providerId": "1305",
+      "community": "Etobicoke"
+    },
+    {
+      "id": "moh-ltc-4503",
+      "name": "Valleyview Residence",
+      "addr": "541 Finch Avenue West",
+      "lat": 43.7708913990576,
+      "lng": -79.44621209999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790307"
+      ],
+      "providerId": "4503",
+      "community": "North York"
+    },
+    {
+      "id": "moh-ltc-3731",
+      "name": "Ehatare Nursing Home",
+      "addr": "40 Old Kingston Road",
+      "lat": 43.77549689905757,
+      "lng": -79.18319829999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790256"
+      ],
+      "providerId": "3731",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-4348",
+      "name": "Labdara Lithuanian Nursing Home",
+      "addr": "5 Resurrection Road",
+      "lat": 43.64409249905775,
+      "lng": -79.53078979999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790276"
+      ],
+      "providerId": "4348",
+      "community": "Etobicoke"
+    },
+    {
+      "id": "moh-ltc-4304",
+      "name": "Fountain View Community",
+      "addr": "1800 O'Connor Drive",
+      "lat": 43.720542699057646,
+      "lng": -79.30495909999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790263"
+      ],
+      "providerId": "4304",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-4495",
+      "name": "AgeCare Westbury",
+      "addr": "495 The West Mall",
+      "lat": 43.648306099057756,
+      "lng": -79.5676719,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790246"
+      ],
+      "providerId": "4495",
+      "community": "Etobicoke"
+    },
+    {
+      "id": "moh-ltc-3849",
+      "name": "Ukrainian Canadian Care Centre",
+      "addr": "60 Richview Road",
+      "lat": 43.68452899905768,
+      "lng": -79.51901949999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790306"
+      ],
+      "providerId": "3849",
+      "community": "Etobicoke"
+    },
+    {
+      "id": "moh-ltc-2795",
+      "name": "Tendercare Living Centre",
+      "addr": "1020 McNicoll Avenue",
+      "lat": 43.805753299057564,
+      "lng": -79.33599679999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790297"
+      ],
+      "providerId": "2795",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-4308",
+      "name": "Deerwood Creek Community",
+      "addr": "70 Humberline Drive",
+      "lat": 43.73158769905764,
+      "lng": -79.61743889999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790252"
+      ],
+      "providerId": "4308",
+      "community": "Etobicoke"
+    },
+    {
+      "id": "moh-ltc-1344",
+      "name": "Glen Rouge Community",
+      "addr": "92 Island Road",
+      "lat": 43.79886699905756,
+      "lng": -79.14013559999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790238"
+      ],
+      "providerId": "1344",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-4473",
+      "name": "Yee Hong Centre - Scarborough Finch",
+      "addr": "60 Scottfield Drive",
+      "lat": 43.808638999057536,
+      "lng": -79.25453479999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790314"
+      ],
+      "providerId": "4473",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-4863",
+      "name": "Providence Healthcare",
+      "addr": "3276 St. Clair Avenue East",
+      "lat": 43.71294669905767,
+      "lng": -79.28527829999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790287"
+      ],
+      "providerId": "4863",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-3659",
+      "name": "Midland Gardens Community",
+      "addr": "130 Midland Avenue",
+      "lat": 43.70832629905766,
+      "lng": -79.2478413,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790281"
+      ],
+      "providerId": "3659",
+      "community": "Scarborough"
+    },
+    {
+      "id": "moh-ltc-3521",
+      "name": "Copernicus Lodge",
+      "addr": "66 Roncesvalles Avenue",
+      "lat": 43.6401908990578,
+      "lng": -79.44730419999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790249"
+      ],
+      "providerId": "3521",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-4336",
+      "name": "The Kensington Gardens",
+      "addr": "25 Brunswick Avenue",
+      "lat": 43.65818179905776,
+      "lng": -79.40343149999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790300"
+      ],
+      "providerId": "4336",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-5511",
+      "name": "Humber Meadows Long-Term Care Home",
+      "addr": "2109 Finch Avenue West",
+      "lat": 43.75468739905762,
+      "lng": -79.52465459999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790316"
+      ],
+      "providerId": "5511",
+      "community": "Toronto"
+    },
+    {
+      "id": "moh-ltc-4295",
+      "name": "Harmony Hills Community",
+      "addr": "1800 O'Connor Drive",
+      "lat": 43.720542699057646,
+      "lng": -79.30495909999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790265"
+      ],
+      "providerId": "4295",
+      "community": "Toronto"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "bounds": [
+    [
+      43.37643633467712,
+      -79.63930457416879
+    ],
+    [
+      43.85545613037791,
+      -79.00344005123046
+    ]
+  ],
+  "center": [
+    43.67807101554298,
+    -79.53855364490265
+  ],
+  "roadsUrl": "cities/toronto/roads.geojson.gz",
+  "roadFeatureCount": 153233,
+  "roadDataSha256": "7fb3479254795aa1a881f6e5e940d017e73165085e04645b937ae35a84ca44d9"
+}

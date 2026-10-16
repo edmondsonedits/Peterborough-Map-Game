@@ -114,4 +114,11 @@ for (const file of canonicalSurfaces) {
   write(file, html);
 }
 
+// These imports share module identity with versioned entrypoints. Keep the
+// authored-scene bridge and main renderer on the same CitySplatLayer instance.
+for (const file of ['city-explorer/app.js', 'city-explorer/authored-scene-bootstrap.js', 'city-explorer/road-orientation-fix.js', 'city-explorer/editor/city-editor.js']) {
+  const source = replaceRequired(file, read(file), /(\.\/(?:editor\/)?(?:city-splat-layer|authored-scene-bootstrap|draft-store|city-editor|version-saver|recovery-prompt)\.js\?v=)\d+\.\d+\.\d+/g, `$1${VERSION}`, 'shared versioned module import');
+  write(file, source);
+}
+
 console.log(`Normalized GitHub Pages artifact to v${VERSION}.`);

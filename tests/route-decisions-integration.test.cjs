@@ -3,20 +3,36 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const root=path.resolve(__dirname,'..'),read=f=>fs.readFileSync(path.join(root,f),'utf8'),services=require('../response-simulator/service-config.js');
 const calls=JSON.parse(zlib.gunzipSync(Buffer.from(read('shared/dispatch-data-1.4.4.js').match(/const PAYLOAD = '([^']+)'/)[1],'base64')));
 function app(){
- const storage=new Map(),elements=new Map(),c=vm.createContext({
+ const storage=new Map(),elements=new Map(),layoutRects=new Map(),c=vm.createContext({
   window:{PTBO_SERVICE_CONFIG:services,PTBO_ROUTE_LEARNING:require('../route-mapping/learning-core.js')},
-  document:{body:{classList:{toggle(){}}},getElementById(id){if(!elements.has(id))elements.set(id,{textContent:'',disabled:false,hidden:true,dataset:{},setAttribute(){}});return elements.get(id);}},
+  document:{body:{classList:{toggle(){}}},getElementById(id){if(!elements.has(id))elements.set(id,{textContent:'',disabled:false,hidden:true,dataset:{},setAttribute(){},getBoundingClientRect(){return layoutRects.get(id)||{left:0,top:0,right:0,bottom:0,width:0,height:0};}});return elements.get(id);}},
   localStorage:{getItem:k=>storage.get(k)??null,setItem:(k,v)=>storage.set(k,v)},
   console,requestAnimationFrame:fn=>fn()
  });
- const exportNames=['state','CONFIG','toXY','toLatLng','buildGraph','basePoint','callPoint','pathBetween','buildDifficultyIndex','scoreCall','analyzeDecisionDifficulty','chooseCall','progressionPhase','applyProgressionStart','loadProgression','saveProgression','loadSkillProfiles','weightedCallChoice','weaknessBoostForAnalysis','undo','stopStroke','submitRoute','newCall','updateMarkers'];
+ const exportNames=['state','CONFIG','toXY','toLatLng','buildGraph','basePoint','callPoint','pathBetween','buildDifficultyIndex','scoreCall','analyzeDecisionDifficulty','chooseCall','progressionPhase','applyProgressionStart','loadProgression','saveProgression','loadSkillProfiles','weightedCallChoice','weaknessBoostForAnalysis','undo','stopStroke','submitRoute','newCall','updateMarkers','fitExercise'];
  vm.runInContext(read('route-mapping/app.js').replace('  initialize();','  globalThis.routeTest={'+exportNames.join(',')+'};'),c);
  const a=c.routeTest;
  a.state.graph=a.buildGraph(JSON.parse(read('city-explorer/data/osm-public-roads.geojson')));
  a.state.traceCore=require('../route-mapping/trace-core.js').createTraceCore({graph:a.state.graph,toXY:a.toXY,toLatLng:a.toLatLng,search:(from,to,o)=>a.pathBetween(from,to,'distance',o)});
- return {a,storage,c};
+ return {a,storage,c,layoutRects};
 }
 const real=app();
+test('exercise fitting reserves the live header, hint, controls, and zoom-nav area on phone, landscape, and desktop',()=>{
+ const {a,c,layoutRects}=app(),options=[];a.state.base=services.profiles.fire.bases[0];a.state.call=calls[0];
+ a.state.map={fitBounds(_bounds,value){options.push(value);}};
+ for(const id of ['dispatch-card','hint','controls','map-nav'])c.document.getElementById(id).hidden=false;
+ for(const [width,height,cardBottom,hintTop,controlsTop,navTop] of [[390,844,140,700,770,660],[667,375,105,240,300,185],[1280,800,120,660,720,650]]){
+  layoutRects.set('map',{left:0,top:0,right:width,bottom:height,width,height});
+  layoutRects.set('dispatch-card',{left:72,top:16,right:width-72,bottom:cardBottom,width:width-144,height:cardBottom-16});
+  layoutRects.set('hint',{left:20,top:hintTop,right:width-20,bottom:hintTop+40,width:width-40,height:40});
+  layoutRects.set('controls',{left:14,top:controlsTop,right:width-14,bottom:height-16,width:width-28,height:height-controlsTop-16});
+  layoutRects.set('map-nav',{left:width-58,top:navTop,right:width-14,bottom:height-98,width:44,height:height-98-navTop});
+  a.fitExercise();const fit=options.at(-1);
+  assert.ok(fit.paddingTopLeft[1]>=cardBottom+30,`${width}x${height}: keep marker bounds below the live header`);
+  assert.ok(fit.paddingBottomRight[1]>=height-Math.min(hintTop,controlsTop,navTop)+30,`${width}x${height}: reserve the deepest visible bottom overlay and marker bounds`);
+  assert.ok(fit.paddingBottomRight[0]>=58+30,`${width}x${height}: reserve the right-side zoom controls and marker bounds`);
+ }
+});
 test('real Station 1 50 metre stroke remains partial on Sherbrooke Street',()=>{
  const {a}=real,core=a.state.traceCore,start=core.snap(a.basePoint(services.profiles.fire.bases[0]),260);
  const target=core.snap(calls.find(x=>x.addr==='353 Hunter St E')||calls[0],520),reference=core.between(start,target);

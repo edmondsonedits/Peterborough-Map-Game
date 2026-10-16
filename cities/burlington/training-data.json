@@ -1,0 +1,273 @@
+{
+  "schemaVersion": 1,
+  "id": "burlington",
+  "name": "Burlington",
+  "careHomes": [
+    {
+      "id": "moh-ltc-4349",
+      "name": "The Village of Tansley Woods",
+      "addr": "4100 Upper Middle Road",
+      "lat": 43.383398299058186,
+      "lng": -79.80029609999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789906"
+      ],
+      "providerId": "4349",
+      "community": "Burlington"
+    },
+    {
+      "id": "moh-ltc-3620",
+      "name": "CAMA Woodlands Nursing Home",
+      "addr": "159 Panin Road",
+      "lat": 43.310295499058306,
+      "lng": -79.86710539999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789728"
+      ],
+      "providerId": "3620",
+      "community": "Burlington"
+    },
+    {
+      "id": "moh-ltc-4488",
+      "name": "Billings Court Manor",
+      "addr": "3700 Billings Court",
+      "lat": 43.36352799905825,
+      "lng": -79.78720349999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789719"
+      ],
+      "providerId": "4488",
+      "community": "Burlington"
+    },
+    {
+      "id": "moh-ltc-1156",
+      "name": "Wellington Park Care Centre",
+      "addr": "802 Hager Avenue",
+      "lat": 43.33137469905829,
+      "lng": -79.81202959999996,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789924"
+      ],
+      "providerId": "1156",
+      "community": "Burlington"
+    },
+    {
+      "id": "moh-ltc-1162",
+      "name": "Maple Villa Long Term Care Centre",
+      "addr": "441 Maple Avenue",
+      "lat": 43.320100299058325,
+      "lng": -79.80254879999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789823"
+      ],
+      "providerId": "1162",
+      "community": "Burlington"
+    },
+    {
+      "id": "moh-ltc-4317",
+      "name": "Hampton Terrace Care Centre",
+      "addr": "75 Plains Road West",
+      "lat": 43.305416899058336,
+      "lng": -79.8554914,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789796"
+      ],
+      "providerId": "4317",
+      "community": "Burlington"
+    },
+    {
+      "id": "moh-ltc-4331",
+      "name": "Burloak",
+      "addr": "5959 New Street",
+      "lat": 43.38145329905821,
+      "lng": -79.73937059999997,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789727"
+      ],
+      "providerId": "4331",
+      "community": "Burlington"
+    },
+    {
+      "id": "moh-ltc-4591",
+      "name": "Creek Way Village",
+      "addr": "5200 Corporate Drive",
+      "lat": 43.39301119905821,
+      "lng": -79.77984619999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789756"
+      ],
+      "providerId": "4591",
+      "community": "Burlington"
+    },
+    {
+      "id": "moh-ltc-4441",
+      "name": "AgeCare Brant",
+      "addr": "1182 Northshore Boulevard East",
+      "lat": 43.316498699058315,
+      "lng": -79.8038037,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789740"
+      ],
+      "providerId": "4441",
+      "community": "Burlington"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "bounds": [
+    [
+      43.26801300112401,
+      -79.95928964637378
+    ],
+    [
+      43.47654603016583,
+      -79.63034733192568
+    ]
+  ],
+  "center": [
+    43.33113882611392,
+    -79.81819737571415
+  ],
+  "roadsUrl": "cities/burlington/roads.geojson.gz",
+  "roadFeatureCount": 32580,
+  "roadDataSha256": "c04aaee1541fe90e412d5e597730c7f2bc294dbe4a8a1565e525f464119d2848"
+}

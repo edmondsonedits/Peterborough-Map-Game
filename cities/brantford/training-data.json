@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 1,
+  "id": "brantford",
+  "name": "Brantford",
+  "careHomes": [
+    {
+      "id": "moh-ltc-1002",
+      "name": "Oakwood Commons Community",
+      "addr": "166 Lynden Road",
+      "lat": 43.17424629905863,
+      "lng": -80.23405609999998,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789782"
+      ],
+      "providerId": "1002",
+      "community": "Brantford"
+    },
+    {
+      "id": "moh-ltc-1011",
+      "name": "John Noble Home",
+      "addr": "97 Mount Pleasant Street",
+      "lat": 43.125477599058684,
+      "lng": -80.27587029999995,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789810"
+      ],
+      "providerId": "1011",
+      "community": "Brantford"
+    },
+    {
+      "id": "moh-ltc-3315",
+      "name": "Brierwood Gardens",
+      "addr": "425 Park Road North",
+      "lat": 43.17852289905859,
+      "lng": -80.24747009999999,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789724"
+      ],
+      "providerId": "3315",
+      "community": "Brantford"
+    },
+    {
+      "id": "moh-ltc-4507",
+      "name": "St. Joseph's Lifecare Centre",
+      "addr": "99 Wayne Gretzky Parkway",
+      "lat": 43.14552599905866,
+      "lng": -80.2353081,
+      "radius": 65,
+      "facilityType": "long-term-care",
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "recognitionDifficulty": "medium",
+      "custom": false,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        },
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789881"
+      ],
+      "providerId": "4507",
+      "community": "Brantford"
+    }
+  ],
+  "careSource": {
+    "url": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26",
+    "dataset": "Ontario Ministry of Health Service Provider Locations",
+    "filter": "SERVICE_TYPE = 'Long-Term Care Home'",
+    "retrievedAt": "2026-10-16",
+    "license": "Open Government Licence - Ontario",
+    "sha256": "96114733c41ff3955285f2c0581006714e3865e9abb136916feaad37f4b284a7"
+  },
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "bounds": [
+    [
+      43.094072144874396,
+      -80.3535853481985
+    ],
+    [
+      43.20851486570947,
+      -80.18967939749706
+    ]
+  ],
+  "center": [
+    43.14202450140971,
+    -80.25947528700333
+  ],
+  "roadsUrl": "cities/brantford/roads.geojson.gz",
+  "roadFeatureCount": 5579,
+  "roadDataSha256": "f94a219730886951b6a6213cb71fbb2f3130a82052b53134742da47cc72b1917"
+}

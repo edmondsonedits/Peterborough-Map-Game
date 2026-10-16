@@ -14,7 +14,17 @@ Only the selected city should load its heavy geographic assets. Adding more city
 - `base-training` — an existing shared free-driving preview, with dispatch calls unavailable. Oshawa, Pickering, Markham and Toronto also have Geo demos; Belleville and Scarborough do not.
 - `geo-demo` — a researched Geo Guesser demo with twenty calls and Fire/EMS bases. This status does not supply driving roads or dispatch simulation.
 
-Launchers must use `city.modes` from `city-registry.js` for each mode: `geo`, `route`, `dispatch` and `explorer`. Peterborough supports all four. The six existing previews retain `dispatch: true` to access their existing free-driving simulator; the twenty-six newly added city folders have only `geo: true`. A common `dispatch.desktop` or `dispatch.mobile` route is a URL descriptor, not evidence that a city supports that mode.
+Launchers must use `city.modes` from `city-registry.js` for each mode: `geo`, `route`, `dispatch` and `explorer`. All 33 cities now support Route Mapping. Peterborough supports all four modes. The six existing previews retain `dispatch: true` to access their existing free-driving simulator. Other cities support Geo and Route Mapping. A common `dispatch.desktop` or `dispatch.mobile` URL is not evidence of dispatch capability.
+
+## Route Mapping and EMS care homes
+
+Each city's `training-data.json` identifies the selected road asset and Ontario MOHSERLO long-term-care homes. The shared dispatch store loads only that city's descriptor, retains canonical coordinates/IDs, and marks matching civic addresses within 100 metres as care homes. Additional homes are EMS-only. Saved edits remain city scoped. The shared EMS priority policy favors care homes in eligible pools while retaining general practice and avoiding immediate repeats where possible.
+
+Peterborough keeps its existing public-road asset and its independently refreshed geospatial source manifest. The other 32 cities have independent `roads.geojson.gz` extracts from the recorded Geofabrik Ontario snapshot, retaining OSM way identity, access and direction tags. Visual tiles remain separate. Extracts include a buffer around the existing training bounds; they are not authoritative municipal boundary polygons. Each descriptor records source checksums/date or the maintained source manifest, and licenses. Only the selected road network is downloaded. Fire routes in the two legacy cities without a general-call catalog (Belleville and Scarborough) use verified fire-station destinations.
+
+Route exercises honor mapped one-way streets; the current graph does not include OSM turn-restriction relations, temporary closures or live emergency routing. A base needs a directed connection to an eligible training destination within the mapped network. Toronto's two Island bases have no reachable destination in the current catalog; users can choose another base without an invented mainland connection.
+
+Build with `scripts/build-city-training.py` and PyOsmium 4.3.1 using the reviewed city descriptors, regional PBF and official MOHSERLO GeoJSON. It rejects missing care-home coverage, filters by community and training bounds, and records source checksums. Care-home catalogs are a training snapshot, not a complete or real-time facility inventory. Copyright: OpenStreetMap contributors (ODbL 1.0); Ontario health-provider data under the Open Government Licence – Ontario.
 
 ## Standard package layout
 
@@ -77,4 +87,4 @@ node scripts/build-ontario-geo-data.cjs /path/to/package/cities
 node --test tests/ontario-city-data.test.cjs
 ```
 
-The builder checks source IDs and coordinate bounds, writes the thirty compact datasets, and adds Geo manifest fields while preserving existing driving configuration. New manifests have no driving runtime or roads. `package.js` and `dispatch-data.js` are never generated or changed by this command. When changing availability, also update the registry's explicit mode flags.
+The Geo builder checks source IDs and coordinate bounds, writes the thirty compact datasets, and adds Geo manifest fields while preserving existing driving configuration. It does not generate driving runtimes or roads; Route Mapping's separate training-data builder supplies its own road extracts. `package.js` and `dispatch-data.js` are never generated or changed by this command. When changing availability, also update the registry's explicit mode flags.
