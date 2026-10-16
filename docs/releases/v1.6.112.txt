@@ -1,0 +1,67 @@
+Peterborough Map Game v1.6.112 - release verification
+
+Published website: https://edmondsonedits.github.io/Peterborough-Map-Game/
+Published integrated editor: https://peterborough-3d-map-editor-preview.dans-host.chatgpt.site/city-explorer/?editor=1
+
+Delivered
+- Correct directed response routing and roundabout handling.
+- Distinct training history entries after reload; existing entries preserved.
+- Route Mapping always loads its Peterborough data, without rewriting city preferences.
+- Useful Geo Guesser focus, legible review panels and clear phone controls.
+- Editor draft identity, immediate-navigation autosave, recovery/export and publish-error feedback.
+- Editor panels and mobile training notices remain clear of the playfield controls.
+- Updated release cache keys and one shared authored-scene module identity.
+- Separate editor host updated from v1.6.88 to the reviewed v1.6.112 runtime.
+- Phone feedback toast no longer overlaps the station/status panel.
+
+Verification
+540 repository tests passed (425 main, 111 tooling, 4 Python terrain).
+8 standalone editor-host tests passed.
+Static source, release/module graph, syntax and diff checks passed.
+Independent Sol review resolved the substantive and release-cache findings.
+21 live Chromium journeys passed: 7 Geo Guesser desktop/mobile/online Fire/EMS
+journeys; Route Mapping Fire/EMS and retry; Fire/EMS reload history; 3D phone
+truck/flight and authored layer; narrow landscape Geo review; live editor layout
+and draft recovery; launcher; Fire/EMS dispatch; local Dispatch Editor; Tunnel Break.
+30 Ontario city demos passed Fire/EMS and difficulty checks, plus five viewports,
+city availability, local requests, stats and unavailable-city feedback.
+All 65 Fire/EMS bases across six base-training cities passed spawn/availability checks.
+26 GitHub runtime files and 13 editor-host files matched released source hashes.
+Editor-host HTML differs only by the identified hosting-injected Cloudflare script.
+Authored scene data was preserved. No browser QA edit was published to scene data.
+
+Tunnel QA correction
+The old synthetic test forced victory on a one-piece board, causing an immediate
+maze victory and a delayed results dialog. The corrected test creates a valid
+connected maze, proves movement, and verifies board/maze Pause, Escape and Resume.
+No Tunnel Break runtime change was required.
+
+Release provenance
+Runtime release commit: bcf2f07166e1bc9e1b3fa0f91ca45cd7f26939fc.
+GitHub main includes the concurrent automated geospatial metadata refresh.
+The final deployed source commit/workflow is recorded in release-receipt.json.
+Editor Site version: 4; source a6e80557a348cd898ad4db9c26e93ecc1d476e48.
+Editor deployment: appgdep_6ad18509eea481918ca980200200c1a4; existing public audience retained.
+
+Evidence (local; intentionally excluded from the website bundle)
+test-artifacts/release-1.6.112/release-receipt.json
+test-artifacts/release-1.6.112/deployed-source-receipt.json
+test-artifacts/release-1.6.112/live-geo/focus-browser-report.json
+test-artifacts/release-1.6.112/live-core/browser-report.json
+test-artifacts/release-1.6.112/live-editor/browser-report.json
+test-artifacts/release-1.6.112/live-journeys/journeys.json
+test-artifacts/release-1.6.112/tunnel-focused-live/journeys.json
+test-artifacts/release-1.6.112/live-ontario/report.json
+test-artifacts/release-1.6.112/live-base-cities/base-cities.json
+Screenshots are alongside their corresponding browser reports.
+Full unit/tool logs: test-artifacts/release-1.6.111/ (rerun for this release).
+
+Limits
+Chromium desktop and touch/device emulation; physical devices, Safari and Firefox
+were not tested. Mission arrivals and Tunnel setup used explicit test fixtures;
+movement and controls were exercised. The editor mismatch check intercepted only
+published-details JSON updatedAt; all executable editor assets came from the live
+host. Authenticated scene publication was not exercised. Analytics writes were
+intercepted. No performance or operational-navigation claim is made.
+No unresolved actionable defect remains from this review; these verification
+limits remain distinct from confirmed release results.

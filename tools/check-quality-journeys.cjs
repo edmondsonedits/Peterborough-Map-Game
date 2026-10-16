@@ -110,15 +110,49 @@ await journey('dispatch-editor',false,async page=>{
 },async context=>{await context.addInitScript(()=>localStorage.setItem('ptbo-emergency-developer-mode','enabled'));});
 await journey('tunnel',true,async page=>{
  await page.goto(base+'/tunnel-break/');await page.waitForFunction(()=>window.TunnelBreakDebug);
- await page.evaluate(()=>TunnelBreakDebug.start());const board=await page.locator('#board').boundingBox();
- await page.mouse.move(board.x+board.width/2,board.y+board.height/2);await page.mouse.down();
+ await page.evaluate(()=>TunnelBreakDebug.start('bandido',5,'classic','quality-journey'));
+ // Cancel over an actual legal placement, then prove the same pointer action can
+ // select and place a card. Cancelling over the locked starting card proves little.
+ await page.locator('#hintBtn').click();await page.locator('#fitBtn').click();
+ const placement=await page.evaluate(()=>{
+  const G=BBGame,s=TunnelBreakDebug.getState(),p=TunnelBreakStrategy.hint(G,s,{maxPerCard:38}).best;
+  const card=G.cardByUid(s,p.cardUid),g=G.getCardGeometry(card,p.rotation,p.superExitCount),bounds=G.getBounds(s,4),rect=document.querySelector('#board').getBoundingClientRect();
+  const scale=Math.max(7,Math.min(43,Math.min(rect.width/Math.max(12,bounds.maxX-bounds.minX),rect.height/Math.max(10,bounds.maxY-bounds.minY))*.92));
+  return{x:rect.left+(p.x+g.width/2-(bounds.minX+bounds.maxX)/2)*scale+rect.width/2,y:rect.top+(p.y+g.height/2-(bounds.minY+bounds.maxY)/2)*scale+rect.height/2,moves:s.moves};
+ });
+ await page.mouse.move(placement.x,placement.y);await page.mouse.down();
  await page.locator('#board').dispatchEvent('pointercancel',{pointerId:1});await page.mouse.up();
- await page.evaluate(()=>TunnelBreakDebug.forceWin());await page.locator('#modalLayer').waitFor();
- await page.locator('[data-maze]').click();await page.evaluate(()=>TunnelBreakDebug.fpFreeze());
- const moved=await page.evaluate(()=>{window.dispatchEvent(new KeyboardEvent('keydown',{code:'KeyW'}));const a=TunnelBreakDebug.fpPose();TunnelBreakDebug.fpTick(.15);const b=TunnelBreakDebug.fpPose();window.dispatchEvent(new Event('blur'));TunnelBreakDebug.fpTick(.15);const c=TunnelBreakDebug.fpPose();return{a,b,c};});
+ assert.equal(await page.locator('#placeBtn').isDisabled(),true,'cancelled pointer must not select a card placement');
+ assert.equal(await page.evaluate(()=>TunnelBreakDebug.getState().moves),placement.moves);
+ await page.mouse.click(placement.x,placement.y);assert.equal(await page.locator('#placeBtn').isDisabled(),false);await page.locator('#placeBtn').click();
+ assert.equal(await page.evaluate(()=>TunnelBreakDebug.getState().moves),placement.moves+1,'a real board placement succeeds after cancellation');
+ const closed=()=>page.waitForFunction(()=>!document.querySelector('#modalLayer').open,null,{timeout:2000});
+ await page.locator('#pauseBtn').click();assert.equal(await page.locator('#modal h2').innerText(),'Paused');await page.locator('[data-resume]').click();await closed();
+ // The former forceWin(initial one-piece board) fixture has start===goal and is
+ // already won. Its delayed result modal raced Pause/Escape. Build a real maze.
+ const fixture=await page.evaluate(()=>{
+  let steps=0;while(Object.keys(TunnelBreakDebug.getState().pieces).length<8&&TunnelBreakDebug.getState().status==='playing'&&steps++<24)TunnelBreakDebug.autoStep();
+  const s=TunnelBreakDebug.getState();return{pieces:Object.keys(s.pieces).length,moves:s.moves,status:s.status,automaticSetupSteps:steps};
+ });
+ assert.ok(fixture.pieces>=8,'maze fixture needs a nontrivial connected board');assert.equal(fixture.status,'playing');
+ await page.evaluate(()=>TunnelBreakDebug.forceWin());await page.locator('[data-maze]').waitFor();await page.locator('[data-maze]').click();
+ await page.waitForFunction(()=>{const s=TunnelBreakDebug.getState(),w=TunnelBreakDebug.fpWorld();return s.mode===BBGame.MODE.MAZE&&s.status==='playing'&&w&&Math.hypot(w.start.x-w.goal.x,w.start.y-w.goal.y)>1;});
+ await page.locator('#fpIntro').waitFor({state:'detached'});
+ await page.evaluate(()=>{TunnelBreakDebug.fpFreeze();document.activeElement?.blur?.();});
+ await page.keyboard.down('KeyW');
+ const moved=await page.evaluate(()=>{const a=TunnelBreakDebug.fpPose();TunnelBreakDebug.fpTick(.05);const b=TunnelBreakDebug.fpPose();window.dispatchEvent(new Event('blur'));TunnelBreakDebug.fpTick(.05);const c=TunnelBreakDebug.fpPose();return{a,b,c};});
+ await page.keyboard.up('KeyW');assert.ok(Math.hypot(moved.b.x-moved.a.x,moved.b.y-moved.a.y)>.005,'maze key input must actually move before testing blur');
  assert.equal(moved.b.x,moved.c.x);assert.equal(moved.b.y,moved.c.y);
- await page.locator('#pauseBtn').click();assert.equal(await page.locator('#modalLayer').evaluate(e=>e.open),true);await page.keyboard.press('Escape');assert.equal(await page.locator('#modalLayer').evaluate(e=>e.open),false);
- return{boardCancelDiscards:true,blurClearsMazeInput:true,modalEscape:true};
+ await page.evaluate(()=>TunnelBreakDebug.fpResume());
+ await page.locator('#pauseBtn').click();assert.equal(await page.locator('#modal h2').innerText(),'Paused');
+ const paused=await page.evaluate(()=>TunnelBreakDebug.fpPose());await page.keyboard.down('KeyW');await page.waitForTimeout(100);await page.keyboard.up('KeyW');
+ assert.deepEqual(await page.evaluate(()=>TunnelBreakDebug.fpPose()),paused,'native pause modal prevents maze movement');
+ await page.keyboard.press('Escape');await closed();
+ await page.evaluate(()=>document.activeElement?.blur?.());await page.keyboard.down('KeyW');
+ await page.waitForFunction(p=>{const now=TunnelBreakDebug.fpPose();return Math.hypot(now.x-p.x,now.y-p.y)>.005;},paused,{timeout:2000});await page.keyboard.up('KeyW');
+ await page.locator('#pauseBtn').click();assert.equal(await page.locator('#modal h2').innerText(),'Paused');await page.locator('[data-resume]').click();await closed();
+ assert.equal(await page.evaluate(()=>TunnelBreakDebug.getState().status),'playing');
+ return{boardCancelDiscards:true,boardPlacement:true,boardPauseResume:true,fixture,blurClearsMazeInput:true,positiveMazeMovement:true,mazePauseResume:true,modalEscape:true,setup:'deterministic debug seed; one UI card placement, legal autoStep setup, forced board result; native maze input and dialogs'};
 });
 fs.writeFileSync(path.join(out,'journeys.json'),JSON.stringify(reports,null,2));await browser.close();if(reports.some(r=>r.status==='fail'))process.exitCode=1;
 })().catch(e=>{console.error(e);process.exitCode=1;});
