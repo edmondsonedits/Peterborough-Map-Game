@@ -87,39 +87,76 @@ function disjoint(a, b, label) {
         const s = PTBO_ROUTE_MAPPING.state, c = s.traceCore;
         const route = c.between(c.snap(s.startMarker.getLatLng(), 260), c.snap({ lat: s.call.lat, lng: s.call.lng }, 520));
         if (!route) throw Error('No reference route');
-        const samples = [route.start];
+        const samples = [{ ...route.start, travel: 0 }];
+        let travel = 0;
         for (const e of route.edges) {
           const count = Math.ceil(e.distance / 4);
-          for (let i = 1; i <= count; i++) samples.push({ lat: e.start.lat + (e.end.lat - e.start.lat) * i / count, lng: e.start.lng + (e.end.lng - e.start.lng) * i / count });
+          for (let i = 1; i <= count; i++) samples.push({ lat: e.start.lat + (e.end.lat - e.start.lat) * i / count, lng: e.start.lng + (e.end.lng - e.start.lng) * i / count, travel: travel + e.distance * i / count });
+          travel += e.distance;
         }
-        s.map.fitBounds(route.coordinates, { paddingTopLeft: [55, 150], paddingBottomRight: [55, 190], maxZoom: 18, animate: false });
         window.qaRoutePoints = samples;
-        return { service: s.service, base: s.base.name, callCount: s.callCount, distance: route.distance };
+        return { service: s.service, base: s.base.name, call: s.call.id, callCount: s.callCount, distance: route.distance, samples: samples.length };
       });
-      await page.waitForTimeout(200);
-      const points = await page.evaluate(() => qaRoutePoints.map(p => {
-        const s = PTBO_ROUTE_MAPPING.state, q = s.map.latLngToContainerPoint(p), r = s.map.getContainer().getBoundingClientRect();
-        return { x: q.x + r.left, y: q.y + r.top };
-      }));
-      const box = await page.locator('#draw-surface').boundingBox(), start = { x: box.x + box.width / 2, y: box.y + box.height / 2 };
       const touch = mobile ? await context.newCDPSession(page) : null;
-      if (touch) await touch.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [start] });
-      else { await page.mouse.move(start.x, start.y); await page.mouse.down(); }
-      for (const p of points.slice(1)) {
-        if (touch) await touch.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [p] });
-        else await page.mouse.move(p.x, p.y);
+      const drawing = { chunks: 0, nativeEvents: 0, zooms: [] };
+      // Long routes cannot encode street junctions in a city-wide integer pixel.
+      // Practice at street scale, releasing and re-grabbing END between sections.
+      // Only the viewport and intended pointer path are fixtures: route state is
+      // produced entirely by native mouse/touch input, including pause/continue.
+      let index = 0;
+      while (index < before.samples - 1) {
+        const chunk = await page.evaluate(({ index, metres }) => {
+          const s = PTBO_ROUTE_MAPPING.state;
+          let end = index + 1;
+          while (end < qaRoutePoints.length - 1 && qaRoutePoints[end].travel - qaRoutePoints[index].travel < metres) end++;
+          const points = qaRoutePoints.slice(index, end + 1);
+          s.map.fitBounds(points.map(p => [p.lat, p.lng]), { paddingTopLeft: [60, 150], paddingBottomRight: [60, 190], maxZoom: 18, animate: false });
+          const rect = s.map.getContainer().getBoundingClientRect();
+          return {
+            end, zoom: s.map.getZoom(),
+            points: points.filter((p, i) => i % 2 === 0 || i === points.length - 1).map(p => {
+              const q = s.map.latLngToContainerPoint(p);
+              return { x: q.x + rect.left, y: q.y + rect.top };
+            })
+          };
+        }, { index, metres: mobile ? 180 : 500 });
+        await page.waitForTimeout(80);
+        const box = await page.locator('#draw-surface').boundingBox();
+        assert.ok(box, 'END remains available for continued drawing');
+        const start = { x: box.x + box.width / 2, y: box.y + box.height / 2 };
+        if (touch) await touch.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [start] });
+        else { await page.mouse.move(start.x, start.y); await page.mouse.down(); }
+        for (const p of chunk.points.slice(1)) {
+          if (touch) await touch.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [p] });
+          else await page.mouse.move(p.x, p.y);
+          drawing.nativeEvents++;
+        }
+        if (touch) await touch.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] }); else await page.mouse.up();
+        drawing.chunks++; drawing.zooms.push(chunk.zoom); index = chunk.end;
+        const status = await page.evaluate(end => {
+          const s = PTBO_ROUTE_MAPPING.state;
+          return { mode: s.mode, gap: s.playerRoute ? s.traceCore.distance(s.playerRoute.endpoint, qaRoutePoints[end]) : Infinity };
+        }, index);
+        if (status.mode === 'editing') break;
+        assert.ok(status.gap <= 70, `Route stopped following native input in section ${drawing.chunks}: ${status.gap.toFixed(1)} m behind`);
       }
-      if (touch) await touch.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] }); else await page.mouse.up();
       await page.waitForFunction(() => PTBO_ROUTE_MAPPING.state.mode === 'editing');
       await page.locator('#submit-button').click();
       await page.locator('#results').waitFor({ state: 'visible' });
       const review = await page.locator('#results').innerText();
+      assert.match(review, /100% efficient/, 'native tracing of the reference path preserves the route and score');
+      for (const selector of ['#zoom-in', '#zoom-out']) {
+        const zoom = await rect(page.locator(selector));
+        disjoint(zoom, await rect(page.locator('#results')), 'zoom controls leave every route result readable');
+        assert.ok(zoom.width >= 44 && zoom.height >= 44, 'zoom controls retain touch targets');
+      }
+      await page.waitForFunction(() => !Object.values(PTBO_ROUTE_MAPPING.state.map._layers).some(l => l._loading === true) && [...document.querySelectorAll('.leaflet-tile')].some(t => t.complete && t.naturalWidth));
       await page.screenshot({ path: path.join(out, 'route-' + service + '-review.png') });
       await page.locator('#next-button').click();
       assert.equal(await page.evaluate(() => PTBO_ROUTE_MAPPING.state.callCount), before.callCount + 1);
       await page.locator('#clear-button').click();
       assert.equal(await page.evaluate(() => PTBO_ROUTE_MAPPING.state.playerRoute), null);
-      return { ...before, review, notice, pointer: mobile ? 'emulated touch' : 'mouse', rememberedCity: routeCity, loadedCity: routeCity };
+      return { ...before, review, notice, drawing, pointer: mobile ? 'emulated touch' : 'mouse', rememberedCity: routeCity, loadedCity: routeCity };
     });
     await check('route-error-retry', false, async (page, context, report) => {
       await page.route('**/osm-public-roads.geojson*', r => r.abort());

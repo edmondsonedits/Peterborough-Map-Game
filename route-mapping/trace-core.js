@@ -209,6 +209,29 @@
     // that travel as an edit, including on one-way streets, not extra mileage.
     // Compare removed + added distance (never the total route score), and only
     // inspect the nearby, contiguous tail inside this gesture's corridor.
+    function settleShallowFork(current,target,options){
+      // A sub-metre wobble can choose either arm before a shallow fork is
+      // visually distinct. Settle only that local ambiguity, never a committed
+      // turn: both arms must remain in a 3 m corridor at a shared outbound node.
+      const width=Math.min(3,options.corridorWidth*.25),budget=Math.min(50,options.corridorWidth*4);
+      let removed=0;
+      for(let i=current.edges.length-1;i>=0;i--){
+        const edge=current.edges[i];removed+=edge.distance;if(removed>=budget)break;
+        const node=graph.nodes[edge.from];
+        if(!node||node.edges.length<2||distance(edge.start,node)>.05)continue;
+        const a=toXY(node.lat,node.lng),b=toXY(target.lat,target.lng);
+        if(current.edges.slice(i).some(e=>[e.start,e.end].some(p=>segmentGap(toXY(p.lat,p.lng),a,b)>width)))continue;
+        const segment=graph.segments[edge.segmentId],t=edge.t0??(edge.reverse?1:0),junction={...pointAt(segment,t),segmentId:segment.id,t};
+        const leg=between(junction,target,{local:true,maxDistance:budget-removed,corridorStart:junction,corridorEnd:target,corridorWidth:width});
+        const first=leg?.edges[0];
+        if(!first||first.from!==node.id||first.to===edge.to)continue;
+        const oldEnd=toXY(edge.end.lat,edge.end.lng),newEnd=toXY(first.end.lat,first.end.lng);
+        const dx=oldEnd.x-a.x,dy=oldEnd.y-a.y,nx=newEnd.x-a.x,ny=newEnd.y-a.y;
+        if((dx*nx+dy*ny)/(Math.hypot(dx,dy)*Math.hypot(nx,ny))<.85)continue;
+        return route([...current.edges.slice(0,i),...leg.edges],current.start,target);
+      }
+      return null;
+    }
     function connectEdited(current,target,options){
       const retracted=retreat(current,target,options);
       if(retracted)return retracted;
@@ -226,7 +249,7 @@
         bestCost=removed+leg.distance;
         best=route([...current.edges.slice(0,i),...leg.edges],current.start,target);
       }
-      return best;
+      return best||(options.settleFork?settleShallowFork(current,target,options):null);
     }
     function advance(current,point,{tolerance=30,directionBias=.35,previousPoint=current?.endpoint}={}){
       if(!current||!point||!Number.isFinite(point.lat)||!Number.isFinite(point.lng))throw new Error('A route and a finite pointer position are required.');
@@ -246,7 +269,7 @@
           // After an off-road gap, return near the open end; never teleport to a
           // distant part of the same street just because it is connected somewhere.
           if(gap>tolerance*2+spacing*2)continue;
-          const options={local:true,maxDistance:Math.max(.5,gap*1.8+1),corridorStart:before,corridorEnd:p,corridorWidth:tolerance};
+          const options={local:true,maxDistance:Math.max(.5,gap*1.8+1),corridorStart:before,corridorEnd:p,corridorWidth:tolerance,settleFork:true};
           if(gap<.35){accepted=result;break;}
           const edited=connectEdited(result,anchor,options);
           if(!edited)continue;

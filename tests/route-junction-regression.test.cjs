@@ -53,6 +53,57 @@ function consistent(core,r){
   }
 }
 
+// Metres relative to the shared Toronto ramp junction (OSM-derived geometry).
+// These pointer samples reproduce the native zoom18 +/-2px drift, <1 m.
+const rampDrift=[[43.494,23.462],[40.471,21.748],[36.584,20.034],[33.129,18.748],[29.674,17.463],[26.219,15.749],[22.764,13.607],[19.74,11.036],[16.717,8.893],[13.694,6.751],[10.239,5.037],[6.784,3.323],[3.328,2.038],[-.559,.752],[-4.014,-1.39],[-7.037,-3.533],[-10.492,-5.675],[-13.515,-8.246],[-16.97,-10.388],[-20.425,-12.102]];
+function shallowFork({wrongWay=false,long=false,wide=false,loop=false}={}){
+  return fixture([
+    [[[56.478,31.670],[0,0]],{backward:false,name:'Incoming'}],
+    [[[0,0],[-21.746,-8.257],long?[-100,-37.97]:[-43.226,-15.177]],{backward:false,name:'Other arm'}],
+    [[[0,0],wide?[0,-40]:[-31.262,-17.377],wide?[0,-100]:long?[-120,-66.7]:[-65,-36]],{forward:!wrongWay,backward:wrongWay,name:'Intended arm'}],
+    ...(loop?[[[[56.478,31.670],[76.478,31.670],[76.478,51.670],[56.478,51.670],[56.478,31.670]],{backward:false,name:'Earlier loop'}]]:[]),
+  ]);
+}
+test('sub-metre drift can settle a shallow one-way fork without trapping the open end',()=>{
+  const{core}=shallowFork(),e=editor(core,point(...rampDrift[0]),12);
+  for(const p of rampDrift.slice(1))e.move(...p);
+  const target=core.snap(point(...rampDrift.at(-1)),1);
+  near(core.distance(e.route.endpoint,target),0,'reached intended arm');
+  assert.equal(e.route.endpoint.road,'Intended arm');assert.ok(e.route.edges.every(edge=>edge.name!=='Other arm'&&!edge.reverse));consistent(core,e.route);
+});
+test('shallow fork settling survives pause/re-grab without changing the Undo snapshot',()=>{
+  const{core}=shallowFork(),e=editor(core,point(...rampDrift[0]),12);
+  for(const p of rampDrift.slice(1,17))e.move(...p);
+  const snapshot=e.route,serialized=JSON.stringify(snapshot);let route=snapshot,previous=snapshot.endpoint;
+  for(const p of rampDrift.slice(17)){const current=point(...p);route=core.advance(route,current,{tolerance:12,previousPoint:previous}).route;previous=current;}
+  assert.equal(route.endpoint.road,'Intended arm');assert.equal(JSON.stringify(snapshot),serialized);consistent(core,route);
+});
+test('shallow fork settling cannot enter a wrong-way outgoing arm',()=>{
+  const{core}=shallowFork({wrongWay:true}),e=editor(core,point(...rampDrift[0]),12);
+  for(const p of rampDrift.slice(1))e.move(...p);
+  assert.ok(e.route.edges.every(edge=>edge.name!=='Intended arm'&&!edge.reverse));consistent(core,e.route);
+});
+test('a wider deliberate turn does not gain the shallow-fork settling budget',()=>{
+  const{core}=shallowFork({wide:true}),e=editor(core,point(40,22.4),12);e.move(0,0);e.move(-18,-6.8);
+  const before=e.route.distance,result=core.advance(e.route,point(0,-20),{tolerance:12,previousPoint:point(0,-18)});assert.ok(result.route.edges.every(edge=>edge.name!=='Intended arm'));near(result.route.distance,before);consistent(core,result.route);
+});
+test('a committed longer fork choice is retained instead of erased by nearby pointer travel',()=>{
+  const{core}=shallowFork({long:true}),e=editor(core,point(40,22.4),12);e.move(0,0);e.move(-65.4,-24.8);
+  const before=e.route.distance;e.move(-61.18,-34.02);assert.ok(e.route.edges.every(edge=>edge.name!=='Intended arm'));near(e.route.distance,before);consistent(core,e.route);
+});
+test('settling the open fork retains a deliberately completed earlier loop',()=>{
+  const{core}=shallowFork({loop:true}),start=point(56.478,31.670),prefix=core.trace([start,point(76.478,31.670),point(76.478,51.670),point(56.478,51.670),start],{tolerance:1});
+  const serialized=JSON.stringify(prefix);let route=prefix,previous=start;
+  for(const p of rampDrift){const target=point(...p);route=core.advance(route,target,{tolerance:12,previousPoint:previous}).route;previous=target;}
+  const direct=core.between(core.snap(start,1),core.snap(point(...rampDrift.at(-1)),1));
+  assert.equal(route.endpoint.road,'Intended arm');assert.equal(route.edges.filter(e=>e.name==='Earlier loop').length,4);near(route.distance,80+direct.distance);assert.equal(JSON.stringify(prefix),serialized);consistent(core,route);
+});
+for(const level of ['0','1'])test(`nearby disconnected parallel geometry stays separate at level ${level}`,()=>{
+  const{core}=fixture([[[[0,0],[100,0]],{backward:false,name:'Current'}],[[[0,2],[100,2]],{level,backward:false,name:'Separate'}]]),e=editor(core,point(0),12);
+  e.move(20);e.move(25,2);assert.ok(e.route.edges.every(edge=>edge.name==='Current'));
+  assert.equal(core.finish(e.route,core.snap(point(30,2),.5),12).complete,false);consistent(core,e.route);
+});
+
 test('turning after a junction overshoot removes the outgoing and return spur',()=>{
   const {core}=junction(),e=editor(core,point(-80),30);
   e.move(12);const snapshot=e.route,serialized=JSON.stringify(snapshot);

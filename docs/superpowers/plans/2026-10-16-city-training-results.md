@@ -1,4 +1,4 @@
-# City training and driving release v1.6.113
+# City training and driving releases v1.6.113–1.6.114
 
 ## User benefit
 
@@ -21,7 +21,7 @@ The route comparison is labelled “Shortest mapped route”: it honors mapped o
 
 ## Verification
 
-- Main behavioral suite: 455 passed. Editor/geospatial Node checks: 111 passed. Python geographic/terrain checks: 6 passed. Syntax and diff checks passed.
+- Main behavioral suite: 463 passed after the final junction correction (455 in the initial release). Editor/geospatial Node checks: 111 passed. Python geographic/terrain checks: 6 passed. Syntax and diff checks passed.
 - Real Chromium: Fire and EMS Route Mapping in every city, 66/66 journeys, using disclosed reference-trace fixtures and actual Submit/Next/settings controls. Separately, actual mouse and emulated touch drawing, submission, next and clear passed in Peterborough and Toronto; deliberate road-request failure and Retry passed.
 - Directed base coverage: 606 origins; 138 production A*/trace-finish routes passed; exactly the two documented Island origins are unavailable. Barrie repaired access and Toronto disabled-origin UI passed browser inspection.
 - START/CALL framing measures visible overlays and reserves a 30 px gutter. Full marker bounds cleared all panels at 390x844, 667x375 and 1280x800 for initial, Next and terminal-arrival fallback states; the map refits on resize.
@@ -37,4 +37,10 @@ Camera's comparable controlled browser path reduced the desktop's longest statio
 
 Local receipts and screenshots are under `test-artifacts/city-expansion/`, including `all-routes-final`, `toronto-pointer`, `geo-focus-final`, `care-dispatch`, `camera-integrated`, `base-coverage-fixed`, `city-final` and `final-journeys`. The comparable baseline is under `test-artifacts/camera-profile/`. These are intentionally excluded from publication.
 
-Release target is GitHub Pages from `main`, using canonical v1.6.113. Publication is authorized; fresh deployed checks and source hashes are recorded separately in `test-artifacts/city-expansion/live/`. The separately hosted 3D editor is unchanged by this release and retains its own deployed version.
+The initial v1.6.113 release passed deployed source checks for all 126 changed public files, 66 city/service route journeys, Geo Next/Try Again checks, Fire/EMS dispatch journeys and camera measurement. A native mouse test exposed a further shallow-ramp tracing issue; those initial results are retained in `test-artifacts/city-expansion/live/`.
+
+The v1.6.114 follow-up corrects an early shallow-fork selection after small hand drift. It only replaces the nearby open tail through a shared legal outbound junction, within a 3 m corridor and at most 50 m combined edit distance; ordinary valid continuation and deliberate longer turns remain unchanged. Eight new regression cases cover recovery, pause/continue, Undo snapshots, one-way travel, disconnected roads, wider/committed turns and earlier loops. Sol Medium independently reviewed the fix and passed all 24 focused junction tests. The same 19.146 km Toronto route completed with 2,551 native mouse moves, deliberate 2 px drift and pause/re-grab inside the repaired fork: 100% review, no page errors. Toronto Fire mouse, EMS emulated touch and loading-error retry also passed integrated checks. Phone review panels now leave space for the 44 px zoom controls. Native browser checks draw long routes in zoomed sections instead of collapsing several metres of road into one screen pixel.
+
+Remaining bounded limitations: larger ambiguous fork gestures can still require Undo or retracing from END. Production graph construction joins matching coordinates without a separate layer key; the disconnected-fixture tests do not certify every mapped overpass. A separate production topology audit is a follow-up, not a verified capability of this release.
+
+Release target is GitHub Pages from `main`, using canonical v1.6.114. Publication is authorized; final deployed checks and source hashes are recorded separately in `test-artifacts/city-expansion/live-v114/`. A concurrent automated geospatial refresh was preserved; its JSON differences were timestamps only. The separately hosted 3D editor is unchanged by this release and retains its own deployed version.
