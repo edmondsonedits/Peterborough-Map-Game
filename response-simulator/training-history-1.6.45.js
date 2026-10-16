@@ -37,6 +37,10 @@
     return `session-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
   }
 
+  // Mission generations restart when this document reloads. Keep tab session
+  // grouping, but scope completion deduplication to this particular document.
+  const documentId = randomId();
+
   function currentSessionId() {
     try {
       let id = sessionStorage.getItem(SESSION_KEY);
@@ -120,7 +124,7 @@
     const sessionId = currentSessionId();
     const generation = text(snapshot.generation || 'unknown');
     const completedAt = snapshot.completedAt ? new Date(snapshot.completedAt).toISOString() : new Date().toISOString();
-    const completionKey = `${sessionId}:${generation}:${service}`;
+    const completionKey = `${sessionId}:${documentId}:${generation}:${service}`;
 
     return Object.freeze({
       id: completionKey,

@@ -165,6 +165,29 @@ test('route guidance can calculate a connected hospital trip from each EMS base'
   }
 });
 
+test('directed guidance preserves Fire/EMS response and hospital transport access for the entire shared catalog',async()=>{
+  const g=game();
+  vm.runInContext(read('response-simulator/road-collision-core.js'),g.c);
+  await g.c.PTBO_ROAD_COLLISION.ready;
+  vm.runInContext(read('response-simulator/route-reveal.js'),g.c);
+  await g.c.PTBO_ROUTE_REVEAL.ready;
+  const encoded=read('shared/dispatch-data-1.4.4.js').match(/const PAYLOAD = '([^']+)'/)[1];
+  const calls=JSON.parse(require('node:zlib').gunzipSync(Buffer.from(encoded,'base64')));
+  const hospital=g.c.resolveIncidentArrival(config.hospital),router=g.c.PTBO_ROUTE_REVEAL;
+  const missing=[];
+  for(const call of calls){
+    const access=g.c.resolveIncidentArrival(call);
+    if(!access){missing.push(`${call.addr}: scene access`);continue;}
+    for(const base of [...config.profiles.fire.bases,...config.profiles.ems.bases]){
+      const route=router.calculateRoute(base.spawnLat,base.spawnLng,access.lat,access.lng);
+      if(!route)missing.push(`${call.addr}: response from ${base.id}`);
+    }
+    if(!router.calculateRoute(access.lat,access.lng,hospital.lat,hospital.lng))missing.push(`${call.addr}: transport`);
+  }
+  assert.equal(calls.length,200);
+  assert.deepEqual(missing,[]);
+});
+
 test('station yards contain their spawns and provide road access or a temporary driveway connector',async()=>{
   const g=game();vm.runInContext(read('response-simulator/road-collision-core.js'),g.c);await g.c.PTBO_ROAD_COLLISION.ready;
   const store=g.c.PTBO_BASE_STORE,collision=g.c.PTBO_ROAD_COLLISION;

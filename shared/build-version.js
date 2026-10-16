@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.110';
+  const VERSION = '1.6.111';
   const CITY_RUNTIME_VERSION = '1.6.17';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
@@ -101,16 +101,16 @@
     if (!style) {
       style = document.createElement('style');
       style.id = 'ptbo-training-use-style';
-      style.textContent = '#ptbo-training-use-notice{position:fixed;top:max(8px,env(safe-area-inset-top));right:8px;z-index:2147483646;max-width:190px;padding:7px 9px;border:1px solid rgba(251,113,133,.48);border-radius:10px;background:rgba(69,10,10,.86);box-shadow:0 4px 14px rgba(0,0,0,.28);color:#fff;text-decoration:none;font:700 10px/1.22 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.01em;-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px)}#ptbo-training-use-notice strong{display:block;margin-bottom:2px;color:#fecdd3;font-size:9px;letter-spacing:.08em;text-transform:uppercase}#ptbo-training-use-notice span{color:#f8fafc;font-weight:650}#ptbo-training-use-notice:hover,#ptbo-training-use-notice:focus-visible{border-color:#fda4af;background:rgba(69,10,10,.96);outline:none}@media(max-width:520px){#ptbo-training-use-notice{top:max(5px,env(safe-area-inset-top));right:5px;max-width:145px;padding:5px 7px;font-size:8px}#ptbo-training-use-notice strong{font-size:7px}}';
+      style.textContent = '#ptbo-training-use-notice{position:fixed;top:max(8px,env(safe-area-inset-top));right:8px;z-index:2147483646;max-width:190px;padding:7px 9px;border:1px solid rgba(251,113,133,.48);border-radius:10px;background:rgba(69,10,10,.86);box-shadow:0 4px 14px rgba(0,0,0,.28);color:#fff;text-decoration:none;font:700 10px/1.22 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.01em;-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px)}#ptbo-training-use-notice strong{display:block;margin-bottom:2px;color:#fecdd3;font-size:9px;letter-spacing:.08em;text-transform:uppercase}#ptbo-training-use-notice span{color:#f8fafc;font-weight:650}#ptbo-training-use-notice:hover,#ptbo-training-use-notice:focus-visible{border-color:#fda4af;background:rgba(69,10,10,.96);outline:none}@media(max-width:520px){#ptbo-training-use-notice{top:max(5px,env(safe-area-inset-top));right:5px;max-width:145px;padding:5px 7px;font-size:8px}#ptbo-training-use-notice strong{font-size:7px}}#ptbo-training-use-notice.ptbo-route-training-notice{top:calc(76px + env(safe-area-inset-top));right:auto;left:12px;width:52px;max-width:52px;min-height:44px;padding:4px;display:flex;align-items:center;justify-content:center;font-size:10px;line-height:1.2}#ptbo-training-use-notice.ptbo-route-training-notice strong{margin:0;font-size:10px;letter-spacing:0;text-transform:none;text-align:center}#ptbo-training-use-notice.ptbo-route-training-notice span,#ptbo-training-use-notice.ptbo-city-training-notice span{display:none}#ptbo-training-use-notice.ptbo-city-training-notice{top:auto;right:8px;bottom:calc(156px + env(safe-area-inset-bottom));max-width:100px;min-height:44px;display:flex;align-items:center;padding:5px 7px;font-size:10px}#ptbo-training-use-notice.ptbo-city-training-notice strong{font-size:10px;letter-spacing:.03em}#ptbo-training-use-notice:focus-visible{outline:2px solid white;outline-offset:2px}@media(max-width:760px){#ptbo-training-use-notice.ptbo-city-training-notice{bottom:calc(220px + env(safe-area-inset-bottom))}}html.is-editor #ptbo-training-use-notice.ptbo-city-training-notice{top:74px;right:auto;bottom:auto;left:50%;transform:translateX(-50%)}';
       document.head.appendChild(style);
     }
     const notice = document.createElement('a');
     notice.id = 'ptbo-training-use-notice';
-    if(/\/route-mapping\//.test(path))notice.style.top='calc(76px + env(safe-area-inset-top))';
+    if(/\/route-mapping\//.test(path))notice.classList.add('ptbo-route-training-notice');
     else if(/\/geo-guesser\//.test(path))notice.style.top='calc(90px + env(safe-area-inset-top))';
-    else if(/\/city-explorer\//.test(path))notice.style.top='calc(148px + env(safe-area-inset-top))';
+    else if(/\/city-explorer\//.test(path))notice.classList.add('ptbo-city-training-notice');
     notice.href = new URL('../legal/', SCRIPT_URL).href;
-    notice.innerHTML = '<strong>Training use only</strong><span>Not for live response, navigation, dispatch, or operational decisions.</span>';
+    notice.innerHTML = '<strong>Training only</strong><span>Not for live response, navigation, dispatch, or operational decisions.</span>';
     notice.setAttribute('aria-label', 'Training use only. Not for live response, navigation, dispatch, or operational decisions. Open the full training use notice.');
     document.body.appendChild(notice);
   }

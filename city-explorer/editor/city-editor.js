@@ -5,14 +5,26 @@ import { createGeneratedReplacementDocument, isProtectedEditorTarget, pickEditor
 import { cancelTransformControlDrag, rebindEditorSelection } from './editor-interactions.js';
 import { createEditorCameraNavigation } from './editor-camera-navigation.js';
 import { restoreEditorCameraSession, startEditorCameraSession } from './editor-camera-session.js';
-import { createVersionSaver } from './version-saver.js';
+import { createVersionSaver } from './version-saver.js?v=1.6.111';
 import { authorizeEditorEntry } from './editor-entry.js';
-import { createRecoveryPrompt } from './recovery-prompt.js';
+import { createRecoveryPrompt } from './recovery-prompt.js?v=1.6.111';
 
 export { createGeneratedReplacementDocument, isProtectedEditorTarget, pickEditorSelection } from './city-editor-selection.js';
 
 const CATALOG_KEYS = Object.keys(ASSET_CATALOG);
 const clampScale = (value) => Math.max(0.05, Number(value) || 0.05);
+
+function reconcileEditorPanels({ narrow, assetsOpen, inspectorOpen, lastOpenedPanel = 'inspector', entering = false }) {
+  if (entering) return narrow
+    ? { assetsOpen: false, inspectorOpen: false }
+    : { assetsOpen: true, inspectorOpen: true };
+  if (narrow && assetsOpen && inspectorOpen) {
+    return lastOpenedPanel === 'assets'
+      ? { assetsOpen: true, inspectorOpen: false }
+      : { assetsOpen: false, inspectorOpen: true };
+  }
+  return { assetsOpen, inspectorOpen };
+}
 
 export function createCityEditor(adapter) {
   const {
@@ -38,6 +50,7 @@ export function createCityEditor(adapter) {
   let entryPending = false;
   let transientClone = null;
   let gestureGeneratedRecord = null;
+  let lastOpenedPanel = 'inspector';
   const listeners = [];
   const selectionHelpers = new Map();
   const ui = {
@@ -65,7 +78,7 @@ export function createCityEditor(adapter) {
     serviceUrl: publisherUrl,
     publishedDocument: documentHistory.current,
     draftStore,
-    onState({ name, commitSha, reason, deploymentStatus }) {
+    onState({ name, commitSha, reason, deploymentStatus, localDraftRecoveryUnavailable }) {
       const version = commitSha || '';
       const messages = {
         saved: deploymentStatus === 'unavailable'
@@ -79,7 +92,9 @@ export function createCityEditor(adapter) {
           : reason === 'unconfigured' ? 'Publisher not configured; local draft is safe. Download/Export JSON remains available.'
             : 'Version save failed; your local draft is safe.',
       };
-      setStatus(messages[name] || 'Saving version…');
+      setStatus(localDraftRecoveryUnavailable
+        ? `Published version saved (${version}); local draft recovery is unavailable for newer edits. Download/Export JSON remains available.`
+        : messages[name] || 'Saving version…');
     },
   });
 
@@ -474,6 +489,23 @@ export function createCityEditor(adapter) {
   }
 
   function setPanelOpen(name, open) {
+    if (open) lastOpenedPanel = name;
+    const narrow = globalThis.matchMedia?.('(max-width: 760px)').matches || false;
+    const current = {
+      assetsOpen: !!ui.left && !ui.left.hidden,
+      inspectorOpen: !!ui.inspector && !ui.inspector.hidden,
+    };
+    const next = reconcileEditorPanels({
+      narrow,
+      ...current,
+      ...(name === 'assets' ? { assetsOpen: open } : { inspectorOpen: open }),
+      lastOpenedPanel,
+    });
+    applyPanelOpen('assets', next.assetsOpen);
+    applyPanelOpen('inspector', next.inspectorOpen);
+  }
+
+  function applyPanelOpen(name, open) {
     const panel = name === 'assets' ? ui.left : ui.inspector;
     const toggle = ui.toolbar?.querySelector(`[data-editor-panel-toggle="${name}"]`);
     if (!panel || !toggle) return;
@@ -483,10 +515,17 @@ export function createCityEditor(adapter) {
     document.documentElement.classList.toggle(`editor-panel-${name}-open`, open);
   }
 
-  function syncPanelLayout() {
+  function syncPanelLayout({ entering = false } = {}) {
     const isMobile = globalThis.matchMedia?.('(max-width: 760px)').matches || false;
-    setPanelOpen('assets', !isMobile);
-    setPanelOpen('inspector', !isMobile);
+    const next = reconcileEditorPanels({
+      narrow: isMobile,
+      assetsOpen: !!ui.left && !ui.left.hidden,
+      inspectorOpen: !!ui.inspector && !ui.inspector.hidden,
+      lastOpenedPanel,
+      entering,
+    });
+    applyPanelOpen('assets', next.assetsOpen);
+    applyPanelOpen('inspector', next.inspectorOpen);
   }
 
   function handleShortcut(event) {
@@ -572,6 +611,19 @@ export function createCityEditor(adapter) {
     updateAuthoredTransform(record, value);
   }
 
+  function exportDraft() {
+    const result = draftStore.exportDraft();
+    if (result.status !== 'exported') { setStatus('No saved draft is available to export'); return result; }
+    const url = URL.createObjectURL(new Blob([result.data], { type: 'application/json' }));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'peterborough-city-editor-draft.json';
+    link.click();
+    URL.revokeObjectURL(url);
+    setStatus('Draft exported');
+    return result;
+  }
+
   function initialize() {
     if (disposed) throw new Error('City editor has been disposed.');
     transform = new TransformControls(camera, canvas);
@@ -607,6 +659,7 @@ export function createCityEditor(adapter) {
       const name = toggle.dataset.editorPanelToggle;
       setPanelOpen(name, toggle.getAttribute('aria-pressed') !== 'true');
     });
+    addListener(globalThis, 'resize', () => { if (active) syncPanelLayout(); });
     addListener(controls.search, 'input', renderAssets);
     addListener(controls.label, 'change', () => {
       if (!selected) return;
@@ -635,17 +688,7 @@ export function createCityEditor(adapter) {
       controls.saveVersion.disabled = false;
       if (result.state === 'auth-expired' && publisherUrl) globalThis.location.assign(`${publisherUrl.replace(/\/$/, '')}/auth/github`);
     });
-    addListener(ui.status?.querySelector('[data-editor-export]'), 'click', () => {
-      const result = draftStore.exportDraft();
-      if (result.status !== 'exported') { setStatus('No saved draft is available to export'); return; }
-      const url = URL.createObjectURL(new Blob([result.data], { type: 'application/json' }));
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'peterborough-city-editor-draft.json';
-      link.click();
-      URL.revokeObjectURL(url);
-      setStatus('Draft exported');
-    });
+    addListener(ui.status?.querySelector('[data-editor-export]'), 'click', exportDraft);
     addListener(ui.status?.querySelector('[data-editor-exit]'), 'click', exit);
     ui.toolbar?.querySelectorAll('[data-transform-mode]').forEach((button) => addListener(button, 'click', () => {
       transform.setMode(button.dataset.transformMode);
@@ -663,8 +706,9 @@ export function createCityEditor(adapter) {
     });
     const recover = ui.recovery?.querySelector('[data-recovery-action="recover"]');
     const discard = ui.recovery?.querySelector('[data-recovery-action="discard"]');
+    addListener(ui.recovery?.querySelector('[data-recovery-action="export"]'), 'click', exportDraft);
     addListener(recover, 'click', () => {
-      const draft = draftStore.loadDraft({ baseRevision: currentDocument().revision });
+      const draft = draftStore.loadDraft();
       if (draft.document) {
         documentHistory.execute('Recover local draft', draft.document);
         authoredRuntime.load(draft.document);
@@ -675,13 +719,15 @@ export function createCityEditor(adapter) {
       ui.recovery.close();
     });
     addListener(discard, 'click', () => { draftStore.discardDraft(); recoveryPrompt.dismiss(); ui.recovery.close(); });
-    const draft = draftStore.loadDraft({ baseRevision: currentDocument().revision });
-    if (draft.status === 'recovered' || draft.status === 'base-revision-mismatch') {
+    const draft = draftStore.loadDraft();
+    if (['recovered', 'base-revision-mismatch', 'base-content-mismatch', 'base-content-unverified'].includes(draft.status)) {
       recoveryPrompt = createRecoveryPrompt(draft.status);
       const note = ui.recovery?.querySelector('[data-recovery-note]');
       if (note) note.textContent = draft.status === 'recovered'
         ? 'A local draft matches the published city. Recover it or discard it.'
-        : 'A local draft was created from a different published revision. Recovering it will replace this city in your browser.';
+        : draft.status === 'base-content-unverified'
+          ? 'This older local draft has no published-content identity, so its base cannot be verified. Recovering it will replace this city in your browser. You can also export the draft.'
+          : 'The published city has changed since this local draft was created. Recovering it will replace this city in your browser. You can also export the draft.';
     } else if (draft.status === 'corrupt') setStatus('A damaged local draft was quarantined for recovery');
     refreshUI();
     hooks.onInitialize?.(api);
@@ -707,7 +753,7 @@ export function createCityEditor(adapter) {
     hooks.setMode?.('editor');
     Object.values(ui).forEach((panel) => { if (panel) { panel.hidden = false; panel.inert = false; } });
     document.documentElement.classList.add('is-editor');
-    syncPanelLayout();
+    syncPanelLayout({ entering: true });
     transform.enabled = true;
     transform.getHelper().visible = true;
     if (recoveryPrompt.pending && ui.recovery?.showModal) ui.recovery.showModal();
@@ -718,6 +764,11 @@ export function createCityEditor(adapter) {
   }
 
   function exit() {
+    // Pagehide disposes the editor immediately; do not leave the last committed
+    // edit waiting for its autosave debounce. flush() is idle for clean stores,
+    // clears the timer, and retains pending export data when storage fails.
+    const saved = draftStore.flush();
+    if (saved.status === 'unavailable') setStatus('Local draft recovery could not be saved. Download/Export JSON remains available.');
     if (!active) return false;
     cancelGesture();
     removeSelectionHelper();
@@ -765,7 +816,7 @@ export function createCityEditor(adapter) {
   }
 
   const api = {
-    initialize, enter, exit, update, selectById, dispose,
+    initialize, enter, exit, update, selectById, dispose, exportDraft,
     handleShortcut,
     loadPublishedDocument(documentValue) {
       authoredRuntime.load(documentValue);

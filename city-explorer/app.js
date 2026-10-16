@@ -13,8 +13,8 @@ import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js';
 import { createCatalogObject } from './editor/asset-catalog.js';
 import { createCommandHistory } from './editor/command-history.js';
-import { createDraftStore } from './editor/draft-store.js';
-import { createCityEditor } from './editor/city-editor.js?v=1.6.101';
+import { createDraftStore } from './editor/draft-store.js?v=1.6.111';
+import { createCityEditor } from './editor/city-editor.js?v=1.6.111';
 import { createEmptySceneDocument, sanitizeRenderableSceneDocument } from './editor/scene-document.js';
 import { createGeneratedRegistry } from './editor/generated-registry.js';
 import { applyOverrides } from './editor/override-runtime.js';
@@ -36,7 +36,7 @@ import { clearLandCoverRaster, paintLandCoverPolygon } from './land-cover-raster
 import { sampleOfficialTerrainElevation, validOfficialTerrainMetadata } from './terrain-heightmap.js?v=1.5.5-lidar1';
 import { sampleTriangulatedTerrainHeight } from './terrain-surface.js?v=1.5.5-terrain1';
 import { HydroSurfaceIndex, WATER_SURFACE_CLEARANCE, WATER_TERRAIN_RECESS, createWaterStageSampler, relativeWaterElevation, robustFallbackWaterHeight, subdivideWaterTriangle, watercourseWidth } from './water-system.js?v=1.5.5-hydro2';
-import { CitySplatLayer } from './city-splat-layer.js?v=1.6.101';
+import { CitySplatLayer } from './city-splat-layer.js?v=1.6.111';
 import {
   estimatedBuildingFloors,
   facadeDetailClass,
@@ -4686,13 +4686,13 @@ async function loadPublishedAuthoredDetails() {
 
 function initializeCityEditor(publishedDocument = createEmptySceneDocument()) {
   if (cityEditor) return cityEditor;
-  const draftStore = createDraftStore();
+  const draftStore = createDraftStore({ baseDocument: publishedDocument });
   const history = createCommandHistory({
     initialDocument: publishedDocument,
     onChange: (documentValue) => {
       authoredRuntime.load(documentValue);
       applyOverrides(documentValue, { registry: generatedRegistry, authoredRuntime, materials, THREE });
-      draftStore.saveDraft(documentValue, { baseRevision: publishedDocument.revision });
+      draftStore.saveDraft(documentValue);
     },
   });
   cityEditor = createCityEditor({

@@ -6,7 +6,7 @@ export function createVersionSaver({ serviceUrl, publishedDocument, draftStore, 
   function state(name, extra = {}) { const value = { name, ...extra }; onState(value); return { state: name, ...extra }; }
 
   async function save(document) {
-    const scheduled = draftStore.saveDraft(document, { baseRevision: document.revision });
+    const scheduled = draftStore.saveDraft(document, { baseRevision: baseline.revision, baseDocument: baseline });
     const local = scheduled.status === 'scheduled' ? draftStore.flush() : scheduled;
     if (local.status !== 'saved') return state('failed', { reason: 'local-draft' });
     if (!base) return state('failed', { reason: 'unconfigured' });
@@ -29,22 +29,25 @@ export function createVersionSaver({ serviceUrl, publishedDocument, draftStore, 
       const { commitSha } = await response.json();
       if (!/^[0-9a-f]{40}$/i.test(commitSha || '')) return state('failed');
       baseline = document;
-      state('saved', { commitSha });
+      const rebased = draftStore.setBaseDocument?.(baseline, { rebaseDraft: true });
+      const recoveryState = rebased && !['saved', 'base-updated'].includes(rebased.status)
+        ? { localDraftRecoveryUnavailable: true } : {};
+      state('saved', { commitSha, ...recoveryState });
       try {
         for (let index = 0; index < maxPolls; index++) {
           if (index) await wait(Math.min(1000 * 2 ** (index - 1), 8000));
           const deployment = await fetchImpl(`${base}/api/scene/versions/${commitSha}/status`, { credentials: 'include' });
-          if (deployment.status === 401) return state('auth-expired', { commitSha });
-          if (!deployment.ok) return state('saved', { commitSha, deploymentStatus: 'unavailable' });
+          if (deployment.status === 401) return state('auth-expired', { commitSha, ...recoveryState });
+          if (!deployment.ok) return state('saved', { commitSha, deploymentStatus: 'unavailable', ...recoveryState });
           const { state: deploymentState } = await deployment.json();
-          if (deploymentState === 'live') return state('live', { commitSha });
-          if (deploymentState === 'failed') return state('failed', { commitSha });
-          state('deploying', { commitSha });
+          if (deploymentState === 'live') return state('live', { commitSha, ...recoveryState });
+          if (deploymentState === 'failed') return state('failed', { commitSha, ...recoveryState });
+          state('deploying', { commitSha, ...recoveryState });
         }
       } catch {
-        return state('saved', { commitSha, deploymentStatus: 'unavailable' });
+        return state('saved', { commitSha, deploymentStatus: 'unavailable', ...recoveryState });
       }
-      return state('deploying', { commitSha });
+      return state('deploying', { commitSha, ...recoveryState });
     } catch {
       return state('failed');
     }

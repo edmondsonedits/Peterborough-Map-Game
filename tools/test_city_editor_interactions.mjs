@@ -29,12 +29,36 @@ authoredRuntime.load(authoredDocument);
 const staleObject = authoredRuntime.getObject(authoredRecord.id);
 authoredRuntime.load(authoredDocument);
 const liveObject = authoredRuntime.getObject(authoredRecord.id);
+const panelHelperSource = editor.match(/^function reconcileEditorPanels\([^\n]*\)\s*\{[\s\S]*?^\}/m)?.[0];
+assert.ok(panelHelperSource, 'city-editor.js should expose its panel state reconciliation logic for regression coverage');
+const reconcileEditorPanels = new Function(`${panelHelperSource}; return reconcileEditorPanels;`)();
 assert.deepEqual(
   rebindEditorSelection({ id: authoredRecord.id, kind: 'authored', object: staleObject }, (id) => ({ ...authoredRecord, id, kind: 'authored', object: authoredRuntime.getObject(id) })),
   { id: authoredRecord.id, kind: 'authored', object: liveObject, canTransform: undefined },
   'document reload should re-resolve selection to the current runtime object',
 );
 assert.equal(rebindEditorSelection({ id: 'deleted', object: staleObject }, () => null), null, 'selection should clear when its record no longer exists');
+
+assert.deepEqual(
+  reconcileEditorPanels({ narrow: true, assetsOpen: true, inspectorOpen: true, lastOpenedPanel: 'assets' }),
+  { assetsOpen: true, inspectorOpen: false },
+  'narrowing with both panels open should retain Assets when it was most recently opened',
+);
+assert.deepEqual(
+  reconcileEditorPanels({ narrow: true, assetsOpen: true, inspectorOpen: false, lastOpenedPanel: 'inspector' }),
+  { assetsOpen: true, inspectorOpen: false },
+  'narrowing should preserve a single already-open panel',
+);
+assert.deepEqual(
+  reconcileEditorPanels({ narrow: false, assetsOpen: false, inspectorOpen: false, entering: true }),
+  { assetsOpen: true, inspectorOpen: true },
+  'desktop editor entry should open both panels',
+);
+assert.deepEqual(
+  reconcileEditorPanels({ narrow: true, assetsOpen: false, inspectorOpen: false, entering: true }),
+  { assetsOpen: false, inspectorOpen: false },
+  'narrow editor entry should keep both panels closed',
+);
 
 let pointerUpArgument = 'not-called';
 const draggingControl = {
@@ -57,6 +81,9 @@ assert.match(editor, /transform\?\.getHelper\?\.\(\)\.updateMatrixWorld\(/, 'the
 assert.match(editor, /startEditorCameraSession\(camera, cameraNavigation, previousMode/, 'every editor entry should snapshot and reset navigation for its prior mode');
 assert.match(editor, /restoreEditorCameraSession\(camera, cameraSnapshot\)/, 'editor exit should restore the exact prior camera state');
 assert.match(editor, /matchMedia\?\.\('\(max-width: 760px\)'\)/, 'mobile editor drawers should start collapsed at narrow viewport sizes');
+assert.match(editor, /addListener\(globalThis, 'resize', \(\) => \{ if \(active\) syncPanelLayout\(\); \}\)/, 'active editor panels should be reconciled after viewport changes');
+// Help/prompt/street spacing is verified from rendered rectangles in
+// tests/quality-review-browser.cjs, not a fixed CSS pixel value.
 assert.match(app, /if\s*\(cityEditor\?\.active\)\s*\{\s*cityEditor\.handleShortcut\(event\);\s*return;/, 'editor navigation keys must not leak into driving handlers');
 assert.match(app, /getNavigationTarget\(\)[\s\S]*?intersectObjects\(terrainGroup\.children, true\)[\s\S]*?terrainHeightAtWorld/, 'editor navigation should target real terrain, with a ground-height fallback');
 

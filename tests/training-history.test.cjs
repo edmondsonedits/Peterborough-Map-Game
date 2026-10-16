@@ -27,16 +27,14 @@ function storage({ failWrites = false } = {}) {
   };
 }
 
-function harness({ failWrites = false, pending = [] } = {}) {
-  const localStorage = storage({ failWrites });
-  const sessionStorage = storage();
+function harness({ failWrites = false, pending = [], localStorage = storage({ failWrites }), sessionStorage = storage(), createId = () => 'session-test' } = {}) {
   const context = vm.createContext({
     console,
     URL,
     Blob,
     localStorage,
     sessionStorage,
-    crypto: { randomUUID: () => 'session-test' },
+    crypto: { randomUUID: createId },
     location: { href: 'https://example.test/response-simulator/index.html?city=peterborough' },
     document: {
       body: null,
@@ -117,6 +115,31 @@ test('one mission generation produces one history row even if completion is repo
   const entries = api.list();
   assert.equal(entries.length, 1);
   assert.equal(entries[0].responseSeconds, 11);
+});
+
+test('reloading with the same tab stores preserves previous completions when mission generations restart', () => {
+  let serial = 0;
+  const createId = () => `identity-${++serial}`;
+  const first = harness({ createId });
+  first.api.recordCompletion(fireSnapshot(2, 10000));
+  const second = harness({ createId, localStorage: first.localStorage, sessionStorage: first.sessionStorage });
+  second.api.recordCompletion(fireSnapshot(2, 20000));
+  second.api.recordCompletion(fireSnapshot(2, 21000));
+  const entries = second.api.list();
+  assert.equal(entries.length, 2, 'same generation after reload is a different mission');
+  assert.equal(entries[0].responseSeconds, 21, 'repeat report of the new mission still deduplicates');
+  assert.equal(entries[1].responseSeconds, 10);
+  assert.notEqual(entries[0].id, entries[1].id);
+  assert.equal(entries[0].sessionId, entries[1].sessionId, 'tab training session grouping is preserved');
+});
+
+test('legacy history rows remain readable alongside document-scoped completion identities', () => {
+  const saved = storage();
+  saved.setItem('ptbo.trainingHistory.v1', JSON.stringify([{ id: 'old-session:2:fire', service: 'fire', responseSeconds: 12 }]));
+  const { api } = harness({ localStorage: saved });
+  api.recordCompletion(fireSnapshot(2));
+  assert.equal(api.list().length, 2);
+  assert.equal(api.list()[1].id, 'old-session:2:fire');
 });
 
 test('history is bounded to the newest 150 completion summaries', () => {

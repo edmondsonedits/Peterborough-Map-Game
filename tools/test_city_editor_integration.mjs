@@ -35,6 +35,9 @@ assert.match(app, /cityEditor\?\.enter\(\)/, 'the Editor button should enter edi
 assert.match(app, /\.get\('editor'\) === '1'[\s\S]*?cityEditor\.enter\(\)/, 'private owner editor query should request entry through the same guard');
 assert.match(app, /data\/editor\/peterborough-details\.json/, 'published authored content should load');
 assert.match(app, /onChange:\s*\(documentValue\)\s*=>[\s\S]*?draftStore\.saveDraft\(documentValue/, 'every editor document change should schedule local recovery autosave');
+assert.match(app, /createDraftStore\(\{ baseDocument: publishedDocument \}\)/, 'draft recovery must bind to the loaded published content, including null revisions');
+assert.doesNotMatch(editor, /loadDraft\(\{ baseRevision: currentDocument\(\)\.revision \}\)/, 'recovery must not mistake the edited document revision for the published baseline');
+assert.match(editor, /base-content-unverified/, 'legacy drafts must disclose an unverified published base');
 assert.match(editor, /Publisher not configured; local draft is safe\./, 'an absent publisher must be reported honestly while preserving the local draft');
 assert.match(editor, /data-editor-export/, 'the local JSON export action must remain wired while publishing is unavailable');
 assert.match(app, /if\s*\(!result\.ok\)[\s\S]*?initializeCityEditor\(createEmptySceneDocument\(\)\);[\s\S]*?return;/, 'invalid published content should leave the editor available with an empty document');

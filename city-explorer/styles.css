@@ -85,6 +85,8 @@ button { color: inherit; }
 .help-panel { left: 50%; bottom: 42px; transform: translateX(-50%); width: max-content; max-width: calc(100vw - 320px); padding: 8px 12px; border: 1px solid rgba(255,255,255,.08); background: rgba(5, 14, 20, .54); backdrop-filter: blur(7px); }
 .help-panel p { margin: 0; color: #aab5ae; font-size: 10px; line-height: 1.35; letter-spacing: .015em; text-align: center; }
 .help-panel strong { color: #e7ece8; }
+/* Reserve space for both the interaction prompt and the current-street readout. */
+.help-panel { bottom: 148px; }
 
 #map-guide { position: absolute; right: 30px; bottom: 72px; z-index: 12; display: none; align-items: flex-end; gap: 18px; color: #f4ead0; filter: drop-shadow(0 2px 8px rgba(0,0,0,.6)); pointer-events: none; }
 .is-map #map-guide { display: flex; }
@@ -429,10 +431,11 @@ button { color: inherit; }
 .city-editor-recovery .dialog-shell { display: grid; gap: 12px; }
 .city-editor-recovery .dialog-shell > p { margin: 0; color: #c1d1cd; font-size: 12px; line-height: 1.5; }
 .is-editor .control-panel .menu-link, .is-editor .control-panel #play-mode, .is-editor .control-panel #fly-mode, .is-editor .control-panel #map-mode { display: none; }
-.is-editor .control-panel { z-index: 27; top: auto; right: 0; bottom: 80px; left: 50%; width: auto; display: flex; gap: 5px; transform: translateX(-50%); }
-.is-editor .control-panel .hud-button { text-align: center; }
+html.is-editor #app .control-panel { z-index: 27; top: auto; right: auto; bottom: 80px; left: 50%; width: max-content; max-width: calc(100vw - 36px); display: flex; flex-wrap: nowrap; gap: 5px; transform: translateX(-50%); overflow-x: auto; }
+.is-editor .control-panel .hud-button { flex: 0 0 auto; text-align: center; }
 .is-editor #touch-controls { display: none; }
 .is-editor #flight-reticle { display: none; }
+.is-editor #gameplay-hud, .is-editor #interaction-prompt, .is-editor .help-panel { display: none; }
 
 @media (max-width: 760px) {
   .city-editor-panel { top: 66px; bottom: 70px; width: min(250px, calc(50vw - 16px)); padding: 11px; }
@@ -440,18 +443,24 @@ button { color: inherit; }
   .city-editor-inspector { right: 8px; }
   .is-editor #city-editor-left:not([hidden]),
   .is-editor #city-editor-inspector:not([hidden]) {
-    top: 62px;
+    top: 92px;
     right: 10px;
-    bottom: 126px;
+    bottom: 140px;
     left: 10px;
     width: auto;
     max-height: 55vh;
   }
-  .city-editor-toolbar { top: 8px; max-width: calc(100vw - 16px); overflow-x: auto; }
-  .city-editor-toolbar button { flex: 0 0 auto; }
+  .city-editor-toolbar { top: 24px; left: 8px; transform: none; max-width: calc(100vw - 132px); overflow-x: auto; }
+  .city-editor-toolbar button { flex: 0 0 auto; min-height: 44px; font-size: 10px; }
+  html.is-editor body #ptbo-training-use-notice.ptbo-city-training-notice { top: 24px; right: 8px; bottom: auto; left: auto; width: 108px; max-width: 108px; transform: none; justify-content: center; }
   .city-editor-status { right: 8px; bottom: 7px; left: 8px; flex-wrap: wrap; gap: 5px 10px; }
   .city-editor-status > [data-editor-status-text] { flex-basis: 60%; }
   .city-editor-actions { justify-content: flex-start; }
   .city-editor-actions button { font-size: 8px; }
-  .is-editor .control-panel { top: auto; bottom: 76px; left: 50%; }
+  html.is-editor #app .control-panel { bottom: 122px; padding: 0; }
+  .is-editor .control-panel .hud-button { min-height: 44px; }
+}
+
+@media (max-width: 760px) and (max-height: 560px) {
+  html.is-editor #app .control-panel { bottom: 85px; }
 }

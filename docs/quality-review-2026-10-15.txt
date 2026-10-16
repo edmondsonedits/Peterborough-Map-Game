@@ -1,0 +1,111 @@
+PETERBOROUGH MAP GAME — COMPLETED REVIEW FIXES
+15 October 2026 — local result, not published
+
+Source and scope
+Repository: edmondsonedits/Peterborough-Map-Game
+Checkout: repository-quality-audit
+Branch: codex/complete-quality-review
+Base: 5f37936489d9d0fa1e144fcb5fca19680c3b28ba (v1.6.110)
+Fixes cover every actionable finding in the whole-repository review, both
+additional layout findings, and three issues raised by independent review.
+Existing unpublished Geo changes were preserved and integrated. Geographic
+data, base/call identities, attribution and compatibility loaders are preserved.
+
+Completed fixes
+1. Driving guidance uses legal directed road-segment access instead of jumping
+   to arbitrary nearby graph vertices. Same-segment routes, reverse-only roads,
+   connected return loops and disconnected access are covered by regressions.
+2. Roundabouts imply one-way travel, while explicit direction overrides remain
+   supported. The real North Monaghan contraflow case is a regression test.
+3. Training history survives reload without replacing a previous completion.
+   Repeated completion reports within one mission still deduplicate.
+4. Plain Route Mapping links load Peterborough consistently even when Toronto
+   is remembered. Other city preferences and unrelated URL parameters survive.
+5. Training notices remain accessible and usable, without covering call cards,
+   editor controls, touch controls, street names, speed or gear readouts.
+6. Geo Guesser restores keyboard focus after next/retry/base/finish/settings;
+   correct-answer labels no longer overlap. Long landscape reviews are readable.
+7. Editor drafts identify the actual published content. Changed publications
+   with null revisions are detected; legacy drafts are explicitly unverified.
+   Recover, export, discard, corrupt storage and post-save rebase are covered.
+8. Editor drawers reconcile on resize and remain mutually exclusive on narrow
+   screens. Toolbars and menus scroll within their available space.
+9. Editor release checks validate the current loader/cache graph instead of an
+   obsolete September release token. New consequential tests run in Pages CI.
+10. 3D help, interaction prompts and street HUD are separated. Gameplay HUD is
+    hidden during editing, leaving the editing controls readable.
+
+Independent review follow-ups, also resolved
+- Pending editor changes flush on exit/dispose/pagehide, including immediate
+  navigation before the autosave delay. Failed writes remain exportable.
+- Recovery has its own Export action; download leaves the decision open.
+- If publication succeeds but newer local draft persistence fails, the UI
+  retains commit success and explicitly warns that recovery is unavailable.
+
+Verification
+- Main behavioral suite: 425 passed, zero failures/skips.
+- Tooling/editor suite: 111 passed, zero failures/skips.
+- Python terrain suite: 4 passed. Total 540 automated checks.
+- Final notice-only adjustment:syntax and 15 affected checks passed.
+- All 1,200 canonical routing cases passed: 600 Fire responses, 400 EMS responses,
+  and 200 EMS hospital transports, using existing operational arrival resolution.
+- Static inventory: 363 scripts, 27 inline scripts and 98 JSON/GeoJSON documents
+  parsed without errors; no missing literal local HTML resources.
+- Production normalization succeeded for all 11 canonical surfaces in a separate
+  staging copy. Versioned loading remained intact. git diff --check passed.
+- 19 distinct Chromium journeys passed: 5 Geo focus journeys; Fire/EMS Route
+  Mapping; route failure/retry; Fire/EMS history across reload; 3D editor desktop,
+  portrait and landscape layout; 3D phone driving/flight controls; actual editor
+  placement, immediate navigation, changed-publication recovery, JSON download,
+  undo/redo; small-landscape Geo review; launcher; Fire/EMS driving; dispatch
+  editor persistence; Tunnel Break. Layout-only reruns are not counted twice.
+- Screenshots personally inspected at desktop, 390x844, 667x375 and 844x390.
+  No unexpected page errors, failed requests or missing local assets remained.
+  Telemetry writes were intercepted; its expected 403 console messages and the
+  deliberately failed road request are recorded separately in evidence.
+- GPT-6 Luna High handled bounded UI/bootstrap work; GPT-6.1 Sol High handled
+  routing/history/draft persistence. The configured deep_reviewer Sol Medium
+  performed independent read-only review; all three actionable findings were
+  fixed and spot-reviewed with no further material finding.
+
+Local preview and evidence
+Preview: http://127.0.0.1:4191/
+Restart: node tools/serve-quality-preview.cjs 4191.
+Tests: test-artifacts/quality-review/all-unit-tests.log, tool-tests.log,
+       final-shared-checks.log, static-audit.log
+Browser: test-artifacts/quality-review/browser-report.json
+Final layouts: test-artifacts/quality-review/layout-final/browser-report.json
+Geo: test-artifacts/quality-review/geo-focus/focus-browser-report.json
+Recovery: test-artifacts/quality-review/recovery-final/browser-report.json
+3D touch: test-artifacts/quality-review/city-touch-final/browser-report.json
+Other modes: test-artifacts/quality-audit/after/journeys.json
+Source receipt: test-artifacts/quality-review/source-receipt.json
+Repeatable browser harnesses: tests/quality-review-browser.cjs and
+tests/geo-focus-browser.cjs. Playwright is provided by the local workspace runtime.
+
+Relevant implementation files
+response-simulator/route-reveal.js
+response-simulator/training-history-1.6.45.js
+route-mapping/index.html
+geo-guesser/app.js and app.css
+shared/build-version.js
+city-explorer/editor/draft-store.js, version-saver.js and city-editor.js
+city-explorer/styles.css and index.html
+.github/workflows/deploy-pages.yml
+
+Limits and release status
+Phone checks used Chromium device/touch emulation, not physical phones, Safari
+or Firefox. Mission-arrival coordinates and changed-publication data were
+deliberate test fixtures; no full emergency response was physically driven.
+Routing checks validate the shipped graph, not authoritative field conditions
+or suitability for operational navigation. No performance improvement is claimed.
+The separate editor origin was emulated with local responses, retaining the
+real entry policy. Live authentication/publication was not attempted. Draft
+identity stores an exact normalized base snapshot and can use more local storage;
+quota/error paths are tested and surfaced, but browser storage remains finite.
+No remaining actionable item from this scoped review is open. Physical-device
+and authenticated publishing checks remain release verification limits.
+This document records the completed local review before the subsequent authorized
+release. Release v1.6.111 also updates cache keys and aligns the optional authored
+scene bridge on one CitySplatLayer module identity. Release/deployment evidence
+and live browser results are recorded under test-artifacts/release-1.6.111/.

@@ -10,8 +10,6 @@
     gridSize: 120,
     startSnapRadius: 180,
     destinationSnapRadius: 500,
-    startCandidates: 8,
-    destinationCandidates: 10,
     rerouteDistance: 45,
     rerouteIntervalMs: 1800,
     maxVisitedNodes: 120000,
@@ -83,8 +81,9 @@
   }
 
   function isForwardOnly(properties = {}) {
-    const value = String(properties.oneway || '').toLowerCase();
-    return value === 'yes' || value === 'true' || value === '1';
+    const value = String(properties.oneway ?? '').toLowerCase();
+    return value === 'yes' || value === 'true' || value === '1'
+      || (properties.junction === 'roundabout' && !['no', 'false', '0', '-1'].includes(value));
   }
 
   function isReverseOnly(properties = {}) {
@@ -99,6 +98,8 @@
     const nodes = [];
     const nodeByCoordinate = new Map();
     const grid = new Map();
+    const segments = [];
+    const segmentGrid = new Map();
     let directedEdges = 0;
 
     function registerNode(coordinate) {
@@ -120,7 +121,7 @@
       return id;
     }
 
-    function addDirectedEdge(from, to, properties) {
+    function addDirectedEdge(from, to, properties, segmentId, reverse = false) {
       if (from < 0 || to < 0 || from === to) return;
       const a = nodes[from];
       const b = nodes[to];
@@ -129,7 +130,10 @@
       const profile = routeProfile(properties);
       const duration = distance / (profile.speed / 3.6);
       a.edges.push({
+        from,
         to,
+        segmentId,
+        reverse,
         distance,
         duration,
         weight: duration * profile.priority,
@@ -146,10 +150,23 @@
       for (let index = 1; index < ids.length; index += 1) {
         const from = ids[index - 1];
         const to = ids[index];
-        if (isReverseOnly(properties)) addDirectedEdge(to, from, properties);
+        if (from < 0 || to < 0 || from === to) continue;
+        const a = nodes[from], b = nodes[to], dx = b.x - a.x, dy = b.y - a.y;
+        const length = Math.hypot(dx, dy);
+        if (length < .2) continue;
+        const segmentId = segments.length;
+        segments.push({ id:segmentId, from, to, ax:a.x, ay:a.y, dx, dy, length,
+          forward:!isReverseOnly(properties), backward:isReverseOnly(properties) || !isForwardOnly(properties) });
+        for (let x = Math.floor(Math.min(a.x,b.x)/CONFIG.gridSize); x <= Math.floor(Math.max(a.x,b.x)/CONFIG.gridSize); x++) {
+          for (let y = Math.floor(Math.min(a.y,b.y)/CONFIG.gridSize); y <= Math.floor(Math.max(a.y,b.y)/CONFIG.gridSize); y++) {
+            const key = `${x},${y}`, bucket = segmentGrid.get(key);
+            if (bucket) bucket.push(segmentId); else segmentGrid.set(key,[segmentId]);
+          }
+        }
+        if (isReverseOnly(properties)) addDirectedEdge(to, from, properties, segmentId, true);
         else {
-          addDirectedEdge(from, to, properties);
-          if (!isForwardOnly(properties)) addDirectedEdge(to, from, properties);
+          addDirectedEdge(from, to, properties, segmentId);
+          if (!isForwardOnly(properties)) addDirectedEdge(to, from, properties, segmentId, true);
         }
       }
     }
@@ -163,33 +180,69 @@
     });
 
     if (!nodes.length || !directedEdges) throw new Error('The routing graph did not contain any usable roads.');
-    return { nodes, grid, directedEdges };
+    return { nodes, grid, segments, segmentGrid, directedEdges };
   }
 
-  function nearestNodes(lat, lng, count, maxRadius) {
-    if (!state.graph) return [];
+  function nearestAccess(lat, lng, maxRadius) {
+    if (!state.graph || !Number.isFinite(lat) || !Number.isFinite(lng)) return null;
     const point = toXY(lat, lng);
     const radiusCells = Math.max(1, Math.ceil(maxRadius / CONFIG.gridSize));
     const centerX = Math.floor(point.x / CONFIG.gridSize);
     const centerY = Math.floor(point.y / CONFIG.gridSize);
-    const found = [];
+    let best = null;
     const seen = new Set();
 
     for (let offsetX = -radiusCells; offsetX <= radiusCells; offsetX += 1) {
       for (let offsetY = -radiusCells; offsetY <= radiusCells; offsetY += 1) {
-        const bucket = state.graph.grid.get(`${centerX + offsetX},${centerY + offsetY}`);
+        const bucket = state.graph.segmentGrid.get(`${centerX + offsetX},${centerY + offsetY}`);
         if (!bucket) continue;
         bucket.forEach(id => {
           if (seen.has(id)) return;
           seen.add(id);
-          const node = state.graph.nodes[id];
-          const distance = Math.hypot(node.x - point.x, node.y - point.y);
-          if (distance <= maxRadius) found.push({ id, distance });
+          const segment = state.graph.segments[id];
+          let t = Math.max(0,Math.min(1,((point.x-segment.ax)*segment.dx+(point.y-segment.ay)*segment.dy)/(segment.length*segment.length)));
+          if (t < 1e-8) t = 0;
+          if (t > 1-1e-8) t = 1;
+          const x = segment.ax+segment.dx*t, y = segment.ay+segment.dy*t;
+          const distance = Math.hypot(x-point.x,y-point.y);
+          if (distance <= maxRadius && (!best || distance < best.distance-1e-7)) {
+            best = { segment,t,x,y,distance,lat:CONFIG.centerLat+y/METERS_PER_LAT,lng:CONFIG.centerLng+x/METERS_PER_LNG };
+          }
         });
       }
     }
 
-    return found.sort((a, b) => a.distance - b.distance).slice(0, count);
+    return best;
+  }
+
+  function segmentPoint(segment,t) {
+    return {lat:CONFIG.centerLat+(segment.ay+segment.dy*t)/METERS_PER_LAT,
+      lng:CONFIG.centerLng+(segment.ax+segment.dx*t)/METERS_PER_LNG};
+  }
+
+  function segmentPart(segment,fromT,toT) {
+    if (Math.abs(toT-fromT) < 1e-9) return null;
+    const reverse = toT < fromT;
+    const edge = state.graph.nodes[reverse?segment.to:segment.from].edges.find(item => item.segmentId===segment.id && item.reverse===reverse);
+    if (!edge) return null;
+    const fraction = Math.abs(toT-fromT);
+    return {...edge,distance:edge.distance*fraction,duration:edge.duration*fraction,weight:edge.weight*fraction,
+      start:segmentPoint(segment,fromT),end:segmentPoint(segment,toT)};
+  }
+
+  function accessEnds(access, entering) {
+    const segment = access.segment, ends = [];
+    const add = (nodeId,fromT,toT) => ends.push({nodeId,edge:segmentPart(segment,fromT,toT)});
+    // At a real graph vertex, every connected legal outgoing/incoming road is usable.
+    // Interior endpoints can reach only the permitted end of their own segment.
+    if (entering) {
+      if (segment.forward || access.t===0) add(segment.from,0,access.t);
+      if (segment.backward || access.t===1) add(segment.to,1,access.t);
+    } else {
+      if (segment.forward || access.t===1) add(segment.to,access.t,1);
+      if (segment.backward || access.t===0) add(segment.from,access.t,0);
+    }
+    return ends;
   }
 
   class MinHeap {
@@ -244,47 +297,58 @@
 
   function calculateRoute(startLat, startLng, endLat, endLng) {
     if (!state.graph) return null;
-    const startCandidates = nearestNodes(startLat, startLng, CONFIG.startCandidates, CONFIG.startSnapRadius);
-    const endCandidates = nearestNodes(endLat, endLng, CONFIG.destinationCandidates, CONFIG.destinationSnapRadius);
-    if (!startCandidates.length || !endCandidates.length) return null;
+    // Project each supplied operational point onto its nearest road section once.
+    // Never retry farther roads merely because they offer a shorter connected route.
+    const start = nearestAccess(startLat,startLng,CONFIG.startSnapRadius);
+    const end = nearestAccess(endLat,endLng,CONFIG.destinationSnapRadius);
+    if (!start || !end) return null;
 
     const { nodes } = state.graph;
-    const destinationXY = toXY(endLat, endLng);
-    const destinationSet = new Map(endCandidates.map(candidate => [candidate.id, candidate.distance / 9]));
+    const destinationSet = new Map(accessEnds(end,true).map(candidate => [candidate.nodeId,candidate.edge]));
     const scores = new Float64Array(nodes.length);
     const previous = new Int32Array(nodes.length);
     const previousEdge = new Array(nodes.length);
+    const startEdges = new Map();
     scores.fill(Infinity);
     previous.fill(-1);
     const heap = new MinHeap();
 
-    startCandidates.forEach(candidate => {
-      const connectorCost = candidate.distance / 12;
-      if (connectorCost < scores[candidate.id]) {
-        scores[candidate.id] = connectorCost;
-        heap.push({ id: candidate.id, score: connectorCost + heuristic(nodes[candidate.id], destinationXY) });
+    accessEnds(start,false).forEach(candidate => {
+      const cost = candidate.edge?.weight || 0;
+      if (cost < scores[candidate.nodeId]) {
+        scores[candidate.nodeId] = cost;
+        startEdges.set(candidate.nodeId,candidate.edge);
+        heap.push({ id:candidate.nodeId,score:cost+heuristic(nodes[candidate.nodeId],end) });
       }
     });
 
     let bestDestination = -1;
     let bestTotal = Infinity;
+    let directEdges = null;
+    if (start.segment.id===end.segment.id) {
+      if (Math.abs(start.t-end.t)<1e-9) { directEdges=[];bestTotal=0; }
+      else {
+        const direct = segmentPart(start.segment,start.t,end.t);
+        if (direct) { directEdges=[direct];bestTotal=direct.weight; }
+      }
+    }
     let visited = 0;
 
     while (heap.size && visited < CONFIG.maxVisitedNodes) {
       const current = heap.pop();
       if (!current) break;
       const currentNode = nodes[current.id];
-      const expected = scores[current.id] + heuristic(currentNode, destinationXY);
+      const expected = scores[current.id] + heuristic(currentNode, end);
       if (current.score > expected + 1e-7) continue;
       if (current.score >= bestTotal) break;
       visited += 1;
 
-      const terminalCost = destinationSet.get(current.id);
-      if (terminalCost !== undefined) {
-        const total = scores[current.id] + terminalCost;
+      if (destinationSet.has(current.id)) {
+        const total = scores[current.id] + (destinationSet.get(current.id)?.weight || 0);
         if (total < bestTotal) {
           bestTotal = total;
           bestDestination = current.id;
+          directEdges = null;
         }
       }
 
@@ -294,31 +358,38 @@
         scores[edge.to] = nextScore;
         previous[edge.to] = current.id;
         previousEdge[edge.to] = edge;
-        heap.push({ id: edge.to, score: nextScore + heuristic(nodes[edge.to], destinationXY) });
+        heap.push({ id: edge.to, score: nextScore + heuristic(nodes[edge.to], end) });
       }
     }
 
-    if (bestDestination < 0) return null;
+    if (bestDestination < 0 && directEdges===null) return null;
 
-    const nodeIds = [];
-    const edges = [];
-    let cursor = bestDestination;
-    while (cursor >= 0) {
-      nodeIds.push(cursor);
-      if (previousEdge[cursor]) edges.push(previousEdge[cursor]);
-      cursor = previous[cursor];
+    let edges = directEdges;
+    if (edges===null) {
+      edges=[];
+      let cursor = bestDestination;
+      while (previous[cursor]>=0) {
+        edges.push(previousEdge[cursor]);
+        cursor=previous[cursor];
+      }
+      edges.reverse();
+      const first = startEdges.get(cursor), last = destinationSet.get(bestDestination);
+      if (first) edges.unshift(first);
+      if (last) edges.push(last);
     }
-    nodeIds.reverse();
-    edges.reverse();
 
     const coordinates = [[startLat, startLng]];
-    nodeIds.forEach(id => coordinates.push([nodes[id].lat, nodes[id].lng]));
-    coordinates.push([endLat, endLng]);
-
-    const connectorDistance = startCandidates.find(candidate => candidate.id === nodeIds[0])?.distance || 0;
-    const destinationDistance = endCandidates.find(candidate => candidate.id === bestDestination)?.distance || 0;
-    const distance = connectorDistance + destinationDistance + edges.reduce((sum, edge) => sum + edge.distance, 0);
-    const duration = connectorDistance / 12 + destinationDistance / 9 + edges.reduce((sum, edge) => sum + edge.duration, 0);
+    const append = point => {
+      const last = coordinates[coordinates.length-1];
+      if (distanceMeters(last[0],last[1],point.lat,point.lng)>.01) coordinates.push([point.lat,point.lng]);
+    };
+    append(start);
+    edges.forEach(edge => append(edge.end || nodes[edge.to]));
+    append(end);
+    append({lat:endLat,lng:endLng});
+    if (coordinates.length===1) coordinates.push([endLat,endLng]);
+    const distance = start.distance + end.distance + edges.reduce((sum, edge) => sum + edge.distance, 0);
+    const duration = start.distance / 12 + end.distance / 9 + edges.reduce((sum, edge) => sum + edge.duration, 0);
     return {
       coordinates,
       edges,

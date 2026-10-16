@@ -1,11 +1,17 @@
 import assert from 'node:assert/strict';
 import { readFile, readdir, stat } from 'node:fs/promises';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const city = path.join(root, 'city-explorer');
 const html = await readFile(path.join(city, 'index.html'), 'utf8');
+const appSource = await readFile(path.join(city, 'app.js'), 'utf8');
+const bootstrapSource = await readFile(path.join(city, 'authored-scene-bootstrap.js'), 'utf8');
+const roadOrientationSource = await readFile(path.join(city, 'road-orientation-fix.js'), 'utf8');
+const editorSource = await readFile(path.join(city, 'editor/city-editor.js'), 'utf8');
+const buildSource = await readFile(path.join(root, 'shared/build-version.js'), 'utf8');
+const stationsSource = await readFile(path.join(root, 'shared/stations.js'), 'utf8');
 const workflow = await readFile(path.join(root, '.github/workflows/deploy-pages.yml'), 'utf8');
 const scene = JSON.parse(await readFile(path.join(city, 'data/editor/peterborough-details.json'), 'utf8'));
 const editorFiles = await readdir(path.join(city, 'editor'));
@@ -23,10 +29,48 @@ for (const match of html.matchAll(/<script\b([^>]*)\bsrc=["']([^"']+)["'][^>]*>/
   assert.equal((await stat(referenced)).isFile(), true, `referenced script must exist: ${path.relative(root, referenced)}`);
 }
 
-assert.match(html, /styles\.css\?v=city-editor-20260925/, 'the editor release must invalidate cached styles');
-assert.match(html, /road-orientation-fix\.js\?v=city-editor-20260925/, 'the app entrypoint must have a release cache key');
-assert.match(html, /data-loader\.js\?v=city-editor-20260925/, 'the data loader must have a release cache key');
-assert.match(html, /osmtogeojson-3\.0\.0-beta\.5\/osmtogeojson\.js\?v=city-editor-20260925/, 'the pinned GeoJSON converter must have a release cache key');
+const releaseVersion = html.match(/release\.js\?v=(\d+\.\d+\.\d+)/)?.[1];
+assert.ok(releaseVersion, 'the release entrypoint should define the active asset version');
+const canonicalVersion = buildSource.match(/const VERSION = '(\d+\.\d+\.\d+)'/)?.[1];
+assert.equal(canonicalVersion, releaseVersion, 'HTML entrypoints must match the canonical source release');
+const appSplatImport = appSource.match(/from ['"](\.\/city-splat-layer\.js\?[^'"]+)['"]/)
+  ?.[1];
+const bootstrapSplatImport = bootstrapSource.match(/from ['"](\.\/city-splat-layer\.js\?[^'"]+)['"]/)
+  ?.[1];
+assert.ok(appSplatImport && bootstrapSplatImport, 'both editor modules must import CitySplatLayer');
+const appSplatUrl = new URL(appSplatImport, pathToFileURL(path.join(city, 'app.js')));
+const bootstrapSplatUrl = new URL(bootstrapSplatImport, pathToFileURL(path.join(city, 'authored-scene-bootstrap.js')));
+assert.equal(appSplatUrl.href, bootstrapSplatUrl.href, 'the authored-scene hook and editor must share the same CitySplatLayer module identity');
+assert.equal(appSplatUrl.searchParams.get('v'), canonicalVersion, 'CitySplatLayer cache key should match the active release');
+const bootstrapImport = roadOrientationSource.match(/import\(['"](\.\/authored-scene-bootstrap\.js\?[^'"]+)['"]\)/)?.[1];
+assert.ok(bootstrapImport, 'the explorer loader must version its authored-scene bootstrap import');
+const bootstrapUrl = new URL(bootstrapImport, pathToFileURL(path.join(city, 'road-orientation-fix.js')));
+assert.equal(bootstrapUrl.searchParams.get('v'), canonicalVersion, 'authored-scene bootstrap cache key should match the active release');
+for (const [source, specifier, label] of [
+  [appSource, './editor/draft-store.js', 'draft store'],
+  [appSource, './editor/city-editor.js', 'editor entry module'],
+  [editorSource, './version-saver.js', 'version saver'],
+  [editorSource, './recovery-prompt.js', 'recovery prompt'],
+]) {
+  const escaped = specifier.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  assert.match(source, new RegExp(`from ['"]${escaped}\\?v=${canonicalVersion}['"]`), `${label} import should carry the active cache key`);
+}
+const routeRevealLoader = stationsSource.match(/route-reveal\.js\?v=\$\{([^}]+)\}/)?.[1];
+assert.equal(routeRevealLoader, 'CACHE_VERSION', 'shared stations must use the canonical script cache key for the changed route calculator');
+const stylesheetRefs = [...html.matchAll(/<link\b(?=[^>]*\brel=["']stylesheet["'])[^>]*\bhref=["']([^"']+)["'][^>]*>/gi)].map((match) => match[1]);
+assert.ok(stylesheetRefs.length > 0, 'the shell should expose its active stylesheet graph');
+for (const href of stylesheetRefs) {
+  const url = new URL(href, 'https://editor.example.test/city-explorer/');
+  assert.equal(url.origin, 'https://editor.example.test', `stylesheets should stay local: ${href}`);
+  assert.equal(url.searchParams.get('v'), releaseVersion, `stylesheet cache version should match active release ${releaseVersion}: ${href}`);
+  const referenced = path.resolve(city, decodeURIComponent(url.pathname).replace(/^\/city-explorer\//, ''));
+  assert.equal((await stat(referenced)).isFile(), true, `referenced stylesheet must exist: ${path.relative(root, referenced)}`);
+}
+for (const match of html.matchAll(/<script\b([^>]*)\bsrc=["']([^"']+)["'][^>]*>/gi)) {
+  const url = new URL(match[2], 'https://editor.example.test/city-explorer/');
+  assert.equal(url.searchParams.get('v'), releaseVersion, `script cache version should match active release ${releaseVersion}: ${match[2]}`);
+}
+assert.doesNotMatch(html, /city-editor-20260925/, 'retired release cache tokens should not remain in the active shell');
 assert.match(html, /three-r180\/build\/three\.module\.min\.js/, 'Three.js must resolve from the pinned local vendor copy');
 assert.match(html, /three-r180\/examples\/jsm\//, 'Three.js addons must resolve from the pinned local vendor copy');
 assert.match(html, /spark-2\.1\.0\/spark\.module\.min\.js/, 'Spark must resolve from the pinned local vendor copy');

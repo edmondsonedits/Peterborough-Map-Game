@@ -124,7 +124,7 @@
     loadSimulatorTool(doc,'speed-streak.js?v=1.5.10','data-ptbo-speed-streak','Unable to load the collision speed streak system.');
     loadSimulatorTool(doc,`vehicle-instruments.js?v=${VERSION}`,'data-ptbo-vehicle-instruments','Unable to load the speedometer and mobile steering systems.');
     loadSimulatorTool(doc,'max-speed.js?v=1.5.10','data-ptbo-max-speed','Unable to load the max speed tracker.');
-    loadSimulatorTool(doc,`route-reveal.js?v=${VERSION}`,'data-ptbo-route-reveal','Unable to load the route answer system.');
+    loadSimulatorTool(doc,`route-reveal.js?v=${CACHE_VERSION}`,'data-ptbo-route-reveal','Unable to load the route answer system.');
     loadSimulatorTool(doc,`route-compare.js?v=${VERSION}`,'data-ptbo-route-compare','Unable to load the post-call route comparison system.');
 
     const apply = async () => {

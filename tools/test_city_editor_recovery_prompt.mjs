@@ -10,3 +10,12 @@ for (const action of ['recover', 'discard']) {
     assert.equal(prompt.pending, false);
   });
 }
+
+for (const status of ['base-revision-mismatch', 'base-content-mismatch', 'base-content-unverified']) {
+  test(`${status} retains an explicit recovery choice`, () => {
+    const prompt = createRecoveryPrompt(status);
+    assert.equal(prompt.pending, true);
+    prompt.dismiss();
+    assert.equal(prompt.pending, false);
+  });
+}
