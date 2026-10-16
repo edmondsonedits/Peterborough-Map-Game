@@ -308,8 +308,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-
-  #toast { top: 88px; max-width: calc(100vw - 28px); text-align: center; }
+  #toast { top: 140px; max-width: calc(100vw - 28px); text-align: center; }
 }
 
 @media (max-width: 390px) and (pointer: coarse) {

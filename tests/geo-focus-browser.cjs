@@ -10,12 +10,13 @@ const { chromium, devices } = require('playwright');
   const out = path.resolve(process.env.PTBO_FOCUS_QA_OUTPUT || 'test-artifacts/quality-batch-20261015');
   fs.mkdirSync(out, { recursive: true });
   const browser = await chromium.launch({ headless: true, executablePath: process.env.PTBO_CHROMIUM_EXECUTABLE || undefined });
-  const report = { scenarios: [], externalWritesIntercepted: true };
+  const report = { base, scenarios: [], externalWritesIntercepted: true };
   try {
     for (const [surface, service, width, height] of [
       ['desktop', 'fire', 1365, 900], ['desktop', 'ems', 1365, 900],
       ['mobile', 'fire', 390, 844], ['mobile', 'ems', 390, 844],
       ['mobile', 'ems', 844, 390],
+      ['online', 'fire', 1365, 900], ['online', 'ems', 1365, 900],
     ]) {
       const name = `${surface}-${service}-${width}x${height}`;
       const context = await browser.newContext({
@@ -43,6 +44,8 @@ const { chromium, devices } = require('playwright');
         const frame = page.frames().find(item => item.url().includes('/geo-guesser/index.html'));
         assert.ok(frame, 'Geo Guesser wrapper has its game frame');
         await frame.waitForFunction(() => window.PTBO_GEO?.state.ready);
+        result.buildVersion = await frame.evaluate(() => window.PTBO_BUILD?.version);
+        if (process.env.PTBO_EXPECTED_VERSION) assert.equal(result.buildVersion, process.env.PTBO_EXPECTED_VERSION);
         const activate = locator => surface === 'mobile' ? locator.tap() : locator.click();
         const focused = locator => locator.evaluate(node => document.activeElement === node);
         async function verifyVisibleFocus(locator, label) {

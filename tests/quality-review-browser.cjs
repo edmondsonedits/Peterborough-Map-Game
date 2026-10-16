@@ -222,6 +222,12 @@ function disjoint(a, b, label) {
       await page.waitForFunction(() => __PTBO_GAMEPLAY__.state().mode === 'driving');
       disjoint(await rect(notice), await rect(page.locator('.vehicle-instruments')), 'notice leaves speed and gear readable');
       disjoint(await rect(notice), await rect(page.locator('.current-street-box')), 'notice leaves current street readable');
+      const toast = page.locator('#toast.is-visible');
+      await toast.waitFor({ state: 'attached' });
+      assert.match(await toast.innerText(), /Fire Rescue Engine 1 ready/i);
+      const toastRect = await rect(toast), locationRect = await rect(page.locator('.location-panel'));
+      assert.ok(toastRect.right <= locationRect.x || toastRect.x >= locationRect.right || toastRect.bottom <= locationRect.y || toastRect.y >= locationRect.bottom,
+        `truck-entry toast stays clear of the phone location panel: toast=${JSON.stringify(toastRect)} location=${JSON.stringify(locationRect)}`);
       await page.screenshot({ path: path.join(out, 'city-driving-phone.png') });
       await page.locator('#mobile-action-button').tap();
       await page.waitForFunction(() => __PTBO_GAMEPLAY__.state().mode === 'onFoot');

@@ -106,6 +106,6 @@ quota/error paths are tested and surfaced, but browser storage remains finite.
 No remaining actionable item from this scoped review is open. Physical-device
 and authenticated publishing checks remain release verification limits.
 This document records the completed local review before the subsequent authorized
-release. Release v1.6.111 also updates cache keys and aligns the optional authored
+release. Release v1.6.112 also updates cache keys and aligns the optional authored
 scene bridge on one CitySplatLayer module identity. Release/deployment evidence
-and live browser results are recorded under test-artifacts/release-1.6.111/.
+and live browser results are recorded under test-artifacts/release-1.6.112/.
