@@ -17,3 +17,44 @@ body #ptbo-training-use-notice{top:auto!important;right:auto!important;bottom:8p
 body #ptbo-training-use-notice span{display:none}
 body #ptbo-training-use-notice strong{margin:0;font-size:9px}
 body #ptbo-training-use-notice:focus-visible{outline:3px solid #6de8dc;outline-offset:3px}
+
+/* Peterborough review: keep the address at the top and secondary hints tucked away. */
+.ptbo-geo-compact #header{top:calc(12px + env(safe-area-inset-top));max-height:calc(50dvh - 35px);padding:14px 18px}
+.ptbo-geo-compact #header h2,.ptbo-geo-compact #call-address{overflow-wrap:anywhere}
+.ptbo-geo-compact #practice-feedback:empty{display:none}
+.ptbo-geo-compact #reveal-cross-streets{display:block;min-height:36px;margin-top:2px;padding:6px 0;text-align:left}
+#practice-bases{position:relative;pointer-events:auto}
+#practice-bases summary{display:flex;align-items:center;gap:10px;min-height:42px;padding:9px 14px;border:1px solid var(--line);border-radius:12px;background:var(--panel);cursor:pointer;list-style:none;touch-action:manipulation}
+#practice-bases summary::-webkit-details-marker{display:none}
+#practice-bases summary:hover{background:#262c3b}
+#practice-bases summary:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+#practice-bases summary span{color:var(--accent);transition:transform .15s}
+#practice-bases[open] summary{border-color:var(--accent)}
+#practice-bases[open] summary span{transform:rotate(180deg)}
+#practice-base-options{position:absolute;top:calc(100% + 8px);left:0;width:min(340px,calc(100vw - 24px));max-height:min(55dvh,420px);overflow:auto;overscroll-behavior:contain;padding:6px;background:#191d29}
+#practice-base-options .base-option{display:block;width:100%;text-align:left;min-height:52px;padding:11px 12px;border-color:transparent;border-radius:10px}
+.base-option strong{display:block;font-size:.88rem;line-height:1.3}
+.base-option span{display:block;margin-top:3px;font-size:.75rem;line-height:1.4;color:var(--muted)}
+#practice-base-options .base-option[aria-pressed=true]{background:#69e0cf17;border-color:var(--accent)}
+@media(max-width:760px){
+  .ptbo-geo-compact #header{top:calc(8px + env(safe-area-inset-top));left:12px;right:12px;transform:none;width:auto;padding:54px 16px 10px;max-height:calc(50dvh - 34px)}
+  .ptbo-geo-compact .map-top-actions{top:calc(14px + env(safe-area-inset-top));left:20px;right:20px}
+  .ptbo-geo-compact #header h2{font-size:1.05rem;margin:4px 0;line-height:1.25}
+  .ptbo-geo-compact #call-type{font-size:.65rem;letter-spacing:.1em}
+  .ptbo-geo-compact #call-address{font-size:.95rem}
+  .ptbo-geo-compact #call-cross-streets{font-size:.78rem;margin-top:6px;padding-top:6px}
+  .ptbo-geo-compact #practice-review{margin-top:6px;padding-top:6px}
+  .ptbo-geo-compact #practice-base-options{left:-8px}
+}
+@media(orientation:landscape) and (max-height:560px){
+  .ptbo-geo-compact #header{top:calc(12px + env(safe-area-inset-top));left:126px;right:auto;transform:none;width:min(360px,calc(50vw - 154px));padding:12px 14px;max-height:calc(100dvh - 24px)}
+  .ptbo-geo-compact .map-top-actions{left:12px;right:12px;top:calc(12px + env(safe-area-inset-top))}
+  .ptbo-geo-compact #practice-base-options{left:0}
+}
+@media(prefers-reduced-motion:reduce){#practice-bases summary span{transition:none}}
+@media(max-width:520px){
+  .ptbo-geo-compact #practice-controls{width:min(380px,calc(100% - 24px));padding:8px}
+  .ptbo-geo-compact .map-buttons{display:grid;grid-template-columns:40px 40px minmax(0,1fr) minmax(0,1fr);gap:6px}
+  .ptbo-geo-compact .map-buttons button{padding:8px 6px;font-size:.8rem}
+  .ptbo-geo-compact #practice-reveal{white-space:normal;line-height:1.15}
+}

@@ -142,7 +142,8 @@ const { chromium, devices } = require('playwright');
         await activate(frame.locator('#confirm'));
         assert.equal(await targetKey(), retryTarget, 'Try again retains the current address');
         await verifyMapKeyboard('retry');
-        await activate(frame.locator('#practice-return'));
+        await activate(frame.locator('#practice-bases-toggle'));
+        await activate(frame.locator('#practice-base-options [aria-pressed="true"]'));
         await verifyMapKeyboard('return to base');
 
         await frame.evaluate(() => {
