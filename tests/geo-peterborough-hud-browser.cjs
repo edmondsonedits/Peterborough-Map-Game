@@ -26,8 +26,9 @@ const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=r
         const frame=page.frames().find(f=>f.url().includes('/geo-guesser/index.html'));
         await frame.waitForFunction(()=>window.PTBO_GEO?.state.ready);
         result.version=await frame.evaluate(()=>PTBO_BUILD.version);
-        await frame.locator(`#service-${service}`).click();await frame.locator('#difficulty-medium').click();
-        if(city==='peterborough')await frame.evaluate(()=>{PTBO_GEO.state.locations=[PTBO_GEO.state.locations.find(c=>c.name==='Adam Scott Collegiate and Vocational Institute')];});
+        const example=city==='peterborough'&&surface==='desktop'&&width===1365;
+        await frame.locator(`#service-${service}`).click();await frame.locator(example?'#difficulty-easy':'#difficulty-medium').click();
+        if(city==='peterborough')await frame.evaluate(name=>{PTBO_GEO.state.locations=[PTBO_GEO.state.locations.find(c=>c.name===name)];},example?'Portage Place':'Adam Scott Collegiate and Vocational Institute');
         await frame.locator('#practice-stations button').first().click();
         if(city!=='peterborough'){
           assert.equal(await frame.locator('#practice-return').isVisible(),true);
@@ -38,13 +39,18 @@ const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=r
         const inspectLayout=()=>frame.evaluate(()=>{
           const box=id=>{const r=document.getElementById(id).getBoundingClientRect();return{left:r.left,right:r.right,top:r.top,bottom:r.bottom,width:r.width,height:r.height};};
           const header=box('header'),reticle=box('reticle');
-          return{width:innerWidth,height:innerHeight,header,reticle,
+          return{width:innerWidth,height:innerHeight,header,reticle,address:box('call-address'),cross:box('call-cross-streets'),
             overlap:header.left<reticle.right&&header.right>reticle.left&&header.top<reticle.bottom&&header.bottom>reticle.top,
             controls:['practice-bases-toggle','practice-finish','confirm','practice-controls','practice-reveal','practice-continue'].map(id=>({id,...box(id)}))};
         });
         const layout=await inspectLayout();result.layout=layout;
         assert.ok(layout.header.top<=14,'location card begins at the top');
         assert.equal(layout.overlap,false,'long location name leaves crosshair clear');
+        if(surface==='desktop'){
+          assert.ok(layout.cross.left>=layout.address.right+8,'cross streets sit to the right of the address');
+          assert.ok(Math.abs(layout.cross.bottom-layout.address.bottom)<4,'address and cross streets share one baseline');
+        }
+        if(example)assert.ok(layout.header.height<115,'the supplied Portage Place example has a flat card');
         for(const c of layout.controls)assert.ok(c.left>=-1&&c.right<=width+1&&c.top>=0&&c.bottom<=height+1,`${c.id} fits ${width}x${height}`);
         assert.equal(await frame.locator('#practice-feedback').innerText(),'');
         assert.equal(await frame.locator('#call-cross-streets').isVisible(),surface!=='mobile');

@@ -54,3 +54,19 @@ test('other cities retain the original Base button and phone cross-street behavi
   assert.equal(g.node('call-cross-streets').hidden,false);
   assert.match(g.node('practice-feedback').textContent,/Pan and zoom/);
 });
+test('Peterborough uses compact cross-street labels and removes the desktop hide row',async()=>{
+  const g=await started();
+  g.api.state.target.crossStreets=['Towerhill Road','Milroy Drive'];g.api.setCrossStreets(true);
+  assert.equal(g.node('call-cross-streets').textContent,'Cross: Towerhill Rd • Milroy Dr');
+  assert.equal(g.node('reveal-cross-streets').hidden,true);
+  const other=await started({cityPackage:{id:'toronto',name:'Toronto'}});
+  other.api.state.target.crossStreets=['Towerhill Road','Milroy Drive'];other.api.setCrossStreets(true);
+  assert.equal(other.node('call-cross-streets').textContent,'Cross streets: Towerhill Road · Milroy Drive');
+});
+test('phone cross streets keep an accessible inline hide control when expanded',async()=>{
+  const g=await started({mobile:true});g.api.revealCrossStreets();
+  assert.equal(g.node('reveal-cross-streets').hidden,false);
+  assert.equal(g.node('reveal-cross-streets').textContent,'Hide');
+  assert.equal(g.node('reveal-cross-streets')['aria-label'],'Hide cross streets');
+  g.api.revealCrossStreets();assert.equal(g.node('reveal-cross-streets').textContent,'Show cross streets');
+});

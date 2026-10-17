@@ -75,10 +75,15 @@
   function updateCrossStreets(reveal=false){
     const streets=state.target?.crossStreets||[],visible=state.peterborough?
       (state.crossStreetsExpanded??(state.showCrossStreets&&!compactPhone())):state.showCrossStreets||reveal;
-    $('call-cross-streets').textContent=streets.length?'Cross streets: '+streets.join(' · '):'Cross streets unavailable';
+    const suffixes={road:'Rd',drive:'Dr',street:'St',avenue:'Ave',boulevard:'Blvd',crescent:'Cres',court:'Ct',lane:'Ln',place:'Pl',parkway:'Pkwy',highway:'Hwy',circle:'Cir',trail:'Trl'};
+    const shortStreet=street=>String(street).replace(/\b(Road|Drive|Street|Avenue|Boulevard|Crescent|Court|Lane|Place|Parkway|Highway|Circle|Trail)(?=(?:\s+(?:North|South|East|West))?$)/i,word=>suffixes[word.toLowerCase()]);
+    $('call-cross-streets').textContent=state.peterborough?
+      (streets.length?'Cross: '+streets.map(shortStreet).join(' • '):'Cross: unavailable'):
+      (streets.length?'Cross streets: '+streets.join(' · '):'Cross streets unavailable');
     $('call-cross-streets').hidden=!visible;
-    $('reveal-cross-streets').hidden=!state.peterborough&&(visible||!streets.length);
-    $('reveal-cross-streets').textContent=visible?'Hide cross streets':'Show cross streets';
+    $('reveal-cross-streets').hidden=state.peterborough?(visible&&!compactPhone()):(visible||!streets.length);
+    $('reveal-cross-streets').textContent=visible?(state.peterborough?'Hide':'Hide cross streets'):'Show cross streets';
+    $('reveal-cross-streets').setAttribute('aria-label',visible?'Hide cross streets':'Show cross streets');
     $('reveal-cross-streets').setAttribute('aria-expanded',String(visible));
   }
   function revealCrossStreets(){

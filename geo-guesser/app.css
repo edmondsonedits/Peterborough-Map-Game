@@ -18,11 +18,16 @@ body #ptbo-training-use-notice span{display:none}
 body #ptbo-training-use-notice strong{margin:0;font-size:9px}
 body #ptbo-training-use-notice:focus-visible{outline:3px solid #6de8dc;outline-offset:3px}
 
-/* Peterborough review: keep the address at the top and secondary hints tucked away. */
-.ptbo-geo-compact #header{top:calc(12px + env(safe-area-inset-top));max-height:calc(50dvh - 35px);padding:14px 18px}
+/* Other cities retain their existing flow; Peterborough uses one wrapping location row. */
+#call-location-row{display:contents}
+.ptbo-geo-compact #header{top:calc(12px + env(safe-area-inset-top));max-height:calc(50dvh - 35px);padding:12px 18px}
+.ptbo-geo-compact #header h2{margin:4px 0 5px}
+.ptbo-geo-compact #call-location-row{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px}
+.ptbo-geo-compact #call-address{line-height:1.4}
+.ptbo-geo-compact #call-cross-streets{border:0;padding:0;margin:0;font-size:.82rem;line-height:1.4;overflow-wrap:anywhere}
 .ptbo-geo-compact #header h2,.ptbo-geo-compact #call-address{overflow-wrap:anywhere}
 .ptbo-geo-compact #practice-feedback:empty{display:none}
-.ptbo-geo-compact #reveal-cross-streets{display:block;min-height:36px;margin-top:2px;padding:6px 0;text-align:left}
+.ptbo-geo-compact #reveal-cross-streets{display:block;min-height:32px;margin:0;padding:6px 0;text-align:left;line-height:1.25}
 #practice-bases{position:relative;pointer-events:auto}
 #practice-bases summary{display:flex;align-items:center;gap:10px;min-height:42px;padding:9px 14px;border:1px solid var(--line);border-radius:12px;background:var(--panel);cursor:pointer;list-style:none;touch-action:manipulation}
 #practice-bases summary::-webkit-details-marker{display:none}
@@ -42,7 +47,7 @@ body #ptbo-training-use-notice:focus-visible{outline:3px solid #6de8dc;outline-o
   .ptbo-geo-compact #header h2{font-size:1.05rem;margin:4px 0;line-height:1.25}
   .ptbo-geo-compact #call-type{font-size:.65rem;letter-spacing:.1em}
   .ptbo-geo-compact #call-address{font-size:.95rem}
-  .ptbo-geo-compact #call-cross-streets{font-size:.78rem;margin-top:6px;padding-top:6px}
+  .ptbo-geo-compact #call-cross-streets{font-size:.8rem}
   .ptbo-geo-compact #practice-review{margin-top:6px;padding-top:6px}
   .ptbo-geo-compact #practice-base-options{left:-8px}
 }
