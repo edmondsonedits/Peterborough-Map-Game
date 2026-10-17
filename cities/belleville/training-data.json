@@ -139,5 +139,1982 @@
   ],
   "roadsUrl": "cities/belleville/roads.geojson.gz",
   "roadFeatureCount": 4997,
-  "roadDataSha256": "32dde86c81c5221019e3e7e9a82df05565b4e7ea21e5973624c50dbcab21ac20"
+  "roadDataSha256": "32dde86c81c5221019e3e7e9a82df05565b4e7ea21e5973624c50dbcab21ac20",
+  "routeResponses": {
+    "schemaVersion": 1,
+    "minCallsPerBase": 3,
+    "targetCallsPerBase": 6,
+    "generatedOn": "2026-10-17",
+    "model": {
+      "description": "Published first-due polygons where available. Otherwise a directed road-network estimate using road class travel cost from every same-service hall; allows a15second cost tie for overlapping nearby halls. This is training geography, not live dispatch advice.",
+      "ownershipToleranceSeconds": 15,
+      "maximumCandidateRouteMetres": 12000
+    },
+    "bases": [
+      {
+        "baseId": "fire-fire-station-1-1",
+        "service": "fire",
+        "number": 1,
+        "name": "Fire Station 1",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 44.17889237224672,
+          "lng": -77.37418184424108,
+          "road": "Station Street",
+          "gapMetres": 1.8
+        },
+        "callIds": [
+          "route-local-fire-fire-station-1-1-01",
+          "route-local-fire-fire-station-1-1-02",
+          "route-local-fire-fire-station-1-1-03",
+          "route-local-fire-fire-station-1-1-04",
+          "route-local-fire-fire-station-1-1-05",
+          "route-local-fire-fire-station-1-1-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-fire-station-2-2",
+        "service": "fire",
+        "number": 2,
+        "name": "Fire Station 2",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 44.1684206,
+          "lng": -77.3912265,
+          "road": "Fahey Street",
+          "gapMetres": 9.9
+        },
+        "callIds": [
+          "route-local-fire-fire-station-2-2-01",
+          "route-local-fire-fire-station-2-2-02",
+          "route-local-fire-fire-station-2-2-03",
+          "route-local-fire-fire-station-2-2-04",
+          "route-local-fire-fire-station-2-2-05",
+          "route-local-fire-fire-station-2-2-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-fire-station-3-3",
+        "service": "fire",
+        "number": 3,
+        "name": "Fire Station 3",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 9300,
+        "access": {
+          "lat": 44.18256034967815,
+          "lng": -77.27728997982406,
+          "road": "Old Highway 2",
+          "gapMetres": 8
+        },
+        "callIds": [
+          "route-local-fire-fire-station-3-3-01",
+          "route-local-fire-fire-station-3-3-02",
+          "route-local-fire-fire-station-3-3-03",
+          "route-local-fire-fire-station-3-3-04",
+          "route-local-fire-fire-station-3-3-05",
+          "route-local-fire-fire-station-3-3-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-fire-station-4-4",
+        "service": "fire",
+        "number": 4,
+        "name": "Fire Station 4",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 7200,
+        "access": {
+          "lat": 44.24024857757718,
+          "lng": -77.3905308022436,
+          "road": "Harmony Road",
+          "gapMetres": 12.7
+        },
+        "callIds": [
+          "route-local-fire-fire-station-4-4-01",
+          "route-local-fire-fire-station-4-4-02",
+          "route-local-fire-fire-station-4-4-03",
+          "route-local-fire-fire-station-4-4-04",
+          "route-local-fire-fire-station-4-4-05",
+          "route-local-fire-fire-station-4-4-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-fire-station-5-5",
+        "service": "fire",
+        "number": 5,
+        "name": "Fire Station 5",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 7400,
+        "access": {
+          "lat": 44.290681202815,
+          "lng": -77.35156915624812,
+          "road": "Hoskin Road",
+          "gapMetres": 6.6
+        },
+        "callIds": [
+          "route-local-fire-fire-station-5-5-01",
+          "route-local-fire-fire-station-5-5-02",
+          "route-local-fire-fire-station-5-5-03",
+          "route-local-fire-fire-station-5-5-04",
+          "route-local-fire-fire-station-5-5-05",
+          "route-local-fire-fire-station-5-5-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-base-00-headquarters-1",
+        "service": "ems",
+        "number": 1,
+        "name": "Base 00 — Headquarters",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 44.19250550377344,
+          "lng": -77.40562950503511,
+          "road": "Millennium Parkway",
+          "gapMetres": 87.7
+        },
+        "callIds": [
+          "route-local-ems-base-00-headquarters-1-01",
+          "route-local-ems-base-00-headquarters-1-02",
+          "route-local-ems-base-00-headquarters-1-03",
+          "route-local-ems-base-00-headquarters-1-04",
+          "route-local-ems-base-00-headquarters-1-05",
+          "route-local-ems-base-00-headquarters-1-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-base-01-farley-2",
+        "service": "ems",
+        "number": 2,
+        "name": "Base 01 — Farley",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6100,
+        "access": {
+          "lat": 44.174599582348,
+          "lng": -77.35226137208136,
+          "road": "Farley Avenue",
+          "gapMetres": 4.4
+        },
+        "callIds": [
+          "route-local-ems-base-01-farley-2-01",
+          "route-local-ems-base-01-farley-2-02",
+          "route-local-ems-base-01-farley-2-03",
+          "route-local-ems-base-01-farley-2-04",
+          "route-local-ems-base-01-farley-2-05",
+          "route-local-ems-base-01-farley-2-06"
+        ],
+        "challengeCalls": 6
+      }
+    ]
+  },
+  "routeCalls": [
+    {
+      "name": "Jones Street & Reid Street",
+      "addr": "Jones Street & Reid Street",
+      "lat": 44.1747506,
+      "lng": -77.3810366,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55521296",
+        "way/55524058",
+        "way/55525434"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55521296",
+        "https://www.openstreetmap.org/way/55524058",
+        "https://www.openstreetmap.org/way/55525434"
+      ],
+      "id": "route-local-fire-fire-station-1-1-01",
+      "routeBaseId": "fire-fire-station-1-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 808.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 167.6,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Station Street",
+        "estimatedCostSeconds": 76.5,
+        "bestSameServiceCostSeconds": 76.5
+      }
+    },
+    {
+      "name": "Farley Avenue & Kawartha Court",
+      "addr": "Farley Avenue & Kawartha Court",
+      "lat": 44.1816292,
+      "lng": -77.3557189,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/179518870",
+        "way/55525569"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/179518870",
+        "https://www.openstreetmap.org/way/55525569"
+      ],
+      "id": "route-local-fire-fire-station-1-1-02",
+      "routeBaseId": "fire-fire-station-1-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1752.9,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 1532.5,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Station Street",
+        "estimatedCostSeconds": 140.2,
+        "bestSameServiceCostSeconds": 140.2
+      }
+    },
+    {
+      "name": "5th Street & Bay Drive",
+      "addr": "5th Street & Bay Drive",
+      "lat": 44.1641054,
+      "lng": -77.3587184,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55521221",
+        "way/55521804",
+        "way/55521903"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55521221",
+        "https://www.openstreetmap.org/way/55521804",
+        "https://www.openstreetmap.org/way/55521903"
+      ],
+      "id": "route-local-fire-fire-station-1-1-03",
+      "routeBaseId": "fire-fire-station-1-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2594.6,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 614.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Station Street",
+        "estimatedCostSeconds": 265.2,
+        "bestSameServiceCostSeconds": 265.2
+      }
+    },
+    {
+      "name": "Adam Street & Centre Street & Lahr Drive",
+      "addr": "Adam Street & Centre Street & Lahr Drive",
+      "lat": 44.1916251,
+      "lng": -77.3802535,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/191580143",
+        "way/55522060",
+        "way/55523568",
+        "way/55526089"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/191580143",
+        "https://www.openstreetmap.org/way/55522060",
+        "https://www.openstreetmap.org/way/55523568",
+        "https://www.openstreetmap.org/way/55526089"
+      ],
+      "id": "route-local-fire-fire-station-1-1-04",
+      "routeBaseId": "fire-fire-station-1-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2539.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 3042.5,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Station Street",
+        "estimatedCostSeconds": 183.7,
+        "bestSameServiceCostSeconds": 183.7
+      }
+    },
+    {
+      "name": "South Church Street & St. Paul Street",
+      "addr": "South Church Street & St. Paul Street",
+      "lat": 44.1586605,
+      "lng": -77.3784054,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55521756",
+        "way/55522013",
+        "way/55525817",
+        "way/55526352"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55521756",
+        "https://www.openstreetmap.org/way/55522013",
+        "https://www.openstreetmap.org/way/55525817",
+        "https://www.openstreetmap.org/way/55526352"
+      ],
+      "id": "route-local-fire-fire-station-1-1-05",
+      "routeBaseId": "fire-fire-station-1-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2622.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 319.7,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Station Street",
+        "estimatedCostSeconds": 196.4,
+        "bestSameServiceCostSeconds": 196.4
+      }
+    },
+    {
+      "name": "Byron Street & West Street",
+      "addr": "Byron Street & West Street",
+      "lat": 44.1830407,
+      "lng": -77.3728156,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55521596",
+        "way/55522080",
+        "way/55525899",
+        "way/55526074"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55521596",
+        "https://www.openstreetmap.org/way/55522080",
+        "https://www.openstreetmap.org/way/55525899",
+        "https://www.openstreetmap.org/way/55526074"
+      ],
+      "id": "route-local-fire-fire-station-1-1-06",
+      "routeBaseId": "fire-fire-station-1-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1685.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 3044.7,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Station Street",
+        "estimatedCostSeconds": 128.4,
+        "bestSameServiceCostSeconds": 128.4
+      }
+    },
+    {
+      "name": "Gordon Street & Ridley Street West",
+      "addr": "Gordon Street & Ridley Street West",
+      "lat": 44.1732511,
+      "lng": -77.3900424,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55521217",
+        "way/55522242",
+        "way/55522474"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55521217",
+        "https://www.openstreetmap.org/way/55522242",
+        "https://www.openstreetmap.org/way/55522474"
+      ],
+      "id": "route-local-fire-fire-station-2-2-01",
+      "routeBaseId": "fire-fire-station-2-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 801.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 619.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Fahey Street",
+        "estimatedCostSeconds": 119,
+        "bestSameServiceCostSeconds": 119
+      }
+    },
+    {
+      "name": "Harbour Drive & South John Street",
+      "addr": "Harbour Drive & South John Street",
+      "lat": 44.1563766,
+      "lng": -77.3759514,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/499583802",
+        "way/55524104"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/499583802",
+        "https://www.openstreetmap.org/way/55524104"
+      ],
+      "id": "route-local-fire-fire-station-2-2-02",
+      "routeBaseId": "fire-fire-station-2-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2536.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 207.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Fahey Street",
+        "estimatedCostSeconds": 260.1,
+        "bestSameServiceCostSeconds": 256.3
+      }
+    },
+    {
+      "name": "Harder Drive & Palmer Road",
+      "addr": "Harder Drive & Palmer Road",
+      "lat": 44.1559932,
+      "lng": -77.4043865,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1421560575",
+        "way/55524732",
+        "way/55525318"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1421560575",
+        "https://www.openstreetmap.org/way/55524732",
+        "https://www.openstreetmap.org/way/55525318"
+      ],
+      "id": "route-local-fire-fire-station-2-2-03",
+      "routeBaseId": "fire-fire-station-2-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2588.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 333.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Fahey Street",
+        "estimatedCostSeconds": 254,
+        "bestSameServiceCostSeconds": 254
+      }
+    },
+    {
+      "name": "Faraday Gardens & Pepper Avenue",
+      "addr": "Faraday Gardens & Pepper Avenue",
+      "lat": 44.1679306,
+      "lng": -77.4059813,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55521189",
+        "way/55523032",
+        "way/55523338"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55521189",
+        "https://www.openstreetmap.org/way/55523032",
+        "https://www.openstreetmap.org/way/55523338"
+      ],
+      "id": "route-local-fire-fire-station-2-2-04",
+      "routeBaseId": "fire-fire-station-2-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1669.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 454.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Fahey Street",
+        "estimatedCostSeconds": 157.6,
+        "bestSameServiceCostSeconds": 157.6
+      }
+    },
+    {
+      "name": "Finch Drive & Parkwood Gardens",
+      "addr": "Finch Drive & Parkwood Gardens",
+      "lat": 44.1835105,
+      "lng": -77.3973484,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55521583",
+        "way/55523225",
+        "way/55523391"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55521583",
+        "https://www.openstreetmap.org/way/55523225",
+        "https://www.openstreetmap.org/way/55523391"
+      ],
+      "id": "route-local-fire-fire-station-2-2-05",
+      "routeBaseId": "fire-fire-station-2-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2599.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 550.8,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Fahey Street",
+        "estimatedCostSeconds": 202.5,
+        "bestSameServiceCostSeconds": 202.5
+      }
+    },
+    {
+      "name": "Forin Street & William Street",
+      "addr": "Forin Street & William Street",
+      "lat": 44.1698048,
+      "lng": -77.3795083,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55521146",
+        "way/55525020",
+        "way/55526378"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55521146",
+        "https://www.openstreetmap.org/way/55525020",
+        "https://www.openstreetmap.org/way/55526378"
+      ],
+      "id": "route-local-fire-fire-station-2-2-06",
+      "routeBaseId": "fire-fire-station-2-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1764.7,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 211.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Fahey Street",
+        "estimatedCostSeconds": 179.5,
+        "bestSameServiceCostSeconds": 166.7
+      }
+    },
+    {
+      "name": "Mitchell Road & Old Highway 2",
+      "addr": "Mitchell Road & Old Highway 2",
+      "lat": 44.1807046,
+      "lng": -77.2810236,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55523133",
+        "way/55524286",
+        "way/55526043"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55523133",
+        "https://www.openstreetmap.org/way/55524286",
+        "https://www.openstreetmap.org/way/55526043"
+      ],
+      "id": "route-local-fire-fire-station-3-3-01",
+      "routeBaseId": "fire-fire-station-3-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 364.9,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 11958.7,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Old Highway 2",
+        "estimatedCostSeconds": 17.8,
+        "bestSameServiceCostSeconds": 17.8
+      }
+    },
+    {
+      "name": "Burns Drive & Old Highway 2",
+      "addr": "Burns Drive & Old Highway 2",
+      "lat": 44.1909382,
+      "lng": -77.2559774,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/162797685",
+        "way/332162725",
+        "way/55523133"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/162797685",
+        "https://www.openstreetmap.org/way/332162725",
+        "https://www.openstreetmap.org/way/55523133"
+      ],
+      "id": "route-local-fire-fire-station-3-3-02",
+      "routeBaseId": "fire-fire-station-3-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2020.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 8648.3,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Old Highway 2",
+        "estimatedCostSeconds": 98.5,
+        "bestSameServiceCostSeconds": 98.5
+      }
+    },
+    {
+      "name": "Airport Parkway & Mitchell Road",
+      "addr": "Airport Parkway & Mitchell Road",
+      "lat": 44.2007441,
+      "lng": -77.2902514,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33979989",
+        "way/55524286",
+        "way/55526088"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33979989",
+        "https://www.openstreetmap.org/way/55524286",
+        "https://www.openstreetmap.org/way/55526088"
+      ],
+      "id": "route-local-fire-fire-station-3-3-03",
+      "routeBaseId": "fire-fire-station-3-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2701.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 7284.6,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Old Highway 2",
+        "estimatedCostSeconds": 204.7,
+        "bestSameServiceCostSeconds": 204.7
+      }
+    },
+    {
+      "name": "Grass Boulevard & Old Highway 2",
+      "addr": "Grass Boulevard & Old Highway 2",
+      "lat": 44.1744954,
+      "lng": -77.3076908,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55521625",
+        "way/55524922",
+        "way/55525268",
+        "way/55525479"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55521625",
+        "https://www.openstreetmap.org/way/55524922",
+        "https://www.openstreetmap.org/way/55525268",
+        "https://www.openstreetmap.org/way/55525479"
+      ],
+      "id": "route-local-fire-fire-station-3-3-04",
+      "routeBaseId": "fire-fire-station-3-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2702.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 11958.7,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Old Highway 2",
+        "estimatedCostSeconds": 131.7,
+        "bestSameServiceCostSeconds": 131.7
+      }
+    },
+    {
+      "name": "Old Highway 2 & York Road",
+      "addr": "Old Highway 2 & York Road",
+      "lat": 44.1972822,
+      "lng": -77.2307659,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1339970065",
+        "way/1339970071",
+        "way/55200473"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1339970065",
+        "https://www.openstreetmap.org/way/1339970071",
+        "https://www.openstreetmap.org/way/55200473"
+      ],
+      "id": "route-local-fire-fire-station-3-3-05",
+      "routeBaseId": "fire-fire-station-3-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 4182.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 8856.2,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Old Highway 2",
+        "estimatedCostSeconds": 203.9,
+        "bestSameServiceCostSeconds": 203.9
+      }
+    },
+    {
+      "name": "Industrial Park Road & Old Highway 2",
+      "addr": "Industrial Park Road & Old Highway 2",
+      "lat": 44.195229,
+      "lng": -77.2437005,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/254747317",
+        "way/332162721"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/254747317",
+        "https://www.openstreetmap.org/way/332162721"
+      ],
+      "id": "route-local-fire-fire-station-3-3-06",
+      "routeBaseId": "fire-fire-station-3-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 3112.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 10848.9,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Old Highway 2",
+        "estimatedCostSeconds": 151.7,
+        "bestSameServiceCostSeconds": 151.7
+      }
+    },
+    {
+      "name": "Harmony Road & Highway 37",
+      "addr": "Harmony Road & Highway 37",
+      "lat": 44.2427126,
+      "lng": -77.3804361,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/478107379",
+        "way/478107380",
+        "way/478107381",
+        "way/478107382"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/478107379",
+        "https://www.openstreetmap.org/way/478107380",
+        "https://www.openstreetmap.org/way/478107381",
+        "https://www.openstreetmap.org/way/478107382"
+      ],
+      "id": "route-local-fire-fire-station-4-4-01",
+      "routeBaseId": "fire-fire-station-4-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 852,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 7423.5,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Harmony Road",
+        "estimatedCostSeconds": 68.2,
+        "bestSameServiceCostSeconds": 68.2
+      }
+    },
+    {
+      "name": "Harmony Road & River Road & River Road North",
+      "addr": "Harmony Road & River Road & River Road North",
+      "lat": 44.233986,
+      "lng": -77.4155965,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33976135",
+        "way/33987131",
+        "way/33990547",
+        "way/33991814"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33976135",
+        "https://www.openstreetmap.org/way/33987131",
+        "https://www.openstreetmap.org/way/33990547",
+        "https://www.openstreetmap.org/way/33991814"
+      ],
+      "id": "route-local-fire-fire-station-4-4-02",
+      "routeBaseId": "fire-fire-station-4-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2118,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 5205.3,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Harmony Road",
+        "estimatedCostSeconds": 169.4,
+        "bestSameServiceCostSeconds": 169.4
+      }
+    },
+    {
+      "name": "River Road & Sycamore Street",
+      "addr": "River Road & Sycamore Street",
+      "lat": 44.2253492,
+      "lng": -77.3952072,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33978507",
+        "way/33979904",
+        "way/55526369"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33978507",
+        "https://www.openstreetmap.org/way/33979904",
+        "https://www.openstreetmap.org/way/55526369"
+      ],
+      "id": "route-local-fire-fire-station-4-4-03",
+      "routeBaseId": "fire-fire-station-4-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2625.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 8640.7,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Harmony Road",
+        "estimatedCostSeconds": 314.5,
+        "bestSameServiceCostSeconds": 314.5
+      }
+    },
+    {
+      "name": "Harmony Road & Plumpton Road",
+      "addr": "Harmony Road & Plumpton Road",
+      "lat": 44.2369836,
+      "lng": -77.4035451,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33982816",
+        "way/33990751",
+        "way/33991203"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33982816",
+        "https://www.openstreetmap.org/way/33990751",
+        "https://www.openstreetmap.org/way/33991203"
+      ],
+      "id": "route-local-fire-fire-station-4-4-04",
+      "routeBaseId": "fire-fire-station-4-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1100.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 5800.2,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Harmony Road",
+        "estimatedCostSeconds": 88,
+        "bestSameServiceCostSeconds": 88
+      }
+    },
+    {
+      "name": "Harmony Road & Shaw Road",
+      "addr": "Harmony Road & Shaw Road",
+      "lat": 44.2539142,
+      "lng": -77.3562225,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33988708",
+        "way/33989234",
+        "way/33991379"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33988708",
+        "https://www.openstreetmap.org/way/33989234",
+        "https://www.openstreetmap.org/way/33991379"
+      ],
+      "id": "route-local-fire-fire-station-4-4-05",
+      "routeBaseId": "fire-fire-station-4-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 3227.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 9754.4,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Harmony Road",
+        "estimatedCostSeconds": 420.9,
+        "bestSameServiceCostSeconds": 420.9
+      }
+    },
+    {
+      "name": "Blessington Road & Ritz Road",
+      "addr": "Blessington Road & Ritz Road",
+      "lat": 44.2265738,
+      "lng": -77.3726719,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33975484",
+        "way/33982001",
+        "way/33991818"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33975484",
+        "https://www.openstreetmap.org/way/33982001",
+        "https://www.openstreetmap.org/way/33991818"
+      ],
+      "id": "route-local-fire-fire-station-4-4-06",
+      "routeBaseId": "fire-fire-station-4-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2787.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 3832.7,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Harmony Road",
+        "estimatedCostSeconds": 255.6,
+        "bestSameServiceCostSeconds": 255.6
+      }
+    },
+    {
+      "name": "Cemetery Road & Highway 37",
+      "addr": "Cemetery Road & Highway 37",
+      "lat": 44.2887541,
+      "lng": -77.3597714,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33981094",
+        "way/33982373",
+        "way/33986128"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33981094",
+        "https://www.openstreetmap.org/way/33982373",
+        "https://www.openstreetmap.org/way/33986128"
+      ],
+      "id": "route-local-fire-fire-station-5-5-01",
+      "routeBaseId": "fire-fire-station-5-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 747.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 4042.4,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Hoskin Road",
+        "estimatedCostSeconds": 45.8,
+        "bestSameServiceCostSeconds": 45.8
+      }
+    },
+    {
+      "name": "Bronk Road & Scuttlehole Road",
+      "addr": "Bronk Road & Scuttlehole Road",
+      "lat": 44.300829,
+      "lng": -77.3377906,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33975239",
+        "way/33976373",
+        "way/33979936"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33975239",
+        "https://www.openstreetmap.org/way/33976373",
+        "https://www.openstreetmap.org/way/33979936"
+      ],
+      "id": "route-local-fire-fire-station-5-5-02",
+      "routeBaseId": "fire-fire-station-5-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1851.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 7288.6,
+        "decisionKinds": [
+          "departure",
+          "bridge"
+        ],
+        "departureRoad": "Hoskin Road",
+        "estimatedCostSeconds": 249.8,
+        "bestSameServiceCostSeconds": 249.8
+      }
+    },
+    {
+      "name": "Highway 37 & Thrasher Road",
+      "addr": "Highway 37 & Thrasher Road",
+      "lat": 44.2690489,
+      "lng": -77.3657608,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33981554",
+        "way/33985903",
+        "way/33992266"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33981554",
+        "https://www.openstreetmap.org/way/33985903",
+        "https://www.openstreetmap.org/way/33992266"
+      ],
+      "id": "route-local-fire-fire-station-5-5-03",
+      "routeBaseId": "fire-fire-station-5-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 3207.1,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 8050.3,
+        "decisionKinds": [
+          "departure",
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Hoskin Road",
+        "estimatedCostSeconds": 165.7,
+        "bestSameServiceCostSeconds": 165.7
+      }
+    },
+    {
+      "name": "Countrycharm Drive & Mudcat Road",
+      "addr": "Countrycharm Drive & Mudcat Road",
+      "lat": 44.2814552,
+      "lng": -77.3893106,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33978315",
+        "way/33980268",
+        "way/33985139"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33978315",
+        "https://www.openstreetmap.org/way/33980268",
+        "https://www.openstreetmap.org/way/33985139"
+      ],
+      "id": "route-local-fire-fire-station-5-5-04",
+      "routeBaseId": "fire-fire-station-5-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 3298.4,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 16206.9,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Hoskin Road",
+        "estimatedCostSeconds": 195.3,
+        "bestSameServiceCostSeconds": 195.3
+      }
+    },
+    {
+      "name": "Denyes Road & Highway 37 & Latta Drive",
+      "addr": "Denyes Road & Highway 37 & Latta Drive",
+      "lat": 44.3052777,
+      "lng": -77.3447498,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33976315",
+        "way/33978314",
+        "way/33985558"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33976315",
+        "https://www.openstreetmap.org/way/33978314",
+        "https://www.openstreetmap.org/way/33985558"
+      ],
+      "id": "route-local-fire-fire-station-5-5-05",
+      "routeBaseId": "fire-fire-station-5-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1961.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 577.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Hoskin Road",
+        "estimatedCostSeconds": 105,
+        "bestSameServiceCostSeconds": 105
+      }
+    },
+    {
+      "name": "Denyes Road & Phillipston Road",
+      "addr": "Denyes Road & Phillipston Road",
+      "lat": 44.2914395,
+      "lng": -77.3661711,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33983339",
+        "way/33987530",
+        "way/33991054"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33983339",
+        "https://www.openstreetmap.org/way/33987530",
+        "https://www.openstreetmap.org/way/33991054"
+      ],
+      "id": "route-local-fire-fire-station-5-5-06",
+      "routeBaseId": "fire-fire-station-5-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1598.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 3105.5,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Hoskin Road",
+        "estimatedCostSeconds": 96.3,
+        "bestSameServiceCostSeconds": 96.3
+      }
+    },
+    {
+      "name": "Millennium Parkway & Mineral Road",
+      "addr": "Millennium Parkway & Mineral Road",
+      "lat": 44.1965022,
+      "lng": -77.3977257,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1107389009",
+        "way/55522693",
+        "way/55524497"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1107389009",
+        "https://www.openstreetmap.org/way/55522693",
+        "https://www.openstreetmap.org/way/55524497"
+      ],
+      "id": "route-local-ems-base-00-headquarters-1-01",
+      "routeBaseId": "ems-base-00-headquarters-1",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 847.7,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 3126.6,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Millennium Parkway",
+        "estimatedCostSeconds": 67.8,
+        "bestSameServiceCostSeconds": 67.8
+      }
+    },
+    {
+      "name": "Bellevue Drive & Roblin Road",
+      "addr": "Bellevue Drive & Roblin Road",
+      "lat": 44.1862967,
+      "lng": -77.4227283,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55523686",
+        "way/55524019",
+        "way/55524055"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55523686",
+        "https://www.openstreetmap.org/way/55524019",
+        "https://www.openstreetmap.org/way/55524055"
+      ],
+      "id": "route-local-ems-base-00-headquarters-1-02",
+      "routeBaseId": "ems-base-00-headquarters-1",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1584,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1125.1,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Millennium Parkway",
+        "estimatedCostSeconds": 126.7,
+        "bestSameServiceCostSeconds": 126.7
+      }
+    },
+    {
+      "name": "Highview Crescent & Jackson Avenue",
+      "addr": "Highview Crescent & Jackson Avenue",
+      "lat": 44.1814304,
+      "lng": -77.3986459,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55522415",
+        "way/55524951",
+        "way/55526470"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55522415",
+        "https://www.openstreetmap.org/way/55524951",
+        "https://www.openstreetmap.org/way/55526470"
+      ],
+      "id": "route-local-ems-base-00-headquarters-1-03",
+      "routeBaseId": "ems-base-00-headquarters-1",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2588.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 4153.5,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Millennium Parkway",
+        "estimatedCostSeconds": 229.1,
+        "bestSameServiceCostSeconds": 229.1
+      }
+    },
+    {
+      "name": "Bird Crescent & Maitland Drive",
+      "addr": "Bird Crescent & Maitland Drive",
+      "lat": 44.1955755,
+      "lng": -77.4133904,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1141862894",
+        "way/55524542"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1141862894",
+        "https://www.openstreetmap.org/way/55524542"
+      ],
+      "id": "route-local-ems-base-00-headquarters-1-04",
+      "routeBaseId": "ems-base-00-headquarters-1",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1295.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1874.5,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Millennium Parkway",
+        "estimatedCostSeconds": 92.6,
+        "bestSameServiceCostSeconds": 92.6
+      }
+    },
+    {
+      "name": "Cascade Boulevard & Tracey Park Drive",
+      "addr": "Cascade Boulevard & Tracey Park Drive",
+      "lat": 44.1754664,
+      "lng": -77.4137906,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55521556",
+        "way/55524327",
+        "way/55526216"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55521556",
+        "https://www.openstreetmap.org/way/55524327",
+        "https://www.openstreetmap.org/way/55526216"
+      ],
+      "id": "route-local-ems-base-00-headquarters-1-05",
+      "routeBaseId": "ems-base-00-headquarters-1",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2583.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 6299.5,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Millennium Parkway",
+        "estimatedCostSeconds": 181.9,
+        "bestSameServiceCostSeconds": 181.9
+      }
+    },
+    {
+      "name": "Highway 62 & Roy Boulevard",
+      "addr": "Highway 62 & Roy Boulevard",
+      "lat": 44.2052372,
+      "lng": -77.4042412,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/344620682",
+        "way/55526535",
+        "way/55526554"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/344620682",
+        "https://www.openstreetmap.org/way/55526535",
+        "https://www.openstreetmap.org/way/55526554"
+      ],
+      "id": "route-local-ems-base-00-headquarters-1-06",
+      "routeBaseId": "ems-base-00-headquarters-1",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1753.3,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 4098.2,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Millennium Parkway",
+        "estimatedCostSeconds": 106.1,
+        "bestSameServiceCostSeconds": 106.1
+      }
+    },
+    {
+      "name": "Bridge Street East & Melrose Crescent",
+      "addr": "Bridge Street East & Melrose Crescent",
+      "lat": 44.1726664,
+      "lng": -77.3455406,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55521445",
+        "way/55525032",
+        "way/55525355"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55521445",
+        "https://www.openstreetmap.org/way/55525032",
+        "https://www.openstreetmap.org/way/55525355"
+      ],
+      "id": "route-local-ems-base-01-farley-2-01",
+      "routeBaseId": "ems-base-01-farley-2",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 804.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 801.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Farley Avenue",
+        "estimatedCostSeconds": 64.7,
+        "bestSameServiceCostSeconds": 64.7
+      }
+    },
+    {
+      "name": "MacDonald Avenue & Pine Street",
+      "addr": "MacDonald Avenue & Pine Street",
+      "lat": 44.1741551,
+      "lng": -77.3697505,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55522029",
+        "way/55523508",
+        "way/55526132",
+        "way/55526703"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55522029",
+        "https://www.openstreetmap.org/way/55523508",
+        "https://www.openstreetmap.org/way/55526132",
+        "https://www.openstreetmap.org/way/55526703"
+      ],
+      "id": "route-local-ems-base-01-farley-2-02",
+      "routeBaseId": "ems-base-01-farley-2",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1726.2,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 2067.5,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Farley Avenue",
+        "estimatedCostSeconds": 175.7,
+        "bestSameServiceCostSeconds": 175.7
+      }
+    },
+    {
+      "name": "O'Neill Drive & Old Kingston Road",
+      "addr": "O'Neill Drive & Old Kingston Road",
+      "lat": 44.1711753,
+      "lng": -77.3268937,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55521234",
+        "way/55524565",
+        "way/55526826"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55521234",
+        "https://www.openstreetmap.org/way/55524565",
+        "https://www.openstreetmap.org/way/55526826"
+      ],
+      "id": "route-local-ems-base-01-farley-2-03",
+      "routeBaseId": "ems-base-01-farley-2",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2612.7,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 733.7,
+        "decisionKinds": [
+          "turn",
+          "bridge",
+          "departure"
+        ],
+        "departureRoad": "Farley Avenue",
+        "estimatedCostSeconds": 219.8,
+        "bestSameServiceCostSeconds": 219.8
+      }
+    },
+    {
+      "name": "Farley Avenue & Station Street",
+      "addr": "Farley Avenue & Station Street",
+      "lat": 44.1838141,
+      "lng": -77.3567604,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55525569",
+        "way/55525938",
+        "way/762741378"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55525569",
+        "https://www.openstreetmap.org/way/55525938",
+        "https://www.openstreetmap.org/way/762741378"
+      ],
+      "id": "route-local-ems-base-01-farley-2-04",
+      "routeBaseId": "ems-base-01-farley-2",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1080.1,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 2204.3,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Farley Avenue",
+        "estimatedCostSeconds": 86.4,
+        "bestSameServiceCostSeconds": 86.4
+      }
+    },
+    {
+      "name": "Belle Bay Street & South Foster Avenue",
+      "addr": "Belle Bay Street & South Foster Avenue",
+      "lat": 44.1614258,
+      "lng": -77.3703595,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55521521",
+        "way/55522664",
+        "way/55526284"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55521521",
+        "https://www.openstreetmap.org/way/55522664",
+        "https://www.openstreetmap.org/way/55526284"
+      ],
+      "id": "route-local-ems-base-01-farley-2-05",
+      "routeBaseId": "ems-base-01-farley-2",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2694.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1038.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Farley Avenue",
+        "estimatedCostSeconds": 172.4,
+        "bestSameServiceCostSeconds": 172.4
+      }
+    },
+    {
+      "name": "Mercedes Drive & Tessa Boulevard",
+      "addr": "Mercedes Drive & Tessa Boulevard",
+      "lat": 44.1834606,
+      "lng": -77.3441759,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/179519934",
+        "way/741118908"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/179519934",
+        "https://www.openstreetmap.org/way/741118908"
+      ],
+      "id": "route-local-ems-base-01-farley-2-06",
+      "routeBaseId": "ems-base-01-farley-2",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1640.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 734.4,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Farley Avenue",
+        "estimatedCostSeconds": 160.6,
+        "bestSameServiceCostSeconds": 160.6
+      }
+    }
+  ]
 }

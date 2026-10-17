@@ -191,5 +191,2584 @@
   ],
   "roadsUrl": "cities/niagara-falls/roads.geojson.gz",
   "roadFeatureCount": 13634,
-  "roadDataSha256": "38489580b148cfed82cb26b26e2823b38d5de7993aa9f71824fc3868911b1e71"
+  "roadDataSha256": "38489580b148cfed82cb26b26e2823b38d5de7993aa9f71824fc3868911b1e71",
+  "routeResponses": {
+    "schemaVersion": 1,
+    "minCallsPerBase": 3,
+    "targetCallsPerBase": 6,
+    "generatedOn": "2026-10-17",
+    "model": {
+      "description": "Published first-due polygons where available. Otherwise a directed road-network estimate using road class travel cost from every same-service hall; allows a15second cost tie for overlapping nearby halls. This is training geography, not live dispatch advice.",
+      "ownershipToleranceSeconds": 15,
+      "maximumCandidateRouteMetres": 12000
+    },
+    "bases": [
+      {
+        "baseId": "fire-niagara-falls-fire-2",
+        "service": "fire",
+        "number": 2,
+        "name": "Fire Station 2",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5600,
+        "access": {
+          "lat": 43.07010927859306,
+          "lng": -79.11204359596054,
+          "road": "Unnamed road",
+          "gapMetres": 30.7
+        },
+        "callIds": [
+          "route-local-fire-niagara-falls-fire-2-01",
+          "route-local-fire-niagara-falls-fire-2-02",
+          "route-local-fire-niagara-falls-fire-2-03",
+          "route-local-fire-niagara-falls-fire-2-04",
+          "route-local-fire-niagara-falls-fire-2-05",
+          "route-local-fire-niagara-falls-fire-2-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-niagara-falls-fire-4",
+        "service": "fire",
+        "number": 4,
+        "name": "Fire Station 4",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5800,
+        "access": {
+          "lat": 43.051833395650426,
+          "lng": -79.05360859469225,
+          "road": "Unnamed road",
+          "gapMetres": 17.6
+        },
+        "callIds": [
+          "route-local-fire-niagara-falls-fire-4-01",
+          "route-local-fire-niagara-falls-fire-4-02",
+          "route-local-fire-niagara-falls-fire-4-03",
+          "route-local-fire-niagara-falls-fire-4-04",
+          "route-local-fire-niagara-falls-fire-4-05",
+          "route-local-fire-niagara-falls-fire-4-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-niagara-falls-fire-5",
+        "service": "fire",
+        "number": 5,
+        "name": "Fire Station 5",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.01583273824357,
+          "lng": -79.05803842414535,
+          "road": "Sodom Road",
+          "gapMetres": 33.4
+        },
+        "callIds": [
+          "route-local-fire-niagara-falls-fire-5-01",
+          "route-local-fire-niagara-falls-fire-5-02",
+          "route-local-fire-niagara-falls-fire-5-03",
+          "route-local-fire-niagara-falls-fire-5-04",
+          "route-local-fire-niagara-falls-fire-5-05",
+          "route-local-fire-niagara-falls-fire-5-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-niagara-falls-fire-6",
+        "service": "fire",
+        "number": 6,
+        "name": "Fire Station 6",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6700,
+        "access": {
+          "lat": 43.0039459,
+          "lng": -79.1307513,
+          "road": "Unnamed road",
+          "gapMetres": 17.9
+        },
+        "callIds": [
+          "route-local-fire-niagara-falls-fire-6-01",
+          "route-local-fire-niagara-falls-fire-6-02",
+          "route-local-fire-niagara-falls-fire-6-03",
+          "route-local-fire-niagara-falls-fire-6-04",
+          "route-local-fire-niagara-falls-fire-6-05",
+          "route-local-fire-niagara-falls-fire-6-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-niagara-falls-fire-1",
+        "service": "fire",
+        "number": 1,
+        "name": "Fire Station 1",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.10459241415663,
+          "lng": -79.09173000034582,
+          "road": "Unnamed road",
+          "gapMetres": 10.9
+        },
+        "callIds": [
+          "route-local-fire-niagara-falls-fire-1-01",
+          "route-local-fire-niagara-falls-fire-1-02",
+          "route-local-fire-niagara-falls-fire-1-03",
+          "route-local-fire-niagara-falls-fire-1-04",
+          "route-local-fire-niagara-falls-fire-1-05",
+          "route-local-fire-niagara-falls-fire-1-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-niagara-falls-fire-3",
+        "service": "fire",
+        "number": 3,
+        "name": "Fire Station 3",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.12329333122746,
+          "lng": -79.11227370895317,
+          "road": "Dorchester Road",
+          "gapMetres": 35.4
+        },
+        "callIds": [
+          "route-local-fire-niagara-falls-fire-3-01",
+          "route-local-fire-niagara-falls-fire-3-02",
+          "route-local-fire-niagara-falls-fire-3-03",
+          "route-local-fire-niagara-falls-fire-3-04",
+          "route-local-fire-niagara-falls-fire-3-05",
+          "route-local-fire-niagara-falls-fire-3-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-niagara-falls-fire-7",
+        "service": "fire",
+        "number": 7,
+        "name": "Fire Station 7",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.08813283066,
+          "lng": -79.14062213141128,
+          "road": "Unnamed road",
+          "gapMetres": 54.8
+        },
+        "callIds": [
+          "route-local-fire-niagara-falls-fire-7-01",
+          "route-local-fire-niagara-falls-fire-7-02",
+          "route-local-fire-niagara-falls-fire-7-03",
+          "route-local-fire-niagara-falls-fire-7-04",
+          "route-local-fire-niagara-falls-fire-7-05",
+          "route-local-fire-niagara-falls-fire-7-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-niagara-falls-ems-north",
+        "service": "ems",
+        "number": 10000,
+        "name": "Niagara Falls Ambulance Base — North Street",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.09357664982231,
+          "lng": -79.08830642857184,
+          "road": "Unnamed road",
+          "gapMetres": 18.2
+        },
+        "callIds": [
+          "route-local-ems-niagara-falls-ems-north-01",
+          "route-local-ems-niagara-falls-ems-north-02",
+          "route-local-ems-niagara-falls-ems-north-03",
+          "route-local-ems-niagara-falls-ems-north-04",
+          "route-local-ems-niagara-falls-ems-north-05",
+          "route-local-ems-niagara-falls-ems-north-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-niagara-falls-ems-st-paul",
+        "service": "ems",
+        "number": 10001,
+        "name": "St. Paul Avenue Ambulance Base",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5800,
+        "access": {
+          "lat": 43.132706489125155,
+          "lng": -79.09931374010127,
+          "road": "Unnamed road",
+          "gapMetres": 12
+        },
+        "callIds": [
+          "route-local-ems-niagara-falls-ems-st-paul-01",
+          "route-local-ems-niagara-falls-ems-st-paul-02",
+          "route-local-ems-niagara-falls-ems-st-paul-03",
+          "route-local-ems-niagara-falls-ems-st-paul-04",
+          "route-local-ems-niagara-falls-ems-st-paul-05",
+          "route-local-ems-niagara-falls-ems-st-paul-06"
+        ],
+        "challengeCalls": 6
+      }
+    ]
+  },
+  "routeCalls": [
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "MacBain Community Centre",
+      "addr": "7150 Montrose Road, Niagara Falls, ON",
+      "lat": 43.07140493500003,
+      "lng": -79.12424448999997,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services9.arcgis.com/oMFQlUUrLd1Uh1bd/arcgis/rest/services/Niagara_Falls_City_Facilities/FeatureServer/0",
+        "https://services9.arcgis.com/oMFQlUUrLd1Uh1bd/arcgis/rest/services/Niagara_Falls_Address_Points_WGS_1984/FeatureServer/0/query?objectIds=29984&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Mcleod Road",
+        "Kinsmen Court"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "niagara-falls-call-03",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-niagara-falls-fire-2-01",
+      "routeBaseId": "fire-niagara-falls-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1432.6,
+        "meaningfulDecisions": 6,
+        "maxAlternativePenaltyMetres": 4544.1,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 135.3,
+        "bestSameServiceCostSeconds": 135.3
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "C. B. Wright Park",
+      "addr": "6915 Ailanthus Avenue, Niagara Falls, ON",
+      "lat": 43.075439360000075,
+      "lng": -79.08927525699994,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services9.arcgis.com/oMFQlUUrLd1Uh1bd/arcgis/rest/services/Niagara_Falls_Community_Parks_and_Trail_Lands_WGS_1984/FeatureServer/0",
+        "https://services9.arcgis.com/oMFQlUUrLd1Uh1bd/arcgis/rest/services/Niagara_Falls_Address_Points_WGS_1984/FeatureServer/0/query?objectIds=830&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Sunnylea Crescent",
+        "Frontenac Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "niagara-falls-call-16",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-niagara-falls-fire-2-02",
+      "routeBaseId": "fire-niagara-falls-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2450.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 164.1,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 210.9,
+        "bestSameServiceCostSeconds": 210.9
+      }
+    },
+    {
+      "name": "Brown Road & Hackberry Trail",
+      "addr": "Brown Road & Hackberry Trail",
+      "lat": 43.0591602,
+      "lng": -79.1263579,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/600632100",
+        "way/67956781"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/600632100",
+        "https://www.openstreetmap.org/way/67956781"
+      ],
+      "id": "route-local-fire-niagara-falls-fire-2-03",
+      "routeBaseId": "fire-niagara-falls-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2444.9,
+        "meaningfulDecisions": 6,
+        "maxAlternativePenaltyMetres": 5544.6,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 184.8,
+        "bestSameServiceCostSeconds": 184.8
+      }
+    },
+    {
+      "name": "Oldfield Road & Sam Iorfida Drive",
+      "addr": "Oldfield Road & Sam Iorfida Drive",
+      "lat": 43.0632737,
+      "lng": -79.1044365,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/13499960",
+        "way/539510335"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/13499960",
+        "https://www.openstreetmap.org/way/539510335"
+      ],
+      "id": "route-local-fire-niagara-falls-fire-2-04",
+      "routeBaseId": "fire-niagara-falls-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1444.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 303.5,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 125,
+        "bestSameServiceCostSeconds": 125
+      }
+    },
+    {
+      "name": "Dorchester Road & Stokes Street",
+      "addr": "Dorchester Road & Stokes Street",
+      "lat": 43.0838453,
+      "lng": -79.1103088,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55548956",
+        "way/55549110",
+        "way/55550668"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55548956",
+        "https://www.openstreetmap.org/way/55549110",
+        "https://www.openstreetmap.org/way/55550668"
+      ],
+      "id": "route-local-fire-niagara-falls-fire-2-05",
+      "routeBaseId": "fire-niagara-falls-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1690.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 164.1,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 115.5,
+        "bestSameServiceCostSeconds": 115.5
+      }
+    },
+    {
+      "name": "Dunn Street & Heximer Avenue",
+      "addr": "Dunn Street & Heximer Avenue",
+      "lat": 43.0785545,
+      "lng": -79.0999069,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55547843",
+        "way/55548014",
+        "way/55548634"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55547843",
+        "https://www.openstreetmap.org/way/55548014",
+        "https://www.openstreetmap.org/way/55548634"
+      ],
+      "id": "route-local-fire-niagara-falls-fire-2-06",
+      "routeBaseId": "fire-niagara-falls-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1718.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 164.1,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 142.3,
+        "bestSameServiceCostSeconds": 142.3
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Chippawa Library",
+      "addr": "3848 Main Street Chippawa, Niagara Falls, ON",
+      "lat": 43.05703764800006,
+      "lng": -79.05195955699998,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services9.arcgis.com/oMFQlUUrLd1Uh1bd/arcgis/rest/services/Niagara_Falls_Address_Points_WGS_1984/FeatureServer/0/query?objectIds=24142&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Dock Street",
+        "Laura Secord Place"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "niagara-falls-call-12",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-niagara-falls-fire-4-01",
+      "routeBaseId": "fire-niagara-falls-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 791.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 219.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 139.2,
+        "bestSameServiceCostSeconds": 139.2
+      }
+    },
+    {
+      "name": "Emerald Avenue & Willick Road",
+      "addr": "Emerald Avenue & Willick Road",
+      "lat": 43.0413435,
+      "lng": -79.0632684,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/179188967",
+        "way/597976082"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/179188967",
+        "https://www.openstreetmap.org/way/597976082"
+      ],
+      "id": "route-local-fire-niagara-falls-fire-4-02",
+      "routeBaseId": "fire-niagara-falls-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2006.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 218.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 227.6,
+        "bestSameServiceCostSeconds": 224.4
+      }
+    },
+    {
+      "name": "Niagara Parkway & Niagara River Parkway",
+      "addr": "Niagara Parkway & Niagara River Parkway",
+      "lat": 43.068682,
+      "lng": -79.0588756,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/235237663",
+        "way/55547799",
+        "way/55549861"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/235237663",
+        "https://www.openstreetmap.org/way/55547799",
+        "https://www.openstreetmap.org/way/55549861"
+      ],
+      "id": "route-local-fire-niagara-falls-fire-4-03",
+      "routeBaseId": "fire-niagara-falls-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2564.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 5833.5,
+        "decisionKinds": [
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 220.7,
+        "bestSameServiceCostSeconds": 220.7
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Chippawa Willoughby Memorial Arena",
+      "addr": "9000 Sodom Road, Niagara Falls, ON",
+      "lat": 43.04764914100008,
+      "lng": -79.05765464399997,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://niagarafalls.ca/recreation-culture-and-community/recreation-programs-and-facilities/arenas-and-skating",
+        "https://services9.arcgis.com/oMFQlUUrLd1Uh1bd/arcgis/rest/services/Niagara_Falls_Address_Points_WGS_1984/FeatureServer/0/query?objectIds=2474&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Weinbrenner Road",
+        "Nassau Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "niagara-falls-call-14",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-niagara-falls-fire-4-04",
+      "routeBaseId": "fire-niagara-falls-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1106.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 375.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 170.2,
+        "bestSameServiceCostSeconds": 170.2
+      }
+    },
+    {
+      "name": "Ives Gateway & Niagara Parkway",
+      "addr": "Ives Gateway & Niagara Parkway",
+      "lat": 43.0607456,
+      "lng": -79.0385385,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/488216855",
+        "way/491283221"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/488216855",
+        "https://www.openstreetmap.org/way/491283221"
+      ],
+      "id": "route-local-fire-niagara-falls-fire-4-05",
+      "routeBaseId": "fire-niagara-falls-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2150.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 845.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 201.1,
+        "bestSameServiceCostSeconds": 201.1
+      }
+    },
+    {
+      "name": "Weinbrenner Road & Willoughby Drive",
+      "addr": "Weinbrenner Road & Willoughby Drive",
+      "lat": 43.0491039,
+      "lng": -79.0461582,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/10040376",
+        "way/179042258",
+        "way/179193552",
+        "way/461409594"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/10040376",
+        "https://www.openstreetmap.org/way/179042258",
+        "https://www.openstreetmap.org/way/179193552",
+        "https://www.openstreetmap.org/way/461409594"
+      ],
+      "id": "route-local-fire-niagara-falls-fire-4-06",
+      "routeBaseId": "fire-niagara-falls-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1438.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 714.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 178.2,
+        "bestSameServiceCostSeconds": 178.2
+      }
+    },
+    {
+      "name": "Detenbeck Road & Sodom Road",
+      "addr": "Detenbeck Road & Sodom Road",
+      "lat": 43.0118703,
+      "lng": -79.0579265,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25900917",
+        "way/35290076"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25900917",
+        "https://www.openstreetmap.org/way/35290076"
+      ],
+      "id": "route-local-fire-niagara-falls-fire-5-01",
+      "routeBaseId": "fire-niagara-falls-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 438.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 2856.4,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Sodom Road",
+        "estimatedCostSeconds": 26.4,
+        "bestSameServiceCostSeconds": 26.4
+      }
+    },
+    {
+      "name": "Sodom Road & Weaver Road",
+      "addr": "Sodom Road & Weaver Road",
+      "lat": 43.0339781,
+      "lng": -79.0585191,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25900917",
+        "way/491273180"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25900917",
+        "https://www.openstreetmap.org/way/491273180"
+      ],
+      "id": "route-local-fire-niagara-falls-fire-5-02",
+      "routeBaseId": "fire-niagara-falls-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2006.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2948.5,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Sodom Road",
+        "estimatedCostSeconds": 120.8,
+        "bestSameServiceCostSeconds": 120.8
+      }
+    },
+    {
+      "name": "Marshall Road & Service Road 21",
+      "addr": "Marshall Road & Service Road 21",
+      "lat": 43.0196025,
+      "lng": -79.0311315,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/179212390",
+        "way/26785621",
+        "way/499690433"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/179212390",
+        "https://www.openstreetmap.org/way/26785621",
+        "https://www.openstreetmap.org/way/499690433"
+      ],
+      "id": "route-local-fire-niagara-falls-fire-5-03",
+      "routeBaseId": "fire-niagara-falls-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2583.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2266.3,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Sodom Road",
+        "estimatedCostSeconds": 199,
+        "bestSameServiceCostSeconds": 199
+      }
+    },
+    {
+      "name": "Marshall Road & Ort Road",
+      "addr": "Marshall Road & Ort Road",
+      "lat": 43.0192675,
+      "lng": -79.0707186,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/26785604",
+        "way/477854360"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/26785604",
+        "https://www.openstreetmap.org/way/477854360"
+      ],
+      "id": "route-local-fire-niagara-falls-fire-5-04",
+      "routeBaseId": "fire-niagara-falls-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1410.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 3244.5,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Sodom Road",
+        "estimatedCostSeconds": 105.2,
+        "bestSameServiceCostSeconds": 105.2
+      }
+    },
+    {
+      "name": "Sodom Road & Somerville Road",
+      "addr": "Sodom Road & Somerville Road",
+      "lat": 42.9941971,
+      "lng": -79.0570713,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/67947735",
+        "way/67957308",
+        "way/67958719"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/67947735",
+        "https://www.openstreetmap.org/way/67957308",
+        "https://www.openstreetmap.org/way/67958719"
+      ],
+      "id": "route-local-fire-niagara-falls-fire-5-05",
+      "routeBaseId": "fire-niagara-falls-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2393.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 5773,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Sodom Road",
+        "estimatedCostSeconds": 144.1,
+        "bestSameServiceCostSeconds": 144.1
+      }
+    },
+    {
+      "name": "Marshall Road & Willoughby Drive",
+      "addr": "Marshall Road & Willoughby Drive",
+      "lat": 43.0194326,
+      "lng": -79.0454596,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/26784974",
+        "way/26785621",
+        "way/943507071"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/26784974",
+        "https://www.openstreetmap.org/way/26785621",
+        "https://www.openstreetmap.org/way/943507071"
+      ],
+      "id": "route-local-fire-niagara-falls-fire-5-06",
+      "routeBaseId": "fire-niagara-falls-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1418.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1625,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Sodom Road",
+        "estimatedCostSeconds": 105.8,
+        "bestSameServiceCostSeconds": 105.8
+      }
+    },
+    {
+      "name": "Montrose Road & Schisler Road",
+      "addr": "Montrose Road & Schisler Road",
+      "lat": 43.0074251,
+      "lng": -79.1224372,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/477853710",
+        "way/477853711",
+        "way/491262568",
+        "way/846195084"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/477853710",
+        "https://www.openstreetmap.org/way/477853711",
+        "https://www.openstreetmap.org/way/491262568",
+        "https://www.openstreetmap.org/way/846195084"
+      ],
+      "id": "route-local-fire-niagara-falls-fire-6-01",
+      "routeBaseId": "fire-niagara-falls-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 862.9,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 2191.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 62.1,
+        "bestSameServiceCostSeconds": 62.1
+      }
+    },
+    {
+      "name": "Morris Road & Schisler Road",
+      "addr": "Morris Road & Schisler Road",
+      "lat": 43.0034963,
+      "lng": -79.1537026,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/67924532",
+        "way/67925823",
+        "way/67957587",
+        "way/67958091"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/67924532",
+        "https://www.openstreetmap.org/way/67925823",
+        "https://www.openstreetmap.org/way/67957587",
+        "https://www.openstreetmap.org/way/67958091"
+      ],
+      "id": "route-local-fire-niagara-falls-fire-6-02",
+      "routeBaseId": "fire-niagara-falls-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1900.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 3011.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 124.6,
+        "bestSameServiceCostSeconds": 124.6
+      }
+    },
+    {
+      "name": "Beck Road & Schisler Road",
+      "addr": "Beck Road & Schisler Road",
+      "lat": 43.0077282,
+      "lng": -79.0963253,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/28429985",
+        "way/491262568"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/28429985",
+        "https://www.openstreetmap.org/way/491262568"
+      ],
+      "id": "route-local-fire-niagara-falls-fire-6-03",
+      "routeBaseId": "fire-niagara-falls-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2999,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2191.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 233,
+        "bestSameServiceCostSeconds": 233
+      }
+    },
+    {
+      "name": "Misener Road & Young Road",
+      "addr": "Misener Road & Young Road",
+      "lat": 43.0129853,
+      "lng": -79.1330487,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/67930289",
+        "way/67933160",
+        "way/67936598",
+        "way/67941664"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/67930289",
+        "https://www.openstreetmap.org/way/67933160",
+        "https://www.openstreetmap.org/way/67936598",
+        "https://www.openstreetmap.org/way/67941664"
+      ],
+      "id": "route-local-fire-niagara-falls-fire-6-04",
+      "routeBaseId": "fire-niagara-falls-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1248.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1696.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 176.7,
+        "bestSameServiceCostSeconds": 176.7
+      }
+    },
+    {
+      "name": "Lemon Road & Montrose Road",
+      "addr": "Lemon Road & Montrose Road",
+      "lat": 42.9925433,
+      "lng": -79.1225172,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/67931150",
+        "way/67955819",
+        "way/67956062"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/67931150",
+        "https://www.openstreetmap.org/way/67955819",
+        "https://www.openstreetmap.org/way/67956062"
+      ],
+      "id": "route-local-fire-niagara-falls-fire-6-05",
+      "routeBaseId": "fire-niagara-falls-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2460,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1881.6,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 159.5,
+        "bestSameServiceCostSeconds": 159.5
+      }
+    },
+    {
+      "name": "Crowland Avenue & Yokom Road",
+      "addr": "Crowland Avenue & Yokom Road",
+      "lat": 42.9940003,
+      "lng": -79.1433759,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/67926031",
+        "way/67931243",
+        "way/67938507",
+        "way/67955966"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/67926031",
+        "https://www.openstreetmap.org/way/67931243",
+        "https://www.openstreetmap.org/way/67938507",
+        "https://www.openstreetmap.org/way/67955966"
+      ],
+      "id": "route-local-fire-niagara-falls-fire-6-06",
+      "routeBaseId": "fire-niagara-falls-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2112.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1960.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 230.6,
+        "bestSameServiceCostSeconds": 230.6
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Althea Park",
+      "addr": "6162 Althea Street, Niagara Falls, ON",
+      "lat": 43.10556000500003,
+      "lng": -79.09765435799994,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services9.arcgis.com/oMFQlUUrLd1Uh1bd/arcgis/rest/services/Niagara_Falls_Community_Parks_and_Trail_Lands_WGS_1984/FeatureServer/0",
+        "https://services9.arcgis.com/oMFQlUUrLd1Uh1bd/arcgis/rest/services/Niagara_Falls_Address_Points_WGS_1984/FeatureServer/0/query?objectIds=15446&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Drummond Road",
+        "Burdette Drive East"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "niagara-falls-call-17",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-niagara-falls-fire-1-01",
+      "routeBaseId": "fire-niagara-falls-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 836.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 765.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 75.8,
+        "bestSameServiceCostSeconds": 75.8
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Victoria Avenue Library",
+      "addr": "4848 Victoria Avenue, Niagara Falls, ON",
+      "lat": 43.104009648000044,
+      "lng": -79.07267242599994,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services9.arcgis.com/oMFQlUUrLd1Uh1bd/arcgis/rest/services/Niagara_Falls_City_Facilities/FeatureServer/0",
+        "https://services9.arcgis.com/oMFQlUUrLd1Uh1bd/arcgis/rest/services/Niagara_Falls_Address_Points_WGS_1984/FeatureServer/0/query?objectIds=17261&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Morrison Street",
+        "Crawford Place"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "niagara-falls-call-06",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-niagara-falls-fire-1-02",
+      "routeBaseId": "fire-niagara-falls-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1791.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 391.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 184.9,
+        "bestSameServiceCostSeconds": 184.9
+      }
+    },
+    {
+      "name": "Allendale Avenue & Robinson Street",
+      "addr": "Allendale Avenue & Robinson Street",
+      "lat": 43.0862412,
+      "lng": -79.0862151,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55548617",
+        "way/55549896",
+        "way/55550620",
+        "way/55551829"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55548617",
+        "https://www.openstreetmap.org/way/55549896",
+        "https://www.openstreetmap.org/way/55550620",
+        "https://www.openstreetmap.org/way/55551829"
+      ],
+      "id": "route-local-fire-niagara-falls-fire-1-03",
+      "routeBaseId": "fire-niagara-falls-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2583.9,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 175.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 187.5,
+        "bestSameServiceCostSeconds": 187.5
+      }
+    },
+    {
+      "name": "Stanley Avenue & Thorold Stone Road",
+      "addr": "Stanley Avenue & Thorold Stone Road",
+      "lat": 43.1153176,
+      "lng": -79.0859145,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1134316778",
+        "way/459600322",
+        "way/476906827",
+        "way/476906828"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1134316778",
+        "https://www.openstreetmap.org/way/459600322",
+        "https://www.openstreetmap.org/way/476906827",
+        "https://www.openstreetmap.org/way/476906828"
+      ],
+      "id": "route-local-fire-niagara-falls-fire-1-04",
+      "routeBaseId": "fire-niagara-falls-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1718.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 629.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 120.9,
+        "bestSameServiceCostSeconds": 120.9
+      }
+    },
+    {
+      "name": "Optimist Lane & Stacey Drive",
+      "addr": "Optimist Lane & Stacey Drive",
+      "lat": 43.1052499,
+      "lng": -79.1173279,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/383390640",
+        "way/383390641"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/383390640",
+        "https://www.openstreetmap.org/way/383390641"
+      ],
+      "id": "route-local-fire-niagara-falls-fire-1-05",
+      "routeBaseId": "fire-niagara-falls-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2222.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 765.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 225.9,
+        "bestSameServiceCostSeconds": 215.6
+      }
+    },
+    {
+      "name": "Hanan Avenue & North Street",
+      "addr": "Hanan Avenue & North Street",
+      "lat": 43.0931247,
+      "lng": -79.0955732,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55547948",
+        "way/55548699",
+        "way/55550745"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55547948",
+        "https://www.openstreetmap.org/way/55548699",
+        "https://www.openstreetmap.org/way/55550745"
+      ],
+      "id": "route-local-fire-niagara-falls-fire-1-06",
+      "routeBaseId": "fire-niagara-falls-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1689.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 460,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 154.5,
+        "bestSameServiceCostSeconds": 154.5
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Stamford Centre Library",
+      "addr": "3643 Portage Road, Niagara Falls, ON",
+      "lat": 43.119639740000025,
+      "lng": -79.10136183399999,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://niagarafalls.ca/recreation-culture-and-community/library/",
+        "https://services9.arcgis.com/oMFQlUUrLd1Uh1bd/arcgis/rest/services/Niagara_Falls_Address_Points_WGS_1984/FeatureServer/0/query?objectIds=7179&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Keith Street",
+        "Colborne Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "niagara-falls-call-13",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-niagara-falls-fire-3-01",
+      "routeBaseId": "fire-niagara-falls-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1514.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 199.4,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Dorchester Road",
+        "estimatedCostSeconds": 158.5,
+        "bestSameServiceCostSeconds": 158.5
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Firemen’s Park",
+      "addr": "2275 Dorchester Road, Niagara Falls, ON",
+      "lat": 43.13931376700003,
+      "lng": -79.11432283699997,
+      "radius": 150,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services9.arcgis.com/oMFQlUUrLd1Uh1bd/arcgis/rest/services/Niagara_Falls_Community_Parks_and_Trail_Lands_WGS_1984/FeatureServer/0",
+        "https://services9.arcgis.com/oMFQlUUrLd1Uh1bd/arcgis/rest/services/Niagara_Falls_Address_Points_WGS_1984/FeatureServer/0/query?objectIds=2439&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Calaguiro Drive",
+        "Mountain Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "niagara-falls-call-08",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-niagara-falls-fire-3-02",
+      "routeBaseId": "fire-niagara-falls-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1830,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 786.6,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Dorchester Road",
+        "estimatedCostSeconds": 180,
+        "bestSameServiceCostSeconds": 180
+      }
+    },
+    {
+      "name": "Cropp Street & University Avenue",
+      "addr": "Cropp Street & University Avenue",
+      "lat": 43.1021837,
+      "lng": -79.1078757,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55547947",
+        "way/55551548",
+        "way/55552030"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55547947",
+        "https://www.openstreetmap.org/way/55551548",
+        "https://www.openstreetmap.org/way/55552030"
+      ],
+      "id": "route-local-fire-niagara-falls-fire-3-03",
+      "routeBaseId": "fire-niagara-falls-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2610.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 822.2,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Dorchester Road",
+        "estimatedCostSeconds": 181,
+        "bestSameServiceCostSeconds": 180.8
+      }
+    },
+    {
+      "name": "Montrose Road & Thorold Stone Road",
+      "addr": "Montrose Road & Thorold Stone Road",
+      "lat": 43.114665,
+      "lng": -79.1247359,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55547513",
+        "way/55548527",
+        "way/55550186",
+        "way/55551213"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55547513",
+        "https://www.openstreetmap.org/way/55548527",
+        "https://www.openstreetmap.org/way/55550186",
+        "https://www.openstreetmap.org/way/55551213"
+      ],
+      "id": "route-local-fire-niagara-falls-fire-3-04",
+      "routeBaseId": "fire-niagara-falls-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1876,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 3959,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Dorchester Road",
+        "estimatedCostSeconds": 112,
+        "bestSameServiceCostSeconds": 112
+      }
+    },
+    {
+      "name": "Mewburn Road & Nadia Court",
+      "addr": "Mewburn Road & Nadia Court",
+      "lat": 43.1311028,
+      "lng": -79.125524,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55547543",
+        "way/55547700",
+        "way/55549354"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55547543",
+        "https://www.openstreetmap.org/way/55547700",
+        "https://www.openstreetmap.org/way/55549354"
+      ],
+      "id": "route-local-fire-niagara-falls-fire-3-05",
+      "routeBaseId": "fire-niagara-falls-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1812.1,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 319.7,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Dorchester Road",
+        "estimatedCostSeconds": 177.4,
+        "bestSameServiceCostSeconds": 177.4
+      }
+    },
+    {
+      "name": "Galaxy Drive & Jupiter Boulevard",
+      "addr": "Galaxy Drive & Jupiter Boulevard",
+      "lat": 43.1313796,
+      "lng": -79.1023867,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55549549",
+        "way/55549592",
+        "way/55550982"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55549549",
+        "https://www.openstreetmap.org/way/55549592",
+        "https://www.openstreetmap.org/way/55550982"
+      ],
+      "id": "route-local-fire-niagara-falls-fire-3-06",
+      "routeBaseId": "fire-niagara-falls-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1714.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 217.2,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Dorchester Road",
+        "estimatedCostSeconds": 141.8,
+        "bestSameServiceCostSeconds": 141.8
+      }
+    },
+    {
+      "name": "Cheesman Street & Feren Drive",
+      "addr": "Cheesman Street & Feren Drive",
+      "lat": 43.0907741,
+      "lng": -79.1381659,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55549846",
+        "way/55550138",
+        "way/55550781"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55549846",
+        "https://www.openstreetmap.org/way/55550138",
+        "https://www.openstreetmap.org/way/55550781"
+      ],
+      "id": "route-local-fire-niagara-falls-fire-7-01",
+      "routeBaseId": "fire-niagara-falls-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 793.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 181.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 83.1,
+        "bestSameServiceCostSeconds": 83.1
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Kalar Sports Park",
+      "addr": "6775 Kalar Road, Niagara Falls, ON",
+      "lat": 43.07689971100007,
+      "lng": -79.13859227199998,
+      "radius": 150,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services9.arcgis.com/oMFQlUUrLd1Uh1bd/arcgis/rest/services/Niagara_Falls_Community_Parks_and_Trail_Lands_WGS_1984/FeatureServer/0",
+        "https://services9.arcgis.com/oMFQlUUrLd1Uh1bd/arcgis/rest/services/Niagara_Falls_Address_Points_WGS_1984/FeatureServer/0/query?objectIds=34310&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Coventry Road",
+        "Westwood Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "niagara-falls-call-10",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-niagara-falls-fire-7-02",
+      "routeBaseId": "fire-niagara-falls-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2015.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 198.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 223.6,
+        "bestSameServiceCostSeconds": 223.6
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Royal Manor Park",
+      "addr": "5616 Glamis Crescent, Niagara Falls, ON",
+      "lat": 43.09227575700004,
+      "lng": -79.11702735699998,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services9.arcgis.com/oMFQlUUrLd1Uh1bd/arcgis/rest/services/Niagara_Falls_Community_Parks_and_Trail_Lands_WGS_1984/FeatureServer/0",
+        "https://services9.arcgis.com/oMFQlUUrLd1Uh1bd/arcgis/rest/services/Niagara_Falls_Address_Points_WGS_1984/FeatureServer/0/query?objectIds=26273&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Royal Manor Drive",
+        "Strathmore Crescent (via Royal Manor Drive)"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "niagara-falls-call-20",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-niagara-falls-fire-7-03",
+      "routeBaseId": "fire-niagara-falls-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2498.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2391.5,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 218.7,
+        "bestSameServiceCostSeconds": 218.7
+      }
+    },
+    {
+      "name": "Costabile Drive & Kalar Road",
+      "addr": "Costabile Drive & Kalar Road",
+      "lat": 43.1086369,
+      "lng": -79.1371608,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55547774",
+        "way/55548893",
+        "way/55550476"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55547774",
+        "https://www.openstreetmap.org/way/55548893",
+        "https://www.openstreetmap.org/way/55550476"
+      ],
+      "id": "route-local-fire-niagara-falls-fire-7-04",
+      "routeBaseId": "fire-niagara-falls-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2614.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 181.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 178.5,
+        "bestSameServiceCostSeconds": 178.5
+      }
+    },
+    {
+      "name": "Beaverdams Road & Garner Road",
+      "addr": "Beaverdams Road & Garner Road",
+      "lat": 43.0997202,
+      "lng": -79.1496233,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55550341",
+        "way/55550415",
+        "way/55550798",
+        "way/55551710"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55550341",
+        "https://www.openstreetmap.org/way/55550415",
+        "https://www.openstreetmap.org/way/55550798",
+        "https://www.openstreetmap.org/way/55551710"
+      ],
+      "id": "route-local-fire-niagara-falls-fire-7-05",
+      "routeBaseId": "fire-niagara-falls-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2337.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 181.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 185.3,
+        "bestSameServiceCostSeconds": 185.3
+      }
+    },
+    {
+      "name": "Angie Drive & Curlin Crescent",
+      "addr": "Angie Drive & Curlin Crescent",
+      "lat": 43.0854282,
+      "lng": -79.147447,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1473560405",
+        "way/340139205"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1473560405",
+        "https://www.openstreetmap.org/way/340139205"
+      ],
+      "id": "route-local-fire-niagara-falls-fire-7-06",
+      "routeBaseId": "fire-niagara-falls-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1680.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 198.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 207.2,
+        "bestSameServiceCostSeconds": 207.2
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Niagara Falls History Museum",
+      "addr": "5810 Ferry Street, Niagara Falls, ON",
+      "lat": 43.089241850000064,
+      "lng": -79.09127709499995,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://niagarafalls.ca/city-government/city-guide/",
+        "https://services9.arcgis.com/oMFQlUUrLd1Uh1bd/arcgis/rest/services/Niagara_Falls_Address_Points_WGS_1984/FeatureServer/0/query?objectIds=28674&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Sylvia Place",
+        "Main Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "niagara-falls-call-04",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-niagara-falls-ems-north-01",
+      "routeBaseId": "ems-niagara-falls-ems-north",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 789.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 170.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 115.3,
+        "bestSameServiceCostSeconds": 115.3
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Oakes Park",
+      "addr": "5700 Morrison Street, Niagara Falls, ON",
+      "lat": 43.10402875800003,
+      "lng": -79.08755309399999,
+      "radius": 150,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services9.arcgis.com/oMFQlUUrLd1Uh1bd/arcgis/rest/services/Niagara_Falls_Community_Parks_and_Trail_Lands_WGS_1984/FeatureServer/0",
+        "https://services9.arcgis.com/oMFQlUUrLd1Uh1bd/arcgis/rest/services/Niagara_Falls_Address_Points_WGS_1984/FeatureServer/0/query?objectIds=15147&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Stanley Avenue",
+        "Law Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "niagara-falls-call-09",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-niagara-falls-ems-north-02",
+      "routeBaseId": "ems-niagara-falls-ems-north",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1790.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 491.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 167.9,
+        "bestSameServiceCostSeconds": 167.9
+      }
+    },
+    {
+      "name": "Royal Manor Drive & Windsor Crescent",
+      "addr": "Royal Manor Drive & Windsor Crescent",
+      "lat": 43.0957538,
+      "lng": -79.1148542,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55547526",
+        "way/55549814",
+        "way/55552041"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55547526",
+        "https://www.openstreetmap.org/way/55549814",
+        "https://www.openstreetmap.org/way/55552041"
+      ],
+      "id": "route-local-ems-niagara-falls-ems-north-03",
+      "routeBaseId": "ems-niagara-falls-ems-north",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2516.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1204.2,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 240.9,
+        "bestSameServiceCostSeconds": 240.9
+      }
+    },
+    {
+      "name": "Roger Crescent & Stanley Avenue",
+      "addr": "Roger Crescent & Stanley Avenue",
+      "lat": 43.0722191,
+      "lng": -79.0835298,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55548420",
+        "way/55549137",
+        "way/55551346"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55548420",
+        "https://www.openstreetmap.org/way/55549137",
+        "https://www.openstreetmap.org/way/55551346"
+      ],
+      "id": "route-local-ems-niagara-falls-ems-north-04",
+      "routeBaseId": "ems-niagara-falls-ems-north",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2621.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 348.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 192.8,
+        "bestSameServiceCostSeconds": 192.8
+      }
+    },
+    {
+      "name": "Crysler Avenue & Morrison Street",
+      "addr": "Crysler Avenue & Morrison Street",
+      "lat": 43.1046637,
+      "lng": -79.0686831,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55547565",
+        "way/55549254",
+        "way/55549870",
+        "way/55550949"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55547565",
+        "https://www.openstreetmap.org/way/55549254",
+        "https://www.openstreetmap.org/way/55549870",
+        "https://www.openstreetmap.org/way/55550949"
+      ],
+      "id": "route-local-ems-niagara-falls-ems-north-05",
+      "routeBaseId": "ems-niagara-falls-ems-north",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2599.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 327.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 230.3,
+        "bestSameServiceCostSeconds": 230.3
+      }
+    },
+    {
+      "name": "Dixon Street & Main Street",
+      "addr": "Dixon Street & Main Street",
+      "lat": 43.0811551,
+      "lng": -79.0838009,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/421320092",
+        "way/55548665",
+        "way/55551928"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/421320092",
+        "https://www.openstreetmap.org/way/55548665",
+        "https://www.openstreetmap.org/way/55551928"
+      ],
+      "id": "route-local-ems-niagara-falls-ems-north-06",
+      "routeBaseId": "ems-niagara-falls-ems-north",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1665.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 331.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 135.2,
+        "bestSameServiceCostSeconds": 135.2
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Stamford Centre Library",
+      "addr": "3643 Portage Road, Niagara Falls, ON",
+      "lat": 43.119639740000025,
+      "lng": -79.10136183399999,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://niagarafalls.ca/recreation-culture-and-community/library/",
+        "https://services9.arcgis.com/oMFQlUUrLd1Uh1bd/arcgis/rest/services/Niagara_Falls_Address_Points_WGS_1984/FeatureServer/0/query?objectIds=7179&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Keith Street",
+        "Colborne Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "niagara-falls-call-13",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-niagara-falls-ems-st-paul-01",
+      "routeBaseId": "ems-niagara-falls-ems-st-paul",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1616.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1474.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 156.6,
+        "bestSameServiceCostSeconds": 156.6
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Firemen’s Park",
+      "addr": "2275 Dorchester Road, Niagara Falls, ON",
+      "lat": 43.13931376700003,
+      "lng": -79.11432283699997,
+      "radius": 150,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services9.arcgis.com/oMFQlUUrLd1Uh1bd/arcgis/rest/services/Niagara_Falls_Community_Parks_and_Trail_Lands_WGS_1984/FeatureServer/0",
+        "https://services9.arcgis.com/oMFQlUUrLd1Uh1bd/arcgis/rest/services/Niagara_Falls_Address_Points_WGS_1984/FeatureServer/0/query?objectIds=2439&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Calaguiro Drive",
+        "Mountain Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "niagara-falls-call-08",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-niagara-falls-ems-st-paul-02",
+      "routeBaseId": "ems-niagara-falls-ems-st-paul",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1755,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 674.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 191.9,
+        "bestSameServiceCostSeconds": 191.9
+      }
+    },
+    {
+      "name": "Niagara Parkway & Whirlpool Road",
+      "addr": "Niagara Parkway & Whirlpool Road",
+      "lat": 43.1239568,
+      "lng": -79.0782193,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1426353132",
+        "way/55550250",
+        "way/55551629"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1426353132",
+        "https://www.openstreetmap.org/way/55550250",
+        "https://www.openstreetmap.org/way/55551629"
+      ],
+      "id": "route-local-ems-niagara-falls-ems-st-paul-03",
+      "routeBaseId": "ems-niagara-falls-ems-st-paul",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2542,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 3998.1,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 212.6,
+        "bestSameServiceCostSeconds": 212.6
+      }
+    },
+    {
+      "name": "Mountain Gate Drive & Portage Road",
+      "addr": "Mountain Gate Drive & Portage Road",
+      "lat": 43.1332849,
+      "lng": -79.0949134,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55547961",
+        "way/55550196",
+        "way/55793563"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55547961",
+        "https://www.openstreetmap.org/way/55550196",
+        "https://www.openstreetmap.org/way/55793563"
+      ],
+      "id": "route-local-ems-niagara-falls-ems-st-paul-04",
+      "routeBaseId": "ems-niagara-falls-ems-st-paul",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 981.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 384.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 87.7,
+        "bestSameServiceCostSeconds": 87.7
+      }
+    },
+    {
+      "name": "Mallette Crescent & Melrose Drive",
+      "addr": "Mallette Crescent & Melrose Drive",
+      "lat": 43.1492642,
+      "lng": -79.0975486,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55792831",
+        "way/55793387",
+        "way/55794061"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55792831",
+        "https://www.openstreetmap.org/way/55793387",
+        "https://www.openstreetmap.org/way/55794061"
+      ],
+      "id": "route-local-ems-niagara-falls-ems-st-paul-05",
+      "routeBaseId": "ems-niagara-falls-ems-st-paul",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2438.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 4416.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 192.5,
+        "bestSameServiceCostSeconds": 192.5
+      }
+    },
+    {
+      "name": "Casey Street & President Drive",
+      "addr": "Casey Street & President Drive",
+      "lat": 43.1289857,
+      "lng": -79.1161484,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55547900",
+        "way/55548650",
+        "way/55550026"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55547900",
+        "https://www.openstreetmap.org/way/55548650",
+        "https://www.openstreetmap.org/way/55550026"
+      ],
+      "id": "route-local-ems-niagara-falls-ems-st-paul-06",
+      "routeBaseId": "ems-niagara-falls-ems-st-paul",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1723.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 941.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 146.4,
+        "bestSameServiceCostSeconds": 146.4
+      }
+    }
+  ]
 }

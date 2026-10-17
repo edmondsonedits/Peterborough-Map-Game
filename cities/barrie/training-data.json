@@ -269,5 +269,2283 @@
   ],
   "roadsUrl": "cities/barrie/roads.geojson.gz",
   "roadFeatureCount": 10228,
-  "roadDataSha256": "7b7478ef56cf5cbe53a984679e76f378196045f00dec7e5c9e9b7043f07a8b4d"
+  "roadDataSha256": "7b7478ef56cf5cbe53a984679e76f378196045f00dec7e5c9e9b7043f07a8b4d",
+  "routeResponses": {
+    "schemaVersion": 1,
+    "minCallsPerBase": 3,
+    "targetCallsPerBase": 6,
+    "generatedOn": "2026-10-17",
+    "model": {
+      "description": "Published first-due polygons where available. Otherwise a directed road-network estimate using road class travel cost from every same-service hall; allows a15second cost tie for overlapping nearby halls. This is training geography, not live dispatch advice.",
+      "ownershipToleranceSeconds": 15,
+      "maximumCandidateRouteMetres": 12000
+    },
+    "bases": [
+      {
+        "baseId": "fire-barrie-fire-1",
+        "service": "fire",
+        "number": 1,
+        "name": "Station 1 — BFES Headquarters",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5700,
+        "access": {
+          "lat": 44.38629197598549,
+          "lng": -79.69692126455892,
+          "road": "Dunlop Street West",
+          "gapMetres": 66.6
+        },
+        "callIds": [
+          "route-local-fire-barrie-fire-1-01",
+          "route-local-fire-barrie-fire-1-02",
+          "route-local-fire-barrie-fire-1-03",
+          "route-local-fire-barrie-fire-1-04",
+          "route-local-fire-barrie-fire-1-05",
+          "route-local-fire-barrie-fire-1-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-barrie-fire-2",
+        "service": "fire",
+        "number": 2,
+        "name": "Station 2",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 44.407716691542355,
+          "lng": -79.68403683036307,
+          "road": "Bell Farm Road",
+          "gapMetres": 29
+        },
+        "callIds": [
+          "route-local-fire-barrie-fire-2-01",
+          "route-local-fire-barrie-fire-2-02",
+          "route-local-fire-barrie-fire-2-03",
+          "route-local-fire-barrie-fire-2-04",
+          "route-local-fire-barrie-fire-2-05",
+          "route-local-fire-barrie-fire-2-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-barrie-fire-3",
+        "service": "fire",
+        "number": 3,
+        "name": "Station 3",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 44.3547853,
+          "lng": -79.6601272,
+          "road": "Unnamed road",
+          "gapMetres": 61.4
+        },
+        "callIds": [
+          "route-local-fire-barrie-fire-3-01",
+          "route-local-fire-barrie-fire-3-02",
+          "route-local-fire-barrie-fire-3-03",
+          "route-local-fire-barrie-fire-3-04",
+          "route-local-fire-barrie-fire-3-05",
+          "route-local-fire-barrie-fire-3-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-barrie-fire-4",
+        "service": "fire",
+        "number": 4,
+        "name": "Station 4",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5800,
+        "access": {
+          "lat": 44.35445144249187,
+          "lng": -79.71702720103515,
+          "road": "Ardagh Road",
+          "gapMetres": 59.5
+        },
+        "callIds": [
+          "route-local-fire-barrie-fire-4-01",
+          "route-local-fire-barrie-fire-4-02",
+          "route-local-fire-barrie-fire-4-03",
+          "route-local-fire-barrie-fire-4-04",
+          "route-local-fire-barrie-fire-4-05",
+          "route-local-fire-barrie-fire-4-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-barrie-fire-5",
+        "service": "fire",
+        "number": 5,
+        "name": "Station 5",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5800,
+        "access": {
+          "lat": 44.3279725519214,
+          "lng": -79.69912782387942,
+          "road": "Unnamed road",
+          "gapMetres": 17.8
+        },
+        "callIds": [
+          "route-local-fire-barrie-fire-5-01",
+          "route-local-fire-barrie-fire-5-02",
+          "route-local-fire-barrie-fire-5-03",
+          "route-local-fire-barrie-fire-5-04",
+          "route-local-fire-barrie-fire-5-05",
+          "route-local-fire-barrie-fire-5-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-barrie-fire-6",
+        "service": "fire",
+        "number": 6,
+        "name": "Station 6",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6200,
+        "access": {
+          "lat": 44.351340741013026,
+          "lng": -79.61101070532318,
+          "road": "Tobias Lane",
+          "gapMetres": 35.3
+        },
+        "callIds": [
+          "route-local-fire-barrie-fire-6-01",
+          "route-local-fire-barrie-fire-6-02",
+          "route-local-fire-barrie-fire-6-03",
+          "route-local-fire-barrie-fire-6-04",
+          "route-local-fire-barrie-fire-6-05",
+          "route-local-fire-barrie-fire-6-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-barrie-ems-fairview",
+        "service": "ems",
+        "number": 10001,
+        "name": "Barrie Simcoe Emergency Services Campus",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6300,
+        "access": {
+          "lat": 44.3552478,
+          "lng": -79.6874592,
+          "road": "Unnamed road",
+          "gapMetres": 29.2
+        },
+        "callIds": [
+          "route-local-ems-barrie-ems-fairview-01",
+          "route-local-ems-barrie-ems-fairview-02",
+          "route-local-ems-barrie-ems-fairview-03",
+          "route-local-ems-barrie-ems-fairview-04",
+          "route-local-ems-barrie-ems-fairview-05",
+          "route-local-ems-barrie-ems-fairview-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-barrie-ems-ross",
+        "service": "ems",
+        "number": 10002,
+        "name": "Barrie Central East Post",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 44.39074399779998,
+          "lng": -79.69402375087812,
+          "road": "Ross Street",
+          "gapMetres": 13.9
+        },
+        "callIds": [
+          "route-local-ems-barrie-ems-ross-01",
+          "route-local-ems-barrie-ems-ross-02",
+          "route-local-ems-barrie-ems-ross-03",
+          "route-local-ems-barrie-ems-ross-04",
+          "route-local-ems-barrie-ems-ross-05",
+          "route-local-ems-barrie-ems-ross-06"
+        ],
+        "challengeCalls": 6
+      }
+    ]
+  },
+  "routeCalls": [
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Maclaren Art Centre",
+      "addr": "37 Mulcaster St",
+      "lat": 44.390180728988554,
+      "lng": -79.68512308211166,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://gispublic.barrie.ca/arcgis/rest/services/Public/OperationalLayers_Dynamic/MapServer/5/query?where=OBJECTID%3D47&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Collier Street",
+        "Dunlop Street East"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "barrie-call-05",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-barrie-fire-1-01",
+      "routeBaseId": "fire-barrie-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1087.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 554.6,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Dunlop Street West",
+        "estimatedCostSeconds": 68.1,
+        "bestSameServiceCostSeconds": 68.1
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Court Services",
+      "addr": "45 Cedar Pointe Dr",
+      "lat": 44.38138029594503,
+      "lng": -79.71192484682275,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://gispublic.barrie.ca/arcgis/rest/services/Public/OperationalLayers_Dynamic/MapServer/5/query?where=OBJECTID%3D125&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Dunlop Street West",
+        "Highway 400"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "barrie-call-18",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-barrie-fire-1-02",
+      "routeBaseId": "fire-barrie-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1923.6,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 521.5,
+        "decisionKinds": [
+          "departure",
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Dunlop Street West",
+        "estimatedCostSeconds": 135.1,
+        "bestSameServiceCostSeconds": 135.1
+      }
+    },
+    {
+      "name": "Cundles Road West & Lillian Crescent",
+      "addr": "Cundles Road West & Lillian Crescent",
+      "lat": 44.4003267,
+      "lng": -79.715699,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33931280",
+        "way/33935819",
+        "way/482259261"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33931280",
+        "https://www.openstreetmap.org/way/33935819",
+        "https://www.openstreetmap.org/way/482259261"
+      ],
+      "id": "route-local-fire-barrie-fire-1-03",
+      "routeBaseId": "fire-barrie-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2507.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 699.4,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Dunlop Street West",
+        "estimatedCostSeconds": 196.8,
+        "bestSameServiceCostSeconds": 191.4
+      }
+    },
+    {
+      "name": "Bradford Street & Essa Road & Tiffin Street",
+      "addr": "Bradford Street & Essa Road & Tiffin Street",
+      "lat": 44.3746687,
+      "lng": -79.690316,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/335829789",
+        "way/335847495",
+        "way/335847496",
+        "way/33958091"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/335829789",
+        "https://www.openstreetmap.org/way/335847495",
+        "https://www.openstreetmap.org/way/335847496",
+        "https://www.openstreetmap.org/way/33958091"
+      ],
+      "id": "route-local-fire-barrie-fire-1-04",
+      "routeBaseId": "fire-barrie-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1739.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 257.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Dunlop Street West",
+        "estimatedCostSeconds": 105.6,
+        "bestSameServiceCostSeconds": 105.6
+      }
+    },
+    {
+      "name": "Lount Street & North Street",
+      "addr": "Lount Street & North Street",
+      "lat": 44.3979317,
+      "lng": -79.6957107,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33945445",
+        "way/33948561",
+        "way/653049518"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33945445",
+        "https://www.openstreetmap.org/way/33948561",
+        "https://www.openstreetmap.org/way/653049518"
+      ],
+      "id": "route-local-fire-barrie-fire-1-05",
+      "routeBaseId": "fire-barrie-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1784.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 612.7,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Dunlop Street West",
+        "estimatedCostSeconds": 135.8,
+        "bestSameServiceCostSeconds": 135.8
+      }
+    },
+    {
+      "name": "Letitia Street & Valley Drive",
+      "addr": "Letitia Street & Valley Drive",
+      "lat": 44.3930894,
+      "lng": -79.7100819,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33932466",
+        "way/33938193"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33932466",
+        "https://www.openstreetmap.org/way/33938193"
+      ],
+      "id": "route-local-fire-barrie-fire-1-06",
+      "routeBaseId": "fire-barrie-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1710.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 555.3,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Dunlop Street West",
+        "estimatedCostSeconds": 173,
+        "bestSameServiceCostSeconds": 173
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Maple Grove Public School",
+      "addr": "242 Grove St E",
+      "lat": 44.40629653603229,
+      "lng": -79.67907698546495,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://gispublic.barrie.ca/arcgis/rest/services/Public/OperationalLayers_Dynamic/MapServer/48/query?where=OBJECTID%3D62&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Lay Street",
+        "Blue Mound Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "barrie-call-14",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-barrie-fire-2-01",
+      "routeBaseId": "fire-barrie-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 995.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 924.6,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Bell Farm Road",
+        "estimatedCostSeconds": 93,
+        "bestSameServiceCostSeconds": 93
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "East Bayfield Community Centre",
+      "addr": "80 Livingstone St E",
+      "lat": 44.41494581032141,
+      "lng": -79.70413209198874,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://gispublic.barrie.ca/arcgis/rest/services/Public/OperationalLayers_Dynamic/MapServer/39/query?where=OBJECTID%3D22&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Stanley Street",
+        "Michael Crescent"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "barrie-call-06",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-barrie-fire-2-02",
+      "routeBaseId": "fire-barrie-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2443.3,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1668,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Bell Farm Road",
+        "estimatedCostSeconds": 225.8,
+        "bestSameServiceCostSeconds": 225.8
+      }
+    },
+    {
+      "name": "Kempenfelt Drive & Nelson Square West",
+      "addr": "Kempenfelt Drive & Nelson Square West",
+      "lat": 44.3937829,
+      "lng": -79.666543,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/162797902",
+        "way/33947418"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/162797902",
+        "https://www.openstreetmap.org/way/33947418"
+      ],
+      "id": "route-local-fire-barrie-fire-2-03",
+      "routeBaseId": "fire-barrie-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2639.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1362.5,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Bell Farm Road",
+        "estimatedCostSeconds": 180.3,
+        "bestSameServiceCostSeconds": 180.3
+      }
+    },
+    {
+      "name": "Peel Street & Wellington Street East",
+      "addr": "Peel Street & Wellington Street East",
+      "lat": 44.3959515,
+      "lng": -79.6888537,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33931300",
+        "way/33938359",
+        "way/33946362",
+        "way/33947698"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33931300",
+        "https://www.openstreetmap.org/way/33938359",
+        "https://www.openstreetmap.org/way/33946362",
+        "https://www.openstreetmap.org/way/33947698"
+      ],
+      "id": "route-local-fire-barrie-fire-2-04",
+      "routeBaseId": "fire-barrie-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1817.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1733.5,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Bell Farm Road",
+        "estimatedCostSeconds": 135.7,
+        "bestSameServiceCostSeconds": 127.8
+      }
+    },
+    {
+      "name": "Duckworth Street & Little Lake Drive",
+      "addr": "Duckworth Street & Little Lake Drive",
+      "lat": 44.4178562,
+      "lng": -79.6723811,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33941632",
+        "way/33963166",
+        "way/458180419"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33941632",
+        "https://www.openstreetmap.org/way/33963166",
+        "https://www.openstreetmap.org/way/458180419"
+      ],
+      "id": "route-local-fire-barrie-fire-2-05",
+      "routeBaseId": "fire-barrie-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2140.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 580.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Bell Farm Road",
+        "estimatedCostSeconds": 167,
+        "bestSameServiceCostSeconds": 167
+      }
+    },
+    {
+      "name": "Golden Eagle Way & Snowy Owl Crescent",
+      "addr": "Golden Eagle Way & Snowy Owl Crescent",
+      "lat": 44.4163352,
+      "lng": -79.6887825,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33942824",
+        "way/33947871",
+        "way/33959873"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33942824",
+        "https://www.openstreetmap.org/way/33947871",
+        "https://www.openstreetmap.org/way/33959873"
+      ],
+      "id": "route-local-fire-barrie-fire-2-06",
+      "routeBaseId": "fire-barrie-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1705.8,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1647.8,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Bell Farm Road",
+        "estimatedCostSeconds": 128.2,
+        "bestSameServiceCostSeconds": 128.2
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Barrie Public Library - Painswick Branch",
+      "addr": "48 Dean Ave",
+      "lat": 44.35451144284384,
+      "lng": -79.64740058293316,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://gispublic.barrie.ca/arcgis/rest/services/Public/OperationalLayers_Dynamic/MapServer/5/query?where=OBJECTID%3D122&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Raquel Street",
+        "Russell Hill Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "barrie-call-16",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-barrie-fire-3-01",
+      "routeBaseId": "fire-barrie-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1341.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1186.5,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 152.1,
+        "bestSameServiceCostSeconds": 152.1
+      }
+    },
+    {
+      "name": "Bayview Drive & Big Bay Point Road",
+      "addr": "Bayview Drive & Big Bay Point Road",
+      "lat": 44.3498187,
+      "lng": -79.679959,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1411607041",
+        "way/33941923",
+        "way/33945110",
+        "way/33951568"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1411607041",
+        "https://www.openstreetmap.org/way/33941923",
+        "https://www.openstreetmap.org/way/33945110",
+        "https://www.openstreetmap.org/way/33951568"
+      ],
+      "id": "route-local-fire-barrie-fire-3-02",
+      "routeBaseId": "fire-barrie-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1726.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1996.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 152.8,
+        "bestSameServiceCostSeconds": 152.8
+      }
+    },
+    {
+      "name": "Autumn Lane & Trillium Crescent",
+      "addr": "Autumn Lane & Trillium Crescent",
+      "lat": 44.3677823,
+      "lng": -79.6736579,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33946971",
+        "way/33948357",
+        "way/33958997"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33946971",
+        "https://www.openstreetmap.org/way/33948357",
+        "https://www.openstreetmap.org/way/33958997"
+      ],
+      "id": "route-local-fire-barrie-fire-3-03",
+      "routeBaseId": "fire-barrie-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2562.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 279.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 232,
+        "bestSameServiceCostSeconds": 232
+      }
+    },
+    {
+      "name": "Ellis Drive & Huronia Road",
+      "addr": "Ellis Drive & Huronia Road",
+      "lat": 44.3501233,
+      "lng": -79.6642754,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33945471",
+        "way/33954757",
+        "way/33961705"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33945471",
+        "https://www.openstreetmap.org/way/33954757",
+        "https://www.openstreetmap.org/way/33961705"
+      ],
+      "id": "route-local-fire-barrie-fire-3-04",
+      "routeBaseId": "fire-barrie-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 820.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 748,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 74,
+        "bestSameServiceCostSeconds": 74
+      }
+    },
+    {
+      "name": "Hooper Road & Welham Road",
+      "addr": "Hooper Road & Welham Road",
+      "lat": 44.336659,
+      "lng": -79.6692475,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33937876",
+        "way/33951120",
+        "way/33960811"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33937876",
+        "https://www.openstreetmap.org/way/33951120",
+        "https://www.openstreetmap.org/way/33960811"
+      ],
+      "id": "route-local-fire-barrie-fire-3-05",
+      "routeBaseId": "fire-barrie-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2646.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1049.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 206.9,
+        "bestSameServiceCostSeconds": 206.9
+      }
+    },
+    {
+      "name": "MacLaren Avenue & Yonge Street",
+      "addr": "MacLaren Avenue & Yonge Street",
+      "lat": 44.3645787,
+      "lng": -79.6602495,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33956831",
+        "way/500354312"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33956831",
+        "https://www.openstreetmap.org/way/500354312"
+      ],
+      "id": "route-local-fire-barrie-fire-3-06",
+      "routeBaseId": "fire-barrie-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1715.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 232.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 175.4,
+        "bestSameServiceCostSeconds": 175.4
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Ferndale Woods Elementary School",
+      "addr": "170 Ferndale Dr S",
+      "lat": 44.35825921185672,
+      "lng": -79.71665034903491,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://gispublic.barrie.ca/arcgis/rest/services/Public/OperationalLayers_Dynamic/MapServer/48/query?where=OBJECTID%3D95&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Cuthbert Street",
+        "Gore Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "barrie-call-15",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-barrie-fire-4-01",
+      "routeBaseId": "fire-barrie-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 566,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1378.6,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Ardagh Road",
+        "estimatedCostSeconds": 37.7,
+        "bestSameServiceCostSeconds": 37.7
+      }
+    },
+    {
+      "name": "Cygnus Crescent & Deneb Street",
+      "addr": "Cygnus Crescent & Deneb Street",
+      "lat": 44.3491894,
+      "lng": -79.7362674,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/478998700",
+        "way/478998710"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/478998700",
+        "https://www.openstreetmap.org/way/478998710"
+      ],
+      "id": "route-local-fire-barrie-fire-4-02",
+      "routeBaseId": "fire-barrie-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1716.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1138.8,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Ardagh Road",
+        "estimatedCostSeconds": 149.2,
+        "bestSameServiceCostSeconds": 149.2
+      }
+    },
+    {
+      "name": "Bryne Drive & Harvie Road",
+      "addr": "Bryne Drive & Harvie Road",
+      "lat": 44.3470114,
+      "lng": -79.6925468,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1411607048",
+        "way/693118140",
+        "way/903630485"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1411607048",
+        "https://www.openstreetmap.org/way/693118140",
+        "https://www.openstreetmap.org/way/903630485"
+      ],
+      "id": "route-local-fire-barrie-fire-4-03",
+      "routeBaseId": "fire-barrie-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2566.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1938.8,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Ardagh Road",
+        "estimatedCostSeconds": 173.8,
+        "bestSameServiceCostSeconds": 173.8
+      }
+    },
+    {
+      "name": "Bryne Drive & Essa Road",
+      "addr": "Bryne Drive & Essa Road",
+      "lat": 44.3582362,
+      "lng": -79.6978937,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/27292529",
+        "way/482229748"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/27292529",
+        "https://www.openstreetmap.org/way/482229748"
+      ],
+      "id": "route-local-fire-barrie-fire-4-04",
+      "routeBaseId": "fire-barrie-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1594.8,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1938.8,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Ardagh Road",
+        "estimatedCostSeconds": 128.1,
+        "bestSameServiceCostSeconds": 128.1
+      }
+    },
+    {
+      "name": "Elliott Avenue & Ferndale Drive North",
+      "addr": "Elliott Avenue & Ferndale Drive North",
+      "lat": 44.3743868,
+      "lng": -79.7186492,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33948867",
+        "way/784400564"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33948867",
+        "https://www.openstreetmap.org/way/784400564"
+      ],
+      "id": "route-local-fire-barrie-fire-4-05",
+      "routeBaseId": "fire-barrie-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2493.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2673.1,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Ardagh Road",
+        "estimatedCostSeconds": 153.8,
+        "bestSameServiceCostSeconds": 143.7
+      }
+    },
+    {
+      "name": "Brown Street & Looker Drive",
+      "addr": "Brown Street & Looker Drive",
+      "lat": 44.3451918,
+      "lng": -79.7082849,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33936289",
+        "way/33963826"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33936289",
+        "https://www.openstreetmap.org/way/33963826"
+      ],
+      "id": "route-local-fire-barrie-fire-4-06",
+      "routeBaseId": "fire-barrie-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1685,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1938.8,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Ardagh Road",
+        "estimatedCostSeconds": 137.6,
+        "bestSameServiceCostSeconds": 137.6
+      }
+    },
+    {
+      "name": "Hollyholme Farm Road & King Street",
+      "addr": "Hollyholme Farm Road & King Street",
+      "lat": 44.3272847,
+      "lng": -79.7081299,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/176093121",
+        "way/27292506"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/176093121",
+        "https://www.openstreetmap.org/way/27292506"
+      ],
+      "id": "route-local-fire-barrie-fire-5-01",
+      "routeBaseId": "fire-barrie-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 844.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 339.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 135.1,
+        "bestSameServiceCostSeconds": 135.1
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Sadlon Arena",
+      "addr": "555 Bayview Dr",
+      "lat": 44.33771813463284,
+      "lng": -79.67772795036848,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://gispublic.barrie.ca/arcgis/rest/services/Public/OperationalLayers_Dynamic/MapServer/39/query?where=OBJECTID%3D116&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Mapleview Drive East",
+        "South Village Way"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "barrie-call-09",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-barrie-fire-5-02",
+      "routeBaseId": "fire-barrie-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2540.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 906.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 240.8,
+        "bestSameServiceCostSeconds": 240.8
+      }
+    },
+    {
+      "name": "Craydon Street & Ennerdale Road",
+      "addr": "Craydon Street & Ennerdale Road",
+      "lat": 44.3078503,
+      "lng": -79.6963075,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1359863838",
+        "way/1558033039"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1359863838",
+        "https://www.openstreetmap.org/way/1558033039"
+      ],
+      "id": "route-local-fire-barrie-fire-5-03",
+      "routeBaseId": "fire-barrie-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2580.8,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 5146.4,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 197.3,
+        "bestSameServiceCostSeconds": 197.3
+      }
+    },
+    {
+      "name": "Bryne Drive & Commerce Park Drive",
+      "addr": "Bryne Drive & Commerce Park Drive",
+      "lat": 44.325187,
+      "lng": -79.6871092,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/27292464",
+        "way/335847493",
+        "way/335847494"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/27292464",
+        "https://www.openstreetmap.org/way/335847493",
+        "https://www.openstreetmap.org/way/335847494"
+      ],
+      "id": "route-local-fire-barrie-fire-5-04",
+      "routeBaseId": "fire-barrie-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1456.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 395.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 127.7,
+        "bestSameServiceCostSeconds": 127.7
+      }
+    },
+    {
+      "name": "Blackbird Lane & Megan Crescent & Thrushwood Drive",
+      "addr": "Blackbird Lane & Megan Crescent & Thrushwood Drive",
+      "lat": 44.3430636,
+      "lng": -79.6972375,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33931083",
+        "way/33937617",
+        "way/33963572"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33931083",
+        "https://www.openstreetmap.org/way/33937617",
+        "https://www.openstreetmap.org/way/33963572"
+      ],
+      "id": "route-local-fire-barrie-fire-5-05",
+      "routeBaseId": "fire-barrie-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2013.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 815.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 172.7,
+        "bestSameServiceCostSeconds": 161.3
+      }
+    },
+    {
+      "name": "Quance Street & Warner Road",
+      "addr": "Quance Street & Warner Road",
+      "lat": 44.3379354,
+      "lng": -79.7075941,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33935862",
+        "way/33943123",
+        "way/33955518"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33935862",
+        "https://www.openstreetmap.org/way/33943123",
+        "https://www.openstreetmap.org/way/33955518"
+      ],
+      "id": "route-local-fire-barrie-fire-5-06",
+      "routeBaseId": "fire-barrie-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2031.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 409,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 172,
+        "bestSameServiceCostSeconds": 162.8
+      }
+    },
+    {
+      "name": "Regalia Way & Shamrock Lane",
+      "addr": "Regalia Way & Shamrock Lane",
+      "lat": 44.3570487,
+      "lng": -79.609163,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33961241",
+        "way/33967194"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33961241",
+        "https://www.openstreetmap.org/way/33967194"
+      ],
+      "id": "route-local-fire-barrie-fire-6-01",
+      "routeBaseId": "fire-barrie-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 792.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 909.4,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Tobias Lane",
+        "estimatedCostSeconds": 90.1,
+        "bestSameServiceCostSeconds": 90.1
+      }
+    },
+    {
+      "name": "St Paul's Crescent & Yonge Street",
+      "addr": "St Paul's Crescent & Yonge Street",
+      "lat": 44.3498209,
+      "lng": -79.6289614,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/335840320",
+        "way/33938102"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/335840320",
+        "https://www.openstreetmap.org/way/33938102"
+      ],
+      "id": "route-local-fire-barrie-fire-6-02",
+      "routeBaseId": "fire-barrie-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1702.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 503.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Tobias Lane",
+        "estimatedCostSeconds": 110.1,
+        "bestSameServiceCostSeconds": 110.1
+      }
+    },
+    {
+      "name": "Lockhart Road & Yonge Street",
+      "addr": "Lockhart Road & Yonge Street",
+      "lat": 44.3370197,
+      "lng": -79.6227146,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1426548637",
+        "way/33942777",
+        "way/363987001",
+        "way/404320190"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1426548637",
+        "https://www.openstreetmap.org/way/33942777",
+        "https://www.openstreetmap.org/way/363987001",
+        "https://www.openstreetmap.org/way/404320190"
+      ],
+      "id": "route-local-fire-barrie-fire-6-03",
+      "routeBaseId": "fire-barrie-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2740.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 503.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Tobias Lane",
+        "estimatedCostSeconds": 179.2,
+        "bestSameServiceCostSeconds": 179.2
+      }
+    },
+    {
+      "name": "20th Sideroad & Mapleview Drive & Mapleview Drive East",
+      "addr": "20th Sideroad & Mapleview Drive & Mapleview Drive East",
+      "lat": 44.3572556,
+      "lng": -79.5888532,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1293708637",
+        "way/363987992",
+        "way/742513963"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1293708637",
+        "https://www.openstreetmap.org/way/363987992",
+        "https://www.openstreetmap.org/way/742513963"
+      ],
+      "id": "route-local-fire-barrie-fire-6-04",
+      "routeBaseId": "fire-barrie-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1957.6,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 4015.4,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Tobias Lane",
+        "estimatedCostSeconds": 123.6,
+        "bestSameServiceCostSeconds": 123.6
+      }
+    },
+    {
+      "name": "Quantz Crescent & Wilkinson Street",
+      "addr": "Quantz Crescent & Wilkinson Street",
+      "lat": 44.3680779,
+      "lng": -79.605758,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33929895",
+        "way/33937385",
+        "way/33955987"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33929895",
+        "https://www.openstreetmap.org/way/33937385",
+        "https://www.openstreetmap.org/way/33955987"
+      ],
+      "id": "route-local-fire-barrie-fire-6-05",
+      "routeBaseId": "fire-barrie-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2438.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 878.7,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Tobias Lane",
+        "estimatedCostSeconds": 217.4,
+        "bestSameServiceCostSeconds": 217.4
+      }
+    },
+    {
+      "name": "Flan Boulevard & Kneeshaw Drive & Shiraz Trail",
+      "addr": "Flan Boulevard & Kneeshaw Drive & Shiraz Trail",
+      "lat": 44.3445751,
+      "lng": -79.6208491,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1441491652",
+        "way/1441491653",
+        "way/1441491655"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1441491652",
+        "https://www.openstreetmap.org/way/1441491653",
+        "https://www.openstreetmap.org/way/1441491655"
+      ],
+      "id": "route-local-fire-barrie-fire-6-06",
+      "routeBaseId": "fire-barrie-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1679.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 503.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Tobias Lane",
+        "estimatedCostSeconds": 159.8,
+        "bestSameServiceCostSeconds": 159.8
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Allandale Recreation Centre",
+      "addr": "190 Bayview Dr",
+      "lat": 44.36126355941821,
+      "lng": -79.68441927005286,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://gispublic.barrie.ca/arcgis/rest/services/Public/OperationalLayers_Dynamic/MapServer/39/query?where=OBJECTID%3D118&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Little Avenue",
+        "Charles Court"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "barrie-call-07",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-barrie-ems-fairview-01",
+      "routeBaseId": "ems-barrie-ems-fairview",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1627.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1818.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 181.7,
+        "bestSameServiceCostSeconds": 181.7
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Roberta Place",
+      "addr": "503 Essa Road",
+      "lat": 44.342107099056996,
+      "lng": -79.708506,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790200"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "4312",
+      "community": "Barrie",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-4312",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-barrie-ems-fairview-02",
+      "routeBaseId": "ems-barrie-ems-fairview",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2774.9,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 3263.5,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 247.5,
+        "bestSameServiceCostSeconds": 247.5
+      }
+    },
+    {
+      "name": "Bayview Drive & Mapleview Drive East",
+      "addr": "Bayview Drive & Mapleview Drive East",
+      "lat": 44.3366965,
+      "lng": -79.6787306,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1301239477",
+        "way/1427896740",
+        "way/33943899",
+        "way/899083442"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1301239477",
+        "https://www.openstreetmap.org/way/1427896740",
+        "https://www.openstreetmap.org/way/33943899",
+        "https://www.openstreetmap.org/way/899083442"
+      ],
+      "id": "route-local-ems-barrie-ems-fairview-03",
+      "routeBaseId": "ems-barrie-ems-fairview",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2736.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2614.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 253,
+        "bestSameServiceCostSeconds": 253
+      }
+    },
+    {
+      "name": "Bayview Drive & Big Bay Point Road",
+      "addr": "Bayview Drive & Big Bay Point Road",
+      "lat": 44.3498187,
+      "lng": -79.679959,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1411607041",
+        "way/33941923",
+        "way/33945110",
+        "way/33951568"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1411607041",
+        "https://www.openstreetmap.org/way/33941923",
+        "https://www.openstreetmap.org/way/33945110",
+        "https://www.openstreetmap.org/way/33951568"
+      ],
+      "id": "route-local-ems-barrie-ems-fairview-04",
+      "routeBaseId": "ems-barrie-ems-fairview",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1257.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1784.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 134.7,
+        "bestSameServiceCostSeconds": 134.7
+      }
+    },
+    {
+      "name": "Alfred Street & Caroline Street",
+      "addr": "Alfred Street & Caroline Street",
+      "lat": 44.3704327,
+      "lng": -79.6992669,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33946365",
+        "way/33952205",
+        "way/33964778"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33946365",
+        "https://www.openstreetmap.org/way/33952205",
+        "https://www.openstreetmap.org/way/33964778"
+      ],
+      "id": "route-local-ems-barrie-ems-fairview-05",
+      "routeBaseId": "ems-barrie-ems-fairview",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2514.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2967.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 240.2,
+        "bestSameServiceCostSeconds": 239.7
+      }
+    },
+    {
+      "name": "Bryne Drive & Harvie Road",
+      "addr": "Bryne Drive & Harvie Road",
+      "lat": 44.3470114,
+      "lng": -79.6925468,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1411607048",
+        "way/693118140",
+        "way/903630485"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1411607048",
+        "https://www.openstreetmap.org/way/693118140",
+        "https://www.openstreetmap.org/way/903630485"
+      ],
+      "id": "route-local-ems-barrie-ems-fairview-06",
+      "routeBaseId": "ems-barrie-ems-fairview",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1380.7,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 3548.9,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 144.6,
+        "bestSameServiceCostSeconds": 144.6
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Maclaren Art Centre",
+      "addr": "37 Mulcaster St",
+      "lat": 44.390180728988554,
+      "lng": -79.68512308211166,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://gispublic.barrie.ca/arcgis/rest/services/Public/OperationalLayers_Dynamic/MapServer/5/query?where=OBJECTID%3D47&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Collier Street",
+        "Dunlop Street East"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "barrie-call-05",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-barrie-ems-ross-01",
+      "routeBaseId": "ems-barrie-ems-ross",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 734.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 262.7,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Ross Street",
+        "estimatedCostSeconds": 53.8,
+        "bestSameServiceCostSeconds": 53.8
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Coleman Care Centre",
+      "addr": "140 Cundles Road West",
+      "lat": 44.40110169905696,
+      "lng": -79.7153568,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790156"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "1821",
+      "community": "Barrie",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-1821",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-barrie-ems-ross-02",
+      "routeBaseId": "ems-barrie-ems-ross",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2348.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 632.4,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Ross Street",
+        "estimatedCostSeconds": 152.5,
+        "bestSameServiceCostSeconds": 152.5
+      }
+    },
+    {
+      "name": "Caroline Street & Innisfil Street",
+      "addr": "Caroline Street & Innisfil Street",
+      "lat": 44.371235,
+      "lng": -79.6933965,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33942797",
+        "way/33953046",
+        "way/476938628"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33942797",
+        "https://www.openstreetmap.org/way/33953046",
+        "https://www.openstreetmap.org/way/476938628"
+      ],
+      "id": "route-local-ems-barrie-ems-ross-03",
+      "routeBaseId": "ems-barrie-ems-ross",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2595.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 320.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Ross Street",
+        "estimatedCostSeconds": 177.9,
+        "bestSameServiceCostSeconds": 177.9
+      }
+    },
+    {
+      "name": "Shirley Avenue & Sunnidale Road",
+      "addr": "Shirley Avenue & Sunnidale Road",
+      "lat": 44.3932836,
+      "lng": -79.7055236,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33950124",
+        "way/33953475",
+        "way/33956116"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33950124",
+        "https://www.openstreetmap.org/way/33953475",
+        "https://www.openstreetmap.org/way/33956116"
+      ],
+      "id": "route-local-ems-barrie-ems-ross-04",
+      "routeBaseId": "ems-barrie-ems-ross",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 982.7,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1926.1,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Ross Street",
+        "estimatedCostSeconds": 59.2,
+        "bestSameServiceCostSeconds": 59.2
+      }
+    },
+    {
+      "name": "Collete Crescent & Daphne Crescent",
+      "addr": "Collete Crescent & Daphne Crescent",
+      "lat": 44.4077841,
+      "lng": -79.6952154,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33942713",
+        "way/33953654",
+        "way/33955225"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33942713",
+        "https://www.openstreetmap.org/way/33953654",
+        "https://www.openstreetmap.org/way/33955225"
+      ],
+      "id": "route-local-ems-barrie-ems-ross-05",
+      "routeBaseId": "ems-barrie-ems-ross",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2593.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1374.7,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Ross Street",
+        "estimatedCostSeconds": 190.2,
+        "bestSameServiceCostSeconds": 190.2
+      }
+    },
+    {
+      "name": "Northpark Road & Parkdale Crescent",
+      "addr": "Northpark Road & Parkdale Crescent",
+      "lat": 44.4004467,
+      "lng": -79.6857846,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33932121",
+        "way/33945814",
+        "way/33952998"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33932121",
+        "https://www.openstreetmap.org/way/33945814",
+        "https://www.openstreetmap.org/way/33952998"
+      ],
+      "id": "route-local-ems-barrie-ems-ross-06",
+      "routeBaseId": "ems-barrie-ems-ross",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1690.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 638.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Ross Street",
+        "estimatedCostSeconds": 166.9,
+        "bestSameServiceCostSeconds": 166.9
+      }
+    }
+  ]
 }

@@ -69,7 +69,7 @@
   };
 
   const state = {
-    map:null, graph:null, traceCore:null, endpointMarker:null, calls:[], originalCalls:[], advancedCalls:[], difficultyIndex:null, service:'fire', base:null, call:null, callCount:0, recentCallIds:[], mode:'loading', mapZooming:false,
+    map:null, graph:null, traceCore:null, endpointMarker:null, calls:[], originalCalls:[], advancedCalls:[], routeResponses:null, difficultyIndex:null, service:'fire', base:null, call:null, callCount:0, recentCallIds:[], mode:'loading', mapZooming:false,
     skillProfiles:null, skillProfile:null, adaptiveTarget:null, progression:null, phase:null, lastDecisionAnalysis:null, tuning:null,
     stroke:null, drawingPointer:null, originAnchor:null, destinationAnchor:null, history:[], playerRoute:null,
     shortestRoute:null, playerLayers:[], referenceLayers:[], startMarker:null, callMarker:null, mapGestureSnapshot:null
@@ -170,22 +170,22 @@
     state.difficultyIndex={distances,previous,previousEdge,sourceStation,stations};
   }
 
-  function difficultyProfileForNode(nodeId,destinationHighway){
+  function difficultyProfileForNode(nodeId,destinationHighway,route){
     const index=state.difficultyIndex;
-    if(!index||nodeId<0||nodeId>=index.distances.length)return {score:50,routeDistance:0,roadChanges:0,smallApproachRatio:0,decisionPotential:0,decisionForks:0};
-    const routeDistance=index.distances[nodeId];
+    if(!route&&(!index||nodeId<0||nodeId>=index.distances.length))return {score:50,routeDistance:0,roadChanges:0,smallApproachRatio:0,decisionPotential:0,decisionForks:0};
+    const routeDistance=route?route.distance:index.distances[nodeId];
     if(!Number.isFinite(routeDistance))return {score:65,routeDistance:0,roadChanges:0,smallApproachRatio:0,decisionPotential:0,decisionForks:0};
 
     const reverseEdges=[],reverseNodes=[nodeId];
     let cursor=nodeId,guard=0;
-    while(index.previous[cursor]>=0&&guard++<5000){
+    while(!route&&index.previous[cursor]>=0&&guard++<5000){
       const edge=index.previousEdge[cursor];
       if(!edge)break;
       reverseEdges.push(edge);
       cursor=index.previous[cursor];
       reverseNodes.push(cursor);
     }
-    const routeEdges=reverseEdges.reverse(),routeNodes=reverseNodes.reverse();
+    const routeEdges=route?route.edges:reverseEdges.reverse(),routeNodes=route?[...route.edges.map(edge=>edge.from),route.edges.at(-1)?.to].filter(Number.isInteger):reverseNodes.reverse();
     let roadChanges=0,lastRoad='';
     for(const edge of routeEdges){
       const road=String(edge.name||edge.ref||'').trim();
@@ -250,14 +250,15 @@
     return {score,routeBase,routeDistance,roadChanges,smallApproachRatio,classPenalty,decisionPotential,decisionForks,routeNodes};
   }
 
-  function scoreCall(call){
+  function scoreCall(call,route){
+    if(!Array.isArray(route?.edges))route=null;
     const point=callPoint(call),road=nearestRoad(point.lat,point.lng,650);
     if(!road){
       const stations=state.base?[state.base]:basesForService(state.service),nearest=Math.min(...stations.map(base=>dist(point,basePoint(base))));
       const score=Math.round(clamp((nearest-700)/6500*48+16,0,100));
       return {...call,difficulty:score,difficultyDistance:Infinity,difficultyRoadClass:'unknown',decisionPotential:0,decisionForks:0};
     }
-    const profile=difficultyProfileForNode(road.nodeId,road.highway);
+    const profile=difficultyProfileForNode(road.nodeId,road.highway,route);
     return {
       ...call,
       difficulty:profile.score,
@@ -389,7 +390,7 @@
   function normalizeProgression(raw){
     const source=raw&&typeof raw==='object'?raw:{};
     const last=source.lastCall&&Number.isFinite(Number(source.lastCall.lat))&&Number.isFinite(Number(source.lastCall.lng))
-      ? {id:String(source.lastCall.id||''),name:String(source.lastCall.name||source.lastCall.addr||'Previous Call'),addr:String(source.lastCall.addr||source.lastCall.name||'Previous Call'),lat:Number(source.lastCall.lat),lng:Number(source.lastCall.lng)}
+      ? {id:String(source.lastCall.id||''),name:String(source.lastCall.name||source.lastCall.addr||'Previous Call'),addr:String(source.lastCall.addr||source.lastCall.name||'Previous Call'),lat:Number(source.lastCall.lat),lng:Number(source.lastCall.lng),...(source.lastCall.responseBaseId?{responseBaseId:String(source.lastCall.responseBaseId)}:{})}
       : null;
     return {completed:Math.max(0,Math.floor(Number(source.completed)||0)),lastCall:last,updatedAt:Number(source.updatedAt)||0};
   }
@@ -415,12 +416,13 @@
     return stations.find(base=>Number(base.number)===Number(phase.stationNumber))||stations[Math.max(0,Math.min(stations.length-1,phase.index))]||null;
   }
 
-  function previousCallBase(lastCall){
+  function previousCallBase(lastCall,responseBaseId=lastCall?.responseBaseId){
     if(!lastCall)return null;
     const access=callAccessPoint(lastCall);
     return {
       id:'previous-call',
       sourceCallId:lastCall.id,
+      ...(responseBaseId?{responseBaseId,service:state.service}:{}),
       number:0,
       name:'Previous Call',
       shortName:'Previous Call',
@@ -439,6 +441,17 @@
     if(!phase.continuous){
       const station=stationForPhase(phase);
       if(station)state.base=station;
+      return phase;
+    }
+    if(state.routeResponses){
+      const last=state.progression?.lastCall,stations=availableBasesForService(state.service),source=state.calls.find(call=>call.id===last?.id),savedId=last?.responseBaseId||source?.routeBaseId;
+      const ordered=stations.slice().sort((a,b)=>dist(last,a)-dist(last,b));
+      const scoped=ordered.find(base=>base.id===savedId)||ordered.find(base=>last&&dist(last,base)<=Number(routeResponseProfile(base.id)?.maxRouteMetres));
+      const profile=scoped&&routeResponseProfile(scoped.id),previous=profile&&previousCallBase(last,profile.baseId);
+      if(previous&&reachableLocalCalls(previous,profile).length){state.base=previous;return phase;}
+      const fallback=scoped||stations[0];
+      if(fallback)state.base=fallback;
+      phase.originFallback=Boolean(last);
       return phase;
     }
     const previous=previousCallBase(state.progression?.lastCall);
@@ -468,6 +481,8 @@
       lat:Number(state.call.lat),
       lng:Number(state.call.lng)
     };
+    const responseBaseId=state.call.routeBaseId||state.base?.responseBaseId;
+    if(responseBaseId)state.progression.lastCall.responseBaseId=responseBaseId;
     state.progression.updatedAt=Date.now();
     saveProgression();
   }
@@ -498,9 +513,10 @@
 
   const routePathCache=new Map();
   let cachedRouteGraph=null;
+  let routeSearchWorkspace=null;
   function pathBetween(startId,endId,objective,constraints={}){
     const graph=state.graph;
-    if(graph!==cachedRouteGraph){routePathCache.clear();cachedRouteGraph=graph;}
+    if(graph!==cachedRouteGraph){routePathCache.clear();cachedRouteGraph=graph;routeSearchWorkspace=null;}
     if(!Number.isInteger(startId)||!Number.isInteger(endId)||!graph?.nodes[startId]||!graph.nodes[endId])return null;
     const key=objective+':'+startId+':'+endId+':'+(constraints.avoidNode??'')+':'+(constraints.avoidBridge||'')+':'+(constraints.maxDistance??'');
     let result;
@@ -512,10 +528,39 @@
   }
   function computePathBetween(startId,endId,objective,constraints={}){
     if(startId===endId)return {nodeIds:[startId],edges:[],distance:0,duration:0};
-    const nodes=state.graph.nodes,target=nodes[endId],scores=new Float64Array(nodes.length),previous=new Int32Array(nodes.length),previousEdge=new Array(nodes.length),heap=new MinHeap();
-    scores.fill(Infinity);previous.fill(-1);scores[startId]=0;heap.push({id:startId,score:heuristic(nodes[startId],target,objective)});let visited=0,found=false;
-    while(heap.size&&visited<CONFIG.maxVisitedNodes){const cur=heap.pop();if(!cur)break;const expected=scores[cur.id]+heuristic(nodes[cur.id],target,objective);if(cur.score>expected+1e-7)continue;if(cur.id===endId){found=true;break;}visited+=1;for(const e of nodes[cur.id].edges){if(e.to===constraints.avoidNode||constraints.avoidBridge&&e.bridgeKey===constraints.avoidBridge)continue;const next=scores[cur.id]+edgeCost(e,objective);if(next>(constraints.maxDistance??Infinity))continue;if(next+1e-7>=scores[e.to])continue;scores[e.to]=next;previous[e.to]=cur.id;previousEdge[e.to]=e;heap.push({id:e.to,score:next+heuristic(nodes[e.to],target,objective)});}}
-    if(!found)return null;const nodeIds=[],edges=[];let cursor=endId;while(cursor>=0){nodeIds.push(cursor);if(previousEdge[cursor])edges.push(previousEdge[cursor]);if(cursor===startId)break;cursor=previous[cursor];if(cursor<0)return null;}nodeIds.reverse();edges.reverse();return {nodeIds,edges,distance:edges.reduce((s,e)=>s+e.distance,0),duration:edges.reduce((s,e)=>s+e.duration,0)};
+    const graph=state.graph,nodes=graph.nodes,target=nodes[endId],heap=new MinHeap();
+    // Searches are synchronous. Epoch stamps let successive local routes share
+    // buffers without allocating or clearing arrays for every city graph node.
+    if(routeSearchWorkspace?.graph!==graph||routeSearchWorkspace.scores.length!==nodes.length)routeSearchWorkspace={graph,scores:new Float64Array(nodes.length),previous:new Int32Array(nodes.length),previousEdge:new Array(nodes.length),stamps:new Uint32Array(nodes.length),epoch:0};
+    const workspace=routeSearchWorkspace;
+    workspace.epoch=(workspace.epoch+1)>>>0;
+    if(workspace.epoch===0){workspace.stamps.fill(0);workspace.epoch=1;}
+    const {scores,previous,previousEdge,stamps,epoch}=workspace;
+    stamps[startId]=epoch;scores[startId]=0;previous[startId]=-1;previousEdge[startId]=null;
+    heap.push({id:startId,score:heuristic(nodes[startId],target,objective)});let visited=0,found=false;
+    while(heap.size&&visited<CONFIG.maxVisitedNodes){
+      const cur=heap.pop();if(!cur)break;
+      const expected=scores[cur.id]+heuristic(nodes[cur.id],target,objective);
+      if(cur.score>expected+1e-7)continue;
+      if(cur.id===endId){found=true;break;}
+      visited+=1;
+      for(const e of nodes[cur.id].edges){
+        if(e.to===constraints.avoidNode||constraints.avoidBridge&&e.bridgeKey===constraints.avoidBridge)continue;
+        const next=scores[cur.id]+edgeCost(e,objective);
+        if(next>(constraints.maxDistance??Infinity)||stamps[e.to]===epoch&&next+1e-7>=scores[e.to])continue;
+        stamps[e.to]=epoch;scores[e.to]=next;previous[e.to]=cur.id;previousEdge[e.to]=e;
+        heap.push({id:e.to,score:next+heuristic(nodes[e.to],target,objective)});
+      }
+    }
+    if(!found)return null;
+    const nodeIds=[],edges=[];let cursor=endId;
+    while(cursor>=0){
+      if(stamps[cursor]!==epoch)return null;
+      nodeIds.push(cursor);if(previousEdge[cursor])edges.push(previousEdge[cursor]);
+      if(cursor===startId)break;
+      cursor=previous[cursor];if(cursor<0)return null;
+    }
+    nodeIds.reverse();edges.reverse();return {nodeIds,edges,distance:edges.reduce((s,e)=>s+e.distance,0),duration:edges.reduce((s,e)=>s+e.duration,0)};
   }
 
   function composeRoute(anchors){
@@ -625,10 +670,32 @@
     while(head<tail){const id=queue[head++];for(let i=cache.offsets[id];i<cache.offsets[id+1];i++)seed(cache.from[i]);}
     cache.services.set(indexKey,{excludeCallId,reachable});return reachable;
   }
-  function baseAnchor(base,service=base.service||state.service){
+  function baseAnchor(base,service=base?.service||state.service){
+    if(!base)return null;
     const point={lat:Number(base.spawnLat??base.lat),lng:Number(base.spawnLng??base.lng)};
     if(!state.traceCore)return null;
     if(!state.graph)return state.traceCore.snap(point,260);
+    if(state.routeResponses){
+      const profile=routeResponseProfile(responseBaseId(base),service);
+      if(profile?.unavailable)return null;
+      if(base.id==='previous-call'||!profile)return state.traceCore.snap(point,260);
+      // The package records the audited road access, including a reachable
+      // alternate driveway. Recheck its position after local base edits.
+      const audited=profile.access&&state.traceCore.snap(profile.access,2);
+      if(audited&&dist(point,audited)<=260)return {...audited,distance:dist(point,audited),alternate:dist(point,audited)>(state.traceCore.snap(point,260)?.distance??Infinity)+.2};
+      const xy=toXY(point.lat,point.lng),candidates=[];
+      for(const id of nearbySegments(xy.x,xy.y,260)){
+        const segment=state.graph.segments[id],projection=projectToSegment(xy.x,xy.y,segment);
+        if(projection.distance<=260)candidates.push({...toLatLng(projection.x,projection.y),segmentId:id,t:projection.t,road:segment.name,highway:segment.highway,distance:projection.distance});
+      }
+      candidates.sort((a,b)=>a.distance-b.distance||a.segmentId-b.segmentId);
+      const targets=localCallsForProfile(profile,service).map(call=>state.traceCore.snap(callPoint(call),CONFIG.destinationSearchRadius)).filter(Boolean);
+      for(const candidate of candidates){
+        let reachable=0;
+        for(const target of targets){const route=state.traceCore.between(candidate,target,{maxDistance:profile.maxRouteMetres});if(route&&route.distance>0&&route.distance<=profile.maxRouteMetres)reachable+=1;if(reachable>=state.routeResponses.minCallsPerBase)return {...candidate,alternate:candidate.distance>(candidates[0]?.distance??Infinity)+.2};}
+      }
+      return null;
+    }
     const excludeCallId=base.id==='previous-call'?base.sourceCallId||null:null,reachable=accessReachability(service,excludeCallId);
     // Before call data is installed, retain the existing nearest-road helper.
     if(!reachable)return state.traceCore.snap(point,260);
@@ -903,17 +970,69 @@
   }
 
   function callsForService(service=state.service){const main=service==='ems'?'Medical':'Fire';return state.calls.filter(call=>(!call.trainingServices||call.trainingServices.includes(service))&&(call.incidentProfiles?.[service]||call.main===main)).map(call=>{const profile=call.incidentProfiles?.[service];return profile?{...call,main,sub:profile.sub}:call;});}
+  function routeResponseProfile(baseId,service=state.service){return state.routeResponses?.bases?.find(profile=>profile.baseId===baseId&&profile.service===service)||null;}
+  function responseBaseId(base=state.base){return base?.id==='previous-call'?(base.responseBaseId||state.calls.find(call=>call.id===base.sourceCallId)?.routeBaseId):base?.id;}
+  function localResponseError(base,detail){return new Error('Local response data for '+(base?.shortName||base?.name||'this base')+': '+detail+'. Update its local response calls before starting a route.');}
+  function localCallsForProfile(profile,service=state.service){
+    const ids=new Set(profile.callIds||[]);
+    return callsForService(service).filter(call=>ids.has(call.id)&&call.routeBaseId===profile.baseId&&Array.isArray(call.trainingServices)&&call.trainingServices.length===1&&call.trainingServices[0]===service);
+  }
+  function reachableLocalCalls(base,profile){
+    const origin=baseAnchor(base,profile.service);
+    if(!origin)return [];
+    return localCallsForProfile(profile,profile.service).filter(call=>call.id!==base.sourceCallId).flatMap(call=>{
+      const destination=state.traceCore.snap(callPoint(call),CONFIG.destinationSearchRadius),route=destination&&state.traceCore.between(origin,destination,{maxDistance:profile.maxRouteMetres});
+      return route&&route.distance>0&&route.distance<=profile.maxRouteMetres?[{call,route}]:[];
+    });
+  }
+  function validateRouteResponses(data){
+    const manifest=data?.routeResponses,calls=data?.routeCalls;
+    if(!manifest||manifest.schemaVersion!==1||!Number.isInteger(manifest.minCallsPerBase)||manifest.minCallsPerBase<3||!Array.isArray(manifest.bases)||!Array.isArray(calls))throw localResponseError(null,'the city package needs a valid local response manifest');
+    const byId=new Map(),assigned=new Set(),profiles=new Map();
+    for(const call of calls){if(!call?.id||byId.has(call.id)||![call.lat,call.lng].every(Number.isFinite))throw localResponseError(null,'a local call has an invalid or duplicate identity/location');byId.set(call.id,call);}
+    for(const profile of manifest.bases){
+      if(!profile||typeof profile!=='object')throw localResponseError(null,'a response profile is invalid');
+      const base={name:profile.name||profile.baseId};
+      if(!profile.baseId||!['fire','ems'].includes(profile.service)||profiles.has(profile.baseId)||!Array.isArray(profile.callIds))throw localResponseError(base,'the response profile is invalid or duplicated');
+      profiles.set(profile.baseId,profile);
+      if(profile.unavailable){if(!profile.reason||profile.callIds.length)throw localResponseError(base,'an unavailable profile needs a reason and no assigned calls');continue;}
+      if(!Number.isFinite(profile.maxRouteMetres)||profile.maxRouteMetres<=0||![profile.access?.lat,profile.access?.lng,profile.access?.gapMetres].every(Number.isFinite)||profile.access.gapMetres<0||profile.access.gapMetres>260||new Set(profile.callIds).size!==profile.callIds.length||profile.callIds.length<manifest.minCallsPerBase)throw localResponseError(base,'the response range, access, or minimum call set is invalid');
+      for(const id of profile.callIds){
+        const call=byId.get(id),service=profile.service,main=service==='ems'?'Medical':'Fire';
+        if(!call||assigned.has(id)||call.routeBaseId!==profile.baseId||call.main!==main||!call.incidentProfiles?.[service]||!Array.isArray(call.trainingServices)||call.trainingServices.length!==1||call.trainingServices[0]!==service)throw localResponseError(base,'an assigned call is missing or belongs to another hall/service');
+        assigned.add(id);
+      }
+    }
+    if(assigned.size!==calls.length)throw localResponseError(null,'a local call has no response profile');
+    const seed=window.PTBO_BASE_STORE?.getSeed?.()||['fire','ems'].flatMap(basesForService);
+    for(const base of seed)if(!profiles.has(base.id)||profiles.get(base.id).service!==base.service)throw localResponseError(base,'the published hall has no matching response profile');
+    return manifest;
+  }
   function chooseCall(){
-    if(!baseAnchor(state.base))throw new Error('No connected public-road training access within 260 m of '+(state.base.name||'this base')+'. Choose another base or update the mapped training destinations.');
-    buildDifficultyIndex(state.base);
-    const pool=callsForService().map(scoreCall).filter(call=>Number.isFinite(call.difficultyDistance)&&call.difficultyDistance>0),recent=new Set(state.recentCallIds);
-    let fresh=pool.filter(call=>!recent.has(call.id)||(state.service==='ems'&&call.facilityType==='long-term-care'&&call.id!==state.recentCallIds.at(-1)));
+    let pool;
+    if(state.routeResponses){
+      const profile=routeResponseProfile(responseBaseId());
+      if(!profile)throw localResponseError(state.base,'no local response profile exists for this base');
+      if(profile.unavailable)throw localResponseError(state.base,profile.reason||'this response profile is unavailable');
+      const reachable=reachableLocalCalls(state.base,profile),minimum=state.base?.id==='previous-call'?1:state.routeResponses.minCallsPerBase;
+      if(reachable.length<minimum)throw localResponseError(state.base,'fewer than '+minimum+' assigned calls have legal routes within '+formatDistance(profile.maxRouteMetres));
+      // Score the exact fractional route from this origin. No citywide distance
+      // index is needed for a small, audited local response catalog.
+      pool=reachable.map(({call,route})=>scoreCall(call,route));
+    }else{
+      if(!baseAnchor(state.base))throw new Error('No connected public-road training access within 260 m of '+(state.base.name||'this base')+'. Choose another base or update the mapped training destinations.');
+      buildDifficultyIndex(state.base);
+      pool=callsForService().map(call=>scoreCall(call)).filter(call=>Number.isFinite(call.difficultyDistance)&&call.difficultyDistance>0);
+    }
+    const recent=new Set(state.recentCallIds),lastId=state.recentCallIds.at(-1);
+    let fresh=pool.filter(call=>!recent.has(call.id)||(!state.routeResponses&&state.service==='ems'&&call.facilityType==='long-term-care'&&call.id!==lastId));
     if(state.phase?.continuous&&state.base){
       const start=basePoint(state.base);
       const spaced=fresh.filter(call=>dist(start,callPoint(call))>=CONFIG.continuousMinNextCallDistance);
       if(spaced.length>=4)fresh=spaced;
     }
     let source=fresh.length?fresh:pool;
+    if(source.length>1)source=source.filter(call=>call.id!==lastId);
     if(!source.length)throw new Error('No dispatch calls are available.');
     if(state.service==='ems'&&window.PTBO_EMS_PRIORITY)source=window.PTBO_EMS_PRIORITY.chooseGroup(source,{service:'ems',lastId:state.recentCallIds.at(-1)});
     const target=adaptiveDifficultyTarget();
@@ -929,8 +1048,9 @@
     clearRaw();clearReference();clearLayers(state.playerLayers);
     clearLayer(state.endpointMarker);state.endpointMarker=null;
     const previousPhase=state.phase?.index;
-    const phase=applyProgressionStart();
-    state.call=chooseCall();state.callCount+=1;state.playerRoute=null;state.shortestRoute=null;state.history=[];ui.callNumber.textContent='CALL '+state.callCount;ui.baseLabel.textContent=state.base.shortName||state.base.name;ui.callType.textContent=state.call.sub||state.call.main||'Dispatch Call';ui.callAddress.textContent=state.call.addr||state.call.name;
+    let phase;
+    try{phase=applyProgressionStart();state.call=chooseCall();}catch(error){showFailure(error);return;}
+    state.callCount+=1;state.playerRoute=null;state.shortestRoute=null;state.history=[];ui.callNumber.textContent='CALL '+state.callCount;ui.baseLabel.textContent=state.base.shortName||state.base.name;ui.callType.textContent=state.call.sub||state.call.main||'Dispatch Call';ui.callAddress.textContent=state.call.addr||state.call.name;
     const difficulty=clamp(Math.round(Number(state.call.sessionDifficulty??state.call.difficulty)||0),0,100);
     ui.difficultyLabel.textContent=state.call.decisionAnalysis?.traps?.length?'DECISION CHALLENGE':'ROUTE REFRESHER';
     ui.difficultyLabel.dataset.level=difficulty>=80?'extreme':difficulty>=60?'hard':difficulty>=35?'medium':'easy';
@@ -942,7 +1062,7 @@
       setHint('Drag from START. Backtrack to erase. Release to pause.');
     }
     const access=baseAnchor(state.base);if(access?.alternate)setHint('START uses '+access.road+' public-road access, '+Math.round(access.distance)+' m from '+(state.base.shortName||state.base.name)+'. '+ui.hint.textContent);
-    if(phase.originFallback)setHint('The previous call has no reachable next destination. START returns to '+(state.base.shortName||state.base.name)+'. Drag from START to plan this route.');
+    if(phase.originFallback)setHint('The previous call has no reachable local response destination. START returns to '+(state.base.shortName||state.base.name)+'. Drag from START to plan this route.');
     fitExercise();
   }
 
@@ -1178,7 +1298,7 @@
   }
 
   function basesForService(service){const store=window.PTBO_BASE_STORE;if(store&&typeof store.getBases==='function')return store.getBases(service);const profiles=window.PTBO_SERVICE_CONFIG&&window.PTBO_SERVICE_CONFIG.profiles;return profiles&&profiles[service]?profiles[service].bases||[]:[];}
-  function availableBasesForService(service){return basesForService(service).filter(base=>!state.graph||!state.calls?.length||baseAnchor(base,service));}
+  function availableBasesForService(service){return basesForService(service).filter(base=>state.routeResponses?!routeResponseProfile(base.id,service)?.unavailable:!state.graph||!state.calls?.length||baseAnchor(base,service));}
   function phaseNoteText(service){
     const available=availableBasesForService(service),availableIds=new Set(available.map(base=>base.id)),unavailable=basesForService(service).filter(base=>!availableIds.has(base.id));
     return available.map(b=>b.shortName||b.name).join(' → ')+' → previous call. Each base phase lasts 20 completed calls. CALL marks public-road access to the address.'+(unavailable.length?' No reachable training destination: '+unavailable.map(b=>b.shortName||b.name).join(', ')+'. These bases are skipped; their mapped locations are unchanged.':'');
@@ -1228,35 +1348,66 @@
     ui.settingsSheet.addEventListener('close',()=>updateDrawTarget());
   }
 
+  async function loadEmergencyAccessRoads(geojson,trainingData){
+    const metadata=trainingData?.roadSource?.emergencyAccessSupplement;
+    if(metadata===undefined)return geojson;
+    const invalid=detail=>new Error(cityData.name+' emergency-access road supplement '+detail+'.');
+    const expected='cities/'+cityData.id+'/emergency-access-roads.geojson',wayId=/^way\/[1-9]\d*$/;
+    if(!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(cityData.id)||!metadata||metadata.url!==expected||!Number.isInteger(metadata.wayCount)||metadata.wayCount<1||!Array.isArray(metadata.excludedWayIds)||metadata.excludedWayIds.some(id=>typeof id!=='string'||!wayId.test(id))||new Set(metadata.excludedWayIds).size!==metadata.excludedWayIds.length)throw invalid('has invalid packaged metadata');
+    const url=new URL('../'+metadata.url,location.href);
+    if(url.origin!==new URL(location.href).origin)throw invalid('must use a same-origin city package');
+    url.searchParams.set('v',VERSION);
+    let response,supplement;
+    try{response=await fetch(url,{cache:'force-cache',mode:'same-origin',redirect:'error',signal:AbortSignal.timeout(60000)});}catch(error){throw invalid('failed to load ('+(error?.message||'request failed')+')');}
+    if(!response.ok)throw invalid('failed to load ('+response.status+')');
+    try{supplement=await response.json();}catch(_){throw invalid('is not valid JSON');}
+    if(supplement?.type!=='FeatureCollection'||!Array.isArray(supplement.features)||supplement.features.length!==metadata.wayCount||!Array.isArray(geojson?.features))throw invalid('has an invalid feature collection or way count');
+    const excluded=new Set(metadata.excludedWayIds),supplied=new Set();
+    for(const feature of supplement.features){
+      const coordinates=feature?.geometry?.coordinates,properties=feature?.properties,id=feature?.id;
+      if(feature?.type!=='Feature'||typeof id!=='string'||!wayId.test(id)||supplied.has(id)||feature.geometry?.type!=='LineString'||!Array.isArray(coordinates)||coordinates.length<2||coordinates.some(point=>!Array.isArray(point)||point.length!==2||!point.every(Number.isFinite)||Math.abs(point[0])>180||Math.abs(point[1])>90))throw invalid('contains an invalid or duplicate road way');
+      if(!excluded.has(id)&&(properties?.trainingEmergencyAccess!==true||properties.highway!=='service'||properties.surface!=='asphalt'||properties.sourceUrl!=='https://www.openstreetmap.org/'+id))throw invalid('contains a road without asphalt emergency-access provenance');
+      supplied.add(id);
+    }
+    // Supplement copies replace matching ways and keep their original access
+    // and direction tags. Exclusions apply to the base package as well.
+    const features=[],seen=new Set();
+    for(const feature of geojson.features){
+      const id=feature?.id==null?null:String(feature.id);
+      if(excluded.has(id)||seen.has(id)||supplied.has(id))continue;
+      features.push(feature);if(id!==null)seen.add(id);
+    }
+    for(const feature of supplement.features)if(!excluded.has(feature.id))features.push(feature);
+    return {...geojson,features};
+  }
+
   async function loadData(){
     if(!window.PTBO_DISPATCH_STORE)throw new Error('Shared dispatch store did not load.');
     const calls=await window.PTBO_DISPATCH_STORE.ready();
-    let sharedCalls=Array.isArray(calls)?calls:window.PTBO_DISPATCH_STORE.getAll();
-    // The two legacy base-training cities have no researched general-call catalog.
-    // Their verified stations provide useful public-road destinations for Fire.
-    if(['belleville','scarborough'].includes(cityData.id))sharedCalls=[...sharedCalls,...basesForService('fire').map(base=>({...base,id:'route-base-'+base.id,addr:base.address,radius:65,main:'Fire',sub:'Station familiarization',trainingServices:['fire']}))];
-    if(!sharedCalls.length)throw new Error('The shared dispatch database is empty.');
+    const sharedCalls=Array.isArray(calls)?calls:window.PTBO_DISPATCH_STORE.getAll(),trainingData=window.PTBO_DISPATCH_STORE.getTrainingData?.();
+    state.routeResponses=validateRouteResponses(trainingData);
+    const routeCalls=trainingData.routeCalls,ids=new Set(sharedCalls.map(call=>call.id));
+    if(routeCalls.some(call=>ids.has(call.id)))throw localResponseError(null,'a route-only call duplicates a shared dispatch ID');
     const roadUrl=new URL(cityData.roadUrl,location.href);roadUrl.searchParams.set('v',VERSION);
     const response=await fetch(roadUrl,{cache:'force-cache',signal:AbortSignal.timeout(60000)});
     if(!response.ok)throw new Error(cityData.name+' road data failed to load ('+response.status+').');
-    const geojson=cityData.roadUrl.endsWith('.gz')?await new Response(response.body.pipeThrough(new DecompressionStream('gzip'))).json():await response.json();
+    const roadData=cityData.roadUrl.endsWith('.gz')?await new Response(response.body.pipeThrough(new DecompressionStream('gzip'))).json():await response.json();
+    const geojson=await loadEmergencyAccessRoads(roadData,trainingData);
     state.graph=buildGraph(geojson);
     state.traceCore=window.PTBO_ROUTE_TRACE.createTraceCore({graph:state.graph,toXY,toLatLng,search:(from,to,options)=>pathBetween(from,to,'distance',options)});
     const sourceCalls=sharedCalls.map(call=>cityData.id!=='peterborough'&&!call.incidentProfiles&&!call.trainingServices?{...call,incidentProfiles:{fire:{sub:'Structure Fire'},ems:{sub:'Medical Assistance'}}}:call);
-    state.calls=sourceCalls;buildDifficultyIndex();
-    const canonical=sourceCalls.map(scoreCall);
-    state.originalCalls=canonical;
-    state.advancedCalls=cityData.id==='peterborough'?buildAdvancedCalls(canonical):[];
-    state.calls=[...state.originalCalls,...state.advancedCalls];
+    state.originalCalls=sourceCalls;
+    state.advancedCalls=[];
+    // Keep route catalogs private to this app; Geo and the shared store retain
+    // their researched dispatch locations and existing service behavior.
+    state.calls=[...sourceCalls,...routeCalls];
+    state.difficultyIndex=null;
     fillBases(state.service,state.base?.id);
     console.info('Route Mapping call set:',{
       original:state.originalCalls.length,
       advanced:state.advancedCalls.length,
-      total:state.calls.length,
-      difficultyRange:[
-        Math.min(...state.calls.map(call=>call.difficulty)),
-        Math.max(...state.calls.map(call=>call.difficulty))
-      ]
+      local:routeCalls.length,
+      total:state.calls.length
     });
   }
 

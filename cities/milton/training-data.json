@@ -61,5 +61,2562 @@
   ],
   "roadsUrl": "cities/milton/roads.geojson.gz",
   "roadFeatureCount": 32486,
-  "roadDataSha256": "e378676e3f49d2cedecda5077b020bffa701e287a86906dc81d8597ca49f82ab"
+  "roadDataSha256": "e378676e3f49d2cedecda5077b020bffa701e287a86906dc81d8597ca49f82ab",
+  "routeResponses": {
+    "schemaVersion": 1,
+    "minCallsPerBase": 3,
+    "targetCallsPerBase": 6,
+    "generatedOn": "2026-10-17",
+    "model": {
+      "description": "Published first-due polygons where available. Otherwise a directed road-network estimate using road class travel cost from every same-service hall; allows a15second cost tie for overlapping nearby halls. This is training geography, not live dispatch advice.",
+      "ownershipToleranceSeconds": 15,
+      "maximumCandidateRouteMetres": 12000
+    },
+    "bases": [
+      {
+        "baseId": "fire-milton-fire-1",
+        "service": "fire",
+        "number": 1,
+        "name": "Fire Station 1",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5800,
+        "access": {
+          "lat": 43.52565544646899,
+          "lng": -79.89023383155099,
+          "road": "Unnamed road",
+          "gapMetres": 49.7
+        },
+        "callIds": [
+          "route-local-fire-milton-fire-1-01",
+          "route-local-fire-milton-fire-1-02",
+          "route-local-fire-milton-fire-1-03",
+          "route-local-fire-milton-fire-1-04",
+          "route-local-fire-milton-fire-1-05",
+          "route-local-fire-milton-fire-1-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-milton-fire-2",
+        "service": "fire",
+        "number": 2,
+        "name": "Fire Station 2",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5500,
+        "access": {
+          "lat": 43.487765578988935,
+          "lng": -79.99059846050723,
+          "road": "Unnamed road",
+          "gapMetres": 0.9
+        },
+        "callIds": [
+          "route-local-fire-milton-fire-2-01",
+          "route-local-fire-milton-fire-2-02",
+          "route-local-fire-milton-fire-2-03",
+          "route-local-fire-milton-fire-2-04",
+          "route-local-fire-milton-fire-2-05",
+          "route-local-fire-milton-fire-2-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-milton-fire-3",
+        "service": "fire",
+        "number": 3,
+        "name": "Fire Station 3",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5200,
+        "access": {
+          "lat": 43.48795683300556,
+          "lng": -79.88092179126306,
+          "road": "Unnamed road",
+          "gapMetres": 3.2
+        },
+        "callIds": [
+          "route-local-fire-milton-fire-3-01",
+          "route-local-fire-milton-fire-3-02",
+          "route-local-fire-milton-fire-3-03",
+          "route-local-fire-milton-fire-3-04",
+          "route-local-fire-milton-fire-3-05",
+          "route-local-fire-milton-fire-3-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-milton-fire-4",
+        "service": "fire",
+        "number": 4,
+        "name": "Fire Station 4",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6300,
+        "access": {
+          "lat": 43.53437190642371,
+          "lng": -79.8406620523427,
+          "road": "Unnamed road",
+          "gapMetres": 5.3
+        },
+        "callIds": [
+          "route-local-fire-milton-fire-4-01",
+          "route-local-fire-milton-fire-4-02",
+          "route-local-fire-milton-fire-4-03",
+          "route-local-fire-milton-fire-4-04",
+          "route-local-fire-milton-fire-4-05",
+          "route-local-fire-milton-fire-4-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-milton-fire-5",
+        "service": "fire",
+        "number": 5,
+        "name": "Fire Station 5",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.49536310330467,
+          "lng": -79.85004335320392,
+          "road": "Unnamed road",
+          "gapMetres": 2.7
+        },
+        "callIds": [
+          "route-local-fire-milton-fire-5-01",
+          "route-local-fire-milton-fire-5-02",
+          "route-local-fire-milton-fire-5-03",
+          "route-local-fire-milton-fire-5-04",
+          "route-local-fire-milton-fire-5-05",
+          "route-local-fire-milton-fire-5-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-milton-ems-6",
+        "service": "ems",
+        "number": 6,
+        "name": "Halton Paramedic Station 06",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5400,
+        "access": {
+          "lat": 43.48749531524174,
+          "lng": -79.99047814738813,
+          "road": "Unnamed road",
+          "gapMetres": 8.4
+        },
+        "callIds": [
+          "route-local-ems-milton-ems-6-01",
+          "route-local-ems-milton-ems-6-02",
+          "route-local-ems-milton-ems-6-03",
+          "route-local-ems-milton-ems-6-04",
+          "route-local-ems-milton-ems-6-05",
+          "route-local-ems-milton-ems-6-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-milton-ems-7",
+        "service": "ems",
+        "number": 7,
+        "name": "Halton Paramedic Station 07",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5600,
+        "access": {
+          "lat": 43.51787412032464,
+          "lng": -79.87238079160365,
+          "road": "Unnamed road",
+          "gapMetres": 4.3
+        },
+        "callIds": [
+          "route-local-ems-milton-ems-7-01",
+          "route-local-ems-milton-ems-7-02",
+          "route-local-ems-milton-ems-7-03",
+          "route-local-ems-milton-ems-7-04",
+          "route-local-ems-milton-ems-7-05",
+          "route-local-ems-milton-ems-7-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-milton-ems-16",
+        "service": "ems",
+        "number": 16,
+        "name": "Halton Paramedic Station 16",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5700,
+        "access": {
+          "lat": 43.531889723124216,
+          "lng": -79.82440871727906,
+          "road": "Fifth Line",
+          "gapMetres": 24.9
+        },
+        "callIds": [
+          "route-local-ems-milton-ems-16-01",
+          "route-local-ems-milton-ems-16-02",
+          "route-local-ems-milton-ems-16-03",
+          "route-local-ems-milton-ems-16-04",
+          "route-local-ems-milton-ems-16-05",
+          "route-local-ems-milton-ems-16-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-milton-ems-17",
+        "service": "ems",
+        "number": 17,
+        "name": "Halton Paramedic Station 17",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.49510893189495,
+          "lng": -79.85072478156754,
+          "road": "Unnamed road",
+          "gapMetres": 19.5
+        },
+        "callIds": [
+          "route-local-ems-milton-ems-17-01",
+          "route-local-ems-milton-ems-17-02",
+          "route-local-ems-milton-ems-17-03",
+          "route-local-ems-milton-ems-17-04",
+          "route-local-ems-milton-ems-17-05",
+          "route-local-ems-milton-ems-17-06"
+        ],
+        "challengeCalls": 6
+      }
+    ]
+  },
+  "routeCalls": [
+    {
+      "name": "Mountain View Drive & Ontario Street North",
+      "addr": "Mountain View Drive & Ontario Street North",
+      "lat": 43.5225213,
+      "lng": -79.8831238,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/24609297",
+        "way/24737133"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/24609297",
+        "https://www.openstreetmap.org/way/24737133"
+      ],
+      "id": "route-local-fire-milton-fire-1-01",
+      "routeBaseId": "fire-milton-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 804.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1554.5,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 56.1,
+        "bestSameServiceCostSeconds": 56.1
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "MEV INNOVATION CENTRE",
+      "addr": "555 INDUSTRIAL DRIVE, Milton, ON",
+      "lat": 43.51710650384118,
+      "lng": -79.90584841320259,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://api.milton.ca/arcgis/rest/services/Datasets/Town_Facilities/MapServer/0",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Hannant Court",
+        "Market Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "milton-call-15",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-milton-fire-1-02",
+      "routeBaseId": "fire-milton-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2005.7,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 1666.7,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 181.7,
+        "bestSameServiceCostSeconds": 181.7
+      }
+    },
+    {
+      "name": "Lawson Road & Steeles Avenue East",
+      "addr": "Lawson Road & Steeles Avenue East",
+      "lat": 43.5426016,
+      "lng": -79.8704967,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/162136212",
+        "way/613479511",
+        "way/613479514",
+        "way/613479518"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/162136212",
+        "https://www.openstreetmap.org/way/613479511",
+        "https://www.openstreetmap.org/way/613479514",
+        "https://www.openstreetmap.org/way/613479518"
+      ],
+      "id": "route-local-fire-milton-fire-1-03",
+      "routeBaseId": "fire-milton-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2571.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2672.8,
+        "decisionKinds": [
+          "bridge",
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 168.5,
+        "bestSameServiceCostSeconds": 168.5
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "MILTON SENIORS' ACTIVITY CENTRE",
+      "addr": "500 CHILDS DRIVE, Milton, ON",
+      "lat": 43.516715719137565,
+      "lng": -79.87190866907312,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://api.milton.ca/arcgis/rest/services/Datasets/Town_Facilities/MapServer/0",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Nipissing Road",
+        "Ontario Street South"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "milton-call-10",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-milton-fire-1-04",
+      "routeBaseId": "fire-milton-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2103.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1446.6,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 184.2,
+        "bestSameServiceCostSeconds": 184.2
+      }
+    },
+    {
+      "name": "High Point Drive & Regional Road 25",
+      "addr": "High Point Drive & Regional Road 25",
+      "lat": 43.5323458,
+      "lng": -79.9109169,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/328428616",
+        "way/406809441",
+        "way/459205437",
+        "way/459205439"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/328428616",
+        "https://www.openstreetmap.org/way/406809441",
+        "https://www.openstreetmap.org/way/459205437",
+        "https://www.openstreetmap.org/way/459205439"
+      ],
+      "id": "route-local-fire-milton-fire-1-05",
+      "routeBaseId": "fire-milton-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2407.9,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 3783.6,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 134.3,
+        "bestSameServiceCostSeconds": 134.3
+      }
+    },
+    {
+      "name": "Steeles Avenue East & Thompson Road North",
+      "addr": "Steeles Avenue East & Thompson Road North",
+      "lat": 43.5361955,
+      "lng": -79.8777726,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/257799199",
+        "way/326979319",
+        "way/459205446"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/257799199",
+        "https://www.openstreetmap.org/way/326979319",
+        "https://www.openstreetmap.org/way/459205446"
+      ],
+      "id": "route-local-fire-milton-fire-1-06",
+      "routeBaseId": "fire-milton-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1606.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 635.9,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 110.2,
+        "bestSameServiceCostSeconds": 110.2
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "NASSAGAWEYA TENNIS CENTRE & COMMUNITY HALL",
+      "addr": "9267 GUELPH LINE, Milton, ON",
+      "lat": 43.49402988214206,
+      "lng": -79.99095045198221,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://api.milton.ca/arcgis/rest/services/Datasets/Town_Facilities/MapServer/0",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Highway 401",
+        "Campbellville Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "milton-call-12",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-milton-fire-2-01",
+      "routeBaseId": "fire-milton-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1229.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 17110.1,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 125.2,
+        "bestSameServiceCostSeconds": 125.2
+      }
+    },
+    {
+      "name": "Campbellville Road & Twiss Road",
+      "addr": "Campbellville Road & Twiss Road",
+      "lat": 43.4758627,
+      "lng": -79.992554,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/325764104",
+        "way/737155527"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/325764104",
+        "https://www.openstreetmap.org/way/737155527"
+      ],
+      "id": "route-local-fire-milton-fire-2-02",
+      "routeBaseId": "fire-milton-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1774.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 726.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 168.8,
+        "bestSameServiceCostSeconds": 168.8
+      }
+    },
+    {
+      "name": "Guelph Line & Limestone Road",
+      "addr": "Guelph Line & Limestone Road",
+      "lat": 43.47852,
+      "lng": -79.969897,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/11536531",
+        "way/125335544",
+        "way/27010588",
+        "way/43746213"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/11536531",
+        "https://www.openstreetmap.org/way/125335544",
+        "https://www.openstreetmap.org/way/27010588",
+        "https://www.openstreetmap.org/way/43746213"
+      ],
+      "id": "route-local-fire-milton-fire-2-03",
+      "routeBaseId": "fire-milton-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2401.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1975.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 184.1,
+        "bestSameServiceCostSeconds": 184.1
+      }
+    },
+    {
+      "name": "Main Street South & McLaren Road",
+      "addr": "Main Street South & McLaren Road",
+      "lat": 43.4862893,
+      "lng": -79.9808503,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/328374114",
+        "way/328374115",
+        "way/43746201"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/328374114",
+        "https://www.openstreetmap.org/way/328374115",
+        "https://www.openstreetmap.org/way/43746201"
+      ],
+      "id": "route-local-fire-milton-fire-2-04",
+      "routeBaseId": "fire-milton-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1070.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 619.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 104,
+        "bestSameServiceCostSeconds": 104
+      }
+    },
+    {
+      "name": "Campbell Avenue East & Canyon Road",
+      "addr": "Campbell Avenue East & Canyon Road",
+      "lat": 43.4951831,
+      "lng": -79.9700975,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/340433815",
+        "way/43746219",
+        "way/43746230"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/340433815",
+        "https://www.openstreetmap.org/way/43746219",
+        "https://www.openstreetmap.org/way/43746230"
+      ],
+      "id": "route-local-fire-milton-fire-2-05",
+      "routeBaseId": "fire-milton-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2376.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1490,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 213.2,
+        "bestSameServiceCostSeconds": 213.2
+      }
+    },
+    {
+      "name": "Meadowland Crescent & Wheelihan Way",
+      "addr": "Meadowland Crescent & Wheelihan Way",
+      "lat": 43.4912458,
+      "lng": -79.9835277,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/43746212",
+        "way/97033396",
+        "way/97033407"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/43746212",
+        "https://www.openstreetmap.org/way/97033396",
+        "https://www.openstreetmap.org/way/97033407"
+      ],
+      "id": "route-local-fire-milton-fire-2-06",
+      "routeBaseId": "fire-milton-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1648.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 645.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 180,
+        "bestSameServiceCostSeconds": 180
+      }
+    },
+    {
+      "name": "Landsborough Avenue & Tremaine Road",
+      "addr": "Landsborough Avenue & Tremaine Road",
+      "lat": 43.4888249,
+      "lng": -79.8879812,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/211459755",
+        "way/211461403",
+        "way/97035140"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/211459755",
+        "https://www.openstreetmap.org/way/211461403",
+        "https://www.openstreetmap.org/way/97035140"
+      ],
+      "id": "route-local-fire-milton-fire-3-01",
+      "routeBaseId": "fire-milton-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 799.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1027.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 67.1,
+        "bestSameServiceCostSeconds": 67.1
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "MILTON SPORTS CENTRE",
+      "addr": "605 SANTA MARIA BOULEVARD, Milton, ON",
+      "lat": 43.50301177603008,
+      "lng": -79.86367062190871,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://api.milton.ca/arcgis/rest/services/Datasets/Town_Facilities/MapServer/0",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Serafini Crescent",
+        "Commercial Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "milton-call-06",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-milton-fire-3-02",
+      "routeBaseId": "fire-milton-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2284.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 3187.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 174.9,
+        "bestSameServiceCostSeconds": 174.9
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "SHERWOOD COMMUNITY CENTRE",
+      "addr": "6355 MAIN STREET W, Milton, ON",
+      "lat": 43.500019977906625,
+      "lng": -79.89471297891964,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://api.milton.ca/arcgis/rest/services/Datasets/Town_Facilities/MapServer/0",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Given Lane",
+        "Savoline Boulevard"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "milton-call-03",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-milton-fire-3-03",
+      "routeBaseId": "fire-milton-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2166.5,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1111.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 233.8,
+        "bestSameServiceCostSeconds": 233.8
+      }
+    },
+    {
+      "name": "Gleave Terrace & Mortimer Crescent",
+      "addr": "Gleave Terrace & Mortimer Crescent",
+      "lat": 43.4831295,
+      "lng": -79.8634596,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/241498318",
+        "way/97030137"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/241498318",
+        "https://www.openstreetmap.org/way/97030137"
+      ],
+      "id": "route-local-fire-milton-fire-3-04",
+      "routeBaseId": "fire-milton-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1697.1,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1368.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 164.8,
+        "bestSameServiceCostSeconds": 164.8
+      }
+    },
+    {
+      "name": "Bell School Line & Derry Road",
+      "addr": "Bell School Line & Derry Road",
+      "lat": 43.4765533,
+      "lng": -79.8947465,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/132910096",
+        "way/1432726878",
+        "way/493674764",
+        "way/494155802"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/132910096",
+        "https://www.openstreetmap.org/way/1432726878",
+        "https://www.openstreetmap.org/way/493674764",
+        "https://www.openstreetmap.org/way/494155802"
+      ],
+      "id": "route-local-fire-milton-fire-3-05",
+      "routeBaseId": "fire-milton-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1814.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1027.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 122.8,
+        "bestSameServiceCostSeconds": 122.8
+      }
+    },
+    {
+      "name": "McLaughlin Avenue & Sugden Terrace",
+      "addr": "McLaughlin Avenue & Sugden Terrace",
+      "lat": 43.4936335,
+      "lng": -79.8696824,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/211394122",
+        "way/211394131"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/211394122",
+        "https://www.openstreetmap.org/way/211394131"
+      ],
+      "id": "route-local-fire-milton-fire-3-06",
+      "routeBaseId": "fire-milton-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1694.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 588.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 117.7,
+        "bestSameServiceCostSeconds": 117.7
+      }
+    },
+    {
+      "name": "Farlow Crescent & Kearns Drive",
+      "addr": "Farlow Crescent & Kearns Drive",
+      "lat": 43.5296839,
+      "lng": -79.8387521,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/24635729",
+        "way/24636086"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/24635729",
+        "https://www.openstreetmap.org/way/24636086"
+      ],
+      "id": "route-local-fire-milton-fire-4-01",
+      "routeBaseId": "fire-milton-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 796.4,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 738.7,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 103.9,
+        "bestSameServiceCostSeconds": 103.9
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "MILTON LEISURE CENTRE",
+      "addr": "1100 MAIN STREET E, Milton, ON",
+      "lat": 43.52997441339912,
+      "lng": -79.86416480305071,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://api.milton.ca/arcgis/rest/services/Datasets/Town_Facilities/MapServer/0",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Robarts Drive",
+        "Thompson Road North"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "milton-call-05",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-milton-fire-4-02",
+      "routeBaseId": "fire-milton-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2728,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 2840.8,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 216.2,
+        "bestSameServiceCostSeconds": 216.2
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "MILTON PUBLIC LIBRARY - BEATY BRANCH",
+      "addr": "945 FOURTH LINE, Milton, ON",
+      "lat": 43.51915794506795,
+      "lng": -79.83049442620839,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://api.milton.ca/arcgis/rest/services/Datasets/Town_Facilities/MapServer/0",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Hearst Boulevard",
+        "Stewart Crescent"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "milton-call-09",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-milton-fire-4-03",
+      "routeBaseId": "fire-milton-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2448.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 381.5,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 220.1,
+        "bestSameServiceCostSeconds": 220.1
+      }
+    },
+    {
+      "name": "Derry Road West & Sixth Line",
+      "addr": "Derry Road West & Sixth Line",
+      "lat": 43.5447703,
+      "lng": -79.8199347,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/119416316",
+        "way/119416319",
+        "way/216639260",
+        "way/372693745"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/119416316",
+        "https://www.openstreetmap.org/way/119416319",
+        "https://www.openstreetmap.org/way/216639260",
+        "https://www.openstreetmap.org/way/372693745"
+      ],
+      "id": "route-local-fire-milton-fire-4-04",
+      "routeBaseId": "fire-milton-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2698.5,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1706.7,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 210.1,
+        "bestSameServiceCostSeconds": 210.1
+      }
+    },
+    {
+      "name": "Fifth Line & Main Street East",
+      "addr": "Fifth Line & Main Street East",
+      "lat": 43.5475678,
+      "lng": -79.845527,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1547829656",
+        "way/257872580",
+        "way/494134937"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1547829656",
+        "https://www.openstreetmap.org/way/257872580",
+        "https://www.openstreetmap.org/way/494134937"
+      ],
+      "id": "route-local-fire-milton-fire-4-05",
+      "routeBaseId": "fire-milton-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2783,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1204.4,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 172.4,
+        "bestSameServiceCostSeconds": 172.4
+      }
+    },
+    {
+      "name": "James Snow Parkway & Main Street East",
+      "addr": "James Snow Parkway & Main Street East",
+      "lat": 43.5378783,
+      "lng": -79.856198,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/10278407",
+        "way/1432402795",
+        "way/1432402796",
+        "way/212494652"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/10278407",
+        "https://www.openstreetmap.org/way/1432402795",
+        "https://www.openstreetmap.org/way/1432402796",
+        "https://www.openstreetmap.org/way/212494652"
+      ],
+      "id": "route-local-fire-milton-fire-4-06",
+      "routeBaseId": "fire-milton-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1407.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 3776.2,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 89.5,
+        "bestSameServiceCostSeconds": 89.5
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "MILTON SOCCER DOME",
+      "addr": "1145 BRONTE STREET S, Milton, ON",
+      "lat": 43.486537857533506,
+      "lng": -79.85644057077141,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://api.milton.ca/arcgis/rest/services/Datasets/Town_Facilities/MapServer/0",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Louis St Laurent Avenue",
+        "Whitlock Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "milton-call-08",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-milton-fire-5-01",
+      "routeBaseId": "fire-milton-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1273,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 575.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 144.1,
+        "bestSameServiceCostSeconds": 144.1
+      }
+    },
+    {
+      "name": "Kelman Court & Yates Drive",
+      "addr": "Kelman Court & Yates Drive",
+      "lat": 43.501405,
+      "lng": -79.8461824,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/119281354",
+        "way/282506481"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/119281354",
+        "https://www.openstreetmap.org/way/282506481"
+      ],
+      "id": "route-local-fire-milton-fire-5-02",
+      "routeBaseId": "fire-milton-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2083.7,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 2869.8,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 138.6,
+        "bestSameServiceCostSeconds": 138.6
+      }
+    },
+    {
+      "name": "Leatherleaf Landing & Rose Way",
+      "addr": "Leatherleaf Landing & Rose Way",
+      "lat": 43.4906839,
+      "lng": -79.8359953,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/665341614",
+        "way/990198409"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/665341614",
+        "https://www.openstreetmap.org/way/990198409"
+      ],
+      "id": "route-local-fire-milton-fire-5-03",
+      "routeBaseId": "fire-milton-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2599.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 722.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 179.2,
+        "bestSameServiceCostSeconds": 179.2
+      }
+    },
+    {
+      "name": "McLaughlin Avenue & Miltonbrook Crescent",
+      "addr": "McLaughlin Avenue & Miltonbrook Crescent",
+      "lat": 43.4971584,
+      "lng": -79.865583,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/325730115",
+        "way/339501106"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/325730115",
+        "https://www.openstreetmap.org/way/339501106"
+      ],
+      "id": "route-local-fire-milton-fire-5-04",
+      "routeBaseId": "fire-milton-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1727.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 514,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 142.5,
+        "bestSameServiceCostSeconds": 142.5
+      }
+    },
+    {
+      "name": "Bessborough Drive & Urell Way",
+      "addr": "Bessborough Drive & Urell Way",
+      "lat": 43.4791979,
+      "lng": -79.8690312,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/215933930",
+        "way/97030078"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/215933930",
+        "https://www.openstreetmap.org/way/97030078"
+      ],
+      "id": "route-local-fire-milton-fire-5-05",
+      "routeBaseId": "fire-milton-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2500.2,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 2534.5,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 162.2,
+        "bestSameServiceCostSeconds": 151.2
+      }
+    },
+    {
+      "name": "Clarriage Court & Cottrelle Place & Whitlock Avenue",
+      "addr": "Clarriage Court & Cottrelle Place & Whitlock Avenue",
+      "lat": 43.4927356,
+      "lng": -79.8443146,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/478532334",
+        "way/636773013",
+        "way/665341640"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/478532334",
+        "https://www.openstreetmap.org/way/636773013",
+        "https://www.openstreetmap.org/way/665341640"
+      ],
+      "id": "route-local-fire-milton-fire-5-06",
+      "routeBaseId": "fire-milton-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1704.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 178.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 118.6,
+        "bestSameServiceCostSeconds": 118.6
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "NASSAGAWEYA TENNIS CENTRE & COMMUNITY HALL",
+      "addr": "9267 GUELPH LINE, Milton, ON",
+      "lat": 43.49402988214206,
+      "lng": -79.99095045198221,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://api.milton.ca/arcgis/rest/services/Datasets/Town_Facilities/MapServer/0",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Highway 401",
+        "Campbellville Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "milton-call-12",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-milton-ems-6-01",
+      "routeBaseId": "ems-milton-ems-6",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1223.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 3368.1,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 110.7,
+        "bestSameServiceCostSeconds": 110.7
+      }
+    },
+    {
+      "name": "Campbellville Road & Twiss Road",
+      "addr": "Campbellville Road & Twiss Road",
+      "lat": 43.4758627,
+      "lng": -79.992554,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/325764104",
+        "way/737155527"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/325764104",
+        "https://www.openstreetmap.org/way/737155527"
+      ],
+      "id": "route-local-ems-milton-ems-6-02",
+      "routeBaseId": "ems-milton-ems-6",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1731.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 726.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 153.2,
+        "bestSameServiceCostSeconds": 153.2
+      }
+    },
+    {
+      "name": "Guelph Line & Limestone Road",
+      "addr": "Guelph Line & Limestone Road",
+      "lat": 43.47852,
+      "lng": -79.969897,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/11536531",
+        "way/125335544",
+        "way/27010588",
+        "way/43746213"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/11536531",
+        "https://www.openstreetmap.org/way/125335544",
+        "https://www.openstreetmap.org/way/27010588",
+        "https://www.openstreetmap.org/way/43746213"
+      ],
+      "id": "route-local-ems-milton-ems-6-03",
+      "routeBaseId": "ems-milton-ems-6",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2395,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1975.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 169.5,
+        "bestSameServiceCostSeconds": 169.5
+      }
+    },
+    {
+      "name": "Main Street South & McLaren Road",
+      "addr": "Main Street South & McLaren Road",
+      "lat": 43.4862893,
+      "lng": -79.9808503,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/328374114",
+        "way/328374115",
+        "way/43746201"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/328374114",
+        "https://www.openstreetmap.org/way/328374115",
+        "https://www.openstreetmap.org/way/43746201"
+      ],
+      "id": "route-local-ems-milton-ems-6-04",
+      "routeBaseId": "ems-milton-ems-6",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1064.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 772,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 89.4,
+        "bestSameServiceCostSeconds": 89.4
+      }
+    },
+    {
+      "name": "Campbell Avenue East & Canyon Road",
+      "addr": "Campbell Avenue East & Canyon Road",
+      "lat": 43.4951831,
+      "lng": -79.9700975,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/340433815",
+        "way/43746219",
+        "way/43746230"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/340433815",
+        "https://www.openstreetmap.org/way/43746219",
+        "https://www.openstreetmap.org/way/43746230"
+      ],
+      "id": "route-local-ems-milton-ems-6-05",
+      "routeBaseId": "ems-milton-ems-6",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2370,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1490,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 198.6,
+        "bestSameServiceCostSeconds": 198.6
+      }
+    },
+    {
+      "name": "Meadowland Crescent & Wheelihan Way",
+      "addr": "Meadowland Crescent & Wheelihan Way",
+      "lat": 43.4912458,
+      "lng": -79.9835277,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/43746212",
+        "way/97033396",
+        "way/97033407"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/43746212",
+        "https://www.openstreetmap.org/way/97033396",
+        "https://www.openstreetmap.org/way/97033407"
+      ],
+      "id": "route-local-ems-milton-ems-6-06",
+      "routeBaseId": "ems-milton-ems-6",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1642,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1137.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 165.4,
+        "bestSameServiceCostSeconds": 165.4
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Allendale",
+      "addr": "185 Ontario Street South",
+      "lat": 43.51572429905801,
+      "lng": -79.87211769999999,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790140"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "1165",
+      "community": "Milton",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-1165",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-milton-ems-7-01",
+      "routeBaseId": "ems-milton-ems-7",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 313.7,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 395.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 114.2,
+        "bestSameServiceCostSeconds": 114.2
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "MILTON LEISURE CENTRE",
+      "addr": "1100 MAIN STREET E, Milton, ON",
+      "lat": 43.52997441339912,
+      "lng": -79.86416480305071,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://api.milton.ca/arcgis/rest/services/Datasets/Town_Facilities/MapServer/0",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Robarts Drive",
+        "Thompson Road North"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "milton-call-05",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-milton-ems-7-02",
+      "routeBaseId": "ems-milton-ems-7",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2453.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 909.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 271.7,
+        "bestSameServiceCostSeconds": 271.7
+      }
+    },
+    {
+      "name": "Bronte Street South & Dawson Crescent",
+      "addr": "Bronte Street South & Dawson Crescent",
+      "lat": 43.50437,
+      "lng": -79.8824692,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/24608960",
+        "way/58473762"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/24608960",
+        "https://www.openstreetmap.org/way/58473762"
+      ],
+      "id": "route-local-ems-milton-ems-7-03",
+      "routeBaseId": "ems-milton-ems-7",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2337.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 329.5,
+        "decisionKinds": [
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 245.1,
+        "bestSameServiceCostSeconds": 245.1
+      }
+    },
+    {
+      "name": "Joyce Boulevard & Woodward Avenue",
+      "addr": "Joyce Boulevard & Woodward Avenue",
+      "lat": 43.5255954,
+      "lng": -79.8810158,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/216502416",
+        "way/24610901"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/216502416",
+        "https://www.openstreetmap.org/way/24610901"
+      ],
+      "id": "route-local-ems-milton-ems-7-04",
+      "routeBaseId": "ems-milton-ems-7",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1691,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 270,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 184.2,
+        "bestSameServiceCostSeconds": 184.2
+      }
+    },
+    {
+      "name": "Cardinal Court & Laurier Avenue",
+      "addr": "Cardinal Court & Laurier Avenue",
+      "lat": 43.504997,
+      "lng": -79.8685398,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/24611443",
+        "way/48948763"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/24611443",
+        "https://www.openstreetmap.org/way/48948763"
+      ],
+      "id": "route-local-ems-milton-ems-7-05",
+      "routeBaseId": "ems-milton-ems-7",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2179.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 332.8,
+        "decisionKinds": [
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 216.5,
+        "bestSameServiceCostSeconds": 216.5
+      }
+    },
+    {
+      "name": "Pearen Avenue & Randall Crescent",
+      "addr": "Pearen Avenue & Randall Crescent",
+      "lat": 43.5206025,
+      "lng": -79.8595995,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/24601928",
+        "way/24601942"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/24601928",
+        "https://www.openstreetmap.org/way/24601942"
+      ],
+      "id": "route-local-ems-milton-ems-7-06",
+      "routeBaseId": "ems-milton-ems-7",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1696,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 529.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 237.8,
+        "bestSameServiceCostSeconds": 237.8
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "MILTON PUBLIC LIBRARY - BEATY BRANCH",
+      "addr": "945 FOURTH LINE, Milton, ON",
+      "lat": 43.51915794506795,
+      "lng": -79.83049442620839,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://api.milton.ca/arcgis/rest/services/Datasets/Town_Facilities/MapServer/0",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Hearst Boulevard",
+        "Stewart Crescent"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "milton-call-09",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-milton-ems-16-01",
+      "routeBaseId": "ems-milton-ems-16",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1825.7,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1253,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Fifth Line",
+        "estimatedCostSeconds": 152.3,
+        "bestSameServiceCostSeconds": 152.3
+      }
+    },
+    {
+      "name": "Derry Road West & Sixth Line",
+      "addr": "Derry Road West & Sixth Line",
+      "lat": 43.5447703,
+      "lng": -79.8199347,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/119416316",
+        "way/119416319",
+        "way/216639260",
+        "way/372693745"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/119416316",
+        "https://www.openstreetmap.org/way/119416319",
+        "https://www.openstreetmap.org/way/216639260",
+        "https://www.openstreetmap.org/way/372693745"
+      ],
+      "id": "route-local-ems-milton-ems-16-02",
+      "routeBaseId": "ems-milton-ems-16",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1875.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 6244.7,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Fifth Line",
+        "estimatedCostSeconds": 124.8,
+        "bestSameServiceCostSeconds": 124.8
+      }
+    },
+    {
+      "name": "Britannia Road & Fifth Line",
+      "addr": "Britannia Road & Fifth Line",
+      "lat": 43.5159839,
+      "lng": -79.8024711,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1456412349",
+        "way/282750121",
+        "way/494134927"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1456412349",
+        "https://www.openstreetmap.org/way/282750121",
+        "https://www.openstreetmap.org/way/494134927"
+      ],
+      "id": "route-local-ems-milton-ems-16-03",
+      "routeBaseId": "ems-milton-ems-16",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2495.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2512,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Fifth Line",
+        "estimatedCostSeconds": 199.6,
+        "bestSameServiceCostSeconds": 199.6
+      }
+    },
+    {
+      "name": "James Snow Parkway & Waldie Avenue",
+      "addr": "James Snow Parkway & Waldie Avenue",
+      "lat": 43.5335435,
+      "lng": -79.8391112,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/209199162",
+        "way/484911421",
+        "way/484911425"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/209199162",
+        "https://www.openstreetmap.org/way/484911421",
+        "https://www.openstreetmap.org/way/484911425"
+      ],
+      "id": "route-local-ems-milton-ems-16-04",
+      "routeBaseId": "ems-milton-ems-16",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1732.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 3639.4,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Fifth Line",
+        "estimatedCostSeconds": 116.1,
+        "bestSameServiceCostSeconds": 116.1
+      }
+    },
+    {
+      "name": "Fifth Line & Main Street East",
+      "addr": "Fifth Line & Main Street East",
+      "lat": 43.5475678,
+      "lng": -79.845527,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1547829656",
+        "way/257872580",
+        "way/494134937"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1547829656",
+        "https://www.openstreetmap.org/way/257872580",
+        "https://www.openstreetmap.org/way/494134937"
+      ],
+      "id": "route-local-ems-milton-ems-16-05",
+      "routeBaseId": "ems-milton-ems-16",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2430.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 5157.3,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Fifth Line",
+        "estimatedCostSeconds": 194.5,
+        "bestSameServiceCostSeconds": 194.5
+      }
+    },
+    {
+      "name": "Fifth Line & Louis St. Laurent Avenue",
+      "addr": "Fifth Line & Louis St. Laurent Avenue",
+      "lat": 43.5258211,
+      "lng": -79.816014,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1243103092",
+        "way/1482958910",
+        "way/1482958911"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1243103092",
+        "https://www.openstreetmap.org/way/1482958910",
+        "https://www.openstreetmap.org/way/1482958911"
+      ],
+      "id": "route-local-ems-milton-ems-16-06",
+      "routeBaseId": "ems-milton-ems-16",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 953.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2512,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Fifth Line",
+        "estimatedCostSeconds": 76.3,
+        "bestSameServiceCostSeconds": 76.3
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "MILTON SOCCER DOME",
+      "addr": "1145 BRONTE STREET S, Milton, ON",
+      "lat": 43.486537857533506,
+      "lng": -79.85644057077141,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://api.milton.ca/arcgis/rest/services/Datasets/Town_Facilities/MapServer/0",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Louis St Laurent Avenue",
+        "Whitlock Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "milton-call-08",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-milton-ems-17-01",
+      "routeBaseId": "ems-milton-ems-17",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1243.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 575.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 150.1,
+        "bestSameServiceCostSeconds": 150.1
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "JOHN TONELLI SPORTS CENTRE",
+      "addr": "217 Laurier Avenue, Milton, ON",
+      "lat": 43.50388938157155,
+      "lng": -79.87188921963734,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://api.milton.ca/arcgis/rest/services/Datasets/Address_Pts/MapServer/0/query?objectIds=2033&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Sunnyvale Crescent",
+        "Farmstead Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "milton-call-13",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-milton-ems-17-02",
+      "routeBaseId": "ems-milton-ems-17",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2541.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1227.1,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 254.6,
+        "bestSameServiceCostSeconds": 254.6
+      }
+    },
+    {
+      "name": "Walnut Landing & Whitlock Avenue",
+      "addr": "Walnut Landing & Whitlock Avenue",
+      "lat": 43.498705,
+      "lng": -79.8368939,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/937301906",
+        "way/937301925"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/937301906",
+        "https://www.openstreetmap.org/way/937301925"
+      ],
+      "id": "route-local-ems-milton-ems-17-03",
+      "routeBaseId": "ems-milton-ems-17",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2574.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1221.9,
+        "decisionKinds": [
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 185.6,
+        "bestSameServiceCostSeconds": 185.6
+      }
+    },
+    {
+      "name": "Restivo Lane & Sheaffe Place",
+      "addr": "Restivo Lane & Sheaffe Place",
+      "lat": 43.4939994,
+      "lng": -79.8483189,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/772545676",
+        "way/772545677"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/772545676",
+        "https://www.openstreetmap.org/way/772545677"
+      ],
+      "id": "route-local-ems-milton-ems-17-04",
+      "routeBaseId": "ems-milton-ems-17",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1204.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 747.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 99.3,
+        "bestSameServiceCostSeconds": 99.3
+      }
+    },
+    {
+      "name": "Downes Jackson Heights & Job Crescent & Urell Way",
+      "addr": "Downes Jackson Heights & Job Crescent & Urell Way",
+      "lat": 43.4800491,
+      "lng": -79.8704939,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/337568857",
+        "way/356130064",
+        "way/97030078"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/337568857",
+        "https://www.openstreetmap.org/way/356130064",
+        "https://www.openstreetmap.org/way/97030078"
+      ],
+      "id": "route-local-ems-milton-ems-17-05",
+      "routeBaseId": "ems-milton-ems-17",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2617.7,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 2187.4,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 180.4,
+        "bestSameServiceCostSeconds": 180.4
+      }
+    },
+    {
+      "name": "McLaughlin Avenue & Minto Crescent",
+      "addr": "McLaughlin Avenue & Minto Crescent",
+      "lat": 43.4989009,
+      "lng": -79.8636743,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/97030034",
+        "way/97030100",
+        "way/97030332"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/97030034",
+        "https://www.openstreetmap.org/way/97030100",
+        "https://www.openstreetmap.org/way/97030332"
+      ],
+      "id": "route-local-ems-milton-ems-17-06",
+      "routeBaseId": "ems-milton-ems-17",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1731.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 514,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 155.1,
+        "bestSameServiceCostSeconds": 155.1
+      }
+    }
+  ]
 }

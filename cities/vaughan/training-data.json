@@ -217,5 +217,3957 @@
   ],
   "roadsUrl": "cities/vaughan/roads.geojson.gz",
   "roadFeatureCount": 51102,
-  "roadDataSha256": "6a0c71d0ae8325f2caf5a1f53612ca26959d82f53ee3832018615ab99566a0d3"
+  "roadDataSha256": "6a0c71d0ae8325f2caf5a1f53612ca26959d82f53ee3832018615ab99566a0d3",
+  "routeResponses": {
+    "schemaVersion": 1,
+    "minCallsPerBase": 3,
+    "targetCallsPerBase": 6,
+    "generatedOn": "2026-10-17",
+    "model": {
+      "description": "Published first-due polygons where available. Otherwise a directed road-network estimate using road class travel cost from every same-service hall; allows a15second cost tie for overlapping nearby halls. This is training geography, not live dispatch advice.",
+      "ownershipToleranceSeconds": 15,
+      "maximumCandidateRouteMetres": 12000
+    },
+    "bases": [
+      {
+        "baseId": "fire-vaughan-fire-7-1",
+        "service": "fire",
+        "number": 10000,
+        "name": "Fire Station 7-1",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.802769,
+          "lng": -79.4497592,
+          "road": "Smallwood Circle",
+          "gapMetres": 35.7
+        },
+        "callIds": [
+          "route-local-fire-vaughan-fire-7-1-01",
+          "route-local-fire-vaughan-fire-7-1-02",
+          "route-local-fire-vaughan-fire-7-1-03",
+          "route-local-fire-vaughan-fire-7-1-04",
+          "route-local-fire-vaughan-fire-7-1-05",
+          "route-local-fire-vaughan-fire-7-1-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-vaughan-fire-7-10",
+        "service": "fire",
+        "number": 10001,
+        "name": "Fire Station 7-10",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6200,
+        "access": {
+          "lat": 43.88024038627958,
+          "lng": -79.49303268414626,
+          "road": "Unnamed road",
+          "gapMetres": 7.7
+        },
+        "callIds": [
+          "route-local-fire-vaughan-fire-7-10-01",
+          "route-local-fire-vaughan-fire-7-10-02",
+          "route-local-fire-vaughan-fire-7-10-03",
+          "route-local-fire-vaughan-fire-7-10-04",
+          "route-local-fire-vaughan-fire-7-10-05",
+          "route-local-fire-vaughan-fire-7-10-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-vaughan-fire-7-2",
+        "service": "fire",
+        "number": 10003,
+        "name": "Fire Station 7-2",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6200,
+        "access": {
+          "lat": 43.837278138584544,
+          "lng": -79.50888657507981,
+          "road": "Unnamed road",
+          "gapMetres": 12
+        },
+        "callIds": [
+          "route-local-fire-vaughan-fire-7-2-01",
+          "route-local-fire-vaughan-fire-7-2-02",
+          "route-local-fire-vaughan-fire-7-2-03",
+          "route-local-fire-vaughan-fire-7-2-04",
+          "route-local-fire-vaughan-fire-7-2-05",
+          "route-local-fire-vaughan-fire-7-2-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-vaughan-fire-7-3",
+        "service": "fire",
+        "number": 10004,
+        "name": "Fire Station 7-3",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.77406144990227,
+          "lng": -79.60996824672826,
+          "road": "Unnamed road",
+          "gapMetres": 0.5
+        },
+        "callIds": [
+          "route-local-fire-vaughan-fire-7-3-01",
+          "route-local-fire-vaughan-fire-7-3-02",
+          "route-local-fire-vaughan-fire-7-3-03",
+          "route-local-fire-vaughan-fire-7-3-04",
+          "route-local-fire-vaughan-fire-7-3-05",
+          "route-local-fire-vaughan-fire-7-3-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-vaughan-fire-7-4",
+        "service": "fire",
+        "number": 10005,
+        "name": "Fire Station 7-4",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.842058226442234,
+          "lng": -79.65850546623997,
+          "road": "Nashville Road",
+          "gapMetres": 11.4
+        },
+        "callIds": [
+          "route-local-fire-vaughan-fire-7-4-01",
+          "route-local-fire-vaughan-fire-7-4-02",
+          "route-local-fire-vaughan-fire-7-4-03",
+          "route-local-fire-vaughan-fire-7-4-04",
+          "route-local-fire-vaughan-fire-7-4-05",
+          "route-local-fire-vaughan-fire-7-4-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-vaughan-fire-7-5",
+        "service": "fire",
+        "number": 10006,
+        "name": "Fire Station 7-5",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.7933942454158,
+          "lng": -79.54853872699952,
+          "road": "Weston Road",
+          "gapMetres": 44
+        },
+        "callIds": [
+          "route-local-fire-vaughan-fire-7-5-01",
+          "route-local-fire-vaughan-fire-7-5-02",
+          "route-local-fire-vaughan-fire-7-5-03",
+          "route-local-fire-vaughan-fire-7-5-04",
+          "route-local-fire-vaughan-fire-7-5-05",
+          "route-local-fire-vaughan-fire-7-5-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-vaughan-fire-7-6",
+        "service": "fire",
+        "number": 10007,
+        "name": "Fire Station 7-6",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5600,
+        "access": {
+          "lat": 43.798278368925246,
+          "lng": -79.51431144036187,
+          "road": "Unnamed road",
+          "gapMetres": 35
+        },
+        "callIds": [
+          "route-local-fire-vaughan-fire-7-6-01",
+          "route-local-fire-vaughan-fire-7-6-02",
+          "route-local-fire-vaughan-fire-7-6-03",
+          "route-local-fire-vaughan-fire-7-6-04",
+          "route-local-fire-vaughan-fire-7-6-05",
+          "route-local-fire-vaughan-fire-7-6-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-vaughan-fire-7-7",
+        "service": "fire",
+        "number": 10008,
+        "name": "Fire Station 7-7",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6100,
+        "access": {
+          "lat": 43.845362029534705,
+          "lng": -79.55226182777133,
+          "road": "Unnamed road",
+          "gapMetres": 0.5
+        },
+        "callIds": [
+          "route-local-fire-vaughan-fire-7-7-01",
+          "route-local-fire-vaughan-fire-7-7-02",
+          "route-local-fire-vaughan-fire-7-7-03",
+          "route-local-fire-vaughan-fire-7-7-04",
+          "route-local-fire-vaughan-fire-7-7-05",
+          "route-local-fire-vaughan-fire-7-7-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-vaughan-fire-7-8",
+        "service": "fire",
+        "number": 10009,
+        "name": "Fire Station 7-8",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.815655811292984,
+          "lng": -79.47388545725792,
+          "road": "Unnamed road",
+          "gapMetres": 12.7
+        },
+        "callIds": [
+          "route-local-fire-vaughan-fire-7-8-01",
+          "route-local-fire-vaughan-fire-7-8-02",
+          "route-local-fire-vaughan-fire-7-8-03",
+          "route-local-fire-vaughan-fire-7-8-04",
+          "route-local-fire-vaughan-fire-7-8-05",
+          "route-local-fire-vaughan-fire-7-8-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-vaughan-fire-7-9",
+        "service": "fire",
+        "number": 10010,
+        "name": "Fire Station 7-9",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.82433235179038,
+          "lng": -79.60769749038081,
+          "road": "Unnamed road",
+          "gapMetres": 14.4
+        },
+        "callIds": [
+          "route-local-fire-vaughan-fire-7-9-01",
+          "route-local-fire-vaughan-fire-7-9-02",
+          "route-local-fire-vaughan-fire-7-9-03",
+          "route-local-fire-vaughan-fire-7-9-04",
+          "route-local-fire-vaughan-fire-7-9-05",
+          "route-local-fire-vaughan-fire-7-9-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-vaughan-ems-30",
+        "service": "ems",
+        "number": 30,
+        "name": "Paramedic Station #30 (Woodbridge)",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.82432902802413,
+          "lng": -79.60770898192968,
+          "road": "Unnamed road",
+          "gapMetres": 2.1
+        },
+        "callIds": [
+          "route-local-ems-vaughan-ems-30-01",
+          "route-local-ems-vaughan-ems-30-02",
+          "route-local-ems-vaughan-ems-30-03",
+          "route-local-ems-vaughan-ems-30-04",
+          "route-local-ems-vaughan-ems-30-05",
+          "route-local-ems-vaughan-ems-30-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-vaughan-ems-31",
+        "service": "ems",
+        "number": 31,
+        "name": "Paramedic Station #31 (Vaughan West)",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.77406960263637,
+          "lng": -79.60997213886283,
+          "road": "Unnamed road",
+          "gapMetres": 0.5
+        },
+        "callIds": [
+          "route-local-ems-vaughan-ems-31-01",
+          "route-local-ems-vaughan-ems-31-02",
+          "route-local-ems-vaughan-ems-31-03",
+          "route-local-ems-vaughan-ems-31-04",
+          "route-local-ems-vaughan-ems-31-05",
+          "route-local-ems-vaughan-ems-31-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-vaughan-ems-32",
+        "service": "ems",
+        "number": 32,
+        "name": "Paramedic Station #32 (Maple)",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.83515712967321,
+          "lng": -79.50462580253824,
+          "road": "Unnamed road",
+          "gapMetres": 40.1
+        },
+        "callIds": [
+          "route-local-ems-vaughan-ems-32-01",
+          "route-local-ems-vaughan-ems-32-02",
+          "route-local-ems-vaughan-ems-32-03",
+          "route-local-ems-vaughan-ems-32-04",
+          "route-local-ems-vaughan-ems-32-05",
+          "route-local-ems-vaughan-ems-32-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-vaughan-ems-34",
+        "service": "ems",
+        "number": 34,
+        "name": "Paramedic Station #34 (Vaughan-Racco)",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.81565397520405,
+          "lng": -79.47389974783783,
+          "road": "Unnamed road",
+          "gapMetres": 2.2
+        },
+        "callIds": [
+          "route-local-ems-vaughan-ems-34-01",
+          "route-local-ems-vaughan-ems-34-02",
+          "route-local-ems-vaughan-ems-34-03",
+          "route-local-ems-vaughan-ems-34-04",
+          "route-local-ems-vaughan-ems-34-05",
+          "route-local-ems-vaughan-ems-34-06"
+        ],
+        "challengeCalls": 6
+      }
+    ]
+  },
+  "routeCalls": [
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Bathurst Clark Resource Library",
+      "addr": "900 Clark Avenue West, Vaughan, ON",
+      "lat": 43.803436375373245,
+      "lng": -79.45217048713077,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ww3.yorkmaps.ca/arcgis/rest/services/General/CommunityResources/MapServer/9/query?objectIds=15&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "South Promenade",
+        "Smallwood Circle"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "vaughan-call-06",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-vaughan-fire-7-1-01",
+      "routeBaseId": "fire-vaughan-fire-7-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 401.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 225.4,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Smallwood Circle",
+        "estimatedCostSeconds": 82.1,
+        "bestSameServiceCostSeconds": 82.1
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Dufferin Clark Library",
+      "addr": "1441 Clark Avenue West, Vaughan, ON",
+      "lat": 43.79645554346133,
+      "lng": -79.47146259343884,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ww3.yorkmaps.ca/arcgis/rest/services/General/CommunityResources/MapServer/9/query?objectIds=3&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Dufferin Street",
+        "Jason Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "vaughan-call-01",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-vaughan-fire-7-1-02",
+      "routeBaseId": "fire-vaughan-fire-7-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2079.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 756.7,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Smallwood Circle",
+        "estimatedCostSeconds": 225.8,
+        "bestSameServiceCostSeconds": 225.8
+      }
+    },
+    {
+      "name": "Clark Avenue & Yonge Street",
+      "addr": "Clark Avenue & Yonge Street",
+      "lat": 43.8071559,
+      "lng": -79.4222991,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/163761692",
+        "way/37836718",
+        "way/37836721",
+        "way/37836722"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/163761692",
+        "https://www.openstreetmap.org/way/37836718",
+        "https://www.openstreetmap.org/way/37836721",
+        "https://www.openstreetmap.org/way/37836722"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-1-03",
+      "routeBaseId": "fire-vaughan-fire-7-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2598.9,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 908.5,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Smallwood Circle",
+        "estimatedCostSeconds": 219,
+        "bestSameServiceCostSeconds": 219
+      }
+    },
+    {
+      "name": "Bathurst Street & Steeles Avenue West",
+      "addr": "Bathurst Street & Steeles Avenue West",
+      "lat": 43.7923945,
+      "lng": -79.4456242,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/37181770",
+        "way/37181771",
+        "way/37181782",
+        "way/37181785"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/37181770",
+        "https://www.openstreetmap.org/way/37181771",
+        "https://www.openstreetmap.org/way/37181782",
+        "https://www.openstreetmap.org/way/37181785"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-1-04",
+      "routeBaseId": "fire-vaughan-fire-7-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1646,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 887.4,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Smallwood Circle",
+        "estimatedCostSeconds": 119.7,
+        "bestSameServiceCostSeconds": 119.7
+      }
+    },
+    {
+      "name": "Sadot Court & Worth Boulevard",
+      "addr": "Sadot Court & Worth Boulevard",
+      "lat": 43.8221476,
+      "lng": -79.4540702,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/272123782",
+        "way/37272699",
+        "way/887626607"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/272123782",
+        "https://www.openstreetmap.org/way/37272699",
+        "https://www.openstreetmap.org/way/887626607"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-1-05",
+      "routeBaseId": "fire-vaughan-fire-7-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2600.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 225.4,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Smallwood Circle",
+        "estimatedCostSeconds": 181.8,
+        "bestSameServiceCostSeconds": 181.8
+      }
+    },
+    {
+      "name": "Lawrie Road & Vaughan Boulevard",
+      "addr": "Lawrie Road & Vaughan Boulevard",
+      "lat": 43.8091179,
+      "lng": -79.4645618,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/37272679",
+        "way/37272684",
+        "way/37272694"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/37272679",
+        "https://www.openstreetmap.org/way/37272684",
+        "https://www.openstreetmap.org/way/37272694"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-1-06",
+      "routeBaseId": "fire-vaughan-fire-7-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1710.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 443.6,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Smallwood Circle",
+        "estimatedCostSeconds": 186.9,
+        "bestSameServiceCostSeconds": 186.9
+      }
+    },
+    {
+      "name": "Antonni Court & Hunterwood Chase",
+      "addr": "Antonni Court & Hunterwood Chase",
+      "lat": 43.8843119,
+      "lng": -79.4970381,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/80861926",
+        "way/80861930"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/80861926",
+        "https://www.openstreetmap.org/way/80861930"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-10-01",
+      "routeBaseId": "fire-vaughan-fire-7-10",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 835.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 7530.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 108.9,
+        "bestSameServiceCostSeconds": 108.9
+      }
+    },
+    {
+      "name": "Dufferin Street & Sir Benson Drive",
+      "addr": "Dufferin Street & Sir Benson Drive",
+      "lat": 43.8660314,
+      "lng": -79.4887195,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/170996143",
+        "way/845229991",
+        "way/845230010",
+        "way/904602116"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/170996143",
+        "https://www.openstreetmap.org/way/845229991",
+        "https://www.openstreetmap.org/way/845230010",
+        "https://www.openstreetmap.org/way/904602116"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-10-02",
+      "routeBaseId": "fire-vaughan-fire-7-10",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1689.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 7935.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 127.1,
+        "bestSameServiceCostSeconds": 127.1
+      }
+    },
+    {
+      "name": "Kingsville Lane & Oxford Street",
+      "addr": "Kingsville Lane & Oxford Street",
+      "lat": 43.8818376,
+      "lng": -79.4653966,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/26227492",
+        "way/700871357"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/26227492",
+        "https://www.openstreetmap.org/way/700871357"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-10-03",
+      "routeBaseId": "fire-vaughan-fire-7-10",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2590.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 3919.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 193.8,
+        "bestSameServiceCostSeconds": 193.8
+      }
+    },
+    {
+      "name": "Janessa Court & Lady Fenyrose Avenue & Midvale Heights Lane",
+      "addr": "Janessa Court & Lady Fenyrose Avenue & Midvale Heights Lane",
+      "lat": 43.87738,
+      "lng": -79.48475,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/93678424",
+        "way/93678454",
+        "way/93678631"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/93678424",
+        "https://www.openstreetmap.org/way/93678454",
+        "https://www.openstreetmap.org/way/93678631"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-10-04",
+      "routeBaseId": "fire-vaughan-fire-7-10",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1003.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 7015.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 116.1,
+        "bestSameServiceCostSeconds": 116.1
+      }
+    },
+    {
+      "name": "Kokanee Court & Laurentian Boulevard",
+      "addr": "Kokanee Court & Laurentian Boulevard",
+      "lat": 43.8944627,
+      "lng": -79.5018262,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/163155448",
+        "way/34162352",
+        "way/34163616"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/163155448",
+        "https://www.openstreetmap.org/way/34162352",
+        "https://www.openstreetmap.org/way/34163616"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-10-05",
+      "routeBaseId": "fire-vaughan-fire-7-10",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2729,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 4641.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 238.8,
+        "bestSameServiceCostSeconds": 238.8
+      }
+    },
+    {
+      "name": "Quail Run Boulevard & Teston Road",
+      "addr": "Quail Run Boulevard & Teston Road",
+      "lat": 43.8827496,
+      "lng": -79.473911,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1423527920",
+        "way/1423527921",
+        "way/27792515"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1423527920",
+        "https://www.openstreetmap.org/way/1423527921",
+        "https://www.openstreetmap.org/way/27792515"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-10-06",
+      "routeBaseId": "fire-vaughan-fire-7-10",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1685.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 4982.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 126.9,
+        "bestSameServiceCostSeconds": 126.9
+      }
+    },
+    {
+      "name": "Keele Street & McConaghy Court",
+      "addr": "Keele Street & McConaghy Court",
+      "lat": 43.8440207,
+      "lng": -79.5098959,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1465548224",
+        "way/55062758"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1465548224",
+        "https://www.openstreetmap.org/way/55062758"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-2-01",
+      "routeBaseId": "fire-vaughan-fire-7-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 801.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1202,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 63.3,
+        "bestSameServiceCostSeconds": 63.3
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Julliard PS",
+      "addr": "61 Julliard Drive, Vaughan, ON",
+      "lat": 43.83235155949849,
+      "lng": -79.53626871254951,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ww3.yorkmaps.ca/arcgis/rest/services/General/CommunityResources/MapServer/1/query?objectIds=495&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Camino Drive",
+        "Sweetriver Boulevard"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "vaughan-call-19",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-vaughan-fire-7-2-02",
+      "routeBaseId": "fire-vaughan-fire-7-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2737.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1063.2,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 224.3,
+        "bestSameServiceCostSeconds": 224.3
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Maple Library",
+      "addr": "10190 Keele Street, Vaughan, ON",
+      "lat": 43.85935716937769,
+      "lng": -79.51473011873337,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ww3.yorkmaps.ca/arcgis/rest/services/General/CommunityResources/MapServer/9/query?objectIds=4&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Masters Avenue",
+        "Mcnaughton Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "vaughan-call-02",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-vaughan-fire-7-2-03",
+      "routeBaseId": "fire-vaughan-fire-7-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2595,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1097.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 210.1,
+        "bestSameServiceCostSeconds": 210.1
+      }
+    },
+    {
+      "name": "Basaltic Road & Jacob Keffer Parkway",
+      "addr": "Basaltic Road & Jacob Keffer Parkway",
+      "lat": 43.8295868,
+      "lng": -79.4987117,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34164247",
+        "way/34164646",
+        "way/35349471"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34164247",
+        "https://www.openstreetmap.org/way/34164646",
+        "https://www.openstreetmap.org/way/35349471"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-2-04",
+      "routeBaseId": "fire-vaughan-fire-7-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1500.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1333.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 173.9,
+        "bestSameServiceCostSeconds": 173.9
+      }
+    },
+    {
+      "name": "Marathon Avenue & Vanguard Road",
+      "addr": "Marathon Avenue & Vanguard Road",
+      "lat": 43.8384675,
+      "lng": -79.4835261,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/380316743",
+        "way/38519845",
+        "way/38519851"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/380316743",
+        "https://www.openstreetmap.org/way/38519845",
+        "https://www.openstreetmap.org/way/38519851"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-2-05",
+      "routeBaseId": "fire-vaughan-fire-7-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2608.7,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1099.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 202.2,
+        "bestSameServiceCostSeconds": 202.2
+      }
+    },
+    {
+      "name": "Creditstone Road & Modena Trail & Tigi Court",
+      "addr": "Creditstone Road & Modena Trail & Tigi Court",
+      "lat": 43.8318098,
+      "lng": -79.5214293,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1446674645",
+        "way/1446676428",
+        "way/55854969",
+        "way/55855058"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1446674645",
+        "https://www.openstreetmap.org/way/1446676428",
+        "https://www.openstreetmap.org/way/55854969",
+        "https://www.openstreetmap.org/way/55855058"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-2-06",
+      "routeBaseId": "fire-vaughan-fire-7-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1517.7,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1850.5,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 110.3,
+        "bestSameServiceCostSeconds": 110.3
+      }
+    },
+    {
+      "name": "Andrew Park & North Humber Drive",
+      "addr": "Andrew Park & North Humber Drive",
+      "lat": 43.7789333,
+      "lng": -79.6071052,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34163049",
+        "way/34164345",
+        "way/34164678"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34163049",
+        "https://www.openstreetmap.org/way/34164345",
+        "https://www.openstreetmap.org/way/34164678"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-3-01",
+      "routeBaseId": "fire-vaughan-fire-7-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 801,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 163.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 103.9,
+        "bestSameServiceCostSeconds": 103.9
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Woodbridge College",
+      "addr": "71 Bruce Street, Vaughan, ON",
+      "lat": 43.77997022066638,
+      "lng": -79.58250248826545,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ww3.yorkmaps.ca/arcgis/rest/services/General/CommunityResources/MapServer/1/query?objectIds=378&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Highway 7",
+        "Helen Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "vaughan-call-11",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-vaughan-fire-7-3-02",
+      "routeBaseId": "fire-vaughan-fire-7-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2609,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1446.3,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 206.3,
+        "bestSameServiceCostSeconds": 206.3
+      }
+    },
+    {
+      "name": "Cabernet Circle & Cassis Drive",
+      "addr": "Cabernet Circle & Cassis Drive",
+      "lat": 43.7538837,
+      "lng": -79.6013093,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/37024198",
+        "way/37024626"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/37024198",
+        "https://www.openstreetmap.org/way/37024626"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-3-03",
+      "routeBaseId": "fire-vaughan-fire-7-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2585.1,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 2316,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 192.5,
+        "bestSameServiceCostSeconds": 192.5
+      }
+    },
+    {
+      "name": "Regina Road & Roysun Road",
+      "addr": "Regina Road & Roysun Road",
+      "lat": 43.7687188,
+      "lng": -79.6113071,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1545954879",
+        "way/34163462",
+        "way/34166556"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1545954879",
+        "https://www.openstreetmap.org/way/34163462",
+        "https://www.openstreetmap.org/way/34166556"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-3-04",
+      "routeBaseId": "fire-vaughan-fire-7-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 923.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 206.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 103.2,
+        "bestSameServiceCostSeconds": 103.2
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Woodbridge Library",
+      "addr": "150 Woodbridge Avenue, Vaughan, ON",
+      "lat": 43.784945499979045,
+      "lng": -79.59353726244115,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ww3.yorkmaps.ca/arcgis/rest/services/General/CommunityResources/MapServer/9/query?objectIds=8&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Wallace Street",
+        "Old Fire Hall Lane"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "vaughan-call-05",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-vaughan-fire-7-3-05",
+      "routeBaseId": "fire-vaughan-fire-7-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2318.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 300.1,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 183.7,
+        "bestSameServiceCostSeconds": 183.7
+      }
+    },
+    {
+      "name": "Jackman Crescent & Martin Grove Road",
+      "addr": "Jackman Crescent & Martin Grove Road",
+      "lat": 43.7882654,
+      "lng": -79.6126628,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33529137",
+        "way/34163095"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33529137",
+        "https://www.openstreetmap.org/way/34163095"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-3-06",
+      "routeBaseId": "fire-vaughan-fire-7-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1683.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 385.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 157.3,
+        "bestSameServiceCostSeconds": 157.3
+      }
+    },
+    {
+      "name": "Bellefond Street & Canard Drive",
+      "addr": "Bellefond Street & Canard Drive",
+      "lat": 43.8394101,
+      "lng": -79.6632795,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/798035367",
+        "way/798035369",
+        "way/798035378"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/798035367",
+        "https://www.openstreetmap.org/way/798035369",
+        "https://www.openstreetmap.org/way/798035378"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-4-01",
+      "routeBaseId": "fire-vaughan-fire-7-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 822.8,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 6833.7,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Nashville Road",
+        "estimatedCostSeconds": 93.4,
+        "bestSameServiceCostSeconds": 93.4
+      }
+    },
+    {
+      "name": "Nashville Road & Stevenson Avenue",
+      "addr": "Nashville Road & Stevenson Avenue",
+      "lat": 43.8424443,
+      "lng": -79.6386571,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1106094797",
+        "way/1485956492",
+        "way/853987802"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1106094797",
+        "https://www.openstreetmap.org/way/1485956492",
+        "https://www.openstreetmap.org/way/853987802"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-4-02",
+      "routeBaseId": "fire-vaughan-fire-7-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1741.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 6154.7,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Nashville Road",
+        "estimatedCostSeconds": 139.3,
+        "bestSameServiceCostSeconds": 139.3
+      }
+    },
+    {
+      "name": "Huntington Road & Kirby Road",
+      "addr": "Huntington Road & Kirby Road",
+      "lat": 43.8603868,
+      "lng": -79.668565,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1024263082",
+        "way/34165296",
+        "way/34166841"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1024263082",
+        "https://www.openstreetmap.org/way/34165296",
+        "https://www.openstreetmap.org/way/34166841"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-4-03",
+      "routeBaseId": "fire-vaughan-fire-7-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2644.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 7423.9,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Nashville Road",
+        "estimatedCostSeconds": 361.7,
+        "bestSameServiceCostSeconds": 361.7
+      }
+    },
+    {
+      "name": "Countryside Drive & Highway 50 & Nashville Road",
+      "addr": "Countryside Drive & Highway 50 & Nashville Road",
+      "lat": 43.8364872,
+      "lng": -79.6887177,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33876809",
+        "way/394392967",
+        "way/394392970",
+        "way/455492660"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33876809",
+        "https://www.openstreetmap.org/way/394392967",
+        "https://www.openstreetmap.org/way/394392970",
+        "https://www.openstreetmap.org/way/455492660"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-4-04",
+      "routeBaseId": "fire-vaughan-fire-7-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2514.2,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 7423.9,
+        "decisionKinds": [
+          "departure",
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Nashville Road",
+        "estimatedCostSeconds": 201.1,
+        "bestSameServiceCostSeconds": 201.1
+      }
+    },
+    {
+      "name": "Haldimand Crescent & Kinloss Street",
+      "addr": "Haldimand Crescent & Kinloss Street",
+      "lat": 43.8267324,
+      "lng": -79.659546,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1193491035",
+        "way/1193491037"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1193491035",
+        "https://www.openstreetmap.org/way/1193491037"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-4-05",
+      "routeBaseId": "fire-vaughan-fire-7-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2134.5,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 5193.2,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Nashville Road",
+        "estimatedCostSeconds": 185.1,
+        "bestSameServiceCostSeconds": 185.1
+      }
+    },
+    {
+      "name": "Creedmore Court & Northern Pines Boulevard & Spicewood Crescent",
+      "addr": "Creedmore Court & Northern Pines Boulevard & Spicewood Crescent",
+      "lat": 43.8369206,
+      "lng": -79.6453059,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1105884869",
+        "way/1105884870",
+        "way/303529239",
+        "way/303529435"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1105884869",
+        "https://www.openstreetmap.org/way/1105884870",
+        "https://www.openstreetmap.org/way/303529239",
+        "https://www.openstreetmap.org/way/303529435"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-4-06",
+      "routeBaseId": "fire-vaughan-fire-7-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1602.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 5466.5,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Nashville Road",
+        "estimatedCostSeconds": 156.1,
+        "bestSameServiceCostSeconds": 156.1
+      }
+    },
+    {
+      "name": "Rowntree Dairy Road & Weston Road",
+      "addr": "Rowntree Dairy Road & Weston Road",
+      "lat": 43.7862385,
+      "lng": -79.5468877,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/385714961",
+        "way/55871315",
+        "way/55871361"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/385714961",
+        "https://www.openstreetmap.org/way/55871315",
+        "https://www.openstreetmap.org/way/55871361"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-5-01",
+      "routeBaseId": "fire-vaughan-fire-7-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 802.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1121.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Weston Road",
+        "estimatedCostSeconds": 48.3,
+        "bestSameServiceCostSeconds": 48.3
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Ansley Grove Library",
+      "addr": "350 Ansley Grove Road, Vaughan, ON",
+      "lat": 43.79627449038596,
+      "lng": -79.56403553438369,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ww3.yorkmaps.ca/arcgis/rest/services/General/CommunityResources/MapServer/9/query?objectIds=7&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Chancellor Drive",
+        "Snider Green"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "vaughan-call-04",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-vaughan-fire-7-5-02",
+      "routeBaseId": "fire-vaughan-fire-7-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2025.9,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 169.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Weston Road",
+        "estimatedCostSeconds": 175.5,
+        "bestSameServiceCostSeconds": 175.5
+      }
+    },
+    {
+      "name": "Applewood Crescent & Edgeley Boulevard",
+      "addr": "Applewood Crescent & Edgeley Boulevard",
+      "lat": 43.8079644,
+      "lng": -79.5364154,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55854924",
+        "way/55854958",
+        "way/55855032",
+        "way/55855078"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55854924",
+        "https://www.openstreetmap.org/way/55854958",
+        "https://www.openstreetmap.org/way/55855032",
+        "https://www.openstreetmap.org/way/55855078"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-5-03",
+      "routeBaseId": "fire-vaughan-fire-7-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2595.9,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 567.7,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Weston Road",
+        "estimatedCostSeconds": 199.7,
+        "bestSameServiceCostSeconds": 199.7
+      }
+    },
+    {
+      "name": "Applewood Crescent & Portage Parkway",
+      "addr": "Applewood Crescent & Portage Parkway",
+      "lat": 43.7962961,
+      "lng": -79.5364607,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1070688627",
+        "way/55854881",
+        "way/823703939"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1070688627",
+        "https://www.openstreetmap.org/way/55854881",
+        "https://www.openstreetmap.org/way/823703939"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-5-04",
+      "routeBaseId": "fire-vaughan-fire-7-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1089.4,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 858.5,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Weston Road",
+        "estimatedCostSeconds": 86.2,
+        "bestSameServiceCostSeconds": 86.2
+      }
+    },
+    {
+      "name": "Signet Drive & Steeles Avenue West",
+      "addr": "Signet Drive & Steeles Avenue West",
+      "lat": 43.7708917,
+      "lng": -79.5433535,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/37024204",
+        "way/37024592",
+        "way/37024675"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/37024204",
+        "https://www.openstreetmap.org/way/37024592",
+        "https://www.openstreetmap.org/way/37024675"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-5-05",
+      "routeBaseId": "fire-vaughan-fire-7-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2557.5,
+        "meaningfulDecisions": 6,
+        "maxAlternativePenaltyMetres": 3613.3,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Weston Road",
+        "estimatedCostSeconds": 171.8,
+        "bestSameServiceCostSeconds": 171.8
+      }
+    },
+    {
+      "name": "Firefly Crescent & Glitter Road",
+      "addr": "Firefly Crescent & Glitter Road",
+      "lat": 43.8038469,
+      "lng": -79.554703,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34163632",
+        "way/34164000",
+        "way/34165666"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34163632",
+        "https://www.openstreetmap.org/way/34164000",
+        "https://www.openstreetmap.org/way/34165666"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-5-06",
+      "routeBaseId": "fire-vaughan-fire-7-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1691,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 213.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Weston Road",
+        "estimatedCostSeconds": 132.1,
+        "bestSameServiceCostSeconds": 132.1
+      }
+    },
+    {
+      "name": "Highway 7 & Maplecrete Road",
+      "addr": "Highway 7 & Maplecrete Road",
+      "lat": 43.7947839,
+      "lng": -79.5212051,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/546330453",
+        "way/55855008",
+        "way/55868916"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/546330453",
+        "https://www.openstreetmap.org/way/55855008",
+        "https://www.openstreetmap.org/way/55868916"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-6-01",
+      "routeBaseId": "fire-vaughan-fire-7-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 815.9,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 389.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 90.7,
+        "bestSameServiceCostSeconds": 90.7
+      }
+    },
+    {
+      "name": "Creditstone Road & Pippin Road",
+      "addr": "Creditstone Road & Pippin Road",
+      "lat": 43.8105357,
+      "lng": -79.5208602,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55854900",
+        "way/55855118",
+        "way/55855119"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55854900",
+        "https://www.openstreetmap.org/way/55855118",
+        "https://www.openstreetmap.org/way/55855119"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-6-02",
+      "routeBaseId": "fire-vaughan-fire-7-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1930.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 562,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 187.6,
+        "bestSameServiceCostSeconds": 187.6
+      }
+    },
+    {
+      "name": "Administration Road & Keele Street",
+      "addr": "Administration Road & Keele Street",
+      "lat": 43.8032883,
+      "lng": -79.5002,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/316694856",
+        "way/444997973",
+        "way/794898257"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/316694856",
+        "https://www.openstreetmap.org/way/444997973",
+        "https://www.openstreetmap.org/way/794898257"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-6-03",
+      "routeBaseId": "fire-vaughan-fire-7-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2473.5,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 3565.3,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 175.2,
+        "bestSameServiceCostSeconds": 175.2
+      }
+    },
+    {
+      "name": "Creditstone Road & MacIntosh Boulevard",
+      "addr": "Creditstone Road & MacIntosh Boulevard",
+      "lat": 43.8038115,
+      "lng": -79.5196545,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55854892",
+        "way/55854979",
+        "way/55855118"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55854892",
+        "https://www.openstreetmap.org/way/55854979",
+        "https://www.openstreetmap.org/way/55855118"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-6-04",
+      "routeBaseId": "fire-vaughan-fire-7-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1176.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 562,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 127.3,
+        "bestSameServiceCostSeconds": 127.3
+      }
+    },
+    {
+      "name": "Autumn Harvest Road & Millway Avenue",
+      "addr": "Autumn Harvest Road & Millway Avenue",
+      "lat": 43.7873247,
+      "lng": -79.5252057,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1184944001",
+        "way/55855136"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1184944001",
+        "https://www.openstreetmap.org/way/55855136"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-6-05",
+      "routeBaseId": "fire-vaughan-fire-7-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1991,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 189.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 180.4,
+        "bestSameServiceCostSeconds": 180.4
+      }
+    },
+    {
+      "name": "Millway Avenue & Portage Parkway",
+      "addr": "Millway Avenue & Portage Parkway",
+      "lat": 43.7980887,
+      "lng": -79.5277645,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1311349726",
+        "way/55855090",
+        "way/731785735",
+        "way/877600660",
+        "way/877600661"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1311349726",
+        "https://www.openstreetmap.org/way/55855090",
+        "https://www.openstreetmap.org/way/731785735",
+        "https://www.openstreetmap.org/way/877600660",
+        "https://www.openstreetmap.org/way/877600661"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-6-06",
+      "routeBaseId": "fire-vaughan-fire-7-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1728.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 233.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 145.2,
+        "bestSameServiceCostSeconds": 144.2
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Cortellucci Vaughan Hospital",
+      "addr": "3200 Major Mackenzie Drive West, Vaughan, ON",
+      "lat": 43.85006456621015,
+      "lng": -79.54013788931019,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.mackenziehealth.ca/about-us/contact-and-location-information",
+        "https://ww3.yorkmaps.ca/arcgis/rest/services/YorkLocators_Pro/YorkRegionAddressesPlus_WGS84/GeocodeServer/findAddressCandidates?SingleLine=3200+Major+Mackenzie+Drive+West%2C+Vaughan&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Amusement Drive",
+        "Wellness Way"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "vaughan-call-08",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-vaughan-fire-7-7-01",
+      "routeBaseId": "fire-vaughan-fire-7-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1370.8,
+        "meaningfulDecisions": 6,
+        "maxAlternativePenaltyMetres": 4698.9,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 141.2,
+        "bestSameServiceCostSeconds": 141.2
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Fossil Hill PS",
+      "addr": "2 Firenza Rd, Vaughan, ON",
+      "lat": 43.83662267476481,
+      "lng": -79.56530707371947,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ww3.yorkmaps.ca/arcgis/rest/services/General/CommunityResources/MapServer/1/query?objectIds=457&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Lourdes Avenue",
+        "Fossil Hill Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "vaughan-call-20",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-vaughan-fire-7-7-02",
+      "routeBaseId": "fire-vaughan-fire-7-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1956.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 306.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 176.4,
+        "bestSameServiceCostSeconds": 176.4
+      }
+    },
+    {
+      "name": "Teston Road & Weston Road",
+      "addr": "Teston Road & Weston Road",
+      "lat": 43.8630044,
+      "lng": -79.5646362,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/386811198",
+        "way/806574279",
+        "way/806574284"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/386811198",
+        "https://www.openstreetmap.org/way/806574279",
+        "https://www.openstreetmap.org/way/806574284"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-7-03",
+      "routeBaseId": "fire-vaughan-fire-7-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2684.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 277.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 182.6,
+        "bestSameServiceCostSeconds": 182.6
+      }
+    },
+    {
+      "name": "Vellore Park Avenue & Zachary Place",
+      "addr": "Vellore Park Avenue & Zachary Place",
+      "lat": 43.8491576,
+      "lng": -79.5572831,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34162598",
+        "way/34163274",
+        "way/436615671"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34162598",
+        "https://www.openstreetmap.org/way/34163274",
+        "https://www.openstreetmap.org/way/436615671"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-7-04",
+      "routeBaseId": "fire-vaughan-fire-7-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 801.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 277.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 109.9,
+        "bestSameServiceCostSeconds": 109.9
+      }
+    },
+    {
+      "name": "Rutherford Road & Vellore Woods Boulevard",
+      "addr": "Rutherford Road & Vellore Woods Boulevard",
+      "lat": 43.8268454,
+      "lng": -79.5513297,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/272180709",
+        "way/34188343",
+        "way/804043883"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/272180709",
+        "https://www.openstreetmap.org/way/34188343",
+        "https://www.openstreetmap.org/way/804043883"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-7-05",
+      "routeBaseId": "fire-vaughan-fire-7-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2227,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 612.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 159.4,
+        "bestSameServiceCostSeconds": 159.4
+      }
+    },
+    {
+      "name": "Summit Drive & Venice Gate Drive",
+      "addr": "Summit Drive & Venice Gate Drive",
+      "lat": 43.8566151,
+      "lng": -79.5551696,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/172425325",
+        "way/172425333",
+        "way/34163251"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/172425325",
+        "https://www.openstreetmap.org/way/172425333",
+        "https://www.openstreetmap.org/way/34163251"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-7-06",
+      "routeBaseId": "fire-vaughan-fire-7-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1691.6,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 366.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 182.7,
+        "bestSameServiceCostSeconds": 182.7
+      }
+    },
+    {
+      "name": "Beverley Glen Boulevard & Dufferin Street",
+      "addr": "Beverley Glen Boulevard & Dufferin Street",
+      "lat": 43.8096524,
+      "lng": -79.4753049,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1393440744",
+        "way/5560123",
+        "way/761348259",
+        "way/8630773"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1393440744",
+        "https://www.openstreetmap.org/way/5560123",
+        "https://www.openstreetmap.org/way/761348259",
+        "https://www.openstreetmap.org/way/8630773"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-8-01",
+      "routeBaseId": "fire-vaughan-fire-7-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 849.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1457.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 88.8,
+        "bestSameServiceCostSeconds": 88.8
+      }
+    },
+    {
+      "name": "Maple Sugar Lane & Pleasant Ridge Avenue",
+      "addr": "Maple Sugar Lane & Pleasant Ridge Avenue",
+      "lat": 43.8258143,
+      "lng": -79.4732595,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/161614378",
+        "way/445393521",
+        "way/445393522"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/161614378",
+        "https://www.openstreetmap.org/way/445393521",
+        "https://www.openstreetmap.org/way/445393522"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-8-02",
+      "routeBaseId": "fire-vaughan-fire-7-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1746.8,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 3969.9,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 133,
+        "bestSameServiceCostSeconds": 133
+      }
+    },
+    {
+      "name": "Glen Shields Avenue & Point O'Woods Drive",
+      "addr": "Glen Shields Avenue & Point O'Woods Drive",
+      "lat": 43.7963798,
+      "lng": -79.4807218,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/28374277",
+        "way/89155117"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/28374277",
+        "https://www.openstreetmap.org/way/89155117"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-8-03",
+      "routeBaseId": "fire-vaughan-fire-7-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2588.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 3615.4,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 210.1,
+        "bestSameServiceCostSeconds": 210.1
+      }
+    },
+    {
+      "name": "Langstaff Road & North Rivermede Road & Staffern Drive",
+      "addr": "Langstaff Road & North Rivermede Road & Staffern Drive",
+      "lat": 43.8226604,
+      "lng": -79.4848703,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/30614584",
+        "way/445445499",
+        "way/445445505",
+        "way/845773116"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/30614584",
+        "https://www.openstreetmap.org/way/445445499",
+        "https://www.openstreetmap.org/way/445445505",
+        "https://www.openstreetmap.org/way/845773116"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-8-04",
+      "routeBaseId": "fire-vaughan-fire-7-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1778.3,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 4554.4,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 132.2,
+        "bestSameServiceCostSeconds": 132.2
+      }
+    },
+    {
+      "name": "Grenadier Crescent & Palmerston Drive",
+      "addr": "Grenadier Crescent & Palmerston Drive",
+      "lat": 43.8167735,
+      "lng": -79.4607347,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/37272696",
+        "way/37272697",
+        "way/37272698"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/37272696",
+        "https://www.openstreetmap.org/way/37272697",
+        "https://www.openstreetmap.org/way/37272698"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-8-05",
+      "routeBaseId": "fire-vaughan-fire-7-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2642.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2111.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 253.7,
+        "bestSameServiceCostSeconds": 253.7
+      }
+    },
+    {
+      "name": "Beverley Glen Boulevard & Redondo Drive",
+      "addr": "Beverley Glen Boulevard & Redondo Drive",
+      "lat": 43.8134339,
+      "lng": -79.4683586,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/121646151",
+        "way/121646156",
+        "way/35346933"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/121646151",
+        "https://www.openstreetmap.org/way/121646156",
+        "https://www.openstreetmap.org/way/35346933"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-8-06",
+      "routeBaseId": "fire-vaughan-fire-7-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1620.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1457.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 150.4,
+        "bestSameServiceCostSeconds": 150.4
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Emily Carr SS",
+      "addr": "4901 Rutherford Rd, Vaughan, ON",
+      "lat": 43.81740658912321,
+      "lng": -79.5940772467982,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ww3.yorkmaps.ca/arcgis/rest/services/General/CommunityResources/MapServer/1/query?objectIds=452&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Islington Avenue",
+        "Clarence Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "vaughan-call-15",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-vaughan-fire-7-9-01",
+      "routeBaseId": "fire-vaughan-fire-7-9",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1652.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 700,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 161.8,
+        "bestSameServiceCostSeconds": 161.8
+      }
+    },
+    {
+      "name": "Bindertwine Boulevard & Islington Avenue & Sevilla Boulevard",
+      "addr": "Bindertwine Boulevard & Islington Avenue & Sevilla Boulevard",
+      "lat": 43.8361041,
+      "lng": -79.6213849,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/166728562",
+        "way/200184756",
+        "way/33878194",
+        "way/33878225"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/166728562",
+        "https://www.openstreetmap.org/way/200184756",
+        "https://www.openstreetmap.org/way/33878194",
+        "https://www.openstreetmap.org/way/33878225"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-9-02",
+      "routeBaseId": "fire-vaughan-fire-7-9",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1774.7,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 3189.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 131.5,
+        "bestSameServiceCostSeconds": 131.5
+      }
+    },
+    {
+      "name": "Gidleigh Park Crescent & Shawbridge Boulevard",
+      "addr": "Gidleigh Park Crescent & Shawbridge Boulevard",
+      "lat": 43.8103906,
+      "lng": -79.6194544,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33877443",
+        "way/33877446",
+        "way/54016912"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33877443",
+        "https://www.openstreetmap.org/way/33877446",
+        "https://www.openstreetmap.org/way/54016912"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-9-03",
+      "routeBaseId": "fire-vaughan-fire-7-9",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2488.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 363.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 230.5,
+        "bestSameServiceCostSeconds": 230.5
+      }
+    },
+    {
+      "name": "Forest Fountain Drive & Sarno Street",
+      "addr": "Forest Fountain Drive & Sarno Street",
+      "lat": 43.823542,
+      "lng": -79.6135645,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1106452470",
+        "way/33877972"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1106452470",
+        "https://www.openstreetmap.org/way/33877972"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-9-04",
+      "routeBaseId": "fire-vaughan-fire-7-9",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 781.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2739.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 77.3,
+        "bestSameServiceCostSeconds": 77.3
+      }
+    },
+    {
+      "name": "Kiloran Avenue & Pennycross Court",
+      "addr": "Kiloran Avenue & Pennycross Court",
+      "lat": 43.8063017,
+      "lng": -79.5926454,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33877732",
+        "way/33877744"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33877732",
+        "https://www.openstreetmap.org/way/33877744"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-9-05",
+      "routeBaseId": "fire-vaughan-fire-7-9",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2587,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 286.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 238.4,
+        "bestSameServiceCostSeconds": 238.4
+      }
+    },
+    {
+      "name": "Ginger Grove & Lookout Point Court",
+      "addr": "Ginger Grove & Lookout Point Court",
+      "lat": 43.8290041,
+      "lng": -79.6214645,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33878134",
+        "way/34197331"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33878134",
+        "https://www.openstreetmap.org/way/34197331"
+      ],
+      "id": "route-local-fire-vaughan-fire-7-9-06",
+      "routeBaseId": "fire-vaughan-fire-7-9",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1635.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 2886.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 178.8,
+        "bestSameServiceCostSeconds": 178.8
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Emily Carr SS",
+      "addr": "4901 Rutherford Rd, Vaughan, ON",
+      "lat": 43.81740658912321,
+      "lng": -79.5940772467982,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ww3.yorkmaps.ca/arcgis/rest/services/General/CommunityResources/MapServer/1/query?objectIds=452&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Islington Avenue",
+        "Clarence Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "vaughan-call-15",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-vaughan-ems-30-01",
+      "routeBaseId": "ems-vaughan-ems-30",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1651.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 700,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 161.5,
+        "bestSameServiceCostSeconds": 161.5
+      }
+    },
+    {
+      "name": "Bindertwine Boulevard & Islington Avenue & Sevilla Boulevard",
+      "addr": "Bindertwine Boulevard & Islington Avenue & Sevilla Boulevard",
+      "lat": 43.8361041,
+      "lng": -79.6213849,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/166728562",
+        "way/200184756",
+        "way/33878194",
+        "way/33878225"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/166728562",
+        "https://www.openstreetmap.org/way/200184756",
+        "https://www.openstreetmap.org/way/33878194",
+        "https://www.openstreetmap.org/way/33878225"
+      ],
+      "id": "route-local-ems-vaughan-ems-30-02",
+      "routeBaseId": "ems-vaughan-ems-30",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1773.7,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 3189.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 131.1,
+        "bestSameServiceCostSeconds": 131.1
+      }
+    },
+    {
+      "name": "Gidleigh Park Crescent & Shawbridge Boulevard",
+      "addr": "Gidleigh Park Crescent & Shawbridge Boulevard",
+      "lat": 43.8103906,
+      "lng": -79.6194544,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33877443",
+        "way/33877446",
+        "way/54016912"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33877443",
+        "https://www.openstreetmap.org/way/33877446",
+        "https://www.openstreetmap.org/way/54016912"
+      ],
+      "id": "route-local-ems-vaughan-ems-30-03",
+      "routeBaseId": "ems-vaughan-ems-30",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2487.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 363.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 230.1,
+        "bestSameServiceCostSeconds": 230.1
+      }
+    },
+    {
+      "name": "Forest Fountain Drive & Sarno Street",
+      "addr": "Forest Fountain Drive & Sarno Street",
+      "lat": 43.823542,
+      "lng": -79.6135645,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1106452470",
+        "way/33877972"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1106452470",
+        "https://www.openstreetmap.org/way/33877972"
+      ],
+      "id": "route-local-ems-vaughan-ems-30-04",
+      "routeBaseId": "ems-vaughan-ems-30",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 780.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2739.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 77,
+        "bestSameServiceCostSeconds": 77
+      }
+    },
+    {
+      "name": "Kiloran Avenue & Pennycross Court",
+      "addr": "Kiloran Avenue & Pennycross Court",
+      "lat": 43.8063017,
+      "lng": -79.5926454,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33877732",
+        "way/33877744"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33877732",
+        "https://www.openstreetmap.org/way/33877744"
+      ],
+      "id": "route-local-ems-vaughan-ems-30-05",
+      "routeBaseId": "ems-vaughan-ems-30",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2586,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 286.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 238.1,
+        "bestSameServiceCostSeconds": 238.1
+      }
+    },
+    {
+      "name": "Ginger Grove & Lookout Point Court",
+      "addr": "Ginger Grove & Lookout Point Court",
+      "lat": 43.8290041,
+      "lng": -79.6214645,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33878134",
+        "way/34197331"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33878134",
+        "https://www.openstreetmap.org/way/34197331"
+      ],
+      "id": "route-local-ems-vaughan-ems-30-06",
+      "routeBaseId": "ems-vaughan-ems-30",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1634.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 2886.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 178.4,
+        "bestSameServiceCostSeconds": 178.4
+      }
+    },
+    {
+      "name": "Andrew Park & North Humber Drive",
+      "addr": "Andrew Park & North Humber Drive",
+      "lat": 43.7789333,
+      "lng": -79.6071052,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34163049",
+        "way/34164345",
+        "way/34164678"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34163049",
+        "https://www.openstreetmap.org/way/34164345",
+        "https://www.openstreetmap.org/way/34164678"
+      ],
+      "id": "route-local-ems-vaughan-ems-31-01",
+      "routeBaseId": "ems-vaughan-ems-31",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 802,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 163.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 104.3,
+        "bestSameServiceCostSeconds": 104.3
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Villa Santa Maria Community",
+      "addr": "5400 Steeles Avenue West",
+      "lat": 43.759591499057585,
+      "lng": -79.597825,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790228"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "4502",
+      "community": "Woodbridge",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-4502",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-vaughan-ems-31-02",
+      "routeBaseId": "ems-vaughan-ems-31",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2633.7,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 3576.5,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 214.1,
+        "bestSameServiceCostSeconds": 214.1
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Woodbridge College",
+      "addr": "71 Bruce Street, Vaughan, ON",
+      "lat": 43.77997022066638,
+      "lng": -79.58250248826545,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ww3.yorkmaps.ca/arcgis/rest/services/General/CommunityResources/MapServer/1/query?objectIds=378&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Highway 7",
+        "Helen Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "vaughan-call-11",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-vaughan-ems-31-03",
+      "routeBaseId": "ems-vaughan-ems-31",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2610,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1446.3,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 206.7,
+        "bestSameServiceCostSeconds": 206.7
+      }
+    },
+    {
+      "name": "Regina Road & Roysun Road",
+      "addr": "Regina Road & Roysun Road",
+      "lat": 43.7687188,
+      "lng": -79.6113071,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1545954879",
+        "way/34163462",
+        "way/34166556"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1545954879",
+        "https://www.openstreetmap.org/way/34163462",
+        "https://www.openstreetmap.org/way/34166556"
+      ],
+      "id": "route-local-ems-vaughan-ems-31-04",
+      "routeBaseId": "ems-vaughan-ems-31",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 924,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 206.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 103.5,
+        "bestSameServiceCostSeconds": 103.5
+      }
+    },
+    {
+      "name": "Coronation Street & Hollyburn Court & Morning Star Drive",
+      "addr": "Coronation Street & Hollyburn Court & Morning Star Drive",
+      "lat": 43.7916369,
+      "lng": -79.6208943,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1103294822",
+        "way/1103294823",
+        "way/1103294825"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1103294822",
+        "https://www.openstreetmap.org/way/1103294823",
+        "https://www.openstreetmap.org/way/1103294825"
+      ],
+      "id": "route-local-ems-vaughan-ems-31-05",
+      "routeBaseId": "ems-vaughan-ems-31",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2597,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 483.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 237.6,
+        "bestSameServiceCostSeconds": 237.6
+      }
+    },
+    {
+      "name": "Abell Avenue & Kipling Avenue & Villagewood Court",
+      "addr": "Abell Avenue & Kipling Avenue & Villagewood Court",
+      "lat": 43.7821375,
+      "lng": -79.5980809,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33877151",
+        "way/53974819",
+        "way/732473995"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33877151",
+        "https://www.openstreetmap.org/way/53974819",
+        "https://www.openstreetmap.org/way/732473995"
+      ],
+      "id": "route-local-ems-vaughan-ems-31-06",
+      "routeBaseId": "ems-vaughan-ems-31",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1686.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 514.4,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 126.2,
+        "bestSameServiceCostSeconds": 126.2
+      }
+    },
+    {
+      "name": "Rutherford Road & Westburne Drive",
+      "addr": "Rutherford Road & Westburne Drive",
+      "lat": 43.8383239,
+      "lng": -79.5023722,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/291999718",
+        "way/291999721",
+        "way/291999837",
+        "way/291999840"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/291999718",
+        "https://www.openstreetmap.org/way/291999721",
+        "https://www.openstreetmap.org/way/291999837",
+        "https://www.openstreetmap.org/way/291999840"
+      ],
+      "id": "route-local-ems-vaughan-ems-32-01",
+      "routeBaseId": "ems-vaughan-ems-32",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 875.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 292.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 152.3,
+        "bestSameServiceCostSeconds": 152.3
+      }
+    },
+    {
+      "name": "Keele Street & Langstaff Road",
+      "addr": "Keele Street & Langstaff Road",
+      "lat": 43.8185607,
+      "lng": -79.5039829,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/160069130",
+        "way/444997987",
+        "way/444997996"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/160069130",
+        "https://www.openstreetmap.org/way/444997987",
+        "https://www.openstreetmap.org/way/444997996"
+      ],
+      "id": "route-local-ems-vaughan-ems-32-02",
+      "routeBaseId": "ems-vaughan-ems-32",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2219.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 637.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 231.7,
+        "bestSameServiceCostSeconds": 228.4
+      }
+    },
+    {
+      "name": "Creditstone Road & Graniteridge Road",
+      "addr": "Creditstone Road & Graniteridge Road",
+      "lat": 43.8270158,
+      "lng": -79.5229,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55855007",
+        "way/55855052",
+        "way/55855145"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55855007",
+        "https://www.openstreetmap.org/way/55855052",
+        "https://www.openstreetmap.org/way/55855145"
+      ],
+      "id": "route-local-ems-vaughan-ems-32-03",
+      "routeBaseId": "ems-vaughan-ems-32",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2618.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 636.4,
+        "decisionKinds": [
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 279.1,
+        "bestSameServiceCostSeconds": 279.1
+      }
+    },
+    {
+      "name": "Keele Street & Knightswood Avenue",
+      "addr": "Keele Street & Knightswood Avenue",
+      "lat": 43.8455842,
+      "lng": -79.5102775,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/327005288",
+        "way/55062758"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/327005288",
+        "https://www.openstreetmap.org/way/55062758"
+      ],
+      "id": "route-local-ems-vaughan-ems-32-04",
+      "routeBaseId": "ems-vaughan-ems-32",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1720.9,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 268.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 209.5,
+        "bestSameServiceCostSeconds": 209.5
+      }
+    },
+    {
+      "name": "Campobello Street & District Avenue",
+      "addr": "Campobello Street & District Avenue",
+      "lat": 43.8457151,
+      "lng": -79.4869681,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/460708532",
+        "way/828860016"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/460708532",
+        "https://www.openstreetmap.org/way/828860016"
+      ],
+      "id": "route-local-ems-vaughan-ems-32-05",
+      "routeBaseId": "ems-vaughan-ems-32",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2623.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1913.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 271.3,
+        "bestSameServiceCostSeconds": 270.5
+      }
+    },
+    {
+      "name": "Confederation Parkway & Rutherford Road",
+      "addr": "Confederation Parkway & Rutherford Road",
+      "lat": 43.8407244,
+      "lng": -79.4923082,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/38519857",
+        "way/38519858",
+        "way/38519860",
+        "way/961430343"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/38519857",
+        "https://www.openstreetmap.org/way/38519858",
+        "https://www.openstreetmap.org/way/38519860",
+        "https://www.openstreetmap.org/way/961430343"
+      ],
+      "id": "route-local-ems-vaughan-ems-32-06",
+      "routeBaseId": "ems-vaughan-ems-32",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1731.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 236.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 203.8,
+        "bestSameServiceCostSeconds": 203.8
+      }
+    },
+    {
+      "name": "Beverley Glen Boulevard & Dufferin Street",
+      "addr": "Beverley Glen Boulevard & Dufferin Street",
+      "lat": 43.8096524,
+      "lng": -79.4753049,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1393440744",
+        "way/5560123",
+        "way/761348259",
+        "way/8630773"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1393440744",
+        "https://www.openstreetmap.org/way/5560123",
+        "https://www.openstreetmap.org/way/761348259",
+        "https://www.openstreetmap.org/way/8630773"
+      ],
+      "id": "route-local-ems-vaughan-ems-34-01",
+      "routeBaseId": "ems-vaughan-ems-34",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 848.7,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1457.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 88.4,
+        "bestSameServiceCostSeconds": 88.4
+      }
+    },
+    {
+      "name": "Maple Sugar Lane & Pleasant Ridge Avenue",
+      "addr": "Maple Sugar Lane & Pleasant Ridge Avenue",
+      "lat": 43.8258143,
+      "lng": -79.4732595,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/161614378",
+        "way/445393521",
+        "way/445393522"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/161614378",
+        "https://www.openstreetmap.org/way/445393521",
+        "https://www.openstreetmap.org/way/445393522"
+      ],
+      "id": "route-local-ems-vaughan-ems-34-02",
+      "routeBaseId": "ems-vaughan-ems-34",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1745.7,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 3969.9,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 132.5,
+        "bestSameServiceCostSeconds": 132.5
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Dufferin Clark Library",
+      "addr": "1441 Clark Avenue West, Vaughan, ON",
+      "lat": 43.79645554346133,
+      "lng": -79.47146259343884,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ww3.yorkmaps.ca/arcgis/rest/services/General/CommunityResources/MapServer/9/query?objectIds=3&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Dufferin Street",
+        "Jason Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "vaughan-call-01",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-vaughan-ems-34-03",
+      "routeBaseId": "ems-vaughan-ems-34",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2587.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 3615.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 247.5,
+        "bestSameServiceCostSeconds": 247.5
+      }
+    },
+    {
+      "name": "Langstaff Road & North Rivermede Road & Staffern Drive",
+      "addr": "Langstaff Road & North Rivermede Road & Staffern Drive",
+      "lat": 43.8226604,
+      "lng": -79.4848703,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/30614584",
+        "way/445445499",
+        "way/445445505",
+        "way/845773116"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/30614584",
+        "https://www.openstreetmap.org/way/445445499",
+        "https://www.openstreetmap.org/way/445445505",
+        "https://www.openstreetmap.org/way/845773116"
+      ],
+      "id": "route-local-ems-vaughan-ems-34-04",
+      "routeBaseId": "ems-vaughan-ems-34",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1777.1,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 4554.4,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 131.8,
+        "bestSameServiceCostSeconds": 131.8
+      }
+    },
+    {
+      "name": "Grenadier Crescent & Palmerston Drive",
+      "addr": "Grenadier Crescent & Palmerston Drive",
+      "lat": 43.8167735,
+      "lng": -79.4607347,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/37272696",
+        "way/37272697",
+        "way/37272698"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/37272696",
+        "https://www.openstreetmap.org/way/37272697",
+        "https://www.openstreetmap.org/way/37272698"
+      ],
+      "id": "route-local-ems-vaughan-ems-34-05",
+      "routeBaseId": "ems-vaughan-ems-34",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2641.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2111.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 253.3,
+        "bestSameServiceCostSeconds": 253.3
+      }
+    },
+    {
+      "name": "Beverley Glen Boulevard & Redondo Drive",
+      "addr": "Beverley Glen Boulevard & Redondo Drive",
+      "lat": 43.8134339,
+      "lng": -79.4683586,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/121646151",
+        "way/121646156",
+        "way/35346933"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/121646151",
+        "https://www.openstreetmap.org/way/121646156",
+        "https://www.openstreetmap.org/way/35346933"
+      ],
+      "id": "route-local-ems-vaughan-ems-34-06",
+      "routeBaseId": "ems-vaughan-ems-34",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1619.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1457.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 150,
+        "bestSameServiceCostSeconds": 150
+      }
+    }
+  ]
 }

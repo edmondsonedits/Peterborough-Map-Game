@@ -139,5 +139,1983 @@
   ],
   "roadsUrl": "cities/brantford/roads.geojson.gz",
   "roadFeatureCount": 5579,
-  "roadDataSha256": "f94a219730886951b6a6213cb71fbb2f3130a82052b53134742da47cc72b1917"
+  "roadDataSha256": "f94a219730886951b6a6213cb71fbb2f3130a82052b53134742da47cc72b1917",
+  "routeResponses": {
+    "schemaVersion": 1,
+    "minCallsPerBase": 3,
+    "targetCallsPerBase": 6,
+    "generatedOn": "2026-10-17",
+    "model": {
+      "description": "Published first-due polygons where available. Otherwise a directed road-network estimate using road class travel cost from every same-service hall; allows a15second cost tie for overlapping nearby halls. This is training geography, not live dispatch advice.",
+      "ownershipToleranceSeconds": 15,
+      "maximumCandidateRouteMetres": 12000
+    },
+    "bases": [
+      {
+        "baseId": "fire-brantford-fire-1",
+        "service": "fire",
+        "number": 1,
+        "name": "Central Services / Fire Station 1",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.1421848,
+          "lng": -80.2595244,
+          "road": "Unnamed road",
+          "gapMetres": 18.2
+        },
+        "callIds": [
+          "route-local-fire-brantford-fire-1-01",
+          "route-local-fire-brantford-fire-1-02",
+          "route-local-fire-brantford-fire-1-03",
+          "route-local-fire-brantford-fire-1-04",
+          "route-local-fire-brantford-fire-1-05",
+          "route-local-fire-brantford-fire-1-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-brantford-fire-2",
+        "service": "fire",
+        "number": 2,
+        "name": "Fire Station 2",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.16933057173145,
+          "lng": -80.27393037682387,
+          "road": "Norman Street",
+          "gapMetres": 47.8
+        },
+        "callIds": [
+          "route-local-fire-brantford-fire-2-01",
+          "route-local-fire-brantford-fire-2-02",
+          "route-local-fire-brantford-fire-2-03",
+          "route-local-fire-brantford-fire-2-04",
+          "route-local-fire-brantford-fire-2-05",
+          "route-local-fire-brantford-fire-2-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-brantford-fire-3",
+        "service": "fire",
+        "number": 3,
+        "name": "Fire Station 3",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.1731513,
+          "lng": -80.2462103,
+          "road": "Unnamed road",
+          "gapMetres": 12.3
+        },
+        "callIds": [
+          "route-local-fire-brantford-fire-3-01",
+          "route-local-fire-brantford-fire-3-02",
+          "route-local-fire-brantford-fire-3-03",
+          "route-local-fire-brantford-fire-3-04",
+          "route-local-fire-brantford-fire-3-05",
+          "route-local-fire-brantford-fire-3-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-brantford-fire-4",
+        "service": "fire",
+        "number": 4,
+        "name": "Fire Station 4",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.13122089137803,
+          "lng": -80.29288699001225,
+          "road": "Unnamed road",
+          "gapMetres": 6.9
+        },
+        "callIds": [
+          "route-local-fire-brantford-fire-4-01",
+          "route-local-fire-brantford-fire-4-02",
+          "route-local-fire-brantford-fire-4-03",
+          "route-local-fire-brantford-fire-4-04",
+          "route-local-fire-brantford-fire-4-05",
+          "route-local-fire-brantford-fire-4-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-brantford-ems-325",
+        "service": "ems",
+        "number": 10000,
+        "name": "Ambulance Station 00 Henry",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.157274567226224,
+          "lng": -80.22615917214966,
+          "road": "Henry Street",
+          "gapMetres": 33.8
+        },
+        "callIds": [
+          "route-local-ems-brantford-ems-325-01",
+          "route-local-ems-brantford-ems-325-02",
+          "route-local-ems-brantford-ems-325-03",
+          "route-local-ems-brantford-ems-325-04",
+          "route-local-ems-brantford-ems-325-05",
+          "route-local-ems-brantford-ems-325-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-brantford-ems-326",
+        "service": "ems",
+        "number": 4,
+        "name": "Ambulance Station 04 Colborne",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6100,
+        "access": {
+          "lat": 43.1311362,
+          "lng": -80.292155,
+          "road": "Unnamed road",
+          "gapMetres": 19.8
+        },
+        "callIds": [
+          "route-local-ems-brantford-ems-326-01",
+          "route-local-ems-brantford-ems-326-02",
+          "route-local-ems-brantford-ems-326-03",
+          "route-local-ems-brantford-ems-326-04",
+          "route-local-ems-brantford-ems-326-05",
+          "route-local-ems-brantford-ems-326-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-brantford-ems-327",
+        "service": "ems",
+        "number": 5,
+        "name": "Ambulance Station 05 Tranquility",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.18647818384755,
+          "lng": -80.27699515754692,
+          "road": "Francis Street",
+          "gapMetres": 31.9
+        },
+        "callIds": [
+          "route-local-ems-brantford-ems-327-01",
+          "route-local-ems-brantford-ems-327-02",
+          "route-local-ems-brantford-ems-327-03",
+          "route-local-ems-brantford-ems-327-04",
+          "route-local-ems-brantford-ems-327-05",
+          "route-local-ems-brantford-ems-327-06"
+        ],
+        "challengeCalls": 6
+      }
+    ]
+  },
+  "routeCalls": [
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "TD Civic Centre",
+      "addr": "79 Market Street South, Brantford, Ontario",
+      "lat": 43.135694,
+      "lng": -80.264229,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.brantford.ca/parks-and-facilities/details/?facilityId=TNT-COB-0000069-4461EE08-19C2-443F-8277-97841065D803",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Erie Avenue",
+        "Icomm Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "brantford-call-02",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-brantford-fire-1-01",
+      "routeBaseId": "fire-brantford-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1340.5,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 496.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 159,
+        "bestSameServiceCostSeconds": 159
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Arctic Park",
+      "addr": "59 Galileo Boulevard, Brantford, Ontario",
+      "lat": 43.1554069519043,
+      "lng": -80.2616882324219,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.brantford.ca/parks-and-facilities/details/?facilityId=TNT-COB-0000069-47C2D844-2A0B-4807-AD68-9378F26BE811",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "West Street",
+        "Harris Avenue (via West Street)"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "brantford-call-19",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-brantford-fire-1-02",
+      "routeBaseId": "fire-brantford-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1897.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 485.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 218.9,
+        "bestSameServiceCostSeconds": 218.9
+      }
+    },
+    {
+      "name": "Beverly Road & Colborne Street",
+      "addr": "Beverly Road & Colborne Street",
+      "lat": 43.1427627,
+      "lng": -80.2313704,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35506739",
+        "way/461374965"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35506739",
+        "https://www.openstreetmap.org/way/461374965"
+      ],
+      "id": "route-local-fire-brantford-fire-1-03",
+      "routeBaseId": "fire-brantford-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2594.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 311.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 194.3,
+        "bestSameServiceCostSeconds": 194.3
+      }
+    },
+    {
+      "name": "Brock Street & Nelson Street",
+      "addr": "Brock Street & Nelson Street",
+      "lat": 43.1429899,
+      "lng": -80.251186,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25495562",
+        "way/25580629"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25495562",
+        "https://www.openstreetmap.org/way/25580629"
+      ],
+      "id": "route-local-fire-brantford-fire-1-04",
+      "routeBaseId": "fire-brantford-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 786.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 355.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 130.8,
+        "bestSameServiceCostSeconds": 130.8
+      }
+    },
+    {
+      "name": "Baldwin Avenue & Dover Avenue",
+      "addr": "Baldwin Avenue & Dover Avenue",
+      "lat": 43.1231073,
+      "lng": -80.2559348,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35506801",
+        "way/35526250",
+        "way/35532664"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35506801",
+        "https://www.openstreetmap.org/way/35526250",
+        "https://www.openstreetmap.org/way/35532664"
+      ],
+      "id": "route-local-fire-brantford-fire-1-05",
+      "routeBaseId": "fire-brantford-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2594.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 468,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 203.2,
+        "bestSameServiceCostSeconds": 203.2
+      }
+    },
+    {
+      "name": "Greenwich Street & Murray Street",
+      "addr": "Greenwich Street & Murray Street",
+      "lat": 43.131672,
+      "lng": -80.2512133,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35505291",
+        "way/35514506",
+        "way/42874949"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35505291",
+        "https://www.openstreetmap.org/way/35514506",
+        "https://www.openstreetmap.org/way/42874949"
+      ],
+      "id": "route-local-fire-brantford-fire-1-06",
+      "routeBaseId": "fire-brantford-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1680.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 275.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 156,
+        "bestSameServiceCostSeconds": 156
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Wayne Gretzky Sports Centre",
+      "addr": "254 North Park Street, Brantford, Ontario",
+      "lat": 43.167548,
+      "lng": -80.265094,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.brantford.ca/parks-and-facilities/details/?facilityId=TNT-COB-0000069-2C840A6D-EEDB-43AD-BE09-0F09BAE350B9",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Waddington Street",
+        "Morton Avenue West"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "brantford-call-01",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-brantford-fire-2-01",
+      "routeBaseId": "fire-brantford-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 981.5,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 721.3,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Norman Street",
+        "estimatedCostSeconds": 120.3,
+        "bestSameServiceCostSeconds": 120.3
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Anne Good Park",
+      "addr": "50 Allensgate Drive, Brantford, Ontario",
+      "lat": 43.1757888793945,
+      "lng": -80.2995681762695,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.brantford.ca/parks-and-facilities/details/?facilityId=TNT-COB-0000069-B1AC2ECF-70C9-43E3-82D3-0E7249DC4F31",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Heritage Road",
+        "Northfield Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "brantford-call-18",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-brantford-fire-2-02",
+      "routeBaseId": "fire-brantford-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2609.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 427.5,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Norman Street",
+        "estimatedCostSeconds": 256.3,
+        "bestSameServiceCostSeconds": 256.3
+      }
+    },
+    {
+      "name": "Francis Street & Powerline Road",
+      "addr": "Francis Street & Powerline Road",
+      "lat": 43.1867819,
+      "lng": -80.277108,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/309366363",
+        "way/35531681"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/309366363",
+        "https://www.openstreetmap.org/way/35531681"
+      ],
+      "id": "route-local-fire-brantford-fire-2-03",
+      "routeBaseId": "fire-brantford-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2441.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 366.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Norman Street",
+        "estimatedCostSeconds": 146.1,
+        "bestSameServiceCostSeconds": 146.1
+      }
+    },
+    {
+      "name": "St George Street & Tollgate Road",
+      "addr": "St George Street & Tollgate Road",
+      "lat": 43.1667919,
+      "lng": -80.283164,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/247723241",
+        "way/309426147",
+        "way/461136912"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/247723241",
+        "https://www.openstreetmap.org/way/309426147",
+        "https://www.openstreetmap.org/way/461136912"
+      ],
+      "id": "route-local-fire-brantford-fire-2-04",
+      "routeBaseId": "fire-brantford-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 843.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1395.1,
+        "decisionKinds": [
+          "bridge",
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Norman Street",
+        "estimatedCostSeconds": 69.8,
+        "bestSameServiceCostSeconds": 69.8
+      }
+    },
+    {
+      "name": "Terrace Hill Street & Wells Avenue",
+      "addr": "Terrace Hill Street & Wells Avenue",
+      "lat": 43.1516593,
+      "lng": -80.2732316,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25773999",
+        "way/511882810"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25773999",
+        "https://www.openstreetmap.org/way/511882810"
+      ],
+      "id": "route-local-fire-brantford-fire-2-05",
+      "routeBaseId": "fire-brantford-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2401.1,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1185.2,
+        "decisionKinds": [
+          "turn",
+          "bridge",
+          "departure"
+        ],
+        "departureRoad": "Norman Street",
+        "estimatedCostSeconds": 165.5,
+        "bestSameServiceCostSeconds": 165.5
+      }
+    },
+    {
+      "name": "Elm Street & St George Street",
+      "addr": "Elm Street & St George Street",
+      "lat": 43.1578881,
+      "lng": -80.27818,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/27184788",
+        "way/461136914"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/27184788",
+        "https://www.openstreetmap.org/way/461136914"
+      ],
+      "id": "route-local-fire-brantford-fire-2-06",
+      "routeBaseId": "fire-brantford-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1699.6,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 837.6,
+        "decisionKinds": [
+          "turn",
+          "departure",
+          "bridge"
+        ],
+        "departureRoad": "Norman Street",
+        "estimatedCostSeconds": 167.3,
+        "bestSameServiceCostSeconds": 167.3
+      }
+    },
+    {
+      "name": "Applewood Drive & Brier Park Road",
+      "addr": "Applewood Drive & Brier Park Road",
+      "lat": 43.1742874,
+      "lng": -80.2533011,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35504112",
+        "way/35510451",
+        "way/35511810"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35504112",
+        "https://www.openstreetmap.org/way/35510451",
+        "https://www.openstreetmap.org/way/35511810"
+      ],
+      "id": "route-local-fire-brantford-fire-3-01",
+      "routeBaseId": "fire-brantford-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 796.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 749,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 90.1,
+        "bestSameServiceCostSeconds": 90.1
+      }
+    },
+    {
+      "name": "Roy Boulevard & Sage Court",
+      "addr": "Roy Boulevard & Sage Court",
+      "lat": 43.171584,
+      "lng": -80.2285807,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35522592",
+        "way/35525150",
+        "way/35528097"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35522592",
+        "https://www.openstreetmap.org/way/35525150",
+        "https://www.openstreetmap.org/way/35528097"
+      ],
+      "id": "route-local-fire-brantford-fire-3-02",
+      "routeBaseId": "fire-brantford-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1909.9,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 226,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 206.5,
+        "bestSameServiceCostSeconds": 206.5
+      }
+    },
+    {
+      "name": "Carter Street & Wayne Gretzky Parkway",
+      "addr": "Carter Street & Wayne Gretzky Parkway",
+      "lat": 43.1527801,
+      "lng": -80.238617,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/303113282",
+        "way/462357214",
+        "way/462357216",
+        "way/462452626",
+        "way/462452627"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/303113282",
+        "https://www.openstreetmap.org/way/462357214",
+        "https://www.openstreetmap.org/way/462357216",
+        "https://www.openstreetmap.org/way/462452626",
+        "https://www.openstreetmap.org/way/462452627"
+      ],
+      "id": "route-local-fire-brantford-fire-3-03",
+      "routeBaseId": "fire-brantford-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2592.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1919.8,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 173.7,
+        "bestSameServiceCostSeconds": 173.7
+      }
+    },
+    {
+      "name": "Sycamore Drive & West Street",
+      "addr": "Sycamore Drive & West Street",
+      "lat": 43.160179,
+      "lng": -80.2547213,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35508661",
+        "way/487913205"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35508661",
+        "https://www.openstreetmap.org/way/487913205"
+      ],
+      "id": "route-local-fire-brantford-fire-3-04",
+      "routeBaseId": "fire-brantford-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1700.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 976.6,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 116.6,
+        "bestSameServiceCostSeconds": 116.6
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Branlyn Community Centre",
+      "addr": "238 Brantwood Park Road, Brantford, Ontario",
+      "lat": 43.182309,
+      "lng": -80.235363,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.brantford.ca/parks-and-facilities/details/?facilityId=TNT-COB-0000069-10183615-3E9B-4B75-8788-AF2A5236BA4C",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Kiev Boulevard",
+        "Trotter Lane"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "brantford-call-11",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-brantford-fire-3-05",
+      "routeBaseId": "fire-brantford-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2639.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 535.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 194.1,
+        "bestSameServiceCostSeconds": 194.1
+      }
+    },
+    {
+      "name": "Forestwood Court & Greenfield Road",
+      "addr": "Forestwood Court & Greenfield Road",
+      "lat": 43.1893925,
+      "lng": -80.2561631,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35503674",
+        "way/460969367"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35503674",
+        "https://www.openstreetmap.org/way/460969367"
+      ],
+      "id": "route-local-fire-brantford-fire-3-06",
+      "routeBaseId": "fire-brantford-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2589.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 761.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 176.7,
+        "bestSameServiceCostSeconds": 176.7
+      }
+    },
+    {
+      "name": "Colborne Street West & Shellard Lane",
+      "addr": "Colborne Street West & Shellard Lane",
+      "lat": 43.1319411,
+      "lng": -80.2847636,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/236798551",
+        "way/40838500",
+        "way/604081765"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/236798551",
+        "https://www.openstreetmap.org/way/40838500",
+        "https://www.openstreetmap.org/way/604081765"
+      ],
+      "id": "route-local-fire-brantford-fire-4-01",
+      "routeBaseId": "fire-brantford-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 795.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 8957.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 90.7,
+        "bestSameServiceCostSeconds": 90.7
+      }
+    },
+    {
+      "name": "Jennings Road & Oakhill Drive",
+      "addr": "Jennings Road & Oakhill Drive",
+      "lat": 43.1346914,
+      "lng": -80.3089039,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35509680",
+        "way/460973810"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35509680",
+        "https://www.openstreetmap.org/way/460973810"
+      ],
+      "id": "route-local-fire-brantford-fire-4-02",
+      "routeBaseId": "fire-brantford-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1715.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1383.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 260.8,
+        "bestSameServiceCostSeconds": 260.8
+      }
+    },
+    {
+      "name": "Longboat Run West & Powell Road",
+      "addr": "Longboat Run West & Powell Road",
+      "lat": 43.1170133,
+      "lng": -80.3019119,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/478668755",
+        "way/580131332"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/478668755",
+        "https://www.openstreetmap.org/way/580131332"
+      ],
+      "id": "route-local-fire-brantford-fire-4-03",
+      "routeBaseId": "fire-brantford-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2595.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 5174.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 221.5,
+        "bestSameServiceCostSeconds": 221.5
+      }
+    },
+    {
+      "name": "Donegal Drive & Sudds Lane",
+      "addr": "Donegal Drive & Sudds Lane",
+      "lat": 43.1274642,
+      "lng": -80.2964006,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35503572",
+        "way/35504626"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35503572",
+        "https://www.openstreetmap.org/way/35504626"
+      ],
+      "id": "route-local-fire-brantford-fire-4-04",
+      "routeBaseId": "fire-brantford-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1654.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 7349.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 185.4,
+        "bestSameServiceCostSeconds": 185.4
+      }
+    },
+    {
+      "name": "Charles Street & Delamere Street",
+      "addr": "Charles Street & Delamere Street",
+      "lat": 43.12298,
+      "lng": -80.27029,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35516891",
+        "way/35519469",
+        "way/426107694"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35516891",
+        "https://www.openstreetmap.org/way/35519469",
+        "https://www.openstreetmap.org/way/426107694"
+      ],
+      "id": "route-local-fire-brantford-fire-4-05",
+      "routeBaseId": "fire-brantford-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2616.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 8346,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 239.2,
+        "bestSameServiceCostSeconds": 239.2
+      }
+    },
+    {
+      "name": "Oak Street & Sherwood Drive",
+      "addr": "Oak Street & Sherwood Drive",
+      "lat": 43.135504,
+      "lng": -80.2757579,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35528041",
+        "way/35529673",
+        "way/35532150"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35528041",
+        "https://www.openstreetmap.org/way/35529673",
+        "https://www.openstreetmap.org/way/35532150"
+      ],
+      "id": "route-local-fire-brantford-fire-4-06",
+      "routeBaseId": "fire-brantford-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1718.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 8957.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 181.3,
+        "bestSameServiceCostSeconds": 175.3
+      }
+    },
+    {
+      "name": "Adams Boulevard & Middleton Street",
+      "addr": "Adams Boulevard & Middleton Street",
+      "lat": 43.1633922,
+      "lng": -80.2262973,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35505512",
+        "way/35525183",
+        "way/35534042"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35505512",
+        "https://www.openstreetmap.org/way/35525183",
+        "https://www.openstreetmap.org/way/35534042"
+      ],
+      "id": "route-local-ems-brantford-ems-325-01",
+      "routeBaseId": "ems-brantford-ems-325",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 803.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 3531.5,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Henry Street",
+        "estimatedCostSeconds": 111.7,
+        "bestSameServiceCostSeconds": 111.7
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "St. Joseph's Lifecare Centre",
+      "addr": "99 Wayne Gretzky Parkway",
+      "lat": 43.14552599905866,
+      "lng": -80.2353081,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789881"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "4507",
+      "community": "Brantford",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-4507",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-brantford-ems-325-02",
+      "routeBaseId": "ems-brantford-ems-325",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2656.2,
+        "meaningfulDecisions": 6,
+        "maxAlternativePenaltyMetres": 1696.9,
+        "decisionKinds": [
+          "turn",
+          "departure",
+          "bridge"
+        ],
+        "departureRoad": "Henry Street",
+        "estimatedCostSeconds": 235,
+        "bestSameServiceCostSeconds": 235
+      }
+    },
+    {
+      "name": "County Road 18 & Johnson Road",
+      "addr": "County Road 18 & Johnson Road",
+      "lat": 43.1516912,
+      "lng": -80.2003203,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35509037",
+        "way/930702809",
+        "way/930702810",
+        "way/930702811"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35509037",
+        "https://www.openstreetmap.org/way/930702809",
+        "https://www.openstreetmap.org/way/930702810",
+        "https://www.openstreetmap.org/way/930702811"
+      ],
+      "id": "route-local-ems-brantford-ems-325-03",
+      "routeBaseId": "ems-brantford-ems-325",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2571.1,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 3100.7,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Henry Street",
+        "estimatedCostSeconds": 155,
+        "bestSameServiceCostSeconds": 155
+      }
+    },
+    {
+      "name": "Braneida Lane & Hachborn Road",
+      "addr": "Braneida Lane & Hachborn Road",
+      "lat": 43.1509526,
+      "lng": -80.219075,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35514339",
+        "way/35527167",
+        "way/500964453"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35514339",
+        "https://www.openstreetmap.org/way/35527167",
+        "https://www.openstreetmap.org/way/500964453"
+      ],
+      "id": "route-local-ems-brantford-ems-325-04",
+      "routeBaseId": "ems-brantford-ems-325",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1269.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2154,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Henry Street",
+        "estimatedCostSeconds": 145,
+        "bestSameServiceCostSeconds": 145
+      }
+    },
+    {
+      "name": "Craig Street & Morton Avenue East",
+      "addr": "Craig Street & Morton Avenue East",
+      "lat": 43.1615893,
+      "lng": -80.2448698,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35516663",
+        "way/35533431",
+        "way/35534177"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35516663",
+        "https://www.openstreetmap.org/way/35533431",
+        "https://www.openstreetmap.org/way/35534177"
+      ],
+      "id": "route-local-ems-brantford-ems-325-05",
+      "routeBaseId": "ems-brantford-ems-325",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2191.7,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 3786.4,
+        "decisionKinds": [
+          "departure",
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Henry Street",
+        "estimatedCostSeconds": 136.6,
+        "bestSameServiceCostSeconds": 136.6
+      }
+    },
+    {
+      "name": "Abbott Court & Garden Avenue",
+      "addr": "Abbott Court & Garden Avenue",
+      "lat": 43.1628218,
+      "lng": -80.2114672,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/24672241",
+        "way/303113285",
+        "way/439020246"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/24672241",
+        "https://www.openstreetmap.org/way/303113285",
+        "https://www.openstreetmap.org/way/439020246"
+      ],
+      "id": "route-local-ems-brantford-ems-325-06",
+      "routeBaseId": "ems-brantford-ems-325",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1706.7,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 3307.6,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Henry Street",
+        "estimatedCostSeconds": 102.8,
+        "bestSameServiceCostSeconds": 102.8
+      }
+    },
+    {
+      "name": "Diana Avenue & Shellard Lane & St. Patrick's Drive",
+      "addr": "Diana Avenue & Shellard Lane & St. Patrick's Drive",
+      "lat": 43.1273492,
+      "lng": -80.2893179,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/319114730",
+        "way/35510116",
+        "way/35510796",
+        "way/460976031"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/319114730",
+        "https://www.openstreetmap.org/way/35510116",
+        "https://www.openstreetmap.org/way/35510796",
+        "https://www.openstreetmap.org/way/460976031"
+      ],
+      "id": "route-local-ems-brantford-ems-326-01",
+      "routeBaseId": "ems-brantford-ems-326",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 804.7,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 8203.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 64.4,
+        "bestSameServiceCostSeconds": 64.4
+      }
+    },
+    {
+      "name": "Blythwood Heights & Jennings Road",
+      "addr": "Blythwood Heights & Jennings Road",
+      "lat": 43.1358849,
+      "lng": -80.3090121,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35504535",
+        "way/35509680",
+        "way/35514406"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35504535",
+        "https://www.openstreetmap.org/way/35509680",
+        "https://www.openstreetmap.org/way/35514406"
+      ],
+      "id": "route-local-ems-brantford-ems-326-02",
+      "routeBaseId": "ems-brantford-ems-326",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1759.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1383.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 248.2,
+        "bestSameServiceCostSeconds": 248.2
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Lions Park Arena Steve Brown Sports Complex",
+      "addr": "20 Edge Street, Brantford, Ontario",
+      "lat": 43.1213645935059,
+      "lng": -80.270263671875,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.brantford.ca/parks-and-facilities/details/?facilityId=TNT-COB-0000069-BDEEE005-C4CD-4BED-9BBC-937CF888660B",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Delamere Street",
+        "Gilkison Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "brantford-call-14",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-brantford-ems-326-03",
+      "routeBaseId": "ems-brantford-ems-326",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2719.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 8346,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 235.4,
+        "bestSameServiceCostSeconds": 235.4
+      }
+    },
+    {
+      "name": "Colborne Street West & Oak Street",
+      "addr": "Colborne Street West & Oak Street",
+      "lat": 43.134268,
+      "lng": -80.273965,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1557486793",
+        "way/35508578",
+        "way/35525187",
+        "way/460976027"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1557486793",
+        "https://www.openstreetmap.org/way/35508578",
+        "https://www.openstreetmap.org/way/35525187",
+        "https://www.openstreetmap.org/way/460976027"
+      ],
+      "id": "route-local-ems-brantford-ems-326-04",
+      "routeBaseId": "ems-brantford-ems-326",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1719.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 8957.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 119.4,
+        "bestSameServiceCostSeconds": 119.4
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "John Noble Home",
+      "addr": "97 Mount Pleasant Street",
+      "lat": 43.125477599058684,
+      "lng": -80.27587029999995,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789810"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "1011",
+      "community": "Brantford",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-1011",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-brantford-ems-326-05",
+      "routeBaseId": "ems-brantford-ems-326",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2310.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 8684,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 336.2,
+        "bestSameServiceCostSeconds": 336.2
+      }
+    },
+    {
+      "name": "Longboat Run West & Sinden Road",
+      "addr": "Longboat Run West & Sinden Road",
+      "lat": 43.1172846,
+      "lng": -80.300998,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/478668755",
+        "way/580131333"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/478668755",
+        "https://www.openstreetmap.org/way/580131333"
+      ],
+      "id": "route-local-ems-brantford-ems-326-06",
+      "routeBaseId": "ems-brantford-ems-326",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2587.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 5174.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 189.6,
+        "bestSameServiceCostSeconds": 189.6
+      }
+    },
+    {
+      "name": "Consol Road & Francis Street",
+      "addr": "Consol Road & Francis Street",
+      "lat": 43.1798695,
+      "lng": -80.2755905,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35505883",
+        "way/35529833",
+        "way/35532724"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35505883",
+        "https://www.openstreetmap.org/way/35529833",
+        "https://www.openstreetmap.org/way/35532724"
+      ],
+      "id": "route-local-ems-brantford-ems-327-01",
+      "routeBaseId": "ems-brantford-ems-327",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 807.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 680.6,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Francis Street",
+        "estimatedCostSeconds": 119.9,
+        "bestSameServiceCostSeconds": 119.9
+      }
+    },
+    {
+      "name": "Balmoral Drive & Powerline Road",
+      "addr": "Balmoral Drive & Powerline Road",
+      "lat": 43.1834341,
+      "lng": -80.2974566,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34848934",
+        "way/35534322"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34848934",
+        "https://www.openstreetmap.org/way/35534322"
+      ],
+      "id": "route-local-ems-brantford-ems-327-02",
+      "routeBaseId": "ems-brantford-ems-327",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1728.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2702.8,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Francis Street",
+        "estimatedCostSeconds": 107.2,
+        "bestSameServiceCostSeconds": 107.2
+      }
+    },
+    {
+      "name": "Brant Road & King George Road",
+      "addr": "Brant Road & King George Road",
+      "lat": 43.2046018,
+      "lng": -80.2799679,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/244439592",
+        "way/487908331",
+        "way/487908332"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/244439592",
+        "https://www.openstreetmap.org/way/487908331",
+        "https://www.openstreetmap.org/way/487908332"
+      ],
+      "id": "route-local-ems-brantford-ems-327-03",
+      "routeBaseId": "ems-brantford-ems-327",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2492.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 5502,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Francis Street",
+        "estimatedCostSeconds": 129.4,
+        "bestSameServiceCostSeconds": 129.4
+      }
+    },
+    {
+      "name": "Camrose Drive & Oriole Parkway",
+      "addr": "Camrose Drive & Oriole Parkway",
+      "lat": 43.1875165,
+      "lng": -80.259108,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35505719",
+        "way/35512135",
+        "way/35512308"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35505719",
+        "https://www.openstreetmap.org/way/35512135",
+        "https://www.openstreetmap.org/way/35512308"
+      ],
+      "id": "route-local-ems-brantford-ems-327-04",
+      "routeBaseId": "ems-brantford-ems-327",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1668.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1210.1,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Francis Street",
+        "estimatedCostSeconds": 132.8,
+        "bestSameServiceCostSeconds": 132.8
+      }
+    },
+    {
+      "name": "Gillrie Court & Harvard Avenue",
+      "addr": "Gillrie Court & Harvard Avenue",
+      "lat": 43.1707984,
+      "lng": -80.2651789,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35504012",
+        "way/35508464",
+        "way/35531199"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35504012",
+        "https://www.openstreetmap.org/way/35508464",
+        "https://www.openstreetmap.org/way/35531199"
+      ],
+      "id": "route-local-ems-brantford-ems-327-05",
+      "routeBaseId": "ems-brantford-ems-327",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2590.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 669.8,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Francis Street",
+        "estimatedCostSeconds": 208.8,
+        "bestSameServiceCostSeconds": 208.8
+      }
+    },
+    {
+      "name": "Dunsdon Street & Woodway Trail",
+      "addr": "Dunsdon Street & Woodway Trail",
+      "lat": 43.1799807,
+      "lng": -80.2642394,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35506392",
+        "way/460922732"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35506392",
+        "https://www.openstreetmap.org/way/460922732"
+      ],
+      "id": "route-local-ems-brantford-ems-327-06",
+      "routeBaseId": "ems-brantford-ems-327",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1704.5,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1064.4,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Francis Street",
+        "estimatedCostSeconds": 115.9,
+        "bestSameServiceCostSeconds": 115.9
+      }
+    }
+  ]
 }

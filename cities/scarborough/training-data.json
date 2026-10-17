@@ -555,5 +555,3375 @@
   ],
   "roadsUrl": "cities/scarborough/roads.geojson.gz",
   "roadFeatureCount": 47069,
-  "roadDataSha256": "419d06eecc5c203317c04cab78ef126d24dce36d9f509f980204a0b7796e5f0c"
+  "roadDataSha256": "419d06eecc5c203317c04cab78ef126d24dce36d9f509f980204a0b7796e5f0c",
+  "routeResponses": {
+    "schemaVersion": 1,
+    "minCallsPerBase": 3,
+    "targetCallsPerBase": 6,
+    "generatedOn": "2026-10-17",
+    "model": {
+      "description": "Published first-due polygons where available. Otherwise a directed road-network estimate using road class travel cost from every same-service hall; allows a15second cost tie for overlapping nearby halls. This is training geography, not live dispatch advice.",
+      "ownershipToleranceSeconds": 15,
+      "maximumCandidateRouteMetres": 12000
+    },
+    "officialAreasUrl": "cities/scarborough/response-areas.geojson",
+    "officialSource": {
+      "title": "Toronto run areas subset for existing Scarborough Fire bases",
+      "url": "https://open.toronto.ca/dataset/toronto-fire-services-run-areas/",
+      "endpoint": "https://gis.toronto.ca/arcgis/rest/services/cot_geospatial25/FeatureServer/12",
+      "license": "Open Government Licence – Toronto",
+      "licenseUrl": "https://open.toronto.ca/open-data-licence/",
+      "retrievedOn": "2026-10-17",
+      "originalSha256": "bf756c5b85bb0621ace7df8bbccde1b0cd887b2053eb681cdd554690390b736e"
+    },
+    "bases": [
+      {
+        "baseId": "fire-station-212-212",
+        "service": "fire",
+        "number": 212,
+        "name": "Station 212",
+        "method": "official-run-area",
+        "sourceUrl": "https://open.toronto.ca/dataset/toronto-fire-services-run-areas/",
+        "areaCode": "212",
+        "maxRouteMetres": 6300,
+        "access": {
+          "lat": 43.8048712,
+          "lng": -79.1886331,
+          "road": "Unnamed road",
+          "gapMetres": 9.5
+        },
+        "callIds": [
+          "route-local-fire-station-212-212-01",
+          "route-local-fire-station-212-212-02",
+          "route-local-fire-station-212-212-03",
+          "route-local-fire-station-212-212-04",
+          "route-local-fire-station-212-212-05",
+          "route-local-fire-station-212-212-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-station-215-215",
+        "service": "fire",
+        "number": 215,
+        "name": "Station 215",
+        "method": "official-run-area",
+        "sourceUrl": "https://open.toronto.ca/dataset/toronto-fire-services-run-areas/",
+        "areaCode": "215",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.7773476,
+          "lng": -79.1481056,
+          "road": "Unnamed road",
+          "gapMetres": 5.8
+        },
+        "callIds": [
+          "route-local-fire-station-215-215-01",
+          "route-local-fire-station-215-215-02",
+          "route-local-fire-station-215-215-03",
+          "route-local-fire-station-215-215-04",
+          "route-local-fire-station-215-215-05",
+          "route-local-fire-station-215-215-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-station-221-221",
+        "service": "fire",
+        "number": 221,
+        "name": "Station 221",
+        "method": "official-run-area",
+        "sourceUrl": "https://open.toronto.ca/dataset/toronto-fire-services-run-areas/",
+        "areaCode": "221",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.73475997778077,
+          "lng": -79.25524028593213,
+          "road": "Unnamed road",
+          "gapMetres": 14.7
+        },
+        "callIds": [
+          "route-local-fire-station-221-221-01",
+          "route-local-fire-station-221-221-02",
+          "route-local-fire-station-221-221-03",
+          "route-local-fire-station-221-221-04",
+          "route-local-fire-station-221-221-05",
+          "route-local-fire-station-221-221-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-station-231-231",
+        "service": "fire",
+        "number": 231,
+        "name": "Station 231",
+        "method": "official-run-area",
+        "sourceUrl": "https://open.toronto.ca/dataset/toronto-fire-services-run-areas/",
+        "areaCode": "231",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.7646371,
+          "lng": -79.2276281,
+          "road": "Unnamed road",
+          "gapMetres": 13.2
+        },
+        "callIds": [
+          "route-local-fire-station-231-231-01",
+          "route-local-fire-station-231-231-02",
+          "route-local-fire-station-231-231-03",
+          "route-local-fire-station-231-231-04",
+          "route-local-fire-station-231-231-05",
+          "route-local-fire-station-231-231-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-station-243-243",
+        "service": "fire",
+        "number": 243,
+        "name": "Station 243",
+        "method": "official-run-area",
+        "sourceUrl": "https://open.toronto.ca/dataset/toronto-fire-services-run-areas/",
+        "areaCode": "243",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.7890657,
+          "lng": -79.2629902,
+          "road": "Unnamed road",
+          "gapMetres": 9.1
+        },
+        "callIds": [
+          "route-local-fire-station-243-243-01",
+          "route-local-fire-station-243-243-02",
+          "route-local-fire-station-243-243-03",
+          "route-local-fire-station-243-243-04",
+          "route-local-fire-station-243-243-05",
+          "route-local-fire-station-243-243-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-station-245-245",
+        "service": "fire",
+        "number": 245,
+        "name": "Station 245",
+        "method": "official-run-area",
+        "sourceUrl": "https://open.toronto.ca/dataset/toronto-fire-services-run-areas/",
+        "areaCode": "245",
+        "maxRouteMetres": 5300,
+        "access": {
+          "lat": 43.7627262,
+          "lng": -79.2913881,
+          "road": "Unnamed road",
+          "gapMetres": 11.1
+        },
+        "callIds": [
+          "route-local-fire-station-245-245-01",
+          "route-local-fire-station-245-245-02",
+          "route-local-fire-station-245-245-03",
+          "route-local-fire-station-245-245-04",
+          "route-local-fire-station-245-245-05",
+          "route-local-fire-station-245-245-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-ambulance-station-20-20",
+        "service": "ems",
+        "number": 20,
+        "name": "Ambulance Station 20",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.75093883444884,
+          "lng": -79.27113143607056,
+          "road": "Unnamed road",
+          "gapMetres": 18.9
+        },
+        "callIds": [
+          "route-local-ems-ambulance-station-20-20-01",
+          "route-local-ems-ambulance-station-20-20-02",
+          "route-local-ems-ambulance-station-20-20-03",
+          "route-local-ems-ambulance-station-20-20-04",
+          "route-local-ems-ambulance-station-20-20-05",
+          "route-local-ems-ambulance-station-20-20-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-ambulance-station-21-21",
+        "service": "ems",
+        "number": 21,
+        "name": "Ambulance Station 21",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.7294481,
+          "lng": -79.2989976,
+          "road": "Pharmacy Avenue",
+          "gapMetres": 39.4
+        },
+        "callIds": [
+          "route-local-ems-ambulance-station-21-21-01",
+          "route-local-ems-ambulance-station-21-21-02",
+          "route-local-ems-ambulance-station-21-21-03",
+          "route-local-ems-ambulance-station-21-21-04",
+          "route-local-ems-ambulance-station-21-21-05",
+          "route-local-ems-ambulance-station-21-21-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-ambulance-station-22-22",
+        "service": "ems",
+        "number": 22,
+        "name": "Ambulance Station 22",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.74220215939495,
+          "lng": -79.22649818879123,
+          "road": "Unnamed road",
+          "gapMetres": 29.5
+        },
+        "callIds": [
+          "route-local-ems-ambulance-station-22-22-01",
+          "route-local-ems-ambulance-station-22-22-02",
+          "route-local-ems-ambulance-station-22-22-03",
+          "route-local-ems-ambulance-station-22-22-04",
+          "route-local-ems-ambulance-station-22-22-05",
+          "route-local-ems-ambulance-station-22-22-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-ambulance-station-24-24",
+        "service": "ems",
+        "number": 24,
+        "name": "Ambulance Station 24",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.80280878942192,
+          "lng": -79.30810248193043,
+          "road": "Unnamed road",
+          "gapMetres": 4.6
+        },
+        "callIds": [
+          "route-local-ems-ambulance-station-24-24-01",
+          "route-local-ems-ambulance-station-24-24-02",
+          "route-local-ems-ambulance-station-24-24-03",
+          "route-local-ems-ambulance-station-24-24-04",
+          "route-local-ems-ambulance-station-24-24-05",
+          "route-local-ems-ambulance-station-24-24-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-ambulance-station-26-26",
+        "service": "ems",
+        "number": 26,
+        "name": "Ambulance Station 26",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.77110934611238,
+          "lng": -79.17417512479669,
+          "road": "Lawrence Avenue East",
+          "gapMetres": 32.7
+        },
+        "callIds": [
+          "route-local-ems-ambulance-station-26-26-01",
+          "route-local-ems-ambulance-station-26-26-02",
+          "route-local-ems-ambulance-station-26-26-03",
+          "route-local-ems-ambulance-station-26-26-04",
+          "route-local-ems-ambulance-station-26-26-05",
+          "route-local-ems-ambulance-station-26-26-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-ambulance-station-27-27",
+        "service": "ems",
+        "number": 27,
+        "name": "Ambulance Station 27",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.8240059,
+          "lng": -79.2426876,
+          "road": "Unnamed road",
+          "gapMetres": 14.7
+        },
+        "callIds": [
+          "route-local-ems-ambulance-station-27-27-01",
+          "route-local-ems-ambulance-station-27-27-02",
+          "route-local-ems-ambulance-station-27-27-03",
+          "route-local-ems-ambulance-station-27-27-04",
+          "route-local-ems-ambulance-station-27-27-05",
+          "route-local-ems-ambulance-station-27-27-06"
+        ],
+        "challengeCalls": 6
+      }
+    ]
+  },
+  "routeCalls": [
+    {
+      "name": "Coyote Crescent & Rouge River Drive",
+      "addr": "Coyote Crescent & Rouge River Drive",
+      "lat": 43.8070169,
+      "lng": -79.1806984,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1328425434",
+        "way/37319015",
+        "way/37356519"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1328425434",
+        "https://www.openstreetmap.org/way/37319015",
+        "https://www.openstreetmap.org/way/37356519"
+      ],
+      "id": "route-local-fire-station-212-212-01",
+      "routeBaseId": "fire-station-212-212",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 804,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 4766.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 71.6,
+        "bestSameServiceCostSeconds": 71.6
+      }
+    },
+    {
+      "name": "Breckon Gate & Murison Boulevard & Usherwood Court",
+      "addr": "Breckon Gate & Murison Boulevard & Usherwood Court",
+      "lat": 43.7996145,
+      "lng": -79.2063919,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/36738927",
+        "way/36738941",
+        "way/36738942",
+        "way/36738945"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/36738927",
+        "https://www.openstreetmap.org/way/36738941",
+        "https://www.openstreetmap.org/way/36738942",
+        "https://www.openstreetmap.org/way/36738945"
+      ],
+      "id": "route-local-fire-station-212-212-02",
+      "routeBaseId": "fire-station-212-212",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1719.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 4086.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 121,
+        "bestSameServiceCostSeconds": 121
+      }
+    },
+    {
+      "name": "Grayson Crescent & Littles Road",
+      "addr": "Grayson Crescent & Littles Road",
+      "lat": 43.8152969,
+      "lng": -79.2026478,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/36736220",
+        "way/36736231"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/36736220",
+        "https://www.openstreetmap.org/way/36736231"
+      ],
+      "id": "route-local-fire-station-212-212-03",
+      "routeBaseId": "fire-station-212-212",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2781.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 4326.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 194.2,
+        "bestSameServiceCostSeconds": 194.2
+      }
+    },
+    {
+      "name": "Bridleholme Crescent & Chartway Boulevard",
+      "addr": "Bridleholme Crescent & Chartway Boulevard",
+      "lat": 43.7921909,
+      "lng": -79.1873988,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/36854655",
+        "way/36854666",
+        "way/36854682"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/36854655",
+        "https://www.openstreetmap.org/way/36854666",
+        "https://www.openstreetmap.org/way/36854682"
+      ],
+      "id": "route-local-fire-station-212-212-04",
+      "routeBaseId": "fire-station-212-212",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1705.7,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 3175.2,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 164.4,
+        "bestSameServiceCostSeconds": 164.4
+      }
+    },
+    {
+      "name": "Toronto Zoo Road & Zoo Road",
+      "addr": "Toronto Zoo Road & Zoo Road",
+      "lat": 43.8182665,
+      "lng": -79.1729632,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/41784833",
+        "way/41784834",
+        "way/41784835"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/41784833",
+        "https://www.openstreetmap.org/way/41784834",
+        "https://www.openstreetmap.org/way/41784835"
+      ],
+      "id": "route-local-fire-station-212-212-05",
+      "routeBaseId": "fire-station-212-212",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2664,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 4644.3,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 191.7,
+        "bestSameServiceCostSeconds": 191.7
+      }
+    },
+    {
+      "name": "Braymore Boulevard & Fireside Drive",
+      "addr": "Braymore Boulevard & Fireside Drive",
+      "lat": 43.8066196,
+      "lng": -79.1709186,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/36858386",
+        "way/36858418",
+        "way/36858427"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/36858386",
+        "https://www.openstreetmap.org/way/36858418",
+        "https://www.openstreetmap.org/way/36858427"
+      ],
+      "id": "route-local-fire-station-212-212-06",
+      "routeBaseId": "fire-station-212-212",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1591.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 3173.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 152.5,
+        "bestSameServiceCostSeconds": 152.5
+      }
+    },
+    {
+      "name": "Langevin Crescent & McCulley Street",
+      "addr": "Langevin Crescent & McCulley Street",
+      "lat": 43.7810486,
+      "lng": -79.1439181,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/36854199",
+        "way/36854202",
+        "way/36854204"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/36854199",
+        "https://www.openstreetmap.org/way/36854202",
+        "https://www.openstreetmap.org/way/36854204"
+      ],
+      "id": "route-local-fire-station-215-215-01",
+      "routeBaseId": "fire-station-215-215",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 802.5,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 895.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 99.5,
+        "bestSameServiceCostSeconds": 99.5
+      }
+    },
+    {
+      "name": "Fergalea Avenue & McMillan Avenue",
+      "addr": "Fergalea Avenue & McMillan Avenue",
+      "lat": 43.7755949,
+      "lng": -79.1665959,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/5025471",
+        "way/5025478"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/5025471",
+        "https://www.openstreetmap.org/way/5025478"
+      ],
+      "id": "route-local-fire-station-215-215-02",
+      "routeBaseId": "fire-station-215-215",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1706.7,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2708.6,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 145.5,
+        "bestSameServiceCostSeconds": 145.5
+      }
+    },
+    {
+      "name": "Milldock Drive & Ridgewood Road & Starspray Boulevard",
+      "addr": "Milldock Drive & Ridgewood Road & Starspray Boulevard",
+      "lat": 43.7886799,
+      "lng": -79.1237107,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/136953963",
+        "way/31852508",
+        "way/5025414"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/136953963",
+        "https://www.openstreetmap.org/way/31852508",
+        "https://www.openstreetmap.org/way/5025414"
+      ],
+      "id": "route-local-fire-station-215-215-03",
+      "routeBaseId": "fire-station-215-215",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2589.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1369.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 193.9,
+        "bestSameServiceCostSeconds": 193.9
+      }
+    },
+    {
+      "name": "Lakeridge Drive & Rockport Drive",
+      "addr": "Lakeridge Drive & Rockport Drive",
+      "lat": 43.7722844,
+      "lng": -79.138529,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/27258276",
+        "way/27552196"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/27258276",
+        "https://www.openstreetmap.org/way/27552196"
+      ],
+      "id": "route-local-fire-station-215-215-04",
+      "routeBaseId": "fire-station-215-215",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1400.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1370.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 162.5,
+        "bestSameServiceCostSeconds": 162.5
+      }
+    },
+    {
+      "name": "Karina Road & Linderwood Drive",
+      "addr": "Karina Road & Linderwood Drive",
+      "lat": 43.7925986,
+      "lng": -79.1481185,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/36854325",
+        "way/36854326",
+        "way/36854329"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/36854325",
+        "https://www.openstreetmap.org/way/36854326",
+        "https://www.openstreetmap.org/way/36854329"
+      ],
+      "id": "route-local-fire-station-215-215-05",
+      "routeBaseId": "fire-station-215-215",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2170.7,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 920,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 220.3,
+        "bestSameServiceCostSeconds": 220.3
+      }
+    },
+    {
+      "name": "Bethley Drive & Janellan Terrace",
+      "addr": "Bethley Drive & Janellan Terrace",
+      "lat": 43.7694712,
+      "lng": -79.1557242,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/7875778",
+        "way/7978693"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/7875778",
+        "https://www.openstreetmap.org/way/7978693"
+      ],
+      "id": "route-local-fire-station-215-215-06",
+      "routeBaseId": "fire-station-215-215",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2033.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 4645,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 173.5,
+        "bestSameServiceCostSeconds": 173.5
+      }
+    },
+    {
+      "name": "Benjamin Boulevard & Thrush Road",
+      "addr": "Benjamin Boulevard & Thrush Road",
+      "lat": 43.7312121,
+      "lng": -79.261165,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35796848",
+        "way/35796863",
+        "way/35796886"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35796848",
+        "https://www.openstreetmap.org/way/35796863",
+        "https://www.openstreetmap.org/way/35796886"
+      ],
+      "id": "route-local-fire-station-221-221-01",
+      "routeBaseId": "fire-station-221-221",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 800.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 340.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 97.1,
+        "bestSameServiceCostSeconds": 97.1
+      }
+    },
+    {
+      "name": "McCowan Road & Trudelle Street",
+      "addr": "McCowan Road & Trudelle Street",
+      "lat": 43.7406012,
+      "lng": -79.2393154,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/22486527",
+        "way/330602795",
+        "way/35798449",
+        "way/35798452"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/22486527",
+        "https://www.openstreetmap.org/way/330602795",
+        "https://www.openstreetmap.org/way/35798449",
+        "https://www.openstreetmap.org/way/35798452"
+      ],
+      "id": "route-local-fire-station-221-221-02",
+      "routeBaseId": "fire-station-221-221",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1729.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 647.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 105.1,
+        "bestSameServiceCostSeconds": 105.1
+      }
+    },
+    {
+      "name": "Ranstone Gardens & Rosemount Drive",
+      "addr": "Ranstone Gardens & Rosemount Drive",
+      "lat": 43.7394179,
+      "lng": -79.2779176,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1509151554",
+        "way/35799289",
+        "way/35799323"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1509151554",
+        "https://www.openstreetmap.org/way/35799289",
+        "https://www.openstreetmap.org/way/35799323"
+      ],
+      "id": "route-local-fire-station-221-221-03",
+      "routeBaseId": "fire-station-221-221",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2626.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1885.5,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 205.7,
+        "bestSameServiceCostSeconds": 205.7
+      }
+    },
+    {
+      "name": "Chillery Avenue & Citadel Drive",
+      "addr": "Chillery Avenue & Citadel Drive",
+      "lat": 43.7416013,
+      "lng": -79.2565043,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35796835",
+        "way/35796838",
+        "way/35796870"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35796835",
+        "https://www.openstreetmap.org/way/35796838",
+        "https://www.openstreetmap.org/way/35796870"
+      ],
+      "id": "route-local-fire-station-221-221-04",
+      "routeBaseId": "fire-station-221-221",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1236.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 275.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 137.6,
+        "bestSameServiceCostSeconds": 137.6
+      }
+    },
+    {
+      "name": "Brimley Road & Skagway Avenue",
+      "addr": "Brimley Road & Skagway Avenue",
+      "lat": 43.7283918,
+      "lng": -79.2445645,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1385044477",
+        "way/1385044478",
+        "way/35798521"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1385044477",
+        "https://www.openstreetmap.org/way/1385044478",
+        "https://www.openstreetmap.org/way/35798521"
+      ],
+      "id": "route-local-fire-station-221-221-05",
+      "routeBaseId": "fire-station-221-221",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1669.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 328.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 105.7,
+        "bestSameServiceCostSeconds": 105.7
+      }
+    },
+    {
+      "name": "Bertrand Avenue & Kennedy Road",
+      "addr": "Bertrand Avenue & Kennedy Road",
+      "lat": 43.7374738,
+      "lng": -79.2701313,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1382715779",
+        "way/1533330199",
+        "way/35799343"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1382715779",
+        "https://www.openstreetmap.org/way/1533330199",
+        "https://www.openstreetmap.org/way/35799343"
+      ],
+      "id": "route-local-fire-station-221-221-06",
+      "routeBaseId": "fire-station-221-221",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1713.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2133.1,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 103.8,
+        "bestSameServiceCostSeconds": 103.8
+      }
+    },
+    {
+      "name": "Pandora Circle & Sedgemount Drive",
+      "addr": "Pandora Circle & Sedgemount Drive",
+      "lat": 43.7682027,
+      "lng": -79.2300717,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33542244",
+        "way/36784201",
+        "way/36784369"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33542244",
+        "https://www.openstreetmap.org/way/36784201",
+        "https://www.openstreetmap.org/way/36784369"
+      ],
+      "id": "route-local-fire-station-231-231-01",
+      "routeBaseId": "fire-station-231-231",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 787,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 563.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 71.9,
+        "bestSameServiceCostSeconds": 71.9
+      }
+    },
+    {
+      "name": "Blakemanor Boulevard & Peking Road",
+      "addr": "Blakemanor Boulevard & Peking Road",
+      "lat": 43.7508714,
+      "lng": -79.2230282,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/24488213",
+        "way/35835489",
+        "way/43224345"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/24488213",
+        "https://www.openstreetmap.org/way/35835489",
+        "https://www.openstreetmap.org/way/43224345"
+      ],
+      "id": "route-local-fire-station-231-231-02",
+      "routeBaseId": "fire-station-231-231",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1668.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1419.4,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 99.5,
+        "bestSameServiceCostSeconds": 99.5
+      }
+    },
+    {
+      "name": "Botany Hill Road & Plover Road",
+      "addr": "Botany Hill Road & Plover Road",
+      "lat": 43.7753614,
+      "lng": -79.2058896,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1095431556",
+        "way/36795863",
+        "way/36796126"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1095431556",
+        "https://www.openstreetmap.org/way/36795863",
+        "https://www.openstreetmap.org/way/36796126"
+      ],
+      "id": "route-local-fire-station-231-231-03",
+      "routeBaseId": "fire-station-231-231",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2612.7,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 261.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 257.5,
+        "bestSameServiceCostSeconds": 257.5
+      }
+    },
+    {
+      "name": "Benary Crescent & Benroyal Crescent",
+      "addr": "Benary Crescent & Benroyal Crescent",
+      "lat": 43.7597163,
+      "lng": -79.2421321,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/36784182",
+        "way/36784291",
+        "way/36784373"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/36784182",
+        "https://www.openstreetmap.org/way/36784291",
+        "https://www.openstreetmap.org/way/36784373"
+      ],
+      "id": "route-local-fire-station-231-231-04",
+      "routeBaseId": "fire-station-231-231",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1704.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 292.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 213.3,
+        "bestSameServiceCostSeconds": 213.3
+      }
+    },
+    {
+      "name": "Minos Crescent & Pegasus Trail",
+      "addr": "Minos Crescent & Pegasus Trail",
+      "lat": 43.7829267,
+      "lng": -79.2235473,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1312645393",
+        "way/36795997"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1312645393",
+        "https://www.openstreetmap.org/way/36795997"
+      ],
+      "id": "route-local-fire-station-231-231-05",
+      "routeBaseId": "fire-station-231-231",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2500.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1003.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 217.2,
+        "bestSameServiceCostSeconds": 217.2
+      }
+    },
+    {
+      "name": "Milford Haven Drive & Tralee Avenue",
+      "addr": "Milford Haven Drive & Tralee Avenue",
+      "lat": 43.7750112,
+      "lng": -79.2196332,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/36795831",
+        "way/36796098"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/36795831",
+        "https://www.openstreetmap.org/way/36796098"
+      ],
+      "id": "route-local-fire-station-231-231-06",
+      "routeBaseId": "fire-station-231-231",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1716.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 897.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 178,
+        "bestSameServiceCostSeconds": 178
+      }
+    },
+    {
+      "name": "Harrisfarm Gate & Salome Drive",
+      "addr": "Harrisfarm Gate & Salome Drive",
+      "lat": 43.7865579,
+      "lng": -79.2702756,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1500323891",
+        "way/36548467",
+        "way/36548478"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1500323891",
+        "https://www.openstreetmap.org/way/36548467",
+        "https://www.openstreetmap.org/way/36548478"
+      ],
+      "id": "route-local-fire-station-243-243-01",
+      "routeBaseId": "fire-station-243-243",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 774.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 778.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 67.8,
+        "bestSameServiceCostSeconds": 67.8
+      }
+    },
+    {
+      "name": "Massie Street & Plum Brook Crescent & Wyper Square",
+      "addr": "Massie Street & Plum Brook Crescent & Wyper Square",
+      "lat": 43.7908963,
+      "lng": -79.244572,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1495759658",
+        "way/1495760965",
+        "way/36886045",
+        "way/70513779"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1495759658",
+        "https://www.openstreetmap.org/way/1495760965",
+        "https://www.openstreetmap.org/way/36886045",
+        "https://www.openstreetmap.org/way/70513779"
+      ],
+      "id": "route-local-fire-station-243-243-02",
+      "routeBaseId": "fire-station-243-243",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1707.1,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 1754.9,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 134.5,
+        "bestSameServiceCostSeconds": 134.5
+      }
+    },
+    {
+      "name": "Borough Approach East & Borough Drive",
+      "addr": "Borough Approach East & Borough Drive",
+      "lat": 43.7722509,
+      "lng": -79.2561991,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/27121493",
+        "way/302947060",
+        "way/4934670"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/27121493",
+        "https://www.openstreetmap.org/way/302947060",
+        "https://www.openstreetmap.org/way/4934670"
+      ],
+      "id": "route-local-fire-station-243-243-03",
+      "routeBaseId": "fire-station-243-243",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2598.7,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 209.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 182.5,
+        "bestSameServiceCostSeconds": 182.5
+      }
+    },
+    {
+      "name": "Commander Boulevard & McCowan Road",
+      "addr": "Commander Boulevard & McCowan Road",
+      "lat": 43.7961366,
+      "lng": -79.2614846,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1265096972",
+        "way/26129506",
+        "way/42311156"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1265096972",
+        "https://www.openstreetmap.org/way/26129506",
+        "https://www.openstreetmap.org/way/42311156"
+      ],
+      "id": "route-local-fire-station-243-243-04",
+      "routeBaseId": "fire-station-243-243",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1110.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1696.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 84.1,
+        "bestSameServiceCostSeconds": 84.1
+      }
+    },
+    {
+      "name": "Donalda Crescent & Roker Crescent",
+      "addr": "Donalda Crescent & Roker Crescent",
+      "lat": 43.7922617,
+      "lng": -79.2829645,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1503487394",
+        "way/36885888"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1503487394",
+        "https://www.openstreetmap.org/way/36885888"
+      ],
+      "id": "route-local-fire-station-243-243-05",
+      "routeBaseId": "fire-station-243-243",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2392.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 906.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 181.9,
+        "bestSameServiceCostSeconds": 181.9
+      }
+    },
+    {
+      "name": "Consilium Place & McCowan Road",
+      "addr": "Consilium Place & McCowan Road",
+      "lat": 43.7795691,
+      "lng": -79.2542476,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/122317449",
+        "way/23799516",
+        "way/4934476"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/122317449",
+        "https://www.openstreetmap.org/way/23799516",
+        "https://www.openstreetmap.org/way/4934476"
+      ],
+      "id": "route-local-fire-station-243-243-06",
+      "routeBaseId": "fire-station-243-243",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1529.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 4495.3,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 108.2,
+        "bestSameServiceCostSeconds": 108.2
+      }
+    },
+    {
+      "name": "Birchmount Road & Laura Secord Walk",
+      "addr": "Birchmount Road & Laura Secord Walk",
+      "lat": 43.7558435,
+      "lng": -79.2882516,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/118670637",
+        "way/1289051675",
+        "way/1289051676"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/118670637",
+        "https://www.openstreetmap.org/way/1289051675",
+        "https://www.openstreetmap.org/way/1289051676"
+      ],
+      "id": "route-local-fire-station-245-245-01",
+      "routeBaseId": "fire-station-245-245",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 824.7,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 683,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 57,
+        "bestSameServiceCostSeconds": 57
+      }
+    },
+    {
+      "name": "Kennedy Road & William Kitchen Road",
+      "addr": "Kennedy Road & William Kitchen Road",
+      "lat": 43.7734698,
+      "lng": -79.2838336,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/122317140",
+        "way/376316644"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/122317140",
+        "https://www.openstreetmap.org/way/376316644"
+      ],
+      "id": "route-local-fire-station-245-245-02",
+      "routeBaseId": "fire-station-245-245",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1847.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1317.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 119.4,
+        "bestSameServiceCostSeconds": 119.4
+      }
+    },
+    {
+      "name": "Cavehill Crescent & Penworth Road",
+      "addr": "Cavehill Crescent & Penworth Road",
+      "lat": 43.7657672,
+      "lng": -79.3086831,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/36358930",
+        "way/36358942",
+        "way/36359005"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/36358930",
+        "https://www.openstreetmap.org/way/36358942",
+        "https://www.openstreetmap.org/way/36359005"
+      ],
+      "id": "route-local-fire-station-245-245-03",
+      "routeBaseId": "fire-station-245-245",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2348,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 636.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 225.9,
+        "bestSameServiceCostSeconds": 225.9
+      }
+    },
+    {
+      "name": "Murray Glen Drive & Princemere Crescent",
+      "addr": "Murray Glen Drive & Princemere Crescent",
+      "lat": 43.7554272,
+      "lng": -79.3028747,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1518535609",
+        "way/92364682",
+        "way/92364683"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1518535609",
+        "https://www.openstreetmap.org/way/92364682",
+        "https://www.openstreetmap.org/way/92364683"
+      ],
+      "id": "route-local-fire-station-245-245-04",
+      "routeBaseId": "fire-station-245-245",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1681,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1743.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 145.7,
+        "bestSameServiceCostSeconds": 145.7
+      }
+    },
+    {
+      "name": "Ellendale Drive & Merryfield Drive",
+      "addr": "Ellendale Drive & Merryfield Drive",
+      "lat": 43.7537127,
+      "lng": -79.2778349,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/36805201",
+        "way/36805250",
+        "way/36805287"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/36805201",
+        "https://www.openstreetmap.org/way/36805250",
+        "https://www.openstreetmap.org/way/36805287"
+      ],
+      "id": "route-local-fire-station-245-245-05",
+      "routeBaseId": "fire-station-245-245",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1725.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 504.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 176.7,
+        "bestSameServiceCostSeconds": 176.7
+      }
+    },
+    {
+      "name": "Progress Avenue & William Kitchen Road",
+      "addr": "Progress Avenue & William Kitchen Road",
+      "lat": 43.7702096,
+      "lng": -79.2787204,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/485846960",
+        "way/485846963",
+        "way/692405953"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/485846960",
+        "https://www.openstreetmap.org/way/485846963",
+        "https://www.openstreetmap.org/way/692405953"
+      ],
+      "id": "route-local-fire-station-245-245-06",
+      "routeBaseId": "fire-station-245-245",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1667.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1317.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 108.6,
+        "bestSameServiceCostSeconds": 108.6
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Hellenic Home - Scarborough",
+      "addr": "2411 Lawrence Avenue East",
+      "lat": 43.74933069905762,
+      "lng": -79.27440149999995,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790269"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "4489",
+      "community": "Scarborough",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-4489",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-ambulance-station-20-20-01",
+      "routeBaseId": "ems-ambulance-station-20-20",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 454.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 741.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 52.7,
+        "bestSameServiceCostSeconds": 52.7
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Rockcliffe Community",
+      "addr": "3015 Lawrence Avenue East",
+      "lat": 43.75466029905759,
+      "lng": -79.2478868,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790288"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "1358",
+      "community": "Scarborough",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-1358",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-ambulance-station-20-20-02",
+      "routeBaseId": "ems-ambulance-station-20-20",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2331.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 3810.5,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 187.9,
+        "bestSameServiceCostSeconds": 187.9
+      }
+    },
+    {
+      "name": "Dundalk Drive & Glamorgan Avenue",
+      "addr": "Dundalk Drive & Glamorgan Avenue",
+      "lat": 43.7685224,
+      "lng": -79.2853102,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/36818827",
+        "way/36818829",
+        "way/36818839"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/36818827",
+        "https://www.openstreetmap.org/way/36818829",
+        "https://www.openstreetmap.org/way/36818839"
+      ],
+      "id": "route-local-ems-ambulance-station-20-20-03",
+      "routeBaseId": "ems-ambulance-station-20-20",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2582.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 394.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 226.4,
+        "bestSameServiceCostSeconds": 226.4
+      }
+    },
+    {
+      "name": "Kennedy Road & Kingsdown Drive & Stratton Avenue",
+      "addr": "Kennedy Road & Kingsdown Drive & Stratton Avenue",
+      "lat": 43.7383091,
+      "lng": -79.2704705,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/129483333",
+        "way/1382715778",
+        "way/35799331",
+        "way/35799339"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/129483333",
+        "https://www.openstreetmap.org/way/1382715778",
+        "https://www.openstreetmap.org/way/35799331",
+        "https://www.openstreetmap.org/way/35799339"
+      ],
+      "id": "route-local-ems-ambulance-station-20-20-04",
+      "routeBaseId": "ems-ambulance-station-20-20",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1670.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1358.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 127.3,
+        "bestSameServiceCostSeconds": 127.3
+      }
+    },
+    {
+      "name": "Broadbent Avenue & Chillery Avenue",
+      "addr": "Broadbent Avenue & Chillery Avenue",
+      "lat": 43.7400457,
+      "lng": -79.2557672,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35796840",
+        "way/35796844",
+        "way/35796893"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35796840",
+        "https://www.openstreetmap.org/way/35796844",
+        "https://www.openstreetmap.org/way/35796893"
+      ],
+      "id": "route-local-ems-ambulance-station-20-20-05",
+      "routeBaseId": "ems-ambulance-station-20-20",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2602.8,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1473.3,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 218.8,
+        "bestSameServiceCostSeconds": 218.8
+      }
+    },
+    {
+      "name": "Brookridge Drive & Dorcot Avenue & Norbury Crescent",
+      "addr": "Brookridge Drive & Dorcot Avenue & Norbury Crescent",
+      "lat": 43.7581439,
+      "lng": -79.2666296,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/36783525",
+        "way/36783567",
+        "way/36783588",
+        "way/36783679"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/36783525",
+        "https://www.openstreetmap.org/way/36783567",
+        "https://www.openstreetmap.org/way/36783588",
+        "https://www.openstreetmap.org/way/36783679"
+      ],
+      "id": "route-local-ems-ambulance-station-20-20-06",
+      "routeBaseId": "ems-ambulance-station-20-20",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1688,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 2429.5,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 129,
+        "bestSameServiceCostSeconds": 129
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "The Wexford",
+      "addr": "1860 Lawrence Avenue East",
+      "lat": 43.743986899057646,
+      "lng": -79.30319809999997,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790303"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "3118",
+      "community": "Scarborough",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-3118",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-ambulance-station-21-21-01",
+      "routeBaseId": "ems-ambulance-station-21-21",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1747.3,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1030.4,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Pharmacy Avenue",
+        "estimatedCostSeconds": 156,
+        "bestSameServiceCostSeconds": 156
+      }
+    },
+    {
+      "name": "Clairlea Crescent & Pharmacy Avenue",
+      "addr": "Clairlea Crescent & Pharmacy Avenue",
+      "lat": 43.7143714,
+      "lng": -79.2928575,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33043123",
+        "way/5841878"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33043123",
+        "https://www.openstreetmap.org/way/5841878"
+      ],
+      "id": "route-local-ems-ambulance-station-21-21-02",
+      "routeBaseId": "ems-ambulance-station-21-21",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1740.9,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 1063.8,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Pharmacy Avenue",
+        "estimatedCostSeconds": 139.3,
+        "bestSameServiceCostSeconds": 139.3
+      }
+    },
+    {
+      "name": "Maida Vale & Rosemount Drive",
+      "addr": "Maida Vale & Rosemount Drive",
+      "lat": 43.7333099,
+      "lng": -79.2754499,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25022732",
+        "way/35799328",
+        "way/35799334"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25022732",
+        "https://www.openstreetmap.org/way/35799328",
+        "https://www.openstreetmap.org/way/35799334"
+      ],
+      "id": "route-local-ems-ambulance-station-21-21-03",
+      "routeBaseId": "ems-ambulance-station-21-21",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2607.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1259.1,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Pharmacy Avenue",
+        "estimatedCostSeconds": 179.4,
+        "bestSameServiceCostSeconds": 179.4
+      }
+    },
+    {
+      "name": "Eccleston Drive & Larksong Court",
+      "addr": "Eccleston Drive & Larksong Court",
+      "lat": 43.7275628,
+      "lng": -79.3153545,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/191843309",
+        "way/24221291"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/191843309",
+        "https://www.openstreetmap.org/way/24221291"
+      ],
+      "id": "route-local-ems-ambulance-station-21-21-04",
+      "routeBaseId": "ems-ambulance-station-21-21",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1702,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 249.1,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Pharmacy Avenue",
+        "estimatedCostSeconds": 139.3,
+        "bestSameServiceCostSeconds": 139.3
+      }
+    },
+    {
+      "name": "Barrett Road & Selwyn Avenue",
+      "addr": "Barrett Road & Selwyn Avenue",
+      "lat": 43.7097986,
+      "lng": -79.3072477,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/23960549",
+        "way/23960555"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/23960549",
+        "https://www.openstreetmap.org/way/23960555"
+      ],
+      "id": "route-local-ems-ambulance-station-21-21-05",
+      "routeBaseId": "ems-ambulance-station-21-21",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2596.4,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1139.2,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Pharmacy Avenue",
+        "estimatedCostSeconds": 187.9,
+        "bestSameServiceCostSeconds": 187.9
+      }
+    },
+    {
+      "name": "Lancefield Avenue & Marble Arch Crescent",
+      "addr": "Lancefield Avenue & Marble Arch Crescent",
+      "lat": 43.7359525,
+      "lng": -79.2921726,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1519092151",
+        "way/5379107",
+        "way/5379116",
+        "way/5379126"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1519092151",
+        "https://www.openstreetmap.org/way/5379107",
+        "https://www.openstreetmap.org/way/5379116",
+        "https://www.openstreetmap.org/way/5379126"
+      ],
+      "id": "route-local-ems-ambulance-station-21-21-06",
+      "routeBaseId": "ems-ambulance-station-21-21",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1665.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 654.2,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Pharmacy Avenue",
+        "estimatedCostSeconds": 127.5,
+        "bestSameServiceCostSeconds": 127.5
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "AgeCare Trilogy",
+      "addr": "340 McCowan Road",
+      "lat": 43.738468099057656,
+      "lng": -79.2386358,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790245"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "4411",
+      "community": "Scarborough",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-4411",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-ambulance-station-22-22-01",
+      "routeBaseId": "ems-ambulance-station-22-22",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1473.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 177.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 143.6,
+        "bestSameServiceCostSeconds": 143.6
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Extendicare Guildwood",
+      "addr": "60 Guildwood Parkway",
+      "lat": 43.746845899057625,
+      "lng": -79.20312459999997,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790258"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "1351",
+      "community": "Scarborough",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-1351",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-ambulance-station-22-22-02",
+      "routeBaseId": "ems-ambulance-station-22-22",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2619.7,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 274.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 220.7,
+        "bestSameServiceCostSeconds": 220.7
+      }
+    },
+    {
+      "name": "Daphne Road & Eastpark Boulevard",
+      "addr": "Daphne Road & Eastpark Boulevard",
+      "lat": 43.7560439,
+      "lng": -79.2290158,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/27898844",
+        "way/27944954"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/27898844",
+        "https://www.openstreetmap.org/way/27944954"
+      ],
+      "id": "route-local-ems-ambulance-station-22-22-03",
+      "routeBaseId": "ems-ambulance-station-22-22",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2580.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 588.6,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 212.1,
+        "bestSameServiceCostSeconds": 212.1
+      }
+    },
+    {
+      "name": "Hill Crescent & Parkcrest Drive",
+      "addr": "Hill Crescent & Parkcrest Drive",
+      "lat": 43.7326722,
+      "lng": -79.2159342,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35303731",
+        "way/35303734",
+        "way/35303760"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35303731",
+        "https://www.openstreetmap.org/way/35303734",
+        "https://www.openstreetmap.org/way/35303760"
+      ],
+      "id": "route-local-ems-ambulance-station-22-22-04",
+      "routeBaseId": "ems-ambulance-station-22-22",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1794.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 273.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 176.3,
+        "bestSameServiceCostSeconds": 176.3
+      }
+    },
+    {
+      "name": "Cathedral Bluffs Drive & Earl Road",
+      "addr": "Cathedral Bluffs Drive & Earl Road",
+      "lat": 43.723866,
+      "lng": -79.2309325,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35798148",
+        "way/35798183",
+        "way/634152245"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35798148",
+        "https://www.openstreetmap.org/way/35798183",
+        "https://www.openstreetmap.org/way/634152245"
+      ],
+      "id": "route-local-ems-ambulance-station-22-22-05",
+      "routeBaseId": "ems-ambulance-station-22-22",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2568.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 242.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 230.1,
+        "bestSameServiceCostSeconds": 230.1
+      }
+    },
+    {
+      "name": "Farmbrook Road & Ronway Crescent",
+      "addr": "Farmbrook Road & Ronway Crescent",
+      "lat": 43.7461442,
+      "lng": -79.228496,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35798465",
+        "way/35835691",
+        "way/35835695"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35798465",
+        "https://www.openstreetmap.org/way/35835691",
+        "https://www.openstreetmap.org/way/35835695"
+      ],
+      "id": "route-local-ems-ambulance-station-22-22-06",
+      "routeBaseId": "ems-ambulance-station-22-22",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1663.9,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 177.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 192.1,
+        "bestSameServiceCostSeconds": 192.1
+      }
+    },
+    {
+      "name": "Bridletowne Circle & L'Amoreaux Drive",
+      "addr": "Bridletowne Circle & L'Amoreaux Drive",
+      "lat": 43.7989323,
+      "lng": -79.3130529,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1513865759",
+        "way/25896707",
+        "way/419593389"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1513865759",
+        "https://www.openstreetmap.org/way/25896707",
+        "https://www.openstreetmap.org/way/419593389"
+      ],
+      "id": "route-local-ems-ambulance-station-24-24-01",
+      "routeBaseId": "ems-ambulance-station-24-24",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 814,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 950.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 72.1,
+        "bestSameServiceCostSeconds": 72.1
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Mon Sheong Scarborough Long Term Care Centre",
+      "addr": "2030 McNicoll Avenue",
+      "lat": 43.81307889905756,
+      "lng": -79.29998419999998,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790283"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "4500",
+      "community": "Scarborough",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-4500",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-ambulance-station-24-24-02",
+      "routeBaseId": "ems-ambulance-station-24-24",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2359.7,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 415.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 188,
+        "bestSameServiceCostSeconds": 188
+      }
+    },
+    {
+      "name": "Baylawn Drive & Boarhill Drive & Midland Avenue",
+      "addr": "Baylawn Drive & Boarhill Drive & Midland Avenue",
+      "lat": 43.8000635,
+      "lng": -79.284711,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1414843642",
+        "way/1414843643",
+        "way/36372597",
+        "way/36885833"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1414843642",
+        "https://www.openstreetmap.org/way/1414843643",
+        "https://www.openstreetmap.org/way/36372597",
+        "https://www.openstreetmap.org/way/36885833"
+      ],
+      "id": "route-local-ems-ambulance-station-24-24-03",
+      "routeBaseId": "ems-ambulance-station-24-24",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2584.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 447.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 168.6,
+        "bestSameServiceCostSeconds": 168.6
+      }
+    },
+    {
+      "name": "Harfleur Road & Huntingwood Drive",
+      "addr": "Harfleur Road & Huntingwood Drive",
+      "lat": 43.7911267,
+      "lng": -79.2993857,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/36884700",
+        "way/57079573"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/36884700",
+        "https://www.openstreetmap.org/way/57079573"
+      ],
+      "id": "route-local-ems-ambulance-station-24-24-04",
+      "routeBaseId": "ems-ambulance-station-24-24",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1699.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1025.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 121.6,
+        "bestSameServiceCostSeconds": 121.6
+      }
+    },
+    {
+      "name": "Finch Avenue East & Victoria Park Avenue",
+      "addr": "Finch Avenue East & Victoria Park Avenue",
+      "lat": 43.7930519,
+      "lng": -79.3314827,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1121037438",
+        "way/256793949",
+        "way/256793952",
+        "way/33398729"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1121037438",
+        "https://www.openstreetmap.org/way/256793949",
+        "https://www.openstreetmap.org/way/256793952",
+        "https://www.openstreetmap.org/way/33398729"
+      ],
+      "id": "route-local-ems-ambulance-station-24-24-05",
+      "routeBaseId": "ems-ambulance-station-24-24",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2612.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 852.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 172.5,
+        "bestSameServiceCostSeconds": 172.5
+      }
+    },
+    {
+      "name": "Milliken Boulevard & Trojan Gate",
+      "addr": "Milliken Boulevard & Trojan Gate",
+      "lat": 43.8045335,
+      "lng": -79.2955222,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/27501711",
+        "way/27501712"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/27501711",
+        "https://www.openstreetmap.org/way/27501712"
+      ],
+      "id": "route-local-ems-ambulance-station-24-24-06",
+      "routeBaseId": "ems-ambulance-station-24-24",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1679.9,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1406.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 138.5,
+        "bestSameServiceCostSeconds": 138.5
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Ehatare Nursing Home",
+      "addr": "40 Old Kingston Road",
+      "lat": 43.77549689905757,
+      "lng": -79.18319829999996,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790256"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "3731",
+      "community": "Scarborough",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-3731",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-ambulance-station-26-26-01",
+      "routeBaseId": "ems-ambulance-station-26-26",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1166.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 342.1,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Lawrence Avenue East",
+        "estimatedCostSeconds": 102.8,
+        "bestSameServiceCostSeconds": 102.8
+      }
+    },
+    {
+      "name": "Goldberry Square & Lawrence Avenue East & Paulander Avenue",
+      "addr": "Goldberry Square & Lawrence Avenue East & Paulander Avenue",
+      "lat": 43.7759513,
+      "lng": -79.1528027,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25206964",
+        "way/25207110",
+        "way/810271197",
+        "way/86788758"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25206964",
+        "https://www.openstreetmap.org/way/25207110",
+        "https://www.openstreetmap.org/way/810271197",
+        "https://www.openstreetmap.org/way/86788758"
+      ],
+      "id": "route-local-ems-ambulance-station-26-26-02",
+      "routeBaseId": "ems-ambulance-station-26-26",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1803.1,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 1529.4,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Lawrence Avenue East",
+        "estimatedCostSeconds": 108.6,
+        "bestSameServiceCostSeconds": 108.6
+      }
+    },
+    {
+      "name": "3939 Lawrence Avenue East & Lawrence Avenue East",
+      "addr": "3939 Lawrence Avenue East & Lawrence Avenue East",
+      "lat": 43.7642218,
+      "lng": -79.2048417,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/36795963",
+        "way/5379201"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/36795963",
+        "https://www.openstreetmap.org/way/5379201"
+      ],
+      "id": "route-local-ems-ambulance-station-26-26-03",
+      "routeBaseId": "ems-ambulance-station-26-26",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2590.3,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 3836.5,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Lawrence Avenue East",
+        "estimatedCostSeconds": 156,
+        "bestSameServiceCostSeconds": 156
+      }
+    },
+    {
+      "name": "Darlingside Drive & Donnacona Crescent",
+      "addr": "Darlingside Drive & Donnacona Crescent",
+      "lat": 43.7614094,
+      "lng": -79.1740454,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25372419",
+        "way/25372420"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25372419",
+        "https://www.openstreetmap.org/way/25372420"
+      ],
+      "id": "route-local-ems-ambulance-station-26-26-04",
+      "routeBaseId": "ems-ambulance-station-26-26",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1392.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 864.7,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Lawrence Avenue East",
+        "estimatedCostSeconds": 141.9,
+        "bestSameServiceCostSeconds": 141.9
+      }
+    },
+    {
+      "name": "Cultra Square & Havenway Gate",
+      "addr": "Cultra Square & Havenway Gate",
+      "lat": 43.7580309,
+      "lng": -79.1902584,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/36859037",
+        "way/36859043"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/36859037",
+        "https://www.openstreetmap.org/way/36859043"
+      ],
+      "id": "route-local-ems-ambulance-station-26-26-05",
+      "routeBaseId": "ems-ambulance-station-26-26",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2596.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 646.4,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Lawrence Avenue East",
+        "estimatedCostSeconds": 193,
+        "bestSameServiceCostSeconds": 193
+      }
+    },
+    {
+      "name": "Highland Creek Overpass & Lawson Road",
+      "addr": "Highland Creek Overpass & Lawson Road",
+      "lat": 43.7826963,
+      "lng": -79.166384,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/23322628",
+        "way/23408428",
+        "way/31654637"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/23322628",
+        "https://www.openstreetmap.org/way/23408428",
+        "https://www.openstreetmap.org/way/31654637"
+      ],
+      "id": "route-local-ems-ambulance-station-26-26-06",
+      "routeBaseId": "ems-ambulance-station-26-26",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1629.3,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 1088.3,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Lawrence Avenue East",
+        "estimatedCostSeconds": 122.6,
+        "bestSameServiceCostSeconds": 122.6
+      }
+    },
+    {
+      "name": "Finchdene Square & Newgale Gate",
+      "addr": "Finchdene Square & Newgale Gate",
+      "lat": 43.8189673,
+      "lng": -79.2373949,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/142545519",
+        "way/142545521",
+        "way/142545524"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/142545519",
+        "https://www.openstreetmap.org/way/142545521",
+        "https://www.openstreetmap.org/way/142545524"
+      ],
+      "id": "route-local-ems-ambulance-station-27-27-01",
+      "routeBaseId": "ems-ambulance-station-27-27",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 895.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1749.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 80.3,
+        "bestSameServiceCostSeconds": 80.3
+      }
+    },
+    {
+      "name": "Steeles Avenue East & Tapscott Road",
+      "addr": "Steeles Avenue East & Tapscott Road",
+      "lat": 43.8372748,
+      "lng": -79.2484861,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/499546516",
+        "way/499546518",
+        "way/551935155"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/499546516",
+        "https://www.openstreetmap.org/way/499546518",
+        "https://www.openstreetmap.org/way/551935155"
+      ],
+      "id": "route-local-ems-ambulance-station-27-27-02",
+      "routeBaseId": "ems-ambulance-station-27-27",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1572.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 318.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 134.5,
+        "bestSameServiceCostSeconds": 134.5
+      }
+    },
+    {
+      "name": "Brimstone Crescent & Lansbury Drive",
+      "addr": "Brimstone Crescent & Lansbury Drive",
+      "lat": 43.8154599,
+      "lng": -79.2615649,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/36376708",
+        "way/36376725",
+        "way/36376739"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/36376708",
+        "https://www.openstreetmap.org/way/36376725",
+        "https://www.openstreetmap.org/way/36376739"
+      ],
+      "id": "route-local-ems-ambulance-station-27-27-03",
+      "routeBaseId": "ems-ambulance-station-27-27",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2601.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 979.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 207,
+        "bestSameServiceCostSeconds": 207
+      }
+    },
+    {
+      "name": "Dynamic Drive & McNicoll Avenue",
+      "addr": "Dynamic Drive & McNicoll Avenue",
+      "lat": 43.8232843,
+      "lng": -79.2514189,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1126610480",
+        "way/551711677",
+        "way/552183462",
+        "way/552636042"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1126610480",
+        "https://www.openstreetmap.org/way/551711677",
+        "https://www.openstreetmap.org/way/552183462",
+        "https://www.openstreetmap.org/way/552636042"
+      ],
+      "id": "route-local-ems-ambulance-station-27-27-04",
+      "routeBaseId": "ems-ambulance-station-27-27",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 947.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2179.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 74.2,
+        "bestSameServiceCostSeconds": 74.2
+      }
+    },
+    {
+      "name": "McLevin Avenue & Tapscott Road",
+      "addr": "McLevin Avenue & Tapscott Road",
+      "lat": 43.8051531,
+      "lng": -79.2267173,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/282947945",
+        "way/33543158",
+        "way/36745568",
+        "way/36745569"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/282947945",
+        "https://www.openstreetmap.org/way/33543158",
+        "https://www.openstreetmap.org/way/36745568",
+        "https://www.openstreetmap.org/way/36745569"
+      ],
+      "id": "route-local-ems-ambulance-station-27-27-05",
+      "routeBaseId": "ems-ambulance-station-27-27",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2632.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1245,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 219.3,
+        "bestSameServiceCostSeconds": 219.3
+      }
+    },
+    {
+      "name": "Canoe Crescent & Seasons Drive",
+      "addr": "Canoe Crescent & Seasons Drive",
+      "lat": 43.8293617,
+      "lng": -79.2280676,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/27101916",
+        "way/54453091"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/27101916",
+        "https://www.openstreetmap.org/way/54453091"
+      ],
+      "id": "route-local-ems-ambulance-station-27-27-06",
+      "routeBaseId": "ems-ambulance-station-27-27",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1721,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2802.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 131.7,
+        "bestSameServiceCostSeconds": 131.7
+      }
+    }
+  ]
 }

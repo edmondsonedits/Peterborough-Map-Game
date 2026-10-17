@@ -87,5 +87,2016 @@
   ],
   "roadsUrl": "cities/clarington/roads.geojson.gz",
   "roadFeatureCount": 14827,
-  "roadDataSha256": "164fc12a4356aabb611ad632220cd8c5eed6350e6da3a6480272e12c33613e71"
+  "roadDataSha256": "164fc12a4356aabb611ad632220cd8c5eed6350e6da3a6480272e12c33613e71",
+  "routeResponses": {
+    "schemaVersion": 1,
+    "minCallsPerBase": 3,
+    "targetCallsPerBase": 6,
+    "generatedOn": "2026-10-17",
+    "model": {
+      "description": "Published first-due polygons where available. Otherwise a directed road-network estimate using road class travel cost from every same-service hall; allows a15second cost tie for overlapping nearby halls. This is training geography, not live dispatch advice.",
+      "ownershipToleranceSeconds": 15,
+      "maximumCandidateRouteMetres": 12000
+    },
+    "bases": [
+      {
+        "baseId": "fire-clarington-fire-1",
+        "service": "fire",
+        "number": 1,
+        "name": "Fire Station 1",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6100,
+        "access": {
+          "lat": 43.91101030690942,
+          "lng": -78.70575810766874,
+          "road": "Unnamed road",
+          "gapMetres": 9.3
+        },
+        "callIds": [
+          "route-local-fire-clarington-fire-1-01",
+          "route-local-fire-clarington-fire-1-02",
+          "route-local-fire-clarington-fire-1-03",
+          "route-local-fire-clarington-fire-1-04",
+          "route-local-fire-clarington-fire-1-05",
+          "route-local-fire-clarington-fire-1-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-clarington-fire-2",
+        "service": "fire",
+        "number": 2,
+        "name": "Fire Station 2",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5700,
+        "access": {
+          "lat": 43.91291052134018,
+          "lng": -78.60653187613978,
+          "road": "Unnamed road",
+          "gapMetres": 1.3
+        },
+        "callIds": [
+          "route-local-fire-clarington-fire-2-01",
+          "route-local-fire-clarington-fire-2-02",
+          "route-local-fire-clarington-fire-2-03",
+          "route-local-fire-clarington-fire-2-04",
+          "route-local-fire-clarington-fire-2-05",
+          "route-local-fire-clarington-fire-2-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-clarington-fire-3",
+        "service": "fire",
+        "number": 3,
+        "name": "Fire Station 3",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5700,
+        "access": {
+          "lat": 43.98425006394184,
+          "lng": -78.62060242949269,
+          "road": "Main Street",
+          "gapMetres": 38.2
+        },
+        "callIds": [
+          "route-local-fire-clarington-fire-3-01",
+          "route-local-fire-clarington-fire-3-02",
+          "route-local-fire-clarington-fire-3-03",
+          "route-local-fire-clarington-fire-3-04",
+          "route-local-fire-clarington-fire-3-05",
+          "route-local-fire-clarington-fire-3-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-clarington-fire-4",
+        "service": "fire",
+        "number": 4,
+        "name": "Fire Station 4",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6100,
+        "access": {
+          "lat": 43.906948082513466,
+          "lng": -78.78659471734522,
+          "road": "Trulls Road",
+          "gapMetres": 57.3
+        },
+        "callIds": [
+          "route-local-fire-clarington-fire-4-01",
+          "route-local-fire-clarington-fire-4-02",
+          "route-local-fire-clarington-fire-4-03",
+          "route-local-fire-clarington-fire-4-04",
+          "route-local-fire-clarington-fire-4-05",
+          "route-local-fire-clarington-fire-4-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-clarington-fire-5",
+        "service": "fire",
+        "number": 5,
+        "name": "Fire Station 5",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 4800,
+        "access": {
+          "lat": 44.017808685717306,
+          "lng": -78.75953267423321,
+          "road": "Concession Road 8",
+          "gapMetres": 19.7
+        },
+        "callIds": [
+          "route-local-fire-clarington-fire-5-01",
+          "route-local-fire-clarington-fire-5-02",
+          "route-local-fire-clarington-fire-5-03",
+          "route-local-fire-clarington-fire-5-04",
+          "route-local-fire-clarington-fire-5-05",
+          "route-local-fire-clarington-fire-5-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-clarington-ems-519",
+        "service": "ems",
+        "number": 10000,
+        "name": "Courtice Paramedic Station",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.91082814643641,
+          "lng": -78.77678107505334,
+          "road": "Unnamed road",
+          "gapMetres": 21.8
+        },
+        "callIds": [
+          "route-local-ems-clarington-ems-519-01",
+          "route-local-ems-clarington-ems-519-02",
+          "route-local-ems-clarington-ems-519-03",
+          "route-local-ems-clarington-ems-519-04",
+          "route-local-ems-clarington-ems-519-05",
+          "route-local-ems-clarington-ems-519-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-clarington-ems-548",
+        "service": "ems",
+        "number": 10001,
+        "name": "Bowmanville Paramedic Station",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.91019421942676,
+          "lng": -78.67729576719796,
+          "road": "St. George Street South",
+          "gapMetres": 25.3
+        },
+        "callIds": [
+          "route-local-ems-clarington-ems-548-01",
+          "route-local-ems-clarington-ems-548-02",
+          "route-local-ems-clarington-ems-548-03",
+          "route-local-ems-clarington-ems-548-04",
+          "route-local-ems-clarington-ems-548-05",
+          "route-local-ems-clarington-ems-548-06"
+        ],
+        "challengeCalls": 6
+      }
+    ]
+  },
+  "routeCalls": [
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Garnet B Rickard Recreation Complex",
+      "addr": "2440 Durham Regional Highway 2, Clarington, ON",
+      "lat": 43.91219732817553,
+      "lng": -78.70379639694919,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.clarington.net/parks-and-recreation/accessible-recreation/",
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/4/query?objectIds=2688&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Regional Road 57",
+        "Bowmanville Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "clarington-call-02",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-clarington-fire-1-01",
+      "routeBaseId": "fire-clarington-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 378.7,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 557.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 104,
+        "bestSameServiceCostSeconds": 104
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Lakeridge Health Bowmanville",
+      "addr": "47 Liberty St S, Clarington, ON",
+      "lat": 43.90906299273203,
+      "lng": -78.67898861384549,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/8/query?objectIds=2482&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Albert Street",
+        "Queen Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "clarington-call-01",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-clarington-fire-1-02",
+      "routeBaseId": "fire-clarington-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2407.5,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 1882.3,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 153,
+        "bestSameServiceCostSeconds": 153
+      }
+    },
+    {
+      "name": "Holt Road & Regional Highway 2",
+      "addr": "Holt Road & Regional Highway 2",
+      "lat": 43.9125535,
+      "lng": -78.7348506,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34190077",
+        "way/34194234",
+        "way/520799483"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34190077",
+        "https://www.openstreetmap.org/way/34194234",
+        "https://www.openstreetmap.org/way/520799483"
+      ],
+      "id": "route-local-fire-clarington-fire-1-03",
+      "routeBaseId": "fire-clarington-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2498.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 163.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 151.9,
+        "bestSameServiceCostSeconds": 151.9
+      }
+    },
+    {
+      "name": "Buttonshaw Street & Farmstead Drive & McBride Avenue",
+      "addr": "Buttonshaw Street & Farmstead Drive & McBride Avenue",
+      "lat": 43.9001136,
+      "lng": -78.7101573,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/170243698",
+        "way/39652245",
+        "way/39652246"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/170243698",
+        "https://www.openstreetmap.org/way/39652245",
+        "https://www.openstreetmap.org/way/39652246"
+      ],
+      "id": "route-local-fire-clarington-fire-1-04",
+      "routeBaseId": "fire-clarington-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1711.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 409.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 169.1,
+        "bestSameServiceCostSeconds": 169.1
+      }
+    },
+    {
+      "name": "Bowmanville Avenue & Concession Road 3",
+      "addr": "Bowmanville Avenue & Concession Road 3",
+      "lat": 43.9319018,
+      "lng": -78.7111265,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1187704735",
+        "way/140901979",
+        "way/467645033"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1187704735",
+        "https://www.openstreetmap.org/way/140901979",
+        "https://www.openstreetmap.org/way/467645033"
+      ],
+      "id": "route-local-fire-clarington-fire-1-05",
+      "routeBaseId": "fire-clarington-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2709.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1338.9,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 197,
+        "bestSameServiceCostSeconds": 197
+      }
+    },
+    {
+      "name": "Forsey Lane & Gough Lane",
+      "addr": "Forsey Lane & Gough Lane",
+      "lat": 43.9168587,
+      "lng": -78.7194733,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/460706849",
+        "way/460706850"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/460706849",
+        "https://www.openstreetmap.org/way/460706850"
+      ],
+      "id": "route-local-fire-clarington-fire-1-06",
+      "routeBaseId": "fire-clarington-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1685.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 191.1,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 191.1,
+        "bestSameServiceCostSeconds": 191.1
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Diane Hamre Recreation Complex",
+      "addr": "1780 Rudell Rd, Clarington, ON",
+      "lat": 43.912508507412056,
+      "lng": -78.60091885015119,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/4/query?objectIds=2801&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Edward Street West",
+        "Regional Highway 2"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "clarington-call-04",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-clarington-fire-2-01",
+      "routeBaseId": "fire-clarington-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 900,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 6184.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 117.6,
+        "bestSameServiceCostSeconds": 117.6
+      }
+    },
+    {
+      "name": "Darlington-Clarke Townline & Regional Highway 2",
+      "addr": "Darlington-Clarke Townline & Regional Highway 2",
+      "lat": 43.91292,
+      "lng": -78.627129,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34193407",
+        "way/503658796"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34193407",
+        "https://www.openstreetmap.org/way/503658796"
+      ],
+      "id": "route-local-fire-clarington-fire-2-02",
+      "routeBaseId": "fire-clarington-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1707.4,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 5917.1,
+        "decisionKinds": [
+          "departure",
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 98.2,
+        "bestSameServiceCostSeconds": 98.2
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Newcastle Public School",
+      "addr": "50 Glass Ct, Clarington, ON",
+      "lat": 43.912543537275695,
+      "lng": -78.58295059608032,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/6/query?objectIds=6358&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Bridges Drive",
+        "Shipley Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "clarington-call-19",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-clarington-fire-2-03",
+      "routeBaseId": "fire-clarington-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2503.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 4396.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 207.8,
+        "bestSameServiceCostSeconds": 207.8
+      }
+    },
+    {
+      "name": "Cobbledick Road & Service Road",
+      "addr": "Cobbledick Road & Service Road",
+      "lat": 43.9044558,
+      "lng": -78.6072491,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/38795561",
+        "way/39115036",
+        "way/39115037"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/38795561",
+        "https://www.openstreetmap.org/way/39115036",
+        "https://www.openstreetmap.org/way/39115037"
+      ],
+      "id": "route-local-fire-clarington-fire-2-04",
+      "routeBaseId": "fire-clarington-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1328.9,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 6538.2,
+        "decisionKinds": [
+          "departure",
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 172.3,
+        "bestSameServiceCostSeconds": 172.3
+      }
+    },
+    {
+      "name": "Noden Crescent & Whitehand Drive",
+      "addr": "Noden Crescent & Whitehand Drive",
+      "lat": 43.921556,
+      "lng": -78.5982656,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/460704105",
+        "way/460704106"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/460704105",
+        "https://www.openstreetmap.org/way/460704106"
+      ],
+      "id": "route-local-fire-clarington-fire-2-05",
+      "routeBaseId": "fire-clarington-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1647,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 5458.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 198.6,
+        "bestSameServiceCostSeconds": 198.6
+      }
+    },
+    {
+      "name": "Kurve Inn Road & Lovekin Road",
+      "addr": "Kurve Inn Road & Lovekin Road",
+      "lat": 43.910438,
+      "lng": -78.6195561,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34194437",
+        "way/34194874",
+        "way/34195345"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34194437",
+        "https://www.openstreetmap.org/way/34194874",
+        "https://www.openstreetmap.org/way/34195345"
+      ],
+      "id": "route-local-fire-clarington-fire-2-06",
+      "routeBaseId": "fire-clarington-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1655.4,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 6127.7,
+        "decisionKinds": [
+          "departure",
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 127,
+        "bestSameServiceCostSeconds": 127
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Clarington Public Library - Orono Branch",
+      "addr": "127 Church Street North, Clarington, ON",
+      "lat": 43.977557797484224,
+      "lng": -78.61628471814285,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.clarington.net/news/posts/clarington-designates-the-orono-library-under-part-iv-of-the-ontario-heritage-act/",
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/4/query?objectIds=2452&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Centreview Street",
+        "Park Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "clarington-call-20",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-clarington-fire-3-01",
+      "routeBaseId": "fire-clarington-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 877.7,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 2553.3,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Main Street",
+        "estimatedCostSeconds": 61.2,
+        "bestSameServiceCostSeconds": 61.2
+      }
+    },
+    {
+      "name": "Concession Road 6 & Tamblyn Road",
+      "addr": "Concession Road 6 & Tamblyn Road",
+      "lat": 43.9936338,
+      "lng": -78.6087507,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/319210698",
+        "way/34191043",
+        "way/34193186"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/319210698",
+        "https://www.openstreetmap.org/way/34191043",
+        "https://www.openstreetmap.org/way/34193186"
+      ],
+      "id": "route-local-fire-clarington-fire-3-02",
+      "routeBaseId": "fire-clarington-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1947.1,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 6853.9,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Main Street",
+        "estimatedCostSeconds": 119.2,
+        "bestSameServiceCostSeconds": 119.2
+      }
+    },
+    {
+      "name": "Irwin Road & Winter Road",
+      "addr": "Irwin Road & Winter Road",
+      "lat": 43.9638467,
+      "lng": -78.6122753,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/169193801",
+        "way/34189489",
+        "way/34192442"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/169193801",
+        "https://www.openstreetmap.org/way/34189489",
+        "https://www.openstreetmap.org/way/34192442"
+      ],
+      "id": "route-local-fire-clarington-fire-3-03",
+      "routeBaseId": "fire-clarington-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2388.8,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 2578.2,
+        "decisionKinds": [
+          "departure",
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Main Street",
+        "estimatedCostSeconds": 156.1,
+        "bestSameServiceCostSeconds": 156.1
+      }
+    },
+    {
+      "name": "Leskard Road & Taunton Road",
+      "addr": "Leskard Road & Taunton Road",
+      "lat": 43.9886375,
+      "lng": -78.6313168,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33947499",
+        "way/34189778",
+        "way/34194956"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33947499",
+        "https://www.openstreetmap.org/way/34189778",
+        "https://www.openstreetmap.org/way/34194956"
+      ],
+      "id": "route-local-fire-clarington-fire-3-04",
+      "routeBaseId": "fire-clarington-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1392,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 4453.8,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Main Street",
+        "estimatedCostSeconds": 83.8,
+        "bestSameServiceCostSeconds": 83.8
+      }
+    },
+    {
+      "name": "Concession Road 5 & Ochonski Road & Squair Road",
+      "addr": "Concession Road 5 & Ochonski Road & Squair Road",
+      "lat": 43.9679992,
+      "lng": -78.6242632,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34190977",
+        "way/34194819",
+        "way/34196088",
+        "way/44075051"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34190977",
+        "https://www.openstreetmap.org/way/34194819",
+        "https://www.openstreetmap.org/way/34196088",
+        "https://www.openstreetmap.org/way/44075051"
+      ],
+      "id": "route-local-fire-clarington-fire-3-05",
+      "routeBaseId": "fire-clarington-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2512.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1386.9,
+        "decisionKinds": [
+          "departure",
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Main Street",
+        "estimatedCostSeconds": 178.3,
+        "bestSameServiceCostSeconds": 178.3
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Orono Arena",
+      "addr": "2 Princess St, Clarington, ON",
+      "lat": 43.97672308109392,
+      "lng": -78.61415886284404,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/4/query?objectIds=2832&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Station Street",
+        "Rowe Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "clarington-call-17",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-clarington-fire-3-06",
+      "routeBaseId": "fire-clarington-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1510.4,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 2578.2,
+        "decisionKinds": [
+          "departure",
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Main Street",
+        "estimatedCostSeconds": 152.8,
+        "bestSameServiceCostSeconds": 152.8
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Good Shepherd Catholic Elementary School",
+      "addr": "20 Farmington Dr, Clarington, ON",
+      "lat": 43.90390347283515,
+      "lng": -78.77976617595796,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/6/query?objectIds=6471&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Fieldcrest Avenue",
+        "Wilkins Crescent"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "clarington-call-12",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-clarington-fire-4-01",
+      "routeBaseId": "fire-clarington-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 966,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 3525.3,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Trulls Road",
+        "estimatedCostSeconds": 125.7,
+        "bestSameServiceCostSeconds": 125.7
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Dr G J MacGillivray Public School",
+      "addr": "75 Meadowglade Rd, Clarington, ON",
+      "lat": 43.89417116693157,
+      "lng": -78.79650949058625,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/6/query?objectIds=6451&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Robert Adams Drive",
+        "Pears Court"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "clarington-call-14",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-clarington-fire-4-02",
+      "routeBaseId": "fire-clarington-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2017,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 665,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Trulls Road",
+        "estimatedCostSeconds": 228.1,
+        "bestSameServiceCostSeconds": 228.1
+      }
+    },
+    {
+      "name": "Centerfield Drive & Circlefield Court",
+      "addr": "Centerfield Drive & Circlefield Court",
+      "lat": 43.9150096,
+      "lng": -78.8068074,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34190637",
+        "way/34195818",
+        "way/34195966"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34190637",
+        "https://www.openstreetmap.org/way/34195818",
+        "https://www.openstreetmap.org/way/34195966"
+      ],
+      "id": "route-local-fire-clarington-fire-4-03",
+      "routeBaseId": "fire-clarington-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2572.7,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 174.9,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Trulls Road",
+        "estimatedCostSeconds": 227.8,
+        "bestSameServiceCostSeconds": 227.8
+      }
+    },
+    {
+      "name": "4th Avenue & Nash Road",
+      "addr": "4th Avenue & Nash Road",
+      "lat": 43.9149728,
+      "lng": -78.7854596,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/124130362",
+        "way/141008908",
+        "way/141008909"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/124130362",
+        "https://www.openstreetmap.org/way/141008908",
+        "https://www.openstreetmap.org/way/141008909"
+      ],
+      "id": "route-local-fire-clarington-fire-4-04",
+      "routeBaseId": "fire-clarington-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1173.5,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1115.2,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Trulls Road",
+        "estimatedCostSeconds": 93.9,
+        "bestSameServiceCostSeconds": 93.9
+      }
+    },
+    {
+      "name": "Sherry Lane & Trulls Road",
+      "addr": "Sherry Lane & Trulls Road",
+      "lat": 43.9301139,
+      "lng": -78.7970462,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34193214",
+        "way/686094025"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34193214",
+        "https://www.openstreetmap.org/way/686094025"
+      ],
+      "id": "route-local-fire-clarington-fire-4-05",
+      "routeBaseId": "fire-clarington-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2695.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2340.3,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Trulls Road",
+        "estimatedCostSeconds": 215.7,
+        "bestSameServiceCostSeconds": 215.7
+      }
+    },
+    {
+      "name": "Halstead Road & Hathaway Drive",
+      "addr": "Halstead Road & Hathaway Drive",
+      "lat": 43.9040143,
+      "lng": -78.8007706,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34195112",
+        "way/34196036",
+        "way/34196159"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34195112",
+        "https://www.openstreetmap.org/way/34196036",
+        "https://www.openstreetmap.org/way/34196159"
+      ],
+      "id": "route-local-fire-clarington-fire-4-06",
+      "routeBaseId": "fire-clarington-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1678,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 396.7,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Trulls Road",
+        "estimatedCostSeconds": 173.3,
+        "bestSameServiceCostSeconds": 173.3
+      }
+    },
+    {
+      "name": "Allan Wearn Street & Ella Mae Lane & Regional Road 3",
+      "addr": "Allan Wearn Street & Ella Mae Lane & Regional Road 3",
+      "lat": 44.0156407,
+      "lng": -78.7687883,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/205530111",
+        "way/33936646",
+        "way/33965946"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/205530111",
+        "https://www.openstreetmap.org/way/33936646",
+        "https://www.openstreetmap.org/way/33965946"
+      ],
+      "id": "route-local-fire-clarington-fire-5-01",
+      "routeBaseId": "fire-clarington-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 788.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 4235.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Concession Road 8",
+        "estimatedCostSeconds": 48.4,
+        "bestSameServiceCostSeconds": 48.4
+      }
+    },
+    {
+      "name": "Concession Road 8 & Middle Road",
+      "addr": "Concession Road 8 & Middle Road",
+      "lat": 44.022028,
+      "lng": -78.7411743,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33932630",
+        "way/33940056",
+        "way/33941750"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33932630",
+        "https://www.openstreetmap.org/way/33940056",
+        "https://www.openstreetmap.org/way/33941750"
+      ],
+      "id": "route-local-fire-clarington-fire-5-02",
+      "routeBaseId": "fire-clarington-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1740.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 4103,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Concession Road 8",
+        "estimatedCostSeconds": 137.4,
+        "bestSameServiceCostSeconds": 137.4
+      }
+    },
+    {
+      "name": "Bowmanville Avenue & Concession 9 Road & Regional Road 20",
+      "addr": "Bowmanville Avenue & Concession 9 Road & Regional Road 20",
+      "lat": 44.0352166,
+      "lng": -78.7689242,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33941862",
+        "way/33953061",
+        "way/39987259",
+        "way/39987260"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33941862",
+        "https://www.openstreetmap.org/way/33953061",
+        "https://www.openstreetmap.org/way/39987259",
+        "https://www.openstreetmap.org/way/39987260"
+      ],
+      "id": "route-local-fire-clarington-fire-5-03",
+      "routeBaseId": "fire-clarington-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2113.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1764.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Concession Road 8",
+        "estimatedCostSeconds": 128.2,
+        "bestSameServiceCostSeconds": 128.2
+      }
+    },
+    {
+      "name": "Bowmanville Avenue & Concession Road 7",
+      "addr": "Bowmanville Avenue & Concession Road 7",
+      "lat": 44.0006446,
+      "lng": -78.7526922,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1253098695",
+        "way/140901987",
+        "way/33933954",
+        "way/33938934"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1253098695",
+        "https://www.openstreetmap.org/way/140901987",
+        "https://www.openstreetmap.org/way/33933954",
+        "https://www.openstreetmap.org/way/33938934"
+      ],
+      "id": "route-local-fire-clarington-fire-5-04",
+      "routeBaseId": "fire-clarington-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2074.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1772.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Concession Road 8",
+        "estimatedCostSeconds": 125.8,
+        "bestSameServiceCostSeconds": 125.8
+      }
+    },
+    {
+      "name": "Cambrian Road & Old Scugog Road",
+      "addr": "Cambrian Road & Old Scugog Road",
+      "lat": 44.0069337,
+      "lng": -78.7660094,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33010919",
+        "way/33941529"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33010919",
+        "https://www.openstreetmap.org/way/33941529"
+      ],
+      "id": "route-local-fire-clarington-fire-5-05",
+      "routeBaseId": "fire-clarington-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1827.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2128.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Concession Road 8",
+        "estimatedCostSeconds": 132.7,
+        "bestSameServiceCostSeconds": 132.7
+      }
+    },
+    {
+      "name": "Holt Road & Regional Road 3",
+      "addr": "Holt Road & Regional Road 3",
+      "lat": 44.0130686,
+      "lng": -78.7795966,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/304154171",
+        "way/460531608"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/304154171",
+        "https://www.openstreetmap.org/way/460531608"
+      ],
+      "id": "route-local-fire-clarington-fire-5-06",
+      "routeBaseId": "fire-clarington-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1700.5,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 7654.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Concession Road 8",
+        "estimatedCostSeconds": 103.3,
+        "bestSameServiceCostSeconds": 103.3
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Courtice Community Complex",
+      "addr": "2950 Courtice Rd, Clarington, ON",
+      "lat": 43.91320838148362,
+      "lng": -78.78227314007395,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/4/query?objectIds=2980&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Moyse Drive",
+        "Regional Highway 2"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "clarington-call-03",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-clarington-ems-519-01",
+      "routeBaseId": "ems-clarington-ems-519",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 885.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 639.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 200.2,
+        "bestSameServiceCostSeconds": 200.2
+      }
+    },
+    {
+      "name": "Regional Highway 2 & Solina Road",
+      "addr": "Regional Highway 2 & Solina Road",
+      "lat": 43.913851,
+      "lng": -78.7571808,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/141008224",
+        "way/141008225",
+        "way/520799482",
+        "way/520799484"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/141008224",
+        "https://www.openstreetmap.org/way/141008225",
+        "https://www.openstreetmap.org/way/520799482",
+        "https://www.openstreetmap.org/way/520799484"
+      ],
+      "id": "route-local-ems-clarington-ems-519-02",
+      "routeBaseId": "ems-clarington-ems-519",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1920.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1162.3,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 119.5,
+        "bestSameServiceCostSeconds": 119.5
+      }
+    },
+    {
+      "name": "Bloor Street & Granville Street",
+      "addr": "Bloor Street & Granville Street",
+      "lat": 43.8940803,
+      "lng": -78.784687,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1374519639",
+        "way/141004358"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1374519639",
+        "https://www.openstreetmap.org/way/141004358"
+      ],
+      "id": "route-local-ems-clarington-ems-519-03",
+      "routeBaseId": "ems-clarington-ems-519",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2578.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 596.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 189.5,
+        "bestSameServiceCostSeconds": 189.5
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Good Shepherd Catholic Elementary School",
+      "addr": "20 Farmington Dr, Clarington, ON",
+      "lat": 43.90390347283515,
+      "lng": -78.77976617595796,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/6/query?objectIds=6471&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Fieldcrest Avenue",
+        "Wilkins Crescent"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "clarington-call-12",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-clarington-ems-519-04",
+      "routeBaseId": "ems-clarington-ems-519",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1135.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2775.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 183.6,
+        "bestSameServiceCostSeconds": 183.6
+      }
+    },
+    {
+      "name": "Halstead Road & White Cliffe Drive",
+      "addr": "Halstead Road & White Cliffe Drive",
+      "lat": 43.90528,
+      "lng": -78.8015085,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34189886",
+        "way/34190385",
+        "way/34196159"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34189886",
+        "https://www.openstreetmap.org/way/34190385",
+        "https://www.openstreetmap.org/way/34196159"
+      ],
+      "id": "route-local-ems-clarington-ems-519-05",
+      "routeBaseId": "ems-clarington-ems-519",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2602.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 822.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 214.8,
+        "bestSameServiceCostSeconds": 214.8
+      }
+    },
+    {
+      "name": "George Reynolds Drive & Hancock Road",
+      "addr": "George Reynolds Drive & Hancock Road",
+      "lat": 43.9237659,
+      "lng": -78.7723853,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/171251618",
+        "way/34193071"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/171251618",
+        "https://www.openstreetmap.org/way/34193071"
+      ],
+      "id": "route-local-ems-clarington-ems-519-06",
+      "routeBaseId": "ems-clarington-ems-519",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2058.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 206.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 222.5,
+        "bestSameServiceCostSeconds": 222.5
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Glen Hill Strathaven",
+      "addr": "264 King Street East",
+      "lat": 43.912346799057396,
+      "lng": -78.67350969999995,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789987"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "1617",
+      "community": "Bowmanville",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-1617",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-clarington-ems-548-01",
+      "routeBaseId": "ems-clarington-ems-548",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 539.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 466.6,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "St. George Street South",
+        "estimatedCostSeconds": 61.6,
+        "bestSameServiceCostSeconds": 61.6
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Garnet B Rickard Recreation Complex",
+      "addr": "2440 Durham Regional Highway 2, Clarington, ON",
+      "lat": 43.91219732817553,
+      "lng": -78.70379639694919,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.clarington.net/parks-and-recreation/accessible-recreation/",
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/4/query?objectIds=2688&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Regional Road 57",
+        "Bowmanville Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "clarington-call-02",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-clarington-ems-548-02",
+      "routeBaseId": "ems-clarington-ems-548",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2390.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2135.1,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "St. George Street South",
+        "estimatedCostSeconds": 165.7,
+        "bestSameServiceCostSeconds": 165.7
+      }
+    },
+    {
+      "name": "Bennett Road & Regional Highway 2",
+      "addr": "Bennett Road & Regional Highway 2",
+      "lat": 43.9124794,
+      "lng": -78.6483465,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1450869902",
+        "way/190506740",
+        "way/77080795"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1450869902",
+        "https://www.openstreetmap.org/way/190506740",
+        "https://www.openstreetmap.org/way/77080795"
+      ],
+      "id": "route-local-ems-clarington-ems-548-03",
+      "routeBaseId": "ems-clarington-ems-548",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2500.4,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 1723.5,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "St. George Street South",
+        "estimatedCostSeconds": 131.5,
+        "bestSameServiceCostSeconds": 131.5
+      }
+    },
+    {
+      "name": "Baseline Road West & Hunt Street",
+      "addr": "Baseline Road West & Hunt Street",
+      "lat": 43.9004646,
+      "lng": -78.6788449,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/140886664",
+        "way/140886695",
+        "way/34191787"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/140886664",
+        "https://www.openstreetmap.org/way/140886695",
+        "https://www.openstreetmap.org/way/34191787"
+      ],
+      "id": "route-local-ems-clarington-ems-548-04",
+      "routeBaseId": "ems-clarington-ems-548",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1410.7,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 813.9,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "St. George Street South",
+        "estimatedCostSeconds": 110,
+        "bestSameServiceCostSeconds": 110
+      }
+    },
+    {
+      "name": "Brent Crescent & Elephant Hill Drive",
+      "addr": "Brent Crescent & Elephant Hill Drive",
+      "lat": 43.9283658,
+      "lng": -78.6776708,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/523502379",
+        "way/741058440"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/523502379",
+        "https://www.openstreetmap.org/way/741058440"
+      ],
+      "id": "route-local-ems-clarington-ems-548-05",
+      "routeBaseId": "ems-clarington-ems-548",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2602.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 256.4,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "St. George Street South",
+        "estimatedCostSeconds": 199.3,
+        "bestSameServiceCostSeconds": 199.3
+      }
+    },
+    {
+      "name": "Odell Street & Prospect Street",
+      "addr": "Odell Street & Prospect Street",
+      "lat": 43.9173278,
+      "lng": -78.6921746,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34191917",
+        "way/34194377",
+        "way/34195601"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34191917",
+        "https://www.openstreetmap.org/way/34194377",
+        "https://www.openstreetmap.org/way/34195601"
+      ],
+      "id": "route-local-ems-clarington-ems-548-06",
+      "routeBaseId": "ems-clarington-ems-548",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1729.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 332.7,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "St. George Street South",
+        "estimatedCostSeconds": 129.4,
+        "bestSameServiceCostSeconds": 129.4
+      }
+    }
+  ]
 }

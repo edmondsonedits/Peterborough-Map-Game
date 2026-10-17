@@ -61,5 +61,2291 @@
   ],
   "roadsUrl": "cities/st-catharines/roads.geojson.gz",
   "roadFeatureCount": 13546,
-  "roadDataSha256": "750029b3e0e54ef06a3d4fee8df39086d069e7eba0a64996a4e195d83b5dc737"
+  "roadDataSha256": "750029b3e0e54ef06a3d4fee8df39086d069e7eba0a64996a4e195d83b5dc737",
+  "routeResponses": {
+    "schemaVersion": 1,
+    "minCallsPerBase": 3,
+    "targetCallsPerBase": 6,
+    "generatedOn": "2026-10-17",
+    "model": {
+      "description": "Published first-due polygons where available. Otherwise a directed road-network estimate using road class travel cost from every same-service hall; allows a15second cost tie for overlapping nearby halls. This is training geography, not live dispatch advice.",
+      "ownershipToleranceSeconds": 15,
+      "maximumCandidateRouteMetres": 12000
+    },
+    "bases": [
+      {
+        "baseId": "fire-st-catharines-fire-1",
+        "service": "fire",
+        "number": 1,
+        "name": "Fire Station 1",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.16302157252051,
+          "lng": -79.24015021689382,
+          "road": "Geneva Street",
+          "gapMetres": 30.8
+        },
+        "callIds": [
+          "route-local-fire-st-catharines-fire-1-01",
+          "route-local-fire-st-catharines-fire-1-02",
+          "route-local-fire-st-catharines-fire-1-03",
+          "route-local-fire-st-catharines-fire-1-04",
+          "route-local-fire-st-catharines-fire-1-05",
+          "route-local-fire-st-catharines-fire-1-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-st-catharines-fire-2",
+        "service": "fire",
+        "number": 2,
+        "name": "Fire Station 2",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.19193691925269,
+          "lng": -79.24767839065825,
+          "road": "Unnamed road",
+          "gapMetres": 30.2
+        },
+        "callIds": [
+          "route-local-fire-st-catharines-fire-2-01",
+          "route-local-fire-st-catharines-fire-2-02",
+          "route-local-fire-st-catharines-fire-2-03",
+          "route-local-fire-st-catharines-fire-2-04",
+          "route-local-fire-st-catharines-fire-2-05",
+          "route-local-fire-st-catharines-fire-2-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-st-catharines-fire-3",
+        "service": "fire",
+        "number": 3,
+        "name": "Fire Station 3",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5800,
+        "access": {
+          "lat": 43.1300852,
+          "lng": -79.2587555,
+          "road": "Unnamed road",
+          "gapMetres": 33.9
+        },
+        "callIds": [
+          "route-local-fire-st-catharines-fire-3-01",
+          "route-local-fire-st-catharines-fire-3-02",
+          "route-local-fire-st-catharines-fire-3-03",
+          "route-local-fire-st-catharines-fire-3-04",
+          "route-local-fire-st-catharines-fire-3-05",
+          "route-local-fire-st-catharines-fire-3-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-st-catharines-fire-4",
+        "service": "fire",
+        "number": 4,
+        "name": "Fire Station 4",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5700,
+        "access": {
+          "lat": 43.1441929,
+          "lng": -79.2155462,
+          "road": "Irwin Common",
+          "gapMetres": 55.2
+        },
+        "callIds": [
+          "route-local-fire-st-catharines-fire-4-01",
+          "route-local-fire-st-catharines-fire-4-02",
+          "route-local-fire-st-catharines-fire-4-03",
+          "route-local-fire-st-catharines-fire-4-04",
+          "route-local-fire-st-catharines-fire-4-05",
+          "route-local-fire-st-catharines-fire-4-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-st-catharines-fire-5",
+        "service": "fire",
+        "number": 5,
+        "name": "Fire Station 5",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5800,
+        "access": {
+          "lat": 43.167972318195474,
+          "lng": -79.27077369508,
+          "road": "Unnamed road",
+          "gapMetres": 17.1
+        },
+        "callIds": [
+          "route-local-fire-st-catharines-fire-5-01",
+          "route-local-fire-st-catharines-fire-5-02",
+          "route-local-fire-st-catharines-fire-5-03",
+          "route-local-fire-st-catharines-fire-5-04",
+          "route-local-fire-st-catharines-fire-5-05",
+          "route-local-fire-st-catharines-fire-5-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-st-catharines-fire-6",
+        "service": "fire",
+        "number": 6,
+        "name": "Fire Station 6",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.192131025956954,
+          "lng": -79.22103156786194,
+          "road": "Grantham Avenue",
+          "gapMetres": 30.8
+        },
+        "callIds": [
+          "route-local-fire-st-catharines-fire-6-01",
+          "route-local-fire-st-catharines-fire-6-02",
+          "route-local-fire-st-catharines-fire-6-03",
+          "route-local-fire-st-catharines-fire-6-04",
+          "route-local-fire-st-catharines-fire-6-05",
+          "route-local-fire-st-catharines-fire-6-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-st-catharines-ems-linwell",
+        "service": "ems",
+        "number": 10000,
+        "name": "Linwell Road Ambulance Base",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.197696366272986,
+          "lng": -79.23248591597181,
+          "road": "Unnamed road",
+          "gapMetres": 20.8
+        },
+        "callIds": [
+          "route-local-ems-st-catharines-ems-linwell-01",
+          "route-local-ems-st-catharines-ems-linwell-02",
+          "route-local-ems-st-catharines-ems-linwell-03",
+          "route-local-ems-st-catharines-ems-linwell-04",
+          "route-local-ems-st-catharines-ems-linwell-05",
+          "route-local-ems-st-catharines-ems-linwell-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-st-catharines-ems-ontario",
+        "service": "ems",
+        "number": 10001,
+        "name": "Ontario Street Ambulance Base",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.15832807482258,
+          "lng": -79.25323469668122,
+          "road": "Unnamed road",
+          "gapMetres": 4.3
+        },
+        "callIds": [
+          "route-local-ems-st-catharines-ems-ontario-01",
+          "route-local-ems-st-catharines-ems-ontario-02",
+          "route-local-ems-st-catharines-ems-ontario-03",
+          "route-local-ems-st-catharines-ems-ontario-04",
+          "route-local-ems-st-catharines-ems-ontario-05",
+          "route-local-ems-st-catharines-ems-ontario-06"
+        ],
+        "challengeCalls": 6
+      }
+    ]
+  },
+  "routeCalls": [
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "City Hall",
+      "addr": "50 Church Street, St. Catharines, ON",
+      "lat": 43.159389130112,
+      "lng": -79.246969407916,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.stcatharines.ca/council-and-administration/city-hall/",
+        "https://utility.arcgis.com/usrsvcs/servers/21332341b9364d05bf276dd4a9c68d30/rest/services/General/STC_Address_Locator/GeocodeServer/findAddressCandidates?SingleLine=50+Church+Street&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "James Street",
+        "Wellington Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "st-catharines-call-07",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-st-catharines-fire-1-01",
+      "routeBaseId": "fire-st-catharines-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 826.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 275.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Geneva Street",
+        "estimatedCostSeconds": 64.2,
+        "bestSameServiceCostSeconds": 64.2
+      }
+    },
+    {
+      "name": "Elmwood Avenue & Plymouth Avenue",
+      "addr": "Elmwood Avenue & Plymouth Avenue",
+      "lat": 43.1696655,
+      "lng": -79.2239174,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55776872",
+        "way/55777174",
+        "way/55778820"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55776872",
+        "https://www.openstreetmap.org/way/55777174",
+        "https://www.openstreetmap.org/way/55778820"
+      ],
+      "id": "route-local-fire-st-catharines-fire-1-02",
+      "routeBaseId": "fire-st-catharines-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1737.7,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 269.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Geneva Street",
+        "estimatedCostSeconds": 122.9,
+        "bestSameServiceCostSeconds": 122.9
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Bailey Street Park",
+      "addr": "8 Bailey Street, St. Catharines, ON",
+      "lat": 43.143657280166,
+      "lng": -79.249350292581,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.stcatharines.ca/parks-and-facilities/",
+        "https://utility.arcgis.com/usrsvcs/servers/21332341b9364d05bf276dd4a9c68d30/rest/services/General/STC_Address_Locator/GeocodeServer/findAddressCandidates?SingleLine=8+Bailey+Street&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Rykert Street",
+        "Hillview Road North"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "st-catharines-call-19",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-st-catharines-fire-1-03",
+      "routeBaseId": "fire-st-catharines-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2512,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2626.7,
+        "decisionKinds": [
+          "bridge",
+          "departure"
+        ],
+        "departureRoad": "Geneva Street",
+        "estimatedCostSeconds": 161.5,
+        "bestSameServiceCostSeconds": 151.6
+      }
+    },
+    {
+      "name": "Geneva Street & Grote Street",
+      "addr": "Geneva Street & Grote Street",
+      "lat": 43.1783982,
+      "lng": -79.2408721,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1458186831",
+        "way/55773282"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1458186831",
+        "https://www.openstreetmap.org/way/55773282"
+      ],
+      "id": "route-local-fire-st-catharines-fire-1-04",
+      "routeBaseId": "fire-st-catharines-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1700.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 288.1,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Geneva Street",
+        "estimatedCostSeconds": 102.4,
+        "bestSameServiceCostSeconds": 102.4
+      }
+    },
+    {
+      "name": "Manchester Avenue & Ontario Street",
+      "addr": "Manchester Avenue & Ontario Street",
+      "lat": 43.1683415,
+      "lng": -79.2638351,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55771783",
+        "way/55772944"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55771783",
+        "https://www.openstreetmap.org/way/55772944"
+      ],
+      "id": "route-local-fire-st-catharines-fire-1-05",
+      "routeBaseId": "fire-st-catharines-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2591.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 176.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Geneva Street",
+        "estimatedCostSeconds": 168.3,
+        "bestSameServiceCostSeconds": 168.3
+      }
+    },
+    {
+      "name": "Highland Avenue & Rockcliffe Road",
+      "addr": "Highland Avenue & Rockcliffe Road",
+      "lat": 43.1491392,
+      "lng": -79.2371439,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55772234",
+        "way/55773665",
+        "way/55773771",
+        "way/55776145"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55772234",
+        "https://www.openstreetmap.org/way/55773665",
+        "https://www.openstreetmap.org/way/55773771",
+        "https://www.openstreetmap.org/way/55776145"
+      ],
+      "id": "route-local-fire-st-catharines-fire-1-06",
+      "routeBaseId": "fire-st-catharines-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1692.9,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 670.8,
+        "decisionKinds": [
+          "turn",
+          "bridge",
+          "departure"
+        ],
+        "departureRoad": "Geneva Street",
+        "estimatedCostSeconds": 137.8,
+        "bestSameServiceCostSeconds": 137.8
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Bill Burgoyne Arena",
+      "addr": "129 Linwell Road, St. Catharines, ON",
+      "lat": 43.189324000895,
+      "lng": -79.258135397658,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.stcatharines.ca/recreation-and-leisure/arenas-and-ice-rinks/arena-and-ice-rentals/",
+        "https://utility.arcgis.com/usrsvcs/servers/21332341b9364d05bf276dd4a9c68d30/rest/services/General/STC_Address_Locator/GeocodeServer/findAddressCandidates?SingleLine=129+Linwell+Road&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "The Meadows",
+        "Lafayette Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "st-catharines-call-11",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-st-catharines-fire-2-01",
+      "routeBaseId": "fire-st-catharines-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1010.7,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 331.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 114.5,
+        "bestSameServiceCostSeconds": 114.5
+      }
+    },
+    {
+      "name": "Glen Park Road & Manor Road",
+      "addr": "Glen Park Road & Manor Road",
+      "lat": 43.2003353,
+      "lng": -79.2324966,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55772131",
+        "way/55773767"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55772131",
+        "https://www.openstreetmap.org/way/55773767"
+      ],
+      "id": "route-local-fire-st-catharines-fire-2-02",
+      "routeBaseId": "fire-st-catharines-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1714.6,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 776.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 151.5,
+        "bestSameServiceCostSeconds": 151.5
+      }
+    },
+    {
+      "name": "Gary Road & Main Street",
+      "addr": "Gary Road & Main Street",
+      "lat": 43.2029189,
+      "lng": -79.2663839,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55770976",
+        "way/55775019",
+        "way/55777300"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55770976",
+        "https://www.openstreetmap.org/way/55775019",
+        "https://www.openstreetmap.org/way/55777300"
+      ],
+      "id": "route-local-fire-st-catharines-fire-2-03",
+      "routeBaseId": "fire-st-catharines-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2568.3,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 4734.9,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 183.5,
+        "bestSameServiceCostSeconds": 183.5
+      }
+    },
+    {
+      "name": "Edward Avenue & Else Street",
+      "addr": "Edward Avenue & Else Street",
+      "lat": 43.1864339,
+      "lng": -79.2387533,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55774463",
+        "way/55774509",
+        "way/55775258"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55774463",
+        "https://www.openstreetmap.org/way/55774509",
+        "https://www.openstreetmap.org/way/55775258"
+      ],
+      "id": "route-local-fire-st-catharines-fire-2-04",
+      "routeBaseId": "fire-st-catharines-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1526.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 649.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 125.1,
+        "bestSameServiceCostSeconds": 113.4
+      }
+    },
+    {
+      "name": "Mildred Avenue & Oswego Avenue",
+      "addr": "Mildred Avenue & Oswego Avenue",
+      "lat": 43.1760372,
+      "lng": -79.2548499,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55771234",
+        "way/55773366"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55771234",
+        "https://www.openstreetmap.org/way/55773366"
+      ],
+      "id": "route-local-fire-st-catharines-fire-2-05",
+      "routeBaseId": "fire-st-catharines-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2607.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1081.8,
+        "decisionKinds": [
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 208.4,
+        "bestSameServiceCostSeconds": 208.4
+      }
+    },
+    {
+      "name": "Hazelwood Gate & Kimbermount Drive",
+      "addr": "Hazelwood Gate & Kimbermount Drive",
+      "lat": 43.2028142,
+      "lng": -79.2552806,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55771673",
+        "way/55774177",
+        "way/55776670"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55771673",
+        "https://www.openstreetmap.org/way/55774177",
+        "https://www.openstreetmap.org/way/55776670"
+      ],
+      "id": "route-local-fire-st-catharines-fire-2-06",
+      "routeBaseId": "fire-st-catharines-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1713.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 247.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 151.2,
+        "bestSameServiceCostSeconds": 151.2
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "West St. Catharines Older Adult Centre",
+      "addr": "117 Chetwood Street, St. Catharines, ON",
+      "lat": 43.143538629191,
+      "lng": -79.258555588585,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.stcatharines.ca/contacts-directory/",
+        "https://utility.arcgis.com/usrsvcs/servers/21332341b9364d05bf276dd4a9c68d30/rest/services/General/STC_Address_Locator/GeocodeServer/findAddressCandidates?SingleLine=117+Chetwood+Street&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Edith Street",
+        "Louth Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "st-catharines-call-15",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-st-catharines-fire-3-01",
+      "routeBaseId": "fire-st-catharines-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1610.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 471.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 139.2,
+        "bestSameServiceCostSeconds": 139.2
+      }
+    },
+    {
+      "name": "Fredonia Crescent & Vansickle Road",
+      "addr": "Fredonia Crescent & Vansickle Road",
+      "lat": 43.12253,
+      "lng": -79.2694344,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55772554",
+        "way/55776961",
+        "way/55777487"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55772554",
+        "https://www.openstreetmap.org/way/55776961",
+        "https://www.openstreetmap.org/way/55777487"
+      ],
+      "id": "route-local-fire-st-catharines-fire-3-02",
+      "routeBaseId": "fire-st-catharines-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1755.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1575.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 156.5,
+        "bestSameServiceCostSeconds": 156.5
+      }
+    },
+    {
+      "name": "Glendale Avenue & Marlene Drive",
+      "addr": "Glendale Avenue & Marlene Drive",
+      "lat": 43.1330493,
+      "lng": -79.2307166,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55775691",
+        "way/55775841",
+        "way/55778831"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55775691",
+        "https://www.openstreetmap.org/way/55775841",
+        "https://www.openstreetmap.org/way/55778831"
+      ],
+      "id": "route-local-fire-st-catharines-fire-3-03",
+      "routeBaseId": "fire-st-catharines-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2541.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 3979.9,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 181.8,
+        "bestSameServiceCostSeconds": 176.5
+      }
+    },
+    {
+      "name": "Glendale Avenue & Old Glendale Road",
+      "addr": "Glendale Avenue & Old Glendale Road",
+      "lat": 43.1335631,
+      "lng": -79.249146,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55776462",
+        "way/55777405",
+        "way/55778456"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55776462",
+        "https://www.openstreetmap.org/way/55777405",
+        "https://www.openstreetmap.org/way/55778456"
+      ],
+      "id": "route-local-fire-st-catharines-fire-3-04",
+      "routeBaseId": "fire-st-catharines-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 990.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 5420.5,
+        "decisionKinds": [
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 88.4,
+        "bestSameServiceCostSeconds": 88.4
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Bailey Street Park",
+      "addr": "8 Bailey Street, St. Catharines, ON",
+      "lat": 43.143657280166,
+      "lng": -79.249350292581,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.stcatharines.ca/parks-and-facilities/",
+        "https://utility.arcgis.com/usrsvcs/servers/21332341b9364d05bf276dd4a9c68d30/rest/services/General/STC_Address_Locator/GeocodeServer/findAddressCandidates?SingleLine=8+Bailey+Street&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Rykert Street",
+        "Hillview Road North"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "st-catharines-call-19",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-st-catharines-fire-3-05",
+      "routeBaseId": "fire-st-catharines-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1869.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 317.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 151.6,
+        "bestSameServiceCostSeconds": 151.6
+      }
+    },
+    {
+      "name": "First Street Louth & Rykert Street",
+      "addr": "First Street Louth & Rykert Street",
+      "lat": 43.1343519,
+      "lng": -79.2754868,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55770892",
+        "way/55771607",
+        "way/55776566"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55770892",
+        "https://www.openstreetmap.org/way/55771607",
+        "https://www.openstreetmap.org/way/55776566"
+      ],
+      "id": "route-local-fire-st-catharines-fire-3-06",
+      "routeBaseId": "fire-st-catharines-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1904.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 461.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 212.7,
+        "bestSameServiceCostSeconds": 212.7
+      }
+    },
+    {
+      "name": "Disher Street & Oakdale Avenue",
+      "addr": "Disher Street & Oakdale Avenue",
+      "lat": 43.1481669,
+      "lng": -79.221565,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55771029",
+        "way/55772545",
+        "way/55773934",
+        "way/55777546"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55771029",
+        "https://www.openstreetmap.org/way/55772545",
+        "https://www.openstreetmap.org/way/55773934",
+        "https://www.openstreetmap.org/way/55777546"
+      ],
+      "id": "route-local-fire-st-catharines-fire-4-01",
+      "routeBaseId": "fire-st-catharines-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 801.7,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 995.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Irwin Common",
+        "estimatedCostSeconds": 77.8,
+        "bestSameServiceCostSeconds": 77.8
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Niagara Pen Centre",
+      "addr": "221 Glendale Avenue, St. Catharines, ON",
+      "lat": 43.136155539784,
+      "lng": -79.224444278193,
+      "radius": 200,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://shopping.leyad.ca/niagarapencentre/contact-directions",
+        "https://utility.arcgis.com/usrsvcs/servers/21332341b9364d05bf276dd4a9c68d30/rest/services/General/STC_Address_Locator/GeocodeServer/findAddressCandidates?SingleLine=221+Glendale+Avenue&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Highway 406",
+        "Tremont Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "st-catharines-call-03",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-st-catharines-fire-4-02",
+      "routeBaseId": "fire-st-catharines-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2102.4,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 1995.9,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Irwin Common",
+        "estimatedCostSeconds": 256.7,
+        "bestSameServiceCostSeconds": 256.7
+      }
+    },
+    {
+      "name": "Glendale Avenue & Welland Canals Parkway",
+      "addr": "Glendale Avenue & Welland Canals Parkway",
+      "lat": 43.1451966,
+      "lng": -79.1932445,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1424788533",
+        "way/55770794",
+        "way/55774585"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1424788533",
+        "https://www.openstreetmap.org/way/55770794",
+        "https://www.openstreetmap.org/way/55774585"
+      ],
+      "id": "route-local-fire-st-catharines-fire-4-03",
+      "routeBaseId": "fire-st-catharines-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2524.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 382.9,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Irwin Common",
+        "estimatedCostSeconds": 196.5,
+        "bestSameServiceCostSeconds": 196.5
+      }
+    },
+    {
+      "name": "Bessey Street & Walnut Street",
+      "addr": "Bessey Street & Walnut Street",
+      "lat": 43.1404293,
+      "lng": -79.2112673,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55774591",
+        "way/55777063",
+        "way/55777586"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55774591",
+        "https://www.openstreetmap.org/way/55777063",
+        "https://www.openstreetmap.org/way/55777586"
+      ],
+      "id": "route-local-fire-st-catharines-fire-4-04",
+      "routeBaseId": "fire-st-catharines-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 767.9,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 2009.4,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Irwin Common",
+        "estimatedCostSeconds": 84,
+        "bestSameServiceCostSeconds": 84
+      }
+    },
+    {
+      "name": "Ivy Avenue & Rosedale Avenue",
+      "addr": "Ivy Avenue & Rosedale Avenue",
+      "lat": 43.1572405,
+      "lng": -79.2045869,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55773204",
+        "way/55776337",
+        "way/55777418"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55773204",
+        "https://www.openstreetmap.org/way/55776337",
+        "https://www.openstreetmap.org/way/55777418"
+      ],
+      "id": "route-local-fire-st-catharines-fire-4-05",
+      "routeBaseId": "fire-st-catharines-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2493.8,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1217.9,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Irwin Common",
+        "estimatedCostSeconds": 237.7,
+        "bestSameServiceCostSeconds": 225.2
+      }
+    },
+    {
+      "name": "Lincoln Avenue & Lucerne Place & Prestwick Avenue",
+      "addr": "Lincoln Avenue & Lucerne Place & Prestwick Avenue",
+      "lat": 43.1552167,
+      "lng": -79.2165629,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55772034",
+        "way/55772226",
+        "way/55772461",
+        "way/55777902"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55772034",
+        "https://www.openstreetmap.org/way/55772226",
+        "https://www.openstreetmap.org/way/55772461",
+        "https://www.openstreetmap.org/way/55777902"
+      ],
+      "id": "route-local-fire-st-catharines-fire-4-06",
+      "routeBaseId": "fire-st-catharines-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1689.6,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 712.1,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Irwin Common",
+        "estimatedCostSeconds": 152,
+        "bestSameServiceCostSeconds": 152
+      }
+    },
+    {
+      "name": "Laurie Street & Vansickle Road",
+      "addr": "Laurie Street & Vansickle Road",
+      "lat": 43.1630311,
+      "lng": -79.2710467,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55774493",
+        "way/55775213",
+        "way/55778803"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55774493",
+        "https://www.openstreetmap.org/way/55775213",
+        "https://www.openstreetmap.org/way/55778803"
+      ],
+      "id": "route-local-fire-st-catharines-fire-5-01",
+      "routeBaseId": "fire-st-catharines-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 783.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 223.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 77,
+        "bestSameServiceCostSeconds": 77
+      }
+    },
+    {
+      "name": "Brooklyn Court & Martindale Road",
+      "addr": "Brooklyn Court & Martindale Road",
+      "lat": 43.1802991,
+      "lng": -79.2777502,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/428733845",
+        "way/55770890",
+        "way/55775736"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/428733845",
+        "https://www.openstreetmap.org/way/55770890",
+        "https://www.openstreetmap.org/way/55775736"
+      ],
+      "id": "route-local-fire-st-catharines-fire-5-02",
+      "routeBaseId": "fire-st-catharines-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1544.5,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 3160.4,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 104.7,
+        "bestSameServiceCostSeconds": 104.7
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Marotta Family Hospital",
+      "addr": "1200 Fourth Avenue, St. Catharines, ON",
+      "lat": 43.153176969024,
+      "lng": -79.278105753908,
+      "radius": 200,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.niagarahealth.on.ca/site/contact",
+        "https://utility.arcgis.com/usrsvcs/servers/21332341b9364d05bf276dd4a9c68d30/rest/services/General/STC_Address_Locator/GeocodeServer/findAddressCandidates?SingleLine=1200+Fourth+Avenue&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Louth 1St Street",
+        "Vansickle Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "st-catharines-call-01",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-st-catharines-fire-5-03",
+      "routeBaseId": "fire-st-catharines-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2356.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 669.1,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 246.7,
+        "bestSameServiceCostSeconds": 246.7
+      }
+    },
+    {
+      "name": "Captain Tenbrock Terrace & Francis Creek Boulevard",
+      "addr": "Captain Tenbrock Terrace & Francis Creek Boulevard",
+      "lat": 43.1729353,
+      "lng": -79.2825213,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55772708",
+        "way/55774940",
+        "way/55776281"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55772708",
+        "https://www.openstreetmap.org/way/55774940",
+        "https://www.openstreetmap.org/way/55776281"
+      ],
+      "id": "route-local-fire-st-catharines-fire-5-04",
+      "routeBaseId": "fire-st-catharines-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1498,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1135,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 184.4,
+        "bestSameServiceCostSeconds": 184.4
+      }
+    },
+    {
+      "name": "Clement Place & Ridley Heights Drive",
+      "addr": "Clement Place & Ridley Heights Drive",
+      "lat": 43.1541585,
+      "lng": -79.2591396,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55774895",
+        "way/55775772",
+        "way/55778688"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55774895",
+        "https://www.openstreetmap.org/way/55775772",
+        "https://www.openstreetmap.org/way/55778688"
+      ],
+      "id": "route-local-fire-st-catharines-fire-5-05",
+      "routeBaseId": "fire-st-catharines-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2570.1,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1284.6,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 197.2,
+        "bestSameServiceCostSeconds": 197.2
+      }
+    },
+    {
+      "name": "Sawmill Road & Welland Vale Road",
+      "addr": "Sawmill Road & Welland Vale Road",
+      "lat": 43.1600341,
+      "lng": -79.2616775,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55773001",
+        "way/55775515",
+        "way/55776326"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55773001",
+        "https://www.openstreetmap.org/way/55775515",
+        "https://www.openstreetmap.org/way/55776326"
+      ],
+      "id": "route-local-fire-st-catharines-fire-5-06",
+      "routeBaseId": "fire-st-catharines-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1594.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 821.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 156.4,
+        "bestSameServiceCostSeconds": 156.4
+      }
+    },
+    {
+      "name": "Flamingo Avenue & Oriole Drive",
+      "addr": "Flamingo Avenue & Oriole Drive",
+      "lat": 43.198628,
+      "lng": -79.2202728,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55772259",
+        "way/55776719",
+        "way/55777073"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55772259",
+        "https://www.openstreetmap.org/way/55776719",
+        "https://www.openstreetmap.org/way/55777073"
+      ],
+      "id": "route-local-fire-st-catharines-fire-6-01",
+      "routeBaseId": "fire-st-catharines-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 805.4,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 607.1,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Grantham Avenue",
+        "estimatedCostSeconds": 70.4,
+        "bestSameServiceCostSeconds": 70.4
+      }
+    },
+    {
+      "name": "Facer Street & Marlborough Avenue",
+      "addr": "Facer Street & Marlborough Avenue",
+      "lat": 43.1772199,
+      "lng": -79.2214214,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55772210",
+        "way/55776893",
+        "way/55777410",
+        "way/55777671"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55772210",
+        "https://www.openstreetmap.org/way/55776893",
+        "https://www.openstreetmap.org/way/55777410",
+        "https://www.openstreetmap.org/way/55777671"
+      ],
+      "id": "route-local-fire-st-catharines-fire-6-02",
+      "routeBaseId": "fire-st-catharines-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1699.9,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 591.8,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Grantham Avenue",
+        "estimatedCostSeconds": 142.1,
+        "bestSameServiceCostSeconds": 142.1
+      }
+    },
+    {
+      "name": "Overholt Street & Sherman Drive",
+      "addr": "Overholt Street & Sherman Drive",
+      "lat": 43.1848876,
+      "lng": -79.2459472,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55772273",
+        "way/55775786",
+        "way/55776316"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55772273",
+        "https://www.openstreetmap.org/way/55775786",
+        "https://www.openstreetmap.org/way/55776316"
+      ],
+      "id": "route-local-fire-st-catharines-fire-6-03",
+      "routeBaseId": "fire-st-catharines-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2341.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 472.8,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Grantham Avenue",
+        "estimatedCostSeconds": 164.8,
+        "bestSameServiceCostSeconds": 150.6
+      }
+    },
+    {
+      "name": "Dunkeld Avenue & Nassau Road",
+      "addr": "Dunkeld Avenue & Nassau Road",
+      "lat": 43.1927746,
+      "lng": -79.2052563,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55772722",
+        "way/55775946",
+        "way/55777694"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55772722",
+        "https://www.openstreetmap.org/way/55775946",
+        "https://www.openstreetmap.org/way/55777694"
+      ],
+      "id": "route-local-fire-st-catharines-fire-6-04",
+      "routeBaseId": "fire-st-catharines-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1751.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1091.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Grantham Avenue",
+        "estimatedCostSeconds": 156.5,
+        "bestSameServiceCostSeconds": 156.5
+      }
+    },
+    {
+      "name": "Bishops Road & O'Mara Drive",
+      "addr": "Bishops Road & O'Mara Drive",
+      "lat": 43.2118393,
+      "lng": -79.2215382,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55771797",
+        "way/55774595",
+        "way/55775985"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55771797",
+        "https://www.openstreetmap.org/way/55774595",
+        "https://www.openstreetmap.org/way/55775985"
+      ],
+      "id": "route-local-fire-st-catharines-fire-6-05",
+      "routeBaseId": "fire-st-catharines-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2619.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 587.7,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Grantham Avenue",
+        "estimatedCostSeconds": 211,
+        "bestSameServiceCostSeconds": 211
+      }
+    },
+    {
+      "name": "Hallcrest Avenue & Joanna Drive & Tracey Road",
+      "addr": "Hallcrest Avenue & Joanna Drive & Tracey Road",
+      "lat": 43.1948395,
+      "lng": -79.2326164,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55771810",
+        "way/55774253",
+        "way/55774483"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55771810",
+        "https://www.openstreetmap.org/way/55774253",
+        "https://www.openstreetmap.org/way/55774483"
+      ],
+      "id": "route-local-fire-st-catharines-fire-6-06",
+      "routeBaseId": "fire-st-catharines-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1695.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 230,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Grantham Avenue",
+        "estimatedCostSeconds": 136.3,
+        "bestSameServiceCostSeconds": 129
+      }
+    },
+    {
+      "name": "Gordon Place & Strathcona Drive",
+      "addr": "Gordon Place & Strathcona Drive",
+      "lat": 43.201718,
+      "lng": -79.2279005,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55776507",
+        "way/55777708",
+        "way/55777882"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55776507",
+        "https://www.openstreetmap.org/way/55777708",
+        "https://www.openstreetmap.org/way/55777882"
+      ],
+      "id": "route-local-ems-st-catharines-ems-linwell-01",
+      "routeBaseId": "ems-st-catharines-ems-linwell",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 802.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1027.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 90.5,
+        "bestSameServiceCostSeconds": 90.5
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Bill Burgoyne Arena",
+      "addr": "129 Linwell Road, St. Catharines, ON",
+      "lat": 43.189324000895,
+      "lng": -79.258135397658,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.stcatharines.ca/recreation-and-leisure/arenas-and-ice-rinks/arena-and-ice-rentals/",
+        "https://utility.arcgis.com/usrsvcs/servers/21332341b9364d05bf276dd4a9c68d30/rest/services/General/STC_Address_Locator/GeocodeServer/findAddressCandidates?SingleLine=129+Linwell+Road&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "The Meadows",
+        "Lafayette Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "st-catharines-call-11",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-st-catharines-ems-linwell-02",
+      "routeBaseId": "ems-st-catharines-ems-linwell",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2393,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 699.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 196.2,
+        "bestSameServiceCostSeconds": 196.2
+      }
+    },
+    {
+      "name": "Geneva Street & Grote Street",
+      "addr": "Geneva Street & Grote Street",
+      "lat": 43.1783982,
+      "lng": -79.2408721,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1458186831",
+        "way/55773282"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1458186831",
+        "https://www.openstreetmap.org/way/55773282"
+      ],
+      "id": "route-local-ems-st-catharines-ems-linwell-03",
+      "routeBaseId": "ems-st-catharines-ems-linwell",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2612.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 189.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 164.7,
+        "bestSameServiceCostSeconds": 164.7
+      }
+    },
+    {
+      "name": "Harcove Street & Joanna Drive",
+      "addr": "Harcove Street & Joanna Drive",
+      "lat": 43.1915402,
+      "lng": -79.2347176,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55771595",
+        "way/55777642"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55771595",
+        "https://www.openstreetmap.org/way/55777642"
+      ],
+      "id": "route-local-ems-st-catharines-ems-linwell-04",
+      "routeBaseId": "ems-st-catharines-ems-linwell",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 819,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 206.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 107.1,
+        "bestSameServiceCostSeconds": 107.1
+      }
+    },
+    {
+      "name": "Jelicoe Drive & Simpson Road",
+      "addr": "Jelicoe Drive & Simpson Road",
+      "lat": 43.2045287,
+      "lng": -79.2502096,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55772695",
+        "way/55773197",
+        "way/55776922"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55772695",
+        "https://www.openstreetmap.org/way/55773197",
+        "https://www.openstreetmap.org/way/55776922"
+      ],
+      "id": "route-local-ems-st-catharines-ems-linwell-05",
+      "routeBaseId": "ems-st-catharines-ems-linwell",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2583,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 334.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 234.6,
+        "bestSameServiceCostSeconds": 234.6
+      }
+    },
+    {
+      "name": "Agar Drive & Champa Drive",
+      "addr": "Agar Drive & Champa Drive",
+      "lat": 43.193568,
+      "lng": -79.2232013,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55771432",
+        "way/55776544",
+        "way/55777340"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55771432",
+        "https://www.openstreetmap.org/way/55776544",
+        "https://www.openstreetmap.org/way/55777340"
+      ],
+      "id": "route-local-ems-st-catharines-ems-linwell-06",
+      "routeBaseId": "ems-st-catharines-ems-linwell",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1699.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 422.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 154.9,
+        "bestSameServiceCostSeconds": 154.9
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "City Hall",
+      "addr": "50 Church Street, St. Catharines, ON",
+      "lat": 43.159389130112,
+      "lng": -79.246969407916,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.stcatharines.ca/council-and-administration/city-hall/",
+        "https://utility.arcgis.com/usrsvcs/servers/21332341b9364d05bf276dd4a9c68d30/rest/services/General/STC_Address_Locator/GeocodeServer/findAddressCandidates?SingleLine=50+Church+Street&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "James Street",
+        "Wellington Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "st-catharines-call-07",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-st-catharines-ems-ontario-01",
+      "routeBaseId": "ems-st-catharines-ems-ontario",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 751.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 577.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 80.3,
+        "bestSameServiceCostSeconds": 80.3
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Bailey Street Park",
+      "addr": "8 Bailey Street, St. Catharines, ON",
+      "lat": 43.143657280166,
+      "lng": -79.249350292581,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.stcatharines.ca/parks-and-facilities/",
+        "https://utility.arcgis.com/usrsvcs/servers/21332341b9364d05bf276dd4a9c68d30/rest/services/General/STC_Address_Locator/GeocodeServer/findAddressCandidates?SingleLine=8+Bailey+Street&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Rykert Street",
+        "Hillview Road North"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "st-catharines-call-19",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-st-catharines-ems-ontario-02",
+      "routeBaseId": "ems-st-catharines-ems-ontario",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2266.5,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 1878.6,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 174.5,
+        "bestSameServiceCostSeconds": 174.5
+      }
+    },
+    {
+      "name": "Barry Street & Haig Street",
+      "addr": "Barry Street & Haig Street",
+      "lat": 43.1770199,
+      "lng": -79.2591732,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55770721",
+        "way/55771268",
+        "way/55773111"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55770721",
+        "https://www.openstreetmap.org/way/55771268",
+        "https://www.openstreetmap.org/way/55773111"
+      ],
+      "id": "route-local-ems-st-catharines-ems-ontario-03",
+      "routeBaseId": "ems-st-catharines-ems-ontario",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2598,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 381.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 242.5,
+        "bestSameServiceCostSeconds": 242.5
+      }
+    },
+    {
+      "name": "Fourth Avenue & Martindale Road",
+      "addr": "Fourth Avenue & Martindale Road",
+      "lat": 43.155698,
+      "lng": -79.2653984,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55770830",
+        "way/55772881",
+        "way/55773508",
+        "way/55775104"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55770830",
+        "https://www.openstreetmap.org/way/55772881",
+        "https://www.openstreetmap.org/way/55773508",
+        "https://www.openstreetmap.org/way/55775104"
+      ],
+      "id": "route-local-ems-st-catharines-ems-ontario-04",
+      "routeBaseId": "ems-st-catharines-ems-ontario",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1487.9,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1125.1,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 117.3,
+        "bestSameServiceCostSeconds": 117.3
+      }
+    },
+    {
+      "name": "Herrick Avenue & Westchester Crescent",
+      "addr": "Herrick Avenue & Westchester Crescent",
+      "lat": 43.1603,
+      "lng": -79.2255047,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/280077797",
+        "way/55771328",
+        "way/55774409"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/280077797",
+        "https://www.openstreetmap.org/way/55771328",
+        "https://www.openstreetmap.org/way/55774409"
+      ],
+      "id": "route-local-ems-st-catharines-ems-ontario-05",
+      "routeBaseId": "ems-st-catharines-ems-ontario",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2604,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 360.4,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 184.5,
+        "bestSameServiceCostSeconds": 184.5
+      }
+    },
+    {
+      "name": "Highland Avenue & Scarth Road",
+      "addr": "Highland Avenue & Scarth Road",
+      "lat": 43.1521534,
+      "lng": -79.2372899,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55775607",
+        "way/55775785",
+        "way/55778484"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55775607",
+        "https://www.openstreetmap.org/way/55775785",
+        "https://www.openstreetmap.org/way/55778484"
+      ],
+      "id": "route-local-ems-st-catharines-ems-ontario-06",
+      "routeBaseId": "ems-st-catharines-ems-ontario",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1703.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 688.6,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 169.8,
+        "bestSameServiceCostSeconds": 169.8
+      }
+    }
+  ]
 }

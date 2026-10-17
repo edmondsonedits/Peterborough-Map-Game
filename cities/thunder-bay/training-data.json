@@ -191,5 +191,3419 @@
   ],
   "roadsUrl": "cities/thunder-bay/roads.geojson.gz",
   "roadFeatureCount": 11945,
-  "roadDataSha256": "9d9cedacf62b4f5f8aed9dba8a571bf3212a3f9e9225aeb534526b811c65041f"
+  "roadDataSha256": "9d9cedacf62b4f5f8aed9dba8a571bf3212a3f9e9225aeb534526b811c65041f",
+  "routeResponses": {
+    "schemaVersion": 1,
+    "minCallsPerBase": 3,
+    "targetCallsPerBase": 6,
+    "generatedOn": "2026-10-17",
+    "model": {
+      "description": "Published first-due polygons where available. Otherwise a directed road-network estimate using road class travel cost from every same-service hall; allows a15second cost tie for overlapping nearby halls. This is training geography, not live dispatch advice.",
+      "ownershipToleranceSeconds": 15,
+      "maximumCandidateRouteMetres": 12000
+    },
+    "officialAreasUrl": "cities/thunder-bay/response-areas.geojson",
+    "officialSource": {
+      "title": "ES Fire Zones view",
+      "url": "https://opendata.thunderbay.ca/datasets/aa3bc60010c14ede9ab6cee151abc6fe_0",
+      "endpoint": "https://services5.arcgis.com/h9xShea49ZANgOtx/arcgis/rest/services/ES_Fire_Zones_view/FeatureServer/0",
+      "license": "Open Data Licence – The Corporation of the City of Thunder Bay v1.0",
+      "licenseUrl": "https://www.thunderbay.ca/city-hall/thunder-bay-open-data/",
+      "retrievedOn": "2026-10-17",
+      "originalSha256": "e5ed30ec43ddd28f25dcf68a002f6a809e03bbc7fc3e851c2ea5ea23f19b0326"
+    },
+    "bases": [
+      {
+        "baseId": "fire-thunder-bay-fire-1",
+        "service": "fire",
+        "number": 1,
+        "name": "Fire Station 1",
+        "method": "official-run-area",
+        "sourceUrl": "https://opendata.thunderbay.ca/datasets/aa3bc60010c14ede9ab6cee151abc6fe_0",
+        "areaCode": "1",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 48.388676582930245,
+          "lng": -89.25107607643312,
+          "road": "Vickers Street North",
+          "gapMetres": 19.9
+        },
+        "callIds": [
+          "route-local-fire-thunder-bay-fire-1-01",
+          "route-local-fire-thunder-bay-fire-1-02",
+          "route-local-fire-thunder-bay-fire-1-03",
+          "route-local-fire-thunder-bay-fire-1-04",
+          "route-local-fire-thunder-bay-fire-1-05",
+          "route-local-fire-thunder-bay-fire-1-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-thunder-bay-fire-2",
+        "service": "fire",
+        "number": 2,
+        "name": "Fire Station 2",
+        "method": "official-run-area",
+        "sourceUrl": "https://opendata.thunderbay.ca/datasets/aa3bc60010c14ede9ab6cee151abc6fe_0",
+        "areaCode": "2",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 48.44830445694505,
+          "lng": -89.24887490285624,
+          "road": "Unnamed road",
+          "gapMetres": 15.2
+        },
+        "callIds": [
+          "route-local-fire-thunder-bay-fire-2-01",
+          "route-local-fire-thunder-bay-fire-2-02",
+          "route-local-fire-thunder-bay-fire-2-03",
+          "route-local-fire-thunder-bay-fire-2-04",
+          "route-local-fire-thunder-bay-fire-2-05",
+          "route-local-fire-thunder-bay-fire-2-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-thunder-bay-fire-3",
+        "service": "fire",
+        "number": 3,
+        "name": "Fire Station 3",
+        "method": "official-run-area",
+        "sourceUrl": "https://opendata.thunderbay.ca/datasets/aa3bc60010c14ede9ab6cee151abc6fe_0",
+        "areaCode": "3",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 48.43257555416805,
+          "lng": -89.22097843574801,
+          "road": "Pearl Street",
+          "gapMetres": 31.7
+        },
+        "callIds": [
+          "route-local-fire-thunder-bay-fire-3-01",
+          "route-local-fire-thunder-bay-fire-3-02",
+          "route-local-fire-thunder-bay-fire-3-03",
+          "route-local-fire-thunder-bay-fire-3-04",
+          "route-local-fire-thunder-bay-fire-3-05",
+          "route-local-fire-thunder-bay-fire-3-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-thunder-bay-fire-4",
+        "service": "fire",
+        "number": 4,
+        "name": "Fire Station 4",
+        "method": "official-run-area",
+        "sourceUrl": "https://opendata.thunderbay.ca/datasets/aa3bc60010c14ede9ab6cee151abc6fe_0",
+        "areaCode": "4",
+        "maxRouteMetres": 5700,
+        "access": {
+          "lat": 48.3904353,
+          "lng": -89.2898618,
+          "road": "Unnamed road",
+          "gapMetres": 15.5
+        },
+        "callIds": [
+          "route-local-fire-thunder-bay-fire-4-01",
+          "route-local-fire-thunder-bay-fire-4-02",
+          "route-local-fire-thunder-bay-fire-4-03",
+          "route-local-fire-thunder-bay-fire-4-04",
+          "route-local-fire-thunder-bay-fire-4-05",
+          "route-local-fire-thunder-bay-fire-4-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-thunder-bay-fire-5",
+        "service": "fire",
+        "number": 5,
+        "name": "Fire Station 5",
+        "method": "official-run-area",
+        "sourceUrl": "https://opendata.thunderbay.ca/datasets/aa3bc60010c14ede9ab6cee151abc6fe_0",
+        "areaCode": "5",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 48.460788491611275,
+          "lng": -89.18182761933701,
+          "road": "Marion Street",
+          "gapMetres": 24.4
+        },
+        "callIds": [
+          "route-local-fire-thunder-bay-fire-5-01",
+          "route-local-fire-thunder-bay-fire-5-02",
+          "route-local-fire-thunder-bay-fire-5-03",
+          "route-local-fire-thunder-bay-fire-5-04",
+          "route-local-fire-thunder-bay-fire-5-05",
+          "route-local-fire-thunder-bay-fire-5-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-thunder-bay-fire-6",
+        "service": "fire",
+        "number": 6,
+        "name": "Fire Station 6",
+        "method": "official-run-area",
+        "sourceUrl": "https://opendata.thunderbay.ca/datasets/aa3bc60010c14ede9ab6cee151abc6fe_0",
+        "areaCode": "6",
+        "maxRouteMetres": 5800,
+        "access": {
+          "lat": 48.364783504429866,
+          "lng": -89.30657783565832,
+          "road": "Unnamed road",
+          "gapMetres": 8.8
+        },
+        "callIds": [
+          "route-local-fire-thunder-bay-fire-6-01",
+          "route-local-fire-thunder-bay-fire-6-02",
+          "route-local-fire-thunder-bay-fire-6-03",
+          "route-local-fire-thunder-bay-fire-6-04",
+          "route-local-fire-thunder-bay-fire-6-05",
+          "route-local-fire-thunder-bay-fire-6-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-thunder-bay-fire-7",
+        "service": "fire",
+        "number": 7,
+        "name": "Fire Station 7",
+        "method": "official-run-area",
+        "sourceUrl": "https://opendata.thunderbay.ca/datasets/aa3bc60010c14ede9ab6cee151abc6fe_0",
+        "areaCode": "7",
+        "maxRouteMetres": 6100,
+        "access": {
+          "lat": 48.364087379210794,
+          "lng": -89.36100012677521,
+          "road": "20th Sideroad",
+          "gapMetres": 38.6
+        },
+        "callIds": [
+          "route-local-fire-thunder-bay-fire-7-01",
+          "route-local-fire-thunder-bay-fire-7-02",
+          "route-local-fire-thunder-bay-fire-7-03",
+          "route-local-fire-thunder-bay-fire-7-04",
+          "route-local-fire-thunder-bay-fire-7-05",
+          "route-local-fire-thunder-bay-fire-7-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-thunder-bay-fire-8",
+        "service": "fire",
+        "number": 8,
+        "name": "Fire Station 8",
+        "method": "official-run-area",
+        "sourceUrl": "https://opendata.thunderbay.ca/datasets/aa3bc60010c14ede9ab6cee151abc6fe_0",
+        "areaCode": "8",
+        "maxRouteMetres": 9000,
+        "access": {
+          "lat": 48.470628047698796,
+          "lng": -89.37399159903099,
+          "road": "Mapleward Road",
+          "gapMetres": 38.4
+        },
+        "callIds": [
+          "route-local-fire-thunder-bay-fire-8-01",
+          "route-local-fire-thunder-bay-fire-8-02",
+          "route-local-fire-thunder-bay-fire-8-03",
+          "route-local-fire-thunder-bay-fire-8-04",
+          "route-local-fire-thunder-bay-fire-8-05",
+          "route-local-fire-thunder-bay-fire-8-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-thunder-bay-ems-1",
+        "service": "ems",
+        "number": 10000,
+        "name": "North Station / Junot Headquarters",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 48.4450194321233,
+          "lng": -89.25479639146806,
+          "road": "Junot Avenue South",
+          "gapMetres": 59.7
+        },
+        "callIds": [
+          "route-local-ems-thunder-bay-ems-1-01",
+          "route-local-ems-thunder-bay-ems-1-02",
+          "route-local-ems-thunder-bay-ems-1-03",
+          "route-local-ems-thunder-bay-ems-1-04",
+          "route-local-ems-thunder-bay-ems-1-05",
+          "route-local-ems-thunder-bay-ems-1-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-thunder-bay-ems-2",
+        "service": "ems",
+        "number": 10001,
+        "name": "Downtown South Station",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 48.388676582930245,
+          "lng": -89.25107607643312,
+          "road": "Vickers Street North",
+          "gapMetres": 19.9
+        },
+        "callIds": [
+          "route-local-ems-thunder-bay-ems-2-01",
+          "route-local-ems-thunder-bay-ems-2-02",
+          "route-local-ems-thunder-bay-ems-2-03",
+          "route-local-ems-thunder-bay-ems-2-04",
+          "route-local-ems-thunder-bay-ems-2-05",
+          "route-local-ems-thunder-bay-ems-2-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-thunder-bay-ems-3",
+        "service": "ems",
+        "number": 10002,
+        "name": "Northwood Station",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 48.3904353,
+          "lng": -89.2898618,
+          "road": "Unnamed road",
+          "gapMetres": 15.5
+        },
+        "callIds": [
+          "route-local-ems-thunder-bay-ems-3-01",
+          "route-local-ems-thunder-bay-ems-3-02",
+          "route-local-ems-thunder-bay-ems-3-03",
+          "route-local-ems-thunder-bay-ems-3-04",
+          "route-local-ems-thunder-bay-ems-3-05",
+          "route-local-ems-thunder-bay-ems-3-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-thunder-bay-ems-4",
+        "service": "ems",
+        "number": 10003,
+        "name": "Westfort Station",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5200,
+        "access": {
+          "lat": 48.36619156646873,
+          "lng": -89.28179971137929,
+          "road": "Amelia Street West",
+          "gapMetres": 16.2
+        },
+        "callIds": [
+          "route-local-ems-thunder-bay-ems-4-01",
+          "route-local-ems-thunder-bay-ems-4-02",
+          "route-local-ems-thunder-bay-ems-4-03",
+          "route-local-ems-thunder-bay-ems-4-04",
+          "route-local-ems-thunder-bay-ems-4-05",
+          "route-local-ems-thunder-bay-ems-4-06"
+        ],
+        "challengeCalls": 6
+      }
+    ]
+  },
+  "routeCalls": [
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Franklin St Splash Pad",
+      "addr": "215 FRANKLIN ST N",
+      "lat": 48.38603440269373,
+      "lng": -89.25734683644006,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ctb.gisportal.thunderbay.ca/hosting/rest/services/Webmaps/PropertyMap/MapServer/1/query?where=OBJECTID%3D12771&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Miles Street East",
+        "Cumming Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "thunder-bay-call-17",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-thunder-bay-fire-1-01",
+      "routeBaseId": "fire-thunder-bay-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 801.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 323.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Vickers Street North",
+        "estimatedCostSeconds": 95.7,
+        "bestSameServiceCostSeconds": 95.7
+      }
+    },
+    {
+      "name": "13th Avenue & Memorial Avenue",
+      "addr": "13th Avenue & Memorial Avenue",
+      "lat": 48.4093751,
+      "lng": -89.2455437,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75147862",
+        "way/75168619"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75147862",
+        "https://www.openstreetmap.org/way/75168619"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-1-02",
+      "routeBaseId": "fire-thunder-bay-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2620.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 486.1,
+        "decisionKinds": [
+          "bridge"
+        ],
+        "departureRoad": "Vickers Street North",
+        "estimatedCostSeconds": 172.4,
+        "bestSameServiceCostSeconds": 172.4
+      }
+    },
+    {
+      "name": "Christie Street & McDonald Street",
+      "addr": "Christie Street & McDonald Street",
+      "lat": 48.3911163,
+      "lng": -89.2338915,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75158385",
+        "way/75159696",
+        "way/75164187",
+        "way/75165074"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75158385",
+        "https://www.openstreetmap.org/way/75159696",
+        "https://www.openstreetmap.org/way/75164187",
+        "https://www.openstreetmap.org/way/75165074"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-1-03",
+      "routeBaseId": "fire-thunder-bay-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2578.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 3404.1,
+        "decisionKinds": [
+          "bridge"
+        ],
+        "departureRoad": "Vickers Street North",
+        "estimatedCostSeconds": 253.5,
+        "bestSameServiceCostSeconds": 253.5
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Thunder Bay Historical Museum",
+      "addr": "425 DONALD ST E",
+      "lat": 48.38268538467582,
+      "lng": -89.24458298067081,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ctb.gisportal.thunderbay.ca/hosting/rest/services/Webmaps/PropertyMap/MapServer/1/query?where=OBJECTID%3D10761&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Ross Street",
+        "May Street South"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "thunder-bay-call-08",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-thunder-bay-fire-1-04",
+      "routeBaseId": "fire-thunder-bay-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1155.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 323.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Vickers Street North",
+        "estimatedCostSeconds": 90.7,
+        "bestSameServiceCostSeconds": 90.7
+      }
+    },
+    {
+      "name": "Balmoral Street North & William Street",
+      "addr": "Balmoral Street North & William Street",
+      "lat": 48.4000416,
+      "lng": -89.2582293,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/463783534",
+        "way/75286501",
+        "way/75286512",
+        "way/75289069"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/463783534",
+        "https://www.openstreetmap.org/way/75286501",
+        "https://www.openstreetmap.org/way/75286512",
+        "https://www.openstreetmap.org/way/75289069"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-1-05",
+      "routeBaseId": "fire-thunder-bay-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1750.8,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 1858.7,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Vickers Street North",
+        "estimatedCostSeconds": 117.4,
+        "bestSameServiceCostSeconds": 117.4
+      }
+    },
+    {
+      "name": "New Vickers Street & Syndicate Avenue South",
+      "addr": "New Vickers Street & Syndicate Avenue South",
+      "lat": 48.3734685,
+      "lng": -89.2517835,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75159983",
+        "way/75160829",
+        "way/75170565"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75159983",
+        "https://www.openstreetmap.org/way/75160829",
+        "https://www.openstreetmap.org/way/75170565"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-1-06",
+      "routeBaseId": "fire-thunder-bay-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1705.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 338.4,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Vickers Street North",
+        "estimatedCostSeconds": 156.1,
+        "bestSameServiceCostSeconds": 156.1
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Thunder Bay 55 Plus Centre",
+      "addr": "700 RED RIVER RD",
+      "lat": 48.441113042779136,
+      "lng": -89.24486432032741,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ctb.gisportal.thunderbay.ca/hosting/rest/services/Webmaps/PropertyMap/MapServer/1/query?where=OBJECTID%3D29008&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Windemere Avenue North",
+        "Windemere Avenue South"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "thunder-bay-call-15",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-thunder-bay-fire-2-01",
+      "routeBaseId": "fire-thunder-bay-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1006.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 372.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 74.6,
+        "bestSameServiceCostSeconds": 74.6
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Jumbo Gardens Community Centre",
+      "addr": "330 TOIVO ST",
+      "lat": 48.45364608851688,
+      "lng": -89.27418469435112,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ctb.gisportal.thunderbay.ca/hosting/rest/services/Webmaps/PropertyMap/MapServer/1/query?where=OBJECTID%3D36483&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Jameson Street",
+        "Valley Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "thunder-bay-call-20",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-thunder-bay-fire-2-02",
+      "routeBaseId": "fire-thunder-bay-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2496.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 4572.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 217.2,
+        "bestSameServiceCostSeconds": 217.2
+      }
+    },
+    {
+      "name": "Blaquier Street & Gibbon Street",
+      "addr": "Blaquier Street & Gibbon Street",
+      "lat": 48.4541865,
+      "lng": -89.2214815,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75148706",
+        "way/75152434",
+        "way/75153853"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75148706",
+        "https://www.openstreetmap.org/way/75152434",
+        "https://www.openstreetmap.org/way/75153853"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-2-03",
+      "routeBaseId": "fire-thunder-bay-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2606.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1017,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 214.3,
+        "bestSameServiceCostSeconds": 214.3
+      }
+    },
+    {
+      "name": "East Avenue & Market Street",
+      "addr": "East Avenue & Market Street",
+      "lat": 48.4538617,
+      "lng": -89.2552102,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75286198",
+        "way/75291676"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75286198",
+        "https://www.openstreetmap.org/way/75291676"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-2-04",
+      "routeBaseId": "fire-thunder-bay-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1039.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 4572.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 76.8,
+        "bestSameServiceCostSeconds": 76.8
+      }
+    },
+    {
+      "name": "Langworthy Crescent & Oliver Road",
+      "addr": "Langworthy Crescent & Oliver Road",
+      "lat": 48.4266975,
+      "lng": -89.2513927,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75292584",
+        "way/75295704",
+        "way/75295705"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75292584",
+        "https://www.openstreetmap.org/way/75295704",
+        "https://www.openstreetmap.org/way/75295705"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-2-05",
+      "routeBaseId": "fire-thunder-bay-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2599.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 387.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 175,
+        "bestSameServiceCostSeconds": 162.4
+      }
+    },
+    {
+      "name": "Dublin Avenue & Valley Street",
+      "addr": "Dublin Avenue & Valley Street",
+      "lat": 48.4450448,
+      "lng": -89.2653973,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75290792",
+        "way/75290988"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75290792",
+        "https://www.openstreetmap.org/way/75290988"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-2-06",
+      "routeBaseId": "fire-thunder-bay-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1710.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 4590.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 93.2,
+        "bestSameServiceCostSeconds": 93.2
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Prince Arthur's Landing - Water Garden Pavilion",
+      "addr": "2201 SLEEPING GIANT PKWY",
+      "lat": 48.43390761028768,
+      "lng": -89.21674912603122,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ctb.gisportal.thunderbay.ca/hosting/rest/services/Webmaps/PropertyMap/MapServer/1/query?where=OBJECTID%3D74888&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Bobby Curtola Drive",
+        "Saul Laskin Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "thunder-bay-call-10",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-thunder-bay-fire-3-01",
+      "routeBaseId": "fire-thunder-bay-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 641.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1200.1,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Pearl Street",
+        "estimatedCostSeconds": 142.9,
+        "bestSameServiceCostSeconds": 142.9
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Canada Games Complex",
+      "addr": "420 WINNIPEG AVE",
+      "lat": 48.42363478481384,
+      "lng": -89.24146647075705,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ctb.gisportal.thunderbay.ca/hosting/rest/services/Webmaps/PropertyMap/MapServer/1/query?where=OBJECTID%3D22764&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Duluth Road",
+        "Inchiquin Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "thunder-bay-call-04",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-thunder-bay-fire-3-02",
+      "routeBaseId": "fire-thunder-bay-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2201.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 545,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Pearl Street",
+        "estimatedCostSeconds": 194.6,
+        "bestSameServiceCostSeconds": 194.6
+      }
+    },
+    {
+      "name": "Fitzgerald Street & Ruttan Street",
+      "addr": "Fitzgerald Street & Ruttan Street",
+      "lat": 48.4501726,
+      "lng": -89.209014,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75146601",
+        "way/75150268",
+        "way/75166623"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75146601",
+        "https://www.openstreetmap.org/way/75150268",
+        "https://www.openstreetmap.org/way/75166623"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-3-03",
+      "routeBaseId": "fire-thunder-bay-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2598.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 335.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Pearl Street",
+        "estimatedCostSeconds": 193.5,
+        "bestSameServiceCostSeconds": 193.5
+      }
+    },
+    {
+      "name": "Sheppard Street & Tupper Street",
+      "addr": "Sheppard Street & Tupper Street",
+      "lat": 48.4429084,
+      "lng": -89.2288137,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75149100",
+        "way/75150336",
+        "way/75162632"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75149100",
+        "https://www.openstreetmap.org/way/75150336",
+        "https://www.openstreetmap.org/way/75162632"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-3-04",
+      "routeBaseId": "fire-thunder-bay-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1697,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 266.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Pearl Street",
+        "estimatedCostSeconds": 148.8,
+        "bestSameServiceCostSeconds": 148.8
+      }
+    },
+    {
+      "name": "5th Avenue & Winnipeg Avenue",
+      "addr": "5th Avenue & Winnipeg Avenue",
+      "lat": 48.4162541,
+      "lng": -89.2407904,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75153120",
+        "way/75155361",
+        "way/75168755"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75153120",
+        "https://www.openstreetmap.org/way/75155361",
+        "https://www.openstreetmap.org/way/75168755"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-3-05",
+      "routeBaseId": "fire-thunder-bay-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2605.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 577.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Pearl Street",
+        "estimatedCostSeconds": 175.1,
+        "bestSameServiceCostSeconds": 175.1
+      }
+    },
+    {
+      "name": "Court Street North & Van Horne Street",
+      "addr": "Court Street North & Van Horne Street",
+      "lat": 48.4444782,
+      "lng": -89.2121472,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75156106",
+        "way/75162220",
+        "way/75168517",
+        "way/75169800"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75156106",
+        "https://www.openstreetmap.org/way/75162220",
+        "https://www.openstreetmap.org/way/75168517",
+        "https://www.openstreetmap.org/way/75169800"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-3-06",
+      "routeBaseId": "fire-thunder-bay-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1702.7,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 335.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Pearl Street",
+        "estimatedCostSeconds": 112.9,
+        "bestSameServiceCostSeconds": 112.9
+      }
+    },
+    {
+      "name": "Ashland Place & Limbrick Street",
+      "addr": "Ashland Place & Limbrick Street",
+      "lat": 48.3958765,
+      "lng": -89.2871165,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75287921",
+        "way/75290849",
+        "way/75293098"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75287921",
+        "https://www.openstreetmap.org/way/75290849",
+        "https://www.openstreetmap.org/way/75293098"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-4-01",
+      "routeBaseId": "fire-thunder-bay-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 803.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 416.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 85.8,
+        "bestSameServiceCostSeconds": 85.8
+      }
+    },
+    {
+      "name": "Isabella Street West & Shamrock Crescent & Thistle Crescent",
+      "addr": "Isabella Street West & Shamrock Crescent & Thistle Crescent",
+      "lat": 48.37704,
+      "lng": -89.2869384,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75286568",
+        "way/75287288",
+        "way/75287362",
+        "way/75292782"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75286568",
+        "https://www.openstreetmap.org/way/75287288",
+        "https://www.openstreetmap.org/way/75287362",
+        "https://www.openstreetmap.org/way/75292782"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-4-02",
+      "routeBaseId": "fire-thunder-bay-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1695.1,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 2358.3,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 155.5,
+        "bestSameServiceCostSeconds": 155.5
+      }
+    },
+    {
+      "name": "Beaverhall Place & Walsh Street West",
+      "addr": "Beaverhall Place & Walsh Street West",
+      "lat": 48.3743149,
+      "lng": -89.2990937,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75162498",
+        "way/75170825"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75162498",
+        "https://www.openstreetmap.org/way/75170825"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-4-03",
+      "routeBaseId": "fire-thunder-bay-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2495,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2688.8,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 199.6,
+        "bestSameServiceCostSeconds": 112.3
+      }
+    },
+    {
+      "name": "Strachan Crescent & Thornloe Drive",
+      "addr": "Strachan Crescent & Thornloe Drive",
+      "lat": 48.386504,
+      "lng": -89.2970177,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75285584",
+        "way/75290734"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75285584",
+        "https://www.openstreetmap.org/way/75290734"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-4-04",
+      "routeBaseId": "fire-thunder-bay-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 955.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 333.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 145.1,
+        "bestSameServiceCostSeconds": 145.1
+      }
+    },
+    {
+      "name": "Fanshaw Street & Trinity Crescent",
+      "addr": "Fanshaw Street & Trinity Crescent",
+      "lat": 48.4025954,
+      "lng": -89.2836074,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75289710",
+        "way/75293813"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75289710",
+        "https://www.openstreetmap.org/way/75293813"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-4-05",
+      "routeBaseId": "fire-thunder-bay-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1736.5,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 416.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 164.8,
+        "bestSameServiceCostSeconds": 164.8
+      }
+    },
+    {
+      "name": "Beaverhall Place & Mountdale Avenue",
+      "addr": "Beaverhall Place & Mountdale Avenue",
+      "lat": 48.3787603,
+      "lng": -89.2950295,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75286042",
+        "way/75293282"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75286042",
+        "https://www.openstreetmap.org/way/75293282"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-4-06",
+      "routeBaseId": "fire-thunder-bay-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1704.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2688.8,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 136.4,
+        "bestSameServiceCostSeconds": 136.4
+      }
+    },
+    {
+      "name": "Adelaide Street & Grenville Avenue",
+      "addr": "Adelaide Street & Grenville Avenue",
+      "lat": 48.4574173,
+      "lng": -89.1874647,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/525055747",
+        "way/75161509",
+        "way/75169426"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/525055747",
+        "https://www.openstreetmap.org/way/75161509",
+        "https://www.openstreetmap.org/way/75169426"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-5-01",
+      "routeBaseId": "fire-thunder-bay-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 781.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 911,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Marion Street",
+        "estimatedCostSeconds": 86.3,
+        "bestSameServiceCostSeconds": 86.3
+      }
+    },
+    {
+      "name": "Audrey Street & Strathcona Avenue",
+      "addr": "Audrey Street & Strathcona Avenue",
+      "lat": 48.4728644,
+      "lng": -89.1719801,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75148163",
+        "way/75165275"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75148163",
+        "https://www.openstreetmap.org/way/75165275"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-5-02",
+      "routeBaseId": "fire-thunder-bay-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1638,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1290,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Marion Street",
+        "estimatedCostSeconds": 116.2,
+        "bestSameServiceCostSeconds": 116.2
+      }
+    },
+    {
+      "name": "Algoma Street North & Clarke Street",
+      "addr": "Algoma Street North & Clarke Street",
+      "lat": 48.4508258,
+      "lng": -89.2045114,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75160072",
+        "way/75164481",
+        "way/75165604"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75160072",
+        "https://www.openstreetmap.org/way/75164481",
+        "https://www.openstreetmap.org/way/75165604"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-5-03",
+      "routeBaseId": "fire-thunder-bay-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2593.6,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 2099.9,
+        "decisionKinds": [
+          "bridge",
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Marion Street",
+        "estimatedCostSeconds": 182.1,
+        "bestSameServiceCostSeconds": 182.1
+      }
+    },
+    {
+      "name": "Arundel Street & Lyon Boulevard East",
+      "addr": "Arundel Street & Lyon Boulevard East",
+      "lat": 48.4693312,
+      "lng": -89.1991065,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1349884649",
+        "way/463310101",
+        "way/75160685"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1349884649",
+        "https://www.openstreetmap.org/way/463310101",
+        "https://www.openstreetmap.org/way/75160685"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-5-04",
+      "routeBaseId": "fire-thunder-bay-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2015.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 318.6,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Marion Street",
+        "estimatedCostSeconds": 161.9,
+        "bestSameServiceCostSeconds": 161.9
+      }
+    },
+    {
+      "name": "Shipyard Road & Strathcona Avenue",
+      "addr": "Shipyard Road & Strathcona Avenue",
+      "lat": 48.4757494,
+      "lng": -89.1613026,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1287683796",
+        "way/75154981"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1287683796",
+        "https://www.openstreetmap.org/way/75154981"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-5-05",
+      "routeBaseId": "fire-thunder-bay-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2545.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1290,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Marion Street",
+        "estimatedCostSeconds": 170.9,
+        "bestSameServiceCostSeconds": 170.9
+      }
+    },
+    {
+      "name": "Erle Street & Grenville Avenue",
+      "addr": "Erle Street & Grenville Avenue",
+      "lat": 48.4725125,
+      "lng": -89.1878395,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75152343",
+        "way/75160740",
+        "way/75164781",
+        "way/75167048"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75152343",
+        "https://www.openstreetmap.org/way/75160740",
+        "https://www.openstreetmap.org/way/75164781",
+        "https://www.openstreetmap.org/way/75167048"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-5-06",
+      "routeBaseId": "fire-thunder-bay-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1723.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 407.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Marion Street",
+        "estimatedCostSeconds": 145.6,
+        "bestSameServiceCostSeconds": 145.6
+      }
+    },
+    {
+      "name": "Holt Place & Mary Street West",
+      "addr": "Holt Place & Mary Street West",
+      "lat": 48.3694114,
+      "lng": -89.3031594,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75161443",
+        "way/75169113"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75161443",
+        "https://www.openstreetmap.org/way/75169113"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-6-01",
+      "routeBaseId": "fire-thunder-bay-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 764.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 200.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 78.7,
+        "bestSameServiceCostSeconds": 78.7
+      }
+    },
+    {
+      "name": "Broadway Avenue & Meryle Street",
+      "addr": "Broadway Avenue & Meryle Street",
+      "lat": 48.3538384,
+      "lng": -89.3213446,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75147626",
+        "way/75155803",
+        "way/75161606"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75147626",
+        "https://www.openstreetmap.org/way/75155803",
+        "https://www.openstreetmap.org/way/75161606"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-6-02",
+      "routeBaseId": "fire-thunder-bay-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2305,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 4703.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 193.3,
+        "bestSameServiceCostSeconds": 193.3
+      }
+    },
+    {
+      "name": "Chippewa Road & Quarry Road",
+      "addr": "Chippewa Road & Quarry Road",
+      "lat": 48.3544778,
+      "lng": -89.2868411,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/295539197",
+        "way/75166471",
+        "way/75168373"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/295539197",
+        "https://www.openstreetmap.org/way/75166471",
+        "https://www.openstreetmap.org/way/75168373"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-6-03",
+      "routeBaseId": "fire-thunder-bay-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2573.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 4234.3,
+        "decisionKinds": [
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 196.9,
+        "bestSameServiceCostSeconds": 196.9
+      }
+    },
+    {
+      "name": "Princess Street & Round Boulevard & Sifton Avenue",
+      "addr": "Princess Street & Round Boulevard & Sifton Avenue",
+      "lat": 48.3732426,
+      "lng": -89.3094075,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/464776522",
+        "way/477670959",
+        "way/75154111",
+        "way/75166856"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/464776522",
+        "https://www.openstreetmap.org/way/477670959",
+        "https://www.openstreetmap.org/way/75154111",
+        "https://www.openstreetmap.org/way/75166856"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-6-04",
+      "routeBaseId": "fire-thunder-bay-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1183.7,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 225.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 101.8,
+        "bestSameServiceCostSeconds": 101.8
+      }
+    },
+    {
+      "name": "Hector Dougall Way & Kelner Place",
+      "addr": "Hector Dougall Way & Kelner Place",
+      "lat": 48.3703599,
+      "lng": -89.3185011,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75148696",
+        "way/75159793"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75148696",
+        "https://www.openstreetmap.org/way/75159793"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-6-05",
+      "routeBaseId": "fire-thunder-bay-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2121.7,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 3025,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 215.6,
+        "bestSameServiceCostSeconds": 215.6
+      }
+    },
+    {
+      "name": "Hector Dougall Way & John Patterson Drive & Round Boulevard",
+      "addr": "Hector Dougall Way & John Patterson Drive & Round Boulevard",
+      "lat": 48.3700061,
+      "lng": -89.3135953,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75149754",
+        "way/75151794",
+        "way/75159793"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75149754",
+        "https://www.openstreetmap.org/way/75151794",
+        "https://www.openstreetmap.org/way/75159793"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-6-06",
+      "routeBaseId": "fire-thunder-bay-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1702.7,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 321.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 164.8,
+        "bestSameServiceCostSeconds": 164.8
+      }
+    },
+    {
+      "name": "Demeuron Avenue & Rosslyn Road & Taylor Drive",
+      "addr": "Demeuron Avenue & Rosslyn Road & Taylor Drive",
+      "lat": 48.3625042,
+      "lng": -89.3527116,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75154179",
+        "way/75157109",
+        "way/75158411",
+        "way/75159823"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75154179",
+        "https://www.openstreetmap.org/way/75157109",
+        "https://www.openstreetmap.org/way/75158411",
+        "https://www.openstreetmap.org/way/75159823"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-7-01",
+      "routeBaseId": "fire-thunder-bay-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 793.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 10472.7,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "20th Sideroad",
+        "estimatedCostSeconds": 51.3,
+        "bestSameServiceCostSeconds": 51.3
+      }
+    },
+    {
+      "name": "Rosslyn Road & Whitegates Drive",
+      "addr": "Rosslyn Road & Whitegates Drive",
+      "lat": 48.3624825,
+      "lng": -89.3819828,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/463697965",
+        "way/75347090"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/463697965",
+        "https://www.openstreetmap.org/way/75347090"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-7-02",
+      "routeBaseId": "fire-thunder-bay-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1730.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 5168.2,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "20th Sideroad",
+        "estimatedCostSeconds": 107.8,
+        "bestSameServiceCostSeconds": 107.8
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "West Arthur Community Centre",
+      "addr": "1914 ARTHUR ST W",
+      "lat": 48.380145210007605,
+      "lng": -89.35030502180909,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ctb.gisportal.thunderbay.ca/hosting/rest/services/Webmaps/PropertyMap/MapServer/1/query?where=OBJECTID%3D10557&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Mapleward Road",
+        "Garden Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "thunder-bay-call-13",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-thunder-bay-fire-7-03",
+      "routeBaseId": "fire-thunder-bay-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2712.8,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 7415.9,
+        "decisionKinds": [
+          "departure",
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "20th Sideroad",
+        "estimatedCostSeconds": 204.1,
+        "bestSameServiceCostSeconds": 204.1
+      }
+    },
+    {
+      "name": "Bordeaux Crescent & Trotter Road",
+      "addr": "Bordeaux Crescent & Trotter Road",
+      "lat": 48.3715253,
+      "lng": -89.3628516,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75153152",
+        "way/75169285"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75153152",
+        "https://www.openstreetmap.org/way/75169285"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-7-04",
+      "routeBaseId": "fire-thunder-bay-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 959.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 5693.3,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "20th Sideroad",
+        "estimatedCostSeconds": 86.2,
+        "bestSameServiceCostSeconds": 86.2
+      }
+    },
+    {
+      "name": "15th Sideroad & Rosslyn Road",
+      "addr": "15th Sideroad & Rosslyn Road",
+      "lat": 48.3625361,
+      "lng": -89.3334865,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75148149",
+        "way/75159236",
+        "way/75164059",
+        "way/75164496"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75148149",
+        "https://www.openstreetmap.org/way/75159236",
+        "https://www.openstreetmap.org/way/75164059",
+        "https://www.openstreetmap.org/way/75164496"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-7-05",
+      "routeBaseId": "fire-thunder-bay-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2214.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 7630.3,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "20th Sideroad",
+        "estimatedCostSeconds": 136.9,
+        "bestSameServiceCostSeconds": 136.9
+      }
+    },
+    {
+      "name": "20th Sideroad & Lacewood Drive",
+      "addr": "20th Sideroad & Lacewood Drive",
+      "lat": 48.3780632,
+      "lng": -89.3609586,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75153539",
+        "way/75293908"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75153539",
+        "https://www.openstreetmap.org/way/75293908"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-7-06",
+      "routeBaseId": "fire-thunder-bay-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1544.9,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 5969.7,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "20th Sideroad",
+        "estimatedCostSeconds": 123.6,
+        "bestSameServiceCostSeconds": 123.6
+      }
+    },
+    {
+      "name": "Demchuk Road & Government Road",
+      "addr": "Demchuk Road & Government Road",
+      "lat": 48.470202,
+      "lng": -89.3820706,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75347037",
+        "way/75347744",
+        "way/75349953"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75347037",
+        "https://www.openstreetmap.org/way/75347744",
+        "https://www.openstreetmap.org/way/75349953"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-8-01",
+      "routeBaseId": "fire-thunder-bay-fire-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 636.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 12190.8,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Mapleward Road",
+        "estimatedCostSeconds": 50.9,
+        "bestSameServiceCostSeconds": 50.9
+      }
+    },
+    {
+      "name": "Government Road & Willrod Road",
+      "addr": "Government Road & Willrod Road",
+      "lat": 48.4706614,
+      "lng": -89.346588,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75287212",
+        "way/75292371",
+        "way/75293488"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75287212",
+        "https://www.openstreetmap.org/way/75292371",
+        "https://www.openstreetmap.org/way/75293488"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-8-02",
+      "routeBaseId": "fire-thunder-bay-fire-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2064.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 16372.8,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Mapleward Road",
+        "estimatedCostSeconds": 165.1,
+        "bestSameServiceCostSeconds": 165.1
+      }
+    },
+    {
+      "name": "Dawson Road & Mapleward Road",
+      "addr": "Dawson Road & Mapleward Road",
+      "lat": 48.4905562,
+      "lng": -89.3715189,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75285875",
+        "way/75286018",
+        "way/75290795"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75285875",
+        "https://www.openstreetmap.org/way/75286018",
+        "https://www.openstreetmap.org/way/75290795"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-8-03",
+      "routeBaseId": "fire-thunder-bay-fire-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2218.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 8249,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Mapleward Road",
+        "estimatedCostSeconds": 177.5,
+        "bestSameServiceCostSeconds": 177.5
+      }
+    },
+    {
+      "name": "Belview Road & Mapleward Road",
+      "addr": "Belview Road & Mapleward Road",
+      "lat": 48.4568236,
+      "lng": -89.3724625,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75285783",
+        "way/75288900",
+        "way/75291220"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75285783",
+        "https://www.openstreetmap.org/way/75288900",
+        "https://www.openstreetmap.org/way/75291220"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-8-04",
+      "routeBaseId": "fire-thunder-bay-fire-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1546.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 15950.5,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Mapleward Road",
+        "estimatedCostSeconds": 123.7,
+        "bestSameServiceCostSeconds": 123.7
+      }
+    },
+    {
+      "name": "John Street Road & Mapleward Road",
+      "addr": "John Street Road & Mapleward Road",
+      "lat": 48.4427443,
+      "lng": -89.3701971,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75286046",
+        "way/75286949",
+        "way/75288186",
+        "way/75288900"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75286046",
+        "https://www.openstreetmap.org/way/75286949",
+        "https://www.openstreetmap.org/way/75288186",
+        "https://www.openstreetmap.org/way/75288900"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-8-05",
+      "routeBaseId": "fire-thunder-bay-fire-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 3125.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 12792.2,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Mapleward Road",
+        "estimatedCostSeconds": 250,
+        "bestSameServiceCostSeconds": 250
+      }
+    },
+    {
+      "name": "Government Road & Townline Road",
+      "addr": "Government Road & Townline Road",
+      "lat": 48.4719321,
+      "lng": -89.427142,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75347471",
+        "way/75349683",
+        "way/75349953"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75347471",
+        "https://www.openstreetmap.org/way/75349683",
+        "https://www.openstreetmap.org/way/75349953"
+      ],
+      "id": "route-local-fire-thunder-bay-fire-8-06",
+      "routeBaseId": "fire-thunder-bay-fire-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 4061.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 6500.6,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Mapleward Road",
+        "estimatedCostSeconds": 325,
+        "bestSameServiceCostSeconds": 325
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Thunder Bay 55 Plus Centre",
+      "addr": "700 RED RIVER RD",
+      "lat": 48.441113042779136,
+      "lng": -89.24486432032741,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ctb.gisportal.thunderbay.ca/hosting/rest/services/Webmaps/PropertyMap/MapServer/1/query?where=OBJECTID%3D29008&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Windemere Avenue North",
+        "Windemere Avenue South"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "thunder-bay-call-15",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-thunder-bay-ems-1-01",
+      "routeBaseId": "ems-thunder-bay-ems-1",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1287.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1346.9,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Junot Avenue South",
+        "estimatedCostSeconds": 85.8,
+        "bestSameServiceCostSeconds": 85.8
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Jumbo Gardens Community Centre",
+      "addr": "330 TOIVO ST",
+      "lat": 48.45364608851688,
+      "lng": -89.27418469435112,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ctb.gisportal.thunderbay.ca/hosting/rest/services/Webmaps/PropertyMap/MapServer/1/query?where=OBJECTID%3D36483&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Jameson Street",
+        "Valley Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "thunder-bay-call-20",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-thunder-bay-ems-1-02",
+      "routeBaseId": "ems-thunder-bay-ems-1",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2439.8,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 3204,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Junot Avenue South",
+        "estimatedCostSeconds": 192.6,
+        "bestSameServiceCostSeconds": 192.6
+      }
+    },
+    {
+      "name": "Summerhill Drive & Whitestone Way",
+      "addr": "Summerhill Drive & Whitestone Way",
+      "lat": 48.4283599,
+      "lng": -89.2681199,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75288329",
+        "way/75292505"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75288329",
+        "https://www.openstreetmap.org/way/75292505"
+      ],
+      "id": "route-local-ems-thunder-bay-ems-1-03",
+      "routeBaseId": "ems-thunder-bay-ems-1",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2593.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1165,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Junot Avenue South",
+        "estimatedCostSeconds": 226.5,
+        "bestSameServiceCostSeconds": 226.5
+      }
+    },
+    {
+      "name": "Dawson Road & Regina Avenue",
+      "addr": "Dawson Road & Regina Avenue",
+      "lat": 48.4519812,
+      "lng": -89.2551635,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75286565",
+        "way/75288339"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75286565",
+        "https://www.openstreetmap.org/way/75288339"
+      ],
+      "id": "route-local-ems-thunder-bay-ems-1-04",
+      "routeBaseId": "ems-thunder-bay-ems-1",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1172.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 320.1,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Junot Avenue South",
+        "estimatedCostSeconds": 66.9,
+        "bestSameServiceCostSeconds": 66.9
+      }
+    },
+    {
+      "name": "Birch Street & Simcoe Street",
+      "addr": "Birch Street & Simcoe Street",
+      "lat": 48.4522865,
+      "lng": -89.22677,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75149045",
+        "way/75163039",
+        "way/75163760"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75149045",
+        "https://www.openstreetmap.org/way/75163039",
+        "https://www.openstreetmap.org/way/75163760"
+      ],
+      "id": "route-local-ems-thunder-bay-ems-1-05",
+      "routeBaseId": "ems-thunder-bay-ems-1",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2623,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 453.3,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Junot Avenue South",
+        "estimatedCostSeconds": 201.1,
+        "bestSameServiceCostSeconds": 201.1
+      }
+    },
+    {
+      "name": "Chercover Drive & Timberline Drive",
+      "addr": "Chercover Drive & Timberline Drive",
+      "lat": 48.4414453,
+      "lng": -89.269095,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75292707",
+        "way/75292784"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75292707",
+        "https://www.openstreetmap.org/way/75292784"
+      ],
+      "id": "route-local-ems-thunder-bay-ems-1-06",
+      "routeBaseId": "ems-thunder-bay-ems-1",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1697.7,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 3719.9,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Junot Avenue South",
+        "estimatedCostSeconds": 135.4,
+        "bestSameServiceCostSeconds": 135.4
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Franklin St Splash Pad",
+      "addr": "215 FRANKLIN ST N",
+      "lat": 48.38603440269373,
+      "lng": -89.25734683644006,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ctb.gisportal.thunderbay.ca/hosting/rest/services/Webmaps/PropertyMap/MapServer/1/query?where=OBJECTID%3D12771&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Miles Street East",
+        "Cumming Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "thunder-bay-call-17",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-thunder-bay-ems-2-01",
+      "routeBaseId": "ems-thunder-bay-ems-2",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 801.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 323.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Vickers Street North",
+        "estimatedCostSeconds": 95.7,
+        "bestSameServiceCostSeconds": 95.7
+      }
+    },
+    {
+      "name": "13th Avenue & Memorial Avenue",
+      "addr": "13th Avenue & Memorial Avenue",
+      "lat": 48.4093751,
+      "lng": -89.2455437,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75147862",
+        "way/75168619"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75147862",
+        "https://www.openstreetmap.org/way/75168619"
+      ],
+      "id": "route-local-ems-thunder-bay-ems-2-02",
+      "routeBaseId": "ems-thunder-bay-ems-2",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2620.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 486.1,
+        "decisionKinds": [
+          "bridge"
+        ],
+        "departureRoad": "Vickers Street North",
+        "estimatedCostSeconds": 172.4,
+        "bestSameServiceCostSeconds": 172.4
+      }
+    },
+    {
+      "name": "Christie Street & McDonald Street",
+      "addr": "Christie Street & McDonald Street",
+      "lat": 48.3911163,
+      "lng": -89.2338915,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75158385",
+        "way/75159696",
+        "way/75164187",
+        "way/75165074"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75158385",
+        "https://www.openstreetmap.org/way/75159696",
+        "https://www.openstreetmap.org/way/75164187",
+        "https://www.openstreetmap.org/way/75165074"
+      ],
+      "id": "route-local-ems-thunder-bay-ems-2-03",
+      "routeBaseId": "ems-thunder-bay-ems-2",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2578.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 3404.1,
+        "decisionKinds": [
+          "bridge"
+        ],
+        "departureRoad": "Vickers Street North",
+        "estimatedCostSeconds": 253.5,
+        "bestSameServiceCostSeconds": 253.5
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Thunder Bay Historical Museum",
+      "addr": "425 DONALD ST E",
+      "lat": 48.38268538467582,
+      "lng": -89.24458298067081,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ctb.gisportal.thunderbay.ca/hosting/rest/services/Webmaps/PropertyMap/MapServer/1/query?where=OBJECTID%3D10761&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Ross Street",
+        "May Street South"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "thunder-bay-call-08",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-thunder-bay-ems-2-04",
+      "routeBaseId": "ems-thunder-bay-ems-2",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1155.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 323.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Vickers Street North",
+        "estimatedCostSeconds": 90.7,
+        "bestSameServiceCostSeconds": 90.7
+      }
+    },
+    {
+      "name": "Nipigon Road & William Street",
+      "addr": "Nipigon Road & William Street",
+      "lat": 48.3991876,
+      "lng": -89.2687694,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1465350266",
+        "way/463699144",
+        "way/75291653"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1465350266",
+        "https://www.openstreetmap.org/way/463699144",
+        "https://www.openstreetmap.org/way/75291653"
+      ],
+      "id": "route-local-ems-thunder-bay-ems-2-05",
+      "routeBaseId": "ems-thunder-bay-ems-2",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2545.6,
+        "meaningfulDecisions": 6,
+        "maxAlternativePenaltyMetres": 1858.7,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Vickers Street North",
+        "estimatedCostSeconds": 181,
+        "bestSameServiceCostSeconds": 181
+      }
+    },
+    {
+      "name": "New Vickers Street & Syndicate Avenue South",
+      "addr": "New Vickers Street & Syndicate Avenue South",
+      "lat": 48.3734685,
+      "lng": -89.2517835,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75159983",
+        "way/75160829",
+        "way/75170565"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75159983",
+        "https://www.openstreetmap.org/way/75160829",
+        "https://www.openstreetmap.org/way/75170565"
+      ],
+      "id": "route-local-ems-thunder-bay-ems-2-06",
+      "routeBaseId": "ems-thunder-bay-ems-2",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1705.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 338.4,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Vickers Street North",
+        "estimatedCostSeconds": 156.1,
+        "bestSameServiceCostSeconds": 156.1
+      }
+    },
+    {
+      "name": "Ashland Place & Limbrick Street",
+      "addr": "Ashland Place & Limbrick Street",
+      "lat": 48.3958765,
+      "lng": -89.2871165,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75287921",
+        "way/75290849",
+        "way/75293098"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75287921",
+        "https://www.openstreetmap.org/way/75290849",
+        "https://www.openstreetmap.org/way/75293098"
+      ],
+      "id": "route-local-ems-thunder-bay-ems-3-01",
+      "routeBaseId": "ems-thunder-bay-ems-3",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 803.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 416.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 85.8,
+        "bestSameServiceCostSeconds": 85.8
+      }
+    },
+    {
+      "name": "Isabella Street West & Shamrock Crescent & Thistle Crescent",
+      "addr": "Isabella Street West & Shamrock Crescent & Thistle Crescent",
+      "lat": 48.37704,
+      "lng": -89.2869384,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75286568",
+        "way/75287288",
+        "way/75287362",
+        "way/75292782"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75286568",
+        "https://www.openstreetmap.org/way/75287288",
+        "https://www.openstreetmap.org/way/75287362",
+        "https://www.openstreetmap.org/way/75292782"
+      ],
+      "id": "route-local-ems-thunder-bay-ems-3-02",
+      "routeBaseId": "ems-thunder-bay-ems-3",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1695.1,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 2358.3,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 155.5,
+        "bestSameServiceCostSeconds": 155.5
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Confederation College - Shuniah Building",
+      "addr": "1450 NAKINA DR",
+      "lat": 48.402872645469614,
+      "lng": -89.26925002377222,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ctb.gisportal.thunderbay.ca/hosting/rest/services/Webmaps/PropertyMap/MapServer/1/query?where=OBJECTID%3D20485&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Schreiber Road",
+        "Atikokan Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "thunder-bay-call-07",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-thunder-bay-ems-3-03",
+      "routeBaseId": "ems-thunder-bay-ems-3",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2644.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 2135.1,
+        "decisionKinds": [
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 253.5,
+        "bestSameServiceCostSeconds": 253.5
+      }
+    },
+    {
+      "name": "Arthur Street West & Neebing Avenue & Valhalla Inn Road",
+      "addr": "Arthur Street West & Neebing Avenue & Valhalla Inn Road",
+      "lat": 48.3808429,
+      "lng": -89.3059944,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1191581910",
+        "way/477681026",
+        "way/75286014",
+        "way/75293992"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1191581910",
+        "https://www.openstreetmap.org/way/477681026",
+        "https://www.openstreetmap.org/way/75286014",
+        "https://www.openstreetmap.org/way/75293992"
+      ],
+      "id": "route-local-ems-thunder-bay-ems-3-04",
+      "routeBaseId": "ems-thunder-bay-ems-3",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2061.9,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 2688.8,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 167,
+        "bestSameServiceCostSeconds": 167
+      }
+    },
+    {
+      "name": "Fanshaw Street & Trinity Crescent",
+      "addr": "Fanshaw Street & Trinity Crescent",
+      "lat": 48.4025954,
+      "lng": -89.2836074,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75289710",
+        "way/75293813"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75289710",
+        "https://www.openstreetmap.org/way/75293813"
+      ],
+      "id": "route-local-ems-thunder-bay-ems-3-05",
+      "routeBaseId": "ems-thunder-bay-ems-3",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1736.5,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 416.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 164.8,
+        "bestSameServiceCostSeconds": 164.8
+      }
+    },
+    {
+      "name": "Beaverhall Place & Mountdale Avenue",
+      "addr": "Beaverhall Place & Mountdale Avenue",
+      "lat": 48.3787603,
+      "lng": -89.2950295,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75286042",
+        "way/75293282"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75286042",
+        "https://www.openstreetmap.org/way/75293282"
+      ],
+      "id": "route-local-ems-thunder-bay-ems-3-06",
+      "routeBaseId": "ems-thunder-bay-ems-3",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1704.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2688.8,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 136.4,
+        "bestSameServiceCostSeconds": 136.4
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "West Thunder Community Centre",
+      "addr": "915 EDWARD ST S",
+      "lat": 48.37094390128059,
+      "lng": -89.27910415079862,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ctb.gisportal.thunderbay.ca/hosting/rest/services/Webmaps/PropertyMap/MapServer/1/query?where=OBJECTID%3D6040&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Christina Street East",
+        "Empire Avenue East"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "thunder-bay-call-12",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-thunder-bay-ems-4-01",
+      "routeBaseId": "ems-thunder-bay-ems-4",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 785.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 604.1,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Amelia Street West",
+        "estimatedCostSeconds": 88.5,
+        "bestSameServiceCostSeconds": 88.5
+      }
+    },
+    {
+      "name": "Montreal Street & Mountdale Avenue",
+      "addr": "Montreal Street & Mountdale Avenue",
+      "lat": 48.3569793,
+      "lng": -89.2949921,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75147258",
+        "way/75162792",
+        "way/75164630",
+        "way/75170154"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75147258",
+        "https://www.openstreetmap.org/way/75162792",
+        "https://www.openstreetmap.org/way/75164630",
+        "https://www.openstreetmap.org/way/75170154"
+      ],
+      "id": "route-local-ems-thunder-bay-ems-4-02",
+      "routeBaseId": "ems-thunder-bay-ems-4",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1804.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 277,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Amelia Street West",
+        "estimatedCostSeconds": 146.5,
+        "bestSameServiceCostSeconds": 146.5
+      }
+    },
+    {
+      "name": "Brunswick Street South & Moodie Street East",
+      "addr": "Brunswick Street South & Moodie Street East",
+      "lat": 48.375994,
+      "lng": -89.262161,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75287289",
+        "way/75288806",
+        "way/75288997"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75287289",
+        "https://www.openstreetmap.org/way/75288806",
+        "https://www.openstreetmap.org/way/75288997"
+      ],
+      "id": "route-local-ems-thunder-bay-ems-4-03",
+      "routeBaseId": "ems-thunder-bay-ems-4",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2271.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 605.9,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Amelia Street West",
+        "estimatedCostSeconds": 194.8,
+        "bestSameServiceCostSeconds": 194.8
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Southbridge Pinewood",
+      "addr": "2625 Walsh Street East",
+      "lat": 48.37509469906352,
+      "lng": -89.27442819999999,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790135"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "4632",
+      "community": "Thunder Bay",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-4632",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-thunder-bay-ems-4-04",
+      "routeBaseId": "ems-thunder-bay-ems-4",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1524.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 604.1,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Amelia Street West",
+        "estimatedCostSeconds": 143.1,
+        "bestSameServiceCostSeconds": 143.1
+      }
+    },
+    {
+      "name": "Alpine Place & Francis Street West & Wallbridge Avenue",
+      "addr": "Alpine Place & Francis Street West & Wallbridge Avenue",
+      "lat": 48.3672559,
+      "lng": -89.3031411,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75159955",
+        "way/75166989",
+        "way/75169406"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75159955",
+        "https://www.openstreetmap.org/way/75166989",
+        "https://www.openstreetmap.org/way/75169406"
+      ],
+      "id": "route-local-ems-thunder-bay-ems-4-05",
+      "routeBaseId": "ems-thunder-bay-ems-4",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1696.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 477.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Amelia Street West",
+        "estimatedCostSeconds": 152.4,
+        "bestSameServiceCostSeconds": 152.4
+      }
+    },
+    {
+      "name": "Isabella Street West & Rosewood Crescent",
+      "addr": "Isabella Street West & Rosewood Crescent",
+      "lat": 48.3770388,
+      "lng": -89.285684,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/75286568",
+        "way/75287432",
+        "way/75287598"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/75286568",
+        "https://www.openstreetmap.org/way/75287432",
+        "https://www.openstreetmap.org/way/75287598"
+      ],
+      "id": "route-local-ems-thunder-bay-ems-4-06",
+      "routeBaseId": "ems-thunder-bay-ems-4",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1515.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 588.4,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Amelia Street West",
+        "estimatedCostSeconds": 183.5,
+        "bestSameServiceCostSeconds": 169.3
+      }
+    }
+  ]
 }

@@ -269,5 +269,3431 @@
   ],
   "roadsUrl": "cities/burlington/roads.geojson.gz",
   "roadFeatureCount": 32580,
-  "roadDataSha256": "c04aaee1541fe90e412d5e597730c7f2bc294dbe4a8a1565e525f464119d2848"
+  "roadDataSha256": "c04aaee1541fe90e412d5e597730c7f2bc294dbe4a8a1565e525f464119d2848",
+  "routeResponses": {
+    "schemaVersion": 1,
+    "minCallsPerBase": 3,
+    "targetCallsPerBase": 6,
+    "generatedOn": "2026-10-17",
+    "model": {
+      "description": "Published first-due polygons where available. Otherwise a directed road-network estimate using road class travel cost from every same-service hall; allows a15second cost tie for overlapping nearby halls. This is training geography, not live dispatch advice.",
+      "ownershipToleranceSeconds": 15,
+      "maximumCandidateRouteMetres": 12000
+    },
+    "officialAreasUrl": "cities/burlington/response-areas.geojson",
+    "officialSource": {
+      "title": "Fire Response Zones",
+      "url": "https://navburl-burlington.opendata.arcgis.com/",
+      "endpoint": "https://mapping.burlington.ca/arcgisweb/rest/services/COB/Fire_Stations/MapServer/1",
+      "license": "Terms of Use for Open Data Burlington, September 19, 2011",
+      "licenseUrl": "https://opendata.burlington.ca/opendata-terms-of-use/City%20of%20Burlington%20-%20Open%20Data%20Terms%20of%20Use.pdf",
+      "retrievedOn": "2026-10-17",
+      "originalSha256": "e974891f6b7f01622ef4a464c956bac1a53e71f0d5ba438a489c4fd3fb890dcc"
+    },
+    "bases": [
+      {
+        "baseId": "fire-burlington-fire-1",
+        "service": "fire",
+        "number": 1,
+        "name": "Fire Station 1",
+        "method": "official-run-area",
+        "sourceUrl": "https://navburl-burlington.opendata.arcgis.com/",
+        "areaCode": "1",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.3309246,
+          "lng": -79.8182377,
+          "road": "Unnamed road",
+          "gapMetres": 23.9
+        },
+        "callIds": [
+          "route-local-fire-burlington-fire-1-01",
+          "route-local-fire-burlington-fire-1-02",
+          "route-local-fire-burlington-fire-1-03",
+          "route-local-fire-burlington-fire-1-04",
+          "route-local-fire-burlington-fire-1-05",
+          "route-local-fire-burlington-fire-1-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-burlington-fire-2",
+        "service": "fire",
+        "number": 2,
+        "name": "Fire Station 2",
+        "method": "official-run-area",
+        "sourceUrl": "https://navburl-burlington.opendata.arcgis.com/",
+        "areaCode": "2",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.3592634536662,
+          "lng": -79.82852914133007,
+          "road": "Upper Middle Road",
+          "gapMetres": 40.1
+        },
+        "callIds": [
+          "route-local-fire-burlington-fire-2-01",
+          "route-local-fire-burlington-fire-2-02",
+          "route-local-fire-burlington-fire-2-03",
+          "route-local-fire-burlington-fire-2-04",
+          "route-local-fire-burlington-fire-2-05",
+          "route-local-fire-burlington-fire-2-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-burlington-fire-3",
+        "service": "fire",
+        "number": 3,
+        "name": "Fire Station 3",
+        "method": "official-run-area",
+        "sourceUrl": "https://navburl-burlington.opendata.arcgis.com/",
+        "areaCode": "3",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.30792734899593,
+          "lng": -79.8542316607004,
+          "road": "Waterdown Road",
+          "gapMetres": 45.1
+        },
+        "callIds": [
+          "route-local-fire-burlington-fire-3-01",
+          "route-local-fire-burlington-fire-3-02",
+          "route-local-fire-burlington-fire-3-03",
+          "route-local-fire-burlington-fire-3-04",
+          "route-local-fire-burlington-fire-3-05",
+          "route-local-fire-burlington-fire-3-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-burlington-fire-4",
+        "service": "fire",
+        "number": 4,
+        "name": "Fire Station 4",
+        "method": "official-run-area",
+        "sourceUrl": "https://navburl-burlington.opendata.arcgis.com/",
+        "areaCode": "4",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.37398982878513,
+          "lng": -79.76184963758128,
+          "road": "Fairview Street",
+          "gapMetres": 39
+        },
+        "callIds": [
+          "route-local-fire-burlington-fire-4-01",
+          "route-local-fire-burlington-fire-4-02",
+          "route-local-fire-burlington-fire-4-03",
+          "route-local-fire-burlington-fire-4-04",
+          "route-local-fire-burlington-fire-4-05",
+          "route-local-fire-burlington-fire-4-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-burlington-fire-5",
+        "service": "fire",
+        "number": 5,
+        "name": "Fire Station 5",
+        "method": "official-run-area",
+        "sourceUrl": "https://navburl-burlington.opendata.arcgis.com/",
+        "areaCode": "5",
+        "maxRouteMetres": 5500,
+        "access": {
+          "lat": 43.42782781947991,
+          "lng": -79.93419972513583,
+          "road": "Kilbride Street",
+          "gapMetres": 48.1
+        },
+        "callIds": [
+          "route-local-fire-burlington-fire-5-01",
+          "route-local-fire-burlington-fire-5-02",
+          "route-local-fire-burlington-fire-5-03",
+          "route-local-fire-burlington-fire-5-04",
+          "route-local-fire-burlington-fire-5-05",
+          "route-local-fire-burlington-fire-5-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-burlington-fire-6",
+        "service": "fire",
+        "number": 6,
+        "name": "Fire Station 6",
+        "method": "official-run-area",
+        "sourceUrl": "https://navburl-burlington.opendata.arcgis.com/",
+        "areaCode": "6",
+        "maxRouteMetres": 5700,
+        "access": {
+          "lat": 43.34587536514931,
+          "lng": -79.77783293748325,
+          "road": "Cumberland Avenue",
+          "gapMetres": 37.7
+        },
+        "callIds": [
+          "route-local-fire-burlington-fire-6-01",
+          "route-local-fire-burlington-fire-6-02",
+          "route-local-fire-burlington-fire-6-03",
+          "route-local-fire-burlington-fire-6-04",
+          "route-local-fire-burlington-fire-6-05",
+          "route-local-fire-burlington-fire-6-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-burlington-fire-7",
+        "service": "fire",
+        "number": 7,
+        "name": "Fire Station 7",
+        "method": "official-run-area",
+        "sourceUrl": "https://navburl-burlington.opendata.arcgis.com/",
+        "areaCode": "7",
+        "maxRouteMetres": 5800,
+        "access": {
+          "lat": 43.393971194312364,
+          "lng": -79.82030385073237,
+          "road": "Unnamed road",
+          "gapMetres": 40
+        },
+        "callIds": [
+          "route-local-fire-burlington-fire-7-01",
+          "route-local-fire-burlington-fire-7-02",
+          "route-local-fire-burlington-fire-7-03",
+          "route-local-fire-burlington-fire-7-04",
+          "route-local-fire-burlington-fire-7-05",
+          "route-local-fire-burlington-fire-7-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-burlington-fire-8",
+        "service": "fire",
+        "number": 8,
+        "name": "Fire Station 8",
+        "method": "official-run-area",
+        "sourceUrl": "https://navburl-burlington.opendata.arcgis.com/",
+        "areaCode": "8",
+        "maxRouteMetres": 5800,
+        "access": {
+          "lat": 43.3908362941275,
+          "lng": -79.78949902365453,
+          "road": "Unnamed road",
+          "gapMetres": 22.3
+        },
+        "callIds": [
+          "route-local-fire-burlington-fire-8-01",
+          "route-local-fire-burlington-fire-8-02",
+          "route-local-fire-burlington-fire-8-03",
+          "route-local-fire-burlington-fire-8-04",
+          "route-local-fire-burlington-fire-8-05",
+          "route-local-fire-burlington-fire-8-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-burlington-ems-3",
+        "service": "ems",
+        "number": 3,
+        "name": "Halton Paramedic Station 03",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.34594753276632,
+          "lng": -79.7779315819113,
+          "road": "Cumberland Avenue",
+          "gapMetres": 31.7
+        },
+        "callIds": [
+          "route-local-ems-burlington-ems-3-01",
+          "route-local-ems-burlington-ems-3-02",
+          "route-local-ems-burlington-ems-3-03",
+          "route-local-ems-burlington-ems-3-04",
+          "route-local-ems-burlington-ems-3-05",
+          "route-local-ems-burlington-ems-3-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-burlington-ems-4",
+        "service": "ems",
+        "number": 4,
+        "name": "Halton Paramedic Station 04",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6100,
+        "access": {
+          "lat": 43.31771868811232,
+          "lng": -79.83970838480671,
+          "road": "Unnamed road",
+          "gapMetres": 7.6
+        },
+        "callIds": [
+          "route-local-ems-burlington-ems-4-01",
+          "route-local-ems-burlington-ems-4-02",
+          "route-local-ems-burlington-ems-4-03",
+          "route-local-ems-burlington-ems-4-04",
+          "route-local-ems-burlington-ems-4-05",
+          "route-local-ems-burlington-ems-4-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-burlington-ems-5",
+        "service": "ems",
+        "number": 5,
+        "name": "Halton Paramedic Station 05",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.35457163761278,
+          "lng": -79.84077956782203,
+          "road": "Unnamed road",
+          "gapMetres": 11.9
+        },
+        "callIds": [
+          "route-local-ems-burlington-ems-5-01",
+          "route-local-ems-burlington-ems-5-02",
+          "route-local-ems-burlington-ems-5-03",
+          "route-local-ems-burlington-ems-5-04",
+          "route-local-ems-burlington-ems-5-05",
+          "route-local-ems-burlington-ems-5-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-burlington-ems-10",
+        "service": "ems",
+        "number": 10,
+        "name": "Halton Paramedic Station 10",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.393085965224,
+          "lng": -79.78022450056126,
+          "road": "Unnamed road",
+          "gapMetres": 14.4
+        },
+        "callIds": [
+          "route-local-ems-burlington-ems-10-01",
+          "route-local-ems-burlington-ems-10-02",
+          "route-local-ems-burlington-ems-10-03",
+          "route-local-ems-burlington-ems-10-04",
+          "route-local-ems-burlington-ems-10-05",
+          "route-local-ems-burlington-ems-10-06"
+        ],
+        "challengeCalls": 6
+      }
+    ]
+  },
+  "routeCalls": [
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Student Theatre Centre",
+      "addr": "2131 Prospect St., Burlington, ON",
+      "lat": 43.337343859423996,
+      "lng": -79.80556971950485,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://mapping.burlington.ca/arcgisweb/rest/services/COB/CityFacilities/MapServer/0",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Pearson Street",
+        "Robinson Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "burlington-call-19",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-burlington-fire-1-01",
+      "routeBaseId": "fire-burlington-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1554.1,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1229,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 130.5,
+        "bestSameServiceCostSeconds": 130.5
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Joseph Brant Museum",
+      "addr": "1240 Northshore Blvd., Burlington, ON",
+      "lat": 43.31868075020161,
+      "lng": -79.80160724057852,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://mapping.burlington.ca/arcgisweb/rest/services/COB/CityFacilities/MapServer/0",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Lakeshore Road",
+        "Maple Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "burlington-call-10",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-burlington-fire-1-02",
+      "routeBaseId": "fire-burlington-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2363.8,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 999.1,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 156.2,
+        "bestSameServiceCostSeconds": 156.2
+      }
+    },
+    {
+      "name": "Hydro Lane & King Road",
+      "addr": "Hydro Lane & King Road",
+      "lat": 43.3274306,
+      "lng": -79.8404927,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/184642239",
+        "way/23810687",
+        "way/32669604"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/184642239",
+        "https://www.openstreetmap.org/way/23810687",
+        "https://www.openstreetmap.org/way/32669604"
+      ],
+      "id": "route-local-fire-burlington-fire-1-03",
+      "routeBaseId": "fire-burlington-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2525.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2884.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 183.5,
+        "bestSameServiceCostSeconds": 183.5
+      }
+    },
+    {
+      "name": "Nathaniel Crescent & Stephenson Drive",
+      "addr": "Nathaniel Crescent & Stephenson Drive",
+      "lat": 43.3265823,
+      "lng": -79.8161217,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/14773771",
+        "way/842434250"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/14773771",
+        "https://www.openstreetmap.org/way/842434250"
+      ],
+      "id": "route-local-fire-burlington-fire-1-04",
+      "routeBaseId": "fire-burlington-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 946.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1894.3,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 99.2,
+        "bestSameServiceCostSeconds": 99.2
+      }
+    },
+    {
+      "name": "Greenwood Drive & King Road",
+      "addr": "Greenwood Drive & King Road",
+      "lat": 43.3155918,
+      "lng": -79.8237394,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/30124856",
+        "way/32669642",
+        "way/32669645"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/30124856",
+        "https://www.openstreetmap.org/way/32669642",
+        "https://www.openstreetmap.org/way/32669645"
+      ],
+      "id": "route-local-fire-burlington-fire-1-05",
+      "routeBaseId": "fire-burlington-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2583,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2958.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 161,
+        "bestSameServiceCostSeconds": 161
+      }
+    },
+    {
+      "name": "Gabriel Place & Treeland Street",
+      "addr": "Gabriel Place & Treeland Street",
+      "lat": 43.3372552,
+      "lng": -79.8231539,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25514721",
+        "way/25514863"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25514721",
+        "https://www.openstreetmap.org/way/25514863"
+      ],
+      "id": "route-local-fire-burlington-fire-1-06",
+      "routeBaseId": "fire-burlington-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1557.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 325.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 144.3,
+        "bestSameServiceCostSeconds": 144.3
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Ireland House",
+      "addr": "2168 Guelph Line, Burlington, ON",
+      "lat": 43.36777697646143,
+      "lng": -79.82833847236697,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://mapping.burlington.ca/arcgisweb/rest/services/COB/CityFacilities/MapServer/0",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Mountain Grove Avenue",
+        "Pinemeadow Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "burlington-call-15",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-burlington-fire-2-01",
+      "routeBaseId": "fire-burlington-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1311.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 236.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Upper Middle Road",
+        "estimatedCostSeconds": 127.9,
+        "bestSameServiceCostSeconds": 127.9
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Mountainside Recreation Center (Arena/Pool)",
+      "addr": "2205 Mount Forest Dr., Burlington, ON",
+      "lat": 43.35295472209993,
+      "lng": -79.82352703740443,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://mapping.burlington.ca/arcgisweb/rest/services/COB/CityFacilities/MapServer/0",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Dunbar Road",
+        "Royal Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "burlington-call-09",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-burlington-fire-2-02",
+      "routeBaseId": "fire-burlington-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1908.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1798.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Upper Middle Road",
+        "estimatedCostSeconds": 250.4,
+        "bestSameServiceCostSeconds": 250.4
+      }
+    },
+    {
+      "name": "Brant Street & Dundas Street",
+      "addr": "Brant Street & Dundas Street",
+      "lat": 43.3637333,
+      "lng": -79.8556663,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/202449661",
+        "way/202449666",
+        "way/202449669",
+        "way/368373750",
+        "way/4877264"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/202449661",
+        "https://www.openstreetmap.org/way/202449666",
+        "https://www.openstreetmap.org/way/202449669",
+        "https://www.openstreetmap.org/way/368373750",
+        "https://www.openstreetmap.org/way/4877264"
+      ],
+      "id": "route-local-fire-burlington-fire-2-03",
+      "routeBaseId": "fire-burlington-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2600.5,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1778.8,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Upper Middle Road",
+        "estimatedCostSeconds": 156.8,
+        "bestSameServiceCostSeconds": 156.8
+      }
+    },
+    {
+      "name": "Cavendish Drive & Weybridge Court",
+      "addr": "Cavendish Drive & Weybridge Court",
+      "lat": 43.3550534,
+      "lng": -79.8336379,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/26319167",
+        "way/264160519"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/26319167",
+        "https://www.openstreetmap.org/way/264160519"
+      ],
+      "id": "route-local-fire-burlington-fire-2-04",
+      "routeBaseId": "fire-burlington-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1195.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2522.5,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Upper Middle Road",
+        "estimatedCostSeconds": 93.2,
+        "bestSameServiceCostSeconds": 93.2
+      }
+    },
+    {
+      "name": "Headon Road & Vancouver Crescent",
+      "addr": "Headon Road & Vancouver Crescent",
+      "lat": 43.3687062,
+      "lng": -79.8057489,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/24385461",
+        "way/25456977"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/24385461",
+        "https://www.openstreetmap.org/way/25456977"
+      ],
+      "id": "route-local-fire-burlington-fire-2-05",
+      "routeBaseId": "fire-burlington-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2661.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 650.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Upper Middle Road",
+        "estimatedCostSeconds": 183.1,
+        "bestSameServiceCostSeconds": 183.1
+      }
+    },
+    {
+      "name": "Mansfield Drive & Monmouth Drive",
+      "addr": "Mansfield Drive & Monmouth Drive",
+      "lat": 43.3563219,
+      "lng": -79.846779,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/26320593",
+        "way/26320606"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/26320593",
+        "https://www.openstreetmap.org/way/26320606"
+      ],
+      "id": "route-local-fire-burlington-fire-2-06",
+      "routeBaseId": "fire-burlington-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1697.1,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 2616.4,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Upper Middle Road",
+        "estimatedCostSeconds": 113.5,
+        "bestSameServiceCostSeconds": 113.5
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Aldershot Pool",
+      "addr": "50 Fairwood Pl., Burlington, ON",
+      "lat": 43.30359292482481,
+      "lng": -79.85306634206115,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://mapping.burlington.ca/arcgisweb/rest/services/COB/CityFacilities/MapServer/0",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Park Avenue West",
+        "Lasalle Park Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "burlington-call-12",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-burlington-fire-3-01",
+      "routeBaseId": "fire-burlington-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 643.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 616.8,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Waterdown Road",
+        "estimatedCostSeconds": 90.7,
+        "bestSameServiceCostSeconds": 90.7
+      }
+    },
+    {
+      "name": "Flatt Road & Waterdown Road",
+      "addr": "Flatt Road & Waterdown Road",
+      "lat": 43.3173386,
+      "lng": -79.8688683,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/5249718",
+        "way/737132943"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/5249718",
+        "https://www.openstreetmap.org/way/737132943"
+      ],
+      "id": "route-local-fire-burlington-fire-3-02",
+      "routeBaseId": "fire-burlington-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1611.4,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 8469.8,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Waterdown Road",
+        "estimatedCostSeconds": 97,
+        "bestSameServiceCostSeconds": 97
+      }
+    },
+    {
+      "name": "Enfield Road & Joan Drive",
+      "addr": "Enfield Road & Joan Drive",
+      "lat": 43.322277,
+      "lng": -79.8382567,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/150682568",
+        "way/30124825"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/150682568",
+        "https://www.openstreetmap.org/way/30124825"
+      ],
+      "id": "route-local-fire-burlington-fire-3-03",
+      "routeBaseId": "fire-burlington-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2590.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 309,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Waterdown Road",
+        "estimatedCostSeconds": 164.9,
+        "bestSameServiceCostSeconds": 164.9
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Burlington Model Railway Club",
+      "addr": "1137 Hidden Valley Rd., Burlington, ON",
+      "lat": 43.305442223781746,
+      "lng": -79.86466693437052,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://mapping.burlington.ca/arcgisweb/rest/services/COB/CityFacilities/MapServer/0",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Lemonville Road",
+        "Howard Road (via Lemonville Road)"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "burlington-call-18",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-burlington-fire-3-04",
+      "routeBaseId": "fire-burlington-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1454.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 6653.9,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Waterdown Road",
+        "estimatedCostSeconds": 115.3,
+        "bestSameServiceCostSeconds": 115.3
+      }
+    },
+    {
+      "name": "Bonnieview Avenue & Spring Gardens Road",
+      "addr": "Bonnieview Avenue & Spring Gardens Road",
+      "lat": 43.2906185,
+      "lng": -79.8730516,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/30122033",
+        "way/693990851"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/30122033",
+        "https://www.openstreetmap.org/way/693990851"
+      ],
+      "id": "route-local-fire-burlington-fire-3-05",
+      "routeBaseId": "fire-burlington-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2638.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 613.7,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Waterdown Road",
+        "estimatedCostSeconds": 134.6,
+        "bestSameServiceCostSeconds": 134.6
+      }
+    },
+    {
+      "name": "North Shore Boulevard East & Shadeland Avenue",
+      "addr": "North Shore Boulevard East & Shadeland Avenue",
+      "lat": 43.3065674,
+      "lng": -79.8363791,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/12334702",
+        "way/32668677",
+        "way/32668680"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/12334702",
+        "https://www.openstreetmap.org/way/32668677",
+        "https://www.openstreetmap.org/way/32668680"
+      ],
+      "id": "route-local-fire-burlington-fire-3-06",
+      "routeBaseId": "fire-burlington-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1771.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 324.7,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Waterdown Road",
+        "estimatedCostSeconds": 128,
+        "bestSameServiceCostSeconds": 128
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "The Bubble Tennis Club",
+      "addr": "4350 Longmoor Dr., Burlington, ON",
+      "lat": 43.365893943883094,
+      "lng": -79.76419936613665,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://mapping.burlington.ca/arcgisweb/rest/services/COB/CityFacilities/MapServer/0",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Bennett Road",
+        "Lomond Crescent"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "burlington-call-20",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-burlington-fire-4-01",
+      "routeBaseId": "fire-burlington-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1144.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 363.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Fairview Street",
+        "estimatedCostSeconds": 119.8,
+        "bestSameServiceCostSeconds": 119.8
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Sherwood Forest Community Centre",
+      "addr": "5270 Fairview St., Burlington, ON",
+      "lat": 43.38291873030808,
+      "lng": -79.7552707447728,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://mapping.burlington.ca/arcgisweb/rest/services/COB/CityFacilities/MapServer/0",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Oval Court",
+        "Mercer Common"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "burlington-call-11",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-burlington-fire-4-02",
+      "routeBaseId": "fire-burlington-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1277.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 307.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Fairview Street",
+        "estimatedCostSeconds": 153.9,
+        "bestSameServiceCostSeconds": 153.9
+      }
+    },
+    {
+      "name": "Alton Road & White Pines Drive",
+      "addr": "Alton Road & White Pines Drive",
+      "lat": 43.3663824,
+      "lng": -79.7418978,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/13944339",
+        "way/13944422"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/13944339",
+        "https://www.openstreetmap.org/way/13944422"
+      ],
+      "id": "route-local-fire-burlington-fire-4-03",
+      "routeBaseId": "fire-burlington-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2604.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 203.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Fairview Street",
+        "estimatedCostSeconds": 193.1,
+        "bestSameServiceCostSeconds": 193.1
+      }
+    },
+    {
+      "name": "Paletta Court & South Service Road",
+      "addr": "Paletta Court & South Service Road",
+      "lat": 43.3757325,
+      "lng": -79.7767457,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/24486427",
+        "way/24486435",
+        "way/256997843"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/24486427",
+        "https://www.openstreetmap.org/way/24486435",
+        "https://www.openstreetmap.org/way/256997843"
+      ],
+      "id": "route-local-fire-burlington-fire-4-04",
+      "routeBaseId": "fire-burlington-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1727,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 160.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Fairview Street",
+        "estimatedCostSeconds": 114.5,
+        "bestSameServiceCostSeconds": 114.5
+      }
+    },
+    {
+      "name": "Fairview Street & Walkers Line",
+      "addr": "Fairview Street & Walkers Line",
+      "lat": 43.3600707,
+      "lng": -79.7792607,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/257021628",
+        "way/456333500",
+        "way/456333502",
+        "way/456333505"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/257021628",
+        "https://www.openstreetmap.org/way/456333500",
+        "https://www.openstreetmap.org/way/456333502",
+        "https://www.openstreetmap.org/way/456333505"
+      ],
+      "id": "route-local-fire-burlington-fire-4-05",
+      "routeBaseId": "fire-burlington-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2091,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 419.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Fairview Street",
+        "estimatedCostSeconds": 126.8,
+        "bestSameServiceCostSeconds": 126.8
+      }
+    },
+    {
+      "name": "Adams Street & Cherryhill Crescent",
+      "addr": "Adams Street & Cherryhill Crescent",
+      "lat": 43.3705349,
+      "lng": -79.7484727,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/13941867",
+        "way/13942064"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/13941867",
+        "https://www.openstreetmap.org/way/13942064"
+      ],
+      "id": "route-local-fire-burlington-fire-4-06",
+      "routeBaseId": "fire-burlington-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1694.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 794.1,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Fairview Street",
+        "estimatedCostSeconds": 114,
+        "bestSameServiceCostSeconds": 114
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Ella Foote Hall",
+      "addr": "2175 Blessington Street, Burlington, ON",
+      "lat": 43.427928704670784,
+      "lng": -79.9385189499958,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://mapping.burlington.ca/arcgisweb/rest/services/COB/AddressPoints/MapServer/0/query?objectIds=3081&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Panton Street",
+        "Kilbride Street (via Panton Street)"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "burlington-call-17",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-burlington-fire-5-01",
+      "routeBaseId": "fire-burlington-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 486.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1764.6,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Kilbride Street",
+        "estimatedCostSeconds": 102.3,
+        "bestSameServiceCostSeconds": 102.3
+      }
+    },
+    {
+      "name": "Cedar Springs Road & Grand Boulevard",
+      "addr": "Cedar Springs Road & Grand Boulevard",
+      "lat": 43.412465,
+      "lng": -79.9256937,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/23789721",
+        "way/8068880"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/23789721",
+        "https://www.openstreetmap.org/way/8068880"
+      ],
+      "id": "route-local-fire-burlington-fire-5-02",
+      "routeBaseId": "fire-burlington-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2052.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 6285.5,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Kilbride Street",
+        "estimatedCostSeconds": 180.5,
+        "bestSameServiceCostSeconds": 180.5
+      }
+    },
+    {
+      "name": "Guelph Line & No. 8 Side Road",
+      "addr": "Guelph Line & No. 8 Side Road",
+      "lat": 43.4396673,
+      "lng": -79.9153068,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/257177467",
+        "way/379160565"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/257177467",
+        "https://www.openstreetmap.org/way/379160565"
+      ],
+      "id": "route-local-fire-burlington-fire-5-03",
+      "routeBaseId": "fire-burlington-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2426.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1641.4,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Kilbride Street",
+        "estimatedCostSeconds": 194.1,
+        "bestSameServiceCostSeconds": 194.1
+      }
+    },
+    {
+      "name": "Carlisle Road & Kilbride Street & Milburough Line",
+      "addr": "Carlisle Road & Kilbride Street & Milburough Line",
+      "lat": 43.4134813,
+      "lng": -79.9538938,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/319802014",
+        "way/379054054",
+        "way/384259268",
+        "way/5217058"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/319802014",
+        "https://www.openstreetmap.org/way/379054054",
+        "https://www.openstreetmap.org/way/384259268",
+        "https://www.openstreetmap.org/way/5217058"
+      ],
+      "id": "route-local-fire-burlington-fire-5-04",
+      "routeBaseId": "fire-burlington-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2274.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1750.7,
+        "decisionKinds": [
+          "departure",
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Kilbride Street",
+        "estimatedCostSeconds": 181.9,
+        "bestSameServiceCostSeconds": 181.9
+      }
+    },
+    {
+      "name": "Derry Road & McNiven Road",
+      "addr": "Derry Road & McNiven Road",
+      "lat": 43.4267118,
+      "lng": -79.9485383,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/379054637",
+        "way/8068453",
+        "way/998241965"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/379054637",
+        "https://www.openstreetmap.org/way/8068453",
+        "https://www.openstreetmap.org/way/998241965"
+      ],
+      "id": "route-local-fire-burlington-fire-5-05",
+      "routeBaseId": "fire-burlington-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1680.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1585.2,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Kilbride Street",
+        "estimatedCostSeconds": 134.4,
+        "bestSameServiceCostSeconds": 134.4
+      }
+    },
+    {
+      "name": "McNiven Court & McNiven Road",
+      "addr": "McNiven Court & McNiven Road",
+      "lat": 43.4171276,
+      "lng": -79.9349584,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/384259269",
+        "way/947439998"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/384259269",
+        "https://www.openstreetmap.org/way/947439998"
+      ],
+      "id": "route-local-fire-burlington-fire-5-06",
+      "routeBaseId": "fire-burlington-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1501.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1035.1,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Kilbride Street",
+        "estimatedCostSeconds": 134.7,
+        "bestSameServiceCostSeconds": 134.7
+      }
+    },
+    {
+      "name": "Abbott Road & Regal Road",
+      "addr": "Abbott Road & Regal Road",
+      "lat": 43.3478355,
+      "lng": -79.7712307,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/13938603",
+        "way/492987066"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/13938603",
+        "https://www.openstreetmap.org/way/492987066"
+      ],
+      "id": "route-local-fire-burlington-fire-6-01",
+      "routeBaseId": "fire-burlington-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 800.2,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1420.6,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Cumberland Avenue",
+        "estimatedCostSeconds": 72.9,
+        "bestSameServiceCostSeconds": 72.9
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Central Arena",
+      "addr": "519 Drury Lane, Burlington, ON",
+      "lat": 43.335323445982574,
+      "lng": -79.79312900647746,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://mapping.burlington.ca/arcgisweb/rest/services/COB/CityFacilities/MapServer/0",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Caroline Street",
+        "Tallman Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "burlington-call-08",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-burlington-fire-6-02",
+      "routeBaseId": "fire-burlington-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2061.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1282.5,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Cumberland Avenue",
+        "estimatedCostSeconds": 206,
+        "bestSameServiceCostSeconds": 206
+      }
+    },
+    {
+      "name": "Catalina Crescent & Longmoor Drive",
+      "addr": "Catalina Crescent & Longmoor Drive",
+      "lat": 43.3642536,
+      "lng": -79.7705033,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/15171614",
+        "way/15171619"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/15171614",
+        "https://www.openstreetmap.org/way/15171619"
+      ],
+      "id": "route-local-fire-burlington-fire-6-03",
+      "routeBaseId": "fire-burlington-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2527.7,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 990.1,
+        "decisionKinds": [
+          "turn",
+          "bridge",
+          "departure"
+        ],
+        "departureRoad": "Cumberland Avenue",
+        "estimatedCostSeconds": 178.3,
+        "bestSameServiceCostSeconds": 123.5
+      }
+    },
+    {
+      "name": "Hart Avenue & Lakeshore Road",
+      "addr": "Hart Avenue & Lakeshore Road",
+      "lat": 43.3341533,
+      "lng": -79.7760558,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25277353",
+        "way/30651264"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25277353",
+        "https://www.openstreetmap.org/way/30651264"
+      ],
+      "id": "route-local-fire-burlington-fire-6-04",
+      "routeBaseId": "fire-burlington-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1707.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 749.8,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Cumberland Avenue",
+        "estimatedCostSeconds": 125.5,
+        "bestSameServiceCostSeconds": 125.5
+      }
+    },
+    {
+      "name": "Fairview Street & Guelph Line",
+      "addr": "Fairview Street & Guelph Line",
+      "lat": 43.3471998,
+      "lng": -79.7974506,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/268561163",
+        "way/329708916",
+        "way/455478842",
+        "way/455478843"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/268561163",
+        "https://www.openstreetmap.org/way/329708916",
+        "https://www.openstreetmap.org/way/455478842",
+        "https://www.openstreetmap.org/way/455478843"
+      ],
+      "id": "route-local-fire-burlington-fire-6-05",
+      "routeBaseId": "fire-burlington-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2193.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 172.9,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Cumberland Avenue",
+        "estimatedCostSeconds": 152,
+        "bestSameServiceCostSeconds": 152
+      }
+    },
+    {
+      "name": "Belvenia Road & Scarlett Crescent",
+      "addr": "Belvenia Road & Scarlett Crescent",
+      "lat": 43.3572407,
+      "lng": -79.7657637,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1455931698",
+        "way/15171678"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1455931698",
+        "https://www.openstreetmap.org/way/15171678"
+      ],
+      "id": "route-local-fire-burlington-fire-6-06",
+      "routeBaseId": "fire-burlington-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1709.1,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 1420.6,
+        "decisionKinds": [
+          "turn",
+          "departure",
+          "bridge"
+        ],
+        "departureRoad": "Cumberland Avenue",
+        "estimatedCostSeconds": 109.9,
+        "bestSameServiceCostSeconds": 109.9
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Alton Recreation Centre",
+      "addr": "3040 Tim Dobbie Dr., Burlington, ON",
+      "lat": 43.39814232084,
+      "lng": -79.81941923905222,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://mapping.burlington.ca/arcgisweb/rest/services/COB/CityFacilities/MapServer/0",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Velebit Park Boulevard",
+        "Weslock Common"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "burlington-call-14",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-burlington-fire-7-01",
+      "routeBaseId": "fire-burlington-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 945,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 882.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 125.1,
+        "bestSameServiceCostSeconds": 125.1
+      }
+    },
+    {
+      "name": "Annette Court & McCleary Avenue",
+      "addr": "Annette Court & McCleary Avenue",
+      "lat": 43.3841076,
+      "lng": -79.8050708,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/24587844",
+        "way/24587846"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/24587844",
+        "https://www.openstreetmap.org/way/24587846"
+      ],
+      "id": "route-local-fire-burlington-fire-7-02",
+      "routeBaseId": "fire-burlington-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1975.5,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1148,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 186.1,
+        "bestSameServiceCostSeconds": 166.7
+      }
+    },
+    {
+      "name": "No 1 Side Road & Walkers Line",
+      "addr": "No 1 Side Road & Walkers Line",
+      "lat": 43.4058271,
+      "lng": -79.8422967,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/28143066",
+        "way/5936685"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/28143066",
+        "https://www.openstreetmap.org/way/5936685"
+      ],
+      "id": "route-local-fire-burlington-fire-7-03",
+      "routeBaseId": "fire-burlington-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2562.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 3395.9,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 172.6,
+        "bestSameServiceCostSeconds": 172.6
+      }
+    },
+    {
+      "name": "Headon Road & Leith Avenue",
+      "addr": "Headon Road & Leith Avenue",
+      "lat": 43.3839872,
+      "lng": -79.8234791,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25212259",
+        "way/25821112"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25212259",
+        "https://www.openstreetmap.org/way/25821112"
+      ],
+      "id": "route-local-fire-burlington-fire-7-04",
+      "routeBaseId": "fire-burlington-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1685.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 585,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 131.4,
+        "bestSameServiceCostSeconds": 131.4
+      }
+    },
+    {
+      "name": "Ferris Street & Mikalda Road",
+      "addr": "Ferris Street & Mikalda Road",
+      "lat": 43.4105184,
+      "lng": -79.8221739,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/56754065",
+        "way/56754067",
+        "way/56754068"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/56754065",
+        "https://www.openstreetmap.org/way/56754067",
+        "https://www.openstreetmap.org/way/56754068"
+      ],
+      "id": "route-local-fire-burlington-fire-7-05",
+      "routeBaseId": "fire-burlington-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2331.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 987.2,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 244.3,
+        "bestSameServiceCostSeconds": 244.3
+      }
+    },
+    {
+      "name": "Clubview Drive & Latimer Crescent & Millcroft Park Drive",
+      "addr": "Clubview Drive & Latimer Crescent & Millcroft Park Drive",
+      "lat": 43.3981634,
+      "lng": -79.8045111,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/24587802",
+        "way/24587827",
+        "way/463269884"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/24587802",
+        "https://www.openstreetmap.org/way/24587827",
+        "https://www.openstreetmap.org/way/463269884"
+      ],
+      "id": "route-local-fire-burlington-fire-7-06",
+      "routeBaseId": "fire-burlington-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1844.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 981.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 131.5,
+        "bestSameServiceCostSeconds": 131.5
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Appleby Ice Centre",
+      "addr": "1201 Appleby Line, Burlington, ON",
+      "lat": 43.38631887503233,
+      "lng": -79.77643188720218,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://mapping.burlington.ca/arcgisweb/rest/services/COB/CityFacilities/MapServer/0",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Tico Creek Common",
+        "North Service Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "burlington-call-05",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-burlington-fire-8-01",
+      "routeBaseId": "fire-burlington-fire-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1672.7,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2159.2,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 209.6,
+        "bestSameServiceCostSeconds": 209.6
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Tansley Woods Community Centre/Pool",
+      "addr": "1996 Itabashi Way, Burlington, ON",
+      "lat": 43.38207220562688,
+      "lng": -79.80039766881826,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://mapping.burlington.ca/arcgisweb/rest/services/COB/CityFacilities/MapServer/0",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Upper Middle Road",
+        "William O'Connell Boulevard"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "burlington-call-13",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-burlington-fire-8-02",
+      "routeBaseId": "fire-burlington-fire-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1727.7,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1437.4,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 156.8,
+        "bestSameServiceCostSeconds": 156.8
+      }
+    },
+    {
+      "name": "Braeswood Lane & Empire Crescent",
+      "addr": "Braeswood Lane & Empire Crescent",
+      "lat": 43.4089174,
+      "lng": -79.7913463,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/24603546",
+        "way/24603566"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/24603546",
+        "https://www.openstreetmap.org/way/24603566"
+      ],
+      "id": "route-local-fire-burlington-fire-8-03",
+      "routeBaseId": "fire-burlington-fire-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2562.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 344.1,
+        "decisionKinds": [
+          "turn",
+          "departure",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 220.7,
+        "bestSameServiceCostSeconds": 220.7
+      }
+    },
+    {
+      "name": "Appleby Line & Dryden Avenue",
+      "addr": "Appleby Line & Dryden Avenue",
+      "lat": 43.3972085,
+      "lng": -79.7952268,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/24603118",
+        "way/327954042",
+        "way/372605049"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/24603118",
+        "https://www.openstreetmap.org/way/327954042",
+        "https://www.openstreetmap.org/way/372605049"
+      ],
+      "id": "route-local-fire-burlington-fire-8-04",
+      "routeBaseId": "fire-burlington-fire-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 968.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 344.1,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 89.2,
+        "bestSameServiceCostSeconds": 89.2
+      }
+    },
+    {
+      "name": "Heritage Road & North Service Road",
+      "addr": "Heritage Road & North Service Road",
+      "lat": 43.3738011,
+      "lng": -79.7803872,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/463294062",
+        "way/470451474",
+        "way/5229561"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/463294062",
+        "https://www.openstreetmap.org/way/470451474",
+        "https://www.openstreetmap.org/way/5229561"
+      ],
+      "id": "route-local-fire-burlington-fire-8-05",
+      "routeBaseId": "fire-burlington-fire-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2527.9,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 921,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 234,
+        "bestSameServiceCostSeconds": 234
+      }
+    },
+    {
+      "name": "Heritage Road & Mainway",
+      "addr": "Heritage Road & Mainway",
+      "lat": 43.3797149,
+      "lng": -79.7885676,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1153964416",
+        "way/1153965262",
+        "way/463294065"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1153964416",
+        "https://www.openstreetmap.org/way/1153965262",
+        "https://www.openstreetmap.org/way/463294065"
+      ],
+      "id": "route-local-fire-burlington-fire-8-06",
+      "routeBaseId": "fire-burlington-fire-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1589.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1086.4,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 161.3,
+        "bestSameServiceCostSeconds": 161.3
+      }
+    },
+    {
+      "name": "Rossmore Boulevard & Saint Clair Avenue",
+      "addr": "Rossmore Boulevard & Saint Clair Avenue",
+      "lat": 43.3404134,
+      "lng": -79.7806998,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/13932883",
+        "way/13937250",
+        "way/355129070"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/13932883",
+        "https://www.openstreetmap.org/way/13937250",
+        "https://www.openstreetmap.org/way/355129070"
+      ],
+      "id": "route-local-ems-burlington-ems-3-01",
+      "routeBaseId": "ems-burlington-ems-3",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 803.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1038.5,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Cumberland Avenue",
+        "estimatedCostSeconds": 52.5,
+        "bestSameServiceCostSeconds": 52.5
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Nelson Recreation Center (Arena/Pool)",
+      "addr": "4235 New St., Burlington, ON",
+      "lat": 43.36083106707257,
+      "lng": -79.76339209803778,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://mapping.burlington.ca/arcgisweb/rest/services/COB/CityFacilities/MapServer/0",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Shoreacres Road",
+        "Goodram Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "burlington-call-07",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-burlington-ems-3-02",
+      "routeBaseId": "ems-burlington-ems-3",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2420,
+        "meaningfulDecisions": 6,
+        "maxAlternativePenaltyMetres": 1420.6,
+        "decisionKinds": [
+          "turn",
+          "bridge",
+          "departure"
+        ],
+        "departureRoad": "Cumberland Avenue",
+        "estimatedCostSeconds": 239.8,
+        "bestSameServiceCostSeconds": 239.8
+      }
+    },
+    {
+      "name": "Guelph Line & Harvester Road & Queensway Drive",
+      "addr": "Guelph Line & Harvester Road & Queensway Drive",
+      "lat": 43.3501631,
+      "lng": -79.8015576,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/329389365",
+        "way/329708923",
+        "way/455479846",
+        "way/463250714"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/329389365",
+        "https://www.openstreetmap.org/way/329708923",
+        "https://www.openstreetmap.org/way/455479846",
+        "https://www.openstreetmap.org/way/463250714"
+      ],
+      "id": "route-local-ems-burlington-ems-3-03",
+      "routeBaseId": "ems-burlington-ems-3",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2600.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 279.5,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Cumberland Avenue",
+        "estimatedCostSeconds": 180.5,
+        "bestSameServiceCostSeconds": 180.5
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Central Arena",
+      "addr": "519 Drury Lane, Burlington, ON",
+      "lat": 43.335323445982574,
+      "lng": -79.79312900647746,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://mapping.burlington.ca/arcgisweb/rest/services/COB/CityFacilities/MapServer/0",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Caroline Street",
+        "Tallman Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "burlington-call-08",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-burlington-ems-3-04",
+      "routeBaseId": "ems-burlington-ems-3",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2073.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1282.5,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Cumberland Avenue",
+        "estimatedCostSeconds": 206.9,
+        "bestSameServiceCostSeconds": 206.9
+      }
+    },
+    {
+      "name": "Penn Drive & Walden Drive",
+      "addr": "Penn Drive & Walden Drive",
+      "lat": 43.3459107,
+      "lng": -79.7634008,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/13939107",
+        "way/13939192"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/13939107",
+        "https://www.openstreetmap.org/way/13939192"
+      ],
+      "id": "route-local-ems-burlington-ems-3-05",
+      "routeBaseId": "ems-burlington-ems-3",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1704.1,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 1125.7,
+        "decisionKinds": [
+          "turn",
+          "departure",
+          "bridge"
+        ],
+        "departureRoad": "Cumberland Avenue",
+        "estimatedCostSeconds": 152.4,
+        "bestSameServiceCostSeconds": 152.4
+      }
+    },
+    {
+      "name": "Hart Avenue & Lakeshore Road",
+      "addr": "Hart Avenue & Lakeshore Road",
+      "lat": 43.3341533,
+      "lng": -79.7760558,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25277353",
+        "way/30651264"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25277353",
+        "https://www.openstreetmap.org/way/30651264"
+      ],
+      "id": "route-local-ems-burlington-ems-3-06",
+      "routeBaseId": "ems-burlington-ems-3",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1719.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 749.8,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Cumberland Avenue",
+        "estimatedCostSeconds": 126.4,
+        "bestSameServiceCostSeconds": 126.4
+      }
+    },
+    {
+      "name": "Sanford Drive & Townsend Avenue",
+      "addr": "Sanford Drive & Townsend Avenue",
+      "lat": 43.3178888,
+      "lng": -79.8326309,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/10711724",
+        "way/10711750"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/10711724",
+        "https://www.openstreetmap.org/way/10711750"
+      ],
+      "id": "route-local-ems-burlington-ems-4-01",
+      "routeBaseId": "ems-burlington-ems-4",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 803.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 311.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 89.8,
+        "bestSameServiceCostSeconds": 89.8
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Hampton Terrace Care Centre",
+      "addr": "75 Plains Road West",
+      "lat": 43.305416899058336,
+      "lng": -79.8554914,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789796"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "4317",
+      "community": "Burlington",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-4317",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-burlington-ems-4-02",
+      "routeBaseId": "ems-burlington-ems-4",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2038.7,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1252.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 136.1,
+        "bestSameServiceCostSeconds": 136.1
+      }
+    },
+    {
+      "name": "North Service Road & Skyview Drive",
+      "addr": "North Service Road & Skyview Drive",
+      "lat": 43.3343025,
+      "lng": -79.8374037,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/223616304",
+        "way/762670717"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/223616304",
+        "https://www.openstreetmap.org/way/762670717"
+      ],
+      "id": "route-local-ems-burlington-ems-4-03",
+      "routeBaseId": "ems-burlington-ems-4",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2719.3,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 2949.2,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 212.6,
+        "bestSameServiceCostSeconds": 212.6
+      }
+    },
+    {
+      "name": "Gallagher Road & Plains Road East & Shadeland Avenue",
+      "addr": "Gallagher Road & Plains Road East & Shadeland Avenue",
+      "lat": 43.3129062,
+      "lng": -79.8446121,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1353874011",
+        "way/1353878836",
+        "way/1499397586",
+        "way/251851884"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1353874011",
+        "https://www.openstreetmap.org/way/1353878836",
+        "https://www.openstreetmap.org/way/1499397586",
+        "https://www.openstreetmap.org/way/251851884"
+      ],
+      "id": "route-local-ems-burlington-ems-4-04",
+      "routeBaseId": "ems-burlington-ems-4",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 805,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 554.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 58.9,
+        "bestSameServiceCostSeconds": 58.9
+      }
+    },
+    {
+      "name": "Stephenson Drive & Thorpe Road",
+      "addr": "Stephenson Drive & Thorpe Road",
+      "lat": 43.3273817,
+      "lng": -79.816302,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/14773732",
+        "way/15431934",
+        "way/842434250"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/14773732",
+        "https://www.openstreetmap.org/way/15431934",
+        "https://www.openstreetmap.org/way/842434250"
+      ],
+      "id": "route-local-ems-burlington-ems-4-05",
+      "routeBaseId": "ems-burlington-ems-4",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2634.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 650.2,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 190.3,
+        "bestSameServiceCostSeconds": 190.3
+      }
+    },
+    {
+      "name": "Deborah Crescent & Kingsway Drive",
+      "addr": "Deborah Crescent & Kingsway Drive",
+      "lat": 43.3133573,
+      "lng": -79.8238581,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/10711053",
+        "way/23789211"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/10711053",
+        "https://www.openstreetmap.org/way/23789211"
+      ],
+      "id": "route-local-ems-burlington-ems-4-06",
+      "routeBaseId": "ems-burlington-ems-4",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1777,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 296.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 145.5,
+        "bestSameServiceCostSeconds": 145.5
+      }
+    },
+    {
+      "name": "Brant Street & Ester Drive",
+      "addr": "Brant Street & Ester Drive",
+      "lat": 43.3498442,
+      "lng": -79.8337323,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25793558",
+        "way/264160505",
+        "way/358487510"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25793558",
+        "https://www.openstreetmap.org/way/264160505",
+        "https://www.openstreetmap.org/way/358487510"
+      ],
+      "id": "route-local-ems-burlington-ems-5-01",
+      "routeBaseId": "ems-burlington-ems-5",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 800.9,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 702.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 58.9,
+        "bestSameServiceCostSeconds": 58.9
+      }
+    },
+    {
+      "name": "Brant Street & Cedar Springs Road & Dundas Street",
+      "addr": "Brant Street & Cedar Springs Road & Dundas Street",
+      "lat": 43.363779,
+      "lng": -79.8558124,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/202449659",
+        "way/368373749",
+        "way/478254469",
+        "way/4877264"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/202449659",
+        "https://www.openstreetmap.org/way/368373749",
+        "https://www.openstreetmap.org/way/478254469",
+        "https://www.openstreetmap.org/way/4877264"
+      ],
+      "id": "route-local-ems-burlington-ems-5-02",
+      "routeBaseId": "ems-burlington-ems-5",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1679.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 417.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 111.7,
+        "bestSameServiceCostSeconds": 111.7
+      }
+    },
+    {
+      "name": "Cavendish Drive & Cotswold Crescent",
+      "addr": "Cavendish Drive & Cotswold Crescent",
+      "lat": 43.371716,
+      "lng": -79.8349666,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25510966",
+        "way/25905742"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25510966",
+        "https://www.openstreetmap.org/way/25905742"
+      ],
+      "id": "route-local-ems-burlington-ems-5-03",
+      "routeBaseId": "ems-burlington-ems-5",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2594.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 414.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 207.4,
+        "bestSameServiceCostSeconds": 207.4
+      }
+    },
+    {
+      "name": "Havendale Boulevard & Knights Bridge Court",
+      "addr": "Havendale Boulevard & Knights Bridge Court",
+      "lat": 43.3523403,
+      "lng": -79.8477578,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/26320572",
+        "way/291835845"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/26320572",
+        "https://www.openstreetmap.org/way/291835845"
+      ],
+      "id": "route-local-ems-burlington-ems-5-04",
+      "routeBaseId": "ems-burlington-ems-5",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 785.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1217.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 117.4,
+        "bestSameServiceCostSeconds": 117.4
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Mountainside Recreation Center (Arena/Pool)",
+      "addr": "2205 Mount Forest Dr., Burlington, ON",
+      "lat": 43.35295472209993,
+      "lng": -79.82352703740443,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://mapping.burlington.ca/arcgisweb/rest/services/COB/CityFacilities/MapServer/0",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Dunbar Road",
+        "Royal Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "burlington-call-09",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-burlington-ems-5-05",
+      "routeBaseId": "ems-burlington-ems-5",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2308.8,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1620.5,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 281.8,
+        "bestSameServiceCostSeconds": 281.8
+      }
+    },
+    {
+      "name": "Leighland Road & Treeland Street",
+      "addr": "Leighland Road & Treeland Street",
+      "lat": 43.3382843,
+      "lng": -79.8197601,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25514721",
+        "way/298920938"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25514721",
+        "https://www.openstreetmap.org/way/298920938"
+      ],
+      "id": "route-local-ems-burlington-ems-5-06",
+      "routeBaseId": "ems-burlington-ems-5",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2636.6,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 3162.9,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 181,
+        "bestSameServiceCostSeconds": 181
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Appleby Ice Centre",
+      "addr": "1201 Appleby Line, Burlington, ON",
+      "lat": 43.38631887503233,
+      "lng": -79.77643188720218,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://mapping.burlington.ca/arcgisweb/rest/services/COB/CityFacilities/MapServer/0",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Tico Creek Common",
+        "North Service Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "burlington-call-05",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-burlington-ems-10-01",
+      "routeBaseId": "ems-burlington-ems-10",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1648,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2159.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 201.7,
+        "bestSameServiceCostSeconds": 201.7
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "The Village of Tansley Woods",
+      "addr": "4100 Upper Middle Road",
+      "lat": 43.383398299058186,
+      "lng": -79.80029609999997,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789906"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "4349",
+      "community": "Burlington",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-4349",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-burlington-ems-10-02",
+      "routeBaseId": "ems-burlington-ems-10",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2557.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 556.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 221.1,
+        "bestSameServiceCostSeconds": 221.1
+      }
+    },
+    {
+      "name": "Blue Spruce Avenue & Upper Middle Road",
+      "addr": "Blue Spruce Avenue & Upper Middle Road",
+      "lat": 43.406796,
+      "lng": -79.7766444,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1234090492",
+        "way/167276481",
+        "way/167276482",
+        "way/412832586",
+        "way/7976176"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1234090492",
+        "https://www.openstreetmap.org/way/167276481",
+        "https://www.openstreetmap.org/way/167276482",
+        "https://www.openstreetmap.org/way/412832586",
+        "https://www.openstreetmap.org/way/7976176"
+      ],
+      "id": "route-local-ems-burlington-ems-10-03",
+      "routeBaseId": "ems-burlington-ems-10",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2573.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 283.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 195.5,
+        "bestSameServiceCostSeconds": 195.5
+      }
+    },
+    {
+      "name": "Birchleaf Lane & Dryden Avenue & Forest Grove Crescent",
+      "addr": "Birchleaf Lane & Dryden Avenue & Forest Grove Crescent",
+      "lat": 43.3977182,
+      "lng": -79.7944508,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/24603398",
+        "way/489011585",
+        "way/489011588",
+        "way/489011590"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/24603398",
+        "https://www.openstreetmap.org/way/489011585",
+        "https://www.openstreetmap.org/way/489011588",
+        "https://www.openstreetmap.org/way/489011590"
+      ],
+      "id": "route-local-ems-burlington-ems-10-04",
+      "routeBaseId": "ems-burlington-ems-10",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1696.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1184.9,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 123.6,
+        "bestSameServiceCostSeconds": 123.6
+      }
+    },
+    {
+      "name": "Corporate Drive & North Service Road",
+      "addr": "Corporate Drive & North Service Road",
+      "lat": 43.3764329,
+      "lng": -79.7775734,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/463294064",
+        "way/470451474"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/463294064",
+        "https://www.openstreetmap.org/way/470451474"
+      ],
+      "id": "route-local-ems-burlington-ems-10-05",
+      "routeBaseId": "ems-burlington-ems-10",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2611.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 821.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 196.5,
+        "bestSameServiceCostSeconds": 196.5
+      }
+    },
+    {
+      "name": "Quinte Street & Upper Middle Road",
+      "addr": "Quinte Street & Upper Middle Road",
+      "lat": 43.4001797,
+      "lng": -79.7835103,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/412831216",
+        "way/412831218",
+        "way/489007464"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/412831216",
+        "https://www.openstreetmap.org/way/412831218",
+        "https://www.openstreetmap.org/way/489007464"
+      ],
+      "id": "route-local-ems-burlington-ems-10-06",
+      "routeBaseId": "ems-burlington-ems-10",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1641.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 283.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 138.2,
+        "bestSameServiceCostSeconds": 138.2
+      }
+    }
+  ]
 }

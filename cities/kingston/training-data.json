@@ -165,5 +165,3911 @@
   ],
   "roadsUrl": "cities/kingston/roads.geojson.gz",
   "roadFeatureCount": 10552,
-  "roadDataSha256": "1737dd27b6eec8660543774658273b8a55edc5e07be26e73c7b595ce121dd21f"
+  "roadDataSha256": "1737dd27b6eec8660543774658273b8a55edc5e07be26e73c7b595ce121dd21f",
+  "routeResponses": {
+    "schemaVersion": 1,
+    "minCallsPerBase": 3,
+    "targetCallsPerBase": 6,
+    "generatedOn": "2026-10-17",
+    "model": {
+      "description": "Published first-due polygons where available. Otherwise a directed road-network estimate using road class travel cost from every same-service hall; allows a15second cost tie for overlapping nearby halls. This is training geography, not live dispatch advice.",
+      "ownershipToleranceSeconds": 15,
+      "maximumCandidateRouteMetres": 12000
+    },
+    "bases": [
+      {
+        "baseId": "fire-kingston-fire-8",
+        "service": "fire",
+        "number": 8,
+        "name": "KFR Fire Station 8",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 7200,
+        "access": {
+          "lat": 44.32021042327268,
+          "lng": -76.50206775872049,
+          "road": "Unity Road",
+          "gapMetres": 46.9
+        },
+        "callIds": [
+          "route-local-fire-kingston-fire-8-01",
+          "route-local-fire-kingston-fire-8-02",
+          "route-local-fire-kingston-fire-8-03",
+          "route-local-fire-kingston-fire-8-04",
+          "route-local-fire-kingston-fire-8-05",
+          "route-local-fire-kingston-fire-8-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-kingston-fire-4",
+        "service": "fire",
+        "number": 4,
+        "name": "KFR Fire Station 4",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 44.2319738,
+          "lng": -76.4896794,
+          "road": "Unnamed road",
+          "gapMetres": 16.2
+        },
+        "callIds": [
+          "route-local-fire-kingston-fire-4-01",
+          "route-local-fire-kingston-fire-4-02",
+          "route-local-fire-kingston-fire-4-03",
+          "route-local-fire-kingston-fire-4-04",
+          "route-local-fire-kingston-fire-4-05",
+          "route-local-fire-kingston-fire-4-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-kingston-fire-9",
+        "service": "fire",
+        "number": 9,
+        "name": "KFR Fire Station 9",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 8900,
+        "access": {
+          "lat": 44.320843007959404,
+          "lng": -76.62109018722644,
+          "road": "Unnamed road",
+          "gapMetres": 24.3
+        },
+        "callIds": [
+          "route-local-fire-kingston-fire-9-01",
+          "route-local-fire-kingston-fire-9-02",
+          "route-local-fire-kingston-fire-9-03",
+          "route-local-fire-kingston-fire-9-04",
+          "route-local-fire-kingston-fire-9-05",
+          "route-local-fire-kingston-fire-9-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-kingston-fire-5",
+        "service": "fire",
+        "number": 5,
+        "name": "KFR Fire Station 5",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 44.248107418648225,
+          "lng": -76.49424868391121,
+          "road": "Railway Street",
+          "gapMetres": 29.4
+        },
+        "callIds": [
+          "route-local-fire-kingston-fire-5-01",
+          "route-local-fire-kingston-fire-5-02",
+          "route-local-fire-kingston-fire-5-03",
+          "route-local-fire-kingston-fire-5-04",
+          "route-local-fire-kingston-fire-5-05",
+          "route-local-fire-kingston-fire-5-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-kingston-fire-2",
+        "service": "fire",
+        "number": 2,
+        "name": "KFR Fire Station 2",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6900,
+        "access": {
+          "lat": 44.41144012207091,
+          "lng": -76.28151405300241,
+          "road": "Brewer's Mills Road",
+          "gapMetres": 45.6
+        },
+        "callIds": [
+          "route-local-fire-kingston-fire-2-01",
+          "route-local-fire-kingston-fire-2-02",
+          "route-local-fire-kingston-fire-2-03",
+          "route-local-fire-kingston-fire-2-04",
+          "route-local-fire-kingston-fire-2-05",
+          "route-local-fire-kingston-fire-2-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-kingston-fire-1",
+        "service": "fire",
+        "number": 1,
+        "name": "KFR Fire Station 1",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5800,
+        "access": {
+          "lat": 44.302731758174076,
+          "lng": -76.32969529801368,
+          "road": "Joyceville Road",
+          "gapMetres": 36.9
+        },
+        "callIds": [
+          "route-local-fire-kingston-fire-1-01",
+          "route-local-fire-kingston-fire-1-02",
+          "route-local-fire-kingston-fire-1-03",
+          "route-local-fire-kingston-fire-1-04",
+          "route-local-fire-kingston-fire-1-05",
+          "route-local-fire-kingston-fire-1-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-kingston-fire-6",
+        "service": "fire",
+        "number": 6,
+        "name": "KFR Fire Station 6",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6200,
+        "access": {
+          "lat": 44.2319796030951,
+          "lng": -76.51384809049566,
+          "road": "Unnamed road",
+          "gapMetres": 11.7
+        },
+        "callIds": [
+          "route-local-fire-kingston-fire-6-01",
+          "route-local-fire-kingston-fire-6-02",
+          "route-local-fire-kingston-fire-6-03",
+          "route-local-fire-kingston-fire-6-04",
+          "route-local-fire-kingston-fire-6-05",
+          "route-local-fire-kingston-fire-6-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-kingston-fire-10",
+        "service": "fire",
+        "number": 10,
+        "name": "KFR Fire Station 10",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5600,
+        "access": {
+          "lat": 44.21920655652278,
+          "lng": -76.56972577713312,
+          "road": "Unnamed road",
+          "gapMetres": 6.4
+        },
+        "callIds": [
+          "route-local-fire-kingston-fire-10-01",
+          "route-local-fire-kingston-fire-10-02",
+          "route-local-fire-kingston-fire-10-03",
+          "route-local-fire-kingston-fire-10-04",
+          "route-local-fire-kingston-fire-10-05",
+          "route-local-fire-kingston-fire-10-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-kingston-fire-7",
+        "service": "fire",
+        "number": 7,
+        "name": "KFR Fire Station 7",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 44.258469831470165,
+          "lng": -76.5849072780637,
+          "road": "Unnamed road",
+          "gapMetres": 30.8
+        },
+        "callIds": [
+          "route-local-fire-kingston-fire-7-01",
+          "route-local-fire-kingston-fire-7-02",
+          "route-local-fire-kingston-fire-7-03",
+          "route-local-fire-kingston-fire-7-04",
+          "route-local-fire-kingston-fire-7-05",
+          "route-local-fire-kingston-fire-7-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-kingston-fire-3",
+        "service": "fire",
+        "number": 3,
+        "name": "KFR Fire Station 3",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 44.2588868,
+          "lng": -76.4581397,
+          "road": "Unnamed road",
+          "gapMetres": 9.8
+        },
+        "callIds": [
+          "route-local-fire-kingston-fire-3-01",
+          "route-local-fire-kingston-fire-3-02",
+          "route-local-fire-kingston-fire-3-03",
+          "route-local-fire-kingston-fire-3-04",
+          "route-local-fire-kingston-fire-3-05",
+          "route-local-fire-kingston-fire-3-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-kingston-ems-1",
+        "service": "ems",
+        "number": 1,
+        "name": "Station #01 — Palace Road",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 44.231525306270626,
+          "lng": -76.51395217494597,
+          "road": "Unnamed road",
+          "gapMetres": 15.8
+        },
+        "callIds": [
+          "route-local-ems-kingston-ems-1-01",
+          "route-local-ems-kingston-ems-1-02",
+          "route-local-ems-kingston-ems-1-03",
+          "route-local-ems-kingston-ems-1-04",
+          "route-local-ems-kingston-ems-1-05",
+          "route-local-ems-kingston-ems-1-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-kingston-ems-3",
+        "service": "ems",
+        "number": 3,
+        "name": "Station #03 — Highway 15",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 44.28567427181414,
+          "lng": -76.43180519709325,
+          "road": "Unnamed road",
+          "gapMetres": 24.2
+        },
+        "callIds": [
+          "route-local-ems-kingston-ems-3-01",
+          "route-local-ems-kingston-ems-3-02",
+          "route-local-ems-kingston-ems-3-03",
+          "route-local-ems-kingston-ems-3-04",
+          "route-local-ems-kingston-ems-3-05",
+          "route-local-ems-kingston-ems-3-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-kingston-ems-2",
+        "service": "ems",
+        "number": 2,
+        "name": "Station #02 — Woodbine Road",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6100,
+        "access": {
+          "lat": 44.25846431002882,
+          "lng": -76.58584902636315,
+          "road": "Unnamed road",
+          "gapMetres": 23.9
+        },
+        "callIds": [
+          "route-local-ems-kingston-ems-2-01",
+          "route-local-ems-kingston-ems-2-02",
+          "route-local-ems-kingston-ems-2-03",
+          "route-local-ems-kingston-ems-2-04",
+          "route-local-ems-kingston-ems-2-05",
+          "route-local-ems-kingston-ems-2-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-kingston-ems-9",
+        "service": "ems",
+        "number": 9,
+        "name": "Station #09 — Glenburnie",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6200,
+        "access": {
+          "lat": 44.315137873716544,
+          "lng": -76.46467766510072,
+          "road": "Unnamed road",
+          "gapMetres": 32.1
+        },
+        "callIds": [
+          "route-local-ems-kingston-ems-9-01",
+          "route-local-ems-kingston-ems-9-02",
+          "route-local-ems-kingston-ems-9-03",
+          "route-local-ems-kingston-ems-9-04",
+          "route-local-ems-kingston-ems-9-05",
+          "route-local-ems-kingston-ems-9-06"
+        ],
+        "challengeCalls": 6
+      }
+    ]
+  },
+  "routeCalls": [
+    {
+      "name": "Kellys Avenue & Unity Road",
+      "addr": "Kellys Avenue & Unity Road",
+      "lat": 44.3204581,
+      "lng": -76.4919983,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/4405022",
+        "way/5086553"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/4405022",
+        "https://www.openstreetmap.org/way/5086553"
+      ],
+      "id": "route-local-fire-kingston-fire-8-01",
+      "routeBaseId": "fire-kingston-fire-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 802.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 13682.8,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Unity Road",
+        "estimatedCostSeconds": 64.2,
+        "bestSameServiceCostSeconds": 64.2
+      }
+    },
+    {
+      "name": "Highland Heights Drive & Shepherd Drive",
+      "addr": "Highland Heights Drive & Shepherd Drive",
+      "lat": 44.3179442,
+      "lng": -76.5220739,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33978801",
+        "way/5052952",
+        "way/54181134"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33978801",
+        "https://www.openstreetmap.org/way/5052952",
+        "https://www.openstreetmap.org/way/54181134"
+      ],
+      "id": "route-local-fire-kingston-fire-8-02",
+      "routeBaseId": "fire-kingston-fire-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1836.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 15823.5,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Unity Road",
+        "estimatedCostSeconds": 159.9,
+        "bestSameServiceCostSeconds": 159.9
+      }
+    },
+    {
+      "name": "Perth Road & Spooner Road & Spooner Road East",
+      "addr": "Perth Road & Spooner Road & Spooner Road East",
+      "lat": 44.3411875,
+      "lng": -76.5042179,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/309701738",
+        "way/4600932",
+        "way/5053012",
+        "way/5074005"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/309701738",
+        "https://www.openstreetmap.org/way/4600932",
+        "https://www.openstreetmap.org/way/5053012",
+        "https://www.openstreetmap.org/way/5074005"
+      ],
+      "id": "route-local-fire-kingston-fire-8-03",
+      "routeBaseId": "fire-kingston-fire-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2373,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 17807.7,
+        "decisionKinds": [
+          "departure",
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unity Road",
+        "estimatedCostSeconds": 143.9,
+        "bestSameServiceCostSeconds": 143.9
+      }
+    },
+    {
+      "name": "Bur Brook Road & Perth Road",
+      "addr": "Bur Brook Road & Perth Road",
+      "lat": 44.3003261,
+      "lng": -76.5014088,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/4405023",
+        "way/4651354"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/4405023",
+        "https://www.openstreetmap.org/way/4651354"
+      ],
+      "id": "route-local-fire-kingston-fire-8-04",
+      "routeBaseId": "fire-kingston-fire-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2267.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 10725.1,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Unity Road",
+        "estimatedCostSeconds": 137.5,
+        "bestSameServiceCostSeconds": 137.5
+      }
+    },
+    {
+      "name": "Battersea Road & Unity Road",
+      "addr": "Battersea Road & Unity Road",
+      "lat": 44.3214032,
+      "lng": -76.4615584,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1009358362",
+        "way/4405022",
+        "way/4496838",
+        "way/5086556"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1009358362",
+        "https://www.openstreetmap.org/way/4405022",
+        "https://www.openstreetmap.org/way/4496838",
+        "https://www.openstreetmap.org/way/5086556"
+      ],
+      "id": "route-local-fire-kingston-fire-8-05",
+      "routeBaseId": "fire-kingston-fire-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 3229.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 8884.8,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Unity Road",
+        "estimatedCostSeconds": 258.4,
+        "bestSameServiceCostSeconds": 258.4
+      }
+    },
+    {
+      "name": "McKendry Road & Unity Road",
+      "addr": "McKendry Road & Unity Road",
+      "lat": 44.3207229,
+      "lng": -76.4787574,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/4405022",
+        "way/5074024"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/4405022",
+        "https://www.openstreetmap.org/way/5074024"
+      ],
+      "id": "route-local-fire-kingston-fire-8-06",
+      "routeBaseId": "fire-kingston-fire-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1857.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 11572.6,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Unity Road",
+        "estimatedCostSeconds": 148.6,
+        "bestSameServiceCostSeconds": 148.6
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Hotel Dieu Hospital",
+      "addr": "155 SYDENHAM ST",
+      "lat": 44.2308009398942,
+      "lng": -76.48633553769794,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services1.arcgis.com/5GRYvurYYUwAecLQ/arcgis/rest/services/Hospitals/FeatureServer/69/query?where=OBJECTID%3D27478&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Johnson Street",
+        "Brock Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "kingston-call-01",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-kingston-fire-4-01",
+      "routeBaseId": "fire-kingston-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 831,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 240.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 64.3,
+        "bestSameServiceCostSeconds": 64.3
+      }
+    },
+    {
+      "name": "Princess Street & Tower Street",
+      "addr": "Princess Street & Tower Street",
+      "lat": 44.239542,
+      "lng": -76.5077939,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/359900751",
+        "way/4925159"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/359900751",
+        "https://www.openstreetmap.org/way/4925159"
+      ],
+      "id": "route-local-fire-kingston-fire-4-02",
+      "routeBaseId": "fire-kingston-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1902.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 649.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 126.2,
+        "bestSameServiceCostSeconds": 112.3
+      }
+    },
+    {
+      "name": "Fort Henry Drive & Precision Drive",
+      "addr": "Fort Henry Drive & Precision Drive",
+      "lat": 44.2364206,
+      "lng": -76.4653895,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1077284731",
+        "way/31025545",
+        "way/37599914"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1077284731",
+        "https://www.openstreetmap.org/way/31025545",
+        "https://www.openstreetmap.org/way/37599914"
+      ],
+      "id": "route-local-fire-kingston-fire-4-03",
+      "routeBaseId": "fire-kingston-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2587.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 5481.4,
+        "decisionKinds": [
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 140.8,
+        "bestSameServiceCostSeconds": 140.8
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Kingston General Hospital",
+      "addr": "76 STUART ST",
+      "lat": 44.22369718630111,
+      "lng": -76.4933952421073,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services1.arcgis.com/5GRYvurYYUwAecLQ/arcgis/rest/services/Hospitals/FeatureServer/69/query?where=OBJECTID%3D27479&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Lower University Avenue",
+        "Founders Row"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "kingston-call-02",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-kingston-fire-4-04",
+      "routeBaseId": "fire-kingston-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1398.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 293.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 141.5,
+        "bestSameServiceCostSeconds": 141.5
+      }
+    },
+    {
+      "name": "Centre Street & Edgehill Street",
+      "addr": "Centre Street & Edgehill Street",
+      "lat": 44.2238957,
+      "lng": -76.5047037,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/4754786",
+        "way/4754856"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/4754786",
+        "https://www.openstreetmap.org/way/4754856"
+      ],
+      "id": "route-local-fire-kingston-fire-4-05",
+      "routeBaseId": "fire-kingston-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1970.9,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 304.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 149.9,
+        "bestSameServiceCostSeconds": 143.7
+      }
+    },
+    {
+      "name": "Lansdowne Street & Stanley Street",
+      "addr": "Lansdowne Street & Stanley Street",
+      "lat": 44.2398726,
+      "lng": -76.4961129,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/39727126",
+        "way/4754897",
+        "way/4754898"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/39727126",
+        "https://www.openstreetmap.org/way/4754897",
+        "https://www.openstreetmap.org/way/4754898"
+      ],
+      "id": "route-local-fire-kingston-fire-4-06",
+      "routeBaseId": "fire-kingston-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1222.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 325.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 96.5,
+        "bestSameServiceCostSeconds": 82.8
+      }
+    },
+    {
+      "name": "Highway 38 & Unity Road",
+      "addr": "Highway 38 & Unity Road",
+      "lat": 44.3165362,
+      "lng": -76.6156803,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1017910453",
+        "way/1017910455",
+        "way/504276648"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1017910453",
+        "https://www.openstreetmap.org/way/1017910455",
+        "https://www.openstreetmap.org/way/504276648"
+      ],
+      "id": "route-local-fire-kingston-fire-9-01",
+      "routeBaseId": "fire-kingston-fire-9",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 713.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1393,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 55.6,
+        "bestSameServiceCostSeconds": 55.6
+      }
+    },
+    {
+      "name": "Highway 38 & Van Order Road",
+      "addr": "Highway 38 & Van Order Road",
+      "lat": 44.335914,
+      "lng": -76.6267679,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/12248819",
+        "way/33990075"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/12248819",
+        "https://www.openstreetmap.org/way/33990075"
+      ],
+      "id": "route-local-fire-kingston-fire-9-02",
+      "routeBaseId": "fire-kingston-fire-9",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1777.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 10163.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 107,
+        "bestSameServiceCostSeconds": 107
+      }
+    },
+    {
+      "name": "Smith Road & Unity Road",
+      "addr": "Smith Road & Unity Road",
+      "lat": 44.3143779,
+      "lng": -76.6456096,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/491289273",
+        "way/55534912"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/491289273",
+        "https://www.openstreetmap.org/way/55534912"
+      ],
+      "id": "route-local-fire-kingston-fire-9-03",
+      "routeBaseId": "fire-kingston-fire-9",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2329.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 11488.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 245.2,
+        "bestSameServiceCostSeconds": 245.2
+      }
+    },
+    {
+      "name": "Rock Road & Unity Road",
+      "addr": "Rock Road & Unity Road",
+      "lat": 44.3156066,
+      "lng": -76.6284386,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33978287",
+        "way/491289273"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33978287",
+        "https://www.openstreetmap.org/way/491289273"
+      ],
+      "id": "route-local-fire-kingston-fire-9-04",
+      "routeBaseId": "fire-kingston-fire-9",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 955.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 978.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 135.3,
+        "bestSameServiceCostSeconds": 135.3
+      }
+    },
+    {
+      "name": "Cordukes Road & Unity Road",
+      "addr": "Cordukes Road & Unity Road",
+      "lat": 44.3181304,
+      "lng": -76.5761439,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/504276649",
+        "way/504664289",
+        "way/833616659"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/504276649",
+        "https://www.openstreetmap.org/way/504664289",
+        "https://www.openstreetmap.org/way/833616659"
+      ],
+      "id": "route-local-fire-kingston-fire-9-05",
+      "routeBaseId": "fire-kingston-fire-9",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 3870.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1393,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 308.1,
+        "bestSameServiceCostSeconds": 308.1
+      }
+    },
+    {
+      "name": "Bur Brook Road & Highway 38",
+      "addr": "Bur Brook Road & Highway 38",
+      "lat": 44.2981622,
+      "lng": -76.5840448,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1159084950",
+        "way/191641725",
+        "way/191641726",
+        "way/833616657"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1159084950",
+        "https://www.openstreetmap.org/way/191641725",
+        "https://www.openstreetmap.org/way/191641726",
+        "https://www.openstreetmap.org/way/833616657"
+      ],
+      "id": "route-local-fire-kingston-fire-9-06",
+      "routeBaseId": "fire-kingston-fire-9",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 3982.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2850.1,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 214.5,
+        "bestSameServiceCostSeconds": 214.5
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Kingston Secondary School",
+      "addr": "143 KIRKPATRICK ST",
+      "lat": 44.25377382380344,
+      "lng": -76.50247431166464,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services1.arcgis.com/5GRYvurYYUwAecLQ/arcgis/rest/services/Education_Facility1/FeatureServer/33/query?where=OBJECTID%3D92533&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Kingscourt Avenue",
+        "Newton Place"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "kingston-call-12",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-kingston-fire-5-01",
+      "routeBaseId": "fire-kingston-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1183.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1077.5,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Railway Street",
+        "estimatedCostSeconds": 122.2,
+        "bestSameServiceCostSeconds": 122.2
+      }
+    },
+    {
+      "name": "Cataraqui Street & Rideau Street",
+      "addr": "Cataraqui Street & Rideau Street",
+      "lat": 44.2417611,
+      "lng": -76.4834761,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/39239211",
+        "way/39239213",
+        "way/4755151",
+        "way/4964388"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/39239211",
+        "https://www.openstreetmap.org/way/39239213",
+        "https://www.openstreetmap.org/way/4755151",
+        "https://www.openstreetmap.org/way/4964388"
+      ],
+      "id": "route-local-fire-kingston-fire-5-02",
+      "routeBaseId": "fire-kingston-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1688.2,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 1516.8,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Railway Street",
+        "estimatedCostSeconds": 151.3,
+        "bestSameServiceCostSeconds": 141.5
+      }
+    },
+    {
+      "name": "Butler Street & Weller Avenue",
+      "addr": "Butler Street & Weller Avenue",
+      "lat": 44.2621183,
+      "lng": -76.4879743,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/144138197",
+        "way/4712534"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/144138197",
+        "https://www.openstreetmap.org/way/4712534"
+      ],
+      "id": "route-local-fire-kingston-fire-5-03",
+      "routeBaseId": "fire-kingston-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2621.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 929.9,
+        "decisionKinds": [
+          "turn",
+          "departure",
+          "bridge"
+        ],
+        "departureRoad": "Railway Street",
+        "estimatedCostSeconds": 184.1,
+        "bestSameServiceCostSeconds": 184.1
+      }
+    },
+    {
+      "name": "Nelson Street & York Street",
+      "addr": "Nelson Street & York Street",
+      "lat": 44.2384706,
+      "lng": -76.502069,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/4754806",
+        "way/827495252"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/4754806",
+        "https://www.openstreetmap.org/way/827495252"
+      ],
+      "id": "route-local-fire-kingston-fire-5-04",
+      "routeBaseId": "fire-kingston-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1701,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 486,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Railway Street",
+        "estimatedCostSeconds": 134.4,
+        "bestSameServiceCostSeconds": 122.6
+      }
+    },
+    {
+      "name": "Dalton Avenue & Warne Crescent",
+      "addr": "Dalton Avenue & Warne Crescent",
+      "lat": 44.2658252,
+      "lng": -76.5018228,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/367262134",
+        "way/4692605"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/367262134",
+        "https://www.openstreetmap.org/way/4692605"
+      ],
+      "id": "route-local-fire-kingston-fire-5-05",
+      "routeBaseId": "fire-kingston-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2415.9,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 2307,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Railway Street",
+        "estimatedCostSeconds": 153.8,
+        "bestSameServiceCostSeconds": 153.8
+      }
+    },
+    {
+      "name": "Hickson Avenue & Montreal Street",
+      "addr": "Hickson Avenue & Montreal Street",
+      "lat": 44.2530634,
+      "lng": -76.4848423,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/388499094",
+        "way/4651308",
+        "way/4710020"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/388499094",
+        "https://www.openstreetmap.org/way/4651308",
+        "https://www.openstreetmap.org/way/4710020"
+      ],
+      "id": "route-local-fire-kingston-fire-5-06",
+      "routeBaseId": "fire-kingston-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1706.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1143.1,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Railway Street",
+        "estimatedCostSeconds": 156,
+        "bestSameServiceCostSeconds": 156
+      }
+    },
+    {
+      "name": "Haggerty's Sideroad & Pine Grove Road",
+      "addr": "Haggerty's Sideroad & Pine Grove Road",
+      "lat": 44.4053986,
+      "lng": -76.2825153,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33977079",
+        "way/33981425",
+        "way/33985240"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33977079",
+        "https://www.openstreetmap.org/way/33981425",
+        "https://www.openstreetmap.org/way/33985240"
+      ],
+      "id": "route-local-fire-kingston-fire-2-01",
+      "routeBaseId": "fire-kingston-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 835.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 5021.4,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Brewer's Mills Road",
+        "estimatedCostSeconds": 124.1,
+        "bestSameServiceCostSeconds": 124.1
+      }
+    },
+    {
+      "name": "Brewer's Mills Road & Highway 15",
+      "addr": "Brewer's Mills Road & Highway 15",
+      "lat": 44.4131016,
+      "lng": -76.3072057,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1509384770",
+        "way/1509384771",
+        "way/33983931",
+        "way/33985512"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1509384770",
+        "https://www.openstreetmap.org/way/1509384771",
+        "https://www.openstreetmap.org/way/33983931",
+        "https://www.openstreetmap.org/way/33985512"
+      ],
+      "id": "route-local-fire-kingston-fire-2-02",
+      "routeBaseId": "fire-kingston-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2196.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2552.4,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Brewer's Mills Road",
+        "estimatedCostSeconds": 326.2,
+        "bestSameServiceCostSeconds": 326.2
+      }
+    },
+    {
+      "name": "Boundary Road & Brewer's Mills Road & Jenson Road",
+      "addr": "Boundary Road & Brewer's Mills Road & Jenson Road",
+      "lat": 44.4137278,
+      "lng": -76.2439887,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/124816333",
+        "way/33976327",
+        "way/33989364"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/124816333",
+        "https://www.openstreetmap.org/way/33976327",
+        "https://www.openstreetmap.org/way/33989364"
+      ],
+      "id": "route-local-fire-kingston-fire-2-03",
+      "routeBaseId": "fire-kingston-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 3034.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1475,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Brewer's Mills Road",
+        "estimatedCostSeconds": 288.5,
+        "bestSameServiceCostSeconds": 288.5
+      }
+    },
+    {
+      "name": "Church Lane & Pine Grove Road",
+      "addr": "Church Lane & Pine Grove Road",
+      "lat": 44.4060402,
+      "lng": -76.2726456,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/174177409",
+        "way/33978588",
+        "way/33978751"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/174177409",
+        "https://www.openstreetmap.org/way/33978588",
+        "https://www.openstreetmap.org/way/33978751"
+      ],
+      "id": "route-local-fire-kingston-fire-2-04",
+      "routeBaseId": "fire-kingston-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1193.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 432.1,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Brewer's Mills Road",
+        "estimatedCostSeconds": 177.2,
+        "bestSameServiceCostSeconds": 177.2
+      }
+    },
+    {
+      "name": "Sand Gully Road & Sand Hill Road",
+      "addr": "Sand Gully Road & Sand Hill Road",
+      "lat": 44.3864305,
+      "lng": -76.2792261,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33981059",
+        "way/72012064"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33981059",
+        "https://www.openstreetmap.org/way/72012064"
+      ],
+      "id": "route-local-fire-kingston-fire-2-05",
+      "routeBaseId": "fire-kingston-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 3060.4,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 10069.7,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Brewer's Mills Road",
+        "estimatedCostSeconds": 454.5,
+        "bestSameServiceCostSeconds": 454.5
+      }
+    },
+    {
+      "name": "Brewer's Mills Road & Church Lane",
+      "addr": "Brewer's Mills Road & Church Lane",
+      "lat": 44.4107782,
+      "lng": -76.2732257,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33976327",
+        "way/33978588",
+        "way/33980477"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33976327",
+        "https://www.openstreetmap.org/way/33978588",
+        "https://www.openstreetmap.org/way/33980477"
+      ],
+      "id": "route-local-fire-kingston-fire-2-06",
+      "routeBaseId": "fire-kingston-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 667.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1483.7,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Brewer's Mills Road",
+        "estimatedCostSeconds": 99.1,
+        "bestSameServiceCostSeconds": 99.1
+      }
+    },
+    {
+      "name": "Joyceville Road & Middle Road",
+      "addr": "Joyceville Road & Middle Road",
+      "lat": 44.3049276,
+      "lng": -76.3306571,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/5059325",
+        "way/820200524",
+        "way/820200525",
+        "way/820200526"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/5059325",
+        "https://www.openstreetmap.org/way/820200524",
+        "https://www.openstreetmap.org/way/820200525",
+        "https://www.openstreetmap.org/way/820200526"
+      ],
+      "id": "route-local-fire-kingston-fire-1-01",
+      "routeBaseId": "fire-kingston-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 259.9,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 6039.4,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Joyceville Road",
+        "estimatedCostSeconds": 15.7,
+        "bestSameServiceCostSeconds": 15.7
+      }
+    },
+    {
+      "name": "Channelview Road & Highway 2",
+      "addr": "Channelview Road & Highway 2",
+      "lat": 44.28553,
+      "lng": -76.3345423,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/477498779",
+        "way/71872041"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/477498779",
+        "https://www.openstreetmap.org/way/71872041"
+      ],
+      "id": "route-local-fire-kingston-fire-1-02",
+      "routeBaseId": "fire-kingston-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2159.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 3568.9,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Joyceville Road",
+        "estimatedCostSeconds": 122.4,
+        "bestSameServiceCostSeconds": 122.4
+      }
+    },
+    {
+      "name": "4th Concession Road & Joyceville Road",
+      "addr": "4th Concession Road & Joyceville Road",
+      "lat": 44.3247436,
+      "lng": -76.3308416,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1419056605",
+        "way/5059326",
+        "way/5065110"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1419056605",
+        "https://www.openstreetmap.org/way/5059326",
+        "https://www.openstreetmap.org/way/5065110"
+      ],
+      "id": "route-local-fire-kingston-fire-1-03",
+      "routeBaseId": "fire-kingston-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2468.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 14882.1,
+        "decisionKinds": [
+          "departure",
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Joyceville Road",
+        "estimatedCostSeconds": 148.6,
+        "bestSameServiceCostSeconds": 148.6
+      }
+    },
+    {
+      "name": "Highway 2 & Middle Road",
+      "addr": "Highway 2 & Middle Road",
+      "lat": 44.3060768,
+      "lng": -76.3047382,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/13357306",
+        "way/820200526"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/13357306",
+        "https://www.openstreetmap.org/way/820200526"
+      ],
+      "id": "route-local-fire-kingston-fire-1-04",
+      "routeBaseId": "fire-kingston-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2377.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 15063.2,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Joyceville Road",
+        "estimatedCostSeconds": 143.2,
+        "bestSameServiceCostSeconds": 143.2
+      }
+    },
+    {
+      "name": "Middle Road & Roys Road",
+      "addr": "Middle Road & Roys Road",
+      "lat": 44.3025124,
+      "lng": -76.3594883,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33990828",
+        "way/820200525"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33990828",
+        "https://www.openstreetmap.org/way/820200525"
+      ],
+      "id": "route-local-fire-kingston-fire-1-05",
+      "routeBaseId": "fire-kingston-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2572.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 15006.6,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Joyceville Road",
+        "estimatedCostSeconds": 154.9,
+        "bestSameServiceCostSeconds": 154.9
+      }
+    },
+    {
+      "name": "English Way & Highway 2",
+      "addr": "English Way & Highway 2",
+      "lat": 44.2937619,
+      "lng": -76.3201481,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/13357306",
+        "way/71872231"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/13357306",
+        "https://www.openstreetmap.org/way/71872231"
+      ],
+      "id": "route-local-fire-kingston-fire-1-06",
+      "routeBaseId": "fire-kingston-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2294.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 5084.5,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Joyceville Road",
+        "estimatedCostSeconds": 129,
+        "bestSameServiceCostSeconds": 129
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Kingston Frontenac Library - Calvin Park Branch",
+      "addr": "88 WRIGHT CRES",
+      "lat": 44.23871649251537,
+      "lng": -76.5177329782997,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services1.arcgis.com/5GRYvurYYUwAecLQ/arcgis/rest/services/Libraries/FeatureServer/62/query?where=OBJECTID%3D27456&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Kingsland Crescent",
+        "Palace Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "kingston-call-18",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-kingston-fire-6-01",
+      "routeBaseId": "fire-kingston-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1060.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 616.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 137.3,
+        "bestSameServiceCostSeconds": 137.3
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Providence Care Hospital",
+      "addr": "752 KING ST W",
+      "lat": 44.21585973801355,
+      "lng": -76.52790524635384,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services1.arcgis.com/5GRYvurYYUwAecLQ/arcgis/rest/services/Hospitals/FeatureServer/69/query?where=OBJECTID%3D49326&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Country Club Drive",
+        "Portsmouth Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "kingston-call-03",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-kingston-fire-6-02",
+      "routeBaseId": "fire-kingston-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2727.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 485.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 367.2,
+        "bestSameServiceCostSeconds": 367.2
+      }
+    },
+    {
+      "name": "Beverley Street & King Street West",
+      "addr": "Beverley Street & King Street West",
+      "lat": 44.2221627,
+      "lng": -76.5021453,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/4757444",
+        "way/504281660"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/4757444",
+        "https://www.openstreetmap.org/way/504281660"
+      ],
+      "id": "route-local-fire-kingston-fire-6-03",
+      "routeBaseId": "fire-kingston-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2007.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 687.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 134.3,
+        "bestSameServiceCostSeconds": 127.8
+      }
+    },
+    {
+      "name": "Forsythe Avenue & Yonge Street",
+      "addr": "Forsythe Avenue & Yonge Street",
+      "lat": 44.2270003,
+      "lng": -76.5181433,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/39634588",
+        "way/482982448",
+        "way/4884474"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/39634588",
+        "https://www.openstreetmap.org/way/482982448",
+        "https://www.openstreetmap.org/way/4884474"
+      ],
+      "id": "route-local-fire-kingston-fire-6-04",
+      "routeBaseId": "fire-kingston-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 909,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1050.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 68.3,
+        "bestSameServiceCostSeconds": 68.3
+      }
+    },
+    {
+      "name": "Bayswater Place & Greenview Drive",
+      "addr": "Bayswater Place & Greenview Drive",
+      "lat": 44.2361103,
+      "lng": -76.5373294,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/18831816",
+        "way/26737890"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/18831816",
+        "https://www.openstreetmap.org/way/26737890"
+      ],
+      "id": "route-local-fire-kingston-fire-6-05",
+      "routeBaseId": "fire-kingston-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2572.2,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 880.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 186.1,
+        "bestSameServiceCostSeconds": 186.1
+      }
+    },
+    {
+      "name": "Durham Street & Victoria Street",
+      "addr": "Durham Street & Victoria Street",
+      "lat": 44.236846,
+      "lng": -76.5030711,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/4757205",
+        "way/827495318",
+        "way/827495324"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/4757205",
+        "https://www.openstreetmap.org/way/827495318",
+        "https://www.openstreetmap.org/way/827495324"
+      ],
+      "id": "route-local-fire-kingston-fire-6-06",
+      "routeBaseId": "fire-kingston-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1564,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 208.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 113,
+        "bestSameServiceCostSeconds": 109.3
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Welborne Avenue Public School",
+      "addr": "216 BICKNELL CRES",
+      "lat": 44.22252905264633,
+      "lng": -76.5797289481952,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services1.arcgis.com/5GRYvurYYUwAecLQ/arcgis/rest/services/Education_Facility1/FeatureServer/33/query?where=OBJECTID%3D92858&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Welborne Avenue",
+        "Chelsea Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "kingston-call-20",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-kingston-fire-10-01",
+      "routeBaseId": "fire-kingston-fire-10",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1249.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 657.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 172.7,
+        "bestSameServiceCostSeconds": 172.7
+      }
+    },
+    {
+      "name": "Front Road & King Street West",
+      "addr": "Front Road & King Street West",
+      "lat": 44.2200226,
+      "lng": -76.5447079,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/4925455",
+        "way/5049757"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/4925455",
+        "https://www.openstreetmap.org/way/5049757"
+      ],
+      "id": "route-local-fire-kingston-fire-10-02",
+      "routeBaseId": "fire-kingston-fire-10",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2087.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 6361.1,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 135.4,
+        "bestSameServiceCostSeconds": 135.4
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Frontenac Secondary School",
+      "addr": "1789 BATH RD",
+      "lat": 44.23716400612459,
+      "lng": -76.57644102801706,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services1.arcgis.com/5GRYvurYYUwAecLQ/arcgis/rest/services/Education_Facility1/FeatureServer/33/query?where=OBJECTID%3D92537&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Mcewen Drive",
+        "Canatara Court"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "kingston-call-11",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-kingston-fire-10-03",
+      "routeBaseId": "fire-kingston-fire-10",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2450.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 375.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 165.3,
+        "bestSameServiceCostSeconds": 165.3
+      }
+    },
+    {
+      "name": "Keyes Street & Sunny Acres Road",
+      "addr": "Keyes Street & Sunny Acres Road",
+      "lat": 44.2110825,
+      "lng": -76.5636175,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/795432606",
+        "way/795432608",
+        "way/795432641"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/795432606",
+        "https://www.openstreetmap.org/way/795432608",
+        "https://www.openstreetmap.org/way/795432641"
+      ],
+      "id": "route-local-fire-kingston-fire-10-04",
+      "routeBaseId": "fire-kingston-fire-10",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1242,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 443.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 165.8,
+        "bestSameServiceCostSeconds": 165.8
+      }
+    },
+    {
+      "name": "Front Road & Old Front Road",
+      "addr": "Front Road & Old Front Road",
+      "lat": 44.2172411,
+      "lng": -76.595278,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1175505846",
+        "way/4754866",
+        "way/5115983"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1175505846",
+        "https://www.openstreetmap.org/way/4754866",
+        "https://www.openstreetmap.org/way/5115983"
+      ],
+      "id": "route-local-fire-kingston-fire-10-05",
+      "routeBaseId": "fire-kingston-fire-10",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2316.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 514,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 166.1,
+        "bestSameServiceCostSeconds": 166.1
+      }
+    },
+    {
+      "name": "Auden Park Drive & Olympus Avenue",
+      "addr": "Auden Park Drive & Olympus Avenue",
+      "lat": 44.2246008,
+      "lng": -76.5845104,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/795388228",
+        "way/795388252",
+        "way/795388306"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/795388228",
+        "https://www.openstreetmap.org/way/795388252",
+        "https://www.openstreetmap.org/way/795388306"
+      ],
+      "id": "route-local-fire-kingston-fire-10-06",
+      "routeBaseId": "fire-kingston-fire-10",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1684,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 449.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 211.5,
+        "bestSameServiceCostSeconds": 211.5
+      }
+    },
+    {
+      "name": "Cedarwood Drive & Pinewood Place",
+      "addr": "Cedarwood Drive & Pinewood Place",
+      "lat": 44.2620679,
+      "lng": -76.5807492,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/4982476",
+        "way/4982480"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/4982476",
+        "https://www.openstreetmap.org/way/4982480"
+      ],
+      "id": "route-local-fire-kingston-fire-7-01",
+      "routeBaseId": "fire-kingston-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 793.7,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1611.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 87.5,
+        "bestSameServiceCostSeconds": 87.5
+      }
+    },
+    {
+      "name": "Hudson Drive & Laidlaw Crescent",
+      "addr": "Hudson Drive & Laidlaw Crescent",
+      "lat": 44.245087,
+      "lng": -76.5895332,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/39887997",
+        "way/795355576"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/39887997",
+        "https://www.openstreetmap.org/way/795355576"
+      ],
+      "id": "route-local-fire-kingston-fire-7-02",
+      "routeBaseId": "fire-kingston-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1734.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 945.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 133.6,
+        "bestSameServiceCostSeconds": 133.6
+      }
+    },
+    {
+      "name": "Earnhart Street & Finch Street",
+      "addr": "Earnhart Street & Finch Street",
+      "lat": 44.2597003,
+      "lng": -76.6074238,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/4926732",
+        "way/4926734"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/4926732",
+        "https://www.openstreetmap.org/way/4926734"
+      ],
+      "id": "route-local-fire-kingston-fire-7-03",
+      "routeBaseId": "fire-kingston-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2514.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1110.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 228.6,
+        "bestSameServiceCostSeconds": 228.6
+      }
+    },
+    {
+      "name": "Apple Down Drive & Braeside Crescent",
+      "addr": "Apple Down Drive & Braeside Crescent",
+      "lat": 44.2510822,
+      "lng": -76.5740435,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/795331004",
+        "way/795331021",
+        "way/795331025"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/795331004",
+        "https://www.openstreetmap.org/way/795331021",
+        "https://www.openstreetmap.org/way/795331025"
+      ],
+      "id": "route-local-fire-kingston-fire-7-04",
+      "routeBaseId": "fire-kingston-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1589.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 320.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 194.9,
+        "bestSameServiceCostSeconds": 194.9
+      }
+    },
+    {
+      "name": "Creekford Road & Gatwick Avenue",
+      "addr": "Creekford Road & Gatwick Avenue",
+      "lat": 44.2791001,
+      "lng": -76.5805038,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/162790895",
+        "way/730463828"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/162790895",
+        "https://www.openstreetmap.org/way/730463828"
+      ],
+      "id": "route-local-fire-kingston-fire-7-05",
+      "routeBaseId": "fire-kingston-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2667.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1611.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 209.3,
+        "bestSameServiceCostSeconds": 209.3
+      }
+    },
+    {
+      "name": "Buckhorn Drive & Woodhaven Drive",
+      "addr": "Buckhorn Drive & Woodhaven Drive",
+      "lat": 44.2691024,
+      "lng": -76.5950148,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1117941851",
+        "way/278729724",
+        "way/664750000",
+        "way/664750002"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1117941851",
+        "https://www.openstreetmap.org/way/278729724",
+        "https://www.openstreetmap.org/way/664750000",
+        "https://www.openstreetmap.org/way/664750002"
+      ],
+      "id": "route-local-fire-kingston-fire-7-06",
+      "routeBaseId": "fire-kingston-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1887.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1816,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 154.9,
+        "bestSameServiceCostSeconds": 154.9
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Kingston Frontenac Library - Pittsburgh Branch",
+      "addr": "80 Gore Road",
+      "lat": 44.259506491955065,
+      "lng": -76.46123603912777,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.kfpl.ca/locations/all-locations/pittsburgh-branch",
+        "https://services1.arcgis.com/5GRYvurYYUwAecLQ/arcgis/rest/services/Libraries/FeatureServer/62/query?where=OBJECTID%3D27455&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Highway 15",
+        "Point St Mark Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "kingston-call-14",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-kingston-fire-3-01",
+      "routeBaseId": "fire-kingston-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 379.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2218.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 55.6,
+        "bestSameServiceCostSeconds": 55.6
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Molly McGlynn Park Bldg",
+      "addr": "460 MOLLY MCGLYNN ST",
+      "lat": 44.26662134617534,
+      "lng": -76.44825887592206,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services1.arcgis.com/5GRYvurYYUwAecLQ/arcgis/rest/services/Local_Government/FeatureServer/93/query?where=OBJECTID%3D89329&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "St Martha Street",
+        "Sheila Court"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "kingston-call-16",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-kingston-fire-3-02",
+      "routeBaseId": "fire-kingston-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1674.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 200.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 136.6,
+        "bestSameServiceCostSeconds": 136.6
+      }
+    },
+    {
+      "name": "Drummond Street & Regent Street",
+      "addr": "Drummond Street & Regent Street",
+      "lat": 44.2404203,
+      "lng": -76.461908,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/28086071",
+        "way/4757304"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/28086071",
+        "https://www.openstreetmap.org/way/4757304"
+      ],
+      "id": "route-local-fire-kingston-fire-3-03",
+      "routeBaseId": "fire-kingston-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2630.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1308.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 207,
+        "bestSameServiceCostSeconds": 207
+      }
+    },
+    {
+      "name": "Cassidy Street & Maple Street",
+      "addr": "Cassidy Street & Maple Street",
+      "lat": 44.2552598,
+      "lng": -76.4851722,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/4651311",
+        "way/4713260"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/4651311",
+        "https://www.openstreetmap.org/way/4713260"
+      ],
+      "id": "route-local-fire-kingston-fire-3-04",
+      "routeBaseId": "fire-kingston-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2424.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 5220.9,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 180.3,
+        "bestSameServiceCostSeconds": 180.3
+      }
+    },
+    {
+      "name": "Reginald Bart Drive & Waterside Way",
+      "addr": "Reginald Bart Drive & Waterside Way",
+      "lat": 44.275631,
+      "lng": -76.4458857,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1175505816",
+        "way/17491645",
+        "way/307984235"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1175505816",
+        "https://www.openstreetmap.org/way/17491645",
+        "https://www.openstreetmap.org/way/307984235"
+      ],
+      "id": "route-local-fire-kingston-fire-3-05",
+      "routeBaseId": "fire-kingston-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2604,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 860.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 194.7,
+        "bestSameServiceCostSeconds": 194.7
+      }
+    },
+    {
+      "name": "Craftsman Boulevard & Highway 15",
+      "addr": "Craftsman Boulevard & Highway 15",
+      "lat": 44.2463399,
+      "lng": -76.462093,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/32919802",
+        "way/361813467",
+        "way/4964127"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/32919802",
+        "https://www.openstreetmap.org/way/361813467",
+        "https://www.openstreetmap.org/way/4964127"
+      ],
+      "id": "route-local-fire-kingston-fire-3-06",
+      "routeBaseId": "fire-kingston-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1667.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1308.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 120.2,
+        "bestSameServiceCostSeconds": 120.2
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Kingston Frontenac Library - Calvin Park Branch",
+      "addr": "88 WRIGHT CRES",
+      "lat": 44.23871649251537,
+      "lng": -76.5177329782997,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services1.arcgis.com/5GRYvurYYUwAecLQ/arcgis/rest/services/Libraries/FeatureServer/62/query?where=OBJECTID%3D27456&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Kingsland Crescent",
+        "Palace Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "kingston-call-18",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-kingston-ems-1-01",
+      "routeBaseId": "ems-kingston-ems-1",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1117.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 720.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 143.8,
+        "bestSameServiceCostSeconds": 143.8
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Queen's University",
+      "addr": "74 UNIVERSITY AVE",
+      "lat": 44.22665079562167,
+      "lng": -76.496003521196,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services1.arcgis.com/5GRYvurYYUwAecLQ/arcgis/rest/services/Post_Secondary_Education_Facilities/FeatureServer/64/query?where=OBJECTID%3D26752&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Union Street",
+        "Bader Lane"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "kingston-call-04",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-kingston-ems-1-02",
+      "routeBaseId": "ems-kingston-ems-1",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2372.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 667.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 262.7,
+        "bestSameServiceCostSeconds": 262.7
+      }
+    },
+    {
+      "name": "Country Club Drive & King Street West",
+      "addr": "Country Club Drive & King Street West",
+      "lat": 44.2202788,
+      "lng": -76.5301321,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/31007686",
+        "way/4758270",
+        "way/495033485"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/31007686",
+        "https://www.openstreetmap.org/way/4758270",
+        "https://www.openstreetmap.org/way/495033485"
+      ],
+      "id": "route-local-ems-kingston-ems-1-03",
+      "routeBaseId": "ems-kingston-ems-1",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2444.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 630.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 156.5,
+        "bestSameServiceCostSeconds": 156.5
+      }
+    },
+    {
+      "name": "Forsythe Avenue & Yonge Street",
+      "addr": "Forsythe Avenue & Yonge Street",
+      "lat": 44.2270003,
+      "lng": -76.5181433,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/39634588",
+        "way/482982448",
+        "way/4884474"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/39634588",
+        "https://www.openstreetmap.org/way/482982448",
+        "https://www.openstreetmap.org/way/4884474"
+      ],
+      "id": "route-local-ems-kingston-ems-1-04",
+      "routeBaseId": "ems-kingston-ems-1",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 872.6,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1055.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 69.1,
+        "bestSameServiceCostSeconds": 69.1
+      }
+    },
+    {
+      "name": "Avenue Road & Glengarry Road",
+      "addr": "Avenue Road & Glengarry Road",
+      "lat": 44.252959,
+      "lng": -76.5195983,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/795476863",
+        "way/795476865",
+        "way/795476923"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/795476863",
+        "https://www.openstreetmap.org/way/795476865",
+        "https://www.openstreetmap.org/way/795476923"
+      ],
+      "id": "route-local-ems-kingston-ems-1-05",
+      "routeBaseId": "ems-kingston-ems-1",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2598.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 309.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 179.1,
+        "bestSameServiceCostSeconds": 179.1
+      }
+    },
+    {
+      "name": "King Street West & Morton Way",
+      "addr": "King Street West & Morton Way",
+      "lat": 44.2216074,
+      "lng": -76.5063867,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/504281660",
+        "way/5045340"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/504281660",
+        "https://www.openstreetmap.org/way/5045340"
+      ],
+      "id": "route-local-ems-kingston-ems-1-06",
+      "routeBaseId": "ems-kingston-ems-1",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1669,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 604.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 114.3,
+        "bestSameServiceCostSeconds": 114.3
+      }
+    },
+    {
+      "name": "Highway 15 & Station Road",
+      "addr": "Highway 15 & Station Road",
+      "lat": 44.2909353,
+      "lng": -76.4291654,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/23130604",
+        "way/356647440",
+        "way/505964908"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/23130604",
+        "https://www.openstreetmap.org/way/356647440",
+        "https://www.openstreetmap.org/way/505964908"
+      ],
+      "id": "route-local-ems-kingston-ems-3-01",
+      "routeBaseId": "ems-kingston-ems-3",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 649.1,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 11742.5,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 47.1,
+        "bestSameServiceCostSeconds": 47.1
+      }
+    },
+    {
+      "name": "Biscayne Street & Highway 15 & Innovation Drive",
+      "addr": "Biscayne Street & Highway 15 & Innovation Drive",
+      "lat": 44.2726823,
+      "lng": -76.4470732,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1175505815",
+        "way/39909654",
+        "way/39909657",
+        "way/440498354"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1175505815",
+        "https://www.openstreetmap.org/way/39909654",
+        "https://www.openstreetmap.org/way/39909657",
+        "https://www.openstreetmap.org/way/440498354"
+      ],
+      "id": "route-local-ems-kingston-ems-3-02",
+      "routeBaseId": "ems-kingston-ems-3",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1919.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 9487,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 129.2,
+        "bestSameServiceCostSeconds": 129.2
+      }
+    },
+    {
+      "name": "Ironwood Road & Middle Road",
+      "addr": "Ironwood Road & Middle Road",
+      "lat": 44.2941638,
+      "lng": -76.4023317,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33980316",
+        "way/4600893"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33980316",
+        "https://www.openstreetmap.org/way/4600893"
+      ],
+      "id": "route-local-ems-kingston-ems-3-03",
+      "routeBaseId": "ems-kingston-ems-3",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2624.2,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 11742.5,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 170.6,
+        "bestSameServiceCostSeconds": 170.6
+      }
+    },
+    {
+      "name": "Butternut Creek Road & Middle Road",
+      "addr": "Butternut Creek Road & Middle Road",
+      "lat": 44.2913399,
+      "lng": -76.4166787,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33976739",
+        "way/4600893"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33976739",
+        "https://www.openstreetmap.org/way/4600893"
+      ],
+      "id": "route-local-ems-kingston-ems-3-04",
+      "routeBaseId": "ems-kingston-ems-3",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1433.3,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 11742.5,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 98.9,
+        "bestSameServiceCostSeconds": 98.9
+      }
+    },
+    {
+      "name": "Daylan Avenue & Kingston Mills Road",
+      "addr": "Daylan Avenue & Kingston Mills Road",
+      "lat": 44.2925574,
+      "lng": -76.4447225,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/173548376",
+        "way/4405025"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/173548376",
+        "https://www.openstreetmap.org/way/4405025"
+      ],
+      "id": "route-local-ems-kingston-ems-3-05",
+      "routeBaseId": "ems-kingston-ems-3",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2136.8,
+        "meaningfulDecisions": 7,
+        "maxAlternativePenaltyMetres": 9203.1,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 195.5,
+        "bestSameServiceCostSeconds": 195.5
+      }
+    },
+    {
+      "name": "Highway 15 & John F. Scott Road",
+      "addr": "Highway 15 & John F. Scott Road",
+      "lat": 44.2987288,
+      "lng": -76.4225796,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/4600894",
+        "way/820201138",
+        "way/820201140"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/4600894",
+        "https://www.openstreetmap.org/way/820201138",
+        "https://www.openstreetmap.org/way/820201140"
+      ],
+      "id": "route-local-ems-kingston-ems-3-06",
+      "routeBaseId": "ems-kingston-ems-3",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1659.6,
+        "meaningfulDecisions": 6,
+        "maxAlternativePenaltyMetres": 11742.5,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 96.3,
+        "bestSameServiceCostSeconds": 96.3
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Cataraqui Town Centre",
+      "addr": "945 GARDINERS RD",
+      "lat": 44.25632479350796,
+      "lng": -76.5717232549096,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services1.arcgis.com/5GRYvurYYUwAecLQ/arcgis/rest/services/Shopping_Centre/FeatureServer/4/query?where=OBJECTID%3D25989&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Princess Street",
+        "O'Connor Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "kingston-call-07",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-kingston-ems-2-01",
+      "routeBaseId": "ems-kingston-ems-2",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1379.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 179.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 149.1,
+        "bestSameServiceCostSeconds": 149.1
+      }
+    },
+    {
+      "name": "Buckhorn Drive & Woodhaven Drive",
+      "addr": "Buckhorn Drive & Woodhaven Drive",
+      "lat": 44.2691024,
+      "lng": -76.5950148,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1117941851",
+        "way/278729724",
+        "way/664750000",
+        "way/664750002"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1117941851",
+        "https://www.openstreetmap.org/way/278729724",
+        "https://www.openstreetmap.org/way/664750000",
+        "https://www.openstreetmap.org/way/664750002"
+      ],
+      "id": "route-local-ems-kingston-ems-2-02",
+      "routeBaseId": "ems-kingston-ems-2",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1809.9,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1816,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 160.7,
+        "bestSameServiceCostSeconds": 160.7
+      }
+    },
+    {
+      "name": "Downing Street & Hudson Drive",
+      "addr": "Downing Street & Hudson Drive",
+      "lat": 44.2486649,
+      "lng": -76.5974662,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/795317977",
+        "way/795317992",
+        "way/795318065"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/795317977",
+        "https://www.openstreetmap.org/way/795317992",
+        "https://www.openstreetmap.org/way/795318065"
+      ],
+      "id": "route-local-ems-kingston-ems-2-03",
+      "routeBaseId": "ems-kingston-ems-2",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2592.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 884.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 257.1,
+        "bestSameServiceCostSeconds": 257.1
+      }
+    },
+    {
+      "name": "Bittersweet Place & Cataraqui Woods Drive",
+      "addr": "Bittersweet Place & Cataraqui Woods Drive",
+      "lat": 44.2673051,
+      "lng": -76.5764181,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/4927805",
+        "way/4982548"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/4927805",
+        "https://www.openstreetmap.org/way/4982548"
+      ],
+      "id": "route-local-ems-kingston-ems-2-04",
+      "routeBaseId": "ems-kingston-ems-2",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1697.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1611.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 118.4,
+        "bestSameServiceCostSeconds": 118.4
+      }
+    },
+    {
+      "name": "Creekside Valley Drive & Princess Street",
+      "addr": "Creekside Valley Drive & Princess Street",
+      "lat": 44.264666,
+      "lng": -76.6165129,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/31483822",
+        "way/4758520"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/31483822",
+        "https://www.openstreetmap.org/way/4758520"
+      ],
+      "id": "route-local-ems-kingston-ems-2-05",
+      "routeBaseId": "ems-kingston-ems-2",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2679,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 2537.9,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 164.9,
+        "bestSameServiceCostSeconds": 164.9
+      }
+    },
+    {
+      "name": "Grouse Crescent & Milford Drive & Selkirk Road",
+      "addr": "Grouse Crescent & Milford Drive & Selkirk Road",
+      "lat": 44.2486545,
+      "lng": -76.5810761,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/795330986",
+        "way/795330988",
+        "way/795331000",
+        "way/795331012"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/795330986",
+        "https://www.openstreetmap.org/way/795330988",
+        "https://www.openstreetmap.org/way/795331000",
+        "https://www.openstreetmap.org/way/795331012"
+      ],
+      "id": "route-local-ems-kingston-ems-2-06",
+      "routeBaseId": "ems-kingston-ems-2",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1692.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 305.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 148.5,
+        "bestSameServiceCostSeconds": 148.5
+      }
+    },
+    {
+      "name": "Battersea Road & Unity Road",
+      "addr": "Battersea Road & Unity Road",
+      "lat": 44.3214032,
+      "lng": -76.4615584,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1009358362",
+        "way/4405022",
+        "way/4496838",
+        "way/5086556"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1009358362",
+        "https://www.openstreetmap.org/way/4405022",
+        "https://www.openstreetmap.org/way/4496838",
+        "https://www.openstreetmap.org/way/5086556"
+      ],
+      "id": "route-local-ems-kingston-ems-9-01",
+      "routeBaseId": "ems-kingston-ems-9",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 770.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 13872.4,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 58.9,
+        "bestSameServiceCostSeconds": 58.9
+      }
+    },
+    {
+      "name": "Battersea Road & River Ridge Drive",
+      "addr": "Battersea Road & River Ridge Drive",
+      "lat": 44.2984165,
+      "lng": -76.4684329,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/23238149",
+        "way/5074018"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/23238149",
+        "https://www.openstreetmap.org/way/5074018"
+      ],
+      "id": "route-local-ems-kingston-ems-9-02",
+      "routeBaseId": "ems-kingston-ems-9",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1938.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 13649.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 129.2,
+        "bestSameServiceCostSeconds": 129.2
+      }
+    },
+    {
+      "name": "Ellen Avenue & Unity Road",
+      "addr": "Ellen Avenue & Unity Road",
+      "lat": 44.3205233,
+      "lng": -76.4855166,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/4405022",
+        "way/5052839"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/4405022",
+        "https://www.openstreetmap.org/way/5052839"
+      ],
+      "id": "route-local-ems-kingston-ems-9-03",
+      "routeBaseId": "ems-kingston-ems-9",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2625.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 10107,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 211.8,
+        "bestSameServiceCostSeconds": 211.8
+      }
+    },
+    {
+      "name": "Battersea Road & Downsview Drive",
+      "addr": "Battersea Road & Downsview Drive",
+      "lat": 44.3092244,
+      "lng": -76.4643713,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1009358362",
+        "way/173548403"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1009358362",
+        "https://www.openstreetmap.org/way/173548403"
+      ],
+      "id": "route-local-ems-kingston-ems-9-04",
+      "routeBaseId": "ems-kingston-ems-9",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 696.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 14533.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 54.5,
+        "bestSameServiceCostSeconds": 54.5
+      }
+    },
+    {
+      "name": "Battersea Road & Patterson Road",
+      "addr": "Battersea Road & Patterson Road",
+      "lat": 44.3365148,
+      "lng": -76.4544776,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/4496838",
+        "way/5211708"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/4496838",
+        "https://www.openstreetmap.org/way/5211708"
+      ],
+      "id": "route-local-ems-kingston-ems-9-05",
+      "routeBaseId": "ems-kingston-ems-9",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2535.4,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 19024.6,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 165.2,
+        "bestSameServiceCostSeconds": 165.2
+      }
+    },
+    {
+      "name": "Aragon Road & Fitzpatrick Road",
+      "addr": "Aragon Road & Fitzpatrick Road",
+      "lat": 44.3110173,
+      "lng": -76.4480857,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/80111819",
+        "way/80111821",
+        "way/80111822"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/80111819",
+        "https://www.openstreetmap.org/way/80111821",
+        "https://www.openstreetmap.org/way/80111822"
+      ],
+      "id": "route-local-ems-kingston-ems-9-06",
+      "routeBaseId": "ems-kingston-ems-9",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2761.5,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 15225,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 210.7,
+        "bestSameServiceCostSeconds": 210.7
+      }
+    }
+  ]
 }

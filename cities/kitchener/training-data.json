@@ -217,5 +217,2832 @@
   ],
   "roadsUrl": "cities/kitchener/roads.geojson.gz",
   "roadFeatureCount": 26849,
-  "roadDataSha256": "9fd229bac8dc4b9f5c321831ba1cab7d611f2f8882a604321a055e62a0b01031"
+  "roadDataSha256": "9fd229bac8dc4b9f5c321831ba1cab7d611f2f8882a604321a055e62a0b01031",
+  "routeResponses": {
+    "schemaVersion": 1,
+    "minCallsPerBase": 3,
+    "targetCallsPerBase": 6,
+    "generatedOn": "2026-10-17",
+    "model": {
+      "description": "Published first-due polygons where available. Otherwise a directed road-network estimate using road class travel cost from every same-service hall; allows a15second cost tie for overlapping nearby halls. This is training geography, not live dispatch advice.",
+      "ownershipToleranceSeconds": 15,
+      "maximumCandidateRouteMetres": 12000
+    },
+    "bases": [
+      {
+        "baseId": "fire-kitchener-fire-1",
+        "service": "fire",
+        "number": 1,
+        "name": "Kitchener Fire Station 1",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.4238256,
+          "lng": -80.4892367,
+          "road": "Unnamed road",
+          "gapMetres": 25.8
+        },
+        "callIds": [
+          "route-local-fire-kitchener-fire-1-01",
+          "route-local-fire-kitchener-fire-1-02",
+          "route-local-fire-kitchener-fire-1-03",
+          "route-local-fire-kitchener-fire-1-04",
+          "route-local-fire-kitchener-fire-1-05",
+          "route-local-fire-kitchener-fire-1-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-kitchener-fire-2",
+        "service": "fire",
+        "number": 2,
+        "name": "Kitchener Fire Station 2",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.4651687,
+          "lng": -80.4848499,
+          "road": "Unnamed road",
+          "gapMetres": 12.2
+        },
+        "callIds": [
+          "route-local-fire-kitchener-fire-2-01",
+          "route-local-fire-kitchener-fire-2-02",
+          "route-local-fire-kitchener-fire-2-03",
+          "route-local-fire-kitchener-fire-2-04",
+          "route-local-fire-kitchener-fire-2-05",
+          "route-local-fire-kitchener-fire-2-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-kitchener-fire-3",
+        "service": "fire",
+        "number": 3,
+        "name": "Kitchener Fire Station 3",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.4510054,
+          "lng": -80.443181,
+          "road": "Unnamed road",
+          "gapMetres": 3.7
+        },
+        "callIds": [
+          "route-local-fire-kitchener-fire-3-01",
+          "route-local-fire-kitchener-fire-3-02",
+          "route-local-fire-kitchener-fire-3-03",
+          "route-local-fire-kitchener-fire-3-04",
+          "route-local-fire-kitchener-fire-3-05",
+          "route-local-fire-kitchener-fire-3-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-kitchener-fire-4",
+        "service": "fire",
+        "number": 4,
+        "name": "Kitchener Fire Station 4",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.4287138,
+          "lng": -80.4313934,
+          "road": "Unnamed road",
+          "gapMetres": 15.6
+        },
+        "callIds": [
+          "route-local-fire-kitchener-fire-4-01",
+          "route-local-fire-kitchener-fire-4-02",
+          "route-local-fire-kitchener-fire-4-03",
+          "route-local-fire-kitchener-fire-4-04",
+          "route-local-fire-kitchener-fire-4-05",
+          "route-local-fire-kitchener-fire-4-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-kitchener-fire-5",
+        "service": "fire",
+        "number": 5,
+        "name": "Kitchener Fire Station 5",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.427464816228216,
+          "lng": -80.52805984796434,
+          "road": "Unnamed road",
+          "gapMetres": 6
+        },
+        "callIds": [
+          "route-local-fire-kitchener-fire-5-01",
+          "route-local-fire-kitchener-fire-5-02",
+          "route-local-fire-kitchener-fire-5-03",
+          "route-local-fire-kitchener-fire-5-04",
+          "route-local-fire-kitchener-fire-5-05",
+          "route-local-fire-kitchener-fire-5-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-kitchener-fire-6",
+        "service": "fire",
+        "number": 6,
+        "name": "Kitchener Fire Station 6",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6100,
+        "access": {
+          "lat": 43.3933413,
+          "lng": -80.4371723,
+          "road": "Unnamed road",
+          "gapMetres": 9.6
+        },
+        "callIds": [
+          "route-local-fire-kitchener-fire-6-01",
+          "route-local-fire-kitchener-fire-6-02",
+          "route-local-fire-kitchener-fire-6-03",
+          "route-local-fire-kitchener-fire-6-04",
+          "route-local-fire-kitchener-fire-6-05",
+          "route-local-fire-kitchener-fire-6-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-kitchener-fire-7",
+        "service": "fire",
+        "number": 7,
+        "name": "Kitchener Fire Station 7",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.3814905,
+          "lng": -80.4913947,
+          "road": "Unnamed road",
+          "gapMetres": 13.1
+        },
+        "callIds": [
+          "route-local-fire-kitchener-fire-7-01",
+          "route-local-fire-kitchener-fire-7-02",
+          "route-local-fire-kitchener-fire-7-03",
+          "route-local-fire-kitchener-fire-7-04",
+          "route-local-fire-kitchener-fire-7-05",
+          "route-local-fire-kitchener-fire-7-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-kitchener-ems-doon",
+        "service": "ems",
+        "number": 10000,
+        "name": "Kitchener Paramedic Base doon",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.391535314522145,
+          "lng": -80.40404470390918,
+          "road": "Unnamed road",
+          "gapMetres": 18.2
+        },
+        "callIds": [
+          "route-local-ems-kitchener-ems-doon-01",
+          "route-local-ems-kitchener-ems-doon-02",
+          "route-local-ems-kitchener-ems-doon-03",
+          "route-local-ems-kitchener-ems-doon-04",
+          "route-local-ems-kitchener-ems-doon-05",
+          "route-local-ems-kitchener-ems-doon-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-kitchener-ems-ottawa",
+        "service": "ems",
+        "number": 10002,
+        "name": "Kitchener Paramedic Base ottawa",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.45070384376158,
+          "lng": -80.44275777154986,
+          "road": "Unnamed road",
+          "gapMetres": 13.6
+        },
+        "callIds": [
+          "route-local-ems-kitchener-ems-ottawa-01",
+          "route-local-ems-kitchener-ems-ottawa-02",
+          "route-local-ems-kitchener-ems-ottawa-03",
+          "route-local-ems-kitchener-ems-ottawa-04",
+          "route-local-ems-kitchener-ems-ottawa-05",
+          "route-local-ems-kitchener-ems-ottawa-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-kitchener-ems-queens",
+        "service": "ems",
+        "number": 10003,
+        "name": "Kitchener Paramedic Base queens",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.428141404988565,
+          "lng": -80.52763416299246,
+          "road": "Unnamed road",
+          "gapMetres": 41.2
+        },
+        "callIds": [
+          "route-local-ems-kitchener-ems-queens-01",
+          "route-local-ems-kitchener-ems-queens-02",
+          "route-local-ems-kitchener-ems-queens-03",
+          "route-local-ems-kitchener-ems-queens-04",
+          "route-local-ems-kitchener-ems-queens-05",
+          "route-local-ems-kitchener-ems-queens-06"
+        ],
+        "challengeCalls": 6
+      }
+    ]
+  },
+  "routeCalls": [
+    {
+      "name": "Elmsdale Drive & Palace Street",
+      "addr": "Elmsdale Drive & Palace Street",
+      "lat": 43.422328,
+      "lng": -80.4943135,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1091107890",
+        "way/30136934"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1091107890",
+        "https://www.openstreetmap.org/way/30136934"
+      ],
+      "id": "route-local-fire-kitchener-fire-1-01",
+      "routeBaseId": "fire-kitchener-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 776,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 406.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 69.8,
+        "bestSameServiceCostSeconds": 69.8
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Activa Sportsplex",
+      "addr": "135 Lennox Lewis Way, Kitchener, ON",
+      "lat": 43.4221764,
+      "lng": -80.4712185,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.kitchener.ca/recreation-and-sports/arenas/activa-sportsplex/",
+        "https://services1.arcgis.com/qAo1OsXi67t7XgmS/ArcGIS/rest/services/Addresses/FeatureServer/0/query?objectIds=910666&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Ardelt Avenue",
+        "Hanson Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "kitchener-call-04",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-kitchener-fire-1-02",
+      "routeBaseId": "fire-kitchener-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2275.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 281.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 246.2,
+        "bestSameServiceCostSeconds": 246.2
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Mill Courtland Community Centre",
+      "addr": "216 Mill Street, Kitchener, ON",
+      "lat": 43.4382925,
+      "lng": -80.4873269,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.kitchener.ca/contacts-directory/",
+        "https://services1.arcgis.com/qAo1OsXi67t7XgmS/ArcGIS/rest/services/Addresses/FeatureServer/0/query?objectIds=906207&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Stirling Avenue South",
+        "Woodland Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "kitchener-call-15",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-kitchener-fire-1-03",
+      "routeBaseId": "fire-kitchener-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2657.7,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 301.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 235,
+        "bestSameServiceCostSeconds": 235
+      }
+    },
+    {
+      "name": "Kehl Street & Ottawa Street South",
+      "addr": "Kehl Street & Ottawa Street South",
+      "lat": 43.4296179,
+      "lng": -80.48148,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35513496",
+        "way/471827766"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35513496",
+        "https://www.openstreetmap.org/way/471827766"
+      ],
+      "id": "route-local-fire-kitchener-fire-1-04",
+      "routeBaseId": "fire-kitchener-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1196.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 281.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 87.4,
+        "bestSameServiceCostSeconds": 87.4
+      }
+    },
+    {
+      "name": "Folkstone Crescent & Folkstone Place",
+      "addr": "Folkstone Crescent & Folkstone Place",
+      "lat": 43.4082465,
+      "lng": -80.4887461,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1085243106",
+        "way/30925379",
+        "way/30925391"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1085243106",
+        "https://www.openstreetmap.org/way/30925379",
+        "https://www.openstreetmap.org/way/30925391"
+      ],
+      "id": "route-local-fire-kitchener-fire-1-05",
+      "routeBaseId": "fire-kitchener-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2622,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 317.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 295.2,
+        "bestSameServiceCostSeconds": 295.2
+      }
+    },
+    {
+      "name": "Howe Drive & Ottawa Street South",
+      "addr": "Howe Drive & Ottawa Street South",
+      "lat": 43.4196748,
+      "lng": -80.5061422,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/220083095",
+        "way/30177055",
+        "way/472600572"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/220083095",
+        "https://www.openstreetmap.org/way/30177055",
+        "https://www.openstreetmap.org/way/472600572"
+      ],
+      "id": "route-local-fire-kitchener-fire-1-06",
+      "routeBaseId": "fire-kitchener-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1713,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1908.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 119.7,
+        "bestSameServiceCostSeconds": 119.7
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Hillside Park",
+      "addr": "15 Hill Street, Kitchener, ON",
+      "lat": 43.4632429,
+      "lng": -80.4861625,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.kitchener.ca/parks-and-trails/tobogganing-hills/",
+        "https://services1.arcgis.com/qAo1OsXi67t7XgmS/ArcGIS/rest/services/Addresses/FeatureServer/0/query?objectIds=876511&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "St Vincent Street",
+        "Lancaster Street West"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "kitchener-call-17",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-kitchener-fire-2-01",
+      "routeBaseId": "fire-kitchener-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 460.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 822.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 82.3,
+        "bestSameServiceCostSeconds": 82.3
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Centre In The Square",
+      "addr": "101 Queen Street North, Kitchener, ON",
+      "lat": 43.4543693,
+      "lng": -80.4840158,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://centreinthesquare.com/contact/",
+        "https://services1.arcgis.com/qAo1OsXi67t7XgmS/ArcGIS/rest/services/Addresses/FeatureServer/0/query?objectIds=951510&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Otto Street",
+        "Margaret Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "kitchener-call-06",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-kitchener-fire-2-02",
+      "routeBaseId": "fire-kitchener-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1757.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 884.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 249.4,
+        "bestSameServiceCostSeconds": 249.4
+      }
+    },
+    {
+      "name": "Bridgeport Road & Riverbend Drive",
+      "addr": "Bridgeport Road & Riverbend Drive",
+      "lat": 43.4766697,
+      "lng": -80.482112,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/27246480",
+        "way/35513070",
+        "way/902902784"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/27246480",
+        "https://www.openstreetmap.org/way/35513070",
+        "https://www.openstreetmap.org/way/902902784"
+      ],
+      "id": "route-local-fire-kitchener-fire-2-03",
+      "routeBaseId": "fire-kitchener-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2588.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 605,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 297.2,
+        "bestSameServiceCostSeconds": 297.2
+      }
+    },
+    {
+      "name": "Riverbend Drive & Shirley Avenue & Wellington Street North",
+      "addr": "Riverbend Drive & Shirley Avenue & Wellington Street North",
+      "lat": 43.4669,
+      "lng": -80.4675139,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/26144380",
+        "way/466956854",
+        "way/473287100",
+        "way/585244869"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/26144380",
+        "https://www.openstreetmap.org/way/466956854",
+        "https://www.openstreetmap.org/way/473287100",
+        "https://www.openstreetmap.org/way/585244869"
+      ],
+      "id": "route-local-fire-kitchener-fire-2-04",
+      "routeBaseId": "fire-kitchener-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1710.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 605,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 222.4,
+        "bestSameServiceCostSeconds": 222.4
+      }
+    },
+    {
+      "name": "Indiana Street & Victoria Street North",
+      "addr": "Indiana Street & Victoria Street North",
+      "lat": 43.4605028,
+      "lng": -80.4765207,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1023960574",
+        "way/33191816",
+        "way/945680415"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1023960574",
+        "https://www.openstreetmap.org/way/33191816",
+        "https://www.openstreetmap.org/way/945680415"
+      ],
+      "id": "route-local-fire-kitchener-fire-2-05",
+      "routeBaseId": "fire-kitchener-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2119.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 884.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 230.9,
+        "bestSameServiceCostSeconds": 224.1
+      }
+    },
+    {
+      "name": "Chestnut Street & Victoria Street North",
+      "addr": "Chestnut Street & Victoria Street North",
+      "lat": 43.4591116,
+      "lng": -80.480917,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33191795",
+        "way/466956851"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33191795",
+        "https://www.openstreetmap.org/way/466956851"
+      ],
+      "id": "route-local-fire-kitchener-fire-2-06",
+      "routeBaseId": "fire-kitchener-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1732.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 884.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 207.6,
+        "bestSameServiceCostSeconds": 207.6
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Stanley Park Community Centre",
+      "addr": "505 Franklin Street North, Kitchener, ON",
+      "lat": 43.4482469,
+      "lng": -80.4490477,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.kitchener.ca/recreation-and-sports/community-centres/stanley-park-community-centre/",
+        "https://services1.arcgis.com/qAo1OsXi67t7XgmS/ArcGIS/rest/services/Addresses/FeatureServer/0/query?objectIds=906018&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Ottawa Street North",
+        "Dreger Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "kitchener-call-12",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-kitchener-fire-3-01",
+      "routeBaseId": "fire-kitchener-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 661,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 298.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 92.9,
+        "bestSameServiceCostSeconds": 92.9
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "The Aud",
+      "addr": "400 East Avenue, Kitchener, ON",
+      "lat": 43.4472379,
+      "lng": -80.4668974,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.kitchener.ca/recreation-and-sports/arenas/the-aud/",
+        "https://services1.arcgis.com/qAo1OsXi67t7XgmS/ArcGIS/rest/services/Addresses/FeatureServer/0/query?objectIds=972403&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Borden Avenue North",
+        "Eugene George Way"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "kitchener-call-02",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-kitchener-fire-3-02",
+      "routeBaseId": "fire-kitchener-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2251.7,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1645.9,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 186.7,
+        "bestSameServiceCostSeconds": 186.7
+      }
+    },
+    {
+      "name": "Georgian Crescent & Georgian Place & Georgian Street",
+      "addr": "Georgian Crescent & Georgian Place & Georgian Street",
+      "lat": 43.467382,
+      "lng": -80.4403366,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35509490",
+        "way/35515032",
+        "way/35523352"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35509490",
+        "https://www.openstreetmap.org/way/35515032",
+        "https://www.openstreetmap.org/way/35523352"
+      ],
+      "id": "route-local-fire-kitchener-fire-3-03",
+      "routeBaseId": "fire-kitchener-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2592.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 555.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 216.9,
+        "bestSameServiceCostSeconds": 216.9
+      }
+    },
+    {
+      "name": "Quaiser Court & Quaiser Street",
+      "addr": "Quaiser Court & Quaiser Street",
+      "lat": 43.4519624,
+      "lng": -80.4267844,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35503312",
+        "way/35521388"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35503312",
+        "https://www.openstreetmap.org/way/35521388"
+      ],
+      "id": "route-local-fire-kitchener-fire-3-04",
+      "routeBaseId": "fire-kitchener-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1696.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 627.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 154.1,
+        "bestSameServiceCostSeconds": 154.1
+      }
+    },
+    {
+      "name": "Turner Avenue & Victoria Street North",
+      "addr": "Turner Avenue & Victoria Street North",
+      "lat": 43.4649443,
+      "lng": -80.462126,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/216278914",
+        "way/35509741"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/216278914",
+        "https://www.openstreetmap.org/way/35509741"
+      ],
+      "id": "route-local-fire-kitchener-fire-3-05",
+      "routeBaseId": "fire-kitchener-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2606.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1102.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 214.7,
+        "bestSameServiceCostSeconds": 214.7
+      }
+    },
+    {
+      "name": "Old Chicopee Drive & River Road East",
+      "addr": "Old Chicopee Drive & River Road East",
+      "lat": 43.4393092,
+      "lng": -80.4334221,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1099768201",
+        "way/145567476",
+        "way/243928460"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1099768201",
+        "https://www.openstreetmap.org/way/145567476",
+        "https://www.openstreetmap.org/way/243928460"
+      ],
+      "id": "route-local-fire-kitchener-fire-3-06",
+      "routeBaseId": "fire-kitchener-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1700.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 305.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 142.5,
+        "bestSameServiceCostSeconds": 142.5
+      }
+    },
+    {
+      "name": "Florence Avenue & Huber Street",
+      "addr": "Florence Avenue & Huber Street",
+      "lat": 43.4311998,
+      "lng": -80.4361357,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35506489",
+        "way/35518445",
+        "way/35523758"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35506489",
+        "https://www.openstreetmap.org/way/35518445",
+        "https://www.openstreetmap.org/way/35523758"
+      ],
+      "id": "route-local-fire-kitchener-fire-4-01",
+      "routeBaseId": "fire-kitchener-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 808.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2146.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 124.7,
+        "bestSameServiceCostSeconds": 124.7
+      }
+    },
+    {
+      "name": "King Street East & Riverbank Drive",
+      "addr": "King Street East & Riverbank Drive",
+      "lat": 43.4202164,
+      "lng": -80.4094403,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1032411123",
+        "way/145344711",
+        "way/145563467"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1032411123",
+        "https://www.openstreetmap.org/way/145344711",
+        "https://www.openstreetmap.org/way/145563467"
+      ],
+      "id": "route-local-fire-kitchener-fire-4-02",
+      "routeBaseId": "fire-kitchener-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2151,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 3106.5,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 161.3,
+        "bestSameServiceCostSeconds": 161.3
+      }
+    },
+    {
+      "name": "Chicopee Hills Drive & Corfield Drive & Lackner Boulevard",
+      "addr": "Chicopee Hills Drive & Corfield Drive & Lackner Boulevard",
+      "lat": 43.4445941,
+      "lng": -80.4162597,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1426838679",
+        "way/1426838680",
+        "way/35503563",
+        "way/648053976"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1426838679",
+        "https://www.openstreetmap.org/way/1426838680",
+        "https://www.openstreetmap.org/way/35503563",
+        "https://www.openstreetmap.org/way/648053976"
+      ],
+      "id": "route-local-fire-kitchener-fire-4-03",
+      "routeBaseId": "fire-kitchener-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2627.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1439,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 190.8,
+        "bestSameServiceCostSeconds": 190.8
+      }
+    },
+    {
+      "name": "Kingsway Drive & Wilson Avenue",
+      "addr": "Kingsway Drive & Wilson Avenue",
+      "lat": 43.4223594,
+      "lng": -80.443611,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1444472674",
+        "way/1444514582",
+        "way/196465159"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1444472674",
+        "https://www.openstreetmap.org/way/1444514582",
+        "https://www.openstreetmap.org/way/196465159"
+      ],
+      "id": "route-local-fire-kitchener-fire-4-04",
+      "routeBaseId": "fire-kitchener-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1624.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2418,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 136.3,
+        "bestSameServiceCostSeconds": 136.3
+      }
+    },
+    {
+      "name": "Prospect Avenue & Shantz Lane",
+      "addr": "Prospect Avenue & Shantz Lane",
+      "lat": 43.4386869,
+      "lng": -80.4556272,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1040982435",
+        "way/37768636"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1040982435",
+        "https://www.openstreetmap.org/way/37768636"
+      ],
+      "id": "route-local-fire-kitchener-fire-4-05",
+      "routeBaseId": "fire-kitchener-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2611.3,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 2279.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 193.9,
+        "bestSameServiceCostSeconds": 193.9
+      }
+    },
+    {
+      "name": "Morrison Road & Quinte Crescent",
+      "addr": "Morrison Road & Quinte Crescent",
+      "lat": 43.4313315,
+      "lng": -80.4159141,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1363226767",
+        "way/35506351",
+        "way/466817553"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1363226767",
+        "https://www.openstreetmap.org/way/35506351",
+        "https://www.openstreetmap.org/way/466817553"
+      ],
+      "id": "route-local-fire-kitchener-fire-4-06",
+      "routeBaseId": "fire-kitchener-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2108.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 355.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 191.7,
+        "bestSameServiceCostSeconds": 191.7
+      }
+    },
+    {
+      "name": "Bankside Drive & Eastforest Trail",
+      "addr": "Bankside Drive & Eastforest Trail",
+      "lat": 43.4311144,
+      "lng": -80.5335972,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1560083258",
+        "way/1560083259",
+        "way/30321828"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1560083258",
+        "https://www.openstreetmap.org/way/1560083259",
+        "https://www.openstreetmap.org/way/30321828"
+      ],
+      "id": "route-local-fire-kitchener-fire-5-01",
+      "routeBaseId": "fire-kitchener-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 802.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 852.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 76.1,
+        "bestSameServiceCostSeconds": 76.1
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Meadowlane Park",
+      "addr": "138 Glen Park Crescent, Kitchener, ON",
+      "lat": 43.4165135,
+      "lng": -80.5279962,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://calendar.kitchener.ca/default/Download?EndDate=07%2F31%2F2024&PrintView=list&StartDate=07%2F01%2F2024",
+        "https://services1.arcgis.com/qAo1OsXi67t7XgmS/ArcGIS/rest/services/Addresses/FeatureServer/0/query?objectIds=964638&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Forestwood Drive",
+        "Meadowlane Drive (via Forestwood Drive)"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "kitchener-call-18",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-kitchener-fire-5-02",
+      "routeBaseId": "fire-kitchener-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1823.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 983,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 210.4,
+        "bestSameServiceCostSeconds": 210.4
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "WRHN @ Queen's Blvd.",
+      "addr": "911 Queens Boulevard, Kitchener, ON",
+      "lat": 43.4379751,
+      "lng": -80.5014668,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.wrhn.ca/patients-visitors/find-a-location",
+        "https://services1.arcgis.com/qAo1OsXi67t7XgmS/ArcGIS/rest/services/Emergency_Services/FeatureServer/0/query?objectIds=11&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Pleasant Avenue",
+        "Barclay Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "kitchener-call-10",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-kitchener-fire-5-03",
+      "routeBaseId": "fire-kitchener-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2516.8,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 918.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 224.3,
+        "bestSameServiceCostSeconds": 224.3
+      }
+    },
+    {
+      "name": "Greenbrook Drive & Stonybrook Drive",
+      "addr": "Greenbrook Drive & Stonybrook Drive",
+      "lat": 43.4250821,
+      "lng": -80.5120307,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/27552603",
+        "way/36018410"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/27552603",
+        "https://www.openstreetmap.org/way/36018410"
+      ],
+      "id": "route-local-fire-kitchener-fire-5-04",
+      "routeBaseId": "fire-kitchener-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1742.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1010.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 164.6,
+        "bestSameServiceCostSeconds": 164.6
+      }
+    },
+    {
+      "name": "Huck Crescent & Keller Crescent",
+      "addr": "Huck Crescent & Keller Crescent",
+      "lat": 43.4329779,
+      "lng": -80.5518518,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/30105642",
+        "way/30105649"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/30105642",
+        "https://www.openstreetmap.org/way/30105649"
+      ],
+      "id": "route-local-fire-kitchener-fire-5-05",
+      "routeBaseId": "fire-kitchener-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2608.6,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 710.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 232.7,
+        "bestSameServiceCostSeconds": 232.7
+      }
+    },
+    {
+      "name": "Highland Road West & Westheights Drive",
+      "addr": "Highland Road West & Westheights Drive",
+      "lat": 43.425099,
+      "lng": -80.5441273,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1371588960",
+        "way/1371588989",
+        "way/1371588990",
+        "way/172977264"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1371588960",
+        "https://www.openstreetmap.org/way/1371588989",
+        "https://www.openstreetmap.org/way/1371588990",
+        "https://www.openstreetmap.org/way/172977264"
+      ],
+      "id": "route-local-fire-kitchener-fire-5-06",
+      "routeBaseId": "fire-kitchener-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1702.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 579,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 125.6,
+        "bestSameServiceCostSeconds": 125.6
+      }
+    },
+    {
+      "name": "Doon Village Road & Pioneer Drive",
+      "addr": "Doon Village Road & Pioneer Drive",
+      "lat": 43.3951714,
+      "lng": -80.4457696,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1103106809",
+        "way/1447630763",
+        "way/469255179",
+        "way/513726258"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1103106809",
+        "https://www.openstreetmap.org/way/1447630763",
+        "https://www.openstreetmap.org/way/469255179",
+        "https://www.openstreetmap.org/way/513726258"
+      ],
+      "id": "route-local-fire-kitchener-fire-6-01",
+      "routeBaseId": "fire-kitchener-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 779,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1691.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 69.4,
+        "bestSameServiceCostSeconds": 69.4
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Homer Watson House & Gallery",
+      "addr": "1754 Old Mill Road, Kitchener, ON",
+      "lat": 43.3948354,
+      "lng": -80.4185763,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.kitchener.ca/arts-culture-and-events/theatres-museums-and-galleries/",
+        "https://services1.arcgis.com/qAo1OsXi67t7XgmS/ArcGIS/rest/services/Addresses/FeatureServer/0/query?objectIds=928813&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Mill Park Drive",
+        "Roos Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "kitchener-call-20",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-kitchener-fire-6-02",
+      "routeBaseId": "fire-kitchener-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1887.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2098.1,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 227.6,
+        "bestSameServiceCostSeconds": 227.6
+      }
+    },
+    {
+      "name": "Reynolds Court & Robert Ferrie Drive",
+      "addr": "Reynolds Court & Robert Ferrie Drive",
+      "lat": 43.3791617,
+      "lng": -80.4377188,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1504754017",
+        "way/35504668",
+        "way/35509497"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1504754017",
+        "https://www.openstreetmap.org/way/35504668",
+        "https://www.openstreetmap.org/way/35509497"
+      ],
+      "id": "route-local-fire-kitchener-fire-6-03",
+      "routeBaseId": "fire-kitchener-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2695.5,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 984,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 242.2,
+        "bestSameServiceCostSeconds": 242.2
+      }
+    },
+    {
+      "name": "Green Valley Drive & Mill Park Drive",
+      "addr": "Green Valley Drive & Mill Park Drive",
+      "lat": 43.4005333,
+      "lng": -80.4321775,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/467837681",
+        "way/467837682"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/467837681",
+        "https://www.openstreetmap.org/way/467837682"
+      ],
+      "id": "route-local-fire-kitchener-fire-6-04",
+      "routeBaseId": "fire-kitchener-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1235.5,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2123,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 143.6,
+        "bestSameServiceCostSeconds": 143.6
+      }
+    },
+    {
+      "name": "Steckle Place & Trillium Drive",
+      "addr": "Steckle Place & Trillium Drive",
+      "lat": 43.4027273,
+      "lng": -80.4601669,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35508165",
+        "way/622368991"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35508165",
+        "https://www.openstreetmap.org/way/622368991"
+      ],
+      "id": "route-local-fire-kitchener-fire-6-05",
+      "routeBaseId": "fire-kitchener-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2600.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 796.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 205.9,
+        "bestSameServiceCostSeconds": 205.9
+      }
+    },
+    {
+      "name": "Doon South Drive & Doon Village Road",
+      "addr": "Doon South Drive & Doon Village Road",
+      "lat": 43.3884228,
+      "lng": -80.4224125,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/30649210",
+        "way/35508482",
+        "way/35527799",
+        "way/616968189"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/30649210",
+        "https://www.openstreetmap.org/way/35508482",
+        "https://www.openstreetmap.org/way/35527799",
+        "https://www.openstreetmap.org/way/616968189"
+      ],
+      "id": "route-local-fire-kitchener-fire-6-06",
+      "routeBaseId": "fire-kitchener-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1723.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 408.3,
+        "decisionKinds": [
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 126.4,
+        "bestSameServiceCostSeconds": 126.4
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "RBJ Schlegel Park",
+      "addr": "1664 Huron Road, Kitchener, ON",
+      "lat": 43.3809356,
+      "lng": -80.4939409,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.kitchener.ca/pools-and-swimming/splashpads/",
+        "https://services1.arcgis.com/qAo1OsXi67t7XgmS/ArcGIS/rest/services/Addresses/FeatureServer/0/query?objectIds=902698&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Ludolph Street",
+        "Shoreacres Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "kitchener-call-08",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-kitchener-fire-7-01",
+      "routeBaseId": "fire-kitchener-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 295.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 489.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 30.7,
+        "bestSameServiceCostSeconds": 30.7
+      }
+    },
+    {
+      "name": "Cranshaw Street & Featherstone Street & Huron Road",
+      "addr": "Cranshaw Street & Featherstone Street & Huron Road",
+      "lat": 43.3876449,
+      "lng": -80.473644,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1416705487",
+        "way/1429162603",
+        "way/35508111",
+        "way/35523637"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1416705487",
+        "https://www.openstreetmap.org/way/1429162603",
+        "https://www.openstreetmap.org/way/35508111",
+        "https://www.openstreetmap.org/way/35523637"
+      ],
+      "id": "route-local-fire-kitchener-fire-7-02",
+      "routeBaseId": "fire-kitchener-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1701.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 414.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 112.6,
+        "bestSameServiceCostSeconds": 112.6
+      }
+    },
+    {
+      "name": "Guernsey Drive & Histand Trail",
+      "addr": "Guernsey Drive & Histand Trail",
+      "lat": 43.3970255,
+      "lng": -80.5006303,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1304563605",
+        "way/483215695"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1304563605",
+        "https://www.openstreetmap.org/way/483215695"
+      ],
+      "id": "route-local-fire-kitchener-fire-7-03",
+      "routeBaseId": "fire-kitchener-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2602.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 730.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 219.7,
+        "bestSameServiceCostSeconds": 219.7
+      }
+    },
+    {
+      "name": "Huron Road & Trussler Road",
+      "addr": "Huron Road & Trussler Road",
+      "lat": 43.3776535,
+      "lng": -80.5154899,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/222409272",
+        "way/42916028",
+        "way/622374548"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/222409272",
+        "https://www.openstreetmap.org/way/42916028",
+        "https://www.openstreetmap.org/way/622374548"
+      ],
+      "id": "route-local-fire-kitchener-fire-7-04",
+      "routeBaseId": "fire-kitchener-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2026.9,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 6405.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 132.2,
+        "bestSameServiceCostSeconds": 132.2
+      }
+    },
+    {
+      "name": "Pompeii Street & Sorrento Street",
+      "addr": "Pompeii Street & Sorrento Street",
+      "lat": 43.3907205,
+      "lng": -80.4830373,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/169194592",
+        "way/169194593"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/169194592",
+        "https://www.openstreetmap.org/way/169194593"
+      ],
+      "id": "route-local-fire-kitchener-fire-7-05",
+      "routeBaseId": "fire-kitchener-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1997.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 303.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 232.5,
+        "bestSameServiceCostSeconds": 232.5
+      }
+    },
+    {
+      "name": "Fischer-Hallman Road & Plains Road",
+      "addr": "Fischer-Hallman Road & Plains Road",
+      "lat": 43.3745953,
+      "lng": -80.4858207,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1226721723",
+        "way/207122822",
+        "way/35512257"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1226721723",
+        "https://www.openstreetmap.org/way/207122822",
+        "https://www.openstreetmap.org/way/35512257"
+      ],
+      "id": "route-local-fire-kitchener-fire-7-06",
+      "routeBaseId": "fire-kitchener-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1124.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 821.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 77.9,
+        "bestSameServiceCostSeconds": 77.9
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Homer Watson House & Gallery",
+      "addr": "1754 Old Mill Road, Kitchener, ON",
+      "lat": 43.3948354,
+      "lng": -80.4185763,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.kitchener.ca/arts-culture-and-events/theatres-museums-and-galleries/",
+        "https://services1.arcgis.com/qAo1OsXi67t7XgmS/ArcGIS/rest/services/Addresses/FeatureServer/0/query?objectIds=928813&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Mill Park Drive",
+        "Roos Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "kitchener-call-20",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-kitchener-ems-doon-01",
+      "routeBaseId": "ems-kitchener-ems-doon",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1329.7,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2965.4,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 216.8,
+        "bestSameServiceCostSeconds": 216.8
+      }
+    },
+    {
+      "name": "Dickie Settlement Road & Highgrove Court",
+      "addr": "Dickie Settlement Road & Highgrove Court",
+      "lat": 43.3825515,
+      "lng": -80.3972154,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1353329235",
+        "way/35504939"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1353329235",
+        "https://www.openstreetmap.org/way/35504939"
+      ],
+      "id": "route-local-ems-kitchener-ems-doon-02",
+      "routeBaseId": "ems-kitchener-ems-doon",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2406.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 9060.7,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 233,
+        "bestSameServiceCostSeconds": 233
+      }
+    },
+    {
+      "name": "Ridgemount Street & Thomas Slee Drive",
+      "addr": "Ridgemount Street & Thomas Slee Drive",
+      "lat": 43.377356,
+      "lng": -80.418345,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35529178",
+        "way/483416918",
+        "way/483416935"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35529178",
+        "https://www.openstreetmap.org/way/483416918",
+        "https://www.openstreetmap.org/way/483416935"
+      ],
+      "id": "route-local-ems-kitchener-ems-doon-03",
+      "routeBaseId": "ems-kitchener-ems-doon",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2596.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1816.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 274,
+        "bestSameServiceCostSeconds": 274
+      }
+    },
+    {
+      "name": "Conestoga College Boulevard & Pinnacle Drive",
+      "addr": "Conestoga College Boulevard & Pinnacle Drive",
+      "lat": 43.385748,
+      "lng": -80.4126015,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/148530531",
+        "way/35505186",
+        "way/38654396",
+        "way/467063471",
+        "way/513630945"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/148530531",
+        "https://www.openstreetmap.org/way/35505186",
+        "https://www.openstreetmap.org/way/38654396",
+        "https://www.openstreetmap.org/way/467063471",
+        "https://www.openstreetmap.org/way/513630945"
+      ],
+      "id": "route-local-ems-kitchener-ems-doon-04",
+      "routeBaseId": "ems-kitchener-ems-doon",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1199.9,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 430.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 162.3,
+        "bestSameServiceCostSeconds": 162.3
+      }
+    },
+    {
+      "name": "Arrowhead Crescent & Arrowhead Place",
+      "addr": "Arrowhead Crescent & Arrowhead Place",
+      "lat": 43.3939751,
+      "lng": -80.4288827,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/30649213",
+        "way/30649214"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/30649213",
+        "https://www.openstreetmap.org/way/30649214"
+      ],
+      "id": "route-local-ems-kitchener-ems-doon-05",
+      "routeBaseId": "ems-kitchener-ems-doon",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2545.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 931,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 330.9,
+        "bestSameServiceCostSeconds": 330.9
+      }
+    },
+    {
+      "name": "Conestoga College Boulevard & New Dundee Road",
+      "addr": "Conestoga College Boulevard & New Dundee Road",
+      "lat": 43.3840752,
+      "lng": -80.4073897,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/477906737",
+        "way/477906738",
+        "way/477906739"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/477906737",
+        "https://www.openstreetmap.org/way/477906738",
+        "https://www.openstreetmap.org/way/477906739"
+      ],
+      "id": "route-local-ems-kitchener-ems-doon-06",
+      "routeBaseId": "ems-kitchener-ems-doon",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1659.9,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 430.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 187.5,
+        "bestSameServiceCostSeconds": 187.5
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Stanley Park Community Centre",
+      "addr": "505 Franklin Street North, Kitchener, ON",
+      "lat": 43.4482469,
+      "lng": -80.4490477,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.kitchener.ca/recreation-and-sports/community-centres/stanley-park-community-centre/",
+        "https://services1.arcgis.com/qAo1OsXi67t7XgmS/ArcGIS/rest/services/Addresses/FeatureServer/0/query?objectIds=906018&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Ottawa Street North",
+        "Dreger Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "kitchener-call-12",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-kitchener-ems-ottawa-01",
+      "routeBaseId": "ems-kitchener-ems-ottawa",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 740.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 359.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 125.1,
+        "bestSameServiceCostSeconds": 125.1
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "The Aud",
+      "addr": "400 East Avenue, Kitchener, ON",
+      "lat": 43.4472379,
+      "lng": -80.4668974,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.kitchener.ca/recreation-and-sports/arenas/the-aud/",
+        "https://services1.arcgis.com/qAo1OsXi67t7XgmS/ArcGIS/rest/services/Addresses/FeatureServer/0/query?objectIds=972403&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Borden Avenue North",
+        "Eugene George Way"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "kitchener-call-02",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-kitchener-ems-ottawa-02",
+      "routeBaseId": "ems-kitchener-ems-ottawa",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2331.6,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1645.9,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 218.9,
+        "bestSameServiceCostSeconds": 218.9
+      }
+    },
+    {
+      "name": "Briarfield Street & Briarmeadow Drive",
+      "addr": "Briarfield Street & Briarmeadow Drive",
+      "lat": 43.440195,
+      "lng": -80.4216684,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35517969",
+        "way/35521367"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35517969",
+        "https://www.openstreetmap.org/way/35521367"
+      ],
+      "id": "route-local-ems-kitchener-ems-ottawa-03",
+      "routeBaseId": "ems-kitchener-ems-ottawa",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2598.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1101.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 273.4,
+        "bestSameServiceCostSeconds": 273.4
+      }
+    },
+    {
+      "name": "Heritage Drive & Oakhurst Crescent",
+      "addr": "Heritage Drive & Oakhurst Crescent",
+      "lat": 43.4603657,
+      "lng": -80.4387559,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/171171090",
+        "way/32943647"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/171171090",
+        "https://www.openstreetmap.org/way/32943647"
+      ],
+      "id": "route-local-ems-kitchener-ems-ottawa-04",
+      "routeBaseId": "ems-kitchener-ems-ottawa",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1743.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 597.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 197.1,
+        "bestSameServiceCostSeconds": 197.1
+      }
+    },
+    {
+      "name": "Emerald Avenue & Weber Street East",
+      "addr": "Emerald Avenue & Weber Street East",
+      "lat": 43.4360681,
+      "lng": -80.4524591,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/37722937",
+        "way/467603721"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/37722937",
+        "https://www.openstreetmap.org/way/467603721"
+      ],
+      "id": "route-local-ems-kitchener-ems-ottawa-05",
+      "routeBaseId": "ems-kitchener-ems-ottawa",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2603.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 758,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 241.1,
+        "bestSameServiceCostSeconds": 241.1
+      }
+    },
+    {
+      "name": "Krug Street & River Road East",
+      "addr": "Krug Street & River Road East",
+      "lat": 43.4588059,
+      "lng": -80.456891,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/189475400",
+        "way/35115715"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/189475400",
+        "https://www.openstreetmap.org/way/35115715"
+      ],
+      "id": "route-local-ems-kitchener-ems-ottawa-06",
+      "routeBaseId": "ems-kitchener-ems-ottawa",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1663.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 437.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 164.9,
+        "bestSameServiceCostSeconds": 164.9
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Forest Heights",
+      "addr": "60 Westheights Drive",
+      "lat": 43.42862639905814,
+      "lng": -80.5299723,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789781"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "1910",
+      "community": "Kitchener",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-1910",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-kitchener-ems-queens-01",
+      "routeBaseId": "ems-kitchener-ems-queens",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 626.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 547.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 108.4,
+        "bestSameServiceCostSeconds": 108.4
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "WRHN @ Queen's Blvd.",
+      "addr": "911 Queens Boulevard, Kitchener, ON",
+      "lat": 43.4379751,
+      "lng": -80.5014668,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.wrhn.ca/patients-visitors/find-a-location",
+        "https://services1.arcgis.com/qAo1OsXi67t7XgmS/ArcGIS/rest/services/Emergency_Services/FeatureServer/0/query?objectIds=11&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Pleasant Avenue",
+        "Barclay Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "kitchener-call-10",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-kitchener-ems-queens-02",
+      "routeBaseId": "ems-kitchener-ems-queens",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2500.1,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1003.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 246,
+        "bestSameServiceCostSeconds": 246
+      }
+    },
+    {
+      "name": "Activa Avenue & Grey Fox Drive & Hackberry Street",
+      "addr": "Activa Avenue & Grey Fox Drive & Hackberry Street",
+      "lat": 43.4130212,
+      "lng": -80.5090011,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/261011871",
+        "way/26935150",
+        "way/30173602",
+        "way/30173609"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/261011871",
+        "https://www.openstreetmap.org/way/26935150",
+        "https://www.openstreetmap.org/way/30173602",
+        "https://www.openstreetmap.org/way/30173609"
+      ],
+      "id": "route-local-ems-kitchener-ems-queens-03",
+      "routeBaseId": "ems-kitchener-ems-queens",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2588.5,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1676.9,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 206.8,
+        "bestSameServiceCostSeconds": 206.8
+      }
+    },
+    {
+      "name": "Royal Orchard Drive & Royal Orchard Place",
+      "addr": "Royal Orchard Drive & Royal Orchard Place",
+      "lat": 43.4155667,
+      "lng": -80.5299649,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/26662868",
+        "way/26944539"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/26662868",
+        "https://www.openstreetmap.org/way/26944539"
+      ],
+      "id": "route-local-ems-kitchener-ems-queens-04",
+      "routeBaseId": "ems-kitchener-ems-queens",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1686.5,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1583.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 200.8,
+        "bestSameServiceCostSeconds": 200.8
+      }
+    },
+    {
+      "name": "Glasgow Street & Northforest Trail",
+      "addr": "Glasgow Street & Northforest Trail",
+      "lat": 43.4420374,
+      "lng": -80.5429539,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1293297061",
+        "way/24159180",
+        "way/26935102"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1293297061",
+        "https://www.openstreetmap.org/way/24159180",
+        "https://www.openstreetmap.org/way/26935102"
+      ],
+      "id": "route-local-ems-kitchener-ems-queens-05",
+      "routeBaseId": "ems-kitchener-ems-queens",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2616.5,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 2013.4,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 211.6,
+        "bestSameServiceCostSeconds": 211.6
+      }
+    },
+    {
+      "name": "Greenbrook Drive & Stonybrook Drive",
+      "addr": "Greenbrook Drive & Stonybrook Drive",
+      "lat": 43.4250821,
+      "lng": -80.5120307,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/27552603",
+        "way/36018410"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/27552603",
+        "https://www.openstreetmap.org/way/36018410"
+      ],
+      "id": "route-local-ems-kitchener-ems-queens-06",
+      "routeBaseId": "ems-kitchener-ems-queens",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1725.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 476.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 186.3,
+        "bestSameServiceCostSeconds": 186.3
+      }
+    }
+  ]
 }

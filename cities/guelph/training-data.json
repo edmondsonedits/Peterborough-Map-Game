@@ -139,5 +139,2530 @@
   ],
   "roadsUrl": "cities/guelph/roads.geojson.gz",
   "roadFeatureCount": 17063,
-  "roadDataSha256": "32b365aef67c63338a61965188d867df3ab66f15fd7f3c699313fdf163f4cb19"
+  "roadDataSha256": "32b365aef67c63338a61965188d867df3ab66f15fd7f3c699313fdf163f4cb19",
+  "routeResponses": {
+    "schemaVersion": 1,
+    "minCallsPerBase": 3,
+    "targetCallsPerBase": 6,
+    "generatedOn": "2026-10-17",
+    "model": {
+      "description": "Published first-due polygons where available. Otherwise a directed road-network estimate using road class travel cost from every same-service hall; allows a15second cost tie for overlapping nearby halls. This is training geography, not live dispatch advice.",
+      "ownershipToleranceSeconds": 15,
+      "maximumCandidateRouteMetres": 12000
+    },
+    "bases": [
+      {
+        "baseId": "fire-guelph-fire-1",
+        "service": "fire",
+        "number": 1,
+        "name": "Guelph Fire Station 1",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6100,
+        "access": {
+          "lat": 43.54366149100675,
+          "lng": -80.2438786201459,
+          "road": "Unnamed road",
+          "gapMetres": 26.9
+        },
+        "callIds": [
+          "route-local-fire-guelph-fire-1-01",
+          "route-local-fire-guelph-fire-1-02",
+          "route-local-fire-guelph-fire-1-03",
+          "route-local-fire-guelph-fire-1-04",
+          "route-local-fire-guelph-fire-1-05",
+          "route-local-fire-guelph-fire-1-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-guelph-fire-2",
+        "service": "fire",
+        "number": 2,
+        "name": "Guelph Fire Station 2",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.5604143,
+          "lng": -80.2658706,
+          "road": "Unnamed road",
+          "gapMetres": 15.1
+        },
+        "callIds": [
+          "route-local-fire-guelph-fire-2-01",
+          "route-local-fire-guelph-fire-2-02",
+          "route-local-fire-guelph-fire-2-03",
+          "route-local-fire-guelph-fire-2-04",
+          "route-local-fire-guelph-fire-2-05",
+          "route-local-fire-guelph-fire-2-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-guelph-fire-3",
+        "service": "fire",
+        "number": 3,
+        "name": "Guelph Fire Station 3",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.523538556936145,
+          "lng": -80.22962254633637,
+          "road": "Chancellors Way",
+          "gapMetres": 27.5
+        },
+        "callIds": [
+          "route-local-fire-guelph-fire-3-01",
+          "route-local-fire-guelph-fire-3-02",
+          "route-local-fire-guelph-fire-3-03",
+          "route-local-fire-guelph-fire-3-04",
+          "route-local-fire-guelph-fire-3-05",
+          "route-local-fire-guelph-fire-3-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-guelph-fire-4",
+        "service": "fire",
+        "number": 4,
+        "name": "Guelph Fire Station 4",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6100,
+        "access": {
+          "lat": 43.52465057143598,
+          "lng": -80.29155757552522,
+          "road": "Unnamed road",
+          "gapMetres": 13.3
+        },
+        "callIds": [
+          "route-local-fire-guelph-fire-4-01",
+          "route-local-fire-guelph-fire-4-02",
+          "route-local-fire-guelph-fire-4-03",
+          "route-local-fire-guelph-fire-4-04",
+          "route-local-fire-guelph-fire-4-05",
+          "route-local-fire-guelph-fire-4-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-guelph-fire-5",
+        "service": "fire",
+        "number": 5,
+        "name": "Guelph Fire Station 5",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.55582935313152,
+          "lng": -80.22842367505838,
+          "road": "Unnamed road",
+          "gapMetres": 6.1
+        },
+        "callIds": [
+          "route-local-fire-guelph-fire-5-01",
+          "route-local-fire-guelph-fire-5-02",
+          "route-local-fire-guelph-fire-5-03",
+          "route-local-fire-guelph-fire-5-04",
+          "route-local-fire-guelph-fire-5-05",
+          "route-local-fire-guelph-fire-5-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-guelph-fire-6",
+        "service": "fire",
+        "number": 6,
+        "name": "Guelph Fire Station 6",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.496314330399635,
+          "lng": -80.19339357054037,
+          "road": "Unnamed road",
+          "gapMetres": 23.8
+        },
+        "callIds": [
+          "route-local-fire-guelph-fire-6-01",
+          "route-local-fire-guelph-fire-6-02",
+          "route-local-fire-guelph-fire-6-03",
+          "route-local-fire-guelph-fire-6-04",
+          "route-local-fire-guelph-fire-6-05",
+          "route-local-fire-guelph-fire-6-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-guelph-ems-0",
+        "service": "ems",
+        "number": 10000,
+        "name": "Guelph Paramedic Base 0",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.534483820715934,
+          "lng": -80.304790453349,
+          "road": "Unnamed road",
+          "gapMetres": 18.1
+        },
+        "callIds": [
+          "route-local-ems-guelph-ems-0-01",
+          "route-local-ems-guelph-ems-0-02",
+          "route-local-ems-guelph-ems-0-03",
+          "route-local-ems-guelph-ems-0-04",
+          "route-local-ems-guelph-ems-0-05",
+          "route-local-ems-guelph-ems-0-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-guelph-ems-3",
+        "service": "ems",
+        "number": 10002,
+        "name": "Guelph Paramedic Base 3",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.49642466897445,
+          "lng": -80.19356709368529,
+          "road": "Unnamed road",
+          "gapMetres": 2
+        },
+        "callIds": [
+          "route-local-ems-guelph-ems-3-01",
+          "route-local-ems-guelph-ems-3-02",
+          "route-local-ems-guelph-ems-3-03",
+          "route-local-ems-guelph-ems-3-04",
+          "route-local-ems-guelph-ems-3-05",
+          "route-local-ems-guelph-ems-3-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-guelph-ems-12",
+        "service": "ems",
+        "number": 10001,
+        "name": "Guelph Paramedic Base 12",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.54173495087598,
+          "lng": -80.24678878856369,
+          "road": "Unnamed road",
+          "gapMetres": 6.4
+        },
+        "callIds": [
+          "route-local-ems-guelph-ems-12-01",
+          "route-local-ems-guelph-ems-12-02",
+          "route-local-ems-guelph-ems-12-03",
+          "route-local-ems-guelph-ems-12-04",
+          "route-local-ems-guelph-ems-12-05",
+          "route-local-ems-guelph-ems-12-06"
+        ],
+        "challengeCalls": 6
+      }
+    ]
+  },
+  "routeCalls": [
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Guelph Civic Museum",
+      "addr": "52 Norfolk Street, Guelph, ON",
+      "lat": 43.5436831,
+      "lng": -80.2514959,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://guelph.ca/living/recreation/rec-facilities/guelph-civic-museum/",
+        "https://gismaps.guelph.ca/hosting/rest/services/OpenData/OpenData1/FeatureServer/32/query?objectIds=16&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Cork Street East",
+        "Cork Street West"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "guelph-call-06",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-guelph-fire-1-01",
+      "routeBaseId": "fire-guelph-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 926.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 316.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 110.5,
+        "bestSameServiceCostSeconds": 110.5
+      }
+    },
+    {
+      "name": "Caledonia Street & University Avenue West",
+      "addr": "Caledonia Street & University Avenue West",
+      "lat": 43.5309518,
+      "lng": -80.2385702,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35511824",
+        "way/35513940",
+        "way/35525390",
+        "way/35528284"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35511824",
+        "https://www.openstreetmap.org/way/35513940",
+        "https://www.openstreetmap.org/way/35525390",
+        "https://www.openstreetmap.org/way/35528284"
+      ],
+      "id": "route-local-fire-guelph-fire-1-02",
+      "routeBaseId": "fire-guelph-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1954.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1275.3,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 170.4,
+        "bestSameServiceCostSeconds": 158.2
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Goldie Park",
+      "addr": "63 Memorial Crescent, Guelph, ON",
+      "lat": 43.5356797,
+      "lng": -80.2658815,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://guelph.ca/living/recreation/parks/basketball/",
+        "https://gismaps.guelph.ca/hosting/rest/services/OpenData/OpenData1/FeatureServer/0/query?objectIds=20946&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Goldie Avenue",
+        "Paisley Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "guelph-call-19",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-guelph-fire-1-03",
+      "routeBaseId": "fire-guelph-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2719.2,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1308.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 212.4,
+        "bestSameServiceCostSeconds": 212.4
+      }
+    },
+    {
+      "name": "Beverley Street & Harris Street",
+      "addr": "Beverley Street & Harris Street",
+      "lat": 43.5486156,
+      "lng": -80.2316932,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35505526",
+        "way/35519821",
+        "way/35524022",
+        "way/35524749"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35505526",
+        "https://www.openstreetmap.org/way/35519821",
+        "https://www.openstreetmap.org/way/35524022",
+        "https://www.openstreetmap.org/way/35524749"
+      ],
+      "id": "route-local-fire-guelph-fire-1-04",
+      "routeBaseId": "fire-guelph-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1450,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 338.7,
+        "decisionKinds": [
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 124.9,
+        "bestSameServiceCostSeconds": 117.7
+      }
+    },
+    {
+      "name": "Cadillac Drive & Metcalfe Street",
+      "addr": "Cadillac Drive & Metcalfe Street",
+      "lat": 43.5563024,
+      "lng": -80.2484013,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35523567",
+        "way/35523799",
+        "way/35529167"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35523567",
+        "https://www.openstreetmap.org/way/35523799",
+        "https://www.openstreetmap.org/way/35529167"
+      ],
+      "id": "route-local-fire-guelph-fire-1-05",
+      "routeBaseId": "fire-guelph-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1949.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 407.1,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 168.9,
+        "bestSameServiceCostSeconds": 156.3
+      }
+    },
+    {
+      "name": "Harrison Avenue & Sydenham Street",
+      "addr": "Harrison Avenue & Sydenham Street",
+      "lat": 43.5403847,
+      "lng": -80.2593263,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/26661394",
+        "way/38864506"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/26661394",
+        "https://www.openstreetmap.org/way/38864506"
+      ],
+      "id": "route-local-fire-guelph-fire-1-06",
+      "routeBaseId": "fire-guelph-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1706.8,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1470.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 157.9,
+        "bestSameServiceCostSeconds": 157.9
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Riverside Park",
+      "addr": "709 Woolwich Street, Guelph, ON",
+      "lat": 43.562086,
+      "lng": -80.2712133,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://guelph.ca/living/arts-and-culture/public-art/public-art-collection/carousel-mural/",
+        "https://gismaps.guelph.ca/hosting/rest/services/OpenData/OpenData1/FeatureServer/0/query?objectIds=10247&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Marilyn Drive",
+        "Gemmel Lane"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "guelph-call-07",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-guelph-fire-2-01",
+      "routeBaseId": "fire-guelph-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 840.7,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 2797.4,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 103.7,
+        "bestSameServiceCostSeconds": 103.7
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Guelph Public Library – Bullfrog Mall Branch",
+      "addr": "380 Eramosa Road, Guelph, ON",
+      "lat": 43.5624525,
+      "lng": -80.2490646,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://guelph.ca/contact/",
+        "https://gismaps.guelph.ca/hosting/rest/services/OpenData/OpenData1/FeatureServer/32/query?objectIds=21&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Meyer Drive",
+        "Stevenson Street North"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "guelph-call-14",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-guelph-fire-2-02",
+      "routeBaseId": "fire-guelph-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1936.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1906.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 149.2,
+        "bestSameServiceCostSeconds": 149.2
+      }
+    },
+    {
+      "name": "Edinburgh Road North & Mercer Street",
+      "addr": "Edinburgh Road North & Mercer Street",
+      "lat": 43.5428126,
+      "lng": -80.2653983,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1028468505",
+        "way/35524155",
+        "way/834526297"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1028468505",
+        "https://www.openstreetmap.org/way/35524155",
+        "https://www.openstreetmap.org/way/834526297"
+      ],
+      "id": "route-local-fire-guelph-fire-2-03",
+      "routeBaseId": "fire-guelph-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2606.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1191,
+        "decisionKinds": [
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 173.2,
+        "bestSameServiceCostSeconds": 165.3
+      }
+    },
+    {
+      "name": "Dawson Road & Speedvale Avenue West",
+      "addr": "Dawson Road & Speedvale Avenue West",
+      "lat": 43.5498919,
+      "lng": -80.2799629,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1086983382",
+        "way/1086983383",
+        "way/477649683",
+        "way/978014717"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1086983382",
+        "https://www.openstreetmap.org/way/1086983383",
+        "https://www.openstreetmap.org/way/477649683",
+        "https://www.openstreetmap.org/way/978014717"
+      ],
+      "id": "route-local-fire-guelph-fire-2-04",
+      "routeBaseId": "fire-guelph-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1648.7,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 3107.6,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 105,
+        "bestSameServiceCostSeconds": 105
+      }
+    },
+    {
+      "name": "Algoma Drive & Montana Road",
+      "addr": "Algoma Drive & Montana Road",
+      "lat": 43.5781476,
+      "lng": -80.2569093,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35508846",
+        "way/35513757"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35508846",
+        "https://www.openstreetmap.org/way/35513757"
+      ],
+      "id": "route-local-fire-guelph-fire-2-05",
+      "routeBaseId": "fire-guelph-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2630.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1000.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 214.5,
+        "bestSameServiceCostSeconds": 214.5
+      }
+    },
+    {
+      "name": "Dalebrook Place & Golfview Road",
+      "addr": "Dalebrook Place & Golfview Road",
+      "lat": 43.573604,
+      "lng": -80.2683372,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35511571",
+        "way/35518421",
+        "way/35528721"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35511571",
+        "https://www.openstreetmap.org/way/35518421",
+        "https://www.openstreetmap.org/way/35528721"
+      ],
+      "id": "route-local-fire-guelph-fire-2-06",
+      "routeBaseId": "fire-guelph-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1672.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1303.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 186.4,
+        "bestSameServiceCostSeconds": 186.4
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "University of Guelph – University Centre",
+      "addr": "50 Stone Road East, Guelph, ON",
+      "lat": 43.5309,
+      "lng": -80.2285,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.uoguelph.ca/admission/undergraduate/tours/parking-directions-accommodation",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Evergreen Drive",
+        "University Circle"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "guelph-call-02",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-guelph-fire-3-01",
+      "routeBaseId": "fire-guelph-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1285.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 546,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Chancellors Way",
+        "estimatedCostSeconds": 123.5,
+        "bestSameServiceCostSeconds": 123.5
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Hanlon Creek Park",
+      "addr": "505 Kortright Road West, Guelph, ON",
+      "lat": 43.5111488,
+      "lng": -80.2267419,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://guelph.ca/living/getting-around/bus/schedules/routes-service-recreation-culture-leisure-facilities/",
+        "https://gismaps.guelph.ca/hosting/rest/services/OpenData/OpenData1/FeatureServer/0/query?objectIds=27207&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Scottsdale Drive",
+        "Ironwood Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "guelph-call-15",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-guelph-fire-3-02",
+      "routeBaseId": "fire-guelph-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2497.7,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 474.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Chancellors Way",
+        "estimatedCostSeconds": 166.1,
+        "bestSameServiceCostSeconds": 166.1
+      }
+    },
+    {
+      "name": "Marsland Court & Robin Road",
+      "addr": "Marsland Court & Robin Road",
+      "lat": 43.5235513,
+      "lng": -80.2040629,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1469335188",
+        "way/35519449",
+        "way/35522603"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1469335188",
+        "https://www.openstreetmap.org/way/35519449",
+        "https://www.openstreetmap.org/way/35522603"
+      ],
+      "id": "route-local-fire-guelph-fire-3-03",
+      "routeBaseId": "fire-guelph-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2601.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 367.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Chancellors Way",
+        "estimatedCostSeconds": 248,
+        "bestSameServiceCostSeconds": 248
+      }
+    },
+    {
+      "name": "College Avenue & Scottsdale Drive",
+      "addr": "College Avenue & Scottsdale Drive",
+      "lat": 43.5235985,
+      "lng": -80.2441674,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33067028",
+        "way/38896850",
+        "way/632746860"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33067028",
+        "https://www.openstreetmap.org/way/38896850",
+        "https://www.openstreetmap.org/way/632746860"
+      ],
+      "id": "route-local-fire-guelph-fire-3-04",
+      "routeBaseId": "fire-guelph-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1666.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 760.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Chancellors Way",
+        "estimatedCostSeconds": 109.1,
+        "bestSameServiceCostSeconds": 109.1
+      }
+    },
+    {
+      "name": "College Avenue West & Mayfair Court",
+      "addr": "College Avenue West & Mayfair Court",
+      "lat": 43.5109811,
+      "lng": -80.251785,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35504060",
+        "way/35531744"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35504060",
+        "https://www.openstreetmap.org/way/35531744"
+      ],
+      "id": "route-local-fire-guelph-fire-3-05",
+      "routeBaseId": "fire-guelph-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2606,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 474.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Chancellors Way",
+        "estimatedCostSeconds": 166.8,
+        "bestSameServiceCostSeconds": 166.8
+      }
+    },
+    {
+      "name": "Oakdale Drive & Stone Road East",
+      "addr": "Oakdale Drive & Stone Road East",
+      "lat": 43.5335781,
+      "lng": -80.2154603,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1069107800",
+        "way/38865244"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1069107800",
+        "https://www.openstreetmap.org/way/38865244"
+      ],
+      "id": "route-local-fire-guelph-fire-3-06",
+      "routeBaseId": "fire-guelph-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1676.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 330.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Chancellors Way",
+        "estimatedCostSeconds": 105.4,
+        "bestSameServiceCostSeconds": 105.4
+      }
+    },
+    {
+      "name": "Flaherty Drive & Willow Road",
+      "addr": "Flaherty Drive & Willow Road",
+      "lat": 43.5274784,
+      "lng": -80.2967816,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25313614",
+        "way/919613768"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25313614",
+        "https://www.openstreetmap.org/way/919613768"
+      ],
+      "id": "route-local-fire-guelph-fire-4-01",
+      "routeBaseId": "fire-guelph-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1217,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 588.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 196.4,
+        "bestSameServiceCostSeconds": 196.4
+      }
+    },
+    {
+      "name": "Imperial Road South & West Acres Drive",
+      "addr": "Imperial Road South & West Acres Drive",
+      "lat": 43.5221886,
+      "lng": -80.2734255,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1198115875",
+        "way/35504315",
+        "way/35509819"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1198115875",
+        "https://www.openstreetmap.org/way/35504315",
+        "https://www.openstreetmap.org/way/35509819"
+      ],
+      "id": "route-local-fire-guelph-fire-4-02",
+      "routeBaseId": "fire-guelph-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1711.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 2103.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 236,
+        "bestSameServiceCostSeconds": 224.5
+      }
+    },
+    {
+      "name": "Gregory Place & Rhonda Road",
+      "addr": "Gregory Place & Rhonda Road",
+      "lat": 43.5342544,
+      "lng": -80.2800805,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25372311",
+        "way/495618882"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25372311",
+        "https://www.openstreetmap.org/way/495618882"
+      ],
+      "id": "route-local-fire-guelph-fire-4-03",
+      "routeBaseId": "fire-guelph-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2183.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1147.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 303.8,
+        "bestSameServiceCostSeconds": 292.2
+      }
+    },
+    {
+      "name": "Shoemaker Crescent & Whitelaw Road",
+      "addr": "Shoemaker Crescent & Whitelaw Road",
+      "lat": 43.5173848,
+      "lng": -80.2853832,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35503026",
+        "way/35530974"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35503026",
+        "https://www.openstreetmap.org/way/35530974"
+      ],
+      "id": "route-local-fire-guelph-fire-4-04",
+      "routeBaseId": "fire-guelph-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1627.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1302.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 227.2,
+        "bestSameServiceCostSeconds": 227.2
+      }
+    },
+    {
+      "name": "Elmira Road North & Massey Road",
+      "addr": "Elmira Road North & Massey Road",
+      "lat": 43.53507,
+      "lng": -80.3096294,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35511588",
+        "way/35529430",
+        "way/919622153",
+        "way/922742885"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35511588",
+        "https://www.openstreetmap.org/way/35529430",
+        "https://www.openstreetmap.org/way/919622153",
+        "https://www.openstreetmap.org/way/922742885"
+      ],
+      "id": "route-local-fire-guelph-fire-4-05",
+      "routeBaseId": "fire-guelph-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2703.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 651.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 289.3,
+        "bestSameServiceCostSeconds": 289.3
+      }
+    },
+    {
+      "name": "Grandridge Crescent & Stephen Drive",
+      "addr": "Grandridge Crescent & Stephen Drive",
+      "lat": 43.5361044,
+      "lng": -80.2922677,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25339068",
+        "way/25339069"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25339068",
+        "https://www.openstreetmap.org/way/25339069"
+      ],
+      "id": "route-local-fire-guelph-fire-4-06",
+      "routeBaseId": "fire-guelph-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1842.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1437.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 258.1,
+        "bestSameServiceCostSeconds": 258.1
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Victoria Road Recreation Centre",
+      "addr": "151 Victoria Road North, Guelph, ON",
+      "lat": 43.5640279,
+      "lng": -80.2383289,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://guelph.ca/living/getting-around/bus/schedules/routes-service-recreation-culture-leisure-facilities/",
+        "https://gismaps.guelph.ca/hosting/rest/services/OpenData/OpenData1/FeatureServer/32/query?objectIds=17&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Brunswick Lane",
+        "Hadati Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "guelph-call-09",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-guelph-fire-5-01",
+      "routeBaseId": "fire-guelph-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1426.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1287.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 145.7,
+        "bestSameServiceCostSeconds": 145.7
+      }
+    },
+    {
+      "name": "College Avenue East & Victoria Road South",
+      "addr": "College Avenue East & Victoria Road South",
+      "lat": 43.5453449,
+      "lng": -80.2146955,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1317619512",
+        "way/1534087185",
+        "way/35512607"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1317619512",
+        "https://www.openstreetmap.org/way/1534087185",
+        "https://www.openstreetmap.org/way/35512607"
+      ],
+      "id": "route-local-fire-guelph-fire-5-02",
+      "routeBaseId": "fire-guelph-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1701.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 4111.6,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 117.6,
+        "bestSameServiceCostSeconds": 117.6
+      }
+    },
+    {
+      "name": "Law Drive & Swan Drive",
+      "addr": "Law Drive & Swan Drive",
+      "lat": 43.5671033,
+      "lng": -80.2125705,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/481235811",
+        "way/481235814"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/481235811",
+        "https://www.openstreetmap.org/way/481235814"
+      ],
+      "id": "route-local-fire-guelph-fire-5-03",
+      "routeBaseId": "fire-guelph-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2595.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1288,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 202.1,
+        "bestSameServiceCostSeconds": 202.1
+      }
+    },
+    {
+      "name": "Alice Street & Huron Street",
+      "addr": "Alice Street & Huron Street",
+      "lat": 43.5475994,
+      "lng": -80.2361094,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33066948",
+        "way/33066953",
+        "way/35518352",
+        "way/35522373"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33066948",
+        "https://www.openstreetmap.org/way/33066953",
+        "https://www.openstreetmap.org/way/35518352",
+        "https://www.openstreetmap.org/way/35522373"
+      ],
+      "id": "route-local-fire-guelph-fire-5-04",
+      "routeBaseId": "fire-guelph-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1524.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 527.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 138.1,
+        "bestSameServiceCostSeconds": 138.1
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Carter Park",
+      "addr": "1 Fletcher Court, Guelph, ON",
+      "lat": 43.5697662,
+      "lng": -80.2426119,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://guelph.ca/living/recreation/parks/basketball/",
+        "https://gismaps.guelph.ca/hosting/rest/services/OpenData/OpenData1/FeatureServer/0/query?objectIds=36098&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Cheltonwood Avenue",
+        "Carter Drive (via Cheltonwood Avenue)"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "guelph-call-16",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-guelph-fire-5-05",
+      "routeBaseId": "fire-guelph-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2343.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1287.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 221.1,
+        "bestSameServiceCostSeconds": 219.5
+      }
+    },
+    {
+      "name": "Kearney Street & Raspberry Lane",
+      "addr": "Kearney Street & Raspberry Lane",
+      "lat": 43.5653228,
+      "lng": -80.2252579,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35532228",
+        "way/35532725",
+        "way/35533567"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35532228",
+        "https://www.openstreetmap.org/way/35532725",
+        "https://www.openstreetmap.org/way/35533567"
+      ],
+      "id": "route-local-fire-guelph-fire-5-06",
+      "routeBaseId": "fire-guelph-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1699.7,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1521,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 143,
+        "bestSameServiceCostSeconds": 143
+      }
+    },
+    {
+      "name": "Gordon Street & Poppy Drive East & Poppy Drive West",
+      "addr": "Gordon Street & Poppy Drive East & Poppy Drive West",
+      "lat": 43.499171,
+      "lng": -80.1874164,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1041796363",
+        "way/336931434",
+        "way/339746625",
+        "way/422127519",
+        "way/975141918"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1041796363",
+        "https://www.openstreetmap.org/way/336931434",
+        "https://www.openstreetmap.org/way/339746625",
+        "https://www.openstreetmap.org/way/422127519",
+        "https://www.openstreetmap.org/way/975141918"
+      ],
+      "id": "route-local-fire-guelph-fire-6-01",
+      "routeBaseId": "fire-guelph-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 799.9,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 790.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 71.6,
+        "bestSameServiceCostSeconds": 71.6
+      }
+    },
+    {
+      "name": "Corporate Court & Southgate Drive",
+      "addr": "Corporate Court & Southgate Drive",
+      "lat": 43.492106,
+      "lng": -80.2084101,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35517159",
+        "way/35523654",
+        "way/35532205"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35517159",
+        "https://www.openstreetmap.org/way/35523654",
+        "https://www.openstreetmap.org/way/35532205"
+      ],
+      "id": "route-local-fire-guelph-fire-6-02",
+      "routeBaseId": "fire-guelph-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1663.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 6605.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 131.8,
+        "bestSameServiceCostSeconds": 131.8
+      }
+    },
+    {
+      "name": "Arkell Road & Malvern Crescent",
+      "addr": "Arkell Road & Malvern Crescent",
+      "lat": 43.5154656,
+      "lng": -80.1971019,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35505942",
+        "way/35513104"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35505942",
+        "https://www.openstreetmap.org/way/35513104"
+      ],
+      "id": "route-local-fire-guelph-fire-6-03",
+      "routeBaseId": "fire-guelph-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2660.4,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 510,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 183.2,
+        "bestSameServiceCostSeconds": 183.2
+      }
+    },
+    {
+      "name": "Clairfields Drive West & Keys Crescent",
+      "addr": "Clairfields Drive West & Keys Crescent",
+      "lat": 43.5004966,
+      "lng": -80.1995982,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/145332940",
+        "way/35504041",
+        "way/35534107"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/145332940",
+        "https://www.openstreetmap.org/way/35504041",
+        "https://www.openstreetmap.org/way/35534107"
+      ],
+      "id": "route-local-fire-guelph-fire-6-04",
+      "routeBaseId": "fire-guelph-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 971.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1018.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 141.1,
+        "bestSameServiceCostSeconds": 141.1
+      }
+    },
+    {
+      "name": "Arlington Crescent & Hodgson Drive",
+      "addr": "Arlington Crescent & Hodgson Drive",
+      "lat": 43.5123408,
+      "lng": -80.174917,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/287909329",
+        "way/339515331"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/287909329",
+        "https://www.openstreetmap.org/way/339515331"
+      ],
+      "id": "route-local-fire-guelph-fire-6-05",
+      "routeBaseId": "fire-guelph-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2621.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 790.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 214.9,
+        "bestSameServiceCostSeconds": 214.9
+      }
+    },
+    {
+      "name": "Evans Drive & Porter Court",
+      "addr": "Evans Drive & Porter Court",
+      "lat": 43.5073602,
+      "lng": -80.1905452,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35503853",
+        "way/35504567"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35503853",
+        "https://www.openstreetmap.org/way/35504567"
+      ],
+      "id": "route-local-fire-guelph-fire-6-06",
+      "routeBaseId": "fire-guelph-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1687.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 610.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 175.4,
+        "bestSameServiceCostSeconds": 175.4
+      }
+    },
+    {
+      "name": "Flaherty Drive & Thornhill Drive",
+      "addr": "Flaherty Drive & Thornhill Drive",
+      "lat": 43.5310257,
+      "lng": -80.3015081,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25313609",
+        "way/25313614"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25313609",
+        "https://www.openstreetmap.org/way/25313614"
+      ],
+      "id": "route-local-ems-guelph-ems-0-01",
+      "routeBaseId": "ems-guelph-ems-0",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 805.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2414.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 137.6,
+        "bestSameServiceCostSeconds": 137.6
+      }
+    },
+    {
+      "name": "Cope Court & Wilbert Street",
+      "addr": "Cope Court & Wilbert Street",
+      "lat": 43.543341,
+      "lng": -80.3157472,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/27274560",
+        "way/27274561"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/27274560",
+        "https://www.openstreetmap.org/way/27274561"
+      ],
+      "id": "route-local-ems-guelph-ems-0-02",
+      "routeBaseId": "ems-guelph-ems-0",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1867.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 198.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 210.9,
+        "bestSameServiceCostSeconds": 210.9
+      }
+    },
+    {
+      "name": "Elmira Road South & Freshmeadow Way",
+      "addr": "Elmira Road South & Freshmeadow Way",
+      "lat": 43.5199362,
+      "lng": -80.2847037,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35521333",
+        "way/35529963"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35521333",
+        "https://www.openstreetmap.org/way/35529963"
+      ],
+      "id": "route-local-ems-guelph-ems-0-03",
+      "routeBaseId": "ems-guelph-ems-0",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2554.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1982.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 234.5,
+        "bestSameServiceCostSeconds": 234.5
+      }
+    },
+    {
+      "name": "Imperial Road North & Massey Road",
+      "addr": "Imperial Road North & Massey Road",
+      "lat": 43.5407526,
+      "lng": -80.3018941,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35518806",
+        "way/35529430",
+        "way/38864156",
+        "way/38864169"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35518806",
+        "https://www.openstreetmap.org/way/35529430",
+        "https://www.openstreetmap.org/way/38864156",
+        "https://www.openstreetmap.org/way/38864169"
+      ],
+      "id": "route-local-ems-guelph-ems-0-04",
+      "routeBaseId": "ems-guelph-ems-0",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1459.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 535,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 194.9,
+        "bestSameServiceCostSeconds": 194.9
+      }
+    },
+    {
+      "name": "Marksam Road & Rhonda Road",
+      "addr": "Marksam Road & Rhonda Road",
+      "lat": 43.5345381,
+      "lng": -80.2841,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25372311",
+        "way/464459160"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25372311",
+        "https://www.openstreetmap.org/way/464459160"
+      ],
+      "id": "route-local-ems-guelph-ems-0-05",
+      "routeBaseId": "ems-guelph-ems-0",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2628.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 684,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 262.3,
+        "bestSameServiceCostSeconds": 262.3
+      }
+    },
+    {
+      "name": "Michener Road & Woodlawn Road West",
+      "addr": "Michener Road & Woodlawn Road West",
+      "lat": 43.534388,
+      "lng": -80.3196461,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35504465",
+        "way/35528092",
+        "way/464460770"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35504465",
+        "https://www.openstreetmap.org/way/35528092",
+        "https://www.openstreetmap.org/way/464460770"
+      ],
+      "id": "route-local-ems-guelph-ems-0-06",
+      "routeBaseId": "ems-guelph-ems-0",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1703.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 198.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 167.8,
+        "bestSameServiceCostSeconds": 167.8
+      }
+    },
+    {
+      "name": "Gordon Street & Poppy Drive East & Poppy Drive West",
+      "addr": "Gordon Street & Poppy Drive East & Poppy Drive West",
+      "lat": 43.499171,
+      "lng": -80.1874164,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1041796363",
+        "way/336931434",
+        "way/339746625",
+        "way/422127519",
+        "way/975141918"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1041796363",
+        "https://www.openstreetmap.org/way/336931434",
+        "https://www.openstreetmap.org/way/339746625",
+        "https://www.openstreetmap.org/way/422127519",
+        "https://www.openstreetmap.org/way/975141918"
+      ],
+      "id": "route-local-ems-guelph-ems-3-01",
+      "routeBaseId": "ems-guelph-ems-3",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 794.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 790.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 65,
+        "bestSameServiceCostSeconds": 65
+      }
+    },
+    {
+      "name": "Corporate Court & Southgate Drive",
+      "addr": "Corporate Court & Southgate Drive",
+      "lat": 43.492106,
+      "lng": -80.2084101,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35517159",
+        "way/35523654",
+        "way/35532205"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35517159",
+        "https://www.openstreetmap.org/way/35523654",
+        "https://www.openstreetmap.org/way/35532205"
+      ],
+      "id": "route-local-ems-guelph-ems-3-02",
+      "routeBaseId": "ems-guelph-ems-3",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1645.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 6605.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 125.2,
+        "bestSameServiceCostSeconds": 125.2
+      }
+    },
+    {
+      "name": "Arkell Road & Malvern Crescent",
+      "addr": "Arkell Road & Malvern Crescent",
+      "lat": 43.5154656,
+      "lng": -80.1971019,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35505942",
+        "way/35513104"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35505942",
+        "https://www.openstreetmap.org/way/35513104"
+      ],
+      "id": "route-local-ems-guelph-ems-3-03",
+      "routeBaseId": "ems-guelph-ems-3",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2655.2,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 510,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 176.6,
+        "bestSameServiceCostSeconds": 176.6
+      }
+    },
+    {
+      "name": "Clairfields Drive West & Keys Crescent",
+      "addr": "Clairfields Drive West & Keys Crescent",
+      "lat": 43.5004966,
+      "lng": -80.1995982,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/145332940",
+        "way/35504041",
+        "way/35534107"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/145332940",
+        "https://www.openstreetmap.org/way/35504041",
+        "https://www.openstreetmap.org/way/35534107"
+      ],
+      "id": "route-local-ems-guelph-ems-3-04",
+      "routeBaseId": "ems-guelph-ems-3",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 953.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1018.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 134.4,
+        "bestSameServiceCostSeconds": 134.4
+      }
+    },
+    {
+      "name": "Arlington Crescent & Hodgson Drive",
+      "addr": "Arlington Crescent & Hodgson Drive",
+      "lat": 43.5123408,
+      "lng": -80.174917,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/287909329",
+        "way/339515331"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/287909329",
+        "https://www.openstreetmap.org/way/339515331"
+      ],
+      "id": "route-local-ems-guelph-ems-3-05",
+      "routeBaseId": "ems-guelph-ems-3",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2616.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 790.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 208.3,
+        "bestSameServiceCostSeconds": 208.3
+      }
+    },
+    {
+      "name": "Evans Drive & Porter Court",
+      "addr": "Evans Drive & Porter Court",
+      "lat": 43.5073602,
+      "lng": -80.1905452,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35503853",
+        "way/35504567"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35503853",
+        "https://www.openstreetmap.org/way/35504567"
+      ],
+      "id": "route-local-ems-guelph-ems-3-06",
+      "routeBaseId": "ems-guelph-ems-3",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1682.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 610.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 168.8,
+        "bestSameServiceCostSeconds": 168.8
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Guelph Civic Museum",
+      "addr": "52 Norfolk Street, Guelph, ON",
+      "lat": 43.5436831,
+      "lng": -80.2514959,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://guelph.ca/living/recreation/rec-facilities/guelph-civic-museum/",
+        "https://gismaps.guelph.ca/hosting/rest/services/OpenData/OpenData1/FeatureServer/32/query?objectIds=16&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Cork Street East",
+        "Cork Street West"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "guelph-call-06",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-guelph-ems-12-01",
+      "routeBaseId": "ems-guelph-ems-12",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 638.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 567.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 72.6,
+        "bestSameServiceCostSeconds": 72.6
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "University of Guelph – University Centre",
+      "addr": "50 Stone Road East, Guelph, ON",
+      "lat": 43.5309,
+      "lng": -80.2285,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.uoguelph.ca/admission/undergraduate/tours/parking-directions-accommodation",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Evergreen Drive",
+        "University Circle"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "guelph-call-02",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-guelph-ems-12-02",
+      "routeBaseId": "ems-guelph-ems-12",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2050.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2333.8,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 171.8,
+        "bestSameServiceCostSeconds": 171.8
+      }
+    },
+    {
+      "name": "Audrey Avenue & Florence Lane",
+      "addr": "Audrey Avenue & Florence Lane",
+      "lat": 43.5494882,
+      "lng": -80.2233252,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1231621908",
+        "way/35503903",
+        "way/35519466"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1231621908",
+        "https://www.openstreetmap.org/way/35503903",
+        "https://www.openstreetmap.org/way/35519466"
+      ],
+      "id": "route-local-ems-guelph-ems-12-03",
+      "routeBaseId": "ems-guelph-ems-12",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2564.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 218.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 162.4,
+        "bestSameServiceCostSeconds": 162.4
+      }
+    },
+    {
+      "name": "Cedar Street & High Park Drive",
+      "addr": "Cedar Street & High Park Drive",
+      "lat": 43.5319714,
+      "lng": -80.2493203,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35514370",
+        "way/35520770",
+        "way/35528057",
+        "way/35534351"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35514370",
+        "https://www.openstreetmap.org/way/35520770",
+        "https://www.openstreetmap.org/way/35528057",
+        "https://www.openstreetmap.org/way/35534351"
+      ],
+      "id": "route-local-ems-guelph-ems-12-04",
+      "routeBaseId": "ems-guelph-ems-12",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1693.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 403.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 113.2,
+        "bestSameServiceCostSeconds": 113.2
+      }
+    },
+    {
+      "name": "Chase Avenue & Sleeman Avenue",
+      "addr": "Chase Avenue & Sleeman Avenue",
+      "lat": 43.5357404,
+      "lng": -80.2712739,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35522906",
+        "way/35532758"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35522906",
+        "https://www.openstreetmap.org/way/35532758"
+      ],
+      "id": "route-local-ems-guelph-ems-12-05",
+      "routeBaseId": "ems-guelph-ems-12",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2611,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 421.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 174.2,
+        "bestSameServiceCostSeconds": 174.2
+      }
+    },
+    {
+      "name": "Clara Street & Grange Street",
+      "addr": "Clara Street & Grange Street",
+      "lat": 43.5524879,
+      "lng": -80.2408153,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35504475",
+        "way/464459343"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35504475",
+        "https://www.openstreetmap.org/way/464459343"
+      ],
+      "id": "route-local-ems-guelph-ems-12-06",
+      "routeBaseId": "ems-guelph-ems-12",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1705.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 279.5,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 174.6,
+        "bestSameServiceCostSeconds": 174.6
+      }
+    }
+  ]
 }

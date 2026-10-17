@@ -87,5 +87,1998 @@
   ],
   "roadsUrl": "cities/pickering/roads.geojson.gz",
   "roadFeatureCount": 32912,
-  "roadDataSha256": "e27a138e88178db775dbe6a4bedfe9298be3e40af800e7c1c71794961adb0ff3"
+  "roadDataSha256": "e27a138e88178db775dbe6a4bedfe9298be3e40af800e7c1c71794961adb0ff3",
+  "routeResponses": {
+    "schemaVersion": 1,
+    "minCallsPerBase": 3,
+    "targetCallsPerBase": 6,
+    "generatedOn": "2026-10-17",
+    "model": {
+      "description": "Published first-due polygons where available. Otherwise a directed road-network estimate using road class travel cost from every same-service hall; allows a15second cost tie for overlapping nearby halls. This is training geography, not live dispatch advice.",
+      "ownershipToleranceSeconds": 15,
+      "maximumCandidateRouteMetres": 12000
+    },
+    "bases": [
+      {
+        "baseId": "fire-pickering-fire-1",
+        "service": "fire",
+        "number": 1,
+        "name": "Fire Station 1",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.88013068918612,
+          "lng": -79.08921674509425,
+          "road": "Unnamed road",
+          "gapMetres": 4.7
+        },
+        "callIds": [
+          "route-local-fire-pickering-fire-1-01",
+          "route-local-fire-pickering-fire-1-02",
+          "route-local-fire-pickering-fire-1-03",
+          "route-local-fire-pickering-fire-1-04",
+          "route-local-fire-pickering-fire-1-05",
+          "route-local-fire-pickering-fire-1-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-pickering-fire-2",
+        "service": "fire",
+        "number": 2,
+        "name": "Fire Station 2",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.81370920933426,
+          "lng": -79.12200259933275,
+          "road": "Unnamed road",
+          "gapMetres": 34.4
+        },
+        "callIds": [
+          "route-local-fire-pickering-fire-2-01",
+          "route-local-fire-pickering-fire-2-02",
+          "route-local-fire-pickering-fire-2-03",
+          "route-local-fire-pickering-fire-2-04",
+          "route-local-fire-pickering-fire-2-05",
+          "route-local-fire-pickering-fire-2-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-pickering-fire-4",
+        "service": "fire",
+        "number": 4,
+        "name": "Fire Station 4",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.97003192151235,
+          "lng": -79.12870077346383,
+          "road": "Unnamed road",
+          "gapMetres": 19.6
+        },
+        "callIds": [
+          "route-local-fire-pickering-fire-4-01",
+          "route-local-fire-pickering-fire-4-02",
+          "route-local-fire-pickering-fire-4-03",
+          "route-local-fire-pickering-fire-4-04",
+          "route-local-fire-pickering-fire-4-05",
+          "route-local-fire-pickering-fire-4-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-pickering-fire-5",
+        "service": "fire",
+        "number": 5,
+        "name": "Fire Station 5",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6200,
+        "access": {
+          "lat": 43.83273141249882,
+          "lng": -79.07194740860831,
+          "road": "Unnamed road",
+          "gapMetres": 11.3
+        },
+        "callIds": [
+          "route-local-fire-pickering-fire-5-01",
+          "route-local-fire-pickering-fire-5-02",
+          "route-local-fire-pickering-fire-5-03",
+          "route-local-fire-pickering-fire-5-04",
+          "route-local-fire-pickering-fire-5-05",
+          "route-local-fire-pickering-fire-5-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-pickering-fire-6",
+        "service": "fire",
+        "number": 6,
+        "name": "Fire Station 6",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.8432821,
+          "lng": -79.1036635,
+          "road": "Unnamed road",
+          "gapMetres": 29.6
+        },
+        "callIds": [
+          "route-local-fire-pickering-fire-6-01",
+          "route-local-fire-pickering-fire-6-02",
+          "route-local-fire-pickering-fire-6-03",
+          "route-local-fire-pickering-fire-6-04",
+          "route-local-fire-pickering-fire-6-05",
+          "route-local-fire-pickering-fire-6-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-pickering-ems-506",
+        "service": "ems",
+        "number": 10000,
+        "name": "Pickering Paramedic Station",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.82975955300516,
+          "lng": -79.09704197788348,
+          "road": "Unnamed road",
+          "gapMetres": 19.9
+        },
+        "callIds": [
+          "route-local-ems-pickering-ems-506-01",
+          "route-local-ems-pickering-ems-506-02",
+          "route-local-ems-pickering-ems-506-03",
+          "route-local-ems-pickering-ems-506-04",
+          "route-local-ems-pickering-ems-506-05",
+          "route-local-ems-pickering-ems-506-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-pickering-ems-899",
+        "service": "ems",
+        "number": 10001,
+        "name": "Seaton Paramedic Response Station",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5800,
+        "access": {
+          "lat": 43.904971539415236,
+          "lng": -79.08889610398617,
+          "road": "16th Sideline",
+          "gapMetres": 59.1
+        },
+        "callIds": [
+          "route-local-ems-pickering-ems-899-01",
+          "route-local-ems-pickering-ems-899-02",
+          "route-local-ems-pickering-ems-899-03",
+          "route-local-ems-pickering-ems-899-04",
+          "route-local-ems-pickering-ems-899-05",
+          "route-local-ems-pickering-ems-899-06"
+        ],
+        "challengeCalls": 6
+      }
+    ]
+  },
+  "routeCalls": [
+    {
+      "name": "Byford Street & Genena Mews",
+      "addr": "Byford Street & Genena Mews",
+      "lat": 43.8767005,
+      "lng": -79.0846178,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/426974421",
+        "way/426974422"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/426974421",
+        "https://www.openstreetmap.org/way/426974422"
+      ],
+      "id": "route-local-fire-pickering-fire-1-01",
+      "routeBaseId": "fire-pickering-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 801.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 293.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 113.2,
+        "bestSameServiceCostSeconds": 113.2
+      }
+    },
+    {
+      "name": "5th Concession Road & Alexander Knox Riad & Brock Road",
+      "addr": "5th Concession Road & Alexander Knox Riad & Brock Road",
+      "lat": 43.9021606,
+      "lng": -79.0971291,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1370750240",
+        "way/369456742",
+        "way/37524590",
+        "way/437068111"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1370750240",
+        "https://www.openstreetmap.org/way/369456742",
+        "https://www.openstreetmap.org/way/37524590",
+        "https://www.openstreetmap.org/way/437068111"
+      ],
+      "id": "route-local-fire-pickering-fire-1-02",
+      "routeBaseId": "fire-pickering-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2606.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 3177.8,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 185.2,
+        "bestSameServiceCostSeconds": 185.2
+      }
+    },
+    {
+      "name": "Brock Road & Dellbrook Avenue",
+      "addr": "Brock Road & Dellbrook Avenue",
+      "lat": 43.8588457,
+      "lng": -79.0792689,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/334696868",
+        "way/334696972",
+        "way/334696974"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/334696868",
+        "https://www.openstreetmap.org/way/334696972",
+        "https://www.openstreetmap.org/way/334696974"
+      ],
+      "id": "route-local-fire-pickering-fire-1-03",
+      "routeBaseId": "fire-pickering-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2580.2,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 4435.3,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 184.4,
+        "bestSameServiceCostSeconds": 184.4
+      }
+    },
+    {
+      "name": "Brock Road & Taunton Road",
+      "addr": "Brock Road & Taunton Road",
+      "lat": 43.8870369,
+      "lng": -79.0909585,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/37525158",
+        "way/37525160",
+        "way/37525162",
+        "way/37525163"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/37525158",
+        "https://www.openstreetmap.org/way/37525160",
+        "https://www.openstreetmap.org/way/37525162",
+        "https://www.openstreetmap.org/way/37525163"
+      ],
+      "id": "route-local-fire-pickering-fire-1-04",
+      "routeBaseId": "fire-pickering-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 860.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 3225.6,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 80.1,
+        "bestSameServiceCostSeconds": 80.1
+      }
+    },
+    {
+      "name": "Church Street North & Taunton Road West",
+      "addr": "Church Street North & Taunton Road West",
+      "lat": 43.8886846,
+      "lng": -79.0702065,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1530676219",
+        "way/238912979",
+        "way/504896454"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1530676219",
+        "https://www.openstreetmap.org/way/238912979",
+        "https://www.openstreetmap.org/way/504896454"
+      ],
+      "id": "route-local-fire-pickering-fire-1-05",
+      "routeBaseId": "fire-pickering-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2329.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 747.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 187.4,
+        "bestSameServiceCostSeconds": 187.4
+      }
+    },
+    {
+      "name": "Brock Road & Concession Road 3",
+      "addr": "Brock Road & Concession Road 3",
+      "lat": 43.8676576,
+      "lng": -79.0829501,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1265083540",
+        "way/1265083545",
+        "way/350689913",
+        "way/36877927"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1265083540",
+        "https://www.openstreetmap.org/way/1265083545",
+        "https://www.openstreetmap.org/way/350689913",
+        "https://www.openstreetmap.org/way/36877927"
+      ],
+      "id": "route-local-fire-pickering-fire-1-06",
+      "routeBaseId": "fire-pickering-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1559.9,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 609.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 122.9,
+        "bestSameServiceCostSeconds": 122.9
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Pickering Public Library - George Ashe Library",
+      "addr": "470 Kingston Rd, Pickering, ON",
+      "lat": 43.812486226665754,
+      "lng": -79.12523005789113,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/4/query?objectIds=2659&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Rosebank Road",
+        "Evelyn Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "pickering-call-03",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-pickering-fire-2-01",
+      "routeBaseId": "fire-pickering-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 315.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 192.2,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 46.3,
+        "bestSameServiceCostSeconds": 46.3
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Highbush Public School",
+      "addr": "605 Strouds Ln, Pickering, ON",
+      "lat": 43.82713068918967,
+      "lng": -79.12601900567131,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/6/query?objectIds=6423&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Fernam Street",
+        "Broadoak Crescent"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "pickering-call-13",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-pickering-fire-2-02",
+      "routeBaseId": "fire-pickering-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2035.7,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 743.4,
+        "decisionKinds": [
+          "turn",
+          "bridge",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 228.8,
+        "bestSameServiceCostSeconds": 228.8
+      }
+    },
+    {
+      "name": "Calibre Court & Royal Rouge Trail",
+      "addr": "Calibre Court & Royal Rouge Trail",
+      "lat": 43.8013143,
+      "lng": -79.1459637,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/36856218",
+        "way/36856226",
+        "way/36856243"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/36856218",
+        "https://www.openstreetmap.org/way/36856226",
+        "https://www.openstreetmap.org/way/36856243"
+      ],
+      "id": "route-local-fire-pickering-fire-2-03",
+      "routeBaseId": "fire-pickering-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2606.5,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 2210.6,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 201,
+        "bestSameServiceCostSeconds": 201
+      }
+    },
+    {
+      "name": "Kingston Road & Merritton Road",
+      "addr": "Kingston Road & Merritton Road",
+      "lat": 43.8241158,
+      "lng": -79.1046591,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/307522254",
+        "way/307522255",
+        "way/741082480"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/307522254",
+        "https://www.openstreetmap.org/way/307522255",
+        "https://www.openstreetmap.org/way/741082480"
+      ],
+      "id": "route-local-fire-pickering-fire-2-04",
+      "routeBaseId": "fire-pickering-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2006.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 840.9,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 128.7,
+        "bestSameServiceCostSeconds": 128.7
+      }
+    },
+    {
+      "name": "Oakburn Street & Wilcroft Court",
+      "addr": "Oakburn Street & Wilcroft Court",
+      "lat": 43.8195056,
+      "lng": -79.143017,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/36890114",
+        "way/36890155",
+        "way/733727135"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/36890114",
+        "https://www.openstreetmap.org/way/36890155",
+        "https://www.openstreetmap.org/way/733727135"
+      ],
+      "id": "route-local-fire-pickering-fire-2-05",
+      "routeBaseId": "fire-pickering-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2604,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 328.5,
+        "decisionKinds": [
+          "bridge",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 259.7,
+        "bestSameServiceCostSeconds": 259.7
+      }
+    },
+    {
+      "name": "Granite Court & Oklahoma Drive & Whites Road",
+      "addr": "Granite Court & Oklahoma Drive & Whites Road",
+      "lat": 43.8117164,
+      "lng": -79.1123404,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/279476973",
+        "way/279476975",
+        "way/35351424",
+        "way/35351500",
+        "way/934180660"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/279476973",
+        "https://www.openstreetmap.org/way/279476975",
+        "https://www.openstreetmap.org/way/35351424",
+        "https://www.openstreetmap.org/way/35351500",
+        "https://www.openstreetmap.org/way/934180660"
+      ],
+      "id": "route-local-fire-pickering-fire-2-06",
+      "routeBaseId": "fire-pickering-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1716.8,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1077.6,
+        "decisionKinds": [
+          "turn",
+          "bridge",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 125.6,
+        "bestSameServiceCostSeconds": 125.6
+      }
+    },
+    {
+      "name": "Lane Street & Wixon Road",
+      "addr": "Lane Street & Wixon Road",
+      "lat": 43.9764404,
+      "lng": -79.1310682,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/29042597",
+        "way/67302049",
+        "way/67302051"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/29042597",
+        "https://www.openstreetmap.org/way/67302049",
+        "https://www.openstreetmap.org/way/67302051"
+      ],
+      "id": "route-local-fire-pickering-fire-4-01",
+      "routeBaseId": "fire-pickering-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 805.5,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 321.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 100.8,
+        "bestSameServiceCostSeconds": 100.8
+      }
+    },
+    {
+      "name": "8th Concession Road & Brock Road & Concession 8 Road",
+      "addr": "8th Concession Road & Brock Road & Concession 8 Road",
+      "lat": 43.9553474,
+      "lng": -79.1229341,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35349820",
+        "way/387946341",
+        "way/86096173"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35349820",
+        "https://www.openstreetmap.org/way/387946341",
+        "https://www.openstreetmap.org/way/86096173"
+      ],
+      "id": "route-local-fire-pickering-fire-4-02",
+      "routeBaseId": "fire-pickering-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1807.7,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1556.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 141,
+        "bestSameServiceCostSeconds": 141
+      }
+    },
+    {
+      "name": "9th Concession Road & Sideline 12 Road",
+      "addr": "9th Concession Road & Sideline 12 Road",
+      "lat": 43.9789301,
+      "lng": -79.1010648,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1083932119",
+        "way/419857079"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1083932119",
+        "https://www.openstreetmap.org/way/419857079"
+      ],
+      "id": "route-local-fire-pickering-fire-4-03",
+      "routeBaseId": "fire-pickering-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2667.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 5874.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 197.4,
+        "bestSameServiceCostSeconds": 197.4
+      }
+    },
+    {
+      "name": "9th Concession Road & Sideline 22 Road",
+      "addr": "9th Concession Road & Sideline 22 Road",
+      "lat": 43.9673407,
+      "lng": -79.1500759,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35350891",
+        "way/56674696"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35350891",
+        "https://www.openstreetmap.org/way/56674696"
+      ],
+      "id": "route-local-fire-pickering-fire-4-04",
+      "routeBaseId": "fire-pickering-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2009.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 218.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 148.3,
+        "bestSameServiceCostSeconds": 148.3
+      }
+    },
+    {
+      "name": "Brock Road & Uxbridge-Pickering Townline Road",
+      "addr": "Brock Road & Uxbridge-Pickering Townline Road",
+      "lat": 43.9917138,
+      "lng": -79.129615,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/471551413",
+        "way/498970027",
+        "way/85773129",
+        "way/85773257"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/471551413",
+        "https://www.openstreetmap.org/way/498970027",
+        "https://www.openstreetmap.org/way/85773129",
+        "https://www.openstreetmap.org/way/85773257"
+      ],
+      "id": "route-local-fire-pickering-fire-4-05",
+      "routeBaseId": "fire-pickering-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2585.7,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 218.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 206.5,
+        "bestSameServiceCostSeconds": 206.5
+      }
+    },
+    {
+      "name": "Hoxton Street & Old Brock Road",
+      "addr": "Hoxton Street & Old Brock Road",
+      "lat": 43.9840105,
+      "lng": -79.1316605,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/29042570",
+        "way/67302054"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/29042570",
+        "https://www.openstreetmap.org/way/67302054"
+      ],
+      "id": "route-local-fire-pickering-fire-4-06",
+      "routeBaseId": "fire-pickering-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1693.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 218.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 155.9,
+        "bestSameServiceCostSeconds": 155.9
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Pickering GO Station",
+      "addr": "1322 Bayly St, Pickering, ON",
+      "lat": 43.82991534914325,
+      "lng": -79.08532197921026,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/4/query?objectIds=2757&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Liverpool Road",
+        "Krosno Boulevard"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "pickering-call-04",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-pickering-fire-5-01",
+      "routeBaseId": "fire-pickering-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1250,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 480.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 128.7,
+        "bestSameServiceCostSeconds": 128.7
+      }
+    },
+    {
+      "name": "Kellino Street & Squires Beach Road",
+      "addr": "Kellino Street & Squires Beach Road",
+      "lat": 43.8408453,
+      "lng": -79.0603058,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35345424",
+        "way/35350024",
+        "way/35352336"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35345424",
+        "https://www.openstreetmap.org/way/35350024",
+        "https://www.openstreetmap.org/way/35352336"
+      ],
+      "id": "route-local-fire-pickering-fire-5-02",
+      "routeBaseId": "fire-pickering-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1892.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 209.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 174.6,
+        "bestSameServiceCostSeconds": 174.6
+      }
+    },
+    {
+      "name": "McKay Road & Montgomery Park Road",
+      "addr": "McKay Road & Montgomery Park Road",
+      "lat": 43.8164217,
+      "lng": -79.0563045,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/126310482",
+        "way/35062372",
+        "way/35116685"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/126310482",
+        "https://www.openstreetmap.org/way/35062372",
+        "https://www.openstreetmap.org/way/35116685"
+      ],
+      "id": "route-local-fire-pickering-fire-5-03",
+      "routeBaseId": "fire-pickering-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2723.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1238.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 205,
+        "bestSameServiceCostSeconds": 205
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Don Beer Arena",
+      "addr": "940 Dillingham Rd, Pickering, ON",
+      "lat": 43.82836763019205,
+      "lng": -79.06971129941374,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/4/query?objectIds=2792&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Quigley Street",
+        "Brock Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "pickering-call-06",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-pickering-fire-5-04",
+      "routeBaseId": "fire-pickering-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1402.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 4313.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 218.2,
+        "bestSameServiceCostSeconds": 218.2
+      }
+    },
+    {
+      "name": "Kingston Road & Orchard Valley Court",
+      "addr": "Kingston Road & Orchard Valley Court",
+      "lat": 43.8441071,
+      "lng": -79.079744,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1268088913",
+        "way/1268088922",
+        "way/35348217"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1268088913",
+        "https://www.openstreetmap.org/way/1268088922",
+        "https://www.openstreetmap.org/way/35348217"
+      ],
+      "id": "route-local-fire-pickering-fire-5-05",
+      "routeBaseId": "fire-pickering-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2529.5,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 924.4,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 180.9,
+        "bestSameServiceCostSeconds": 175.1
+      }
+    },
+    {
+      "name": "Copperstone Drive & Silicone Drive",
+      "addr": "Copperstone Drive & Silicone Drive",
+      "lat": 43.830025,
+      "lng": -79.0531012,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35345626",
+        "way/35346632",
+        "way/35351187"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35345626",
+        "https://www.openstreetmap.org/way/35346632",
+        "https://www.openstreetmap.org/way/35351187"
+      ],
+      "id": "route-local-fire-pickering-fire-5-06",
+      "routeBaseId": "fire-pickering-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2095.3,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 3861.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 216.9,
+        "bestSameServiceCostSeconds": 216.9
+      }
+    },
+    {
+      "name": "Harvest Drive & Maple Ridge Drive",
+      "addr": "Harvest Drive & Maple Ridge Drive",
+      "lat": 43.8472375,
+      "lng": -79.1020607,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35345942",
+        "way/35351034",
+        "way/35352191"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35345942",
+        "https://www.openstreetmap.org/way/35351034",
+        "https://www.openstreetmap.org/way/35352191"
+      ],
+      "id": "route-local-fire-pickering-fire-6-01",
+      "routeBaseId": "fire-pickering-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 798.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 988.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 94.3,
+        "bestSameServiceCostSeconds": 94.3
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "St Mary Catholic Secondary School",
+      "addr": "1918 Whites Rd, Pickering, ON",
+      "lat": 43.834679633389975,
+      "lng": -79.12331632007023,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/6/query?objectIds=6561&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "New Street",
+        "Highview Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "pickering-call-15",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-pickering-fire-6-02",
+      "routeBaseId": "fire-pickering-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2295.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 978.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 185.8,
+        "bestSameServiceCostSeconds": 185.8
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Chestnut Hill Developments Recreation Complex",
+      "addr": "1867 Valley Farm Rd, Pickering, ON",
+      "lat": 43.83937843172037,
+      "lng": -79.08052210341168,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/4/query?objectIds=2483&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "The Esplanade North",
+        "The Esplanade South"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "pickering-call-01",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-pickering-fire-6-03",
+      "routeBaseId": "fire-pickering-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2654.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 191.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 218.8,
+        "bestSameServiceCostSeconds": 218.8
+      }
+    },
+    {
+      "name": "Kelvinway Lane & Rambleberry Avenue",
+      "addr": "Kelvinway Lane & Rambleberry Avenue",
+      "lat": 43.831288,
+      "lng": -79.1036414,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35345907",
+        "way/35348352",
+        "way/35352392"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35345907",
+        "https://www.openstreetmap.org/way/35348352",
+        "https://www.openstreetmap.org/way/35352392"
+      ],
+      "id": "route-local-fire-pickering-fire-6-04",
+      "routeBaseId": "fire-pickering-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1699.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 330.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 170.5,
+        "bestSameServiceCostSeconds": 170.5
+      }
+    },
+    {
+      "name": "Greenmount Street & Valley Farm Road",
+      "addr": "Greenmount Street & Valley Farm Road",
+      "lat": 43.8559812,
+      "lng": -79.0901574,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35345758",
+        "way/35348755",
+        "way/35349363"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35345758",
+        "https://www.openstreetmap.org/way/35348755",
+        "https://www.openstreetmap.org/way/35349363"
+      ],
+      "id": "route-local-fire-pickering-fire-6-05",
+      "routeBaseId": "fire-pickering-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2665.5,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 1570.7,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 190.3,
+        "bestSameServiceCostSeconds": 190.3
+      }
+    },
+    {
+      "name": "Bronte Square & Charlotte Circle",
+      "addr": "Bronte Square & Charlotte Circle",
+      "lat": 43.8349783,
+      "lng": -79.0938126,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35348494",
+        "way/35349362",
+        "way/35349986"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35348494",
+        "https://www.openstreetmap.org/way/35349362",
+        "https://www.openstreetmap.org/way/35349986"
+      ],
+      "id": "route-local-fire-pickering-fire-6-06",
+      "routeBaseId": "fire-pickering-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1700.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1138.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 184.4,
+        "bestSameServiceCostSeconds": 184.4
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Pickering Public Library - Central Library",
+      "addr": "1 The Esplanade, Pickering, ON",
+      "lat": 43.8374260785768,
+      "lng": -79.08353176444945,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/4/query?objectIds=2458&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Glenanna Road",
+        "Valley Farm Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "pickering-call-02",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-pickering-ems-506-01",
+      "routeBaseId": "ems-pickering-ems-506",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1731.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1577.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 126.4,
+        "bestSameServiceCostSeconds": 126.4
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Dunbarton Indoor Pool",
+      "addr": "655 Sheppard Av E, Pickering, ON",
+      "lat": 43.82064704513061,
+      "lng": -79.11919132720632,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/4/query?objectIds=2467&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Whites Road",
+        "Edmund Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "pickering-call-07",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-pickering-ems-506-02",
+      "routeBaseId": "ems-pickering-ems-506",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2468.5,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 391.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 227.7,
+        "bestSameServiceCostSeconds": 227.7
+      }
+    },
+    {
+      "name": "Ilona Park Road & Liverpool Road",
+      "addr": "Ilona Park Road & Liverpool Road",
+      "lat": 43.820036,
+      "lng": -79.0835569,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35349812",
+        "way/471169021"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35349812",
+        "https://www.openstreetmap.org/way/471169021"
+      ],
+      "id": "route-local-ems-pickering-ems-506-03",
+      "routeBaseId": "ems-pickering-ems-506",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2590,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 3775.7,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 204.4,
+        "bestSameServiceCostSeconds": 204.4
+      }
+    },
+    {
+      "name": "Brookshire Square & Glenanna Road",
+      "addr": "Brookshire Square & Glenanna Road",
+      "lat": 43.8382872,
+      "lng": -79.1091491,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35346548",
+        "way/35350827",
+        "way/35351260"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35346548",
+        "https://www.openstreetmap.org/way/35350827",
+        "https://www.openstreetmap.org/way/35351260"
+      ],
+      "id": "route-local-ems-pickering-ems-506-04",
+      "routeBaseId": "ems-pickering-ems-506",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1870.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 420.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 172.1,
+        "bestSameServiceCostSeconds": 172.1
+      }
+    },
+    {
+      "name": "Bayly Street & Begley Street",
+      "addr": "Bayly Street & Begley Street",
+      "lat": 43.8265033,
+      "lng": -79.0944031,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35116668",
+        "way/35123694",
+        "way/35123695"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35116668",
+        "https://www.openstreetmap.org/way/35123694",
+        "https://www.openstreetmap.org/way/35123695"
+      ],
+      "id": "route-local-ems-pickering-ems-506-05",
+      "routeBaseId": "ems-pickering-ems-506",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2142.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2699.9,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 161.1,
+        "bestSameServiceCostSeconds": 161.1
+      }
+    },
+    {
+      "name": "Spruce Hill Road & Welrus Street",
+      "addr": "Spruce Hill Road & Welrus Street",
+      "lat": 43.827544,
+      "lng": -79.1114644,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35346003",
+        "way/35351088",
+        "way/35351707"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35346003",
+        "https://www.openstreetmap.org/way/35351088",
+        "https://www.openstreetmap.org/way/35351707"
+      ],
+      "id": "route-local-ems-pickering-ems-506-06",
+      "routeBaseId": "ems-pickering-ems-506",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1734.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 600.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 158.5,
+        "bestSameServiceCostSeconds": 158.5
+      }
+    },
+    {
+      "name": "5th Concession Road & Alexander Knox Riad & Brock Road",
+      "addr": "5th Concession Road & Alexander Knox Riad & Brock Road",
+      "lat": 43.9021606,
+      "lng": -79.0971291,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1370750240",
+        "way/369456742",
+        "way/37524590",
+        "way/437068111"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1370750240",
+        "https://www.openstreetmap.org/way/369456742",
+        "https://www.openstreetmap.org/way/37524590",
+        "https://www.openstreetmap.org/way/437068111"
+      ],
+      "id": "route-local-ems-pickering-ems-899-01",
+      "routeBaseId": "ems-pickering-ems-899",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 818.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 5755.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "16th Sideline",
+        "estimatedCostSeconds": 69.3,
+        "bestSameServiceCostSeconds": 69.3
+      }
+    },
+    {
+      "name": "5th Concession Road & Greenwood Road",
+      "addr": "5th Concession Road & Greenwood Road",
+      "lat": 43.9095797,
+      "lng": -79.0649071,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35345879",
+        "way/35347828",
+        "way/37524587",
+        "way/37524594"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35345879",
+        "https://www.openstreetmap.org/way/35347828",
+        "https://www.openstreetmap.org/way/37524587",
+        "https://www.openstreetmap.org/way/37524594"
+      ],
+      "id": "route-local-ems-pickering-ems-899-02",
+      "routeBaseId": "ems-pickering-ems-899",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2084.1,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 6042.2,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "16th Sideline",
+        "estimatedCostSeconds": 170.5,
+        "bestSameServiceCostSeconds": 170.5
+      }
+    },
+    {
+      "name": "Brock Road & Taunton Road",
+      "addr": "Brock Road & Taunton Road",
+      "lat": 43.8870369,
+      "lng": -79.0909585,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/37525158",
+        "way/37525160",
+        "way/37525162",
+        "way/37525163"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/37525158",
+        "https://www.openstreetmap.org/way/37525160",
+        "https://www.openstreetmap.org/way/37525162",
+        "https://www.openstreetmap.org/way/37525163"
+      ],
+      "id": "route-local-ems-pickering-ems-899-03",
+      "routeBaseId": "ems-pickering-ems-899",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2576.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 4201.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "16th Sideline",
+        "estimatedCostSeconds": 175.1,
+        "bestSameServiceCostSeconds": 175.1
+      }
+    },
+    {
+      "name": "16th Sideline & Narcissus Gardens",
+      "addr": "16th Sideline & Narcissus Gardens",
+      "lat": 43.898752,
+      "lng": -79.0850536,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1473780976",
+        "way/35350998"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1473780976",
+        "https://www.openstreetmap.org/way/35350998"
+      ],
+      "id": "route-local-ems-pickering-ems-899-04",
+      "routeBaseId": "ems-pickering-ems-899",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 824.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 293.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "16th Sideline",
+        "estimatedCostSeconds": 116.6,
+        "bestSameServiceCostSeconds": 116.6
+      }
+    },
+    {
+      "name": "Ashe Avenue & Sandalwood Road",
+      "addr": "Ashe Avenue & Sandalwood Road",
+      "lat": 43.9119795,
+      "lng": -79.0986574,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1530960153",
+        "way/520796540"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1530960153",
+        "https://www.openstreetmap.org/way/520796540"
+      ],
+      "id": "route-local-ems-pickering-ems-899-05",
+      "routeBaseId": "ems-pickering-ems-899",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2119.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 8053,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "16th Sideline",
+        "estimatedCostSeconds": 178.2,
+        "bestSameServiceCostSeconds": 178.2
+      }
+    },
+    {
+      "name": "Alexander Knox Riad & Mulberry Lane",
+      "addr": "Alexander Knox Riad & Mulberry Lane",
+      "lat": 43.8999198,
+      "lng": -79.1069946,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35350325",
+        "way/37524577",
+        "way/37524586"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35350325",
+        "https://www.openstreetmap.org/way/37524577",
+        "https://www.openstreetmap.org/way/37524586"
+      ],
+      "id": "route-local-ems-pickering-ems-899-06",
+      "routeBaseId": "ems-pickering-ems-899",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1648.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 5997.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "16th Sideline",
+        "estimatedCostSeconds": 119.3,
+        "bestSameServiceCostSeconds": 119.3
+      }
+    }
+  ]
 }

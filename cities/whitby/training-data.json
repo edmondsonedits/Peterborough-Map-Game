@@ -113,5 +113,1717 @@
   ],
   "roadsUrl": "cities/whitby/roads.geojson.gz",
   "roadFeatureCount": 25712,
-  "roadDataSha256": "83823f8ebd9e590a38d3dc790fddb16b14dce4c4ac1f5d815a50e3e57608483b"
+  "roadDataSha256": "83823f8ebd9e590a38d3dc790fddb16b14dce4c4ac1f5d815a50e3e57608483b",
+  "routeResponses": {
+    "schemaVersion": 1,
+    "minCallsPerBase": 3,
+    "targetCallsPerBase": 6,
+    "generatedOn": "2026-10-17",
+    "model": {
+      "description": "Published first-due polygons where available. Otherwise a directed road-network estimate using road class travel cost from every same-service hall; allows a15second cost tie for overlapping nearby halls. This is training geography, not live dispatch advice.",
+      "ownershipToleranceSeconds": 15,
+      "maximumCandidateRouteMetres": 12000
+    },
+    "bases": [
+      {
+        "baseId": "fire-whitby-fire-1",
+        "service": "fire",
+        "number": 10000,
+        "name": "Fire Hall No. 1",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5700,
+        "access": {
+          "lat": 43.96793726343385,
+          "lng": -78.95823708005138,
+          "road": "Sorbara Way",
+          "gapMetres": 31.4
+        },
+        "callIds": [
+          "route-local-fire-whitby-fire-1-01",
+          "route-local-fire-whitby-fire-1-02",
+          "route-local-fire-whitby-fire-1-03",
+          "route-local-fire-whitby-fire-1-04",
+          "route-local-fire-whitby-fire-1-05",
+          "route-local-fire-whitby-fire-1-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-whitby-fire-2",
+        "service": "fire",
+        "number": 10001,
+        "name": "Fire Hall No. 2",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.89531806217532,
+          "lng": -78.91594079851635,
+          "road": "Manning Road",
+          "gapMetres": 34.4
+        },
+        "callIds": [
+          "route-local-fire-whitby-fire-2-01",
+          "route-local-fire-whitby-fire-2-02",
+          "route-local-fire-whitby-fire-2-03",
+          "route-local-fire-whitby-fire-2-04",
+          "route-local-fire-whitby-fire-2-05",
+          "route-local-fire-whitby-fire-2-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-whitby-fire-3",
+        "service": "fire",
+        "number": 10002,
+        "name": "Fire Hall No. 3",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5800,
+        "access": {
+          "lat": 43.86184848739697,
+          "lng": -78.93439917598185,
+          "road": "Brock Street South",
+          "gapMetres": 37.2
+        },
+        "callIds": [
+          "route-local-fire-whitby-fire-3-01",
+          "route-local-fire-whitby-fire-3-02",
+          "route-local-fire-whitby-fire-3-03",
+          "route-local-fire-whitby-fire-3-04",
+          "route-local-fire-whitby-fire-3-05",
+          "route-local-fire-whitby-fire-3-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-whitby-fire-4",
+        "service": "fire",
+        "number": 10003,
+        "name": "Fire Hall No. 4",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.8771582,
+          "lng": -78.9554244,
+          "road": "Unnamed road",
+          "gapMetres": 13.5
+        },
+        "callIds": [
+          "route-local-fire-whitby-fire-4-01",
+          "route-local-fire-whitby-fire-4-02",
+          "route-local-fire-whitby-fire-4-03",
+          "route-local-fire-whitby-fire-4-04",
+          "route-local-fire-whitby-fire-4-05",
+          "route-local-fire-whitby-fire-4-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-whitby-fire-5",
+        "service": "fire",
+        "number": 10004,
+        "name": "Fire Hall No. 5 - Headquarters",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.917540154955894,
+          "lng": -78.9515210953845,
+          "road": "Unnamed road",
+          "gapMetres": 40.1
+        },
+        "callIds": [
+          "route-local-fire-whitby-fire-5-01",
+          "route-local-fire-whitby-fire-5-02",
+          "route-local-fire-whitby-fire-5-03",
+          "route-local-fire-whitby-fire-5-04",
+          "route-local-fire-whitby-fire-5-05",
+          "route-local-fire-whitby-fire-5-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-whitby-ems-513",
+        "service": "ems",
+        "number": 10000,
+        "name": "Whitby Paramedic Station - Headquarters",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.9219899,
+          "lng": -78.9389261,
+          "road": "Unnamed road",
+          "gapMetres": 19.9
+        },
+        "callIds": [
+          "route-local-ems-whitby-ems-513-01",
+          "route-local-ems-whitby-ems-513-02",
+          "route-local-ems-whitby-ems-513-03",
+          "route-local-ems-whitby-ems-513-04",
+          "route-local-ems-whitby-ems-513-05",
+          "route-local-ems-whitby-ems-513-06"
+        ],
+        "challengeCalls": 6
+      }
+    ]
+  },
+  "routeCalls": [
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Whitby Public Library - Brooklin Branch",
+      "addr": "8 Vipond Rd, Whitby, ON",
+      "lat": 43.95773373633481,
+      "lng": -78.96330757961582,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/4/query?objectIds=2956&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Heber Down Crescent",
+        "Price Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "whitby-call-10",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-whitby-fire-1-01",
+      "routeBaseId": "fire-whitby-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1649,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 400,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Sorbara Way",
+        "estimatedCostSeconds": 120,
+        "bestSameServiceCostSeconds": 120
+      }
+    },
+    {
+      "name": "Cachet Boulevard & Chiswick Avenue",
+      "addr": "Cachet Boulevard & Chiswick Avenue",
+      "lat": 43.97339,
+      "lng": -78.94591,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/511383079",
+        "way/92830292",
+        "way/92830314"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/511383079",
+        "https://www.openstreetmap.org/way/92830292",
+        "https://www.openstreetmap.org/way/92830314"
+      ],
+      "id": "route-local-fire-whitby-fire-1-02",
+      "routeBaseId": "fire-whitby-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1730.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 486.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Sorbara Way",
+        "estimatedCostSeconds": 165.2,
+        "bestSameServiceCostSeconds": 165.2
+      }
+    },
+    {
+      "name": "Cachet Boulevard & Winchester Road",
+      "addr": "Cachet Boulevard & Winchester Road",
+      "lat": 43.9587383,
+      "lng": -78.9369453,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34195394",
+        "way/766405616",
+        "way/766405634"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34195394",
+        "https://www.openstreetmap.org/way/766405616",
+        "https://www.openstreetmap.org/way/766405634"
+      ],
+      "id": "route-local-fire-whitby-fire-1-03",
+      "routeBaseId": "fire-whitby-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2534.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 239.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Sorbara Way",
+        "estimatedCostSeconds": 191.9,
+        "bestSameServiceCostSeconds": 191.9
+      }
+    },
+    {
+      "name": "Camber Court & Columbus Road West",
+      "addr": "Camber Court & Columbus Road West",
+      "lat": 43.9699436,
+      "lng": -78.9652688,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1528673464",
+        "way/407475251"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1528673464",
+        "https://www.openstreetmap.org/way/407475251"
+      ],
+      "id": "route-local-fire-whitby-fire-1-04",
+      "routeBaseId": "fire-whitby-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1168.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 870.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Sorbara Way",
+        "estimatedCostSeconds": 88.5,
+        "bestSameServiceCostSeconds": 88.5
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Luther Vipond Memorial Arena",
+      "addr": "67 Winchester Rd E, Whitby, ON",
+      "lat": 43.95417454568922,
+      "lng": -78.95582913903557,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/4/query?objectIds=2591&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Simcoe Street",
+        "Queen Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "whitby-call-09",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-whitby-fire-1-05",
+      "routeBaseId": "fire-whitby-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1864.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 992.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Sorbara Way",
+        "estimatedCostSeconds": 163.8,
+        "bestSameServiceCostSeconds": 163.8
+      }
+    },
+    {
+      "name": "Baldwin Street North & Duffs Road",
+      "addr": "Baldwin Street North & Duffs Road",
+      "lat": 43.9789653,
+      "lng": -78.9632574,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/316158301",
+        "way/901053213"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/316158301",
+        "https://www.openstreetmap.org/way/901053213"
+      ],
+      "id": "route-local-fire-whitby-fire-1-06",
+      "routeBaseId": "fire-whitby-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1654.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1705,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Sorbara Way",
+        "estimatedCostSeconds": 99.1,
+        "bestSameServiceCostSeconds": 99.1
+      }
+    },
+    {
+      "name": "Hialeah Crescent & Nijinsky Court",
+      "addr": "Hialeah Crescent & Nijinsky Court",
+      "lat": 43.8986267,
+      "lng": -78.9155873,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/26536957",
+        "way/34192730"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/26536957",
+        "https://www.openstreetmap.org/way/34192730"
+      ],
+      "id": "route-local-fire-whitby-fire-2-01",
+      "routeBaseId": "fire-whitby-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 798.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 750.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Manning Road",
+        "estimatedCostSeconds": 75.8,
+        "bestSameServiceCostSeconds": 75.8
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Kirby Park",
+      "addr": "45 Kirby Cr, Whitby, ON",
+      "lat": 43.88079499608979,
+      "lng": -78.90633781949025,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/4/query?objectIds=2725&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Vanessa Place",
+        "Winston Crescent"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "whitby-call-17",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-whitby-fire-2-02",
+      "routeBaseId": "fire-whitby-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2050.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 645.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Manning Road",
+        "estimatedCostSeconds": 172,
+        "bestSameServiceCostSeconds": 172
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Town of Whitby Municipal Office",
+      "addr": "575 Rossland Rd E, Whitby, ON",
+      "lat": 43.89793514609863,
+      "lng": -78.94346986926811,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/7/query?objectIds=297&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Civic Centre Drive",
+        "Garden Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "whitby-call-04",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-whitby-fire-2-03",
+      "routeBaseId": "fire-whitby-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2612.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 675.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Manning Road",
+        "estimatedCostSeconds": 216,
+        "bestSameServiceCostSeconds": 216
+      }
+    },
+    {
+      "name": "Bradley Drive & Fulwood Crescent & Ribblesdale Drive",
+      "addr": "Bradley Drive & Fulwood Crescent & Ribblesdale Drive",
+      "lat": 43.8898769,
+      "lng": -78.9274421,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34191267",
+        "way/34192191",
+        "way/34192353",
+        "way/34194635"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34191267",
+        "https://www.openstreetmap.org/way/34192191",
+        "https://www.openstreetmap.org/way/34192353",
+        "https://www.openstreetmap.org/way/34194635"
+      ],
+      "id": "route-local-fire-whitby-fire-2-04",
+      "routeBaseId": "fire-whitby-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1670.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 399.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Manning Road",
+        "estimatedCostSeconds": 118.2,
+        "bestSameServiceCostSeconds": 118.2
+      }
+    },
+    {
+      "name": "Donald Wilson Street & Eric Clarke Drive & Lloyd Gibson Crescent",
+      "addr": "Donald Wilson Street & Eric Clarke Drive & Lloyd Gibson Crescent",
+      "lat": 43.9126587,
+      "lng": -78.9095399,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34189945",
+        "way/34190060",
+        "way/34192479",
+        "way/34196317"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34189945",
+        "https://www.openstreetmap.org/way/34190060",
+        "https://www.openstreetmap.org/way/34192479",
+        "https://www.openstreetmap.org/way/34196317"
+      ],
+      "id": "route-local-fire-whitby-fire-2-05",
+      "routeBaseId": "fire-whitby-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2638.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 409.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Manning Road",
+        "estimatedCostSeconds": 207.5,
+        "bestSameServiceCostSeconds": 207.5
+      }
+    },
+    {
+      "name": "Butterfield Crescent & Chatsworth Crescent & Glen Dhu Drive",
+      "addr": "Butterfield Crescent & Chatsworth Crescent & Glen Dhu Drive",
+      "lat": 43.9036118,
+      "lng": -78.9277884,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34191233",
+        "way/34191754",
+        "way/34195338",
+        "way/34229457"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34191233",
+        "https://www.openstreetmap.org/way/34191754",
+        "https://www.openstreetmap.org/way/34195338",
+        "https://www.openstreetmap.org/way/34229457"
+      ],
+      "id": "route-local-fire-whitby-fire-2-06",
+      "routeBaseId": "fire-whitby-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1748.9,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 491.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Manning Road",
+        "estimatedCostSeconds": 123.2,
+        "bestSameServiceCostSeconds": 123.2
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Iroquois Park Sports Centre",
+      "addr": "500 Victoria St W, Whitby, ON",
+      "lat": 43.86262056306317,
+      "lng": -78.94291238608905,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/4/query?objectIds=2925&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Gordon Street",
+        "Jim Flaherty Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "whitby-call-01",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-whitby-fire-3-01",
+      "routeBaseId": "fire-whitby-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 934.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 626.9,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Brock Street South",
+        "estimatedCostSeconds": 145.1,
+        "bestSameServiceCostSeconds": 145.1
+      }
+    },
+    {
+      "name": "South Blair Street & Water Street",
+      "addr": "South Blair Street & Water Street",
+      "lat": 43.8517648,
+      "lng": -78.9193445,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34190018",
+        "way/34191415",
+        "way/34194697"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34190018",
+        "https://www.openstreetmap.org/way/34191415",
+        "https://www.openstreetmap.org/way/34194697"
+      ],
+      "id": "route-local-fire-whitby-fire-3-02",
+      "routeBaseId": "fire-whitby-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1942,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 635.2,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Brock Street South",
+        "estimatedCostSeconds": 137.6,
+        "bestSameServiceCostSeconds": 137.6
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Ontario Shores Centre for Mental Health Sciences",
+      "addr": "700 Gordon Street, Whitby, ON",
+      "lat": 43.84786723085815,
+      "lng": -78.94550577706502,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/8/query?objectIds=2833&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Southshore Street",
+        "James Govan Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "whitby-call-08",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-whitby-fire-3-03",
+      "routeBaseId": "fire-whitby-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2566.9,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 1388.4,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Brock Street South",
+        "estimatedCostSeconds": 380.6,
+        "bestSameServiceCostSeconds": 380.6
+      }
+    },
+    {
+      "name": "Cannon Court & Consumers Drive",
+      "addr": "Cannon Court & Consumers Drive",
+      "lat": 43.8689596,
+      "lng": -78.9234827,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34192514",
+        "way/369888613"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34192514",
+        "https://www.openstreetmap.org/way/369888613"
+      ],
+      "id": "route-local-fire-whitby-fire-3-04",
+      "routeBaseId": "fire-whitby-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1734.2,
+        "meaningfulDecisions": 7,
+        "maxAlternativePenaltyMetres": 2163.2,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Brock Street South",
+        "estimatedCostSeconds": 101.1,
+        "bestSameServiceCostSeconds": 101.1
+      }
+    },
+    {
+      "name": "Gilbert Street East & Peel Street",
+      "addr": "Gilbert Street East & Peel Street",
+      "lat": 43.877587,
+      "lng": -78.9372282,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/26250663",
+        "way/34190579",
+        "way/34192070"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/26250663",
+        "https://www.openstreetmap.org/way/34190579",
+        "https://www.openstreetmap.org/way/34192070"
+      ],
+      "id": "route-local-fire-whitby-fire-3-05",
+      "routeBaseId": "fire-whitby-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2037.1,
+        "meaningfulDecisions": 6,
+        "maxAlternativePenaltyMetres": 1630.5,
+        "decisionKinds": [
+          "turn",
+          "bridge",
+          "departure"
+        ],
+        "departureRoad": "Brock Street South",
+        "estimatedCostSeconds": 134.5,
+        "bestSameServiceCostSeconds": 128.4
+      }
+    },
+    {
+      "name": "Topsail Crescent & Whitby Shores Greenway",
+      "addr": "Topsail Crescent & Whitby Shores Greenway",
+      "lat": 43.8559024,
+      "lng": -78.9486968,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34191603",
+        "way/34193395",
+        "way/34195734"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34191603",
+        "https://www.openstreetmap.org/way/34193395",
+        "https://www.openstreetmap.org/way/34195734"
+      ],
+      "id": "route-local-fire-whitby-fire-3-06",
+      "routeBaseId": "fire-whitby-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1696,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1388.4,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Brock Street South",
+        "estimatedCostSeconds": 134.1,
+        "bestSameServiceCostSeconds": 134.1
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Whitby Library Central Branch",
+      "addr": "405 Dundas St W, Whitby, ON",
+      "lat": 43.87825623886044,
+      "lng": -78.94614800715313,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/4/query?objectIds=3009&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "King Street",
+        "Euclid Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "whitby-call-06",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-whitby-fire-4-01",
+      "routeBaseId": "fire-whitby-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 912.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 233.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 71.8,
+        "bestSameServiceCostSeconds": 71.8
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Guthrie Park",
+      "addr": "60 Guthrie Cr, Whitby, ON",
+      "lat": 43.886593346752214,
+      "lng": -78.97354134067874,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/4/query?objectIds=2824&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Somerset Street",
+        "Mellor Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "whitby-call-19",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-whitby-fire-4-02",
+      "routeBaseId": "fire-whitby-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2328.7,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 831.2,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 213.6,
+        "bestSameServiceCostSeconds": 213.6
+      }
+    },
+    {
+      "name": "Dundas Street West & Kingston Road East",
+      "addr": "Dundas Street West & Kingston Road East",
+      "lat": 43.870206,
+      "lng": -78.9856912,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1212821172",
+        "way/448660457",
+        "way/448660458"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1212821172",
+        "https://www.openstreetmap.org/way/448660457",
+        "https://www.openstreetmap.org/way/448660458"
+      ],
+      "id": "route-local-fire-whitby-fire-4-03",
+      "routeBaseId": "fire-whitby-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2580.8,
+        "meaningfulDecisions": 6,
+        "maxAlternativePenaltyMetres": 3829.6,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 135.3,
+        "bestSameServiceCostSeconds": 135.3
+      }
+    },
+    {
+      "name": "Dundas Street West & White Oaks Court",
+      "addr": "Dundas Street West & White Oaks Court",
+      "lat": 43.874954,
+      "lng": -78.9642982,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/292980158",
+        "way/34189257"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/292980158",
+        "https://www.openstreetmap.org/way/34189257"
+      ],
+      "id": "route-local-fire-whitby-fire-4-04",
+      "routeBaseId": "fire-whitby-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 783,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1001.9,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 47.7,
+        "bestSameServiceCostSeconds": 47.7
+      }
+    },
+    {
+      "name": "Redoak Street & Rossland Road West & Whitburn Street",
+      "addr": "Redoak Street & Rossland Road West & Whitburn Street",
+      "lat": 43.8960222,
+      "lng": -78.9568018,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/291638908",
+        "way/428747859",
+        "way/92990287",
+        "way/92990311"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/291638908",
+        "https://www.openstreetmap.org/way/428747859",
+        "https://www.openstreetmap.org/way/92990287",
+        "https://www.openstreetmap.org/way/92990311"
+      ],
+      "id": "route-local-fire-whitby-fire-4-05",
+      "routeBaseId": "fire-whitby-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2586.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1175.6,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 163.3,
+        "bestSameServiceCostSeconds": 163.3
+      }
+    },
+    {
+      "name": "Bayview Avenue & Greenwood Crescent & McCullough Drive",
+      "addr": "Bayview Avenue & Greenwood Crescent & McCullough Drive",
+      "lat": 43.8683139,
+      "lng": -78.946861,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34190206",
+        "way/34193408",
+        "way/34195351"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34190206",
+        "https://www.openstreetmap.org/way/34193408",
+        "https://www.openstreetmap.org/way/34195351"
+      ],
+      "id": "route-local-fire-whitby-fire-4-06",
+      "routeBaseId": "fire-whitby-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1495,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 423.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 130.2,
+        "bestSameServiceCostSeconds": 130.2
+      }
+    },
+    {
+      "name": "Fallingbrook Street & Taunton Road East",
+      "addr": "Fallingbrook Street & Taunton Road East",
+      "lat": 43.917936,
+      "lng": -78.9455151,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34191762",
+        "way/438059872",
+        "way/92985372"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34191762",
+        "https://www.openstreetmap.org/way/438059872",
+        "https://www.openstreetmap.org/way/92985372"
+      ],
+      "id": "route-local-fire-whitby-fire-5-01",
+      "routeBaseId": "fire-whitby-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 793.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 902.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 81.4,
+        "bestSameServiceCostSeconds": 81.4
+      }
+    },
+    {
+      "name": "Cochrane Street & Connie Court",
+      "addr": "Cochrane Street & Connie Court",
+      "lat": 43.9114091,
+      "lng": -78.9667421,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/26447726",
+        "way/815791955"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/26447726",
+        "https://www.openstreetmap.org/way/815791955"
+      ],
+      "id": "route-local-fire-whitby-fire-5-02",
+      "routeBaseId": "fire-whitby-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1667.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 644.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 136.8,
+        "bestSameServiceCostSeconds": 136.8
+      }
+    },
+    {
+      "name": "Donald Fleming Way & Vanier Street",
+      "addr": "Donald Fleming Way & Vanier Street",
+      "lat": 43.8995259,
+      "lng": -78.9478434,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/460714542",
+        "way/703510326"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/460714542",
+        "https://www.openstreetmap.org/way/703510326"
+      ],
+      "id": "route-local-fire-whitby-fire-5-03",
+      "routeBaseId": "fire-whitby-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2609.9,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 376.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 204.9,
+        "bestSameServiceCostSeconds": 204.9
+      }
+    },
+    {
+      "name": "Armour Street & Sleepy Hollow Place",
+      "addr": "Armour Street & Sleepy Hollow Place",
+      "lat": 43.9262031,
+      "lng": -78.9599695,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/92984414",
+        "way/92984462",
+        "way/92984531"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/92984414",
+        "https://www.openstreetmap.org/way/92984462",
+        "https://www.openstreetmap.org/way/92984531"
+      ],
+      "id": "route-local-fire-whitby-fire-5-04",
+      "routeBaseId": "fire-whitby-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1704.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 164.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 153.9,
+        "bestSameServiceCostSeconds": 153.9
+      }
+    },
+    {
+      "name": "Bettina Place & Darren Avenue",
+      "addr": "Bettina Place & Darren Avenue",
+      "lat": 43.9189354,
+      "lng": -78.9291314,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/92950237",
+        "way/92950277",
+        "way/92950327"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/92950237",
+        "https://www.openstreetmap.org/way/92950277",
+        "https://www.openstreetmap.org/way/92950327"
+      ],
+      "id": "route-local-fire-whitby-fire-5-05",
+      "routeBaseId": "fire-whitby-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2572.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 983.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 211.5,
+        "bestSameServiceCostSeconds": 198.2
+      }
+    },
+    {
+      "name": "Fallingbrook Street & Parnell Crescent",
+      "addr": "Fallingbrook Street & Parnell Crescent",
+      "lat": 43.9108262,
+      "lng": -78.940032,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34190802",
+        "way/34192125",
+        "way/34192316"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34190802",
+        "https://www.openstreetmap.org/way/34192125",
+        "https://www.openstreetmap.org/way/34192316"
+      ],
+      "id": "route-local-fire-whitby-fire-5-06",
+      "routeBaseId": "fire-whitby-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1713.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 902.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 211.4,
+        "bestSameServiceCostSeconds": 211.4
+      }
+    },
+    {
+      "name": "Anderson Street & Darren Avenue",
+      "addr": "Anderson Street & Darren Avenue",
+      "lat": 43.9152308,
+      "lng": -78.9360707,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/820112103",
+        "way/92950295"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/820112103",
+        "https://www.openstreetmap.org/way/92950295"
+      ],
+      "id": "route-local-ems-whitby-ems-513-01",
+      "routeBaseId": "ems-whitby-ems-513",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 817.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 609.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 73.6,
+        "bestSameServiceCostSeconds": 73.6
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "McKinney Centre",
+      "addr": "222 McKinney Drive, Whitby, ON",
+      "lat": 43.92083733049407,
+      "lng": -78.95536274250128,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/4/query?objectIds=2436&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Burwell Street",
+        "Broadleaf Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "whitby-call-03",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-whitby-ems-513-02",
+      "routeBaseId": "ems-whitby-ems-513",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1855.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1533.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 204,
+        "bestSameServiceCostSeconds": 204
+      }
+    },
+    {
+      "name": "Conlin Road & Thickson Road",
+      "addr": "Conlin Road & Thickson Road",
+      "lat": 43.9394676,
+      "lng": -78.9355068,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1414843420",
+        "way/26250781",
+        "way/475654517",
+        "way/814754033"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1414843420",
+        "https://www.openstreetmap.org/way/26250781",
+        "https://www.openstreetmap.org/way/475654517",
+        "https://www.openstreetmap.org/way/814754033"
+      ],
+      "id": "route-local-ems-whitby-ems-513-03",
+      "routeBaseId": "ems-whitby-ems-513",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2626.4,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 2700.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 205.5,
+        "bestSameServiceCostSeconds": 205.5
+      }
+    },
+    {
+      "name": "Taunton Road East & Tom Edwards Drive",
+      "addr": "Taunton Road East & Tom Edwards Drive",
+      "lat": 43.923342,
+      "lng": -78.9212616,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34190604",
+        "way/440022023",
+        "way/92951766",
+        "way/92951822"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34190604",
+        "https://www.openstreetmap.org/way/440022023",
+        "https://www.openstreetmap.org/way/92951766",
+        "https://www.openstreetmap.org/way/92951822"
+      ],
+      "id": "route-local-ems-whitby-ems-513-04",
+      "routeBaseId": "ems-whitby-ems-513",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1685.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 956.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 115.8,
+        "bestSameServiceCostSeconds": 115.8
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "The Village of Taunton Mills",
+      "addr": "3800 Brock Street North",
+      "lat": 43.913109799057416,
+      "lng": -78.95825239999999,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790059"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "4425",
+      "community": "Whitby",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-4425",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-whitby-ems-513-05",
+      "routeBaseId": "ems-whitby-ems-513",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2316.7,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 166.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 180,
+        "bestSameServiceCostSeconds": 180
+      }
+    },
+    {
+      "name": "Glengowan Street & Thickson Road",
+      "addr": "Glengowan Street & Thickson Road",
+      "lat": 43.9287184,
+      "lng": -78.9307368,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1417198111",
+        "way/1417198112",
+        "way/218671556"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1417198111",
+        "https://www.openstreetmap.org/way/1417198112",
+        "https://www.openstreetmap.org/way/218671556"
+      ],
+      "id": "route-local-ems-whitby-ems-513-06",
+      "routeBaseId": "ems-whitby-ems-513",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1917.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 979,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 130.4,
+        "bestSameServiceCostSeconds": 130.4
+      }
+    }
+  ]
 }

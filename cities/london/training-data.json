@@ -451,5 +451,6085 @@
   ],
   "roadsUrl": "cities/london/roads.geojson.gz",
   "roadFeatureCount": 25295,
-  "roadDataSha256": "2ab12a8e083efbc245a1fac40a8a7e24b1728ad4d901f465061f43cb36307e49"
+  "roadDataSha256": "2ab12a8e083efbc245a1fac40a8a7e24b1728ad4d901f465061f43cb36307e49",
+  "routeResponses": {
+    "schemaVersion": 1,
+    "minCallsPerBase": 3,
+    "targetCallsPerBase": 6,
+    "generatedOn": "2026-10-17",
+    "model": {
+      "description": "Published first-due polygons where available. Otherwise a directed road-network estimate using road class travel cost from every same-service hall; allows a15second cost tie for overlapping nearby halls. This is training geography, not live dispatch advice.",
+      "ownershipToleranceSeconds": 15,
+      "maximumCandidateRouteMetres": 12000
+    },
+    "bases": [
+      {
+        "baseId": "fire-london-fire-1",
+        "service": "fire",
+        "number": 1,
+        "name": "Fire Headquarters Station #1",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 42.9816928,
+          "lng": -81.2380049,
+          "road": "Unnamed road",
+          "gapMetres": 26.6
+        },
+        "callIds": [
+          "route-local-fire-london-fire-1-01",
+          "route-local-fire-london-fire-1-02",
+          "route-local-fire-london-fire-1-03",
+          "route-local-fire-london-fire-1-04",
+          "route-local-fire-london-fire-1-05",
+          "route-local-fire-london-fire-1-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-london-fire-2",
+        "service": "fire",
+        "number": 2,
+        "name": "Fire Station #2",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 42.990969339845144,
+          "lng": -81.21190173704467,
+          "road": "Florence Street",
+          "gapMetres": 40
+        },
+        "callIds": [
+          "route-local-fire-london-fire-2-01",
+          "route-local-fire-london-fire-2-02",
+          "route-local-fire-london-fire-2-03",
+          "route-local-fire-london-fire-2-04",
+          "route-local-fire-london-fire-2-05",
+          "route-local-fire-london-fire-2-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-london-fire-3",
+        "service": "fire",
+        "number": 3,
+        "name": "Fire Station #3",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6100,
+        "access": {
+          "lat": 42.95362157927505,
+          "lng": -81.29178191591274,
+          "road": "Unnamed road",
+          "gapMetres": 1.3
+        },
+        "callIds": [
+          "route-local-fire-london-fire-3-01",
+          "route-local-fire-london-fire-3-02",
+          "route-local-fire-london-fire-3-03",
+          "route-local-fire-london-fire-3-04",
+          "route-local-fire-london-fire-3-05",
+          "route-local-fire-london-fire-3-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-london-fire-4",
+        "service": "fire",
+        "number": 4,
+        "name": "Fire Station #4",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 42.999624305679625,
+          "lng": -81.24686499042615,
+          "road": "Saint James Street",
+          "gapMetres": 27.2
+        },
+        "callIds": [
+          "route-local-fire-london-fire-4-01",
+          "route-local-fire-london-fire-4-02",
+          "route-local-fire-london-fire-4-03",
+          "route-local-fire-london-fire-4-04",
+          "route-local-fire-london-fire-4-05",
+          "route-local-fire-london-fire-4-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-london-fire-5",
+        "service": "fire",
+        "number": 5,
+        "name": "Fire Station #5",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6100,
+        "access": {
+          "lat": 42.9627331,
+          "lng": -81.19551,
+          "road": "Unnamed road",
+          "gapMetres": 17.8
+        },
+        "callIds": [
+          "route-local-fire-london-fire-5-01",
+          "route-local-fire-london-fire-5-02",
+          "route-local-fire-london-fire-5-03",
+          "route-local-fire-london-fire-5-04",
+          "route-local-fire-london-fire-5-05",
+          "route-local-fire-london-fire-5-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-london-fire-6",
+        "service": "fire",
+        "number": 6,
+        "name": "Fire Station #6",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 42.9830041,
+          "lng": -81.2936629,
+          "road": "Unnamed road",
+          "gapMetres": 9.8
+        },
+        "callIds": [
+          "route-local-fire-london-fire-6-01",
+          "route-local-fire-london-fire-6-02",
+          "route-local-fire-london-fire-6-03",
+          "route-local-fire-london-fire-6-04",
+          "route-local-fire-london-fire-6-05",
+          "route-local-fire-london-fire-6-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-london-fire-7",
+        "service": "fire",
+        "number": 7,
+        "name": "Fire Station #7",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.02219116083385,
+          "lng": -81.21171260709411,
+          "road": "Unnamed road",
+          "gapMetres": 8.5
+        },
+        "callIds": [
+          "route-local-fire-london-fire-7-01",
+          "route-local-fire-london-fire-7-02",
+          "route-local-fire-london-fire-7-03",
+          "route-local-fire-london-fire-7-04",
+          "route-local-fire-london-fire-7-05",
+          "route-local-fire-london-fire-7-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-london-fire-8",
+        "service": "fire",
+        "number": 8,
+        "name": "Fire Station #8",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.0188173,
+          "lng": -81.2790039,
+          "road": "Unnamed road",
+          "gapMetres": 11.9
+        },
+        "callIds": [
+          "route-local-fire-london-fire-8-01",
+          "route-local-fire-london-fire-8-02",
+          "route-local-fire-london-fire-8-03",
+          "route-local-fire-london-fire-8-04",
+          "route-local-fire-london-fire-8-05",
+          "route-local-fire-london-fire-8-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-london-fire-9",
+        "service": "fire",
+        "number": 9,
+        "name": "Fire Station #9",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 42.9465385,
+          "lng": -81.2267571,
+          "road": "Unnamed road",
+          "gapMetres": 8.3
+        },
+        "callIds": [
+          "route-local-fire-london-fire-9-01",
+          "route-local-fire-london-fire-9-02",
+          "route-local-fire-london-fire-9-03",
+          "route-local-fire-london-fire-9-04",
+          "route-local-fire-london-fire-9-05",
+          "route-local-fire-london-fire-9-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-london-fire-10",
+        "service": "fire",
+        "number": 10,
+        "name": "Fire Station #10",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6100,
+        "access": {
+          "lat": 42.9961576,
+          "lng": -81.1550767,
+          "road": "Unnamed road",
+          "gapMetres": 24.7
+        },
+        "callIds": [
+          "route-local-fire-london-fire-10-01",
+          "route-local-fire-london-fire-10-02",
+          "route-local-fire-london-fire-10-03",
+          "route-local-fire-london-fire-10-04",
+          "route-local-fire-london-fire-10-05",
+          "route-local-fire-london-fire-10-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-london-fire-11",
+        "service": "fire",
+        "number": 11,
+        "name": "Fire Station #11",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5700,
+        "access": {
+          "lat": 42.9188458,
+          "lng": -81.2852736,
+          "road": "Unnamed road",
+          "gapMetres": 8
+        },
+        "callIds": [
+          "route-local-fire-london-fire-11-01",
+          "route-local-fire-london-fire-11-02",
+          "route-local-fire-london-fire-11-03",
+          "route-local-fire-london-fire-11-04",
+          "route-local-fire-london-fire-11-05",
+          "route-local-fire-london-fire-11-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-london-fire-12",
+        "service": "fire",
+        "number": 12,
+        "name": "Fire Station #12",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 42.9612854,
+          "lng": -81.3334971,
+          "road": "Unnamed road",
+          "gapMetres": 29.1
+        },
+        "callIds": [
+          "route-local-fire-london-fire-12-01",
+          "route-local-fire-london-fire-12-02",
+          "route-local-fire-london-fire-12-03",
+          "route-local-fire-london-fire-12-04",
+          "route-local-fire-london-fire-12-05",
+          "route-local-fire-london-fire-12-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-london-fire-13",
+        "service": "fire",
+        "number": 13,
+        "name": "Fire Station #13",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.03705755848888,
+          "lng": -81.24752735960689,
+          "road": "Fanshawe Park Road East",
+          "gapMetres": 33.7
+        },
+        "callIds": [
+          "route-local-fire-london-fire-13-01",
+          "route-local-fire-london-fire-13-02",
+          "route-local-fire-london-fire-13-03",
+          "route-local-fire-london-fire-13-04",
+          "route-local-fire-london-fire-13-05",
+          "route-local-fire-london-fire-13-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-london-fire-14",
+        "service": "fire",
+        "number": 14,
+        "name": "Fire Station #14",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5800,
+        "access": {
+          "lat": 43.0151343,
+          "lng": -81.3396916,
+          "road": "Unnamed road",
+          "gapMetres": 20.5
+        },
+        "callIds": [
+          "route-local-fire-london-fire-14-01",
+          "route-local-fire-london-fire-14-02",
+          "route-local-fire-london-fire-14-03",
+          "route-local-fire-london-fire-14-04",
+          "route-local-fire-london-fire-14-05",
+          "route-local-fire-london-fire-14-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-london-fire-15",
+        "service": "fire",
+        "number": 15,
+        "name": "Fire Station #15",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5800,
+        "access": {
+          "lat": 42.96267072087567,
+          "lng": -81.13938986163825,
+          "road": "Old Victoria Road",
+          "gapMetres": 44
+        },
+        "callIds": [
+          "route-local-fire-london-fire-15-01",
+          "route-local-fire-london-fire-15-02",
+          "route-local-fire-london-fire-15-03",
+          "route-local-fire-london-fire-15-04",
+          "route-local-fire-london-fire-15-05",
+          "route-local-fire-london-fire-15-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-london-ems-adelaide",
+        "service": "ems",
+        "number": 10000,
+        "name": "Adelaide Street Base",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6100,
+        "access": {
+          "lat": 42.9298395,
+          "lng": -81.2077112,
+          "road": "Unnamed road",
+          "gapMetres": 32.6
+        },
+        "callIds": [
+          "route-local-ems-london-ems-adelaide-01",
+          "route-local-ems-london-ems-adelaide-02",
+          "route-local-ems-london-ems-adelaide-03",
+          "route-local-ems-london-ems-adelaide-04",
+          "route-local-ems-london-ems-adelaide-05",
+          "route-local-ems-london-ems-adelaide-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-london-ems-byron",
+        "service": "ems",
+        "number": 10001,
+        "name": "Byron Base",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6100,
+        "access": {
+          "lat": 42.9338383,
+          "lng": -81.3162986,
+          "road": "Unnamed road",
+          "gapMetres": 15.9
+        },
+        "callIds": [
+          "route-local-ems-london-ems-byron-01",
+          "route-local-ems-london-ems-byron-02",
+          "route-local-ems-london-ems-byron-03",
+          "route-local-ems-london-ems-byron-04",
+          "route-local-ems-london-ems-byron-05",
+          "route-local-ems-london-ems-byron-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-london-ems-horizon",
+        "service": "ems",
+        "number": 10002,
+        "name": "Horizon Base",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 42.98925178482625,
+          "lng": -81.29329068415076,
+          "road": "Unnamed road",
+          "gapMetres": 1.1
+        },
+        "callIds": [
+          "route-local-ems-london-ems-horizon-01",
+          "route-local-ems-london-ems-horizon-02",
+          "route-local-ems-london-ems-horizon-03",
+          "route-local-ems-london-ems-horizon-04",
+          "route-local-ems-london-ems-horizon-05",
+          "route-local-ems-london-ems-horizon-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-london-ems-hyde-park",
+        "service": "ems",
+        "number": 10003,
+        "name": "Hyde Park Base",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6300,
+        "access": {
+          "lat": 43.01538673018509,
+          "lng": -81.34003745794027,
+          "road": "Unnamed road",
+          "gapMetres": 20.4
+        },
+        "callIds": [
+          "route-local-ems-london-ems-hyde-park-01",
+          "route-local-ems-london-ems-hyde-park-02",
+          "route-local-ems-london-ems-hyde-park-03",
+          "route-local-ems-london-ems-hyde-park-04",
+          "route-local-ems-london-ems-hyde-park-05",
+          "route-local-ems-london-ems-hyde-park-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-london-ems-trafalgar",
+        "service": "ems",
+        "number": 10004,
+        "name": "Trafalgar Base",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.000037729876446,
+          "lng": -81.14310926385645,
+          "road": "Trafalgar Street",
+          "gapMetres": 46.4
+        },
+        "callIds": [
+          "route-local-ems-london-ems-trafalgar-01",
+          "route-local-ems-london-ems-trafalgar-02",
+          "route-local-ems-london-ems-trafalgar-03",
+          "route-local-ems-london-ems-trafalgar-04",
+          "route-local-ems-london-ems-trafalgar-05",
+          "route-local-ems-london-ems-trafalgar-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-london-ems-waterloo",
+        "service": "ems",
+        "number": 10006,
+        "name": "Waterloo Base",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 42.9837138,
+          "lng": -81.2408483,
+          "road": "Unnamed road",
+          "gapMetres": 17.2
+        },
+        "callIds": [
+          "route-local-ems-london-ems-waterloo-01",
+          "route-local-ems-london-ems-waterloo-02",
+          "route-local-ems-london-ems-waterloo-03",
+          "route-local-ems-london-ems-waterloo-04",
+          "route-local-ems-london-ems-waterloo-05",
+          "route-local-ems-london-ems-waterloo-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-london-ems-trossacks",
+        "service": "ems",
+        "number": 10005,
+        "name": "Trossacks Base",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5800,
+        "access": {
+          "lat": 43.04048833509683,
+          "lng": -81.2453438943126,
+          "road": "McTaggart Court",
+          "gapMetres": 17.6
+        },
+        "callIds": [
+          "route-local-ems-london-ems-trossacks-01",
+          "route-local-ems-london-ems-trossacks-02",
+          "route-local-ems-london-ems-trossacks-03",
+          "route-local-ems-london-ems-trossacks-04",
+          "route-local-ems-london-ems-trossacks-05",
+          "route-local-ems-london-ems-trossacks-06"
+        ],
+        "challengeCalls": 6
+      }
+    ]
+  },
+  "routeCalls": [
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Central Public Library",
+      "addr": "251 Dundas St, London, Ontario",
+      "lat": 42.98431037336778,
+      "lng": -81.24626719384013,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.london.ca/server/rest/services/PointsOfInterest/MapServer/4/query?where=OBJECTID%3D22&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Wellington Street",
+        "Clarence Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "london-call-13",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-london-fire-1-01",
+      "routeBaseId": "fire-london-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1103,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 344.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 73.9,
+        "bestSameServiceCostSeconds": 73.9
+      }
+    },
+    {
+      "name": "Chesley Avenue & Dame Street",
+      "addr": "Chesley Avenue & Dame Street",
+      "lat": 42.9822405,
+      "lng": -81.217424,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/27750724",
+        "way/27750751"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/27750724",
+        "https://www.openstreetmap.org/way/27750751"
+      ],
+      "id": "route-local-fire-london-fire-1-02",
+      "routeBaseId": "fire-london-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1834.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 535.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 143.3,
+        "bestSameServiceCostSeconds": 135.7
+      }
+    },
+    {
+      "name": "Belgrave Avenue & Chester Street",
+      "addr": "Belgrave Avenue & Chester Street",
+      "lat": 42.9636515,
+      "lng": -81.2417514,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/23902994",
+        "way/27766719"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/23902994",
+        "https://www.openstreetmap.org/way/27766719"
+      ],
+      "id": "route-local-fire-london-fire-1-03",
+      "routeBaseId": "fire-london-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2601,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 309.6,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 210.7,
+        "bestSameServiceCostSeconds": 210.7
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "City Hall",
+      "addr": "300 Dufferin Ave, London, Ontario",
+      "lat": 42.987988355687634,
+      "lng": -81.2460371812099,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.london.ca/server/rest/services/PointsOfInterest/MapServer/0/query?where=OBJECTID%3D1211&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Centennial Lane",
+        "Wellington Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "london-call-01",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-london-fire-1-04",
+      "routeBaseId": "fire-london-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1361.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 252.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 103.1,
+        "bestSameServiceCostSeconds": 103.1
+      }
+    },
+    {
+      "name": "Cove Road & Wharncliffe Road South",
+      "addr": "Cove Road & Wharncliffe Road South",
+      "lat": 42.972496,
+      "lng": -81.2619776,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1383995395",
+        "way/1383999667",
+        "way/545432569"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1383995395",
+        "https://www.openstreetmap.org/way/1383999667",
+        "https://www.openstreetmap.org/way/545432569"
+      ],
+      "id": "route-local-fire-london-fire-1-05",
+      "routeBaseId": "fire-london-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2570.5,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 329.9,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 160.3,
+        "bestSameServiceCostSeconds": 160.3
+      }
+    },
+    {
+      "name": "Ardaven Place & Ridout Street South",
+      "addr": "Ardaven Place & Ridout Street South",
+      "lat": 42.9736104,
+      "lng": -81.2494312,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/27766650",
+        "way/466645914"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/27766650",
+        "https://www.openstreetmap.org/way/466645914"
+      ],
+      "id": "route-local-fire-london-fire-1-06",
+      "routeBaseId": "fire-london-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1709.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 235.1,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 118.3,
+        "bestSameServiceCostSeconds": 118.3
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Boyle Memorial Community Centre",
+      "addr": "530 Charlotte St, London, Ontario",
+      "lat": 42.99693654478191,
+      "lng": -81.21855471219213,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.london.ca/server/rest/services/PointsOfInterest/MapServer/6/query?where=OBJECTID%3D30&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Princess Avenue",
+        "Lorne Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "london-call-18",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-london-fire-2-01",
+      "routeBaseId": "fire-london-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1112.7,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 257.9,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Florence Street",
+        "estimatedCostSeconds": 125.5,
+        "bestSameServiceCostSeconds": 125.5
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Silverwood Arena",
+      "addr": "50 Sycamore St, London, Ontario",
+      "lat": 42.983676212526305,
+      "lng": -81.20583354025322,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.london.ca/server/rest/services/PointsOfInterest/MapServer/5/query?where=OBJECTID%3D23&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Hume Street",
+        "Ash Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "london-call-16",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-london-fire-2-02",
+      "routeBaseId": "fire-london-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1696.9,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 331.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Florence Street",
+        "estimatedCostSeconds": 163.7,
+        "bestSameServiceCostSeconds": 163.7
+      }
+    },
+    {
+      "name": "Saskatoon Street & Wavell Street",
+      "addr": "Saskatoon Street & Wavell Street",
+      "lat": 42.9948707,
+      "lng": -81.1859994,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1457147543",
+        "way/28073817",
+        "way/28414719"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1457147543",
+        "https://www.openstreetmap.org/way/28073817",
+        "https://www.openstreetmap.org/way/28414719"
+      ],
+      "id": "route-local-fire-london-fire-2-03",
+      "routeBaseId": "fire-london-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2625.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 712.9,
+        "decisionKinds": [
+          "departure",
+          "bridge"
+        ],
+        "departureRoad": "Florence Street",
+        "estimatedCostSeconds": 196.5,
+        "bestSameServiceCostSeconds": 196.5
+      }
+    },
+    {
+      "name": "Florence Street & Rectory Street & York Street",
+      "addr": "Florence Street & Rectory Street & York Street",
+      "lat": 42.9877053,
+      "lng": -81.2232971,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/474401560",
+        "way/474401561",
+        "way/474401562",
+        "way/476939584"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/474401560",
+        "https://www.openstreetmap.org/way/474401561",
+        "https://www.openstreetmap.org/way/474401562",
+        "https://www.openstreetmap.org/way/476939584"
+      ],
+      "id": "route-local-fire-london-fire-2-04",
+      "routeBaseId": "fire-london-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1011.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 357.4,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Florence Street",
+        "estimatedCostSeconds": 60.9,
+        "bestSameServiceCostSeconds": 60.9
+      }
+    },
+    {
+      "name": "First Street & Hansuld Street",
+      "addr": "First Street & Hansuld Street",
+      "lat": 43.0061059,
+      "lng": -81.1976677,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1300919461",
+        "way/28440610"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1300919461",
+        "https://www.openstreetmap.org/way/28440610"
+      ],
+      "id": "route-local-fire-london-fire-2-05",
+      "routeBaseId": "fire-london-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2615.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1139.9,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Florence Street",
+        "estimatedCostSeconds": 174.8,
+        "bestSameServiceCostSeconds": 174.8
+      }
+    },
+    {
+      "name": "Hale Street & Langmuir Avenue",
+      "addr": "Hale Street & Langmuir Avenue",
+      "lat": 42.9914733,
+      "lng": -81.1955804,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/147496457",
+        "way/28414254"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/147496457",
+        "https://www.openstreetmap.org/way/28414254"
+      ],
+      "id": "route-local-fire-london-fire-2-06",
+      "routeBaseId": "fire-london-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1687.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 751.4,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Florence Street",
+        "estimatedCostSeconds": 134.5,
+        "bestSameServiceCostSeconds": 134.5
+      }
+    },
+    {
+      "name": "Nottinghill Crescent & Village Green Avenue",
+      "addr": "Nottinghill Crescent & Village Green Avenue",
+      "lat": 42.9494779,
+      "lng": -81.2955999,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/147222030",
+        "way/147222065"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/147222030",
+        "https://www.openstreetmap.org/way/147222065"
+      ],
+      "id": "route-local-fire-london-fire-3-01",
+      "routeBaseId": "fire-london-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 812.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 419.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 77.1,
+        "bestSameServiceCostSeconds": 77.1
+      }
+    },
+    {
+      "name": "Base Line Road West & Robin Road",
+      "addr": "Base Line Road West & Robin Road",
+      "lat": 42.9610886,
+      "lng": -81.2796765,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/147221953",
+        "way/27784146"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/147221953",
+        "https://www.openstreetmap.org/way/27784146"
+      ],
+      "id": "route-local-fire-london-fire-3-02",
+      "routeBaseId": "fire-london-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1694,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 244.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 149,
+        "bestSameServiceCostSeconds": 149
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Bostwick Community Centre",
+      "addr": "501 Southdale Rd W, London, Ontario",
+      "lat": 42.937381404564626,
+      "lng": -81.28875252066818,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.london.ca/server/rest/services/PointsOfInterest/MapServer/6/query?where=OBJECTID%3D422&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Scollard Street",
+        "Yorkville Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "london-call-15",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-london-fire-3-03",
+      "routeBaseId": "fire-london-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2685.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 544,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 206.3,
+        "bestSameServiceCostSeconds": 206.3
+      }
+    },
+    {
+      "name": "Jarvis Street & Springbank Drive",
+      "addr": "Jarvis Street & Springbank Drive",
+      "lat": 42.9605738,
+      "lng": -81.2993467,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1420393068",
+        "way/489006296"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1420393068",
+        "https://www.openstreetmap.org/way/489006296"
+      ],
+      "id": "route-local-fire-london-fire-3-04",
+      "routeBaseId": "fire-london-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1508.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 910.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 110.9,
+        "bestSameServiceCostSeconds": 110.9
+      }
+    },
+    {
+      "name": "Gabor Street & Thornley Street",
+      "addr": "Gabor Street & Thornley Street",
+      "lat": 42.941393,
+      "lng": -81.3109407,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/147221996",
+        "way/534657865"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/147221996",
+        "https://www.openstreetmap.org/way/534657865"
+      ],
+      "id": "route-local-fire-london-fire-3-05",
+      "routeBaseId": "fire-london-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2548.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2002.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 261.7,
+        "bestSameServiceCostSeconds": 261.7
+      }
+    },
+    {
+      "name": "Monte Vista Crescent & Viscount Road",
+      "addr": "Monte Vista Crescent & Viscount Road",
+      "lat": 42.9474336,
+      "lng": -81.2793525,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/147222027",
+        "way/466645940"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/147222027",
+        "https://www.openstreetmap.org/way/466645940"
+      ],
+      "id": "route-local-fire-london-fire-3-06",
+      "routeBaseId": "fire-london-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1686.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 559.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 121,
+        "bestSameServiceCostSeconds": 121
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "St Joseph's Health Care Hospital",
+      "addr": "268 Grosvenor St, London, Ontario",
+      "lat": 43.00039937415913,
+      "lng": -81.2539490988057,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.london.ca/server/rest/services/PointsOfInterest/MapServer/3/query?where=OBJECTID%3D11&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Wellington Street",
+        "Richmond Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "london-call-10",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-london-fire-4-01",
+      "routeBaseId": "fire-london-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 759.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 475.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Saint James Street",
+        "estimatedCostSeconds": 102.3,
+        "bestSameServiceCostSeconds": 102.3
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Carling Heights Optimist Community Centre",
+      "addr": "656 Elizabeth Street, London, Ontario",
+      "lat": 42.99837310934929,
+      "lng": -81.22881974882871,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.london.ca/server/rest/services/PointsOfInterest/MapServer/6/query?where=OBJECTID%3D22&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Mcmahen Street",
+        "Piccadilly Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "london-call-14",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-london-fire-4-02",
+      "routeBaseId": "fire-london-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1921,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 435.7,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Saint James Street",
+        "estimatedCostSeconds": 258,
+        "bestSameServiceCostSeconds": 258
+      }
+    },
+    {
+      "name": "Norwood Avenue & Wedgewood Drive",
+      "addr": "Norwood Avenue & Wedgewood Drive",
+      "lat": 43.0157867,
+      "lng": -81.2385939,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/28467898",
+        "way/28467900"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/28467898",
+        "https://www.openstreetmap.org/way/28467900"
+      ],
+      "id": "route-local-fire-london-fire-4-03",
+      "routeBaseId": "fire-london-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2623.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1293.4,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Saint James Street",
+        "estimatedCostSeconds": 213.7,
+        "bestSameServiceCostSeconds": 213.3
+      }
+    },
+    {
+      "name": "Princess Avenue & Prospect Avenue",
+      "addr": "Princess Avenue & Prospect Avenue",
+      "lat": 42.9914095,
+      "lng": -81.2380385,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/26764285",
+        "way/27672333"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/26764285",
+        "https://www.openstreetmap.org/way/27672333"
+      ],
+      "id": "route-local-fire-london-fire-4-04",
+      "routeBaseId": "fire-london-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1447.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 493.1,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Saint James Street",
+        "estimatedCostSeconds": 140.2,
+        "bestSameServiceCostSeconds": 139.9
+      }
+    },
+    {
+      "name": "Charles Street & Wharncliffe Road North",
+      "addr": "Charles Street & Wharncliffe Road North",
+      "lat": 42.985776,
+      "lng": -81.262908,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/27772048",
+        "way/465721498"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/27772048",
+        "https://www.openstreetmap.org/way/465721498"
+      ],
+      "id": "route-local-fire-london-fire-4-05",
+      "routeBaseId": "fire-london-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2600.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 880.1,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Saint James Street",
+        "estimatedCostSeconds": 169.7,
+        "bestSameServiceCostSeconds": 169.7
+      }
+    },
+    {
+      "name": "Patricia Street & Steele Street",
+      "addr": "Patricia Street & Steele Street",
+      "lat": 43.0095493,
+      "lng": -81.2560156,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/28539934",
+        "way/489058383"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/28539934",
+        "https://www.openstreetmap.org/way/489058383"
+      ],
+      "id": "route-local-fire-london-fire-4-06",
+      "routeBaseId": "fire-london-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1597.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 719,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Saint James Street",
+        "estimatedCostSeconds": 146.3,
+        "bestSameServiceCostSeconds": 146.3
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Glen Cairn Arena",
+      "addr": "370 Chippendale Cres, London, Ontario",
+      "lat": 42.96223673103948,
+      "lng": -81.2106359598958,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.london.ca/server/rest/services/PointsOfInterest/MapServer/5/query?where=OBJECTID%3D19&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "King Edward Avenue",
+        "Buckingham Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "london-call-17",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-london-fire-5-01",
+      "routeBaseId": "fire-london-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1725.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 742,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 172,
+        "bestSameServiceCostSeconds": 172
+      }
+    },
+    {
+      "name": "Chelton Road & Commissioners Road East & Meadowlark Ridge",
+      "addr": "Chelton Road & Commissioners Road East & Meadowlark Ridge",
+      "lat": 42.9635581,
+      "lng": -81.1738321,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1481004576",
+        "way/1481004577",
+        "way/1547176427",
+        "way/1547786009"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1481004576",
+        "https://www.openstreetmap.org/way/1481004577",
+        "https://www.openstreetmap.org/way/1547176427",
+        "https://www.openstreetmap.org/way/1547786009"
+      ],
+      "id": "route-local-fire-london-fire-5-02",
+      "routeBaseId": "fire-london-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1827.7,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 5289.2,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 115.7,
+        "bestSameServiceCostSeconds": 115.7
+      }
+    },
+    {
+      "name": "Coventry Avenue & Hamilton Road",
+      "addr": "Coventry Avenue & Hamilton Road",
+      "lat": 42.9776184,
+      "lng": -81.1936946,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1382267133",
+        "way/147496455"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1382267133",
+        "https://www.openstreetmap.org/way/147496455"
+      ],
+      "id": "route-local-fire-london-fire-5-03",
+      "routeBaseId": "fire-london-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2678,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 2647.1,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 130.1,
+        "bestSameServiceCostSeconds": 130.1
+      }
+    },
+    {
+      "name": "Glenroy Road & Pond View Road",
+      "addr": "Glenroy Road & Pond View Road",
+      "lat": 42.9500792,
+      "lng": -81.1925188,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/28400800",
+        "way/28400994",
+        "way/466810215"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/28400800",
+        "https://www.openstreetmap.org/way/28400994",
+        "https://www.openstreetmap.org/way/466810215"
+      ],
+      "id": "route-local-fire-london-fire-5-04",
+      "routeBaseId": "fire-london-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1697.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1040.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 140.1,
+        "bestSameServiceCostSeconds": 140.1
+      }
+    },
+    {
+      "name": "Gladstone Avenue & Veronica Avenue",
+      "addr": "Gladstone Avenue & Veronica Avenue",
+      "lat": 42.972156,
+      "lng": -81.2159397,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1549429589",
+        "way/27771599"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1549429589",
+        "https://www.openstreetmap.org/way/27771599"
+      ],
+      "id": "route-local-fire-london-fire-5-05",
+      "routeBaseId": "fire-london-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2621.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 260.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 223,
+        "bestSameServiceCostSeconds": 223
+      }
+    },
+    {
+      "name": "Davidson Court & Meadowgate Boulevard",
+      "addr": "Davidson Court & Meadowgate Boulevard",
+      "lat": 42.9616905,
+      "lng": -81.1804299,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/136691103",
+        "way/488226208"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/136691103",
+        "https://www.openstreetmap.org/way/488226208"
+      ],
+      "id": "route-local-fire-london-fire-5-06",
+      "routeBaseId": "fire-london-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1487.8,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 7664.2,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 104.9,
+        "bestSameServiceCostSeconds": 104.9
+      }
+    },
+    {
+      "name": "Farrah Road & Proudfoot Lane",
+      "addr": "Farrah Road & Proudfoot Lane",
+      "lat": 42.9872303,
+      "lng": -81.2889633,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1444820841",
+        "way/1556691580",
+        "way/467229948"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1444820841",
+        "https://www.openstreetmap.org/way/1556691580",
+        "https://www.openstreetmap.org/way/467229948"
+      ],
+      "id": "route-local-fire-london-fire-6-01",
+      "routeBaseId": "fire-london-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 801.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 191.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 70.4,
+        "bestSameServiceCostSeconds": 70.4
+      }
+    },
+    {
+      "name": "Cedarwood Road & Meadowoak Crescent",
+      "addr": "Cedarwood Road & Meadowoak Crescent",
+      "lat": 42.9809746,
+      "lng": -81.3117519,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/24366783",
+        "way/24366787"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/24366783",
+        "https://www.openstreetmap.org/way/24366787"
+      ],
+      "id": "route-local-fire-london-fire-6-02",
+      "routeBaseId": "fire-london-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1712.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 305.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 156.1,
+        "bestSameServiceCostSeconds": 156.1
+      }
+    },
+    {
+      "name": "Denlaw Road & Lawson Road",
+      "addr": "Denlaw Road & Lawson Road",
+      "lat": 42.9980356,
+      "lng": -81.3063737,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/23295016",
+        "way/466530624"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/23295016",
+        "https://www.openstreetmap.org/way/466530624"
+      ],
+      "id": "route-local-fire-london-fire-6-03",
+      "routeBaseId": "fire-london-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2596.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1011.7,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 225.9,
+        "bestSameServiceCostSeconds": 225.9
+      }
+    },
+    {
+      "name": "Riverside Drive & Warren Road",
+      "addr": "Riverside Drive & Warren Road",
+      "lat": 42.9726591,
+      "lng": -81.2934033,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1430580046",
+        "way/1430580047",
+        "way/26764834"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1430580046",
+        "https://www.openstreetmap.org/way/1430580047",
+        "https://www.openstreetmap.org/way/26764834"
+      ],
+      "id": "route-local-fire-london-fire-6-04",
+      "routeBaseId": "fire-london-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1544.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 185,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 100.1,
+        "bestSameServiceCostSeconds": 100.1
+      }
+    },
+    {
+      "name": "Forward Avenue & Riverside Drive & Woodward Avenue",
+      "addr": "Forward Avenue & Riverside Drive & Woodward Avenue",
+      "lat": 42.9829648,
+      "lng": -81.2694847,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1444078322",
+        "way/27772594",
+        "way/31293537",
+        "way/732215183"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1444078322",
+        "https://www.openstreetmap.org/way/27772594",
+        "https://www.openstreetmap.org/way/31293537",
+        "https://www.openstreetmap.org/way/732215183"
+      ],
+      "id": "route-local-fire-london-fire-6-05",
+      "routeBaseId": "fire-london-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2572.7,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 555.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 180.3,
+        "bestSameServiceCostSeconds": 180.3
+      }
+    },
+    {
+      "name": "Old Riverside Drive & Riverside Drive",
+      "addr": "Old Riverside Drive & Riverside Drive",
+      "lat": 42.978787,
+      "lng": -81.2827558,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1414837590",
+        "way/26764636",
+        "way/27783599"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1414837590",
+        "https://www.openstreetmap.org/way/26764636",
+        "https://www.openstreetmap.org/way/27783599"
+      ],
+      "id": "route-local-fire-london-fire-6-06",
+      "routeBaseId": "fire-london-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1675.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 185,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 108,
+        "bestSameServiceCostSeconds": 108
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "North London Optimist Community Centre",
+      "addr": "1345 Cheapside St, London, Ontario",
+      "lat": 43.013826462137025,
+      "lng": -81.21085781627326,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.london.ca/server/rest/services/PointsOfInterest/MapServer/6/query?where=OBJECTID%3D27&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Highbury Avenue North",
+        "Michael Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "london-call-11",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-london-fire-7-01",
+      "routeBaseId": "fire-london-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1328.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1072.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 131.3,
+        "bestSameServiceCostSeconds": 131.3
+      }
+    },
+    {
+      "name": "Dylan Street & Purser Street",
+      "addr": "Dylan Street & Purser Street",
+      "lat": 43.0362037,
+      "lng": -81.2189076,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/740053442",
+        "way/740053443"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/740053442",
+        "https://www.openstreetmap.org/way/740053443"
+      ],
+      "id": "route-local-fire-london-fire-7-02",
+      "routeBaseId": "fire-london-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1719.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1142.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 164.5,
+        "bestSameServiceCostSeconds": 164.5
+      }
+    },
+    {
+      "name": "Huron Street & Victory Court",
+      "addr": "Huron Street & Victory Court",
+      "lat": 43.029226,
+      "lng": -81.1830136,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1551346054",
+        "way/467245129"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1551346054",
+        "https://www.openstreetmap.org/way/467245129"
+      ],
+      "id": "route-local-fire-london-fire-7-03",
+      "routeBaseId": "fire-london-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2573.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1987.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 171.6,
+        "bestSameServiceCostSeconds": 171.6
+      }
+    },
+    {
+      "name": "Bricklin Place & Ripley Road",
+      "addr": "Bricklin Place & Ripley Road",
+      "lat": 43.0272538,
+      "lng": -81.2063139,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/28461902",
+        "way/489066994"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/28461902",
+        "https://www.openstreetmap.org/way/489066994"
+      ],
+      "id": "route-local-fire-london-fire-7-04",
+      "routeBaseId": "fire-london-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1133.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 210.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 115,
+        "bestSameServiceCostSeconds": 115
+      }
+    },
+    {
+      "name": "Huron Street & Wedgewood Drive",
+      "addr": "Huron Street & Wedgewood Drive",
+      "lat": 43.0134703,
+      "lng": -81.2374367,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/28467900",
+        "way/465711086"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/28467900",
+        "https://www.openstreetmap.org/way/465711086"
+      ],
+      "id": "route-local-fire-london-fire-7-05",
+      "routeBaseId": "fire-london-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2592.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2142.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 172.8,
+        "bestSameServiceCostSeconds": 172.8
+      }
+    },
+    {
+      "name": "Fuller Street & Regal Drive",
+      "addr": "Fuller Street & Regal Drive",
+      "lat": 43.0222092,
+      "lng": -81.2254206,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/110361487",
+        "way/28468241"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/110361487",
+        "https://www.openstreetmap.org/way/28468241"
+      ],
+      "id": "route-local-fire-london-fire-7-06",
+      "routeBaseId": "fire-london-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1701.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 486.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 142.3,
+        "bestSameServiceCostSeconds": 142.3
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Masonville Place",
+      "addr": "1680 Richmond St, London, Ontario",
+      "lat": 43.02595126757416,
+      "lng": -81.27854387313369,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.london.ca/server/rest/services/PointsOfInterest/MapServer/0/query?where=OBJECTID%3D1227&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Hillview Boulevard",
+        "Jacksway Crescent"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "london-call-06",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-london-fire-8-01",
+      "routeBaseId": "fire-london-fire-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 906.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2285.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 141.7,
+        "bestSameServiceCostSeconds": 141.7
+      }
+    },
+    {
+      "name": "Lambton Drive & Middlesex Drive & Perth Drive",
+      "addr": "Lambton Drive & Middlesex Drive & Perth Drive",
+      "lat": 43.0079965,
+      "lng": -81.269921,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/142216962",
+        "way/142399224",
+        "way/40046722"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/142216962",
+        "https://www.openstreetmap.org/way/142399224",
+        "https://www.openstreetmap.org/way/40046722"
+      ],
+      "id": "route-local-fire-london-fire-8-02",
+      "routeBaseId": "fire-london-fire-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1624.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1515.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 127.9,
+        "bestSameServiceCostSeconds": 127.9
+      }
+    },
+    {
+      "name": "Glenridge Crescent & Stoneridge Lane",
+      "addr": "Glenridge Crescent & Stoneridge Lane",
+      "lat": 43.0174047,
+      "lng": -81.3032784,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/43049468",
+        "way/43049469",
+        "way/43049490"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/43049468",
+        "https://www.openstreetmap.org/way/43049469",
+        "https://www.openstreetmap.org/way/43049490"
+      ],
+      "id": "route-local-fire-london-fire-8-03",
+      "routeBaseId": "fire-london-fire-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2671,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 480.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 257.3,
+        "bestSameServiceCostSeconds": 257.3
+      }
+    },
+    {
+      "name": "Corley Drive & Windermere Road",
+      "addr": "Corley Drive & Windermere Road",
+      "lat": 43.0122898,
+      "lng": -81.2857041,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25479139",
+        "way/43049495",
+        "way/43049563"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25479139",
+        "https://www.openstreetmap.org/way/43049495",
+        "https://www.openstreetmap.org/way/43049563"
+      ],
+      "id": "route-local-fire-london-fire-8-04",
+      "routeBaseId": "fire-london-fire-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1225.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 723.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 103.7,
+        "bestSameServiceCostSeconds": 103.7
+      }
+    },
+    {
+      "name": "Callingham Court & Callingham Drive & Quarrier Road",
+      "addr": "Callingham Court & Callingham Drive & Quarrier Road",
+      "lat": 43.0312467,
+      "lng": -81.2962647,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25537816",
+        "way/372860063",
+        "way/489057307"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25537816",
+        "https://www.openstreetmap.org/way/372860063",
+        "https://www.openstreetmap.org/way/489057307"
+      ],
+      "id": "route-local-fire-london-fire-8-05",
+      "routeBaseId": "fire-london-fire-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2590.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1487.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 191,
+        "bestSameServiceCostSeconds": 191
+      }
+    },
+    {
+      "name": "Doon Drive & Ravine Ridge Crescent",
+      "addr": "Doon Drive & Ravine Ridge Crescent",
+      "lat": 43.0208697,
+      "lng": -81.2674292,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/27318943",
+        "way/27372032"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/27318943",
+        "https://www.openstreetmap.org/way/27372032"
+      ],
+      "id": "route-local-fire-london-fire-8-06",
+      "routeBaseId": "fire-london-fire-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1693.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 465.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 119,
+        "bestSameServiceCostSeconds": 119
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "White Oaks Mall",
+      "addr": "1105 Wellington Rd, London, Ontario",
+      "lat": 42.93201476561999,
+      "lng": -81.22487374959137,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.london.ca/server/rest/services/PointsOfInterest/MapServer/0/query?where=OBJECTID%3D1228&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Bradley Avenue",
+        "Whiteoaks Mall Entry"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "london-call-05",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-london-fire-9-01",
+      "routeBaseId": "fire-london-fire-9",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1731.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1405.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 181.2,
+        "bestSameServiceCostSeconds": 181.2
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "London Health Sciences Centre - Victoria Hospital",
+      "addr": "800 Commissioners Rd E, London, Ontario",
+      "lat": 42.960201507894624,
+      "lng": -81.22634631993141,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.london.ca/server/rest/services/PointsOfInterest/MapServer/3/query?where=OBJECTID%3D8&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Victoria Hospital Entry",
+        "Wellington Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "london-call-09",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-london-fire-9-02",
+      "routeBaseId": "fire-london-fire-9",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1805.7,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1163,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 222.1,
+        "bestSameServiceCostSeconds": 222.1
+      }
+    },
+    {
+      "name": "Adswood Place & Adswood Road & Bridlington Road",
+      "addr": "Adswood Place & Adswood Road & Bridlington Road",
+      "lat": 42.9430588,
+      "lng": -81.2022778,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/28393134",
+        "way/28393273",
+        "way/488407427"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/28393134",
+        "https://www.openstreetmap.org/way/28393273",
+        "https://www.openstreetmap.org/way/488407427"
+      ],
+      "id": "route-local-fire-london-fire-9-03",
+      "routeBaseId": "fire-london-fire-9",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2579.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1008.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 183.3,
+        "bestSameServiceCostSeconds": 183.3
+      }
+    },
+    {
+      "name": "Eden Avenue & Verulam Street",
+      "addr": "Eden Avenue & Verulam Street",
+      "lat": 42.947011,
+      "lng": -81.2311026,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/130213283",
+        "way/28343567",
+        "way/465726385",
+        "way/465726386"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/130213283",
+        "https://www.openstreetmap.org/way/28343567",
+        "https://www.openstreetmap.org/way/465726385",
+        "https://www.openstreetmap.org/way/465726386"
+      ],
+      "id": "route-local-fire-london-fire-9-04",
+      "routeBaseId": "fire-london-fire-9",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1078.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 203.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 122.3,
+        "bestSameServiceCostSeconds": 122.3
+      }
+    },
+    {
+      "name": "Crawford Green & Crawford Street",
+      "addr": "Crawford Green & Crawford Street",
+      "lat": 42.9437681,
+      "lng": -81.2510646,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/28343577",
+        "way/28343672"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/28343577",
+        "https://www.openstreetmap.org/way/28343672"
+      ],
+      "id": "route-local-fire-london-fire-9-05",
+      "routeBaseId": "fire-london-fire-9",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2618,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 556,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 199.8,
+        "bestSameServiceCostSeconds": 199.8
+      }
+    },
+    {
+      "name": "Antrim Crescent & Osgoode Drive",
+      "addr": "Antrim Crescent & Osgoode Drive",
+      "lat": 42.9416308,
+      "lng": -81.217624,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1334566873",
+        "way/28401622"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1334566873",
+        "https://www.openstreetmap.org/way/28401622"
+      ],
+      "id": "route-local-fire-london-fire-9-06",
+      "routeBaseId": "fire-london-fire-9",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1709.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 222.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 145.4,
+        "bestSameServiceCostSeconds": 145.4
+      }
+    },
+    {
+      "name": "Martinet Avenue & Napolean Court",
+      "addr": "Martinet Avenue & Napolean Court",
+      "lat": 43.0009998,
+      "lng": -81.1521401,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/28418992",
+        "way/28418996"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/28418992",
+        "https://www.openstreetmap.org/way/28418996"
+      ],
+      "id": "route-local-fire-london-fire-10-01",
+      "routeBaseId": "fire-london-fire-10",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 787.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1041,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 84.2,
+        "bestSameServiceCostSeconds": 84.2
+      }
+    },
+    {
+      "name": "Kirkland Crescent & Sudbury Avenue",
+      "addr": "Kirkland Crescent & Sudbury Avenue",
+      "lat": 42.994213,
+      "lng": -81.1721366,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/28417379",
+        "way/28417453"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/28417379",
+        "https://www.openstreetmap.org/way/28417453"
+      ],
+      "id": "route-local-fire-london-fire-10-02",
+      "routeBaseId": "fire-london-fire-10",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1670.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 860.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 125,
+        "bestSameServiceCostSeconds": 125
+      }
+    },
+    {
+      "name": "Crumlin Sideroad & Gore Road",
+      "addr": "Crumlin Sideroad & Gore Road",
+      "lat": 42.9886941,
+      "lng": -81.1356688,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/28435533",
+        "way/525995472"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/28435533",
+        "https://www.openstreetmap.org/way/525995472"
+      ],
+      "id": "route-local-fire-london-fire-10-03",
+      "routeBaseId": "fire-london-fire-10",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2425.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 346.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 132.4,
+        "bestSameServiceCostSeconds": 132.4
+      }
+    },
+    {
+      "name": "Saddy Avenue & Saddy Crescent",
+      "addr": "Saddy Avenue & Saddy Crescent",
+      "lat": 42.9904567,
+      "lng": -81.1545282,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/28418272",
+        "way/28418298"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/28418272",
+        "https://www.openstreetmap.org/way/28418298"
+      ],
+      "id": "route-local-fire-london-fire-10-04",
+      "routeBaseId": "fire-london-fire-10",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 884.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1611.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 99.1,
+        "bestSameServiceCostSeconds": 99.1
+      }
+    },
+    {
+      "name": "Forest Lawn Avenue & Mountbatten Street",
+      "addr": "Forest Lawn Avenue & Mountbatten Street",
+      "lat": 43.0090559,
+      "lng": -81.1680105,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/28440908",
+        "way/489060313"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/28440908",
+        "https://www.openstreetmap.org/way/489060313"
+      ],
+      "id": "route-local-fire-london-fire-10-05",
+      "routeBaseId": "fire-london-fire-10",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2687.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 605.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 209.4,
+        "bestSameServiceCostSeconds": 209.4
+      }
+    },
+    {
+      "name": "Neptune Crescent & Sovereign Road",
+      "addr": "Neptune Crescent & Sovereign Road",
+      "lat": 42.996185,
+      "lng": -81.1431804,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/28435531",
+        "way/467234021"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/28435531",
+        "https://www.openstreetmap.org/way/467234021"
+      ],
+      "id": "route-local-fire-london-fire-10-06",
+      "routeBaseId": "fire-london-fire-10",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1320.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 681.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 131.1,
+        "bestSameServiceCostSeconds": 131.1
+      }
+    },
+    {
+      "name": "Beattie Street & Westwick Walk",
+      "addr": "Beattie Street & Westwick Walk",
+      "lat": 42.91618,
+      "lng": -81.2891108,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/24473144",
+        "way/24473148",
+        "way/488471400"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/24473144",
+        "https://www.openstreetmap.org/way/24473148",
+        "https://www.openstreetmap.org/way/488471400"
+      ],
+      "id": "route-local-fire-london-fire-11-01",
+      "routeBaseId": "fire-london-fire-11",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 754,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1636.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 141,
+        "bestSameServiceCostSeconds": 141
+      }
+    },
+    {
+      "name": "Roy McDonald Drive & Stewart Avenue",
+      "addr": "Roy McDonald Drive & Stewart Avenue",
+      "lat": 42.9263035,
+      "lng": -81.2648105,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1238325331",
+        "way/1334805534"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1238325331",
+        "https://www.openstreetmap.org/way/1334805534"
+      ],
+      "id": "route-local-fire-london-fire-11-02",
+      "routeBaseId": "fire-london-fire-11",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2492.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 284.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 262.3,
+        "bestSameServiceCostSeconds": 262.3
+      }
+    },
+    {
+      "name": "Bostwick Road & Pack Road",
+      "addr": "Bostwick Road & Pack Road",
+      "lat": 42.9315334,
+      "lng": -81.2911515,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/142059467",
+        "way/1485967852"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/142059467",
+        "https://www.openstreetmap.org/way/1485967852"
+      ],
+      "id": "route-local-fire-london-fire-11-03",
+      "routeBaseId": "fire-london-fire-11",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2349.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2201,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 194.9,
+        "bestSameServiceCostSeconds": 194.9
+      }
+    },
+    {
+      "name": "Main Street & South Routledge Road",
+      "addr": "Main Street & South Routledge Road",
+      "lat": 42.9101511,
+      "lng": -81.2978598,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/312825722",
+        "way/488465416"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/312825722",
+        "https://www.openstreetmap.org/way/488465416"
+      ],
+      "id": "route-local-fire-london-fire-11-04",
+      "routeBaseId": "fire-london-fire-11",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1691.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 170.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 155.2,
+        "bestSameServiceCostSeconds": 155.2
+      }
+    },
+    {
+      "name": "Ayshire Avenue & Hayward Drive",
+      "addr": "Ayshire Avenue & Hayward Drive",
+      "lat": 42.920332,
+      "lng": -81.3006861,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1239851570",
+        "way/1334558274",
+        "way/1334558286"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1239851570",
+        "https://www.openstreetmap.org/way/1334558274",
+        "https://www.openstreetmap.org/way/1334558286"
+      ],
+      "id": "route-local-fire-london-fire-11-05",
+      "routeBaseId": "fire-london-fire-11",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2038.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 369.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 225.7,
+        "bestSameServiceCostSeconds": 225.7
+      }
+    },
+    {
+      "name": "Hamlyn Street & Liberty Cross",
+      "addr": "Hamlyn Street & Liberty Cross",
+      "lat": 42.9149504,
+      "lng": -81.2783307,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1424875158",
+        "way/1561074703"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1424875158",
+        "https://www.openstreetmap.org/way/1561074703"
+      ],
+      "id": "route-local-fire-london-fire-11-06",
+      "routeBaseId": "fire-london-fire-11",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1768.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 376.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 159.1,
+        "bestSameServiceCostSeconds": 159.1
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Byron Optimist Community Centre",
+      "addr": "1306 Norman Ave, London, Ontario",
+      "lat": 42.95617066655444,
+      "lng": -81.33465309738209,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.london.ca/server/rest/services/PointsOfInterest/MapServer/6/query?where=OBJECTID%3D33&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Brock Street",
+        "Byron Boulevard"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "london-call-12",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-london-fire-12-01",
+      "routeBaseId": "fire-london-fire-12",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 828,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 329.6,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 133.4,
+        "bestSameServiceCostSeconds": 133.4
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Storybook Gardens",
+      "addr": "1958 Storybook Lane, London, Ontario",
+      "lat": 42.95748040513413,
+      "lng": -81.31648754798603,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.london.ca/server/rest/services/PointsOfInterest/MapServer/0/query?where=OBJECTID%3D1230&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Springbank Gate",
+        "Flint Lane"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "london-call-07",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-london-fire-12-02",
+      "routeBaseId": "fire-london-fire-12",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1689.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 329.6,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 186.9,
+        "bestSameServiceCostSeconds": 186.9
+      }
+    },
+    {
+      "name": "Manchester Road & Regency Road",
+      "addr": "Manchester Road & Regency Road",
+      "lat": 42.9780188,
+      "lng": -81.3262397,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1334393092",
+        "way/24352394"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1334393092",
+        "https://www.openstreetmap.org/way/24352394"
+      ],
+      "id": "route-local-fire-london-fire-12-03",
+      "routeBaseId": "fire-london-fire-12",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2607.2,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 2637.9,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 177.6,
+        "bestSameServiceCostSeconds": 177.6
+      }
+    },
+    {
+      "name": "KainsRidge Court & Shore Road",
+      "addr": "KainsRidge Court & Shore Road",
+      "lat": 42.9702278,
+      "lng": -81.3515006,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1334394228",
+        "way/23502046"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1334394228",
+        "https://www.openstreetmap.org/way/23502046"
+      ],
+      "id": "route-local-fire-london-fire-12-04",
+      "routeBaseId": "fire-london-fire-12",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2593.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 715,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 193.4,
+        "bestSameServiceCostSeconds": 193.4
+      }
+    },
+    {
+      "name": "Byron Baseline Road & Wickerson Road",
+      "addr": "Byron Baseline Road & Wickerson Road",
+      "lat": 42.9514699,
+      "lng": -81.3509831,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1069934486",
+        "way/147478944",
+        "way/27082179"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1069934486",
+        "https://www.openstreetmap.org/way/147478944",
+        "https://www.openstreetmap.org/way/27082179"
+      ],
+      "id": "route-local-fire-london-fire-12-05",
+      "routeBaseId": "fire-london-fire-12",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2541,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 244.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 182,
+        "bestSameServiceCostSeconds": 182
+      }
+    },
+    {
+      "name": "Springfield Crescent & Timber Crescent",
+      "addr": "Springfield Crescent & Timber Crescent",
+      "lat": 42.9614383,
+      "lng": -81.3474753,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/26786791",
+        "way/26786792"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/26786791",
+        "https://www.openstreetmap.org/way/26786792"
+      ],
+      "id": "route-local-fire-london-fire-12-06",
+      "routeBaseId": "fire-london-fire-12",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1703.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 616.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 191.5,
+        "bestSameServiceCostSeconds": 191.5
+      }
+    },
+    {
+      "name": "Dalkeith Avenue & Dalkeith Crescent",
+      "addr": "Dalkeith Avenue & Dalkeith Crescent",
+      "lat": 43.0331773,
+      "lng": -81.2425766,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/28483436",
+        "way/28483437"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/28483436",
+        "https://www.openstreetmap.org/way/28483437"
+      ],
+      "id": "route-local-fire-london-fire-13-01",
+      "routeBaseId": "fire-london-fire-13",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 799.3,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 1237,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Fanshawe Park Road East",
+        "estimatedCostSeconds": 68.3,
+        "bestSameServiceCostSeconds": 68.3
+      }
+    },
+    {
+      "name": "Adelaide Street North & Blackwater Road",
+      "addr": "Adelaide Street North & Blackwater Road",
+      "lat": 43.0438957,
+      "lng": -81.2594659,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1417997266",
+        "way/1417997267",
+        "way/1560192699",
+        "way/1560192700"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1417997266",
+        "https://www.openstreetmap.org/way/1417997267",
+        "https://www.openstreetmap.org/way/1560192699",
+        "https://www.openstreetmap.org/way/1560192700"
+      ],
+      "id": "route-local-fire-london-fire-13-02",
+      "routeBaseId": "fire-london-fire-13",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1700.8,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1620.5,
+        "decisionKinds": [
+          "turn",
+          "bridge",
+          "departure"
+        ],
+        "departureRoad": "Fanshawe Park Road East",
+        "estimatedCostSeconds": 102.5,
+        "bestSameServiceCostSeconds": 102.5
+      }
+    },
+    {
+      "name": "Robinson Court & Robinson Lane",
+      "addr": "Robinson Court & Robinson Lane",
+      "lat": 43.0264726,
+      "lng": -81.2724928,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/27573301",
+        "way/487751527"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/27573301",
+        "https://www.openstreetmap.org/way/487751527"
+      ],
+      "id": "route-local-fire-london-fire-13-03",
+      "routeBaseId": "fire-london-fire-13",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2602.5,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1034.1,
+        "decisionKinds": [
+          "turn",
+          "bridge",
+          "departure"
+        ],
+        "departureRoad": "Fanshawe Park Road East",
+        "estimatedCostSeconds": 181.1,
+        "bestSameServiceCostSeconds": 181.1
+      }
+    },
+    {
+      "name": "Nicole Avenue & Stackhouse Crescent",
+      "addr": "Nicole Avenue & Stackhouse Crescent",
+      "lat": 43.0467658,
+      "lng": -81.2419105,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/26119689",
+        "way/26119690"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/26119689",
+        "https://www.openstreetmap.org/way/26119690"
+      ],
+      "id": "route-local-fire-london-fire-13-04",
+      "routeBaseId": "fire-london-fire-13",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1736.1,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 1529.4,
+        "decisionKinds": [
+          "turn",
+          "departure",
+          "bridge"
+        ],
+        "departureRoad": "Fanshawe Park Road East",
+        "estimatedCostSeconds": 137.8,
+        "bestSameServiceCostSeconds": 137.8
+      }
+    },
+    {
+      "name": "Arklow Place & Killarney Road",
+      "addr": "Arklow Place & Killarney Road",
+      "lat": 43.0398378,
+      "lng": -81.22075,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/191817719",
+        "way/191817735"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/191817719",
+        "https://www.openstreetmap.org/way/191817735"
+      ],
+      "id": "route-local-fire-london-fire-13-05",
+      "routeBaseId": "fire-london-fire-13",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2567.5,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 2383.6,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Fanshawe Park Road East",
+        "estimatedCostSeconds": 163.4,
+        "bestSameServiceCostSeconds": 163.4
+      }
+    },
+    {
+      "name": "Sprucedale Avenue & Willowdale Avenue",
+      "addr": "Sprucedale Avenue & Willowdale Avenue",
+      "lat": 43.0275506,
+      "lng": -81.2572226,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/27319116",
+        "way/27319130"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/27319116",
+        "https://www.openstreetmap.org/way/27319130"
+      ],
+      "id": "route-local-fire-london-fire-13-06",
+      "routeBaseId": "fire-london-fire-13",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1776.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 240,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Fanshawe Park Road East",
+        "estimatedCostSeconds": 150.7,
+        "bestSameServiceCostSeconds": 150.7
+      }
+    },
+    {
+      "name": "Frieda Way & Henrica Avenue",
+      "addr": "Frieda Way & Henrica Avenue",
+      "lat": 43.0181844,
+      "lng": -81.3411015,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/734511314",
+        "way/740052540"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/734511314",
+        "https://www.openstreetmap.org/way/740052540"
+      ],
+      "id": "route-local-fire-london-fire-14-01",
+      "routeBaseId": "fire-london-fire-14",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 797.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 513,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 82.4,
+        "bestSameServiceCostSeconds": 82.4
+      }
+    },
+    {
+      "name": "Blackacres Boulevard & Dalmagarry Road",
+      "addr": "Blackacres Boulevard & Dalmagarry Road",
+      "lat": 43.0067929,
+      "lng": -81.3280569,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1278334633",
+        "way/494137200",
+        "way/505417732"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1278334633",
+        "https://www.openstreetmap.org/way/494137200",
+        "https://www.openstreetmap.org/way/505417732"
+      ],
+      "id": "route-local-fire-london-fire-14-02",
+      "routeBaseId": "fire-london-fire-14",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1720.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 843.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 140,
+        "bestSameServiceCostSeconds": 140
+      }
+    },
+    {
+      "name": "Hyde Park Road & Medway Road",
+      "addr": "Hyde Park Road & Medway Road",
+      "lat": 43.0343058,
+      "lng": -81.3508194,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1206750068",
+        "way/23516753",
+        "way/27342278",
+        "way/405744038"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1206750068",
+        "https://www.openstreetmap.org/way/23516753",
+        "https://www.openstreetmap.org/way/27342278",
+        "https://www.openstreetmap.org/way/405744038"
+      ],
+      "id": "route-local-fire-london-fire-14-03",
+      "routeBaseId": "fire-london-fire-14",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2462.7,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 4889.1,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 159.1,
+        "bestSameServiceCostSeconds": 159.1
+      }
+    },
+    {
+      "name": "Blue Heron Drive & Mallard Road",
+      "addr": "Blue Heron Drive & Mallard Road",
+      "lat": 43.0082998,
+      "lng": -81.3418341,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25537767",
+        "way/25537770"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25537767",
+        "https://www.openstreetmap.org/way/25537770"
+      ],
+      "id": "route-local-fire-london-fire-14-04",
+      "routeBaseId": "fire-london-fire-14",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1066.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2074.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 86,
+        "bestSameServiceCostSeconds": 86
+      }
+    },
+    {
+      "name": "Silverfox Crescent & Silverfox Drive & Silverfox Place",
+      "addr": "Silverfox Crescent & Silverfox Drive & Silverfox Place",
+      "lat": 43.0240507,
+      "lng": -81.3215313,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/126855192",
+        "way/25537776",
+        "way/25537782"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/126855192",
+        "https://www.openstreetmap.org/way/25537776",
+        "https://www.openstreetmap.org/way/25537782"
+      ],
+      "id": "route-local-fire-london-fire-14-05",
+      "routeBaseId": "fire-london-fire-14",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2575.2,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 527.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 240.1,
+        "bestSameServiceCostSeconds": 240.1
+      }
+    },
+    {
+      "name": "Aldersbrook Gate & Fanshawe Park Road",
+      "addr": "Aldersbrook Gate & Fanshawe Park Road",
+      "lat": 43.0150818,
+      "lng": -81.3220626,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1350858422",
+        "way/24017664",
+        "way/352835108",
+        "way/467173746"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1350858422",
+        "https://www.openstreetmap.org/way/24017664",
+        "https://www.openstreetmap.org/way/352835108",
+        "https://www.openstreetmap.org/way/467173746"
+      ],
+      "id": "route-local-fire-london-fire-14-06",
+      "routeBaseId": "fire-london-fire-14",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1677.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 995.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 131.4,
+        "bestSameServiceCostSeconds": 131.4
+      }
+    },
+    {
+      "name": "Constance Avenue & Oriole Drive",
+      "addr": "Constance Avenue & Oriole Drive",
+      "lat": 42.9643076,
+      "lng": -81.1471185,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/755337385",
+        "way/755337386"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/755337385",
+        "https://www.openstreetmap.org/way/755337386"
+      ],
+      "id": "route-local-fire-london-fire-15-01",
+      "routeBaseId": "fire-london-fire-15",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 808.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 7432.6,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Old Victoria Road",
+        "estimatedCostSeconds": 78.2,
+        "bestSameServiceCostSeconds": 78.2
+      }
+    },
+    {
+      "name": "Discovery Drive & Old Victoria Road",
+      "addr": "Discovery Drive & Old Victoria Road",
+      "lat": 42.9471531,
+      "lng": -81.1365208,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/208287332",
+        "way/27371137"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/208287332",
+        "https://www.openstreetmap.org/way/27371137"
+      ],
+      "id": "route-local-fire-london-fire-15-02",
+      "routeBaseId": "fire-london-fire-15",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1738,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1414.9,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Old Victoria Road",
+        "estimatedCostSeconds": 139,
+        "bestSameServiceCostSeconds": 139
+      }
+    },
+    {
+      "name": "Hamilton Road & Sage Street",
+      "addr": "Hamilton Road & Sage Street",
+      "lat": 42.9717421,
+      "lng": -81.112906,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/31259169",
+        "way/731929836"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/31259169",
+        "https://www.openstreetmap.org/way/731929836"
+      ],
+      "id": "route-local-fire-london-fire-15-03",
+      "routeBaseId": "fire-london-fire-15",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2531.1,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 5495.1,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Old Victoria Road",
+        "estimatedCostSeconds": 155,
+        "bestSameServiceCostSeconds": 155
+      }
+    },
+    {
+      "name": "Catherine Street & Crumlin Sideroad",
+      "addr": "Catherine Street & Crumlin Sideroad",
+      "lat": 42.9787129,
+      "lng": -81.1320404,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1395836759",
+        "way/1395836766",
+        "way/28435530",
+        "way/31342818"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1395836759",
+        "https://www.openstreetmap.org/way/1395836766",
+        "https://www.openstreetmap.org/way/28435530",
+        "https://www.openstreetmap.org/way/31342818"
+      ],
+      "id": "route-local-fire-london-fire-15-04",
+      "routeBaseId": "fire-london-fire-15",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2480.5,
+        "meaningfulDecisions": 6,
+        "maxAlternativePenaltyMetres": 3828.4,
+        "decisionKinds": [
+          "departure",
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Old Victoria Road",
+        "estimatedCostSeconds": 125.7,
+        "bestSameServiceCostSeconds": 125.7
+      }
+    },
+    {
+      "name": "Clarke Road & Pension Lane",
+      "addr": "Clarke Road & Pension Lane",
+      "lat": 42.9763548,
+      "lng": -81.161497,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/28414104",
+        "way/31293840"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/28414104",
+        "https://www.openstreetmap.org/way/31293840"
+      ],
+      "id": "route-local-fire-london-fire-15-05",
+      "routeBaseId": "fire-london-fire-15",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2565.3,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 3871.2,
+        "decisionKinds": [
+          "departure",
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Old Victoria Road",
+        "estimatedCostSeconds": 157,
+        "bestSameServiceCostSeconds": 157
+      }
+    },
+    {
+      "name": "Hungerford Street & Wildgoose Road",
+      "addr": "Hungerford Street & Wildgoose Road",
+      "lat": 42.970919,
+      "lng": -81.1558565,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/31259178",
+        "way/31259366",
+        "way/31259404"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/31259178",
+        "https://www.openstreetmap.org/way/31259366",
+        "https://www.openstreetmap.org/way/31259404"
+      ],
+      "id": "route-local-fire-london-fire-15-06",
+      "routeBaseId": "fire-london-fire-15",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1718.3,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 5852.9,
+        "decisionKinds": [
+          "departure",
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Old Victoria Road",
+        "estimatedCostSeconds": 111.4,
+        "bestSameServiceCostSeconds": 111.4
+      }
+    },
+    {
+      "name": "Adelaide Street South & Bradley Avenue",
+      "addr": "Adelaide Street South & Bradley Avenue",
+      "lat": 42.935975,
+      "lng": -81.2085224,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1409649124",
+        "way/1561468481",
+        "way/31259319",
+        "way/319033510"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1409649124",
+        "https://www.openstreetmap.org/way/1561468481",
+        "https://www.openstreetmap.org/way/31259319",
+        "https://www.openstreetmap.org/way/319033510"
+      ],
+      "id": "route-local-ems-london-ems-adelaide-01",
+      "routeBaseId": "ems-london-ems-adelaide",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 806.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 330.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 131.8,
+        "bestSameServiceCostSeconds": 131.8
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "White Oaks Mall",
+      "addr": "1105 Wellington Rd, London, Ontario",
+      "lat": 42.93201476561999,
+      "lng": -81.22487374959137,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.london.ca/server/rest/services/PointsOfInterest/MapServer/0/query?where=OBJECTID%3D1228&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Bradley Avenue",
+        "Whiteoaks Mall Entry"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "london-call-05",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-london-ems-adelaide-02",
+      "routeBaseId": "ems-london-ems-adelaide",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2401.9,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 241.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 290.8,
+        "bestSameServiceCostSeconds": 290.8
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Dearness Home for Senior Citizens",
+      "addr": "710 Southdale Road East",
+      "lat": 42.944091599059114,
+      "lng": -81.22419609999997,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789758"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "1483",
+      "community": "London",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-1483",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-london-ems-adelaide-03",
+      "routeBaseId": "ems-london-ems-adelaide",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2693.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 236.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 302.4,
+        "bestSameServiceCostSeconds": 302.4
+      }
+    },
+    {
+      "name": "Bessemer Road & Royce Court",
+      "addr": "Bessemer Road & Royce Court",
+      "lat": 42.9280024,
+      "lng": -81.2131079,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/31259771",
+        "way/31259927",
+        "way/31260053"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/31259771",
+        "https://www.openstreetmap.org/way/31259927",
+        "https://www.openstreetmap.org/way/31260053"
+      ],
+      "id": "route-local-ems-london-ems-adelaide-04",
+      "routeBaseId": "ems-london-ems-adelaide",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1645.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 836.9,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 201.2,
+        "bestSameServiceCostSeconds": 201.2
+      }
+    },
+    {
+      "name": "Bradley Avenue & Pond Mills Road",
+      "addr": "Bradley Avenue & Pond Mills Road",
+      "lat": 42.9409294,
+      "lng": -81.1924178,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/474585569",
+        "way/474585571",
+        "way/474585574",
+        "way/474585577"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/474585569",
+        "https://www.openstreetmap.org/way/474585571",
+        "https://www.openstreetmap.org/way/474585574",
+        "https://www.openstreetmap.org/way/474585577"
+      ],
+      "id": "route-local-ems-london-ems-adelaide-05",
+      "routeBaseId": "ems-london-ems-adelaide",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2230.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 330.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 221.2,
+        "bestSameServiceCostSeconds": 221.2
+      }
+    },
+    {
+      "name": "Bexhill Drive & Sloane Crescent",
+      "addr": "Bexhill Drive & Sloane Crescent",
+      "lat": 42.93867,
+      "lng": -81.1991813,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/28393269",
+        "way/28393270"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/28393269",
+        "https://www.openstreetmap.org/way/28393270"
+      ],
+      "id": "route-local-ems-london-ems-adelaide-06",
+      "routeBaseId": "ems-london-ems-adelaide",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1698.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 330.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 202.8,
+        "bestSameServiceCostSeconds": 202.8
+      }
+    },
+    {
+      "name": "Bayham Lane & Settlement Trail",
+      "addr": "Bayham Lane & Settlement Trail",
+      "lat": 42.9315195,
+      "lng": -81.3104068,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/24473713",
+        "way/24473714"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/24473713",
+        "https://www.openstreetmap.org/way/24473714"
+      ],
+      "id": "route-local-ems-london-ems-byron-01",
+      "routeBaseId": "ems-london-ems-byron",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 812.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 810.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 78.1,
+        "bestSameServiceCostSeconds": 78.1
+      }
+    },
+    {
+      "name": "Balsam Gate & Optimist Park Drive",
+      "addr": "Balsam Gate & Optimist Park Drive",
+      "lat": 42.9389553,
+      "lng": -81.3299964,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/27082191",
+        "way/27678140"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/27082191",
+        "https://www.openstreetmap.org/way/27678140"
+      ],
+      "id": "route-local-ems-london-ems-byron-02",
+      "routeBaseId": "ems-london-ems-byron",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1739.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 361.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 139.8,
+        "bestSameServiceCostSeconds": 139.8
+      }
+    },
+    {
+      "name": "Cranbrook Road & Hillsmount Road",
+      "addr": "Cranbrook Road & Hillsmount Road",
+      "lat": 42.9478311,
+      "lng": -81.3038122,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/147222005",
+        "way/466535959"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/147222005",
+        "https://www.openstreetmap.org/way/466535959"
+      ],
+      "id": "route-local-ems-london-ems-byron-03",
+      "routeBaseId": "ems-london-ems-byron",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2580.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1316.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 198.3,
+        "bestSameServiceCostSeconds": 198.3
+      }
+    },
+    {
+      "name": "Colonel Talbot Road & Diane Crescent & Royal Magnolia Avenue",
+      "addr": "Colonel Talbot Road & Diane Crescent & Royal Magnolia Avenue",
+      "lat": 42.9186312,
+      "lng": -81.3129616,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1530509006",
+        "way/24473729",
+        "way/466818843"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1530509006",
+        "https://www.openstreetmap.org/way/24473729",
+        "https://www.openstreetmap.org/way/466818843"
+      ],
+      "id": "route-local-ems-london-ems-byron-04",
+      "routeBaseId": "ems-london-ems-byron",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1739.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2366.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 115.8,
+        "bestSameServiceCostSeconds": 115.8
+      }
+    },
+    {
+      "name": "Bostwick Road & Pack Road",
+      "addr": "Bostwick Road & Pack Road",
+      "lat": 42.9315334,
+      "lng": -81.2911515,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/142059467",
+        "way/1485967852"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/142059467",
+        "https://www.openstreetmap.org/way/1485967852"
+      ],
+      "id": "route-local-ems-london-ems-byron-05",
+      "routeBaseId": "ems-london-ems-byron",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2710.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 577.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 196.1,
+        "bestSameServiceCostSeconds": 196.1
+      }
+    },
+    {
+      "name": "Somerset Crescent & Somerset Place",
+      "addr": "Somerset Crescent & Somerset Place",
+      "lat": 42.9439191,
+      "lng": -81.3221148,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/27082293",
+        "way/488243064"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/27082293",
+        "https://www.openstreetmap.org/way/488243064"
+      ],
+      "id": "route-local-ems-london-ems-byron-06",
+      "routeBaseId": "ems-london-ems-byron",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1637.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1152.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 149,
+        "bestSameServiceCostSeconds": 149
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Chelsey Park",
+      "addr": "310 Oxford Street West",
+      "lat": 42.98759979905897,
+      "lng": -81.27666829999998,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789748"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "1510",
+      "community": "London",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-1510",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-london-ems-horizon-01",
+      "routeBaseId": "ems-london-ems-horizon",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1784.7,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 366.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 225.7,
+        "bestSameServiceCostSeconds": 225.7
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "peopleCare Oakcrossing London",
+      "addr": "1242 Oakcrossing Road",
+      "lat": 42.990424199058985,
+      "lng": -81.31276759999997,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789850"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "4715",
+      "community": "London",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-4715",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-london-ems-horizon-02",
+      "routeBaseId": "ems-london-ems-horizon",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2378.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1239.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 269.1,
+        "bestSameServiceCostSeconds": 269.1
+      }
+    },
+    {
+      "name": "Friars Way & Linksgate Road",
+      "addr": "Friars Way & Linksgate Road",
+      "lat": 43.0063781,
+      "lng": -81.2979336,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/43049429",
+        "way/43049526"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/43049429",
+        "https://www.openstreetmap.org/way/43049526"
+      ],
+      "id": "route-local-ems-london-ems-horizon-03",
+      "routeBaseId": "ems-london-ems-horizon",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2594.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2291.6,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 234.1,
+        "bestSameServiceCostSeconds": 234.1
+      }
+    },
+    {
+      "name": "Riverside Drive & Wonderland Road North & Wonderland Road South",
+      "addr": "Riverside Drive & Wonderland Road North & Wonderland Road South",
+      "lat": 42.9764204,
+      "lng": -81.2899899,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1382804598",
+        "way/1506069184",
+        "way/1534009391"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1382804598",
+        "https://www.openstreetmap.org/way/1506069184",
+        "https://www.openstreetmap.org/way/1534009391"
+      ],
+      "id": "route-local-ems-london-ems-horizon-04",
+      "routeBaseId": "ems-london-ems-horizon",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1697.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 324,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 140.7,
+        "bestSameServiceCostSeconds": 140.7
+      }
+    },
+    {
+      "name": "Deer Park Circle & Luxton Drive",
+      "addr": "Deer Park Circle & Luxton Drive",
+      "lat": 42.9768135,
+      "lng": -81.3104711,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/24366803",
+        "way/26764730"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/24366803",
+        "https://www.openstreetmap.org/way/26764730"
+      ],
+      "id": "route-local-ems-london-ems-horizon-05",
+      "routeBaseId": "ems-london-ems-horizon",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2593.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 324,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 222.6,
+        "bestSameServiceCostSeconds": 222.6
+      }
+    },
+    {
+      "name": "Citation Drive & Rippleton Road",
+      "addr": "Citation Drive & Rippleton Road",
+      "lat": 42.995974,
+      "lng": -81.2927101,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/24052852",
+        "way/24052858"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/24052852",
+        "https://www.openstreetmap.org/way/24052858"
+      ],
+      "id": "route-local-ems-london-ems-horizon-06",
+      "routeBaseId": "ems-london-ems-horizon",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1704.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2388.4,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 144.1,
+        "bestSameServiceCostSeconds": 144.1
+      }
+    },
+    {
+      "name": "Frieda Way & Henrica Avenue",
+      "addr": "Frieda Way & Henrica Avenue",
+      "lat": 43.017028,
+      "lng": -81.3420351,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/734511314",
+        "way/740052540"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/734511314",
+        "https://www.openstreetmap.org/way/740052540"
+      ],
+      "id": "route-local-ems-london-ems-hyde-park-01",
+      "routeBaseId": "ems-london-ems-hyde-park",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 810.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 747.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 136.2,
+        "bestSameServiceCostSeconds": 136.2
+      }
+    },
+    {
+      "name": "Aldersbrook Gate & Fanshawe Park Road",
+      "addr": "Aldersbrook Gate & Fanshawe Park Road",
+      "lat": 43.0150818,
+      "lng": -81.3220626,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1350858422",
+        "way/24017664",
+        "way/352835108",
+        "way/467173746"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1350858422",
+        "https://www.openstreetmap.org/way/24017664",
+        "https://www.openstreetmap.org/way/352835108",
+        "https://www.openstreetmap.org/way/467173746"
+      ],
+      "id": "route-local-ems-london-ems-hyde-park-02",
+      "routeBaseId": "ems-london-ems-hyde-park",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1731.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 995.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 169.4,
+        "bestSameServiceCostSeconds": 169.4
+      }
+    },
+    {
+      "name": "Hyde Park Road & Medway Road",
+      "addr": "Hyde Park Road & Medway Road",
+      "lat": 43.0343058,
+      "lng": -81.3508194,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1206750068",
+        "way/23516753",
+        "way/27342278",
+        "way/405744038"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1206750068",
+        "https://www.openstreetmap.org/way/23516753",
+        "https://www.openstreetmap.org/way/27342278",
+        "https://www.openstreetmap.org/way/405744038"
+      ],
+      "id": "route-local-ems-london-ems-hyde-park-03",
+      "routeBaseId": "ems-london-ems-hyde-park",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2600.8,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 4813.9,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 197.4,
+        "bestSameServiceCostSeconds": 197.4
+      }
+    },
+    {
+      "name": "Hyde Park Road & North Routledge Parkway",
+      "addr": "Hyde Park Road & North Routledge Parkway",
+      "lat": 43.0034573,
+      "lng": -81.3344431,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1414013044",
+        "way/466813817"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1414013044",
+        "https://www.openstreetmap.org/way/466813817"
+      ],
+      "id": "route-local-ems-london-ems-hyde-park-04",
+      "routeBaseId": "ems-london-ems-hyde-park",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1568.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2060,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 135.2,
+        "bestSameServiceCostSeconds": 135.2
+      }
+    },
+    {
+      "name": "Denview Avenue & Sunningdale Road West",
+      "addr": "Denview Avenue & Sunningdale Road West",
+      "lat": 43.0277525,
+      "lng": -81.3247882,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1429874329",
+        "way/1477356309",
+        "way/496632424"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1429874329",
+        "https://www.openstreetmap.org/way/1477356309",
+        "https://www.openstreetmap.org/way/496632424"
+      ],
+      "id": "route-local-ems-london-ems-hyde-park-05",
+      "routeBaseId": "ems-london-ems-hyde-park",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2790.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 793.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 213.3,
+        "bestSameServiceCostSeconds": 213.3
+      }
+    },
+    {
+      "name": "Applerock Avenue & Buroak Drive",
+      "addr": "Applerock Avenue & Buroak Drive",
+      "lat": 43.0231071,
+      "lng": -81.3340531,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1088424485",
+        "way/703518143"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1088424485",
+        "https://www.openstreetmap.org/way/703518143"
+      ],
+      "id": "route-local-ems-london-ems-hyde-park-06",
+      "routeBaseId": "ems-london-ems-hyde-park",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1691.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 858.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 172,
+        "bestSameServiceCostSeconds": 172
+      }
+    },
+    {
+      "name": "Admiral Court & Admiral Drive & Sovereign Road",
+      "addr": "Admiral Court & Admiral Drive & Sovereign Road",
+      "lat": 43.0047407,
+      "lng": -81.1477193,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/28435587",
+        "way/316003566",
+        "way/467234021"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/28435587",
+        "https://www.openstreetmap.org/way/316003566",
+        "https://www.openstreetmap.org/way/467234021"
+      ],
+      "id": "route-local-ems-london-ems-trafalgar-01",
+      "routeBaseId": "ems-london-ems-trafalgar",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 789,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2516.3,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Trafalgar Street",
+        "estimatedCostSeconds": 102.3,
+        "bestSameServiceCostSeconds": 102.3
+      }
+    },
+    {
+      "name": "Aberdeen Drive & Gore Road",
+      "addr": "Aberdeen Drive & Gore Road",
+      "lat": 42.9866492,
+      "lng": -81.1427789,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1429212178",
+        "way/31259961"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1429212178",
+        "https://www.openstreetmap.org/way/31259961"
+      ],
+      "id": "route-local-ems-london-ems-trafalgar-02",
+      "routeBaseId": "ems-london-ems-trafalgar",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2000.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 311.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Trafalgar Street",
+        "estimatedCostSeconds": 98.9,
+        "bestSameServiceCostSeconds": 98.9
+      }
+    },
+    {
+      "name": "Garland Crescent & Royal Crescent",
+      "addr": "Garland Crescent & Royal Crescent",
+      "lat": 42.998836,
+      "lng": -81.1682047,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/28418963",
+        "way/28418969"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/28418963",
+        "https://www.openstreetmap.org/way/28418969"
+      ],
+      "id": "route-local-ems-london-ems-trafalgar-03",
+      "routeBaseId": "ems-london-ems-trafalgar",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2596.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1882.9,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Trafalgar Street",
+        "estimatedCostSeconds": 178.5,
+        "bestSameServiceCostSeconds": 178.5
+      }
+    },
+    {
+      "name": "Frobisher Crescent & Hudson Drive",
+      "addr": "Frobisher Crescent & Hudson Drive",
+      "lat": 42.9920093,
+      "lng": -81.1564162,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/28418245",
+        "way/28418486"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/28418245",
+        "https://www.openstreetmap.org/way/28418486"
+      ],
+      "id": "route-local-ems-london-ems-trafalgar-04",
+      "routeBaseId": "ems-london-ems-trafalgar",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1702.8,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 2236,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Trafalgar Street",
+        "estimatedCostSeconds": 114.9,
+        "bestSameServiceCostSeconds": 114.9
+      }
+    },
+    {
+      "name": "Cuddy Boulevard & Cuddy Court & Page Street",
+      "addr": "Cuddy Boulevard & Cuddy Court & Page Street",
+      "lat": 43.0173683,
+      "lng": -81.1538647,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/28551002",
+        "way/28551021",
+        "way/467233477",
+        "way/467233478"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/28551002",
+        "https://www.openstreetmap.org/way/28551021",
+        "https://www.openstreetmap.org/way/467233477",
+        "https://www.openstreetmap.org/way/467233478"
+      ],
+      "id": "route-local-ems-london-ems-trafalgar-05",
+      "routeBaseId": "ems-london-ems-trafalgar",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2484,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 7256.6,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Trafalgar Street",
+        "estimatedCostSeconds": 132.4,
+        "bestSameServiceCostSeconds": 132.4
+      }
+    },
+    {
+      "name": "Dundas Street & Kostis Avenue",
+      "addr": "Dundas Street & Kostis Avenue",
+      "lat": 43.0145227,
+      "lng": -81.1408877,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/23365786",
+        "way/35525369"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/23365786",
+        "https://www.openstreetmap.org/way/35525369"
+      ],
+      "id": "route-local-ems-london-ems-trafalgar-06",
+      "routeBaseId": "ems-london-ems-trafalgar",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2129,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 6074.9,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Trafalgar Street",
+        "estimatedCostSeconds": 141.8,
+        "bestSameServiceCostSeconds": 141.8
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Central Public Library",
+      "addr": "251 Dundas St, London, Ontario",
+      "lat": 42.98431037336778,
+      "lng": -81.24626719384013,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.london.ca/server/rest/services/PointsOfInterest/MapServer/4/query?where=OBJECTID%3D22&outFields=%2A&outSR=4326&f=json",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Wellington Street",
+        "Clarence Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "london-call-13",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-london-ems-waterloo-01",
+      "routeBaseId": "ems-london-ems-waterloo",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 739,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 349.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 61.6,
+        "bestSameServiceCostSeconds": 61.6
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Extendicare London",
+      "addr": "860 Waterloo Street",
+      "lat": 43.00039929905898,
+      "lng": -81.24852919999995,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789773"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "1485",
+      "community": "London",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-1485",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-london-ems-waterloo-02",
+      "routeBaseId": "ems-london-ems-waterloo",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2205.1,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 473.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 217.9,
+        "bestSameServiceCostSeconds": 217.9
+      }
+    },
+    {
+      "name": "Thomas Janes Drive & Wellington Road",
+      "addr": "Thomas Janes Drive & Wellington Road",
+      "lat": 42.9651366,
+      "lng": -81.2319007,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/27766718",
+        "way/474548785"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/27766718",
+        "https://www.openstreetmap.org/way/474548785"
+      ],
+      "id": "route-local-ems-london-ems-waterloo-03",
+      "routeBaseId": "ems-london-ems-waterloo",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2583.5,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 804.5,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 170.9,
+        "bestSameServiceCostSeconds": 170.9
+      }
+    },
+    {
+      "name": "Dame Street & Egerton Street",
+      "addr": "Dame Street & Egerton Street",
+      "lat": 42.9833952,
+      "lng": -81.2134351,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1069938695",
+        "way/27750754"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1069938695",
+        "https://www.openstreetmap.org/way/27750754"
+      ],
+      "id": "route-local-ems-london-ems-waterloo-04",
+      "routeBaseId": "ems-london-ems-waterloo",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2591.7,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 415.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 204.5,
+        "bestSameServiceCostSeconds": 204.5
+      }
+    },
+    {
+      "name": "Cavendish Crescent & Wyatt Street",
+      "addr": "Cavendish Crescent & Wyatt Street",
+      "lat": 42.9812286,
+      "lng": -81.2670514,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/27772045",
+        "way/27772046"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/27772045",
+        "https://www.openstreetmap.org/way/27772046"
+      ],
+      "id": "route-local-ems-london-ems-waterloo-05",
+      "routeBaseId": "ems-london-ems-waterloo",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2601.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 389.9,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 202.7,
+        "bestSameServiceCostSeconds": 202.7
+      }
+    },
+    {
+      "name": "Adelaide Street North & Nelson Street",
+      "addr": "Adelaide Street North & Nelson Street",
+      "lat": 42.9778045,
+      "lng": -81.2267986,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1559195514",
+        "way/1559195515",
+        "way/27771071",
+        "way/505185526"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1559195514",
+        "https://www.openstreetmap.org/way/1559195515",
+        "https://www.openstreetmap.org/way/27771071",
+        "https://www.openstreetmap.org/way/505185526"
+      ],
+      "id": "route-local-ems-london-ems-waterloo-06",
+      "routeBaseId": "ems-london-ems-waterloo",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1685.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 415.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 124.4,
+        "bestSameServiceCostSeconds": 124.4
+      }
+    },
+    {
+      "name": "Rosenberg Road & Sillers Drive",
+      "addr": "Rosenberg Road & Sillers Drive",
+      "lat": 43.043046,
+      "lng": -81.2413207,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/43049582",
+        "way/43049583",
+        "way/43049586"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/43049582",
+        "https://www.openstreetmap.org/way/43049583",
+        "https://www.openstreetmap.org/way/43049586"
+      ],
+      "id": "route-local-ems-london-ems-trossacks-01",
+      "routeBaseId": "ems-london-ems-trossacks",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 798.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1667.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "McTaggart Court",
+        "estimatedCostSeconds": 73.7,
+        "bestSameServiceCostSeconds": 73.7
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "AgeCare London",
+      "addr": "2000 Blackwater Road",
+      "lat": 43.04405189905884,
+      "lng": -81.26074139999997,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789742"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "4459",
+      "community": "London",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-4459",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-london-ems-trossacks-02",
+      "routeBaseId": "ems-london-ems-trossacks",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2336.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 257.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "McTaggart Court",
+        "estimatedCostSeconds": 189.7,
+        "bestSameServiceCostSeconds": 189.7
+      }
+    },
+    {
+      "name": "Adelaide Street North & Windermere Road",
+      "addr": "Adelaide Street North & Windermere Road",
+      "lat": 43.0232478,
+      "lng": -81.2488022,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/27319112",
+        "way/467173761",
+        "way/475275411",
+        "way/475275412"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/27319112",
+        "https://www.openstreetmap.org/way/467173761",
+        "https://www.openstreetmap.org/way/475275411",
+        "https://www.openstreetmap.org/way/475275412"
+      ],
+      "id": "route-local-ems-london-ems-trossacks-03",
+      "routeBaseId": "ems-london-ems-trossacks",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2574.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 891.2,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "McTaggart Court",
+        "estimatedCostSeconds": 165.6,
+        "bestSameServiceCostSeconds": 165.6
+      }
+    },
+    {
+      "name": "Rideau Court & Rideau Gate",
+      "addr": "Rideau Court & Rideau Gate",
+      "lat": 43.0323558,
+      "lng": -81.234607,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/28483427",
+        "way/487938310"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/28483427",
+        "https://www.openstreetmap.org/way/487938310"
+      ],
+      "id": "route-local-ems-london-ems-trossacks-04",
+      "routeBaseId": "ems-london-ems-trossacks",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1755.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1099.4,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "McTaggart Court",
+        "estimatedCostSeconds": 156.9,
+        "bestSameServiceCostSeconds": 156.9
+      }
+    },
+    {
+      "name": "Ballymote Avenue & Ballymote Way",
+      "addr": "Ballymote Avenue & Ballymote Way",
+      "lat": 43.0549698,
+      "lng": -81.2484423,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/441151979",
+        "way/441151982"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/441151979",
+        "https://www.openstreetmap.org/way/441151982"
+      ],
+      "id": "route-local-ems-london-ems-trossacks-05",
+      "routeBaseId": "ems-london-ems-trossacks",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2573.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 955.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "McTaggart Court",
+        "estimatedCostSeconds": 225,
+        "bestSameServiceCostSeconds": 225
+      }
+    },
+    {
+      "name": "Glenburnie Court & Glenburnie Crescent",
+      "addr": "Glenburnie Court & Glenburnie Crescent",
+      "lat": 43.0403048,
+      "lng": -81.2299683,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/28483417",
+        "way/487921598"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/28483417",
+        "https://www.openstreetmap.org/way/487921598"
+      ],
+      "id": "route-local-ems-london-ems-trossacks-06",
+      "routeBaseId": "ems-london-ems-trossacks",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1727.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 348.5,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "McTaggart Court",
+        "estimatedCostSeconds": 129,
+        "bestSameServiceCostSeconds": 129
+      }
+    }
+  ]
 }

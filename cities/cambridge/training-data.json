@@ -243,5 +243,2568 @@
   ],
   "roadsUrl": "cities/cambridge/roads.geojson.gz",
   "roadFeatureCount": 14364,
-  "roadDataSha256": "4b950a4add63cd0a70451c964fd6400abf798f7c2428c29cd114fb5d51ffe3c5"
+  "roadDataSha256": "4b950a4add63cd0a70451c964fd6400abf798f7c2428c29cd114fb5d51ffe3c5",
+  "routeResponses": {
+    "schemaVersion": 1,
+    "minCallsPerBase": 3,
+    "targetCallsPerBase": 6,
+    "generatedOn": "2026-10-17",
+    "model": {
+      "description": "Published first-due polygons where available. Otherwise a directed road-network estimate using road class travel cost from every same-service hall; allows a15second cost tie for overlapping nearby halls. This is training geography, not live dispatch advice.",
+      "ownershipToleranceSeconds": 15,
+      "maximumCandidateRouteMetres": 12000
+    },
+    "officialAreasUrl": "cities/cambridge/response-areas.geojson",
+    "officialSource": {
+      "title": "Fire Response Areas",
+      "url": "https://geohub.cambridge.ca/",
+      "endpoint": "https://maps.cambridge.ca/arcgispub03/rest/services/OpenData3/MapServer/8",
+      "license": "Open Government License – City of Cambridge v2.1",
+      "licenseUrl": "https://www.cambridge.ca/mayor-city-council-government/open-data",
+      "retrievedOn": "2026-10-17",
+      "originalSha256": "1ed40a3f95e3da9b4b3b930258e5d4c3701f70985d4a6e03df748dd4ad34e988"
+    },
+    "bases": [
+      {
+        "baseId": "fire-cambridge-fire-1",
+        "service": "fire",
+        "number": 1,
+        "name": "Cambridge Fire Station 1",
+        "method": "official-run-area",
+        "sourceUrl": "https://geohub.cambridge.ca/",
+        "areaCode": "1",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.39860559706909,
+          "lng": -80.30591526873953,
+          "road": "Unnamed road",
+          "gapMetres": 10.1
+        },
+        "callIds": [
+          "route-local-fire-cambridge-fire-1-01",
+          "route-local-fire-cambridge-fire-1-02",
+          "route-local-fire-cambridge-fire-1-03",
+          "route-local-fire-cambridge-fire-1-04",
+          "route-local-fire-cambridge-fire-1-05",
+          "route-local-fire-cambridge-fire-1-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-cambridge-fire-2",
+        "service": "fire",
+        "number": 2,
+        "name": "Cambridge Fire Station 2",
+        "method": "official-run-area",
+        "sourceUrl": "https://geohub.cambridge.ca/",
+        "areaCode": "2",
+        "maxRouteMetres": 5800,
+        "access": {
+          "lat": 43.4311462,
+          "lng": -80.3094717,
+          "road": "Unnamed road",
+          "gapMetres": 11.6
+        },
+        "callIds": [
+          "route-local-fire-cambridge-fire-2-01",
+          "route-local-fire-cambridge-fire-2-02",
+          "route-local-fire-cambridge-fire-2-03",
+          "route-local-fire-cambridge-fire-2-04",
+          "route-local-fire-cambridge-fire-2-05",
+          "route-local-fire-cambridge-fire-2-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-cambridge-fire-3",
+        "service": "fire",
+        "number": 3,
+        "name": "Cambridge Fire Station 3",
+        "method": "official-run-area",
+        "sourceUrl": "https://geohub.cambridge.ca/",
+        "areaCode": "3",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.39706666519247,
+          "lng": -80.36013242190106,
+          "road": "Unnamed road",
+          "gapMetres": 14.4
+        },
+        "callIds": [
+          "route-local-fire-cambridge-fire-3-01",
+          "route-local-fire-cambridge-fire-3-02",
+          "route-local-fire-cambridge-fire-3-03",
+          "route-local-fire-cambridge-fire-3-04",
+          "route-local-fire-cambridge-fire-3-05",
+          "route-local-fire-cambridge-fire-3-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-cambridge-fire-4",
+        "service": "fire",
+        "number": 4,
+        "name": "Cambridge Fire Station 4",
+        "method": "official-run-area",
+        "sourceUrl": "https://geohub.cambridge.ca/",
+        "areaCode": "4",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.3541594,
+          "lng": -80.3214825,
+          "road": "Unnamed road",
+          "gapMetres": 12.4
+        },
+        "callIds": [
+          "route-local-fire-cambridge-fire-4-01",
+          "route-local-fire-cambridge-fire-4-02",
+          "route-local-fire-cambridge-fire-4-03",
+          "route-local-fire-cambridge-fire-4-04",
+          "route-local-fire-cambridge-fire-4-05",
+          "route-local-fire-cambridge-fire-4-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-cambridge-fire-5",
+        "service": "fire",
+        "number": 5,
+        "name": "Cambridge Fire Station 5",
+        "method": "official-run-area",
+        "sourceUrl": "https://geohub.cambridge.ca/",
+        "areaCode": "5",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.35836874926404,
+          "lng": -80.28844439245307,
+          "road": "Unnamed road",
+          "gapMetres": 8.4
+        },
+        "callIds": [
+          "route-local-fire-cambridge-fire-5-01",
+          "route-local-fire-cambridge-fire-5-02",
+          "route-local-fire-cambridge-fire-5-03",
+          "route-local-fire-cambridge-fire-5-04",
+          "route-local-fire-cambridge-fire-5-05",
+          "route-local-fire-cambridge-fire-5-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-cambridge-fire-6",
+        "service": "fire",
+        "number": 6,
+        "name": "Cambridge Fire Station 6",
+        "method": "official-run-area",
+        "sourceUrl": "https://geohub.cambridge.ca/",
+        "areaCode": "6",
+        "maxRouteMetres": 5800,
+        "access": {
+          "lat": 43.4264021,
+          "lng": -80.3639621,
+          "road": "Unnamed road",
+          "gapMetres": 3.5
+        },
+        "callIds": [
+          "route-local-fire-cambridge-fire-6-01",
+          "route-local-fire-cambridge-fire-6-02",
+          "route-local-fire-cambridge-fire-6-03",
+          "route-local-fire-cambridge-fire-6-04",
+          "route-local-fire-cambridge-fire-6-05",
+          "route-local-fire-cambridge-fire-6-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-cambridge-ems-maple-grove",
+        "service": "ems",
+        "number": 10000,
+        "name": "Cambridge Paramedic Base maple-grove",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.41726210234164,
+          "lng": -80.3888339600688,
+          "road": "Unnamed road",
+          "gapMetres": 27.2
+        },
+        "callIds": [
+          "route-local-ems-cambridge-ems-maple-grove-01",
+          "route-local-ems-cambridge-ems-maple-grove-02",
+          "route-local-ems-cambridge-ems-maple-grove-03",
+          "route-local-ems-cambridge-ems-maple-grove-04",
+          "route-local-ems-cambridge-ems-maple-grove-05",
+          "route-local-ems-cambridge-ems-maple-grove-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-cambridge-ems-st-andrews",
+        "service": "ems",
+        "number": 10002,
+        "name": "Cambridge Paramedic Base st-andrews",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.3541594,
+          "lng": -80.3214825,
+          "road": "Unnamed road",
+          "gapMetres": 12.4
+        },
+        "callIds": [
+          "route-local-ems-cambridge-ems-st-andrews-01",
+          "route-local-ems-cambridge-ems-st-andrews-02",
+          "route-local-ems-cambridge-ems-st-andrews-03",
+          "route-local-ems-cambridge-ems-st-andrews-04",
+          "route-local-ems-cambridge-ems-st-andrews-05",
+          "route-local-ems-cambridge-ems-st-andrews-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-cambridge-ems-pinebush",
+        "service": "ems",
+        "number": 10001,
+        "name": "Cambridge Paramedic Base pinebush",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6100,
+        "access": {
+          "lat": 43.41461012171991,
+          "lng": -80.28900015270294,
+          "road": "Unnamed road",
+          "gapMetres": 7.2
+        },
+        "callIds": [
+          "route-local-ems-cambridge-ems-pinebush-01",
+          "route-local-ems-cambridge-ems-pinebush-02",
+          "route-local-ems-cambridge-ems-pinebush-03",
+          "route-local-ems-cambridge-ems-pinebush-04",
+          "route-local-ems-cambridge-ems-pinebush-05",
+          "route-local-ems-cambridge-ems-pinebush-06"
+        ],
+        "challengeCalls": 6
+      }
+    ]
+  },
+  "routeCalls": [
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Cambridge Sports Park",
+      "addr": "1001 Franklin Boulevard, Cambridge, ON",
+      "lat": 43.395846,
+      "lng": -80.3007887,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.cambridge.ca/recreation-culture/facilities/sports-facilities/",
+        "https://maps.cambridge.ca/arcgispub03/rest/services/OpenData1/MapServer/13/query?objectIds=36618&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Lindsay Road",
+        "Can Amera Parkway"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "cambridge-call-07",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-cambridge-fire-1-01",
+      "routeBaseId": "fire-cambridge-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 653.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1890.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 120.4,
+        "bestSameServiceCostSeconds": 120.4
+      }
+    },
+    {
+      "name": "Conestoga Boulevard & Sheldon Drive",
+      "addr": "Conestoga Boulevard & Sheldon Drive",
+      "lat": 43.4028371,
+      "lng": -80.3196155,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1350820414",
+        "way/452739148",
+        "way/452739966",
+        "way/469987423"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1350820414",
+        "https://www.openstreetmap.org/way/452739148",
+        "https://www.openstreetmap.org/way/452739966",
+        "https://www.openstreetmap.org/way/469987423"
+      ],
+      "id": "route-local-fire-cambridge-fire-1-02",
+      "routeBaseId": "fire-cambridge-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1820.4,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 645.4,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 143.9,
+        "bestSameServiceCostSeconds": 143.9
+      }
+    },
+    {
+      "name": "Harrison Drive & Hilldale Drive",
+      "addr": "Harrison Drive & Hilldale Drive",
+      "lat": 43.3841367,
+      "lng": -80.316945,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1077443525",
+        "way/4210461"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1077443525",
+        "https://www.openstreetmap.org/way/4210461"
+      ],
+      "id": "route-local-fire-cambridge-fire-1-03",
+      "routeBaseId": "fire-cambridge-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2599.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 611.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 238.9,
+        "bestSameServiceCostSeconds": 238.9
+      }
+    },
+    {
+      "name": "Balmoral Road & Sheldon Drive",
+      "addr": "Balmoral Road & Sheldon Drive",
+      "lat": 43.4073419,
+      "lng": -80.3005166,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/3129664",
+        "way/475267358"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/3129664",
+        "https://www.openstreetmap.org/way/475267358"
+      ],
+      "id": "route-local-fire-cambridge-fire-1-04",
+      "routeBaseId": "fire-cambridge-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1641.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1144,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 127.9,
+        "bestSameServiceCostSeconds": 127.9
+      }
+    },
+    {
+      "name": "Light Drive & Saginaw Parkway",
+      "addr": "Light Drive & Saginaw Parkway",
+      "lat": 43.390094,
+      "lng": -80.2832408,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1352288203",
+        "way/1352288204",
+        "way/35519081"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1352288203",
+        "https://www.openstreetmap.org/way/1352288204",
+        "https://www.openstreetmap.org/way/35519081"
+      ],
+      "id": "route-local-fire-cambridge-fire-1-05",
+      "routeBaseId": "fire-cambridge-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2579.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 366.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 206.6,
+        "bestSameServiceCostSeconds": 206.6
+      }
+    },
+    {
+      "name": "Green Bank Drive & Jenner Court",
+      "addr": "Green Bank Drive & Jenner Court",
+      "lat": 43.4000304,
+      "lng": -80.290927,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/4257359",
+        "way/4257360"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/4257359",
+        "https://www.openstreetmap.org/way/4257360"
+      ],
+      "id": "route-local-fire-cambridge-fire-1-06",
+      "routeBaseId": "fire-cambridge-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1625.5,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 652.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 168.7,
+        "bestSameServiceCostSeconds": 168.7
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Hespeler Memorial Arena",
+      "addr": "640 Ellis Road West, Cambridge, ON",
+      "lat": 43.4280103,
+      "lng": -80.2931836,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.cambridge.ca/recreation-culture/sports/facilities-and-sports-fields/",
+        "https://maps.cambridge.ca/arcgispub03/rest/services/OpenData1/MapServer/13/query?objectIds=19351&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Mclaughlin Street",
+        "Cooper Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "cambridge-call-04",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-cambridge-fire-2-01",
+      "routeBaseId": "fire-cambridge-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1666.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 242.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 192.7,
+        "bestSameServiceCostSeconds": 192.7
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Weaver Park",
+      "addr": "188 Weaver Street, Cambridge, ON",
+      "lat": 43.4197705,
+      "lng": -80.3158892,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.cambridge.ca/recreation-culture/sports/facilities-and-sports-fields/",
+        "https://maps.cambridge.ca/arcgispub03/rest/services/OpenData1/MapServer/13/query?objectIds=40194&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Hipel Avenue",
+        "Heather Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "cambridge-call-20",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-cambridge-fire-2-02",
+      "routeBaseId": "fire-cambridge-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1699.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 230.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 185.7,
+        "bestSameServiceCostSeconds": 185.7
+      }
+    },
+    {
+      "name": "Black Bridge Road & Michigan Avenue",
+      "addr": "Black Bridge Road & Michigan Avenue",
+      "lat": 43.4496832,
+      "lng": -80.3103807,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/3125601",
+        "way/39276244"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/3125601",
+        "https://www.openstreetmap.org/way/39276244"
+      ],
+      "id": "route-local-fire-cambridge-fire-2-03",
+      "routeBaseId": "fire-cambridge-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2574.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 3706.7,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 217.5,
+        "bestSameServiceCostSeconds": 217.5
+      }
+    },
+    {
+      "name": "Clemens Avenue & Fisher Mills Road",
+      "addr": "Clemens Avenue & Fisher Mills Road",
+      "lat": 43.4359552,
+      "lng": -80.3171759,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/288231813",
+        "way/3238734",
+        "way/469979054"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/288231813",
+        "https://www.openstreetmap.org/way/3238734",
+        "https://www.openstreetmap.org/way/469979054"
+      ],
+      "id": "route-local-fire-cambridge-fire-2-04",
+      "routeBaseId": "fire-cambridge-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1249.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 3435.9,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 111.5,
+        "bestSameServiceCostSeconds": 111.5
+      }
+    },
+    {
+      "name": "Alona Avenue & Jamieson Parkway",
+      "addr": "Alona Avenue & Jamieson Parkway",
+      "lat": 43.4187744,
+      "lng": -80.2951529,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/4222391",
+        "way/469983612"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/4222391",
+        "https://www.openstreetmap.org/way/469983612"
+      ],
+      "id": "route-local-fire-cambridge-fire-2-05",
+      "routeBaseId": "fire-cambridge-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2390.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 544.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 235.1,
+        "bestSameServiceCostSeconds": 235.1
+      }
+    },
+    {
+      "name": "Endeavour Drive & McCormick Drive",
+      "addr": "Endeavour Drive & McCormick Drive",
+      "lat": 43.4374439,
+      "lng": -80.2984033,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/4076786",
+        "way/4076787"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/4076786",
+        "https://www.openstreetmap.org/way/4076787"
+      ],
+      "id": "route-local-fire-cambridge-fire-2-06",
+      "routeBaseId": "fire-cambridge-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1658.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 733.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 175.3,
+        "bestSameServiceCostSeconds": 175.3
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Riverside Park",
+      "addr": "49 King Street West, Cambridge, ON",
+      "lat": 43.4005471,
+      "lng": -80.3661653,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.cambridge.ca/recreation-culture/facilities/sports-facilities/",
+        "https://maps.cambridge.ca/arcgispub03/rest/services/OpenData1/MapServer/13/query?objectIds=30974&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Rogers Drive",
+        "Chopin Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "cambridge-call-08",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-cambridge-fire-3-01",
+      "routeBaseId": "fire-cambridge-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 740.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 4184.1,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 68.8,
+        "bestSameServiceCostSeconds": 68.8
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Preston Memorial Auditorium",
+      "addr": "1458 Hamilton Street, Cambridge, ON",
+      "lat": 43.3879118,
+      "lng": -80.3497831,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.cambridge.ca/recreation-culture/sports/facilities-and-sports-fields/",
+        "https://maps.cambridge.ca/arcgispub03/rest/services/OpenData1/MapServer/13/query?objectIds=41840&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Bishop Street South",
+        "Chestnut Street South"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "cambridge-call-06",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-cambridge-fire-3-02",
+      "routeBaseId": "fire-cambridge-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1635.9,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 180.8,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 181.7,
+        "bestSameServiceCostSeconds": 181.7
+      }
+    },
+    {
+      "name": "Rogers Drive & Speedsville Road",
+      "addr": "Rogers Drive & Speedsville Road",
+      "lat": 43.4118241,
+      "lng": -80.3496989,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25154175",
+        "way/35505407"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25154175",
+        "https://www.openstreetmap.org/way/35505407"
+      ],
+      "id": "route-local-fire-cambridge-fire-3-03",
+      "routeBaseId": "fire-cambridge-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2606.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 398.2,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 169.7,
+        "bestSameServiceCostSeconds": 169.7
+      }
+    },
+    {
+      "name": "Birchwood Avenue & Regent Street",
+      "addr": "Birchwood Avenue & Regent Street",
+      "lat": 43.3873569,
+      "lng": -80.3626878,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1295585851",
+        "way/4077000",
+        "way/4077001"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1295585851",
+        "https://www.openstreetmap.org/way/4077000",
+        "https://www.openstreetmap.org/way/4077001"
+      ],
+      "id": "route-local-fire-cambridge-fire-3-04",
+      "routeBaseId": "fire-cambridge-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1417.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 178.6,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 196.9,
+        "bestSameServiceCostSeconds": 196.9
+      }
+    },
+    {
+      "name": "Limerick Lane & Linden Drive",
+      "addr": "Limerick Lane & Linden Drive",
+      "lat": 43.3979389,
+      "lng": -80.3822481,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/441141819",
+        "way/441141821"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/441141819",
+        "https://www.openstreetmap.org/way/441141821"
+      ],
+      "id": "route-local-fire-cambridge-fire-3-05",
+      "routeBaseId": "fire-cambridge-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2239,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 4310.5,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 202.4,
+        "bestSameServiceCostSeconds": 202.4
+      }
+    },
+    {
+      "name": "Fountain Street South & Wismer Street",
+      "addr": "Fountain Street South & Wismer Street",
+      "lat": 43.3942158,
+      "lng": -80.3740435,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/471754842",
+        "way/511858341"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/471754842",
+        "https://www.openstreetmap.org/way/511858341"
+      ],
+      "id": "route-local-fire-cambridge-fire-3-06",
+      "routeBaseId": "fire-cambridge-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1659.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 4310.5,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 108.3,
+        "bestSameServiceCostSeconds": 108.3
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Hamilton Family Theatre Cambridge",
+      "addr": "46 Grand Avenue South, Cambridge, ON",
+      "lat": 43.3562778,
+      "lng": -80.3179848,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.draytonentertainment.com/theatres/hamilton-family-theatre-cambridge",
+        "https://maps.cambridge.ca/arcgispub03/rest/services/OpenData1/MapServer/13/query?objectIds=31303&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "St Andrews Street",
+        "Hood Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "cambridge-call-09",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-cambridge-fire-4-01",
+      "routeBaseId": "fire-cambridge-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 473.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 457.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 41.8,
+        "bestSameServiceCostSeconds": 41.8
+      }
+    },
+    {
+      "name": "Alderwood Crescent & Southwood Drive",
+      "addr": "Alderwood Crescent & Southwood Drive",
+      "lat": 43.345488,
+      "lng": -80.3346432,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35505617",
+        "way/471101590"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35505617",
+        "https://www.openstreetmap.org/way/471101590"
+      ],
+      "id": "route-local-fire-cambridge-fire-4-02",
+      "routeBaseId": "fire-cambridge-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1719,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 276.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 147.9,
+        "bestSameServiceCostSeconds": 147.9
+      }
+    },
+    {
+      "name": "Birkinshaw Road & Lockwood Street",
+      "addr": "Birkinshaw Road & Lockwood Street",
+      "lat": 43.3371307,
+      "lng": -80.3111028,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/281726695",
+        "way/281726697"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/281726695",
+        "https://www.openstreetmap.org/way/281726697"
+      ],
+      "id": "route-local-fire-cambridge-fire-4-03",
+      "routeBaseId": "fire-cambridge-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2620.9,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 1877.1,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 192.2,
+        "bestSameServiceCostSeconds": 192.2
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Cambridge Farmers' Market",
+      "addr": "40 Dickson Street, Cambridge, ON",
+      "lat": 43.3600416,
+      "lng": -80.3134001,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.cambridge.ca/recreation-culture/farmers-market/visit-the-market/about-the-farmers-market/",
+        "https://maps.cambridge.ca/arcgispub03/rest/services/OpenData1/MapServer/13/query?objectIds=25061&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Ainslie Street North",
+        "Petty Place"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "cambridge-call-10",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-cambridge-fire-4-04",
+      "routeBaseId": "fire-cambridge-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1210.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 302.3,
+        "decisionKinds": [
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 90.2,
+        "bestSameServiceCostSeconds": 90.2
+      }
+    },
+    {
+      "name": "Bismark Drive & Blair Road",
+      "addr": "Bismark Drive & Blair Road",
+      "lat": 43.3711006,
+      "lng": -80.3322854,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35507481",
+        "way/35509879",
+        "way/35511878",
+        "way/469972017"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35507481",
+        "https://www.openstreetmap.org/way/35509879",
+        "https://www.openstreetmap.org/way/35511878",
+        "https://www.openstreetmap.org/way/469972017"
+      ],
+      "id": "route-local-fire-cambridge-fire-4-05",
+      "routeBaseId": "fire-cambridge-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2562.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 253.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 248.1,
+        "bestSameServiceCostSeconds": 248.1
+      }
+    },
+    {
+      "name": "Pacific Court & Salisbury Avenue",
+      "addr": "Pacific Court & Salisbury Avenue",
+      "lat": 43.3568043,
+      "lng": -80.3383619,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35506458",
+        "way/471099385"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35506458",
+        "https://www.openstreetmap.org/way/471099385"
+      ],
+      "id": "route-local-fire-cambridge-fire-4-06",
+      "routeBaseId": "fire-cambridge-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1689.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 867.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 253.8,
+        "bestSameServiceCostSeconds": 253.8
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "John Dolson Centre",
+      "addr": "212 South Street, Cambridge, ON",
+      "lat": 43.3538429,
+      "lng": -80.2966433,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.cambridge.ca/recreation-culture/facilities/sports-facilities/",
+        "https://maps.cambridge.ca/arcgispub03/rest/services/OpenData1/MapServer/13/query?objectIds=20827&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Elgin Street South",
+        "Chalmers Street South"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "cambridge-call-12",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-cambridge-fire-5-01",
+      "routeBaseId": "fire-cambridge-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1262,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 513.4,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 123.1,
+        "bestSameServiceCostSeconds": 123.1
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Timber Creek Park",
+      "addr": "80 Timber Creek Crescent, Cambridge, ON",
+      "lat": 43.3747543,
+      "lng": -80.2941723,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.cambridge.ca/recreation-culture/sports/facilities-and-sports-fields/",
+        "https://maps.cambridge.ca/arcgispub03/rest/services/OpenData1/MapServer/13/query?objectIds=19984&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Millcreek Road",
+        "Franklin Boulevard"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "cambridge-call-17",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-cambridge-fire-5-02",
+      "routeBaseId": "fire-cambridge-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2380.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1535.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 176.9,
+        "bestSameServiceCostSeconds": 176.9
+      }
+    },
+    {
+      "name": "Main Street & Old Beverly Road & Robinson Road",
+      "addr": "Main Street & Old Beverly Road & Robinson Road",
+      "lat": 43.3601603,
+      "lng": -80.2587757,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35505891",
+        "way/35517468",
+        "way/35524907"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35505891",
+        "https://www.openstreetmap.org/way/35517468",
+        "https://www.openstreetmap.org/way/35524907"
+      ],
+      "id": "route-local-fire-cambridge-fire-5-03",
+      "routeBaseId": "fire-cambridge-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2513.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1081.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 162.9,
+        "bestSameServiceCostSeconds": 162.9
+      }
+    },
+    {
+      "name": "Nottinghill Drive & Sparrow Avenue",
+      "addr": "Nottinghill Drive & Sparrow Avenue",
+      "lat": 43.3578299,
+      "lng": -80.2799156,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35530693",
+        "way/477904997"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35530693",
+        "https://www.openstreetmap.org/way/477904997"
+      ],
+      "id": "route-local-fire-cambridge-fire-5-04",
+      "routeBaseId": "fire-cambridge-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 875.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 883.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 79.9,
+        "bestSameServiceCostSeconds": 79.9
+      }
+    },
+    {
+      "name": "Gatehouse Drive & Hay Crescent",
+      "addr": "Gatehouse Drive & Hay Crescent",
+      "lat": 43.3414764,
+      "lng": -80.2819132,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35509039",
+        "way/35511618"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35509039",
+        "https://www.openstreetmap.org/way/35511618"
+      ],
+      "id": "route-local-fire-cambridge-fire-5-05",
+      "routeBaseId": "fire-cambridge-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2602.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 345.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 199.8,
+        "bestSameServiceCostSeconds": 199.8
+      }
+    },
+    {
+      "name": "Dundas Street North & Shade Street",
+      "addr": "Dundas Street North & Shade Street",
+      "lat": 43.3651418,
+      "lng": -80.3048243,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/398077595",
+        "way/520473025"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/398077595",
+        "https://www.openstreetmap.org/way/520473025"
+      ],
+      "id": "route-local-fire-cambridge-fire-5-06",
+      "routeBaseId": "fire-cambridge-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1689.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1144,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 97.8,
+        "bestSameServiceCostSeconds": 97.8
+      }
+    },
+    {
+      "name": "Goddard Crescent & Heroux Devtek Drive",
+      "addr": "Goddard Crescent & Heroux Devtek Drive",
+      "lat": 43.4253334,
+      "lng": -80.3559572,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/337782974",
+        "way/337782975"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/337782974",
+        "https://www.openstreetmap.org/way/337782975"
+      ],
+      "id": "route-local-fire-cambridge-fire-6-01",
+      "routeBaseId": "fire-cambridge-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 808.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 207.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 83.1,
+        "bestSameServiceCostSeconds": 83.1
+      }
+    },
+    {
+      "name": "Maple Grove Road & Saltsman Drive",
+      "addr": "Maple Grove Road & Saltsman Drive",
+      "lat": 43.4215025,
+      "lng": -80.3839461,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1158065031",
+        "way/1158065032",
+        "way/1158065033"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1158065031",
+        "https://www.openstreetmap.org/way/1158065032",
+        "https://www.openstreetmap.org/way/1158065033"
+      ],
+      "id": "route-local-fire-cambridge-fire-6-02",
+      "routeBaseId": "fire-cambridge-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1848.5,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 4661.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 129.2,
+        "bestSameServiceCostSeconds": 129.2
+      }
+    },
+    {
+      "name": "Beaverdale Road & Maple Grove Road",
+      "addr": "Beaverdale Road & Maple Grove Road",
+      "lat": 43.4343101,
+      "lng": -80.3364973,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1158065048",
+        "way/1158065049",
+        "way/505416217",
+        "way/505416218"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1158065048",
+        "https://www.openstreetmap.org/way/1158065049",
+        "https://www.openstreetmap.org/way/505416217",
+        "https://www.openstreetmap.org/way/505416218"
+      ],
+      "id": "route-local-fire-cambridge-fire-6-03",
+      "routeBaseId": "fire-cambridge-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2541.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 4990.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 171,
+        "bestSameServiceCostSeconds": 171
+      }
+    },
+    {
+      "name": "Boxwood Drive & Cherry Blossom Road & Royal Oak Road",
+      "addr": "Boxwood Drive & Cherry Blossom Road & Royal Oak Road",
+      "lat": 43.4145005,
+      "lng": -80.3610764,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1086117158",
+        "way/1086117159",
+        "way/25353156",
+        "way/25353157"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1086117158",
+        "https://www.openstreetmap.org/way/1086117159",
+        "https://www.openstreetmap.org/way/25353156",
+        "https://www.openstreetmap.org/way/25353157"
+      ],
+      "id": "route-local-fire-cambridge-fire-6-04",
+      "routeBaseId": "fire-cambridge-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1381.5,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1026.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 213.9,
+        "bestSameServiceCostSeconds": 213.9
+      }
+    },
+    {
+      "name": "Middle Block Road & Speedsville Road",
+      "addr": "Middle Block Road & Speedsville Road",
+      "lat": 43.4414832,
+      "lng": -80.3592818,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25154174",
+        "way/25353144",
+        "way/25353145"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25154174",
+        "https://www.openstreetmap.org/way/25353144",
+        "https://www.openstreetmap.org/way/25353145"
+      ],
+      "id": "route-local-fire-cambridge-fire-6-05",
+      "routeBaseId": "fire-cambridge-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2329.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 3015.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 158.2,
+        "bestSameServiceCostSeconds": 158.2
+      }
+    },
+    {
+      "name": "Boxwood Drive & Vondrau Drive",
+      "addr": "Boxwood Drive & Vondrau Drive",
+      "lat": 43.4298253,
+      "lng": -80.3750798,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25353155",
+        "way/470215109",
+        "way/470215113"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25353155",
+        "https://www.openstreetmap.org/way/470215109",
+        "https://www.openstreetmap.org/way/470215113"
+      ],
+      "id": "route-local-fire-cambridge-fire-6-06",
+      "routeBaseId": "fire-cambridge-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1264.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 204.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 144.2,
+        "bestSameServiceCostSeconds": 144.2
+      }
+    },
+    {
+      "name": "Maple Grove Road & Saltsman Drive",
+      "addr": "Maple Grove Road & Saltsman Drive",
+      "lat": 43.4215025,
+      "lng": -80.3839461,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1158065031",
+        "way/1158065032",
+        "way/1158065033"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1158065031",
+        "https://www.openstreetmap.org/way/1158065032",
+        "https://www.openstreetmap.org/way/1158065033"
+      ],
+      "id": "route-local-ems-cambridge-ems-maple-grove-01",
+      "routeBaseId": "ems-cambridge-ems-maple-grove",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 793.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 689.2,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 117.3,
+        "bestSameServiceCostSeconds": 117.3
+      }
+    },
+    {
+      "name": "Dirksen Court & Maple Manor Court",
+      "addr": "Dirksen Court & Maple Manor Court",
+      "lat": 43.4055866,
+      "lng": -80.4032748,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35504582",
+        "way/35529080",
+        "way/35533625"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35504582",
+        "https://www.openstreetmap.org/way/35529080",
+        "https://www.openstreetmap.org/way/35533625"
+      ],
+      "id": "route-local-ems-cambridge-ems-maple-grove-02",
+      "routeBaseId": "ems-cambridge-ems-maple-grove",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2280.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 837.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 268.3,
+        "bestSameServiceCostSeconds": 268.3
+      }
+    },
+    {
+      "name": "Fountain Street North & Kitchener Road",
+      "addr": "Fountain Street North & Kitchener Road",
+      "lat": 43.4024961,
+      "lng": -80.3700276,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/140281481",
+        "way/35528688"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/140281481",
+        "https://www.openstreetmap.org/way/35528688"
+      ],
+      "id": "route-local-ems-cambridge-ems-maple-grove-03",
+      "routeBaseId": "ems-cambridge-ems-maple-grove",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2609.5,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 1595.9,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 245.2,
+        "bestSameServiceCostSeconds": 245.2
+      }
+    },
+    {
+      "name": "Cherry Blossom Road & Fountain Street North",
+      "addr": "Cherry Blossom Road & Fountain Street North",
+      "lat": 43.4128343,
+      "lng": -80.3745169,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35503759",
+        "way/429484857",
+        "way/429539409",
+        "way/467608934"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35503759",
+        "https://www.openstreetmap.org/way/429484857",
+        "https://www.openstreetmap.org/way/429539409",
+        "https://www.openstreetmap.org/way/467608934"
+      ],
+      "id": "route-local-ems-cambridge-ems-maple-grove-04",
+      "routeBaseId": "ems-cambridge-ems-maple-grove",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1408.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 631.6,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 173,
+        "bestSameServiceCostSeconds": 173
+      }
+    },
+    {
+      "name": "Boxwood Drive & Maple Grove Road",
+      "addr": "Boxwood Drive & Maple Grove Road",
+      "lat": 43.4268855,
+      "lng": -80.3646362,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1158065046",
+        "way/1158065047",
+        "way/470215108",
+        "way/837636851"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1158065046",
+        "https://www.openstreetmap.org/way/1158065047",
+        "https://www.openstreetmap.org/way/470215108",
+        "https://www.openstreetmap.org/way/837636851"
+      ],
+      "id": "route-local-ems-cambridge-ems-maple-grove-05",
+      "routeBaseId": "ems-cambridge-ems-maple-grove",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2542.7,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 689.2,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 222.6,
+        "bestSameServiceCostSeconds": 222.6
+      }
+    },
+    {
+      "name": "Gateway Park Drive & King Street East",
+      "addr": "Gateway Park Drive & King Street East",
+      "lat": 43.4044455,
+      "lng": -80.3860715,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1176302935",
+        "way/1366087184",
+        "way/1367077585"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1176302935",
+        "https://www.openstreetmap.org/way/1366087184",
+        "https://www.openstreetmap.org/way/1367077585"
+      ],
+      "id": "route-local-ems-cambridge-ems-maple-grove-06",
+      "routeBaseId": "ems-cambridge-ems-maple-grove",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2125.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 837.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 223.3,
+        "bestSameServiceCostSeconds": 223.3
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Hamilton Family Theatre Cambridge",
+      "addr": "46 Grand Avenue South, Cambridge, ON",
+      "lat": 43.3562778,
+      "lng": -80.3179848,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.draytonentertainment.com/theatres/hamilton-family-theatre-cambridge",
+        "https://maps.cambridge.ca/arcgispub03/rest/services/OpenData1/MapServer/13/query?objectIds=31303&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "St Andrews Street",
+        "Hood Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "cambridge-call-09",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-cambridge-ems-st-andrews-01",
+      "routeBaseId": "ems-cambridge-ems-st-andrews",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 473.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 457.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 41.8,
+        "bestSameServiceCostSeconds": 41.8
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Stirling Heights",
+      "addr": "200 Stirling Macgregor Drive",
+      "lat": 43.3391396990583,
+      "lng": -80.33370969999999,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789884"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "4371",
+      "community": "Cambridge",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-4371",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-cambridge-ems-st-andrews-02",
+      "routeBaseId": "ems-cambridge-ems-st-andrews",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2156.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 517.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 154,
+        "bestSameServiceCostSeconds": 154
+      }
+    },
+    {
+      "name": "Beauchamp Drive & Freure Drive",
+      "addr": "Beauchamp Drive & Freure Drive",
+      "lat": 43.3569304,
+      "lng": -80.3477186,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/647802778",
+        "way/647802779"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/647802778",
+        "https://www.openstreetmap.org/way/647802779"
+      ],
+      "id": "route-local-ems-cambridge-ems-st-andrews-03",
+      "routeBaseId": "ems-cambridge-ems-st-andrews",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2603.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 867.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 299.6,
+        "bestSameServiceCostSeconds": 299.6
+      }
+    },
+    {
+      "name": "Bismark Drive & Blair Road",
+      "addr": "Bismark Drive & Blair Road",
+      "lat": 43.3711006,
+      "lng": -80.3322854,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35507481",
+        "way/35509879",
+        "way/35511878",
+        "way/469972017"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35507481",
+        "https://www.openstreetmap.org/way/35509879",
+        "https://www.openstreetmap.org/way/35511878",
+        "https://www.openstreetmap.org/way/469972017"
+      ],
+      "id": "route-local-ems-cambridge-ems-st-andrews-04",
+      "routeBaseId": "ems-cambridge-ems-st-andrews",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2562.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 253.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 248.1,
+        "bestSameServiceCostSeconds": 248.1
+      }
+    },
+    {
+      "name": "Elgin Street South & South Street",
+      "addr": "Elgin Street South & South Street",
+      "lat": 43.3534965,
+      "lng": -80.2952665,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/26996690",
+        "way/35519703",
+        "way/471486498"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/26996690",
+        "https://www.openstreetmap.org/way/35519703",
+        "https://www.openstreetmap.org/way/471486498"
+      ],
+      "id": "route-local-ems-cambridge-ems-st-andrews-05",
+      "routeBaseId": "ems-cambridge-ems-st-andrews",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2609.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 693.2,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 195,
+        "bestSameServiceCostSeconds": 195
+      }
+    },
+    {
+      "name": "Birkinshaw Road & Lockwood Street",
+      "addr": "Birkinshaw Road & Lockwood Street",
+      "lat": 43.3371307,
+      "lng": -80.3111028,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/281726695",
+        "way/281726697"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/281726695",
+        "https://www.openstreetmap.org/way/281726697"
+      ],
+      "id": "route-local-ems-cambridge-ems-st-andrews-06",
+      "routeBaseId": "ems-cambridge-ems-st-andrews",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2620.9,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 1877.1,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 192.2,
+        "bestSameServiceCostSeconds": 192.2
+      }
+    },
+    {
+      "name": "Lingard Road & Thompson Drive",
+      "addr": "Lingard Road & Thompson Drive",
+      "lat": 43.4112081,
+      "lng": -80.2889913,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1351495816",
+        "way/4257264",
+        "way/469987438"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1351495816",
+        "https://www.openstreetmap.org/way/4257264",
+        "https://www.openstreetmap.org/way/469987438"
+      ],
+      "id": "route-local-ems-cambridge-ems-pinebush-01",
+      "routeBaseId": "ems-cambridge-ems-pinebush",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 825.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 972.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 92.1,
+        "bestSameServiceCostSeconds": 92.1
+      }
+    },
+    {
+      "name": "Birmingham Drive & Hollywood Court",
+      "addr": "Birmingham Drive & Hollywood Court",
+      "lat": 43.41043,
+      "lng": -80.3183604,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1130754453",
+        "way/1130754454"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1130754453",
+        "https://www.openstreetmap.org/way/1130754454"
+      ],
+      "id": "route-local-ems-cambridge-ems-pinebush-02",
+      "routeBaseId": "ems-cambridge-ems-pinebush",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2529.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1283.7,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 187.7,
+        "bestSameServiceCostSeconds": 187.7
+      }
+    },
+    {
+      "name": "McClintock Drive & Wellington Road 32",
+      "addr": "McClintock Drive & Wellington Road 32",
+      "lat": 43.4242473,
+      "lng": -80.2633435,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35515898",
+        "way/35531982",
+        "way/35532128"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35515898",
+        "https://www.openstreetmap.org/way/35531982",
+        "https://www.openstreetmap.org/way/35532128"
+      ],
+      "id": "route-local-ems-cambridge-ems-pinebush-03",
+      "routeBaseId": "ems-cambridge-ems-pinebush",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2696.9,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 2328.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 189.6,
+        "bestSameServiceCostSeconds": 189.6
+      }
+    },
+    {
+      "name": "Jamieson Parkway & Townline Road",
+      "addr": "Jamieson Parkway & Townline Road",
+      "lat": 43.4250711,
+      "lng": -80.2848284,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/338710651",
+        "way/3927865",
+        "way/469983621",
+        "way/469983622"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/338710651",
+        "https://www.openstreetmap.org/way/3927865",
+        "https://www.openstreetmap.org/way/469983621",
+        "https://www.openstreetmap.org/way/469983622"
+      ],
+      "id": "route-local-ems-cambridge-ems-pinebush-04",
+      "routeBaseId": "ems-cambridge-ems-pinebush",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1718.9,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 2986.8,
+        "decisionKinds": [
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 131,
+        "bestSameServiceCostSeconds": 131
+      }
+    },
+    {
+      "name": "Burnett Avenue & Country Club Drive",
+      "addr": "Burnett Avenue & Country Club Drive",
+      "lat": 43.3977565,
+      "lng": -80.2919061,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1365583061",
+        "way/4257279",
+        "way/4257358",
+        "way/476064093",
+        "way/476064096"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1365583061",
+        "https://www.openstreetmap.org/way/4257279",
+        "https://www.openstreetmap.org/way/4257358",
+        "https://www.openstreetmap.org/way/476064093",
+        "https://www.openstreetmap.org/way/476064096"
+      ],
+      "id": "route-local-ems-cambridge-ems-pinebush-05",
+      "routeBaseId": "ems-cambridge-ems-pinebush",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2642.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 611.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 217.8,
+        "bestSameServiceCostSeconds": 217.8
+      }
+    },
+    {
+      "name": "Balmoral Road & Sheldon Drive",
+      "addr": "Balmoral Road & Sheldon Drive",
+      "lat": 43.4073419,
+      "lng": -80.3005166,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/3129664",
+        "way/475267358"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/3129664",
+        "https://www.openstreetmap.org/way/475267358"
+      ],
+      "id": "route-local-ems-cambridge-ems-pinebush-06",
+      "routeBaseId": "ems-cambridge-ems-pinebush",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1677.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 501.2,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 155.7,
+        "bestSameServiceCostSeconds": 155.7
+      }
+    }
+  ]
 }

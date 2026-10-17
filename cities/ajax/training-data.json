@@ -113,5 +113,1165 @@
   ],
   "roadsUrl": "cities/ajax/roads.geojson.gz",
   "roadFeatureCount": 23252,
-  "roadDataSha256": "8a8aced78d20eb1be30d3e14b6b8d73817710fe5c152f993c3889073bfbecb48"
+  "roadDataSha256": "8a8aced78d20eb1be30d3e14b6b8d73817710fe5c152f993c3889073bfbecb48",
+  "routeResponses": {
+    "schemaVersion": 1,
+    "minCallsPerBase": 3,
+    "targetCallsPerBase": 6,
+    "generatedOn": "2026-10-17",
+    "model": {
+      "description": "Published first-due polygons where available. Otherwise a directed road-network estimate using road class travel cost from every same-service hall; allows a15second cost tie for overlapping nearby halls. This is training geography, not live dispatch advice.",
+      "ownershipToleranceSeconds": 15,
+      "maximumCandidateRouteMetres": 12000
+    },
+    "bases": [
+      {
+        "baseId": "fire-ajax-fire-1",
+        "service": "fire",
+        "number": 1,
+        "name": "Fire Headquarters Station 1",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5800,
+        "access": {
+          "lat": 43.8811416,
+          "lng": -79.0194681,
+          "road": "Unnamed road",
+          "gapMetres": 20.9
+        },
+        "callIds": [
+          "route-local-fire-ajax-fire-1-01",
+          "route-local-fire-ajax-fire-1-02",
+          "route-local-fire-ajax-fire-1-03",
+          "route-local-fire-ajax-fire-1-04",
+          "route-local-fire-ajax-fire-1-05",
+          "route-local-fire-ajax-fire-1-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-ajax-fire-2",
+        "service": "fire",
+        "number": 2,
+        "name": "Fire Station 2",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.8392227,
+          "lng": -79.0227424,
+          "road": "Unnamed road",
+          "gapMetres": 18.9
+        },
+        "callIds": [
+          "route-local-fire-ajax-fire-2-01",
+          "route-local-fire-ajax-fire-2-02",
+          "route-local-fire-ajax-fire-2-03",
+          "route-local-fire-ajax-fire-2-04",
+          "route-local-fire-ajax-fire-2-05",
+          "route-local-fire-ajax-fire-2-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-ajax-fire-3",
+        "service": "fire",
+        "number": 3,
+        "name": "Fire Station 3",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.85877078093076,
+          "lng": -79.04177940636185,
+          "road": "Westney Road North",
+          "gapMetres": 31.3
+        },
+        "callIds": [
+          "route-local-fire-ajax-fire-3-01",
+          "route-local-fire-ajax-fire-3-02",
+          "route-local-fire-ajax-fire-3-03",
+          "route-local-fire-ajax-fire-3-04",
+          "route-local-fire-ajax-fire-3-05",
+          "route-local-fire-ajax-fire-3-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-ajax-ems-511",
+        "service": "ems",
+        "number": 10000,
+        "name": "Ajax Paramedic Station",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.8455966,
+          "lng": -79.0270061,
+          "road": "Unnamed road",
+          "gapMetres": 21.7
+        },
+        "callIds": [
+          "route-local-ems-ajax-ems-511-01",
+          "route-local-ems-ajax-ems-511-02",
+          "route-local-ems-ajax-ems-511-03",
+          "route-local-ems-ajax-ems-511-04",
+          "route-local-ems-ajax-ems-511-05",
+          "route-local-ems-ajax-ems-511-06"
+        ],
+        "challengeCalls": 6
+      }
+    ]
+  },
+  "routeCalls": [
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "St. Teresa of Calcutta Catholic School",
+      "addr": "15 Fishlock Street, Ajax, ON",
+      "lat": 43.87596574348497,
+      "lng": -79.03000191748124,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ajaxmaps.ajax.ca/gisernie/rest/services/Public/Ajax_On_The_Map/FeatureServer/6/query?objectIds=6&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Smales Drive",
+        "Lax Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "ajax-call-20",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-ajax-fire-1-01",
+      "routeBaseId": "fire-ajax-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1742.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1065.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 188.8,
+        "bestSameServiceCostSeconds": 188.8
+      }
+    },
+    {
+      "name": "Formosa Lane & Goss Lane",
+      "addr": "Formosa Lane & Goss Lane",
+      "lat": 43.8825223,
+      "lng": -79.0048967,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/170241144",
+        "way/170241160"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/170241144",
+        "https://www.openstreetmap.org/way/170241160"
+      ],
+      "id": "route-local-fire-ajax-fire-1-02",
+      "routeBaseId": "fire-ajax-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1712.5,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2077.7,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 206.7,
+        "bestSameServiceCostSeconds": 206.7
+      }
+    },
+    {
+      "name": "Booker Drive & Elliottglen Drive & Gamble Drive",
+      "addr": "Booker Drive & Elliottglen Drive & Gamble Drive",
+      "lat": 43.8967222,
+      "lng": -79.026293,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/74837038",
+        "way/74837097",
+        "way/74837128"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/74837038",
+        "https://www.openstreetmap.org/way/74837097",
+        "https://www.openstreetmap.org/way/74837128"
+      ],
+      "id": "route-local-fire-ajax-fire-1-03",
+      "routeBaseId": "fire-ajax-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2581,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 2123.6,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 281.8,
+        "bestSameServiceCostSeconds": 281.8
+      }
+    },
+    {
+      "name": "Graywardine Lane & Salem Road",
+      "addr": "Graywardine Lane & Salem Road",
+      "lat": 43.8854421,
+      "lng": -79.0250644,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35346698",
+        "way/460709242"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35346698",
+        "https://www.openstreetmap.org/way/460709242"
+      ],
+      "id": "route-local-fire-ajax-fire-1-04",
+      "routeBaseId": "fire-ajax-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1094.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1240.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 142.8,
+        "bestSameServiceCostSeconds": 142.8
+      }
+    },
+    {
+      "name": "Lake Ridge Road & Rossland Road East & Rossland Road West",
+      "addr": "Lake Ridge Road & Rossland Road East & Rossland Road West",
+      "lat": 43.8874652,
+      "lng": -78.9935886,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/421142791",
+        "way/421142792",
+        "way/421142793",
+        "way/437099823"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/421142791",
+        "https://www.openstreetmap.org/way/421142792",
+        "https://www.openstreetmap.org/way/421142793",
+        "https://www.openstreetmap.org/way/437099823"
+      ],
+      "id": "route-local-fire-ajax-fire-1-05",
+      "routeBaseId": "fire-ajax-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2503.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2564.6,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 227.6,
+        "bestSameServiceCostSeconds": 227.6
+      }
+    },
+    {
+      "name": "Kerrison Drive & Kerrison Drive West & Salem Road",
+      "addr": "Kerrison Drive & Kerrison Drive West & Salem Road",
+      "lat": 43.8706654,
+      "lng": -79.017746,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/425968330",
+        "way/425968332",
+        "way/425968335",
+        "way/425968336"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/425968330",
+        "https://www.openstreetmap.org/way/425968332",
+        "https://www.openstreetmap.org/way/425968335",
+        "https://www.openstreetmap.org/way/425968336"
+      ],
+      "id": "route-local-fire-ajax-fire-1-06",
+      "routeBaseId": "fire-ajax-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1413.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 553.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 162.2,
+        "bestSameServiceCostSeconds": 162.2
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Pat Bayly Square",
+      "addr": "55 Bayly Street West, Ajax, ON",
+      "lat": 43.84316942014752,
+      "lng": -79.01860348493963,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ajaxmaps.ajax.ca/gisernie/rest/services/Public/Ajax_On_The_Map/FeatureServer/58/query?objectIds=609&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Harwood Avenue South",
+        "Kitney Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "ajax-call-08",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-ajax-fire-2-01",
+      "routeBaseId": "fire-ajax-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 883.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 441.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 103.8,
+        "bestSameServiceCostSeconds": 103.8
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Duffins Bay Public School",
+      "addr": "66 Pittmann Crescent, Ajax, ON",
+      "lat": 43.8250002316976,
+      "lng": -79.02025881516069,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ajaxmaps.ajax.ca/gisernie/rest/services/Public/Ajax_On_The_Map/FeatureServer/6/query?objectIds=20&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Clover Ridge Drive West",
+        "Robbie Crescent (via Clover Ridge Drive West)"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "ajax-call-18",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-ajax-fire-2-02",
+      "routeBaseId": "fire-ajax-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2645.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 372.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 285,
+        "bestSameServiceCostSeconds": 285
+      }
+    },
+    {
+      "name": "Bayly Street & Church Street South",
+      "addr": "Bayly Street & Church Street South",
+      "lat": 43.8373779,
+      "lng": -79.0480927,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1383972534",
+        "way/1383972535",
+        "way/35348667",
+        "way/35350367"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1383972534",
+        "https://www.openstreetmap.org/way/1383972535",
+        "https://www.openstreetmap.org/way/35348667",
+        "https://www.openstreetmap.org/way/35350367"
+      ],
+      "id": "route-local-fire-ajax-fire-2-03",
+      "routeBaseId": "fire-ajax-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2447.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 3442.7,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 182.9,
+        "bestSameServiceCostSeconds": 182.9
+      }
+    },
+    {
+      "name": "Clements Road West & Westney Road South",
+      "addr": "Clements Road West & Westney Road South",
+      "lat": 43.8319685,
+      "lng": -79.0329774,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1268391668",
+        "way/1268561229",
+        "way/1462759214",
+        "way/35346096"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1268391668",
+        "https://www.openstreetmap.org/way/1268561229",
+        "https://www.openstreetmap.org/way/1462759214",
+        "https://www.openstreetmap.org/way/35346096"
+      ],
+      "id": "route-local-fire-ajax-fire-2-04",
+      "routeBaseId": "fire-ajax-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1574.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 766.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 161.7,
+        "bestSameServiceCostSeconds": 161.7
+      }
+    },
+    {
+      "name": "Shoal Point Road & Wilkie Lane",
+      "addr": "Shoal Point Road & Wilkie Lane",
+      "lat": 43.8473245,
+      "lng": -78.998169,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34192298",
+        "way/92996446"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34192298",
+        "https://www.openstreetmap.org/way/92996446"
+      ],
+      "id": "route-local-fire-ajax-fire-2-05",
+      "routeBaseId": "fire-ajax-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2595.7,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2918.1,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 209.3,
+        "bestSameServiceCostSeconds": 209.3
+      }
+    },
+    {
+      "name": "Burrells Road & Strathy Road",
+      "addr": "Burrells Road & Strathy Road",
+      "lat": 43.8333565,
+      "lng": -79.0113329,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35348373",
+        "way/35349286",
+        "way/35350615"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35348373",
+        "https://www.openstreetmap.org/way/35349286",
+        "https://www.openstreetmap.org/way/35350615"
+      ],
+      "id": "route-local-fire-ajax-fire-2-06",
+      "routeBaseId": "fire-ajax-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1737.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 398.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 201.9,
+        "bestSameServiceCostSeconds": 201.9
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Roland Michener Public School",
+      "addr": "95 Ritchie Avenue, Ajax, ON",
+      "lat": 43.85435188735151,
+      "lng": -79.03840132434236,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ajaxmaps.ajax.ca/gisernie/rest/services/Public/Ajax_On_The_Map/FeatureServer/6/query?objectIds=16&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Plowman Drive",
+        "Pembry Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "ajax-call-15",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-ajax-fire-3-01",
+      "routeBaseId": "fire-ajax-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 799.9,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 1439.6,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Westney Road North",
+        "estimatedCostSeconds": 70,
+        "bestSameServiceCostSeconds": 70
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Lester B. Pearson Public School",
+      "addr": "21 Coughlen Street, Ajax, ON",
+      "lat": 43.87140859403886,
+      "lng": -79.04348204583268,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ajaxmaps.ajax.ca/gisernie/rest/services/Public/Ajax_On_The_Map/FeatureServer/6/query?objectIds=10&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Carrick Avenue",
+        "Pearce Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "ajax-call-16",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-ajax-fire-3-02",
+      "routeBaseId": "fire-ajax-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2069.2,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 799.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Westney Road North",
+        "estimatedCostSeconds": 154.4,
+        "bestSameServiceCostSeconds": 154.4
+      }
+    },
+    {
+      "name": "Kearney Drive & Kemp Drive",
+      "addr": "Kearney Drive & Kemp Drive",
+      "lat": 43.8588795,
+      "lng": -79.0662129,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35350082",
+        "way/35350504",
+        "way/35350720"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35350082",
+        "https://www.openstreetmap.org/way/35350504",
+        "https://www.openstreetmap.org/way/35350720"
+      ],
+      "id": "route-local-fire-ajax-fire-3-03",
+      "routeBaseId": "fire-ajax-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2594.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 676.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Westney Road North",
+        "estimatedCostSeconds": 173.9,
+        "bestSameServiceCostSeconds": 173.9
+      }
+    },
+    {
+      "name": "Fuller Road & Westney Road South",
+      "addr": "Fuller Road & Westney Road South",
+      "lat": 43.8381104,
+      "lng": -79.0350268,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1269017704",
+        "way/35349998",
+        "way/383204623"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1269017704",
+        "https://www.openstreetmap.org/way/35349998",
+        "https://www.openstreetmap.org/way/383204623"
+      ],
+      "id": "route-local-fire-ajax-fire-3-04",
+      "routeBaseId": "fire-ajax-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2399.1,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 2841,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Westney Road North",
+        "estimatedCostSeconds": 144.5,
+        "bestSameServiceCostSeconds": 133
+      }
+    },
+    {
+      "name": "Angus Drive & Mandrake Street",
+      "addr": "Angus Drive & Mandrake Street",
+      "lat": 43.8591973,
+      "lng": -79.0156019,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35345737",
+        "way/35350476",
+        "way/36877826",
+        "way/873282499"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35345737",
+        "https://www.openstreetmap.org/way/35350476",
+        "https://www.openstreetmap.org/way/36877826",
+        "https://www.openstreetmap.org/way/873282499"
+      ],
+      "id": "route-local-fire-ajax-fire-3-05",
+      "routeBaseId": "fire-ajax-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2618.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 346.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Westney Road North",
+        "estimatedCostSeconds": 149.3,
+        "bestSameServiceCostSeconds": 149.3
+      }
+    },
+    {
+      "name": "Coe Drive & Dominy Drive",
+      "addr": "Coe Drive & Dominy Drive",
+      "lat": 43.8651584,
+      "lng": -79.0314398,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35349076",
+        "way/35349751",
+        "way/35350764"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35349076",
+        "https://www.openstreetmap.org/way/35349751",
+        "https://www.openstreetmap.org/way/35350764"
+      ],
+      "id": "route-local-fire-ajax-fire-3-06",
+      "routeBaseId": "fire-ajax-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1642.6,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 899.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Westney Road North",
+        "estimatedCostSeconds": 128.7,
+        "bestSameServiceCostSeconds": 128.7
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Ajax Community Centre",
+      "addr": "75 Centennial Road, Ajax, ON",
+      "lat": 43.839311778210416,
+      "lng": -79.02162210346788,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ajaxmaps.ajax.ca/gisernie/rest/services/Public/Ajax_On_The_Map/FeatureServer/25/query?objectIds=6&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Kitney Drive",
+        "Monarch Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "ajax-call-02",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-ajax-ems-511-01",
+      "routeBaseId": "ems-ajax-ems-511",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1034.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 332.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 144.4,
+        "bestSameServiceCostSeconds": 144.4
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Roland Michener Public School",
+      "addr": "95 Ritchie Avenue, Ajax, ON",
+      "lat": 43.85435188735151,
+      "lng": -79.03840132434236,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ajaxmaps.ajax.ca/gisernie/rest/services/Public/Ajax_On_The_Map/FeatureServer/6/query?objectIds=16&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Plowman Drive",
+        "Pembry Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "ajax-call-15",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-ajax-ems-511-02",
+      "routeBaseId": "ems-ajax-ems-511",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2340.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 741,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 212.1,
+        "bestSameServiceCostSeconds": 212.1
+      }
+    },
+    {
+      "name": "Bayly Street East & Shoal Point Road",
+      "addr": "Bayly Street East & Shoal Point Road",
+      "lat": 43.8483734,
+      "lng": -78.9986109,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34192298",
+        "way/438343073",
+        "way/92996447"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34192298",
+        "https://www.openstreetmap.org/way/438343073",
+        "https://www.openstreetmap.org/way/92996447"
+      ],
+      "id": "route-local-ems-ajax-ems-511-03",
+      "routeBaseId": "ems-ajax-ems-511",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2641.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 3771.7,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 199.8,
+        "bestSameServiceCostSeconds": 199.8
+      }
+    },
+    {
+      "name": "Bayly Street & Church Street South",
+      "addr": "Bayly Street & Church Street South",
+      "lat": 43.8373779,
+      "lng": -79.0480927,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1383972534",
+        "way/1383972535",
+        "way/35348667",
+        "way/35350367"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1383972534",
+        "https://www.openstreetmap.org/way/1383972535",
+        "https://www.openstreetmap.org/way/35348667",
+        "https://www.openstreetmap.org/way/35350367"
+      ],
+      "id": "route-local-ems-ajax-ems-511-04",
+      "routeBaseId": "ems-ajax-ems-511",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2318,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 2701.7,
+        "decisionKinds": [
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 183,
+        "bestSameServiceCostSeconds": 183
+      }
+    },
+    {
+      "name": "Chambers Drive & Mandrake Street & Salem Road South",
+      "addr": "Chambers Drive & Mandrake Street & Salem Road South",
+      "lat": 43.8595843,
+      "lng": -79.0141919,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35350712",
+        "way/36877872",
+        "way/36877934",
+        "way/431431833"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35350712",
+        "https://www.openstreetmap.org/way/36877872",
+        "https://www.openstreetmap.org/way/36877934",
+        "https://www.openstreetmap.org/way/431431833"
+      ],
+      "id": "route-local-ems-ajax-ems-511-05",
+      "routeBaseId": "ems-ajax-ems-511",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2573.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 354.7,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 238.3,
+        "bestSameServiceCostSeconds": 238.3
+      }
+    },
+    {
+      "name": "Windsor Avenue & York Street",
+      "addr": "Windsor Avenue & York Street",
+      "lat": 43.8541168,
+      "lng": -79.0256436,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35346422",
+        "way/35350433",
+        "way/35351217"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35346422",
+        "https://www.openstreetmap.org/way/35350433",
+        "https://www.openstreetmap.org/way/35351217"
+      ],
+      "id": "route-local-ems-ajax-ems-511-06",
+      "routeBaseId": "ems-ajax-ems-511",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1695.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 2004.5,
+        "decisionKinds": [
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 167.9,
+        "bestSameServiceCostSeconds": 167.9
+      }
+    }
+  ]
 }

@@ -165,5 +165,4232 @@
   ],
   "roadsUrl": "cities/markham/roads.geojson.gz",
   "roadFeatureCount": 42418,
-  "roadDataSha256": "aa255c2af4e81fccf1da37014b23f051ccbceb08938d51a52a4d484f917cae74"
+  "roadDataSha256": "aa255c2af4e81fccf1da37014b23f051ccbceb08938d51a52a4d484f917cae74",
+  "routeResponses": {
+    "schemaVersion": 1,
+    "minCallsPerBase": 3,
+    "targetCallsPerBase": 6,
+    "generatedOn": "2026-10-17",
+    "model": {
+      "description": "Published first-due polygons where available. Otherwise a directed road-network estimate using road class travel cost from every same-service hall; allows a15second cost tie for overlapping nearby halls. This is training geography, not live dispatch advice.",
+      "ownershipToleranceSeconds": 15,
+      "maximumCandidateRouteMetres": 12000
+    },
+    "bases": [
+      {
+        "baseId": "fire-markham-fire-9-1",
+        "service": "fire",
+        "number": 10000,
+        "name": "Fire Station 9-1",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.8213755,
+          "lng": -79.4011603,
+          "road": "Green Lane",
+          "gapMetres": 37.9
+        },
+        "callIds": [
+          "route-local-fire-markham-fire-9-1-01",
+          "route-local-fire-markham-fire-9-1-02",
+          "route-local-fire-markham-fire-9-1-03",
+          "route-local-fire-markham-fire-9-1-04",
+          "route-local-fire-markham-fire-9-1-05",
+          "route-local-fire-markham-fire-9-1-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-markham-fire-9-2",
+        "service": "fire",
+        "number": 10001,
+        "name": "Fire Station 9-2",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5800,
+        "access": {
+          "lat": 43.831006983443785,
+          "lng": -79.35161191037058,
+          "road": "Unnamed road",
+          "gapMetres": 30.8
+        },
+        "callIds": [
+          "route-local-fire-markham-fire-9-2-01",
+          "route-local-fire-markham-fire-9-2-02",
+          "route-local-fire-markham-fire-9-2-03",
+          "route-local-fire-markham-fire-9-2-04",
+          "route-local-fire-markham-fire-9-2-05",
+          "route-local-fire-markham-fire-9-2-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-markham-fire-9-3",
+        "service": "fire",
+        "number": 10002,
+        "name": "Fire Station 9-3",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.88589751390314,
+          "lng": -79.36947528404025,
+          "road": "Unnamed road",
+          "gapMetres": 8.9
+        },
+        "callIds": [
+          "route-local-fire-markham-fire-9-3-01",
+          "route-local-fire-markham-fire-9-3-02",
+          "route-local-fire-markham-fire-9-3-03",
+          "route-local-fire-markham-fire-9-3-04",
+          "route-local-fire-markham-fire-9-3-05",
+          "route-local-fire-markham-fire-9-3-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-markham-fire-9-4",
+        "service": "fire",
+        "number": 10003,
+        "name": "Fire Station 9-4",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.83151606959236,
+          "lng": -79.31887940513613,
+          "road": "Unnamed road",
+          "gapMetres": 6.9
+        },
+        "callIds": [
+          "route-local-fire-markham-fire-9-4-01",
+          "route-local-fire-markham-fire-9-4-02",
+          "route-local-fire-markham-fire-9-4-03",
+          "route-local-fire-markham-fire-9-4-04",
+          "route-local-fire-markham-fire-9-4-05",
+          "route-local-fire-markham-fire-9-4-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-markham-fire-9-5",
+        "service": "fire",
+        "number": 10004,
+        "name": "Fire Station 9-5",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6100,
+        "access": {
+          "lat": 43.87644199390772,
+          "lng": -79.31399887088931,
+          "road": "Birchview Lane",
+          "gapMetres": 40.3
+        },
+        "callIds": [
+          "route-local-fire-markham-fire-9-5-01",
+          "route-local-fire-markham-fire-9-5-02",
+          "route-local-fire-markham-fire-9-5-03",
+          "route-local-fire-markham-fire-9-5-04",
+          "route-local-fire-markham-fire-9-5-05",
+          "route-local-fire-markham-fire-9-5-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-markham-fire-9-6",
+        "service": "fire",
+        "number": 10005,
+        "name": "Fire Station 9-6",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.851014,
+          "lng": -79.2694362,
+          "road": "Nessie Street",
+          "gapMetres": 37.7
+        },
+        "callIds": [
+          "route-local-fire-markham-fire-9-6-01",
+          "route-local-fire-markham-fire-9-6-02",
+          "route-local-fire-markham-fire-9-6-03",
+          "route-local-fire-markham-fire-9-6-04",
+          "route-local-fire-markham-fire-9-6-05",
+          "route-local-fire-markham-fire-9-6-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-markham-fire-9-7",
+        "service": "fire",
+        "number": 10006,
+        "name": "Fire Station 9-7",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6200,
+        "access": {
+          "lat": 43.883034506597895,
+          "lng": -79.26160592955928,
+          "road": "Ramona Boulevard",
+          "gapMetres": 35
+        },
+        "callIds": [
+          "route-local-fire-markham-fire-9-7-01",
+          "route-local-fire-markham-fire-9-7-02",
+          "route-local-fire-markham-fire-9-7-03",
+          "route-local-fire-markham-fire-9-7-04",
+          "route-local-fire-markham-fire-9-7-05",
+          "route-local-fire-markham-fire-9-7-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-markham-fire-9-8",
+        "service": "fire",
+        "number": 10007,
+        "name": "Fire Station 9-8",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5700,
+        "access": {
+          "lat": 43.8952126,
+          "lng": -79.2899377,
+          "road": "Unnamed road",
+          "gapMetres": 31.8
+        },
+        "callIds": [
+          "route-local-fire-markham-fire-9-8-01",
+          "route-local-fire-markham-fire-9-8-02",
+          "route-local-fire-markham-fire-9-8-03",
+          "route-local-fire-markham-fire-9-8-04",
+          "route-local-fire-markham-fire-9-8-05",
+          "route-local-fire-markham-fire-9-8-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-markham-fire-9-9",
+        "service": "fire",
+        "number": 10008,
+        "name": "Fire Station 9-9",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.8836016,
+          "lng": -79.2275318,
+          "road": "Unnamed road",
+          "gapMetres": 20.5
+        },
+        "callIds": [
+          "route-local-fire-markham-fire-9-9-01",
+          "route-local-fire-markham-fire-9-9-02",
+          "route-local-fire-markham-fire-9-9-03",
+          "route-local-fire-markham-fire-9-9-04",
+          "route-local-fire-markham-fire-9-9-05",
+          "route-local-fire-markham-fire-9-9-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-markham-ems-23",
+        "service": "ems",
+        "number": 23,
+        "name": "Paramedic Station #23 (Markham-Church)",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6100,
+        "access": {
+          "lat": 43.8845404,
+          "lng": -79.2361404,
+          "road": "Ninth Line",
+          "gapMetres": 34.8
+        },
+        "callIds": [
+          "route-local-ems-markham-ems-23-01",
+          "route-local-ems-markham-ems-23-02",
+          "route-local-ems-markham-ems-23-03",
+          "route-local-ems-markham-ems-23-04",
+          "route-local-ems-markham-ems-23-05",
+          "route-local-ems-markham-ems-23-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-markham-ems-24",
+        "service": "ems",
+        "number": 24,
+        "name": "Paramedic Station #24 (Markham-Unionville)",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6100,
+        "access": {
+          "lat": 43.875927485043384,
+          "lng": -79.31448602476296,
+          "road": "Aitken Circle",
+          "gapMetres": 36.4
+        },
+        "callIds": [
+          "route-local-ems-markham-ems-24-01",
+          "route-local-ems-markham-ems-24-02",
+          "route-local-ems-markham-ems-24-03",
+          "route-local-ems-markham-ems-24-04",
+          "route-local-ems-markham-ems-24-05",
+          "route-local-ems-markham-ems-24-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-markham-ems-25",
+        "service": "ems",
+        "number": 25,
+        "name": "Paramedic Station #25 (Markham SE)",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.85227783511565,
+          "lng": -79.26837212707245,
+          "road": "Unnamed road",
+          "gapMetres": 13.2
+        },
+        "callIds": [
+          "route-local-ems-markham-ems-25-01",
+          "route-local-ems-markham-ems-25-02",
+          "route-local-ems-markham-ems-25-03",
+          "route-local-ems-markham-ems-25-04",
+          "route-local-ems-markham-ems-25-05",
+          "route-local-ems-markham-ems-25-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-markham-ems-26",
+        "service": "ems",
+        "number": 26,
+        "name": "Paramedic Station #26 (Markham - Riviera)",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.83104963736375,
+          "lng": -79.35082448048773,
+          "road": "Unnamed road",
+          "gapMetres": 30.1
+        },
+        "callIds": [
+          "route-local-ems-markham-ems-26-01",
+          "route-local-ems-markham-ems-26-02",
+          "route-local-ems-markham-ems-26-03",
+          "route-local-ems-markham-ems-26-04",
+          "route-local-ems-markham-ems-26-05",
+          "route-local-ems-markham-ems-26-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-markham-ems-27",
+        "service": "ems",
+        "number": 27,
+        "name": "Paramedic Station #27 (Cachet Woods)",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.86877428236114,
+          "lng": -79.37276386700542,
+          "road": "Cachet Woods Court",
+          "gapMetres": 88.1
+        },
+        "callIds": [
+          "route-local-ems-markham-ems-27-01",
+          "route-local-ems-markham-ems-27-02",
+          "route-local-ems-markham-ems-27-03",
+          "route-local-ems-markham-ems-27-04",
+          "route-local-ems-markham-ems-27-05",
+          "route-local-ems-markham-ems-27-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-markham-ems-29",
+        "service": "ems",
+        "number": 29,
+        "name": "Paramedic Station #29 (Thornhill-Markham)",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.8073876,
+          "lng": -79.4114861,
+          "road": "Unnamed road",
+          "gapMetres": 6.6
+        },
+        "callIds": [
+          "route-local-ems-markham-ems-29-01",
+          "route-local-ems-markham-ems-29-02",
+          "route-local-ems-markham-ems-29-03",
+          "route-local-ems-markham-ems-29-04",
+          "route-local-ems-markham-ems-29-05",
+          "route-local-ems-markham-ems-29-06"
+        ],
+        "challengeCalls": 6
+      }
+    ]
+  },
+  "routeCalls": [
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Thornhill Community Centre Library",
+      "addr": "7755 Bayview Avenue, Markham, ON",
+      "lat": 43.82010073045188,
+      "lng": -79.40023832441472,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ww3.yorkmaps.ca/arcgis/rest/services/General/CommunityResources/MapServer/9/query?objectIds=33&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Green Lane",
+        "John Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "markham-call-03",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-markham-fire-9-1-01",
+      "routeBaseId": "fire-markham-fire-9-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 494.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 337,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Green Lane",
+        "estimatedCostSeconds": 104.9,
+        "bestSameServiceCostSeconds": 104.9
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Thornhill Village Library",
+      "addr": "10 Colborne Street, Markham, ON",
+      "lat": 43.81570511226799,
+      "lng": -79.42347466055983,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ww3.yorkmaps.ca/arcgis/rest/services/General/CommunityResources/MapServer/9/query?objectIds=30&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Eliza Street",
+        "Yonge Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "markham-call-15",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-markham-fire-9-1-02",
+      "routeBaseId": "fire-markham-fire-9-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2287.6,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1753.5,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Green Lane",
+        "estimatedCostSeconds": 153.3,
+        "bestSameServiceCostSeconds": 153.3
+      }
+    },
+    {
+      "name": "Essex Avenue & Langstaff Road East",
+      "addr": "Essex Avenue & Langstaff Road East",
+      "lat": 43.8377867,
+      "lng": -79.4145441,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/157788369",
+        "way/56675244"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/157788369",
+        "https://www.openstreetmap.org/way/56675244"
+      ],
+      "id": "route-local-fire-markham-fire-9-1-03",
+      "routeBaseId": "fire-markham-fire-9-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2605.2,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 2297.1,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Green Lane",
+        "estimatedCostSeconds": 177.9,
+        "bestSameServiceCostSeconds": 177.9
+      }
+    },
+    {
+      "name": "John Street & Rockingham Court",
+      "addr": "John Street & Rockingham Court",
+      "lat": 43.821494,
+      "lng": -79.3736708,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1085756630",
+        "way/37526968",
+        "way/37527364"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1085756630",
+        "https://www.openstreetmap.org/way/37526968",
+        "https://www.openstreetmap.org/way/37527364"
+      ],
+      "id": "route-local-fire-markham-fire-9-1-04",
+      "routeBaseId": "fire-markham-fire-9-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2553.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1170.1,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Green Lane",
+        "estimatedCostSeconds": 157.9,
+        "bestSameServiceCostSeconds": 157.9
+      }
+    },
+    {
+      "name": "Covewood Street & Tarbert Road",
+      "addr": "Covewood Street & Tarbert Road",
+      "lat": 43.8036544,
+      "lng": -79.3913529,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/10533784",
+        "way/1223340779",
+        "way/321570623"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/10533784",
+        "https://www.openstreetmap.org/way/1223340779",
+        "https://www.openstreetmap.org/way/321570623"
+      ],
+      "id": "route-local-fire-markham-fire-9-1-05",
+      "routeBaseId": "fire-markham-fire-9-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2588.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 412.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Green Lane",
+        "estimatedCostSeconds": 163.4,
+        "bestSameServiceCostSeconds": 163.4
+      }
+    },
+    {
+      "name": "Abraham Avenue & Fraser Street",
+      "addr": "Abraham Avenue & Fraser Street",
+      "lat": 43.8328847,
+      "lng": -79.3987913,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/29018564",
+        "way/29018565"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/29018564",
+        "https://www.openstreetmap.org/way/29018565"
+      ],
+      "id": "route-local-fire-markham-fire-9-1-06",
+      "routeBaseId": "fire-markham-fire-9-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1698.9,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 2582.7,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Green Lane",
+        "estimatedCostSeconds": 137.2,
+        "bestSameServiceCostSeconds": 137.2
+      }
+    },
+    {
+      "name": "Hobbs Gate & Konrad Crescent",
+      "addr": "Hobbs Gate & Konrad Crescent",
+      "lat": 43.8325128,
+      "lng": -79.3587318,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/29033605",
+        "way/29033607"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/29033605",
+        "https://www.openstreetmap.org/way/29033607"
+      ],
+      "id": "route-local-fire-markham-fire-9-2-01",
+      "routeBaseId": "fire-markham-fire-9-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 809.7,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 333.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 119.3,
+        "bestSameServiceCostSeconds": 119.3
+      }
+    },
+    {
+      "name": "Esna Park Drive & Telson Road",
+      "addr": "Esna Park Drive & Telson Road",
+      "lat": 43.8213852,
+      "lng": -79.3357408,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/5947361",
+        "way/74109979"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/5947361",
+        "https://www.openstreetmap.org/way/74109979"
+      ],
+      "id": "route-local-fire-markham-fire-9-2-02",
+      "routeBaseId": "fire-markham-fire-9-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2026.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1598.6,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 194.1,
+        "bestSameServiceCostSeconds": 194.1
+      }
+    },
+    {
+      "name": "Lunar Crescent & Woodbine Avenue",
+      "addr": "Lunar Crescent & Woodbine Avenue",
+      "lat": 43.8524016,
+      "lng": -79.3586803,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/160175025",
+        "way/59467101",
+        "way/634206287",
+        "way/634206291"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/160175025",
+        "https://www.openstreetmap.org/way/59467101",
+        "https://www.openstreetmap.org/way/634206287",
+        "https://www.openstreetmap.org/way/634206291"
+      ],
+      "id": "route-local-fire-markham-fire-9-2-03",
+      "routeBaseId": "fire-markham-fire-9-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2565,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 2259.6,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 183.6,
+        "bestSameServiceCostSeconds": 183.6
+      }
+    },
+    {
+      "name": "14th Avenue & Riviera Drive",
+      "addr": "14th Avenue & Riviera Drive",
+      "lat": 43.8353565,
+      "lng": -79.3374166,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/5914478",
+        "way/5914512"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/5914478",
+        "https://www.openstreetmap.org/way/5914512"
+      ],
+      "id": "route-local-fire-markham-fire-9-2-04",
+      "routeBaseId": "fire-markham-fire-9-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1333.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 367.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 138.3,
+        "bestSameServiceCostSeconds": 138.3
+      }
+    },
+    {
+      "name": "Don Mills Road & John Street & Leslie Street",
+      "addr": "Don Mills Road & John Street & Leslie Street",
+      "lat": 43.8223782,
+      "lng": -79.3700186,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/37527354",
+        "way/37527362",
+        "way/37527372",
+        "way/37527374"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/37527354",
+        "https://www.openstreetmap.org/way/37527362",
+        "https://www.openstreetmap.org/way/37527372",
+        "https://www.openstreetmap.org/way/37527374"
+      ],
+      "id": "route-local-fire-markham-fire-9-2-05",
+      "routeBaseId": "fire-markham-fire-9-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2270.9,
+        "meaningfulDecisions": 6,
+        "maxAlternativePenaltyMetres": 2261.8,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 159.9,
+        "bestSameServiceCostSeconds": 159.9
+      }
+    },
+    {
+      "name": "Steelcase Road East & Torbay Road",
+      "addr": "Steelcase Road East & Torbay Road",
+      "lat": 43.8204041,
+      "lng": -79.3470333,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/302721053",
+        "way/5116946"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/302721053",
+        "https://www.openstreetmap.org/way/5116946"
+      ],
+      "id": "route-local-fire-markham-fire-9-2-06",
+      "routeBaseId": "fire-markham-fire-9-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1698.7,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 1627.9,
+        "decisionKinds": [
+          "turn",
+          "bridge",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 142.6,
+        "bestSameServiceCostSeconds": 142.6
+      }
+    },
+    {
+      "name": "Hazelton Avenue & Murray Spiers Court",
+      "addr": "Hazelton Avenue & Murray Spiers Court",
+      "lat": 43.88816,
+      "lng": -79.36208,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/157804388",
+        "way/157804396",
+        "way/157804411"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/157804388",
+        "https://www.openstreetmap.org/way/157804396",
+        "https://www.openstreetmap.org/way/157804411"
+      ],
+      "id": "route-local-fire-markham-fire-9-3-01",
+      "routeBaseId": "fire-markham-fire-9-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 809.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1415.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 65.5,
+        "bestSameServiceCostSeconds": 65.5
+      }
+    },
+    {
+      "name": "Ultimate Drive & Via Renzo Drive",
+      "addr": "Ultimate Drive & Via Renzo Drive",
+      "lat": 43.8838703,
+      "lng": -79.3867144,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/170267234",
+        "way/170267236"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/170267234",
+        "https://www.openstreetmap.org/way/170267236"
+      ],
+      "id": "route-local-fire-markham-fire-9-3-02",
+      "routeBaseId": "fire-markham-fire-9-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1684.6,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 3514.2,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 104.2,
+        "bestSameServiceCostSeconds": 104.2
+      }
+    },
+    {
+      "name": "Drew Kelly Way & Melissa Way",
+      "addr": "Drew Kelly Way & Melissa Way",
+      "lat": 43.8653093,
+      "lng": -79.3630438,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35348590",
+        "way/35348777",
+        "way/35351565"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35348590",
+        "https://www.openstreetmap.org/way/35348777",
+        "https://www.openstreetmap.org/way/35351565"
+      ],
+      "id": "route-local-fire-markham-fire-9-3-03",
+      "routeBaseId": "fire-markham-fire-9-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2594.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 597.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 178.1,
+        "bestSameServiceCostSeconds": 178.1
+      }
+    },
+    {
+      "name": "Markland Street & Woodbine Avenue",
+      "addr": "Markland Street & Woodbine Avenue",
+      "lat": 43.8905174,
+      "lng": -79.3772999,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/815922103",
+        "way/891333884"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/815922103",
+        "https://www.openstreetmap.org/way/891333884"
+      ],
+      "id": "route-local-fire-markham-fire-9-3-04",
+      "routeBaseId": "fire-markham-fire-9-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1315.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 248.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 92.2,
+        "bestSameServiceCostSeconds": 92.2
+      }
+    },
+    {
+      "name": "Frederick Roman Avenue & Navitas Crescent",
+      "addr": "Frederick Roman Avenue & Navitas Crescent",
+      "lat": 43.9031585,
+      "lng": -79.3641076,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/997261610",
+        "way/997261614"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/997261610",
+        "https://www.openstreetmap.org/way/997261614"
+      ],
+      "id": "route-local-fire-markham-fire-9-3-05",
+      "routeBaseId": "fire-markham-fire-9-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2596.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 567.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 220,
+        "bestSameServiceCostSeconds": 220
+      }
+    },
+    {
+      "name": "Duborg Drive & Pilgrim Drive",
+      "addr": "Duborg Drive & Pilgrim Drive",
+      "lat": 43.8780208,
+      "lng": -79.3604881,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25291021",
+        "way/25291026"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25291021",
+        "https://www.openstreetmap.org/way/25291026"
+      ],
+      "id": "route-local-fire-markham-fire-9-3-06",
+      "routeBaseId": "fire-markham-fire-9-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1706,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1524.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 130.2,
+        "bestSameServiceCostSeconds": 130.2
+      }
+    },
+    {
+      "name": "Highgate Drive & Tiffany Crescent",
+      "addr": "Highgate Drive & Tiffany Crescent",
+      "lat": 43.8313362,
+      "lng": -79.3124416,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/36826570",
+        "way/36826581",
+        "way/36826642"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/36826570",
+        "https://www.openstreetmap.org/way/36826581",
+        "https://www.openstreetmap.org/way/36826642"
+      ],
+      "id": "route-local-fire-markham-fire-9-4-01",
+      "routeBaseId": "fire-markham-fire-9-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 810.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1185.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 77.6,
+        "bestSameServiceCostSeconds": 77.6
+      }
+    },
+    {
+      "name": "Aviva Way & Birchmount Road",
+      "addr": "Aviva Way & Birchmount Road",
+      "lat": 43.8475108,
+      "lng": -79.3238466,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/460536549",
+        "way/59411687"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/460536549",
+        "https://www.openstreetmap.org/way/59411687"
+      ],
+      "id": "route-local-fire-markham-fire-9-4-02",
+      "routeBaseId": "fire-markham-fire-9-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1866.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1157.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 124.9,
+        "bestSameServiceCostSeconds": 124.9
+      }
+    },
+    {
+      "name": "Esna Park Drive & Telson Road",
+      "addr": "Esna Park Drive & Telson Road",
+      "lat": 43.8213852,
+      "lng": -79.3357408,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/5947361",
+        "way/74109979"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/5947361",
+        "https://www.openstreetmap.org/way/74109979"
+      ],
+      "id": "route-local-fire-markham-fire-9-4-03",
+      "routeBaseId": "fire-markham-fire-9-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2439.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 800.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 205.4,
+        "bestSameServiceCostSeconds": 194.1
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Milliken Mills Community Library",
+      "addr": "7600 Kennedy Road, Markham, ON",
+      "lat": 43.84019820431256,
+      "lng": -79.3053701036487,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ww3.yorkmaps.ca/arcgis/rest/services/General/CommunityResources/MapServer/9/query?objectIds=31&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Lee Avenue",
+        "Highglen Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "markham-call-01",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-markham-fire-9-4-04",
+      "routeBaseId": "fire-markham-fire-9-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2226.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1014,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 203.6,
+        "bestSameServiceCostSeconds": 203.6
+      }
+    },
+    {
+      "name": "Ivy Bush Avenue & Morbank Drive",
+      "addr": "Ivy Bush Avenue & Morbank Drive",
+      "lat": 43.8113398,
+      "lng": -79.3097606,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/36518295",
+        "way/36518308",
+        "way/36518323"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/36518295",
+        "https://www.openstreetmap.org/way/36518308",
+        "https://www.openstreetmap.org/way/36518323"
+      ],
+      "id": "route-local-fire-markham-fire-9-4-05",
+      "routeBaseId": "fire-markham-fire-9-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2643.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1886.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 189.2,
+        "bestSameServiceCostSeconds": 189.2
+      }
+    },
+    {
+      "name": "River Grove Drive & Wintermute Boulevard",
+      "addr": "River Grove Drive & Wintermute Boulevard",
+      "lat": 43.8200763,
+      "lng": -79.3186681,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/36518292",
+        "way/36518304"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/36518292",
+        "https://www.openstreetmap.org/way/36518304"
+      ],
+      "id": "route-local-fire-markham-fire-9-4-06",
+      "routeBaseId": "fire-markham-fire-9-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1695.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1713.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 118.6,
+        "bestSameServiceCostSeconds": 118.6
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Unionville PS",
+      "addr": "300 Main Unionville Street, Markham, ON",
+      "lat": 43.87453543357178,
+      "lng": -79.31369550789061,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ww3.yorkmaps.ca/arcgis/rest/services/General/CommunityResources/MapServer/1/query?objectIds=466&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "The Bridle Trail",
+        "Rosemead Close"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "markham-call-14",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-markham-fire-9-5-01",
+      "routeBaseId": "fire-markham-fire-9-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 827.7,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1512,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Birchview Lane",
+        "estimatedCostSeconds": 113.1,
+        "bestSameServiceCostSeconds": 113.1
+      }
+    },
+    {
+      "name": "Major MacKenzie Drive East & Prospectors Drive",
+      "addr": "Major MacKenzie Drive East & Prospectors Drive",
+      "lat": 43.8971795,
+      "lng": -79.320955,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1453468701",
+        "way/247240645",
+        "way/247240648"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1453468701",
+        "https://www.openstreetmap.org/way/247240645",
+        "https://www.openstreetmap.org/way/247240648"
+      ],
+      "id": "route-local-fire-markham-fire-9-5-02",
+      "routeBaseId": "fire-markham-fire-9-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2597.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 440.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Birchview Lane",
+        "estimatedCostSeconds": 166.7,
+        "bestSameServiceCostSeconds": 166.7
+      }
+    },
+    {
+      "name": "Calvert Road & Warden Avenue",
+      "addr": "Calvert Road & Warden Avenue",
+      "lat": 43.876948,
+      "lng": -79.3394765,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25288173",
+        "way/743666009"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25288173",
+        "https://www.openstreetmap.org/way/743666009"
+      ],
+      "id": "route-local-fire-markham-fire-9-5-03",
+      "routeBaseId": "fire-markham-fire-9-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2679.3,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 2634,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Birchview Lane",
+        "estimatedCostSeconds": 178.8,
+        "bestSameServiceCostSeconds": 178.8
+      }
+    },
+    {
+      "name": "Lexington Drive & Shorthill Drive",
+      "addr": "Lexington Drive & Shorthill Drive",
+      "lat": 43.8822437,
+      "lng": -79.2991793,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/37438298",
+        "way/37438359"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/37438298",
+        "https://www.openstreetmap.org/way/37438359"
+      ],
+      "id": "route-local-fire-markham-fire-9-5-04",
+      "routeBaseId": "fire-markham-fire-9-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1717.1,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 992.1,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Birchview Lane",
+        "estimatedCostSeconds": 113.8,
+        "bestSameServiceCostSeconds": 113.8
+      }
+    },
+    {
+      "name": "Janna Court & Swansea Road",
+      "addr": "Janna Court & Swansea Road",
+      "lat": 43.8626077,
+      "lng": -79.2980205,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/37356863",
+        "way/37356889",
+        "way/37356904"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/37356863",
+        "https://www.openstreetmap.org/way/37356889",
+        "https://www.openstreetmap.org/way/37356904"
+      ],
+      "id": "route-local-fire-markham-fire-9-5-05",
+      "routeBaseId": "fire-markham-fire-9-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2585.6,
+        "meaningfulDecisions": 6,
+        "maxAlternativePenaltyMetres": 1077.1,
+        "decisionKinds": [
+          "turn",
+          "departure",
+          "bridge"
+        ],
+        "departureRoad": "Birchview Lane",
+        "estimatedCostSeconds": 173.5,
+        "bestSameServiceCostSeconds": 173.5
+      }
+    },
+    {
+      "name": "Fairlawn Avenue & Madison Heights Boulevard",
+      "addr": "Fairlawn Avenue & Madison Heights Boulevard",
+      "lat": 43.8881051,
+      "lng": -79.3113248,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/37734870",
+        "way/37735319",
+        "way/37735343"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/37734870",
+        "https://www.openstreetmap.org/way/37735319",
+        "https://www.openstreetmap.org/way/37735343"
+      ],
+      "id": "route-local-fire-markham-fire-9-5-06",
+      "routeBaseId": "fire-markham-fire-9-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1686.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 507.1,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Birchview Lane",
+        "estimatedCostSeconds": 141.1,
+        "bestSameServiceCostSeconds": 141.1
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Aaniin Library",
+      "addr": "5665 14th Avenue, Markham, ON",
+      "lat": 43.85197444460447,
+      "lng": -79.26589305702655,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ww3.yorkmaps.ca/arcgis/rest/services/General/CommunityResources/MapServer/9/query?objectIds=37&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Middlefield Road",
+        "Canfield Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "markham-call-06",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-markham-fire-9-6-01",
+      "routeBaseId": "fire-markham-fire-9-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 724.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1470.5,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Nessie Street",
+        "estimatedCostSeconds": 65.3,
+        "bestSameServiceCostSeconds": 65.3
+      }
+    },
+    {
+      "name": "Elson Street & Featherstone Avenue",
+      "addr": "Elson Street & Featherstone Avenue",
+      "lat": 43.8368892,
+      "lng": -79.2689615,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/36822356",
+        "way/36822385"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/36822356",
+        "https://www.openstreetmap.org/way/36822385"
+      ],
+      "id": "route-local-fire-markham-fire-9-6-02",
+      "routeBaseId": "fire-markham-fire-9-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1741.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1239.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Nessie Street",
+        "estimatedCostSeconds": 176.6,
+        "bestSameServiceCostSeconds": 176.6
+      }
+    },
+    {
+      "name": "Beckenridge Drive & Snowcrest Court",
+      "addr": "Beckenridge Drive & Snowcrest Court",
+      "lat": 43.8480421,
+      "lng": -79.2970581,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35346235",
+        "way/35346501",
+        "way/35351295"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35346235",
+        "https://www.openstreetmap.org/way/35346501",
+        "https://www.openstreetmap.org/way/35351295"
+      ],
+      "id": "route-local-fire-markham-fire-9-6-03",
+      "routeBaseId": "fire-markham-fire-9-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2595.9,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 1401,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Nessie Street",
+        "estimatedCostSeconds": 215.9,
+        "bestSameServiceCostSeconds": 215.9
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Middlefield CI",
+      "addr": "525 Highglen Avenue, Markham, ON",
+      "lat": 43.84718795498292,
+      "lng": -79.26741858581437,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ww3.yorkmaps.ca/arcgis/rest/services/General/CommunityResources/MapServer/1/query?objectIds=391&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Summerlea Street",
+        "Middlefield Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "markham-call-12",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-markham-fire-9-6-04",
+      "routeBaseId": "fire-markham-fire-9-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 883.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1263.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Nessie Street",
+        "estimatedCostSeconds": 89.3,
+        "bestSameServiceCostSeconds": 89.3
+      }
+    },
+    {
+      "name": "McCowan Road & South Unionville Avenue",
+      "addr": "McCowan Road & South Unionville Avenue",
+      "lat": 43.8608477,
+      "lng": -79.2828711,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/37356912",
+        "way/37357558",
+        "way/37357559",
+        "way/916396234"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/37356912",
+        "https://www.openstreetmap.org/way/37357558",
+        "https://www.openstreetmap.org/way/37357559",
+        "https://www.openstreetmap.org/way/916396234"
+      ],
+      "id": "route-local-fire-markham-fire-9-6-05",
+      "routeBaseId": "fire-markham-fire-9-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2170.3,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 3274.9,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Nessie Street",
+        "estimatedCostSeconds": 155.4,
+        "bestSameServiceCostSeconds": 155.4
+      }
+    },
+    {
+      "name": "Kyla Crescent & Townley Avenue",
+      "addr": "Kyla Crescent & Townley Avenue",
+      "lat": 43.8435529,
+      "lng": -79.2815571,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35348974",
+        "way/36820221"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35348974",
+        "https://www.openstreetmap.org/way/36820221"
+      ],
+      "id": "route-local-fire-markham-fire-9-6-06",
+      "routeBaseId": "fire-markham-fire-9-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1672,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1004.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Nessie Street",
+        "estimatedCostSeconds": 147.7,
+        "bestSameServiceCostSeconds": 147.7
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Franklin Street PS",
+      "addr": "21 Franklin Street, Markham, ON",
+      "lat": 43.88002509686158,
+      "lng": -79.25802221959665,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ww3.yorkmaps.ca/arcgis/rest/services/General/CommunityResources/MapServer/1/query?objectIds=382&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "George Street",
+        "Church Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "markham-call-20",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-markham-fire-9-7-01",
+      "routeBaseId": "fire-markham-fire-9-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 647.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 460,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Ramona Boulevard",
+        "estimatedCostSeconds": 94.7,
+        "bestSameServiceCostSeconds": 94.7
+      }
+    },
+    {
+      "name": "Battista Perri Drive & Markham Road",
+      "addr": "Battista Perri Drive & Markham Road",
+      "lat": 43.8978388,
+      "lng": -79.2653594,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1511127621",
+        "way/191263742"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1511127621",
+        "https://www.openstreetmap.org/way/191263742"
+      ],
+      "id": "route-local-fire-markham-fire-9-7-02",
+      "routeBaseId": "fire-markham-fire-9-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1698.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1161.8,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Ramona Boulevard",
+        "estimatedCostSeconds": 85.8,
+        "bestSameServiceCostSeconds": 85.8
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "William Armstrong PS",
+      "addr": "11 Major Buttons Drive, Markham, ON",
+      "lat": 43.87449889964369,
+      "lng": -79.2422798492784,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ww3.yorkmaps.ca/arcgis/rest/services/General/CommunityResources/MapServer/1/query?objectIds=352&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Wootten Way South",
+        "James Speight Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "markham-call-17",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-markham-fire-9-7-03",
+      "routeBaseId": "fire-markham-fire-9-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2754.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 494.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Ramona Boulevard",
+        "estimatedCostSeconds": 195.9,
+        "bestSameServiceCostSeconds": 195.9
+      }
+    },
+    {
+      "name": "Bud Lane & Lincoln Green Drive",
+      "addr": "Bud Lane & Lincoln Green Drive",
+      "lat": 43.87441,
+      "lng": -79.2745218,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/37433050",
+        "way/37433183",
+        "way/37433200"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/37433050",
+        "https://www.openstreetmap.org/way/37433183",
+        "https://www.openstreetmap.org/way/37433200"
+      ],
+      "id": "route-local-fire-markham-fire-9-7-04",
+      "routeBaseId": "fire-markham-fire-9-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1680.7,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 2783.3,
+        "decisionKinds": [
+          "turn",
+          "bridge",
+          "departure"
+        ],
+        "departureRoad": "Ramona Boulevard",
+        "estimatedCostSeconds": 148.7,
+        "bestSameServiceCostSeconds": 148.7
+      }
+    },
+    {
+      "name": "Larkin Avenue & Spragg Circle",
+      "addr": "Larkin Avenue & Spragg Circle",
+      "lat": 43.8953731,
+      "lng": -79.2425163,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/153292149",
+        "way/153292155"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/153292149",
+        "https://www.openstreetmap.org/way/153292155"
+      ],
+      "id": "route-local-fire-markham-fire-9-7-05",
+      "routeBaseId": "fire-markham-fire-9-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2593,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 869.5,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Ramona Boulevard",
+        "estimatedCostSeconds": 193.2,
+        "bestSameServiceCostSeconds": 193.2
+      }
+    },
+    {
+      "name": "Main Street Markham South & Mill Street",
+      "addr": "Main Street Markham South & Mill Street",
+      "lat": 43.8684031,
+      "lng": -79.2586113,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/236511409",
+        "way/37809939"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/236511409",
+        "https://www.openstreetmap.org/way/37809939"
+      ],
+      "id": "route-local-fire-markham-fire-9-7-06",
+      "routeBaseId": "fire-markham-fire-9-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1664,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 4579.3,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Ramona Boulevard",
+        "estimatedCostSeconds": 84.1,
+        "bestSameServiceCostSeconds": 84.1
+      }
+    },
+    {
+      "name": "Carolina Rose Crescent & James Parrott Avenue",
+      "addr": "Carolina Rose Crescent & James Parrott Avenue",
+      "lat": 43.8906766,
+      "lng": -79.2879472,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1525617611",
+        "way/241240989"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1525617611",
+        "https://www.openstreetmap.org/way/241240989"
+      ],
+      "id": "route-local-fire-markham-fire-9-8-01",
+      "routeBaseId": "fire-markham-fire-9-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 802.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 443.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 63,
+        "bestSameServiceCostSeconds": 63
+      }
+    },
+    {
+      "name": "Castlemore Avenue & William Berczy Boulevard",
+      "addr": "Castlemore Avenue & William Berczy Boulevard",
+      "lat": 43.8950731,
+      "lng": -79.3126264,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/37734834",
+        "way/37735140",
+        "way/37735172"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/37734834",
+        "https://www.openstreetmap.org/way/37735140",
+        "https://www.openstreetmap.org/way/37735172"
+      ],
+      "id": "route-local-fire-markham-fire-9-8-02",
+      "routeBaseId": "fire-markham-fire-9-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2211.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 435.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 180.9,
+        "bestSameServiceCostSeconds": 169
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Markville SS",
+      "addr": "1000 Carlton Road, Markham, ON",
+      "lat": 43.87739645041033,
+      "lng": -79.28932915188088,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ww3.yorkmaps.ca/arcgis/rest/services/General/CommunityResources/MapServer/1/query?objectIds=388&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Mansfield Lane",
+        "Snowdon Circle"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "markham-call-11",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-markham-fire-9-8-03",
+      "routeBaseId": "fire-markham-fire-9-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2533.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 402.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 233.1,
+        "bestSameServiceCostSeconds": 233.1
+      }
+    },
+    {
+      "name": "Eakin Mill Road & Landsdown Crescent",
+      "addr": "Eakin Mill Road & Landsdown Crescent",
+      "lat": 43.9039026,
+      "lng": -79.2911847,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/220407370",
+        "way/220407372",
+        "way/220407375"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/220407370",
+        "https://www.openstreetmap.org/way/220407372",
+        "https://www.openstreetmap.org/way/220407375"
+      ],
+      "id": "route-local-fire-markham-fire-9-8-04",
+      "routeBaseId": "fire-markham-fire-9-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1270.9,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 531.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 152.3,
+        "bestSameServiceCostSeconds": 152.3
+      }
+    },
+    {
+      "name": "Beebe Crescent & Evershot Crescent",
+      "addr": "Beebe Crescent & Evershot Crescent",
+      "lat": 43.9065713,
+      "lng": -79.2731834,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/220407139",
+        "way/220407143"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/220407139",
+        "https://www.openstreetmap.org/way/220407143"
+      ],
+      "id": "route-local-fire-markham-fire-9-8-05",
+      "routeBaseId": "fire-markham-fire-9-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2423.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 657.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 218.4,
+        "bestSameServiceCostSeconds": 211.3
+      }
+    },
+    {
+      "name": "Hawksbury Road & Mingay Avenue",
+      "addr": "Hawksbury Road & Mingay Avenue",
+      "lat": 43.89457,
+      "lng": -79.27436,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/123064626",
+        "way/35351925",
+        "way/37518732",
+        "way/37518734"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/123064626",
+        "https://www.openstreetmap.org/way/35351925",
+        "https://www.openstreetmap.org/way/37518732",
+        "https://www.openstreetmap.org/way/37518734"
+      ],
+      "id": "route-local-fire-markham-fire-9-8-06",
+      "routeBaseId": "fire-markham-fire-9-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1674,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 233.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 149.8,
+        "bestSameServiceCostSeconds": 145.7
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Markham Stouffville Hospital",
+      "addr": "381 Church Street, Markham, ON",
+      "lat": 43.88385600494087,
+      "lng": -79.2314903638149,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.oakvalleyhealth.ca/our-hospitals/markham-stouffville-hospital/",
+        "https://ww3.yorkmaps.ca/arcgis/rest/services/YorkLocators_Pro/YorkRegionAddressesPlus_WGS84/GeocodeServer/findAddressCandidates?SingleLine=381+Church+Street%2C+Markham&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Country Glen Road",
+        "Butternut Lane"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "markham-call-07",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-markham-fire-9-9-01",
+      "routeBaseId": "fire-markham-fire-9-9",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 887.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 997.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 166,
+        "bestSameServiceCostSeconds": 166
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Black Walnut PS",
+      "addr": "30 John Allan Cameron St, Markham, ON",
+      "lat": 43.89422924951627,
+      "lng": -79.22199362232482,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ww3.yorkmaps.ca/arcgis/rest/services/General/CommunityResources/MapServer/1/query?objectIds=497&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Shady Oaks Avenue",
+        "Autumn Glow Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "markham-call-19",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-markham-fire-9-9-02",
+      "routeBaseId": "fire-markham-fire-9-9",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1991.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 192,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 232.6,
+        "bestSameServiceCostSeconds": 232.6
+      }
+    },
+    {
+      "name": "Box Grove Bypass & Rouge Bank Drive",
+      "addr": "Box Grove Bypass & Rouge Bank Drive",
+      "lat": 43.8651546,
+      "lng": -79.2293838,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/844407424",
+        "way/844407430",
+        "way/918369936",
+        "way/921729124"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/844407424",
+        "https://www.openstreetmap.org/way/844407430",
+        "https://www.openstreetmap.org/way/918369936",
+        "https://www.openstreetmap.org/way/921729124"
+      ],
+      "id": "route-local-fire-markham-fire-9-9-03",
+      "routeBaseId": "fire-markham-fire-9-9",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2671.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2061.3,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 244.1,
+        "bestSameServiceCostSeconds": 244.1
+      }
+    },
+    {
+      "name": "Donald Cousens Parkway & Highway 7",
+      "addr": "Donald Cousens Parkway & Highway 7",
+      "lat": 43.8824637,
+      "lng": -79.2142731,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/163749602",
+        "way/449081122",
+        "way/449081132",
+        "way/80100299"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/163749602",
+        "https://www.openstreetmap.org/way/449081122",
+        "https://www.openstreetmap.org/way/449081132",
+        "https://www.openstreetmap.org/way/80100299"
+      ],
+      "id": "route-local-fire-markham-fire-9-9-04",
+      "routeBaseId": "fire-markham-fire-9-9",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1660.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 429.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 152.9,
+        "bestSameServiceCostSeconds": 152.9
+      }
+    },
+    {
+      "name": "Bur Oak Avenue & Country Glen Road",
+      "addr": "Bur Oak Avenue & Country Glen Road",
+      "lat": 43.90272,
+      "lng": -79.2358,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/462198933",
+        "way/55901724",
+        "way/55902046"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/462198933",
+        "https://www.openstreetmap.org/way/55901724",
+        "https://www.openstreetmap.org/way/55902046"
+      ],
+      "id": "route-local-fire-markham-fire-9-9-05",
+      "routeBaseId": "fire-markham-fire-9-9",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2556.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 916.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 252.9,
+        "bestSameServiceCostSeconds": 241.1
+      }
+    },
+    {
+      "name": "Black Pine Road & Oakmoor Lane",
+      "addr": "Black Pine Road & Oakmoor Lane",
+      "lat": 43.8749385,
+      "lng": -79.2260859,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/123167493",
+        "way/92820527",
+        "way/92820547"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/123167493",
+        "https://www.openstreetmap.org/way/92820527",
+        "https://www.openstreetmap.org/way/92820547"
+      ],
+      "id": "route-local-fire-markham-fire-9-9-06",
+      "routeBaseId": "fire-markham-fire-9-9",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1450.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 938.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 206.5,
+        "bestSameServiceCostSeconds": 206.5
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "AgeCare Woodhaven",
+      "addr": "380 Church Street",
+      "lat": 43.88584929905743,
+      "lng": -79.23092679999996,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790155"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "4401",
+      "community": "Markham",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-4401",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-markham-ems-23-01",
+      "routeBaseId": "ems-markham-ems-23",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 687.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 384.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Ninth Line",
+        "estimatedCostSeconds": 81.5,
+        "bestSameServiceCostSeconds": 81.5
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Franklin Street PS",
+      "addr": "21 Franklin Street, Markham, ON",
+      "lat": 43.88002509686158,
+      "lng": -79.25802221959665,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ww3.yorkmaps.ca/arcgis/rest/services/General/CommunityResources/MapServer/1/query?objectIds=382&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "George Street",
+        "Church Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "markham-call-20",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-markham-ems-23-02",
+      "routeBaseId": "ems-markham-ems-23",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1974.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 687.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Ninth Line",
+        "estimatedCostSeconds": 170.9,
+        "bestSameServiceCostSeconds": 170.9
+      }
+    },
+    {
+      "name": "Bur Oak Avenue & Chancery Road",
+      "addr": "Bur Oak Avenue & Chancery Road",
+      "lat": 43.9022377,
+      "lng": -79.2474473,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55903206",
+        "way/55904510"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55903206",
+        "https://www.openstreetmap.org/way/55904510"
+      ],
+      "id": "route-local-ems-markham-ems-23-03",
+      "routeBaseId": "ems-markham-ems-23",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2581.3,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1437.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Ninth Line",
+        "estimatedCostSeconds": 166.6,
+        "bestSameServiceCostSeconds": 166.6
+      }
+    },
+    {
+      "name": "Delmark Boulevard & Major Button's Drive & Richwood Drive & Wootten Way South",
+      "addr": "Delmark Boulevard & Major Button's Drive & Richwood Drive & Wootten Way South",
+      "lat": 43.8730393,
+      "lng": -79.2407328,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/37809950",
+        "way/37809996",
+        "way/37810009",
+        "way/37810029"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/37809950",
+        "https://www.openstreetmap.org/way/37809996",
+        "https://www.openstreetmap.org/way/37810009",
+        "https://www.openstreetmap.org/way/37810029"
+      ],
+      "id": "route-local-ems-markham-ems-23-04",
+      "routeBaseId": "ems-markham-ems-23",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1709.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 602.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Ninth Line",
+        "estimatedCostSeconds": 120.7,
+        "bestSameServiceCostSeconds": 120.7
+      }
+    },
+    {
+      "name": "Highway 7 & Reesor Road",
+      "addr": "Highway 7 & Reesor Road",
+      "lat": 43.8834961,
+      "lng": -79.2102933,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/32334146",
+        "way/55902241",
+        "way/62281796",
+        "way/849576191"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/32334146",
+        "https://www.openstreetmap.org/way/55902241",
+        "https://www.openstreetmap.org/way/62281796",
+        "https://www.openstreetmap.org/way/849576191"
+      ],
+      "id": "route-local-ems-markham-ems-23-05",
+      "routeBaseId": "ems-markham-ems-23",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2682.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 199.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Ninth Line",
+        "estimatedCostSeconds": 141.7,
+        "bestSameServiceCostSeconds": 141.7
+      }
+    },
+    {
+      "name": "Black Pine Road & Wildmoor Street",
+      "addr": "Black Pine Road & Wildmoor Street",
+      "lat": 43.8753194,
+      "lng": -79.2262482,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/123167493",
+        "way/123167494",
+        "way/123167505",
+        "way/92820541"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/123167493",
+        "https://www.openstreetmap.org/way/123167494",
+        "https://www.openstreetmap.org/way/123167505",
+        "https://www.openstreetmap.org/way/92820541"
+      ],
+      "id": "route-local-ems-markham-ems-23-06",
+      "routeBaseId": "ems-markham-ems-23",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1702.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 213.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Ninth Line",
+        "estimatedCostSeconds": 143.9,
+        "bestSameServiceCostSeconds": 143.9
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Unionville PS",
+      "addr": "300 Main Unionville Street, Markham, ON",
+      "lat": 43.87453543357178,
+      "lng": -79.31369550789061,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ww3.yorkmaps.ca/arcgis/rest/services/General/CommunityResources/MapServer/1/query?objectIds=466&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "The Bridle Trail",
+        "Rosemead Close"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "markham-call-14",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-markham-ems-24-01",
+      "routeBaseId": "ems-markham-ems-24",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 929.3,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 1512,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Aitken Circle",
+        "estimatedCostSeconds": 128.2,
+        "bestSameServiceCostSeconds": 128.2
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Bethany Lodge",
+      "addr": "23 Second Street",
+      "lat": 43.86202349905746,
+      "lng": -79.30138389999996,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790144"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "2025",
+      "community": "Markham",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-2025",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-markham-ems-24-02",
+      "routeBaseId": "ems-markham-ems-24",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2328.8,
+        "meaningfulDecisions": 6,
+        "maxAlternativePenaltyMetres": 1077.1,
+        "decisionKinds": [
+          "turn",
+          "departure",
+          "bridge"
+        ],
+        "departureRoad": "Aitken Circle",
+        "estimatedCostSeconds": 187.6,
+        "bestSameServiceCostSeconds": 187.6
+      }
+    },
+    {
+      "name": "Aries Crescent & Viscount Drive & Winston Castle Drive",
+      "addr": "Aries Crescent & Viscount Drive & Winston Castle Drive",
+      "lat": 43.8966382,
+      "lng": -79.3166616,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/37734868",
+        "way/37734906",
+        "way/37734982",
+        "way/37735249"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/37734868",
+        "https://www.openstreetmap.org/way/37734906",
+        "https://www.openstreetmap.org/way/37734982",
+        "https://www.openstreetmap.org/way/37735249"
+      ],
+      "id": "route-local-ems-markham-ems-24-03",
+      "routeBaseId": "ems-markham-ems-24",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2591.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 544.8,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Aitken Circle",
+        "estimatedCostSeconds": 200.5,
+        "bestSameServiceCostSeconds": 200.5
+      }
+    },
+    {
+      "name": "16th Avenue & Shorthill Drive",
+      "addr": "16th Avenue & Shorthill Drive",
+      "lat": 43.8827688,
+      "lng": -79.299376,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/37438359",
+        "way/37738387",
+        "way/37738389"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/37438359",
+        "https://www.openstreetmap.org/way/37738387",
+        "https://www.openstreetmap.org/way/37738389"
+      ],
+      "id": "route-local-ems-markham-ems-24-04",
+      "routeBaseId": "ems-markham-ems-24",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1758.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 992.1,
+        "decisionKinds": [
+          "bridge",
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Aitken Circle",
+        "estimatedCostSeconds": 124.1,
+        "bestSameServiceCostSeconds": 124.1
+      }
+    },
+    {
+      "name": "Calvert Road & Warden Avenue",
+      "addr": "Calvert Road & Warden Avenue",
+      "lat": 43.876948,
+      "lng": -79.3394765,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25288173",
+        "way/743666009"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25288173",
+        "https://www.openstreetmap.org/way/743666009"
+      ],
+      "id": "route-local-ems-markham-ems-24-05",
+      "routeBaseId": "ems-markham-ems-24",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2686.5,
+        "meaningfulDecisions": 6,
+        "maxAlternativePenaltyMetres": 2634,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Aitken Circle",
+        "estimatedCostSeconds": 193.9,
+        "bestSameServiceCostSeconds": 193.9
+      }
+    },
+    {
+      "name": "Carlton Road & Loring Crescent",
+      "addr": "Carlton Road & Loring Crescent",
+      "lat": 43.8710043,
+      "lng": -79.3008055,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/37438296",
+        "way/37438299"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/37438296",
+        "https://www.openstreetmap.org/way/37438299"
+      ],
+      "id": "route-local-ems-markham-ems-24-06",
+      "routeBaseId": "ems-markham-ems-24",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1648.2,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 1844.1,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Aitken Circle",
+        "estimatedCostSeconds": 123.7,
+        "bestSameServiceCostSeconds": 123.7
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Middlefield CI",
+      "addr": "525 Highglen Avenue, Markham, ON",
+      "lat": 43.84718795498292,
+      "lng": -79.26741858581437,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ww3.yorkmaps.ca/arcgis/rest/services/General/CommunityResources/MapServer/1/query?objectIds=391&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Summerlea Street",
+        "Middlefield Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "markham-call-12",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-markham-ems-25-01",
+      "routeBaseId": "ems-markham-ems-25",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 612,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1755.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 47.3,
+        "bestSameServiceCostSeconds": 47.3
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Boxwood PS",
+      "addr": "30 Boxwood Crescent, Markham, ON",
+      "lat": 43.85583622254882,
+      "lng": -79.24443874242421,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ww3.yorkmaps.ca/arcgis/rest/services/General/CommunityResources/MapServer/1/query?objectIds=337&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Bluebell Drive",
+        "Havelock Gate"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "markham-call-16",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-markham-ems-25-02",
+      "routeBaseId": "ems-markham-ems-25",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2333.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2418.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 171,
+        "bestSameServiceCostSeconds": 171
+      }
+    },
+    {
+      "name": "Rembrandt Drive & South Unionville Avenue",
+      "addr": "Rembrandt Drive & South Unionville Avenue",
+      "lat": 43.8600181,
+      "lng": -79.2868415,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/37356780",
+        "way/37356785",
+        "way/37356867"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/37356780",
+        "https://www.openstreetmap.org/way/37356785",
+        "https://www.openstreetmap.org/way/37356867"
+      ],
+      "id": "route-local-ems-markham-ems-25-03",
+      "routeBaseId": "ems-markham-ems-25",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2593.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2678,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 176.3,
+        "bestSameServiceCostSeconds": 176.3
+      }
+    },
+    {
+      "name": "Ashgrove Road & Highglen Avenue",
+      "addr": "Ashgrove Road & Highglen Avenue",
+      "lat": 43.845001,
+      "lng": -79.2829893,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35345978",
+        "way/36820121"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35345978",
+        "https://www.openstreetmap.org/way/36820121"
+      ],
+      "id": "route-local-ems-markham-ems-25-04",
+      "routeBaseId": "ems-markham-ems-25",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1701.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 185.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 119.9,
+        "bestSameServiceCostSeconds": 119.9
+      }
+    },
+    {
+      "name": "Main Street Markham South & Rouge Street",
+      "addr": "Main Street Markham South & Rouge Street",
+      "lat": 43.867257,
+      "lng": -79.2582965,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/236511409",
+        "way/33551478",
+        "way/37810003"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/236511409",
+        "https://www.openstreetmap.org/way/33551478",
+        "https://www.openstreetmap.org/way/37810003"
+      ],
+      "id": "route-local-ems-markham-ems-25-05",
+      "routeBaseId": "ems-markham-ems-25",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2436.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 3380.5,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 142.2,
+        "bestSameServiceCostSeconds": 142.2
+      }
+    },
+    {
+      "name": "Brando Avenue & Connery Crescent & Golden Avenue",
+      "addr": "Brando Avenue & Connery Crescent & Golden Avenue",
+      "lat": 43.8471071,
+      "lng": -79.2564924,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/36822442",
+        "way/36822446",
+        "way/56127055",
+        "way/56127069"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/36822442",
+        "https://www.openstreetmap.org/way/36822446",
+        "https://www.openstreetmap.org/way/56127055",
+        "https://www.openstreetmap.org/way/56127069"
+      ],
+      "id": "route-local-ems-markham-ems-25-06",
+      "routeBaseId": "ems-markham-ems-25",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1632.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 290.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 156.2,
+        "bestSameServiceCostSeconds": 156.2
+      }
+    },
+    {
+      "name": "John Street & Woodbine Avenue",
+      "addr": "John Street & Woodbine Avenue",
+      "lat": 43.8252117,
+      "lng": -79.3517165,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/161615416",
+        "way/161615418",
+        "way/161615422"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/161615416",
+        "https://www.openstreetmap.org/way/161615418",
+        "https://www.openstreetmap.org/way/161615422"
+      ],
+      "id": "route-local-ems-markham-ems-26-01",
+      "routeBaseId": "ems-markham-ems-26",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 799.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1109.2,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 70.6,
+        "bestSameServiceCostSeconds": 70.6
+      }
+    },
+    {
+      "name": "Woodbine Avenue & Yorktech Drive",
+      "addr": "Woodbine Avenue & Yorktech Drive",
+      "lat": 43.8459926,
+      "lng": -79.3569652,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/59459028",
+        "way/59459050",
+        "way/59459057",
+        "way/59459058"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/59459028",
+        "https://www.openstreetmap.org/way/59459050",
+        "https://www.openstreetmap.org/way/59459057",
+        "https://www.openstreetmap.org/way/59459058"
+      ],
+      "id": "route-local-ems-markham-ems-26-02",
+      "routeBaseId": "ems-markham-ems-26",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1906,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1061,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 141.9,
+        "bestSameServiceCostSeconds": 141.9
+      }
+    },
+    {
+      "name": "Gough Road & McNabb Street",
+      "addr": "Gough Road & McNabb Street",
+      "lat": 43.8335842,
+      "lng": -79.3263212,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/237028662",
+        "way/61226101",
+        "way/730428591"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/237028662",
+        "https://www.openstreetmap.org/way/61226101",
+        "https://www.openstreetmap.org/way/730428591"
+      ],
+      "id": "route-local-ems-markham-ems-26-03",
+      "routeBaseId": "ems-markham-ems-26",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2504,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 417.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 238.3,
+        "bestSameServiceCostSeconds": 238.3
+      }
+    },
+    {
+      "name": "Miller Avenue & Rodick Road",
+      "addr": "Miller Avenue & Rodick Road",
+      "lat": 43.8394456,
+      "lng": -79.3448658,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1459002146",
+        "way/31553769",
+        "way/815003224"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1459002146",
+        "https://www.openstreetmap.org/way/31553769",
+        "https://www.openstreetmap.org/way/815003224"
+      ],
+      "id": "route-local-ems-markham-ems-26-04",
+      "routeBaseId": "ems-markham-ems-26",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1342.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 350.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 135.7,
+        "bestSameServiceCostSeconds": 135.7
+      }
+    },
+    {
+      "name": "Firebrace Road & Glencoyne Crescent",
+      "addr": "Firebrace Road & Glencoyne Crescent",
+      "lat": 43.8172258,
+      "lng": -79.3318265,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/36542189",
+        "way/36542190",
+        "way/36542214"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/36542189",
+        "https://www.openstreetmap.org/way/36542190",
+        "https://www.openstreetmap.org/way/36542214"
+      ],
+      "id": "route-local-ems-markham-ems-26-05",
+      "routeBaseId": "ems-markham-ems-26",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2633,
+        "meaningfulDecisions": 6,
+        "maxAlternativePenaltyMetres": 1587.4,
+        "decisionKinds": [
+          "turn",
+          "bridge",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 238.9,
+        "bestSameServiceCostSeconds": 238.9
+      }
+    },
+    {
+      "name": "John Street & Rockingham Court",
+      "addr": "John Street & Rockingham Court",
+      "lat": 43.821494,
+      "lng": -79.3736708,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1085756630",
+        "way/37526968",
+        "way/37527364"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1085756630",
+        "https://www.openstreetmap.org/way/37526968",
+        "https://www.openstreetmap.org/way/37527364"
+      ],
+      "id": "route-local-ems-markham-ems-26-06",
+      "routeBaseId": "ems-markham-ems-26",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2627.3,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 2261.8,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 180.6,
+        "bestSameServiceCostSeconds": 180.6
+      }
+    },
+    {
+      "name": "Magnotta Road & Markland Street",
+      "addr": "Magnotta Road & Markland Street",
+      "lat": 43.8735847,
+      "lng": -79.3712406,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25288170",
+        "way/472423702"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25288170",
+        "https://www.openstreetmap.org/way/472423702"
+      ],
+      "id": "route-local-ems-markham-ems-27-01",
+      "routeBaseId": "ems-markham-ems-27",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 828.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 3961.2,
+        "decisionKinds": [
+          "departure",
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Cachet Woods Court",
+        "estimatedCostSeconds": 81.6,
+        "bestSameServiceCostSeconds": 81.6
+      }
+    },
+    {
+      "name": "Apple Creek Boulevard & Valleywood Drive & Woodbine Avenue",
+      "addr": "Apple Creek Boulevard & Valleywood Drive & Woodbine Avenue",
+      "lat": 43.85675,
+      "lng": -79.3599509,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/160175016",
+        "way/160175034",
+        "way/302784146"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/160175016",
+        "https://www.openstreetmap.org/way/160175034",
+        "https://www.openstreetmap.org/way/302784146"
+      ],
+      "id": "route-local-ems-markham-ems-27-02",
+      "routeBaseId": "ems-markham-ems-27",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2218.8,
+        "meaningfulDecisions": 6,
+        "maxAlternativePenaltyMetres": 1899.3,
+        "decisionKinds": [
+          "turn",
+          "bridge",
+          "departure"
+        ],
+        "departureRoad": "Cachet Woods Court",
+        "estimatedCostSeconds": 155.9,
+        "bestSameServiceCostSeconds": 155.9
+      }
+    },
+    {
+      "name": "Granton Drive & West Beaver Creek Road",
+      "addr": "Granton Drive & West Beaver Creek Road",
+      "lat": 43.8564136,
+      "lng": -79.3878312,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1479515930",
+        "way/35346250",
+        "way/37583575"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1479515930",
+        "https://www.openstreetmap.org/way/35346250",
+        "https://www.openstreetmap.org/way/37583575"
+      ],
+      "id": "route-local-ems-markham-ems-27-03",
+      "routeBaseId": "ems-markham-ems-27",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2600.4,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 3149.1,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Cachet Woods Court",
+        "estimatedCostSeconds": 181.9,
+        "bestSameServiceCostSeconds": 181.9
+      }
+    },
+    {
+      "name": "Greenshire Street & Headford Avenue",
+      "addr": "Greenshire Street & Headford Avenue",
+      "lat": 43.869117,
+      "lng": -79.390294,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/30010984",
+        "way/35347565"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/30010984",
+        "https://www.openstreetmap.org/way/35347565"
+      ],
+      "id": "route-local-ems-markham-ems-27-04",
+      "routeBaseId": "ems-markham-ems-27",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1680.8,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 2829.6,
+        "decisionKinds": [
+          "turn",
+          "departure",
+          "bridge"
+        ],
+        "departureRoad": "Cachet Woods Court",
+        "estimatedCostSeconds": 159.5,
+        "bestSameServiceCostSeconds": 159.5
+      }
+    },
+    {
+      "name": "Village Gate Drive & Wild Orchid Crescent",
+      "addr": "Village Gate Drive & Wild Orchid Crescent",
+      "lat": 43.8744784,
+      "lng": -79.3495803,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25290831",
+        "way/25290848"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25290831",
+        "https://www.openstreetmap.org/way/25290848"
+      ],
+      "id": "route-local-ems-markham-ems-27-05",
+      "routeBaseId": "ems-markham-ems-27",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2599.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2602.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Cachet Woods Court",
+        "estimatedCostSeconds": 187.1,
+        "bestSameServiceCostSeconds": 187.1
+      }
+    },
+    {
+      "name": "Buttonfield Road & Muster Court",
+      "addr": "Buttonfield Road & Muster Court",
+      "lat": 43.8669843,
+      "lng": -79.3555103,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35346294",
+        "way/35346759",
+        "way/35351884"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35346294",
+        "https://www.openstreetmap.org/way/35346759",
+        "https://www.openstreetmap.org/way/35351884"
+      ],
+      "id": "route-local-ems-markham-ems-27-06",
+      "routeBaseId": "ems-markham-ems-27",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1691.9,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 1738.3,
+        "decisionKinds": [
+          "turn",
+          "departure",
+          "bridge"
+        ],
+        "departureRoad": "Cachet Woods Court",
+        "estimatedCostSeconds": 147.4,
+        "bestSameServiceCostSeconds": 147.4
+      }
+    },
+    {
+      "name": "Almond Avenue & Grandview Avenue",
+      "addr": "Almond Avenue & Grandview Avenue",
+      "lat": 43.8035855,
+      "lng": -79.406573,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/37836266",
+        "way/37836301",
+        "way/37836332"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/37836266",
+        "https://www.openstreetmap.org/way/37836301",
+        "https://www.openstreetmap.org/way/37836332"
+      ],
+      "id": "route-local-ems-markham-ems-29-01",
+      "routeBaseId": "ems-markham-ems-29",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 797.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2044.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 97.6,
+        "bestSameServiceCostSeconds": 97.6
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Thornhill Village Library",
+      "addr": "10 Colborne Street, Markham, ON",
+      "lat": 43.81570511226799,
+      "lng": -79.42347466055983,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ww3.yorkmaps.ca/arcgis/rest/services/General/CommunityResources/MapServer/9/query?objectIds=30&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Eliza Street",
+        "Yonge Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "markham-call-15",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-markham-ems-29-02",
+      "routeBaseId": "ems-markham-ems-29",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2062.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 707.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 199.1,
+        "bestSameServiceCostSeconds": 199.1
+      }
+    },
+    {
+      "name": "Bowman Way & Corkory Way",
+      "addr": "Bowman Way & Corkory Way",
+      "lat": 43.8181778,
+      "lng": -79.396898,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35348827",
+        "way/35351830"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35348827",
+        "https://www.openstreetmap.org/way/35351830"
+      ],
+      "id": "route-local-ems-markham-ems-29-03",
+      "routeBaseId": "ems-markham-ems-29",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2340.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 2183.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 211.7,
+        "bestSameServiceCostSeconds": 211.7
+      }
+    },
+    {
+      "name": "Highland Park Boulevard & Yonge Street",
+      "addr": "Highland Park Boulevard & Yonge Street",
+      "lat": 43.799007,
+      "lng": -79.4203162,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/37181588",
+        "way/37836341",
+        "way/446245779"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/37181588",
+        "https://www.openstreetmap.org/way/37836341",
+        "https://www.openstreetmap.org/way/446245779"
+      ],
+      "id": "route-local-ems-markham-ems-29-04",
+      "routeBaseId": "ems-markham-ems-29",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1694.7,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 381.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 161.8,
+        "bestSameServiceCostSeconds": 161.8
+      }
+    },
+    {
+      "name": "Conacher Drive & Cummer Avenue",
+      "addr": "Conacher Drive & Cummer Avenue",
+      "lat": 43.7914838,
+      "lng": -79.3970129,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1248022885",
+        "way/239655982"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1248022885",
+        "https://www.openstreetmap.org/way/239655982"
+      ],
+      "id": "route-local-ems-markham-ems-29-05",
+      "routeBaseId": "ems-markham-ems-29",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2586.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2193.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 238,
+        "bestSameServiceCostSeconds": 238
+      }
+    },
+    {
+      "name": "Karen Street & Rockford Court & Winding Lane",
+      "addr": "Karen Street & Rockford Court & Winding Lane",
+      "lat": 43.8057327,
+      "lng": -79.4280353,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/148004301",
+        "way/148004302",
+        "way/148015870"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/148004301",
+        "https://www.openstreetmap.org/way/148004302",
+        "https://www.openstreetmap.org/way/148015870"
+      ],
+      "id": "route-local-ems-markham-ems-29-06",
+      "routeBaseId": "ems-markham-ems-29",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1718.9,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 287.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 217.7,
+        "bestSameServiceCostSeconds": 217.7
+      }
+    }
+  ]
 }

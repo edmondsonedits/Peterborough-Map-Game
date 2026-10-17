@@ -295,5 +295,2778 @@
   ],
   "roadsUrl": "cities/windsor/roads.geojson.gz",
   "roadFeatureCount": 17655,
-  "roadDataSha256": "b3a39b8022e5a4213d6f1d5f22a1d12a2ac4b729f61cf0ad8a984a315b3948ea"
+  "roadDataSha256": "b3a39b8022e5a4213d6f1d5f22a1d12a2ac4b729f61cf0ad8a984a315b3948ea",
+  "routeResponses": {
+    "schemaVersion": 1,
+    "minCallsPerBase": 3,
+    "targetCallsPerBase": 6,
+    "generatedOn": "2026-10-17",
+    "model": {
+      "description": "Published first-due polygons where available. Otherwise a directed road-network estimate using road class travel cost from every same-service hall; allows a15second cost tie for overlapping nearby halls. This is training geography, not live dispatch advice.",
+      "ownershipToleranceSeconds": 15,
+      "maximumCandidateRouteMetres": 12000
+    },
+    "bases": [
+      {
+        "baseId": "fire-windsor-fire-1",
+        "service": "fire",
+        "number": 1,
+        "name": "Fire Station 1",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 42.311784412618906,
+          "lng": -83.03360655045388,
+          "road": "Unnamed road",
+          "gapMetres": 14.3
+        },
+        "callIds": [
+          "route-local-fire-windsor-fire-1-01",
+          "route-local-fire-windsor-fire-1-02",
+          "route-local-fire-windsor-fire-1-03",
+          "route-local-fire-windsor-fire-1-04",
+          "route-local-fire-windsor-fire-1-05",
+          "route-local-fire-windsor-fire-1-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-windsor-fire-2",
+        "service": "fire",
+        "number": 2,
+        "name": "Fire Station 2",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 42.306817199113304,
+          "lng": -82.9870457600754,
+          "road": "Unnamed road",
+          "gapMetres": 10.4
+        },
+        "callIds": [
+          "route-local-fire-windsor-fire-2-01",
+          "route-local-fire-windsor-fire-2-02",
+          "route-local-fire-windsor-fire-2-03",
+          "route-local-fire-windsor-fire-2-04",
+          "route-local-fire-windsor-fire-2-05",
+          "route-local-fire-windsor-fire-2-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-windsor-fire-3",
+        "service": "fire",
+        "number": 3,
+        "name": "Fire Station 3",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5700,
+        "access": {
+          "lat": 42.2822796,
+          "lng": -83.0157046,
+          "road": "Unnamed road",
+          "gapMetres": 15.8
+        },
+        "callIds": [
+          "route-local-fire-windsor-fire-3-01",
+          "route-local-fire-windsor-fire-3-02",
+          "route-local-fire-windsor-fire-3-03",
+          "route-local-fire-windsor-fire-3-04",
+          "route-local-fire-windsor-fire-3-05",
+          "route-local-fire-windsor-fire-3-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-windsor-fire-4",
+        "service": "fire",
+        "number": 4,
+        "name": "Fire Station 4",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6200,
+        "access": {
+          "lat": 42.29969856438651,
+          "lng": -83.06264899686857,
+          "road": "College Avenue",
+          "gapMetres": 29.3
+        },
+        "callIds": [
+          "route-local-fire-windsor-fire-4-01",
+          "route-local-fire-windsor-fire-4-02",
+          "route-local-fire-windsor-fire-4-03",
+          "route-local-fire-windsor-fire-4-04",
+          "route-local-fire-windsor-fire-4-05",
+          "route-local-fire-windsor-fire-4-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-windsor-fire-5",
+        "service": "fire",
+        "number": 5,
+        "name": "Fire Station 5",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 42.2764062,
+          "lng": -83.0489587,
+          "road": "Unnamed road",
+          "gapMetres": 20.4
+        },
+        "callIds": [
+          "route-local-fire-windsor-fire-5-01",
+          "route-local-fire-windsor-fire-5-02",
+          "route-local-fire-windsor-fire-5-03",
+          "route-local-fire-windsor-fire-5-04",
+          "route-local-fire-windsor-fire-5-05",
+          "route-local-fire-windsor-fire-5-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-windsor-fire-6",
+        "service": "fire",
+        "number": 6,
+        "name": "Fire Station 6",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 42.25738338867263,
+          "lng": -82.97747090426643,
+          "road": "Unnamed road",
+          "gapMetres": 21.4
+        },
+        "callIds": [
+          "route-local-fire-windsor-fire-6-01",
+          "route-local-fire-windsor-fire-6-02",
+          "route-local-fire-windsor-fire-6-03",
+          "route-local-fire-windsor-fire-6-04",
+          "route-local-fire-windsor-fire-6-05",
+          "route-local-fire-windsor-fire-6-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-windsor-fire-7",
+        "service": "fire",
+        "number": 7,
+        "name": "Fire Station 7",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 42.3216525,
+          "lng": -82.9386746,
+          "road": "Unnamed road",
+          "gapMetres": 11.6
+        },
+        "callIds": [
+          "route-local-fire-windsor-fire-7-01",
+          "route-local-fire-windsor-fire-7-02",
+          "route-local-fire-windsor-fire-7-03",
+          "route-local-fire-windsor-fire-7-04",
+          "route-local-fire-windsor-fire-7-05",
+          "route-local-fire-windsor-fire-7-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-windsor-ems-mercer",
+        "service": "ems",
+        "number": 10002,
+        "name": "Mercer Street Base",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 42.31260329989017,
+          "lng": -83.02840197296743,
+          "road": "Unnamed road",
+          "gapMetres": 23.2
+        },
+        "callIds": [
+          "route-local-ems-windsor-ems-mercer-01",
+          "route-local-ems-windsor-ems-mercer-02",
+          "route-local-ems-windsor-ems-mercer-03",
+          "route-local-ems-windsor-ems-mercer-04",
+          "route-local-ems-windsor-ems-mercer-05",
+          "route-local-ems-windsor-ems-mercer-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-windsor-ems-dougall",
+        "service": "ems",
+        "number": 10000,
+        "name": "Dougall Avenue Base",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 42.278015807556784,
+          "lng": -83.01678812383486,
+          "road": "Unnamed road",
+          "gapMetres": 1.1
+        },
+        "callIds": [
+          "route-local-ems-windsor-ems-dougall-01",
+          "route-local-ems-windsor-ems-dougall-02",
+          "route-local-ems-windsor-ems-dougall-03",
+          "route-local-ems-windsor-ems-dougall-04",
+          "route-local-ems-windsor-ems-dougall-05",
+          "route-local-ems-windsor-ems-dougall-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-windsor-ems-jefferson",
+        "service": "ems",
+        "number": 10001,
+        "name": "Jefferson Boulevard Base",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 42.29471294958074,
+          "lng": -82.9419430942632,
+          "road": "Jefferson Boulevard",
+          "gapMetres": 46
+        },
+        "callIds": [
+          "route-local-ems-windsor-ems-jefferson-01",
+          "route-local-ems-windsor-ems-jefferson-02",
+          "route-local-ems-windsor-ems-jefferson-03",
+          "route-local-ems-windsor-ems-jefferson-04",
+          "route-local-ems-windsor-ems-jefferson-05",
+          "route-local-ems-windsor-ems-jefferson-06"
+        ],
+        "challengeCalls": 6
+      }
+    ]
+  },
+  "routeCalls": [
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Festival Plaza",
+      "addr": "340 Riverside Dr E, Windsor, Ontario",
+      "lat": 42.32156814,
+      "lng": -83.03361254,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://opendata.citywindsor.ca/Uploads/Parks%20Centroids.csv",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Glengarry Avenue",
+        "Aylmer Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "windsor-call-08",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-windsor-fire-1-01",
+      "routeBaseId": "fire-windsor-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1719.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 253,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 159.6,
+        "bestSameServiceCostSeconds": 159.6
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Jackson Park",
+      "addr": "125 Tecumseh Rd E, Windsor, Ontario",
+      "lat": 42.29342236,
+      "lng": -83.02187108,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://opendata.citywindsor.ca/Uploads/Parks%20Centroids.csv",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Goyeau Street",
+        "Windsor Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "windsor-call-03",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-windsor-fire-1-02",
+      "routeBaseId": "fire-windsor-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2375.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 243.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 293.2,
+        "bestSameServiceCostSeconds": 293.2
+      }
+    },
+    {
+      "name": "Chilver Road & Ontario Street",
+      "addr": "Chilver Road & Ontario Street",
+      "lat": 42.314077,
+      "lng": -83.0088185,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/23715042",
+        "way/23737386"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/23715042",
+        "https://www.openstreetmap.org/way/23737386"
+      ],
+      "id": "route-local-fire-windsor-fire-1-03",
+      "routeBaseId": "fire-windsor-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2595.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 219.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 284.8,
+        "bestSameServiceCostSeconds": 278.8
+      }
+    },
+    {
+      "name": "Wellington Avenue & Wyandotte Street West",
+      "addr": "Wellington Avenue & Wyandotte Street West",
+      "lat": 42.3094813,
+      "lng": -83.0498431,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/23409150",
+        "way/23764443"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/23409150",
+        "https://www.openstreetmap.org/way/23764443"
+      ],
+      "id": "route-local-fire-windsor-fire-1-04",
+      "routeBaseId": "fire-windsor-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1661.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 937.9,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 121.5,
+        "bestSameServiceCostSeconds": 121.5
+      }
+    },
+    {
+      "name": "Lincoln Road & Riverside Drive East",
+      "addr": "Lincoln Road & Riverside Drive East",
+      "lat": 42.32514,
+      "lng": -83.0181363,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1394211510",
+        "way/421875299",
+        "way/506267953"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1394211510",
+        "https://www.openstreetmap.org/way/421875299",
+        "https://www.openstreetmap.org/way/506267953"
+      ],
+      "id": "route-local-fire-windsor-fire-1-05",
+      "routeBaseId": "fire-windsor-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2525.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 348.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 186.7,
+        "bestSameServiceCostSeconds": 186.7
+      }
+    },
+    {
+      "name": "Dufferin Place & Giles Boulevard",
+      "addr": "Dufferin Place & Giles Boulevard",
+      "lat": 42.3056973,
+      "lng": -83.0301716,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1447998785",
+        "way/1450741092",
+        "way/436646457"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1447998785",
+        "https://www.openstreetmap.org/way/1450741092",
+        "https://www.openstreetmap.org/way/436646457"
+      ],
+      "id": "route-local-fire-windsor-fire-1-06",
+      "routeBaseId": "fire-windsor-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 828.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 165.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 82.1,
+        "bestSameServiceCostSeconds": 82.1
+      }
+    },
+    {
+      "name": "Chandler Road & Ypres Street",
+      "addr": "Chandler Road & Ypres Street",
+      "lat": 42.3003771,
+      "lng": -82.9832187,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1427051836",
+        "way/24370033"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1427051836",
+        "https://www.openstreetmap.org/way/24370033"
+      ],
+      "id": "route-local-fire-windsor-fire-2-01",
+      "routeBaseId": "fire-windsor-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 800.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 765.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 132.9,
+        "bestSameServiceCostSeconds": 132.9
+      }
+    },
+    {
+      "name": "Metcalfe Street & Westcott Road",
+      "addr": "Metcalfe Street & Westcott Road",
+      "lat": 42.3172816,
+      "lng": -82.9860465,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1093264409",
+        "way/23292768"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1093264409",
+        "https://www.openstreetmap.org/way/23292768"
+      ],
+      "id": "route-local-fire-windsor-fire-2-02",
+      "routeBaseId": "fire-windsor-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1711.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 177.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 238.6,
+        "bestSameServiceCostSeconds": 238.6
+      }
+    },
+    {
+      "name": "St. Luke Road & Whelpton Street",
+      "addr": "St. Luke Road & Whelpton Street",
+      "lat": 42.3208266,
+      "lng": -83.0030688,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1409289525",
+        "way/23579058"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1409289525",
+        "https://www.openstreetmap.org/way/23579058"
+      ],
+      "id": "route-local-fire-windsor-fire-2-03",
+      "routeBaseId": "fire-windsor-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2533.7,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 700.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 263.9,
+        "bestSameServiceCostSeconds": 259.6
+      }
+    },
+    {
+      "name": "Tecumseh Road East & Windermere Road",
+      "addr": "Tecumseh Road East & Windermere Road",
+      "lat": 42.3010182,
+      "lng": -83.0014252,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1396671534",
+        "way/1396671536",
+        "way/1430052854",
+        "way/23737935"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1396671534",
+        "https://www.openstreetmap.org/way/1396671536",
+        "https://www.openstreetmap.org/way/1430052854",
+        "https://www.openstreetmap.org/way/23737935"
+      ],
+      "id": "route-local-fire-windsor-fire-2-04",
+      "routeBaseId": "fire-windsor-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1695,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 598.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 147.6,
+        "bestSameServiceCostSeconds": 147.6
+      }
+    },
+    {
+      "name": "Buckingham Drive & Reginald Street",
+      "addr": "Buckingham Drive & Reginald Street",
+      "lat": 42.3180838,
+      "lng": -82.968001,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1411253220",
+        "way/23375863"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1411253220",
+        "https://www.openstreetmap.org/way/23375863"
+      ],
+      "id": "route-local-fire-windsor-fire-2-05",
+      "routeBaseId": "fire-windsor-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2587.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 681.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 323.7,
+        "bestSameServiceCostSeconds": 323.7
+      }
+    },
+    {
+      "name": "Bernard Road & Ypres Street",
+      "addr": "Bernard Road & Ypres Street",
+      "lat": 42.3047305,
+      "lng": -82.9708915,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/23604482",
+        "way/23604500"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/23604482",
+        "https://www.openstreetmap.org/way/23604500"
+      ],
+      "id": "route-local-fire-windsor-fire-2-06",
+      "routeBaseId": "fire-windsor-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1728.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 639.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 169.6,
+        "bestSameServiceCostSeconds": 169.6
+      }
+    },
+    {
+      "name": "Eugenie Street & Pelissier Street",
+      "addr": "Eugenie Street & Pelissier Street",
+      "lat": 42.2859197,
+      "lng": -83.0199068,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/162326834",
+        "way/23250854",
+        "way/459473341",
+        "way/489034638"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/162326834",
+        "https://www.openstreetmap.org/way/23250854",
+        "https://www.openstreetmap.org/way/459473341",
+        "https://www.openstreetmap.org/way/489034638"
+      ],
+      "id": "route-local-fire-windsor-fire-3-01",
+      "routeBaseId": "fire-windsor-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 798.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 245.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 102.9,
+        "bestSameServiceCostSeconds": 102.9
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Compton Court Park",
+      "addr": "600 Compton Crt, Windsor, Ontario",
+      "lat": 42.26913756,
+      "lng": -83.00325486,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://opendata.citywindsor.ca/Uploads/Parks%20Centroids.csv",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Kenilworth Drive",
+        "Howard Avenue (via Kenilworth Drive)"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "windsor-call-16",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-windsor-fire-3-02",
+      "routeBaseId": "fire-windsor-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2520,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1177.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 223.5,
+        "bestSameServiceCostSeconds": 223.5
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Brookview Park",
+      "addr": "1097 Brookview Cres, Windsor, Ontario",
+      "lat": 42.28291651,
+      "lng": -82.99822627,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://opendata.citywindsor.ca/Uploads/Parks%20Centroids.csv",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Alderbrook Drive",
+        "North Service Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "windsor-call-20",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-windsor-fire-3-03",
+      "routeBaseId": "fire-windsor-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2275.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1496.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 239.8,
+        "bestSameServiceCostSeconds": 239.8
+      }
+    },
+    {
+      "name": "Dougall Avenue & South Cameron Boulevard",
+      "addr": "Dougall Avenue & South Cameron Boulevard",
+      "lat": 42.2790694,
+      "lng": -83.0178303,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/346371199",
+        "way/511948843",
+        "way/511948848"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/346371199",
+        "https://www.openstreetmap.org/way/511948843",
+        "https://www.openstreetmap.org/way/511948848"
+      ],
+      "id": "route-local-fire-windsor-fire-3-04",
+      "routeBaseId": "fire-windsor-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1179.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1403,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 121.4,
+        "bestSameServiceCostSeconds": 121.4
+      }
+    },
+    {
+      "name": "Howard Avenue & Tecumseh Road East",
+      "addr": "Howard Avenue & Tecumseh Road East",
+      "lat": 42.2980757,
+      "lng": -83.0170776,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1408120659",
+        "way/1408120665",
+        "way/1541545062"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1408120659",
+        "https://www.openstreetmap.org/way/1408120665",
+        "https://www.openstreetmap.org/way/1541545062"
+      ],
+      "id": "route-local-fire-windsor-fire-3-05",
+      "routeBaseId": "fire-windsor-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2176.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 541.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 183.9,
+        "bestSameServiceCostSeconds": 172
+      }
+    },
+    {
+      "name": "Marentette Avenue & Vimy Avenue",
+      "addr": "Marentette Avenue & Vimy Avenue",
+      "lat": 42.2930679,
+      "lng": -83.0099275,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/31698725",
+        "way/31876564"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/31698725",
+        "https://www.openstreetmap.org/way/31876564"
+      ],
+      "id": "route-local-fire-windsor-fire-3-06",
+      "routeBaseId": "fire-windsor-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1721.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 541.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 178.6,
+        "bestSameServiceCostSeconds": 178.6
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Mackenzie Hall Cultural Centre",
+      "addr": "3277 Sandwich St, Windsor, Ontario",
+      "lat": 42.3001247118,
+      "lng": -83.0764985562,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://opendata.citywindsor.ca/Uploads/Community_Centres.csv",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Brock Street",
+        "Mill Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "windsor-call-09",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-windsor-fire-4-01",
+      "routeBaseId": "fire-windsor-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1448.5,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 798.5,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "College Avenue",
+        "estimatedCostSeconds": 175.1,
+        "bestSameServiceCostSeconds": 175.1
+      }
+    },
+    {
+      "name": "McEwan Avenue & Pelletier Street",
+      "addr": "McEwan Avenue & Pelletier Street",
+      "lat": 42.2973879,
+      "lng": -83.0481154,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/23778004",
+        "way/29100897"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/23778004",
+        "https://www.openstreetmap.org/way/29100897"
+      ],
+      "id": "route-local-fire-windsor-fire-4-02",
+      "routeBaseId": "fire-windsor-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1718.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 701.2,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "College Avenue",
+        "estimatedCostSeconds": 156,
+        "bestSameServiceCostSeconds": 156
+      }
+    },
+    {
+      "name": "Greenview Crescent & Sun Valley Drive",
+      "addr": "Greenview Crescent & Sun Valley Drive",
+      "lat": 42.2793251,
+      "lng": -83.0632415,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/23921598",
+        "way/23921654"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/23921598",
+        "https://www.openstreetmap.org/way/23921654"
+      ],
+      "id": "route-local-fire-windsor-fire-4-03",
+      "routeBaseId": "fire-windsor-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2766,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1056,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "College Avenue",
+        "estimatedCostSeconds": 188.1,
+        "bestSameServiceCostSeconds": 185.1
+      }
+    },
+    {
+      "name": "McEwan Avenue & Riverside Drive East",
+      "addr": "McEwan Avenue & Riverside Drive East",
+      "lat": 42.3150128,
+      "lng": -83.0594759,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/23764414",
+        "way/459473091"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/23764414",
+        "https://www.openstreetmap.org/way/459473091"
+      ],
+      "id": "route-local-fire-windsor-fire-4-04",
+      "routeBaseId": "fire-windsor-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2267.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 369.9,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "College Avenue",
+        "estimatedCostSeconds": 194.1,
+        "bestSameServiceCostSeconds": 187.2
+      }
+    },
+    {
+      "name": "John B Avenue & Sandwich Street",
+      "addr": "John B Avenue & Sandwich Street",
+      "lat": 42.2879314,
+      "lng": -83.0843052,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/23366037",
+        "way/23725297"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/23366037",
+        "https://www.openstreetmap.org/way/23725297"
+      ],
+      "id": "route-local-fire-windsor-fire-4-05",
+      "routeBaseId": "fire-windsor-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2607.5,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 1062.7,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "College Avenue",
+        "estimatedCostSeconds": 199.9,
+        "bestSameServiceCostSeconds": 199.9
+      }
+    },
+    {
+      "name": "Birch Street & Wolfe Court",
+      "addr": "Birch Street & Wolfe Court",
+      "lat": 42.2901225,
+      "lng": -83.0665378,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1267087389",
+        "way/205132001"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1267087389",
+        "https://www.openstreetmap.org/way/205132001"
+      ],
+      "id": "route-local-fire-windsor-fire-4-06",
+      "routeBaseId": "fire-windsor-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1692.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1056,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "College Avenue",
+        "estimatedCostSeconds": 163.2,
+        "bestSameServiceCostSeconds": 163.2
+      }
+    },
+    {
+      "name": "Manitoba Street & Northway Avenue",
+      "addr": "Manitoba Street & Northway Avenue",
+      "lat": 42.2816614,
+      "lng": -83.0519685,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/163762318",
+        "way/163762331",
+        "way/459470028"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/163762318",
+        "https://www.openstreetmap.org/way/163762331",
+        "https://www.openstreetmap.org/way/459470028"
+      ],
+      "id": "route-local-fire-windsor-fire-5-01",
+      "routeBaseId": "fire-windsor-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 787.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 334.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 135.9,
+        "bestSameServiceCostSeconds": 135.9
+      }
+    },
+    {
+      "name": "Labelle Street & Northway Avenue",
+      "addr": "Labelle Street & Northway Avenue",
+      "lat": 42.2663821,
+      "lng": -83.0417825,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/161930054",
+        "way/459473103",
+        "way/459473105"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/161930054",
+        "https://www.openstreetmap.org/way/459473103",
+        "https://www.openstreetmap.org/way/459473105"
+      ],
+      "id": "route-local-fire-windsor-fire-5-02",
+      "routeBaseId": "fire-windsor-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1726,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 2275.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 149.1,
+        "bestSameServiceCostSeconds": 149.1
+      }
+    },
+    {
+      "name": "Armanda Street & Werner Avenue",
+      "addr": "Armanda Street & Werner Avenue",
+      "lat": 42.2680946,
+      "lng": -83.067064,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/23740315",
+        "way/23825754"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/23740315",
+        "https://www.openstreetmap.org/way/23825754"
+      ],
+      "id": "route-local-fire-windsor-fire-5-03",
+      "routeBaseId": "fire-windsor-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2666.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1116.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 301.6,
+        "bestSameServiceCostSeconds": 301.6
+      }
+    },
+    {
+      "name": "Curry Avenue & Northwood Street",
+      "addr": "Curry Avenue & Northwood Street",
+      "lat": 42.2764422,
+      "lng": -83.0334984,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/23422392",
+        "way/513198601"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/23422392",
+        "https://www.openstreetmap.org/way/513198601"
+      ],
+      "id": "route-local-fire-windsor-fire-5-04",
+      "routeBaseId": "fire-windsor-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1799.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 2020.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 233.1,
+        "bestSameServiceCostSeconds": 233.1
+      }
+    },
+    {
+      "name": "Bristol Street & Malden Road",
+      "addr": "Bristol Street & Malden Road",
+      "lat": 42.2613638,
+      "lng": -83.0599924,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/201857969",
+        "way/31702409"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/201857969",
+        "https://www.openstreetmap.org/way/31702409"
+      ],
+      "id": "route-local-fire-windsor-fire-5-05",
+      "routeBaseId": "fire-windsor-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2569.9,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 335.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 245.1,
+        "bestSameServiceCostSeconds": 245.1
+      }
+    },
+    {
+      "name": "Greenview Crescent & Sun Valley Drive",
+      "addr": "Greenview Crescent & Sun Valley Drive",
+      "lat": 42.2793251,
+      "lng": -83.0632415,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/23921598",
+        "way/23921654"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/23921598",
+        "https://www.openstreetmap.org/way/23921654"
+      ],
+      "id": "route-local-fire-windsor-fire-5-06",
+      "routeBaseId": "fire-windsor-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1621.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 507.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 185.1,
+        "bestSameServiceCostSeconds": 185.1
+      }
+    },
+    {
+      "name": "Barton Street & Morand Street",
+      "addr": "Barton Street & Morand Street",
+      "lat": 42.2558682,
+      "lng": -82.9817653,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/31699373",
+        "way/31700317"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/31699373",
+        "https://www.openstreetmap.org/way/31700317"
+      ],
+      "id": "route-local-fire-windsor-fire-6-01",
+      "routeBaseId": "fire-windsor-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 807.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 892.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 104.8,
+        "bestSameServiceCostSeconds": 104.8
+      }
+    },
+    {
+      "name": "Cabana Road East & Concession Road 7",
+      "addr": "Cabana Road East & Concession Road 7",
+      "lat": 42.264395,
+      "lng": -82.9619283,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1501511100",
+        "way/200069334"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1501511100",
+        "https://www.openstreetmap.org/way/200069334"
+      ],
+      "id": "route-local-fire-windsor-fire-6-02",
+      "routeBaseId": "fire-windsor-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1887.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 603.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 152.2,
+        "bestSameServiceCostSeconds": 152.2
+      }
+    },
+    {
+      "name": "Provincial Road & Southwest Crescent",
+      "addr": "Provincial Road & Southwest Crescent",
+      "lat": 42.2446601,
+      "lng": -82.9529499,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/31705157",
+        "way/377143050",
+        "way/377143052"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/31705157",
+        "https://www.openstreetmap.org/way/377143050",
+        "https://www.openstreetmap.org/way/377143052"
+      ],
+      "id": "route-local-fire-windsor-fire-6-03",
+      "routeBaseId": "fire-windsor-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2544.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1691.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 179.7,
+        "bestSameServiceCostSeconds": 179.7
+      }
+    },
+    {
+      "name": "Marentette Avenue & Sydney Avenue",
+      "addr": "Marentette Avenue & Sydney Avenue",
+      "lat": 42.2731697,
+      "lng": -82.9972053,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/23349037",
+        "way/410368370",
+        "way/459468482"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/23349037",
+        "https://www.openstreetmap.org/way/410368370",
+        "https://www.openstreetmap.org/way/459468482"
+      ],
+      "id": "route-local-fire-windsor-fire-6-04",
+      "routeBaseId": "fire-windsor-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2610.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 297.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 200.3,
+        "bestSameServiceCostSeconds": 200.3
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Shinglecreek Park",
+      "addr": "3699 Shinglecreek Crt, Windsor, Ontario",
+      "lat": 42.26783479,
+      "lng": -82.98264072,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://opendata.citywindsor.ca/Uploads/Parks%20Centroids.csv",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Kamloops Street",
+        "Caribou Crescent"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "windsor-call-18",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-windsor-fire-6-05",
+      "routeBaseId": "fire-windsor-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2573.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 916.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 311.7,
+        "bestSameServiceCostSeconds": 311.7
+      }
+    },
+    {
+      "name": "Dougall Square & McGregor Boulevard",
+      "addr": "Dougall Square & McGregor Boulevard",
+      "lat": 42.2566247,
+      "lng": -83.0042376,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/205003242",
+        "way/23809734"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/205003242",
+        "https://www.openstreetmap.org/way/23809734"
+      ],
+      "id": "route-local-fire-windsor-fire-6-06",
+      "routeBaseId": "fire-windsor-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2624.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 432.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 189.7,
+        "bestSameServiceCostSeconds": 189.7
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "WFCU Centre",
+      "addr": "8787 McHugh St, Windsor, Ontario",
+      "lat": 42.3187171903,
+      "lng": -82.9274864852,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://opendata.citywindsor.ca/Uploads/Community_Centres.csv",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Florence Avenue",
+        "Darfield Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "windsor-call-01",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-windsor-fire-7-01",
+      "routeBaseId": "fire-windsor-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1865.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1262.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 221,
+        "bestSameServiceCostSeconds": 221
+      }
+    },
+    {
+      "name": "Edward Avenue & St. Rose Avenue",
+      "addr": "Edward Avenue & St. Rose Avenue",
+      "lat": 42.3302568,
+      "lng": -82.9520458,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/23144016",
+        "way/31538566"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/23144016",
+        "https://www.openstreetmap.org/way/31538566"
+      ],
+      "id": "route-local-fire-windsor-fire-7-02",
+      "routeBaseId": "fire-windsor-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1707.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 214.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 219.4,
+        "bestSameServiceCostSeconds": 219.4
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Little River Golf Course",
+      "addr": "2861 Lauzon Rd, Windsor, Ontario",
+      "lat": 42.3060794922,
+      "lng": -82.9281714155,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://opendata.citywindsor.ca/Uploads/Community_Centres.csv",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Vince Drive",
+        "Faholo Crescent"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "windsor-call-15",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-windsor-fire-7-03",
+      "routeBaseId": "fire-windsor-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2607.7,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 878.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 255.1,
+        "bestSameServiceCostSeconds": 255.1
+      }
+    },
+    {
+      "name": "Catherine Street & Parkview Avenue",
+      "addr": "Catherine Street & Parkview Avenue",
+      "lat": 42.3149754,
+      "lng": -82.9456903,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1413322800",
+        "way/1413322848"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1413322800",
+        "https://www.openstreetmap.org/way/1413322848"
+      ],
+      "id": "route-local-fire-windsor-fire-7-04",
+      "routeBaseId": "fire-windsor-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1896.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 699.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 198.8,
+        "bestSameServiceCostSeconds": 198.8
+      }
+    },
+    {
+      "name": "Greendale Drive & Menard Street",
+      "addr": "Greendale Drive & Menard Street",
+      "lat": 42.3358352,
+      "lng": -82.931696,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/23292983",
+        "way/23630394"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/23292983",
+        "https://www.openstreetmap.org/way/23630394"
+      ],
+      "id": "route-local-fire-windsor-fire-7-05",
+      "routeBaseId": "fire-windsor-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2600.7,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 376.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 262.7,
+        "bestSameServiceCostSeconds": 262.7
+      }
+    },
+    {
+      "name": "Aire Place & Little River Acres Drive",
+      "addr": "Aire Place & Little River Acres Drive",
+      "lat": 42.3254345,
+      "lng": -82.9285472,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/86429476",
+        "way/86553822"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/86429476",
+        "https://www.openstreetmap.org/way/86553822"
+      ],
+      "id": "route-local-fire-windsor-fire-7-06",
+      "routeBaseId": "fire-windsor-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1694.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 355.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 175.6,
+        "bestSameServiceCostSeconds": 175.6
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Regency Park Long Term Care Home",
+      "addr": "567 Victoria Avenue",
+      "lat": 42.31361319906077,
+      "lng": -83.0393148,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789858"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "3554",
+      "community": "Windsor",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-3554",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-windsor-ems-mercer-01",
+      "routeBaseId": "ems-windsor-ems-mercer",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1263.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 248.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 136.8,
+        "bestSameServiceCostSeconds": 136.8
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Willistead Park",
+      "addr": "1899 Niagara St, Windsor, Ontario",
+      "lat": 42.31767443,
+      "lng": -83.00986601,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://opendata.citywindsor.ca/Uploads/Parks%20Centroids.csv",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Kildare Road",
+        "Chilver Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "windsor-call-07",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-windsor-ems-mercer-02",
+      "routeBaseId": "ems-windsor-ems-mercer",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2073.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 274.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 300,
+        "bestSameServiceCostSeconds": 300
+      }
+    },
+    {
+      "name": "Logan Avenue & Marentette Avenue",
+      "addr": "Logan Avenue & Marentette Avenue",
+      "lat": 42.2966004,
+      "lng": -83.0120996,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/31698398",
+        "way/31698525"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/31698398",
+        "https://www.openstreetmap.org/way/31698525"
+      ],
+      "id": "route-local-ems-windsor-ems-mercer-03",
+      "routeBaseId": "ems-windsor-ems-mercer",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2613.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 224.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 212.4,
+        "bestSameServiceCostSeconds": 206.3
+      }
+    },
+    {
+      "name": "Langlois Avenue & Riverside Drive East",
+      "addr": "Langlois Avenue & Riverside Drive East",
+      "lat": 42.3231954,
+      "lng": -83.0251883,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1394232887",
+        "way/421875298"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1394232887",
+        "https://www.openstreetmap.org/way/421875298"
+      ],
+      "id": "route-local-ems-windsor-ems-mercer-04",
+      "routeBaseId": "ems-windsor-ems-mercer",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1715,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 227.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 146,
+        "bestSameServiceCostSeconds": 146
+      }
+    },
+    {
+      "name": "College Avenue & Wellington Avenue",
+      "addr": "College Avenue & Wellington Avenue",
+      "lat": 42.3058474,
+      "lng": -83.0475104,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1445763221",
+        "way/1445763223",
+        "way/23394488",
+        "way/23764443"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1445763221",
+        "https://www.openstreetmap.org/way/1445763223",
+        "https://www.openstreetmap.org/way/23394488",
+        "https://www.openstreetmap.org/way/23764443"
+      ],
+      "id": "route-local-ems-windsor-ems-mercer-05",
+      "routeBaseId": "ems-windsor-ems-mercer",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2612.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 880.8,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 220.6,
+        "bestSameServiceCostSeconds": 220.6
+      }
+    },
+    {
+      "name": "McDougall Street & Riverside Drive East",
+      "addr": "McDougall Street & Riverside Drive East",
+      "lat": 42.3206398,
+      "lng": -83.0355857,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/220181207",
+        "way/23248036",
+        "way/422209899"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/220181207",
+        "https://www.openstreetmap.org/way/23248036",
+        "https://www.openstreetmap.org/way/422209899"
+      ],
+      "id": "route-local-ems-windsor-ems-mercer-06",
+      "routeBaseId": "ems-windsor-ems-mercer",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1595.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 297.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 135.1,
+        "bestSameServiceCostSeconds": 135.1
+      }
+    },
+    {
+      "name": "Northwood Street & South Cameron Boulevard",
+      "addr": "Northwood Street & South Cameron Boulevard",
+      "lat": 42.2797341,
+      "lng": -83.0194648,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1067968758",
+        "way/23297303"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1067968758",
+        "https://www.openstreetmap.org/way/23297303"
+      ],
+      "id": "route-local-ems-windsor-ems-dougall-01",
+      "routeBaseId": "ems-windsor-ems-dougall",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 797.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 6413.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 73.6,
+        "bestSameServiceCostSeconds": 73.6
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Compton Court Park",
+      "addr": "600 Compton Crt, Windsor, Ontario",
+      "lat": 42.26913756,
+      "lng": -83.00325486,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://opendata.citywindsor.ca/Uploads/Parks%20Centroids.csv",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Kenilworth Drive",
+        "Howard Avenue (via Kenilworth Drive)"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "windsor-call-16",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-windsor-ems-dougall-02",
+      "routeBaseId": "ems-windsor-ems-dougall",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2196.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1584.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 179.6,
+        "bestSameServiceCostSeconds": 179.6
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Jackson Park",
+      "addr": "125 Tecumseh Rd E, Windsor, Ontario",
+      "lat": 42.29342236,
+      "lng": -83.02187108,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://opendata.citywindsor.ca/Uploads/Parks%20Centroids.csv",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Goyeau Street",
+        "Windsor Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "windsor-call-03",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-windsor-ems-dougall-03",
+      "routeBaseId": "ems-windsor-ems-dougall",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2652.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 536.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 287.8,
+        "bestSameServiceCostSeconds": 287.8
+      }
+    },
+    {
+      "name": "Askin Avenue & Labelle Street",
+      "addr": "Askin Avenue & Labelle Street",
+      "lat": 42.2674305,
+      "lng": -83.0381582,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/23422061",
+        "way/459473105"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/23422061",
+        "https://www.openstreetmap.org/way/459473105"
+      ],
+      "id": "route-local-ems-windsor-ems-dougall-04",
+      "routeBaseId": "ems-windsor-ems-dougall",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2593.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1648.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 253.8,
+        "bestSameServiceCostSeconds": 253.8
+      }
+    },
+    {
+      "name": "Capitol Street & Parent Avenue",
+      "addr": "Capitol Street & Parent Avenue",
+      "lat": 42.2846229,
+      "lng": -83.0020215,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/202552191",
+        "way/31698723",
+        "way/31699858"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/202552191",
+        "https://www.openstreetmap.org/way/31698723",
+        "https://www.openstreetmap.org/way/31699858"
+      ],
+      "id": "route-local-ems-windsor-ems-dougall-05",
+      "routeBaseId": "ems-windsor-ems-dougall",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2580.7,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 504.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 217,
+        "bestSameServiceCostSeconds": 217
+      }
+    },
+    {
+      "name": "Norfolk Street & Virginia Park Avenue",
+      "addr": "Norfolk Street & Virginia Park Avenue",
+      "lat": 42.2665724,
+      "lng": -83.0183898,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/31704025",
+        "way/459473098"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/31704025",
+        "https://www.openstreetmap.org/way/459473098"
+      ],
+      "id": "route-local-ems-windsor-ems-dougall-06",
+      "routeBaseId": "ems-windsor-ems-dougall",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1700.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 3018.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 125.7,
+        "bestSameServiceCostSeconds": 125.7
+      }
+    },
+    {
+      "name": "Clarence Drive & Grandview Street",
+      "addr": "Clarence Drive & Grandview Street",
+      "lat": 42.2962662,
+      "lng": -82.9483927,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/23577936",
+        "way/652822087"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/23577936",
+        "https://www.openstreetmap.org/way/652822087"
+      ],
+      "id": "route-local-ems-windsor-ems-jefferson-01",
+      "routeBaseId": "ems-windsor-ems-jefferson",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 787,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 2495.5,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Jefferson Boulevard",
+        "estimatedCostSeconds": 104.9,
+        "bestSameServiceCostSeconds": 104.9
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Riverside Place",
+      "addr": "3181 Meadowbrook Lane",
+      "lat": 42.299092599060806,
+      "lng": -82.92754579999996,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789864"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "4673",
+      "community": "Windsor",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-4673",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-windsor-ems-jefferson-02",
+      "routeBaseId": "ems-windsor-ems-jefferson",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2104.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1277.2,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Jefferson Boulevard",
+        "estimatedCostSeconds": 209.9,
+        "bestSameServiceCostSeconds": 209.9
+      }
+    },
+    {
+      "name": "Empress Street & Ferndale Avenue",
+      "addr": "Empress Street & Ferndale Avenue",
+      "lat": 42.3111348,
+      "lng": -82.9583176,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/23551176",
+        "way/23551210"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/23551176",
+        "https://www.openstreetmap.org/way/23551210"
+      ],
+      "id": "route-local-ems-windsor-ems-jefferson-03",
+      "routeBaseId": "ems-windsor-ems-jefferson",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2588.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 837.9,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Jefferson Boulevard",
+        "estimatedCostSeconds": 212.7,
+        "bestSameServiceCostSeconds": 212.7
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Coletta Park",
+      "addr": "2979 Coletta Crt, Windsor, Ontario",
+      "lat": 42.29420369,
+      "lng": -82.95707096,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://opendata.citywindsor.ca/Uploads/Parks%20Centroids.csv",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Princess Avenue",
+        "Grand Boulevard"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "windsor-call-17",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-windsor-ems-jefferson-04",
+      "routeBaseId": "ems-windsor-ems-jefferson",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2038.4,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1461.2,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Jefferson Boulevard",
+        "estimatedCostSeconds": 290.7,
+        "bestSameServiceCostSeconds": 290.7
+      }
+    },
+    {
+      "name": "Lauzon Parkway & South Service Road & Twin Oaks Drive",
+      "addr": "Lauzon Parkway & South Service Road & Twin Oaks Drive",
+      "lat": 42.2902965,
+      "lng": -82.923466,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1307199452",
+        "way/23414347",
+        "way/459474496",
+        "way/459474497"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1307199452",
+        "https://www.openstreetmap.org/way/23414347",
+        "https://www.openstreetmap.org/way/459474496",
+        "https://www.openstreetmap.org/way/459474497"
+      ],
+      "id": "route-local-ems-windsor-ems-jefferson-05",
+      "routeBaseId": "ems-windsor-ems-jefferson",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2136.5,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 5091.7,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Jefferson Boulevard",
+        "estimatedCostSeconds": 170.9,
+        "bestSameServiceCostSeconds": 170.9
+      }
+    },
+    {
+      "name": "Roseville Garden Drive & Thornberry Crescent",
+      "addr": "Roseville Garden Drive & Thornberry Crescent",
+      "lat": 42.307407,
+      "lng": -82.9468852,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/23364242",
+        "way/23364285"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/23364242",
+        "https://www.openstreetmap.org/way/23364285"
+      ],
+      "id": "route-local-ems-windsor-ems-jefferson-06",
+      "routeBaseId": "ems-windsor-ems-jefferson",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1680,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1232.2,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Jefferson Boulevard",
+        "estimatedCostSeconds": 150.1,
+        "bestSameServiceCostSeconds": 150.1
+      }
+    }
+  ]
 }

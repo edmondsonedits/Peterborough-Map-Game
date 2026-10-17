@@ -5,11 +5,12 @@ const root=path.resolve(__dirname,'..'),read=file=>fs.readFileSync(path.join(roo
 const output=path.resolve(process.env.PTBO_COVERAGE_OUTPUT||path.join(root,'test-artifacts/city-expansion/base-coverage'));
 fs.mkdirSync(output,{recursive:true});
 const trace=require('../route-mapping/trace-core.js');
+const learning=require('../route-mapping/learning-core.js');
 const registry={window:{}};vm.runInNewContext(read('cities/city-registry.js'),registry);
 const appSource=read('route-mapping/app.js');
 function app(city,training,bases){
- const c={window:{PTBO_SERVICE_CONFIG:{profiles:Object.fromEntries(['fire','ems'].map(service=>[service,{bases:bases.filter(b=>b.service===service)}]))}},document:{getElementById:()=>({})},console};
- const expose='globalThis.api={state,applyCityData,buildGraph,toXY,toLatLng,pathBetween,basePoint,baseAnchor:typeof baseAnchor===\'function\'?baseAnchor:null,nearestRoad,callsForService,buildDifficultyIndex,scoreCall,CONFIG};';
+ const c={window:{PTBO_ROUTE_LEARNING:learning,PTBO_SERVICE_CONFIG:{profiles:Object.fromEntries(['fire','ems'].map(service=>[service,{bases:bases.filter(b=>b.service===service)}]))}},document:{getElementById:()=>({})},console};
+ const expose='globalThis.api={state,applyCityData,buildGraph,toXY,toLatLng,pathBetween,basePoint,baseAnchor:typeof baseAnchor===\'function\'?baseAnchor:null,nearestRoad,callsForService,buildDifficultyIndex,scoreCall,analyzeDecisionDifficulty,normalizeTuning,normalizeSkillProfile,validateRouteResponses,reachableLocalCalls,chooseCall,applyProgressionStart,defaultProgression,MinHeap,keyCoord,nearbySegments,projectToSegment,CONFIG};';
  if(!appSource.includes('  initialize();'))throw new Error('Production initialize hook changed');
  vm.runInNewContext(appSource.replace('  initialize();','  '+expose),c);
  c.api.applyCityData(city,training);return c.api;
@@ -23,9 +24,10 @@ async function inputs(city){
   vm.runInNewContext(read('cities/peterborough/package.js'),c);bases=Object.entries(c.window.PTBO_SERVICE_CONFIG.profiles).flatMap(([service,p])=>p.bases.map(b=>({...b,service})));
   const encoded=read('shared/dispatch-data-1.4.4.js').match(/const PAYLOAD = '([^']+)'/)[1];raw=JSON.parse(zlib.gunzipSync(Buffer.from(encoded,'base64')));
  }else{
-  let config;const c={window:{PTBO_PREVIEW_CITY_FACTORY:{version:'1.6.13',create(value){config=value;}}},URL,location:{href:'https://example.test/'},document:{currentScript:{src:`https://example.test/cities/${city.id}/package.js`}}};
-  vm.runInNewContext(read(`cities/${city.id}/package.js`),c);
-  bases=['fire','ems'].flatMap(service=>(config.sources[service].fallback||config.sources[service].entries).map(b=>({...b,id:b.id||`${service}-${b.number}`,service})));raw=[];
+  const c={URL,CustomEvent:class{},console,location:{href:'https://example.test/'},document:{currentScript:{src:`https://example.test/cities/${city.id}/package.js`},documentElement:{dataset:{}},createElement:()=>({dataset:{}}),head:{appendChild(){}}}};
+  c.window=c;c.dispatchEvent=()=>{};
+  vm.runInNewContext(read('cities/preview-package-factory.js'),c);vm.runInNewContext(read(`cities/${city.id}/package.js`),c);await c.PTBO_CITY_PACKAGE_READY;
+  bases=Object.entries(c.PTBO_SERVICE_CONFIG.profiles).flatMap(([service,p])=>p.bases.map(b=>({...b,service})));raw=[];
  }
  const c={console:{info(){},warn(){}},URL,setTimeout,clearTimeout,AbortController,CustomEvent:class{},location:{href:`https://example.test/?city=${city.id}`},
   document:{currentScript:{src:`https://example.test/shared/dispatch-locations.js?city=${city.id}`}},localStorage:{getItem:()=>null,setItem(){}},dispatchEvent(){},
@@ -96,16 +98,16 @@ function diagnoseBlockedBase(api,scc,base,pool){
  }
  return{productionSelectableCalls:selectable.length,alternatives};
 }
-(async()=>{
+async function main(){
  const reports=[],findings=[];let proven=0,actual=0,totalBases=0;
  const cities=registry.window.PTBO_CITIES.filter(c=>c.modes.route&&(!process.env.PTBO_COVERAGE_CITY||process.env.PTBO_COVERAGE_CITY.split(',').includes(c.id)));
  for(const city of cities){
-  const started=Date.now(),{training,bases,calls}=await inputs(city),api=app(city,training,bases),bytes=fs.readFileSync(path.join(root,training.roadsUrl));
-  const raw=training.roadsUrl.endsWith('.gz')?zlib.gunzipSync(bytes):bytes,geo=JSON.parse(raw);api.state.graph=api.buildGraph(geo);const graph=api.state.graph;
+  const started=Date.now(),{training,bases,calls:sharedCalls,roads}=await require('./route-response-data.cjs').loadCity(city),calls=training.routeCalls||sharedCalls,api=app(city,training,bases),bytes=fs.readFileSync(path.join(root,training.roadsUrl));
+  const raw=training.roadsUrl.endsWith('.gz')?zlib.gunzipSync(bytes):bytes,geo=roads;api.state.graph=api.buildGraph(geo);const graph=api.state.graph;
   api.state.traceCore=trace.createTraceCore({graph,toXY:api.toXY,toLatLng:api.toLatLng,search:(a,b,o)=>api.pathBetween(a,b,'distance',o)});
   const scc=components(graph),report={city:city.id,nodes:graph.nodes.length,segments:graph.segments.length,components:scc.sizes.length,largestComponent:scc.sizes.reduce((a,b)=>Math.max(a,b),0),bases:[],callSnaps:[],actualRoutes:[],findings:[]};
   if(training.roadDataSha256&&crypto.createHash('sha256').update(raw).digest('hex')!==training.roadDataSha256)report.findings.push({kind:'road-hash-mismatch'});
-  api.state.calls=calls;
+  api.state.calls=calls;api.state.routeResponses=training.routeResponses||null;
   for(const service of ['fire','ems']){
    api.state.service=service;const pool=api.callsForService().map(call=>({call,anchor:api.state.traceCore.snap(call,520),road:api.nearestRoad(call.lat,call.lng,650)}));
    report.callSnaps.push({service,total:pool.length,within520:pool.filter(c=>c.anchor).length,maxGap:pool.reduce((max,c)=>Math.max(max,c.anchor?.distance||0),0),without520:pool.filter(c=>!c.anchor).map(c=>({id:c.call.id,name:c.call.name,lat:c.call.lat,lng:c.call.lng,nearest650:c.road?.distance??null}))});
@@ -134,6 +136,8 @@ function diagnoseBlockedBase(api,scc,base,pool){
  }
  const expected=new Set((process.env.PTBO_EXPECTED_UNAVAILABLE||'').split(',').filter(Boolean)),acceptedUnavailable=findings.filter(f=>f.kind==='base-no-connected-access-within260'&&expected.has(f.id)),unexpected=findings.filter(f=>!acceptedUnavailable.includes(f));
  for(const id of expected)if(!acceptedUnavailable.some(f=>f.id===id))unexpected.push({kind:'expected-unavailable-origin-not-observed',id});
- const summary={cities:reports.length,totalBases,proven,actualRoutes:actual,findings,acceptedUnavailable:acceptedUnavailable.map(f=>({city:f.city,id:f.id,name:f.name,service:f.service})),unexpectedFindings:unexpected,productionAppSha256:crypto.createHash('sha256').update(appSource).digest('hex'),limits:['Read-only production-code VM plus directed SCC proof; first/last and ambiguous bases get production A*/finish checks under the production120000visited-node limit.','No browser input tracing, authoritative coordinate revalidation or physical access/driveway survey.','Canonical published data with empty local edits; Peterborough advanced synthetic call additions not enumerated.','Directed reachability is proven for604bases; actual A* is sampled at first/last and alternate starts, not every candidate call pair.'],reports:reports.map(r=>({city:r.city,bases:r.bases.length,nodes:r.nodes,actualRoutes:r.actualRoutes.length,findings:r.findings.length}))};
+ const summary={cities:reports.length,totalBases,proven,actualRoutes:actual,findings,acceptedUnavailable:acceptedUnavailable.map(f=>({city:f.city,id:f.id,name:f.name,service:f.service})),unexpectedFindings:unexpected,productionAppSha256:crypto.createHash('sha256').update(appSource).digest('hex'),limits:['Read-only production-code VM plus directed SCC proof; first/last and ambiguous bases get production A*/finish checks under the production120000visited-node limit.','No browser input tracing, authoritative coordinate revalidation or physical access/driveway survey.','Canonical published data with empty local edits; Peterborough advanced synthetic call additions not enumerated.','Directed reachability uses the current packaged bases; this legacy A* audit is sampled. Run check-local-response-calls.cjs for every assigned local call and response-area check.'],reports:reports.map(r=>({city:r.city,bases:r.bases.length,nodes:r.nodes,actualRoutes:r.actualRoutes.length,findings:r.findings.length}))};
  fs.writeFileSync(path.join(output,'summary.json'),JSON.stringify(summary,null,2));console.log(JSON.stringify({cities:summary.cities,totalBases,proven,actualRoutes:actual,acceptedUnavailable:acceptedUnavailable.length,unexpectedFindings:unexpected.length}));if(unexpected.length)process.exitCode=1;
-})().catch(e=>{console.error(e);process.exitCode=1;});
+}
+module.exports={app,inputs,components,exits,legalReach,verifyRoute,registry:registry.window.PTBO_CITIES};
+if(require.main===module)main().catch(e=>{console.error(e);process.exitCode=1;});

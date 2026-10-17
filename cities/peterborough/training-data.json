@@ -164,5 +164,1355 @@
     44.3091,
     -78.3197
   ],
-  "roadsUrl": "city-explorer/data/osm-public-roads.geojson"
+  "roadsUrl": "city-explorer/data/osm-public-roads.geojson",
+  "routeResponses": {
+    "schemaVersion": 1,
+    "minCallsPerBase": 3,
+    "targetCallsPerBase": 6,
+    "generatedOn": "2026-10-17",
+    "model": {
+      "description": "Published first-due polygons where available. Otherwise a directed road-network estimate using road class travel cost from every same-service hall; allows a15second cost tie for overlapping nearby halls. This is training geography, not live dispatch advice.",
+      "ownershipToleranceSeconds": 15,
+      "maximumCandidateRouteMetres": 12000
+    },
+    "bases": [
+      {
+        "baseId": "fire-station-1",
+        "service": "fire",
+        "number": 1,
+        "name": "Station 1",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 44.30069955409769,
+          "lng": -78.32218161361465,
+          "road": "Sherbrooke Street",
+          "gapMetres": 26.8
+        },
+        "callIds": [
+          "route-local-fire-station-1-01",
+          "route-local-fire-station-1-02",
+          "route-local-fire-station-1-03",
+          "route-local-fire-station-1-04",
+          "route-local-fire-station-1-05",
+          "route-local-fire-station-1-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-station-2",
+        "service": "fire",
+        "number": 2,
+        "name": "Station 2",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 44.33505891019387,
+          "lng": -78.31630313301149,
+          "road": "Marina Boulevard",
+          "gapMetres": 98.8
+        },
+        "callIds": [
+          "route-local-fire-station-2-01",
+          "route-local-fire-station-2-02",
+          "route-local-fire-station-2-03",
+          "route-local-fire-station-2-04",
+          "route-local-fire-station-2-05",
+          "route-local-fire-station-2-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-station-3",
+        "service": "fire",
+        "number": 3,
+        "name": "Station 3",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 44.28476530851904,
+          "lng": -78.35035347375633,
+          "road": "Clonsilla Avenue",
+          "gapMetres": 34.6
+        },
+        "callIds": [
+          "route-local-fire-station-3-01",
+          "route-local-fire-station-3-02",
+          "route-local-fire-station-3-03",
+          "route-local-fire-station-3-04",
+          "route-local-fire-station-3-05",
+          "route-local-fire-station-3-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-armour",
+        "service": "ems",
+        "number": 1,
+        "name": "Armour Road Headquarters",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 44.304605541456226,
+          "lng": -78.30419236474337,
+          "road": "Armour Road",
+          "gapMetres": 77.9
+        },
+        "callIds": [
+          "route-local-ems-armour-01",
+          "route-local-ems-armour-02",
+          "route-local-ems-armour-03",
+          "route-local-ems-armour-04",
+          "route-local-ems-armour-05",
+          "route-local-ems-armour-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-clonsilla",
+        "service": "ems",
+        "number": 2,
+        "name": "Clonsilla Avenue Base",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 44.28924627088464,
+          "lng": -78.34541131805436,
+          "road": "Clonsilla Avenue",
+          "gapMetres": 66.8
+        },
+        "callIds": [
+          "route-local-ems-clonsilla-01",
+          "route-local-ems-clonsilla-02",
+          "route-local-ems-clonsilla-03",
+          "route-local-ems-clonsilla-04",
+          "route-local-ems-clonsilla-05",
+          "route-local-ems-clonsilla-06"
+        ],
+        "challengeCalls": 6
+      }
+    ]
+  },
+  "routeCalls": [
+    {
+      "name": "All Saints' Anglican Church",
+      "addr": "235 Rubidge Street",
+      "lat": 44.30002452608694,
+      "lng": -78.3268649652174,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "sources": [
+        "https://www.openstreetmap.org/way/749414218"
+      ],
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "simulatedIncident": true,
+      "canonicalCallId": "osm-address-way-749414218",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-station-1-01",
+      "routeBaseId": "fire-station-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 560.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 396.1,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Sherbrooke Street",
+        "estimatedCostSeconds": 52.4,
+        "bestSameServiceCostSeconds": 52.4
+      }
+    },
+    {
+      "name": "Carlisle Avenue & Knox Street",
+      "addr": "Carlisle Avenue & Knox Street",
+      "lat": 44.3122984,
+      "lng": -78.3047229,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/163508307",
+        "way/33962017"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/163508307",
+        "https://www.openstreetmap.org/way/33962017"
+      ],
+      "id": "route-local-fire-station-1-02",
+      "routeBaseId": "fire-station-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2580.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1124.2,
+        "decisionKinds": [
+          "bridge"
+        ],
+        "departureRoad": "Sherbrooke Street",
+        "estimatedCostSeconds": 181.6,
+        "bestSameServiceCostSeconds": 181.6
+      }
+    },
+    {
+      "name": "Chester Street & McKellar Street",
+      "addr": "Chester Street & McKellar Street",
+      "lat": 44.2822571,
+      "lng": -78.3164871,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33941543",
+        "way/460582093"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33941543",
+        "https://www.openstreetmap.org/way/460582093"
+      ],
+      "id": "route-local-fire-station-1-03",
+      "routeBaseId": "fire-station-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2591.9,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 909.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Sherbrooke Street",
+        "estimatedCostSeconds": 206.5,
+        "bestSameServiceCostSeconds": 206.5
+      }
+    },
+    {
+      "name": "Donegal Street & Highland Road",
+      "addr": "Donegal Street & Highland Road",
+      "lat": 44.317617,
+      "lng": -78.3364284,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33938599",
+        "way/33944534",
+        "way/460016544"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33938599",
+        "https://www.openstreetmap.org/way/33944534",
+        "https://www.openstreetmap.org/way/460016544"
+      ],
+      "id": "route-local-fire-station-1-04",
+      "routeBaseId": "fire-station-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2593.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 542.4,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Sherbrooke Street",
+        "estimatedCostSeconds": 218.8,
+        "bestSameServiceCostSeconds": 218.8
+      }
+    },
+    {
+      "name": "Sherwood Crescent & Weller Street",
+      "addr": "Sherwood Crescent & Weller Street",
+      "lat": 44.3009039,
+      "lng": -78.3509742,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33940249",
+        "way/33952318"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33940249",
+        "https://www.openstreetmap.org/way/33952318"
+      ],
+      "id": "route-local-fire-station-1-05",
+      "routeBaseId": "fire-station-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2655.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 542.4,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Sherbrooke Street",
+        "estimatedCostSeconds": 178.6,
+        "bestSameServiceCostSeconds": 178.6
+      }
+    },
+    {
+      "name": "Edinburgh Street & George Street North",
+      "addr": "Edinburgh Street & George Street North",
+      "lat": 44.31333,
+      "lng": -78.3205663,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33960902",
+        "way/33963209",
+        "way/759024593"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33960902",
+        "https://www.openstreetmap.org/way/33963209",
+        "https://www.openstreetmap.org/way/759024593"
+      ],
+      "id": "route-local-fire-station-1-06",
+      "routeBaseId": "fire-station-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1723.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 190.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Sherbrooke Street",
+        "estimatedCostSeconds": 113.1,
+        "bestSameServiceCostSeconds": 113.1
+      }
+    },
+    {
+      "name": "999 Hilliard Street",
+      "addr": "999 Hilliard Street",
+      "lat": 44.3306591,
+      "lng": -78.3233849,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "sources": [
+        "https://www.openstreetmap.org/way/764442713"
+      ],
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "simulatedIncident": true,
+      "canonicalCallId": "osm-address-way-764442713",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-station-2-01",
+      "routeBaseId": "fire-station-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1133.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2616,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Marina Boulevard",
+        "estimatedCostSeconds": 133.8,
+        "bestSameServiceCostSeconds": 133.8
+      }
+    },
+    {
+      "name": "865 Water Street",
+      "addr": "865 Water Street",
+      "lat": 44.32131987142857,
+      "lng": -78.31639821428573,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "sources": [
+        "https://www.openstreetmap.org/way/1004430040"
+      ],
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "simulatedIncident": true,
+      "canonicalCallId": "osm-address-way-1004430040",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-station-2-02",
+      "routeBaseId": "fire-station-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1649.8,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 3259.6,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Marina Boulevard",
+        "estimatedCostSeconds": 102.3,
+        "bestSameServiceCostSeconds": 102.3
+      }
+    },
+    {
+      "name": "Nassau Mills Road & Water Street",
+      "addr": "Nassau Mills Road & Water Street",
+      "lat": 44.3530869,
+      "lng": -78.298111,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33945066",
+        "way/33963163",
+        "way/477855335"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33945066",
+        "https://www.openstreetmap.org/way/33963163",
+        "https://www.openstreetmap.org/way/477855335"
+      ],
+      "id": "route-local-fire-station-2-03",
+      "routeBaseId": "fire-station-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2597.4,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 2949.8,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Marina Boulevard",
+        "estimatedCostSeconds": 158,
+        "bestSameServiceCostSeconds": 158
+      }
+    },
+    {
+      "name": "Carriage Lane & Heritage Trail",
+      "addr": "Carriage Lane & Heritage Trail",
+      "lat": 44.3459402,
+      "lng": -78.3198142,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1286966118",
+        "way/176999395"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1286966118",
+        "https://www.openstreetmap.org/way/176999395"
+      ],
+      "id": "route-local-fire-station-2-04",
+      "routeBaseId": "fire-station-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1728.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2139.2,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Marina Boulevard",
+        "estimatedCostSeconds": 187.8,
+        "bestSameServiceCostSeconds": 187.8
+      }
+    },
+    {
+      "name": "Brittany Street & Towerhill Road",
+      "addr": "Brittany Street & Towerhill Road",
+      "lat": 44.3300312,
+      "lng": -78.3355913,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1413973334",
+        "way/33959172"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1413973334",
+        "https://www.openstreetmap.org/way/33959172"
+      ],
+      "id": "route-local-fire-station-2-05",
+      "routeBaseId": "fire-station-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2574.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1189.4,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Marina Boulevard",
+        "estimatedCostSeconds": 249.1,
+        "bestSameServiceCostSeconds": 249.1
+      }
+    },
+    {
+      "name": "Cumberland Avenue & Ungava Avenue",
+      "addr": "Cumberland Avenue & Ungava Avenue",
+      "lat": 44.3416761,
+      "lng": -78.3248249,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33959489",
+        "way/489249566"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33959489",
+        "https://www.openstreetmap.org/way/489249566"
+      ],
+      "id": "route-local-fire-station-2-06",
+      "routeBaseId": "fire-station-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1919.9,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 3423.9,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Marina Boulevard",
+        "estimatedCostSeconds": 181.5,
+        "bestSameServiceCostSeconds": 181.5
+      }
+    },
+    {
+      "name": "950 Lansdowne Street West",
+      "addr": "950 Lansdowne Street West",
+      "lat": 44.28427120909091,
+      "lng": -78.34361708484849,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "sources": [
+        "https://www.openstreetmap.org/way/77774333"
+      ],
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "simulatedIncident": true,
+      "canonicalCallId": "osm-address-way-77774333",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-station-3-01",
+      "routeBaseId": "fire-station-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 809.5,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1201.7,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Clonsilla Avenue",
+        "estimatedCostSeconds": 49.9,
+        "bestSameServiceCostSeconds": 49.9
+      }
+    },
+    {
+      "name": "Applewood Retirement Residence",
+      "addr": "1500 Lansdowne Street West",
+      "lat": 44.27859394615385,
+      "lng": -78.36241968846153,
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "sources": [
+        "https://www.openstreetmap.org/way/77714898"
+      ],
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "simulatedIncident": true,
+      "canonicalCallId": "osm-address-way-77714898",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-station-3-02",
+      "routeBaseId": "fire-station-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1272.7,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 4591,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Clonsilla Avenue",
+        "estimatedCostSeconds": 76.6,
+        "bestSameServiceCostSeconds": 76.6
+      }
+    },
+    {
+      "name": "Kensington Drive & Westbrook Drive",
+      "addr": "Kensington Drive & Westbrook Drive",
+      "lat": 44.3030344,
+      "lng": -78.3464473,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33943560",
+        "way/33955476",
+        "way/33957441"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33943560",
+        "https://www.openstreetmap.org/way/33955476",
+        "https://www.openstreetmap.org/way/33957441"
+      ],
+      "id": "route-local-fire-station-3-03",
+      "routeBaseId": "fire-station-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2594.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 2000.4,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Clonsilla Avenue",
+        "estimatedCostSeconds": 169.9,
+        "bestSameServiceCostSeconds": 167.5
+      }
+    },
+    {
+      "name": "The Parkway & The Queensway",
+      "addr": "The Parkway & The Queensway",
+      "lat": 44.2746901,
+      "lng": -78.3404008,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/422829322",
+        "way/478051542",
+        "way/58427031",
+        "way/58427043"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/422829322",
+        "https://www.openstreetmap.org/way/478051542",
+        "https://www.openstreetmap.org/way/58427031",
+        "https://www.openstreetmap.org/way/58427043"
+      ],
+      "id": "route-local-fire-station-3-04",
+      "routeBaseId": "fire-station-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1715.8,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 960.9,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Clonsilla Avenue",
+        "estimatedCostSeconds": 116.1,
+        "bestSameServiceCostSeconds": 116.1
+      }
+    },
+    {
+      "name": "Brioux Avenue & Priscilla Street",
+      "addr": "Brioux Avenue & Priscilla Street",
+      "lat": 44.2852509,
+      "lng": -78.3279402,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33947605",
+        "way/33951556",
+        "way/33952596"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33947605",
+        "https://www.openstreetmap.org/way/33951556",
+        "https://www.openstreetmap.org/way/33952596"
+      ],
+      "id": "route-local-fire-station-3-05",
+      "routeBaseId": "fire-station-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2389.5,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 960.9,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Clonsilla Avenue",
+        "estimatedCostSeconds": 175.9,
+        "bestSameServiceCostSeconds": 175.9
+      }
+    },
+    {
+      "name": "Montague Court & Sherbrooke Street",
+      "addr": "Montague Court & Sherbrooke Street",
+      "lat": 44.294311,
+      "lng": -78.3517837,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33934608",
+        "way/33946115",
+        "way/33960426"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33934608",
+        "https://www.openstreetmap.org/way/33946115",
+        "https://www.openstreetmap.org/way/33960426"
+      ],
+      "id": "route-local-fire-station-3-06",
+      "routeBaseId": "fire-station-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1898.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2000.4,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Clonsilla Avenue",
+        "estimatedCostSeconds": 125.5,
+        "bestSameServiceCostSeconds": 125.5
+      }
+    },
+    {
+      "name": "Peterborough Lift Lock",
+      "addr": "353 Hunter Street East",
+      "lat": 44.3076283,
+      "lng": -78.3005458,
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://www.openstreetmap.org/node/4486255889"
+      ],
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "simulatedIncident": true,
+      "canonicalCallId": "osm-address-node-4486255889",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-armour-01",
+      "routeBaseId": "ems-armour",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 730.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1741.9,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Armour Road",
+        "estimatedCostSeconds": 52,
+        "bestSameServiceCostSeconds": 52
+      }
+    },
+    {
+      "name": "Cloverleaf Street & Otonabee Drive",
+      "addr": "Cloverleaf Street & Otonabee Drive",
+      "lat": 44.2855696,
+      "lng": -78.3008786,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33935029",
+        "way/33941778",
+        "way/33957942"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33935029",
+        "https://www.openstreetmap.org/way/33941778",
+        "https://www.openstreetmap.org/way/33957942"
+      ],
+      "id": "route-local-ems-armour-02",
+      "routeBaseId": "ems-armour",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2595.8,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 2476.5,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Armour Road",
+        "estimatedCostSeconds": 167.3,
+        "bestSameServiceCostSeconds": 167.3
+      }
+    },
+    {
+      "name": "Aylmer Street North & Wolfe Street",
+      "addr": "Aylmer Street North & Wolfe Street",
+      "lat": 44.2981877,
+      "lng": -78.322843,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/499204463",
+        "way/499204464",
+        "way/499204465",
+        "way/651372377"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/499204463",
+        "https://www.openstreetmap.org/way/499204464",
+        "https://www.openstreetmap.org/way/499204465",
+        "https://www.openstreetmap.org/way/651372377"
+      ],
+      "id": "route-local-ems-armour-03",
+      "routeBaseId": "ems-armour",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2595.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2996.7,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Armour Road",
+        "estimatedCostSeconds": 163.6,
+        "bestSameServiceCostSeconds": 163.6
+      }
+    },
+    {
+      "name": "Canadian Canoe Museum",
+      "addr": "2077 Ashburnham Drive",
+      "lat": 44.2979902125,
+      "lng": -78.30177423750001,
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://www.openstreetmap.org/way/1375439338"
+      ],
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "simulatedIncident": true,
+      "canonicalCallId": "osm-address-way-1375439338",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-armour-04",
+      "routeBaseId": "ems-armour",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 896.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1411,
+        "decisionKinds": [
+          "turn",
+          "bridge",
+          "departure"
+        ],
+        "departureRoad": "Armour Road",
+        "estimatedCostSeconds": 54,
+        "bestSameServiceCostSeconds": 54
+      }
+    },
+    {
+      "name": "Barnardo Avenue & Water Street",
+      "addr": "Barnardo Avenue & Water Street",
+      "lat": 44.3182668,
+      "lng": -78.3181445,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33954169",
+        "way/477855330"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33954169",
+        "https://www.openstreetmap.org/way/477855330"
+      ],
+      "id": "route-local-ems-armour-05",
+      "routeBaseId": "ems-armour",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2590.6,
+        "meaningfulDecisions": 6,
+        "maxAlternativePenaltyMetres": 308.9,
+        "decisionKinds": [
+          "departure",
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Armour Road",
+        "estimatedCostSeconds": 156.8,
+        "bestSameServiceCostSeconds": 156.8
+      }
+    },
+    {
+      "name": "McDonnel Street & Waterford Street",
+      "addr": "McDonnel Street & Waterford Street",
+      "lat": 44.3097383,
+      "lng": -78.316965,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/165554481",
+        "way/33931009"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/165554481",
+        "https://www.openstreetmap.org/way/33931009"
+      ],
+      "id": "route-local-ems-armour-06",
+      "routeBaseId": "ems-armour",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1708.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1661.7,
+        "decisionKinds": [
+          "bridge"
+        ],
+        "departureRoad": "Armour Road",
+        "estimatedCostSeconds": 137.3,
+        "bestSameServiceCostSeconds": 137.3
+      }
+    },
+    {
+      "name": "Scotiabank",
+      "addr": "780 Clonsilla Avenue",
+      "lat": 44.28327774285714,
+      "lng": -78.35103491428572,
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "sources": [
+        "https://www.openstreetmap.org/way/77774033"
+      ],
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "simulatedIncident": true,
+      "canonicalCallId": "osm-address-way-77774033",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-clonsilla-01",
+      "routeBaseId": "ems-clonsilla",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 796,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1545.5,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Clonsilla Avenue",
+        "estimatedCostSeconds": 47.9,
+        "bestSameServiceCostSeconds": 47.9
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Extendicare Peterborough",
+      "addr": "860 Alexander Court",
+      "lat": 44.29854499905705,
+      "lng": -78.34563889999998,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789970"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "1764",
+      "community": "Peterborough",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-1764",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-clonsilla-02",
+      "routeBaseId": "ems-clonsilla",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1497.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1873.8,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Clonsilla Avenue",
+        "estimatedCostSeconds": 106.1,
+        "bestSameServiceCostSeconds": 106.1
+      }
+    },
+    {
+      "name": "Aylmer Street South & Princess Street",
+      "addr": "Aylmer Street South & Princess Street",
+      "lat": 44.2895265,
+      "lng": -78.3205997,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33937629",
+        "way/33938649"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33937629",
+        "https://www.openstreetmap.org/way/33938649"
+      ],
+      "id": "route-local-ems-clonsilla-03",
+      "routeBaseId": "ems-clonsilla",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2625.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 457.9,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Clonsilla Avenue",
+        "estimatedCostSeconds": 198.9,
+        "bestSameServiceCostSeconds": 198.9
+      }
+    },
+    {
+      "name": "High Street & Lansdowne Street West",
+      "addr": "High Street & Lansdowne Street West",
+      "lat": 44.2848764,
+      "lng": -78.333358,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/119716714",
+        "way/1340380317",
+        "way/486106958",
+        "way/550182200"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/119716714",
+        "https://www.openstreetmap.org/way/1340380317",
+        "https://www.openstreetmap.org/way/486106958",
+        "https://www.openstreetmap.org/way/550182200"
+      ],
+      "id": "route-local-ems-clonsilla-04",
+      "routeBaseId": "ems-clonsilla",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1629.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 192.6,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Clonsilla Avenue",
+        "estimatedCostSeconds": 109.2,
+        "bestSameServiceCostSeconds": 109.2
+      }
+    },
+    {
+      "name": "Glenforest Boulevard & Glenforest Crescent",
+      "addr": "Glenforest Boulevard & Glenforest Crescent",
+      "lat": 44.2958912,
+      "lng": -78.3636566,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/177043453",
+        "way/177043455",
+        "way/33966864"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/177043453",
+        "https://www.openstreetmap.org/way/177043455",
+        "https://www.openstreetmap.org/way/33966864"
+      ],
+      "id": "route-local-ems-clonsilla-05",
+      "routeBaseId": "ems-clonsilla",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2578.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1873.8,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Clonsilla Avenue",
+        "estimatedCostSeconds": 195.1,
+        "bestSameServiceCostSeconds": 195.1
+      }
+    },
+    {
+      "name": "Monaghan Road & Wolfe Street",
+      "addr": "Monaghan Road & Wolfe Street",
+      "lat": 44.2963071,
+      "lng": -78.3342702,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33934994",
+        "way/33939924"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33934994",
+        "https://www.openstreetmap.org/way/33939924"
+      ],
+      "id": "route-local-ems-clonsilla-06",
+      "routeBaseId": "ems-clonsilla",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1704.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1620.7,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Clonsilla Avenue",
+        "estimatedCostSeconds": 102.6,
+        "bestSameServiceCostSeconds": 102.6
+      }
+    }
+  ]
 }

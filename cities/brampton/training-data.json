@@ -321,5 +321,6488 @@
   ],
   "roadsUrl": "cities/brampton/roads.geojson.gz",
   "roadFeatureCount": 59389,
-  "roadDataSha256": "0e0116078fab98a5d93b2066f2728a8ac6e4650a9fa1e263933ba2f070b16f37"
+  "roadDataSha256": "0e0116078fab98a5d93b2066f2728a8ac6e4650a9fa1e263933ba2f070b16f37",
+  "routeResponses": {
+    "schemaVersion": 1,
+    "minCallsPerBase": 3,
+    "targetCallsPerBase": 6,
+    "generatedOn": "2026-10-17",
+    "model": {
+      "description": "Published first-due polygons where available. Otherwise a directed road-network estimate using road class travel cost from every same-service hall; allows a15second cost tie for overlapping nearby halls. This is training geography, not live dispatch advice.",
+      "ownershipToleranceSeconds": 15,
+      "maximumCandidateRouteMetres": 12000
+    },
+    "bases": [
+      {
+        "baseId": "fire-brampton-fire-203",
+        "service": "fire",
+        "number": 203,
+        "name": "Fire Station 203",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5800,
+        "access": {
+          "lat": 43.74799334019345,
+          "lng": -79.71232615085458,
+          "road": "Unnamed road",
+          "gapMetres": 0.3
+        },
+        "callIds": [
+          "route-local-fire-brampton-fire-203-01",
+          "route-local-fire-brampton-fire-203-02",
+          "route-local-fire-brampton-fire-203-03",
+          "route-local-fire-brampton-fire-203-04",
+          "route-local-fire-brampton-fire-203-05",
+          "route-local-fire-brampton-fire-203-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-brampton-fire-204",
+        "service": "fire",
+        "number": 204,
+        "name": "Fire Station 204",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.6715071,
+          "lng": -79.7752249,
+          "road": "Unnamed road",
+          "gapMetres": 4.6
+        },
+        "callIds": [
+          "route-local-fire-brampton-fire-204-01",
+          "route-local-fire-brampton-fire-204-02",
+          "route-local-fire-brampton-fire-204-03",
+          "route-local-fire-brampton-fire-204-04",
+          "route-local-fire-brampton-fire-204-05",
+          "route-local-fire-brampton-fire-204-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-brampton-fire-205",
+        "service": "fire",
+        "number": 205,
+        "name": "Fire Station 205",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.72258988802904,
+          "lng": -79.79729014883921,
+          "road": "Unnamed road",
+          "gapMetres": 2.5
+        },
+        "callIds": [
+          "route-local-fire-brampton-fire-205-01",
+          "route-local-fire-brampton-fire-205-02",
+          "route-local-fire-brampton-fire-205-03",
+          "route-local-fire-brampton-fire-205-04",
+          "route-local-fire-brampton-fire-205-05",
+          "route-local-fire-brampton-fire-205-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-brampton-fire-206",
+        "service": "fire",
+        "number": 206,
+        "name": "Fire Station 206",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.6627826527896,
+          "lng": -79.72953786498967,
+          "road": "Unnamed road",
+          "gapMetres": 6.5
+        },
+        "callIds": [
+          "route-local-fire-brampton-fire-206-01",
+          "route-local-fire-brampton-fire-206-02",
+          "route-local-fire-brampton-fire-206-03",
+          "route-local-fire-brampton-fire-206-04",
+          "route-local-fire-brampton-fire-206-05",
+          "route-local-fire-brampton-fire-206-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-brampton-fire-207",
+        "service": "fire",
+        "number": 207,
+        "name": "Fire Station 207",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.69649553373743,
+          "lng": -79.76510585097544,
+          "road": "Unnamed road",
+          "gapMetres": 0.5
+        },
+        "callIds": [
+          "route-local-fire-brampton-fire-207-01",
+          "route-local-fire-brampton-fire-207-02",
+          "route-local-fire-brampton-fire-207-03",
+          "route-local-fire-brampton-fire-207-04",
+          "route-local-fire-brampton-fire-207-05",
+          "route-local-fire-brampton-fire-207-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-brampton-fire-202",
+        "service": "fire",
+        "number": 202,
+        "name": "Fire Station 202",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5800,
+        "access": {
+          "lat": 43.714127,
+          "lng": -79.7040755,
+          "road": "Unnamed road",
+          "gapMetres": 6.7
+        },
+        "callIds": [
+          "route-local-fire-brampton-fire-202-01",
+          "route-local-fire-brampton-fire-202-02",
+          "route-local-fire-brampton-fire-202-03",
+          "route-local-fire-brampton-fire-202-04",
+          "route-local-fire-brampton-fire-202-05",
+          "route-local-fire-brampton-fire-202-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-brampton-fire-208",
+        "service": "fire",
+        "number": 208,
+        "name": "Fire Station 208",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.73868468248111,
+          "lng": -79.75257043277895,
+          "road": "Unnamed road",
+          "gapMetres": 3.4
+        },
+        "callIds": [
+          "route-local-fire-brampton-fire-208-01",
+          "route-local-fire-brampton-fire-208-02",
+          "route-local-fire-brampton-fire-208-03",
+          "route-local-fire-brampton-fire-208-04",
+          "route-local-fire-brampton-fire-208-05",
+          "route-local-fire-brampton-fire-208-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-brampton-fire-209",
+        "service": "fire",
+        "number": 209,
+        "name": "Fire Station 209",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.766489997797464,
+          "lng": -79.74088738314062,
+          "road": "Sandalwood Parkway East",
+          "gapMetres": 38.8
+        },
+        "callIds": [
+          "route-local-fire-brampton-fire-209-01",
+          "route-local-fire-brampton-fire-209-02",
+          "route-local-fire-brampton-fire-209-03",
+          "route-local-fire-brampton-fire-209-04",
+          "route-local-fire-brampton-fire-209-05",
+          "route-local-fire-brampton-fire-209-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-brampton-fire-210",
+        "service": "fire",
+        "number": 210,
+        "name": "Fire Station 210",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.68708288836708,
+          "lng": -79.83376071385422,
+          "road": "Unnamed road",
+          "gapMetres": 2.5
+        },
+        "callIds": [
+          "route-local-fire-brampton-fire-210-01",
+          "route-local-fire-brampton-fire-210-02",
+          "route-local-fire-brampton-fire-210-03",
+          "route-local-fire-brampton-fire-210-04",
+          "route-local-fire-brampton-fire-210-05",
+          "route-local-fire-brampton-fire-210-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-brampton-fire-213",
+        "service": "fire",
+        "number": 213,
+        "name": "Fire Station 213",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.76532505559724,
+          "lng": -79.67032929120323,
+          "road": "Unnamed road",
+          "gapMetres": 0
+        },
+        "callIds": [
+          "route-local-fire-brampton-fire-213-01",
+          "route-local-fire-brampton-fire-213-02",
+          "route-local-fire-brampton-fire-213-03",
+          "route-local-fire-brampton-fire-213-04",
+          "route-local-fire-brampton-fire-213-05",
+          "route-local-fire-brampton-fire-213-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-brampton-fire-212",
+        "service": "fire",
+        "number": 212,
+        "name": "Fire Station 212",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5600,
+        "access": {
+          "lat": 43.63103979425093,
+          "lng": -79.78228428807358,
+          "road": "Unnamed road",
+          "gapMetres": 20.4
+        },
+        "callIds": [
+          "route-local-fire-brampton-fire-212-01",
+          "route-local-fire-brampton-fire-212-02",
+          "route-local-fire-brampton-fire-212-03",
+          "route-local-fire-brampton-fire-212-04",
+          "route-local-fire-brampton-fire-212-05",
+          "route-local-fire-brampton-fire-212-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-brampton-fire-211",
+        "service": "fire",
+        "number": 211,
+        "name": "Fire Station 211",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.8070524,
+          "lng": -79.7097442,
+          "road": "Unnamed road",
+          "gapMetres": 12.9
+        },
+        "callIds": [
+          "route-local-fire-brampton-fire-211-01",
+          "route-local-fire-brampton-fire-211-02",
+          "route-local-fire-brampton-fire-211-03",
+          "route-local-fire-brampton-fire-211-04",
+          "route-local-fire-brampton-fire-211-05",
+          "route-local-fire-brampton-fire-211-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-brampton-fire-214",
+        "service": "fire",
+        "number": 214,
+        "name": "Fire Station 214",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.687379424889514,
+          "lng": -79.80602268338508,
+          "road": "Unnamed road",
+          "gapMetres": 13.1
+        },
+        "callIds": [
+          "route-local-fire-brampton-fire-214-01",
+          "route-local-fire-brampton-fire-214-02",
+          "route-local-fire-brampton-fire-214-03",
+          "route-local-fire-brampton-fire-214-04",
+          "route-local-fire-brampton-fire-214-05",
+          "route-local-fire-brampton-fire-214-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-brampton-fire-201",
+        "service": "fire",
+        "number": 201,
+        "name": "Fire Station 201",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6200,
+        "access": {
+          "lat": 43.699545712022484,
+          "lng": -79.74007159127734,
+          "road": "Unnamed road",
+          "gapMetres": 37.3
+        },
+        "callIds": [
+          "route-local-fire-brampton-fire-201-01",
+          "route-local-fire-brampton-fire-201-02",
+          "route-local-fire-brampton-fire-201-03",
+          "route-local-fire-brampton-fire-201-04",
+          "route-local-fire-brampton-fire-201-05",
+          "route-local-fire-brampton-fire-201-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-brampton-ems-fernforest",
+        "service": "ems",
+        "number": 10003,
+        "name": "Fernforest Paramedic Reporting Station and Administrative Offices",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.73792430403428,
+          "lng": -79.75301311046637,
+          "road": "Unnamed road",
+          "gapMetres": 27.5
+        },
+        "callIds": [
+          "route-local-ems-brampton-ems-fernforest-01",
+          "route-local-ems-brampton-ems-fernforest-02",
+          "route-local-ems-brampton-ems-fernforest-03",
+          "route-local-ems-brampton-ems-fernforest-04",
+          "route-local-ems-brampton-ems-fernforest-05",
+          "route-local-ems-brampton-ems-fernforest-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-brampton-ems-rising-hill",
+        "service": "ems",
+        "number": 10006,
+        "name": "Rising Hill Paramedic Reporting Station",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.63176835411071,
+          "lng": -79.78318469154381,
+          "road": "Unnamed road",
+          "gapMetres": 7.5
+        },
+        "callIds": [
+          "route-local-ems-brampton-ems-rising-hill-01",
+          "route-local-ems-brampton-ems-rising-hill-02",
+          "route-local-ems-brampton-ems-rising-hill-03",
+          "route-local-ems-brampton-ems-rising-hill-04",
+          "route-local-ems-brampton-ems-rising-hill-05",
+          "route-local-ems-brampton-ems-rising-hill-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-brampton-ems-bovaird-west",
+        "service": "ems",
+        "number": 10000,
+        "name": "Bovaird West Satellite Station",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5800,
+        "access": {
+          "lat": 43.6875391,
+          "lng": -79.8065763,
+          "road": "Unnamed road",
+          "gapMetres": 15.6
+        },
+        "callIds": [
+          "route-local-ems-brampton-ems-bovaird-west-01",
+          "route-local-ems-brampton-ems-bovaird-west-02",
+          "route-local-ems-brampton-ems-bovaird-west-03",
+          "route-local-ems-brampton-ems-bovaird-west-04",
+          "route-local-ems-brampton-ems-bovaird-west-05",
+          "route-local-ems-brampton-ems-bovaird-west-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-brampton-ems-inspire",
+        "service": "ems",
+        "number": 10005,
+        "name": "Inspire / Bramalea Satellite Station",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5800,
+        "access": {
+          "lat": 43.77102487196252,
+          "lng": -79.77931365358754,
+          "road": "Unnamed road",
+          "gapMetres": 0.8
+        },
+        "callIds": [
+          "route-local-ems-brampton-ems-inspire-01",
+          "route-local-ems-brampton-ems-inspire-02",
+          "route-local-ems-brampton-ems-inspire-03",
+          "route-local-ems-brampton-ems-inspire-04",
+          "route-local-ems-brampton-ems-inspire-05",
+          "route-local-ems-brampton-ems-inspire-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-brampton-ems-exchange",
+        "service": "ems",
+        "number": 10002,
+        "name": "Exchange Satellite Station",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5500,
+        "access": {
+          "lat": 43.75364527291996,
+          "lng": -79.68870499131428,
+          "road": "Unnamed road",
+          "gapMetres": 3.7
+        },
+        "callIds": [
+          "route-local-ems-brampton-ems-exchange-01",
+          "route-local-ems-brampton-ems-exchange-02",
+          "route-local-ems-brampton-ems-exchange-03",
+          "route-local-ems-brampton-ems-exchange-04",
+          "route-local-ems-brampton-ems-exchange-05",
+          "route-local-ems-brampton-ems-exchange-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-brampton-ems-sandalwood",
+        "service": "ems",
+        "number": 10007,
+        "name": "Sandalwood Satellite Station",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.7222627,
+          "lng": -79.7975291,
+          "road": "Unnamed road",
+          "gapMetres": 5.9
+        },
+        "callIds": [
+          "route-local-ems-brampton-ems-sandalwood-01",
+          "route-local-ems-brampton-ems-sandalwood-02",
+          "route-local-ems-brampton-ems-sandalwood-03",
+          "route-local-ems-brampton-ems-sandalwood-04",
+          "route-local-ems-brampton-ems-sandalwood-05",
+          "route-local-ems-brampton-ems-sandalwood-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-brampton-ems-gore",
+        "service": "ems",
+        "number": 10004,
+        "name": "The Gore Satellite Station",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.8070524,
+          "lng": -79.7097442,
+          "road": "Unnamed road",
+          "gapMetres": 14.1
+        },
+        "callIds": [
+          "route-local-ems-brampton-ems-gore-01",
+          "route-local-ems-brampton-ems-gore-02",
+          "route-local-ems-brampton-ems-gore-03",
+          "route-local-ems-brampton-ems-gore-04",
+          "route-local-ems-brampton-ems-gore-05",
+          "route-local-ems-brampton-ems-gore-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-brampton-ems-trueman",
+        "service": "ems",
+        "number": 10008,
+        "name": "Trueman / Lynch Satellite Station",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.690655155902334,
+          "lng": -79.74884520587021,
+          "road": "Trueman Street",
+          "gapMetres": 21
+        },
+        "callIds": [
+          "route-local-ems-brampton-ems-trueman-01",
+          "route-local-ems-brampton-ems-trueman-02",
+          "route-local-ems-brampton-ems-trueman-03",
+          "route-local-ems-brampton-ems-trueman-04",
+          "route-local-ems-brampton-ems-trueman-05",
+          "route-local-ems-brampton-ems-trueman-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-brampton-ems-victoria",
+        "service": "ems",
+        "number": 10009,
+        "name": "Victoria Satellite Station",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6300,
+        "access": {
+          "lat": 43.70506544903988,
+          "lng": -79.69445154408317,
+          "road": "Unnamed road",
+          "gapMetres": 12.1
+        },
+        "callIds": [
+          "route-local-ems-brampton-ems-victoria-01",
+          "route-local-ems-brampton-ems-victoria-02",
+          "route-local-ems-brampton-ems-victoria-03",
+          "route-local-ems-brampton-ems-victoria-04",
+          "route-local-ems-brampton-ems-victoria-05",
+          "route-local-ems-brampton-ems-victoria-06"
+        ],
+        "challengeCalls": 6
+      }
+    ]
+  },
+  "routeCalls": [
+    {
+      "name": "Chrysler Drive & Corporation Drive",
+      "addr": "Chrysler Drive & Corporation Drive",
+      "lat": 43.7430446,
+      "lng": -79.706843,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/51870441",
+        "way/51870442",
+        "way/51870446"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/51870441",
+        "https://www.openstreetmap.org/way/51870442",
+        "https://www.openstreetmap.org/way/51870446"
+      ],
+      "id": "route-local-fire-brampton-fire-203-01",
+      "routeBaseId": "fire-brampton-fire-203",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 776,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1234.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 82.5,
+        "bestSameServiceCostSeconds": 82.5
+      }
+    },
+    {
+      "name": "Edvac Drive & Sun Pac Boulevard & Williams Parkway East",
+      "addr": "Edvac Drive & Sun Pac Boulevard & Williams Parkway East",
+      "lat": 43.7607025,
+      "lng": -79.7002655,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34162990",
+        "way/34164518",
+        "way/468024002",
+        "way/469512541"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34162990",
+        "https://www.openstreetmap.org/way/34164518",
+        "https://www.openstreetmap.org/way/468024002",
+        "https://www.openstreetmap.org/way/469512541"
+      ],
+      "id": "route-local-fire-brampton-fire-203-02",
+      "routeBaseId": "fire-brampton-fire-203",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2024.9,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 209.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 148.3,
+        "bestSameServiceCostSeconds": 148.3
+      }
+    },
+    {
+      "name": "Fountainview Way & Village Lake Crescent",
+      "addr": "Fountainview Way & Village Lake Crescent",
+      "lat": 43.7543568,
+      "lng": -79.731332,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55206857",
+        "way/55206859",
+        "way/55206877"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55206857",
+        "https://www.openstreetmap.org/way/55206859",
+        "https://www.openstreetmap.org/way/55206877"
+      ],
+      "id": "route-local-fire-brampton-fire-203-03",
+      "routeBaseId": "fire-brampton-fire-203",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2538.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 483.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 212.5,
+        "bestSameServiceCostSeconds": 212.5
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "GREENBRIAR RECREATION CENTRE",
+      "addr": "1100 CENTRAL PARK DR, Brampton, ON",
+      "lat": 43.73598536016577,
+      "lng": -79.71723357633455,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services3.arcgis.com/rl7ACuZkiFsmDA2g/ArcGIS/rest/services/Planning_Local_Government/FeatureServer/6",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Private Road",
+        "Glenvale Boulevard"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "brampton-call-15",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-brampton-fire-203-04",
+      "routeBaseId": "fire-brampton-fire-203",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2016.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1038.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 215.1,
+        "bestSameServiceCostSeconds": 215.1
+      }
+    },
+    {
+      "name": "Baker Road & Colony Court & Summerlea Road",
+      "addr": "Baker Road & Colony Court & Summerlea Road",
+      "lat": 43.7320342,
+      "lng": -79.6962838,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/50977690",
+        "way/50977691",
+        "way/51870375",
+        "way/51870392"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/50977690",
+        "https://www.openstreetmap.org/way/50977691",
+        "https://www.openstreetmap.org/way/51870375",
+        "https://www.openstreetmap.org/way/51870392"
+      ],
+      "id": "route-local-fire-brampton-fire-203-05",
+      "routeBaseId": "fire-brampton-fire-203",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2433.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2530,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 215.1,
+        "bestSameServiceCostSeconds": 215.1
+      }
+    },
+    {
+      "name": "Jardine Street & Torbram Road",
+      "addr": "Jardine Street & Torbram Road",
+      "lat": 43.7467753,
+      "lng": -79.7237231,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1287977248",
+        "way/313340428",
+        "way/33872837"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1287977248",
+        "https://www.openstreetmap.org/way/313340428",
+        "https://www.openstreetmap.org/way/33872837"
+      ],
+      "id": "route-local-fire-brampton-fire-203-06",
+      "routeBaseId": "fire-brampton-fire-203",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1353.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 483.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 108.7,
+        "bestSameServiceCostSeconds": 108.7
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "BOB CALLAHAN FLOWER CITY SENIORS CENTRE",
+      "addr": "8870 MCLAUGHLIN RD S, Brampton, ON",
+      "lat": 43.67141209576191,
+      "lng": -79.76936339920097,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services3.arcgis.com/rl7ACuZkiFsmDA2g/ArcGIS/rest/services/Planning_Local_Government/FeatureServer/6",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Corona Gate",
+        "Private Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "brampton-call-08",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-brampton-fire-204-01",
+      "routeBaseId": "fire-brampton-fire-204",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 697.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 799.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 147.7,
+        "bestSameServiceCostSeconds": 147.7
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "MEMORIAL ARENA",
+      "addr": "69 ELLIOTT ST, Brampton, ON",
+      "lat": 43.6786807468337,
+      "lng": -79.75877585956998,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services3.arcgis.com/rl7ACuZkiFsmDA2g/ArcGIS/rest/services/Planning_Local_Government/FeatureServer/6",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Fraser Avenue",
+        "Frederick Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "brampton-call-17",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-brampton-fire-204-02",
+      "routeBaseId": "fire-brampton-fire-204",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2121.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 799.6,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 189.8,
+        "bestSameServiceCostSeconds": 189.8
+      }
+    },
+    {
+      "name": "Dawes Road & Jordensen Drive & Kenora Street",
+      "addr": "Dawes Road & Jordensen Drive & Kenora Street",
+      "lat": 43.6670897,
+      "lng": -79.7984369,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/397320011",
+        "way/459014525",
+        "way/97326232"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/397320011",
+        "https://www.openstreetmap.org/way/459014525",
+        "https://www.openstreetmap.org/way/97326232"
+      ],
+      "id": "route-local-fire-brampton-fire-204-03",
+      "routeBaseId": "fire-brampton-fire-204",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2580.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 312.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 221.4,
+        "bestSameServiceCostSeconds": 221.4
+      }
+    },
+    {
+      "name": "Holtby Avenue & McLaughlin Road North",
+      "addr": "Holtby Avenue & McLaughlin Road North",
+      "lat": 43.6827886,
+      "lng": -79.7796916,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/256424244",
+        "way/33177951"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/256424244",
+        "https://www.openstreetmap.org/way/33177951"
+      ],
+      "id": "route-local-fire-brampton-fire-204-04",
+      "routeBaseId": "fire-brampton-fire-204",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1657.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 431,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 113.9,
+        "bestSameServiceCostSeconds": 113.9
+      }
+    },
+    {
+      "name": "Aspen Hills Road & Banbrooke Street & Botanical Avenue",
+      "addr": "Aspen Hills Road & Banbrooke Street & Botanical Avenue",
+      "lat": 43.6545133,
+      "lng": -79.7680209,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1122062482",
+        "way/464923765",
+        "way/464923766"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1122062482",
+        "https://www.openstreetmap.org/way/464923765",
+        "https://www.openstreetmap.org/way/464923766"
+      ],
+      "id": "route-local-fire-brampton-fire-204-05",
+      "routeBaseId": "fire-brampton-fire-204",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2586.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 665.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 182.6,
+        "bestSameServiceCostSeconds": 182.6
+      }
+    },
+    {
+      "name": "Chinguacousy Road & Exton Road & Flowertown Avenue",
+      "addr": "Chinguacousy Road & Exton Road & Flowertown Avenue",
+      "lat": 43.6735881,
+      "lng": -79.7912984,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1266117453",
+        "way/467486311",
+        "way/47283161",
+        "way/87650348"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1266117453",
+        "https://www.openstreetmap.org/way/467486311",
+        "https://www.openstreetmap.org/way/47283161",
+        "https://www.openstreetmap.org/way/87650348"
+      ],
+      "id": "route-local-fire-brampton-fire-204-06",
+      "routeBaseId": "fire-brampton-fire-204",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1689,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 308.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 126.2,
+        "bestSameServiceCostSeconds": 126.2
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "PAUL PALLESCHI RECREATION CENTRE",
+      "addr": "30 LOAFERS LAKE LANE, Brampton, ON",
+      "lat": 43.72483838013483,
+      "lng": -79.8009084743854,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services3.arcgis.com/rl7ACuZkiFsmDA2g/ArcGIS/rest/services/Planning_Local_Government/FeatureServer/6",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Savino Drive",
+        "Conestoga Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "brampton-call-19",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-brampton-fire-205-01",
+      "routeBaseId": "fire-brampton-fire-205",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 808.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 3451.9,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 98,
+        "bestSameServiceCostSeconds": 98
+      }
+    },
+    {
+      "name": "Heart Lake Road & Sandalwood Parkway East",
+      "addr": "Heart Lake Road & Sandalwood Parkway East",
+      "lat": 43.736347,
+      "lng": -79.780865,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/444877907",
+        "way/444877911",
+        "way/444877914",
+        "way/459693778"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/444877907",
+        "https://www.openstreetmap.org/way/444877911",
+        "https://www.openstreetmap.org/way/444877914",
+        "https://www.openstreetmap.org/way/459693778"
+      ],
+      "id": "route-local-fire-brampton-fire-205-02",
+      "routeBaseId": "fire-brampton-fire-205",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2127.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 3131,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 139.9,
+        "bestSameServiceCostSeconds": 139.9
+      }
+    },
+    {
+      "name": "Quarry Edge Drive & Yellow Brick Road",
+      "addr": "Quarry Edge Drive & Yellow Brick Road",
+      "lat": 43.7076101,
+      "lng": -79.7810232,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/39338202",
+        "way/39338204"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/39338202",
+        "https://www.openstreetmap.org/way/39338204"
+      ],
+      "id": "route-local-fire-brampton-fire-205-03",
+      "routeBaseId": "fire-brampton-fire-205",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2601.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 975.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 208.5,
+        "bestSameServiceCostSeconds": 206.9
+      }
+    },
+    {
+      "name": "Potters Wheel Gate & Van Kirk Drive & Van Scott Drive",
+      "addr": "Potters Wheel Gate & Van Kirk Drive & Van Scott Drive",
+      "lat": 43.7108497,
+      "lng": -79.8143062,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/51867499",
+        "way/51867525",
+        "way/51867528",
+        "way/51867529"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/51867499",
+        "https://www.openstreetmap.org/way/51867525",
+        "https://www.openstreetmap.org/way/51867528",
+        "https://www.openstreetmap.org/way/51867529"
+      ],
+      "id": "route-local-fire-brampton-fire-205-04",
+      "routeBaseId": "fire-brampton-fire-205",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2160.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1123.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 155,
+        "bestSameServiceCostSeconds": 155
+      }
+    },
+    {
+      "name": "Colonel Bertram Road & Dokkum Crescent",
+      "addr": "Colonel Bertram Road & Dokkum Crescent",
+      "lat": 43.7333227,
+      "lng": -79.821639,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/30366326",
+        "way/39337796"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/30366326",
+        "https://www.openstreetmap.org/way/39337796"
+      ],
+      "id": "route-local-fire-brampton-fire-205-05",
+      "routeBaseId": "fire-brampton-fire-205",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2655,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 674.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 190.8,
+        "bestSameServiceCostSeconds": 190.8
+      }
+    },
+    {
+      "name": "Allenhead Crescent & Cochrane Avenue & Lanercost Way",
+      "addr": "Allenhead Crescent & Cochrane Avenue & Lanercost Way",
+      "lat": 43.7237681,
+      "lng": -79.7836182,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/51868890",
+        "way/51868902",
+        "way/51868951"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/51868890",
+        "https://www.openstreetmap.org/way/51868902",
+        "https://www.openstreetmap.org/way/51868951"
+      ],
+      "id": "route-local-fire-brampton-fire-205-06",
+      "routeBaseId": "fire-brampton-fire-205",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1735.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1867.5,
+        "decisionKinds": [
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 139.4,
+        "bestSameServiceCostSeconds": 139.4
+      }
+    },
+    {
+      "name": "Mossbank Drive & Payton Court",
+      "addr": "Mossbank Drive & Payton Court",
+      "lat": 43.6648317,
+      "lng": -79.7224822,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33698837",
+        "way/33698838"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33698837",
+        "https://www.openstreetmap.org/way/33698838"
+      ],
+      "id": "route-local-fire-brampton-fire-206-01",
+      "routeBaseId": "fire-brampton-fire-206",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 813.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 434.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 71.4,
+        "bestSameServiceCostSeconds": 71.4
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "SUSAN FENNELL SPORTSPLEX",
+      "addr": "500 RAY LAWSON BLVD, Brampton, ON",
+      "lat": 43.65287943182113,
+      "lng": -79.7358399250944,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services3.arcgis.com/rl7ACuZkiFsmDA2g/ArcGIS/rest/services/Planning_Local_Government/FeatureServer/6",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Mclaughlin Road",
+        "Timberlane Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "brampton-call-09",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-brampton-fire-206-02",
+      "routeBaseId": "fire-brampton-fire-206",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2018.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 999.7,
+        "decisionKinds": [
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 205.9,
+        "bestSameServiceCostSeconds": 205.9
+      }
+    },
+    {
+      "name": "Derwent Avenue & Mono Court",
+      "addr": "Derwent Avenue & Mono Court",
+      "lat": 43.6771776,
+      "lng": -79.7440803,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/39082837",
+        "way/39082845",
+        "way/39082851"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/39082837",
+        "https://www.openstreetmap.org/way/39082845",
+        "https://www.openstreetmap.org/way/39082851"
+      ],
+      "id": "route-local-fire-brampton-fire-206-03",
+      "routeBaseId": "fire-brampton-fire-206",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2593.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1224.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 205.2,
+        "bestSameServiceCostSeconds": 205.2
+      }
+    },
+    {
+      "name": "Derry Road East & Derry Road West & Hurontario Street",
+      "addr": "Derry Road East & Derry Road West & Hurontario Street",
+      "lat": 43.6460621,
+      "lng": -79.7062486,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/137223287",
+        "way/1392194153",
+        "way/392788333",
+        "way/446038522"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/137223287",
+        "https://www.openstreetmap.org/way/1392194153",
+        "https://www.openstreetmap.org/way/392788333",
+        "https://www.openstreetmap.org/way/446038522"
+      ],
+      "id": "route-local-fire-brampton-fire-206-04",
+      "routeBaseId": "fire-brampton-fire-206",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2666.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2813.1,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 140.1,
+        "bestSameServiceCostSeconds": 140.1
+      }
+    },
+    {
+      "name": "Rutherford Road South & Steeles Avenue East",
+      "addr": "Rutherford Road South & Steeles Avenue East",
+      "lat": 43.6806003,
+      "lng": -79.7173991,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/119880171",
+        "way/223979259",
+        "way/445471926",
+        "way/446813908"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/119880171",
+        "https://www.openstreetmap.org/way/223979259",
+        "https://www.openstreetmap.org/way/445471926",
+        "https://www.openstreetmap.org/way/446813908"
+      ],
+      "id": "route-local-fire-brampton-fire-206-05",
+      "routeBaseId": "fire-brampton-fire-206",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2570.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 481.9,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 166.4,
+        "bestSameServiceCostSeconds": 166.4
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "PEEL VILLAGE GOLF COURSE",
+      "addr": "29A HARTFORD TRAIL, Brampton, ON",
+      "lat": 43.67037802386582,
+      "lng": -79.72385474817531,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services3.arcgis.com/rl7ACuZkiFsmDA2g/ArcGIS/rest/services/Planning_Local_Government/FeatureServer/6",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Appleton Trail",
+        "Austin Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "brampton-call-20",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-brampton-fire-206-06",
+      "routeBaseId": "fire-brampton-fire-206",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1932.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 481.9,
+        "decisionKinds": [
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 193,
+        "bestSameServiceCostSeconds": 193
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "CENTRAL PUBLIC SCHOOL RECREATION AND ARTS CENTRE",
+      "addr": "24 ALEXANDER ST, Brampton, ON",
+      "lat": 43.69028078867479,
+      "lng": -79.76310684427216,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services3.arcgis.com/rl7ACuZkiFsmDA2g/ArcGIS/rest/services/Planning_Local_Government/FeatureServer/6",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Union Street",
+        "Main Street North"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "brampton-call-16",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-brampton-fire-207-01",
+      "routeBaseId": "fire-brampton-fire-207",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1288.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 354,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 113.6,
+        "bestSameServiceCostSeconds": 113.6
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "CENTURY GARDENS RECREATION CENTRE",
+      "addr": "340 VODDEN ST E, Brampton, ON",
+      "lat": 43.70853274152546,
+      "lng": -79.75395147616642,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services3.arcgis.com/rl7ACuZkiFsmDA2g/ArcGIS/rest/services/Planning_Local_Government/FeatureServer/6",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Robwill Court",
+        "Rutherford Road North"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "brampton-call-12",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-brampton-fire-207-02",
+      "routeBaseId": "fire-brampton-fire-207",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1770.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1928.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 173.1,
+        "bestSameServiceCostSeconds": 173.1
+      }
+    },
+    {
+      "name": "Pressed Brick Drive & Quarry Edge Drive",
+      "addr": "Pressed Brick Drive & Quarry Edge Drive",
+      "lat": 43.7069872,
+      "lng": -79.7816088,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33701213",
+        "way/39338204"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33701213",
+        "https://www.openstreetmap.org/way/39338204"
+      ],
+      "id": "route-local-fire-brampton-fire-207-03",
+      "routeBaseId": "fire-brampton-fire-207",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2581.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 284.3,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 197.8,
+        "bestSameServiceCostSeconds": 197.8
+      }
+    },
+    {
+      "name": "Brookview Road & Vodden Street West",
+      "addr": "Brookview Road & Vodden Street West",
+      "lat": 43.6896321,
+      "lng": -79.7814423,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1430438682",
+        "way/29501150",
+        "way/33701034"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1430438682",
+        "https://www.openstreetmap.org/way/29501150",
+        "https://www.openstreetmap.org/way/33701034"
+      ],
+      "id": "route-local-fire-brampton-fire-207-04",
+      "routeBaseId": "fire-brampton-fire-207",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1691,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1457.6,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 145,
+        "bestSameServiceCostSeconds": 145
+      }
+    },
+    {
+      "name": "Eldomar Avenue & Erlesmere Avenue",
+      "addr": "Eldomar Avenue & Erlesmere Avenue",
+      "lat": 43.6827025,
+      "lng": -79.7445765,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/140609871",
+        "way/39082752"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/140609871",
+        "https://www.openstreetmap.org/way/39082752"
+      ],
+      "id": "route-local-fire-brampton-fire-207-05",
+      "routeBaseId": "fire-brampton-fire-207",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2602.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1231.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 245.4,
+        "bestSameServiceCostSeconds": 245.4
+      }
+    },
+    {
+      "name": "Hillcrest Avenue & Trueman Street",
+      "addr": "Hillcrest Avenue & Trueman Street",
+      "lat": 43.6918261,
+      "lng": -79.7508534,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33178304",
+        "way/34583166"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33178304",
+        "https://www.openstreetmap.org/way/34583166"
+      ],
+      "id": "route-local-fire-brampton-fire-207-06",
+      "routeBaseId": "fire-brampton-fire-207",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1738.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 765.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 156.6,
+        "bestSameServiceCostSeconds": 146.3
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "BALMORAL RECREATION CENTRE",
+      "addr": "225 BALMORAL DR, Brampton, ON",
+      "lat": 43.707248075746136,
+      "lng": -79.71312832118502,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services3.arcgis.com/rl7ACuZkiFsmDA2g/ArcGIS/rest/services/Planning_Local_Government/FeatureServer/6",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Braemar Drive",
+        "Brookland Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "brampton-call-11",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-brampton-fire-202-01",
+      "routeBaseId": "fire-brampton-fire-202",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1427.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1648,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 171.8,
+        "bestSameServiceCostSeconds": 171.8
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "CHINGUACOUSY PARK",
+      "addr": "9050 BRAMALEA RD, Brampton, ON",
+      "lat": 43.72356295091825,
+      "lng": -79.72088303638762,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services3.arcgis.com/rl7ACuZkiFsmDA2g/ArcGIS/rest/services/Planning_Local_Government/FeatureServer/6",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Queen Street East",
+        "Kensington Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "brampton-call-04",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-brampton-fire-202-02",
+      "routeBaseId": "fire-brampton-fire-202",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2393.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 317.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 258.3,
+        "bestSameServiceCostSeconds": 258.3
+      }
+    },
+    {
+      "name": "East Drive & Torbram Road & Walker Drive",
+      "addr": "East Drive & Torbram Road & Walker Drive",
+      "lat": 43.717043,
+      "lng": -79.6837357,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1201834018",
+        "way/1266696082",
+        "way/50977443",
+        "way/51870456"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1201834018",
+        "https://www.openstreetmap.org/way/1266696082",
+        "https://www.openstreetmap.org/way/50977443",
+        "https://www.openstreetmap.org/way/51870456"
+      ],
+      "id": "route-local-fire-brampton-fire-202-03",
+      "routeBaseId": "fire-brampton-fire-202",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2450.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 476.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 184.5,
+        "bestSameServiceCostSeconds": 184.5
+      }
+    },
+    {
+      "name": "Balmoral Drive & Dorchester Drive",
+      "addr": "Balmoral Drive & Dorchester Drive",
+      "lat": 43.7200209,
+      "lng": -79.7015572,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/38861864",
+        "way/468451283"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/38861864",
+        "https://www.openstreetmap.org/way/468451283"
+      ],
+      "id": "route-local-fire-brampton-fire-202-04",
+      "routeBaseId": "fire-brampton-fire-202",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 813,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1301.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 69.9,
+        "bestSameServiceCostSeconds": 69.9
+      }
+    },
+    {
+      "name": "Advance Boulevard & Strathearn Avenue",
+      "addr": "Advance Boulevard & Strathearn Avenue",
+      "lat": 43.6973841,
+      "lng": -79.6956473,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/181746674",
+        "way/38414465"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/181746674",
+        "https://www.openstreetmap.org/way/38414465"
+      ],
+      "id": "route-local-fire-brampton-fire-202-05",
+      "routeBaseId": "fire-brampton-fire-202",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2573.1,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1484.7,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 176,
+        "bestSameServiceCostSeconds": 176
+      }
+    },
+    {
+      "name": "Delemere Road & Drum Oak Crescent",
+      "addr": "Delemere Road & Drum Oak Crescent",
+      "lat": 43.7135174,
+      "lng": -79.6942772,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/38861843",
+        "way/38861872",
+        "way/38861904"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/38861843",
+        "https://www.openstreetmap.org/way/38861872",
+        "https://www.openstreetmap.org/way/38861904"
+      ],
+      "id": "route-local-fire-brampton-fire-202-06",
+      "routeBaseId": "fire-brampton-fire-202",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1631.7,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2401.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 135.6,
+        "bestSameServiceCostSeconds": 135.6
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "ELLEN MITCHELL RECREATION CENTRE",
+      "addr": "922 NORTH PARK DR, Brampton, ON",
+      "lat": 43.733741138257464,
+      "lng": -79.74488430162108,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services3.arcgis.com/rl7ACuZkiFsmDA2g/ArcGIS/rest/services/Planning_Local_Government/FeatureServer/6",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Malabar Crescent",
+        "Myna Court"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "brampton-call-14",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-brampton-fire-208-01",
+      "routeBaseId": "fire-brampton-fire-208",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 999.3,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1715.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 136.5,
+        "bestSameServiceCostSeconds": 136.5
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "BRAMPTON SOCCER CENTRE",
+      "addr": "1495 SANDALWOOD PKY E, Brampton, ON",
+      "lat": 43.743703400174866,
+      "lng": -79.76903757888766,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services3.arcgis.com/rl7ACuZkiFsmDA2g/ArcGIS/rest/services/Planning_Local_Government/FeatureServer/6",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Dixie Road",
+        "Springtown Trail"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "brampton-call-03",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-brampton-fire-208-02",
+      "routeBaseId": "fire-brampton-fire-208",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1886.1,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 691.3,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 228.8,
+        "bestSameServiceCostSeconds": 228.8
+      }
+    },
+    {
+      "name": "Red Clover Road & Wyoming Trail",
+      "addr": "Red Clover Road & Wyoming Trail",
+      "lat": 43.7557075,
+      "lng": -79.7436377,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33873004",
+        "way/33873104"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33873004",
+        "https://www.openstreetmap.org/way/33873104"
+      ],
+      "id": "route-local-fire-brampton-fire-208-03",
+      "routeBaseId": "fire-brampton-fire-208",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2439.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 244.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 207.9,
+        "bestSameServiceCostSeconds": 204.7
+      }
+    },
+    {
+      "name": "Sea Lion Road & Southlake Boulevard",
+      "addr": "Sea Lion Road & Southlake Boulevard",
+      "lat": 43.7210654,
+      "lng": -79.7684159,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1451632684",
+        "way/51870183",
+        "way/51870217"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1451632684",
+        "https://www.openstreetmap.org/way/51870183",
+        "https://www.openstreetmap.org/way/51870217"
+      ],
+      "id": "route-local-fire-brampton-fire-208-04",
+      "routeBaseId": "fire-brampton-fire-208",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2601.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2594.6,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 161.5,
+        "bestSameServiceCostSeconds": 161.5
+      }
+    },
+    {
+      "name": "Jordan Boulevard & Joyce Gate & Junewood Crescent",
+      "addr": "Jordan Boulevard & Joyce Gate & Junewood Crescent",
+      "lat": 43.7428413,
+      "lng": -79.7293656,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33872799",
+        "way/39159001",
+        "way/39160076"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33872799",
+        "https://www.openstreetmap.org/way/39159001",
+        "https://www.openstreetmap.org/way/39160076"
+      ],
+      "id": "route-local-fire-brampton-fire-208-05",
+      "routeBaseId": "fire-brampton-fire-208",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2569.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 370.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 189.4,
+        "bestSameServiceCostSeconds": 175.9
+      }
+    },
+    {
+      "name": "Nautical Drive & Sandyshores Drive",
+      "addr": "Nautical Drive & Sandyshores Drive",
+      "lat": 43.7334133,
+      "lng": -79.7595197,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/38656262",
+        "way/38656266",
+        "way/38656288"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/38656262",
+        "https://www.openstreetmap.org/way/38656266",
+        "https://www.openstreetmap.org/way/38656288"
+      ],
+      "id": "route-local-fire-brampton-fire-208-06",
+      "routeBaseId": "fire-brampton-fire-208",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1688,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 500.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 142.2,
+        "bestSameServiceCostSeconds": 142.2
+      }
+    },
+    {
+      "name": "Plateau Drive & Revelstoke Place",
+      "addr": "Plateau Drive & Revelstoke Place",
+      "lat": 43.7693947,
+      "lng": -79.7349409,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55206493",
+        "way/55206529",
+        "way/55206622"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55206493",
+        "https://www.openstreetmap.org/way/55206529",
+        "https://www.openstreetmap.org/way/55206622"
+      ],
+      "id": "route-local-fire-brampton-fire-209-01",
+      "routeBaseId": "fire-brampton-fire-209",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 807.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1542.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Sandalwood Parkway East",
+        "estimatedCostSeconds": 69.6,
+        "bestSameServiceCostSeconds": 69.6
+      }
+    },
+    {
+      "name": "Australia Drive & Severin Street & Sunny Meadow Boulevard",
+      "addr": "Australia Drive & Severin Street & Sunny Meadow Boulevard",
+      "lat": 43.7632239,
+      "lng": -79.7579582,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55206486",
+        "way/55206590",
+        "way/94345153"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55206486",
+        "https://www.openstreetmap.org/way/55206590",
+        "https://www.openstreetmap.org/way/94345153"
+      ],
+      "id": "route-local-fire-brampton-fire-209-02",
+      "routeBaseId": "fire-brampton-fire-209",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1703.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 912.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Sandalwood Parkway East",
+        "estimatedCostSeconds": 144.9,
+        "bestSameServiceCostSeconds": 144.9
+      }
+    },
+    {
+      "name": "Porteous Circle & Pretty Place",
+      "addr": "Porteous Circle & Pretty Place",
+      "lat": 43.7501621,
+      "lng": -79.7313545,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33872903",
+        "way/33872904"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33872903",
+        "https://www.openstreetmap.org/way/33872904"
+      ],
+      "id": "route-local-fire-brampton-fire-209-03",
+      "routeBaseId": "fire-brampton-fire-209",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2576.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 562,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Sandalwood Parkway East",
+        "estimatedCostSeconds": 201.8,
+        "bestSameServiceCostSeconds": 198.1
+      }
+    },
+    {
+      "name": "Eagleridge Drive & Steeplebush Avenue & Torbram Road",
+      "addr": "Eagleridge Drive & Steeplebush Avenue & Torbram Road",
+      "lat": 43.7615355,
+      "lng": -79.7435705,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/420926250",
+        "way/420941584",
+        "way/537015383",
+        "way/537015384",
+        "way/537015385"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/420926250",
+        "https://www.openstreetmap.org/way/420941584",
+        "https://www.openstreetmap.org/way/537015383",
+        "https://www.openstreetmap.org/way/537015384",
+        "https://www.openstreetmap.org/way/537015385"
+      ],
+      "id": "route-local-fire-brampton-fire-209-04",
+      "routeBaseId": "fire-brampton-fire-209",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1109.9,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1651.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Sandalwood Parkway East",
+        "estimatedCostSeconds": 78.7,
+        "bestSameServiceCostSeconds": 78.7
+      }
+    },
+    {
+      "name": "Bayridge Drive & Horizon Street",
+      "addr": "Bayridge Drive & Horizon Street",
+      "lat": 43.7679384,
+      "lng": -79.7115089,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55205774",
+        "way/55206233",
+        "way/55206440"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55205774",
+        "https://www.openstreetmap.org/way/55206233",
+        "https://www.openstreetmap.org/way/55206440"
+      ],
+      "id": "route-local-fire-brampton-fire-209-05",
+      "routeBaseId": "fire-brampton-fire-209",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2641.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 358.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Sandalwood Parkway East",
+        "estimatedCostSeconds": 196.8,
+        "bestSameServiceCostSeconds": 196.8
+      }
+    },
+    {
+      "name": "Blue Iris Trail & Yellow Avens Boulevard",
+      "addr": "Blue Iris Trail & Yellow Avens Boulevard",
+      "lat": 43.7799654,
+      "lng": -79.7513178,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55205693",
+        "way/55206105",
+        "way/55206267"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55205693",
+        "https://www.openstreetmap.org/way/55206105",
+        "https://www.openstreetmap.org/way/55206267"
+      ],
+      "id": "route-local-fire-brampton-fire-209-06",
+      "routeBaseId": "fire-brampton-fire-209",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2597.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 983.9,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Sandalwood Parkway East",
+        "estimatedCostSeconds": 205,
+        "bestSameServiceCostSeconds": 205
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "CASSIE CAMPBELL COMMUNITY CENTRE",
+      "addr": "1050 SANDALWOOD PKY W, Brampton, ON",
+      "lat": 43.69696664599032,
+      "lng": -79.82453109908978,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services3.arcgis.com/rl7ACuZkiFsmDA2g/ArcGIS/rest/services/Planning_Local_Government/FeatureServer/6",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Chinguacousy Road",
+        "Fidelity Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "brampton-call-02",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-brampton-fire-210-01",
+      "routeBaseId": "fire-brampton-fire-210",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1739.5,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 910.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 203.3,
+        "bestSameServiceCostSeconds": 203.3
+      }
+    },
+    {
+      "name": "Tysonville Circle & Veterans Drive",
+      "addr": "Tysonville Circle & Veterans Drive",
+      "lat": 43.6790938,
+      "lng": -79.8384645,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1201224378",
+        "way/1268084119",
+        "way/295702231"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1201224378",
+        "https://www.openstreetmap.org/way/1268084119",
+        "https://www.openstreetmap.org/way/295702231"
+      ],
+      "id": "route-local-fire-brampton-fire-210-02",
+      "routeBaseId": "fire-brampton-fire-210",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1702.4,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1261.2,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 126.5,
+        "bestSameServiceCostSeconds": 126.5
+      }
+    },
+    {
+      "name": "James Potter Road & James Potter Road North",
+      "addr": "James Potter Road & James Potter Road North",
+      "lat": 43.6689952,
+      "lng": -79.8202325,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/363244594",
+        "way/688049746",
+        "way/688049747"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/363244594",
+        "https://www.openstreetmap.org/way/688049746",
+        "https://www.openstreetmap.org/way/688049747"
+      ],
+      "id": "route-local-fire-brampton-fire-210-03",
+      "routeBaseId": "fire-brampton-fire-210",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2593.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 665.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 166.9,
+        "bestSameServiceCostSeconds": 166.9
+      }
+    },
+    {
+      "name": "Leblanc Crescent & Lothbury Drive",
+      "addr": "Leblanc Crescent & Lothbury Drive",
+      "lat": 43.6935599,
+      "lng": -79.8477718,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/305086875",
+        "way/305086877"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/305086875",
+        "https://www.openstreetmap.org/way/305086877"
+      ],
+      "id": "route-local-fire-brampton-fire-210-04",
+      "routeBaseId": "fire-brampton-fire-210",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1726.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 289.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 140.8,
+        "bestSameServiceCostSeconds": 140.8
+      }
+    },
+    {
+      "name": "Clayborne Avenue & Worthington Avenue",
+      "addr": "Clayborne Avenue & Worthington Avenue",
+      "lat": 43.683715,
+      "lng": -79.8188921,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/38722114",
+        "way/38722243"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/38722114",
+        "https://www.openstreetmap.org/way/38722243"
+      ],
+      "id": "route-local-fire-brampton-fire-210-05",
+      "routeBaseId": "fire-brampton-fire-210",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1708.9,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 770.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 139.6,
+        "bestSameServiceCostSeconds": 137.2
+      }
+    },
+    {
+      "name": "Crannyfield Drive & Rambling Oak Drive & Sugarhill Drive",
+      "addr": "Crannyfield Drive & Rambling Oak Drive & Sugarhill Drive",
+      "lat": 43.6981012,
+      "lng": -79.8391511,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/51866960",
+        "way/51866962",
+        "way/51866964",
+        "way/51866972"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/51866960",
+        "https://www.openstreetmap.org/way/51866962",
+        "https://www.openstreetmap.org/way/51866964",
+        "https://www.openstreetmap.org/way/51866972"
+      ],
+      "id": "route-local-fire-brampton-fire-210-06",
+      "routeBaseId": "fire-brampton-fire-210",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1710,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 193.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 149.7,
+        "bestSameServiceCostSeconds": 149.7
+      }
+    },
+    {
+      "name": "Hampton Springs Drive & Pasadena Avenue",
+      "addr": "Hampton Springs Drive & Pasadena Avenue",
+      "lat": 43.769552,
+      "lng": -79.6762276,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55205621",
+        "way/55206238",
+        "way/55206383"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55205621",
+        "https://www.openstreetmap.org/way/55206238",
+        "https://www.openstreetmap.org/way/55206383"
+      ],
+      "id": "route-local-fire-brampton-fire-213-01",
+      "routeBaseId": "fire-brampton-fire-213",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 808,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1803.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 79.4,
+        "bestSameServiceCostSeconds": 79.4
+      }
+    },
+    {
+      "name": "Humberwest Parkway & Queen Street East",
+      "addr": "Humberwest Parkway & Queen Street East",
+      "lat": 43.7530896,
+      "lng": -79.6846732,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1146109221",
+        "way/1146109222",
+        "way/370280600",
+        "way/445431297"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1146109221",
+        "https://www.openstreetmap.org/way/1146109222",
+        "https://www.openstreetmap.org/way/370280600",
+        "https://www.openstreetmap.org/way/445431297"
+      ],
+      "id": "route-local-fire-brampton-fire-213-02",
+      "routeBaseId": "fire-brampton-fire-213",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1898.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 4572.9,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 106.8,
+        "bestSameServiceCostSeconds": 106.8
+      }
+    },
+    {
+      "name": "Huntington Road & Nativio Street",
+      "addr": "Huntington Road & Nativio Street",
+      "lat": 43.7769973,
+      "lng": -79.648782,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/459800590",
+        "way/55205715"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/459800590",
+        "https://www.openstreetmap.org/way/55205715"
+      ],
+      "id": "route-local-fire-brampton-fire-213-03",
+      "routeBaseId": "fire-brampton-fire-213",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2590.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 652.9,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 193.8,
+        "bestSameServiceCostSeconds": 193.8
+      }
+    },
+    {
+      "name": "Beaumaris Drive & Queen Street East",
+      "addr": "Beaumaris Drive & Queen Street East",
+      "lat": 43.7650308,
+      "lng": -79.6609494,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55206675",
+        "way/562678674",
+        "way/775724669"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55206675",
+        "https://www.openstreetmap.org/way/562678674",
+        "https://www.openstreetmap.org/way/775724669"
+      ],
+      "id": "route-local-fire-brampton-fire-213-04",
+      "routeBaseId": "fire-brampton-fire-213",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1086.9,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1207.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 70.1,
+        "bestSameServiceCostSeconds": 70.1
+      }
+    },
+    {
+      "name": "Pannahill Drive & Saint Grace Court",
+      "addr": "Pannahill Drive & Saint Grace Court",
+      "lat": 43.7824791,
+      "lng": -79.6782642,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/39014154",
+        "way/39014155",
+        "way/456868485",
+        "way/456868486"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/39014154",
+        "https://www.openstreetmap.org/way/39014155",
+        "https://www.openstreetmap.org/way/456868485",
+        "https://www.openstreetmap.org/way/456868486"
+      ],
+      "id": "route-local-fire-brampton-fire-213-05",
+      "routeBaseId": "fire-brampton-fire-213",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2601,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 477.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 178.8,
+        "bestSameServiceCostSeconds": 178.8
+      }
+    },
+    {
+      "name": "Ebenezer Road & Via Romano Way",
+      "addr": "Ebenezer Road & Via Romano Way",
+      "lat": 43.7770136,
+      "lng": -79.6577751,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/387623363",
+        "way/387623370",
+        "way/387623371",
+        "way/55205806"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/387623363",
+        "https://www.openstreetmap.org/way/387623370",
+        "https://www.openstreetmap.org/way/387623371",
+        "https://www.openstreetmap.org/way/55205806"
+      ],
+      "id": "route-local-fire-brampton-fire-213-06",
+      "routeBaseId": "fire-brampton-fire-213",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1687.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1213.5,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 110.5,
+        "bestSameServiceCostSeconds": 110.5
+      }
+    },
+    {
+      "name": "Mississauga Road & Steeles Avenue West",
+      "addr": "Mississauga Road & Steeles Avenue West",
+      "lat": 43.6274058,
+      "lng": -79.775763,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/367446567",
+        "way/446350457",
+        "way/446350466",
+        "way/805387955"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/367446567",
+        "https://www.openstreetmap.org/way/446350457",
+        "https://www.openstreetmap.org/way/446350466",
+        "https://www.openstreetmap.org/way/805387955"
+      ],
+      "id": "route-local-fire-brampton-fire-212-01",
+      "routeBaseId": "fire-brampton-fire-212",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 803.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1269.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 79.2,
+        "bestSameServiceCostSeconds": 79.2
+      }
+    },
+    {
+      "name": "Embleton Road & Mississauga Road",
+      "addr": "Embleton Road & Mississauga Road",
+      "lat": 43.6443791,
+      "lng": -79.7990044,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1266471022",
+        "way/1303117286",
+        "way/377912442"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1266471022",
+        "https://www.openstreetmap.org/way/1303117286",
+        "https://www.openstreetmap.org/way/377912442"
+      ],
+      "id": "route-local-fire-brampton-fire-212-02",
+      "routeBaseId": "fire-brampton-fire-212",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2137.3,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 607.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 149.1,
+        "bestSameServiceCostSeconds": 149.1
+      }
+    },
+    {
+      "name": "Heritage Road & Lionhead Golf Club Road",
+      "addr": "Heritage Road & Lionhead Golf Club Road",
+      "lat": 43.6302601,
+      "lng": -79.8032941,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1267893383",
+        "way/1267893384",
+        "way/464935060"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1267893383",
+        "https://www.openstreetmap.org/way/1267893384",
+        "https://www.openstreetmap.org/way/464935060"
+      ],
+      "id": "route-local-fire-brampton-fire-212-03",
+      "routeBaseId": "fire-brampton-fire-212",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2484.7,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 239.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 223.5,
+        "bestSameServiceCostSeconds": 223.5
+      }
+    },
+    {
+      "name": "Port Hope Hollow & Tammy Drive",
+      "addr": "Port Hope Hollow & Tammy Drive",
+      "lat": 43.6386151,
+      "lng": -79.781009,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/182527755",
+        "way/262690379"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/182527755",
+        "https://www.openstreetmap.org/way/262690379"
+      ],
+      "id": "route-local-fire-brampton-fire-212-04",
+      "routeBaseId": "fire-brampton-fire-212",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1188.5,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 607.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 153.4,
+        "bestSameServiceCostSeconds": 153.4
+      }
+    },
+    {
+      "name": "Edgeware Road & Heritage Road",
+      "addr": "Edgeware Road & Heritage Road",
+      "lat": 43.6154057,
+      "lng": -79.7839492,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25168615",
+        "way/392527923",
+        "way/454291903",
+        "way/805387960"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25168615",
+        "https://www.openstreetmap.org/way/392527923",
+        "https://www.openstreetmap.org/way/454291903",
+        "https://www.openstreetmap.org/way/805387960"
+      ],
+      "id": "route-local-fire-brampton-fire-212-05",
+      "routeBaseId": "fire-brampton-fire-212",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2470.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 676.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 181.1,
+        "bestSameServiceCostSeconds": 181.1
+      }
+    },
+    {
+      "name": "Creditview Road & Steeles Avenue West",
+      "addr": "Creditview Road & Steeles Avenue West",
+      "lat": 43.6353654,
+      "lng": -79.7669691,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/119418684",
+        "way/33604633"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/119418684",
+        "https://www.openstreetmap.org/way/33604633"
+      ],
+      "id": "route-local-fire-brampton-fire-212-06",
+      "routeBaseId": "fire-brampton-fire-212",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1836.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 735.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 147.2,
+        "bestSameServiceCostSeconds": 147.2
+      }
+    },
+    {
+      "name": "Countryside Drive & The Gore Road",
+      "addr": "Countryside Drive & The Gore Road",
+      "lat": 43.8116721,
+      "lng": -79.7166491,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1115782694",
+        "way/1115782695",
+        "way/1115782696",
+        "way/1115782697"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1115782694",
+        "https://www.openstreetmap.org/way/1115782695",
+        "https://www.openstreetmap.org/way/1115782696",
+        "https://www.openstreetmap.org/way/1115782697"
+      ],
+      "id": "route-local-fire-brampton-fire-211-01",
+      "routeBaseId": "fire-brampton-fire-211",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 791.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 7601.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 59,
+        "bestSameServiceCostSeconds": 59
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "GORE MEADOWS COMMUNITY CENTRE",
+      "addr": "10150 THE GORE RD, Brampton, ON",
+      "lat": 43.79453530193816,
+      "lng": -79.69495782520038,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services3.arcgis.com/rl7ACuZkiFsmDA2g/ArcGIS/rest/services/Planning_Local_Government/FeatureServer/6",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Castlemore Road",
+        "Fitzpatrick Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "brampton-call-05",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-brampton-fire-211-02",
+      "routeBaseId": "fire-brampton-fire-211",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2155.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 4985.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 235.1,
+        "bestSameServiceCostSeconds": 235.1
+      }
+    },
+    {
+      "name": "Mayfield Road & O'Reilly's Lane",
+      "addr": "Mayfield Road & O'Reilly's Lane",
+      "lat": 43.8241656,
+      "lng": -79.7222361,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34163121",
+        "way/387351779"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34163121",
+        "https://www.openstreetmap.org/way/387351779"
+      ],
+      "id": "route-local-fire-brampton-fire-211-03",
+      "routeBaseId": "fire-brampton-fire-211",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2672.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 6141.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 172.3,
+        "bestSameServiceCostSeconds": 172.3
+      }
+    },
+    {
+      "name": "Edgeforest Drive & The Gore Road",
+      "addr": "Edgeforest Drive & The Gore Road",
+      "lat": 43.8027146,
+      "lng": -79.7045668,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1414879376",
+        "way/314021271",
+        "way/55205996"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1414879376",
+        "https://www.openstreetmap.org/way/314021271",
+        "https://www.openstreetmap.org/way/55205996"
+      ],
+      "id": "route-local-fire-brampton-fire-211-04",
+      "routeBaseId": "fire-brampton-fire-211",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 670.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 7599.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 51.7,
+        "bestSameServiceCostSeconds": 51.7
+      }
+    },
+    {
+      "name": "Clarkway Drive & Countryside Drive",
+      "addr": "Clarkway Drive & Countryside Drive",
+      "lat": 43.821214,
+      "lng": -79.7058759,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55207147",
+        "way/55207152"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55207147",
+        "https://www.openstreetmap.org/way/55207152"
+      ],
+      "id": "route-local-fire-brampton-fire-211-05",
+      "routeBaseId": "fire-brampton-fire-211",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2156.3,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 4714,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 168.2,
+        "bestSameServiceCostSeconds": 168.2
+      }
+    },
+    {
+      "name": "Countryside Drive & Martin Byrne Drive",
+      "addr": "Countryside Drive & Martin Byrne Drive",
+      "lat": 43.8059123,
+      "lng": -79.72305,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1115769910",
+        "way/1350087618",
+        "way/1450139259"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1115769910",
+        "https://www.openstreetmap.org/way/1350087618",
+        "https://www.openstreetmap.org/way/1450139259"
+      ],
+      "id": "route-local-fire-brampton-fire-211-06",
+      "routeBaseId": "fire-brampton-fire-211",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1610.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 5963.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 108.3,
+        "bestSameServiceCostSeconds": 108.3
+      }
+    },
+    {
+      "name": "Edenbrook Hill Drive & Queen Anne Drive",
+      "addr": "Edenbrook Hill Drive & Queen Anne Drive",
+      "lat": 43.6928926,
+      "lng": -79.8051877,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33730665",
+        "way/33730670"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33730665",
+        "https://www.openstreetmap.org/way/33730670"
+      ],
+      "id": "route-local-fire-brampton-fire-214-01",
+      "routeBaseId": "fire-brampton-fire-214",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 801.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1378.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 76.8,
+        "bestSameServiceCostSeconds": 76.8
+      }
+    },
+    {
+      "name": "Bleasdale Avenue & Portsdown Road & Viewforth Road",
+      "addr": "Bleasdale Avenue & Portsdown Road & Viewforth Road",
+      "lat": 43.6763332,
+      "lng": -79.8214718,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/154340219",
+        "way/154340231",
+        "way/469416304"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/154340219",
+        "https://www.openstreetmap.org/way/154340231",
+        "https://www.openstreetmap.org/way/469416304"
+      ],
+      "id": "route-local-fire-brampton-fire-214-02",
+      "routeBaseId": "fire-brampton-fire-214",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2273.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 322.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 184.5,
+        "bestSameServiceCostSeconds": 173.9
+      }
+    },
+    {
+      "name": "Manett Crescent & Tessler Crescent",
+      "addr": "Manett Crescent & Tessler Crescent",
+      "lat": 43.7009629,
+      "lng": -79.7895254,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33701207",
+        "way/39338309"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33701207",
+        "https://www.openstreetmap.org/way/39338309"
+      ],
+      "id": "route-local-fire-brampton-fire-214-03",
+      "routeBaseId": "fire-brampton-fire-214",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2594.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 824.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 188.4,
+        "bestSameServiceCostSeconds": 188.4
+      }
+    },
+    {
+      "name": "Albright Road & Withers Way",
+      "addr": "Albright Road & Withers Way",
+      "lat": 43.6809178,
+      "lng": -79.7984345,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34727800",
+        "way/34727996",
+        "way/34728005"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34727800",
+        "https://www.openstreetmap.org/way/34727996",
+        "https://www.openstreetmap.org/way/34728005"
+      ],
+      "id": "route-local-fire-brampton-fire-214-04",
+      "routeBaseId": "fire-brampton-fire-214",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1760,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 756,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 157.1,
+        "bestSameServiceCostSeconds": 157.1
+      }
+    },
+    {
+      "name": "Peachleaf Crescent & Redfinch Way",
+      "addr": "Peachleaf Crescent & Redfinch Way",
+      "lat": 43.6953133,
+      "lng": -79.8202218,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33782275",
+        "way/33782279"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33782275",
+        "https://www.openstreetmap.org/way/33782279"
+      ],
+      "id": "route-local-fire-brampton-fire-214-05",
+      "routeBaseId": "fire-brampton-fire-214",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2340.5,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1016.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 224.2,
+        "bestSameServiceCostSeconds": 209.6
+      }
+    },
+    {
+      "name": "Brunswick Street & Dunlop Court",
+      "addr": "Brunswick Street & Dunlop Court",
+      "lat": 43.6787472,
+      "lng": -79.8099853,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/38722126",
+        "way/38722147",
+        "way/38722285"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/38722126",
+        "https://www.openstreetmap.org/way/38722147",
+        "https://www.openstreetmap.org/way/38722285"
+      ],
+      "id": "route-local-fire-brampton-fire-214-06",
+      "routeBaseId": "fire-brampton-fire-214",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1667.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 218.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 181.9,
+        "bestSameServiceCostSeconds": 181.9
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "CENTURY GARDENS RECREATION CENTRE",
+      "addr": "340 VODDEN ST E, Brampton, ON",
+      "lat": 43.70853274152546,
+      "lng": -79.75395147616642,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services3.arcgis.com/rl7ACuZkiFsmDA2g/ArcGIS/rest/services/Planning_Local_Government/FeatureServer/6",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Robwill Court",
+        "Rutherford Road North"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "brampton-call-12",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-brampton-fire-201-01",
+      "routeBaseId": "fire-brampton-fire-201",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1789.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 304.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 177.7,
+        "bestSameServiceCostSeconds": 173.1
+      }
+    },
+    {
+      "name": "Clark Boulevard & Lisa Street & Terese Road",
+      "addr": "Clark Boulevard & Lisa Street & Terese Road",
+      "lat": 43.7094967,
+      "lng": -79.7240109,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1442412884",
+        "way/1442754655",
+        "way/445041998",
+        "way/770879684"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1442412884",
+        "https://www.openstreetmap.org/way/1442754655",
+        "https://www.openstreetmap.org/way/445041998",
+        "https://www.openstreetmap.org/way/770879684"
+      ],
+      "id": "route-local-fire-brampton-fire-201-02",
+      "routeBaseId": "fire-brampton-fire-201",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1901.3,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 5140.8,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 164.8,
+        "bestSameServiceCostSeconds": 164.8
+      }
+    },
+    {
+      "name": "Jersey Avenue & Milner Road",
+      "addr": "Jersey Avenue & Milner Road",
+      "lat": 43.68404,
+      "lng": -79.7384904,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/39082758",
+        "way/39082810",
+        "way/39082813"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/39082758",
+        "https://www.openstreetmap.org/way/39082810",
+        "https://www.openstreetmap.org/way/39082813"
+      ],
+      "id": "route-local-fire-brampton-fire-201-03",
+      "routeBaseId": "fire-brampton-fire-201",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2539.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 431.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 238.3,
+        "bestSameServiceCostSeconds": 238.3
+      }
+    },
+    {
+      "name": "Hansen Road South & Orenda Road",
+      "addr": "Hansen Road South & Orenda Road",
+      "lat": 43.6938658,
+      "lng": -79.7398077,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/51869886",
+        "way/51869898",
+        "way/51869900"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/51869886",
+        "https://www.openstreetmap.org/way/51869898",
+        "https://www.openstreetmap.org/way/51869900"
+      ],
+      "id": "route-local-fire-brampton-fire-201-04",
+      "routeBaseId": "fire-brampton-fire-201",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1261.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 195.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 115.1,
+        "bestSameServiceCostSeconds": 115.1
+      }
+    },
+    {
+      "name": "Blair Drive & Glidden Road",
+      "addr": "Blair Drive & Glidden Road",
+      "lat": 43.6927278,
+      "lng": -79.716568,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/463025240",
+        "way/51870573"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/463025240",
+        "https://www.openstreetmap.org/way/51870573"
+      ],
+      "id": "route-local-fire-brampton-fire-201-05",
+      "routeBaseId": "fire-brampton-fire-201",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2743.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 473.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 248.7,
+        "bestSameServiceCostSeconds": 248.7
+      }
+    },
+    {
+      "name": "Church Street East & June Avenue",
+      "addr": "Church Street East & June Avenue",
+      "lat": 43.6963974,
+      "lng": -79.7536316,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/41284076",
+        "way/41284102",
+        "way/41284109"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/41284076",
+        "https://www.openstreetmap.org/way/41284102",
+        "https://www.openstreetmap.org/way/41284109"
+      ],
+      "id": "route-local-fire-brampton-fire-201-06",
+      "routeBaseId": "fire-brampton-fire-201",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1683.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 310.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 141.3,
+        "bestSameServiceCostSeconds": 141.3
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "ELLEN MITCHELL RECREATION CENTRE",
+      "addr": "922 NORTH PARK DR, Brampton, ON",
+      "lat": 43.733741138257464,
+      "lng": -79.74488430162108,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services3.arcgis.com/rl7ACuZkiFsmDA2g/ArcGIS/rest/services/Planning_Local_Government/FeatureServer/6",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Malabar Crescent",
+        "Myna Court"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "brampton-call-14",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-brampton-ems-fernforest-01",
+      "routeBaseId": "ems-brampton-ems-fernforest",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1091.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1715.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 170.6,
+        "bestSameServiceCostSeconds": 170.6
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "BRAMPTON SOCCER CENTRE",
+      "addr": "1495 SANDALWOOD PKY E, Brampton, ON",
+      "lat": 43.743703400174866,
+      "lng": -79.76903757888766,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services3.arcgis.com/rl7ACuZkiFsmDA2g/ArcGIS/rest/services/Planning_Local_Government/FeatureServer/6",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Dixie Road",
+        "Springtown Trail"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "brampton-call-03",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-brampton-ems-fernforest-02",
+      "routeBaseId": "ems-brampton-ems-fernforest",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2024.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 691.3,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 249.9,
+        "bestSameServiceCostSeconds": 249.9
+      }
+    },
+    {
+      "name": "Harbourtown Crescent & Southlake Boulevard & Stoneylake Avenue",
+      "addr": "Harbourtown Crescent & Southlake Boulevard & Stoneylake Avenue",
+      "lat": 43.7207311,
+      "lng": -79.7669776,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/51870183",
+        "way/51870220",
+        "way/51870221"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/51870183",
+        "https://www.openstreetmap.org/way/51870220",
+        "https://www.openstreetmap.org/way/51870221"
+      ],
+      "id": "route-local-ems-brampton-ems-fernforest-03",
+      "routeBaseId": "ems-brampton-ems-fernforest",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2578.1,
+        "meaningfulDecisions": 6,
+        "maxAlternativePenaltyMetres": 2347.4,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 185.2,
+        "bestSameServiceCostSeconds": 185.2
+      }
+    },
+    {
+      "name": "Black Forest Drive & Bramalea Road & Larkspur Road",
+      "addr": "Black Forest Drive & Bramalea Road & Larkspur Road",
+      "lat": 43.7504088,
+      "lng": -79.7523465,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/333349465",
+        "way/333349466",
+        "way/333350034",
+        "way/333350035"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/333349465",
+        "https://www.openstreetmap.org/way/333349466",
+        "https://www.openstreetmap.org/way/333350034",
+        "https://www.openstreetmap.org/way/333350035"
+      ],
+      "id": "route-local-ems-brampton-ems-fernforest-04",
+      "routeBaseId": "ems-brampton-ems-fernforest",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1696.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 540.1,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 165,
+        "bestSameServiceCostSeconds": 165
+      }
+    },
+    {
+      "name": "Howden Boulevard & Williams Parkway East",
+      "addr": "Howden Boulevard & Williams Parkway East",
+      "lat": 43.7201913,
+      "lng": -79.7468123,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/277372677",
+        "way/454771309",
+        "way/601326587"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/277372677",
+        "https://www.openstreetmap.org/way/454771309",
+        "https://www.openstreetmap.org/way/601326587"
+      ],
+      "id": "route-local-ems-brampton-ems-fernforest-05",
+      "routeBaseId": "ems-brampton-ems-fernforest",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2602,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 519.1,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 190.3,
+        "bestSameServiceCostSeconds": 190.3
+      }
+    },
+    {
+      "name": "Ocean Avenue & Riverbank Road",
+      "addr": "Ocean Avenue & Riverbank Road",
+      "lat": 43.7340641,
+      "lng": -79.7614062,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/38656263",
+        "way/38656278",
+        "way/38656286"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/38656263",
+        "https://www.openstreetmap.org/way/38656278",
+        "https://www.openstreetmap.org/way/38656286"
+      ],
+      "id": "route-local-ems-brampton-ems-fernforest-06",
+      "routeBaseId": "ems-brampton-ems-fernforest",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1668,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 691.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 168.8,
+        "bestSameServiceCostSeconds": 168.8
+      }
+    },
+    {
+      "name": "Alameda Street & Sacramento Road",
+      "addr": "Alameda Street & Sacramento Road",
+      "lat": 43.6369899,
+      "lng": -79.7780857,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/182800334",
+        "way/295941645"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/182800334",
+        "https://www.openstreetmap.org/way/295941645"
+      ],
+      "id": "route-local-ems-brampton-ems-rising-hill-01",
+      "routeBaseId": "ems-brampton-ems-rising-hill",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 798.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 645.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 139.8,
+        "bestSameServiceCostSeconds": 139.8
+      }
+    },
+    {
+      "name": "Heritage Road & Lionhead Golf Club Road",
+      "addr": "Heritage Road & Lionhead Golf Club Road",
+      "lat": 43.6302601,
+      "lng": -79.8032941,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1267893383",
+        "way/1267893384",
+        "way/464935060"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1267893383",
+        "https://www.openstreetmap.org/way/1267893384",
+        "https://www.openstreetmap.org/way/464935060"
+      ],
+      "id": "route-local-ems-brampton-ems-rising-hill-02",
+      "routeBaseId": "ems-brampton-ems-rising-hill",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2151,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 239.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 210,
+        "bestSameServiceCostSeconds": 210
+      }
+    },
+    {
+      "name": "Edgeware Road & Heritage Road",
+      "addr": "Edgeware Road & Heritage Road",
+      "lat": 43.6154057,
+      "lng": -79.7839492,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25168615",
+        "way/392527923",
+        "way/454291903",
+        "way/805387960"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25168615",
+        "https://www.openstreetmap.org/way/392527923",
+        "https://www.openstreetmap.org/way/454291903",
+        "https://www.openstreetmap.org/way/805387960"
+      ],
+      "id": "route-local-ems-brampton-ems-rising-hill-03",
+      "routeBaseId": "ems-brampton-ems-rising-hill",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2524,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 344.5,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 185.2,
+        "bestSameServiceCostSeconds": 185.2
+      }
+    },
+    {
+      "name": "Embleton Road & Mississauga Road",
+      "addr": "Embleton Road & Mississauga Road",
+      "lat": 43.6443791,
+      "lng": -79.7990044,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1266471022",
+        "way/1303117286",
+        "way/377912442"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1266471022",
+        "https://www.openstreetmap.org/way/1303117286",
+        "https://www.openstreetmap.org/way/377912442"
+      ],
+      "id": "route-local-ems-brampton-ems-rising-hill-04",
+      "routeBaseId": "ems-brampton-ems-rising-hill",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1972.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 318.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 135.6,
+        "bestSameServiceCostSeconds": 135.6
+      }
+    },
+    {
+      "name": "Financial Drive & Legendary Circle",
+      "addr": "Financial Drive & Legendary Circle",
+      "lat": 43.6245749,
+      "lng": -79.7604299,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/182786136",
+        "way/701375174",
+        "way/701375177"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/182786136",
+        "https://www.openstreetmap.org/way/701375174",
+        "https://www.openstreetmap.org/way/701375177"
+      ],
+      "id": "route-local-ems-brampton-ems-rising-hill-05",
+      "routeBaseId": "ems-brampton-ems-rising-hill",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2602.9,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 735.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 202.4,
+        "bestSameServiceCostSeconds": 202.4
+      }
+    },
+    {
+      "name": "Edgeware Road & Ironbridge Road",
+      "addr": "Edgeware Road & Ironbridge Road",
+      "lat": 43.6213626,
+      "lng": -79.7727283,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1268967941",
+        "way/1269021122",
+        "way/379977858"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1268967941",
+        "https://www.openstreetmap.org/way/1269021122",
+        "https://www.openstreetmap.org/way/379977858"
+      ],
+      "id": "route-local-ems-brampton-ems-rising-hill-06",
+      "routeBaseId": "ems-brampton-ems-rising-hill",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1702.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 275.4,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 133.4,
+        "bestSameServiceCostSeconds": 133.4
+      }
+    },
+    {
+      "name": "Hackmore Gate & Rivermere Court",
+      "addr": "Hackmore Gate & Rivermere Court",
+      "lat": 43.6862978,
+      "lng": -79.8111035,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/38722088",
+        "way/38722180",
+        "way/38722308"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/38722088",
+        "https://www.openstreetmap.org/way/38722180",
+        "https://www.openstreetmap.org/way/38722308"
+      ],
+      "id": "route-local-ems-brampton-ems-bovaird-west-01",
+      "routeBaseId": "ems-brampton-ems-bovaird-west",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 800.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1263.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 73.5,
+        "bestSameServiceCostSeconds": 73.5
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "CASSIE CAMPBELL COMMUNITY CENTRE",
+      "addr": "1050 SANDALWOOD PKY W, Brampton, ON",
+      "lat": 43.69696664599032,
+      "lng": -79.82453109908978,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services3.arcgis.com/rl7ACuZkiFsmDA2g/ArcGIS/rest/services/Planning_Local_Government/FeatureServer/6",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Chinguacousy Road",
+        "Fidelity Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "brampton-call-02",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-brampton-ems-bovaird-west-02",
+      "routeBaseId": "ems-brampton-ems-bovaird-west",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2396,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 604.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 207.9,
+        "bestSameServiceCostSeconds": 207.9
+      }
+    },
+    {
+      "name": "Flowertown Avenue & Major William Sharpe Drive",
+      "addr": "Flowertown Avenue & Major William Sharpe Drive",
+      "lat": 43.6756913,
+      "lng": -79.7878214,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1517818004",
+        "way/1517818005",
+        "way/1517846734",
+        "way/33700521"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1517818004",
+        "https://www.openstreetmap.org/way/1517818005",
+        "https://www.openstreetmap.org/way/1517846734",
+        "https://www.openstreetmap.org/way/33700521"
+      ],
+      "id": "route-local-ems-brampton-ems-bovaird-west-03",
+      "routeBaseId": "ems-brampton-ems-bovaird-west",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2565.1,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1279.9,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 171.5,
+        "bestSameServiceCostSeconds": 171.5
+      }
+    },
+    {
+      "name": "Richwood Crescent & Royal Orchard Drive & Springview Drive",
+      "addr": "Richwood Crescent & Royal Orchard Drive & Springview Drive",
+      "lat": 43.6969933,
+      "lng": -79.7925094,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33700935",
+        "way/33700981",
+        "way/468023996",
+        "way/538606556"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33700935",
+        "https://www.openstreetmap.org/way/33700981",
+        "https://www.openstreetmap.org/way/468023996",
+        "https://www.openstreetmap.org/way/538606556"
+      ],
+      "id": "route-local-ems-brampton-ems-bovaird-west-04",
+      "routeBaseId": "ems-brampton-ems-bovaird-west",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1742.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 222.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 102.3,
+        "bestSameServiceCostSeconds": 102.3
+      }
+    },
+    {
+      "name": "Commuter Drive & Creditview Road & Salvation Road",
+      "addr": "Commuter Drive & Creditview Road & Salvation Road",
+      "lat": 43.6766244,
+      "lng": -79.8191159,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/181683507",
+        "way/38722919",
+        "way/468896532"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/181683507",
+        "https://www.openstreetmap.org/way/38722919",
+        "https://www.openstreetmap.org/way/468896532"
+      ],
+      "id": "route-local-ems-brampton-ems-bovaird-west-05",
+      "routeBaseId": "ems-brampton-ems-bovaird-west",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1769.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 490.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 119.7,
+        "bestSameServiceCostSeconds": 119.7
+      }
+    },
+    {
+      "name": "Hayloft Court & Porchlight Road & Provisions Lane",
+      "addr": "Hayloft Court & Porchlight Road & Provisions Lane",
+      "lat": 43.6858984,
+      "lng": -79.7917218,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33700804",
+        "way/33700806",
+        "way/39225756"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33700804",
+        "https://www.openstreetmap.org/way/33700806",
+        "https://www.openstreetmap.org/way/39225756"
+      ],
+      "id": "route-local-ems-brampton-ems-bovaird-west-06",
+      "routeBaseId": "ems-brampton-ems-bovaird-west",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1713,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 376.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 137,
+        "bestSameServiceCostSeconds": 137
+      }
+    },
+    {
+      "name": "Michener Drive & Tetley Road",
+      "addr": "Michener Drive & Tetley Road",
+      "lat": 43.7661268,
+      "lng": -79.7749578,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/777184868",
+        "way/777184869"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/777184868",
+        "https://www.openstreetmap.org/way/777184869"
+      ],
+      "id": "route-local-ems-brampton-ems-inspire-01",
+      "routeBaseId": "ems-brampton-ems-inspire",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 806.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 180.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 111.2,
+        "bestSameServiceCostSeconds": 111.2
+      }
+    },
+    {
+      "name": "Mayfield Road & Torbram Road",
+      "addr": "Mayfield Road & Torbram Road",
+      "lat": 43.7824407,
+      "lng": -79.7719377,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1384646231",
+        "way/1419070311",
+        "way/295161332",
+        "way/94341523"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1384646231",
+        "https://www.openstreetmap.org/way/1419070311",
+        "https://www.openstreetmap.org/way/295161332",
+        "https://www.openstreetmap.org/way/94341523"
+      ],
+      "id": "route-local-ems-brampton-ems-inspire-02",
+      "routeBaseId": "ems-brampton-ems-inspire",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1580.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 525.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 140.1,
+        "bestSameServiceCostSeconds": 140.1
+      }
+    },
+    {
+      "name": "Merchant Road & Speirs Giffen Avenue & Speirs Griffen Avenue",
+      "addr": "Merchant Road & Speirs Giffen Avenue & Speirs Griffen Avenue",
+      "lat": 43.7635259,
+      "lng": -79.7992101,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1013564868",
+        "way/332004311",
+        "way/332004312"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1013564868",
+        "https://www.openstreetmap.org/way/332004311",
+        "https://www.openstreetmap.org/way/332004312"
+      ],
+      "id": "route-local-ems-brampton-ems-inspire-03",
+      "routeBaseId": "ems-brampton-ems-inspire",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2513.4,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 503.9,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 193.7,
+        "bestSameServiceCostSeconds": 193.7
+      }
+    },
+    {
+      "name": "Grove End Way & Sarno Road & Swans Acre Trail",
+      "addr": "Grove End Way & Sarno Road & Swans Acre Trail",
+      "lat": 43.7607458,
+      "lng": -79.7861997,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1030129117",
+        "way/606193593",
+        "way/606193594"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1030129117",
+        "https://www.openstreetmap.org/way/606193593",
+        "https://www.openstreetmap.org/way/606193594"
+      ],
+      "id": "route-local-ems-brampton-ems-inspire-04",
+      "routeBaseId": "ems-brampton-ems-inspire",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1703.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 401.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 185.3,
+        "bestSameServiceCostSeconds": 185.3
+      }
+    },
+    {
+      "name": "Melsandra Street & Tennant Drive",
+      "addr": "Melsandra Street & Tennant Drive",
+      "lat": 43.7679841,
+      "lng": -79.7576113,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55206497",
+        "way/55206594",
+        "way/55206662"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55206497",
+        "https://www.openstreetmap.org/way/55206594",
+        "https://www.openstreetmap.org/way/55206662"
+      ],
+      "id": "route-local-ems-brampton-ems-inspire-05",
+      "routeBaseId": "ems-brampton-ems-inspire",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2554.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 693.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 224.6,
+        "bestSameServiceCostSeconds": 224.6
+      }
+    },
+    {
+      "name": "Cedarbrook Road & Father Tobin Road",
+      "addr": "Cedarbrook Road & Father Tobin Road",
+      "lat": 43.761977,
+      "lng": -79.7659802,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/221148207",
+        "way/468076105"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/221148207",
+        "https://www.openstreetmap.org/way/468076105"
+      ],
+      "id": "route-local-ems-brampton-ems-inspire-06",
+      "routeBaseId": "ems-brampton-ems-inspire",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1701.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 693.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 148.6,
+        "bestSameServiceCostSeconds": 148.6
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Hawthorn Woods Community",
+      "addr": "9257 Goreway Drive",
+      "lat": 43.75758509905761,
+      "lng": -79.6889797,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790173"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "4399",
+      "community": "Brampton",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-4399",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-brampton-ems-exchange-01",
+      "routeBaseId": "ems-brampton-ems-exchange",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 539,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1449.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 87.9,
+        "bestSameServiceCostSeconds": 87.9
+      }
+    },
+    {
+      "name": "Armthorpe Road & Goreway Drive",
+      "addr": "Armthorpe Road & Goreway Drive",
+      "lat": 43.7449327,
+      "lng": -79.673454,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/4902019",
+        "way/50977906"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/4902019",
+        "https://www.openstreetmap.org/way/50977906"
+      ],
+      "id": "route-local-ems-brampton-ems-exchange-02",
+      "routeBaseId": "ems-brampton-ems-exchange",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1803.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2864.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 126.2,
+        "bestSameServiceCostSeconds": 126.2
+      }
+    },
+    {
+      "name": "Cottrelle Boulevard & Goreway Drive",
+      "addr": "Cottrelle Boulevard & Goreway Drive",
+      "lat": 43.7699461,
+      "lng": -79.7071093,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/454539071",
+        "way/454572948",
+        "way/55205900"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/454539071",
+        "https://www.openstreetmap.org/way/454572948",
+        "https://www.openstreetmap.org/way/55205900"
+      ],
+      "id": "route-local-ems-brampton-ems-exchange-03",
+      "routeBaseId": "ems-brampton-ems-exchange",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2440.7,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1909.7,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 209.3,
+        "bestSameServiceCostSeconds": 209.3
+      }
+    },
+    {
+      "name": "Delta Park Boulevard & Maritime Ontario Boulevard & Queen Street East",
+      "addr": "Delta Park Boulevard & Maritime Ontario Boulevard & Queen Street East",
+      "lat": 43.746229,
+      "lng": -79.6928364,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/30124648",
+        "way/50977557",
+        "way/775724693",
+        "way/897224538",
+        "way/897224539"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/30124648",
+        "https://www.openstreetmap.org/way/50977557",
+        "https://www.openstreetmap.org/way/775724693",
+        "https://www.openstreetmap.org/way/897224538",
+        "https://www.openstreetmap.org/way/897224539"
+      ],
+      "id": "route-local-ems-brampton-ems-exchange-04",
+      "routeBaseId": "ems-brampton-ems-exchange",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1166.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 3025.7,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 96.2,
+        "bestSameServiceCostSeconds": 96.2
+      }
+    },
+    {
+      "name": "Airport Road & Williams Parkway East",
+      "addr": "Airport Road & Williams Parkway East",
+      "lat": 43.7533236,
+      "lng": -79.7087289,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1117480096",
+        "way/1117480098",
+        "way/445430089",
+        "way/445430097"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1117480096",
+        "https://www.openstreetmap.org/way/1117480098",
+        "https://www.openstreetmap.org/way/445430089",
+        "https://www.openstreetmap.org/way/445430097"
+      ],
+      "id": "route-local-ems-brampton-ems-exchange-05",
+      "routeBaseId": "ems-brampton-ems-exchange",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2390.9,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 195.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 175.3,
+        "bestSameServiceCostSeconds": 175.3
+      }
+    },
+    {
+      "name": "Claireville Conservation Road & Queen Street East",
+      "addr": "Claireville Conservation Road & Queen Street East",
+      "lat": 43.76158,
+      "lng": -79.6730191,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/118254424",
+        "way/775724672",
+        "way/897224513"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/118254424",
+        "https://www.openstreetmap.org/way/775724672",
+        "https://www.openstreetmap.org/way/897224513"
+      ],
+      "id": "route-local-ems-brampton-ems-exchange-06",
+      "routeBaseId": "ems-brampton-ems-exchange",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1860.2,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 4137.6,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 113.3,
+        "bestSameServiceCostSeconds": 113.3
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "PAUL PALLESCHI RECREATION CENTRE",
+      "addr": "30 LOAFERS LAKE LANE, Brampton, ON",
+      "lat": 43.72483838013483,
+      "lng": -79.8009084743854,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services3.arcgis.com/rl7ACuZkiFsmDA2g/ArcGIS/rest/services/Planning_Local_Government/FeatureServer/6",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Savino Drive",
+        "Conestoga Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "brampton-call-19",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-brampton-ems-sandalwood-01",
+      "routeBaseId": "ems-brampton-ems-sandalwood",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 892,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 3451.9,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 116.6,
+        "bestSameServiceCostSeconds": 116.6
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Woodhall Park Community",
+      "addr": "10260 Kennedy Road North",
+      "lat": 43.72034309905767,
+      "lng": -79.78370009999998,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790229"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "4475",
+      "community": "Brampton",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-4475",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-brampton-ems-sandalwood-02",
+      "routeBaseId": "ems-brampton-ems-sandalwood",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2039.7,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1031.2,
+        "decisionKinds": [
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 173.8,
+        "bestSameServiceCostSeconds": 173.8
+      }
+    },
+    {
+      "name": "Van Kirk Drive & Viceroy Crescent",
+      "addr": "Van Kirk Drive & Viceroy Crescent",
+      "lat": 43.7135945,
+      "lng": -79.8179658,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/51867484",
+        "way/51867508",
+        "way/51867510"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/51867484",
+        "https://www.openstreetmap.org/way/51867508",
+        "https://www.openstreetmap.org/way/51867510"
+      ],
+      "id": "route-local-ems-brampton-ems-sandalwood-03",
+      "routeBaseId": "ems-brampton-ems-sandalwood",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2589.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 693.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 203.1,
+        "bestSameServiceCostSeconds": 203.1
+      }
+    },
+    {
+      "name": "Glover Gate & Royal Palm Drive & Sandalwood Parkway East",
+      "addr": "Glover Gate & Royal Palm Drive & Sandalwood Parkway East",
+      "lat": 43.7335363,
+      "lng": -79.7852754,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/119718009",
+        "way/459693777",
+        "way/51869277",
+        "way/51869278"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/119718009",
+        "https://www.openstreetmap.org/way/459693777",
+        "https://www.openstreetmap.org/way/51869277",
+        "https://www.openstreetmap.org/way/51869278"
+      ],
+      "id": "route-local-ems-brampton-ems-sandalwood-04",
+      "routeBaseId": "ems-brampton-ems-sandalwood",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1709.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 3053.8,
+        "decisionKinds": [
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 127.7,
+        "bestSameServiceCostSeconds": 127.7
+      }
+    },
+    {
+      "name": "Brinkley Drive & Hurontario Street & Roycrest Street",
+      "addr": "Brinkley Drive & Hurontario Street & Roycrest Street",
+      "lat": 43.7305004,
+      "lng": -79.8204908,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/333622109",
+        "way/333622110",
+        "way/333622111",
+        "way/33873926"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/333622109",
+        "https://www.openstreetmap.org/way/333622110",
+        "https://www.openstreetmap.org/way/333622111",
+        "https://www.openstreetmap.org/way/33873926"
+      ],
+      "id": "route-local-ems-brampton-ems-sandalwood-05",
+      "routeBaseId": "ems-brampton-ems-sandalwood",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2544.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 183.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 170,
+        "bestSameServiceCostSeconds": 170
+      }
+    },
+    {
+      "name": "Fisherman Drive & Railside Drive",
+      "addr": "Fisherman Drive & Railside Drive",
+      "lat": 43.7115976,
+      "lng": -79.8031564,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/119723291",
+        "way/119723293",
+        "way/119723295"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/119723291",
+        "https://www.openstreetmap.org/way/119723293",
+        "https://www.openstreetmap.org/way/119723295"
+      ],
+      "id": "route-local-ems-brampton-ems-sandalwood-06",
+      "routeBaseId": "ems-brampton-ems-sandalwood",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1660.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2632.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 168.5,
+        "bestSameServiceCostSeconds": 168.5
+      }
+    },
+    {
+      "name": "Countryside Drive & The Gore Road",
+      "addr": "Countryside Drive & The Gore Road",
+      "lat": 43.8116721,
+      "lng": -79.7166491,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1115782694",
+        "way/1115782695",
+        "way/1115782696",
+        "way/1115782697"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1115782694",
+        "https://www.openstreetmap.org/way/1115782695",
+        "https://www.openstreetmap.org/way/1115782696",
+        "https://www.openstreetmap.org/way/1115782697"
+      ],
+      "id": "route-local-ems-brampton-ems-gore-01",
+      "routeBaseId": "ems-brampton-ems-gore",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 791.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 7601.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 59,
+        "bestSameServiceCostSeconds": 59
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "GORE MEADOWS COMMUNITY CENTRE",
+      "addr": "10150 THE GORE RD, Brampton, ON",
+      "lat": 43.79453530193816,
+      "lng": -79.69495782520038,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services3.arcgis.com/rl7ACuZkiFsmDA2g/ArcGIS/rest/services/Planning_Local_Government/FeatureServer/6",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Castlemore Road",
+        "Fitzpatrick Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "brampton-call-05",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-brampton-ems-gore-02",
+      "routeBaseId": "ems-brampton-ems-gore",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2155.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 4985.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 235.1,
+        "bestSameServiceCostSeconds": 235.1
+      }
+    },
+    {
+      "name": "Mayfield Road & O'Reilly's Lane",
+      "addr": "Mayfield Road & O'Reilly's Lane",
+      "lat": 43.8241656,
+      "lng": -79.7222361,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34163121",
+        "way/387351779"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34163121",
+        "https://www.openstreetmap.org/way/387351779"
+      ],
+      "id": "route-local-ems-brampton-ems-gore-03",
+      "routeBaseId": "ems-brampton-ems-gore",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2672.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 6141.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 172.3,
+        "bestSameServiceCostSeconds": 172.3
+      }
+    },
+    {
+      "name": "Edgeforest Drive & The Gore Road",
+      "addr": "Edgeforest Drive & The Gore Road",
+      "lat": 43.8027146,
+      "lng": -79.7045668,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1414879376",
+        "way/314021271",
+        "way/55205996"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1414879376",
+        "https://www.openstreetmap.org/way/314021271",
+        "https://www.openstreetmap.org/way/55205996"
+      ],
+      "id": "route-local-ems-brampton-ems-gore-04",
+      "routeBaseId": "ems-brampton-ems-gore",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 670.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 7599.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 51.7,
+        "bestSameServiceCostSeconds": 51.7
+      }
+    },
+    {
+      "name": "Clarkway Drive & Countryside Drive",
+      "addr": "Clarkway Drive & Countryside Drive",
+      "lat": 43.821214,
+      "lng": -79.7058759,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/55207147",
+        "way/55207152"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/55207147",
+        "https://www.openstreetmap.org/way/55207152"
+      ],
+      "id": "route-local-ems-brampton-ems-gore-05",
+      "routeBaseId": "ems-brampton-ems-gore",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2156.3,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 4714,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 168.2,
+        "bestSameServiceCostSeconds": 168.2
+      }
+    },
+    {
+      "name": "Countryside Drive & Martin Byrne Drive",
+      "addr": "Countryside Drive & Martin Byrne Drive",
+      "lat": 43.8059123,
+      "lng": -79.72305,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1115769910",
+        "way/1350087618",
+        "way/1450139259"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1115769910",
+        "https://www.openstreetmap.org/way/1350087618",
+        "https://www.openstreetmap.org/way/1450139259"
+      ],
+      "id": "route-local-ems-brampton-ems-gore-06",
+      "routeBaseId": "ems-brampton-ems-gore",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1610.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 5963.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 108.3,
+        "bestSameServiceCostSeconds": 108.3
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "COLLABORATIVE LEARNING AND TECHNOLOGY CENTRE",
+      "addr": "32 KENNEDY RD N, Brampton, ON",
+      "lat": 43.69878503149307,
+      "lng": -79.75217649407686,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services3.arcgis.com/rl7ACuZkiFsmDA2g/ArcGIS/rest/services/Planning_Local_Government/FeatureServer/6",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Mccaul Street",
+        "Church Street East"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "brampton-call-07",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-brampton-ems-trueman-01",
+      "routeBaseId": "ems-brampton-ems-trueman",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1240.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 896,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Trueman Street",
+        "estimatedCostSeconds": 160.9,
+        "bestSameServiceCostSeconds": 160.9
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Tullamore Community",
+      "addr": "133 Kennedy Road South",
+      "lat": 43.6847854990577,
+      "lng": -79.73602359999995,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790219"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "1722",
+      "community": "Brampton",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-1722",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-brampton-ems-trueman-02",
+      "routeBaseId": "ems-brampton-ems-trueman",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1875,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1039.9,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Trueman Street",
+        "estimatedCostSeconds": 175.3,
+        "bestSameServiceCostSeconds": 175.3
+      }
+    },
+    {
+      "name": "Fairglen Avenue & Nancy McCredie Drive & Pleasantview Avenue",
+      "addr": "Fairglen Avenue & Nancy McCredie Drive & Pleasantview Avenue",
+      "lat": 43.6868228,
+      "lng": -79.7731064,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1517775107",
+        "way/1550022360",
+        "way/39240347",
+        "way/39240351"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1517775107",
+        "https://www.openstreetmap.org/way/1550022360",
+        "https://www.openstreetmap.org/way/39240347",
+        "https://www.openstreetmap.org/way/39240351"
+      ],
+      "id": "route-local-ems-brampton-ems-trueman-03",
+      "routeBaseId": "ems-brampton-ems-trueman",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2588.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 330.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Trueman Street",
+        "estimatedCostSeconds": 269.1,
+        "bestSameServiceCostSeconds": 269.1
+      }
+    },
+    {
+      "name": "Centre Street South & Haslemere Avenue",
+      "addr": "Centre Street South & Haslemere Avenue",
+      "lat": 43.6879248,
+      "lng": -79.749514,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/39082749",
+        "way/39082822",
+        "way/39082824"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/39082749",
+        "https://www.openstreetmap.org/way/39082822",
+        "https://www.openstreetmap.org/way/39082824"
+      ],
+      "id": "route-local-ems-brampton-ems-trueman-04",
+      "routeBaseId": "ems-brampton-ems-trueman",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 835.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 441.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Trueman Street",
+        "estimatedCostSeconds": 114.1,
+        "bestSameServiceCostSeconds": 114.1
+      }
+    },
+    {
+      "name": "Orenda Road & Tilbury Court",
+      "addr": "Orenda Road & Tilbury Court",
+      "lat": 43.6974663,
+      "lng": -79.7254481,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/30419704",
+        "way/51870730"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/30419704",
+        "https://www.openstreetmap.org/way/51870730"
+      ],
+      "id": "route-local-ems-brampton-ems-trueman-05",
+      "routeBaseId": "ems-brampton-ems-trueman",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2450.8,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 848.2,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Trueman Street",
+        "estimatedCostSeconds": 226.5,
+        "bestSameServiceCostSeconds": 226.5
+      }
+    },
+    {
+      "name": "Centre Street North & Vodden Street East",
+      "addr": "Centre Street North & Vodden Street East",
+      "lat": 43.6977193,
+      "lng": -79.7642519,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/41284104",
+        "way/41284127",
+        "way/41284139",
+        "way/41284173"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/41284104",
+        "https://www.openstreetmap.org/way/41284127",
+        "https://www.openstreetmap.org/way/41284139",
+        "https://www.openstreetmap.org/way/41284173"
+      ],
+      "id": "route-local-ems-brampton-ems-trueman-06",
+      "routeBaseId": "ems-brampton-ems-trueman",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1697.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 330.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Trueman Street",
+        "estimatedCostSeconds": 162.1,
+        "bestSameServiceCostSeconds": 162.1
+      }
+    },
+    {
+      "name": "Anne Court & Autumn Boulevard",
+      "addr": "Anne Court & Autumn Boulevard",
+      "lat": 43.7090829,
+      "lng": -79.6978241,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/38862161",
+        "way/38862191",
+        "way/38862203"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/38862161",
+        "https://www.openstreetmap.org/way/38862191",
+        "https://www.openstreetmap.org/way/38862203"
+      ],
+      "id": "route-local-ems-brampton-ems-victoria-01",
+      "routeBaseId": "ems-brampton-ems-victoria",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 838.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 603.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 77.7,
+        "bestSameServiceCostSeconds": 77.7
+      }
+    },
+    {
+      "name": "Advance Boulevard & Rainham Court & Strathearn Avenue",
+      "addr": "Advance Boulevard & Rainham Court & Strathearn Avenue",
+      "lat": 43.6922715,
+      "lng": -79.6941131,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/181746674",
+        "way/38414463",
+        "way/38414465"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/181746674",
+        "https://www.openstreetmap.org/way/38414463",
+        "https://www.openstreetmap.org/way/38414465"
+      ],
+      "id": "route-local-ems-brampton-ems-victoria-02",
+      "routeBaseId": "ems-brampton-ems-victoria",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2156.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 764.2,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 189.5,
+        "bestSameServiceCostSeconds": 189.5
+      }
+    },
+    {
+      "name": "Orenda Road & Titan Road",
+      "addr": "Orenda Road & Titan Road",
+      "lat": 43.6988823,
+      "lng": -79.7194027,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1289092340",
+        "way/30419704",
+        "way/51870731"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1289092340",
+        "https://www.openstreetmap.org/way/30419704",
+        "https://www.openstreetmap.org/way/51870731"
+      ],
+      "id": "route-local-ems-brampton-ems-victoria-03",
+      "routeBaseId": "ems-brampton-ems-victoria",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2418.7,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 767,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 201.3,
+        "bestSameServiceCostSeconds": 201.3
+      }
+    },
+    {
+      "name": "Melanie Drive & Steeles Avenue East",
+      "addr": "Melanie Drive & Steeles Avenue East",
+      "lat": 43.7105698,
+      "lng": -79.6840422,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1201221387",
+        "way/1201221408",
+        "way/51870523"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1201221387",
+        "https://www.openstreetmap.org/way/1201221408",
+        "https://www.openstreetmap.org/way/51870523"
+      ],
+      "id": "route-local-ems-brampton-ems-victoria-04",
+      "routeBaseId": "ems-brampton-ems-victoria",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1241.9,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 3393,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 93.8,
+        "bestSameServiceCostSeconds": 93.8
+      }
+    },
+    {
+      "name": "Bramalea Road & Drew Road",
+      "addr": "Bramalea Road & Drew Road",
+      "lat": 43.6897154,
+      "lng": -79.6699709,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/52419995",
+        "way/52419998",
+        "way/52420001",
+        "way/52420003"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/52419995",
+        "https://www.openstreetmap.org/way/52419998",
+        "https://www.openstreetmap.org/way/52420001",
+        "https://www.openstreetmap.org/way/52420003"
+      ],
+      "id": "route-local-ems-brampton-ems-victoria-05",
+      "routeBaseId": "ems-brampton-ems-victoria",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2796.5,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 2483,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 187.6,
+        "bestSameServiceCostSeconds": 187.6
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "BALMORAL RECREATION CENTRE",
+      "addr": "225 BALMORAL DR, Brampton, ON",
+      "lat": 43.707248075746136,
+      "lng": -79.71312832118502,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://services3.arcgis.com/rl7ACuZkiFsmDA2g/ArcGIS/rest/services/Planning_Local_Government/FeatureServer/6",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Braemar Drive",
+        "Brookland Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "brampton-call-11",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-brampton-ems-victoria-06",
+      "routeBaseId": "ems-brampton-ems-victoria",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2797.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 455,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 270.1,
+        "bestSameServiceCostSeconds": 270.1
+      }
+    }
+  ]
 }

@@ -165,5 +165,2297 @@
   ],
   "roadsUrl": "cities/oshawa/roads.geojson.gz",
   "roadFeatureCount": 20638,
-  "roadDataSha256": "80b471ac27ace7635518484bcdb138a267b4f6e6aa114d1a5c81417687ce46bd"
+  "roadDataSha256": "80b471ac27ace7635518484bcdb138a267b4f6e6aa114d1a5c81417687ce46bd",
+  "routeResponses": {
+    "schemaVersion": 1,
+    "minCallsPerBase": 3,
+    "targetCallsPerBase": 6,
+    "generatedOn": "2026-10-17",
+    "model": {
+      "description": "Published first-due polygons where available. Otherwise a directed road-network estimate using road class travel cost from every same-service hall; allows a15second cost tie for overlapping nearby halls. This is training geography, not live dispatch advice.",
+      "ownershipToleranceSeconds": 15,
+      "maximumCandidateRouteMetres": 12000
+    },
+    "officialAreasUrl": "cities/oshawa/response-areas.geojson",
+    "officialSource": {
+      "title": "Oshawa Fire Response Boundaries",
+      "url": "https://www.arcgis.com/home/item.html?id=8ffc1f2a85e048b3b77adde01f4379a1",
+      "endpoint": "https://map.oshawa.ca/arcgis/rest/services/Operational/OpenData/MapServer/15",
+      "license": "Open Government Licence – City of Oshawa",
+      "licenseUrl": "https://map.oshawa.ca/OpenData/Open%20Government%20Licence%20version%202.0%20-%20Oshawa.pdf",
+      "retrievedOn": "2026-10-17",
+      "originalSha256": "a46c15ffd65276a290cf809cf562b8a795f5e2295c595ff575d2368322fc294d"
+    },
+    "bases": [
+      {
+        "baseId": "fire-oshawa-fire-1",
+        "service": "fire",
+        "number": 1,
+        "name": "Fire Station 1",
+        "method": "official-run-area",
+        "sourceUrl": "https://www.arcgis.com/home/item.html?id=8ffc1f2a85e048b3b77adde01f4379a1",
+        "areaCode": "1",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.90114365959868,
+          "lng": -78.87308070995486,
+          "road": "Unnamed road",
+          "gapMetres": 1.5
+        },
+        "callIds": [
+          "route-local-fire-oshawa-fire-1-01",
+          "route-local-fire-oshawa-fire-1-02",
+          "route-local-fire-oshawa-fire-1-03",
+          "route-local-fire-oshawa-fire-1-04",
+          "route-local-fire-oshawa-fire-1-05",
+          "route-local-fire-oshawa-fire-1-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-oshawa-fire-2",
+        "service": "fire",
+        "number": 2,
+        "name": "Fire Station 2",
+        "method": "official-run-area",
+        "sourceUrl": "https://www.arcgis.com/home/item.html?id=8ffc1f2a85e048b3b77adde01f4379a1",
+        "areaCode": "2",
+        "maxRouteMetres": 6100,
+        "access": {
+          "lat": 43.872916682568786,
+          "lng": -78.84258649895641,
+          "road": "Simcoe Street South",
+          "gapMetres": 24.8
+        },
+        "callIds": [
+          "route-local-fire-oshawa-fire-2-01",
+          "route-local-fire-oshawa-fire-2-02",
+          "route-local-fire-oshawa-fire-2-03",
+          "route-local-fire-oshawa-fire-2-04",
+          "route-local-fire-oshawa-fire-2-05",
+          "route-local-fire-oshawa-fire-2-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-oshawa-fire-3",
+        "service": "fire",
+        "number": 3,
+        "name": "Fire Station 3",
+        "method": "official-run-area",
+        "sourceUrl": "https://www.arcgis.com/home/item.html?id=8ffc1f2a85e048b3b77adde01f4379a1",
+        "areaCode": "3",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.92665980007807,
+          "lng": -78.87372149996958,
+          "road": "Beatrice Street East",
+          "gapMetres": 37.7
+        },
+        "callIds": [
+          "route-local-fire-oshawa-fire-3-01",
+          "route-local-fire-oshawa-fire-3-02",
+          "route-local-fire-oshawa-fire-3-03",
+          "route-local-fire-oshawa-fire-3-04",
+          "route-local-fire-oshawa-fire-3-05",
+          "route-local-fire-oshawa-fire-3-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-oshawa-fire-4",
+        "service": "fire",
+        "number": 4,
+        "name": "Fire Station 4",
+        "method": "official-run-area",
+        "sourceUrl": "https://www.arcgis.com/home/item.html?id=8ffc1f2a85e048b3b77adde01f4379a1",
+        "areaCode": "4",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.9057612411743,
+          "lng": -78.8347191450466,
+          "road": "Harmony Road North",
+          "gapMetres": 38.6
+        },
+        "callIds": [
+          "route-local-fire-oshawa-fire-4-01",
+          "route-local-fire-oshawa-fire-4-02",
+          "route-local-fire-oshawa-fire-4-03",
+          "route-local-fire-oshawa-fire-4-04",
+          "route-local-fire-oshawa-fire-4-05",
+          "route-local-fire-oshawa-fire-4-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-oshawa-fire-5",
+        "service": "fire",
+        "number": 5,
+        "name": "Fire Station 5",
+        "method": "official-run-area",
+        "sourceUrl": "https://www.arcgis.com/home/item.html?id=8ffc1f2a85e048b3b77adde01f4379a1",
+        "areaCode": "5",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.94511202910753,
+          "lng": -78.85199126721025,
+          "road": "Harmony Road North",
+          "gapMetres": 28.5
+        },
+        "callIds": [
+          "route-local-fire-oshawa-fire-5-01",
+          "route-local-fire-oshawa-fire-5-02",
+          "route-local-fire-oshawa-fire-5-03",
+          "route-local-fire-oshawa-fire-5-04",
+          "route-local-fire-oshawa-fire-5-05",
+          "route-local-fire-oshawa-fire-5-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-oshawa-fire-6",
+        "service": "fire",
+        "number": 6,
+        "name": "Fire Station 6",
+        "method": "official-run-area",
+        "sourceUrl": "https://www.arcgis.com/home/item.html?id=8ffc1f2a85e048b3b77adde01f4379a1",
+        "areaCode": "6",
+        "maxRouteMetres": 6300,
+        "access": {
+          "lat": 43.956488862287934,
+          "lng": -78.89903003756415,
+          "road": "Unnamed road",
+          "gapMetres": 15.1
+        },
+        "callIds": [
+          "route-local-fire-oshawa-fire-6-01",
+          "route-local-fire-oshawa-fire-6-02",
+          "route-local-fire-oshawa-fire-6-03",
+          "route-local-fire-oshawa-fire-6-04",
+          "route-local-fire-oshawa-fire-6-05",
+          "route-local-fire-oshawa-fire-6-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-oshawa-ems-514",
+        "service": "ems",
+        "number": 10000,
+        "name": "Oshawa North Paramedic Station",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.9347097,
+          "lng": -78.8587086,
+          "road": "Unnamed road",
+          "gapMetres": 5.2
+        },
+        "callIds": [
+          "route-local-ems-oshawa-ems-514-01",
+          "route-local-ems-oshawa-ems-514-02",
+          "route-local-ems-oshawa-ems-514-03",
+          "route-local-ems-oshawa-ems-514-04",
+          "route-local-ems-oshawa-ems-514-05",
+          "route-local-ems-oshawa-ems-514-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-oshawa-ems-537",
+        "service": "ems",
+        "number": 10001,
+        "name": "Oshawa South Paramedic Station",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.88442536508016,
+          "lng": -78.83804092049563,
+          "road": "Bloor Street East",
+          "gapMetres": 46
+        },
+        "callIds": [
+          "route-local-ems-oshawa-ems-537-01",
+          "route-local-ems-oshawa-ems-537-02",
+          "route-local-ems-oshawa-ems-537-03",
+          "route-local-ems-oshawa-ems-537-04",
+          "route-local-ems-oshawa-ems-537-05",
+          "route-local-ems-oshawa-ems-537-06"
+        ],
+        "challengeCalls": 6
+      }
+    ]
+  },
+  "routeCalls": [
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Valleyview Community Centre",
+      "addr": "81 Gladstone Av, Oshawa, ON",
+      "lat": 43.897736316033836,
+      "lng": -78.87144343175446,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/4/query?objectIds=3145&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Punshon Avenue",
+        "Bond Street West"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "oshawa-call-20",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-oshawa-fire-1-01",
+      "routeBaseId": "fire-oshawa-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 649.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 436.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 120.7,
+        "bestSameServiceCostSeconds": 120.7
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "R S McLaughlin Collegiate and Vocational Institute",
+      "addr": "570 Stevenson Rd N, Oshawa, ON",
+      "lat": 43.90762649802886,
+      "lng": -78.89087531714156,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/6/query?objectIds=6616&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Malan Avenue",
+        "Marion Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "oshawa-call-13",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-oshawa-fire-1-02",
+      "routeBaseId": "fire-oshawa-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2119.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1601.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 182,
+        "bestSameServiceCostSeconds": 182
+      }
+    },
+    {
+      "name": "Oshawa Boulevard North & Ritson Road North",
+      "addr": "Oshawa Boulevard North & Ritson Road North",
+      "lat": 43.9156225,
+      "lng": -78.8607799,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34189874",
+        "way/34191460",
+        "way/455494028"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34189874",
+        "https://www.openstreetmap.org/way/34191460",
+        "https://www.openstreetmap.org/way/455494028"
+      ],
+      "id": "route-local-fire-oshawa-fire-1-03",
+      "routeBaseId": "fire-oshawa-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2673.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1082.2,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 185.5,
+        "bestSameServiceCostSeconds": 153.2
+      }
+    },
+    {
+      "name": "Cromwell Avenue & Park Road South",
+      "addr": "Cromwell Avenue & Park Road South",
+      "lat": 43.8801443,
+      "lng": -78.8692494,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25555405",
+        "way/25557681"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25555405",
+        "https://www.openstreetmap.org/way/25557681"
+      ],
+      "id": "route-local-fire-oshawa-fire-1-04",
+      "routeBaseId": "fire-oshawa-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2626.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1465.9,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 187.9,
+        "bestSameServiceCostSeconds": 167.9
+      }
+    },
+    {
+      "name": "Saturna Avenue & Waverly Street South",
+      "addr": "Saturna Avenue & Waverly Street South",
+      "lat": 43.8865599,
+      "lng": -78.8857061,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25554991",
+        "way/25555005"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25554991",
+        "https://www.openstreetmap.org/way/25555005"
+      ],
+      "id": "route-local-fire-oshawa-fire-1-05",
+      "routeBaseId": "fire-oshawa-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2604.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 457.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 221.3,
+        "bestSameServiceCostSeconds": 221.3
+      }
+    },
+    {
+      "name": "Amber Avenue & Waverly Street North",
+      "addr": "Amber Avenue & Waverly Street North",
+      "lat": 43.896734,
+      "lng": -78.8897266,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/283021801",
+        "way/34191344",
+        "way/34193150"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/283021801",
+        "https://www.openstreetmap.org/way/34191344",
+        "https://www.openstreetmap.org/way/34193150"
+      ],
+      "id": "route-local-fire-oshawa-fire-1-06",
+      "routeBaseId": "fire-oshawa-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1701.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1601.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 140,
+        "bestSameServiceCostSeconds": 140
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Oshawa Public Library - Jess Hann Branch",
+      "addr": "199 Wentworth St W, Oshawa, ON",
+      "lat": 43.86936650256068,
+      "lng": -78.84922171634138,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/4/query?objectIds=2544&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Cedar Street",
+        "Glen Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "oshawa-call-08",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-oshawa-fire-2-01",
+      "routeBaseId": "fire-oshawa-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1007.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 402.8,
+        "decisionKinds": [
+          "departure",
+          "bridge"
+        ],
+        "departureRoad": "Simcoe Street South",
+        "estimatedCostSeconds": 113.1,
+        "bestSameServiceCostSeconds": 113.1
+      }
+    },
+    {
+      "name": "Farewell Street & Raleigh Avenue",
+      "addr": "Farewell Street & Raleigh Avenue",
+      "lat": 43.8815988,
+      "lng": -78.8292793,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/164874433",
+        "way/25757435"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/164874433",
+        "https://www.openstreetmap.org/way/25757435"
+      ],
+      "id": "route-local-fire-oshawa-fire-2-02",
+      "routeBaseId": "fire-oshawa-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1921.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 634.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Simcoe Street South",
+        "estimatedCostSeconds": 124.6,
+        "bestSameServiceCostSeconds": 124.6
+      }
+    },
+    {
+      "name": "Court Street & Olive Avenue",
+      "addr": "Court Street & Olive Avenue",
+      "lat": 43.8895017,
+      "lng": -78.8557836,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/122725734",
+        "way/159832147",
+        "way/34195696"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/122725734",
+        "https://www.openstreetmap.org/way/159832147",
+        "https://www.openstreetmap.org/way/34195696"
+      ],
+      "id": "route-local-fire-oshawa-fire-2-03",
+      "routeBaseId": "fire-oshawa-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2694.4,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1868.2,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Simcoe Street South",
+        "estimatedCostSeconds": 171.4,
+        "bestSameServiceCostSeconds": 171.4
+      }
+    },
+    {
+      "name": "Lakeview Park Avenue & Simcoe Street South",
+      "addr": "Lakeview Park Avenue & Simcoe Street South",
+      "lat": 43.8655572,
+      "lng": -78.8289724,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/164351021",
+        "way/25511620",
+        "way/77964020"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/164351021",
+        "https://www.openstreetmap.org/way/25511620",
+        "https://www.openstreetmap.org/way/77964020"
+      ],
+      "id": "route-local-fire-oshawa-fire-2-04",
+      "routeBaseId": "fire-oshawa-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1361.4,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1274.3,
+        "decisionKinds": [
+          "bridge",
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Simcoe Street South",
+        "estimatedCostSeconds": 116.8,
+        "bestSameServiceCostSeconds": 116.8
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "South Oshawa Community Centre",
+      "addr": "1455 Cedar St, Oshawa, ON",
+      "lat": 43.85953334288914,
+      "lng": -78.84654177437613,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/4/query?objectIds=2853&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Balsam Crescent",
+        "Chaleur Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "oshawa-call-04",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-oshawa-fire-2-05",
+      "routeBaseId": "fire-oshawa-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1830.3,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1339.5,
+        "decisionKinds": [
+          "turn",
+          "departure",
+          "bridge"
+        ],
+        "departureRoad": "Simcoe Street South",
+        "estimatedCostSeconds": 159.3,
+        "bestSameServiceCostSeconds": 159.3
+      }
+    },
+    {
+      "name": "Farewell Street & Harbour Road",
+      "addr": "Farewell Street & Harbour Road",
+      "lat": 43.872053,
+      "lng": -78.8251118,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25757318",
+        "way/25757323",
+        "way/77964022"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25757318",
+        "https://www.openstreetmap.org/way/25757323",
+        "https://www.openstreetmap.org/way/77964022"
+      ],
+      "id": "route-local-fire-oshawa-fire-2-06",
+      "routeBaseId": "fire-oshawa-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1657.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 990.1,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Simcoe Street South",
+        "estimatedCostSeconds": 132.6,
+        "bestSameServiceCostSeconds": 132.6
+      }
+    },
+    {
+      "name": "Sherwood Avenue & Somerville Street",
+      "addr": "Sherwood Avenue & Somerville Street",
+      "lat": 43.9230695,
+      "lng": -78.8795213,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34190200",
+        "way/34190366",
+        "way/34193991"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34190200",
+        "https://www.openstreetmap.org/way/34190366",
+        "https://www.openstreetmap.org/way/34193991"
+      ],
+      "id": "route-local-fire-oshawa-fire-3-01",
+      "routeBaseId": "fire-oshawa-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 789.1,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 675,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Beatrice Street East",
+        "estimatedCostSeconds": 68.2,
+        "bestSameServiceCostSeconds": 68.2
+      }
+    },
+    {
+      "name": "Chelsea Court & Old Brampton Court",
+      "addr": "Chelsea Court & Old Brampton Court",
+      "lat": 43.9297649,
+      "lng": -78.8568322,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34191359",
+        "way/500705513"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34191359",
+        "https://www.openstreetmap.org/way/500705513"
+      ],
+      "id": "route-local-fire-oshawa-fire-3-02",
+      "routeBaseId": "fire-oshawa-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1793,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1761.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Beatrice Street East",
+        "estimatedCostSeconds": 144.5,
+        "bestSameServiceCostSeconds": 144.5
+      }
+    },
+    {
+      "name": "Airport Boulevard & Stevenson Road North & Taunton Road West",
+      "addr": "Airport Boulevard & Stevenson Road North & Taunton Road West",
+      "lat": 43.928531,
+      "lng": -78.898306,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/265261733",
+        "way/379688211",
+        "way/447500847",
+        "way/461747919",
+        "way/478284369"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/265261733",
+        "https://www.openstreetmap.org/way/379688211",
+        "https://www.openstreetmap.org/way/447500847",
+        "https://www.openstreetmap.org/way/461747919",
+        "https://www.openstreetmap.org/way/478284369"
+      ],
+      "id": "route-local-fire-oshawa-fire-3-03",
+      "routeBaseId": "fire-oshawa-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2604.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 3444.2,
+        "decisionKinds": [
+          "bridge",
+          "departure"
+        ],
+        "departureRoad": "Beatrice Street East",
+        "estimatedCostSeconds": 162.9,
+        "bestSameServiceCostSeconds": 162.9
+      }
+    },
+    {
+      "name": "Glovers Road & Norwill Crescent",
+      "addr": "Glovers Road & Norwill Crescent",
+      "lat": 43.9373238,
+      "lng": -78.8771256,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/29275457",
+        "way/29276347"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/29275457",
+        "https://www.openstreetmap.org/way/29276347"
+      ],
+      "id": "route-local-fire-oshawa-fire-3-04",
+      "routeBaseId": "fire-oshawa-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1617,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 648.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Beatrice Street East",
+        "estimatedCostSeconds": 130.1,
+        "bestSameServiceCostSeconds": 130.1
+      }
+    },
+    {
+      "name": "Ritson Road North & Rossland Road East",
+      "addr": "Ritson Road North & Rossland Road East",
+      "lat": 43.917222,
+      "lng": -78.8614703,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/439086122",
+        "way/439086123",
+        "way/439086124",
+        "way/439086125"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/439086122",
+        "https://www.openstreetmap.org/way/439086123",
+        "https://www.openstreetmap.org/way/439086124",
+        "https://www.openstreetmap.org/way/439086125"
+      ],
+      "id": "route-local-fire-oshawa-fire-3-05",
+      "routeBaseId": "fire-oshawa-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1858,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 445.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Beatrice Street East",
+        "estimatedCostSeconds": 142,
+        "bestSameServiceCostSeconds": 142
+      }
+    },
+    {
+      "name": "Manitou Drive & Seneca Avenue",
+      "addr": "Manitou Drive & Seneca Avenue",
+      "lat": 43.9321333,
+      "lng": -78.886956,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/29960999",
+        "way/29961476"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/29960999",
+        "https://www.openstreetmap.org/way/29961476"
+      ],
+      "id": "route-local-fire-oshawa-fire-3-06",
+      "routeBaseId": "fire-oshawa-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1693.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 482.1,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Beatrice Street East",
+        "estimatedCostSeconds": 137,
+        "bestSameServiceCostSeconds": 137
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Donevan Recreation Complex",
+      "addr": "171 Harmony Rd S, Oshawa, ON",
+      "lat": 43.900113360655354,
+      "lng": -78.83035022316555,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/4/query?objectIds=2653&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Hoskin Avenue",
+        "Taylor Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "oshawa-call-02",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-oshawa-fire-4-01",
+      "routeBaseId": "fire-oshawa-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 915.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1650.9,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Harmony Road North",
+        "estimatedCostSeconds": 109.6,
+        "bestSameServiceCostSeconds": 109.6
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Woodview Community Centre",
+      "addr": "151 Cadillac Av N, Oshawa, ON",
+      "lat": 43.906004659800935,
+      "lng": -78.84763859356177,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/4/query?objectIds=2569&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Beverly Street",
+        "Colborne Street East"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "oshawa-call-16",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-oshawa-fire-4-02",
+      "routeBaseId": "fire-oshawa-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1529.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 293.8,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Harmony Road North",
+        "estimatedCostSeconds": 118.3,
+        "bestSameServiceCostSeconds": 118.3
+      }
+    },
+    {
+      "name": "Kilmaurs Avenue & Townline Road North",
+      "addr": "Kilmaurs Avenue & Townline Road North",
+      "lat": 43.9180661,
+      "lng": -78.8184396,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1187974376",
+        "way/29124243"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1187974376",
+        "https://www.openstreetmap.org/way/29124243"
+      ],
+      "id": "route-local-fire-oshawa-fire-4-03",
+      "routeBaseId": "fire-oshawa-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2611.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1961,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Harmony Road North",
+        "estimatedCostSeconds": 157.3,
+        "bestSameServiceCostSeconds": 157.3
+      }
+    },
+    {
+      "name": "Adelaide Avenue East & Blackthorn Street",
+      "addr": "Adelaide Avenue East & Blackthorn Street",
+      "lat": 43.9133616,
+      "lng": -78.8341772,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1419905482",
+        "way/29081807"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1419905482",
+        "https://www.openstreetmap.org/way/29081807"
+      ],
+      "id": "route-local-fire-oshawa-fire-4-04",
+      "routeBaseId": "fire-oshawa-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1075.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2247.5,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Harmony Road North",
+        "estimatedCostSeconds": 64.7,
+        "bestSameServiceCostSeconds": 64.7
+      }
+    },
+    {
+      "name": "Olive Avenue & Verdun Road",
+      "addr": "Olive Avenue & Verdun Road",
+      "lat": 43.8916437,
+      "lng": -78.8464999,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/122725726",
+        "way/34192266",
+        "way/34196325"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/122725726",
+        "https://www.openstreetmap.org/way/34192266",
+        "https://www.openstreetmap.org/way/34196325"
+      ],
+      "id": "route-local-fire-oshawa-fire-4-05",
+      "routeBaseId": "fire-oshawa-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2584.6,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 436.2,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Harmony Road North",
+        "estimatedCostSeconds": 156.6,
+        "bestSameServiceCostSeconds": 156.6
+      }
+    },
+    {
+      "name": "Eastlawn Street & King Street East",
+      "addr": "Eastlawn Street & King Street East",
+      "lat": 43.9062995,
+      "lng": -78.8156854,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/103093532",
+        "way/1324933591",
+        "way/29068485"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/103093532",
+        "https://www.openstreetmap.org/way/1324933591",
+        "https://www.openstreetmap.org/way/29068485"
+      ],
+      "id": "route-local-fire-oshawa-fire-4-06",
+      "routeBaseId": "fire-oshawa-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1669.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1909.1,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Harmony Road North",
+        "estimatedCostSeconds": 83.2,
+        "bestSameServiceCostSeconds": 83.2
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Delpark Homes Centre",
+      "addr": "1661 HARMONY RD N, Oshawa, ON",
+      "lat": 43.9485763051898,
+      "lng": -78.85133706312325,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/4/query?objectIds=2500&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Greenhill Avenue",
+        "Coldstream Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "oshawa-call-01",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-oshawa-fire-5-01",
+      "routeBaseId": "fire-oshawa-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 722.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1341.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Harmony Road North",
+        "estimatedCostSeconds": 89.3,
+        "bestSameServiceCostSeconds": 89.3
+      }
+    },
+    {
+      "name": "Greystone Court & Keswick Court",
+      "addr": "Greystone Court & Keswick Court",
+      "lat": 43.9318792,
+      "lng": -78.8484802,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34191988",
+        "way/500708767",
+        "way/500708768"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34191988",
+        "https://www.openstreetmap.org/way/500708767",
+        "https://www.openstreetmap.org/way/500708768"
+      ],
+      "id": "route-local-fire-oshawa-fire-5-02",
+      "routeBaseId": "fire-oshawa-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1715.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 824.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Harmony Road North",
+        "estimatedCostSeconds": 159.9,
+        "bestSameServiceCostSeconds": 159.9
+      }
+    },
+    {
+      "name": "Conlin Road East & Laurelview Street",
+      "addr": "Conlin Road East & Laurelview Street",
+      "lat": 43.9529832,
+      "lng": -78.8734945,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1136766724",
+        "way/118114902"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1136766724",
+        "https://www.openstreetmap.org/way/118114902"
+      ],
+      "id": "route-local-fire-oshawa-fire-5-03",
+      "routeBaseId": "fire-oshawa-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2579.5,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 609.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Harmony Road North",
+        "estimatedCostSeconds": 202.2,
+        "bestSameServiceCostSeconds": 202.2
+      }
+    },
+    {
+      "name": "Arborwood Drive & Oakhill Avenue",
+      "addr": "Arborwood Drive & Oakhill Avenue",
+      "lat": 43.9464561,
+      "lng": -78.8344302,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/29036213",
+        "way/29036609"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/29036213",
+        "https://www.openstreetmap.org/way/29036609"
+      ],
+      "id": "route-local-fire-oshawa-fire-5-04",
+      "routeBaseId": "fire-oshawa-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1697.3,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 687.9,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Harmony Road North",
+        "estimatedCostSeconds": 155.6,
+        "bestSameServiceCostSeconds": 155.6
+      }
+    },
+    {
+      "name": "Hallandale Street & Rexton Drive",
+      "addr": "Hallandale Street & Rexton Drive",
+      "lat": 43.9611419,
+      "lng": -78.8557712,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1025706542",
+        "way/1025706545"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1025706542",
+        "https://www.openstreetmap.org/way/1025706545"
+      ],
+      "id": "route-local-fire-oshawa-fire-5-05",
+      "routeBaseId": "fire-oshawa-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2599.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 686.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Harmony Road North",
+        "estimatedCostSeconds": 178.5,
+        "bestSameServiceCostSeconds": 178.5
+      }
+    },
+    {
+      "name": "Luple Avenue & Northfield Avenue",
+      "addr": "Luple Avenue & Northfield Avenue",
+      "lat": 43.9436,
+      "lng": -78.86849,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/92826387",
+        "way/92826388",
+        "way/92826389"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/92826387",
+        "https://www.openstreetmap.org/way/92826388",
+        "https://www.openstreetmap.org/way/92826389"
+      ],
+      "id": "route-local-fire-oshawa-fire-5-06",
+      "routeBaseId": "fire-oshawa-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1718.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1020.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Harmony Road North",
+        "estimatedCostSeconds": 148.1,
+        "bestSameServiceCostSeconds": 148.1
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Campus Ice Centre",
+      "addr": "2200 Simcoe St N, Oshawa, ON",
+      "lat": 43.95063489928222,
+      "lng": -78.8982437991583,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/4/query?objectIds=2534&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Founders Drive",
+        "Northern Dancer Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "oshawa-call-10",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-oshawa-fire-6-01",
+      "routeBaseId": "fire-oshawa-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 987.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 987.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 112.1,
+        "bestSameServiceCostSeconds": 112.1
+      }
+    },
+    {
+      "name": "Bridle Road & Winchester Road East",
+      "addr": "Bridle Road & Winchester Road East",
+      "lat": 43.9691481,
+      "lng": -78.8947774,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1428204918",
+        "way/1428204919",
+        "way/689675884"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1428204918",
+        "https://www.openstreetmap.org/way/1428204919",
+        "https://www.openstreetmap.org/way/689675884"
+      ],
+      "id": "route-local-fire-oshawa-fire-6-02",
+      "routeBaseId": "fire-oshawa-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2050.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 206.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 149.1,
+        "bestSameServiceCostSeconds": 149.1
+      }
+    },
+    {
+      "name": "Canadore Crescent & Niagara Drive",
+      "addr": "Canadore Crescent & Niagara Drive",
+      "lat": 43.9379683,
+      "lng": -78.8881558,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/29958612",
+        "way/29959396"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/29958612",
+        "https://www.openstreetmap.org/way/29959396"
+      ],
+      "id": "route-local-fire-oshawa-fire-6-03",
+      "routeBaseId": "fire-oshawa-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2633.4,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 915.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 211.7,
+        "bestSameServiceCostSeconds": 188.5
+      }
+    },
+    {
+      "name": "Windfields Farm Drive West & Wintergrace Avenue",
+      "addr": "Windfields Farm Drive West & Wintergrace Avenue",
+      "lat": 43.9581308,
+      "lng": -78.9145471,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/480759798",
+        "way/703521023"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/480759798",
+        "https://www.openstreetmap.org/way/703521023"
+      ],
+      "id": "route-local-fire-oshawa-fire-6-04",
+      "routeBaseId": "fire-oshawa-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1686.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 951.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 189.4,
+        "bestSameServiceCostSeconds": 189.4
+      }
+    },
+    {
+      "name": "Sandalwood Court & Valewood Court",
+      "addr": "Sandalwood Court & Valewood Court",
+      "lat": 43.9508358,
+      "lng": -78.8787762,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/29274726",
+        "way/403208342"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/29274726",
+        "https://www.openstreetmap.org/way/403208342"
+      ],
+      "id": "route-local-fire-oshawa-fire-6-05",
+      "routeBaseId": "fire-oshawa-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2590.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 487.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 256.8,
+        "bestSameServiceCostSeconds": 256.8
+      }
+    },
+    {
+      "name": "Simcoe Street North & Steepleview Court & Westview Drive",
+      "addr": "Simcoe Street North & Steepleview Court & Westview Drive",
+      "lat": 43.9792364,
+      "lng": -78.9099698,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34190178",
+        "way/34192550",
+        "way/402632367",
+        "way/454963359"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34190178",
+        "https://www.openstreetmap.org/way/34192550",
+        "https://www.openstreetmap.org/way/402632367",
+        "https://www.openstreetmap.org/way/454963359"
+      ],
+      "id": "route-local-fire-oshawa-fire-6-06",
+      "routeBaseId": "fire-oshawa-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2776.6,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 3862.7,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 188.3,
+        "bestSameServiceCostSeconds": 188.3
+      }
+    },
+    {
+      "name": "Charrington Avenue & Torrington Court",
+      "addr": "Charrington Avenue & Torrington Court",
+      "lat": 43.9308537,
+      "lng": -78.8597972,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34190612",
+        "way/34194792",
+        "way/34196122"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34190612",
+        "https://www.openstreetmap.org/way/34194792",
+        "https://www.openstreetmap.org/way/34196122"
+      ],
+      "id": "route-local-ems-oshawa-ems-514-01",
+      "routeBaseId": "ems-oshawa-ems-514",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 795.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2821.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 98.6,
+        "bestSameServiceCostSeconds": 98.6
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "AgeCare Samac",
+      "addr": "451 Woodmount Drive",
+      "lat": 43.94671519905738,
+      "lng": -78.87267319999995,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321789956"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "4400",
+      "community": "Oshawa",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-4400",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-oshawa-ems-514-02",
+      "routeBaseId": "ems-oshawa-ems-514",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2381.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 355.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 229.5,
+        "bestSameServiceCostSeconds": 229.5
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Delpark Homes Centre",
+      "addr": "1661 HARMONY RD N, Oshawa, ON",
+      "lat": 43.9485763051898,
+      "lng": -78.85133706312325,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/4/query?objectIds=2500&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Greenhill Avenue",
+        "Coldstream Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "oshawa-call-01",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-oshawa-ems-514-03",
+      "routeBaseId": "ems-oshawa-ems-514",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2489.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 191.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 234.7,
+        "bestSameServiceCostSeconds": 234.7
+      }
+    },
+    {
+      "name": "Harmony Road North & Taunton Road East",
+      "addr": "Harmony Road North & Taunton Road East",
+      "lat": 43.9396517,
+      "lng": -78.8494069,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/165326923",
+        "way/165327319",
+        "way/168164906",
+        "way/455473662"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/165326923",
+        "https://www.openstreetmap.org/way/165327319",
+        "https://www.openstreetmap.org/way/168164906",
+        "https://www.openstreetmap.org/way/455473662"
+      ],
+      "id": "route-local-ems-oshawa-ems-514-04",
+      "routeBaseId": "ems-oshawa-ems-514",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1291.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 235.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 116.8,
+        "bestSameServiceCostSeconds": 116.8
+      }
+    },
+    {
+      "name": "Grandview Street North & Ripley Crescent",
+      "addr": "Grandview Street North & Ripley Crescent",
+      "lat": 43.9232475,
+      "lng": -78.8386441,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/29289483",
+        "way/29289494"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/29289483",
+        "https://www.openstreetmap.org/way/29289494"
+      ],
+      "id": "route-local-ems-oshawa-ems-514-05",
+      "routeBaseId": "ems-oshawa-ems-514",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2595.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 314.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 228.2,
+        "bestSameServiceCostSeconds": 228.2
+      }
+    },
+    {
+      "name": "Canonberry Court & Terrace Drive",
+      "addr": "Canonberry Court & Terrace Drive",
+      "lat": 43.9219849,
+      "lng": -78.8536369,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34196539",
+        "way/499246610",
+        "way/62205996"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34196539",
+        "https://www.openstreetmap.org/way/499246610",
+        "https://www.openstreetmap.org/way/62205996"
+      ],
+      "id": "route-local-ems-oshawa-ems-514-06",
+      "routeBaseId": "ems-oshawa-ems-514",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1637.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 541.4,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 145.4,
+        "bestSameServiceCostSeconds": 145.4
+      }
+    },
+    {
+      "name": "Bloor Street East & Fourth Avenue",
+      "addr": "Bloor Street East & Fourth Avenue",
+      "lat": 43.8821258,
+      "lng": -78.8482658,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25757444",
+        "way/868882272",
+        "way/868882274",
+        "way/868882275"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25757444",
+        "https://www.openstreetmap.org/way/868882272",
+        "https://www.openstreetmap.org/way/868882274",
+        "https://www.openstreetmap.org/way/868882275"
+      ],
+      "id": "route-local-ems-oshawa-ems-537-01",
+      "routeBaseId": "ems-oshawa-ems-537",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 859.8,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1949.4,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Bloor Street East",
+        "estimatedCostSeconds": 51.8,
+        "bestSameServiceCostSeconds": 51.8
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Donevan Recreation Complex",
+      "addr": "171 Harmony Rd S, Oshawa, ON",
+      "lat": 43.900113360655354,
+      "lng": -78.83035022316555,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/4/query?objectIds=2653&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Hoskin Avenue",
+        "Taylor Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "oshawa-call-02",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-oshawa-ems-537-02",
+      "routeBaseId": "ems-oshawa-ems-537",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2499.3,
+        "meaningfulDecisions": 6,
+        "maxAlternativePenaltyMetres": 1427.5,
+        "decisionKinds": [
+          "departure",
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Bloor Street East",
+        "estimatedCostSeconds": 205,
+        "bestSameServiceCostSeconds": 205
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Oshawa Public Library - Jess Hann Branch",
+      "addr": "199 Wentworth St W, Oshawa, ON",
+      "lat": 43.86936650256068,
+      "lng": -78.84922171634138,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/4/query?objectIds=2544&outFields=*&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Cedar Street",
+        "Glen Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "oshawa-call-08",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-oshawa-ems-537-03",
+      "routeBaseId": "ems-oshawa-ems-537",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2486.4,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 982.5,
+        "decisionKinds": [
+          "turn",
+          "bridge",
+          "departure"
+        ],
+        "departureRoad": "Bloor Street East",
+        "estimatedCostSeconds": 197.1,
+        "bestSameServiceCostSeconds": 197.1
+      }
+    },
+    {
+      "name": "Colonel Sam Drive & Farewell Street & Wentworth Street East",
+      "addr": "Colonel Sam Drive & Farewell Street & Wentworth Street East",
+      "lat": 43.8791656,
+      "lng": -78.8282401,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/164874433",
+        "way/25513542",
+        "way/25757304",
+        "way/373157156"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/164874433",
+        "https://www.openstreetmap.org/way/25513542",
+        "https://www.openstreetmap.org/way/25757304",
+        "https://www.openstreetmap.org/way/373157156"
+      ],
+      "id": "route-local-ems-oshawa-ems-537-04",
+      "routeBaseId": "ems-oshawa-ems-537",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1359.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1380.2,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Bloor Street East",
+        "estimatedCostSeconds": 81.9,
+        "bestSameServiceCostSeconds": 81.9
+      }
+    },
+    {
+      "name": "Downview Crescent & Grandview Drive",
+      "addr": "Downview Crescent & Grandview Drive",
+      "lat": 43.8874618,
+      "lng": -78.8103148,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1315608379",
+        "way/25790917"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1315608379",
+        "https://www.openstreetmap.org/way/25790917"
+      ],
+      "id": "route-local-ems-oshawa-ems-537-05",
+      "routeBaseId": "ems-oshawa-ems-537",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2608.4,
+        "meaningfulDecisions": 8,
+        "maxAlternativePenaltyMetres": 3593.3,
+        "decisionKinds": [
+          "departure",
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Bloor Street East",
+        "estimatedCostSeconds": 190.5,
+        "bestSameServiceCostSeconds": 190.5
+      }
+    },
+    {
+      "name": "Browning Street & Tennyson Avenue",
+      "addr": "Browning Street & Tennyson Avenue",
+      "lat": 43.8906724,
+      "lng": -78.828745,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/34189880",
+        "way/34190910"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/34189880",
+        "https://www.openstreetmap.org/way/34190910"
+      ],
+      "id": "route-local-ems-oshawa-ems-537-06",
+      "routeBaseId": "ems-oshawa-ems-537",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1382.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1581.9,
+        "decisionKinds": [
+          "departure",
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Bloor Street East",
+        "estimatedCostSeconds": 88.8,
+        "bestSameServiceCostSeconds": 88.8
+      }
+    }
+  ]
 }

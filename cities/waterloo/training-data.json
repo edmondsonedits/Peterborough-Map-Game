@@ -113,5 +113,1431 @@
   ],
   "roadsUrl": "cities/waterloo/roads.geojson.gz",
   "roadFeatureCount": 19231,
-  "roadDataSha256": "322f4ed7f2b36f41dcb9557c42fa80ee8f35556f144c16cf268a7c38ed8a0c86"
+  "roadDataSha256": "322f4ed7f2b36f41dcb9557c42fa80ee8f35556f144c16cf268a7c38ed8a0c86",
+  "routeResponses": {
+    "schemaVersion": 1,
+    "minCallsPerBase": 3,
+    "targetCallsPerBase": 6,
+    "generatedOn": "2026-10-17",
+    "model": {
+      "description": "Published first-due polygons where available. Otherwise a directed road-network estimate using road class travel cost from every same-service hall; allows a15second cost tie for overlapping nearby halls. This is training geography, not live dispatch advice.",
+      "ownershipToleranceSeconds": 15,
+      "maximumCandidateRouteMetres": 12000
+    },
+    "bases": [
+      {
+        "baseId": "fire-waterloo-fire-1",
+        "service": "fire",
+        "number": 1,
+        "name": "Waterloo Fire Station 1",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6100,
+        "access": {
+          "lat": 43.4771313,
+          "lng": -80.518406,
+          "road": "Unnamed road",
+          "gapMetres": 13.1
+        },
+        "callIds": [
+          "route-local-fire-waterloo-fire-1-01",
+          "route-local-fire-waterloo-fire-1-02",
+          "route-local-fire-waterloo-fire-1-03",
+          "route-local-fire-waterloo-fire-1-04",
+          "route-local-fire-waterloo-fire-1-05",
+          "route-local-fire-waterloo-fire-1-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-waterloo-fire-2",
+        "service": "fire",
+        "number": 2,
+        "name": "Waterloo Fire Station 2",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.46639695997034,
+          "lng": -80.57149258128244,
+          "road": "Unnamed road",
+          "gapMetres": 26.8
+        },
+        "callIds": [
+          "route-local-fire-waterloo-fire-2-01",
+          "route-local-fire-waterloo-fire-2-02",
+          "route-local-fire-waterloo-fire-2-03",
+          "route-local-fire-waterloo-fire-2-04",
+          "route-local-fire-waterloo-fire-2-05",
+          "route-local-fire-waterloo-fire-2-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-waterloo-fire-3",
+        "service": "fire",
+        "number": 3,
+        "name": "Waterloo Fire Station 3",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.49775539476376,
+          "lng": -80.54439980234625,
+          "road": "Northfield Drive West",
+          "gapMetres": 17.9
+        },
+        "callIds": [
+          "route-local-fire-waterloo-fire-3-01",
+          "route-local-fire-waterloo-fire-3-02",
+          "route-local-fire-waterloo-fire-3-03",
+          "route-local-fire-waterloo-fire-3-04",
+          "route-local-fire-waterloo-fire-3-05",
+          "route-local-fire-waterloo-fire-3-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-waterloo-fire-4",
+        "service": "fire",
+        "number": 4,
+        "name": "Waterloo Fire Station 4",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.5140032596455,
+          "lng": -80.49842698434296,
+          "road": "University Avenue East",
+          "gapMetres": 32.2
+        },
+        "callIds": [
+          "route-local-fire-waterloo-fire-4-01",
+          "route-local-fire-waterloo-fire-4-02",
+          "route-local-fire-waterloo-fire-4-03",
+          "route-local-fire-waterloo-fire-4-04",
+          "route-local-fire-waterloo-fire-4-05",
+          "route-local-fire-waterloo-fire-4-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-waterloo-ems-westmount",
+        "service": "ems",
+        "number": 10000,
+        "name": "Waterloo Paramedic Base westmount",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.4633562,
+          "lng": -80.539243,
+          "road": "Unnamed road",
+          "gapMetres": 3.3
+        },
+        "callIds": [
+          "route-local-ems-waterloo-ems-westmount-01",
+          "route-local-ems-waterloo-ems-westmount-02",
+          "route-local-ems-waterloo-ems-westmount-03",
+          "route-local-ems-waterloo-ems-westmount-04",
+          "route-local-ems-waterloo-ems-westmount-05",
+          "route-local-ems-waterloo-ems-westmount-06"
+        ],
+        "challengeCalls": 6
+      }
+    ]
+  },
+  "routeCalls": [
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Wilfrid Laurier University",
+      "addr": "75 University Avenue West, Waterloo, ON",
+      "lat": 43.4743727,
+      "lng": -80.5281595,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://wlu.ca/about/contacts/",
+        "https://services.arcgis.com/ExP11I9o3OS7Krz9/ArcGIS/rest/services/Address/FeatureServer/0/query?objectIds=125278&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Hazel Street",
+        "Hemlock Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "waterloo-call-03",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-waterloo-fire-1-01",
+      "routeBaseId": "fire-waterloo-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 987.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 453.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 93.3,
+        "bestSameServiceCostSeconds": 93.3
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Waterloo City Hall",
+      "addr": "100 Regina Street South, Waterloo, ON",
+      "lat": 43.4631891,
+      "lng": -80.5202372,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.waterloo.ca/council-and-city-administration/call-or-visit-us/",
+        "https://services.arcgis.com/ExP11I9o3OS7Krz9/ArcGIS/rest/services/Address/FeatureServer/0/query?objectIds=106034&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "William Street East",
+        "Willis Way"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "waterloo-call-01",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-waterloo-fire-1-02",
+      "routeBaseId": "fire-waterloo-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1857.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 479.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 152.2,
+        "bestSameServiceCostSeconds": 152.2
+      }
+    },
+    {
+      "name": "Dunvegan Drive & Lexington Road",
+      "addr": "Dunvegan Drive & Lexington Road",
+      "lat": 43.4947098,
+      "lng": -80.5100254,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1372752257",
+        "way/1560054201",
+        "way/34029733"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1372752257",
+        "https://www.openstreetmap.org/way/1560054201",
+        "https://www.openstreetmap.org/way/34029733"
+      ],
+      "id": "route-local-fire-waterloo-fire-1-03",
+      "routeBaseId": "fire-waterloo-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2602.7,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1418.2,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 173.6,
+        "bestSameServiceCostSeconds": 173.6
+      }
+    },
+    {
+      "name": "Margaret Avenue North & Neilson Avenue",
+      "addr": "Margaret Avenue North & Neilson Avenue",
+      "lat": 43.4731057,
+      "lng": -80.5050009,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/35511264",
+        "way/35837483"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/35511264",
+        "https://www.openstreetmap.org/way/35837483"
+      ],
+      "id": "route-local-fire-waterloo-fire-1-04",
+      "routeBaseId": "fire-waterloo-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1695.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 410.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 158.6,
+        "bestSameServiceCostSeconds": 158.6
+      }
+    },
+    {
+      "name": "University Avenue West & Westmount Road North",
+      "addr": "University Avenue West & Westmount Road North",
+      "lat": 43.4642485,
+      "lng": -80.5413494,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/196464736",
+        "way/473268677",
+        "way/473268680",
+        "way/473268684"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/196464736",
+        "https://www.openstreetmap.org/way/473268677",
+        "https://www.openstreetmap.org/way/473268680",
+        "https://www.openstreetmap.org/way/473268684"
+      ],
+      "id": "route-local-fire-waterloo-fire-1-05",
+      "routeBaseId": "fire-waterloo-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2679.1,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 308.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 174.8,
+        "bestSameServiceCostSeconds": 174.8
+      }
+    },
+    {
+      "name": "Dearborn Boulevard & Holbeach Crescent",
+      "addr": "Dearborn Boulevard & Holbeach Crescent",
+      "lat": 43.4880394,
+      "lng": -80.520036,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/27292727",
+        "way/27292731"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/27292727",
+        "https://www.openstreetmap.org/way/27292731"
+      ],
+      "id": "route-local-fire-waterloo-fire-1-06",
+      "routeBaseId": "fire-waterloo-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1664.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 472.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 132.1,
+        "bestSameServiceCostSeconds": 132.1
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Regency Park",
+      "addr": "211 Roxton Drive, Waterloo, ON",
+      "lat": 43.4604478,
+      "lng": -80.5604026,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.waterloo.ca/parks-and-trails/explore-our-parks/find-a-sports-field-or-court/",
+        "https://services.arcgis.com/ExP11I9o3OS7Krz9/ArcGIS/rest/services/Address/FeatureServer/0/query?objectIds=163002&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Fischer Hallman Road North",
+        "Craigleith Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "waterloo-call-17",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-waterloo-fire-2-01",
+      "routeBaseId": "fire-waterloo-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1566.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 510.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 123.5,
+        "bestSameServiceCostSeconds": 123.5
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "John M. Harper Library",
+      "addr": "500 Fischer-Hallman Road North, Waterloo, ON",
+      "lat": 43.4743838,
+      "lng": -80.5712486,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.wpl.ca/your-library/locations-hours/",
+        "https://services.arcgis.com/ExP11I9o3OS7Krz9/ArcGIS/rest/services/Address/FeatureServer/0/query?objectIds=160881&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Bearinger Road",
+        "Laurelwood Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "waterloo-call-13",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-waterloo-fire-2-02",
+      "routeBaseId": "fire-waterloo-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1689.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 479.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 189.8,
+        "bestSameServiceCostSeconds": 189.8
+      }
+    },
+    {
+      "name": "North Campus Road & Ring Road",
+      "addr": "North Campus Road & Ring Road",
+      "lat": 43.4741062,
+      "lng": -80.5457993,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25634438",
+        "way/26716771",
+        "way/41169450"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25634438",
+        "https://www.openstreetmap.org/way/26716771",
+        "https://www.openstreetmap.org/way/41169450"
+      ],
+      "id": "route-local-fire-waterloo-fire-2-03",
+      "routeBaseId": "fire-waterloo-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2522.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1004.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 186.7,
+        "bestSameServiceCostSeconds": 186.7
+      }
+    },
+    {
+      "name": "Columbia Forest Boulevard & Columbia Forest Court",
+      "addr": "Columbia Forest Boulevard & Columbia Forest Court",
+      "lat": 43.4616542,
+      "lng": -80.5917789,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/27006786",
+        "way/27209937"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/27006786",
+        "https://www.openstreetmap.org/way/27209937"
+      ],
+      "id": "route-local-fire-waterloo-fire-2-04",
+      "routeBaseId": "fire-waterloo-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2105.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 619.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 221.8,
+        "bestSameServiceCostSeconds": 221.8
+      }
+    },
+    {
+      "name": "Chablis Drive & Erbsville Road",
+      "addr": "Chablis Drive & Erbsville Road",
+      "lat": 43.4497837,
+      "lng": -80.5726563,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/253396905",
+        "way/253396906",
+        "way/27209899"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/253396905",
+        "https://www.openstreetmap.org/way/253396906",
+        "https://www.openstreetmap.org/way/27209899"
+      ],
+      "id": "route-local-fire-waterloo-fire-2-05",
+      "routeBaseId": "fire-waterloo-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2591.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1160.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 185.1,
+        "bestSameServiceCostSeconds": 185.1
+      }
+    },
+    {
+      "name": "Brookmill Crescent & Laurelwood Drive",
+      "addr": "Brookmill Crescent & Laurelwood Drive",
+      "lat": 43.4723154,
+      "lng": -80.5856649,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/182749088",
+        "way/35503461"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/182749088",
+        "https://www.openstreetmap.org/way/35503461"
+      ],
+      "id": "route-local-fire-waterloo-fire-2-06",
+      "routeBaseId": "fire-waterloo-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1737.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 881.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 203.9,
+        "bestSameServiceCostSeconds": 203.9
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Albert McCormick Community Centre",
+      "addr": "500 Parkside Drive, Waterloo, ON",
+      "lat": 43.488905,
+      "lng": -80.5445329,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.waterloo.ca/recreation-and-sports/find-a-community-or-rec-centre/albert-mccormick-community-centre-amcc/",
+        "https://services.arcgis.com/ExP11I9o3OS7Krz9/ArcGIS/rest/services/Address/FeatureServer/0/query?objectIds=108836&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Cedarbrae Avenue",
+        "Glenelm Crescent"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "waterloo-call-11",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-waterloo-fire-3-01",
+      "routeBaseId": "fire-waterloo-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1233.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 332.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Northfield Drive West",
+        "estimatedCostSeconds": 124.1,
+        "bestSameServiceCostSeconds": 124.1
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Pinebrook Park",
+      "addr": "635 Sprucehurst Crescent, Waterloo, ON",
+      "lat": 43.4976504,
+      "lng": -80.5612148,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.waterloo.ca/parks-and-trails/explore-our-parks/find-a-sports-field-or-court/",
+        "https://services.arcgis.com/ExP11I9o3OS7Krz9/ArcGIS/rest/services/Address/FeatureServer/0/query?objectIds=107981&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Twinflower Crescent",
+        "Fern Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "waterloo-call-16",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-waterloo-fire-3-02",
+      "routeBaseId": "fire-waterloo-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1924,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 712.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Northfield Drive West",
+        "estimatedCostSeconds": 166.9,
+        "bestSameServiceCostSeconds": 166.9
+      }
+    },
+    {
+      "name": "Frobisher Drive & Superior Drive",
+      "addr": "Frobisher Drive & Superior Drive",
+      "lat": 43.510013,
+      "lng": -80.524484,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/196451567",
+        "way/30786225"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/196451567",
+        "https://www.openstreetmap.org/way/30786225"
+      ],
+      "id": "route-local-fire-waterloo-fire-3-03",
+      "routeBaseId": "fire-waterloo-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2598,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1792.3,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Northfield Drive West",
+        "estimatedCostSeconds": 207.4,
+        "bestSameServiceCostSeconds": 199.2
+      }
+    },
+    {
+      "name": "Colby Drive & Conestogo Road & Northfield Drive West",
+      "addr": "Colby Drive & Conestogo Road & Northfield Drive West",
+      "lat": 43.5000521,
+      "lng": -80.5375817,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/193622636",
+        "way/26741510",
+        "way/30786208",
+        "way/778461675"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/193622636",
+        "https://www.openstreetmap.org/way/26741510",
+        "https://www.openstreetmap.org/way/30786208",
+        "https://www.openstreetmap.org/way/778461675"
+      ],
+      "id": "route-local-fire-waterloo-fire-3-04",
+      "routeBaseId": "fire-waterloo-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 913.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2655.2,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Northfield Drive West",
+        "estimatedCostSeconds": 55,
+        "bestSameServiceCostSeconds": 55
+      }
+    },
+    {
+      "name": "King Street North & Weber Street North",
+      "addr": "King Street North & Weber Street North",
+      "lat": 43.5138905,
+      "lng": -80.5569184,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1023981585",
+        "way/474940407",
+        "way/477904100"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1023981585",
+        "https://www.openstreetmap.org/way/474940407",
+        "https://www.openstreetmap.org/way/477904100"
+      ],
+      "id": "route-local-fire-waterloo-fire-3-05",
+      "routeBaseId": "fire-waterloo-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2575.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 862.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Northfield Drive West",
+        "estimatedCostSeconds": 155.1,
+        "bestSameServiceCostSeconds": 155.1
+      }
+    },
+    {
+      "name": "Fallingbrook Drive & Glen Forrest Boulevard",
+      "addr": "Fallingbrook Drive & Glen Forrest Boulevard",
+      "lat": 43.4881533,
+      "lng": -80.5571304,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/132529802",
+        "way/25619532"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/132529802",
+        "https://www.openstreetmap.org/way/25619532"
+      ],
+      "id": "route-local-fire-waterloo-fire-3-06",
+      "routeBaseId": "fire-waterloo-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1777.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 342.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Northfield Drive West",
+        "estimatedCostSeconds": 132.8,
+        "bestSameServiceCostSeconds": 132.8
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "RIM Park Manulife Sportsplex",
+      "addr": "2001 University Avenue East, Waterloo, ON",
+      "lat": 43.5178195,
+      "lng": -80.5022124,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.waterloo.ca/council-and-city-administration/call-or-visit-us/",
+        "https://services.arcgis.com/ExP11I9o3OS7Krz9/ArcGIS/rest/services/Address/FeatureServer/0/query?objectIds=106721&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Park Road",
+        "Millennium Boulevard"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "waterloo-call-06",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-waterloo-fire-4-01",
+      "routeBaseId": "fire-waterloo-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 539.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 4131.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "University Avenue East",
+        "estimatedCostSeconds": 34,
+        "bestSameServiceCostSeconds": 34
+      }
+    },
+    {
+      "name": "Bronco Crescent & Dansbury Drive",
+      "addr": "Bronco Crescent & Dansbury Drive",
+      "lat": 43.4960351,
+      "lng": -80.4925863,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/42705444",
+        "way/42705525",
+        "way/42705528"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/42705444",
+        "https://www.openstreetmap.org/way/42705525",
+        "https://www.openstreetmap.org/way/42705528"
+      ],
+      "id": "route-local-fire-waterloo-fire-4-02",
+      "routeBaseId": "fire-waterloo-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2611,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1712.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "University Avenue East",
+        "estimatedCostSeconds": 180.9,
+        "bestSameServiceCostSeconds": 180.9
+      }
+    },
+    {
+      "name": "Bridge Street West & University Avenue East",
+      "addr": "Bridge Street West & University Avenue East",
+      "lat": 43.5147738,
+      "lng": -80.5263222,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/196451542",
+        "way/276149263",
+        "way/705651198"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/196451542",
+        "https://www.openstreetmap.org/way/276149263",
+        "https://www.openstreetmap.org/way/705651198"
+      ],
+      "id": "route-local-fire-waterloo-fire-4-03",
+      "routeBaseId": "fire-waterloo-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2613.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2424.2,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "University Avenue East",
+        "estimatedCostSeconds": 173.1,
+        "bestSameServiceCostSeconds": 173.1
+      }
+    },
+    {
+      "name": "Cabot Trail & Eastbridge Boulevard",
+      "addr": "Cabot Trail & Eastbridge Boulevard",
+      "lat": 43.5059146,
+      "lng": -80.502657,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/255978852",
+        "way/27250918"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/255978852",
+        "https://www.openstreetmap.org/way/27250918"
+      ],
+      "id": "route-local-fire-waterloo-fire-4-04",
+      "routeBaseId": "fire-waterloo-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1667.7,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1240.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "University Avenue East",
+        "estimatedCostSeconds": 181.3,
+        "bestSameServiceCostSeconds": 181.3
+      }
+    },
+    {
+      "name": "Charing Cross & Country Squire Road",
+      "addr": "Charing Cross & Country Squire Road",
+      "lat": 43.5295362,
+      "lng": -80.4855067,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/276145220",
+        "way/34042352"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/276145220",
+        "https://www.openstreetmap.org/way/34042352"
+      ],
+      "id": "route-local-fire-waterloo-fire-4-05",
+      "routeBaseId": "fire-waterloo-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2663.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 846.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "University Avenue East",
+        "estimatedCostSeconds": 210.8,
+        "bestSameServiceCostSeconds": 210.8
+      }
+    },
+    {
+      "name": "Grey Silo Road & Millstream Drive",
+      "addr": "Grey Silo Road & Millstream Drive",
+      "lat": 43.5239261,
+      "lng": -80.4946276,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/27247540",
+        "way/385344946"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/27247540",
+        "https://www.openstreetmap.org/way/385344946"
+      ],
+      "id": "route-local-fire-waterloo-fire-4-06",
+      "routeBaseId": "fire-waterloo-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1698.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 846.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "University Avenue East",
+        "estimatedCostSeconds": 152.2,
+        "bestSameServiceCostSeconds": 152.2
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Waterloo Memorial Recreation Complex",
+      "addr": "101 Father David Bauer Drive, Waterloo, ON",
+      "lat": 43.4641301,
+      "lng": -80.5323692,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.waterloo.ca/recreation-and-sports/find-a-community-or-rec-centre/waterloo-memorial-recreation-complex-wmrc/",
+        "https://services.arcgis.com/ExP11I9o3OS7Krz9/ArcGIS/rest/services/Address/FeatureServer/0/query?objectIds=108020&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Barrel Yards Boulevard",
+        "Merchant Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "waterloo-call-07",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-waterloo-ems-westmount-01",
+      "routeBaseId": "ems-waterloo-ems-westmount",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 808.1,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1414.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 102.8,
+        "bestSameServiceCostSeconds": 102.8
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Warrington Park",
+      "addr": "397 Warrington Drive, Waterloo, ON",
+      "lat": 43.4477225,
+      "lng": -80.5453487,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://www.waterloo.ca/parks-and-trails/explore-our-parks/find-a-sports-field-or-court/",
+        "https://services.arcgis.com/ExP11I9o3OS7Krz9/ArcGIS/rest/services/Address/FeatureServer/0/query?objectIds=108840&outFields=%2A&outSR=4326&f=pjson",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Roosevelt Avenue",
+        "Fischer Hallman Road South"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "waterloo-call-19",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-waterloo-ems-westmount-02",
+      "routeBaseId": "ems-waterloo-ems-westmount",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2463.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 251,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 220,
+        "bestSameServiceCostSeconds": 220
+      }
+    },
+    {
+      "name": "Columbia Street West & Fischer-Hallman Road North",
+      "addr": "Columbia Street West & Fischer-Hallman Road North",
+      "lat": 43.4676253,
+      "lng": -80.566086,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/182745333",
+        "way/196461234",
+        "way/34778579",
+        "way/40855070"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/182745333",
+        "https://www.openstreetmap.org/way/196461234",
+        "https://www.openstreetmap.org/way/34778579",
+        "https://www.openstreetmap.org/way/40855070"
+      ],
+      "id": "route-local-ems-waterloo-ems-westmount-03",
+      "routeBaseId": "ems-waterloo-ems-westmount",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2598.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1154.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 165.5,
+        "bestSameServiceCostSeconds": 165.5
+      }
+    },
+    {
+      "name": "Columbia Street West & Phillip Street",
+      "addr": "Columbia Street West & Phillip Street",
+      "lat": 43.4769824,
+      "lng": -80.5399389,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1027218341",
+        "way/176087115",
+        "way/309843488",
+        "way/311052074"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1027218341",
+        "https://www.openstreetmap.org/way/176087115",
+        "https://www.openstreetmap.org/way/309843488",
+        "https://www.openstreetmap.org/way/311052074"
+      ],
+      "id": "route-local-ems-waterloo-ems-westmount-04",
+      "routeBaseId": "ems-waterloo-ems-westmount",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1803,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1168.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 130.7,
+        "bestSameServiceCostSeconds": 130.7
+      }
+    },
+    {
+      "name": "Dunbar Road & Katherine Crescent",
+      "addr": "Dunbar Road & Katherine Crescent",
+      "lat": 43.4487699,
+      "lng": -80.519417,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/27247565",
+        "way/30011848"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/27247565",
+        "https://www.openstreetmap.org/way/30011848"
+      ],
+      "id": "route-local-ems-waterloo-ems-westmount-05",
+      "routeBaseId": "ems-waterloo-ems-westmount",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2588.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 748.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 192.6,
+        "bestSameServiceCostSeconds": 192.6
+      }
+    },
+    {
+      "name": "Candlewood Crescent & Keats Way",
+      "addr": "Candlewood Crescent & Keats Way",
+      "lat": 43.4583575,
+      "lng": -80.5548914,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1453492660",
+        "way/1453492661",
+        "way/26826205"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1453492660",
+        "https://www.openstreetmap.org/way/1453492661",
+        "https://www.openstreetmap.org/way/26826205"
+      ],
+      "id": "route-local-ems-waterloo-ems-westmount-06",
+      "routeBaseId": "ems-waterloo-ems-westmount",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1741.3,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1065.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 139.9,
+        "bestSameServiceCostSeconds": 139.9
+      }
+    }
+  ]
 }

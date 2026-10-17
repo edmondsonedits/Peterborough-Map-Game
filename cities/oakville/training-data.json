@@ -165,5 +165,3723 @@
   ],
   "roadsUrl": "cities/oakville/roads.geojson.gz",
   "roadFeatureCount": 27925,
-  "roadDataSha256": "fe76de8c4e857179e3b8209c025018860e2831071820b1c6fdaec4c2a8d17a90"
+  "roadDataSha256": "fe76de8c4e857179e3b8209c025018860e2831071820b1c6fdaec4c2a8d17a90",
+  "routeResponses": {
+    "schemaVersion": 1,
+    "minCallsPerBase": 3,
+    "targetCallsPerBase": 6,
+    "generatedOn": "2026-10-17",
+    "model": {
+      "description": "Published first-due polygons where available. Otherwise a directed road-network estimate using road class travel cost from every same-service hall; allows a15second cost tie for overlapping nearby halls. This is training geography, not live dispatch advice.",
+      "ownershipToleranceSeconds": 15,
+      "maximumCandidateRouteMetres": 12000
+    },
+    "bases": [
+      {
+        "baseId": "fire-oakville-fire-9",
+        "service": "fire",
+        "number": 9,
+        "name": "Fire Station 9",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.470719007557356,
+          "lng": -79.75472885413039,
+          "road": "Unnamed road",
+          "gapMetres": 4.2
+        },
+        "callIds": [
+          "route-local-fire-oakville-fire-9-01",
+          "route-local-fire-oakville-fire-9-02",
+          "route-local-fire-oakville-fire-9-03",
+          "route-local-fire-oakville-fire-9-04",
+          "route-local-fire-oakville-fire-9-05",
+          "route-local-fire-oakville-fire-9-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-oakville-fire-3",
+        "service": "fire",
+        "number": 3,
+        "name": "Fire Station 3",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.440853283675864,
+          "lng": -79.67654369351062,
+          "road": "Kerr Street",
+          "gapMetres": 18.6
+        },
+        "callIds": [
+          "route-local-fire-oakville-fire-3-01",
+          "route-local-fire-oakville-fire-3-02",
+          "route-local-fire-oakville-fire-3-03",
+          "route-local-fire-oakville-fire-3-04",
+          "route-local-fire-oakville-fire-3-05",
+          "route-local-fire-oakville-fire-3-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-oakville-fire-4",
+        "service": "fire",
+        "number": 4,
+        "name": "Fire Station 4",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.46678495619235,
+          "lng": -79.71216807959046,
+          "road": "Sixth Line",
+          "gapMetres": 38
+        },
+        "callIds": [
+          "route-local-fire-oakville-fire-4-01",
+          "route-local-fire-oakville-fire-4-02",
+          "route-local-fire-oakville-fire-4-03",
+          "route-local-fire-oakville-fire-4-04",
+          "route-local-fire-oakville-fire-4-05",
+          "route-local-fire-oakville-fire-4-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-oakville-fire-6",
+        "service": "fire",
+        "number": 6,
+        "name": "Fire Station 6",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 6000,
+        "access": {
+          "lat": 43.43484106606287,
+          "lng": -79.74503972700401,
+          "road": "Postmaster Drive",
+          "gapMetres": 22.7
+        },
+        "callIds": [
+          "route-local-fire-oakville-fire-6-01",
+          "route-local-fire-oakville-fire-6-02",
+          "route-local-fire-oakville-fire-6-03",
+          "route-local-fire-oakville-fire-6-04",
+          "route-local-fire-oakville-fire-6-05",
+          "route-local-fire-oakville-fire-6-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-oakville-fire-1",
+        "service": "fire",
+        "number": 1,
+        "name": "Fire Station 1",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5700,
+        "access": {
+          "lat": 43.39644582536207,
+          "lng": -79.72204403560633,
+          "road": "Unnamed road",
+          "gapMetres": 15.3
+        },
+        "callIds": [
+          "route-local-fire-oakville-fire-1-01",
+          "route-local-fire-oakville-fire-1-02",
+          "route-local-fire-oakville-fire-1-03",
+          "route-local-fire-oakville-fire-1-04",
+          "route-local-fire-oakville-fire-1-05",
+          "route-local-fire-oakville-fire-1-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-oakville-fire-7",
+        "service": "fire",
+        "number": 7,
+        "name": "Fire Station 7",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5700,
+        "access": {
+          "lat": 43.492665122307535,
+          "lng": -79.68306308383863,
+          "road": "Joshuas Creek Drive",
+          "gapMetres": 29.4
+        },
+        "callIds": [
+          "route-local-fire-oakville-fire-7-01",
+          "route-local-fire-oakville-fire-7-02",
+          "route-local-fire-oakville-fire-7-03",
+          "route-local-fire-oakville-fire-7-04",
+          "route-local-fire-oakville-fire-7-05",
+          "route-local-fire-oakville-fire-7-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-oakville-fire-5",
+        "service": "fire",
+        "number": 5,
+        "name": "Fire Station 5",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5400,
+        "access": {
+          "lat": 43.431485741615745,
+          "lng": -79.71117730209636,
+          "road": "Unnamed road",
+          "gapMetres": 18.4
+        },
+        "callIds": [
+          "route-local-fire-oakville-fire-5-01",
+          "route-local-fire-oakville-fire-5-02",
+          "route-local-fire-oakville-fire-5-03",
+          "route-local-fire-oakville-fire-5-04",
+          "route-local-fire-oakville-fire-5-05",
+          "route-local-fire-oakville-fire-5-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-oakville-fire-2",
+        "service": "fire",
+        "number": 2,
+        "name": "Fire Station 2",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.48727243108013,
+          "lng": -79.65141357474326,
+          "road": "Cornwall Road",
+          "gapMetres": 24
+        },
+        "callIds": [
+          "route-local-fire-oakville-fire-2-01",
+          "route-local-fire-oakville-fire-2-02",
+          "route-local-fire-oakville-fire-2-03",
+          "route-local-fire-oakville-fire-2-04",
+          "route-local-fire-oakville-fire-2-05",
+          "route-local-fire-oakville-fire-2-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "fire-oakville-fire-8",
+        "service": "fire",
+        "number": 8,
+        "name": "Fire Station 8",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5600,
+        "access": {
+          "lat": 43.43335382079368,
+          "lng": -79.7747911354991,
+          "road": "Unnamed road",
+          "gapMetres": 7.5
+        },
+        "callIds": [
+          "route-local-fire-oakville-fire-8-01",
+          "route-local-fire-oakville-fire-8-02",
+          "route-local-fire-oakville-fire-8-03",
+          "route-local-fire-oakville-fire-8-04",
+          "route-local-fire-oakville-fire-8-05",
+          "route-local-fire-oakville-fire-8-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-oakville-ems-2",
+        "service": "ems",
+        "number": 2,
+        "name": "Halton Paramedic Station 02",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.4797101,
+          "lng": -79.7179502,
+          "road": "Unnamed road",
+          "gapMetres": 7.5
+        },
+        "callIds": [
+          "route-local-ems-oakville-ems-2-01",
+          "route-local-ems-oakville-ems-2-02",
+          "route-local-ems-oakville-ems-2-03",
+          "route-local-ems-oakville-ems-2-04",
+          "route-local-ems-oakville-ems-2-05",
+          "route-local-ems-oakville-ems-2-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-oakville-ems-12",
+        "service": "ems",
+        "number": 12,
+        "name": "Halton Paramedic Station 12",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.4666761,
+          "lng": -79.6710762,
+          "road": "Unnamed road",
+          "gapMetres": 16.6
+        },
+        "callIds": [
+          "route-local-ems-oakville-ems-12-01",
+          "route-local-ems-oakville-ems-12-02",
+          "route-local-ems-oakville-ems-12-03",
+          "route-local-ems-oakville-ems-12-04",
+          "route-local-ems-oakville-ems-12-05",
+          "route-local-ems-oakville-ems-12-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-oakville-ems-14",
+        "service": "ems",
+        "number": 14,
+        "name": "Halton Paramedic Station 14",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5800,
+        "access": {
+          "lat": 43.432822255024,
+          "lng": -79.77382500582435,
+          "road": "Unnamed road",
+          "gapMetres": 11.1
+        },
+        "callIds": [
+          "route-local-ems-oakville-ems-14-01",
+          "route-local-ems-oakville-ems-14-02",
+          "route-local-ems-oakville-ems-14-03",
+          "route-local-ems-oakville-ems-14-04",
+          "route-local-ems-oakville-ems-14-05",
+          "route-local-ems-oakville-ems-14-06"
+        ],
+        "challengeCalls": 6
+      },
+      {
+        "baseId": "ems-oakville-ems-15",
+        "service": "ems",
+        "number": 15,
+        "name": "Halton Paramedic Station 15",
+        "method": "modeled-road-response",
+        "maxRouteMetres": 5900,
+        "access": {
+          "lat": 43.41664333069059,
+          "lng": -79.69799980481653,
+          "road": "Woodside Drive",
+          "gapMetres": 15.8
+        },
+        "callIds": [
+          "route-local-ems-oakville-ems-15-01",
+          "route-local-ems-oakville-ems-15-02",
+          "route-local-ems-oakville-ems-15-03",
+          "route-local-ems-oakville-ems-15-04",
+          "route-local-ems-oakville-ems-15-05",
+          "route-local-ems-oakville-ems-15-06"
+        ],
+        "challengeCalls": 6
+      }
+    ]
+  },
+  "routeCalls": [
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "George Savage Park Playground",
+      "addr": "3200 George Savage Ave, Oakville, ON",
+      "lat": 43.473143395775196,
+      "lng": -79.74675603552642,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.oakville.ca/oakgis/rest/services/ArcGISOnline/AGO_Oakville_Misc_Layers/MapServer/7",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Dahlia Trail",
+        "North Park Boulevard"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "oakville-call-18",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-oakville-fire-9-01",
+      "routeBaseId": "fire-oakville-fire-9",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 854.7,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 3042.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 95.9,
+        "bestSameServiceCostSeconds": 95.9
+      }
+    },
+    {
+      "name": "Dundas Street West & Fourth Line",
+      "addr": "Dundas Street West & Fourth Line",
+      "lat": 43.456614,
+      "lng": -79.7540143,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/203838055",
+        "way/53747323"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/203838055",
+        "https://www.openstreetmap.org/way/53747323"
+      ],
+      "id": "route-local-fire-oakville-fire-9-02",
+      "routeBaseId": "fire-oakville-fire-9",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2265.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 3030.6,
+        "decisionKinds": [
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 154.4,
+        "bestSameServiceCostSeconds": 154.4
+      }
+    },
+    {
+      "name": "Burnhamthorpe Road West & William Halton Parkway West",
+      "addr": "Burnhamthorpe Road West & William Halton Parkway West",
+      "lat": 43.4866069,
+      "lng": -79.7556336,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1429659901",
+        "way/1429659902",
+        "way/443271617"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1429659901",
+        "https://www.openstreetmap.org/way/1429659902",
+        "https://www.openstreetmap.org/way/443271617"
+      ],
+      "id": "route-local-fire-oakville-fire-9-03",
+      "routeBaseId": "fire-oakville-fire-9",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2143.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1061.9,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 160.9,
+        "bestSameServiceCostSeconds": 160.9
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Sixteen Mile Sports Complex",
+      "addr": "3070 Neyagawa Blvd., Oakville, ON",
+      "lat": 43.46588716662579,
+      "lng": -79.74932041252201,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.oakville.ca/oakgis/rest/services/ArcGISOnline/AGO_Oakville_Misc_Layers/MapServer/7",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "16 Mile Drive",
+        "Gardenbrook Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "oakville-call-04",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-oakville-fire-9-04",
+      "routeBaseId": "fire-oakville-fire-9",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1226.7,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 3792.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 208.9,
+        "bestSameServiceCostSeconds": 208.9
+      }
+    },
+    {
+      "name": "Genesee Drive & Howell Road",
+      "addr": "Genesee Drive & Howell Road",
+      "lat": 43.4699809,
+      "lng": -79.7300474,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/144345535",
+        "way/144345537"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/144345535",
+        "https://www.openstreetmap.org/way/144345537"
+      ],
+      "id": "route-local-fire-oakville-fire-9-05",
+      "routeBaseId": "fire-oakville-fire-9",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2652.4,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 480.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 240.7,
+        "bestSameServiceCostSeconds": 240.7
+      }
+    },
+    {
+      "name": "Carding Mill Trail & George Savage Avenue & Polly Drive",
+      "addr": "Carding Mill Trail & George Savage Avenue & Polly Drive",
+      "lat": 43.4796579,
+      "lng": -79.7462988,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/280940250",
+        "way/396616093",
+        "way/687903511"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/280940250",
+        "https://www.openstreetmap.org/way/396616093",
+        "https://www.openstreetmap.org/way/687903511"
+      ],
+      "id": "route-local-fire-oakville-fire-9-06",
+      "routeBaseId": "fire-oakville-fire-9",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1692.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1229.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 158.2,
+        "bestSameServiceCostSeconds": 158.2
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Erchless Estates",
+      "addr": "8 Navy St, Oakville, ON",
+      "lat": 43.44199236052612,
+      "lng": -79.6666910126328,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.oakville.ca/oakgis/rest/services/ArcGISOnline/AGO_Communications/MapServer/1",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Front Street",
+        "King Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "oakville-call-09",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-oakville-fire-3-01",
+      "routeBaseId": "fire-oakville-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1141.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 260.9,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Kerr Street",
+        "estimatedCostSeconds": 87.7,
+        "bestSameServiceCostSeconds": 87.7
+      }
+    },
+    {
+      "name": "Kerr Street & Wyecroft Road",
+      "addr": "Kerr Street & Wyecroft Road",
+      "lat": 43.450364,
+      "lng": -79.6932522,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1418831669",
+        "way/15245620",
+        "way/464822948"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1418831669",
+        "https://www.openstreetmap.org/way/15245620",
+        "https://www.openstreetmap.org/way/464822948"
+      ],
+      "id": "route-local-fire-oakville-fire-3-02",
+      "routeBaseId": "fire-oakville-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1718.5,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 609.5,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Kerr Street",
+        "estimatedCostSeconds": 103.5,
+        "bestSameServiceCostSeconds": 103.5
+      }
+    },
+    {
+      "name": "Tilford Road & West Lynn Road",
+      "addr": "Tilford Road & West Lynn Road",
+      "lat": 43.4226847,
+      "lng": -79.6878832,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33656900",
+        "way/33657428",
+        "way/33657644"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33656900",
+        "https://www.openstreetmap.org/way/33657428",
+        "https://www.openstreetmap.org/way/33657644"
+      ],
+      "id": "route-local-fire-oakville-fire-3-03",
+      "routeBaseId": "fire-oakville-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2595.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 426.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Kerr Street",
+        "estimatedCostSeconds": 141.4,
+        "bestSameServiceCostSeconds": 141.4
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Oakville Trafalgar Community Centre",
+      "addr": "325 Reynolds St, Oakville, ON",
+      "lat": 43.453394968207164,
+      "lng": -79.67379741778824,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.oakville.ca/oakgis/rest/services/ArcGISOnline/AGO_Oakville_Misc_Layers/MapServer/7",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Lawson Street",
+        "Macdonald Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "oakville-call-12",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-oakville-fire-3-04",
+      "routeBaseId": "fire-oakville-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1905.1,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 872.8,
+        "decisionKinds": [
+          "turn",
+          "bridge",
+          "departure"
+        ],
+        "departureRoad": "Kerr Street",
+        "estimatedCostSeconds": 135,
+        "bestSameServiceCostSeconds": 135
+      }
+    },
+    {
+      "name": "Brentwood Road & Lakeshore Road East",
+      "addr": "Brentwood Road & Lakeshore Road East",
+      "lat": 43.4570865,
+      "lng": -79.6560271,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1271073025",
+        "way/1271073026",
+        "way/32783036"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1271073025",
+        "https://www.openstreetmap.org/way/1271073026",
+        "https://www.openstreetmap.org/way/32783036"
+      ],
+      "id": "route-local-fire-oakville-fire-3-05",
+      "routeBaseId": "fire-oakville-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2615.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 260.9,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Kerr Street",
+        "estimatedCostSeconds": 130.4,
+        "bestSameServiceCostSeconds": 130.4
+      }
+    },
+    {
+      "name": "Southview Road & Wildwood Drive",
+      "addr": "Southview Road & Wildwood Drive",
+      "lat": 43.4357943,
+      "lng": -79.6916104,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1164501689",
+        "way/32753119",
+        "way/32753412",
+        "way/32753431"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1164501689",
+        "https://www.openstreetmap.org/way/32753119",
+        "https://www.openstreetmap.org/way/32753412",
+        "https://www.openstreetmap.org/way/32753431"
+      ],
+      "id": "route-local-fire-oakville-fire-3-06",
+      "routeBaseId": "fire-oakville-fire-3",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1694.3,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 170.4,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Kerr Street",
+        "estimatedCostSeconds": 117.8,
+        "bestSameServiceCostSeconds": 117.8
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "River Oaks Community Centre",
+      "addr": "2400 Sixth Line, Oakville, ON",
+      "lat": 43.47105897591402,
+      "lng": -79.72358060332503,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.oakville.ca/oakgis/rest/services/ArcGISOnline/AGO_Oakville_Misc_Layers/MapServer/7",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Chester Street",
+        "Bridgewater Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "oakville-call-03",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-oakville-fire-4-01",
+      "routeBaseId": "fire-oakville-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1093.4,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 646.4,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Sixth Line",
+        "estimatedCostSeconds": 101.5,
+        "bestSameServiceCostSeconds": 101.5
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Oakville Town Hall",
+      "addr": "1225 Trafalgar Road, Oakville, ON",
+      "lat": 43.46723515976725,
+      "lng": -79.68784788641558,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.oakville.ca/oakgis/rest/services/ArcGISOnline/AGO_Oakville_Misc_Layers/MapServer/7",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Mccraney Street East",
+        "White Oaks Boulevard"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "oakville-call-01",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-oakville-fire-4-02",
+      "routeBaseId": "fire-oakville-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2416.7,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 511.4,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Sixth Line",
+        "estimatedCostSeconds": 202.2,
+        "bestSameServiceCostSeconds": 202.2
+      }
+    },
+    {
+      "name": "Glen Valley Road & Old Oak Drive",
+      "addr": "Glen Valley Road & Old Oak Drive",
+      "lat": 43.4510928,
+      "lng": -79.7309915,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/32752003",
+        "way/32752007",
+        "way/32752026"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/32752003",
+        "https://www.openstreetmap.org/way/32752007",
+        "https://www.openstreetmap.org/way/32752026"
+      ],
+      "id": "route-local-fire-oakville-fire-4-03",
+      "routeBaseId": "fire-oakville-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2604.1,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 4590.2,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Sixth Line",
+        "estimatedCostSeconds": 168.2,
+        "bestSameServiceCostSeconds": 162.5
+      }
+    },
+    {
+      "name": "Oxford Avenue & Richards Crescent",
+      "addr": "Oxford Avenue & Richards Crescent",
+      "lat": 43.4555948,
+      "lng": -79.7071439,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/32732205",
+        "way/54122843"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/32732205",
+        "https://www.openstreetmap.org/way/54122843"
+      ],
+      "id": "route-local-fire-oakville-fire-4-04",
+      "routeBaseId": "fire-oakville-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1698.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 685.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Sixth Line",
+        "estimatedCostSeconds": 185.8,
+        "bestSameServiceCostSeconds": 185.8
+      }
+    },
+    {
+      "name": "Milford Lane & Penrose Lane & Rosegate Way",
+      "addr": "Milford Lane & Penrose Lane & Rosegate Way",
+      "lat": 43.4836414,
+      "lng": -79.7114404,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/147780245",
+        "way/149072090",
+        "way/53747598"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/147780245",
+        "https://www.openstreetmap.org/way/149072090",
+        "https://www.openstreetmap.org/way/53747598"
+      ],
+      "id": "route-local-fire-oakville-fire-4-05",
+      "routeBaseId": "fire-oakville-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2605.6,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 735.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Sixth Line",
+        "estimatedCostSeconds": 158.4,
+        "bestSameServiceCostSeconds": 158.4
+      }
+    },
+    {
+      "name": "Trafalgar Road & White Oaks Boulevard",
+      "addr": "Trafalgar Road & White Oaks Boulevard",
+      "lat": 43.4726002,
+      "lng": -79.6985674,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/179873400",
+        "way/424216521",
+        "way/74271710"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/179873400",
+        "https://www.openstreetmap.org/way/424216521",
+        "https://www.openstreetmap.org/way/74271710"
+      ],
+      "id": "route-local-fire-oakville-fire-4-06",
+      "routeBaseId": "fire-oakville-fire-4",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1648.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1480.4,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Sixth Line",
+        "estimatedCostSeconds": 96.4,
+        "bestSameServiceCostSeconds": 96.4
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Glen Abbey Community Centre",
+      "addr": "1415 Third Line, Oakville, ON",
+      "lat": 43.43557716313941,
+      "lng": -79.7391822171327,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.oakville.ca/oakgis/rest/services/ArcGISOnline/AGO_Oakville_Misc_Layers/MapServer/7",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Glen Abbey Gate",
+        "Upper Middle Road West"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "oakville-call-02",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-oakville-fire-6-01",
+      "routeBaseId": "fire-oakville-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 858.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1391.6,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Postmaster Drive",
+        "estimatedCostSeconds": 85.2,
+        "bestSameServiceCostSeconds": 85.2
+      }
+    },
+    {
+      "name": "Bronte Road & Upper Middle Road West",
+      "addr": "Bronte Road & Upper Middle Road West",
+      "lat": 43.4229107,
+      "lng": -79.758863,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/255868090",
+        "way/40652143"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/255868090",
+        "https://www.openstreetmap.org/way/40652143"
+      ],
+      "id": "route-local-fire-oakville-fire-6-02",
+      "routeBaseId": "fire-oakville-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1817,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 2187.2,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Postmaster Drive",
+        "estimatedCostSeconds": 111,
+        "bestSameServiceCostSeconds": 111
+      }
+    },
+    {
+      "name": "Dashwood Drive & Oakhaven Drive & Pine Glen Road",
+      "addr": "Dashwood Drive & Oakhaven Drive & Pine Glen Road",
+      "lat": 43.4519582,
+      "lng": -79.7531224,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/264595667",
+        "way/32752279",
+        "way/32752293"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/264595667",
+        "https://www.openstreetmap.org/way/32752279",
+        "https://www.openstreetmap.org/way/32752293"
+      ],
+      "id": "route-local-fire-oakville-fire-6-03",
+      "routeBaseId": "fire-oakville-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2577,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 938.7,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Postmaster Drive",
+        "estimatedCostSeconds": 174.4,
+        "bestSameServiceCostSeconds": 174.4
+      }
+    },
+    {
+      "name": "Third Line & Wyecroft Road",
+      "addr": "Third Line & Wyecroft Road",
+      "lat": 43.4218048,
+      "lng": -79.7218297,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/378462816",
+        "way/378462817",
+        "way/443760416",
+        "way/443760419"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/378462816",
+        "https://www.openstreetmap.org/way/378462817",
+        "https://www.openstreetmap.org/way/443760416",
+        "https://www.openstreetmap.org/way/443760419"
+      ],
+      "id": "route-local-fire-oakville-fire-6-04",
+      "routeBaseId": "fire-oakville-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2628.5,
+        "meaningfulDecisions": 6,
+        "maxAlternativePenaltyMetres": 3818.4,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Postmaster Drive",
+        "estimatedCostSeconds": 188.7,
+        "bestSameServiceCostSeconds": 188.7
+      }
+    },
+    {
+      "name": "Canonridge Circle & Gooseberry Way",
+      "addr": "Canonridge Circle & Gooseberry Way",
+      "lat": 43.4329374,
+      "lng": -79.7602138,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33656724",
+        "way/33657090",
+        "way/33657736"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33656724",
+        "https://www.openstreetmap.org/way/33657090",
+        "https://www.openstreetmap.org/way/33657736"
+      ],
+      "id": "route-local-fire-oakville-fire-6-05",
+      "routeBaseId": "fire-oakville-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2193.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 743.4,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Postmaster Drive",
+        "estimatedCostSeconds": 198,
+        "bestSameServiceCostSeconds": 183.9
+      }
+    },
+    {
+      "name": "Chatsworth Avenue & Parkhurst Drive",
+      "addr": "Chatsworth Avenue & Parkhurst Drive",
+      "lat": 43.4468984,
+      "lng": -79.7388978,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/32732995",
+        "way/32733041"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/32732995",
+        "https://www.openstreetmap.org/way/32733041"
+      ],
+      "id": "route-local-fire-oakville-fire-6-06",
+      "routeBaseId": "fire-oakville-fire-6",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1715.1,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 873.5,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Postmaster Drive",
+        "estimatedCostSeconds": 163.8,
+        "bestSameServiceCostSeconds": 163.8
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Bronte Harbour Washroom",
+      "addr": "75 West River St, Oakville, ON",
+      "lat": 43.393286298444906,
+      "lng": -79.71147770873398,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.oakville.ca/oakgis/rest/services/ArcGISOnline/AGO_Oakville_Misc_Layers/MapServer/7",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Seneca Drive",
+        "Lakeshore Road West"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "oakville-call-20",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-oakville-fire-1-01",
+      "routeBaseId": "fire-oakville-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1154.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 923.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 114.9,
+        "bestSameServiceCostSeconds": 114.9
+      }
+    },
+    {
+      "name": "Bronte Road & Wyecroft Road",
+      "addr": "Bronte Road & Wyecroft Road",
+      "lat": 43.4066373,
+      "lng": -79.7363165,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/15245648",
+        "way/372605630",
+        "way/379340361"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/15245648",
+        "https://www.openstreetmap.org/way/372605630",
+        "https://www.openstreetmap.org/way/379340361"
+      ],
+      "id": "route-local-fire-oakville-fire-1-02",
+      "routeBaseId": "fire-oakville-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1758.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2720.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 94.1,
+        "bestSameServiceCostSeconds": 94.1
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Shell Park",
+      "addr": "3307 Lakeshore Rd W, Oakville, ON",
+      "lat": 43.38006790033102,
+      "lng": -79.71778693131064,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.oakville.ca/oakgis/rest/services/ArcGISOnline/AGO_Communications/MapServer/1",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Shelburne Place",
+        "Great Lakes Boulevard"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "oakville-call-07",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-oakville-fire-1-03",
+      "routeBaseId": "fire-oakville-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2489.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1265.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 151.1,
+        "bestSameServiceCostSeconds": 151.1
+      }
+    },
+    {
+      "name": "Sloane Drive & Stanfield Drive",
+      "addr": "Sloane Drive & Stanfield Drive",
+      "lat": 43.4081289,
+      "lng": -79.7143298,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/32752717",
+        "way/32752741",
+        "way/53745054"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/32752717",
+        "https://www.openstreetmap.org/way/32752741",
+        "https://www.openstreetmap.org/way/53745054"
+      ],
+      "id": "route-local-fire-oakville-fire-1-04",
+      "routeBaseId": "fire-oakville-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1713.5,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2440.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 141,
+        "bestSameServiceCostSeconds": 141
+      }
+    },
+    {
+      "name": "Burloak Drive & Great Lakes Boulevard & Michigan Drive",
+      "addr": "Burloak Drive & Great Lakes Boulevard & Michigan Drive",
+      "lat": 43.3862737,
+      "lng": -79.7423155,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1339119682",
+        "way/1339119683",
+        "way/1339119685",
+        "way/1339119686"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1339119682",
+        "https://www.openstreetmap.org/way/1339119683",
+        "https://www.openstreetmap.org/way/1339119685",
+        "https://www.openstreetmap.org/way/1339119686"
+      ],
+      "id": "route-local-fire-oakville-fire-1-05",
+      "routeBaseId": "fire-oakville-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2324.2,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 3343.4,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 147.1,
+        "bestSameServiceCostSeconds": 147.1
+      }
+    },
+    {
+      "name": "Great Lakes Boulevard & Rebecca Street",
+      "addr": "Great Lakes Boulevard & Rebecca Street",
+      "lat": 43.3847277,
+      "lng": -79.7343336,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25691744",
+        "way/264387718",
+        "way/396039993"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25691744",
+        "https://www.openstreetmap.org/way/264387718",
+        "https://www.openstreetmap.org/way/396039993"
+      ],
+      "id": "route-local-fire-oakville-fire-1-06",
+      "routeBaseId": "fire-oakville-fire-1",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1670.3,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 3372.7,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 107.7,
+        "bestSameServiceCostSeconds": 107.7
+      }
+    },
+    {
+      "name": "Grand Boulevard & Valleybrook Drive",
+      "addr": "Grand Boulevard & Valleybrook Drive",
+      "lat": 43.4900821,
+      "lng": -79.6905608,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1352199059",
+        "way/27520889",
+        "way/28160682"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1352199059",
+        "https://www.openstreetmap.org/way/27520889",
+        "https://www.openstreetmap.org/way/28160682"
+      ],
+      "id": "route-local-fire-oakville-fire-7-01",
+      "routeBaseId": "fire-oakville-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 813.6,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 821.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Joshuas Creek Drive",
+        "estimatedCostSeconds": 63,
+        "bestSameServiceCostSeconds": 63
+      }
+    },
+    {
+      "name": "Buckingham Road & Upper Middle Road East",
+      "addr": "Buckingham Road & Upper Middle Road East",
+      "lat": 43.5044587,
+      "lng": -79.670856,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/285825806",
+        "way/464839168",
+        "way/464839169",
+        "way/51885931"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/285825806",
+        "https://www.openstreetmap.org/way/464839168",
+        "https://www.openstreetmap.org/way/464839169",
+        "https://www.openstreetmap.org/way/51885931"
+      ],
+      "id": "route-local-fire-oakville-fire-7-02",
+      "routeBaseId": "fire-oakville-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1715.2,
+        "meaningfulDecisions": 6,
+        "maxAlternativePenaltyMetres": 3510.1,
+        "decisionKinds": [
+          "departure",
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Joshuas Creek Drive",
+        "estimatedCostSeconds": 113.4,
+        "bestSameServiceCostSeconds": 113.4
+      }
+    },
+    {
+      "name": "Dundas Street East & Ninth Line",
+      "addr": "Dundas Street East & Ninth Line",
+      "lat": 43.5082442,
+      "lng": -79.6972335,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/110346206",
+        "way/1267330739",
+        "way/386580698",
+        "way/514897992"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/110346206",
+        "https://www.openstreetmap.org/way/1267330739",
+        "https://www.openstreetmap.org/way/386580698",
+        "https://www.openstreetmap.org/way/514897992"
+      ],
+      "id": "route-local-fire-oakville-fire-7-03",
+      "routeBaseId": "fire-oakville-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2505,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 1395.8,
+        "decisionKinds": [
+          "turn",
+          "departure",
+          "bridge"
+        ],
+        "departureRoad": "Joshuas Creek Drive",
+        "estimatedCostSeconds": 151.9,
+        "bestSameServiceCostSeconds": 151.9
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Falgarwood Pool",
+      "addr": "1349 Gainsborough Dr, Oakville, ON",
+      "lat": 43.47771752873151,
+      "lng": -79.68530617788802,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.oakville.ca/oakgis/rest/services/ArcGISOnline/AGO_Oakville_Misc_Layers/MapServer/7",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Ingledene Drive",
+        "Hampton Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "oakville-call-14",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-oakville-fire-7-04",
+      "routeBaseId": "fire-oakville-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1975.4,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 2869,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Joshuas Creek Drive",
+        "estimatedCostSeconds": 168.9,
+        "bestSameServiceCostSeconds": 168.9
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Iroquois Ridge Community Centre",
+      "addr": "1051 Glenashton Dr, Oakville, ON",
+      "lat": 43.48794464004543,
+      "lng": -79.70099328479932,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.oakville.ca/oakgis/rest/services/ArcGISOnline/AGO_Oakville_Misc_Layers/MapServer/7",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Glenora Drive",
+        "Grosvenor Street"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "oakville-call-06",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-oakville-fire-7-05",
+      "routeBaseId": "fire-oakville-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1846.2,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 311.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Joshuas Creek Drive",
+        "estimatedCostSeconds": 206,
+        "bestSameServiceCostSeconds": 206
+      }
+    },
+    {
+      "name": "Kingsway Drive & Sherwood Heights Drive",
+      "addr": "Kingsway Drive & Sherwood Heights Drive",
+      "lat": 43.4939237,
+      "lng": -79.6649323,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1482817646",
+        "way/29087747",
+        "way/397508113"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1482817646",
+        "https://www.openstreetmap.org/way/29087747",
+        "https://www.openstreetmap.org/way/397508113"
+      ],
+      "id": "route-local-fire-oakville-fire-7-06",
+      "routeBaseId": "fire-oakville-fire-7",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1721.3,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1181,
+        "decisionKinds": [
+          "departure",
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Joshuas Creek Drive",
+        "estimatedCostSeconds": 108.9,
+        "bestSameServiceCostSeconds": 104.7
+      }
+    },
+    {
+      "name": "Fourth Line & Wyecroft Road",
+      "addr": "Fourth Line & Wyecroft Road",
+      "lat": 43.4370044,
+      "lng": -79.7066099,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/170004516",
+        "way/340996531",
+        "way/464822947"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/170004516",
+        "https://www.openstreetmap.org/way/340996531",
+        "https://www.openstreetmap.org/way/464822947"
+      ],
+      "id": "route-local-fire-oakville-fire-5-01",
+      "routeBaseId": "fire-oakville-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 841,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 4224.7,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 129.5,
+        "bestSameServiceCostSeconds": 129.5
+      }
+    },
+    {
+      "name": "Friars Court & Montrose Abbey Drive",
+      "addr": "Friars Court & Montrose Abbey Drive",
+      "lat": 43.4455911,
+      "lng": -79.7183663,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/149072066",
+        "way/32734651"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/149072066",
+        "https://www.openstreetmap.org/way/32734651"
+      ],
+      "id": "route-local-fire-oakville-fire-5-02",
+      "routeBaseId": "fire-oakville-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2380.4,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 3484.7,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 313.4,
+        "bestSameServiceCostSeconds": 304.6
+      }
+    },
+    {
+      "name": "Pinegrove Road & Stonecliffe Road",
+      "addr": "Pinegrove Road & Stonecliffe Road",
+      "lat": 43.4260423,
+      "lng": -79.7068952,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/263725791",
+        "way/32753051",
+        "way/32753060"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/263725791",
+        "https://www.openstreetmap.org/way/32753051",
+        "https://www.openstreetmap.org/way/32753060"
+      ],
+      "id": "route-local-fire-oakville-fire-5-03",
+      "routeBaseId": "fire-oakville-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2380.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 2173.9,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 312.5,
+        "bestSameServiceCostSeconds": 300.7
+      }
+    },
+    {
+      "name": "Progress Court & South Service Road West",
+      "addr": "Progress Court & South Service Road West",
+      "lat": 43.4293463,
+      "lng": -79.7186896,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/275135038",
+        "way/32782610"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/275135038",
+        "https://www.openstreetmap.org/way/32782610"
+      ],
+      "id": "route-local-fire-oakville-fire-5-04",
+      "routeBaseId": "fire-oakville-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 973.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 3891.8,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 140.1,
+        "bestSameServiceCostSeconds": 140.1
+      }
+    },
+    {
+      "name": "Maidstone Crescent & Northwood Drive",
+      "addr": "Maidstone Crescent & Northwood Drive",
+      "lat": 43.4457268,
+      "lng": -79.7087503,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/32751930",
+        "way/40661895"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/32751930",
+        "https://www.openstreetmap.org/way/40661895"
+      ],
+      "id": "route-local-fire-oakville-fire-5-05",
+      "routeBaseId": "fire-oakville-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2124.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 3773.8,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 275.5,
+        "bestSameServiceCostSeconds": 275.5
+      }
+    },
+    {
+      "name": "Fourth Line & Stephens Crescent",
+      "addr": "Fourth Line & Stephens Crescent",
+      "lat": 43.4316114,
+      "lng": -79.6994992,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1164501688",
+        "way/32753104",
+        "way/32753121"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1164501688",
+        "https://www.openstreetmap.org/way/32753104",
+        "https://www.openstreetmap.org/way/32753121"
+      ],
+      "id": "route-local-fire-oakville-fire-5-06",
+      "routeBaseId": "fire-oakville-fire-5",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1626.7,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 3263.7,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 192.4,
+        "bestSameServiceCostSeconds": 187.6
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Maple Grove Arena",
+      "addr": "2237 Devon Rd, Oakville, ON",
+      "lat": 43.47915052743376,
+      "lng": -79.64373778941317,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.oakville.ca/oakgis/rest/services/ArcGISOnline/AGO_Oakville_Misc_Layers/MapServer/7",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Ash Tree Way",
+        "Elmhurst Avenue"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "oakville-call-15",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-oakville-fire-2-01",
+      "routeBaseId": "fire-oakville-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1609.2,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1068.8,
+        "decisionKinds": [
+          "turn",
+          "departure",
+          "bridge"
+        ],
+        "departureRoad": "Cornwall Road",
+        "estimatedCostSeconds": 129.9,
+        "bestSameServiceCostSeconds": 129.9
+      }
+    },
+    {
+      "name": "Kingsway Drive & Sherwood Heights Drive",
+      "addr": "Kingsway Drive & Sherwood Heights Drive",
+      "lat": 43.4939237,
+      "lng": -79.6649323,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1482817646",
+        "way/29087747",
+        "way/397508113"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1482817646",
+        "https://www.openstreetmap.org/way/29087747",
+        "https://www.openstreetmap.org/way/397508113"
+      ],
+      "id": "route-local-fire-oakville-fire-2-02",
+      "routeBaseId": "fire-oakville-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1697.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1993.8,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Cornwall Road",
+        "estimatedCostSeconds": 104.7,
+        "bestSameServiceCostSeconds": 104.7
+      }
+    },
+    {
+      "main": "Fire",
+      "sub": "Structure Fire",
+      "name": "Wedgewood Pool",
+      "addr": "351 Cairncroft Rd, Oakville, ON",
+      "lat": 43.46879927157762,
+      "lng": -79.65757752941832,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.oakville.ca/oakgis/rest/services/ArcGISOnline/AGO_Oakville_Misc_Layers/MapServer/7",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Cedarbrae Drive",
+        "Devon Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Structure Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "oakville-call-17",
+      "locationKind": "sourced-address",
+      "id": "route-local-fire-oakville-fire-2-03",
+      "routeBaseId": "fire-oakville-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2599.5,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 253,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Cornwall Road",
+        "estimatedCostSeconds": 195.5,
+        "bestSameServiceCostSeconds": 195.5
+      }
+    },
+    {
+      "name": "Beryl Road & Winston Churchill Boulevard",
+      "addr": "Beryl Road & Winston Churchill Boulevard",
+      "lat": 43.4942762,
+      "lng": -79.6426799,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1271075660",
+        "way/1308309640"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1271075660",
+        "https://www.openstreetmap.org/way/1308309640"
+      ],
+      "id": "route-local-fire-oakville-fire-2-04",
+      "routeBaseId": "fire-oakville-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1050.6,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 1810.8,
+        "decisionKinds": [
+          "departure",
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Cornwall Road",
+        "estimatedCostSeconds": 81.5,
+        "bestSameServiceCostSeconds": 81.5
+      }
+    },
+    {
+      "name": "Caradoc Lane & Greenwood Crescent",
+      "addr": "Caradoc Lane & Greenwood Crescent",
+      "lat": 43.5035058,
+      "lng": -79.65663,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Vehicle Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Vehicle Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/32784270",
+        "way/32784271"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/32784270",
+        "https://www.openstreetmap.org/way/32784271"
+      ],
+      "id": "route-local-fire-oakville-fire-2-05",
+      "routeBaseId": "fire-oakville-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2587.9,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1810.8,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Cornwall Road",
+        "estimatedCostSeconds": 196.5,
+        "bestSameServiceCostSeconds": 196.5
+      }
+    },
+    {
+      "name": "Maple Grove Drive & Royal Windsor Drive",
+      "addr": "Maple Grove Drive & Royal Windsor Drive",
+      "lat": 43.4820242,
+      "lng": -79.6614327,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33656633",
+        "way/451808087",
+        "way/451808088"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33656633",
+        "https://www.openstreetmap.org/way/451808087",
+        "https://www.openstreetmap.org/way/451808088"
+      ],
+      "id": "route-local-fire-oakville-fire-2-06",
+      "routeBaseId": "fire-oakville-fire-2",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1520.3,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 3868.7,
+        "decisionKinds": [
+          "departure",
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Cornwall Road",
+        "estimatedCostSeconds": 79.2,
+        "bestSameServiceCostSeconds": 79.2
+      }
+    },
+    {
+      "name": "Grand Oak Trail & Quetico Crescent",
+      "addr": "Grand Oak Trail & Quetico Crescent",
+      "lat": 43.4371263,
+      "lng": -79.7721753,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1469363170",
+        "way/182888957",
+        "way/182888960"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1469363170",
+        "https://www.openstreetmap.org/way/182888957",
+        "https://www.openstreetmap.org/way/182888960"
+      ],
+      "id": "route-local-fire-oakville-fire-8-01",
+      "routeBaseId": "fire-oakville-fire-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 804.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1886.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 77.6,
+        "bestSameServiceCostSeconds": 77.6
+      }
+    },
+    {
+      "name": "Dundas Street & Dundas Street West & Tremaine Road",
+      "addr": "Dundas Street & Dundas Street West & Tremaine Road",
+      "lat": 43.4210593,
+      "lng": -79.7920733,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/10277681",
+        "way/1338722666",
+        "way/1365186044"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/10277681",
+        "https://www.openstreetmap.org/way/1338722666",
+        "https://www.openstreetmap.org/way/1365186044"
+      ],
+      "id": "route-local-fire-oakville-fire-8-02",
+      "routeBaseId": "fire-oakville-fire-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2227.2,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 948,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 135.6,
+        "bestSameServiceCostSeconds": 135.6
+      }
+    },
+    {
+      "name": "Bronte Road & Burnhamthorpe Road West",
+      "addr": "Bronte Road & Burnhamthorpe Road West",
+      "lat": 43.4492431,
+      "lng": -79.7952285,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/132910686",
+        "way/132910687",
+        "way/25567453",
+        "way/446202917"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/132910686",
+        "https://www.openstreetmap.org/way/132910687",
+        "https://www.openstreetmap.org/way/25567453",
+        "https://www.openstreetmap.org/way/446202917"
+      ],
+      "id": "route-local-fire-oakville-fire-8-03",
+      "routeBaseId": "fire-oakville-fire-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2460.9,
+        "meaningfulDecisions": 6,
+        "maxAlternativePenaltyMetres": 4835.4,
+        "decisionKinds": [
+          "bridge",
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 147,
+        "bestSameServiceCostSeconds": 147
+      }
+    },
+    {
+      "name": "Carberry Way & Hemmford Drive",
+      "addr": "Carberry Way & Hemmford Drive",
+      "lat": 43.4260862,
+      "lng": -79.7618861,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33657046",
+        "way/33657128",
+        "way/33657603"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33657046",
+        "https://www.openstreetmap.org/way/33657128",
+        "https://www.openstreetmap.org/way/33657603"
+      ],
+      "id": "route-local-fire-oakville-fire-8-04",
+      "routeBaseId": "fire-oakville-fire-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1631,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 770,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 171.2,
+        "bestSameServiceCostSeconds": 171.2
+      }
+    },
+    {
+      "name": "Dundas Street West & Third Line",
+      "addr": "Dundas Street West & Third Line",
+      "lat": 43.4504321,
+      "lng": -79.7609048,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1326551745",
+        "way/1326551746",
+        "way/264599183",
+        "way/756017934"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1326551745",
+        "https://www.openstreetmap.org/way/1326551746",
+        "https://www.openstreetmap.org/way/264599183",
+        "https://www.openstreetmap.org/way/756017934"
+      ],
+      "id": "route-local-fire-oakville-fire-8-05",
+      "routeBaseId": "fire-oakville-fire-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 2481.2,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 944,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 148.8,
+        "bestSameServiceCostSeconds": 148.7
+      }
+    },
+    {
+      "name": "Liptay Avenue & Skipton Lane",
+      "addr": "Liptay Avenue & Skipton Lane",
+      "lat": 43.4259499,
+      "lng": -79.7789717,
+      "radius": 40,
+      "main": "Fire",
+      "sub": "Outdoor Fire",
+      "incidentProfiles": {
+        "fire": {
+          "sub": "Outdoor Fire"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/50175837",
+        "way/50175838",
+        "way/60613220"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/50175837",
+        "https://www.openstreetmap.org/way/50175838",
+        "https://www.openstreetmap.org/way/60613220"
+      ],
+      "id": "route-local-fire-oakville-fire-8-06",
+      "routeBaseId": "fire-oakville-fire-8",
+      "trainingServices": [
+        "fire"
+      ],
+      "routeQuality": {
+        "routeMetres": 1695.9,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 948,
+        "decisionKinds": [
+          "turn",
+          "bridge",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 134.4,
+        "bestSameServiceCostSeconds": 134.4
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Post Inn Village",
+      "addr": "203 Georgian Drive",
+      "lat": 43.48024329905806,
+      "lng": -79.7167455,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790198"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "4491",
+      "community": "Oakville",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-4491",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-oakville-ems-2-01",
+      "routeBaseId": "ems-oakville-ems-2",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 284,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 202.3,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 60.7,
+        "bestSameServiceCostSeconds": 60.7
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "William Rose Park Playground",
+      "addr": "455 Wheat Boom Dr, Oakville, ON",
+      "lat": 43.493298660631055,
+      "lng": -79.71977662581402,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.oakville.ca/oakgis/rest/services/ArcGISOnline/AGO_Oakville_Misc_Layers/MapServer/7",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Lane 165",
+        "Postridge Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "oakville-call-19",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-oakville-ems-2-02",
+      "routeBaseId": "ems-oakville-ems-2",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1906.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 412.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 156.7,
+        "bestSameServiceCostSeconds": 156.7
+      }
+    },
+    {
+      "name": "Cashey Drive & Glenashton Drive",
+      "addr": "Cashey Drive & Glenashton Drive",
+      "lat": 43.4898098,
+      "lng": -79.6951003,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/26174509",
+        "way/99456711"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/26174509",
+        "https://www.openstreetmap.org/way/99456711"
+      ],
+      "id": "route-local-ems-oakville-ems-2-03",
+      "routeBaseId": "ems-oakville-ems-2",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2609,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 692.7,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 231.3,
+        "bestSameServiceCostSeconds": 231.3
+      }
+    },
+    {
+      "name": "Genesee Drive & Hopewell Road",
+      "addr": "Genesee Drive & Hopewell Road",
+      "lat": 43.4712158,
+      "lng": -79.7299495,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/144345535",
+        "way/144345536"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/144345535",
+        "https://www.openstreetmap.org/way/144345536"
+      ],
+      "id": "route-local-ems-oakville-ems-2-04",
+      "routeBaseId": "ems-oakville-ems-2",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1707,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 189.6,
+        "decisionKinds": [
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 218.1,
+        "bestSameServiceCostSeconds": 218.1
+      }
+    },
+    {
+      "name": "Clayton Trail & Viva Gardens",
+      "addr": "Clayton Trail & Viva Gardens",
+      "lat": 43.491215,
+      "lng": -79.7402669,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/665373652",
+        "way/665373663",
+        "way/665373702"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/665373652",
+        "https://www.openstreetmap.org/way/665373663",
+        "https://www.openstreetmap.org/way/665373702"
+      ],
+      "id": "route-local-ems-oakville-ems-2-05",
+      "routeBaseId": "ems-oakville-ems-2",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2614,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 731.7,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 238.6,
+        "bestSameServiceCostSeconds": 238.6
+      }
+    },
+    {
+      "name": "Milbourne Crescent & Nipigon Drive & Pelee Boulevard",
+      "addr": "Milbourne Crescent & Nipigon Drive & Pelee Boulevard",
+      "lat": 43.4705456,
+      "lng": -79.7095051,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/26694433",
+        "way/26694541",
+        "way/26694543"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/26694433",
+        "https://www.openstreetmap.org/way/26694541",
+        "https://www.openstreetmap.org/way/26694543"
+      ],
+      "id": "route-local-ems-oakville-ems-2-06",
+      "routeBaseId": "ems-oakville-ems-2",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1713.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 198.9,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 211.7,
+        "bestSameServiceCostSeconds": 211.7
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Wedgewood Pool",
+      "addr": "351 Cairncroft Rd, Oakville, ON",
+      "lat": 43.46879927157762,
+      "lng": -79.65757752941832,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.oakville.ca/oakgis/rest/services/ArcGISOnline/AGO_Oakville_Misc_Layers/MapServer/7",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "hard",
+      "crossStreets": [
+        "Cedarbrae Drive",
+        "Devon Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "oakville-call-17",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-oakville-ems-12-01",
+      "routeBaseId": "ems-oakville-ems-12",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1633.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1028.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 154.9,
+        "bestSameServiceCostSeconds": 154.9
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Oakville Trafalgar Community Centre",
+      "addr": "325 Reynolds St, Oakville, ON",
+      "lat": 43.453394968207164,
+      "lng": -79.67379741778824,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.oakville.ca/oakgis/rest/services/ArcGISOnline/AGO_Oakville_Misc_Layers/MapServer/7",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "Lawson Street",
+        "Macdonald Road"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "oakville-call-12",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-oakville-ems-12-02",
+      "routeBaseId": "ems-oakville-ems-12",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1976,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 1615.8,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 168.5,
+        "bestSameServiceCostSeconds": 168.5
+      }
+    },
+    {
+      "name": "Carlisle Court & Dunvegan Avenue",
+      "addr": "Carlisle Court & Dunvegan Avenue",
+      "lat": 43.482575,
+      "lng": -79.6533883,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/25481794",
+        "way/32773739"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/25481794",
+        "https://www.openstreetmap.org/way/32773739"
+      ],
+      "id": "route-local-ems-oakville-ems-12-03",
+      "routeBaseId": "ems-oakville-ems-12",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2596.8,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 855.5,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 235.2,
+        "bestSameServiceCostSeconds": 235.2
+      }
+    },
+    {
+      "name": "Industry Street & South Service Road East",
+      "addr": "Industry Street & South Service Road East",
+      "lat": 43.4695203,
+      "lng": -79.6743927,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/220187755",
+        "way/33657119",
+        "way/464851147"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/220187755",
+        "https://www.openstreetmap.org/way/33657119",
+        "https://www.openstreetmap.org/way/464851147"
+      ],
+      "id": "route-local-ems-oakville-ems-12-04",
+      "routeBaseId": "ems-oakville-ems-12",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1155,
+        "meaningfulDecisions": 1,
+        "maxAlternativePenaltyMetres": 204.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 111.4,
+        "bestSameServiceCostSeconds": 111.4
+      }
+    },
+    {
+      "name": "North Service Road East & Trafalgar Road",
+      "addr": "North Service Road East & Trafalgar Road",
+      "lat": 43.462601,
+      "lng": -79.6846339,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/180066648",
+        "way/25646151",
+        "way/286811445"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/180066648",
+        "https://www.openstreetmap.org/way/25646151",
+        "https://www.openstreetmap.org/way/286811445"
+      ],
+      "id": "route-local-ems-oakville-ems-12-05",
+      "routeBaseId": "ems-oakville-ems-12",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2496.8,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 1772.9,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 168,
+        "bestSameServiceCostSeconds": 168
+      }
+    },
+    {
+      "name": "Avon Crescent & Drummond Road",
+      "addr": "Avon Crescent & Drummond Road",
+      "lat": 43.4716459,
+      "lng": -79.6636871,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/32773494",
+        "way/53721991",
+        "way/53721992"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/32773494",
+        "https://www.openstreetmap.org/way/53721991",
+        "https://www.openstreetmap.org/way/53721992"
+      ],
+      "id": "route-local-ems-oakville-ems-12-06",
+      "routeBaseId": "ems-oakville-ems-12",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1717,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 1028.1,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 196,
+        "bestSameServiceCostSeconds": 196
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "AgeCare Glen Oaks",
+      "addr": "2140 Baronwood Drive",
+      "lat": 43.4271391990581,
+      "lng": -79.7630274,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790153"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "4443",
+      "community": "Oakville",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-4443",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-oakville-ems-14-01",
+      "routeBaseId": "ems-oakville-ems-14",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1304.4,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 770,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 101.3,
+        "bestSameServiceCostSeconds": 101.3
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "West Oak Village",
+      "addr": "2370 Third Line",
+      "lat": 43.4470663990581,
+      "lng": -79.75632529999996,
+      "radius": 65,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_OPEN_DATA/LIO_Open09/MapServer/26?where=OGF_ID%3D321790227"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "facilityType": "long-term-care",
+      "providerId": "4373",
+      "community": "Oakville",
+      "simulatedIncident": true,
+      "canonicalCallId": "moh-ltc-4373",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-oakville-ems-14-02",
+      "routeBaseId": "ems-oakville-ems-14",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2453.2,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 799.3,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 239.3,
+        "bestSameServiceCostSeconds": 239.3
+      }
+    },
+    {
+      "name": "Bronte Road & Burnhamthorpe Road West",
+      "addr": "Bronte Road & Burnhamthorpe Road West",
+      "lat": 43.4492431,
+      "lng": -79.7952285,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/132910686",
+        "way/132910687",
+        "way/25567453",
+        "way/446202917"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/132910686",
+        "https://www.openstreetmap.org/way/132910687",
+        "https://www.openstreetmap.org/way/25567453",
+        "https://www.openstreetmap.org/way/446202917"
+      ],
+      "id": "route-local-ems-oakville-ems-14-03",
+      "routeBaseId": "ems-oakville-ems-14",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2560,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 4835.4,
+        "decisionKinds": [
+          "bridge",
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 136.5,
+        "bestSameServiceCostSeconds": 136.5
+      }
+    },
+    {
+      "name": "Bronte Road & William Halton Parkway West",
+      "addr": "Bronte Road & William Halton Parkway West",
+      "lat": 43.437718,
+      "lng": -79.780834,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1320146115",
+        "way/1320146116",
+        "way/184884973"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1320146115",
+        "https://www.openstreetmap.org/way/1320146116",
+        "https://www.openstreetmap.org/way/184884973"
+      ],
+      "id": "route-local-ems-oakville-ems-14-04",
+      "routeBaseId": "ems-oakville-ems-14",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 862.6,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 999.9,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 53.9,
+        "bestSameServiceCostSeconds": 53.9
+      }
+    },
+    {
+      "name": "Dundas Street & Dundas Street West & Tremaine Road",
+      "addr": "Dundas Street & Dundas Street West & Tremaine Road",
+      "lat": 43.4210593,
+      "lng": -79.7920733,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/10277681",
+        "way/1338722666",
+        "way/1365186044"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/10277681",
+        "https://www.openstreetmap.org/way/1338722666",
+        "https://www.openstreetmap.org/way/1365186044"
+      ],
+      "id": "route-local-ems-oakville-ems-14-05",
+      "routeBaseId": "ems-oakville-ems-14",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2326.3,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 948,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 125.1,
+        "bestSameServiceCostSeconds": 125.1
+      }
+    },
+    {
+      "name": "Colonel William Parkway & Liptay Avenue",
+      "addr": "Colonel William Parkway & Liptay Avenue",
+      "lat": 43.4264698,
+      "lng": -79.7783379,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/210336153",
+        "way/50175375",
+        "way/50175837"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/210336153",
+        "https://www.openstreetmap.org/way/50175375",
+        "https://www.openstreetmap.org/way/50175837"
+      ],
+      "id": "route-local-ems-oakville-ems-14-06",
+      "routeBaseId": "ems-oakville-ems-14",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1718.1,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 948,
+        "decisionKinds": [
+          "turn",
+          "bridge"
+        ],
+        "departureRoad": "Unnamed road",
+        "estimatedCostSeconds": 112.4,
+        "bestSameServiceCostSeconds": 112.4
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Coronation Park",
+      "addr": "1426 Lakeshore Rd W, Oakville, ON",
+      "lat": 43.40967509311865,
+      "lng": -79.69241427560095,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.oakville.ca/oakgis/rest/services/ArcGISOnline/AGO_Communications/MapServer/1",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "easy",
+      "crossStreets": [
+        "Woodhaven Park Drive",
+        "Westminster Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "oakville-call-08",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-oakville-ems-15-01",
+      "routeBaseId": "ems-oakville-ems-15",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1046.3,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 434.7,
+        "decisionKinds": [
+          "departure",
+          "turn"
+        ],
+        "departureRoad": "Woodside Drive",
+        "estimatedCostSeconds": 142.9,
+        "bestSameServiceCostSeconds": 142.9
+      }
+    },
+    {
+      "name": "Bridge Road & Third Line",
+      "addr": "Bridge Road & Third Line",
+      "lat": 43.4152447,
+      "lng": -79.7127162,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Pedestrian Injury",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Pedestrian Injury"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/1413446645",
+        "way/275134189",
+        "way/43929691",
+        "way/43929708"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/1413446645",
+        "https://www.openstreetmap.org/way/275134189",
+        "https://www.openstreetmap.org/way/43929691",
+        "https://www.openstreetmap.org/way/43929708"
+      ],
+      "id": "route-local-ems-oakville-ems-15-02",
+      "routeBaseId": "ems-oakville-ems-15",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1717.9,
+        "meaningfulDecisions": 2,
+        "maxAlternativePenaltyMetres": 886.8,
+        "decisionKinds": [
+          "turn",
+          "departure"
+        ],
+        "departureRoad": "Woodside Drive",
+        "estimatedCostSeconds": 116.2,
+        "bestSameServiceCostSeconds": 116.2
+      }
+    },
+    {
+      "name": "Burton Road & Pinegrove Road",
+      "addr": "Burton Road & Pinegrove Road",
+      "lat": 43.4343019,
+      "lng": -79.6982095,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/32753077",
+        "way/32753303"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/32753077",
+        "https://www.openstreetmap.org/way/32753303"
+      ],
+      "id": "route-local-ems-oakville-ems-15-03",
+      "routeBaseId": "ems-oakville-ems-15",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2549.4,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 1188.3,
+        "decisionKinds": [
+          "turn",
+          "departure",
+          "bridge"
+        ],
+        "departureRoad": "Woodside Drive",
+        "estimatedCostSeconds": 294.1,
+        "bestSameServiceCostSeconds": 294.1
+      }
+    },
+    {
+      "name": "Lakeshore Road West & West Lynn Road",
+      "addr": "Lakeshore Road West & West Lynn Road",
+      "lat": 43.4226307,
+      "lng": -79.6893156,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/33657644",
+        "way/43929726"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/33657644",
+        "https://www.openstreetmap.org/way/43929726"
+      ],
+      "id": "route-local-ems-oakville-ems-15-04",
+      "routeBaseId": "ems-oakville-ems-15",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 1703,
+        "meaningfulDecisions": 6,
+        "maxAlternativePenaltyMetres": 2145.6,
+        "decisionKinds": [
+          "turn",
+          "bridge",
+          "departure"
+        ],
+        "departureRoad": "Woodside Drive",
+        "estimatedCostSeconds": 161,
+        "bestSameServiceCostSeconds": 161
+      }
+    },
+    {
+      "name": "Belyea Street & Nelson Street",
+      "addr": "Belyea Street & Nelson Street",
+      "lat": 43.3989223,
+      "lng": -79.7112541,
+      "radius": 40,
+      "main": "Medical",
+      "sub": "Motor Vehicle Collision",
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Motor Vehicle Collision"
+        }
+      },
+      "simulatedIncident": true,
+      "locationKind": "mapped-intersection",
+      "osmWays": [
+        "way/23051603",
+        "way/23051618"
+      ],
+      "sources": [
+        "https://www.openstreetmap.org/way/23051603",
+        "https://www.openstreetmap.org/way/23051618"
+      ],
+      "id": "route-local-ems-oakville-ems-15-05",
+      "routeBaseId": "ems-oakville-ems-15",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2612,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 715.5,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Woodside Drive",
+        "estimatedCostSeconds": 213.8,
+        "bestSameServiceCostSeconds": 213.8
+      }
+    },
+    {
+      "main": "Medical",
+      "sub": "Medical Assistance",
+      "name": "Sir John Colborne Recreation Centre",
+      "addr": "1565 Old Lakeshore Rd, Oakville, ON",
+      "lat": 43.405003510819014,
+      "lng": -79.69694094019353,
+      "radius": 100,
+      "cityTen": false,
+      "confirmed": false,
+      "sources": [
+        "https://maps.oakville.ca/oakgis/rest/services/ArcGISOnline/AGO_Oakville_Misc_Layers/MapServer/7",
+        "https://services1.arcgis.com/TJH5KDher0W13Kgo/arcgis/rest/services/Ontario_Road_Network_Composite_Service_GeoHub_View_EN/FeatureServer/5"
+      ],
+      "custom": false,
+      "recognitionDifficulty": "medium",
+      "crossStreets": [
+        "3Rd Line",
+        "Marine Drive"
+      ],
+      "sourceCallIds": [],
+      "incidentProfiles": {
+        "ems": {
+          "sub": "Medical Assistance"
+        }
+      },
+      "simulatedIncident": true,
+      "canonicalCallId": "oakville-call-13",
+      "locationKind": "sourced-address",
+      "id": "route-local-ems-oakville-ems-15-06",
+      "routeBaseId": "ems-oakville-ems-15",
+      "trainingServices": [
+        "ems"
+      ],
+      "routeQuality": {
+        "routeMetres": 2115.5,
+        "meaningfulDecisions": 4,
+        "maxAlternativePenaltyMetres": 2638.3,
+        "decisionKinds": [
+          "turn"
+        ],
+        "departureRoad": "Woodside Drive",
+        "estimatedCostSeconds": 189.2,
+        "bestSameServiceCostSeconds": 189.2
+      }
+    }
+  ]
 }
