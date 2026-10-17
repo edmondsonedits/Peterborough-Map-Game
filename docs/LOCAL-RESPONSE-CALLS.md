@@ -2,7 +2,9 @@
 
 Route Mapping has its own hall-specific call catalog in each city's `training-data.json`. Shared Geo Guesser and driving catalogs are unchanged. Incidents are simulated; addresses and junctions come from the linked source records.
 
-Each selectable Fire and EMS hall has at least three distinct destinations, targeting six. Runtime filters by hall and service **before** difficulty, decision challenges, recent history, and EMS care-home priority. Exhausting history recycles the local set. It never falls back to citywide calls. Previous-call practice retains the originating hall's catalog.
+Each selectable Fire and EMS hall has at least three distinct destinations, targeting six. Runtime filters by hall and service **before** difficulty, decision challenges, recent history, and EMS care-home priority. Exhausting history recycles the local set. It never falls back to citywide calls.
+
+Route Mapping opens a Fire/EMS station picker before loading the map. Each station displays the number of unique calls assigned to that hall and service. Choosing a station keeps it as the starting point throughout the session, including after 20 completed calls. The map's back arrow and Change station link return to the picker; changing service in settings also asks for a new station. Existing learning and completed-call history are retained. Missing or invalid gameplay station links return to the picker.
 
 ## Response geography
 

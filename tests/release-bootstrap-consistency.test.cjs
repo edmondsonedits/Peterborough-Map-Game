@@ -15,6 +15,8 @@ const releaseVersion = versionMatch[1];
 
 const canonicalSurfaces = [
   'index.html',
+  'route-mapping/index.html',
+  'route-mapping/play.html',
   'response-simulator/play/index.html',
   'response-simulator/mobile/index.html',
   'geo-guesser/index.html',

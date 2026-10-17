@@ -1,7 +1,7 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
 const root=path.resolve(__dirname,'..'),read=f=>fs.readFileSync(path.join(root,f),'utf8');
-const source=read('route-mapping/app.js'),html=read('route-mapping/index.html'),css=read('route-mapping/styles.css');
+const source=read('route-mapping/app.js'),html=read('route-mapping/play.html'),css=read('route-mapping/styles.css');
 const {harness}=require('./helpers/route-gesture-harness.cjs');
 test('draw hotspot follows the active endpoint in viewport coordinates',()=>{
  const{api,draw,attributes}=harness();api.state.playerRoute={endpoint:{lat:90,lng:120},complete:false};api.updateDrawTarget();

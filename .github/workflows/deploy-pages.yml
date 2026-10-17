@@ -49,7 +49,7 @@ jobs:
         run: node --test tests/ontario-city-data.test.cjs tests/editor-city-runtime.test.cjs tests/geo-city-runtime.test.cjs tests/geo-city-flow.test.cjs tests/demo-requests.test.cjs
 
       - name: Check every city road asset and shared EMS priority
-        run: node --test tests/city-training-data.test.cjs tests/ems-priority.test.cjs tests/ems-training-store.test.cjs tests/route-base-access.test.cjs tests/route-local-calls.test.cjs tests/route-search-workspace.test.cjs tests/route-road-supplement.test.cjs tests/route-local-data.test.cjs
+        run: node --test tests/city-training-data.test.cjs tests/ems-priority.test.cjs tests/ems-training-store.test.cjs tests/route-base-access.test.cjs tests/route-local-calls.test.cjs tests/route-search-workspace.test.cjs tests/route-road-supplement.test.cjs tests/route-local-data.test.cjs tests/route-station-selection.test.cjs
 
       - name: Check streetscape regressions
         run: node --test tests/sherbrooke-plan.test.mjs tests/sherbrooke-fallback.test.mjs tests/station-reference-details.test.mjs tests/streetscape-assets.test.mjs tests/vegetation-variants.test.mjs tests/city-feature-utils.test.mjs
@@ -78,6 +78,9 @@ jobs:
           test -f _site/index.html
           test -f _site/city-explorer/index.html
           test -f _site/response-simulator/index.html
+          test -f _site/route-mapping/play.html
+          test -f _site/route-mapping/station-core.js
+          test -f _site/route-mapping/stations.js
           test -f _site/docs/ANALYTICS-PRIVACY-SECURITY.md
           test ! -e _site/.git
           test ! -e _site/.github

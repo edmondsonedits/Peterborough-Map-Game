@@ -20,9 +20,22 @@ fs.mkdirSync(out,{recursive:true});
    const report={city:city.id,service,input:service==='ems'?'emulated phone':'desktop',fixture:'reference trace; real Submit/Next controls'};
    try{
     await page.goto(base+'/route-mapping/?city='+city.id+'&analytics=off');
+    await page.locator('#station-picker[aria-busy="false"]').waitFor();
+    const training=JSON.parse(fs.readFileSync(`cities/${city.id}/training-data.json`)),profiles=training.routeResponses.bases.filter(p=>p.service===service&&!p.unavailable).sort((a,b)=>a.number-b.number);
+    const cards=await page.locator('a[data-station-id]').evaluateAll(nodes=>nodes.map(node=>({id:node.dataset.stationId,count:node.querySelector('.station-call-count').textContent})));
+    assert.deepEqual(cards,profiles.map(profile=>({id:profile.baseId,count:profile.callIds.length+' calls available'})),'every station displays its actual local catalog count');
+    assert.equal(await page.evaluate(()=>Boolean(window.PTBO_ROUTE_MAPPING||window.L)),false,'the picker does not load the map engine');
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false);
+    await page.screenshot({path:path.join(out,city.id+'-'+service+'-stations.png')});
+    const chosen=process.env.PTBO_QA_STATION_NUMBER?profiles.find(p=>p.number===Number(process.env.PTBO_QA_STATION_NUMBER)):profiles.at(-1);
+    assert.ok(chosen,'the requested station exists');
+    await page.locator('#station-search').fill('no matching station zzz');assert.equal(await page.locator('a[data-station-id]').count(),0);
+    await page.locator('#station-search').fill(String(chosen.number));
+    await page.locator('[data-station-id="'+chosen.baseId+'"]').click();
     await page.waitForFunction(()=>window.PTBO_ROUTE_MAPPING||!document.getElementById('loading-error').hidden);
     const failure=await page.locator('#loading-error').isVisible();if(failure)throw Error(await page.locator('#loading-error-message').innerText());
     assert.equal(await page.evaluate(()=>PTBO_ROUTE_MAPPING.cityId),city.id);
+    assert.equal(await page.evaluate(()=>PTBO_ROUTE_MAPPING.state.base.id),chosen.baseId,'gameplay starts at the chosen station');
     report.detail=await page.evaluate(()=>{
      const api=PTBO_ROUTE_MAPPING,s=api.state,c=s.traceCore;
      const origin=c.snap(s.startMarker.getLatLng(),260),destination=c.snap(s.call,520),reference=c.between(origin,destination);
@@ -57,6 +70,7 @@ fs.mkdirSync(out,{recursive:true});
     await page.waitForTimeout(400);
    }
    await page.screenshot({path:path.join(out,city.id+'-'+service+'.png')}).catch(()=>{});
+   if(report.pass){await page.locator('.back-button').click();await page.locator('#station-picker[aria-busy="false"]').waitFor();assert.equal(await page.locator('#picker-'+service).getAttribute('aria-pressed'),'true');}
    results.push(report);fs.writeFileSync(path.join(out,'report.json'),JSON.stringify({base,results,physicalDevice:false,stubbedTiles:process.env.PTBO_QA_STUB_TILES==='1'},null,2));
    console.log(JSON.stringify({city:city.id,service,pass:report.pass,error:report.error}));await context.close();
   }

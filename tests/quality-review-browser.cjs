@@ -66,6 +66,9 @@ function disjoint(a, b, label) {
     for (const [service, mobile] of [['fire', false], ['ems', true]]) await check('route-' + service, mobile, async (page, context) => {
       await context.addInitScript(() => localStorage.setItem('ptboSelectedCity', 'toronto'));
       await page.goto(base + '/route-mapping/?city=' + routeCity);
+      await page.locator('#station-picker[aria-busy="false"]').waitFor();
+      await page.locator('#picker-'+service).click();
+      await page.locator('a[data-station-id]').first().click();
       await page.waitForFunction(() => window.PTBO_ROUTE_MAPPING);
       assert.equal(await page.evaluate(() => PTBO_CITY_PACKAGE.id), routeCity);
       assert.equal(await page.evaluate(() => localStorage.getItem('ptboSelectedCity')), routeCity, 'explicit city takes precedence and updates the remembered city');
@@ -161,6 +164,8 @@ function disjoint(a, b, label) {
     await check('route-error-retry', false, async (page, context, report) => {
       await page.route('**/osm-public-roads.geojson*', r => r.abort());
       await page.goto(base + '/route-mapping/?city=peterborough&analytics=off');
+      await page.locator('#station-picker[aria-busy="false"]').waitFor();
+      await page.locator('a[data-station-id]').first().click();
       await page.locator('#loading-error').waitFor({ state: 'visible' });
       const message = await page.locator('#loading-error-message').innerText();
       report.failed.forEach(r => { if (r.url.includes('/osm-public-roads.geojson')) r.expected = true; });

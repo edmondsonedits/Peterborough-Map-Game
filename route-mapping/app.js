@@ -70,7 +70,7 @@
 
   const state = {
     map:null, graph:null, traceCore:null, endpointMarker:null, calls:[], originalCalls:[], advancedCalls:[], routeResponses:null, difficultyIndex:null, service:'fire', base:null, call:null, callCount:0, recentCallIds:[], mode:'loading', mapZooming:false,
-    skillProfiles:null, skillProfile:null, adaptiveTarget:null, progression:null, phase:null, lastDecisionAnalysis:null, tuning:null,
+    skillProfiles:null, skillProfile:null, adaptiveTarget:null, progression:null, phase:null, selectedBaseId:null, selectedStartCompleted:0, lastDecisionAnalysis:null, tuning:null,
     stroke:null, drawingPointer:null, originAnchor:null, destinationAnchor:null, history:[], playerRoute:null,
     shortestRoute:null, playerLayers:[], referenceLayers:[], startMarker:null, callMarker:null, mapGestureSnapshot:null
   };
@@ -408,6 +408,12 @@
 
   function progressionPhase(){
     const completed=Math.max(0,Number(state.progression?.completed)||0),size=CONFIG.callsPerStationPhase,stations=availableBasesForService(state.service),count=Math.max(1,stations.length);
+    if(state.selectedBaseId){
+      const index=stations.findIndex(base=>base.id===state.selectedBaseId),base=stations[index];
+      if(!base)throw localResponseError(null,'the selected station is unavailable');
+      const completedInPhase=Math.max(0,completed-state.selectedStartCompleted);
+      return {index,key:'selected-'+base.id,stationNumber:base.number,label:base.shortName||base.name,completedInPhase,rankProgress:Math.min(1,completedInPhase/size),continuous:false,selected:true};
+    }
     if(completed<size*count){const index=Math.floor(completed/size),base=stations[index];return {index,key:'station-'+index,stationNumber:base?.number,label:base?.shortName||base?.name||'Base',completedInPhase:completed-index*size,rankProgress:(completed-index*size)/size,continuous:false};}
     return {index:count,key:'continuous',stationNumber:null,label:'Previous Call',completedInPhase:completed-size*count,rankProgress:1,continuous:true};
   }
@@ -1300,6 +1306,10 @@
   function basesForService(service){const store=window.PTBO_BASE_STORE;if(store&&typeof store.getBases==='function')return store.getBases(service);const profiles=window.PTBO_SERVICE_CONFIG&&window.PTBO_SERVICE_CONFIG.profiles;return profiles&&profiles[service]?profiles[service].bases||[]:[];}
   function availableBasesForService(service){return basesForService(service).filter(base=>state.routeResponses?!routeResponseProfile(base.id,service)?.unavailable:!state.graph||!state.calls?.length||baseAnchor(base,service));}
   function phaseNoteText(service){
+    if(state.selectedBaseId){
+      const base=basesForService(state.service).find(base=>base.id===state.selectedBaseId);
+      return service===state.service?(base?.name||'Your selected station')+' remains your starting point. CALL marks mapped road access to the address.':'Choose a station after applying your service change.';
+    }
     const available=availableBasesForService(service),availableIds=new Set(available.map(base=>base.id)),unavailable=basesForService(service).filter(base=>!availableIds.has(base.id));
     return available.map(b=>b.shortName||b.name).join(' → ')+' → previous call. Each base phase lasts 20 completed calls. CALL marks public-road access to the address.'+(unavailable.length?' No reachable training destination: '+unavailable.map(b=>b.shortName||b.name).join(', ')+'. These bases are skipped; their mapped locations are unchanged.':'');
   }
@@ -1319,7 +1329,13 @@
     if(serviceChanged){state.service=service;loadProgression();state.skillProfile=state.skillProfiles?.[service]||normalizeSkillProfile(null);if(state.skillProfiles&&!state.skillProfiles[service])state.skillProfiles[service]=state.skillProfile;savePreferences();}
     return serviceChanged;
   }
-  function loadPreferences(){state.tuning=loadTuning();displayTuning(state.tuning);let service='fire';try{service=localStorage.getItem('ptboRouteMappingService')||service;}catch(_){}if(!['fire','ems'].includes(service))service='fire';state.service=service;ui.serviceSelect.value=service;fillBases(service,null);loadSkillProfiles();loadProgression();applyProgressionStart();}
+  function loadPreferences({deferStart=false}={}){
+    state.tuning=loadTuning();displayTuning(state.tuning);let service='fire';try{service=localStorage.getItem('ptboRouteMappingService')||service;}catch(_){}
+    const params=new URL(location.href).searchParams,requested=params.get('service');if(['fire','ems'].includes(requested))service=requested;
+    if(!['fire','ems'].includes(service))service='fire';state.service=service;state.selectedBaseId=params.get('station');ui.serviceSelect.value=service;fillBases(service,null);loadSkillProfiles();loadProgression();state.selectedStartCompleted=state.progression.completed;
+    if(!deferStart)applyProgressionStart();
+  }
+  function stationPickerUrl(){return window.PTBO_ROUTE_STATIONS.pickerUrl(location.href,{city:cityData.id,service:state.service,version:VERSION});}
   function savePreferences(){try{localStorage.setItem('ptboRouteMappingService',state.service);}catch(_){}}
   function openSettings(){cancelDrawing();ui.serviceSelect.value=state.service;fillBases(state.service,state.base&&state.base.id);displayTuning(state.tuning);ui.phaseNote.textContent=phaseNoteText(state.service);if(!ui.settingsSheet.open)ui.settingsSheet.showModal();updateDrawTarget();}
   function closeSettings(){if(ui.settingsSheet.open)ui.settingsSheet.close();updateDrawTarget();}
@@ -1343,7 +1359,7 @@
     ui.serviceSelect.addEventListener('change',()=>{fillBases(ui.serviceSelect.value,null);ui.phaseNote.textContent=phaseNoteText(ui.serviceSelect.value);});
     for(const input of [ui.streetForgiveness,ui.straightPreference,ui.arrivalDistance,ui.challengeFrequency])input?.addEventListener('input',()=>displayTuning(draftTuning()));
     ui.settingsReset?.addEventListener('click',()=>displayTuning(DEFAULT_TUNING));
-    ui.settingsForm.addEventListener('submit',event=>{event.preventDefault();const changed=applySettings(ui.serviceSelect.value,draftTuning());closeSettings();if(changed)newCall();});
+    ui.settingsForm.addEventListener('submit',event=>{event.preventDefault();const changed=applySettings(ui.serviceSelect.value,draftTuning());closeSettings();if(changed)location.assign(stationPickerUrl());});
     ui.settingsSheet.addEventListener('click',event=>{if(event.target===ui.settingsSheet)closeSettings();});
     ui.settingsSheet.addEventListener('close',()=>updateDrawTarget());
   }
@@ -1420,9 +1436,12 @@
       applyCityData(city,window.PTBO_DISPATCH_STORE.getTrainingData());
       document.title='Route Mapping · '+cityData.name;
       ui.map.setAttribute('aria-label',cityData.name+' route training map');
-      document.querySelector('.back-button').href='../?city='+encodeURIComponent(cityData.id);
       ui.callAddress.textContent='Preparing '+cityData.name+' road data';
-      initMap();bindUi();loadPreferences();await loadData();applyProgressionStart();if(!state.base)throw new Error('No starting base is available.');ui.app.setAttribute('aria-busy','false');newCall();window.PTBO_ROUTE_MAPPING=Object.freeze({version:VERSION,cityId:cityData.id,state,nearestRoad,composeRoute,pathBetween,newCall});
+      loadPreferences({deferStart:true});
+      const choice=window.PTBO_ROUTE_STATIONS.stationChoices(window.PTBO_BASE_STORE.getAll(),window.PTBO_DISPATCH_STORE.getTrainingData(),state.service).find(choice=>choice.base.id===state.selectedBaseId&&choice.available);
+      if(!choice){location.replace(stationPickerUrl());return;}
+      document.querySelector('.back-button').href=stationPickerUrl();document.getElementById('change-station').href=stationPickerUrl();
+      initMap();bindUi();await loadData();applyProgressionStart();if(!state.base)throw new Error('No starting base is available.');ui.app.setAttribute('aria-busy','false');newCall();window.PTBO_ROUTE_MAPPING=Object.freeze({version:VERSION,cityId:cityData.id,state,nearestRoad,composeRoute,pathBetween,newCall});
     }
     catch(error){showFailure(error);}
   }

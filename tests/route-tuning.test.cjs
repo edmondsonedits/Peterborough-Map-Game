@@ -48,7 +48,7 @@ test('challenge mix follows the selected frequency',()=>{
 });
 
 test('settings expose labeled bounded sliders and usable apply/reset actions',()=>{
- const html=fs.readFileSync(path.resolve(__dirname,'../route-mapping/index.html'),'utf8');
+ const html=fs.readFileSync(path.resolve(__dirname,'../route-mapping/play.html'),'utf8');
  for(const id of ['street-forgiveness','straight-preference','arrival-distance','challenge-frequency'])assert.match(html,new RegExp(`id="${id}"`));
  assert.match(html,/Apply settings/);assert.match(html,/Reset defaults/);
 });
