@@ -1,6 +1,42 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
 const {game}=require('./helpers/geo-game.cjs'),root=path.resolve(__dirname,'..'),read=f=>fs.readFileSync(path.join(root,f),'utf8');
+const {runtime}=require('./helpers/city-runtime.cjs');
+test('all 31 Geo cities share compact hints, service-specific base menus and answer feedback on desktop and phones',async()=>{
+ const ids=['peterborough',...fs.readdirSync(path.join(root,'cities')).filter(id=>fs.existsSync(path.join(root,'cities',id,'geo-data.json')))];
+ assert.equal(ids.length,31);let sessions=0;
+ for(const id of ids){
+  const pack=id==='peterborough'?undefined:JSON.parse(read(`cities/${id}/geo-data.json`)),loaded=runtime({search:'?city='+id,pack});
+  Object.assign(loaded.c,{atob:s=>Buffer.from(s,'base64').toString('binary'),Uint8Array,Response,Blob,DecompressionStream});
+  await loaded.c.PTBO_GEO_CITY_READY;
+  const cityPackage=loaded.c.PTBO_CITY_PACKAGE,locations=loaded.c.PTBO_DISPATCH_STORE.getAll(),baseRecords=['fire','ems'].flatMap(service=>loaded.c.PTBO_BASE_STORE.getBases(service));
+  for(const mobile of [false,true])for(const service of ['fire','ems']){
+   const label=`${id} ${service} ${mobile?'phone':'desktop'}`,g=await game({cityPackage,locations,baseRecords,mobile}),available=baseRecords.filter(b=>b.service===service);
+   g.api.chooseService(service);g.api.chooseDifficulty('easy');assert.equal(g.api.start(0),true,label);sessions++;
+   assert.equal(g.node('body').classList.contains('ptbo-geo-compact'),true,label);
+   assert.equal(g.node('practice-bases').hidden,false,label);assert.equal(g.node('practice-feedback').textContent,'',label);
+   assert.equal(g.node('call-address').textContent,g.api.state.target.addr,label);
+   assert.equal(g.node('call-cross-streets').hidden,mobile,label);assert.match(g.node('call-cross-streets').textContent,/^Cross: /,label);
+   if(mobile){assert.equal(g.node('reveal-cross-streets').textContent,'Show cross streets',label);g.api.revealCrossStreets();assert.equal(g.node('call-cross-streets').hidden,false,label);g.api.revealCrossStreets();assert.equal(g.node('call-cross-streets').hidden,true,label);}
+   else assert.equal(g.node('reveal-cross-streets').hidden,true,label);
+   const menu=g.node('practice-base-options').children;
+   assert.equal(menu.length,available.length,label);assert.deepEqual(menu.map(b=>b.children[0].textContent),available.map(b=>b.name),label);
+   const target=g.api.state.target,session=g.api.state.session;
+   assert.equal(g.api.chooseBase(available.length-1),true,label);assert.equal(g.api.state.target,target,label);assert.equal(g.api.state.session,session,label);
+   assert.equal(g.node('practice-base-options').children.at(-1)['aria-pressed'],'true',label);
+   g.map.setView([target.lat+.05,target.lng+.05],18);assert.equal(g.api.check(),false,label);
+   assert.equal(g.node('game').dataset.feedback,'incorrect',label);assert.equal(g.node('guess-effect-label').textContent,'Incorrect',label);
+   assert.equal(g.api.retry(),true,label);assert.equal(g.api.state.target,target,label);assert.equal(g.node('guess-effect').hidden,true,label);
+   g.map.setView([target.lat,target.lng],18);assert.equal(g.api.check(),true,label);
+   assert.equal(g.node('game').dataset.feedback,'correct',label);assert.equal(g.node('guess-effect-label').textContent,'Correct',label);
+   const markers=g.layers.filter(l=>l.kind==='marker').slice(-2);assert.equal(markers[0].options.fillColor,markers[1].options.fillColor,label);
+   g.api.next();assert.equal(g.node('game').dataset.feedback,undefined,label);assert.equal(g.node('call-cross-streets').hidden,mobile,label);
+   assert.equal(g.map.getCenter().lat,available.at(-1).lat,label);assert.equal(g.map.getZoom(),18,label);
+   g.api.reveal();assert.equal(g.node('game').dataset.feedback,'revealed',label);assert.equal(g.node('guess-effect').hidden,true,label);
+   g.api.finish();assert.equal(g.node('game').dataset.feedback,undefined,label);
+  }
+ }assert.equal(sessions,124);
+});
 test('Geo setup identifies the selected city and starts every eligible base/tier through the same engine',async()=>{
  const dirs=fs.readdirSync(path.join(root,'cities')).filter(id=>fs.existsSync(path.join(root,'cities',id,'geo-data.json')));assert.equal(dirs.length,30);let starts=0;
  for(const id of dirs){const pack=JSON.parse(read(`cities/${id}/geo-data.json`)),bases=pack.bases.filter(b=>b.status==='active'&&b.selectionEligible),g=await game({cityPackage:pack,locations:pack.locations,baseRecords:bases});

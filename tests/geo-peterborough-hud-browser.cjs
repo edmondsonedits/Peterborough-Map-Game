@@ -16,26 +16,22 @@ const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=r
       ['mobile',390,844,'fire','toronto'],
     ]){
       const name=`${city}-${surface}-${service}-${width}x${height}`,errors=[],missing=[];
-      const context=await browser.newContext({viewport:{width,height},isMobile:surface==='mobile',hasTouch:surface==='mobile',deviceScaleFactor:1});
+      const context=await browser.newContext({viewport:{width,height},isMobile:surface==='mobile',hasTouch:surface==='mobile',deviceScaleFactor:1,ignoreHTTPSErrors:true});
       await context.route('https://firestore.googleapis.com/**',route=>route.fulfill({status:403,contentType:'application/json',body:'{}'}));
       const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
       page.on('response',r=>{if(r.url().startsWith(base)&&r.status()>=400)missing.push(r.url());});
       const result={name,errors,missing};report.push(result);
       try{
-        await page.goto(`${base}/geo-guesser/${surface}/?city=${city}&analytics=off`,{waitUntil:'load'});
+        await page.goto(`${base}/geo-guesser/${surface}/?city=${city}&analytics=off${process.env.PTBO_EXPECTED_VERSION?'&v='+process.env.PTBO_EXPECTED_VERSION:''}`,{waitUntil:'load'});
         const frame=page.frames().find(f=>f.url().includes('/geo-guesser/index.html'));
         await frame.waitForFunction(()=>window.PTBO_GEO?.state.ready);
         result.version=await frame.evaluate(()=>PTBO_BUILD.version);
+        if(process.env.PTBO_EXPECTED_VERSION)assert.equal(result.version,process.env.PTBO_EXPECTED_VERSION);
         const example=city==='peterborough'&&surface==='desktop'&&width===1365;
         await frame.locator(`#service-${service}`).click();await frame.locator(example?'#difficulty-easy':'#difficulty-medium').click();
         if(city==='peterborough')await frame.evaluate(name=>{PTBO_GEO.state.locations=[PTBO_GEO.state.locations.find(c=>c.name===name)];},example?'Portage Place':'Adam Scott Collegiate and Vocational Institute');
         await frame.locator('#practice-stations button').first().click();
-        if(city!=='peterborough'){
-          assert.equal(await frame.locator('#practice-return').isVisible(),true);
-          assert.equal(await frame.locator('#practice-bases').isVisible(),false);
-          assert.equal(await frame.locator('#call-cross-streets').isVisible(),true);
-          result.pass=true;console.log(JSON.stringify(result));continue;
-        }
+        if(process.env.PTBO_GEO_REQUIRE_TILES==='true')await frame.locator('.leaflet-tile-loaded').first().waitFor({timeout:20000});
         const inspectLayout=()=>frame.evaluate(()=>{
           const box=id=>{const r=document.getElementById(id).getBoundingClientRect();return{left:r.left,right:r.right,top:r.top,bottom:r.bottom,width:r.width,height:r.height};};
           const header=box('header'),reticle=box('reticle');

@@ -13,7 +13,6 @@ async function started(options={}){
 }
 test('Peterborough base dropdown changes the start without losing the current call or session',async()=>{
   const g=await started(),target=g.api.state.target,session=g.api.state.session;
-  assert.equal(g.node('practice-return').hidden,true);
   assert.equal(g.node('practice-bases').hidden,false);
   assert.equal(g.node('practice-base-options').children.length,2);
   assert.equal(g.api.chooseBase(1),true);
@@ -48,11 +47,13 @@ test('desktop cross streets keep their saved setting and EMS menu contains only 
   assert.equal(g.node('practice-base-options').children.length,1);assert.equal(g.api.state.base.id,'ems-1');
   const hidden=await started({savedCross:'false'});assert.equal(hidden.node('call-cross-streets').hidden,true);
 });
-test('other cities retain the original Base button and phone cross-street behavior',async()=>{
+test('other cities share the Bases dropdown and collapsed phone cross streets',async()=>{
   const g=await started({cityPackage:{id:'toronto',name:'Toronto'},mobile:true});
-  assert.equal(g.node('practice-return').hidden,false);assert.equal(g.node('practice-bases').hidden,true);
-  assert.equal(g.node('call-cross-streets').hidden,false);
-  assert.match(g.node('practice-feedback').textContent,/Pan and zoom/);
+  assert.equal(g.node('body').classList.contains('ptbo-geo-compact'),true);
+  assert.equal(g.node('practice-bases').hidden,false);
+  assert.equal(g.node('practice-base-options').children.length,2);
+  assert.equal(g.node('call-cross-streets').hidden,true);
+  assert.equal(g.node('practice-feedback').textContent,'');
 });
 test('Peterborough uses compact cross-street labels and removes the desktop hide row',async()=>{
   const g=await started();
@@ -61,7 +62,8 @@ test('Peterborough uses compact cross-street labels and removes the desktop hide
   assert.equal(g.node('reveal-cross-streets').hidden,true);
   const other=await started({cityPackage:{id:'toronto',name:'Toronto'}});
   other.api.state.target.crossStreets=['Towerhill Road','Milroy Drive'];other.api.setCrossStreets(true);
-  assert.equal(other.node('call-cross-streets').textContent,'Cross streets: Towerhill Road · Milroy Drive');
+  assert.equal(other.node('call-cross-streets').textContent,'Cross: Towerhill Rd • Milroy Dr');
+  assert.equal(other.node('reveal-cross-streets').hidden,true);
 });
 test('phone cross streets keep an accessible inline hide control when expanded',async()=>{
   const g=await started({mobile:true});g.api.revealCrossStreets();
@@ -97,8 +99,9 @@ test('reveals are neutral and Finish clears an active result effect',async()=>{
   g.api.next();g.api.check();assert.equal(g.node('guess-effect').hidden,false);
   g.api.finish();assert.equal(g.node('game').dataset.feedback,undefined);assert.equal(g.node('guess-effect').hidden,true);
 });
-test('answer effects remain limited to Peterborough',async()=>{
+test('other cities share the green success effect',async()=>{
   const g=await started({cityPackage:{id:'toronto',name:'Toronto'}}),t=g.api.state.target;
   g.map.setView([t.lat,t.lng],18);g.api.check();
-  assert.equal(g.node('game').dataset.feedback,undefined);assert.equal(g.node('guess-effect').hidden,true);
+  assert.equal(g.node('game').dataset.feedback,'correct');assert.equal(g.node('guess-effect').hidden,false);
+  assert.equal(g.node('guess-effect-label').textContent,'Correct');
 });

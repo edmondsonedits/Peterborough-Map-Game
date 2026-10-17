@@ -16,8 +16,8 @@ test('Try again returns keyboard focus to the map after a miss',async()=>{
  assert.equal(g.activeElement.id,'map');
 });
 
-test('Base returns keyboard focus to the map',async()=>{
- const g=await started();g.node('practice-return').focus();g.api.returnToBase();
+test('choosing a base returns keyboard focus to the map',async()=>{
+ const g=await started();g.node('practice-bases-toggle').focus();g.api.chooseBase(0);
  assert.equal(g.activeElement.id,'map');
 });
 

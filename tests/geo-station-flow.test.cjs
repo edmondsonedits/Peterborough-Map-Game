@@ -29,7 +29,7 @@ test('cross streets default visible, remain separate and honor the remembered hi
  assert.equal(g.node('call-cross-streets').hidden,true);assert.equal(g.node('show-cross-streets').checked,false);
  g.api.revealCrossStreets();assert.equal(g.node('call-cross-streets').hidden,false);g.api.reveal();g.api.next();assert.equal(g.node('call-cross-streets').hidden,true);
  g.api.setCrossStreets(true);assert.equal(g.storage.get('geoShowCrossStreets'),'true');assert.equal(g.node('call-cross-streets').hidden,false);
- assert.ok(g.node('call-cross-streets').textContent.includes(g.api.state.target.crossStreets[0]));
+ assert.match(g.node('call-cross-streets').textContent,/^Cross: /);
  assert.equal(g.node('call-address').textContent,g.api.state.target.addr);
 });
 test('wrong guesses retain the call for retry and Finish cancels the session',async()=>{

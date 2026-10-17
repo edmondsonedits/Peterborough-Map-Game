@@ -2,17 +2,17 @@
 'use strict';
 const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 (async()=>{
-  const base=process.argv[2]||'http://127.0.0.1:4188',out=process.env.PTBO_GEO_QA_OUTPUT||'test-artifacts/geo-answer-feedback';
+  const base=process.argv[2]||'http://127.0.0.1:4188',out=process.env.PTBO_GEO_QA_OUTPUT||'test-artifacts/geo-answer-feedback',city=process.env.PTBO_GEO_QA_CITY||'peterborough';
   fs.mkdirSync(out,{recursive:true});
   const browser=await chromium.launch({headless:true,executablePath:process.env.PTBO_CHROMIUM_EXECUTABLE||undefined,
     ...(process.env.HTTPS_PROXY?{proxy:{server:process.env.HTTPS_PROXY,bypass:'127.0.0.1,localhost'}}:{})});
   try{
     for(const [surface,width,height,reduced] of [['desktop',1365,900,false],['mobile',390,844,false],['mobile',844,390,false],['mobile',320,568,false],['desktop',1365,900,true],['mobile',390,844,true]]){
-      const name=`${surface}-${width}x${height}${reduced?'-reduced-motion':''}`;
+      const name=`${city}-${surface}-${width}x${height}${reduced?'-reduced-motion':''}`;
       const context=await browser.newContext({viewport:{width,height},isMobile:surface==='mobile',hasTouch:surface==='mobile',reducedMotion:reduced?'reduce':'no-preference',ignoreHTTPSErrors:true});
       const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
       try{
-        await page.goto(`${base}/geo-guesser/${surface}/?city=peterborough&analytics=off`,{waitUntil:'load'});
+        await page.goto(`${base}/geo-guesser/${surface}/?city=${city}&analytics=off${process.env.PTBO_EXPECTED_VERSION?'&v='+process.env.PTBO_EXPECTED_VERSION:''}`,{waitUntil:'load'});
         const frame=page.frames().find(f=>f.url().includes('/geo-guesser/index.html'));
         await frame.waitForFunction(()=>PTBO_GEO?.state.ready);
         if(process.env.PTBO_EXPECTED_VERSION)assert.equal(await frame.evaluate(()=>PTBO_BUILD.version),process.env.PTBO_EXPECTED_VERSION);

@@ -6,8 +6,8 @@
   const title=t=>t[0].toUpperCase()+t.slice(1);
   const read=(key,fallback)=>{try{return localStorage.getItem(key)??fallback;}catch(_){return fallback;}};
   const save=(key,value)=>{try{localStorage.setItem(key,String(value));}catch(_){/* Preferences still work for this visit. */}};
-  const state={ready:false,peterborough:false,service:null,difficulty:null,base:null,bases:[],locations:[],pool:[],session:null,target:null,map:null,layers:null,review:null,crossStreetsExpanded:null,showCrossStreets:read('geoShowCrossStreets','true')!=='false'};
-  const compactPhone=()=>state.peterborough&&Boolean(window.matchMedia?.('(max-width:760px), (pointer:coarse)').matches);
+  const state={ready:false,service:null,difficulty:null,base:null,bases:[],locations:[],pool:[],session:null,target:null,map:null,layers:null,review:null,crossStreetsExpanded:null,showCrossStreets:read('geoShowCrossStreets','true')!=='false'};
+  const compactPhone=()=>Boolean(window.matchMedia?.('(max-width:760px), (pointer:coarse)').matches);
   const isCurrentBase=base=>state.base?.id!=null?base.id===state.base.id:
     base.name===state.base?.name&&base.address===state.base?.address&&base.lat===state.base?.lat&&base.lng===state.base?.lng;
   function screen(id){$('practice-bases').open=false;for(const name of ['station-practice','settings','game'])$(name).hidden=name!==id;$('game-home').hidden=id==='game';$('practice-controls').classList[id==='game'?'remove':'add']('hidden');}
@@ -19,7 +19,6 @@
   }
   function bases(){return window.PTBO_BASE_STORE?.getBases(state.service)||window.PTBO_CITY_PACKAGE?.serviceConfig?.profiles?.[state.service]?.bases||[];}
   function renderBaseMenu(){
-    if(!state.peterborough)return;
     $('practice-base-options').replaceChildren(...state.bases.map((base,index)=>{
       const button=document.createElement('button');button.className='base-option';button.setAttribute('aria-pressed',String(isCurrentBase(base)));
       const name=document.createElement('strong');name.textContent=base.name;
@@ -28,7 +27,7 @@
     }));
   }
   function chooseBase(index){
-    if(!state.peterborough||!state.session||!Number.isInteger(index))return false;
+    if(!state.session||!Number.isInteger(index))return false;
     const available=bases(),chosen=available[index];if(!chosen)return false;
     state.base=chosen;state.bases=available;renderBaseMenu();$('practice-bases').open=false;returnToBase();return true;
   }
@@ -72,25 +71,22 @@
     if(state.layers){state.layers.clearLayers();state.map.removeLayer(state.layers);state.layers=null;}
     state.review=null;$('practice-review').hidden=true;
     $('guess-effect').hidden=true;
-    if(state.peterborough){delete $('game').dataset.feedback;$('guess-effect-icon').textContent='';$('guess-effect-label').textContent='';}
+    delete $('game').dataset.feedback;$('guess-effect-icon').textContent='';$('guess-effect-label').textContent='';
   }
-  function updateCrossStreets(reveal=false){
-    const streets=state.target?.crossStreets||[],visible=state.peterborough?
-      (state.crossStreetsExpanded??(state.showCrossStreets&&!compactPhone())):state.showCrossStreets||reveal;
+  function updateCrossStreets(){
+    const streets=state.target?.crossStreets||[],visible=state.crossStreetsExpanded??(state.showCrossStreets&&!compactPhone());
     const suffixes={road:'Rd',drive:'Dr',street:'St',avenue:'Ave',boulevard:'Blvd',crescent:'Cres',court:'Ct',lane:'Ln',place:'Pl',parkway:'Pkwy',highway:'Hwy',circle:'Cir',trail:'Trl'};
     const shortStreet=street=>String(street).replace(/\b(Road|Drive|Street|Avenue|Boulevard|Crescent|Court|Lane|Place|Parkway|Highway|Circle|Trail)(?=(?:\s+(?:North|South|East|West))?$)/i,word=>suffixes[word.toLowerCase()]);
-    $('call-cross-streets').textContent=state.peterborough?
-      (streets.length?'Cross: '+streets.map(shortStreet).join(' • '):'Cross: unavailable'):
-      (streets.length?'Cross streets: '+streets.join(' · '):'Cross streets unavailable');
+    $('call-cross-streets').textContent=streets.length?'Cross: '+streets.map(shortStreet).join(' • '):'Cross: unavailable';
     $('call-cross-streets').hidden=!visible;
-    $('reveal-cross-streets').hidden=state.peterborough?(visible&&!compactPhone()):(visible||!streets.length);
-    $('reveal-cross-streets').textContent=visible?(state.peterborough?'Hide':'Hide cross streets'):'Show cross streets';
+    $('reveal-cross-streets').hidden=visible&&!compactPhone();
+    $('reveal-cross-streets').textContent=visible?'Hide':'Show cross streets';
     $('reveal-cross-streets').setAttribute('aria-label',visible?'Hide cross streets':'Show cross streets');
     $('reveal-cross-streets').setAttribute('aria-expanded',String(visible));
   }
   function revealCrossStreets(){
-    if(state.peterborough)state.crossStreetsExpanded=$('call-cross-streets').hidden;
-    updateCrossStreets(true);
+    state.crossStreetsExpanded=$('call-cross-streets').hidden;
+    updateCrossStreets();
   }
   function setCrossStreets(value){state.crossStreetsExpanded=null;state.showCrossStreets=Boolean(value);save('geoShowCrossStreets',state.showCrossStreets);$('show-cross-streets').checked=state.showCrossStreets;updateCrossStreets();}
   function loadTarget(target){
@@ -99,7 +95,7 @@
     $('call-type').textContent=target?.facilityType==='long-term-care'?`Care home · ${title(actualDifficulty)}`:title(actualDifficulty);
     $('call-name').textContent=target.name;$('call-name').hidden=!target.name;
     $('call-address').textContent=target.addr;updateCrossStreets();
-    $('practice-feedback').textContent=state.peterborough?'':'Pan and zoom to place the crosshair over this address.';
+    $('practice-feedback').textContent='';
     $('confirm').textContent='Check location';$('confirm').hidden=false;
     $('reticle').hidden=false;$('practice-reveal').hidden=false;$('practice-continue').hidden=false;
     state.map.stop().setView([state.base.lat,state.base.lng],18,{animate:false});focusMap();
@@ -121,19 +117,17 @@
   }
   function review(outcome,guess,distance){
     const center=state.map.getCenter(),zoom=state.map.getZoom();clearReview();state.review={outcome,center,zoom};
-    if(state.peterborough){
-      $('game').dataset.feedback=outcome;
-      if(outcome==='correct'||outcome==='incorrect'){
-        $('guess-effect-icon').textContent=outcome==='correct'?'✓':'×';
-        $('guess-effect-label').textContent=outcome==='correct'?'Correct':'Incorrect';
-        $('guess-effect').hidden=false;
-      }
+    $('game').dataset.feedback=outcome;
+    if(outcome==='correct'||outcome==='incorrect'){
+      $('guess-effect-icon').textContent=outcome==='correct'?'✓':'×';
+      $('guess-effect-label').textContent=outcome==='correct'?'Correct':'Incorrect';
+      $('guess-effect').hidden=false;
     }
     state.layers=L.layerGroup().addTo(state.map);
     const target=[state.target.lat,state.target.lng],circle=L.circle(target,{radius:state.target.radius,color:'#15a58c',weight:3,fillOpacity:.15}).addTo(state.layers);
     L.circleMarker(target,{radius:8,color:'#fff',weight:3,fillColor:'#15a58c',fillOpacity:1}).bindTooltip('Address location',{permanent:true,direction:'top'}).addTo(state.layers);
-    const guessColor=state.peterborough&&outcome==='correct'?'#15a58c':'#dc2626';
-    if(guess){L.circleMarker(guess,{radius:8,color:'#fff',weight:3,fillColor:guessColor,fillOpacity:1}).bindTooltip('Your guess',{permanent:true,direction:'bottom'}).addTo(state.layers);L.polyline([guess,target],{color:state.peterborough?guessColor:'#334155',weight:3,dashArray:'7 7'}).addTo(state.layers);}
+    const guessColor=outcome==='correct'?'#15a58c':'#dc2626';
+    if(guess){L.circleMarker(guess,{radius:8,color:'#fff',weight:3,fillColor:guessColor,fillOpacity:1}).bindTooltip('Your guess',{permanent:true,direction:'bottom'}).addTo(state.layers);L.polyline([guess,target],{color:guessColor,weight:3,dashArray:'7 7'}).addTo(state.layers);}
     $('reticle').hidden=true;$('practice-reveal').hidden=true;$('practice-review').hidden=false;
     $('practice-feedback').textContent='';
     $('practice-review-title').textContent=outcome==='correct'?'Location found':outcome==='incorrect'?'Try again':'Location revealed';
@@ -149,10 +143,8 @@
       let left=42,top=rect.bottom-area.top+30;
       if(area.height-top-bottom<100&&area.width-rect.right>260){left=rect.right-area.left+30;top=65;}
       top=Math.max(24,Math.min(top,area.height-bottom-100));
-      if(state.peterborough){
-        $('guess-effect').style.left=`${(left+area.width-42)/2}px`;
-        $('guess-effect').style.top=`${(top+area.height-bottom)/2}px`;
-      }
+      $('guess-effect').style.left=`${(left+area.width-42)/2}px`;
+      $('guess-effect').style.top=`${(top+area.height-bottom)/2}px`;
       state.map.stop();state.map.invalidateSize();
       state.map.fitBounds(bounds,{paddingTopLeft:[left,top],paddingBottomRight:[42,bottom],maxZoom:17,animate:false});
     });
@@ -179,9 +171,7 @@
   window.PTBO_GEO=api;
   window.PTBO_GEO_READY=Promise.resolve(window.PTBO_GEO_CITY_READY).then(()=>window.PTBO_DISPATCH_STORE.ready()).then(()=>{
     const city=window.PTBO_CITY_PACKAGE;
-    state.peterborough=city?.id==='peterborough';
-    if(state.peterborough)document.body.classList.add('ptbo-geo-compact');
-    $('practice-return').hidden=state.peterborough;$('practice-bases').hidden=!state.peterborough;
+    document.body.classList.add('ptbo-geo-compact');
     if(city){
       const demo=city.id!=='peterborough';
       $('geo-city-label').textContent=city.name+' · '+(demo?'Geo Guesser demo':'street practice');
@@ -198,5 +188,5 @@
   window.addEventListener('ptbo-bases-updated',renderBases);
   window.addEventListener('pointerdown',event=>{const menu=$('practice-bases');if(menu.open&&!menu.contains(event.target))menu.open=false;});
   window.addEventListener('keydown',event=>{const menu=$('practice-bases');if(event.key==='Escape'&&menu.open){menu.open=false;$('practice-bases-toggle').focus();event.preventDefault();}});
-  window.addEventListener('resize',()=>{if(state.peterborough&&state.target)updateCrossStreets();});
+  window.addEventListener('resize',()=>{if(state.target)updateCrossStreets();});
 })();
