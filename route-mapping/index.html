@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#07111f">
   <meta name="description" content="Rapid Peterborough route-learning practice. Trace a route on real streets, backtrack to erase, pause and resume, then compare your response route.">
   <title>Route Mapping · Peterborough Emergency Games</title>
-  <link rel="stylesheet" href="../response-simulator/vendor/leaflet-1.9.4/leaflet.css?v=1.6.118">
-  <link rel="stylesheet" href="./styles.css?v=1.6.118">
+  <link rel="stylesheet" href="../response-simulator/vendor/leaflet-1.9.4/leaflet.css?v=1.6.119">
+  <link rel="stylesheet" href="./styles.css?v=1.6.119">
 </head>
 <body>
   <main id="route-app" aria-busy="true">
@@ -54,12 +54,12 @@
         <label hidden>Base<select id="base-select"></select></label>
         <p id="phase-note">Starting points advance automatically: Station 1 → North Station → West Station → previous dispatch. Each station phase lasts 20 completed calls. CALL marks the nearest mapped public-road access to the address.</p>
         <section class="tuning-controls" aria-label="Gameplay tuning">
-          <label for="street-forgiveness">Street forgiveness <output id="street-forgiveness-value" for="street-forgiveness">12 px</output></label>
-          <input id="street-forgiveness" type="range" min="6" max="24" step="1" value="12" aria-describedby="street-forgiveness-help">
+          <label for="street-forgiveness">Street forgiveness <output id="street-forgiveness-value" for="street-forgiveness">18 px</output></label>
+          <input id="street-forgiveness" type="range" min="6" max="24" step="1" value="18" aria-describedby="street-forgiveness-help">
           <small id="street-forgiveness-help">How close your pointer must stay to a street for the route to follow it.</small>
 
-          <label for="straight-preference">Straight-street preference <output id="straight-preference-value" for="straight-preference">35%</output></label>
-          <input id="straight-preference" type="range" min="0" max="100" step="1" value="35" aria-describedby="straight-preference-help">
+          <label for="straight-preference">Straight-street preference <output id="straight-preference-value" for="straight-preference">50%</output></label>
+          <input id="straight-preference" type="range" min="0" max="100" step="1" value="50" aria-describedby="straight-preference-help">
           <small id="straight-preference-help">Favor your drawing direction when nearby streets compete for snapping.</small>
 
           <label for="arrival-distance">Call arrival distance <output id="arrival-distance-value" for="arrival-distance">40 m</output></label>
@@ -81,13 +81,13 @@
     </div>
   </main>
 
-  <script src="../shared/build-version.js?v=1.6.118"></script>
-  <script src="../response-simulator/vendor/leaflet-1.9.4/leaflet.js?v=1.6.118"></script>
-  <script src="../cities/city-registry.js?v=1.6.118"></script>
-  <script src="../shared/location-changes.js?v=1.6.118"></script>
-  <script src="../shared/city-location-runtime.js?v=1.6.118"></script>
-  <script src="./trace-core.js?v=1.6.118&amp;edit=live-trace-2"></script>
-  <script src="./learning-core.js?v=1.6.118"></script>
-  <script src="./app.js?v=1.6.118&amp;edit=live-trace-2"></script>
+  <script src="../shared/build-version.js?v=1.6.119"></script>
+  <script src="../response-simulator/vendor/leaflet-1.9.4/leaflet.js?v=1.6.119"></script>
+  <script src="../cities/city-registry.js?v=1.6.119"></script>
+  <script src="../shared/location-changes.js?v=1.6.119"></script>
+  <script src="../shared/city-location-runtime.js?v=1.6.119"></script>
+  <script src="./trace-core.js?v=1.6.119&amp;edit=live-trace-2"></script>
+  <script src="./learning-core.js?v=1.6.119"></script>
+  <script src="./app.js?v=1.6.119&amp;edit=live-trace-2"></script>
 </body>
 </html>

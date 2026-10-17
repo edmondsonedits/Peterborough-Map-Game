@@ -10,16 +10,16 @@ function context(storage={}){
 
 test('tuning normalization clamps finite values and falls back for corrupt or missing fields',()=>{
  const {api}=context();
- assert.deepEqual({...api.normalizeTuning({streetForgiveness:99,straightPreference:NaN,arrivalDistance:5,challengeFrequency:72})},{streetForgiveness:24,straightPreference:35,arrivalDistance:10,challengeFrequency:72});
+ assert.deepEqual({...api.normalizeTuning({streetForgiveness:99,straightPreference:NaN,arrivalDistance:5,challengeFrequency:72})},{streetForgiveness:24,straightPreference:50,arrivalDistance:10,challengeFrequency:72});
 });
 
 test('tuning persistence recovers from denied and corrupt localStorage',()=>{
  const saved=context();saved.api.saveTuning({streetForgiveness:18,straightPreference:61,arrivalDistance:32,challengeFrequency:67});
  assert.deepEqual(JSON.parse(saved.values.get('ptboRouteMappingTuningV1')),{streetForgiveness:18,straightPreference:61,arrivalDistance:32,challengeFrequency:67});
  const corrupt=context({ptboRouteMappingTuningV1:'{broken'});
- assert.deepEqual({...corrupt.api.loadTuning()},{streetForgiveness:12,straightPreference:35,arrivalDistance:40,challengeFrequency:80});
+ assert.deepEqual({...corrupt.api.loadTuning()},{streetForgiveness:18,straightPreference:50,arrivalDistance:40,challengeFrequency:80});
  const blocked=context();blocked.c.localStorage={getItem(){throw Error('denied')},setItem(){throw Error('denied')}};
- assert.deepEqual({...blocked.api.loadTuning()},{streetForgiveness:12,straightPreference:35,arrivalDistance:40,challengeFrequency:80});
+ assert.deepEqual({...blocked.api.loadTuning()},{streetForgiveness:18,straightPreference:50,arrivalDistance:40,challengeFrequency:80});
  assert.doesNotThrow(()=>blocked.api.saveTuning({streetForgiveness:18,straightPreference:50,arrivalDistance:35,challengeFrequency:65}));
 });
 

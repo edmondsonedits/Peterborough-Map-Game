@@ -127,7 +127,7 @@
   }
 
   function clamp(value,min,max){ return Math.max(min,Math.min(max,value)); }
-  const DEFAULT_TUNING=Object.freeze({streetForgiveness:12,straightPreference:35,arrivalDistance:40,challengeFrequency:80});
+  const DEFAULT_TUNING=Object.freeze({streetForgiveness:18,straightPreference:50,arrivalDistance:40,challengeFrequency:80});
   function normalizeTuning(raw){
     const source=raw&&typeof raw==='object'?raw:{};
     const bounded=(key,min,max)=>{if(source[key]===null||source[key]===''||source[key]===undefined)return DEFAULT_TUNING[key];const value=Number(source[key]);return Number.isFinite(value)?Math.round(clamp(value,min,max)):DEFAULT_TUNING[key];};
