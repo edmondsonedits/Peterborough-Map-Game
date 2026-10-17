@@ -6,16 +6,32 @@
   const title=t=>t[0].toUpperCase()+t.slice(1);
   const read=(key,fallback)=>{try{return localStorage.getItem(key)??fallback;}catch(_){return fallback;}};
   const save=(key,value)=>{try{localStorage.setItem(key,String(value));}catch(_){/* Preferences still work for this visit. */}};
-  const state={ready:false,service:null,difficulty:null,base:null,bases:[],locations:[],pool:[],session:null,target:null,map:null,layers:null,review:null,showCrossStreets:read('geoShowCrossStreets','true')!=='false'};
-  function screen(id){for(const name of ['station-practice','settings','game'])$(name).hidden=name!==id;$('game-home').hidden=id==='game';$('practice-controls').classList[id==='game'?'remove':'add']('hidden');}
+  const state={ready:false,peterborough:false,service:null,difficulty:null,base:null,bases:[],locations:[],pool:[],session:null,target:null,map:null,layers:null,review:null,crossStreetsExpanded:null,showCrossStreets:read('geoShowCrossStreets','true')!=='false'};
+  const compactPhone=()=>state.peterborough&&Boolean(window.matchMedia?.('(max-width:760px), (pointer:coarse)').matches);
+  const isCurrentBase=base=>state.base?.id!=null?base.id===state.base.id:
+    base.name===state.base?.name&&base.address===state.base?.address&&base.lat===state.base?.lat&&base.lng===state.base?.lng;
+  function screen(id){$('practice-bases').open=false;for(const name of ['station-practice','settings','game'])$(name).hidden=name!==id;$('game-home').hidden=id==='game';$('practice-controls').classList[id==='game'?'remove':'add']('hidden');}
   function focusMap(){state.map?.getContainer?.()?.focus?.({preventScroll:true});}
   function focusBaseOrService(){
-    const selectedIndex=state.bases.findIndex(base=>state.base?.id!=null?base.id===state.base.id:
-      base.name===state.base?.name&&base.address===state.base?.address&&base.lat===state.base?.lat&&base.lng===state.base?.lng);
+    const selectedIndex=state.bases.findIndex(isCurrentBase);
     const selected=selectedIndex>=0?$(`practice-base-${selectedIndex}`):null;
     (selected&&!selected.disabled?selected:$('service-'+state.service))?.focus?.();
   }
   function bases(){return window.PTBO_BASE_STORE?.getBases(state.service)||window.PTBO_CITY_PACKAGE?.serviceConfig?.profiles?.[state.service]?.bases||[];}
+  function renderBaseMenu(){
+    if(!state.peterborough)return;
+    $('practice-base-options').replaceChildren(...state.bases.map((base,index)=>{
+      const button=document.createElement('button');button.className='base-option';button.setAttribute('aria-pressed',String(isCurrentBase(base)));
+      const name=document.createElement('strong');name.textContent=base.name;
+      const address=document.createElement('span');address.textContent=base.address;
+      button.appendChild(name);button.appendChild(address);button.addEventListener('click',()=>chooseBase(index));return button;
+    }));
+  }
+  function chooseBase(index){
+    if(!state.peterborough||!state.session||!Number.isInteger(index))return false;
+    const available=bases(),chosen=available[index];if(!chosen)return false;
+    state.base=chosen;state.bases=available;renderBaseMenu();$('practice-bases').open=false;returnToBase();return true;
+  }
   function updateDifficultyCounts(){
     if(!state.ready)return;
     for(const tier of tiers)$('count-'+tier).textContent=String(window.PTBO_STATION_PRACTICE.serviceLocations(state.locations,state.service||'fire',tier).length);
@@ -36,7 +52,7 @@
   }
   function renderBases(){
     if(!state.difficulty)return;
-    state.bases=bases();const host=$('practice-stations');
+    state.bases=bases();renderBaseMenu();const host=$('practice-stations');
     host.replaceChildren(...state.bases.map((base,index)=>{
       const button=document.createElement('button');button.id=`practice-base-${index}`;button.className='base-button';button.disabled=!state.ready;
       const name=document.createElement('strong');name.textContent=base.name;
@@ -57,19 +73,26 @@
     state.review=null;$('practice-review').hidden=true;
   }
   function updateCrossStreets(reveal=false){
-    const streets=state.target?.crossStreets||[],visible=state.showCrossStreets||reveal;
+    const streets=state.target?.crossStreets||[],visible=state.peterborough?
+      (state.crossStreetsExpanded??(state.showCrossStreets&&!compactPhone())):state.showCrossStreets||reveal;
     $('call-cross-streets').textContent=streets.length?'Cross streets: '+streets.join(' · '):'Cross streets unavailable';
     $('call-cross-streets').hidden=!visible;
-    $('reveal-cross-streets').hidden=visible||!streets.length;
+    $('reveal-cross-streets').hidden=!state.peterborough&&(visible||!streets.length);
+    $('reveal-cross-streets').textContent=visible?'Hide cross streets':'Show cross streets';
+    $('reveal-cross-streets').setAttribute('aria-expanded',String(visible));
   }
-  function setCrossStreets(value){state.showCrossStreets=Boolean(value);save('geoShowCrossStreets',state.showCrossStreets);$('show-cross-streets').checked=state.showCrossStreets;updateCrossStreets();}
+  function revealCrossStreets(){
+    if(state.peterborough)state.crossStreetsExpanded=$('call-cross-streets').hidden;
+    updateCrossStreets(true);
+  }
+  function setCrossStreets(value){state.crossStreetsExpanded=null;state.showCrossStreets=Boolean(value);save('geoShowCrossStreets',state.showCrossStreets);$('show-cross-streets').checked=state.showCrossStreets;updateCrossStreets();}
   function loadTarget(target){
-    clearReview();state.target=target;
+    clearReview();state.target=target;state.crossStreetsExpanded=null;$('practice-bases').open=false;
     const actualDifficulty=target?.recognitionDifficulty||state.difficulty;
     $('call-type').textContent=target?.facilityType==='long-term-care'?`Care home · ${title(actualDifficulty)}`:title(actualDifficulty);
     $('call-name').textContent=target.name;$('call-name').hidden=!target.name;
     $('call-address').textContent=target.addr;updateCrossStreets();
-    $('practice-feedback').textContent='Pan and zoom to place the crosshair over this address.';
+    $('practice-feedback').textContent=state.peterborough?'':'Pan and zoom to place the crosshair over this address.';
     $('confirm').textContent='Check location';$('confirm').hidden=false;
     $('reticle').hidden=false;$('practice-reveal').hidden=false;$('practice-continue').hidden=false;
     state.map.stop().setView([state.base.lat,state.base.lng],18,{animate:false});focusMap();
@@ -79,7 +102,7 @@
     const chosen=bases()[index];if(!chosen)return false;
     const pool=window.PTBO_STATION_PRACTICE.serviceLocations(state.locations,state.service,state.difficulty);
     if(!pool.length){$('practice-setup-status').textContent='No locations are ranked in this difficulty yet.';return false;}
-    state.session?.cancel();clearReview();state.base=chosen;state.pool=pool;
+    state.session?.cancel();clearReview();state.base=chosen;state.pool=pool;renderBaseMenu();
     if(!state.map){
       state.map=L.map('map',{zoomControl:false,inertia:false,minZoom:window.PTBO_CITY_PACKAGE?.map?.minZoom??10,maxZoom:19});state.map.attributionControl.setPrefix(false);
       window.PTBO_GEO_MAP_PROVIDER.createStreetLayer({maxZoom:19}).addTo(state.map);
@@ -132,10 +155,13 @@
   function finish(){state.session?.cancel();state.session=null;clearReview();screen('station-practice');$('practice-setup-status').textContent='Choose a base to practise again.';focusBaseOrService();}
   function openSettings(){$('show-cross-streets').checked=state.showCrossStreets;screen('settings');$('show-cross-streets').focus();}
   function closeSettings(){screen('station-practice');$('settings-link').focus();}
-  const api=Object.freeze({state,chooseService,chooseDifficulty,start,check,retry,reveal,next,returnToBase,finish,setCrossStreets,revealCrossStreets:()=>updateCrossStreets(true),openSettings,closeSettings,zoom:amount=>{if(state.map)state.map.setZoom(Math.max(window.PTBO_CITY_PACKAGE?.map?.minZoom??10,Math.min(19,state.map.getZoom()+amount)));}});
+  const api=Object.freeze({state,chooseService,chooseDifficulty,chooseBase,start,check,retry,reveal,next,returnToBase,finish,setCrossStreets,revealCrossStreets,openSettings,closeSettings,zoom:amount=>{if(state.map)state.map.setZoom(Math.max(window.PTBO_CITY_PACKAGE?.map?.minZoom??10,Math.min(19,state.map.getZoom()+amount)));}});
   window.PTBO_GEO=api;
   window.PTBO_GEO_READY=Promise.resolve(window.PTBO_GEO_CITY_READY).then(()=>window.PTBO_DISPATCH_STORE.ready()).then(()=>{
     const city=window.PTBO_CITY_PACKAGE;
+    state.peterborough=city?.id==='peterborough';
+    if(state.peterborough)document.body.classList.add('ptbo-geo-compact');
+    $('practice-return').hidden=state.peterborough;$('practice-bases').hidden=!state.peterborough;
     if(city){
       const demo=city.id!=='peterborough';
       $('geo-city-label').textContent=city.name+' · '+(demo?'Geo Guesser demo':'street practice');
@@ -150,4 +176,7 @@
     return api;
   }).catch(error=>{console.error('Unable to load Geo Guesser locations.',error);$('practice-setup-status').textContent=error?.message || 'Locations could not load. Check your connection and try again.';$('load-retry').hidden=false;return false;});
   window.addEventListener('ptbo-bases-updated',renderBases);
+  window.addEventListener('pointerdown',event=>{const menu=$('practice-bases');if(menu.open&&!menu.contains(event.target))menu.open=false;});
+  window.addEventListener('keydown',event=>{const menu=$('practice-bases');if(event.key==='Escape'&&menu.open){menu.open=false;$('practice-bases-toggle').focus();event.preventDefault();}});
+  window.addEventListener('resize',()=>{if(state.peterborough&&state.target)updateCrossStreets();});
 })();

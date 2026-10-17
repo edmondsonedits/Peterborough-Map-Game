@@ -6,7 +6,7 @@ const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=r
  const browser=await chromium.launch({headless:true,executablePath:process.env.PTBO_CHROMIUM_EXECUTABLE||undefined,args:['--no-sandbox']});
  try{
   for(const [surface,width,height] of [['desktop',1365,900],['mobile',390,844],['mobile',844,390],['mobile',667,375],['mobile',390,568]]){
-   const page=await browser.newPage({viewport:{width,height}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
+   const page=await browser.newPage({viewport:{width,height},isMobile:surface==='mobile',hasTouch:surface==='mobile'}),errors=[];page.on('pageerror',e=>errors.push(e.message));
    await page.goto(base+'/geo-guesser/'+surface+'/',{waitUntil:'load'});
    const frame=page.frames().find(f=>f.url().includes('/geo-guesser/index.html'));await frame.waitForFunction(()=>window.PTBO_GEO?.state.ready);
    assert.equal(await frame.evaluate(()=>PTBO_GEO.state.locations.length),200);
@@ -15,7 +15,7 @@ const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=r
    await frame.evaluate(()=>{const g=PTBO_GEO,c=g.state.locations.find(c=>c.name==='Adam Scott Collegiate and Vocational Institute');g.finish();g.state.locations=[c];g.chooseService('ems');g.chooseDifficulty('medium');g.start(0);});
    const layout=await frame.evaluate(()=>{const g=PTBO_GEO,h=document.getElementById('header').getBoundingClientRect(),r=document.getElementById('reticle').getBoundingClientRect(),m=g.state.map;return{count:g.state.pool.length,base:g.state.base.name,zoom:m.getZoom(),crossVisible:!document.getElementById('call-cross-streets').hidden,overlap:h.left<r.right&&h.right>r.left&&h.top<r.bottom&&h.bottom>r.top};});
    await page.screenshot({path:out+'/guess-'+width+'x'+height+'.png'});assert.equal(layout.overlap,false,'header obscures crosshair at '+width+'x'+height);
-   assert.equal(layout.zoom,18);assert.equal(layout.crossVisible,true);
+   assert.equal(layout.zoom,18);assert.equal(layout.crossVisible,surface!=='mobile');
    await frame.locator('#practice-reveal').click();assert.equal(await frame.locator('#practice-continue').isVisible(),true);
    await page.screenshot({path:out+'/review-'+width+'x'+height+'.png'});
    await frame.locator('#practice-continue').click();assert.equal(await frame.evaluate(()=>PTBO_GEO.state.map.getZoom()),18);
