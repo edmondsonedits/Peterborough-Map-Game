@@ -60,6 +60,32 @@ body #ptbo-training-use-notice:focus-visible{outline:3px solid #6de8dc;outline-o
 @media(max-width:520px){
   .ptbo-geo-compact #practice-controls{width:min(380px,calc(100% - 24px));padding:8px}
   .ptbo-geo-compact .map-buttons{display:grid;grid-template-columns:40px 40px minmax(0,1fr) minmax(0,1fr);gap:6px}
+  .ptbo-geo-compact #game[data-feedback] .map-buttons{grid-template-columns:40px 40px minmax(0,1fr)}
   .ptbo-geo-compact .map-buttons button{padding:8px 6px;font-size:.8rem}
   .ptbo-geo-compact #practice-reveal{white-space:normal;line-height:1.15}
+}
+
+/* Outcome feedback stays brief, never captures input, and clears with the review. */
+.ptbo-geo-compact #game[data-feedback=correct]{--answer-color:#7aefae;--answer-panel:#102b20f7;--answer-wash:#26d77b38}
+.ptbo-geo-compact #game[data-feedback=incorrect]{--answer-color:#fda4a4;--answer-panel:#351b24f7;--answer-wash:#ef444438}
+.ptbo-geo-compact #game[data-feedback=correct] #header,.ptbo-geo-compact #game[data-feedback=incorrect] #header{border-color:var(--answer-color);background:var(--answer-panel)}
+.ptbo-geo-compact #game[data-feedback=correct] #practice-review-title,.ptbo-geo-compact #game[data-feedback=incorrect] #practice-review-title{color:var(--answer-color);font-size:1rem}
+.ptbo-geo-compact #game[data-feedback=correct] #practice-review-title::before{content:'✓';margin-right:7px}
+.ptbo-geo-compact #game[data-feedback=incorrect] #practice-review-title::before{content:'×';margin-right:7px}
+.ptbo-geo-compact #game[data-feedback=revealed] #practice-review-title{color:#cbd5e1}
+.ptbo-geo-compact #game[data-feedback=correct] #practice-continue{background:#7aefae;border-color:#7aefae;color:#08251a}
+.ptbo-geo-compact #game[data-feedback=incorrect] #confirm{background:#fecaca;border-color:#fda4a4;color:#450a0a}
+.ptbo-geo-compact #guess-effect{position:absolute;left:50%;top:50%;z-index:660;display:grid;justify-items:center;gap:10px;transform:translate(-50%,-50%);pointer-events:none;user-select:none;opacity:0;animation:ptbo-answer-pop 1.2s ease-out both}
+.ptbo-geo-compact #guess-effect-icon{display:grid;place-items:center;width:78px;height:78px;border:2px solid var(--answer-color);border-radius:50%;background:var(--answer-panel);color:var(--answer-color);font:800 48px/1 system-ui,sans-serif;box-shadow:0 0 35px var(--answer-wash),0 6px 24px #0004}
+.ptbo-geo-compact #guess-effect-label{padding:6px 13px;border-radius:999px;background:var(--answer-panel);color:var(--answer-color);font-size:1rem;box-shadow:0 3px 14px #0003}
+.ptbo-geo-compact #game[data-feedback=correct] #guess-effect::before{content:'';position:absolute;left:50%;top:0;width:78px;height:78px;border:2px solid var(--answer-color);border-radius:50%;transform:translateX(-50%);animation:ptbo-answer-ring .95s ease-out both}
+.ptbo-geo-compact #game[data-feedback=correct]::after,.ptbo-geo-compact #game[data-feedback=incorrect]::after{content:'';position:absolute;inset:0;z-index:650;pointer-events:none;box-shadow:inset 0 0 95px var(--answer-wash);opacity:0;animation:ptbo-answer-wash .85s ease-out both}
+.ptbo-geo-compact #game[data-feedback=incorrect] #map .leaflet-map-pane{animation:ptbo-answer-blur .38s ease-out}
+@keyframes ptbo-answer-pop{0%{opacity:0;transform:translate(-50%,-50%) scale(.82)}18%,68%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-53%) scale(1.04)}}
+@keyframes ptbo-answer-ring{0%{opacity:.85;transform:translateX(-50%) scale(1)}100%{opacity:0;transform:translateX(-50%) scale(2)}}
+@keyframes ptbo-answer-wash{0%,100%{opacity:0}22%{opacity:1}}
+@keyframes ptbo-answer-blur{0%,100%{filter:none}35%{filter:blur(2.5px)}}
+@media(prefers-reduced-motion:reduce){
+  .ptbo-geo-compact #game[data-feedback] #guess-effect,.ptbo-geo-compact #game[data-feedback] #guess-effect::before,.ptbo-geo-compact #game[data-feedback]::after{animation:none;opacity:0}
+  .ptbo-geo-compact #game[data-feedback=incorrect] #map .leaflet-map-pane{animation:none;filter:none}
 }

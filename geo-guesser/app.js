@@ -71,6 +71,8 @@
   function clearReview(){
     if(state.layers){state.layers.clearLayers();state.map.removeLayer(state.layers);state.layers=null;}
     state.review=null;$('practice-review').hidden=true;
+    $('guess-effect').hidden=true;
+    if(state.peterborough){delete $('game').dataset.feedback;$('guess-effect-icon').textContent='';$('guess-effect-label').textContent='';}
   }
   function updateCrossStreets(reveal=false){
     const streets=state.target?.crossStreets||[],visible=state.peterborough?
@@ -119,10 +121,19 @@
   }
   function review(outcome,guess,distance){
     const center=state.map.getCenter(),zoom=state.map.getZoom();clearReview();state.review={outcome,center,zoom};
+    if(state.peterborough){
+      $('game').dataset.feedback=outcome;
+      if(outcome==='correct'||outcome==='incorrect'){
+        $('guess-effect-icon').textContent=outcome==='correct'?'✓':'×';
+        $('guess-effect-label').textContent=outcome==='correct'?'Correct':'Incorrect';
+        $('guess-effect').hidden=false;
+      }
+    }
     state.layers=L.layerGroup().addTo(state.map);
     const target=[state.target.lat,state.target.lng],circle=L.circle(target,{radius:state.target.radius,color:'#15a58c',weight:3,fillOpacity:.15}).addTo(state.layers);
     L.circleMarker(target,{radius:8,color:'#fff',weight:3,fillColor:'#15a58c',fillOpacity:1}).bindTooltip('Address location',{permanent:true,direction:'top'}).addTo(state.layers);
-    if(guess){L.circleMarker(guess,{radius:8,color:'#fff',weight:3,fillColor:'#dc2626',fillOpacity:1}).bindTooltip('Your guess',{permanent:true,direction:'bottom'}).addTo(state.layers);L.polyline([guess,target],{color:'#334155',weight:3,dashArray:'7 7'}).addTo(state.layers);}
+    const guessColor=state.peterborough&&outcome==='correct'?'#15a58c':'#dc2626';
+    if(guess){L.circleMarker(guess,{radius:8,color:'#fff',weight:3,fillColor:guessColor,fillOpacity:1}).bindTooltip('Your guess',{permanent:true,direction:'bottom'}).addTo(state.layers);L.polyline([guess,target],{color:state.peterborough?guessColor:'#334155',weight:3,dashArray:'7 7'}).addTo(state.layers);}
     $('reticle').hidden=true;$('practice-reveal').hidden=true;$('practice-review').hidden=false;
     $('practice-feedback').textContent='';
     $('practice-review-title').textContent=outcome==='correct'?'Location found':outcome==='incorrect'?'Try again':'Location revealed';
@@ -138,6 +149,10 @@
       let left=42,top=rect.bottom-area.top+30;
       if(area.height-top-bottom<100&&area.width-rect.right>260){left=rect.right-area.left+30;top=65;}
       top=Math.max(24,Math.min(top,area.height-bottom-100));
+      if(state.peterborough){
+        $('guess-effect').style.left=`${(left+area.width-42)/2}px`;
+        $('guess-effect').style.top=`${(top+area.height-bottom)/2}px`;
+      }
       state.map.stop();state.map.invalidateSize();
       state.map.fitBounds(bounds,{paddingTopLeft:[left,top],paddingBottomRight:[42,bottom],maxZoom:17,animate:false});
     });
