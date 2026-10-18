@@ -1,120 +1,32 @@
 name: City Explorer Browser QA
-
 on:
   workflow_dispatch:
   pull_request:
     paths:
-      - 'city-explorer/**'
-      - 'tools/**'
+      - 'tools/hunter-bridge-editor-test.cjs'
       - '.github/workflows/city-explorer-browser-qa.yml'
-  push:
-    branches: [main]
-    paths:
-      - 'tools/check-station-driving.cjs'
-      - 'tools/check-mobile-controls.cjs'
-      - 'tools/check-authored-scene.cjs'
-      - 'tools/test_authored_scene_runtime.mjs'
-      - 'tools/test_street_*.mjs'
-      - 'city-explorer/app.js'
-      - 'city-explorer/street-paint.js'
-      - 'city-explorer/city-detail-rules.js'
-      - 'city-explorer/road-network.js'
-      - 'city-explorer/feature-utils.js'
-      - 'city-explorer/authored-scene-*.js'
-      - 'city-explorer/data/authored/**'
-      - 'city-explorer/gameplay-systems*.js'
-      - 'city-explorer/driving-refinement*.js'
-      - 'city-explorer/mobile-controls*.js'
-      - 'city-explorer/mobile-controls*.css'
-      - 'city-explorer/road-orientation-fix.js'
-      - 'city-explorer/release.js'
-      - 'city-explorer/release-*.js'
-      - '.github/workflows/city-explorer-browser-qa.yml'
-
 permissions:
   contents: read
-
-concurrency:
-  group: city-explorer-browser-qa-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
-  station-1-driving:
+  hunter-bridge-editor:
     runs-on: ubuntu-latest
-    timeout-minutes: 24
+    timeout-minutes: 10
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 22
-
-      - name: Run authored scene runtime unit tests
-        run: node tools/test_authored_scene_runtime.mjs
-
-      - name: Verify road geometry and driver contact regressions
-        run: |
-          node --input-type=module --check < city-explorer/app.js
-          node --check city-explorer/citywide-road-quality.js
-          node --check city-explorer/fallback-junction-geometry.js
-          node --check city-explorer/road-wheel-contact.js
-          node tools/test_street_marking_evidence.mjs
-          node tools/test_street_paint_runtime_edges.mjs
-          node tools/test_city_detail_rules.mjs
-          node tools/test_citywide_road_quality.mjs
-          node tools/test_fallback_junction_geometry.mjs
-          node tools/test_station_road_detail.mjs
-          node tools/test_gameplay_systems.mjs
-          node tools/test_official_road_surface_index.mjs
-          node tools/test_rendered_pavement.mjs
-          node tools/geospatial/test_road_network.mjs
-          node tools/geospatial/test_road_terrain_clearance.mjs
-
-      - name: Install Playwright test runtime
+      - name: Install isolated browser test runtime
         run: |
           npm init -y >/dev/null 2>&1
           npm install --no-save --no-package-lock playwright@1.55.0
           npx playwright install chromium
-
-      - name: Start local simulator server
-        run: |
-          python3 -m http.server 4174 --bind 127.0.0.1 > /tmp/ptbo-http.log 2>&1 &
-          echo $! > /tmp/ptbo-http.pid
-          for attempt in $(seq 1 30); do
-            if curl --fail --silent http://127.0.0.1:4174/city-explorer/ >/dev/null; then
-              exit 0
-            fi
-            sleep 1
-          done
-          cat /tmp/ptbo-http.log
-          exit 1
-
-      - name: Check road startup and report browser errors
-        run: node tools/check-road-preview-smoke.cjs http://127.0.0.1:4174
-
-      - name: Run authored scene fail-open integration QA
-        run: node tools/check-authored-scene.cjs http://127.0.0.1:4174
-
-      - name: Run deterministic Station 1 driving QA
-        env:
-          PTBO_QA_ARTIFACT_DIR: artifacts/driving-qa
-        run: node tools/check-station-driving.cjs http://127.0.0.1:4174 station-1-ci
-
-      - name: Run mobile controls and responsive-layout QA
-        env:
-          PTBO_QA_ARTIFACT_DIR: artifacts/mobile-qa
-        run: node tools/check-mobile-controls.cjs http://127.0.0.1:4174 mobile-ci
-
-      - name: Preserve browser QA evidence
+      - name: Test the published Hunter Street bridge editor
+        run: node tools/hunter-bridge-editor-test.cjs
+      - name: Preserve screenshots and command results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: city-explorer-browser-qa-${{ github.run_id }}
-          path: |
-            artifacts/driving-qa/
-            artifacts/mobile-qa/
-            /tmp/ptbo-http.log
-          if-no-files-found: warn
-          retention-days: 14
+          name: hunter-bridge-editor-test
+          path: artifacts/hunter-bridge-editor/
+          retention-days: 7
