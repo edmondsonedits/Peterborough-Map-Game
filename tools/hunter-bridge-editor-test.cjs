@@ -17,6 +17,8 @@ const out=path.resolve('artifacts/hunter-bridge-editor');fs.mkdirSync(out,{recur
   await page.waitForFunction(()=>window.PTBO_CITY_EDITOR?.run({op:'status'}).data?.active===true || document.documentElement.dataset.explorerBoot==='failed',null,{timeout:180000});
   const status=await run({op:'status'});assert.equal(status.data.active,true);assert.equal(status.data.version,'1.6.122');
   report.url=page.url();
+  const styling=await page.locator('[data-ai-run]').evaluate(element=>({height:parseFloat(getComputedStyle(element).minHeight),fontSize:getComputedStyle(element).fontSize}));
+  report.styling=styling;assert.ok(styling.height>=32,'the published AI panel stylesheet must be present');
   await page.locator('.ai-editor-tools summary').click();
   await page.locator('[data-ai-search]').fill('Ashburnham Bridge');
   await page.locator('[data-ai-find]').click();
@@ -29,6 +31,7 @@ const out=path.resolve('artifacts/hunter-bridge-editor');fs.mkdirSync(out,{recur
   assert.deepEqual(selected.data.capabilities.appearance,['color','opacity']);
   await page.locator('[data-ai-focus]').click();
   assert.equal(JSON.parse(await page.locator('[data-ai-result]').textContent()).ok,true);
+  await page.screenshot({path:path.join(out,'bridge-focus.png')});
   const inspected=await run({op:'inspect'});assert.equal(inspected.ok,true);assert.ok(inspected.data.bounds);
   report.initialScene=(await run({op:'export'})).data.scene;
   const cameraCommand={op:'camera',latitude:44.305884,longitude:-78.314833,altitude:20,distance:230,bearing:180};
@@ -50,6 +53,14 @@ const out=path.resolve('artifacts/hunter-bridge-editor');fs.mkdirSync(out,{recur
   assert.equal((await run({op:'redo'})).ok,true);changed=true;
   assert.equal((await run({op:'inspect'})).data.appearance.color,'#ff00ff');
   assert.equal((await run({op:'undo'})).ok,true);changed=false;
+  const faded=await run({op:'edit',changes:[{id:report.selectedId,appearance:{opacity:0.25}}]});
+  assert.equal(faded.ok,true);changed=true;
+  assert.equal((await run({op:'inspect'})).data.appearance.opacity,0.25);
+  await page.screenshot({path:path.join(out,'bridge-opacity-test.png')});
+  assert.equal((await run({op:'undo'})).ok,true);changed=false;
+  assert.deepEqual((await run({op:'export'})).data.scene,report.initialScene);
+  assert.equal((await run({...cameraCommand,altitude:100,bearing:155,distance:240})).ok,true);
+  await page.screenshot({path:path.join(out,'bridge-overview.png')});
   assert.equal((await run({...cameraCommand,bearing:90,distance:80})).ok,true);
   assert.equal((await run({op:'view.restore',name:'Hunter bridge QA before'})).ok,true);
   assert.deepEqual((await run({op:'context'})).data.camera,report.beforeCamera,'saved view restores exact camera and orbit target');
@@ -72,4 +83,3 @@ const out=path.resolve('artifacts/hunter-bridge-editor');fs.mkdirSync(out,{recur
   await browser.close();
  }
 })().catch(error=>{console.error(error);process.exitCode=1;});
-
