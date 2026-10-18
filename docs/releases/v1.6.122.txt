@@ -1,0 +1,20 @@
+Peterborough Map Game v1.6.122 — AI editor tools
+
+Adds a bounded external command API and Inspector > AI tools to the integrated
+City Explorer editor. Search city features by label/source/type/proximity, inspect
+stable IDs and supported edits, focus individual features, run validated atomic
+edit batches, undo/redo, save/restore camera views and export scene context.
+
+Authored colour/opacity changes persist in ordinary scene drafts. Connected roads
+and protected landmarks retain transform restrictions; batched/instanced appearance
+reports colour-only support. The interface does not evaluate JavaScript, call an
+AI service or publish automatically. Existing editor entry authorization remains.
+
+Verified: command validation, stale-state rejection, atomic failure, source-clone
+selection, per-instance bounds, authored appearance reload, view restoration,
+storage-error handling and the existing editor regression suite. Three findings
+from independent code review were reproduced and fixed with regression coverage.
+
+Browser QA limitation: this environment has no supported control-browser plugin
+or local Chromium binary. No fresh WebGL screenshots, physical-phone layout checks,
+or measured efficiency gains are claimed for this release.
