@@ -5,9 +5,13 @@ import { createGeneratedReplacementDocument, isProtectedEditorTarget, pickEditor
 import { cancelTransformControlDrag, rebindEditorSelection } from './editor-interactions.js';
 import { createEditorCameraNavigation } from './editor-camera-navigation.js';
 import { restoreEditorCameraSession, startEditorCameraSession } from './editor-camera-session.js';
-import { createVersionSaver } from './version-saver.js?v=1.6.121';
+import { createVersionSaver } from './version-saver.js?v=1.6.122';
 import { authorizeEditorEntry } from './editor-entry.js';
-import { createRecoveryPrompt } from './recovery-prompt.js?v=1.6.121';
+import { createRecoveryPrompt } from './recovery-prompt.js?v=1.6.122';
+import { createAIEditorTools } from './ai-editor-tools.js?v=1.6.122';
+import { createAIEditorCamera } from './ai-editor-camera.js?v=1.6.122';
+import { installAIEditorPanel } from './ai-editor-panel.js?v=1.6.122';
+import { editorFeatureBounds } from './ai-editor-bounds.js?v=1.6.122';
 
 export { createGeneratedReplacementDocument, isProtectedEditorTarget, pickEditorSelection } from './city-editor-selection.js';
 
@@ -51,6 +55,8 @@ export function createCityEditor(adapter) {
   let transientClone = null;
   let gestureGeneratedRecord = null;
   let lastOpenedPanel = 'inspector';
+  let aiTools = null;
+  let aiPanel = null;
   const listeners = [];
   const selectionHelpers = new Map();
   const ui = {
@@ -468,7 +474,9 @@ export function createCityEditor(adapter) {
       adapter.applyOverrides?.(documentValue);
       rebindSelectionToLiveRuntime();
       refreshUI();
+      return true;
     }
+    return false;
   }
 
   function redo() {
@@ -478,7 +486,9 @@ export function createCityEditor(adapter) {
       adapter.applyOverrides?.(documentValue);
       rebindSelectionToLiveRuntime();
       refreshUI();
+      return true;
     }
+    return false;
   }
 
   function rebindSelectionToLiveRuntime() {
@@ -629,6 +639,46 @@ export function createCityEditor(adapter) {
     transform = new TransformControls(camera, canvas);
     const rect = canvas.getBoundingClientRect();
     cameraNavigation = createEditorCameraNavigation(THREE, camera, { width: rect.width, height: rect.height });
+    let viewStorage;
+    try { viewStorage = globalThis.localStorage; } catch { /* Session views remain available. */ }
+    const aiCamera = createAIEditorCamera({ THREE, camera, navigation: () => cameraNavigation,
+      project: adapter.project, heightAt: adapter.terrainHeightAtWorld, storage: viewStorage });
+    const aiRecord = (id) => {
+      const authored = currentDocument().objects.find(record => record.id === id);
+      if (authored) return { ...authored, kind: 'authored', object: authoredRuntime.getObject(id) };
+      const generated = generatedRegistry.records.get(id);
+      return generated ? { ...generated, kind: 'generated' } : null;
+    };
+    aiTools = createAIEditorTools({
+      isActive: () => active && !disposed,
+      isBlocked: () => recoveryPrompt.pending || Boolean(gestureSnapshot || pendingAssetKey || transform?.dragging),
+      getDocument: currentDocument,
+      getRecord: aiRecord,
+      listRecords: function* () {
+        for (const record of generatedRegistry.records.values()) yield { ...record, kind: 'generated' };
+        for (const record of currentDocument().objects) yield { ...record, kind: 'authored' };
+      },
+      selectedId: () => selected?.id ?? null,
+      select: selectById,
+      focus: record => aiCamera.focus(record.object, editorFeatureBounds(THREE, record)),
+      bounds(record) {
+        if (!record.object) return null;
+        const box = editorFeatureBounds(THREE, record);
+        return box.isEmpty() ? null : { min: box.min.toArray(), max: box.max.toArray() };
+      },
+      commit(documentValue, label) {
+        const changed = documentHistory.execute(label, documentValue);
+        if (changed) {
+          const replacement = documentValue.objects.find(item => item.properties?.sourceTargetId === selected?.id);
+          if (replacement) selectById(replacement.id);
+          else rebindSelectionToLiveRuntime();
+          refreshUI();
+        }
+        return changed;
+      },
+      undo, redo, camera: aiCamera, metadata: () => adapter.aiMetadata?.() || {},
+    });
+    aiPanel = installAIEditorPanel(ui.inspector?.querySelector('[data-editor-ai-root]'), aiTools);
     raycaster.layers.enable(31);
     // Picking proxies belong to the raycaster only; rendering their invisible
     // materials still submits thousands of building/road draw calls.
@@ -811,6 +861,7 @@ export function createCityEditor(adapter) {
     removeTransientClone();
     listeners.splice(0).forEach((remove) => remove());
     transform?.dispose();
+    aiPanel?.dispose();
     if (transform) scene.remove(transform.getHelper());
     disposed = true;
   }
@@ -818,6 +869,9 @@ export function createCityEditor(adapter) {
   const api = {
     initialize, enter, exit, update, selectById, dispose, exportDraft,
     handleShortcut,
+    runCommand(command) {
+      return aiTools?.run(command) || { ok: false, error: { code: 'NOT_READY', message: 'Editor is still initializing.' } };
+    },
     loadPublishedDocument(documentValue) {
       authoredRuntime.load(documentValue);
       adapter.applyOverrides?.(documentValue);

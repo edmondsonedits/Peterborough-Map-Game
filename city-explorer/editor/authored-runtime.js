@@ -63,6 +63,19 @@ export function createAuthoredRuntime(adapter) {
     const rotation = transform.rotation || { x: 0, y: 0, z: 0 };
     object.rotation.set(rotation.x, rotation.y, rotation.z);
     object.scale.set(scale.x * baseScale.x, scale.y * baseScale.y, scale.z * baseScale.z);
+    // Saved appearance belongs to this authored object, never a shared city material.
+    const appearance = record.properties?.editorAppearance;
+    if (appearance && typeof appearance === 'object') object.traverse((node) => {
+      const materials = Array.isArray(node.material) ? node.material : node.material ? [node.material] : [];
+      for (const material of materials) {
+        if (typeof appearance.color === 'string' && /^#[0-9a-f]{6}$/i.test(appearance.color)) material.color?.set(appearance.color);
+        if (Number.isFinite(appearance.opacity) && appearance.opacity >= 0 && appearance.opacity <= 1) {
+          material.opacity = appearance.opacity;
+          material.transparent = appearance.opacity < 1;
+          material.needsUpdate = true;
+        }
+      }
+    });
     object.userData.cityEditor = { kind: 'authored', id: record.id, assetKey: record.assetKey };
     if (sourceClone) object.userData.cityEditor.sourceTargetId = record.properties.sourceTargetId;
 

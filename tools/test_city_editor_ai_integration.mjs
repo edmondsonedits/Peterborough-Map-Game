@@ -1,0 +1,48 @@
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { pathToFileURL } from 'node:url';
+import path from 'node:path';
+import * as THREE from '../city-explorer/vendor/three-r180/build/three.module.min.js';
+import { createGeneratedRegistry } from '../city-explorer/editor/generated-registry.js';
+import { createAuthoredRuntime } from '../city-explorer/editor/authored-runtime.js';
+import { createEmptySceneDocument } from '../city-explorer/editor/scene-document.js';
+import { createCommandHistory } from '../city-explorer/editor/command-history.js';
+import { createDraftStore } from '../city-explorer/editor/draft-store.js';
+import { applyOverrides } from '../city-explorer/editor/override-runtime.js';
+// Resolve only browser import-map specifiers; run the real editor lifecycle,
+// real TransformControls, registry, authored runtime and command history.
+const editorPath=path.resolve('city-explorer/editor/city-editor.js');
+const transformSource=(await readFile('city-explorer/vendor/three-r180/examples/jsm/controls/TransformControls.js','utf8')).replace("from 'three'",`from '${pathToFileURL(path.resolve('city-explorer/vendor/three-r180/build/three.module.min.js')).href}'`);
+const transformUrl=`data:text/javascript;base64,${Buffer.from(transformSource).toString('base64')}`;
+const source=(await readFile(editorPath,'utf8')).replace(/from '([^']+)'/g,(_,specifier)=>`from ${JSON.stringify(specifier==='three/addons/controls/TransformControls.js'?transformUrl:new URL(specifier,pathToFileURL(editorPath)).href)}`);
+const {createCityEditor}=await import(`data:text/javascript;base64,${Buffer.from(source).toString('base64')}`);
+const noop=()=>{};
+const doc={querySelector:()=>null,addEventListener:noop,removeEventListener:noop,documentElement:{classList:{add:noop,remove:noop,toggle:noop}}};
+globalThis.document=doc;globalThis.location={href:'https://peterborough-3d-map-editor-preview.dans-host.chatgpt.site/city-explorer/?editor=1'};
+globalThis.addEventListener=noop;globalThis.removeEventListener=noop;
+const canvas={style:{},ownerDocument:doc,getRootNode:()=>doc,addEventListener:noop,removeEventListener:noop,getBoundingClientRect:()=>({width:1000,height:700}),focus:noop};
+const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(55,1.4,0.1,20000);camera.position.set(0,20,30);
+const registry=createGeneratedRegistry(THREE),group=new THREE.Group();scene.add(group);
+const id='00000000-0000-4000-8000-000000000001';
+const mesh=new THREE.Mesh(new THREE.BoxGeometry(10,8,10),new THREE.MeshStandardMaterial());scene.add(mesh);
+const transform={longitude:-78.32,latitude:44.3,elevation:0,rotation:{x:0,y:0,z:0},scale:{x:1,y:1,z:1}};
+registry.registerEditableObject(mesh,{id,sourceType:'building',label:'Test building',transform});
+const runtime=createAuthoredRuntime({THREE,project:()=>({x:0,y:0}),terrainHeightAtWorld:()=>0,authoredDetailGroup:group,generatedRegistry:registry});
+const base=createEmptySceneDocument(),draft=createDraftStore({storage:null,baseDocument:base});
+const history=createCommandHistory({initialDocument:base,onChange:value=>{runtime.load(value);applyOverrides(value,{registry,authoredRuntime:runtime,THREE});draft.saveDraft(value);}});
+const editor=createCityEditor({THREE,scene,camera,canvas,authoredRuntime:runtime,generatedRegistry:registry,documentHistory:history,draftStore:draft,raycaster:new THREE.Raycaster(),
+  project:()=>({x:0,y:0}),terrainHeightAtWorld:()=>0,hooks:{getMode:()=> 'onFoot'},applyOverrides:value=>applyOverrides(value,{registry,authoredRuntime:runtime,THREE})});
+editor.initialize();assert.equal(editor.runCommand({op:'inspect',id}).error.code,'EDITOR_INACTIVE');
+assert.equal(await editor.enter(),true);assert.equal(editor.active,true);
+assert.equal(editor.runCommand({op:'select',id}).ok,true);
+assert.equal(editor.runCommand({op:'edit',changes:[{id,transform:{elevation:2},appearance:{color:'#aabbcc'}}]}).ok,true);
+const replacement=history.current.objects[0];assert.equal(editor.selectedId,replacement.id);
+assert.equal(runtime.getObject(replacement.id).position.y,2);
+assert.equal(editor.runCommand({op:'inspect'}).data.id,replacement.id);
+assert.equal(editor.runCommand({op:'focus'}).ok,true);
+assert.equal(editor.runCommand({op:'view.save',name:'Proof'}).ok,true);
+assert.equal(editor.runCommand({op:'undo'}).ok,true);assert.equal(history.current.objects.length,0);
+assert.equal(editor.runCommand({op:'redo'}).ok,true);assert.equal(history.current.objects.length,1);
+editor.exit();assert.equal(editor.runCommand({op:'edit',changes:[{id,visible:false}]}).error.code,'EDITOR_INACTIVE');
+editor.dispose();assert.equal(draft.exportDraft().status,'exported');
+console.log('Real editor initialization, entry policy, source replacement selection, camera commands, history and exit gates passed without a browser.');

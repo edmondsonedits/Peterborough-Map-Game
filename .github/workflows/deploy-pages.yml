@@ -43,7 +43,7 @@ jobs:
           node --test tests/driving-route-guidance.test.cjs tests/route-city-bootstrap.test.cjs
 
       - name: Check city editor recovery and loading
-        run: node --test tools/test_city_editor_state.mjs tools/test_city_editor_draft_identity.mjs tools/test_city_editor_draft_lifecycle.mjs tools/test_city_editor_publisher_client.mjs tools/test_city_editor_recovery_prompt.mjs tools/test_city_editor_integration.mjs tools/test_city_editor_interactions.mjs tools/test_city_editor_release.mjs
+        run: node --test tools/test_city_editor_ai_tools.mjs tools/test_city_editor_ai_camera.mjs tools/test_city_editor_ai_appearance.mjs tools/test_city_editor_ai_bounds.mjs tools/test_city_editor_ai_integration.mjs tools/test_city_editor_state.mjs tools/test_city_editor_draft_identity.mjs tools/test_city_editor_draft_lifecycle.mjs tools/test_city_editor_publisher_client.mjs tools/test_city_editor_recovery_prompt.mjs tools/test_city_editor_integration.mjs tools/test_city_editor_interactions.mjs tools/test_city_editor_release.mjs
 
       - name: Check Ontario city demos and demo requests
         run: node --test tests/ontario-city-data.test.cjs tests/editor-city-runtime.test.cjs tests/geo-city-runtime.test.cjs tests/geo-city-flow.test.cjs tests/demo-requests.test.cjs

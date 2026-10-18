@@ -10,11 +10,11 @@ import { createVegetationVariant, stationOneVegetationPalette } from './vegetati
 import { installStationStreetscape } from './streetscape-assets.js?v=streetscape-2';
 import { installStationApron } from './site-surface-materials.js?v=1.6.56';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
-import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js';
+import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js?v=1.6.122';
 import { createCatalogObject } from './editor/asset-catalog.js';
 import { createCommandHistory } from './editor/command-history.js';
-import { createDraftStore } from './editor/draft-store.js?v=1.6.121';
-import { createCityEditor } from './editor/city-editor.js?v=1.6.121';
+import { createDraftStore } from './editor/draft-store.js?v=1.6.122';
+import { createCityEditor } from './editor/city-editor.js?v=1.6.122';
 import { createEmptySceneDocument, sanitizeRenderableSceneDocument } from './editor/scene-document.js';
 import { createGeneratedRegistry } from './editor/generated-registry.js';
 import { applyOverrides } from './editor/override-runtime.js';
@@ -36,7 +36,7 @@ import { clearLandCoverRaster, paintLandCoverPolygon } from './land-cover-raster
 import { sampleOfficialTerrainElevation, validOfficialTerrainMetadata } from './terrain-heightmap.js?v=1.5.5-lidar1';
 import { sampleTriangulatedTerrainHeight } from './terrain-surface.js?v=1.5.5-terrain1';
 import { HydroSurfaceIndex, WATER_SURFACE_CLEARANCE, WATER_TERRAIN_RECESS, createWaterStageSampler, relativeWaterElevation, robustFallbackWaterHeight, subdivideWaterTriangle, watercourseWidth } from './water-system.js?v=1.5.5-hydro2';
-import { CitySplatLayer } from './city-splat-layer.js?v=1.6.121';
+import { CitySplatLayer } from './city-splat-layer.js?v=1.6.122';
 import {
   estimatedBuildingFloors,
   facadeDetailClass,
@@ -4705,6 +4705,12 @@ function initializeCityEditor(publishedDocument = createEmptySceneDocument()) {
     raycaster: editorRaycaster,
     camera,
     canvas: els.canvas,
+    project,
+    terrainHeightAtWorld,
+    aiMetadata: () => ({ version: window.PTBO_BUILD?.version || null, profile: lowPowerProfile ? 'lite' : 'full',
+      lighting: state.theme, viewport: [innerWidth, innerHeight], mapGeneratedAt: state.dataGeneratedAt || null,
+      metrics: { drawCalls: renderer.info.render.calls, triangles: renderer.info.render.triangles,
+        geometries: renderer.info.memory.geometries, textures: renderer.info.memory.textures } }),
     layers: {
       Authored: authoredDetailGroup,
       Landmarks: landmarkGroup,
@@ -4768,6 +4774,10 @@ function initializeCityEditor(publishedDocument = createEmptySceneDocument()) {
     },
   });
   cityEditor.initialize();
+  // Explicit command API; entry uses the same authorization as the Editor button.
+  window.PTBO_CITY_EDITOR = Object.freeze({ apiVersion: 1,
+    enter: () => cityEditor.enter(), exit: () => cityEditor.exit(),
+    run: (command) => cityEditor.runCommand(command) });
   if (els.editorMode) els.editorMode.disabled = false;
   if (new URLSearchParams(location.search).get('editor') === '1') void cityEditor.enter();
   return cityEditor;

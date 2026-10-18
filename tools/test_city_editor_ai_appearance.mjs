@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import * as THREE from '../city-explorer/vendor/three-r180/build/three.module.min.js';
+import { createAuthoredRuntime } from '../city-explorer/editor/authored-runtime.js';
+const group=new THREE.Group();
+const runtime=createAuthoredRuntime({THREE,authoredDetailGroup:group,project:()=>({x:0,y:0}),terrainHeightAtWorld:()=>0});
+const record={id:'00000000-0000-4000-8000-000000000003',assetKey:'bench',label:'Bench',visible:true,properties:{editorAppearance:{color:'#aabbcc',opacity:0.6}},transform:{latitude:44.3,longitude:-78.32,elevation:0,rotation:{x:0,y:0,z:0},scale:{x:1,y:1,z:1}}};
+runtime.upsert(record);
+let mesh=runtime.getObject(record.id).children[0];
+assert.equal(mesh.material.color.getHexString(),'aabbcc');assert.equal(mesh.material.opacity,0.6);
+runtime.load({objects:[JSON.parse(JSON.stringify(record))]});
+mesh=runtime.getObject(record.id).children[0];assert.equal(mesh.material.color.getHexString(),'aabbcc');
+runtime.upsert({...record,properties:{}});mesh=runtime.getObject(record.id).children[0];assert.notEqual(mesh.material.color.getHexString(),'aabbcc','undo resets source appearance');
+runtime.dispose();console.log('Authored appearance persists through full runtime reload and resets on undo.');

@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import * as THREE from '../city-explorer/vendor/three-r180/build/three.module.min.js';
+import { editorFeatureBounds } from '../city-explorer/editor/ai-editor-bounds.js';
+const mesh=new THREE.InstancedMesh(new THREE.BoxGeometry(2,4,2),new THREE.MeshBasicMaterial(),2);
+mesh.setMatrixAt(0,new THREE.Matrix4().makeTranslation(0,2,0));
+mesh.setMatrixAt(1,new THREE.Matrix4().makeTranslation(1000,2,1000));mesh.updateMatrixWorld();
+const bounds=editorFeatureBounds(THREE,{object:mesh,parts:[{object:mesh,instanceIndex:1}]});
+assert.deepEqual(bounds.getCenter(new THREE.Vector3()).toArray(),[1000,2,1000]);
+assert.deepEqual(bounds.getSize(new THREE.Vector3()).toArray(),[2,4,2]);
+console.log('AI feature bounds isolate one instance instead of framing the city-wide collection.');

@@ -388,6 +388,20 @@ button { color: inherit; }
 .city-editor-panel { top: 18px; bottom: 82px; width: min(290px, calc(100vw - 28px)); padding: 16px; overflow: auto; }
 #city-editor-left { left: 18px; }
 .city-editor-inspector { right: 18px; }
+.ai-editor-tools { margin: 10px 0; border: 1px solid #34555f; border-radius: 6px; padding: 9px; }
+.ai-editor-tools summary { cursor: pointer; color: #95e7ee; font-size: 12px; font-weight: 700; min-height: 28px; }
+.ai-editor-tools p { font-size: 10px; line-height: 1.5; color: #b8c9c8; }
+.ai-editor-tools button, .ai-editor-tools select { min-height: 32px; max-width: 100%; border: 1px solid #45656f; border-radius: 4px; background: #102b35; color: #e8f7f7; padding: 6px; font-size: 10px; cursor: pointer; }
+.ai-editor-tools button:focus-visible, .ai-editor-tools textarea:focus-visible, .ai-editor-tools select:focus-visible { outline: 2px solid #72dbe6; outline-offset: 2px; }
+.ai-editor-tools input, .ai-editor-tools select { width: 100%; min-width: 0; }
+.ai-editor-row { display: flex; flex-wrap: wrap; gap: 5px; margin: 6px 0; }
+.ai-editor-row select { flex: 1 1 90px; }
+.ai-editor-tools textarea { width: 100%; min-height: 90px; resize: vertical; padding: 7px; background: #06151d; color: #ddf1f5; border: 1px solid #45656f; border-radius: 4px; font: 11px/1.5 monospace; user-select: text; }
+.ai-editor-tools output { display: block; max-height: 180px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; font: 10px/1.5 monospace; user-select: text; }
+.ai-editor-tools output[data-ok="false"] { color: #ffb9ae; }
+.ai-editor-results { max-height: 160px; overflow: auto; display: grid; gap: 4px; }
+.ai-editor-results button { text-align: left; overflow-wrap: anywhere; }
+@media (max-width: 760px) { .ai-editor-tools button, .ai-editor-tools select { min-height: 44px; } .ai-editor-tools textarea { font-size: 16px; } }
 .city-editor-panel header { margin-bottom: 14px; }
 .city-editor-panel header p, .city-editor-panel header h2 { margin: 0; }
 .city-editor-panel header p { color: #72dbe6; font-size: 9px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }

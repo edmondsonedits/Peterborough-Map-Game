@@ -48,7 +48,7 @@ globalThis.showPeterboroughExplorerFatalError = showFatalError;
 
 try {
   globalThis.__PTBO_EXPLORER_BOOTSTRAP__?.touch?.('loading authored-scene bridge');
-  await import('./authored-scene-bootstrap.js?v=1.6.121');
+  await import('./authored-scene-bootstrap.js?v=1.6.122');
   globalThis.__PTBO_EXPLORER_BOOTSTRAP__?.touch?.('loading 3D city module');
   const appVersion = globalThis.PTBO_BUILD?.version || 'city-editor-20260925';
   await import('./app.js?v=' + encodeURIComponent(appVersion));
