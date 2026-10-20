@@ -113,7 +113,7 @@
   window.addEventListener('keyup', suppressDigitalDriving, true);
 
   joystick.addEventListener('pointerdown', event => {
-    if (!bridgeInstalled || !driving()) return;
+    if (!bridgeInstalled || !driving() || analog.active) return;
     analog.active = true;
     analog.pointerId = event.pointerId;
     updateFromPointer(event.clientX, event.clientY);

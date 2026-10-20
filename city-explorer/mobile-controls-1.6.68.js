@@ -129,7 +129,7 @@
   }
 
   joystick.addEventListener('pointerdown', event => {
-    if (app?.classList.contains('is-map')) return;
+    if (app?.classList.contains('is-map') || pointerId !== null) return;
     event.preventDefault();
     closeMenu();
     pointerId = event.pointerId;

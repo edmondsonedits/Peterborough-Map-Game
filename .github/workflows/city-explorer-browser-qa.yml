@@ -12,6 +12,7 @@ on:
     paths:
       - 'tools/check-station-driving.cjs'
       - 'tools/check-mobile-controls.cjs'
+      - 'tools/check-multitouch-controls.cjs'
       - 'tools/check-authored-scene.cjs'
       - 'tools/test_authored_scene_runtime.mjs'
       - 'tools/test_street_*.mjs'
@@ -106,6 +107,11 @@ jobs:
         env:
           PTBO_QA_ARTIFACT_DIR: artifacts/mobile-qa
         run: node tools/check-mobile-controls.cjs http://127.0.0.1:4174 mobile-ci
+
+      - name: Check simultaneous movement and camera touches
+        env:
+          PTBO_QA_ARTIFACT_DIR: artifacts/mobile-qa
+        run: node tools/check-multitouch-controls.cjs http://127.0.0.1:4174 multitouch-ci
 
       - name: Preserve browser QA evidence
         if: always()

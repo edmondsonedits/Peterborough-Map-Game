@@ -13,11 +13,11 @@ import { createVegetationVariant, stationOneVegetationPalette } from './vegetati
 import { installStationStreetscape } from './streetscape-assets.js?v=streetscape-2';
 import { installStationApron } from './site-surface-materials.js?v=1.6.56';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
-import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js?v=1.6.123';
+import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js?v=1.6.124';
 import { createCatalogObject } from './editor/asset-catalog.js';
 import { createCommandHistory } from './editor/command-history.js';
-import { createDraftStore } from './editor/draft-store.js?v=1.6.123';
-import { createCityEditor } from './editor/city-editor.js?v=1.6.123';
+import { createDraftStore } from './editor/draft-store.js?v=1.6.124';
+import { createCityEditor } from './editor/city-editor.js?v=1.6.124';
 import { createEmptySceneDocument, sanitizeRenderableSceneDocument } from './editor/scene-document.js';
 import { createGeneratedRegistry } from './editor/generated-registry.js?v=footage-20261020';
 import { applyOverrides } from './editor/override-runtime.js';
@@ -39,7 +39,7 @@ import { clearLandCoverRaster, paintLandCoverPolygon } from './land-cover-raster
 import { sampleOfficialTerrainElevation, validOfficialTerrainMetadata } from './terrain-heightmap.js?v=1.5.5-lidar1';
 import { sampleTriangulatedTerrainHeight } from './terrain-surface.js?v=1.5.5-terrain1';
 import { HydroSurfaceIndex, WATER_SURFACE_CLEARANCE, WATER_TERRAIN_RECESS, createWaterStageSampler, relativeWaterElevation, robustFallbackWaterHeight, subdivideWaterTriangle, watercourseWidth } from './water-system.js?v=1.5.5-hydro2';
-import { CitySplatLayer } from './city-splat-layer.js?v=1.6.123';
+import { CitySplatLayer } from './city-splat-layer.js?v=1.6.124';
 import {
   estimatedBuildingFloors,
   facadeDetailClass,
@@ -202,7 +202,6 @@ const state = {
   dragPointerId: null,
   previousPointer: null,
   flySpeedScale: 1,
-  previousTouch: null,
   loadedSource: 'live',
   objectCount: 0,
   lastFlyPosition: new THREE.Vector3(0, 180, 520),
@@ -4806,7 +4805,6 @@ function initializeCityEditor(publishedDocument = createEmptySceneDocument()) {
       },
       clearInputs() {
         state.keys.clear();
-        state.previousTouch = null;
         state.dragLooking = false;
         state.dragPointerId = null;
         state.previousPointer = null;
@@ -5977,6 +5975,16 @@ function exposeCityQualityQa() {
   };
   window.__PTBO_CITY_QA__ = Object.freeze({
     setView,
+    input() {
+      return {
+        mode: state.mode,
+        yaw: state.mode === 'fly' ? state.yaw : state.gameplayYaw,
+        pitch: state.mode === 'fly' ? state.pitch : state.gameplayPitch,
+        keys: [...state.keys],
+        lookPointerId: state.dragPointerId,
+        position: camera.position.toArray(),
+      };
+    },
     metrics() {
       return {
         drawCalls: renderer.info.render.calls,
@@ -6261,15 +6269,17 @@ function requestMouseLook() {
 
 function beginCanvasLook(event) {
   if (cityEditor?.active) return;
-  const mouseLikePointer = event.pointerType === 'mouse' || matchMedia('(any-pointer: fine)').matches;
-  if (state.mode === 'map' || !mouseLikePointer || ![0, 2].includes(event.button)) return;
+  // Each surface owns one pointer. The look finger is often non-primary
+  // because the movement thumb touched first; never gate it on isPrimary.
+  if (state.mode === 'map' || state.dragPointerId !== null || state.pointerLocked || ![0, 2].includes(event.button)) return;
   els.canvas.focus({ preventScroll: true });
   state.dragLooking = true;
   state.dragPointerId = event.pointerId;
   state.previousPointer = { x: event.clientX, y: event.clientY };
   try { els.canvas.setPointerCapture(event.pointerId); } catch { /* Pointer lock can supersede capture. */ }
-  if (event.button === 0) requestMouseLook();
-  if (event.button === 2) event.preventDefault();
+  // A connected mouse must not make touchscreen gestures request mouse lock.
+  if (event.pointerType === 'mouse' && event.button === 0) requestMouseLook();
+  if (event.pointerType !== 'mouse' || event.button === 2) event.preventDefault();
   updateMouseLookUi();
 }
 
@@ -6278,23 +6288,31 @@ function updateCanvasDrag(event) {
   if (!state.dragLooking || state.pointerLocked || state.dragPointerId !== event.pointerId || !state.previousPointer) return;
   const dx = event.clientX - state.previousPointer.x;
   const dy = event.clientY - state.previousPointer.y;
+  const touch = event.pointerType === 'touch';
   if (state.mode === 'fly') {
-    const look = applyFlyLookDelta(state.yaw, state.pitch, dx, dy);
-    state.yaw = look.yaw;
-    state.pitch = look.pitch;
+    if (touch) {
+      state.yaw = wrapFlyYaw(state.yaw - dx * 0.004);
+      state.pitch = THREE.MathUtils.clamp(state.pitch - dy * 0.0035, FLY_TUNING.pitchMinimum, FLY_TUNING.pitchMaximum);
+    } else {
+      const look = applyFlyLookDelta(state.yaw, state.pitch, dx, dy);
+      state.yaw = look.yaw;
+      state.pitch = look.pitch;
+    }
   } else {
-    state.gameplayYaw = wrapFlyYaw(state.gameplayYaw - dx * 0.0042);
-    state.gameplayPitch = THREE.MathUtils.clamp(state.gameplayPitch - dy * 0.0034, -0.68, 0.28);
+    state.gameplayYaw = wrapFlyYaw(state.gameplayYaw - dx * (touch ? 0.004 : 0.0042));
+    state.gameplayPitch = THREE.MathUtils.clamp(state.gameplayPitch - dy * (touch ? 0.0035 : 0.0034), -0.68, 0.28);
     state.gameplayLastLookTime = performance.now();
   }
   state.previousPointer = { x: event.clientX, y: event.clientY };
 }
 
 function endCanvasLook(event) {
-  if (state.dragPointerId !== event.pointerId) return;
+  if (event && state.dragPointerId !== event.pointerId) return;
+  const pointerId = state.dragPointerId;
   state.dragLooking = false;
   state.dragPointerId = null;
   state.previousPointer = null;
+  if (pointerId !== null && els.canvas.hasPointerCapture(pointerId)) els.canvas.releasePointerCapture(pointerId);
   updateMouseLookUi();
 }
 
@@ -6424,11 +6442,12 @@ function wireEvents() {
     if (isFlyControlCode(event.code) || ['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.code)) event.preventDefault();
   });
   window.addEventListener('keyup', (event) => { if (!cityEditor?.active) state.keys.delete(event.code); });
-  window.addEventListener('blur', () => stopFlyMotion());
+  window.addEventListener('blur', () => { stopFlyMotion(); endCanvasLook(); });
   window.addEventListener('pagehide', () => { citySplatLayer?.dispose(); cityEditor?.dispose(); }, { once: true });
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
       stopFlyMotion();
+      endCanvasLook();
       return;
     }
     clock.start();
@@ -6459,29 +6478,6 @@ function wireEvents() {
   els.surveyOverlayOpacity?.addEventListener('input', () => {
     if (semanticSurveyOverlay?.material) semanticSurveyOverlay.material.opacity = Number(els.surveyOverlayOpacity.value);
   });
-
-  els.canvas.addEventListener('touchstart', (event) => {
-    if (cityEditor?.active) return;
-    if (event.touches.length !== 1 || state.mode === 'map') return;
-    state.previousTouch = { x: event.touches[0].clientX, y: event.touches[0].clientY };
-  }, { passive: true });
-  els.canvas.addEventListener('touchmove', (event) => {
-    if (cityEditor?.active) return;
-    if (!state.previousTouch || event.touches.length !== 1 || state.mode === 'map') return;
-    const touch = event.touches[0];
-    const dx = touch.clientX - state.previousTouch.x;
-    const dy = touch.clientY - state.previousTouch.y;
-    if (state.mode === 'fly') {
-      state.yaw = wrapFlyYaw(state.yaw - dx * 0.004);
-      state.pitch = THREE.MathUtils.clamp(state.pitch - dy * 0.0035, FLY_TUNING.pitchMinimum, FLY_TUNING.pitchMaximum);
-    } else {
-      state.gameplayYaw = wrapFlyYaw(state.gameplayYaw - dx * 0.004);
-      state.gameplayPitch = THREE.MathUtils.clamp(state.gameplayPitch - dy * 0.0035, -0.68, 0.28);
-      state.gameplayLastLookTime = performance.now();
-    }
-    state.previousTouch = { x: touch.clientX, y: touch.clientY };
-  }, { passive: true });
-  els.canvas.addEventListener('touchend', () => { state.previousTouch = null; }, { passive: true });
 
   window.addEventListener('resize', () => {
     camera.aspect = innerWidth / innerHeight;
