@@ -90,7 +90,11 @@ export function createFeatureBatchBinding(ranges, resolveMesh) {
         const attribute = sourceGeometry.getAttribute(name);
         const start = first * attribute.itemSize;
         const end = last * attribute.itemSize;
-        const array = attribute.array.slice(start, end);
+        // Replacement hides the original before cloning. Read its saved source
+        // positions instead of the zeroed visibility buffer in that case.
+        const array = name === 'position' && hidden && originals.has(rangeIdentity(range))
+          ? originals.get(rangeIdentity(range)).slice()
+          : attribute.array.slice(start, end);
         if (name === 'position' && origin) {
           for (let offset = 0; offset + 2 < array.length; offset += attribute.itemSize) {
             array[offset] -= origin.x;

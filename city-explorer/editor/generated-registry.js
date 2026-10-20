@@ -158,7 +158,28 @@ export function createGeneratedRegistry(THREE = {}) {
     const record = records.get(id);
     if (!record) return null;
     if (record.batchBinding?.cloneGeometry && THREE.Group) {
-      return record.batchBinding.cloneGeometry(THREE, record.object.position);
+      const origin = record.object.position;
+      const clone = record.batchBinding.cloneGeometry(THREE, origin);
+      // Reviewed facade groups live in world space beside the GPU-batched mass.
+      // A source-copy replacement must carry them into the same local origin.
+      for (const part of record.parts.filter(part => part.attachedGroup)) {
+        const detail = part.object.clone(true);
+        part.object.updateWorldMatrix(true, false);
+        detail.matrix.copy(part.object.matrixWorld);
+        detail.matrix.decompose(detail.position, detail.quaternion, detail.scale);
+        detail.position.sub(origin);
+        detail.updateMatrix(); // Cloned city groups can have matrixAutoUpdate disabled.
+        detail.visible = part.sourceVisible;
+        detail.traverse(node => {
+          delete node.userData.cityEditor;
+          delete node.userData.cityEditorRecords;
+          if (!node.isMesh) return;
+          node.geometry = node.geometry.clone();
+          node.material = Array.isArray(node.material) ? node.material.map(m => m.clone()) : node.material.clone();
+        });
+        clone.add(detail);
+      }
+      return clone;
     }
     const clone = record.object.clone?.(true);
     if (!clone) return null;
@@ -170,6 +191,20 @@ export function createGeneratedRegistry(THREE = {}) {
       object.material = Array.isArray(object.material) ? copies : copies[0];
     });
     return clone;
+  }
+
+  // Only for generated batched buildings. Existing instance-part behavior stays intact.
+  function attachEditableGroup(id, object) {
+    const record = records.get(id);
+    if (!record?.batchBinding || !object?.isObject3D || !THREE.Group) return false;
+    if (record.parts.some(part => part.object === object)) return true;
+    const sourceMaterials = [];
+    object.traverse(node => { if (node.material !== undefined) sourceMaterials.push([node, node.material]); });
+    record.parts.push({ object, instanceIndex: null, attachedGroup: true,
+      sourceVisible: object.visible !== false, sourceMaterial: object.material, sourceMaterials });
+    object.userData.cityEditor = {kind: 'generated', id, sourceType: record.sourceType, sourceId: record.sourceId};
+    if (hiddenTargets.has(id)) object.visible = false;
+    return true;
   }
 
   function attachEditablePart(id, object, instanceIndex) {
@@ -339,6 +374,7 @@ export function createGeneratedRegistry(THREE = {}) {
     getEditableRecord,
     cloneEditableObject,
     attachEditablePart,
+    attachEditableGroup,
     resetOverrides() { hiddenTargets.clear(); },
     restore,
     hide,

@@ -1,5 +1,8 @@
 import { recordSherbrookeBuilding, recordSherbrookeSidewalk, sherbrookeBuildings } from './sherbrooke-plan.js';
-import { installSherbrookeDetails } from './sherbrooke-details.js';
+import { installSherbrookeDetails } from './sherbrooke-details.js?v=footage-20261020';
+import { FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js';
+import { createFootageFacade } from './sherbrooke-footage.js';
+import { appendFootageRoof } from './sherbrooke-footage-roofs.js';
 import * as THREE from 'three';
 import { reconcileStationPavement } from './station-pavement-layer.js?v=1.6.57';
 import { CURB_REVEAL, curbIsRaised, stationRoadWeight, splitRoadDetailSegment, pavementSupportBottom } from './station-road-detail.js?v=1.6.58';
@@ -10,15 +13,15 @@ import { createVegetationVariant, stationOneVegetationPalette } from './vegetati
 import { installStationStreetscape } from './streetscape-assets.js?v=streetscape-2';
 import { installStationApron } from './site-surface-materials.js?v=1.6.56';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
-import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js?v=1.6.122';
+import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js?v=1.6.123';
 import { createCatalogObject } from './editor/asset-catalog.js';
 import { createCommandHistory } from './editor/command-history.js';
-import { createDraftStore } from './editor/draft-store.js?v=1.6.122';
-import { createCityEditor } from './editor/city-editor.js?v=1.6.122';
+import { createDraftStore } from './editor/draft-store.js?v=1.6.123';
+import { createCityEditor } from './editor/city-editor.js?v=1.6.123';
 import { createEmptySceneDocument, sanitizeRenderableSceneDocument } from './editor/scene-document.js';
-import { createGeneratedRegistry } from './editor/generated-registry.js';
+import { createGeneratedRegistry } from './editor/generated-registry.js?v=footage-20261020';
 import { applyOverrides } from './editor/override-runtime.js';
-import { captureBatchLengths, collectBatchRanges, createFeatureBatchBinding } from './editor/feature-batch-binding.js';
+import { captureBatchLengths, collectBatchRanges, createFeatureBatchBinding } from './editor/feature-batch-binding.js?v=footage-20261020';
 import {
   LANDMARKS,
   LANDMARK_BUILDING_HEIGHT_OVERRIDES,
@@ -36,7 +39,7 @@ import { clearLandCoverRaster, paintLandCoverPolygon } from './land-cover-raster
 import { sampleOfficialTerrainElevation, validOfficialTerrainMetadata } from './terrain-heightmap.js?v=1.5.5-lidar1';
 import { sampleTriangulatedTerrainHeight } from './terrain-surface.js?v=1.5.5-terrain1';
 import { HydroSurfaceIndex, WATER_SURFACE_CLEARANCE, WATER_TERRAIN_RECESS, createWaterStageSampler, relativeWaterElevation, robustFallbackWaterHeight, subdivideWaterTriangle, watercourseWidth } from './water-system.js?v=1.5.5-hydro2';
-import { CitySplatLayer } from './city-splat-layer.js?v=1.6.122';
+import { CitySplatLayer } from './city-splat-layer.js?v=1.6.123';
 import {
   estimatedBuildingFloors,
   facadeDetailClass,
@@ -581,6 +584,16 @@ const materials = {
   ['park', 'grass'], ['grass', 'grass'], ['residentialLand', 'grass'], ['water', 'water'],
 ].forEach(([materialKey, detailKind]) => installWorldSurfaceDetail(materials[materialKey], detailKind));
 ['roadService', 'officialRoad', 'parking'].forEach((key) => installStationApron(materials[key], project));
+// A small palette only for this captured block; GIS footprints and road data are untouched.
+for (const [id, profile] of Object.entries(FOOTAGE_PROFILES)) {
+  if (profile.style === 'station' || profile.confidence === 'inferred') continue;
+  materials[`footage-wall-${id}`] = standard(profile.wallColor, {side: THREE.DoubleSide});
+  materials[`footage-roof-${id}`] = standard(profile.roofColor, {side: THREE.DoubleSide});
+  installWorldSurfaceDetail(materials[`footage-wall-${id}`], profile.style === 'house' ? 'brick' : 'masonry');
+  installWorldSurfaceDetail(materials[`footage-roof-${id}`], 'roof');
+}
+const footageFacadeGroups = new Map();
+
 document.documentElement.dataset.verticalSliceQuality = 'downtown-little-lake-v1';
 document.documentElement.dataset.qualityShadows = sun.castShadow ? 'pcf-soft-2048' : 'mobile-off';
 
@@ -1039,6 +1052,14 @@ function createTerrainMesh(hydroSurfaceIndex = null) {
 }
 
 function buildingDimensions(tags = {}, featureId = '') {
+  const footage = FOOTAGE_PROFILES[featureId];
+  // Appearance estimates only. Preserve the reviewed station and unobserved rear masses.
+  if (footage && footage.style !== 'station' && footage.confidence !== 'inferred') {
+    return {height: footage.eaveHeight, minHeight: 0,
+      roofHeight: footage.roof === 'flat' ? 0.2 : footage.roofRise,
+      roofShape: {gable: 'gabled', hip: 'hipped'}[footage.roof] || 'flat'};
+  }
+
   const reviewedStyle = REVIEWED_BUILDING_STYLES[featureId];
   if (reviewedStyle) {
     return {
@@ -1090,6 +1111,7 @@ function buildingDimensions(tags = {}, featureId = '') {
 }
 
 function buildingMaterialKey(tags, totalHeight, featureId = '') {
+  if (FOOTAGE_PROFILES[featureId] && FOOTAGE_PROFILES[featureId].style !== 'station' && FOOTAGE_PROFILES[featureId].confidence !== 'inferred') return `footage-wall-${featureId}`;
   if (REVIEWED_BUILDING_STYLES[featureId]?.wallMaterial) return REVIEWED_BUILDING_STYLES[featureId].wallMaterial;
   const type = String(tags.building || tags['building:part'] || '').toLowerCase();
   const amenity = String(tags.amenity || '').toLowerCase();
@@ -1461,10 +1483,22 @@ function flushPrototypeFacades() {
 
 // Bounded pilot: GIS still owns volumes; these inferred panels add visual use
 // and frontage grammar. No doors/windows are claimed as surveyed features.
+// Keep existing inferred side/rear detail while replacing only the photographed wall.
+function isCapturedFrontEdge(featureId, a, b) {
+  const profile = FOOTAGE_PROFILES[featureId];
+  if (!profile || profile.confidence === 'inferred' || profile.style === 'station') return false;
+  const [p, q] = profile.frontLatLon.map(({lat, lon}) => project(lat, lon));
+  const dx = q.x-p.x, dz = q.y-p.y, length = Math.hypot(dx,dz);
+  const distance = v => Math.abs(dx*(v.y-p.y)-dz*(v.x-p.x))/length;
+  return length > 1 && distance(a) < .15 && distance(b) < .15;
+}
+
 function appendPrototypeFacade(outer, tags, featureId, foundationTop, wallTop, batches, anchor) {
   const station = project(44.3010, -78.32212);
   if (Math.hypot(anchor.x - station.x, anchor.y - station.y) > 190) return false;
-  if (!prototypeRoadContextReady) {
+  const capturedProfile = FOOTAGE_PROFILES[featureId];
+  const reviewedFront = capturedProfile && capturedProfile.confidence !== 'inferred';
+  if (!prototypeRoadContextReady && !reviewedFront) {
     prototypeFacadeQueue.push([outer, tags, featureId, foundationTop, wallTop, batches, anchor]);
     return true;
   }
@@ -1480,8 +1514,9 @@ function appendPrototypeFacade(outer, tags, featureId, foundationTop, wallTop, b
   outer.forEach((a, edge) => {
     const b = outer[(edge + 1) % outer.length];
     const length = a.distanceTo(b);
+    if (isCapturedFrontEdge(featureId, a, b)) return;
     const plan = buildingFacadePlan({ tags, featureId, edgeLength: length, wallHeight: wallTop - foundationTop,
-      edgeIndex: edge, footprintArea: Math.abs(area), lite: lowPowerProfile, front: edge === frontEdge });
+      edgeIndex: edge, footprintArea: Math.abs(area), lite: lowPowerProfile, front: !reviewedFront && edge === frontEdge });
     for (const panel of plan.panels) {
       if (prototypeFacadeQuads >= (lowPowerProfile ? 6500 : 20000)) break;
       const ux = (b.x - a.x) / length, uz = (b.y - a.y) / length;
@@ -1556,6 +1591,7 @@ function appendBuildingFacadeDetails(outer, tags, featureId, foundationTop, wall
   for (let edge = 0; edge < outer.length && facadeDetailQuads < FACADE_DETAIL_QUAD_LIMIT; edge += 1) {
     const a = outer[edge];
     const b = outer[(edge + 1) % outer.length];
+    if (isCapturedFrontEdge(featureId, a, b)) continue;
     const length = a.distanceTo(b);
     if (length < 3.1 || length > 135) continue;
     const sideMargin = Math.min(1.05, length * 0.18);
@@ -1619,7 +1655,7 @@ function appendBufferedBuilding(rings, tags, featureId, batches, sourceId = feat
   const anchor = polygonCentroid(outer);
   const generatedFeatureKey = `${batchSetId(batches)}:${featureId}`;
   const wallKey = buildingMaterialKey(tags, dimensions.height + dimensions.minHeight + dimensions.roofHeight, featureId);
-  const roofKey = featureId === 'way/1009651229' ? 'stationRoof' : roofMaterialKey(tags, wallKey);
+  const roofKey = featureId === 'way/1009651229' ? 'stationRoof' : FOOTAGE_PROFILES[featureId] && FOOTAGE_PROFILES[featureId].confidence !== 'inferred' ? `footage-roof-${featureId}` : roofMaterialKey(tags, wallKey);
   const rangeStarts = captureBatchLengths(batches);
   const wallPositions = batchPositions(batches, wallKey, anchor);
   const roofPositions = batchPositions(batches, roofKey, anchor);
@@ -1673,7 +1709,9 @@ function appendBufferedBuilding(rings, tags, featureId, batches, sourceId = feat
     }
   }
   const pitchedRoof = dimensions.roofHeight > 0.3 && !holes.length && outerArea <= 1600
-    && appendPitchedRoof(roofPositions, outer, wallTop, roofTop, dimensions.roofShape);
+    && ((FOOTAGE_PROFILES[featureId] && FOOTAGE_PROFILES[featureId].confidence !== 'inferred' && appendFootageRoof({THREE,
+      roofPositions, wallPositions, outer, wallTop, roofTop, profile: FOOTAGE_PROFILES[featureId], project}))
+      || appendPitchedRoof(roofPositions, outer, wallTop, roofTop, dimensions.roofShape));
 
   // Complex tagged roofs retain a simplified roof volume. Simple four-corner
   // homes receive actual gabled or hipped planes instead of flat dark slabs.
@@ -1780,10 +1818,21 @@ function buildBufferedBuildingBatches(batches) {
       transform: { longitude: feature.longitude, latitude: feature.latitude, elevation: 0, rotation: { x: 0, y: 0, z: 0 }, scale: { x: 1, y: 1, z: 1 } },
       batchBinding: makeBatchBinding(feature.ranges, generatedBuildingMeshes),
     });
+    const profile = FOOTAGE_PROFILES[feature.sourceId];
+    const captured = sherbrookeBuildings.get(feature.sourceId);
+    if (profile && profile.style !== 'station' && profile.confidence !== 'inferred' && captured && !footageFacadeGroups.has(feature.sourceId)) {
+      const detail = createFootageFacade({THREE, profile, ring: captured.ring, base: captured.base, top: captured.top, project});
+      buildingGroup.add(detail);
+      generatedRegistry.attachEditableGroup(id, detail);
+      footageFacadeGroups.set(feature.sourceId, detail);
+    }
     feature.generatedId = id;
     feature.registered = true;
   }
   document.documentElement.dataset.facadePanels = String(facadeDetailQuads);
+  document.documentElement.dataset.sherbrookeFootage = JSON.stringify({version: 1,
+    profiles: Object.keys(FOOTAGE_PROFILES).length, facadeGroups: footageFacadeGroups.size,
+    sourceIds: [...footageFacadeGroups.keys()], station: 'existing-reviewed-five-bay-facade'});
 }
 
 function buildVerticalSliceRooftopEquipment() {
@@ -4641,6 +4690,8 @@ async function buildCity() {
   await initializeSemanticSurvey();
   await initializeCapturedDetailLayer();
   generatedEditorProxyGroup.updateMatrixWorld(true);
+  // Settle optional photographic geometry before editor source-copy replacements are loaded.
+  await Promise.all([...footageFacadeGroups.values()].map(group => group.userData.photoReady));
   initializeGameplay();
   await Promise.all([fireTruckActor.userData.truck.ready, playerActor.userData.animation.ready]);
   cityVisualLod = '';
@@ -4906,6 +4957,9 @@ function initializeGameplay() {
     survey: semanticSurveyCollection,
   });
   gameplayGroup.add(fireStationDetail);
+  const stationGeneratedId = generatedRegistry.makeGeneratedId({sourceType: 'building', sourceId: 'way/1009651229'});
+  generatedRegistry.attachEditableGroup(stationGeneratedId, fireStationDetail);
+
 
   gameplayReady = true;
   state.gameplayYaw = 0;
@@ -5930,6 +5984,10 @@ function exposeCityQualityQa() {
         textures: renderer.info.memory.textures,
         triangles: renderer.info.render.triangles,
         verticalSliceBounds: { ...verticalSliceBounds },
+        footage: [...footageFacadeGroups].map(([sourceId, group]) => ({sourceId,
+          photoStatus: group.userData.photoStatus, detailsOmitted: group.userData.detailsOmitted || null,
+          objects: group.children.length, editorLinked: [...generatedRegistry.records.values()].some(record => record.sourceId === sourceId && record.parts.some(part => part.object === group))})),
+        stationEditorLinked: [...generatedRegistry.records.values()].some(record => record.sourceId === 'way/1009651229' && record.parts.some(part => part.object === fireStationDetail)),
       };
     },
   });

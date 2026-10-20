@@ -1,3 +1,4 @@
+import { FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js';
 import * as THREE from 'three';
 import { loadStreetscapeAsset } from './streetscape-assets.js';
 import { makeSherbrookePlan, sherbrookeBuildings, sherbrookeSidewalks, segmentDistance, landscapeClear } from './sherbrooke-plan.js';
@@ -60,7 +61,7 @@ export async function installSherbrookeDetails({group,project,terrainHeightAtWor
  for(const positions of seamTiles.values()){const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));root.add(new THREE.LineSegments(g,new THREE.LineBasicMaterial({color:0x88877d})));}
  const targetRoads=plan.roads.filter(r=>plan.targetIds.includes(r.id));
  for(const b of sherbrookeBuildings.values()){
-  if(b.id==='way/1009651229'||b.top-b.base<2.5)continue;
+  if(b.id==='way/1009651229'||(FOOTAGE_PROFILES[b.id]&&FOOTAGE_PROFILES[b.id].confidence!=='inferred')||b.top-b.base<2.5)continue;
   let best=null;
   b.ring.forEach((a,i)=>{const c=b.ring[(i+1)%b.ring.length],length=Math.hypot(c.x-a.x,c.z-a.z);if(length<4)return;const p={x:(a.x+c.x)/2,z:(a.z+c.z)/2};const d=Math.min(...targetRoads.map(r=>segmentDistance(p,r.a,r.b)));if(!best||d<best.d)best={a,c,length,p,d};});
   if(!best||best.d>40)continue;
