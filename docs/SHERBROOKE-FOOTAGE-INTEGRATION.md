@@ -33,3 +33,16 @@ Roof tests check nine eligible pitched profiles, exact projected footprint area,
 Browser check: install/use Playwright, serve this checkout, then run `node tools/check-sherbrooke-footage.cjs http://127.0.0.1:8870 local`. Set `BROWSER_EXECUTABLE` if using an installed Edge/Chrome. It saves street views, a desktop control check, a narrow-screen compatibility check and a JSON receipt under ignored `test-artifacts/sherbrooke/`. It checks original truck movement, all 13 linked frontages, station linkage, successful mural loading, and browser/resource errors. The same script accepts the production Pages base URL for live verification.
 
 Matched baseline/after Station 1 views were also captured locally using the existing capture contract. Browser screenshots support appearance review, not geographic accuracy or physical-phone thermal/FPS certification. No training videos, large splat assets or paid compute are introduced by this change.
+
+
+## Version 1.6.125 — reviewed building fronts and gardens
+
+The earlier release description above is historical. This revision has 16 linked frontage groups, six additional rectified facade photographs, and ten terrain-following front gardens. Sequential footage review corrects the placement of the red balcony house (S03), distinguishes the adjacent hipped and gabled brick houses, and identifies the blue-sided house (S10). Station 1 keeps its existing five-bay facade.
+
+Six small JPEGs total 245,231 bytes (about 245 KB), with an estimated 6.7 MiB decoded RGBA allocation including mipmaps. Source-frame hashes, crop quadrilaterals and adjustments are recorded in `city-explorer/assets/sherbrooke-frontages/recipes.json` and `manifest.json`. Rebuild with `tools/streetscape/build_frontage_textures.py --frames <original extracted-frame directory>` using Pillow and NumPy. Original source images remain untouched; no generated details or paid processing were used.
+
+The optional facade photographs replace repeated procedural front details after loading successfully. Failed loads keep procedural details. Gabled photos use triangular roof boundaries; side and rear walls remain conventional geometry. These are planar photographs, so projecting porches and partially obscured details cannot provide perfect parallax from every viewpoint.
+
+Reviewed lawn depths, paths, selected driveway bands and a hedge are visual estimates, not surveyed parcel geometry. Terrain-following garden cells are excluded from building footprints, roads and a sidewalk reserve. Garden geometry is combined by material, with at most four meshes per building. Existing roads, collision, gameplay and the multitouch fix are preserved.
+
+New focused tests cover asset hashes and budgets, profile corrections, facade UV orientation, gable boundaries, optional-photo fallback, wide porches and garden clipping. `tools/check-sherbrooke-footage.cjs` checks six loaded photographs, 16 editor-linked frontages, gardens, truck movement, desktop and narrow-screen lite rendering, and browser/resource errors. Narrow-screen desktop testing does not establish physical-phone FPS or thermal stability.

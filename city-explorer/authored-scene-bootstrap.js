@@ -1,4 +1,4 @@
-import { CitySplatLayer } from './city-splat-layer.js?v=1.6.124';
+import { CitySplatLayer } from './city-splat-layer.js?v=1.6.125';
 import {
   authoredSceneDiagnostics,
   initializeAuthoredScene,

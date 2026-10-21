@@ -14,11 +14,13 @@ const fs=require('node:fs'),path=require('node:path'),assert=require('node:asser
   await page.waitForFunction(()=>document.documentElement.dataset.gameplayReady==='true'&&window.__PTBO_CITY_QA__,null,{timeout:180000});
   await page.waitForFunction(()=>!document.querySelector('#loading-screen')||document.querySelector('#loading-screen').classList.contains('is-hidden'),null,{timeout:30000});
   const metrics=await page.evaluate(()=>__PTBO_CITY_QA__.metrics());
-  assert.equal(metrics.footage.length,13);assert.ok(metrics.footage.every(x=>x.editorLinked));assert.equal(metrics.stationEditorLinked,true);
+  assert.equal(metrics.footage.length,16);assert.ok(metrics.footage.every(x=>x.editorLinked));assert.equal(metrics.stationEditorLinked,true);
+  assert.equal(metrics.footage.filter(x=>x.facadePhotoStatus==='loaded').length,6);
+  assert.ok(metrics.footage.filter(x=>x.gardenMeshes>0).length>=8,'reviewed lawns rendered');
   assert.equal(metrics.footage.find(x=>x.sourceId==='way/846927296').photoStatus,'loaded');
   if(!mobile){
    const style=await page.addStyleTag({content:'#app > :not(canvas), #ptbo-build-badge {visibility:hidden!important}'});
-   const views={block:{lat:44.30078,lon:-78.3213,altitude:67,distance:145,bearing:180,pitch:-.40},south:{lat:44.3005,lon:-78.3221,altitude:2.8,distance:26,bearing:0,pitch:.015},office:{lat:44.30085,lon:-78.32271,altitude:2.8,distance:25,bearing:168,pitch:.06},mural:{lat:44.3009,lon:-78.31995,altitude:2.8,distance:23,bearing:165,pitch:.03}};
+   const views={block:{lat:44.30078,lon:-78.3213,altitude:67,distance:145,bearing:180,pitch:-.40},south:{lat:44.3005,lon:-78.3221,altitude:2.8,distance:26,bearing:0,pitch:.015},balcony:{lat:44.30055,lon:-78.32239,altitude:3.2,distance:24,bearing:0,pitch:.08},bluehouse:{lat:44.30062,lon:-78.32122,altitude:2.8,distance:23,bearing:0,pitch:.06},store:{lat:44.30085,lon:-78.32146,altitude:2.8,distance:22,bearing:180,pitch:.06},office:{lat:44.30085,lon:-78.32271,altitude:2.8,distance:25,bearing:168,pitch:.06},mural:{lat:44.3009,lon:-78.31995,altitude:2.8,distance:23,bearing:165,pitch:.03}};
    for(const [name,view]of Object.entries(views)){await page.evaluate(v=>__PTBO_CITY_QA__.setView(v),view);await page.waitForTimeout(1500);await page.screenshot({path:path.join(out,name+'.png')});}
    await style.evaluate(n=>n.remove());
   }

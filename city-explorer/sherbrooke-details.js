@@ -1,4 +1,4 @@
-import { FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js';
+import { FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js?v=frontages-20261021';
 import * as THREE from 'three';
 import { loadStreetscapeAsset } from './streetscape-assets.js';
 import { makeSherbrookePlan, sherbrookeBuildings, sherbrookeSidewalks, segmentDistance, landscapeClear } from './sherbrooke-plan.js';

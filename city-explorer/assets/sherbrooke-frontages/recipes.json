@@ -1,0 +1,190 @@
+{
+  "schemaVersion": 1,
+  "source": "Owner-supplied Insta360 X4 Air footage; existing rectilinear extracts. No AI-generated pixels.",
+  "quadOrder": "top-left, top-right, bottom-right, bottom-left in original 2048x960 pixels",
+  "recipes": [
+    {
+      "label": "N03",
+      "frame": "0174_LEFT_SIDE.jpg",
+      "quad": [
+        [
+          421,
+          310
+        ],
+        [
+          1065,
+          299
+        ],
+        [
+          1077,
+          451
+        ],
+        [
+          413,
+          458
+        ]
+      ],
+      "size": [
+        768,
+        256
+      ],
+      "heightMetres": 2.9,
+      "bottomMetres": 1.15,
+      "brightness": 1.06,
+      "note": "Upper storefront only; crop stops before the foreground railing."
+    },
+    {
+      "label": "S03",
+      "frame": "0150_RIGHT_SIDE.jpg",
+      "quad": [
+        [
+          756,
+          349
+        ],
+        [
+          1069,
+          327
+        ],
+        [
+          1065,
+          695
+        ],
+        [
+          720,
+          692
+        ]
+      ],
+      "size": [
+        384,
+        512
+      ],
+      "heightMetres": 6.3,
+      "gableHeightMetres": 2.3,
+      "bottomMetres": 0.08,
+      "brightness": 1.16,
+      "note": "219 balcony house, third south-side footprint. Gable wings are clipped in geometry. Small fixed porch shrubs remain part of the photographed frontage."
+    },
+    {
+      "label": "S04",
+      "frame": "0154_RIGHT_SIDE.jpg",
+      "quad": [
+        [
+          965,
+          479
+        ],
+        [
+          1268,
+          469
+        ],
+        [
+          1278,
+          690
+        ],
+        [
+          980,
+          691
+        ]
+      ],
+      "size": [
+        512,
+        384
+      ],
+      "heightMetres": 6.2,
+      "bottomMetres": 0.08,
+      "brightness": 1.17,
+      "note": "Two-storey rectangular brick front; hipped roof remains real geometry."
+    },
+    {
+      "label": "S05",
+      "frame": "0154_RIGHT_SIDE.jpg",
+      "quad": [
+        [
+          575,
+          390
+        ],
+        [
+          822,
+          372
+        ],
+        [
+          815,
+          704
+        ],
+        [
+          586,
+          697
+        ]
+      ],
+      "size": [
+        384,
+        512
+      ],
+      "heightMetres": 6.3,
+      "gableHeightMetres": 2.0,
+      "bottomMetres": 0.08,
+      "brightness": 1.15,
+      "note": "White curved porch and pale gable siding. Small edge vegetation remains visible; dimensions estimated."
+    },
+    {
+      "label": "S08",
+      "frame": "0170_RIGHT_SIDE.jpg",
+      "quad": [
+        [
+          1040,
+          491
+        ],
+        [
+          1288,
+          475
+        ],
+        [
+          1312,
+          741
+        ],
+        [
+          1030,
+          739
+        ]
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "heightMetres": 6.2,
+      "bottomMetres": 0.08,
+      "brightness": 1.18,
+      "note": "Black trim and deep porch; small fixed entrance sign remains at the lower edge, not a moving object."
+    },
+    {
+      "label": "S10",
+      "frame": "0176_RIGHT_SIDE.jpg",
+      "quad": [
+        [
+          842,
+          463
+        ],
+        [
+          1151,
+          452
+        ],
+        [
+          1158,
+          773
+        ],
+        [
+          815,
+          772
+        ]
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "heightMetres": 4.5,
+      "gableHeightMetres": 2.1,
+      "bottomMetres": 0.08,
+      "brightness": 1.12,
+      "note": "Blue siding, white glazed porch and gabled roof replace the earlier inferred commercial mass."
+    }
+  ]
+}

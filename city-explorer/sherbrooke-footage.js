@@ -45,7 +45,7 @@ export function mapPhotoPatchUV(quad, x, y) {
   return [(h[0] * x + h[1] * y + h[2]) / d, (h[3] * x + h[4] * y + h[5]) / d];
 }
 
-export function createFootageFacade({ THREE, profile, ring, base, top, project }) {
+export function createFootageFacade({ THREE, profile, ring, base, top, project, terrainHeightAtWorld, gardenClear }) {
   if (!THREE?.Group || !THREE?.InstancedMesh) throw new TypeError("Three.js runtime is required");
   if (!profile || !Number.isFinite(base) || !Number.isFinite(top) || top <= base) throw new TypeError("Profile and finite building base/top are required");
   const root = new THREE.Group(); root.name = `SherbrookeFootage-${profile.label || profile.id || "building"}`;
@@ -56,6 +56,7 @@ export function createFootageFacade({ THREE, profile, ring, base, top, project }
   if (profile.confidence === "inferred") { root.userData.detailsOmitted = "front openings not supported by the available reference"; return root; }
 
   const f = frontageFrame({ profile, ring, project }), h = Math.min(top - base, Number(profile.eaveHeight) || Number(profile.height) || top - base), levels = clamp(Number(profile.levels) || 1, 1, 5), columns = clamp(Number(profile.windowColumns) || 2, 1, 12), floor = h / levels;
+  const frontageDetails = new THREE.Group(); frontageDetails.name = "frontage-procedural-details"; root.add(frontageDetails);
   const unitBox = new THREE.BoxGeometry(1, 1, 1), mats = new Map(), instances = new Map(), dummy = new THREE.Object3D();
   const palette = { trim: profile.trimColor || "#eee8dc", wall: profile.wallColor || "#a8907a", brick: profile.wallColor || "#a8907a", glass: "#33494e", shade: "#322f2c", door: "#53443a", metal: "#343a39", accent: profile.trimColor || "#eee8dc" };
   function material(key) { if (!mats.has(key)) mats.set(key, new THREE.MeshStandardMaterial({ color: palette[key] || key, roughness: key === "glass" ? .34 : .88, metalness: key === "glass" ? .12 : 0, transparent: key === "glass", opacity: key === "glass" ? .9 : 1, side: THREE.DoubleSide })); return mats.get(key); }
@@ -77,7 +78,7 @@ export function createFootageFacade({ THREE, profile, ring, base, top, project }
     ctx.font = "700 46px Georgia,serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText(String(text).slice(0, 38), canvas.width / 2, canvas.height / 2);
     const tex = new THREE.CanvasTexture(canvas); if (THREE.SRGBColorSpace) tex.colorSpace = THREE.SRGBColorSpace;
     const plate = new THREE.Mesh(new THREE.PlaneGeometry(w * .9, .34), new THREE.MeshBasicMaterial({ map: tex, side: THREE.DoubleSide }));
-    const p = at(t, y, .3); plate.position.set(p.x, p.y, p.z); plate.rotation.y = f.yaw; root.add(plate);
+    const p = at(t, y, .3); plate.position.set(p.x, p.y, p.z); plate.rotation.y = f.yaw; frontageDetails.add(plate);
   }
 
   const style = profile.style || "office", patch = profile.texturePatch?.target;
@@ -103,10 +104,18 @@ export function createFootageFacade({ THREE, profile, ring, base, top, project }
   for (const win of profile.groundWindows || []) if (Number.isFinite(win.t) && win.t >= 0 && win.t <= 1 && !openingUnderPatch(win.t)) window(win.t, (Number(win.bottom) || 0) + (Number(win.height) || 1.5) / 2, Number(win.width) || 1, Number(win.height) || 1.5);
 
   if (style === "house") {
-    const t = Number.isFinite(profile.doorFraction) ? profile.doorFraction : .5, porchWidth = Math.min(f.length * .56, 3.2);
-    box(t, 1.05, .86, 2.05, .09, "door", .24); box(t, .16, porchWidth, .12, 1.05, "trim", .62);
-    for (const side of [-1, 1]) box(t + side * porchWidth * .43 / f.length, 1.35, .11, 2.55, .11, "trim", .78);
-    box(t, 2.72, porchWidth + .2, .14, 1.18, "trim", .8);
+    const t = Number.isFinite(profile.doorFraction) ? profile.doorFraction : .5;
+    box(t, 1.05, .86, 2.05, .09, "door", .24);
+    if (profile.porch !== false) {
+      const hasReviewedWidth = profile.porchWidthFraction != null && Number.isFinite(Number(profile.porchWidthFraction));
+      const widthFraction = hasReviewedWidth ? clamp(Number(profile.porchWidthFraction), .1, 1) : .56;
+      const porchWidth = hasReviewedWidth ? f.length * widthFraction : Math.min(f.length * widthFraction, 3.2), porchDepth = Number.isFinite(Number(profile.porchDepthMetres)) ? clamp(Number(profile.porchDepthMetres), .3, 3) : 1.05;
+      const porchHeight = Number.isFinite(Number(profile.porchHeightMetres)) ? Math.max(.5, Number(profile.porchHeightMetres)) : 2.72;
+      const columnTop = Math.max(.2, porchHeight - .095), columnHeight = Math.max(.1, columnTop - .1);
+      box(t, .16, porchWidth, .12, porchDepth, "trim", porchDepth * .59);
+      for (const side of [-1, 1]) box(t + side * porchWidth * .43 / f.length, .1 + columnHeight / 2, .11, columnHeight, .11, "trim", porchDepth * .74);
+      box(t, porchHeight, porchWidth + .2, .14, porchDepth + .13, "trim", porchDepth * .76);
+    }
     if ((profile.features || []).some(v => /balcony/i.test(v))) {
       const y = Math.min(h * .58, floor * 1.65), bw = Math.min(f.length * .58, 5.4); box(.5, y, bw, .12, .4, "trim", .38);
       for (let i = 0; i < 8; i++) box(.5 + (i - 3.5) * bw / 8.5 / f.length, y + .45, .045, .85, .055, "trim", .42);
@@ -125,11 +134,110 @@ export function createFootageFacade({ THREE, profile, ring, base, top, project }
   for (const [key, items] of instances) {
     const mesh = new THREE.InstancedMesh(unitBox, material(key), items.length); mesh.name = `frontage-${key}`;
     items.forEach((item, i) => { dummy.position.set(item.p.x, item.p.y, item.p.z); dummy.rotation.set(0, item.yaw, 0); dummy.scale.set(...item.scale); dummy.updateMatrix(); mesh.setMatrixAt(i, dummy.matrix); });
-    mesh.instanceMatrix.needsUpdate = true; mesh.computeBoundingSphere(); mesh.castShadow = true; mesh.receiveShadow = true; root.add(mesh);
+    mesh.instanceMatrix.needsUpdate = true; mesh.computeBoundingSphere(); mesh.castShadow = true; mesh.receiveShadow = true; frontageDetails.add(mesh);
   }
   if (profile.texturePatch?.quad && profile.label === "N07") addMuralPhoto(THREE, root, profile, f, base, h, at);
+  if (profile.facadePhoto) addFacadePhoto(THREE, root, frontageDetails, profile, f, base, h, top - base);
+  if (profile.frontGarden) addFrontGarden(THREE, root, profile.frontGarden, f, base, terrainHeightAtWorld, gardenClear);
   root.userData.frontage = { length: f.length, outward: f.outward, estimatedHeight: h, style, openingCount: [...instances.values()].reduce((n, a) => n + a.length, 0) };
   return root;
+}
+
+function addFacadePhoto(THREE, root, frontageDetails, profile, f, base, wallHeight, buildingHeight) {
+  const photo = profile.facadePhoto;
+  const center = clamp(Number(photo.centerFraction) || .5, 0, 1), width = clamp(Number(photo.widthFraction) || 1, .05, 1);
+  const left = clamp(center - width / 2, 0, 1 - width), bottom = Math.max(0, Number(photo.bottomMetres) || 0);
+  const availableWallHeight = Math.max(.1, wallHeight - bottom);
+  const availableBuildingHeight = Math.max(.1, buildingHeight - bottom);
+  const patchHeight = clamp(Number(photo.heightMetres) || availableWallHeight, .1, availableWallHeight);
+  const gableHeight = Math.min(Math.max(0, Number(photo.gableHeightMetres) || 0), Math.max(0, availableBuildingHeight - patchHeight));
+  const totalHeight = patchHeight + gableHeight;
+  const reverseU = f.outward.x * -f.tangent.z + f.outward.z * f.tangent.x < 0;
+  const point = (t, y) => ({ x: f.start.x + f.tangent.x * f.length * t + f.outward.x * .36, y: base + y, z: f.start.z + f.tangent.z * f.length * t + f.outward.z * .36 });
+  const a = point(left, bottom), b = point(left + width, bottom), c = point(left + width, bottom + patchHeight), d = point(left, bottom + patchHeight);
+  const geometry = new THREE.BufferGeometry();
+  const positions = [a.x,a.y,a.z,b.x,b.y,b.z,c.x,c.y,c.z,d.x,d.y,d.z];
+  const uv = reverseU ? [1,0,0,0,0,patchHeight/totalHeight,1,patchHeight/totalHeight] : [0,0,1,0,1,patchHeight/totalHeight,0,patchHeight/totalHeight];
+  if (gableHeight > 0) {
+    const peak = point(left + width / 2, bottom + totalHeight);
+    positions.push(peak.x,peak.y,peak.z); uv.push(.5,1);
+  }
+  geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+  // Front-facing U runs opposite the segment order when frontageFrame had to reverse its outward normal.
+  geometry.setAttribute("uv", new THREE.Float32BufferAttribute(uv, 2));
+  geometry.setIndex(gableHeight > 0 ? [0,1,2,0,2,3,3,2,4] : [0,1,2,0,2,3]); geometry.computeVertexNormals();
+  root.userData.facadePhotoStatus = "loading";
+  root.userData.photoStatus = "loading";
+  root.userData.facadePhotoReady = new Promise(resolve => {
+    let settled = false, timer;
+    const fail = () => { if (settled) return; settled = true; clearTimeout(timer); geometry.dispose(); root.userData.facadePhotoStatus = "failed"; root.userData.photoStatus = "failed"; resolve("failed"); };
+    const succeed = texture => {
+      if (settled) { texture.dispose?.(); return; }
+      try {
+        if (THREE.SRGBColorSpace) texture.colorSpace = THREE.SRGBColorSpace;
+        texture.anisotropy = 2;
+        const mesh = new THREE.Mesh(geometry, new THREE.MeshStandardMaterial({ map: texture, color: 0xffffff, roughness: .9, metalness: 0, transparent: false, side: THREE.DoubleSide }));
+        mesh.name = "reviewed-facade-photo";
+        frontageDetails.visible = false;
+        root.add(mesh); settled = true; clearTimeout(timer); root.userData.facadePhotoStatus = "loaded"; root.userData.photoStatus = "loaded"; resolve("loaded");
+      } catch { texture.dispose?.(); fail(); }
+    };
+    timer = setTimeout(fail, PHOTO_LOAD_TIMEOUT_MS);
+    try { new THREE.TextureLoader().load(new URL(photo.file, import.meta.url).href, succeed, undefined, fail); }
+    catch { fail(); }
+  });
+  // The existing scene startup waits on photoReady for every frontage group.
+  root.userData.photoReady = root.userData.photoReady
+    ? Promise.all([root.userData.photoReady, root.userData.facadePhotoReady]).then(results => results.every(result => result === "loaded") ? "loaded" : "failed")
+    : root.userData.facadePhotoReady;
+}
+
+function addFrontGarden(THREE, root, garden, f, base, terrainHeightAtWorld, gardenClear) {
+  // The caller owns the safe-setback predicate; without it we cannot prove that a garden avoids paving and footprints.
+  if (typeof terrainHeightAtWorld !== "function" || typeof gardenClear !== "function") return;
+  const depth = clamp(Number(garden.depthMetres) || 0, 0, 12), pathWidth = clamp(Number(garden.pathWidthMetres) || 0, 0, 5);
+  if (depth < .5) return;
+  const pathFraction = clamp(Number.isFinite(Number(garden.pathFraction)) ? Number(garden.pathFraction) : .5, 0, 1);
+  const drivewayFraction = clamp(Number.isFinite(Number(garden.drivewayFraction)) ? Number(garden.drivewayFraction) : .5, 0, 1);
+  const drivewayWidth = clamp(Number(garden.drivewayWidthMetres) || 0, 0, 8), step = .8;
+  const lawnPositions = [], pathPositions = [], drivewayPositions = [], hedgePositions = [];
+  const point = (t, out) => ({ x: f.start.x + f.tangent.x * f.length * t + f.outward.x * out, z: f.start.z + f.tangent.z * f.length * t + f.outward.z * out });
+  const pushQuad = (target, corners, heights) => {
+    const v = corners.map((p, i) => [p.x, heights[i] + .025, p.z]);
+    target.push(...v[0], ...v[1], ...v[2], ...v[0], ...v[2], ...v[3]);
+  };
+  const nx = Math.max(1, Math.ceil(f.length / step)), nz = Math.max(1, Math.ceil(depth / step));
+  for (let ix = 0; ix < nx; ix++) for (let iz = 0; iz < nz; iz++) {
+    const t0 = ix / nx, t1 = (ix + 1) / nx, o0 = iz / nz * depth, o1 = (iz + 1) / nz * depth;
+    const corners = [point(t0,o0), point(t1,o0), point(t1,o1), point(t0,o1)], center = point((t0+t1)/2, (o0+o1)/2);
+    // All corners and the center must be clear so no partial cell can intrude into a path, road, or footprint.
+    if (!corners.concat(center).every(p => gardenClear(p.x, p.z) === true)) continue;
+    const along = (center.x-f.start.x)*f.tangent.x + (center.z-f.start.z)*f.tangent.z;
+    const isDriveway = drivewayWidth > 0 && Math.abs(along - drivewayFraction * f.length) < drivewayWidth / 2;
+    const isPath = !isDriveway && pathWidth > 0 && Math.abs(along - pathFraction * f.length) < pathWidth / 2;
+    const heights = corners.map(p => { const y = Number(terrainHeightAtWorld(p.x, p.z)); return Number.isFinite(y) ? y : base; });
+    pushQuad(isDriveway ? drivewayPositions : isPath ? pathPositions : lawnPositions, corners, heights);
+  }
+  if (garden.hedge === true) {
+    const across = Math.max(1, Math.ceil(f.length / step));
+    for (let i = 0; i < across; i++) {
+      const t0 = i / across, t1 = (i + 1) / across, q = [point(t0,depth-.12), point(t1,depth-.12), point(t1,depth+.12), point(t0,depth+.12)];
+      if (!q.every(p => gardenClear(p.x, p.z) === true)) continue;
+      const ground = q.map(p => { const y = Number(terrainHeightAtWorld(p.x, p.z)); return Number.isFinite(y) ? y : base; });
+      const upper = ground.map(y => y + .65);
+      hedgePositions.push(q[0].x,ground[0],q[0].z,q[1].x,ground[1],q[1].z,q[2].x,upper[2],q[2].z,q[0].x,ground[0],q[0].z,q[2].x,upper[2],q[2].z,q[3].x,upper[3],q[3].z);
+    }
+  }
+  const add = (positions, color, name) => {
+    if (!positions.length) return;
+    const geometry = new THREE.BufferGeometry(); geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3)); geometry.computeVertexNormals();
+    const mesh = new THREE.Mesh(geometry, new THREE.MeshStandardMaterial({ color, roughness: .95, side: THREE.DoubleSide }));
+    mesh.name = name; mesh.castShadow = false; mesh.receiveShadow = true; root.add(mesh);
+  };
+  add(lawnPositions, garden.lawnColor || "#789264", "front-garden-lawn");
+  add(pathPositions, "#9b9386", "front-garden-path");
+  add(drivewayPositions, "#514f4c", "front-garden-driveway");
+  add(hedgePositions, "#506b43", "front-garden-hedge");
 }
 
 function addMuralPhoto(THREE, root, profile, f, base, height, at) {

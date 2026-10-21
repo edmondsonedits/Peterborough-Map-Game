@@ -1,4 +1,4 @@
-// Visual profile fields and original reference metadata from the reviewed Sherbrooke reference-block dataset. The station profile intentionally has no facade details here.
+// Reviewed visual profiles; original map footprints and collision remain authoritative.
 export const FOOTAGE_PROFILES = Object.fromEntries([
   {
     "id": "way/1009651251",
@@ -149,7 +149,19 @@ export const FOOTAGE_PROFILES = Object.fromEntries([
         "lat": 44.300852399862464
       }
     ],
-    "frontSource": "Ordered frontage endpoints converted from reference block.json to geographic coordinates for the existing project() transform."
+    "frontSource": "Ordered frontage endpoints converted from reference block.json to geographic coordinates for the existing project() transform.",
+    "facadePhoto": {
+      "file": "./assets/sherbrooke-frontages/n03.jpg",
+      "widthFraction": 1,
+      "centerFraction": 0.5,
+      "bottomMetres": 1.15,
+      "heightMetres": 2.9,
+      "gableHeightMetres": 0,
+      "sha256": "c1a4b5e7d105363049dbb8adbf3be5e300b731cbb2fa4a60ee34b8e3d4b46691",
+      "sourceSha256": "1da9f8c31518416e7002e4f2e3f43749574ead930dbd8f629922e1dc736963a8",
+      "sourceFrame": "0174_LEFT_SIDE.jpg",
+      "note": "Upper storefront only; crop stops before the foreground railing."
+    }
   },
   {
     "id": "way/1009651239",
@@ -160,9 +172,9 @@ export const FOOTAGE_PROFILES = Object.fromEntries([
     "eaveHeight": 9.8,
     "roof": "flat",
     "roofRise": 0,
-    "wallColor": "#b6aa86",
+    "wallColor": "#a3a285",
     "roofColor": "#55504a",
-    "trimColor": "#4b453d",
+    "trimColor": "#4a4438",
     "levels": 3,
     "windowColumns": 6,
     "style": "office",
@@ -381,22 +393,39 @@ export const FOOTAGE_PROFILES = Object.fromEntries([
         "lat": 44.30052090034943
       }
     ],
-    "frontSource": "Ordered frontage endpoints converted from reference block.json to geographic coordinates for the existing project() transform."
+    "frontSource": "Ordered frontage endpoints converted from reference block.json to geographic coordinates for the existing project() transform.",
+    "porchWidthFraction": 0.82,
+    "porchDepthMetres": 1.5,
+    "porchHeightMetres": 2.5,
+    "frontGarden": {
+      "depthMetres": 7,
+      "pathFraction": 0.2,
+      "pathWidthMetres": 1.2,
+      "lawnColor": "#65754b",
+      "hedge": false,
+      "evidenceFrame": "0140_RIGHT_SIDE.jpg",
+      "accuracy": "Visual estimate from footage, clipped to existing mapped clear ground."
+    },
+    "frontageReview": {
+      "frame": "0140_RIGHT_SIDE.jpg",
+      "sha256": "b4727e00d426d883bfcb015862e9e0894b382e6544a8003207ac37975db7054d",
+      "method": "Ordered west-to-east footage review matched to existing footprint order and visible setback; not surveyed."
+    }
   },
   {
     "id": "way/1006575705",
     "label": "S02",
     "name": "Sherbrooke south-side house",
     "confidence": "partial",
-    "height": 8.4,
-    "eaveHeight": 6.0,
+    "height": 7.2,
+    "eaveHeight": 5.6,
     "roof": "gable",
-    "roofRise": 2.0,
-    "wallColor": "#813f35",
+    "roofRise": 1.6,
+    "wallColor": "#874a3c",
     "roofColor": "#494b47",
     "trimColor": "#e8e4d6",
     "levels": 2,
-    "windowColumns": 3,
+    "windowColumns": 4,
     "style": "house",
     "features": [
       "front-porch"
@@ -420,28 +449,46 @@ export const FOOTAGE_PROFILES = Object.fromEntries([
         "lat": 44.30051290026543
       }
     ],
-    "frontSource": "Ordered frontage endpoints converted from reference block.json to geographic coordinates for the existing project() transform."
+    "frontSource": "Ordered frontage endpoints converted from reference block.json to geographic coordinates for the existing project() transform.",
+    "porchWidthFraction": 0.95,
+    "porchDepthMetres": 1.7,
+    "porchHeightMetres": 2.6,
+    "frontGarden": {
+      "depthMetres": 8.5,
+      "pathFraction": 0.5,
+      "pathWidthMetres": 1.2,
+      "lawnColor": "#65754b",
+      "hedge": false,
+      "evidenceFrame": "0146_RIGHT_SIDE.jpg",
+      "accuracy": "Visual estimate from footage, clipped to existing mapped clear ground."
+    },
+    "frontageReview": {
+      "frame": "0146_RIGHT_SIDE.jpg",
+      "sha256": "73336f350c2eb4bf11b10a564f35abf5df0da2ef1691911c7b05dd9c12fa2590",
+      "method": "Ordered west-to-east footage review matched to existing footprint order and visible setback; not surveyed."
+    }
   },
   {
     "id": "way/1006575704",
     "label": "S03",
-    "name": "Sherbrooke south-side brick house",
+    "name": "219 Sherbrooke balcony frontage",
     "confidence": "partial",
-    "height": 8.7,
-    "eaveHeight": 6.3,
+    "height": 8.68,
+    "eaveHeight": 6.38,
     "roof": "gable",
-    "roofRise": 2.0,
-    "wallColor": "#7b3c32",
-    "roofColor": "#454743",
-    "trimColor": "#eee9dc",
+    "roofRise": 2.3,
+    "wallColor": "#894b43",
+    "roofColor": "#3b5248",
+    "trimColor": "#eee8dc",
     "levels": 2,
     "windowColumns": 3,
     "style": "house",
     "features": [
+      "white-upper-balcony",
       "front-porch"
     ],
     "signText": null,
-    "notes": "0150 opposite-side view contains adjacent red masonry houses, lawns and porches. Assignment is sequential/approximate; tree cover and oblique view conceal openings.",
+    "notes": "Front appearance revised from the ordered original footage on 2026-10-21. Ordered west-to-east footage review matched to existing footprint order and visible setback; not surveyed.",
     "reference": {
       "file": "references/0150_RIGHT_SIDE.jpg",
       "sourceSequence": 150,
@@ -459,28 +506,57 @@ export const FOOTAGE_PROFILES = Object.fromEntries([
         "lat": 44.30055719960654
       }
     ],
-    "frontSource": "Ordered frontage endpoints converted from reference block.json to geographic coordinates for the existing project() transform."
+    "frontSource": "Ordered frontage endpoints converted from reference block.json to geographic coordinates for the existing project() transform.",
+    "frontGarden": {
+      "depthMetres": 6,
+      "pathFraction": 0.15,
+      "pathWidthMetres": 1.1,
+      "lawnColor": "#65754b",
+      "hedge": false,
+      "evidenceFrame": "0150_RIGHT_SIDE.jpg",
+      "accuracy": "Visual estimate from footage, clipped to existing mapped clear ground.",
+      "drivewayFraction": 0.04,
+      "drivewayWidthMetres": 2.2
+    },
+    "frontageReview": {
+      "frame": "0150_RIGHT_SIDE.jpg",
+      "sha256": "ee1d90e4803dfe34a9e7f58e2f972823a75c3682ea7e7ad08e02c280b7da73fe",
+      "method": "Ordered west-to-east footage review matched to existing footprint order and visible setback; not surveyed."
+    },
+    "facadePhoto": {
+      "file": "./assets/sherbrooke-frontages/s03.jpg",
+      "widthFraction": 1,
+      "centerFraction": 0.5,
+      "bottomMetres": 0.08,
+      "heightMetres": 6.3,
+      "gableHeightMetres": 2.3,
+      "sha256": "11e5ce3f4ff916895746e0af5d39bdbc31a8836e0ea6f6ac9a889f698434ea87",
+      "sourceSha256": "ee1d90e4803dfe34a9e7f58e2f972823a75c3682ea7e7ad08e02c280b7da73fe",
+      "sourceFrame": "0150_RIGHT_SIDE.jpg",
+      "note": "219 balcony house, third south-side footprint. Gable wings are clipped in geometry. Small fixed porch shrubs remain part of the photographed frontage."
+    }
   },
   {
     "id": "way/1006575744",
     "label": "S04",
-    "name": "Sherbrooke south-side brick house",
+    "name": "Rectangular brick frontage beside 219",
     "confidence": "partial",
-    "height": 8.5,
-    "eaveHeight": 6.2,
-    "roof": "gable",
-    "roofRise": 2.0,
-    "wallColor": "#873e32",
-    "roofColor": "#484a47",
+    "height": 7.48,
+    "eaveHeight": 6.28,
+    "roof": "hip",
+    "roofRise": 1.2,
+    "wallColor": "#785048",
+    "roofColor": "#414641",
     "trimColor": "#eee9dd",
     "levels": 2,
     "windowColumns": 3,
     "style": "house",
     "features": [
-      "front-porch"
+      "projecting-entry",
+      "wide-ground-window"
     ],
     "signText": null,
-    "notes": "Opposite-side sequence shows detached brick houses, but insufficient frontage resolution for exact porches/windows. Simple illustrative house volume.",
+    "notes": "Front appearance revised from the ordered original footage on 2026-10-21. Ordered west-to-east footage review matched to existing footprint order and visible setback; not surveyed.",
     "reference": {
       "file": "references/0150_RIGHT_SIDE.jpg",
       "sourceSequence": 150,
@@ -498,29 +574,58 @@ export const FOOTAGE_PROFILES = Object.fromEntries([
         "lat": 44.30054470034731
       }
     ],
-    "frontSource": "Ordered frontage endpoints converted from reference block.json to geographic coordinates for the existing project() transform."
+    "frontSource": "Ordered frontage endpoints converted from reference block.json to geographic coordinates for the existing project() transform.",
+    "porch": false,
+    "frontGarden": {
+      "depthMetres": 7.5,
+      "pathFraction": 0.75,
+      "pathWidthMetres": 1.1,
+      "lawnColor": "#65754b",
+      "hedge": false,
+      "evidenceFrame": "0154_RIGHT_SIDE.jpg",
+      "accuracy": "Visual estimate from footage, clipped to existing mapped clear ground.",
+      "drivewayFraction": 0.04,
+      "drivewayWidthMetres": 2.2
+    },
+    "frontageReview": {
+      "frame": "0154_RIGHT_SIDE.jpg",
+      "sha256": "957539ccd7258c915620d0a20f60e659d21960852832e2ca36ada8a53ac0740b",
+      "method": "Ordered west-to-east footage review matched to existing footprint order and visible setback; not surveyed."
+    },
+    "facadePhoto": {
+      "file": "./assets/sherbrooke-frontages/s04.jpg",
+      "widthFraction": 1,
+      "centerFraction": 0.5,
+      "bottomMetres": 0.08,
+      "heightMetres": 6.2,
+      "gableHeightMetres": 0,
+      "sha256": "db37002f55f23f4c98723d64feafd6410c6ccc1bd6012fe2b28e65e857be3464",
+      "sourceSha256": "957539ccd7258c915620d0a20f60e659d21960852832e2ca36ada8a53ac0740b",
+      "sourceFrame": "0154_RIGHT_SIDE.jpg",
+      "note": "Two-storey rectangular brick front; hipped roof remains real geometry."
+    }
   },
   {
     "id": "way/1006575743",
     "label": "S05",
-    "name": "Red balcony house",
+    "name": "Brick house with curved white porch",
     "confidence": "partial",
-    "height": 10.0,
-    "eaveHeight": 7.3,
+    "height": 8.38,
+    "eaveHeight": 6.38,
     "roof": "gable",
-    "roofRise": 2.4,
-    "wallColor": "#9b4238",
-    "roofColor": "#38453c",
+    "roofRise": 2,
+    "wallColor": "#854f42",
+    "roofColor": "#4c4e4a",
     "trimColor": "#ece9df",
     "levels": 3,
     "windowColumns": 3,
     "style": "house",
     "features": [
-      "white-upper-balcony",
-      "front-porch"
+      "curved-white-porch",
+      "pale-gable-siding"
     ],
     "signText": null,
-    "notes": "Distinct red facade, green-edged gable and white upper balcony appear near 219 number and a Denture Arts signboard. Tree canopy/wires partly obscure left portion; strong visual match but not rectified texture.",
+    "notes": "Front appearance revised from the ordered original footage on 2026-10-21. Ordered west-to-east footage review matched to existing footprint order and visible setback; not surveyed.",
     "reference": {
       "file": "references/0150_RIGHT_SIDE.jpg",
       "sourceSequence": 150,
@@ -538,25 +643,54 @@ export const FOOTAGE_PROFILES = Object.fromEntries([
         "lat": 44.300553900171614
       }
     ],
-    "frontSource": "Ordered frontage endpoints converted from reference block.json to geographic coordinates for the existing project() transform."
+    "frontSource": "Ordered frontage endpoints converted from reference block.json to geographic coordinates for the existing project() transform.",
+    "frontGarden": {
+      "depthMetres": 7,
+      "pathFraction": 0.25,
+      "pathWidthMetres": 1.1,
+      "lawnColor": "#65754b",
+      "hedge": false,
+      "evidenceFrame": "0154_RIGHT_SIDE.jpg",
+      "accuracy": "Visual estimate from footage, clipped to existing mapped clear ground.",
+      "drivewayFraction": 0.96,
+      "drivewayWidthMetres": 2.2
+    },
+    "frontageReview": {
+      "frame": "0154_RIGHT_SIDE.jpg",
+      "sha256": "957539ccd7258c915620d0a20f60e659d21960852832e2ca36ada8a53ac0740b",
+      "method": "Ordered west-to-east footage review matched to existing footprint order and visible setback; not surveyed."
+    },
+    "facadePhoto": {
+      "file": "./assets/sherbrooke-frontages/s05.jpg",
+      "widthFraction": 1,
+      "centerFraction": 0.5,
+      "bottomMetres": 0.08,
+      "heightMetres": 6.3,
+      "gableHeightMetres": 2.0,
+      "sha256": "3ec3d40b64717b23d255864307679a39c41f9e1ea508278880cf7fefce755080",
+      "sourceSha256": "957539ccd7258c915620d0a20f60e659d21960852832e2ca36ada8a53ac0740b",
+      "sourceFrame": "0154_RIGHT_SIDE.jpg",
+      "note": "White curved porch and pale gable siding. Small edge vegetation remains visible; dimensions estimated."
+    }
   },
   {
     "id": "way/1006575703",
     "label": "S06",
-    "name": "Sherbrooke south-side residence",
+    "name": "Brick law-office frontage",
     "confidence": "partial",
     "height": 8.7,
     "eaveHeight": 6.2,
     "roof": "gable",
     "roofRise": 2.1,
-    "wallColor": "#8c4437",
+    "wallColor": "#884a3e",
     "roofColor": "#414844",
-    "trimColor": "#e6e0d3",
+    "trimColor": "#e0d5b9",
     "levels": 2,
     "windowColumns": 3,
     "style": "house",
     "features": [
-      "front-porch"
+      "front-gable",
+      "front-steps"
     ],
     "signText": null,
     "notes": "Repeated house-row appearance visible in opposite-side frames. Facade-to-footprint registration uncertain; feature geometry intentionally modest.",
@@ -577,25 +711,41 @@ export const FOOTAGE_PROFILES = Object.fromEntries([
         "lat": 44.30061230011907
       }
     ],
-    "frontSource": "Ordered frontage endpoints converted from reference block.json to geographic coordinates for the existing project() transform."
+    "frontSource": "Ordered frontage endpoints converted from reference block.json to geographic coordinates for the existing project() transform.",
+    "porch": false,
+    "frontGarden": {
+      "depthMetres": 3.8,
+      "pathFraction": 0.5,
+      "pathWidthMetres": 1.3,
+      "lawnColor": "#65754b",
+      "hedge": false,
+      "evidenceFrame": "0164_RIGHT_SIDE.jpg",
+      "accuracy": "Visual estimate from footage, clipped to existing mapped clear ground."
+    },
+    "frontageReview": {
+      "frame": "0164_RIGHT_SIDE.jpg",
+      "sha256": "0b90b8ab7dfcff294c1f15c506b3342c7539d5fc3aff6034df3a2226e03b3dca",
+      "method": "Ordered west-to-east footage review matched to existing footprint order and visible setback; not surveyed."
+    }
   },
   {
     "id": "way/1006575741",
     "label": "S07",
-    "name": "Sherbrooke south-side residence",
+    "name": "Westland frontage with lower entrance addition",
     "confidence": "partial",
     "height": 8.6,
     "eaveHeight": 6.2,
     "roof": "gable",
     "roofRise": 2.0,
-    "wallColor": "#773b32",
+    "wallColor": "#824b40",
     "roofColor": "#454743",
-    "trimColor": "#e6e1d6",
+    "trimColor": "#d8cfb4",
     "levels": 2,
     "windowColumns": 3,
     "style": "house",
     "features": [
-      "front-porch"
+      "lower-front-addition",
+      "pale-gable-siding"
     ],
     "signText": null,
     "notes": "House forms and roof pitches visible in far-side sequence but screened by trees/utility lines. Approximate facade association follows map order.",
@@ -616,28 +766,46 @@ export const FOOTAGE_PROFILES = Object.fromEntries([
         "lat": 44.30061990038206
       }
     ],
-    "frontSource": "Ordered frontage endpoints converted from reference block.json to geographic coordinates for the existing project() transform."
+    "frontSource": "Ordered frontage endpoints converted from reference block.json to geographic coordinates for the existing project() transform.",
+    "porch": false,
+    "frontGarden": {
+      "depthMetres": 3.8,
+      "pathFraction": 0.5,
+      "pathWidthMetres": 1.2,
+      "lawnColor": "#65754b",
+      "hedge": false,
+      "evidenceFrame": "0168_RIGHT_SIDE.jpg",
+      "accuracy": "Visual estimate from footage, clipped to existing mapped clear ground.",
+      "drivewayFraction": 0.04,
+      "drivewayWidthMetres": 2.2
+    },
+    "frontageReview": {
+      "frame": "0168_RIGHT_SIDE.jpg",
+      "sha256": "f3c0b5cbf054630b629f2e41f4be6e119d233a19e9ce3a6dc8b8aeea60a1ebc4",
+      "method": "Ordered west-to-east footage review matched to existing footprint order and visible setback; not surveyed."
+    }
   },
   {
     "id": "way/1006575740",
     "label": "S08",
-    "name": "Sherbrooke south-side house",
-    "confidence": "inferred",
-    "height": 8.3,
-    "eaveHeight": 6.0,
-    "roof": "gable",
-    "roofRise": 2.0,
-    "wallColor": "#7a3a31",
-    "roofColor": "#464743",
-    "trimColor": "#e8e4d7",
+    "name": "Two-storey brick house with dark porch",
+    "confidence": "partial",
+    "height": 7.48,
+    "eaveHeight": 6.28,
+    "roof": "hip",
+    "roofRise": 1.2,
+    "wallColor": "#8b5547",
+    "roofColor": "#494c49",
+    "trimColor": "#262c2c",
     "levels": 2,
-    "windowColumns": 3,
+    "windowColumns": 2,
     "style": "house",
     "features": [
-      "front-porch"
+      "dark-full-width-porch",
+      "right-entry"
     ],
     "signText": null,
-    "notes": "Partially tree-obscured residential strip, but this exact frontage is not isolated. Conservative inferred mass pending a direct facade image.",
+    "notes": "Front appearance revised from the ordered original footage on 2026-10-21. Ordered west-to-east footage review matched to existing footprint order and visible setback; not surveyed.",
     "reference": {
       "file": "references/0170_RIGHT_SIDE.jpg",
       "sourceSequence": 170,
@@ -655,26 +823,57 @@ export const FOOTAGE_PROFILES = Object.fromEntries([
         "lat": 44.30059939981314
       }
     ],
-    "frontSource": "Ordered frontage endpoints converted from reference block.json to geographic coordinates for the existing project() transform."
+    "frontSource": "Ordered frontage endpoints converted from reference block.json to geographic coordinates for the existing project() transform.",
+    "frontGarden": {
+      "depthMetres": 5.5,
+      "pathFraction": 0.23,
+      "pathWidthMetres": 1.1,
+      "lawnColor": "#65754b",
+      "hedge": false,
+      "evidenceFrame": "0170_RIGHT_SIDE.jpg",
+      "accuracy": "Visual estimate from footage, clipped to existing mapped clear ground.",
+      "drivewayFraction": 0.04,
+      "drivewayWidthMetres": 2.2
+    },
+    "frontageReview": {
+      "frame": "0170_RIGHT_SIDE.jpg",
+      "sha256": "a4cc5469f106a14cc302ce8597fc4387e6d7082d8b1bd5c7b6b013a5f1cfd58d",
+      "method": "Ordered west-to-east footage review matched to existing footprint order and visible setback; not surveyed."
+    },
+    "facadePhoto": {
+      "file": "./assets/sherbrooke-frontages/s08.jpg",
+      "widthFraction": 1,
+      "centerFraction": 0.5,
+      "bottomMetres": 0.08,
+      "heightMetres": 6.2,
+      "gableHeightMetres": 0,
+      "sha256": "e743bcae3b68e1d2fbcfcb4d24059657201104d341af3e21dce08933a153b2ce",
+      "sourceSha256": "a4cc5469f106a14cc302ce8597fc4387e6d7082d8b1bd5c7b6b013a5f1cfd58d",
+      "sourceFrame": "0170_RIGHT_SIDE.jpg",
+      "note": "Black trim and deep porch; small fixed entrance sign remains at the lower edge, not a moving object."
+    }
   },
   {
     "id": "way/1006575739",
     "label": "S09",
-    "name": "Sherbrooke south-side house",
-    "confidence": "inferred",
-    "height": 8.3,
-    "eaveHeight": 6.0,
+    "name": "Brick house with white porch and upper balcony",
+    "confidence": "partial",
+    "height": 8.6,
+    "eaveHeight": 6.3,
     "roof": "gable",
-    "roofRise": 2.0,
-    "wallColor": "#7a3a31",
+    "roofRise": 2.3,
+    "wallColor": "#8f564b",
     "roofColor": "#464743",
-    "trimColor": "#e8e4d7",
+    "trimColor": "#e8e3d7",
     "levels": 2,
     "windowColumns": 3,
     "style": "house",
-    "features": [],
+    "features": [
+      "white-upper-balcony",
+      "white-front-porch"
+    ],
     "signText": null,
-    "notes": "Frame is dominated by vegetation/barrier; individual frontage unresolved. Volume/style are placeholders, not measured facade.",
+    "notes": "Front appearance revised from the ordered original footage on 2026-10-21. Ordered west-to-east footage review matched to existing footprint order and visible setback; not surveyed.",
     "reference": {
       "file": "references/0180_RIGHT_SIDE.jpg",
       "sourceSequence": 180,
@@ -692,26 +891,48 @@ export const FOOTAGE_PROFILES = Object.fromEntries([
         "lat": 44.3005964998394
       }
     ],
-    "frontSource": "Ordered frontage endpoints converted from reference block.json to geographic coordinates for the existing project() transform."
+    "frontSource": "Ordered frontage endpoints converted from reference block.json to geographic coordinates for the existing project() transform.",
+    "porchWidthFraction": 0.95,
+    "porchDepthMetres": 1.8,
+    "porchHeightMetres": 2.7,
+    "frontGarden": {
+      "depthMetres": 6,
+      "pathFraction": 0.8,
+      "pathWidthMetres": 1.2,
+      "lawnColor": "#65754b",
+      "hedge": true,
+      "evidenceFrame": "0174_RIGHT_SIDE.jpg",
+      "accuracy": "Visual estimate from footage, clipped to existing mapped clear ground.",
+      "drivewayFraction": 0.96,
+      "drivewayWidthMetres": 2.2
+    },
+    "frontageReview": {
+      "frame": "0174_RIGHT_SIDE.jpg",
+      "sha256": "31d7c69f52c2417c87aaed54482181a9954cd87c0e3bb9ff855bba931362816d",
+      "method": "Ordered west-to-east footage review matched to existing footprint order and visible setback; not surveyed."
+    }
   },
   {
     "id": "way/1006575702",
     "label": "S10",
-    "name": "Sherbrooke south-side commercial building",
-    "confidence": "inferred",
-    "height": 6.4,
-    "eaveHeight": 5.9,
-    "roof": "flat",
-    "roofRise": 0,
-    "wallColor": "#aaa18e",
-    "roofColor": "#57554d",
-    "trimColor": "#59564d",
+    "name": "Blue-sided gable house with glazed porch",
+    "confidence": "partial",
+    "height": 6.68,
+    "eaveHeight": 4.58,
+    "roof": "gable",
+    "roofRise": 2.1,
+    "wallColor": "#8b9ca5",
+    "roofColor": "#454b4c",
+    "trimColor": "#efeee6",
     "levels": 2,
     "windowColumns": 3,
-    "style": "retail",
-    "features": [],
+    "style": "house",
+    "features": [
+      "blue-horizontal-siding",
+      "white-glazed-porch"
+    ],
     "signText": null,
-    "notes": "Later sequence gives only obstructed commercial context on this side. Use a plain low mass until a clean, matched frontage is available.",
+    "notes": "Front appearance revised from the ordered original footage on 2026-10-21. Ordered west-to-east footage review matched to existing footprint order and visible setback; not surveyed.",
     "reference": {
       "file": "references/0180_RIGHT_SIDE.jpg",
       "sourceSequence": 180,
@@ -729,7 +950,35 @@ export const FOOTAGE_PROFILES = Object.fromEntries([
         "lat": 44.30061669986072
       }
     ],
-    "frontSource": "Ordered frontage endpoints converted from reference block.json to geographic coordinates for the existing project() transform."
+    "frontSource": "Ordered frontage endpoints converted from reference block.json to geographic coordinates for the existing project() transform.",
+    "frontGarden": {
+      "depthMetres": 5,
+      "pathFraction": 0.25,
+      "pathWidthMetres": 1.1,
+      "lawnColor": "#65754b",
+      "hedge": false,
+      "evidenceFrame": "0176_RIGHT_SIDE.jpg",
+      "accuracy": "Visual estimate from footage, clipped to existing mapped clear ground.",
+      "drivewayFraction": 0.04,
+      "drivewayWidthMetres": 2.2
+    },
+    "frontageReview": {
+      "frame": "0176_RIGHT_SIDE.jpg",
+      "sha256": "1a88e1ef2b2deca76dfd70453041afcfbc5d1ca259196609707a02f383b743ba",
+      "method": "Ordered west-to-east footage review matched to existing footprint order and visible setback; not surveyed."
+    },
+    "facadePhoto": {
+      "file": "./assets/sherbrooke-frontages/s10.jpg",
+      "widthFraction": 1,
+      "centerFraction": 0.5,
+      "bottomMetres": 0.08,
+      "heightMetres": 4.5,
+      "gableHeightMetres": 2.1,
+      "sha256": "8e4469b08876a63a0ed054eb3203aa6060699b79b3c57dbb6cdaeb87402e991c",
+      "sourceSha256": "1a88e1ef2b2deca76dfd70453041afcfbc5d1ca259196609707a02f383b743ba",
+      "sourceFrame": "0176_RIGHT_SIDE.jpg",
+      "note": "Blue siding, white glazed porch and gabled roof replace the earlier inferred commercial mass."
+    }
   },
   {
     "id": "way/1006575733",

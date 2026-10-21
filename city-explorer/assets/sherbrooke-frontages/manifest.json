@@ -1,0 +1,250 @@
+{
+  "schemaVersion": 1,
+  "records": [
+    {
+      "label": "N03",
+      "frame": "0174_LEFT_SIDE.jpg",
+      "quad": [
+        [
+          421,
+          310
+        ],
+        [
+          1065,
+          299
+        ],
+        [
+          1077,
+          451
+        ],
+        [
+          413,
+          458
+        ]
+      ],
+      "size": [
+        768,
+        256
+      ],
+      "heightMetres": 2.9,
+      "bottomMetres": 1.15,
+      "brightness": 1.06,
+      "note": "Upper storefront only; crop stops before the foreground railing.",
+      "file": "n03.jpg",
+      "sourceSha256": "1da9f8c31518416e7002e4f2e3f43749574ead930dbd8f629922e1dc736963a8",
+      "sha256": "c1a4b5e7d105363049dbb8adbf3be5e300b731cbb2fa4a60ee34b8e3d4b46691",
+      "bytes": 33563,
+      "sourceSize": [
+        2048,
+        960
+      ],
+      "method": "single-plane perspective rectification and bounded brightness adjustment; no generative fill",
+      "provenance": "User-owned footage; geometry and crop review, not surveyed dimensions"
+    },
+    {
+      "label": "S03",
+      "frame": "0150_RIGHT_SIDE.jpg",
+      "quad": [
+        [
+          756,
+          349
+        ],
+        [
+          1069,
+          327
+        ],
+        [
+          1065,
+          695
+        ],
+        [
+          720,
+          692
+        ]
+      ],
+      "size": [
+        384,
+        512
+      ],
+      "heightMetres": 6.3,
+      "gableHeightMetres": 2.3,
+      "bottomMetres": 0.08,
+      "brightness": 1.16,
+      "note": "219 balcony house, third south-side footprint. Gable wings are clipped in geometry. Small fixed porch shrubs remain part of the photographed frontage.",
+      "file": "s03.jpg",
+      "sourceSha256": "ee1d90e4803dfe34a9e7f58e2f972823a75c3682ea7e7ad08e02c280b7da73fe",
+      "sha256": "11e5ce3f4ff916895746e0af5d39bdbc31a8836e0ea6f6ac9a889f698434ea87",
+      "bytes": 45337,
+      "sourceSize": [
+        2048,
+        960
+      ],
+      "method": "single-plane perspective rectification and bounded brightness adjustment; no generative fill",
+      "provenance": "User-owned footage; geometry and crop review, not surveyed dimensions"
+    },
+    {
+      "label": "S04",
+      "frame": "0154_RIGHT_SIDE.jpg",
+      "quad": [
+        [
+          965,
+          479
+        ],
+        [
+          1268,
+          469
+        ],
+        [
+          1278,
+          690
+        ],
+        [
+          980,
+          691
+        ]
+      ],
+      "size": [
+        512,
+        384
+      ],
+      "heightMetres": 6.2,
+      "bottomMetres": 0.08,
+      "brightness": 1.17,
+      "note": "Two-storey rectangular brick front; hipped roof remains real geometry.",
+      "file": "s04.jpg",
+      "sourceSha256": "957539ccd7258c915620d0a20f60e659d21960852832e2ca36ada8a53ac0740b",
+      "sha256": "db37002f55f23f4c98723d64feafd6410c6ccc1bd6012fe2b28e65e857be3464",
+      "bytes": 37168,
+      "sourceSize": [
+        2048,
+        960
+      ],
+      "method": "single-plane perspective rectification and bounded brightness adjustment; no generative fill",
+      "provenance": "User-owned footage; geometry and crop review, not surveyed dimensions"
+    },
+    {
+      "label": "S05",
+      "frame": "0154_RIGHT_SIDE.jpg",
+      "quad": [
+        [
+          575,
+          390
+        ],
+        [
+          822,
+          372
+        ],
+        [
+          815,
+          704
+        ],
+        [
+          586,
+          697
+        ]
+      ],
+      "size": [
+        384,
+        512
+      ],
+      "heightMetres": 6.3,
+      "gableHeightMetres": 2.0,
+      "bottomMetres": 0.08,
+      "brightness": 1.15,
+      "note": "White curved porch and pale gable siding. Small edge vegetation remains visible; dimensions estimated.",
+      "file": "s05.jpg",
+      "sourceSha256": "957539ccd7258c915620d0a20f60e659d21960852832e2ca36ada8a53ac0740b",
+      "sha256": "3ec3d40b64717b23d255864307679a39c41f9e1ea508278880cf7fefce755080",
+      "bytes": 43117,
+      "sourceSize": [
+        2048,
+        960
+      ],
+      "method": "single-plane perspective rectification and bounded brightness adjustment; no generative fill",
+      "provenance": "User-owned footage; geometry and crop review, not surveyed dimensions"
+    },
+    {
+      "label": "S08",
+      "frame": "0170_RIGHT_SIDE.jpg",
+      "quad": [
+        [
+          1040,
+          491
+        ],
+        [
+          1288,
+          475
+        ],
+        [
+          1312,
+          741
+        ],
+        [
+          1030,
+          739
+        ]
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "heightMetres": 6.2,
+      "bottomMetres": 0.08,
+      "brightness": 1.18,
+      "note": "Black trim and deep porch; small fixed entrance sign remains at the lower edge, not a moving object.",
+      "file": "s08.jpg",
+      "sourceSha256": "a4cc5469f106a14cc302ce8597fc4387e6d7082d8b1bd5c7b6b013a5f1cfd58d",
+      "sha256": "e743bcae3b68e1d2fbcfcb4d24059657201104d341af3e21dce08933a153b2ce",
+      "bytes": 32425,
+      "sourceSize": [
+        2048,
+        960
+      ],
+      "method": "single-plane perspective rectification and bounded brightness adjustment; no generative fill",
+      "provenance": "User-owned footage; geometry and crop review, not surveyed dimensions"
+    },
+    {
+      "label": "S10",
+      "frame": "0176_RIGHT_SIDE.jpg",
+      "quad": [
+        [
+          842,
+          463
+        ],
+        [
+          1151,
+          452
+        ],
+        [
+          1158,
+          773
+        ],
+        [
+          815,
+          772
+        ]
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "heightMetres": 4.5,
+      "gableHeightMetres": 2.1,
+      "bottomMetres": 0.08,
+      "brightness": 1.12,
+      "note": "Blue siding, white glazed porch and gabled roof replace the earlier inferred commercial mass.",
+      "file": "s10.jpg",
+      "sourceSha256": "1a88e1ef2b2deca76dfd70453041afcfbc5d1ca259196609707a02f383b743ba",
+      "sha256": "8e4469b08876a63a0ed054eb3203aa6060699b79b3c57dbb6cdaeb87402e991c",
+      "bytes": 53621,
+      "sourceSize": [
+        2048,
+        960
+      ],
+      "method": "single-plane perspective rectification and bounded brightness adjustment; no generative fill",
+      "provenance": "User-owned footage; geometry and crop review, not surveyed dimensions"
+    }
+  ],
+  "totalBytes": 245231,
+  "decodedTextureBytesWithMipmaps": 6990506
+}

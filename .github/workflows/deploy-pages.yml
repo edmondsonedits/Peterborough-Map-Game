@@ -52,7 +52,7 @@ jobs:
         run: node --test tests/city-training-data.test.cjs tests/ems-priority.test.cjs tests/ems-training-store.test.cjs tests/route-base-access.test.cjs tests/route-local-calls.test.cjs tests/route-search-workspace.test.cjs tests/route-road-supplement.test.cjs tests/route-local-data.test.cjs tests/route-station-selection.test.cjs
 
       - name: Check streetscape regressions
-        run: node --test tests/sherbrooke-footage-roofs.test.mjs tests/sherbrooke-footage.test.mjs tests/sherbrooke-editor-link.test.mjs tests/sherbrooke-plan.test.mjs tests/sherbrooke-fallback.test.mjs tests/station-reference-details.test.mjs tests/streetscape-assets.test.mjs tests/vegetation-variants.test.mjs tests/city-feature-utils.test.mjs
+        run: node --test tests/sherbrooke-frontage-v2.test.mjs tests/sherbrooke-facade-assets.test.mjs tests/sherbrooke-footage-roofs.test.mjs tests/sherbrooke-footage.test.mjs tests/sherbrooke-editor-link.test.mjs tests/sherbrooke-plan.test.mjs tests/sherbrooke-fallback.test.mjs tests/station-reference-details.test.mjs tests/streetscape-assets.test.mjs tests/vegetation-variants.test.mjs tests/city-feature-utils.test.mjs
 
       - name: Check authored actors and station architecture
         run: node --test tests/pumper-asset.test.mjs tests/firefighter-asset.test.mjs tests/station-architecture.test.mjs

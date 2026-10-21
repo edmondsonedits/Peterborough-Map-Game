@@ -1,7 +1,8 @@
 import { recordSherbrookeBuilding, recordSherbrookeSidewalk, sherbrookeBuildings } from './sherbrooke-plan.js';
-import { installSherbrookeDetails } from './sherbrooke-details.js?v=footage-20261020';
-import { FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js';
-import { createFootageFacade } from './sherbrooke-footage.js';
+import { installSherbrookeDetails } from './sherbrooke-details.js?v=frontages-20261021';
+import { FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js?v=frontages-20261021';
+import { createFootageFacade, frontageFrame } from './sherbrooke-footage.js?v=frontages-20261021';
+import { createGardenClearance } from './sherbrooke-garden-clearance.js';
 import { appendFootageRoof } from './sherbrooke-footage-roofs.js';
 import * as THREE from 'three';
 import { reconcileStationPavement } from './station-pavement-layer.js?v=1.6.57';
@@ -13,11 +14,11 @@ import { createVegetationVariant, stationOneVegetationPalette } from './vegetati
 import { installStationStreetscape } from './streetscape-assets.js?v=streetscape-2';
 import { installStationApron } from './site-surface-materials.js?v=1.6.56';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
-import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js?v=1.6.124';
+import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js?v=1.6.125';
 import { createCatalogObject } from './editor/asset-catalog.js';
 import { createCommandHistory } from './editor/command-history.js';
-import { createDraftStore } from './editor/draft-store.js?v=1.6.124';
-import { createCityEditor } from './editor/city-editor.js?v=1.6.124';
+import { createDraftStore } from './editor/draft-store.js?v=1.6.125';
+import { createCityEditor } from './editor/city-editor.js?v=1.6.125';
 import { createEmptySceneDocument, sanitizeRenderableSceneDocument } from './editor/scene-document.js';
 import { createGeneratedRegistry } from './editor/generated-registry.js?v=footage-20261020';
 import { applyOverrides } from './editor/override-runtime.js';
@@ -39,7 +40,7 @@ import { clearLandCoverRaster, paintLandCoverPolygon } from './land-cover-raster
 import { sampleOfficialTerrainElevation, validOfficialTerrainMetadata } from './terrain-heightmap.js?v=1.5.5-lidar1';
 import { sampleTriangulatedTerrainHeight } from './terrain-surface.js?v=1.5.5-terrain1';
 import { HydroSurfaceIndex, WATER_SURFACE_CLEARANCE, WATER_TERRAIN_RECESS, createWaterStageSampler, relativeWaterElevation, robustFallbackWaterHeight, subdivideWaterTriangle, watercourseWidth } from './water-system.js?v=1.5.5-hydro2';
-import { CitySplatLayer } from './city-splat-layer.js?v=1.6.124';
+import { CitySplatLayer } from './city-splat-layer.js?v=1.6.125';
 import {
   estimatedBuildingFloors,
   facadeDetailClass,
@@ -1820,7 +1821,9 @@ function buildBufferedBuildingBatches(batches) {
     const profile = FOOTAGE_PROFILES[feature.sourceId];
     const captured = sherbrookeBuildings.get(feature.sourceId);
     if (profile && profile.style !== 'station' && profile.confidence !== 'inferred' && captured && !footageFacadeGroups.has(feature.sourceId)) {
-      const detail = createFootageFacade({THREE, profile, ring: captured.ring, base: captured.base, top: captured.top, project});
+      const anchor = frontageFrame({profile, ring:captured.ring, project}).midpoint;
+      const detail = createFootageFacade({THREE, profile, ring: captured.ring, base: captured.base, top: captured.top + buildingDimensions({}, feature.sourceId).roofHeight, project,
+        terrainHeightAtWorld, gardenClear:profile.frontGarden ? createGardenClearance(project, anchor) : undefined});
       buildingGroup.add(detail);
       generatedRegistry.attachEditableGroup(id, detail);
       footageFacadeGroups.set(feature.sourceId, detail);
@@ -5993,7 +5996,8 @@ function exposeCityQualityQa() {
         triangles: renderer.info.render.triangles,
         verticalSliceBounds: { ...verticalSliceBounds },
         footage: [...footageFacadeGroups].map(([sourceId, group]) => ({sourceId,
-          photoStatus: group.userData.photoStatus, detailsOmitted: group.userData.detailsOmitted || null,
+          photoStatus: group.userData.photoStatus, facadePhotoStatus: group.userData.facadePhotoStatus || null,
+          gardenMeshes:group.children.filter(child=>child.name.startsWith('front-garden-')).length, detailsOmitted: group.userData.detailsOmitted || null,
           objects: group.children.length, editorLinked: [...generatedRegistry.records.values()].some(record => record.sourceId === sourceId && record.parts.some(part => part.object === group))})),
         stationEditorLinked: [...generatedRegistry.records.values()].some(record => record.sourceId === 'way/1009651229' && record.parts.some(part => part.object === fireStationDetail)),
       };
