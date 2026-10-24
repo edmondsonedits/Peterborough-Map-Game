@@ -762,13 +762,14 @@ const MODEL_BUILDERS = {
   pagodaBridge,
 };
 
-export function createPeterboroughLandmarks({ THREE, group, project, terrainHeightAtWorld, landmarkBuildingPlacements = null }) {
+export function createPeterboroughLandmarks({ THREE, group, project, terrainHeightAtWorld, landmarkBuildingPlacements = null, sourceOwnedLandmarks = new Set() }) {
   if (!THREE || !group || typeof project !== 'function' || typeof terrainHeightAtWorld !== 'function') return { objects: 0, roots: 0 };
   const context = { THREE, group, project, terrainHeightAtWorld, landmarkBuildingPlacements };
   const materials = createMaterials(THREE);
   const counter = { objects: 0, roots: 0 };
   LANDMARKS.forEach((landmark) => {
     if (!landmark.model || !MODEL_BUILDERS[landmark.model]) return;
+    if ((landmark.osmRefs || []).some(id => sourceOwnedLandmarks.has(id))) return;
     MODEL_BUILDERS[landmark.model](context, landmark, materials, counter);
   });
   return counter;

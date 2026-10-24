@@ -1,0 +1,886 @@
+{
+  "schema": 1,
+  "recording": "VID_20261018_073202_00_001.insv",
+  "route": "Station 1 / Sherbrooke east -> Water north -> Hunter east to Burnham",
+  "inventory": [
+    {
+      "id": "way/1006575704",
+      "street": "Sherbrooke",
+      "status": "existing-reviewed",
+      "reason": "Existing Station 1/Sherbrooke or downtown facade reviewed against full recording and retained.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.30049118181818,
+        "lon": -78.32238267272727
+      }
+    },
+    {
+      "id": "way/1006575744",
+      "street": "Sherbrooke",
+      "status": "existing-reviewed",
+      "reason": "Existing Station 1/Sherbrooke or downtown facade reviewed against full recording and retained.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.3004570875,
+        "lon": -78.3222277375
+      }
+    },
+    {
+      "id": "way/1006575743",
+      "street": "Sherbrooke",
+      "status": "existing-reviewed",
+      "reason": "Existing Station 1/Sherbrooke or downtown facade reviewed against full recording and retained.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.300449308333334,
+        "lon": -78.32208356666666
+      }
+    },
+    {
+      "id": "way/1009651229",
+      "street": "Sherbrooke",
+      "status": "existing-reviewed",
+      "reason": "Existing Station 1/Sherbrooke or downtown facade reviewed against full recording and retained.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.300929721428574,
+        "lon": -78.32211662142858
+      }
+    },
+    {
+      "id": "way/1006575703",
+      "street": "Sherbrooke",
+      "status": "existing-reviewed",
+      "reason": "Existing Station 1/Sherbrooke or downtown facade reviewed against full recording and retained.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.3004689,
+        "lon": -78.3218517375
+      }
+    },
+    {
+      "id": "way/1006575741",
+      "street": "Sherbrooke",
+      "status": "existing-reviewed",
+      "reason": "Existing Station 1/Sherbrooke or downtown facade reviewed against full recording and retained.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.3005400125,
+        "lon": -78.3216476375
+      }
+    },
+    {
+      "id": "way/1006575740",
+      "street": "Sherbrooke",
+      "status": "existing-reviewed",
+      "reason": "Existing Station 1/Sherbrooke or downtown facade reviewed against full recording and retained.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.300513675,
+        "lon": -78.32151135833332
+      }
+    },
+    {
+      "id": "way/194192530",
+      "street": "Sherbrooke",
+      "status": "existing-reviewed",
+      "reason": "Existing Station 1/Sherbrooke or downtown facade reviewed against full recording and retained.",
+      "mappedName": "LCBO",
+      "centroid": {
+        "lat": 44.301013725,
+        "lon": -78.321478275
+      }
+    },
+    {
+      "id": "way/1006575739",
+      "street": "Sherbrooke",
+      "status": "existing-reviewed",
+      "reason": "Existing Station 1/Sherbrooke or downtown facade reviewed against full recording and retained.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.30049875454545,
+        "lon": -78.32136950909091
+      }
+    },
+    {
+      "id": "way/1006575702",
+      "street": "Sherbrooke",
+      "status": "existing-reviewed",
+      "reason": "Existing Station 1/Sherbrooke or downtown facade reviewed against full recording and retained.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.3005318875,
+        "lon": -78.3212130125
+      }
+    },
+    {
+      "id": "way/1009651239",
+      "street": "Sherbrooke",
+      "status": "existing-reviewed",
+      "reason": "Existing profile refined: full source resolves two principal storeys; updated material/opening pattern where visible.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.30115577,
+        "lon": -78.32045415
+      },
+      "refinedThisPass": true
+    },
+    {
+      "id": "way/1006575733",
+      "street": "Sherbrooke",
+      "status": "existing-reviewed",
+      "reason": "Existing Station 1/Sherbrooke or downtown facade reviewed against full recording and retained.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.300399999999996,
+        "lon": -78.3203743625
+      }
+    },
+    {
+      "id": "way/1006575731",
+      "street": "Sherbrooke",
+      "status": "existing-reviewed",
+      "reason": "Existing profile refined: full source resolves two principal storeys; updated material/opening pattern where visible.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.300621925,
+        "lon": -78.319993625
+      },
+      "refinedThisPass": true
+    },
+    {
+      "id": "way/1009651245",
+      "street": "Sherbrooke",
+      "status": "retained-occluded",
+      "reason": "Rear candidate behind the Village of Thai frontage; no reliable independent street elevation.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.301031425,
+        "lon": -78.319969925
+      }
+    },
+    {
+      "id": "way/846927296",
+      "street": "Sherbrooke",
+      "status": "existing-reviewed",
+      "reason": "Existing Station 1/Sherbrooke or downtown facade reviewed against full recording and retained.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.30093214,
+        "lon": -78.31995839999999
+      }
+    },
+    {
+      "id": "way/755554888",
+      "street": "Sherbrooke",
+      "status": "updated",
+      "reason": "Observed appearance attached to original mapped frontage.",
+      "mappedName": "No Frills",
+      "centroid": {
+        "lat": 44.30044716,
+        "lon": -78.31929757
+      },
+      "reference": {
+        "file": "VID_20261018_073202_00_001.insv",
+        "sourceSeconds": 582,
+        "lens": 0,
+        "sourceFrameSha256": "1ebc23937c9d89a252295e2ddd0d3a33830078ec0cb451a20c3ff62af05463c0",
+        "neighborSeconds": [
+          576,
+          588
+        ],
+        "projection": "FisheyeReframer 2048px / 100deg; existing experimental calibration"
+      }
+    },
+    {
+      "id": "way/1009651246",
+      "street": "Water",
+      "status": "updated",
+      "reason": "Observed appearance attached to original mapped frontage.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.301092725000004,
+        "lon": -78.319349
+      },
+      "reference": {
+        "file": "VID_20261018_073202_00_001.insv",
+        "sourceSeconds": 600,
+        "lens": 1,
+        "sourceFrameSha256": "a74b4c2416e03de9abf71a924319d495b158987a1bb9bfea4a256d111de063af",
+        "neighborSeconds": [
+          594,
+          606
+        ],
+        "projection": "FisheyeReframer 2048px / 100deg; existing experimental calibration"
+      }
+    },
+    {
+      "id": "way/755554892",
+      "street": "Water",
+      "status": "updated",
+      "reason": "Observed appearance attached to original mapped frontage.",
+      "mappedName": "Harvey's",
+      "centroid": {
+        "lat": 44.3014236,
+        "lon": -78.3185306
+      },
+      "reference": {
+        "file": "VID_20261018_073202_00_001.insv",
+        "sourceSeconds": 600,
+        "lens": 0,
+        "sourceFrameSha256": "0136764a7dac751cf424cf7797fe21fe888a6ab50ec9ac97e26ec43ec8f370c3",
+        "neighborSeconds": [
+          594,
+          606
+        ],
+        "projection": "FisheyeReframer 2048px / 100deg; existing experimental calibration"
+      }
+    },
+    {
+      "id": "way/1009651247",
+      "street": "Water",
+      "status": "updated",
+      "reason": "Observed appearance attached to original mapped frontage.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.301809425,
+        "lon": -78.31941685
+      },
+      "reference": {
+        "file": "VID_20261018_073202_00_001.insv",
+        "sourceSeconds": 606,
+        "lens": 1,
+        "sourceFrameSha256": "b71d4b8d36ee74c3c3f7648c5a110a65a86c876af461c566b8ad561977e854cb",
+        "neighborSeconds": [
+          600,
+          612
+        ],
+        "projection": "FisheyeReframer 2048px / 100deg; existing experimental calibration"
+      }
+    },
+    {
+      "id": "way/1009651259",
+      "street": "Water",
+      "status": "updated",
+      "reason": "Observed appearance attached to original mapped frontage.",
+      "mappedName": "J.J. Turner Building",
+      "centroid": {
+        "lat": 44.30222856,
+        "lon": -78.31952543999999
+      },
+      "reference": {
+        "file": "VID_20261018_073202_00_001.insv",
+        "sourceSeconds": 624,
+        "lens": 1,
+        "sourceFrameSha256": "0bcd958ae767d088ce52dfa61712444a3bb7b16e1781057a6b0caad19a0ca99f",
+        "neighborSeconds": [
+          618,
+          630
+        ],
+        "projection": "FisheyeReframer 2048px / 100deg; existing experimental calibration"
+      }
+    },
+    {
+      "id": "way/1009651260",
+      "street": "Water",
+      "status": "updated",
+      "reason": "Observed appearance attached to original mapped frontage.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.30237562857143,
+        "lon": -78.31939385714286
+      },
+      "reference": {
+        "file": "VID_20261018_073202_00_001.insv",
+        "sourceSeconds": 612,
+        "lens": 1,
+        "sourceFrameSha256": "781d68c30e492f93b6ceb8136b6cbbb2bc5a2b515b7cfb99262d286bc9cbe187",
+        "neighborSeconds": [
+          606,
+          618
+        ],
+        "projection": "FisheyeReframer 2048px / 100deg; existing experimental calibration"
+      }
+    },
+    {
+      "id": "way/1009651261",
+      "street": "Water",
+      "status": "updated",
+      "reason": "Observed appearance attached to original mapped frontage.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.3025289,
+        "lon": -78.319422525
+      },
+      "reference": {
+        "file": "VID_20261018_073202_00_001.insv",
+        "sourceSeconds": 630,
+        "lens": 1,
+        "sourceFrameSha256": "5816e0cb0201bd727df9e2f8ec47196a68eb67f4a82b789af674c7f88cf3f46e",
+        "neighborSeconds": [
+          624,
+          636
+        ],
+        "projection": "FisheyeReframer 2048px / 100deg; existing experimental calibration"
+      }
+    },
+    {
+      "id": "way/1009651258",
+      "street": "Water",
+      "status": "retained-occluded",
+      "reason": "Small compound at the lower King/east Water approach; oblique/occluded view insufficient for a reliable facade.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.302497800000005,
+        "lon": -78.31867758
+      }
+    },
+    {
+      "id": "way/1009651262",
+      "street": "Water",
+      "status": "updated",
+      "reason": "Observed appearance attached to original mapped frontage.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.30271986923076,
+        "lon": -78.31932246923077
+      },
+      "reference": {
+        "file": "VID_20261018_073202_00_001.insv",
+        "sourceSeconds": 630,
+        "lens": 1,
+        "sourceFrameSha256": "5816e0cb0201bd727df9e2f8ec47196a68eb67f4a82b789af674c7f88cf3f46e",
+        "neighborSeconds": [
+          624,
+          636
+        ],
+        "projection": "FisheyeReframer 2048px / 100deg; existing experimental calibration"
+      }
+    },
+    {
+      "id": "way/930494669",
+      "street": "Water",
+      "status": "excluded-roof",
+      "reason": "Open shelter/roof, not a solid street building.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.303049120000004,
+        "lon": -78.31849714
+      }
+    },
+    {
+      "id": "way/1009651266",
+      "street": "Water",
+      "status": "updated",
+      "reason": "Observed appearance attached to original mapped frontage.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.30317195185185,
+        "lon": -78.31923499259258
+      },
+      "reference": {
+        "file": "VID_20261018_073202_00_001.insv",
+        "sourceSeconds": 642,
+        "lens": 1,
+        "sourceFrameSha256": "4a00b0e57ab40cf7d88d1826eb01e15c971aa48e1bbd7b590b1cf2e87db14bc8",
+        "neighborSeconds": [
+          636,
+          648
+        ],
+        "projection": "FisheyeReframer 2048px / 100deg; existing experimental calibration"
+      }
+    },
+    {
+      "id": "way/995887447",
+      "street": "Water",
+      "status": "updated",
+      "reason": "Observed appearance attached to original mapped frontage.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.3030307030303,
+        "lon": -78.31816606666666
+      },
+      "reference": {
+        "file": "VID_20261018_073202_00_001.insv",
+        "sourceSeconds": 636,
+        "lens": 0,
+        "sourceFrameSha256": "47f803bade69115003daa076050abaa228451152de0fe69405613fcdfa9216d5",
+        "neighborSeconds": [
+          630,
+          642
+        ],
+        "projection": "FisheyeReframer 2048px / 100deg; existing experimental calibration"
+      }
+    },
+    {
+      "id": "way/945902121",
+      "street": "Water",
+      "status": "excluded-roof",
+      "reason": "Roof-only outbuilding behind the first street row.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.30317338333333,
+        "lon": -78.31913658333333
+      }
+    },
+    {
+      "id": "way/458496270",
+      "street": "Water",
+      "status": "retained-occluded",
+      "reason": "Galaxy building set back beyond open space/vegetation; visible context reviewed, do not invent an unrecorded main entrance.",
+      "mappedName": "Galaxy Cinemas Peterborough",
+      "centroid": {
+        "lat": 44.30413594545454,
+        "lon": -78.31820914242425
+      }
+    },
+    {
+      "id": "way/77774650",
+      "street": "Water",
+      "status": "updated",
+      "reason": "Observed appearance attached to original mapped frontage.",
+      "mappedName": "Peterborough Square",
+      "centroid": {
+        "lat": 44.304119189285714,
+        "lon": -78.31937064285715
+      },
+      "reference": {
+        "file": "VID_20261018_073202_00_001.insv",
+        "sourceSeconds": 690,
+        "lens": 1,
+        "sourceFrameSha256": "dfbabff872e67829c8c1b0a271aedc672f33557f9bf193e47320bd786cbde549",
+        "neighborSeconds": [
+          684,
+          696
+        ],
+        "projection": "FisheyeReframer 2048px / 100deg; existing experimental calibration"
+      }
+    },
+    {
+      "id": "way/458496269",
+      "street": "Water",
+      "status": "updated",
+      "reason": "Observed appearance attached to original mapped frontage.",
+      "mappedName": "BrickHouse Craft Burger",
+      "centroid": {
+        "lat": 44.30457540909091,
+        "lon": -78.31853058181818
+      },
+      "reference": {
+        "file": "VID_20261018_073202_00_001.insv",
+        "sourceSeconds": 696,
+        "lens": 0,
+        "sourceFrameSha256": "e61e5f20589d1b449c7dfa2ebf372b0702665f67c2759ea73aade0a545278886",
+        "neighborSeconds": [
+          690,
+          702
+        ],
+        "projection": "FisheyeReframer 2048px / 100deg; existing experimental calibration"
+      }
+    },
+    {
+      "id": "way/1031042883",
+      "street": "Water",
+      "status": "updated",
+      "reason": "Observed appearance attached to original mapped frontage.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.30491546666667,
+        "lon": -78.31859116666666
+      },
+      "reference": {
+        "file": "VID_20261018_073202_00_001.insv",
+        "sourceSeconds": 714,
+        "lens": 0,
+        "sourceFrameSha256": "b0f995e688aac31bc10289993e5d975c706a77fb9b27cc4f1babf56bf9be941b",
+        "neighborSeconds": [
+          708,
+          720
+        ],
+        "projection": "FisheyeReframer 2048px / 100deg; existing experimental calibration"
+      }
+    },
+    {
+      "id": "way/1006243563",
+      "street": "Water",
+      "status": "updated",
+      "reason": "Observed appearance attached to original mapped frontage.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.30495465,
+        "lon": -78.319174725
+      },
+      "reference": {
+        "file": "VID_20261018_073202_00_001.insv",
+        "sourceSeconds": 720,
+        "lens": 1,
+        "sourceFrameSha256": "1962aaa98621c6789353f35e6c012ce413971fb2122d7905b3078d792c36ff16",
+        "neighborSeconds": [
+          714,
+          726
+        ],
+        "projection": "FisheyeReframer 2048px / 100deg; existing experimental calibration"
+      }
+    },
+    {
+      "id": "way/1006243552",
+      "street": "Water",
+      "status": "updated",
+      "reason": "Observed appearance attached to original mapped frontage.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.305138740000004,
+        "lon": -78.3185561
+      },
+      "reference": {
+        "file": "VID_20261018_073202_00_001.insv",
+        "sourceSeconds": 732,
+        "lens": 0,
+        "sourceFrameSha256": "54ed48854d4265844a161b5240784411aef6b850c05c9fd9a809eac0e1a01eda",
+        "neighborSeconds": [
+          726,
+          738
+        ],
+        "projection": "FisheyeReframer 2048px / 100deg; existing experimental calibration"
+      }
+    },
+    {
+      "id": "way/1006243558",
+      "street": "Water",
+      "status": "updated",
+      "reason": "Observed appearance attached to original mapped frontage.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.305199716666664,
+        "lon": -78.31913311666666
+      },
+      "reference": {
+        "file": "VID_20261018_073202_00_001.insv",
+        "sourceSeconds": 732,
+        "lens": 1,
+        "sourceFrameSha256": "5070c046d7cff32219aed2d5b958e3f93aafa8af0e58ed2bdef145a684bed0b6",
+        "neighborSeconds": [
+          726,
+          738
+        ],
+        "projection": "FisheyeReframer 2048px / 100deg; existing experimental calibration"
+      }
+    },
+    {
+      "id": "way/1006243553",
+      "street": "Water",
+      "status": "updated",
+      "reason": "Observed appearance attached to original mapped frontage.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.305252100000004,
+        "lon": -78.31860351428573
+      },
+      "reference": {
+        "file": "VID_20261018_073202_00_001.insv",
+        "sourceSeconds": 732,
+        "lens": 0,
+        "sourceFrameSha256": "54ed48854d4265844a161b5240784411aef6b850c05c9fd9a809eac0e1a01eda",
+        "neighborSeconds": [
+          726,
+          738
+        ],
+        "projection": "FisheyeReframer 2048px / 100deg; existing experimental calibration"
+      }
+    },
+    {
+      "id": "way/1006243559",
+      "street": "Water",
+      "status": "updated",
+      "reason": "Observed appearance attached to original mapped frontage.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.3052884,
+        "lon": -78.31912351999999
+      },
+      "reference": {
+        "file": "VID_20261018_073202_00_001.insv",
+        "sourceSeconds": 738,
+        "lens": 1,
+        "sourceFrameSha256": "db0a9916c413a3cfd97f03ecbc5185d64b40be169adb0087c734c9fd5fdf59a5",
+        "neighborSeconds": [
+          732,
+          744
+        ],
+        "projection": "FisheyeReframer 2048px / 100deg; existing experimental calibration"
+      }
+    },
+    {
+      "id": "way/1006243554",
+      "street": "Water",
+      "status": "updated",
+      "reason": "Observed appearance attached to original mapped frontage.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.30542106,
+        "lon": -78.31859394
+      },
+      "reference": {
+        "file": "VID_20261018_073202_00_001.insv",
+        "sourceSeconds": 738,
+        "lens": 0,
+        "sourceFrameSha256": "cf539f94ab7184d21997922e4fca31930988753bf01c3f7f9d0c2356e5e99f3a",
+        "neighborSeconds": [
+          732,
+          744
+        ],
+        "projection": "FisheyeReframer 2048px / 100deg; existing experimental calibration"
+      }
+    },
+    {
+      "id": "way/1006243562",
+      "street": "Water",
+      "status": "existing-reviewed",
+      "reason": "Existing Station 1/Sherbrooke or downtown facade reviewed against full recording and retained.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.305465857142856,
+        "lon": -78.3192037142857
+      }
+    },
+    {
+      "id": "way/945902906",
+      "street": "Water",
+      "status": "excluded-behind",
+      "reason": "Separate Hunter wing behind Commerce from this route; do not duplicate its facade on Water.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.305736325,
+        "lon": -78.31929435
+      }
+    },
+    {
+      "id": "way/1005977949",
+      "street": "Hunter",
+      "status": "excluded-behind",
+      "reason": "Northwest Water/Hunter corner is behind the eastbound turn; exclude unrecorded Hunter-west elevation.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.306168650000004,
+        "lon": -78.319164925
+      }
+    },
+    {
+      "id": "way/1005977950",
+      "street": "Hunter",
+      "status": "excluded-behind",
+      "reason": "Second northwest parcel behind the first corner, outside eastbound Hunter frontage.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.306149233333336,
+        "lon": -78.31932361666667
+      }
+    },
+    {
+      "id": "way/1006243555",
+      "street": "Hunter",
+      "status": "existing-reviewed",
+      "reason": "Existing Station 1/Sherbrooke or downtown facade reviewed against full recording and retained.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.305744450000006,
+        "lon": -78.3185786
+      }
+    },
+    {
+      "id": "way/1005975373",
+      "street": "Hunter",
+      "status": "updated",
+      "reason": "Observed appearance attached to original mapped frontage.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.306132175,
+        "lon": -78.31838127500001
+      },
+      "reference": {
+        "file": "VID_20261018_073202_00_001.insv",
+        "sourceSeconds": 756,
+        "lens": 1,
+        "sourceFrameSha256": "a07e399d561dc5575dc17b51b6a01f2dd5c0e8dd00287513a4223cee1675944e",
+        "neighborSeconds": [
+          750,
+          762
+        ],
+        "projection": "FisheyeReframer 2048px / 100deg; existing experimental calibration"
+      }
+    },
+    {
+      "id": "way/1006243532",
+      "street": "Hunter",
+      "status": "updated",
+      "reason": "Observed appearance attached to original mapped frontage.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.305850850000006,
+        "lon": -78.31743375833334
+      },
+      "reference": {
+        "file": "VID_20261018_073202_00_001.insv",
+        "sourceSeconds": 768,
+        "lens": 0,
+        "sourceFrameSha256": "f498bf4ed02a088f4e8035c56ed4fc8defe13f3a59fd4a9fb940008714eee6da",
+        "neighborSeconds": [
+          762,
+          774
+        ],
+        "projection": "FisheyeReframer 2048px / 100deg; existing experimental calibration"
+      }
+    },
+    {
+      "id": "way/472446708",
+      "street": "Hunter",
+      "status": "updated",
+      "reason": "Observed appearance attached to original mapped frontage.",
+      "mappedName": "Churchill Manor Apartments",
+      "centroid": {
+        "lat": 44.306445479411764,
+        "lon": -78.31739177647059
+      },
+      "reference": {
+        "file": "VID_20261018_073202_00_001.insv",
+        "sourceSeconds": 768,
+        "lens": 1,
+        "sourceFrameSha256": "ef6ade6a125b5d2a569066bce69c8366af240a61a373088d585f82ee56ecf8a6",
+        "neighborSeconds": [
+          762,
+          774
+        ],
+        "projection": "FisheyeReframer 2048px / 100deg; existing experimental calibration"
+      }
+    },
+    {
+      "id": "way/1006243541",
+      "street": "Hunter",
+      "status": "updated",
+      "reason": "Observed appearance attached to original mapped frontage.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.305876525,
+        "lon": -78.317260275
+      },
+      "reference": {
+        "file": "VID_20261018_073202_00_001.insv",
+        "sourceSeconds": 768,
+        "lens": 0,
+        "sourceFrameSha256": "f498bf4ed02a088f4e8035c56ed4fc8defe13f3a59fd4a9fb940008714eee6da",
+        "neighborSeconds": [
+          762,
+          774
+        ],
+        "projection": "FisheyeReframer 2048px / 100deg; existing experimental calibration"
+      }
+    },
+    {
+      "id": "way/1006243540",
+      "street": "Hunter",
+      "status": "updated",
+      "reason": "Observed appearance attached to original mapped frontage.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.305838025,
+        "lon": -78.3171012
+      },
+      "reference": {
+        "file": "VID_20261018_073202_00_001.insv",
+        "sourceSeconds": 774,
+        "lens": 0,
+        "sourceFrameSha256": "5a23a3db61512224bd4217428ded7e397a26d8e092dddd38c5e531adf5744a9d",
+        "neighborSeconds": [
+          768,
+          780
+        ],
+        "projection": "FisheyeReframer 2048px / 100deg; existing experimental calibration"
+      }
+    },
+    {
+      "id": "way/1005975361",
+      "street": "Hunter",
+      "status": "updated",
+      "reason": "Observed appearance attached to original mapped frontage.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.30625155,
+        "lon": -78.316770425
+      },
+      "reference": {
+        "file": "VID_20261018_073202_00_001.insv",
+        "sourceSeconds": 774,
+        "lens": 1,
+        "sourceFrameSha256": "a6f149975f8a0db83be467ebfe8b8a3dab6e13909bcfb50a6693e230fc79d9f9",
+        "neighborSeconds": [
+          768,
+          780
+        ],
+        "projection": "FisheyeReframer 2048px / 100deg; existing experimental calibration"
+      }
+    },
+    {
+      "id": "way/1005975362",
+      "street": "Hunter",
+      "status": "updated",
+      "reason": "Observed appearance attached to original mapped frontage.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.306239624999996,
+        "lon": -78.316540925
+      },
+      "reference": {
+        "file": "VID_20261018_073202_00_001.insv",
+        "sourceSeconds": 774,
+        "lens": 1,
+        "sourceFrameSha256": "a6f149975f8a0db83be467ebfe8b8a3dab6e13909bcfb50a6693e230fc79d9f9",
+        "neighborSeconds": [
+          768,
+          780
+        ],
+        "projection": "FisheyeReframer 2048px / 100deg; existing experimental calibration"
+      }
+    },
+    {
+      "id": "way/1031894168",
+      "street": "Hunter",
+      "status": "updated",
+      "reason": "Recorded eight-level brick/cream framed Hunter section beside a two-level wing, estimated 30m/10.5m. Visible south volumes are clipped to original factory footprint; division and northward depth are approximate; low zone extends behind the photographed wing to avoid a tall wall against its observed skyline. Unseen northern factory height retains source estimate 71m; separate mapped elevated links retained. Old overlapping authored boxes suppressed. Ground arches and unrecorded rear facades remain simplified.",
+      "mappedName": null,
+      "centroid": {
+        "lat": 44.307584457013576,
+        "lon": -78.31494930271492
+      },
+      "reference": {
+        "file": "VID_20261018_073202_00_001.insv",
+        "sourceSeconds": 786,
+        "lens": 1,
+        "sourceFrameSha256": "b3b70d53934c7d9920824a986dab4e228ee6c71c21336c380744fa1164f8bc55",
+        "neighborSeconds": [
+          780,
+          792
+        ],
+        "projection": "FisheyeReframer 2048px / 100deg; existing experimental calibration"
+      }
+    }
+  ],
+  "counts": {
+    "excluded-behind": 3,
+    "excluded-roof": 2,
+    "existing-reviewed": 16,
+    "retained-occluded": 3,
+    "updated": 27
+  },
+  "limits": [
+    "Visual estimates, not a measured architectural survey",
+    "Existing experimental lens calibration reused",
+    "Complex rear/upper masses and occluded facades explicitly retained; no claim that all reference images yield new geometry",
+    "Original OSM rings, roads, collision and the six earlier photo facades retained"
+  ],
+  "sources": [
+    {
+      "url": "https://www.infrastructureontario.ca/en/what-we-do/projectssearch/300-water-st.---leed-ebom-platinum",
+      "supports": "300 Water / Robinson Place identity and compound seven-storey context; photographed street wing is lower"
+    }
+  ]
+}

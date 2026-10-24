@@ -17,7 +17,7 @@ const sourceRing = id => {
 const finite = values => [...values].every(Number.isFinite);
 const segmentDistance = (p, a, b) => { const dx = b.x - a.x, dz = b.z - a.z, t = Math.max(0, Math.min(1, ((p.x - a.x) * dx + (p.z - a.z) * dz) / (dx * dx + dz * dz || 1))); return Math.hypot(p.x - a.x - dx * t, p.z - a.z - dz * t); };
 
-assert.equal(Object.keys(FOOTAGE_PROFILES).length, 22, "all 22 reviewed profile records remain available by OSM way id");
+assert.equal(Object.keys(FOOTAGE_PROFILES).length, 49, "all reviewed profile records remain available by OSM way id");
 for (const [id, profile] of Object.entries(FOOTAGE_PROFILES)) {
   const ring = sourceRing(id), frame = frontageFrame({ profile, ring, project });
   assert.ok(frame.length > 2 && finite([frame.start.x, frame.start.z, frame.end.x, frame.end.z]), `${profile.label} has a finite projected frontage`);
@@ -83,4 +83,4 @@ try {
     assert.equal(disposedPhotoGeometry, 2, "failure and timeout both dispose their unused patch geometry");
   } finally { globalThis.setTimeout = originalSetTimeout; globalThis.clearTimeout = originalClearTimeout; }
 } finally { THREE.BufferGeometry.prototype.dispose = disposeOriginal; }
-console.log("Sherbrooke frontage checks passed: 22 OSM profiles, source alignment, finite geometry, conservative openings, mural UVs and bounded photo loading.");
+console.log("Sherbrooke frontage checks passed: 49 OSM profiles, source alignment, finite geometry, conservative openings, mural UVs and bounded photo loading.");

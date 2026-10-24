@@ -1,5 +1,6 @@
 // Reviewed visual profiles; original map footprints and collision remain authoritative.
 import { VIDEO_BUILDING_PROFILES } from './video-building-profiles.js';
+import { ROUTE_BUILDING_PROFILES } from './route-building-profiles.js';
 export const FOOTAGE_PROFILES = Object.fromEntries([
   {
     "id": "way/1009651251",
@@ -169,14 +170,14 @@ export const FOOTAGE_PROFILES = Object.fromEntries([
     "label": "N04",
     "name": "Good Neighbours Care Centre",
     "confidence": "partial",
-    "height": 10.5,
-    "eaveHeight": 9.8,
+    "height": 7.8,
+    "eaveHeight": 7.5,
     "roof": "flat",
     "roofRise": 0,
     "wallColor": "#a3a285",
     "roofColor": "#55504a",
     "trimColor": "#4a4438",
-    "levels": 3,
+    "levels": 2,
     "windowColumns": 6,
     "style": "office",
     "features": [
@@ -184,12 +185,17 @@ export const FOOTAGE_PROFILES = Object.fromEntries([
       "street-facing-identification-sign"
     ],
     "signText": "Good Neighbours Care Centre",
-    "notes": "Tan/greenish brick, repeated upper-floor windows and care-centre sign are visible in late north-side view. Trees and angle obscure portions; floors and dimensions are visual estimates.",
+    "notes": "Full source shows two principal storeys with repeated rectangular openings and pale tan/green masonry; correct earlier estimated three-storey profile.",
     "reference": {
-      "file": "references/0190_LEFT_SIDE.jpg",
-      "sourceSequence": 190,
-      "sourceSeconds": 155.488667,
-      "sha256": "d76cd1301a4861600ff9af24fbd1fba6672da65f7261d9e4190e53da5cbfcf3b"
+      "file": "VID_20261018_073202_00_001.insv",
+      "sourceSeconds": 528,
+      "lens": 1,
+      "sourceFrameSha256": "9a54358246632ac73b2d09b39176e248fe99a9da190e3d042f80e36e9190fca7",
+      "neighborSeconds": [
+        522,
+        534
+      ],
+      "projection": "FisheyeReframer 2048px / 100deg; existing experimental calibration"
     },
     "texturePatch": null,
     "frontLatLon": [
@@ -1025,24 +1031,29 @@ export const FOOTAGE_PROFILES = Object.fromEntries([
     "label": "S12",
     "name": "Sherbrooke south-side commercial/service building",
     "confidence": "partial",
-    "height": 6.0,
-    "eaveHeight": 5.6,
+    "height": 7.0,
+    "eaveHeight": 6.8,
     "roof": "flat",
     "roofRise": 0,
-    "wallColor": "#aaa18f",
+    "wallColor": "#894738",
     "roofColor": "#57544d",
-    "trimColor": "#5a564d",
-    "levels": 1,
-    "windowColumns": 2,
+    "trimColor": "#d4c6a7",
+    "levels": 2,
+    "windowColumns": 7,
     "style": "retail",
     "features": [],
     "signText": null,
-    "notes": "Final opposite-side still partially shows low commercial/service buildings. Exact frontage and height unresolved; neutral mass avoids invented sign/facade details.",
+    "notes": "Full original recording resolves two levels, dark red cladding/brick, pale continuous fascia, narrow upper openings and ground-level shop windows. Individual shop signs not asserted.",
     "reference": {
-      "file": "references/0200_RIGHT_SIDE.jpg",
-      "sourceSequence": 200,
-      "sourceSeconds": 164.2641,
-      "sha256": "8a822832b88565c23f7cf0161c14bfa723197a77fe3a5a2a7de205262cd0343c"
+      "file": "VID_20261018_073202_00_001.insv",
+      "sourceSeconds": 534,
+      "lens": 0,
+      "sourceFrameSha256": "9faef6b8b11ee82603a66767cb220dc6646e49113173f0a47b9c218baac3198a",
+      "neighborSeconds": [
+        528,
+        540
+      ],
+      "projection": "FisheyeReframer 2048px / 100deg; existing experimental calibration"
     },
     "texturePatch": null,
     "frontLatLon": [
@@ -1055,6 +1066,19 @@ export const FOOTAGE_PROFILES = Object.fromEntries([
         "lat": 44.300696800455356
       }
     ],
-    "frontSource": "Ordered frontage endpoints converted from reference block.json to geographic coordinates for the existing project() transform."
+    "frontSource": "Ordered frontage endpoints converted from reference block.json to geographic coordinates for the existing project() transform.",
+    "windowWidthMetres": 0.65,
+    "windowHeightMetres": 0.95,
+    "facadePanels": [
+      {
+        "fraction": 0.5,
+        "bottomMetres": 2.5,
+        "widthFraction": 1,
+        "heightMetres": 0.8,
+        "color": "#d0c5a2",
+        "outsetMetres": 0.16
+      }
+    ]
   }
-, ...VIDEO_BUILDING_PROFILES].map(profile => [profile.id, profile]));
+, ...VIDEO_BUILDING_PROFILES,
+  ...ROUTE_BUILDING_PROFILES].map(profile => [profile.id, profile]));

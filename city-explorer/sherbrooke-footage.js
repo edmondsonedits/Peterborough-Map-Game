@@ -71,7 +71,7 @@ export function createFootageFacade({ THREE, profile, ring, base, top, project, 
     return root;
   }
 
-  const f = frontageFrame({ profile, ring, project }), h = Math.min(top - base, Number(profile.eaveHeight) || Number(profile.height) || top - base), levels = clamp(Number(profile.levels) || 1, 1, 5), columns = clamp(Number(profile.windowColumns) || 2, 1, 12), atticBand = clamp(Number(profile.atticBandHeight) || 0, 0, h * .2), floor = (h - atticBand) / levels;
+  const f = frontageFrame({ profile, ring, project }), h = Math.min(top - base, Number(profile.detailHeightMetres) || Number(profile.eaveHeight) || Number(profile.height) || top - base), levels = clamp(Number(profile.levels) || 1, 1, 16), columns = clamp(Number(profile.windowColumns) || 2, 1, 48), atticBand = clamp(Number(profile.atticBandHeight) || 0, 0, h * .2), floor = (h - atticBand) / levels;
   const frontageDetails = new THREE.Group(); frontageDetails.name = "frontage-procedural-details"; root.add(frontageDetails);
   const unitBox = new THREE.BoxGeometry(1, 1, 1), mats = new Map(), instances = new Map(), dummy = new THREE.Object3D();
   const palette = { trim: profile.trimColor || "#eee8dc", wall: profile.wallColor || "#a8907a", brick: profile.wallColor || "#a8907a", glass: "#33494e", shade: "#322f2c", door: "#53443a", metal: "#343a39", accent: profile.trimColor || "#eee8dc" };
@@ -107,8 +107,8 @@ export function createFootageFacade({ THREE, profile, ring, base, top, project, 
     const band = clamp(Number(profile.plinthHeight), .1, Math.min(h, 4));
     box(.5, band / 2, f.length, band, .12, profile.plinthColor, .1);
   }
-  for (let level = 0; level < levels; level++) {
-    const y = floor * (level + .53), ww = style === "house" ? .96 : 1.42, wh = Math.min(style === "house" ? 1.35 : 1.65, floor * .62);
+  for (let level = 0; level < (profile.blankFacade ? 0 : levels); level++) {
+    const y = floor * (level + .53), ww = clamp(Number(profile.windowWidthMetres) || (style === "house" ? .96 : 1.42), .2, f.length / columns * .9), wh = Math.min(Number(profile.windowHeightMetres) || (style === "house" ? 1.35 : 1.65), floor * (Number(profile.windowHeightMetres) > 0 ? .85 : .62));
     if ((level === 0 && wideGlass) || profile.glazedLevels?.includes(level)) {
       const gy = level === 0 && wideGlass ? floor * .5 : y, gh = clamp(Number(profile.glazedLevelHeights?.[level]) || floor * .9, .3, floor * .9), gw = f.length * .9; box(.5, gy, gw, gh, .1, "glass", .19);
       for (let i = 0; i <= columns; i++) box(.05 + .9 * i / columns, gy, .075, gh, .06, "accent", .27);
@@ -122,6 +122,44 @@ export function createFootageFacade({ THREE, profile, ring, base, top, project, 
       else window(t, y, ww, wh);
     }
   }
+  // Recorded additions use bounded dimensions and merge into existing material batches.
+  for (const panel of (profile.facadePanels || []).slice(0, 12)) {
+    const width = f.length * clamp(Number(panel.widthFraction) || .2, .02, 1);
+    const fraction = clamp(Number.isFinite(panel.fraction) ? panel.fraction : .5, width / (2 * f.length), 1 - width / (2 * f.length));
+    const bottom = clamp(Number(panel.bottomMetres) || 0, 0, h - .05), height = clamp(Number(panel.heightMetres) || .5, .05, h - bottom);
+    box(fraction, bottom + height / 2, width, height, .06, panel.color || 'trim', clamp(Number(panel.outsetMetres) || .3, .16, .6));
+  }
+  if (profile.verticalGlazing) {
+    const pane = profile.verticalGlazing, width = f.length * clamp(Number(pane.widthFraction) || .1, .03, .3);
+    const fraction = clamp(Number(pane.fraction) || .5, width / (2 * f.length), 1 - width / (2 * f.length));
+    const bottom = clamp(Number(pane.bottomMetres) || 0, 0, h - .2), height = clamp(Number(pane.heightMetres) || h, .2, h - bottom);
+    box(fraction, bottom + height / 2, width, height, .12, 'glass', .31);
+    for (const side of [-1, 1]) box(fraction + side * width / (2 * f.length), bottom + height / 2, .09, height, .12, 'trim', .35);
+  }
+  if (profile.entryCanopy) {
+    const canopy = profile.entryCanopy, width = clamp(Number(canopy.widthMetres) || 3, .5, f.length * .95), depth = clamp(Number(canopy.depthMetres) || 1, .2, 2.5), y = clamp(Number(canopy.heightMetres) || 2.8, .8, h - .15);
+    const fraction = clamp(Number(canopy.fraction) || .5, width / (2 * f.length), 1 - width / (2 * f.length));
+    box(fraction, y, width, .16, depth, 'trim', depth / 2 + .15);
+    if (depth > 1) for (const side of [-1, 1]) box(fraction + side * width * .43 / f.length, y / 2, .14, y, .14, 'trim', depth);
+  }
+  for (const level of [...new Set(profile.balconyLevels || [])].filter(n => Number.isInteger(n) && n > 0 && n < levels).slice(0, 15)) {
+    const y = level * floor, width = f.length * clamp(Number(profile.balconyWidthFraction) || .65, .1, .95);
+    box(.5, y, width, .12, .9, 'trim', .6);
+    box(.5, y + .95, width, .07, .07, 'trim', .98);
+    for (let i = 0; i < 9; i++) box(.5 + (i - 4) * width / (9 * f.length), y + .48, .035, .9, .04, 'trim', .98);
+  }
+
+  if (profile.structuralGrid) {
+    for (let i=0;i<=columns;i++) box(.02+.96*i/columns,h/2,.35,h,.12,'trim',.34);
+    for (let i=0;i<=levels;i++) box(.5,h*i/levels,f.length,.3,.12,'trim',.34);
+  }
+  if (profile.roof === 'mansard') for (const dormer of (profile.roofDormers || []).slice(0,6)) {
+    const width=clamp(Number(dormer.width)||.8,.5,Math.min(2.2,f.length*.2)),t=clamp(Number(dormer.fraction)||.5,width/f.length,1-width/f.length),rise=clamp(Number(profile.roofRise)||2,.5,4),y=h+rise*.53;
+    box(t,y,width,1.4,1.3,'trim',-.65);
+    box(t,y,width*.7,1.05,.04,'glass',.025);
+    box(t,y+.75,width+.18,.14,1.5,'trim',-.65);
+  }
+
   // Separate attic band: never replace the observed rectangular main floors.
   if (atticBand > .2) {
     const count = clamp(Math.round(Number(profile.atticWindowColumns) || columns), 1, 24);
@@ -171,7 +209,7 @@ export function createFootageFacade({ THREE, profile, ring, base, top, project, 
   } else if (style === "retail") {
     box(.5, h - .33, f.length * .98, .42, .23, (profile.features || []).includes("green-parapet-trim") ? "#658158" : "trim", .23);
     if (profile.features?.includes("black-sign-awnings")) for (let i = 0; i < columns; i++) box((i + .5) / columns, 2.38, f.length / columns * .86, .18, .48, "shade", .44);
-  } else if (style === "office" && levels > 1) {
+  } else if (style === "office" && levels > 1 && !profile.blankFacade) {
     // A modest entry marks office frontages without implying storefront signage where none is listed.
     const t = Number.isFinite(profile.doorFraction) ? profile.doorFraction : .5;
     if (!profile.skipGroundWindows) box(t, 1.05, .9, 2.05, .1, "door", .23);

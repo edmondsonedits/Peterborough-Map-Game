@@ -1,9 +1,10 @@
 import { recordSherbrookeBuilding, recordSherbrookeSidewalk, sherbrookeBuildings } from './sherbrooke-plan.js';
 import { installSherbrookeDetails } from './sherbrooke-details.js?v=frontages-20261021';
-import { FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js?v=frontages-20261021';
-import { createFootageFacade, frontageFrame } from './sherbrooke-footage.js?v=frontages-20261021';
+import { FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js?v=corridor-20261024';
+import { createFootageFacade, frontageFrame } from './sherbrooke-footage.js?v=corridor-20261024';
 import { createGardenClearance } from './sherbrooke-garden-clearance.js';
-import { appendFootageRoof } from './sherbrooke-footage-roofs.js';
+import { appendFootageRoof } from './sherbrooke-footage-roofs.js?v=corridor-20261024';
+import { appendFootageMassing } from './footage-building-massing.js';
 import * as THREE from 'three';
 import { reconcileStationPavement } from './station-pavement-layer.js?v=1.6.57';
 import { CURB_REVEAL, curbIsRaised, stationRoadWeight, splitRoadDetailSegment, pavementSupportBottom } from './station-road-detail.js?v=1.6.58';
@@ -14,11 +15,11 @@ import { createVegetationVariant, stationOneVegetationPalette } from './vegetati
 import { installStationStreetscape } from './streetscape-assets.js?v=streetscape-2';
 import { installStationApron } from './site-surface-materials.js?v=1.6.56';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
-import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js?v=1.6.126';
+import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js?v=1.6.127';
 import { createCatalogObject } from './editor/asset-catalog.js';
 import { createCommandHistory } from './editor/command-history.js';
-import { createDraftStore } from './editor/draft-store.js?v=1.6.126';
-import { createCityEditor } from './editor/city-editor.js?v=1.6.126';
+import { createDraftStore } from './editor/draft-store.js?v=1.6.127';
+import { createCityEditor } from './editor/city-editor.js?v=1.6.127';
 import { createEmptySceneDocument, sanitizeRenderableSceneDocument } from './editor/scene-document.js';
 import { createGeneratedRegistry } from './editor/generated-registry.js?v=footage-20261020';
 import { applyOverrides } from './editor/override-runtime.js';
@@ -28,7 +29,7 @@ import {
   LANDMARK_BUILDING_HEIGHT_OVERRIDES,
   createBuildingFootprintPlacement,
   createPeterboroughLandmarks,
-} from './landmark-models.js?v=1.5.5-streets4';
+} from './landmark-models.js?v=corridor-20261024';
 import { ROAD_SURFACE_CLEARANCE, RoadSurfaceIndex, laneCountFor, reconcileRoadNetworkElevations, roadProfile, roadRibbonCrossSections, resampleRoadLine } from './road-network.js?v=street-evidence-2';
 import { solveFallbackJunctions, polygonArea as junctionPolygonArea } from './fallback-junction-geometry.js';
 import { officialRoadMeshEdgeLength, officialCurbDisplayMode, nearbyMunicipalRoadHeight, municipalCurbTop } from './citywide-road-quality.js';
@@ -40,7 +41,7 @@ import { clearLandCoverRaster, paintLandCoverPolygon } from './land-cover-raster
 import { sampleOfficialTerrainElevation, validOfficialTerrainMetadata } from './terrain-heightmap.js?v=1.5.5-lidar1';
 import { sampleTriangulatedTerrainHeight } from './terrain-surface.js?v=1.5.5-terrain1';
 import { HydroSurfaceIndex, WATER_SURFACE_CLEARANCE, WATER_TERRAIN_RECESS, createWaterStageSampler, relativeWaterElevation, robustFallbackWaterHeight, subdivideWaterTriangle, watercourseWidth } from './water-system.js?v=1.5.5-hydro2';
-import { CitySplatLayer } from './city-splat-layer.js?v=1.6.126';
+import { CitySplatLayer } from './city-splat-layer.js?v=1.6.127';
 import {
   estimatedBuildingFloors,
   facadeDetailClass,
@@ -1054,7 +1055,7 @@ function createTerrainMesh(hydroSurfaceIndex = null) {
 function buildingDimensions(tags = {}, featureId = '') {
   const footage = FOOTAGE_PROFILES[featureId];
   // Appearance estimates only. Preserve the reviewed station and unobserved rear masses.
-  if (footage && footage.style !== 'station' && footage.confidence !== 'inferred') {
+  if (footage && !footage.preserveMappedMassing && footage.style !== 'station' && footage.confidence !== 'inferred') {
     return {height: footage.eaveHeight, minHeight: 0,
       roofHeight: footage.roof === 'flat' ? 0.2 : footage.roofRise,
       roofShape: {gable: 'gabled', hip: 'hipped'}[footage.roof] || 'flat'};
@@ -1148,17 +1149,13 @@ function roofMaterialKey(tags, wallMaterialKey) {
   return 'roofDark';
 }
 
-function coordinatesToRing(coordinates) {
-  return simplifyRing(
-    coordinates
-      .filter((coordinate) => Array.isArray(coordinate) && coordinate.length >= 2)
-      .map(([lon, lat]) => {
-        const p = project(lat, lon);
-        return new THREE.Vector2(p.x, p.y);
-      }),
-    0.72,
-    110,
-  );
+function coordinatesToRing(coordinates, featureId = '') {
+  const ring = coordinates
+    .filter((coordinate) => Array.isArray(coordinate) && coordinate.length >= 2)
+    .map(([lon, lat]) => project(lat, lon));
+  // Captured facades use source edges. A point cap can cut across a concave
+  // corner and leave their windows in the air on complex footprints (Quaker).
+  return FOOTAGE_PROFILES[featureId] ? ring : simplifyRing(ring, 0.72, 110);
 }
 
 function shapeFromRings(rings) {
@@ -1487,10 +1484,12 @@ function flushPrototypeFacades() {
 function isCapturedFrontEdge(featureId, a, b) {
   const profile = FOOTAGE_PROFILES[featureId];
   if (!profile || profile.confidence === 'inferred' || profile.style === 'station') return false;
-  const [p, q] = profile.frontLatLon.map(({lat, lon}) => project(lat, lon));
-  const dx = q.x-p.x, dz = q.y-p.y, length = Math.hypot(dx,dz);
-  const distance = v => Math.abs(dx*(v.y-p.y)-dz*(v.x-p.x))/length;
-  return length > 1 && distance(a) < .15 && distance(b) < .15;
+  return [profile, ...(profile.additionalFrontages || [])].some(face => {
+    const [p, q] = face.frontLatLon.map(({lat, lon}) => project(lat, lon));
+    const dx = q.x-p.x, dz = q.y-p.y, length = Math.hypot(dx,dz);
+    const distance = v => Math.abs(dx*(v.y-p.y)-dz*(v.x-p.x))/length;
+    return length > 1 && distance(a) < .15 && distance(b) < .15;
+  });
 }
 
 function appendPrototypeFacade(outer, tags, featureId, foundationTop, wallTop, batches, anchor) {
@@ -1649,9 +1648,8 @@ function appendBufferedBuilding(rings, tags, featureId, batches, sourceId = feat
   const allVertices = outer.concat(...holes);
   const groundHeights = allVertices.map((point) => terrainHeightAtWorld(point.x, point.y) + dimensions.minHeight);
   const foundationTop = Math.max(...groundHeights);
-  const wallTop = foundationTop + dimensions.height;
-  const roofTop = wallTop + dimensions.roofHeight;
-  recordSherbrookeBuilding(featureId, outer, foundationTop, wallTop);
+  let wallTop = foundationTop + dimensions.height;
+  let roofTop = wallTop + dimensions.roofHeight;
   const anchor = polygonCentroid(outer);
   const generatedFeatureKey = `${batchSetId(batches)}:${featureId}`;
   const wallKey = buildingMaterialKey(tags, dimensions.height + dimensions.minHeight + dimensions.roofHeight, featureId);
@@ -1669,6 +1667,11 @@ function appendBufferedBuilding(rings, tags, featureId, batches, sourceId = feat
     }
   }
 
+  const footage = FOOTAGE_PROFILES[featureId];
+  const massing = appendFootageMassing({THREE, wallPositions, roofPositions, outer, holes, foundationTop, profile: footage, project, groundHeights});
+  if (massing) { wallTop = foundationTop + massing.maxHeight; roofTop = wallTop + .2; }
+  recordSherbrookeBuilding(featureId, outer, foundationTop, massing ? foundationTop + (footage.detailHeightMetres || massing.defaultHeight) : wallTop);
+  if (!massing) {
   let groundOffset = 0;
   appendRingWalls(wallPositions, outer, groundHeights.slice(groundOffset, groundOffset + outer.length), foundationTop, wallTop);
   groundOffset += outer.length;
@@ -1740,8 +1743,10 @@ function appendBufferedBuilding(rings, tags, featureId, batches, sourceId = feat
     // still retained, and the rest of the city continues to load.
     console.debug('Skipped invalid building roof triangulation', featureId, error);
   }
+  } // Reviewed massing emitted all walls/roofs into the same editor batch ranges.
   if (!REVIEWED_BUILDING_STYLES[featureId]?.customFacade) {
-    appendBuildingFacadeDetails(outer, tags, featureId, foundationTop, wallTop, dimensions, batches, anchor);
+    const detailHeight = massing ? Math.min(footage.massing.defaultHeight, ...footage.massing.zones.map(zone => zone.height)) : dimensions.height;
+    appendBuildingFacadeDetails(outer, tags, featureId, foundationTop, foundationTop + detailHeight, {...dimensions, height: detailHeight}, batches, anchor);
   }
   const key = generatedFeatureKey;
   const point = unproject(anchor.x, anchor.y);
@@ -4252,7 +4257,7 @@ async function parseOsmWithGeoJson(data) {
 
     if (tags.building || tags['building:part']) {
       for (const polygonCoordinates of geometryPolygons(feature)) {
-        const rings = polygonCoordinates.map(coordinatesToRing).filter((ring) => ring.length >= 4);
+        const rings = polygonCoordinates.map(coordinates => coordinatesToRing(coordinates, featureId)).filter((ring) => ring.length >= 4);
         if (!rings.length) continue;
         if (!appendBufferedBuilding(rings, tags, featureId, buildingBatches, feature.id || tags.id || null)) continue;
         buildingCentroidIndex.add(rings);
@@ -4668,6 +4673,7 @@ async function buildCity() {
     project,
     terrainHeightAtWorld,
     landmarkBuildingPlacements: state.landmarkBuildingPlacements,
+    sourceOwnedLandmarks: new Set(Object.values(FOOTAGE_PROFILES).filter(profile => profile.replacesAuthoredLandmark).map(profile => profile.id)),
   });
   landmarkGroup.traverse((object) => {
     if (!object.isMesh) return;

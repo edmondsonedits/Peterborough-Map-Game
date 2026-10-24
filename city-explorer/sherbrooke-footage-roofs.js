@@ -31,7 +31,7 @@ function asWorld(p, y, THREE) { return new THREE.Vector3(p.x, y, p.y); }
 export function appendFootageRoof({ THREE, roofPositions, wallPositions, outer, wallTop, roofTop, profile, project }) {
   if (!THREE?.ShapeUtils?.triangulateShape || !Array.isArray(roofPositions) || !Array.isArray(wallPositions) || !Array.isArray(outer) || outer.length < 3 || !Number.isFinite(wallTop) || !Number.isFinite(roofTop) || typeof project !== "function") return false;
   const shape = String(profile?.roof || profile?.roofShape || "").toLowerCase();
-  if (!/^(gable|hip|pyramid)$/.test(shape) || roofTop <= wallTop || outer.some(p => !Number.isFinite(p.x) || !Number.isFinite(p.y))) return false;
+  if (!/^(gable|hip|pyramid|mansard)$/.test(shape) || roofTop <= wallTop || outer.some(p => !Number.isFinite(p.x) || !Number.isFinite(p.y))) return false;
   if (!Array.isArray(profile.frontLatLon) || profile.frontLatLon.length !== 2) return false;
   const projected = profile.frontLatLon.map(p => project(p.lat, p.lon));
   const start = { x: projected[0].x, z: projected[0].y ?? projected[0].z }, end = { x: projected[1].x, z: projected[1].y ?? projected[1].z };
@@ -49,17 +49,20 @@ export function appendFootageRoof({ THREE, roofPositions, wallPositions, outer, 
   // A plane's coefficients describe its normalized rise: a*u + b*v + c.
   // Gable slope varies across the frontage axis, leaving its ridge perpendicular
   // to the frontage. Hip roofs use the lower envelope of four edge-slope planes.
+  const runU = shape === 'mansard' ? Math.min((u1-u0)/3, Math.max(.6, Number(profile.roofInsetMetres) || 1.25)) : (u1-u0)/2;
+  const runV = shape === 'mansard' ? Math.min((v1-v0)/3, Math.max(.6, Number(profile.roofInsetMetres) || 1.25)) : (v1-v0)/2;
   const planes = shape === "gable"
     ? [
       { a: 1 / (ridgeU - u0), b: 0, c: -u0 / (ridgeU - u0) },
       { a: -1 / (u1 - ridgeU), b: 0, c: u1 / (u1 - ridgeU) },
     ]
     : [
-      { a: 1 / ((u1 - u0) / 2), b: 0, c: -u0 / ((u1 - u0) / 2) },
-      { a: -1 / ((u1 - u0) / 2), b: 0, c: u1 / ((u1 - u0) / 2) },
-      { a: 0, b: 1 / ((v1 - v0) / 2), c: -v0 / ((v1 - v0) / 2) },
-      { a: 0, b: -1 / ((v1 - v0) / 2), c: v1 / ((v1 - v0) / 2) },
+      { a: 1 / runU, b: 0, c: -u0 / runU },
+      { a: -1 / runU, b: 0, c: u1 / runU },
+      { a: 0, b: 1 / runV, c: -v0 / runV },
+      { a: 0, b: -1 / runV, c: v1 / runV },
     ];
+  if (shape === 'mansard') planes.push({a:0,b:0,c:1});
   const normalizedPlane = (plane, point) => { const q = local(point); return plane.a * q.u + plane.b * q.v + plane.c; };
   const roofY = point => wallTop + rise * Math.max(0, Math.min(1, ...planes.map(plane => normalizedPlane(plane, point))));
 

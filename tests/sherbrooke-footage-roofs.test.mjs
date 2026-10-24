@@ -1,4 +1,6 @@
 import assert from "node:assert/strict";
+import {readFileSync} from "node:fs";
+const osm=JSON.parse(readFileSync(new URL("../city-explorer/data/peterborough-osm.json",import.meta.url),"utf8"));
 import * as THREE from "../city-explorer/vendor/three-r180/build/three.module.min.js";
 import { appendFootageRoof, FOOTAGE_ROOF_MAX_RISE } from "../city-explorer/sherbrooke-footage-roofs.js";
 import { FOOTAGE_PROFILES } from "../city-explorer/sherbrooke-footage-profiles.js";
@@ -22,8 +24,8 @@ function triangleAreaXZ(points, offset) {
 }
 
 for (const [id, profile] of Object.entries(FOOTAGE_PROFILES)) {
-  if (!/^(gable|hip|pyramid)$/i.test(profile.roof || "")) continue;
-  const source = SHERBROOKE_SOURCE.buildings.find(b => b.id === id), outer = source.ring.slice(0, -1).map(([lon, lat]) => { const p = project(lat, lon); return new THREE.Vector2(p.x, p.y); });
+  if (!/^(gable|hip|pyramid|mansard)$/i.test(profile.roof || "")) continue;
+  const source = SHERBROOKE_SOURCE.buildings.find(b => b.id === id) || {ring:osm.elements.find(e=>e.type === "way" && `way/${e.id}` === id).geometry.map(p=>[p.lon,p.lat])}, outer = source.ring.slice(0, -1).map(([lon, lat]) => { const p = project(lat, lon); return new THREE.Vector2(p.x, p.y); });
   const roof = [], walls = [], wallTop = 50, requestedTop = wallTop + (Number(profile.roofRise) || 2.6);
   assert.equal(appendFootageRoof({ THREE, roofPositions: roof, wallPositions: walls, outer, wallTop, roofTop: requestedTop, profile, project }), true, `${profile.label} pitches with an irregular/complex outline`);
   if (outer.length > 4) complexFootprints++;
