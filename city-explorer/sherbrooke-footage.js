@@ -49,13 +49,29 @@ export function createFootageFacade({ THREE, profile, ring, base, top, project, 
   if (!THREE?.Group || !THREE?.InstancedMesh) throw new TypeError("Three.js runtime is required");
   if (!profile || !Number.isFinite(base) || !Number.isFinite(top) || top <= base) throw new TypeError("Profile and finite building base/top are required");
   const root = new THREE.Group(); root.name = `SherbrookeFootage-${profile.label || profile.id || "building"}`;
-  root.userData = { type: "reference-frontage-details", profileId: profile.id, confidence: profile.confidence, collision: false, photoStatus: "not-needed" };
+  root.userData = { type: "reference-frontage-details", profileId: profile.id, confidence: profile.confidence, collision: false, photoStatus: "not-needed", frontageCount: 1 };
   // Station 1 already has a separately reviewed five-door frontage in the game.
   if (profile.style === "station" || profile.id === "way/1009651229") { root.userData.stationFacadeSuppliedByGame = true; return root; }
   // Keep rear/inferred masses conservative; do not imply observed doors or windows.
   if (profile.confidence === "inferred") { root.userData.detailsOmitted = "front openings not supported by the available reference"; return root; }
 
-  const f = frontageFrame({ profile, ring, project }), h = Math.min(top - base, Number(profile.eaveHeight) || Number(profile.height) || top - base), levels = clamp(Number(profile.levels) || 1, 1, 5), columns = clamp(Number(profile.windowColumns) || 2, 1, 12), floor = h / levels;
+  if (Array.isArray(profile.additionalFrontages) && profile.additionalFrontages.length) {
+    const {additionalFrontages, ...primary} = profile;
+    const faces = [primary, ...additionalFrontages.slice(0, 2).map((face, i) => ({
+      ...primary, ...face, id: profile.id, label: `${profile.label}-face-${i + 2}`,
+      additionalFrontages: undefined, facadePhoto: undefined, texturePatch: undefined, frontGarden: undefined,
+    }))];
+    for (const face of faces) root.add(createFootageFacade({THREE, profile: face, ring, base, top, project, terrainHeightAtWorld, gardenClear}));
+    root.userData.frontageCount = faces.length;
+    root.userData.photoReady = Promise.all(root.children.map(child => child.userData.photoReady)).then(() => {
+      const statuses = root.children.map(child => child.userData.photoStatus);
+      root.userData.photoStatus = statuses.includes('loaded') ? 'loaded' : statuses.includes('failed') ? 'failed' : 'not-needed';
+      return root.userData.photoStatus;
+    });
+    return root;
+  }
+
+  const f = frontageFrame({ profile, ring, project }), h = Math.min(top - base, Number(profile.eaveHeight) || Number(profile.height) || top - base), levels = clamp(Number(profile.levels) || 1, 1, 5), columns = clamp(Number(profile.windowColumns) || 2, 1, 12), atticBand = clamp(Number(profile.atticBandHeight) || 0, 0, h * .2), floor = (h - atticBand) / levels;
   const frontageDetails = new THREE.Group(); frontageDetails.name = "frontage-procedural-details"; root.add(frontageDetails);
   const unitBox = new THREE.BoxGeometry(1, 1, 1), mats = new Map(), instances = new Map(), dummy = new THREE.Object3D();
   const palette = { trim: profile.trimColor || "#eee8dc", wall: profile.wallColor || "#a8907a", brick: profile.wallColor || "#a8907a", glass: "#33494e", shade: "#322f2c", door: "#53443a", metal: "#343a39", accent: profile.trimColor || "#eee8dc" };
@@ -71,24 +87,30 @@ export function createFootageFacade({ THREE, profile, ring, base, top, project, 
     box(t, y - ht * .39, w + .025, .045, .055, "accent", .28);
   }
   function sign(text, t, y, w) {
-    box(t, y, w, .5, .09, "trim", .24);
+    const boardHeight = clamp(Number(profile.signBoardHeightMetres) || .5, .3, 1.5);
+    const signOutset = clamp(Number(profile.signOutsetMetres) || .3, .3, .6);
+    box(t, y, w, boardHeight, .09, profile.signBoardColor || "trim", signOutset - .06);
     if (typeof document === "undefined" || !text) return;
     const canvas = document.createElement("canvas"); canvas.width = 768; canvas.height = 96; const ctx = canvas.getContext("2d");
-    ctx.fillStyle = "#eee8dc"; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = "#293c3c";
+    ctx.fillStyle = profile.signBackgroundColor || "#eee8dc"; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = profile.signTextColor || "#293c3c";
     ctx.font = "700 46px Georgia,serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText(String(text).slice(0, 38), canvas.width / 2, canvas.height / 2);
     const tex = new THREE.CanvasTexture(canvas); if (THREE.SRGBColorSpace) tex.colorSpace = THREE.SRGBColorSpace;
-    const plate = new THREE.Mesh(new THREE.PlaneGeometry(w * .9, .34), new THREE.MeshBasicMaterial({ map: tex, side: THREE.DoubleSide }));
-    const p = at(t, y, .3); plate.position.set(p.x, p.y, p.z); plate.rotation.y = f.yaw; frontageDetails.add(plate);
+    const plate = new THREE.Mesh(new THREE.PlaneGeometry(w * .9, boardHeight * .68), new THREE.MeshBasicMaterial({ map: tex, side: THREE.DoubleSide }));
+    const p = at(t, y, signOutset); plate.position.set(p.x, p.y, p.z); plate.rotation.y = Math.atan2(f.outward.x, f.outward.z); frontageDetails.add(plate);
   }
 
   const style = profile.style || "office", patch = profile.texturePatch?.target;
   const patchCenter = patch ? Number(patch.centerFraction) || .5 : .5, patchWidth = patch ? clamp(Number(patch.widthFraction) || 1, .05, 1) : 0;
   const openingUnderPatch = t => !!patch && Math.abs(t - patchCenter) < patchWidth / 2 + .025;
   const wideGlass = style === "office" && profile.largeGlazedFront;
+  if (Number(profile.plinthHeight) > 0 && profile.plinthColor) {
+    const band = clamp(Number(profile.plinthHeight), .1, Math.min(h, 4));
+    box(.5, band / 2, f.length, band, .12, profile.plinthColor, .1);
+  }
   for (let level = 0; level < levels; level++) {
     const y = floor * (level + .53), ww = style === "house" ? .96 : 1.42, wh = Math.min(style === "house" ? 1.35 : 1.65, floor * .62);
-    if (level === 0 && wideGlass) {
-      const gy = floor * .5, gh = floor * .9, gw = f.length * .9; box(.5, gy, gw, gh, .1, "glass", .19);
+    if ((level === 0 && wideGlass) || profile.glazedLevels?.includes(level)) {
+      const gy = level === 0 && wideGlass ? floor * .5 : y, gh = clamp(Number(profile.glazedLevelHeights?.[level]) || floor * .9, .3, floor * .9), gw = f.length * .9; box(.5, gy, gw, gh, .1, "glass", .19);
       for (let i = 0; i <= columns; i++) box(.05 + .9 * i / columns, gy, .075, gh, .06, "accent", .27);
       for (const yy of [gy - gh / 2, gy, gy + gh / 2]) box(.5, yy, gw, .07, .06, "accent", .27);
       continue;
@@ -100,6 +122,31 @@ export function createFootageFacade({ THREE, profile, ring, base, top, project, 
       else window(t, y, ww, wh);
     }
   }
+  // Separate attic band: never replace the observed rectangular main floors.
+  if (atticBand > .2) {
+    const count = clamp(Math.round(Number(profile.atticWindowColumns) || columns), 1, 24);
+    const shape = new THREE.Shape();
+    shape.moveTo(-.5, -.5); shape.lineTo(.5, -.5); shape.lineTo(.5, 0);
+    shape.absarc(0, 0, .5, 0, Math.PI, false); shape.lineTo(-.5, -.5);
+    const geometry = new THREE.ShapeGeometry(shape, 10);
+    const frameMesh = new THREE.InstancedMesh(geometry, material('trim'), count);
+    const infillMesh = new THREE.InstancedMesh(geometry, material(profile.atticInfillColor || 'glass'), count);
+    frameMesh.name = 'frontage-arched-trim'; infillMesh.name = 'frontage-arched-infill';
+    const width = Math.min(.8, f.length / count * .55), height = Math.min(.75, atticBand * .68);
+    for (let i = 0; i < count; i++) {
+      const p = at((i + .5) / count, h - atticBand / 2, .2);
+      dummy.position.set(p.x, p.y, p.z); dummy.rotation.set(0, f.yaw, 0); dummy.scale.set(width, height, 1); dummy.updateMatrix(); frameMesh.setMatrixAt(i, dummy.matrix);
+      dummy.position.x += f.outward.x * .025; dummy.position.z += f.outward.z * .025;
+      dummy.scale.set(Math.max(.1, width - .1), Math.max(.1, height - .1), 1); dummy.updateMatrix(); infillMesh.setMatrixAt(i, dummy.matrix);
+    }
+    for (const mesh of [frameMesh, infillMesh]) { mesh.instanceMatrix.needsUpdate = true; mesh.computeBoundingSphere(); frontageDetails.add(mesh); }
+  }
+  if (profile.features?.includes('corbelled-cornice')) {
+    const color = profile.corniceColor || 'trim', count = Math.min(24, Math.max(3, columns * 2));
+    box(.5, h - .12, f.length * 1.01, .2, .3, color, .23);
+    for (let i = 0; i < count; i++) box((i + .5) / count, h - .35, Math.min(.3, f.length / count * .55), .23, .22, color, .24);
+  }
+
   // Specific photographed openings are the only ground windows retained on the mural facade.
   for (const win of profile.groundWindows || []) if (Number.isFinite(win.t) && win.t >= 0 && win.t <= 1 && !openingUnderPatch(win.t)) window(win.t, (Number(win.bottom) || 0) + (Number(win.height) || 1.5) / 2, Number(win.width) || 1, Number(win.height) || 1.5);
 
@@ -129,7 +176,7 @@ export function createFootageFacade({ THREE, profile, ring, base, top, project, 
     const t = Number.isFinite(profile.doorFraction) ? profile.doorFraction : .5;
     if (!profile.skipGroundWindows) box(t, 1.05, .9, 2.05, .1, "door", .23);
   }
-  if (profile.signText) sign(profile.signText, Number.isFinite(profile.signFraction) ? profile.signFraction : .5, Math.min(h - .48, Math.max(2.8, patch ? (Number(patch.bottomMetres) || .18) + h * (Number(patch.heightFraction) || .55) + .45 : h - .7)), Math.min(f.length * .76, style === "house" ? 3.6 : 8));
+  if (profile.signText) sign(profile.signText, Number.isFinite(profile.signFraction) ? profile.signFraction : .5, Number.isFinite(profile.signHeightMetres) ? clamp(profile.signHeightMetres, .5, h - .3) : Math.min(h - .48, Math.max(2.8, patch ? (Number(patch.bottomMetres) || .18) + h * (Number(patch.heightFraction) || .55) + .45 : h - .7)), Math.min(f.length * .76, Number(profile.signWidthMetres) || 8, style === "house" ? 3.6 : Infinity));
 
   for (const [key, items] of instances) {
     const mesh = new THREE.InstancedMesh(unitBox, material(key), items.length); mesh.name = `frontage-${key}`;

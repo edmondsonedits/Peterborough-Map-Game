@@ -14,7 +14,7 @@ const fs=require('node:fs'),path=require('node:path'),assert=require('node:asser
   await page.waitForFunction(()=>document.documentElement.dataset.gameplayReady==='true'&&window.__PTBO_CITY_QA__,null,{timeout:180000});
   await page.waitForFunction(()=>!document.querySelector('#loading-screen')||document.querySelector('#loading-screen').classList.contains('is-hidden'),null,{timeout:30000});
   const metrics=await page.evaluate(()=>__PTBO_CITY_QA__.metrics());
-  assert.equal(metrics.footage.length,16);assert.ok(metrics.footage.every(x=>x.editorLinked));assert.equal(metrics.stationEditorLinked,true);
+  assert.equal(metrics.footage.length,19);assert.ok(metrics.footage.every(x=>x.editorLinked));assert.equal(metrics.stationEditorLinked,true);
   assert.equal(metrics.footage.filter(x=>x.facadePhotoStatus==='loaded').length,6);
   assert.ok(metrics.footage.filter(x=>x.gardenMeshes>0).length>=8,'reviewed lawns rendered');
   assert.equal(metrics.footage.find(x=>x.sourceId==='way/846927296').photoStatus,'loaded');

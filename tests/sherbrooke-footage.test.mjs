@@ -8,11 +8,16 @@ import { SHERBROOKE_SOURCE } from "../city-explorer/sherbrooke-source.js";
 
 const CENTER = { lat: 44.3091, lon: -78.3197 };
 const project = (lat, lon) => new THREE.Vector2((lon - CENTER.lon) * 111320 * Math.cos(THREE.MathUtils.degToRad(CENTER.lat)), -(lat - CENTER.lat) * 110540);
-const sourceRing = id => SHERBROOKE_SOURCE.buildings.find(b => b.id === id).ring.slice(0, -1).map(([lon, lat]) => { const p = project(lat, lon); return { x: p.x, z: p.y }; });
+const osm = JSON.parse(await readFile(new URL('../city-explorer/data/peterborough-osm.json', import.meta.url)));
+const sourceRing = id => {
+ const reviewed = SHERBROOKE_SOURCE.buildings.find(b => b.id === id);
+ const coords = reviewed ? reviewed.ring : osm.elements.find(e => e.type === 'way' && `way/${e.id}` === id).geometry.map(p => [p.lon,p.lat]);
+ return coords.slice(0,-1).map(([lon,lat]) => { const p = project(lat,lon);return {x:p.x,z:p.y}; });
+};
 const finite = values => [...values].every(Number.isFinite);
 const segmentDistance = (p, a, b) => { const dx = b.x - a.x, dz = b.z - a.z, t = Math.max(0, Math.min(1, ((p.x - a.x) * dx + (p.z - a.z) * dz) / (dx * dx + dz * dz || 1))); return Math.hypot(p.x - a.x - dx * t, p.z - a.z - dz * t); };
 
-assert.equal(Object.keys(FOOTAGE_PROFILES).length, 19, "all 19 reviewed profile records remain available by OSM way id");
+assert.equal(Object.keys(FOOTAGE_PROFILES).length, 22, "all 22 reviewed profile records remain available by OSM way id");
 for (const [id, profile] of Object.entries(FOOTAGE_PROFILES)) {
   const ring = sourceRing(id), frame = frontageFrame({ profile, ring, project });
   assert.ok(frame.length > 2 && finite([frame.start.x, frame.start.z, frame.end.x, frame.end.z]), `${profile.label} has a finite projected frontage`);
@@ -78,4 +83,4 @@ try {
     assert.equal(disposedPhotoGeometry, 2, "failure and timeout both dispose their unused patch geometry");
   } finally { globalThis.setTimeout = originalSetTimeout; globalThis.clearTimeout = originalClearTimeout; }
 } finally { THREE.BufferGeometry.prototype.dispose = disposeOriginal; }
-console.log("Sherbrooke frontage checks passed: 19 OSM profiles, source alignment, finite geometry, conservative openings, mural UVs and bounded photo loading.");
+console.log("Sherbrooke frontage checks passed: 22 OSM profiles, source alignment, finite geometry, conservative openings, mural UVs and bounded photo loading.");

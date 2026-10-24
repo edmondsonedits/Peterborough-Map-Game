@@ -1,0 +1,58 @@
+{
+  "source": "User-owned October18 recording; original unchanged",
+  "scope": "Three positively matched buildings; other unnamed properties are not reconstructed",
+  "profiles": [
+    {
+      "sourceId": "way/1006243562",
+      "reference": {
+        "file": "VID_20261018_073202_00_001.insv",
+        "sourceSeconds": 750,
+        "lens": 1,
+        "sourceFrameSha256": "e2273badf47318e1fc2811c3303d7967ee232a85c7f71e4e9da7ccf21a87d6dd",
+        "projection": "FisheyeReframer;2048x2048;100degree FOV; existing experimental calibration"
+      },
+      "notes": "Observed red brick, three main levels, separate small arched attic openings, cornice and stone ground floor. Height and opening spacing are visual estimates. Both recorded street faces; rear/interior unknown."
+    },
+    {
+      "sourceId": "way/1006243555",
+      "reference": {
+        "file": "VID_20261018_073202_00_001.insv",
+        "sourceSeconds": 750,
+        "lens": 0,
+        "sourceFrameSha256": "17828694e40b7cf2230b5b3899c278ae75b283c954e2a2c15cca26af98806fe4",
+        "projection": "FisheyeReframer;2048x2048;100degree FOV; existing experimental calibration"
+      },
+      "notes": "Observed pale masonry, two levels, broad upper glazing and lower storefront glazing. Southeast Hunter/Water footprint is a spatial match, not an OSM business tag. Dimensions are visual estimates; unseen faces stay inferred."
+    },
+    {
+      "sourceId": "way/176908281",
+      "reference": {
+        "file": "VID_20261018_073202_00_001.insv",
+        "sourceSeconds": 60,
+        "lens": 0,
+        "sourceFrameSha256": "1d987dc3a1df8373dfb965bdcbf540c16ecfd0405be83d92cfa5b863a7e5fe2c",
+        "projection": "FisheyeReframer;2048x2048;100degree FOV; existing experimental calibration"
+      },
+      "notes": "Direct storefront sign at01:00 plus named addressed OSM building confirm identity. One-level light retail facade, flat parapet and red sign band; opening rhythm and dimensions remain compact visual estimates. Rear/sides not asserted."
+    }
+  ],
+  "matches": {
+    "way/1006243562": [
+      "https://pub-peterborough.escribemeetings.com/filestream.ashx?DocumentId=39904",
+      "https://pub-peterborough.escribemeetings.com/filestream.ashx?DocumentId=39630"
+    ],
+    "way/1006243555": [
+      "https://locator.scotiabank.com/fr/abm/AN03",
+      "https://trentvalleyarchives.com/wp-content/uploads/2015/02/HGTV-November-2014-v-19-n-3b.pdf"
+    ],
+    "way/176908281": [
+      "Cached OSM named building at971Chemong; direct storefront wordmark at01:00"
+    ]
+  },
+  "limitations": [
+    "Appearance and dimensions are visual estimates, not survey results",
+    "Existing experiment lens calibration reused, not independently validated",
+    "Original GIS footprints and controls remain authoritative",
+    "No new runtime photo assets; additional street-face geometry is source-linked for editor hide/restore"
+  ]
+}

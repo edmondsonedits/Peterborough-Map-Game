@@ -1,11 +1,13 @@
 import { SHERBROOKE_SOURCE } from './sherbrooke-source.js';
+import { FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js';
 import { roadProfile } from './road-network.js';
 export const sherbrookeBuildings = new Map();
 export const sherbrookeSidewalks = [];
 export function recordSherbrookeSidewalk(segment, al, ar, bl, br) {
  if(/sherbrooke/i.test(segment.name||segment.tags?.name||'')) sherbrookeSidewalks.push([al,ar,bl,br].map(v=>({x:v.x,y:v.y,z:v.z})));
 }
-const ids = new Set(SHERBROOKE_SOURCE.buildings.map(b=>b.id));
+// Only reviewed source IDs can add reference facade/editor details.
+const ids = new Set([...SHERBROOKE_SOURCE.buildings.map(b=>b.id), ...Object.keys(FOOTAGE_PROFILES)]);
 export function recordSherbrookeBuilding(id, ring, base, top) {
  if(ids.has(id)) sherbrookeBuildings.set(id,{id,ring:ring.map(p=>({x:p.x,z:p.y})),base,top});
 }

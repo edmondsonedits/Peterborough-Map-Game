@@ -1,4 +1,5 @@
 // Reviewed visual profiles; original map footprints and collision remain authoritative.
+import { VIDEO_BUILDING_PROFILES } from './video-building-profiles.js';
 export const FOOTAGE_PROFILES = Object.fromEntries([
   {
     "id": "way/1009651251",
@@ -1056,4 +1057,4 @@ export const FOOTAGE_PROFILES = Object.fromEntries([
     ],
     "frontSource": "Ordered frontage endpoints converted from reference block.json to geographic coordinates for the existing project() transform."
   }
-].map(profile => [profile.id, profile]));
+, ...VIDEO_BUILDING_PROFILES].map(profile => [profile.id, profile]));
