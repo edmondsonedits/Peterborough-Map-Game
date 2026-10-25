@@ -1,9 +1,16 @@
+import {facadeDetailClass} from './city-detail-rules.js?v=street-evidence-2';
 // Pure wall-layout rules shared by the catalogue builder and runtime. Positions
 // are checked against rendered outer rings; courtyard walls are never selected.
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const point=p=>({x:Number(p.x),z:Number(p.z??p.y)});
 function segment(p,a,b){const dx=b.x-a.x,dz=b.z-a.z,l2=dx*dx+dz*dz,t=clamp(((p.x-a.x)*dx+(p.z-a.z)*dz)/(l2||1),0,1);return{t,distance:Math.hypot(p.x-a.x-dx*t,p.z-a.z-dz*t)}}
 function inside(p,ring){let yes=false;for(let i=0,j=ring.length-1;i<ring.length;j=i++){const a=ring[j],b=ring[i];if((a.z>p.z)!==(b.z>p.z)&&p.x<(b.x-a.x)*(p.z-a.z)/(b.z-a.z)+a.x)yes=!yes}return yes}
+// Match the generated facade opening bands; reviewed profiles retain their own scale.
+export function businessOpeningTop(tags,wallHeight,profile){
+ if(profile){const floor=(profile.detailHeightMetres||profile.eaveHeight||profile.height)/(profile.levels||1),glass=profile.glazedLevels?.includes(0)||(profile.style==='office'&&profile.largeGlazedFront);return Math.max(2.2,glass?floor*.98:profile.style==='retail'?floor*.43+Math.min(2.15,floor*.7)/2:2.2)}
+ if(wallHeight<3.1)return 2.2;
+ const type=facadeDetailClass(tags);return type==='storefront'?Math.min(wallHeight-.28,2.72):type==='industrial'?Math.min(wallHeight-.35,3.33):Math.min(wallHeight-.34,2.44);
+}
 export function signVisibilityChanged(previous,next,threshold=15){return !previous||Math.hypot(next.x-previous.x,next.z-previous.z)>=threshold}
 export function wrapSignText(text,measure,maxWidth){
  const words=String(text).trim().split(/\s+/),lines=[];let line='';
@@ -42,8 +49,11 @@ function planBusinessWallSignsOnce({building,businesses,project}){
   for(const item of fitted){
    const {row,width,left}=item,right=left+width,offset=Math.abs(left+width/2-item.desired),directory=row.placementMode==='shared-entrance-directory';
    if(offset>(Number(row.maxShiftMetres)||2.5)){reject(row,'tenant-position-requires-review');continue}
-   const clearance=directory?.18:Math.min(.18,Math.max(.05,polygon.wallTop-polygon.base-2.2-.35)),height=directory?1.6:Math.min(clamp(Number(row.heightMetres)||.54,.35,.8),polygon.wallTop-polygon.base-2.2-clearance),requestedY=Number(row.heightAboveBaseMetres)||(directory?3.2:2.78),y=Math.min(polygon.base+requestedY,polygon.wallTop-clearance-height/2);
-   if(y-height/2<polygon.base+2.2-1e-7){reject(row,'insufficient-height-above-opening');continue}
+   const openingTop=Math.max(2.2,Number(row.openingTopMetres)||2.2),wallHeight=polygon.wallTop-polygon.base;
+   const clearance=directory?.18:Math.min(.18,Math.max(.05,wallHeight-openingTop-.35)),height=directory?1.6:Math.min(clamp(Number(row.heightMetres)||.54,.35,.8),wallHeight-openingTop-clearance);
+   if(height<.35-1e-7){reject(row,'insufficient-height-above-opening');continue}
+   const requestedY=Math.max(Number(row.heightAboveBaseMetres)||(directory?3.2:2.78),openingTop+height/2+.1),y=Math.min(polygon.base+requestedY,polygon.wallTop-clearance-height/2);
+   if(y-height/2<polygon.base+openingTop-1e-7){reject(row,'insufficient-height-above-opening');continue}
    const t=(left+width/2)/length,outset=clamp(Number(row.outsetMetres)||.16,.08,.8),center={x:a.x+(b.x-a.x)*t+normal.x*outset,y,z:a.z+(b.z-a.z)*t+normal.z*outset};
    signs.push({id:row.id,name:row.name,address:row.address||'',buildingSourceId:building.sourceId,placementMode:row.placementMode||'street-facing-wall',members:row.members||null,center,normal,rightVector:{x:normal.z,z:-normal.x},width,height,bottom:y-height/2,top:y+height/2,left,right,source:row});
   }

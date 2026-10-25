@@ -40,3 +40,6 @@
 - Review: actual runtime rings matter; generic footprints are simplified. Per-building atlas meshes plus near-distance LOD are acceptable. Sign LOD must not inherit the 600 m visual-LOD update interval.
 
 - Final local check: 920 rendered names (888 storefronts, 32 directory members); 495 unresolved of 1,415 unique records. Both browser layouts passed with no runtime rejections. Front and oblique captures exposed and led to removal of seven obscured placements. Exact tenant openings remain inferred unless supported by reviewed footage or mapped entrance data.
+
+- v1.6.129 checkpoint: imported all 290 obtainable DBIA profiles and all 785 ptbo.ca profiles reported during the crawl, with zero profile request failures; raw pages remain private. Exact civic-address/parcel evidence can locate a directory business only on a property with one complete unambiguous building. Regional-coordinate conflicts and shared properties stay unresolved. Source IDs, current-name corrections and source links remain auditable.
+- Sign clearance now uses the generated facade opening band and the same mapped wall/roof calculation as the runtime. Existing geometry behavior is preserved. 616 production checks passed before the final map-data refresh; final refreshed-data browser verification precedes publication.

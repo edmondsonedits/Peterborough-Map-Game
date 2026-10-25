@@ -1,4 +1,5 @@
-import {createBusinessSignLayer, loadBusinessDirectory} from './business-signs.js?v=1.6.128';
+import {mappedBuildingDimensions} from './mapped-building-dimensions.js?v=1.6.129';
+import {createBusinessSignLayer, loadBusinessDirectory} from './business-signs.js?v=1.6.129';
 import { recordSherbrookeBuilding, recordSherbrookeSidewalk, sherbrookeBuildings } from './sherbrooke-plan.js';
 import { installSherbrookeDetails } from './sherbrooke-details.js?v=frontages-20261021';
 import { FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js?v=corridor-20261024';
@@ -16,11 +17,11 @@ import { createVegetationVariant, stationOneVegetationPalette } from './vegetati
 import { installStationStreetscape } from './streetscape-assets.js?v=streetscape-2';
 import { installStationApron } from './site-surface-materials.js?v=1.6.56';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
-import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js?v=1.6.128';
+import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js?v=1.6.129';
 import { createCatalogObject } from './editor/asset-catalog.js';
 import { createCommandHistory } from './editor/command-history.js';
-import { createDraftStore } from './editor/draft-store.js?v=1.6.128';
-import { createCityEditor } from './editor/city-editor.js?v=1.6.128';
+import { createDraftStore } from './editor/draft-store.js?v=1.6.129';
+import { createCityEditor } from './editor/city-editor.js?v=1.6.129';
 import { createEmptySceneDocument, sanitizeRenderableSceneDocument } from './editor/scene-document.js';
 import { createGeneratedRegistry } from './editor/generated-registry.js?v=footage-20261020';
 import { applyOverrides } from './editor/override-runtime.js';
@@ -42,7 +43,7 @@ import { clearLandCoverRaster, paintLandCoverPolygon } from './land-cover-raster
 import { sampleOfficialTerrainElevation, validOfficialTerrainMetadata } from './terrain-heightmap.js?v=1.5.5-lidar1';
 import { sampleTriangulatedTerrainHeight } from './terrain-surface.js?v=1.5.5-terrain1';
 import { HydroSurfaceIndex, WATER_SURFACE_CLEARANCE, WATER_TERRAIN_RECESS, createWaterStageSampler, relativeWaterElevation, robustFallbackWaterHeight, subdivideWaterTriangle, watercourseWidth } from './water-system.js?v=1.5.5-hydro2';
-import { CitySplatLayer } from './city-splat-layer.js?v=1.6.128';
+import { CitySplatLayer } from './city-splat-layer.js?v=1.6.129';
 import {
   estimatedBuildingFloors,
   facadeDetailClass,
@@ -1072,46 +1073,7 @@ function buildingDimensions(tags = {}, featureId = '') {
       roofShape: reviewedStyle.roofShape,
     };
   }
-  const explicitHeight = parseMeters(tags.height);
-  const landmarkBaseHeight = Number(LANDMARK_BUILDING_HEIGHT_OVERRIDES[featureId]);
-  const levels = Number.parseFloat(tags['building:levels']);
-  const roofHeightTag = parseMeters(tags['roof:height']);
-  const minHeightTag = parseMeters(tags.min_height);
-  const minLevels = Number.parseFloat(tags['building:min_level']);
-  const type = String(tags.building || tags['building:part'] || '').toLowerCase();
-  const use = `${type} ${tags.leisure || ''} ${tags.amenity || ''}`.toLowerCase();
-  let height;
-  if (Number.isFinite(landmarkBaseHeight)) height = landmarkBaseHeight;
-  else if (Number.isFinite(explicitHeight)) height = explicitHeight;
-  // Mall storeys need commercial floor clearance; explicit heights and reviewed profiles still take precedence.
-  else if (Number.isFinite(levels)) height = levels * (tags.shop === 'mall' ? 4.8 : 3.15);
-  else if (/church|cathedral|mosque|temple/.test(type)) height = 18 + deterministicNumber(featureId, 0, 8);
-  else if (/apartments|hotel|office|commercial|hospital|school|university/.test(type)) height = deterministicNumber(featureId, 11, 23);
-  else if (/industrial|warehouse|retail|supermarket/.test(type)) height = deterministicNumber(featureId, 7, 12);
-  else if (/garage|shed|carport/.test(type)) height = deterministicNumber(featureId, 2.7, 4.2);
-  // OSM carries height metadata for only a minority of local footprints. Keep
-  // inferred detached-building massing deliberately conservative rather than
-  // making an unsupported claim of precise height.
-  else height = deterministicNumber(featureId, 6.4, 8.8);
-
-  const minHeight = Number.isFinite(minHeightTag) ? minHeightTag : Number.isFinite(minLevels) ? minLevels * 3.15 : 0;
-  const taggedRoofShape = String(tags['roof:shape'] || '').toLowerCase();
-  const pitchedCandidate = tags.shop !== 'mall' && !/industrial|warehouse|retail|supermarket|commercial|office|apartments|hospital|school|university|garage|shed|carport|ice_rink|sports_centre|stadium/.test(use)
-    && !/flat|skillion|sawtooth/.test(taggedRoofShape);
-  // Detached homes dominate Peterborough's residential fabric. OSM rarely
-  // records roof height, so infer a conservative, stable pitch while keeping
-  // every source footprint and all explicit tags authoritative.
-  const inferredRoofHeight = pitchedCandidate ? deterministicNumber(`${featureId}:roof`, 1.25, 2.35) : 0;
-  const roofHeight = Number.isFinite(roofHeightTag) ? roofHeightTag : inferredRoofHeight;
-  const roofShape = taggedRoofShape || (pitchedCandidate
-    ? (stableHash(`${featureId}:roof-shape`) % 5 === 0 ? 'hipped' : 'gabled')
-    : 'flat');
-  return {
-    height: THREE.MathUtils.clamp(Math.max(2.6, height - roofHeight - minHeight), 2.6, 115),
-    minHeight: THREE.MathUtils.clamp(minHeight, 0, 60),
-    roofHeight: THREE.MathUtils.clamp(roofHeight, 0, 18),
-    roofShape,
-  };
+  return mappedBuildingDimensions(tags,featureId,LANDMARK_BUILDING_HEIGHT_OVERRIDES[featureId]);
 }
 
 function buildingMaterialKey(tags, totalHeight, featureId = '') {

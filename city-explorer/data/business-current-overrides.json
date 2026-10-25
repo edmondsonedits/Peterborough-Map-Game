@@ -48,6 +48,12 @@
       "lat": 44.3051581,
       "lon": -78.3187216,
       "sourceUrl": "https://kawarthanow.com/venue/5781/the-food-shop/"
+    },
+    {
+      "matchId": "osm:way/77714036",
+      "name": "Comfort Hotel & Suites",
+      "address": "1209 Lansdowne Street West",
+      "sourceUrl": "https://www.choicehotels.com/ontario/peterborough/comfort-inn-hotels/cn159"
     }
   ],
   "suppressed": [

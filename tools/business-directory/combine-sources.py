@@ -7,7 +7,8 @@ for r in module.parse((root/"chamber-results.html").read_text(encoding="utf-8"),
 chamber["businesses"]=list(by_id.values());chamber["searchResultRecords"]=33
 (root/"chamber-combined-normalized.json").write_text(json.dumps(chamber,ensure_ascii=False,indent=2),encoding="utf-8")
 rows=[];sources=[]
-for filename in ["osm-citywide-normalized.json","city-businesses-normalized.json","chamber-combined-normalized.json"]:
+for filename in ["osm-citywide-normalized.json","city-businesses-normalized.json","chamber-combined-normalized.json","boro-businesses-normalized.json","ptbo-businesses-normalized.json"]:
+ if not (root/filename).exists():continue
  data=json.loads((root/filename).read_text(encoding="utf-8"));rows.extend(data["businesses"]);sources.append({"file":filename,"records":len(data["businesses"])})
 (root/"businesses-combined.json").write_text(json.dumps({"businesses":rows,"sources":sources},ensure_ascii=False,indent=2),encoding="utf-8")
 print(json.dumps({"records":len(rows),"sources":sources}))

@@ -1,5 +1,5 @@
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
-export function normalizeAddress(value){return String(value||'').replace(/,\s*Peterborough\b.*$/i,'').replace(/,?\s*\b(?:unit|suite|#)\s*[a-z0-9-]+\b/gi,'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\b(st|rd|ave|blvd|dr|ct|pl|cres|hwy)\b/g,s=>({st:'street',rd:'road',ave:'avenue',blvd:'boulevard',dr:'drive',ct:'court',pl:'place',cres:'crescent',hwy:'highway'}[s])).replace(/[^a-z0-9]+/g,' ').trim().replace(/\b(n|s|e|w)$/,d=>({n:'north',s:'south',e:'east',w:'west'}[d]))}
+export function normalizeAddress(value){return String(value||'').replace(/,\s*Peterborough\b.*$/i,'').replace(/,?\s*\b(?:unit|suite|#)\s*[a-z0-9-]+\b/gi,'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\blandsdowne\b/g,'lansdowne').replace(/\b(st|rd|ave|blvd|dr|ct|pl|cres|hwy)\b/g,s=>({st:'street',rd:'road',ave:'avenue',blvd:'boulevard',dr:'drive',ct:'court',pl:'place',cres:'crescent',hwy:'highway'}[s])).replace(/[^a-z0-9]+/g,' ').trim().replace(/\b(n|s|e|w)$/,d=>({n:'north',s:'south',e:'east',w:'west'}[d]))}
 const nameKey=value=>String(value||'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]/g,'');
 export function segmentDistance(p,a,b){const dx=b.x-a.x,dz=b.z-a.z,t=clamp(((p.x-a.x)*dx+(p.z-a.z)*dz)/(dx*dx+dz*dz||1),0,1);return{distance:Math.hypot(p.x-a.x-t*dx,p.z-a.z-t*dz),fraction:t,point:{x:a.x+t*dx,z:a.z+t*dz}}}
 function inRing(p,ring){let inside=false;for(let i=0,j=ring.length-1;i<ring.length;j=i++){const a=ring[i],b=ring[j];if(segmentDistance(p,a,b).distance<1e-7)return true;if((a.z>p.z)!==(b.z>p.z)&&p.x<(b.x-a.x)*(p.z-a.z)/(b.z-a.z)+a.x)inside=!inside}return inside}
@@ -24,10 +24,32 @@ export function chooseEntranceFrontage(entrance,building,{project,unproject,maxW
 
 export function reconcileSourceCoordinates(rows){
  const references=rows.filter(r=>r.osmElementId&&Number.isFinite(r.lat)&&Number.isFinite(r.lon)&&normalizeAddress(r.address||r.parcelAddress));
- return rows.map(row=>{if(!['city-directory','chamber-directory'].includes(row.sourceKind))return row;const unit=row.unit||row.address?.match(/\b(?:unit|suite)\s*([a-z0-9-]+)/i)?.[1];const candidates=references.filter(r=>nameKey(r.name)===nameKey(row.name)&&normalizeAddress(r.address||r.parcelAddress)===normalizeAddress(row.address)&&(!unit||!r.unit||normalizeAddress(unit)===normalizeAddress(r.unit)));if(candidates.length!==1)return{...row,unit,requiresAddressEvidence:true};const reference=candidates[0],discrepancy=Number.isFinite(row.lat)?Math.hypot((row.lat-reference.lat)*111320,(row.lon-reference.lon)*111320*Math.cos(reference.lat*Math.PI/180)):null;return{...row,unit,lat:reference.lat,lon:reference.lon,geocodeMethod:'cross-source-exact-name-and-civic-address',coordinateSourceUrl:reference.sourceUrl,sourceCoordinateDiscrepancyMetres:discrepancy,requiresAddressEvidence:false}});
+ return rows.map(row=>{if(!['city-directory','chamber-directory','boro-directory','ptbo-directory'].includes(row.sourceKind))return row;if(row.scopeStatus==='outside-game-extent')return{...row,requiresAddressEvidence:true};const unit=row.unit||row.address?.match(/\b(?:unit|suite)\s*([a-z0-9-]+)/i)?.[1];const candidates=references.filter(r=>nameKey(r.name)===nameKey(row.name)&&normalizeAddress(r.address||r.parcelAddress)===normalizeAddress(row.address)&&(!unit||!r.unit||normalizeAddress(unit)===normalizeAddress(r.unit)));if(candidates.length!==1)return{...row,unit,requiresAddressEvidence:true};const reference=candidates[0],discrepancy=Number.isFinite(row.lat)?Math.hypot((row.lat-reference.lat)*111320,(row.lon-reference.lon)*111320*Math.cos(reference.lat*Math.PI/180)):null;return{...row,unit,lat:reference.lat,lon:reference.lon,geocodeMethod:'cross-source-exact-name-and-civic-address',coordinateSourceUrl:reference.sourceUrl,sourceCoordinateDiscrepancyMetres:discrepancy,requiresAddressEvidence:false}});
 }
 
 // Hold a panel if another rendered footprint would cover any of its face.
 export function signFootprintOccluders(sign,index){
  return index.near(sign.center,sign.width/2+.5).filter(b=>b.sourceId!==sign.buildingSourceId&&[-.49,-.25,0,.25,.49].some(t=>{const p={x:sign.center.x+sign.rightVector.x*sign.width*t,z:sign.center.z+sign.rightVector.z*sign.width*t};return polygonsOf(b).some((rings,i)=>{const part=b.polygons?.[i];return (!part||part.wallTop>sign.bottom&&part.base<sign.top)&&inRing(p,rings[0])&&!rings.slice(1).some(r=>inRing(p,r))})})).map(b=>b.sourceId);
+}
+
+// Civic address evidence may corroborate an existing pin, or locate a single
+// complete building on the addressed property. Shared properties stay unresolved.
+export function reconcileMunicipalAddresses(rows,parcels,index,{project,unproject}){
+ const byAddress=new Map();for(const parcel of parcels){const key=normalizeAddress(parcel.address);if(!byAddress.has(key))byAddress.set(key,[]);byAddress.get(key).push(parcel)}
+ return rows.map(row=>{
+  if(!row.requiresAddressEvidence||row.scopeStatus==='outside-game-extent')return row;
+  const matches=byAddress.get(normalizeAddress(row.address))||[];if(matches.length!==1)return row;
+  const parcel=matches[0],pin=worldPoint(row,project),evidence={parcelAddress:parcel.address,parcelObjectId:parcel.sourceId,coordinateSourceUrl:parcel.sourceUrl,addressSourceUrl:parcel.sourceUrl};
+  if(row.sourceKind==='ptbo-directory'&&!(pin&&contains(parcel,pin))&&!/^peterborough$/i.test(row.city||''))return row;
+  const points=polygonsOf(parcel).flatMap(r=>r[0]),xs=points.map(p=>p.x),zs=points.map(p=>p.z),mid={x:(Math.min(...xs)+Math.max(...xs))/2,z:(Math.min(...zs)+Math.max(...zs))/2},radius=Math.hypot(Math.max(...xs)-Math.min(...xs),Math.max(...zs)-Math.min(...zs))/2+1;
+  const candidates=index.near(mid,radius).filter(b=>!b.properties?.['building:part']&&(polygonsOf(b).some(rings=>rings[0].some(p=>contains(parcel,p)))||points.some(p=>contains(b,p))));
+  if(candidates.length!==1)return row;
+  const building=candidates[0],vertices=polygonsOf(building).flatMap(r=>r[0]);if(!vertices.every(p=>contains(parcel,p)))return row;
+  if(pin&&contains(parcel,pin)&&contains(building,pin))return{...row,...evidence,buildingSourceId:building.sourceId,requiresAddressEvidence:false,geocodeMethod:'municipal-civic-address-and-source-point'};
+  const center={x:vertices.reduce((s,p)=>s+p.x,0)/vertices.length,z:vertices.reduce((s,p)=>s+p.z,0)/vertices.length};let point=contains(building,center)?center:null;
+  if(!point)for(const rings of polygonsOf(building)){const ring=rings[0];for(let i=0;i<ring.length&&!point;i++){const a=ring[i],b=ring[(i+1)%ring.length],length=Math.hypot(b.x-a.x,b.z-a.z);if(!length)continue;for(const side of [-1,1]){const p={x:(a.x+b.x)/2-(b.z-a.z)/length*.1*side,z:(a.z+b.z)/2+(b.x-a.x)/length*.1*side};if(contains(building,p)){point=p;break}}}}
+  if(!point||!contains(parcel,point))return row;
+  const coordinates=unproject(point.x,point.z),discrepancy=pin?Math.hypot(pin.x-point.x,pin.z-point.z):null;
+  return{...row,...evidence,...coordinates,buildingSourceId:building.sourceId,requiresAddressEvidence:false,geocodeMethod:'municipal-civic-address-single-building',sourceCoordinateDiscrepancyMetres:discrepancy};
+ });
 }

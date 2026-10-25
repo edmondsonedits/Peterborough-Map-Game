@@ -1,8 +1,8 @@
-import {planBusinessWallSigns,signVisibilityChanged,wrapSignText} from './business-sign-layout.js?v=1.6.128';
+import {planBusinessWallSigns,businessOpeningTop,signVisibilityChanged,wrapSignText} from './business-sign-layout.js?v=1.6.129';
 
 export async function loadBusinessDirectory(fetcher=fetch,url=new URL('./data/business-directory.json',import.meta.url)){
  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);
- try{const sourceUrl=new URL(url,import.meta.url);sourceUrl.searchParams.set('v',globalThis.PTBO_BUILD?.version||'1.6.128');const response=await fetcher(sourceUrl,{signal:controller.signal});if(!response.ok)throw new Error('Business directory HTTP '+response.status);const data=await response.json();if(data.schemaVersion!==1||!Array.isArray(data.businesses))throw new Error('Unsupported business directory');return data}finally{clearTimeout(timer)}
+ try{const sourceUrl=new URL(url,import.meta.url);sourceUrl.searchParams.set('v',globalThis.PTBO_BUILD?.version||'1.6.129');const response=await fetcher(sourceUrl,{signal:controller.signal});if(!response.ok)throw new Error('Business directory HTTP '+response.status);const data=await response.json();if(data.schemaVersion!==1||!Array.isArray(data.businesses))throw new Error('Unsupported business directory');return data}finally{clearTimeout(timer)}
 }
 
 function makeAtlas(THREE,canvasFactory){
@@ -32,13 +32,14 @@ export function createBusinessSignLayer({THREE,parent,features,directory,project
   const polygons=feature.sourceGeometry.map((rings,i)=>({rings:rings.map(r=>r.map(([lon,lat])=>{const p=project(lat,lon);return{x:p.x,z:p.y??p.z}})),base:feature.partHeights?.[i]?.base??feature.minY,wallTop:feature.partHeights?.[i]?.wallTop??feature.maxY-.2}));
   const remaining=rows.filter(row=>{const profile=profiles[feature.sourceId];if(profile?.signText&&(normalized(row.name)===normalized(profile.signText)||(normalized(profile.signText).length>=5&&normalized(row.name).startsWith(normalized(profile.signText))))&&(!row.frontageIndex||row.frontageIndex===0)){existing++;samples.push({id:row.id,name:row.name,buildingSourceId:feature.sourceId,existingProfileSign:true});return false}return true});
   const profile=profiles[feature.sourceId];
-  const adjusted=remaining.map(row=>{if(!profile)return row;const floor=(profile.detailHeightMetres||profile.eaveHeight||profile.height)/(profile.levels||1);const glass=profile.glazedLevels?.includes(0)||(profile.style==='office'&&profile.largeGlazedFront);const openingTop=glass?floor*.98:profile.style==='retail'?floor*.43+Math.min(2.15,floor*.7)/2:2.2;return{...row,outsetMetres:row.outsetMetres??.34,heightAboveBaseMetres:row.heightAboveBaseMetres??Math.max(2.78,openingTop+.1+.27)}});
+  const openingTop=businessOpeningTop(feature.properties||{},Math.min(...polygons.map(p=>p.wallTop-p.base)),profile);
+  const adjusted=remaining.map(row=>({...row,openingTopMetres:Math.max(row.openingTopMetres||0,openingTop),...(profile?{outsetMetres:row.outsetMetres??.34}:{})}));
   const result=planBusinessWallSigns({building:{sourceId:feature.sourceId,polygons},businesses:adjusted,project});rejected.push(...result.rejected);if(!result.signs.length)continue;
   const root=new THREE.Group(),lod=new THREE.Group();root.name='BusinessNames-'+feature.sourceId;root.userData={type:'business-name-signs',sourceId:feature.sourceId,collision:false};lod.name='business-sign-distance-lod';root.add(lod);parent.add(root);const batches=new Map();
   for(const sign of result.signs){const tile=atlas.add(sign);if(tile.error){rejected.push({id:sign.id,buildingSourceId:sign.buildingSourceId,reason:tile.error});continue;}if(!batches.has(tile.index))batches.set(tile.index,{positions:[],uvs:[],indices:[],material:tile.page.material});const batch=batches.get(tile.index),baseIndex=batch.positions.length/3,{center:c,rightVector:r,width:w,height:h}=sign,[u0,v0,u1,v1]=tile.uv;
    for(const [side,vertical]of [[-1,-1],[1,-1],[1,1],[-1,1]])batch.positions.push(c.x+r.x*w*.5*side,c.y+h*.5*vertical,c.z+r.z*w*.5*side);
    batch.uvs.push(u0,v0,u1,v0,u1,v1,u0,v1);batch.indices.push(baseIndex,baseIndex+1,baseIndex+2,baseIndex,baseIndex+2,baseIndex+3);
-   samples.push({id:sign.id,name:sign.name,buildingSourceId:sign.buildingSourceId,placementMode:sign.placementMode,center:sign.center,normal:sign.normal,width:sign.width,height:sign.height,belowRoof:true,members:sign.members,entrance:sign.source.entrance});
+   samples.push({id:sign.id,name:sign.name,buildingSourceId:sign.buildingSourceId,placementMode:sign.placementMode,sourceKind:sign.source.sourceKind,geocodeMethod:sign.source.geocodeMethod,center:sign.center,normal:sign.normal,width:sign.width,height:sign.height,belowRoof:true,members:sign.members,entrance:sign.source.entrance});
   }
   for(const batch of batches.values()){const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(batch.positions,3));geometry.setAttribute('uv',new THREE.Float32BufferAttribute(batch.uvs,2));geometry.setIndex(batch.indices);geometry.computeBoundingSphere();const mesh=new THREE.Mesh(geometry,batch.material);mesh.name='business-sign-atlas';mesh.userData={type:'business-name-sign',collision:false};lod.add(mesh);meshes++}
   generatedRegistry.attachEditableGroup(feature.generatedId,root);const bounds=new THREE.Box3().setFromObject(lod),center=bounds.getCenter(new THREE.Vector3());roots.push({root,lod,center});
