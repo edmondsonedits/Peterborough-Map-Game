@@ -120,18 +120,18 @@
   },
   "city_road_surfaces": {
     "cache_reused": false,
-    "feature_count": 18864,
+    "feature_count": 18866,
     "file": "peterborough-road-surfaces.geojson",
     "layer_counts": {
       "bridges": 107,
       "curb_edges": 9610,
-      "official_streets": 2667,
+      "official_streets": 2669,
       "parking_surfaces": 1926,
       "road_surfaces": 4554
     },
     "layers": [
       {
-        "feature_count": 2667,
+        "feature_count": 2669,
         "id": 0,
         "key": "official_streets",
         "last_edit_date": null,
@@ -192,9 +192,9 @@
     "file": "construction-audit.json",
     "policy": "Only authoritative completed geometry changes alter the packaged city"
   },
-  "generated_at": "2026-10-25T04:48:44+00:00",
+  "generated_at": "2026-10-25T15:25:33+00:00",
   "hydrography": {
-    "cache_reused": false,
+    "cache_reused": true,
     "feature_count": 1312,
     "file": "peterborough-hydrography.geojson",
     "lidar_breaklines_url": "https://www.publicdocs.mnr.gov.on.ca/mirb/Lidar%20DTM%20-%20Ptbo%20-%20breaklines.zip",
