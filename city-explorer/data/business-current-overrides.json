@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-24",
+  "overrides": [
+    {
+      "matchId": "osm:node/5398947922",
+      "name": "Bijoux Bar",
+      "address": "399 Water Street",
+      "sourceUrl": "https://www.stveronus.com/contact-us"
+    },
+    {
+      "matchId": "osm:node/5398850827",
+      "name": "St. Veronus",
+      "address": "129 Hunter Street West",
+      "sourceUrl": "https://www.stveronus.com/contact-us"
+    },
+    {
+      "matchId": "osm:node/7986427616",
+      "name": "Take Cover Books",
+      "address": "391 Water Street",
+      "sourceUrl": "https://takecoverbooks.ca/"
+    },
+    {
+      "matchId": "osm:node/7986427615",
+      "name": "Sweet Fern Floral Studio",
+      "address": "387 Water Street",
+      "sourceUrl": "https://sweetfernfloralstudio.com/",
+      "locationNote": "Site announces a move at the end of October; 387 Water remains current on 2026-10-24."
+    },
+    {
+      "matchId": "osm:node/7854664940",
+      "name": "Faculty Bar & Small Plates",
+      "address": "379 Water Street",
+      "sourceUrl": "https://kawarthanow.com/venue/5829/faculty-bar-small-plates/"
+    },
+    {
+      "matchId": "osm:node/7854664944",
+      "name": "Pro-Tect Lock & Safe",
+      "address": "380 Water Street",
+      "lat": 44.30528,
+      "lon": -78.3187216,
+      "sourceUrl": "https://www.pro-tectlockandsafe.com/contact"
+    },
+    {
+      "matchId": "osm:node/7854664941",
+      "name": "The Food Shop",
+      "address": "374 Water Street",
+      "lat": 44.3051581,
+      "lon": -78.3187216,
+      "sourceUrl": "https://kawarthanow.com/venue/5781/the-food-shop/"
+    }
+  ],
+  "suppressed": [
+    {
+      "id": "osm:node/7854664943",
+      "reason": "Dated Planet pin occupies current Food Shop frontage; current 374 Water listing takes precedence.",
+      "sourceUrl": "https://kawarthanow.com/venue/5781/the-food-shop/"
+    }
+  ],
+  "additions": [
+    {
+      "id": "reviewed:east-city-knife-water",
+      "name": "East City Knife Co.",
+      "address": "376 Water Street",
+      "street": "Water Street",
+      "lat": 44.3052089,
+      "lon": -78.3187216,
+      "buildingSourceId": "way/1006243553",
+      "category": "houseware",
+      "sourceKind": "reviewed-current-name",
+      "sourceUrl": "https://eastcityknife.co/",
+      "observedAt": "2026-10-24"
+    },
+    {
+      "id": "reviewed:statement-house-water",
+      "name": "Statement House",
+      "address": "378 Water Street",
+      "street": "Water Street",
+      "lat": 44.305244,
+      "lon": -78.3187216,
+      "buildingSourceId": "way/1006243553",
+      "category": "interior_decoration",
+      "sourceKind": "reviewed-current-name",
+      "sourceUrl": "https://www.statementhouse.com/",
+      "observedAt": "2026-10-24"
+    },
+    {
+      "id": "reviewed:curate-water",
+      "name": "Curate & Co by KDI",
+      "address": "386 Water Street",
+      "street": "Water Street",
+      "lat": 44.30543,
+      "lon": -78.3187025,
+      "buildingSourceId": "way/1006243554",
+      "category": "interior_decoration",
+      "sourceKind": "reviewed-current-name",
+      "sourceUrl": "https://curateandco.ca/",
+      "observedAt": "2026-10-24"
+    }
+  ]
+}

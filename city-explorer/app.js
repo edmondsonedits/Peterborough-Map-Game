@@ -1,3 +1,4 @@
+import {createBusinessSignLayer, loadBusinessDirectory} from './business-signs.js?v=1.6.128';
 import { recordSherbrookeBuilding, recordSherbrookeSidewalk, sherbrookeBuildings } from './sherbrooke-plan.js';
 import { installSherbrookeDetails } from './sherbrooke-details.js?v=frontages-20261021';
 import { FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js?v=corridor-20261024';
@@ -15,11 +16,11 @@ import { createVegetationVariant, stationOneVegetationPalette } from './vegetati
 import { installStationStreetscape } from './streetscape-assets.js?v=streetscape-2';
 import { installStationApron } from './site-surface-materials.js?v=1.6.56';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
-import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js?v=1.6.127';
+import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js?v=1.6.128';
 import { createCatalogObject } from './editor/asset-catalog.js';
 import { createCommandHistory } from './editor/command-history.js';
-import { createDraftStore } from './editor/draft-store.js?v=1.6.127';
-import { createCityEditor } from './editor/city-editor.js?v=1.6.127';
+import { createDraftStore } from './editor/draft-store.js?v=1.6.128';
+import { createCityEditor } from './editor/city-editor.js?v=1.6.128';
 import { createEmptySceneDocument, sanitizeRenderableSceneDocument } from './editor/scene-document.js';
 import { createGeneratedRegistry } from './editor/generated-registry.js?v=footage-20261020';
 import { applyOverrides } from './editor/override-runtime.js';
@@ -41,7 +42,7 @@ import { clearLandCoverRaster, paintLandCoverPolygon } from './land-cover-raster
 import { sampleOfficialTerrainElevation, validOfficialTerrainMetadata } from './terrain-heightmap.js?v=1.5.5-lidar1';
 import { sampleTriangulatedTerrainHeight } from './terrain-surface.js?v=1.5.5-terrain1';
 import { HydroSurfaceIndex, WATER_SURFACE_CLEARANCE, WATER_TERRAIN_RECESS, createWaterStageSampler, relativeWaterElevation, robustFallbackWaterHeight, subdivideWaterTriangle, watercourseWidth } from './water-system.js?v=1.5.5-hydro2';
-import { CitySplatLayer } from './city-splat-layer.js?v=1.6.127';
+import { CitySplatLayer } from './city-splat-layer.js?v=1.6.128';
 import {
   estimatedBuildingFloors,
   facadeDetailClass,
@@ -349,6 +350,7 @@ const authoredRuntime = createAuthoredRuntime({ THREE, project, unproject, terra
 const generatedBuildingMeshes = new Map();
 const generatedRoadMeshes = new Map();
 const generatedBuildingFeatures = new Map();
+let businessSignLayer = null;
 const batchSetIds = new WeakMap();
 let nextBatchSetId = 1;
 function batchSetId(batches) {
@@ -1081,7 +1083,8 @@ function buildingDimensions(tags = {}, featureId = '') {
   let height;
   if (Number.isFinite(landmarkBaseHeight)) height = landmarkBaseHeight;
   else if (Number.isFinite(explicitHeight)) height = explicitHeight;
-  else if (Number.isFinite(levels)) height = levels * 3.15;
+  // Mall storeys need commercial floor clearance; explicit heights and reviewed profiles still take precedence.
+  else if (Number.isFinite(levels)) height = levels * (tags.shop === 'mall' ? 4.8 : 3.15);
   else if (/church|cathedral|mosque|temple/.test(type)) height = 18 + deterministicNumber(featureId, 0, 8);
   else if (/apartments|hotel|office|commercial|hospital|school|university/.test(type)) height = deterministicNumber(featureId, 11, 23);
   else if (/industrial|warehouse|retail|supermarket/.test(type)) height = deterministicNumber(featureId, 7, 12);
@@ -1093,7 +1096,7 @@ function buildingDimensions(tags = {}, featureId = '') {
 
   const minHeight = Number.isFinite(minHeightTag) ? minHeightTag : Number.isFinite(minLevels) ? minLevels * 3.15 : 0;
   const taggedRoofShape = String(tags['roof:shape'] || '').toLowerCase();
-  const pitchedCandidate = !/industrial|warehouse|retail|supermarket|commercial|office|apartments|hospital|school|university|garage|shed|carport|ice_rink|sports_centre|stadium/.test(use)
+  const pitchedCandidate = tags.shop !== 'mall' && !/industrial|warehouse|retail|supermarket|commercial|office|apartments|hospital|school|university|garage|shed|carport|ice_rink|sports_centre|stadium/.test(use)
     && !/flat|skillion|sawtooth/.test(taggedRoofShape);
   // Detached homes dominate Peterborough's residential fabric. OSM rarely
   // records roof height, so infer a conservative, stable pitch while keeping
@@ -1756,6 +1759,7 @@ function appendBufferedBuilding(rings, tags, featureId, batches, sourceId = feat
       sourceId: sourceId === undefined || sourceId === null || sourceId === '' ? null : String(sourceId),
       stableSourceId: sourceId,
       sourceGeometry: [],
+      partHeights: [],
       batchSet: batches,
       ranges: [],
       minX: Infinity, maxX: -Infinity, minZ: Infinity, maxZ: -Infinity,
@@ -1766,6 +1770,7 @@ function appendBufferedBuilding(rings, tags, featureId, batches, sourceId = feat
     };
     generatedBuildingFeatures.set(key, feature);
   }
+  feature.partHeights.push({base: foundationTop, wallTop: footage?.detailHeightMetres ? foundationTop + footage.detailHeightMetres : wallTop});
   feature.ranges.push(...namespacedRanges(batches, rangeStarts));
   feature.sourceGeometry.push([outer, ...holes].map((ring) => ring.map((vertex) => {
     const coordinates = unproject(vertex.x, vertex.y);
@@ -4588,6 +4593,7 @@ async function buildCity() {
     configureTerrainMeshResolution();
     return null;
   });
+  const businessDirectoryPromise = loadBusinessDirectory().catch(error => { console.info('Business names unavailable; the base city remains available.', error); return null; });
   const osmPromise = fetchOsm();
   const cityOpenDataPromise = loadCityOpenData().catch((error) => {
     console.info('Official City eMaps detail layer is unavailable; the OSM city remains usable.', error);
@@ -4697,6 +4703,15 @@ async function buildCity() {
   buildLandmarkMapLabels();
   await initializeSemanticSurvey();
   await initializeCapturedDetailLayer();
+  const businessDirectory = await businessDirectoryPromise;
+  if (businessDirectory) try {
+    businessSignLayer = createBusinessSignLayer({THREE, parent: buildingGroup, features: generatedBuildingFeatures.values(), directory: businessDirectory, project, generatedRegistry, profiles: FOOTAGE_PROFILES, lowPower: lowPowerProfile});
+    document.documentElement.dataset.businessSigns = 'ready';
+  } catch (error) {
+    buildingGroup.children.filter(object => object.userData.type === 'business-name-signs').forEach(object => { object.visible = false; });
+    document.documentElement.dataset.businessSigns = 'unavailable';
+    console.info('Business names could not be prepared; the base city remains available.', error);
+  }
   generatedEditorProxyGroup.updateMatrixWorld(true);
   // Settle optional photographic geometry before editor source-copy replacements are loaded.
   await Promise.all([...footageFacadeGroups.values()].map(group => group.userData.photoReady));
@@ -5818,6 +5833,7 @@ function updateCityVisualLod(viewCamera = camera) {
   cityVisualLod = lodKey;
 
   buildingGroup.children.forEach((object) => {
+    if (object.userData.type === 'business-name-signs') return;
     if (state.mode === 'map') {
       object.visible = false;
       return;
@@ -5900,6 +5916,7 @@ function animate() {
   }
   const viewCamera = captureFrame?.camera || camera;
   updateCityVisualLod(viewCamera);
+  businessSignLayer?.update(viewCamera,false,state.mode);
   updateLocation();
   updateFps();
   atmosphere.mesh.position.copy(viewCamera.position);
@@ -5994,8 +6011,11 @@ function exposeCityQualityQa() {
         position: camera.position.toArray(),
       };
     },
+    businessSigns() { return businessSignLayer?.samples() || []; },
+    businessSignRejections() { return businessSignLayer?.rejected() || []; },
     metrics() {
       return {
+        businessSigns: businessSignLayer?.stats() || null,
         drawCalls: renderer.info.render.calls,
         geometries: renderer.info.memory.geometries,
         textures: renderer.info.memory.textures,
