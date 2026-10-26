@@ -39,7 +39,7 @@ const routine = app.match(/^function appendDrapedOfficialRoadTriangle\([^]*?^\}/
 assert.ok(routine);
 const subdivide = runInNewContext(`${routine}\nappendDrapedOfficialRoadTriangle`, {
   project: () => ({ x: 0, y: 0 }), lowPowerProfile: false,
-  officialRoadMeshEdgeLength, CITY_ROAD_MESH_LEGACY: false,
+  officialRoadMeshEdgeLength, CITY_ROAD_MESH_LEGACY: false, hunterBridgeSurface: null,
   cachedOfficialRoadHeightAt: (_cache, point) => 100 + point.x * 0.02 + point.y * 0.01,
   appendRoadTriangle: (out, ...vertices) => out.push(vertices),
 });

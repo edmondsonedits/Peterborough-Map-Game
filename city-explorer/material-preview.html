@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Local metre-scale preview of shared city materials and facade components.">
+  <title>City Visual Workshop</title>
+  <style>
+    :root{color-scheme:dark;--ink:#e8edf1;--muted:#9aa9b4;--line:#33434c;--panel:#111b20;--accent:#a4d6c0;--gold:#d8b981}
+    *{box-sizing:border-box}html,body{margin:0;height:100%;font:14px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:#10171a;color:var(--ink)}
+    body{overflow:hidden}button,select{font:inherit;color:inherit;background:#1a292f;border:1px solid #40545d;border-radius:7px;padding:8px 10px}button{cursor:pointer}button:hover,select:hover{border-color:var(--accent)}
+    .shell{height:100%;display:grid;grid-template-rows:auto 1fr}.topbar{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:13px 20px;background:#131d22;border-bottom:1px solid var(--line)}
+    .brand{display:flex;align-items:center;gap:12px}.mark{width:32px;height:32px;border-radius:9px;background:#25423b;color:#c5ead9;display:grid;place-items:center;font-weight:800}.eyebrow{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);font-weight:700}.brand h1{font-size:16px;margin:0;font-weight:650;letter-spacing:.01em}.controls{display:flex;align-items:center;gap:10px}.controls label{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:8px}.mode-button[aria-pressed="true"]{background:#24463c;border-color:#618f7d;color:#d7f4e7}.status{font-size:11px;color:var(--muted);min-width:95px;text-align:right}
+    main{position:relative;min-height:0}canvas{display:block;width:100%;height:100%;outline:none}.info{position:absolute;z-index:1;left:18px;top:18px;pointer-events:none}.info h2{font-size:13px;margin:0 0 3px;font-weight:650}.info p{margin:0;color:var(--muted);font-size:11px}.legend{position:absolute;z-index:1;left:18px;bottom:16px;display:flex;gap:8px;pointer-events:none}.chip{background:#142126e8;border:1px solid #33464e;border-radius:6px;padding:6px 9px;color:#bfccd1;font-size:10px}.notice{position:absolute;right:16px;bottom:16px;max-width:300px;padding:9px 11px;border:1px solid #3c4b51;border-radius:8px;background:#111b20e8;color:#b9c5ca;font-size:10px}.notice strong{color:var(--gold)}
+    @media(max-width:760px){.topbar{align-items:flex-start;padding:11px 13px;gap:12px;flex-direction:column}.controls{width:100%;flex-wrap:wrap}.controls label{flex:1}.status{margin-left:auto}.info{left:12px;top:12px}.notice{right:10px;bottom:10px;max-width:200px}.legend{left:12px;bottom:10px;max-width:55%;flex-wrap:wrap}}
+  </style>
+  <script type="importmap">{"imports":{"three":"./vendor/three-r180/build/three.module.min.js"}}</script>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand"><div class="mark">V</div><div><div class="eyebrow">City explorer · authoring</div><h1>City Visual Workshop</h1></div></div>
+      <div class="controls">
+        <label for="archetype">Facade<select id="archetype"><option value="residential">Residential</option><option value="storefront">Storefront</option><option value="apartment">Apartment</option><option value="industrial">Industrial</option><option value="civic">Civic</option></select></label>
+        <label for="quality">Detail<select id="quality"><option value="full">Full</option><option value="lite">Lite</option></select></label>
+        <button id="mode" class="mode-button" type="button" aria-pressed="false">Procedural detail</button>
+        <span class="status" id="status" aria-live="polite">Starting preview…</span>
+      </div>
+    </header>
+    <main>
+      <canvas id="preview" aria-label="Interactive 3D preview; drag to orbit, scroll to zoom"></canvas>
+      <div class="info"><h2 id="scene-title">Materials and facade components</h2><p>Drag to orbit · scroll to zoom · dimensions are metres</p></div>
+      <div class="legend" id="legend" aria-live="polite"></div>
+      <div class="notice"><strong>Authoring preview</strong><br>Not a performance or final visual review. Source profiles remain authoritative.</div>
+    </main>
+  </div>
+  <script type="module" src="./material-preview.js"></script>
+</body>
+</html>

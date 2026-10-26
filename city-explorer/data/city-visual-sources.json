@@ -1,0 +1,232 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Source and licensing record for reusable city visual materials. This is provenance metadata, not a blanket permission to redistribute source imagery.",
+  "proceduralMaterials": [
+    {
+      "kind": "asphalt",
+      "source": "city-material-library.js",
+      "provenance": "original procedural",
+      "licenseScope": "original procedural code; no external imagery or texture license",
+      "scaleMeters": {
+        "grain": 0.28,
+        "patch": 2
+      }
+    },
+    {
+      "kind": "brick",
+      "source": "city-material-library.js",
+      "provenance": "original procedural",
+      "licenseScope": "original procedural code; no external imagery or texture license",
+      "scaleMeters": {
+        "width": 0.24,
+        "height": 0.075,
+        "mortar": 0.0084
+      }
+    },
+    {
+      "kind": "concrete",
+      "source": "city-material-library.js",
+      "provenance": "original procedural",
+      "licenseScope": "original procedural code; no external imagery or texture license",
+      "scaleMeters": {
+        "jointSpacing": 3.2,
+        "jointWidth": 0.012,
+        "grain": 0.42
+      }
+    },
+    {
+      "kind": "glass",
+      "source": "city-material-library.js",
+      "provenance": "original procedural",
+      "licenseScope": "original procedural code; no external imagery or texture license",
+      "scaleMeters": {
+        "variation": 2.5
+      }
+    },
+    {
+      "kind": "grass",
+      "source": "city-material-library.js",
+      "provenance": "original procedural",
+      "licenseScope": "original procedural code; no external imagery or texture license",
+      "scaleMeters": {
+        "grain": 0.9,
+        "patch": 4
+      }
+    },
+    {
+      "kind": "metal-roof",
+      "source": "city-material-library.js",
+      "provenance": "original procedural",
+      "licenseScope": "original procedural code; no external imagery or texture license",
+      "scaleMeters": {
+        "seamSpacing": 0.55,
+        "panelVariation": 6.25
+      }
+    },
+    {
+      "kind": "render",
+      "source": "city-material-library.js",
+      "provenance": "original procedural",
+      "licenseScope": "original procedural code; no external imagery or texture license",
+      "scaleMeters": {
+        "grain": 0.7,
+        "cloud": 3.57
+      }
+    },
+    {
+      "kind": "roof",
+      "source": "city-material-library.js",
+      "provenance": "original procedural",
+      "licenseScope": "original procedural code; no external imagery or texture license",
+      "scaleMeters": {
+        "width": 0.34,
+        "height": 0.15,
+        "weathering": 2.38
+      }
+    },
+    {
+      "kind": "stone",
+      "source": "city-material-library.js",
+      "provenance": "original procedural",
+      "licenseScope": "original procedural code; no external imagery or texture license",
+      "scaleMeters": {
+        "width": 0.42,
+        "height": 0.28,
+        "mortar": 0.0147
+      }
+    },
+    {
+      "kind": "water",
+      "source": "city-material-library.js",
+      "provenance": "original procedural",
+      "licenseScope": "original procedural code; no external imagery or texture license",
+      "scaleMeters": {
+        "grain": 2.4,
+        "patch": 12.5
+      }
+    }
+  ],
+  "footageFacades": {
+    "manifest": "assets/sherbrooke-frontages/manifest.json",
+    "profileSource": "sherbrooke-footage-profiles.js",
+    "provenance": "User-owned footage; geometry and crop review, not surveyed dimensions",
+    "licenseScope": "User-owned source footage. Consult the owner and project distribution terms before reuse outside this project; no general redistribution grant is asserted here.",
+    "records": [
+      {
+        "label": "N03",
+        "file": "assets/sherbrooke-frontages/n03.jpg",
+        "sha256": "c1a4b5e7d105363049dbb8adbf3be5e300b731cbb2fa4a60ee34b8e3d4b46691",
+        "sourceSha256": "1da9f8c31518416e7002e4f2e3f43749574ead930dbd8f629922e1dc736963a8",
+        "bytes": 33563,
+        "sourceFrame": "0174_LEFT_SIDE.jpg"
+      },
+      {
+        "label": "S03",
+        "file": "assets/sherbrooke-frontages/s03.jpg",
+        "sha256": "11e5ce3f4ff916895746e0af5d39bdbc31a8836e0ea6f6ac9a889f698434ea87",
+        "sourceSha256": "ee1d90e4803dfe34a9e7f58e2f972823a75c3682ea7e7ad08e02c280b7da73fe",
+        "bytes": 45337,
+        "sourceFrame": "0150_RIGHT_SIDE.jpg"
+      },
+      {
+        "label": "S04",
+        "file": "assets/sherbrooke-frontages/s04.jpg",
+        "sha256": "db37002f55f23f4c98723d64feafd6410c6ccc1bd6012fe2b28e65e857be3464",
+        "sourceSha256": "957539ccd7258c915620d0a20f60e659d21960852832e2ca36ada8a53ac0740b",
+        "bytes": 37168,
+        "sourceFrame": "0154_RIGHT_SIDE.jpg"
+      },
+      {
+        "label": "S05",
+        "file": "assets/sherbrooke-frontages/s05.jpg",
+        "sha256": "3ec3d40b64717b23d255864307679a39c41f9e1ea508278880cf7fefce755080",
+        "sourceSha256": "957539ccd7258c915620d0a20f60e659d21960852832e2ca36ada8a53ac0740b",
+        "bytes": 43117,
+        "sourceFrame": "0154_RIGHT_SIDE.jpg"
+      },
+      {
+        "label": "S08",
+        "file": "assets/sherbrooke-frontages/s08.jpg",
+        "sha256": "e743bcae3b68e1d2fbcfcb4d24059657201104d341af3e21dce08933a153b2ce",
+        "sourceSha256": "a4cc5469f106a14cc302ce8597fc4387e6d7082d8b1bd5c7b6b013a5f1cfd58d",
+        "bytes": 32425,
+        "sourceFrame": "0170_RIGHT_SIDE.jpg"
+      },
+      {
+        "label": "S10",
+        "file": "assets/sherbrooke-frontages/s10.jpg",
+        "sha256": "8e4469b08876a63a0ed054eb3203aa6060699b79b3c57dbb6cdaeb87402e991c",
+        "sourceSha256": "1a88e1ef2b2deca76dfd70453041afcfbc5d1ca259196609707a02f383b743ba",
+        "bytes": 53621,
+        "sourceFrame": "0176_RIGHT_SIDE.jpg"
+      }
+    ]
+  },
+  "webReferences": {
+    "documentation": "../../docs/web-storefront-references.md",
+    "runtimeUse": "Reference evidence only. The searched storefront photographs are not bundled or loaded by the runtime. Public accessibility is not a reuse license."
+  },
+  "displayGeometryOverrides": [
+    {
+      "featureId": "way/1006575704",
+      "source": "assets/sherbrooke-frontages/s03.jpg",
+      "implementation": "reviewed-photo-appearance.js",
+      "confidence": "visual-estimate",
+      "method": "Image-UV mesh silhouette clips roof-edge background without editing or redistributing a new raster; porch width/posts aligned to inspected crop, conservative depth estimate.",
+      "limits": "Original full-resolution source absent. Baked shadows, vegetation and photographic porch perspective remain. GIS footprint, roof mass, collision and identity unchanged.",
+      "photoOverlapPolicy": "Reviewed S03 source contains front porch posts/beam and balcony rails. Hide their generated duplicates only after photo load; preserve slabs and failed-photo procedural fallback. Original raster and hashes unchanged."
+    }
+  ],
+  "recordingReferenceIntegration": {
+    "manifest": "assets/recording-frontages/manifest.json",
+    "recipes": "assets/recording-frontages/recipes.json",
+    "appearanceEvidence": "data/recording-reference-evidence.json",
+    "implementation": "recording-appearance.js",
+    "source": "User-provided October 18, 2026 driving footage, existing perspective exports; original recordings are not shipped.",
+    "rights": "User requested use of their recording in this game. No CC0/public-domain or third-party redistribution license is asserted. No new external images.",
+    "runtimeUse": "Two bounded sign/identity crops, a yellow No Frills wall section, the observed stone pier at 364 Water, and path/driveway tints on five previously matched residential gardens. Building and terrain geometry sources remain unchanged.",
+    "fallback": "?recordingReferences=off disables this pass; ?visuals=legacy also disables it. Missing photos retain procedural details.",
+    "limits": "Reference proportions and colors are estimates under existing experimental projection and baked illumination. Parking layouts and the unlocated residential extract set remain unassigned."
+  },
+  "recordingReferenceExpansion": {
+    "corridorAudit": "data/corridor-recording-review.json",
+    "outerCollectionAudit": "data/outer-recording-review.json",
+    "implementation": [
+      "corridor-recording-appearances.js",
+      "recording-surface-appearance.js",
+      "sherbrooke-footage.js"
+    ],
+    "source": "Existing user-provided October 18 perspective exports and separately identified October 19 two-pass extracts. Original files remain outside runtime assets.",
+    "rights": "Reference-only use requested by the user; no additional photos are bundled and no CC0 or third-party redistribution rights are asserted.",
+    "runtimeUse": "Five verified corridor appearance additions and five existing shared ground colour defaults. Arches are limited to Showplace centre upper opening and the tall east-Water upper floor; unsupported neighbour-derived arches were removed.",
+    "incrementalImageBytes": 0,
+    "incrementalTextureStorageBytes": 0,
+    "fallback": "?recordingExpansion=off retains the earlier eight-site recording pass. ?recordingReferences=off and ?visuals=legacy disable this continuation too.",
+    "limits": "Facade proportions and surface colours are visual approximations. The Cricket route and houses 22/24 are now matched in the separate cricketRecordingReferences section; other house IDs remain provisional. The separate October 19 residential collection is not georeferenced. Obscured, roof-only and unrecorded elevations are not reconstructed."
+  },
+  "cricketRecordingReferences": {
+    "implementation": "cricket-recording-appearances.js",
+    "audit": "data/outer-recording-review.json",
+    "records": [
+      {
+        "featureId": "way/1015118649",
+        "address": "22 Cricket Place",
+        "parcelObjectId": 4384
+      },
+      {
+        "featureId": "way/1015118651",
+        "address": "24 Cricket Place",
+        "parcelObjectId": 4385
+      }
+    ],
+    "identityEvidence": "User identified the recorded orange-toy porch house as 22 Cricket Place and confirmed the Hunter Street East bridge / north Driscoll Terrace / east Cricket Place route. Official City civic parcel geometry anchors 22 and adjoining 24 to the existing OSM footprints.",
+    "parcelSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Basedata/MapServer/4",
+    "source": "Existing user-provided October 18 perspective exports; paths, SHA256 hashes and observed details are recorded with each runtime profile.",
+    "rights": "User-authorized reference use in this game. No original photographs, third-party listing images or parcel data are bundled as game assets; no public-domain or general redistribution license is asserted.",
+    "runtimeUse": "Reference-derived brick and trim colours, two front opening layouts and simplified porch components. Source map footprints, dimensions, roof geometry, collision and identity stay unchanged.",
+    "incrementalImageBytes": 0,
+    "incrementalTextureStorageBytes": 0,
+    "fallback": "?cricketReferences=off disables only these two houses. recordingExpansion=off, recordingReferences=off and visuals=legacy also disable them.",
+    "limits": "Simplified existing roof volumes remain visibly unlike the source gables. Porch and opening dimensions are visual estimates. Unknown neighbours and the separate October 19 image collection remain unassigned. Trial lawn/path strips were rejected after image review because they formed arbitrary rectangles and stopped short of a known sidewalk endpoint; the existing ground remains unchanged."
+  }
+}

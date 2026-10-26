@@ -91,7 +91,7 @@ const state = {
   roadSurfaceIndex: { sample: () => ({ onRoad: false, height: 10, name: 'Main Street' }) },
 };
 const gameplaySurfaceAt = runInNewContext(gameplayFunction + '\ngameplaySurfaceAt', {
-  state, terrainHeightAtWorld: () => 0,
+  state, terrainHeightAtWorld: () => 0, hunterBridgeSurface: null,
 });
 let contact = gameplaySurfaceAt(0, 0, 10);
 assert.equal(contact.heightSource, 'junction-polygon');

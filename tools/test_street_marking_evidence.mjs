@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { mappedLaneCount, roadProfile } from '../city-explorer/road-network.js';
 import { mappedCycleLaneSides, roadLaneMarkingBoundaries } from '../city-explorer/city-detail-rules.js';
+import { createRoadMarkingContext, roadMarkingIntervals } from '../city-explorer/road-appearance-rules.js';
 const paint = tags => roadLaneMarkingBoundaries(tags, roadProfile(tags));
 test('centre turning lane is part of the total when only directional counts exist',()=>{
  assert.equal(mappedLaneCount({'lanes:forward':'1','lanes:backward':'1','lanes:both_ways':'1'}),3);
@@ -62,18 +63,20 @@ import * as THREE from '../city-explorer/vendor/three-r180/build/three.module.mi
 import { laneCountFor } from '../city-explorer/road-network.js';
 import { createFeatureBatchBinding } from '../city-explorer/editor/feature-batch-binding.js';
 const app = fs.readFileSync(new URL('../city-explorer/app.js',import.meta.url),'utf8');
-function renderPaint(tags, lineId = 'way/460581459') {
+function renderPaint(tags, lineId = 'way/460581459', { roadAppearance = true, segments = null } = {}) {
  const state={roadPaintRanges:new Map([[lineId,[]]]),objectCount:0};
  const group=new THREE.Group(), meshes=new Map();
  const fn=app.match(/^function buildRoadMarkings\([^]*?^\}/m)[0];
- const env={THREE, state, streetscapeGroup:group, generatedRoadMeshes:meshes,
+ const env={THREE, state, streetscapeGroup:group, generatedRoadMeshes:meshes, roadAppearanceEnabled:roadAppearance,
+  cityVisuals:{mode:'legacy'},
   roadProfile,laneCountFor,roadLaneMarkingBoundaries,mappedCycleLaneSides,
+  createRoadMarkingContext,roadMarkingIntervals,
   reviewedPaintTags:helper.reviewedPaintTags,drapePaintStrip:helper.drapePaintStrip,
   roadRenderTileCoordinates:()=>({x:0,z:0}),lowPowerProfile:false,ROAD_RENDER_TILE_SIZE:400,
   materials:{roadPaintYellow:new THREE.MeshBasicMaterial(),roadPaintWhite:new THREE.MeshBasicMaterial()},
   document:{documentElement:{dataset:{}}},gameplaySurfaceAt:(x,z)=>({height:10+.02*x+.01*z,onRoad:true})};
  const run=Function(...Object.keys(env), fn+';return buildRoadMarkings;')(...Object.values(env));
- run([{a:new THREE.Vector2(0,0),b:new THREE.Vector2(20,0),aY:1,bY:2,
+ run(segments || [{a:new THREE.Vector2(0,0),b:new THREE.Vector2(20,0),aY:1,bY:2,
    aSourceVertex:true,bSourceVertex:true,lineId,chainStart:0,width:9,name:tags.name,
    profile:roadProfile(tags),tags}]);
  return {state,group,meshes};
@@ -99,6 +102,40 @@ test('existing road editor bindings can hide and restore final draped paint',()=
  const attr=group.children[0].geometry.getAttribute('position'), before=attr.array.slice();
  binding.setVisible(false);assert.ok(attr.array.every(v=>v===0));
  binding.restore();assert.deepEqual(attr.array,before);
+});
+function mainWaySegments(tags) {
+ const make=(id,a,b,chainStart=0)=>({a:new THREE.Vector2(...a),b:new THREE.Vector2(...b),aY:1,bY:1,
+  aSourceVertex:true,bSourceVertex:true,lineId:id,chainStart,width:roadProfile(tags).width,
+  name:tags.name,profile:roadProfile(tags),tags});
+ return [make('way/main',[-30,0],[0,0]),
+  make('way/north',[0,0],[0,30]),make('way/south',[0,0],[0,-30])];
+}
+function negativeXMaximum(mesh) {
+ const p=mesh.geometry.getAttribute('position');let maximum=-Infinity;
+ for(let i=0;i<p.count;i++)if(p.getX(i)<-3)maximum=Math.max(maximum,p.getX(i));
+ return maximum;
+}
+test('renderer opens center and mapped cycle markings at a same-name three-arm junction',()=>{
+ const tags={highway:'secondary',name:'Main Street',lanes:'2',divider:'solid_line',
+  cycleway:'lane','cycleway:right':'lane'};
+ const segments=mainWaySegments(tags);
+ const {group}=renderPaint(tags,'way/main',{segments});
+ const center=group.children.find(mesh=>mesh.userData.type==='road-centre-lines');
+ const cycle=group.children.find(mesh=>mesh.userData.type==='mapped-cycle-lane-edges');
+ assert.ok(center);assert.ok(cycle);
+ assert.ok(negativeXMaximum(center)<-5,'center divider ends before the shared intersection node');
+ assert.ok(negativeXMaximum(cycle)<-5,'mapped cycle-lane separator uses the same intersection opening');
+});
+test('legacy appearance keeps its old bounded endpoint trim while junction-aware mode opens farther',()=>{
+ const tags={highway:'secondary',name:'Main Street',lanes:'2',divider:'solid_line'};
+ const segments=mainWaySegments(tags);
+ const modern=renderPaint(tags,'way/main',{segments,roadAppearance:true}).group.children
+  .find(mesh=>mesh.userData.type==='road-centre-lines');
+ const legacy=renderPaint(tags,'way/main',{segments,roadAppearance:false}).group.children
+  .find(mesh=>mesh.userData.type==='road-centre-lines');
+ assert.ok(modern&&legacy);
+ assert.ok(negativeXMaximum(modern)<negativeXMaximum(legacy)-1,
+  'junction-aware trim reaches the source-derived mouth; legacy keeps the previous endpoint cap');
 });
 test('source road paint is built once after municipal surfaces rather than during OSM parsing',()=>{
  assert.equal((app.match(/buildRoadMarkings\(roadSegments\)/g)||[]).length,0);

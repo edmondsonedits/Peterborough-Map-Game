@@ -1,0 +1,219 @@
+{
+  "scope": "Appearance-only settings from inspected non-fisheye perspective exports: residential surface colors, a No Frills facade panel, and the 364 Water Street stone pier. Existing source IDs, massing, roof shapes, roads, collision, and safe-setback garden geometry remain unchanged.",
+  "calibrationLimit": "Perspective exports reuse the existing experimental fisheye calibration. They support visible surface/material categories, not surveyed dimensions or colorimetry.",
+  "sharedAppearance": {
+    "frontGarden.pathColor": "#85827b",
+    "frontGarden.drivewayColor": "#514f4b"
+  },
+  "records": [
+    {
+      "id": "way/1031042883",
+      "label": "R13",
+      "name": "364 Water Street office",
+      "source": {
+        "path": "H:/ChatGPT/Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0714s_lens0_pitch+0.jpg",
+        "sha256": "57371f5366f978d3fb1236436af8191e56fc3eaa893ab94cbd826ee259ce3afe",
+        "sourceSeconds": 714,
+        "lens": 0,
+        "dimensions": [2048, 2048],
+        "fovDegrees": 100,
+        "yawDegrees": 0,
+        "pitchDegrees": 0
+      },
+      "baseline": {
+        "path": "H:/ChatGPT/Peterborough-Map-Game-Sherbrooke/test-artifacts/recording-visuals-20261025/final/full-R13-front.jpg",
+        "sha256": "cbde5ab2deef2c6343712a4e20ecc422dd0e774269400a52a1f24431efb931ac"
+      },
+      "observation": "The 0714 source shows a broad pale stone/concrete pier between the narrow north/left vertical glazed bay and the horizontal ribbon windows. In the final R13 frontage, the ribbons and lower glazed band cross this pier. The profile runs t=0 south/right to t=1 north/left; the pier spans about t=.62-.84, leaving the separate vertical strip beginning near .845 visible.",
+      "changes": [
+        "Add a bounded facade panel at t=.73, width fraction .22 (span .62-.84), bottom 0 m, height 20.2 m (the existing profile height), and .30 m outset, using the existing wall color #b9ae96. This hides the incorrect crossing window ribbons locally without changing footprint or massing."
+      ],
+      "limitations": [
+        "The source is one upward oblique perspective view, so pier width and material match are visual estimates.",
+        "The 20.2 m panel height follows the existing building profile, not a measured facade height."
+      ]
+    },
+    {
+      "id": "way/1006575704",
+      "label": "S03",
+      "name": "219 Sherbrooke balcony frontage",
+      "source": {
+        "path": "H:/ChatGPT/Peterborough-Building-References-20261024/flat-priority-2048/0495s_lens0.jpg",
+        "sha256": "08ac955513d032a9088dc8450b1a33f2978797552d4610f15f8cfb7d901b429e",
+        "sourceSeconds": 495,
+        "lens": 0,
+        "dimensions": [
+          2048,
+          2048
+        ],
+        "fovDegrees": 100,
+        "yawDegrees": 0,
+        "pitchDegrees": 0
+      },
+      "observation": "The visible 219 number anchors the frontage; the yard has a light concrete walk and darker paved access beside green lawn.",
+      "changes": [
+        "Tint existing safe-clipped walk and driveway surfaces with shared neutral concrete/asphalt colors."
+      ],
+      "limitations": [
+        "The car masks part of the foreground.",
+        "Dusk lighting prevents reliable color measurement."
+      ]
+    },
+    {
+      "id": "way/1006575744",
+      "label": "S04",
+      "name": "Rectangular brick frontage beside 219",
+      "source": {
+        "path": "H:/ChatGPT/Peterborough-Building-References-20261024/flat-priority-2048/0495s_lens0.jpg",
+        "sha256": "08ac955513d032a9088dc8450b1a33f2978797552d4610f15f8cfb7d901b429e",
+        "sourceSeconds": 495,
+        "lens": 0,
+        "dimensions": [
+          2048,
+          2048
+        ],
+        "fovDegrees": 100,
+        "yawDegrees": 0,
+        "pitchDegrees": 0
+      },
+      "observation": "The adjacent brick house has a narrow gray walk and dark paved side access through a small lawn/retaining-edge frontage.",
+      "changes": [
+        "Tint existing safe-clipped walk and driveway surfaces with shared neutral concrete/asphalt colors."
+      ],
+      "limitations": [
+        "The shared view and foreground car limit exact pavement boundaries.",
+        "Existing path and driveway fractions remain unchanged."
+      ]
+    },
+    {
+      "id": "way/1006575743",
+      "label": "S05",
+      "name": "Brick house with curved white porch",
+      "source": {
+        "path": "H:/ChatGPT/Peterborough-Building-References-20261024/flat-priority-2048/0495s_lens0.jpg",
+        "sha256": "08ac955513d032a9088dc8450b1a33f2978797552d4610f15f8cfb7d901b429e",
+        "sourceSeconds": 495,
+        "lens": 0,
+        "dimensions": [
+          2048,
+          2048
+        ],
+        "fovDegrees": 100,
+        "yawDegrees": 0,
+        "pitchDegrees": 0
+      },
+      "observation": "The brick house and curved white porch sit behind a lawn, with a gray paved walk and darker vehicle access at the side.",
+      "changes": [
+        "Tint existing safe-clipped walk and driveway surfaces with shared neutral concrete/asphalt colors."
+      ],
+      "limitations": [
+        "Trees, foreground car, and low evening light obscure parts of the ground.",
+        "The evidence supports surface families, not surveyed color or dimensions."
+      ]
+    },
+    {
+      "id": "way/1006575739",
+      "label": "S09",
+      "name": "Brick house with white porch and upper balcony",
+      "source": {
+        "path": "H:/ChatGPT/Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0510s_lens0_pitch+0.jpg",
+        "sha256": "b75f920ee92b7734532f8088c378b7bc07942a4a8413f66059c102d0c301c477",
+        "sourceSeconds": 510,
+        "lens": 0,
+        "dimensions": [
+          2048,
+          2048
+        ],
+        "fovDegrees": 100,
+        "yawDegrees": 0,
+        "pitchDegrees": 0
+      },
+      "observation": "White porch/balcony brick house has a short lawn edge, gray entrance walk, and dark paved side access.",
+      "changes": [
+        "Tint existing safe-clipped walk and driveway surfaces with shared neutral concrete/asphalt colors."
+      ],
+      "limitations": [
+        "Trees, signs, and the vehicle obscure ground edges.",
+        "The existing hedge, walk, and driveway bounds are retained."
+      ]
+    },
+    {
+      "id": "way/1006575702",
+      "label": "S10",
+      "name": "Blue-sided gable house with glazed porch",
+      "source": {
+        "path": "H:/ChatGPT/Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0510s_lens0_pitch+0.jpg",
+        "sha256": "b75f920ee92b7734532f8088c378b7bc07942a4a8413f66059c102d0c301c477",
+        "sourceSeconds": 510,
+        "lens": 0,
+        "dimensions": [
+          2048,
+          2048
+        ],
+        "fovDegrees": 100,
+        "yawDegrees": 0,
+        "pitchDegrees": 0
+      },
+      "observation": "The blue-sided gabled house has a glazed porch, small green planting/lawn strips, and a broad dark paved access area.",
+      "changes": [
+        "Tint existing safe-clipped walk and driveway surfaces with shared neutral concrete/asphalt colors."
+      ],
+      "limitations": [
+        "Trees and a parked vehicle obscure the yard edge.",
+        "No parking extent is inferred from this view."
+      ]
+    },
+    {
+      "id": "way/755554888",
+      "label": "R01",
+      "name": "No Frills, George/Sherbrooke",
+      "source": {
+        "path": "H:/ChatGPT/Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0582s_lens0_pitch+0.jpg",
+        "sha256": "6f640d248abcd9dacacb373a6e871a37f170f5ebd16ab1939ecde83d9797e2b7",
+        "sourceSeconds": 582,
+        "lens": 0,
+        "dimensions": [
+          2048,
+          2048
+        ],
+        "fovDegrees": 100,
+        "yawDegrees": 0,
+        "pitchDegrees": 0,
+        "neighborFrames": [
+          {
+            "path": "H:/ChatGPT/Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0576s_lens0_pitch+0.jpg",
+            "sha256": "049db04e2a13453f4a6a8a6e50e225f5975545125664e91580abff00409d71e9",
+            "sourceSeconds": 576,
+            "lens": 0
+          },
+          {
+            "path": "H:/ChatGPT/Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0588s_lens0_pitch+0.jpg",
+            "sha256": "ca369dbd1ee3e53c58bfd1f4526ecaf18b7c742d23ffecffa3e781d7a148b04e",
+            "sourceSeconds": 588,
+            "lens": 0
+          }
+        ]
+      },
+      "baselines": [
+        {
+          "path": "H:/ChatGPT/Peterborough-Map-Game-Sherbrooke/test-artifacts/recording-visuals-20261025/baseline/full-R01-front.jpg",
+          "sha256": "0c3e08f9f724cbbefe74a489072bf890aeb2c1ce1a1f806f852051b02fc34ae7"
+        },
+        {
+          "path": "H:/ChatGPT/Peterborough-Map-Game-Sherbrooke/test-artifacts/recording-visuals-20261025/baseline/full-R01-oblique.jpg",
+          "sha256": "86b978bd9cff440bff3a38b59cf2d91f702662e38bfe0889cc7fae3758246831"
+        }
+      ],
+      "observation": "The 0582 perspective source shows the No Frills west-end facade with a broad yellow sign-bearing wall section beside pale/white cladding. Both baseline R01 views show the same mapped facade as mostly white with only a narrow yellow eave strip. The 0576 neighbor shows the yellow corner; 0588 shows a separate pale return, which is excluded.",
+      "changes": [
+        "Append one yellow facade panel at frontage fraction 0.18, width fraction 0.36 (~12 m of the mapped ~34 m face), bottom 0.15 m, height 4.9 m, and 0.16 m outset. This is an explicit visual estimate; it leaves the pale wall remainder and does not touch the side return.",
+        "Set the existing NO FRILLS wordmark to 9 m wide at t=0.15, sign center height 3.75 m, and 0.8 m board height only when the source profile still has its original 12 m / t=0.18 / 4.3 m settings. This keeps the lettering span (~t=0.017–0.283) beside the worker badge (~t=0.308–0.332) at the same vertical center."
+      ],
+      "limitations": [
+        "The perspective export reuses experimental fisheye calibration and is oblique, so pixel width does not directly establish mapped frontage proportion.",
+        "Panel span is a conservative estimate anchored by the existing 12 m sign span; color is an appearance estimate under dusk lighting.",
+        "The baseline has substantial tree occlusion."
+      ]
+    }
+  ]
+}

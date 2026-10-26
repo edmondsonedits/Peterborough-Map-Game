@@ -1,0 +1,258 @@
+{
+  "schemaVersion": 1,
+  "referenceRoot": "H:/ChatGPT/Peterborough-Building-References-20261024",
+  "recording": "VID_20261018_073202_00_001.insv",
+  "recordingSource": "User-provided recording; camera calibration remains experimental.",
+  "records": [
+    {
+      "id": "way/755554888",
+      "label": "No Frills George/Sherbrooke",
+      "file": "no-frills-maple-badge.jpg",
+      "source": "sherbrooke-water-hunter/perspective-2048/0582s_lens0_pitch+0.jpg",
+      "seconds": 582,
+      "lens": 0,
+      "view": "perspective-2048, pitch +0 degrees",
+      "quad": [
+        [
+          747,
+          1126
+        ],
+        [
+          819,
+          1118
+        ],
+        [
+          824,
+          1194
+        ],
+        [
+          751,
+          1200
+        ]
+      ],
+      "size": [
+        80,
+        92
+      ],
+      "quality": 90,
+      "centerFraction": 0.32,
+      "widthFraction": 0.023,
+      "bottomMetres": 3.3,
+      "heightMetres": 0.9,
+      "observations": "Isolated red maple badge on the yellow No Frills wall. The signal mast crosses the wordmark, so only the clear badge is retained.",
+      "uncertainties": [
+        "Facade endpoint fraction and badge dimensions are visual estimates, not surveyed.",
+        "The crop is a small identity detail; it does not represent the complete retail facade."
+      ],
+      "sourcePath": "H:/ChatGPT/Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0582s_lens0_pitch+0.jpg",
+      "sourceSha256": "6f640d248abcd9dacacb373a6e871a37f170f5ebd16ab1939ecde83d9797e2b7",
+      "sourceDimensions": [
+        2048,
+        2048
+      ],
+      "sha256": "f12acbfe861c9e9f1460280dc195472e29a5e651050412bee302b829995b62c7",
+      "dimensions": [
+        80,
+        92
+      ],
+      "bytes": 2573,
+      "mipEstimateBytes": 39254,
+      "preparation": "Pillow perspective homography with bicubic resampling; JPEG export; no synthetic fill or source edits",
+      "provenance": "User-provided vehicle recording. This records source and derivation, not a generic copyright licence."
+    },
+    {
+      "id": "way/1006243562",
+      "label": "Commerce Building / St. Veronus",
+      "file": "commerce-building-sign.jpg",
+      "source": "flat-priority-2048/0750s_lens1.jpg",
+      "seconds": 750,
+      "lens": 1,
+      "view": "flat-priority-2048, centered pitch 0 degrees",
+      "quad": [
+        [
+          282,
+          325
+        ],
+        [
+          420,
+          324
+        ],
+        [
+          411,
+          656
+        ],
+        [
+          275,
+          656
+        ]
+      ],
+      "size": [
+        128,
+        308
+      ],
+      "quality": 91,
+      "frontageIndex": 1,
+      "centerFraction": 0.25,
+      "widthFraction": 0.024,
+      "bottomMetres": 4.0,
+      "heightMetres": 3.6,
+      "observations": "Vertical COMMERCE BUILDING sign on the red-brick Water Street wing. Its two-column lettering is unobstructed.",
+      "uncertainties": [
+        "The sign position and dimensions are visual estimates.",
+        "Only additionalFrontages[0], the reviewed Water Street face, receives the patch. The primary Hunter face retains its prior profile."
+      ],
+      "sourcePath": "H:/ChatGPT/Peterborough-Building-References-20261024/flat-priority-2048/0750s_lens1.jpg",
+      "sourceSha256": "c3a37cf3485ee7c748f30b6958412d844a4889f8e532b362b267877d30c805a0",
+      "sourceDimensions": [
+        2048,
+        2048
+      ],
+      "sha256": "c05a399f2c26f6b1902e4ddab4d29c32a75a85899455f75a5ab82d2477d5f2e0",
+      "dimensions": [
+        128,
+        308
+      ],
+      "bytes": 15645,
+      "mipEstimateBytes": 210262,
+      "preparation": "Pillow perspective homography with bicubic resampling; JPEG export; no synthetic fill or source edits",
+      "provenance": "User-provided vehicle recording. This records source and derivation, not a generic copyright licence."
+    }
+  ],
+  "candidateReviews": [
+    {
+      "id": "way/755554888",
+      "label": "No Frills George/Sherbrooke",
+      "source": "sherbrooke-water-hunter/perspective-2048/0582s_lens0_pitch+0.jpg",
+      "seconds": 582,
+      "lens": 0,
+      "view": "perspective-2048, pitch +0 degrees",
+      "decision": "retain isolated badge crop",
+      "observations": "The main mapped facade is a large yellow wall. The signal mast crosses the right end of the wordmark; the small maple badge remains unobstructed.",
+      "uncertainties": [
+        "Badge-only coverage does not resolve the complete facade."
+      ],
+      "sourcePath": "H:/ChatGPT/Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0582s_lens0_pitch+0.jpg",
+      "sourceSha256": "6f640d248abcd9dacacb373a6e871a37f170f5ebd16ab1939ecde83d9797e2b7",
+      "sourceAvailable": true
+    },
+    {
+      "id": "way/1006243562",
+      "label": "Commerce Building / St. Veronus",
+      "source": "flat-priority-2048/0750s_lens1.jpg",
+      "seconds": 750,
+      "lens": 1,
+      "view": "flat-priority-2048, centered pitch 0 degrees",
+      "decision": "retain permanent sign crop",
+      "observations": "The vertical facade sign is clear and isolated between windows; the full facade view shows strong late-day lighting.",
+      "uncertainties": [
+        "The source is an upward oblique view; patch dimensions are estimated."
+      ],
+      "sourcePath": "H:/ChatGPT/Peterborough-Building-References-20261024/flat-priority-2048/0750s_lens1.jpg",
+      "sourceSha256": "c3a37cf3485ee7c748f30b6958412d844a4889f8e532b362b267877d30c805a0",
+      "sourceAvailable": true
+    },
+    {
+      "id": "way/1031042883",
+      "label": "364 Water Street office",
+      "source": "sherbrooke-water-hunter/perspective-2048/0714s_lens0_pitch+0.jpg",
+      "seconds": 714,
+      "lens": 0,
+      "view": "perspective-2048, pitch +0 degrees",
+      "decision": "reject crop; retain architectural reference only",
+      "observations": "364Water.com is part of a larger FOR SALE / LEASE board. Cropping out the other copy would falsely imply a standalone permanent plaque.",
+      "uncertainties": [
+        "Current advertising status is unknown; the full board is not shipped."
+      ],
+      "sourcePath": "H:/ChatGPT/Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0714s_lens0_pitch+0.jpg",
+      "sourceSha256": "57371f5366f978d3fb1236436af8191e56fc3eaa893ab94cbd826ee259ce3afe",
+      "sourceAvailable": true
+    },
+    {
+      "id": "way/1009651246",
+      "label": "Lower Water flat-roof commercial frontage",
+      "source": "sherbrooke-water-hunter/perspective-2048/0600s_lens1_pitch+0.jpg",
+      "seconds": 600,
+      "lens": 1,
+      "view": "perspective-2048, pitch +0 degrees",
+      "decision": "reject",
+      "observations": "Dark storefront plane is distant and oblique; foreground fencing, parking and a freestanding sign dominate the single-wall extraction.",
+      "uncertainties": [
+        "Business identity and exact facade boundary are unclear in this view."
+      ],
+      "sourcePath": "H:/ChatGPT/Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0600s_lens1_pitch+0.jpg",
+      "sourceSha256": "5dc60edc300f90b8683312ead55a3d064cd80c01f27261b582fe00131663a0f9",
+      "sourceAvailable": true
+    },
+    {
+      "id": "way/1006243552",
+      "label": "Water shop row north of 364",
+      "source": "sherbrooke-water-hunter/perspective-2048/0732s_lens0_pitch+0.jpg",
+      "seconds": 732,
+      "lens": 0,
+      "view": "perspective-2048, pitch +0 degrees",
+      "decision": "reject",
+      "observations": "Several attached storefronts share the view; facade depths, signs, windows, a streetlamp and a tree overlap the candidate wall.",
+      "uncertainties": [
+        "A clean patch cannot be assigned to this mapped profile with confidence."
+      ],
+      "sourcePath": "H:/ChatGPT/Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0732s_lens0_pitch+0.jpg",
+      "sourceSha256": "521bd8dd8c4104630ed90dea6a4b9a4af110a4ba95f82c072756904548c6474e",
+      "sourceAvailable": true
+    },
+    {
+      "id": "way/1006243559",
+      "label": "Water Street brick frontage beside Commerce",
+      "source": "sherbrooke-water-hunter/perspective-2048/0738s_lens1_pitch+0.jpg",
+      "seconds": 738,
+      "lens": 1,
+      "view": "perspective-2048, pitch +0 degrees",
+      "decision": "reject",
+      "observations": "The attached row has repeated windows, storefronts, changing depths, a streetlamp and foreground vegetation; no crop could be assigned to this narrow profile without crossing unit boundaries.",
+      "uncertainties": [
+        "The row is clear, but the exact unit and safe crop boundaries are not."
+      ],
+      "sourcePath": "H:/ChatGPT/Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0738s_lens1_pitch+0.jpg",
+      "sourceSha256": "177bb065500ac0eeb8c1560f6014d19e8522169f5167a8dadef9356b6123affc",
+      "sourceAvailable": true
+    },
+    {
+      "id": "way/1006243541",
+      "label": "Low Hunter storefront beside brick corner",
+      "source": "sherbrooke-water-hunter/perspective-2048/0768s_lens0_pitch+0.jpg",
+      "seconds": 768,
+      "lens": 0,
+      "view": "perspective-2048, pitch +0 degrees",
+      "decision": "reject",
+      "observations": "The low storefront is mostly obscured by mature trees and foreground street furniture.",
+      "uncertainties": [
+        "The frontage is not clean enough for a reliable photo patch."
+      ],
+      "sourcePath": "H:/ChatGPT/Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0768s_lens0_pitch+0.jpg",
+      "sourceSha256": "92b60e5c7484cbb46a837327dc70c02ef99c8f65cd843e626851139b015df4c1",
+      "sourceAvailable": true
+    },
+    {
+      "id": "way/1006243563",
+      "label": "Red mansard-roof corner at Simcoe/Water",
+      "source": "sherbrooke-water-hunter/perspective-2048/0720s_lens1_pitch+0.jpg",
+      "seconds": 720,
+      "lens": 1,
+      "view": "perspective-2048, pitch +0 degrees",
+      "decision": "reject",
+      "observations": "Corner geometry and oblique views of two street faces, deep shadows and foreground furniture prevent assigning a reliable planar patch.",
+      "uncertainties": [
+        "The visible faces cannot be separated at confident crop boundaries."
+      ],
+      "sourcePath": "H:/ChatGPT/Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0720s_lens1_pitch+0.jpg",
+      "sourceSha256": "8a493aec949966a3ef649e60244eb43af5b19984f0caab8b7ecdd93ac1c243ce",
+      "sourceAvailable": true
+    }
+  ],
+  "totalBytes": 18218,
+  "decodedTextureBytesWithMipmaps": 249516,
+  "limits": {
+    "encodedBytes": 1048576,
+    "decodedTextureBytesWithMipmaps": 12582912,
+    "longestSide": 1024
+  }
+}

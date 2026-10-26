@@ -1,6 +1,6 @@
 import { SHERBROOKE_SOURCE } from './sherbrooke-source.js';
-import { FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js';
-import { roadProfile } from './road-network.js';
+import { FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js?v=1.6.130';
+import { roadProfile } from './road-network.js?v=1.6.130';
 export const sherbrookeBuildings = new Map();
 export const sherbrookeSidewalks = [];
 export function recordSherbrookeSidewalk(segment, al, ar, bl, br) {
@@ -8,8 +8,10 @@ export function recordSherbrookeSidewalk(segment, al, ar, bl, br) {
 }
 // Only reviewed source IDs can add reference facade/editor details.
 const ids = new Set([...SHERBROOKE_SOURCE.buildings.map(b=>b.id), ...Object.keys(FOOTAGE_PROFILES)]);
-export function recordSherbrookeBuilding(id, ring, base, top) {
- if(ids.has(id)) sherbrookeBuildings.set(id,{id,ring:ring.map(p=>({x:p.x,z:p.y})),base,top});
+export function recordSherbrookeBuilding(id, ring, base, top, profile) {
+ // Runtime reference-only profiles decorate the existing mass without changing it.
+ const reviewedAppearance = profile?.id === id && profile.appearanceOnly === true && profile.preserveMappedMassing === true && profile.confidence === 'observed';
+ if(ids.has(id) || reviewedAppearance) sherbrookeBuildings.set(id,{id,ring:ring.map(p=>({x:p.x,z:p.y})),base,top});
 }
 export function segmentDistance(p,a,b) {
  const dx=b.x-a.x,dz=b.z-a.z,t=Math.max(0,Math.min(1,((p.x-a.x)*dx+(p.z-a.z)*dz)/(dx*dx+dz*dz||1)));

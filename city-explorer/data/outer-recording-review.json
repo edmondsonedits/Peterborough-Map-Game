@@ -1,0 +1,677 @@
+{
+  "schema": "outer-recording-reference-review-v1",
+  "created": "2026-10-25",
+  "scope": {
+    "mainRecording": "VID_20261018_073202_00_001.insv",
+    "mainSourceWindowsSeconds": [
+      [
+        0,
+        480
+      ],
+      [
+        834,
+        944
+      ]
+    ],
+    "excludedWindowSeconds": [
+      480,
+      834
+    ],
+    "exclusionReason": "The Sherbrooke-Water-Hunter corridor is assigned to a separate audit.",
+    "reviewMethod": "Inspected contact-sheet pixels and selected full-resolution derivatives; read catalog and source metadata, then checked visible brand cues against existing local mapped business/building records and appearance profiles. Contact-sheet inspection is screening evidence, not a claim that every image was individually inspected at full resolution."
+  },
+  "collections": [
+    {
+      "id": "main-recording-dense",
+      "root": "Peterborough-Building-References-20261024/dense/flat-768",
+      "inventory": {
+        "images": 2838,
+        "sourceTimestamps": 473,
+        "lenses": 2,
+        "viewsPerLensAndTimestamp": 3
+      },
+      "reviewedCoverage": [
+        {
+          "sourceSeconds": [
+            0,
+            474
+          ],
+          "contactSheets": [
+            {
+              "path": "Peterborough-Building-References-20261024/dense/contact-sheets/coverage_01.jpg",
+              "sha256": "956fa6340b76563aa38cf51fae8008aaaacdd893ac6eee61704313318a2d584d"
+            },
+            {
+              "path": "Peterborough-Building-References-20261024/dense/contact-sheets/coverage_02.jpg",
+              "sha256": "ccadb544fea5f771584f75da9277c1e9d9fc8cc3646db0c81203c6fc59f6a28b"
+            },
+            {
+              "path": "Peterborough-Building-References-20261024/dense/contact-sheets/coverage_03.jpg",
+              "sha256": "4c7a97cd623a975edd399d480aa73f57eb3c9e488717c3dbc11997f52789d612"
+            },
+            {
+              "path": "Peterborough-Building-References-20261024/dense/contact-sheets/coverage_04.jpg",
+              "sha256": "7bc95a641cd5cfe0911b9c20047e59e8b7989cd0ef24e152e73bb3dcdcb0766c"
+            },
+            {
+              "path": "Peterborough-Building-References-20261024/dense/contact-sheets/coverage_05.jpg",
+              "sha256": "479b6abea9619723d6f0058e64654e4201e60610fbc11747c6407663f0e855f3"
+            },
+            {
+              "path": "Peterborough-Building-References-20261024/dense/contact-sheets/coverage_06.jpg",
+              "sha256": "413ead315782fbb304d36d58b25ff5b463efe461667ff9430a3910f934fbf656"
+            },
+            {
+              "path": "Peterborough-Building-References-20261024/dense/contact-sheets/coverage_07.jpg",
+              "sha256": "575247232c8262e6dcb3c627bab4b8f841b31ec87fa5cb2fc5a421b59071ffb2"
+            },
+            {
+              "path": "Peterborough-Building-References-20261024/dense/contact-sheets/coverage_08.jpg",
+              "sha256": "fa1754b2cb1aae19f9b402c882f6178829a69cdbab4bd450cadfc8798394d077"
+            }
+          ],
+          "method": "Viewed contact sheets at their supplied preview size. Their time labels sample the source about every six seconds and show both lens directions and three pitch variants."
+        },
+        {
+          "sourceSeconds": [
+            480,
+            480
+          ],
+          "contactSheets": [
+            {
+              "path": "Peterborough-Building-References-20261024/dense/contact-sheets/coverage_09.jpg",
+              "sha256": "08b9f68b36f11405b7be807b77774af8adb59e5646a14332e0d95f790ee29d70"
+            }
+          ],
+          "method": "Used the 08:00 boundary row only; later rows are outside this audit window."
+        },
+        {
+          "sourceSeconds": [
+            834,
+            834
+          ],
+          "contactSheets": [
+            {
+              "path": "Peterborough-Building-References-20261024/dense/contact-sheets/coverage_14.jpg",
+              "sha256": "35c5a46ffa8971394819c6d73791dc43551697b36f001726ac14064938799af5"
+            }
+          ],
+          "method": "Used the final 13:54.834 boundary row only."
+        },
+        {
+          "sourceSeconds": [
+            840,
+            944
+          ],
+          "contactSheets": [
+            {
+              "path": "Peterborough-Building-References-20261024/dense/contact-sheets/coverage_15.jpg",
+              "sha256": "bce46a0b315c851dcd21dd881634d7fed5fc4b50661ad17896d351cddb674df0"
+            },
+            {
+              "path": "Peterborough-Building-References-20261024/dense/contact-sheets/coverage_16.jpg",
+              "sha256": "d9af8f2286b8ae3702258e8b43632b08eaeb0a07b718a82ef75c64b8c474d887"
+            }
+          ],
+          "method": "Viewed both contact sheets at preview size; full-resolution derivatives were also inspected for source time 870."
+        }
+      ],
+      "individuallyInspectedLateFrames": [
+        {
+          "sourceSeconds": 870,
+          "path": "Peterborough-Building-References-20261024/dense/flat-768/frame_0435_lens0_pitch-35.jpg",
+          "sha256": "cf10a3d72498e3f23848160d8d771ab67a53364f008904ca3f6b06785e685310",
+          "note": "Opened full-resolution derivative to review the brick / pale-gable house group."
+        },
+        {
+          "sourceSeconds": 900,
+          "path": "Peterborough-Building-References-20261024/dense/flat-768/frame_0450_lens0_pitch-35.jpg",
+          "sha256": "4ba8dc0a9446de0b4222ad1db9b4e96801364aa09db72c14f927b8d3258d9c2d",
+          "note": "Opened full-resolution derivative to review the brick house with pale front gable, green porch roof, lawn, and short gravel drive."
+        },
+        {
+          "sourceSeconds": 930,
+          "path": "Peterborough-Building-References-20261024/dense/flat-768/frame_0465_lens0_pitch-35.jpg",
+          "sha256": "48e94fce085bcc1f75a4eb806293ee934050532fa1a73117dc8e29c5033cf86d",
+          "note": "Street sign / STOP sign at the Cricket Place intersection are legible."
+        },
+        {
+          "sourceSeconds": 936,
+          "path": "Peterborough-Building-References-20261024/dense/flat-768/frame_0468_lens0_pitch-35.jpg",
+          "sha256": "3ab37a1671c2f5039a5ba4a224db9944f15f1884ad3074fc8722e19fff1779fb",
+          "note": "Confirms readable Cricket Pl sign beside the STOP sign against a red-brick side wall."
+        },
+        {
+          "sourceSeconds": 928,
+          "path": "Peterborough-Building-References-20261024/dense/raw-lens0/frame_0464.jpg",
+          "sha256": "cc1806b5dbd273a892078551c88c67d81c071e700e229038e25f950b9b5354ec",
+          "note": "Neighboring raw-lens approach frame; curb ramp, brick frontage, parked cars, curb and sidewalk."
+        },
+        {
+          "sourceSeconds": 930,
+          "path": "Peterborough-Building-References-20261024/dense/raw-lens0/frame_0465.jpg",
+          "sha256": "102a54a8d9c51e37226a757e392ac057a09d3a4ec2f8b8be24f2f8506466d9a4",
+          "note": "Street name and STOP sign visible at intersection."
+        },
+        {
+          "sourceSeconds": 936,
+          "path": "Peterborough-Building-References-20261024/dense/raw-lens0/frame_0468.jpg",
+          "sha256": "d0eefc54b3211e96d78521b132a167536efcd4a87b77f3f2a2f28adc16fec7c5",
+          "note": "Raw-lens confirmation of sign and corner wall."
+        },
+        {
+          "sourceSeconds": 938,
+          "path": "Peterborough-Building-References-20261024/dense/raw-lens0/frame_0469.jpg",
+          "sha256": "f854ae5d9dabe756991c075c3a3509c6aa696aaa43634d94ee9b4cc58c360e30",
+          "note": "Neighboring departure frame confirms same intersection and traffic island."
+        },
+        {
+          "sourceSeconds": 840,
+          "path": "Peterborough-Building-References-20261024/dense/flat-768/frame_0420_lens0_pitch-35.jpg",
+          "sha256": "c380835e9c93f4c67b4e10daf3773520f780fd2acfc08c65887808d20eb9cede",
+          "note": "Incoming view at the junction: beige building with twin narrow evergreens, curb/sidewalk and a blank red-brick wall across."
+        },
+        {
+          "sourceSeconds": 864,
+          "path": "Peterborough-Building-References-20261024/dense/flat-768/frame_0432_lens0_pitch-35.jpg",
+          "sha256": "eca5272639f705ae9a421aa33ff2ef72e0d85527624221fd7232bd826808f5ae",
+          "note": "Outbound lens0 view of green-gabled red-brick house on camera right with a pale house across the street."
+        },
+        {
+          "sourceSeconds": 918,
+          "path": "Peterborough-Building-References-20261024/dense/flat-768/frame_0459_lens1_pitch-35.jpg",
+          "sha256": "624c8610a3bf308d99c67c590f98591bc8508179f0816e1179c7be5965b7f16d",
+          "note": "Reverse-lens view shows a visually matching green-gabled house after the loop."
+        },
+        {
+          "sourceSeconds": 930,
+          "path": "Peterborough-Building-References-20261024/dense/flat-768/frame_0465_lens1_pitch-35.jpg",
+          "sha256": "f0592ca31b3397d95a4ee906288d78464a84fcd31a0b967bee1206a28f4d448a",
+          "note": "Reverse-lens view of same twin-evergreen building and intersection seen in t=840 frame."
+        },
+        {
+          "sourceSeconds": 936,
+          "path": "Peterborough-Building-References-20261024/dense/flat-768/frame_0468_lens1_pitch-35.jpg",
+          "sha256": "5decd0c397653646b03c943a844de693e3a56e691a8c80de6e57a3e65bcbc759",
+          "note": "Reverse-lens view confirms same junction; forward lens shows Cricket Pl sign and STOP sign."
+        }
+      ]
+    },
+    {
+      "id": "main-recording-priority-derivatives",
+      "root": "Peterborough-Building-References-20261024/flat-priority-2048",
+      "inventoryImages": 128,
+      "reviewedFullResolutionSamples": [
+        {
+          "path": "Peterborough-Building-References-20261024/flat-priority-2048/0045s_lens0.jpg",
+          "sha256": "e7c9f673f6445bbe55136a1978772e328e20d67cb2e9aefb043e3667614eece6"
+        },
+        {
+          "path": "Peterborough-Building-References-20261024/flat-priority-2048/0060s_lens0.jpg",
+          "sha256": "25abc0c6c2179968fa4e4e659dd36f8dea671bb92b2a2a41f35f9e3757394908"
+        },
+        {
+          "path": "Peterborough-Building-References-20261024/flat-priority-2048/0060s_lens1.jpg",
+          "sha256": "44ee9d74355dcdece35f8096ad6efc926bd6b7db9eced33a2e7d5fbc6ad47b38"
+        },
+        {
+          "path": "Peterborough-Building-References-20261024/flat-priority-2048/0870s_lens1_pitch-35_up15.jpg",
+          "sha256": "a53ca7d6a3d2ce4e58db30cf31efb16c4e98f0e7b995b5b5f6c9c7e9f5c46dca"
+        }
+      ],
+      "overviewSheets": [
+        {
+          "path": "Peterborough-Building-References-20261024/flat-overview-sheets/flat_01.jpg",
+          "sha256": "4b649f7a44e8bf56b2b7d679e8028b13f6b668e222f2d901d5b6dbcc6beba88a"
+        },
+        {
+          "path": "Peterborough-Building-References-20261024/flat-overview-sheets/flat_08.jpg",
+          "sha256": "4c8850d580c8f72c27f9b9acc6deb2f1dc282cddb834b32541fa11051b7e931a"
+        }
+      ],
+      "method": "Viewed both overview sheets and the four listed full-resolution examples. Other priority derivatives were inventoried but are not claimed as individually inspected."
+    },
+    {
+      "id": "separate-perspective-hybrid",
+      "root": "Peterborough Splats/Experiments/offpath-ten-tests-20261020-112451/data/export/perspective-hybrid-parent4-2048-v2/all-projected/images",
+      "inventory": {
+        "jpgImages": 104,
+        "physicalGroups": 52,
+        "viewsPerGroup": 2,
+        "source": "Peterborough Splats/Source/VID_20261019_130358_00_001.insv",
+        "sourcePassWindowsSeconds": [
+          [
+            71.071,
+            83.5835
+          ],
+          [
+            410.41,
+            422.5221
+          ]
+        ]
+      },
+      "metadata": [
+        {
+          "path": "Peterborough Splats/Experiments/offpath-ten-tests-20261020-112451/capture-manifest.json",
+          "sha256": "86368c40ad7bc4079c89a0d55c75a651043c03e9e23d32dd7f890dc33b5d6259"
+        },
+        {
+          "path": "Peterborough Splats/Experiments/offpath-ten-tests-20261020-112451/comparisons/view-plans/hybrid-partial-residential.json",
+          "sha256": "25791608497f9e28d5944027df7f8ebc7e852702fc50395d06fd029221456730"
+        },
+        {
+          "path": "Peterborough-Image-Catalog-20261025/splats/inventory.json",
+          "sha256": "ad355cf3f9fdebc82cf2c0cd5ef979df21fdd7748bc2d0b8a2566c009507391c"
+        },
+        {
+          "path": "Peterborough-Image-Catalog-20261025/splats/perspective-hybrid-contact-sheet.jpg",
+          "sha256": "7da68e44bb18490b07a40042630f8d5e67850c0735bf762b185491962b9120b1"
+        }
+      ],
+      "reviewedFullResolutionSamples": [
+        {
+          "path": "Peterborough Splats/Experiments/offpath-ten-tests-20261020-112451/data/export/perspective-hybrid-parent4-2048-v2/all-projected/images/left_pass1_f002130.jpg",
+          "sha256": "205ce5fd99e0a5096d3166021fe96f4c6ed2ff3da9e921cbd490b6dd11ec3acd"
+        },
+        {
+          "path": "Peterborough Splats/Experiments/offpath-ten-tests-20261020-112451/data/export/perspective-hybrid-parent4-2048-v2/all-projected/images/right_pass1_f002310.jpg",
+          "sha256": "da0530c3d51f1961a380f696c73baca0419f53963605909f2ddc811f14c0ff53"
+        },
+        {
+          "path": "Peterborough Splats/Experiments/offpath-ten-tests-20261020-112451/data/export/perspective-hybrid-parent4-2048-v2/all-projected/images/left_pass2_f012300.jpg",
+          "sha256": "eb1263643db7440675bace1224bdea794e04d4ca3c91d0e0059902d65c7e8204"
+        }
+      ],
+      "identityAssessment": "The capture manifest identifies an October 19 source, different from the October 18 main drive. Its two residential windows are separate short patches, the shared view-plan uses arbitrary scene units, and the delivery record says one physical street side and recommends measured landmarks before cross-pass geometry claims. No GPS coordinates or georeference were found in these reviewed metadata. Visible houses/yard details are scenery references only; they cannot be assigned to main-recording building IDs."
+    }
+  ],
+  "matches": [
+    {
+      "id": "way/1015118649",
+      "label": "22 Cricket Place red-brick porch house with orange-wheeled toy (source seconds 870 and 900)",
+      "matchType": "confirmed-address-parcel-footprint",
+      "sourcePath": "Peterborough-Building-References-20261024/dense/flat-768/frame_0435_lens0_pitch-35.jpg",
+      "sourceSha256": "cf10a3d72498e3f23848160d8d771ab67a53364f008904ca3f6b06785e685310",
+      "status": "confirmed-user-address-and-official-parcel-overlap",
+      "evidence": "The user explicitly identifies the red-brick porch house beside the orange-wheeled toy in the t=870/900 recording view as 22 Cricket Place. The official City civic parcel query returns ADDRESS=22 CRICKET PL (MapServer/4 objectId 4384); OSM way/1015118649 has centroid (-78.311336411,44.307332789) inside that parcel and all 8 listed vertices inside. The exact frontage parcel is therefore tied to this mapped building, not inferred from appearance alone. Source pixels show red brick, pale front-gable trim, broad green porch canopy, porch columns/white rail, front lawn with shrubs/flower beds, a concrete walk, and a front-yard gravel/asphalt drive; no roof, height or geometry edit is implied.",
+      "alreadyRepresented": false,
+      "appearanceAction": "confirmed-reference-for-parent-overlay-integration",
+      "reason": "Exact address confirmation plus civic parcel geometry resolves the house identity. Detached-garage geometry way/1015118650 is not a fa\u00e7ade target; its centroid is in parcel 22 but its outline straddles the 22/24 parcel boundary. Keep its appearance unchanged absent independent source pixels.",
+      "candidateStreet": "Cricket Place (confirmed by sign, route and official parcel address)",
+      "candidateFootprintWayIds": [
+        "1015118649"
+      ],
+      "sourceFrames": [
+        {
+          "sourceSeconds": 870,
+          "sha256": "cf10a3d72498e3f23848160d8d771ab67a53364f008904ca3f6b06785e685310",
+          "path": "Peterborough-Building-References-20261024/dense/flat-768/frame_0435_lens0_pitch-35.jpg"
+        },
+        {
+          "sourceSeconds": 900,
+          "sha256": "4ba8dc0a9446de0b4222ad1db9b4e96801364aa09db72c14f927b8d3258d9c2d",
+          "path": "Peterborough-Building-References-20261024/dense/flat-768/frame_0450_lens0_pitch-35.jpg"
+        },
+        {
+          "sourceSeconds": 870,
+          "sha256": "fcdb895bd275ca35ae7dd533e6cb42166cd01a83deb967b20cfb0eb91511a724",
+          "path": "Peterborough-Building-References-20261024/flat-priority-2048/0870s_lens0_pitch-35_up15.jpg"
+        },
+        {
+          "sourceSeconds": 870,
+          "sha256": "69207bac529487f235ca5091278da9f1a8f3f57d4c0d4f7c8a65cba5de8e310f",
+          "path": "Peterborough-Building-References-20261024/flat-priority-2048/0870s_lens0.jpg"
+        }
+      ],
+      "civicParcelEvidence": {
+        "parcelMapSource": "Peterborough-Map-Game-Sherbrooke/city-explorer/data/peterborough-osm.json",
+        "address": "22 CRICKET PL",
+        "osmVerticesInsideParcel": 8,
+        "otherFootprintAssessment": "centroid inside parcel; polygon vertices overlap 22/24 parcel boundary; possible ancillary detached garage, not photo-matched",
+        "otherFootprint": "way/1015118650",
+        "centroidInsideParcel": true,
+        "sourceUrl": "https://citymaps.peterborough.ca/arcgis/rest/services/Basedata/MapServer/4/query",
+        "osmVertexCount": 8,
+        "objectId": 4384,
+        "parcelMapSourceSha256": "bf417e1062d66fb7b03f1c6487b1accdab334dd9589030b2e4dd50f5ad4a6633",
+        "matchedOsmWay": "way/1015118649",
+        "sourceResponseSha256": "61D24A76C8BD646A392B6471BC024BEEDA2B2FDAD5C70FF9CFEFC517F76FB5AA",
+        "cityParcelLayer": "Basedata/MapServer/4",
+        "frontageEndpoints": [
+          [
+            -78.31133492034348,
+            44.30723306001732
+          ],
+          [
+            -78.31118947966138,
+            44.30726672286994
+          ]
+        ],
+        "parcelPolygonLonLat": [
+          [
+            -78.31118947966138,
+            44.30726672286994
+          ],
+          [
+            -78.31133603017824,
+            44.30757164895114
+          ],
+          [
+            -78.31135892438658,
+            44.307566361615315
+          ],
+          [
+            -78.31148151318328,
+            44.30753806253387
+          ],
+          [
+            -78.31133492034348,
+            44.30723306001732
+          ],
+          [
+            -78.31118947966138,
+            44.30726672286994
+          ]
+        ],
+        "parcelResponseSha256Scope": "Saved official City ArcGIS FeatureCollection response containing only objectIds 4384 and 4385, fields OBJECTID/ADDRESS and geometry; SHA256 applies to the saved GeoJSON artifact bytes.",
+        "parcelGeoJsonArtifact": "test-artifacts/cricket-visuals-20261025/agent-matching/city-parcel-22-24.geojson"
+      },
+      "relatedFootprintCandidates": [
+        "way/1015118650 (possible detached garage; appearance not assigned)"
+      ]
+    },
+    {
+      "id": "way/176908281",
+      "label": "Shoppers Drug Mart, 971 Chemong Road",
+      "matchType": "existing-building-identity-and-frontage",
+      "sourcePath": "Peterborough-Building-References-20261024/flat-priority-2048/0060s_lens0.jpg",
+      "sourceSha256": "25abc0c6c2179968fa4e4e659dd36f8dea671bb92b2a2a41f35f9e3757394908",
+      "status": "confirmed-already-represented",
+      "evidence": "The source directly shows the SHOPPERS DRUG MART storefront sign. The local business directory maps 971 Chemong Road to way/176908281, and video-building-profiles.js already contains that source ID and storefront appearance based on this same t=60, lens 0 evidence.",
+      "directoryPath": "Peterborough-Map-Game-Sherbrooke/city-explorer/data/business-directory.json",
+      "directorySha256": "e872e816249ed7dfa93f84ec1b48f94c61b692f37a7c8c31cc98b7241796d8f2",
+      "profilePath": "Peterborough-Map-Game-Sherbrooke/city-explorer/video-building-profiles.js",
+      "profileSha256": "09c297c26a0849f8a7cfaa658c0bce15fed3df8cacb543c037e6f5621f074d8a",
+      "alreadyRepresented": true,
+      "appearanceAction": "none-duplicate-existing-profile"
+    },
+    {
+      "id": "way/176908280",
+      "label": "Walmart Supercentre, 1002 Chemong Road",
+      "matchType": "site-signage-only",
+      "sourcePath": "Peterborough-Building-References-20261024/flat-priority-2048/0060s_lens0.jpg",
+      "sourceSha256": "25abc0c6c2179968fa4e4e659dd36f8dea671bb92b2a2a41f35f9e3757394908",
+      "status": "confirmed-site-no-fa\u00e7ade-match",
+      "evidence": "A roadside pylon is legible as Walmart Supercentre, Pharmacy, Pickup and McDonald's. The local business directory maps the Walmart building at 1002 Chemong to way/176908280. The building's own wall is not shown clearly enough for a source-backed fa\u00e7ade appearance.",
+      "directoryPath": "Peterborough-Map-Game-Sherbrooke/city-explorer/data/business-directory.json",
+      "directorySha256": "e872e816249ed7dfa93f84ec1b48f94c61b692f37a7c8c31cc98b7241796d8f2",
+      "alreadyRepresented": false,
+      "appearanceAction": "none-sign-only-evidence"
+    },
+    {
+      "id": "node/724280630",
+      "label": "McDonald's pylon panel at the 1002 Chemong Walmart site",
+      "matchType": "site-signage-only",
+      "sourcePath": "Peterborough-Building-References-20261024/flat-priority-2048/0060s_lens0.jpg",
+      "sourceSha256": "25abc0c6c2179968fa4e4e659dd36f8dea671bb92b2a2a41f35f9e3757394908",
+      "status": "confirmed-site-no-fa\u00e7ade-match",
+      "evidence": "The pylon includes a McDonald's panel. The local business directory records node/724280630 at the Walmart site, but no McDonald's building fa\u00e7ade is visible in the frame.",
+      "directoryPath": "Peterborough-Map-Game-Sherbrooke/city-explorer/data/business-directory.json",
+      "directorySha256": "e872e816249ed7dfa93f84ec1b48f94c61b692f37a7c8c31cc98b7241796d8f2",
+      "alreadyRepresented": false,
+      "appearanceAction": "none-sign-only-evidence"
+    },
+    {
+      "id": null,
+      "label": "Green-gabled red brick house at source second 900",
+      "matchType": "visual-group-only",
+      "sourcePath": "Peterborough-Building-References-20261024/dense/flat-768/frame_0450_lens0_pitch-35.jpg",
+      "sourceSha256": "4ba8dc0a9446de0b4222ad1db9b4e96801364aa09db72c14f927b8d3258d9c2d",
+      "status": "unresolved-no-building-id",
+      "evidence": "Full-resolution derivative shows a two-storey red-brick house with a pale front gable, green porch roof, front lawn, planted shrubs, concrete entrance walk, and short gravel driveway. No address or individually distinguishing footprint cue is visible.",
+      "alreadyRepresented": false,
+      "appearanceAction": "none",
+      "reason": "The visual match is useful for future route-specific follow-up, but source position cannot be tied to one mapped building without the streets traversed after the eastbound Hunter/Burnham approach."
+    },
+    {
+      "id": "way/33960427",
+      "label": "Cricket Place street-name anchor at the Driscoll Terrace junction",
+      "matchType": "roadway-anchor",
+      "sourcePath": "Peterborough-Building-References-20261024/dense/flat-768/frame_0468_lens0_pitch-35.jpg",
+      "sourceSha256": "3ab37a1671c2f5039a5ba4a224db9944f15f1884ad3074fc8722e19fff1779fb",
+      "status": "confirmed-roadway-name-not-building",
+      "evidence": "The Cricket Pl and STOP signs at t=936 are on the same corner as the distinctive twin-evergreen beige house and blank red-brick wall seen across the junction in t=840 lens0 and again in t=930/936 lens1. The OSM western node 388924251 is a vehicle junction joining Cricket Place way/33960427, Driscoll Terrace ways/33965578 and /33938730, plus service way/827183682. Quaker Park way/1020094081 and wooded/open ground are nearby. This visual+topology sequence identifies the stop-sign junction as the western Cricket/Driscoll junction with high confidence. Cricket Place eastern endpoint node 388970236 joins only footways /827185081 and /827185082, so it is not the photographed vehicle junction.",
+      "alreadyRepresented": false,
+      "appearanceAction": "none-roadway-anchor-only",
+      "relatedLocalFootprintCandidates": [
+        "way/1015118645",
+        "way/1015118646",
+        "way/1015118647",
+        "way/1015118648",
+        "way/1015118649",
+        "way/1015118650",
+        "way/1015118651",
+        "way/1015118652",
+        "way/1015118653",
+        "way/1015118654",
+        "way/1015118660",
+        "way/1015118661",
+        "way/1015118662",
+        "way/1015118663",
+        "way/1015118664",
+        "way/1015118665"
+      ],
+      "candidateAssessment": "These are nearby unaddressed footprints only; listed as a review neighborhood, not photo-to-building matches.",
+      "mapSourcePath": "Peterborough-Map-Game-Sherbrooke/city-explorer/data/peterborough-osm.json",
+      "mapSourceSha256": "bf417e1062d66fb7b03f1c6487b1accdab334dd9589030b2e4dd50f5ad4a6633",
+      "endpointConfidence": "high: reciprocal distinctive scene match plus OSM vehicle-junction topology; no GPS coordinates are present in the frames",
+      "junctionNodeId": "388924251",
+      "eastDeadEndNodeId": "388970236"
+    },
+    {
+      "id": null,
+      "candidateId": "way/1015118648",
+      "alternateCandidateId": null,
+      "label": "Green-gabled red-brick house immediately west of 22 Cricket Place",
+      "matchType": "route-adjacent-footprint-candidate",
+      "sourceFrames": [
+        "Peterborough-Building-References-20261024/dense/flat-768/frame_0432_lens0_pitch-35.jpg",
+        "Peterborough-Building-References-20261024/dense/flat-768/frame_0459_lens1_pitch-35.jpg"
+      ],
+      "status": "probable-adjacent-footprint-not-address-confirmed",
+      "evidence": "The green-gabled brick house appears at t=864 lens0 outbound and again at t=918 lens1 on the return. The confirmed route runs west-to-east from Driscoll onto Cricket, places this frontage just before the confirmed 22 Cricket Place porch house at t=870, and passes it again on return. OSM way/1015118648 is the immediately west-adjacent north-side footprint relative to the confirmed 22 parcel. This ordered visual/map match is strong but lacks a civic address parcel confirmation for this house; keep it provisional.",
+      "candidateNeighborhood": [
+        "way/1015118648",
+        "way/1015118649",
+        "way/1015118651"
+      ],
+      "alreadyRepresented": false,
+      "appearanceAction": "none-pending-adjacent-parcel-address-confirmation",
+      "mapSourcePath": "Peterborough-Map-Game-Sherbrooke/city-explorer/data/peterborough-osm.json",
+      "mapSourceSha256": "bf417e1062d66fb7b03f1c6487b1accdab334dd9589030b2e4dd50f5ad4a6633",
+      "eliminatedPriorCandidateIds": [
+        "way/1015118664",
+        "way/1015118665"
+      ],
+      "sourceHashEvidence": [
+        {
+          "path": "Peterborough-Building-References-20261024/dense/flat-768/frame_0432_lens0_pitch-35.jpg",
+          "sha256": "eca5272639f705ae9a421aa33ff2ef72e0d85527624221fd7232bd826808f5ae"
+        },
+        {
+          "path": "Peterborough-Building-References-20261024/dense/flat-768/frame_0459_lens1_pitch-35.jpg",
+          "sha256": "624c8610a3bf308d99c67c590f98591bc8508179f0816e1179c7be5965b7f16d"
+        }
+      ]
+    },
+    {
+      "id": "way/1015118651",
+      "label": "24 Cricket Place adjacent white-porch brick house",
+      "matchType": "confirmed-address-parcel-footprint",
+      "sourcePath": "Peterborough-Building-References-20261024/dense/flat-768/frame_0435_lens0_pitch-35.jpg",
+      "sourceSha256": "cf10a3d72498e3f23848160d8d771ab67a53364f008904ca3f6b06785e685310",
+      "sourceFrames": [
+        {
+          "sourceSeconds": 870,
+          "sha256": "cf10a3d72498e3f23848160d8d771ab67a53364f008904ca3f6b06785e685310",
+          "path": "Peterborough-Building-References-20261024/dense/flat-768/frame_0435_lens0_pitch-35.jpg"
+        },
+        {
+          "sourceSeconds": 900,
+          "sha256": "4ba8dc0a9446de0b4222ad1db9b4e96801364aa09db72c14f927b8d3258d9c2d",
+          "path": "Peterborough-Building-References-20261024/dense/flat-768/frame_0450_lens0_pitch-35.jpg"
+        },
+        {
+          "sourceSeconds": 870,
+          "sha256": "69207bac529487f235ca5091278da9f1a8f3f57d4c0d4f7c8a65cba5de8e310f",
+          "path": "Peterborough-Building-References-20261024/flat-priority-2048/0870s_lens0.jpg"
+        }
+      ],
+      "status": "confirmed-city-address-parcel-plus-adjacent-source-sequence",
+      "evidence": "The official City parcel query returns ADDRESS=24 CRICKET PL (MapServer/4 objectId 4385), the immediately east-adjoining lot in the confirmed eastbound Cricket sequence. Local OSM way/1015118651 has centroid (-78.311216611,44.307438667) inside that parcel; 7/9 vertices are also inside. The t=870 lens0 frame shows the adjacent red-brick frontage with pale gable trim, green porch canopy, white porch rail/columns, two clearly visible upper front windows, a front lawn, shrubs, concrete entry walk and driveway. Its adjacency/order from the user-confirmed route and parcel overlap support the 24 frontage match.",
+      "civicParcelEvidence": {
+        "sourceResponseSha256": "61D24A76C8BD646A392B6471BC024BEEDA2B2FDAD5C70FF9CFEFC517F76FB5AA",
+        "matchedOsmWay": "way/1015118651",
+        "parcelMapSource": "Peterborough-Map-Game-Sherbrooke/city-explorer/data/peterborough-osm.json",
+        "osmVertexCount": 9,
+        "sourceUrl": "https://citymaps.peterborough.ca/arcgis/rest/services/Basedata/MapServer/4/query",
+        "centroidInsideParcel": true,
+        "cityParcelLayer": "Basedata/MapServer/4",
+        "address": "24 CRICKET PL",
+        "objectId": 4385,
+        "parcelMapSourceSha256": "bf417e1062d66fb7b03f1c6487b1accdab334dd9589030b2e4dd50f5ad4a6633",
+        "osmVerticesInsideParcel": 7,
+        "frontageEndpoints": [
+          [
+            -78.31118947966138,
+            44.30726672286994
+          ],
+          [
+            -78.31104404245472,
+            44.30730038831931
+          ]
+        ],
+        "parcelPolygonLonLat": [
+          [
+            -78.31104404245472,
+            44.30730038831931
+          ],
+          [
+            -78.31119055223007,
+            44.307605230800114
+          ],
+          [
+            -78.31120408616394,
+            44.307602107841255
+          ],
+          [
+            -78.31133603017824,
+            44.30757164895114
+          ],
+          [
+            -78.31118947966138,
+            44.30726672286994
+          ],
+          [
+            -78.31104404245472,
+            44.30730038831931
+          ]
+        ],
+        "parcelResponseSha256Scope": "Saved official City ArcGIS FeatureCollection response containing only objectIds 4384 and 4385, fields OBJECTID/ADDRESS and geometry; SHA256 applies to the saved GeoJSON artifact bytes.",
+        "parcelGeoJsonArtifact": "test-artifacts/cricket-visuals-20261025/agent-matching/city-parcel-22-24.geojson",
+        "nearbyUnassignedFootprint": "way/1015118650 centroid falls within parcel 22 but outline crosses the shared parcel boundary; no appearance assigned."
+      },
+      "appearanceAction": "confirmed-neighbor-reference-for-parent-overlay-integration",
+      "alreadyRepresented": false
+    }
+  ],
+  "sceneEvidenceForParentIntegration": [
+    {
+      "sourceSeconds": [
+        0,
+        60
+      ],
+      "observations": "Wide retail parking area with repeated painted stalls, broad asphalt drive aisles, a small planted island/tree, and roadside screen planting."
+    },
+    {
+      "sourceSeconds": [
+        54,
+        120
+      ],
+      "observations": "Chemong commercial approach with a tall shared tenant pylon, marked pedestrian crossing, curb ramps, a raised planting wedge around the sign, guardrail and tree/shrub buffer. The 0060 lens 1 view shows approach lane markings and crosswalk hatch."
+    },
+    {
+      "sourceSeconds": [
+        834,
+        840
+      ],
+      "observations": "The 13:54 boundary row shows a low commercial/service edge with trees and planted road islands; by 14:00 the camera is on a residential frontage sequence."
+    },
+    {
+      "sourceSeconds": [
+        840,
+        944
+      ],
+      "observations": "Detached brick and pale-sided houses, short lawns, concrete sidewalks, narrow entrance walks, gravel/asphalt drives, mature street trees and parked cars. The t=870/900 orange-toy porch house is confirmed as 22 Cricket Place / OSM way/1015118649; the adjacent t=870 white-porch brick house is 24 Cricket Place / way/1015118651. A green-gabled house immediately west (way/1015118648) is a probable route-ordered neighbor, not address-confirmed."
+    },
+    {
+      "sourceSeconds": [
+        928,
+        938
+      ],
+      "observations": "Cricket Pl street-name sign and STOP sign mark a residential-street corner by a large blank red-brick side wall; the visible Cricket Pl and STOP signs, reciprocal twin-evergreen/brick-wall landmarks, and OSM topology identify the western Cricket/Driscoll vehicle junction. Neighbor frames show asphalt approach, a concrete curb ramp and sidewalk, small landscaped traffic island with grass, low planting against the wall, parked cars, streetlights, utility poles and overhead wires. The 14:30 and 15:00 frames show detached two-storey brick houses, pale gables, green porch roof, short front lawns, shrubs/flower beds, concrete entry walks, gravel drives, a small shed/garage, and parked cars. The confirmed route proceeds east from the Driscoll junction to the 22/24 Cricket Place frontage and returns west; this home/neighbor match follows the user-confirmed turn sequence and official civic parcels."
+    }
+  ],
+  "lateRouteGap": {
+    "knownUpstreamContext": "Coordinator route notes place the vehicle eastbound on Hunter toward Burnham at about source second 834.",
+    "gap": "User confirms the route crossed Hunter Street East bridge, turned left north on Driscoll Terrace and right east on Cricket Place. The t=936 Cricket Pl/STOP junction is the western Driscoll junction. The t=870/900 orange-toy brick-porch house is confirmed as 22 Cricket Place, OSM way/1015118649, by official civic parcel objectId 4384 and in-parcel OSM overlap; the adjacent t=870 white-porch house is 24 Cricket Place, way/1015118651, civic parcel objectId 4385. The green-gabled brick house at t=864/918 is probably immediately west way/1015118648 by ordered outbound/return sequence but remains an address-unconfirmed candidate.",
+    "suggestedQuestion": null,
+    "endpointComparison": "High confidence: t=840 lens0 and t=930/936 lens1 show reciprocal views of the same distinctive twin-evergreen beige house, blank brick wall, curb and landscaped/open island; t=936 lens0 reads Cricket Pl beside STOP. OSM west node 388924251 joins Cricket Place way/33960427, Driscoll Terrace ways/33965578 and /33938730, and service way/827183682. The east node 388970236 connects Cricket only to footways /827185081 and /827185082, so it cannot be the photographed vehicle intersection. The sign, reciprocal landmarks and road topology identify the western Cricket/Driscoll junction; frames contain no GPS.",
+    "addressAnchors": [
+      {
+        "matchedOsmWay": "way/1015118649",
+        "address": "22 CRICKET PL",
+        "confidence": "confirmed",
+        "parcelObjectId": 4384
+      },
+      {
+        "matchedOsmWay": "way/1015118651",
+        "address": "24 CRICKET PL",
+        "confidence": "confirmed",
+        "parcelObjectId": 4385
+      },
+      {
+        "confidence": "probable-not-address-confirmed",
+        "address": "preceding green-gable house",
+        "matchedOsmWay": "way/1015118648"
+      }
+    ]
+  },
+  "runtimeAppearanceOverrides": [
+    {
+      "featureId": "way/1015118649",
+      "implementation": "cricket-recording-appearances.js",
+      "status": "implemented-and-visually-reviewed",
+      "scope": "Brick/trim, openings and simple porch only. Trial lawn/path strips rejected and removed."
+    },
+    {
+      "featureId": "way/1015118651",
+      "implementation": "cricket-recording-appearances.js",
+      "status": "implemented-and-visually-reviewed",
+      "scope": "Brick/trim, openings and simple porch only. Trial lawn/path strips rejected and removed."
+    }
+  ],
+  "decision": "Two frontage identities are now confirmed: 22 Cricket Place maps to OSM way/1015118649, and adjacent 24 Cricket Place maps to way/1015118651, each via official City civic parcel geometry and local OSM footprint overlap. Frame evidence supports bounded fa\u00e7ade cues for both houses. The green-gabled red-brick house immediately west is likely way/1015118648 from the user-confirmed route and outbound/return order but remains provisional. Way/1015118650 is an ancillary parcel-overlap/possible garage footprint without independent fa\u00e7ade pixels; leave it unchanged. Existing Shoppers Drug Mart match remains represented; Walmart and McDonalds remain site-signage references. Civic parcel front boundaries for 22 and 24 Cricket Place are stored as mapped endpoint coordinates in this audit. The 22 parcel matches OSM way/1015118649; the 24 parcel matches way/1015118651. Way/1015118648 remains the provisional green-gable west neighbor.",
+  "limitations": [
+    "The experimental fisheye calibration and projections are visual reference output, not surveyed geometry or reliable photometric color measurement.",
+    "Full-resolution review is limited to the listed paths; dense imagery was screened from contact sheets and selected derivatives, not all full-resolution frames.",
+    "The audit changes no geometry; runtime now adds two appearance-only profiles while preserving mapped roofs, height, footprint, roads, collision and source identity."
+  ],
+  "visualReviewArtifacts": [
+    "test-artifacts/recording-complete-20261025/agent-outer/outer-late-forward-lens0-contact-sheet.jpg",
+    "test-artifacts/recording-complete-20261025/agent-outer/outer-late-key-frames-both-lenses-contact-sheet.jpg",
+    "test-artifacts/recording-complete-20261025/agent-outer/outer-local-osm-cricket-driscoll-footprints.jpg",
+    "test-artifacts/recording-complete-20261025/agent-outer/outer-cricket-endpoint-context.jpg",
+    "test-artifacts/cricket-visuals-20261025/comparison.html"
+  ]
+}

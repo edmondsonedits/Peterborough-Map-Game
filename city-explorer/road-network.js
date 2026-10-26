@@ -647,8 +647,12 @@ export class RoadSurfaceIndex {
             distance,
             height: segment.aY + (segment.bY - segment.aY) * t,
             highway: segment.tags?.highway || '',
+            layer: Number.isFinite(Number.parseFloat(segment.tags?.layer))
+              ? Number.parseFloat(segment.tags.layer) : 0,
             name: segment.name || '',
             onRoad: distance <= segment.width / 2,
+            lineId: segment.lineId || '',
+            tunnel: Boolean(segment.profile?.tunnel || (segment.tags?.tunnel && segment.tags.tunnel !== 'no')),
             t,
             width: segment.width,
           });
@@ -661,11 +665,41 @@ export class RoadSurfaceIndex {
   sample(x, z, tolerance = 0.75, referenceHeight = null) {
     const candidates = this.sampleAll(x, z, tolerance);
     if (!candidates.length) return null;
-    if (!Number.isFinite(referenceHeight)) return candidates[0];
-    candidates.sort((a, b) => {
+    const onRoad = candidates.filter(candidate => candidate.onRoad);
+    if (!Number.isFinite(referenceHeight)) return onRoad[0] || candidates[0];
+
+    // A stale vehicle height must not pull a contact back to the previous
+    // sample on a sloping, continuous road. Same-grade contacts follow the
+    // closest pavement centerline; height is reserved for explicit stacked
+    // levels, where two on-road ribbons are separated by over one metre.
+    const gradeGroups = new Map();
+    for (const candidate of onRoad) {
+      const explicitGrade = candidate.bridge || candidate.tunnel || candidate.layer !== 0;
+      const key = `${candidate.bridge}:${candidate.tunnel}:${candidate.layer}:${explicitGrade ? candidate.lineId : 'surface'}`;
+      const group = gradeGroups.get(key) || { ...candidate, minHeight: Infinity, maxHeight: -Infinity };
+      group.minHeight = Math.min(group.minHeight, candidate.height);
+      group.maxHeight = Math.max(group.maxHeight, candidate.height);
+      gradeGroups.set(key, group);
+    }
+    const grades = [...gradeGroups.values()];
+    let stacked = false;
+    for (let i = 0; i < grades.length && !stacked; i += 1) {
+      for (let j = i + 1; j < grades.length; j += 1) {
+        const a = grades[i], b = grades[j];
+        const explicitGradeChange = a.bridge !== b.bridge || a.tunnel !== b.tunnel || a.layer !== b.layer
+          || ((a.bridge || b.bridge || a.tunnel || b.tunnel || a.layer !== 0 || b.layer !== 0)
+            && a.lineId !== b.lineId);
+        const verticalGap = Math.max(Math.abs(a.minHeight - b.maxHeight), Math.abs(a.maxHeight - b.minHeight));
+        if (explicitGradeChange && verticalGap > 1) { stacked = true; break; }
+      }
+    }
+    if (onRoad.length && !stacked) return onRoad[0];
+
+    const eligible = onRoad.length ? onRoad : candidates;
+    eligible.sort((a, b) => {
       const verticalDifference = Math.abs(a.height - referenceHeight) - Math.abs(b.height - referenceHeight);
       return verticalDifference || a.distance - b.distance;
     });
-    return candidates[0];
+    return eligible[0];
   }
 }

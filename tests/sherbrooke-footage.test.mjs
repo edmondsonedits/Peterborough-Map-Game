@@ -4,6 +4,7 @@ import { createHash } from "node:crypto";
 import * as THREE from "../city-explorer/vendor/three-r180/build/three.module.min.js";
 import { createFootageFacade, frontageFrame, mapPhotoPatchUV, PHOTO_LOAD_TIMEOUT_MS } from "../city-explorer/sherbrooke-footage.js";
 import { FOOTAGE_PROFILES } from "../city-explorer/sherbrooke-footage-profiles.js";
+import { applyReviewedPhotoAppearance } from "../city-explorer/reviewed-photo-appearance.js";
 import { SHERBROOKE_SOURCE } from "../city-explorer/sherbrooke-source.js";
 
 const CENTER = { lat: 44.3091, lon: -78.3197 };
@@ -17,7 +18,8 @@ const sourceRing = id => {
 const finite = values => [...values].every(Number.isFinite);
 const segmentDistance = (p, a, b) => { const dx = b.x - a.x, dz = b.z - a.z, t = Math.max(0, Math.min(1, ((p.x - a.x) * dx + (p.z - a.z) * dz) / (dx * dx + dz * dz || 1))); return Math.hypot(p.x - a.x - dx * t, p.z - a.z - dz * t); };
 
-assert.equal(Object.keys(FOOTAGE_PROFILES).length, 49, "all reviewed profile records remain available by OSM way id");
+// The 49 Sherbrooke profiles plus two reviewed web-reference profiles are composed here.
+assert.equal(Object.keys(FOOTAGE_PROFILES).length, 51, "all reviewed frontage profiles remain available by OSM way id");
 for (const [id, profile] of Object.entries(FOOTAGE_PROFILES)) {
   const ring = sourceRing(id), frame = frontageFrame({ profile, ring, project });
   assert.ok(frame.length > 2 && finite([frame.start.x, frame.start.z, frame.end.x, frame.end.z]), `${profile.label} has a finite projected frontage`);
@@ -83,4 +85,32 @@ try {
     assert.equal(disposedPhotoGeometry, 2, "failure and timeout both dispose their unused patch geometry");
   } finally { globalThis.setTimeout = originalSetTimeout; globalThis.clearTimeout = originalClearTimeout; }
 } finally { THREE.BufferGeometry.prototype.dispose = disposeOriginal; }
-console.log("Sherbrooke frontage checks passed: 49 OSM profiles, source alignment, finite geometry, conservative openings, mural UVs and bounded photo loading.");
+const s03 = FOOTAGE_PROFILES["way/1006575704"], reviewedS03 = applyReviewedPhotoAppearance(s03, "improved");
+assert.equal(reviewedS03.hidePhotoDuplicatedMembers, true, "only the reviewed S03 photo opts into hiding source-duplicated members");
+const s03Ring = sourceRing(s03.id), s03Loading = createFootageFacade({ THREE: mockedThree, profile: reviewedS03, ring: s03Ring, base: 100, top: 110, project, visuals: "improved" });
+assert.ok(s03Loading.userData.photoOverlapDetails, "reviewed duplicate components have an isolated visibility group");
+assert.equal(s03Loading.userData.photoOverlapDetails.visible, true, "photo-overlap members remain available while the image loads");
+assert.ok(s03Loading.children.find(child => child.name === "frontage-supported-depth-details")?.visible, "useful porch and balcony slabs retain their depth");
+pendingLoads.at(-1).onLoad({ dispose() {}, anisotropy: 1 });
+assert.equal(await s03Loading.userData.photoReady, "loaded");
+assert.equal(s03Loading.userData.photoOverlapDetails.visible, false, "duplicated posts and rails hide only after the reviewed image loads");
+assert.ok(s03Loading.children.find(child => child.name === "frontage-supported-depth-details")?.visible, "supported depth remains after photo load");
+
+const s03Failed = createFootageFacade({ THREE: mockedThree, profile: reviewedS03, ring: s03Ring, base: 100, top: 110, project, visuals: "improved" });
+pendingLoads.at(-1).onError(new Error("fixture failure"));
+assert.equal(await s03Failed.userData.photoReady, "failed");
+assert.equal(s03Failed.userData.photoOverlapDetails.visible, true, "failed photo keeps procedural members available as fallback");
+assert.ok(s03Failed.children.find(child => child.name === "frontage-procedural-details")?.visible, "failed photo retains the procedural facade fallback");
+assert.equal(applyReviewedPhotoAppearance(s03, "legacy"), s03, "legacy visuals leave the source profile untouched");
+assert.equal(applyReviewedPhotoAppearance(n07, "improved").hidePhotoDuplicatedMembers, undefined, "unreviewed photos keep their existing detail path");
+const s03Default = createFootageFacade({ THREE: mockedThree, profile: s03, ring: s03Ring, base: 100, top: 110, project, visuals: "improved" });
+assert.equal(s03Default.userData.photoOverlapDetails, undefined, "unreviewed S03 keeps the existing default detail path");
+pendingLoads.at(-1).onLoad({ dispose() {}, anisotropy: 1 });
+assert.equal(await s03Default.userData.photoReady, "loaded");
+assert.equal(s03Default.children.find(child => child.name === "frontage-procedural-details")?.visible, false, "default successful photos keep their existing facade lifecycle");
+const s03Legacy = createFootageFacade({ THREE: mockedThree, profile: s03, ring: s03Ring, base: 100, top: 110, project, visuals: "legacy" });
+assert.equal(s03Legacy.userData.photoOverlapDetails, undefined, "legacy rendering does not create the selective overlap group");
+pendingLoads.at(-1).onError(new Error("fixture failure"));
+assert.equal(await s03Legacy.userData.photoReady, "failed");
+assert.ok(s03Legacy.children.find(child => child.name === "frontage-procedural-details")?.visible, "legacy photo failure keeps the procedural fallback");
+console.log("Sherbrooke frontage checks passed: 51 OSM profiles, source alignment, finite geometry, conservative openings, mural UVs and bounded photo loading.");

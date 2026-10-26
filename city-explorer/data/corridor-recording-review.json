@@ -1,0 +1,1185 @@
+{
+  "title": "Sherbrooke-Water-Hunter corridor recording appearance review",
+  "sourceCatalogue": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/CATALOGUE.md",
+  "sourceCalibration": "Existing experimental FisheyeReframer calibration; visual reference only, not surveyed measurements.",
+  "summary": {
+    "reviewed": 51,
+    "newChanged": 5,
+    "alreadyRepresented": 35,
+    "blocked": 8,
+    "sourcePixelViewsInspected": 39,
+    "appearanceScope": "Facade/garden appearance fields only; footprints, endpoints, heights, roofs, identity and collision remain unchanged.",
+    "representedWithLimitations": 8,
+    "baselineFrontageCapturesReviewed": 55,
+    "baselineReview": "All 55 full frontage baseline captures were reviewed in five contact sheets. Five supported appearance additions were integrated and recaptured; R16 and R19 arch proposals were rejected after source-to-building review. Final comparison and performance evidence are in test-artifacts/recording-complete-20261025."
+  },
+  "records": [
+    {
+      "id": "way/1006575704",
+      "name": "219 Sherbrooke balcony frontage",
+      "street": "Sherbrooke",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0492s_lens0_pitch+0.jpg",
+          "sha256": "bb9b890f5d44bfe5357075514ff53310e5b3a1389935fee89fbb5b4ea90a1cae",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Brick two-storey frontage with upper balcony/porch; the green lawn and gray walk/darker side drive are separately represented by the earlier garden tint.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": "full-S03-face0-front.jpg",
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/1006575744",
+      "name": "Rectangular brick frontage beside 219",
+      "street": "Sherbrooke",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0498s_lens0_pitch+0.jpg",
+          "sha256": "f79a6ca019e56b3b749d274d69c0795242c82811310aca7a90d7282a80937bea",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Brick two-storey frontage has a projecting entry and broad lower window; profile records the observed brick, pale trim, and openings.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": "full-S04-face0-front.jpg",
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/1006575743",
+      "name": "Brick house with curved white porch",
+      "street": "Sherbrooke",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0498s_lens0_pitch+0.jpg",
+          "sha256": "f79a6ca019e56b3b749d274d69c0795242c82811310aca7a90d7282a80937bea",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Brick house with rounded white porch and pale gable; porch and pitched roof outline are represented.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": "full-S05-face0-front.jpg",
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/1009651229",
+      "name": "Peterborough Fire Station 1",
+      "street": "Sherbrooke",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0492s_lens1_pitch+0.jpg",
+          "sha256": "c6a9e16a1e7deb37b211e20a1aef4fee3d36fca251bd6afa831197b974bab394",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Station frontage shows five red apparatus doors, separate entry and office wing; profile retains this split.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": "full-N02-face0-front.jpg",
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/1006575703",
+      "name": "Brick law-office frontage",
+      "street": "Sherbrooke",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0498s_lens0_pitch+0.jpg",
+          "sha256": "f79a6ca019e56b3b749d274d69c0795242c82811310aca7a90d7282a80937bea",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Brick law-office frontage has a shallow gable and front steps; current modest profile reflects the distant angle.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": "full-S06-face0-front.jpg",
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/1006575741",
+      "name": "Westland frontage with lower entrance addition",
+      "street": "Sherbrooke",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0504s_lens0_pitch+0.jpg",
+          "sha256": "d080b6d724690a15c662e39e8dc73deedb566c76923f5f1ecdc229a81946b278",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Westland is the low entrance addition beneath a taller pale-gable building; profile keeps the lower entrance segment.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": "full-S07-face0-front.jpg",
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/1006575740",
+      "name": "Two-storey brick house with dark porch",
+      "street": "Sherbrooke",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0498s_lens0_pitch+0.jpg",
+          "sha256": "f79a6ca019e56b3b749d274d69c0795242c82811310aca7a90d7282a80937bea",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Two-storey brick residence with a dark full-width porch and right-hand entry.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": "full-S08-face0-front.jpg",
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/194192530",
+      "name": "LCBO Sherbrooke storefront",
+      "street": "Sherbrooke",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0510s_lens1_pitch+0.jpg",
+          "sha256": "cdacebd296f9dca597934ff0190d156905bef52f3bd57f68c63f7478444bceff",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Low pale LCBO wall, green parapet trim and dark sign/awning bays.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": "full-N03-face0-front.jpg",
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/1006575739",
+      "name": "Brick house with white porch and upper balcony",
+      "street": "Sherbrooke",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0510s_lens0_pitch+0.jpg",
+          "sha256": "b75f920ee92b7734532f8088c378b7bc07942a4a8413f66059c102d0c301c477",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Brick house has white porch and upper balcony; foreground trees/signs obscure yard boundaries.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": "full-S09-face0-front.jpg",
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/1006575702",
+      "name": "Blue-sided gable house with glazed porch",
+      "street": "Sherbrooke",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0510s_lens0_pitch+0.jpg",
+          "sha256": "b75f920ee92b7734532f8088c378b7bc07942a4a8413f66059c102d0c301c477",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Blue-sided gable house with glazed porch; parking and tree cover prevent estimating yard extents.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": "full-S10-face0-front.jpg",
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/1009651239",
+      "name": "Good Neighbours Care Centre",
+      "street": "Sherbrooke",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0528s_lens1_pitch+0.jpg",
+          "sha256": "306afeb41b7c0da5365907fabb654b38ce37060f6e6f792ce3ba89471eb6a2f8",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Care centre shows two primary levels of pale tan/green masonry and repeated rectangular openings.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": "full-N04-face0-front.jpg",
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/1006575733",
+      "name": "Sherbrooke south-side commercial row",
+      "street": "Sherbrooke",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0522s_lens1_pitch+0.jpg",
+          "sha256": "827097af046d4fac14cfc35f8cfb14eb3993c4ff2cc21672b46d2082f970afd8",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "South Sherbrooke row is a continuous low commercial frontage; trees and overhead wires screen many openings.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": "full-S11-face0-front.jpg",
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/1006575731",
+      "name": "Sherbrooke south-side commercial/service building",
+      "street": "Sherbrooke",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0534s_lens0_pitch+0.jpg",
+          "sha256": "a7098c06d021c78b23602cb1a13529ee9928d2581a4f4a6c8cedc5f2ff3cd375",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Dark red two-level service/shop frontage has pale continuous fascia, narrow upper windows and ground-level shop glazing.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": "full-S12-face0-front.jpg",
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/1009651245",
+      "name": "Unidentified rear building candidate",
+      "street": "Sherbrooke",
+      "disposition": "blocked-unresolved",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0534s_lens0_pitch+0.jpg",
+          "sha256": "a7098c06d021c78b23602cb1a13529ee9928d2581a4f4a6c8cedc5f2ff3cd375",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Rear candidate overlaps the Village of Thai frontage; no independent street elevation is separable.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": [],
+        "status": "no-resolved-frontage-capture-source-limited",
+        "observation": "Rear candidate overlaps the Village of Thai frontage; no independent street elevation is separable."
+      }
+    },
+    {
+      "id": "way/846927296",
+      "name": "Village of Thai corner building",
+      "street": "Sherbrooke",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0540s_lens0_pitch+0.jpg",
+          "sha256": "2bbc01a89bd4f05c1ccc634ace1d883204d3233a2378d9c2b3f8e69da87d97d6",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Village of Thai corner has pale brick, visible door/shop opening, upper windows and the named mural/sign zone.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": "full-N07-face0-front.jpg",
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/755554888",
+      "name": "No Frills, George/Sherbrooke",
+      "street": "Sherbrooke",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0582s_lens0_pitch+0.jpg",
+          "sha256": "6f640d248abcd9dacacb373a6e871a37f170f5ebd16ab1939ecde83d9797e2b7",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "No Frills west-end wall is broad yellow beside pale cladding; yellow wall/sign panel and sign layout are already implemented.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": "full-R01-face0-front.jpg",
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/1009651246",
+      "name": "Lower Water flat-roof commercial frontage",
+      "street": "Water",
+      "disposition": "represented-with-limitations",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0600s_lens1_pitch+0.jpg",
+          "sha256": "5dc60edc300f90b8683312ead55a3d064cd80c01f27261b582fe00131663a0f9",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Single-level flat-roof dark gray commercial frontage with pale stone base and sparse door/window openings.",
+      "appearance": {
+        "plinthColor": "#b7b3a8",
+        "plinthHeight": 0.8
+      },
+      "rendererBaseline": {
+        "status": "appearance-correction-proposed",
+        "path": "test-artifacts/recording-complete-20261025/baseline/full-R02-face0-front.jpg",
+        "correction": "Add plinthHeight 0.8m and plinthColor #b7b3a8, using existing renderer plinth fields. The lower course stays below the first window opening.",
+        "observation": "Source has a pale stone-clad base course. Baseline shows uninterrupted dark wall down to the sidewalk."
+      },
+      "integration": {
+        "status": "applied-local",
+        "captureRoot": "test-artifacts/recording-complete-20261025/final",
+        "limitationsRetained": true
+      }
+    },
+    {
+      "id": "way/755554892",
+      "name": "Harvey's, 250 Water",
+      "street": "Water",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0600s_lens0_pitch+0.jpg",
+          "sha256": "66039dd108be69534bc9137ff278752ed86a4c887b26a42dd23a18b87b7157fb",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Harvey\u2019s is a low dark red-brown/black storefront with orange end panel and red/white fascia sign.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": "full-R03-face0-front.jpg",
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/1009651247",
+      "name": "Lower Water commercial row behind forecourt",
+      "street": "Water",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0606s_lens1_pitch+0.jpg",
+          "sha256": "1581a06627b834458d5c0194fa86400fb9cf1ef4aab811e7a68ea4eea6b7834c",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Distant two-level commercial row beyond open paved forecourt; broad repeated windows and pale masonry.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": "full-R04-face0-front.jpg",
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/1009651259",
+      "name": "J.J. Turner Building, King Street return",
+      "street": "Water",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0624s_lens1_pitch+0.jpg",
+          "sha256": "0295a1f896a636359707d62df066a27ac4854096cef07249c9641dd9054636bb",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "J.J. Turner return is a tall red-brick historic wall with vertical windows/cornice; angle and trees obscure some openings.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": "full-R05-face0-front.jpg",
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/1009651260",
+      "name": "Water/King ribbon-window office",
+      "street": "Water",
+      "disposition": "represented-with-limitations",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0612s_lens1_pitch+0.jpg",
+          "sha256": "dce52eaa50de031aa788401666e1be0961bf176969f019765c45cec3b8714ec5",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Three broad horizontal ribbon-window rows separated by wide concrete bands; glazed projecting corner entrance.",
+      "appearance": {
+        "doorFraction": 0.12
+      },
+      "rendererBaseline": {
+        "status": "partially-correctable",
+        "path": "test-artifacts/recording-complete-20261025/baseline/full-R06-face0-front.jpg",
+        "correction": "Set missing doorFraction to 0.12 to align the existing door with the source-side canopy. A projecting glazed corner-entry shape is not expressible by current profile API.",
+        "observation": "Three ribbon-glazing rows match. The source corner entry is projecting and glazed, while baseline places a small dark door at center although the existing canopy is at fraction 0.12."
+      },
+      "integration": {
+        "status": "applied-local",
+        "captureRoot": "test-artifacts/recording-complete-20261025/final",
+        "limitationsRetained": true
+      }
+    },
+    {
+      "id": "way/1009651261",
+      "name": "Showplace performance-hall blank wall",
+      "street": "Water",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0630s_lens1_pitch+0.jpg",
+          "sha256": "b5cc43b4de1ca36f6ce8557d5d9884ed15d72cf060b843b40d788c5a1f2b530a",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Showplace wall is a large blank red-brick plane with small service door and shallow base openings.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": "full-R07-face0-front.jpg",
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/1009651258",
+      "name": "way/1009651258",
+      "street": "Water",
+      "disposition": "blocked-unresolved",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0624s_lens1_pitch+0.jpg",
+          "sha256": "0295a1f896a636359707d62df066a27ac4854096cef07249c9641dd9054636bb",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Small lower King/east Water compound is partly hidden and seen obliquely; facade arrangement is unresolved.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": [],
+        "status": "no-resolved-frontage-capture-source-limited",
+        "observation": "Small lower King/east Water compound is partly hidden and seen obliquely; facade arrangement is unresolved."
+      }
+    },
+    {
+      "id": "way/1009651262",
+      "name": "Showplace east entrance wing",
+      "street": "Water",
+      "disposition": "represented-with-limitations",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0630s_lens1_pitch+0.jpg",
+          "sha256": "b5cc43b4de1ca36f6ce8557d5d9884ed15d72cf060b843b40d788c5a1f2b530a",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Showplace east wing has red brick, stepped parapet, arched upper window and a glazed ground-level entrance.",
+      "appearance": {
+        "windowOverrides": [
+          {
+            "referenceId": "source-0630-lens1-upper-center-arch",
+            "column": 1,
+            "shape": "arch",
+            "widthMetres": 1.8,
+            "heightMetres": 2.2,
+            "level": 1
+          }
+        ]
+      },
+      "rendererBaseline": {
+        "observation": "Source 0630 lens1 shows a single large arched upper opening centered between two narrow rectangular upper windows. Baseline R08 renders all three as rectangles.",
+        "path": "test-artifacts/recording-complete-20261025/baseline/full-R08-face0-front.jpg",
+        "status": "profile-correction-proposed-renderer-api-available-pending-wiring",
+        "correction": "Replace only the default slot at level 1, column 1 with a bounded 1.8m x 2.2m arch at the existing level-1 center height; preserve rectangular columns 0 and 2 and all level-0 glazing."
+      },
+      "integration": {
+        "status": "applied-local",
+        "captureRoot": "test-artifacts/recording-complete-20261025/final",
+        "limitationsRetained": true
+      }
+    },
+    {
+      "id": "way/930494669",
+      "name": "way/930494669",
+      "street": "Water",
+      "disposition": "blocked-unresolved",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0630s_lens1_pitch+0.jpg",
+          "sha256": "b5cc43b4de1ca36f6ce8557d5d9884ed15d72cf060b843b40d788c5a1f2b530a",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Open roof shelter, not a solid frontage; excluded from facade detailing.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": [],
+        "status": "no-resolved-frontage-capture-source-limited",
+        "observation": "Open roof shelter, not a solid frontage; excluded from facade detailing."
+      }
+    },
+    {
+      "id": "way/1009651266",
+      "name": "Water/Charlotte narrow-window tower",
+      "street": "Water",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0642s_lens1_pitch+0.jpg",
+          "sha256": "4f438490dee25a41aacac36c6ccdbf57a446a4ef3c4710afc973bcbc730ee4a8",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Pale tower has a narrow repeated vertical window stack and broad blank wall; the five visible openings align vertically.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": "full-R09-face0-front.jpg",
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/995887447",
+      "name": "Robinson Place, 300 Water",
+      "street": "Water",
+      "disposition": "represented-with-limitations",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0636s_lens0_pitch+0.jpg",
+          "sha256": "71174d64dccf4e92031862246ed7512ecaac79d14f713051748d42e2721592db",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Robinson Place lower wing is pale masonry with green-framed, large ground-floor panes separated by visible piers and a covered entrance; complex rear/upper mass remains simplified.",
+      "appearance": {
+        "windowOverrides": [
+          {
+            "level": 0,
+            "column": 0,
+            "shape": "rectangle",
+            "heightMetres": 3.2,
+            "referenceId": "source-0636-lens0-ground-bay-0"
+          },
+          {
+            "level": 0,
+            "column": 1,
+            "shape": "rectangle",
+            "heightMetres": 3.2,
+            "referenceId": "source-0636-lens0-ground-bay-1"
+          },
+          {
+            "level": 0,
+            "column": 2,
+            "shape": "rectangle",
+            "heightMetres": 3.2,
+            "referenceId": "source-0636-lens0-ground-bay-2"
+          },
+          {
+            "level": 0,
+            "column": 3,
+            "shape": "rectangle",
+            "heightMetres": 3.2,
+            "referenceId": "source-0636-lens0-ground-bay-3"
+          },
+          {
+            "level": 0,
+            "column": 4,
+            "shape": "rectangle",
+            "heightMetres": 3.2,
+            "referenceId": "source-0636-lens0-ground-bay-4"
+          },
+          {
+            "level": 0,
+            "column": 5,
+            "shape": "rectangle",
+            "heightMetres": 3.2,
+            "referenceId": "source-0636-lens0-ground-bay-5"
+          },
+          {
+            "level": 0,
+            "column": 6,
+            "shape": "rectangle",
+            "heightMetres": 3.2,
+            "referenceId": "source-0636-lens0-ground-bay-6"
+          },
+          {
+            "level": 0,
+            "column": 7,
+            "shape": "rectangle",
+            "heightMetres": 3.2,
+            "referenceId": "source-0636-lens0-ground-bay-7"
+          },
+          {
+            "level": 0,
+            "column": 8,
+            "shape": "rectangle",
+            "heightMetres": 3.2,
+            "referenceId": "source-0636-lens0-ground-bay-8"
+          },
+          {
+            "level": 0,
+            "column": 9,
+            "shape": "rectangle",
+            "heightMetres": 3.2,
+            "referenceId": "source-0636-lens0-ground-bay-9"
+          }
+        ]
+      },
+      "rendererBaseline": {
+        "status": "appearance-correction-proposed",
+        "path": "test-artifacts/recording-complete-20261025/baseline/full-R10-face0-front.jpg; test-artifacts/recording-complete-20261025/baseline/full-R10-face1-front.jpg",
+        "correction": "Use ten separated ground-level rectangular window overrides at 3.2m high, with default 2.5m widths and visible source pier gaps; do not change upper levels or massing.",
+        "observation": "Baseline faces repeat small square windows. Source 0636 lens0 shows larger ground panes with pier gaps; first eight columns are visible on this frontage, while any extra slots remain profile defaults."
+      },
+      "integration": {
+        "status": "applied-local",
+        "captureRoot": "test-artifacts/recording-complete-20261025/final",
+        "limitationsRetained": true
+      }
+    },
+    {
+      "id": "way/945902121",
+      "name": "way/945902121",
+      "street": "Water",
+      "disposition": "blocked-unresolved",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0636s_lens0_pitch+0.jpg",
+          "sha256": "71174d64dccf4e92031862246ed7512ecaac79d14f713051748d42e2721592db",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Roof-only outbuilding behind the first street row; no visible street-facing wall to model.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": [],
+        "status": "no-resolved-frontage-capture-source-limited",
+        "observation": "Roof-only outbuilding behind the first street row; no visible street-facing wall to model."
+      }
+    },
+    {
+      "id": "way/458496270",
+      "name": "Galaxy Cinemas Peterborough",
+      "street": "Water",
+      "disposition": "blocked-unresolved",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0648s_lens1_pitch+0.jpg",
+          "sha256": "dc0563e2e89de04468ed9c56c1895b8308f09307634ee87fbb2172dbdebb4288",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Galaxy is set back behind open area/vegetation; main entrance and direct facade are not resolved in this route view.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": [],
+        "status": "no-resolved-frontage-capture-source-limited",
+        "observation": "Galaxy is set back behind open area/vegetation; main entrance and direct facade are not resolved in this route view."
+      }
+    },
+    {
+      "id": "way/77774650",
+      "name": "Peterborough Square, Water Street return",
+      "street": "Water",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0690s_lens1_pitch+0.jpg",
+          "sha256": "c4bda269ba56722c9dd412f9054384ab93537c788ecba39aa1515e39050da242",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Peterborough Square return shows repeated horizontal window bands and a recessed/garage base beneath upper floors.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": [
+          "full-R11-face0-front.jpg",
+          "full-R11-face1-front.jpg"
+        ],
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/458496269",
+      "name": "BrickHouse building, Simcoe/Water",
+      "street": "Water",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0696s_lens0_pitch+0.jpg",
+          "sha256": "d54a233e9bca564535df90fc8be5f04ed68dc3c83c1dd8059dadd49b9869d08e",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "BrickHouse corner is red brick with mansard roof/dormers, tall upper windows and a dark storefront base.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": "full-R12-face0-front.jpg",
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/1031042883",
+      "name": "364 Water Street office",
+      "street": "Water",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0714s_lens0_pitch+0.jpg",
+          "sha256": "57371f5366f978d3fb1236436af8191e56fc3eaa893ab94cbd826ee259ce3afe",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "364 Water is pale stone/concrete with a narrow blue glazed bay, ribbon windows, dark lower glazing and a broad central pier; sale/lease board is temporary and excluded.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": "full-R13-face0-front.jpg",
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/1006243563",
+      "name": "Red mansard-roof corner at Simcoe/Water",
+      "street": "Water",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0720s_lens1_pitch+0.jpg",
+          "sha256": "8a493aec949966a3ef649e60244eb43af5b19984f0caab8b7ecdd93ac1c243ce",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Red brick corner with dark mansard roof, dormer windows, corbelled cornice and stone trim.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": "full-R14-face0-front.jpg",
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/1006243552",
+      "name": "Water shop row north of 364",
+      "street": "Water",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0732s_lens0_pitch+0.jpg",
+          "sha256": "521bd8dd8c4104630ed90dea6a4b9a4af110a4ba95f82c072756904548c6474e",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Low red-brick shop row has repeated upper windows and a vivid green storefront panel; profile retains mixed shop frontage.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": "full-R17-face0-front.jpg",
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/1006243558",
+      "name": "Cream Water Street balcony/shop frontage",
+      "street": "Water",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0732s_lens1_pitch+0.jpg",
+          "sha256": "6a54386788c2baffcdb11a6aed0067876ab5794bd021dc56f90be71b7d45caac",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Cream facade with upper balcony and dark-framed openings over a narrow storefront.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": "full-R15-face0-front.jpg",
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/1006243553",
+      "name": "Tall brick shop frontage, east Water",
+      "street": "Water",
+      "disposition": "represented-with-limitations",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0732s_lens0_pitch+0.jpg",
+          "sha256": "521bd8dd8c4104630ed90dea6a4b9a4af110a4ba95f82c072756904548c6474e",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Tall red brick shop frontage has three levels, dark storefront bands and pale cornice/trim.",
+      "appearance": {
+        "archedWindowLevels": [
+          2
+        ]
+      },
+      "rendererBaseline": {
+        "observation": "Baseline upper openings are square and cornice reads plain; source 0732 lens0 shows arched windows on the top floor and a pronounced cornice. Current profile already has corbelled-cornice.",
+        "path": "test-artifacts/recording-complete-20261025/baseline/full-R18-face0-front.jpg",
+        "status": "arch-overlay-proposed-renderer-api-available-pending-wiring",
+        "correction": "Use archedWindowLevels [2] when corridor overlay is wired; do not change signs, height, roof, or footprint."
+      },
+      "integration": {
+        "status": "applied-local",
+        "captureRoot": "test-artifacts/recording-complete-20261025/final",
+        "limitationsRetained": true
+      }
+    },
+    {
+      "id": "way/1006243559",
+      "name": "Water Street brick frontage beside Commerce",
+      "street": "Water",
+      "disposition": "represented-with-limitations",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0738s_lens1_pitch+0.jpg",
+          "sha256": "177bb065500ac0eeb8c1560f6014d19e8522169f5167a8dadef9356b6123affc",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "The 0738 lens1 source shows a red-brick row with upper arches, but exact frontage association for this profile is uncertain; no arch overlay is assigned.",
+      "appearance": {},
+      "rendererBaseline": {
+        "observation": "The arched openings belong to a neighboring red-brick row in source 0738 lens1; attribution to this exact profile is not established, so the proposed arch overlay was rejected.",
+        "path": "test-artifacts/recording-complete-20261025/baseline/full-R16-face0-front.jpg",
+        "status": "unsupported-correction-rejected",
+        "correction": "No profile correction: retain the existing windows until an exact facade-to-profile match is established."
+      }
+    },
+    {
+      "id": "way/1006243554",
+      "name": "Curate and adjacent Water Street storefronts",
+      "street": "Water",
+      "disposition": "represented-with-limitations",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0738s_lens0_pitch+0.jpg",
+          "sha256": "878d4265f59481f69c04c4580d46c727f7d684d581dd5507b525d6067266b111",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Curate storefront windows are rectangular; arched windows in source 0738 lens0 belong to the neighboring brick facade, so no arch overlay is assigned.",
+      "appearance": {},
+      "rendererBaseline": {
+        "observation": "Source 0738 lens0 shows rectangular Curate storefront windows and arches on a neighboring brick facade; current directory-derived sign text remains authoritative.",
+        "path": "test-artifacts/recording-complete-20261025/baseline/full-R19-face0-front.jpg",
+        "status": "unsupported-correction-rejected",
+        "correction": "No arch correction: retain rectangular openings and current directory-derived sign text."
+      }
+    },
+    {
+      "id": "way/1006243562",
+      "name": "way/1006243562",
+      "street": "Water",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0750s_lens1_pitch+0.jpg",
+          "sha256": "2d57e732cdc6dc04b417bcdec8a81375dedca229fb3275d8092c31227dc974c7",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Commerce/St. Veronus brick frontage has three levels, small arched attic openings, cornice and stone plinth; photos already cover the reviewed Water face.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": [
+          "full-V01-face0-front.jpg",
+          "full-V01-face1-front.jpg"
+        ],
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/945902906",
+      "name": "way/945902906",
+      "street": "Water",
+      "disposition": "blocked-unresolved",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0750s_lens0_pitch+0.jpg",
+          "sha256": "2f92e4bca903b284dcd5e30edc4f8b1a820f78c93166930712795a73987958d2",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Separate Hunter wing is behind Commerce and not an eastbound Water frontage; no duplicated elevation.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": [],
+        "status": "no-resolved-frontage-capture-source-limited",
+        "observation": "Separate Hunter wing is behind Commerce and not an eastbound Water frontage; no duplicated elevation."
+      }
+    },
+    {
+      "id": "way/1005977949",
+      "name": "way/1005977949",
+      "street": "Hunter",
+      "disposition": "blocked-unresolved",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0756s_lens1_pitch+0.jpg",
+          "sha256": "e9cc756f4c7a91111841c3d8638a354d12643187579ccfe83bb77ed0f78eafaf",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Northwest Water/Hunter corner lies behind the eastbound turn; the unrecorded west elevation remains excluded.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": [],
+        "status": "no-resolved-frontage-capture-source-limited",
+        "observation": "Northwest Water/Hunter corner lies behind the eastbound turn; the unrecorded west elevation remains excluded."
+      }
+    },
+    {
+      "id": "way/1005977950",
+      "name": "way/1005977950",
+      "street": "Hunter",
+      "disposition": "blocked-unresolved",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0756s_lens1_pitch+0.jpg",
+          "sha256": "e9cc756f4c7a91111841c3d8638a354d12643187579ccfe83bb77ed0f78eafaf",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Second northwest parcel is behind the corner, outside the recorded eastbound Hunter frontage.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": [],
+        "status": "no-resolved-frontage-capture-source-limited",
+        "observation": "Second northwest parcel is behind the corner, outside the recorded eastbound Hunter frontage."
+      }
+    },
+    {
+      "id": "way/1006243555",
+      "name": "way/1006243555",
+      "street": "Hunter",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0750s_lens0_pitch+0.jpg",
+          "sha256": "2f92e4bca903b284dcd5e30edc4f8b1a820f78c93166930712795a73987958d2",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Scotiabank corner has pale masonry, broad upper windows and lower storefront glazing.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": [
+          "full-V02-face0-front.jpg",
+          "full-V02-face1-front.jpg"
+        ],
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/1005975373",
+      "name": "Pale Hunter house west of Churchill Manor",
+      "street": "Hunter",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0756s_lens1_pitch+0.jpg",
+          "sha256": "e9cc756f4c7a91111841c3d8638a354d12643187579ccfe83bb77ed0f78eafaf",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Pale two-level Hunter house; vegetation and viewing angle obscure its entrance depth.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": "full-R20-face0-front.jpg",
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/1006243532",
+      "name": "Hunter south brick pub/corner frontage",
+      "street": "Hunter",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0768s_lens0_pitch+0.jpg",
+          "sha256": "92b60e5c7484cbb46a837327dc70c02ef99c8f65cd843e626851139b015df4c1",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Two-level red-brick corner with dark ground-level glazing and shallow canopy; identity is not asserted.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": "full-R21-face0-front.jpg",
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/472446708",
+      "name": "Churchill Manor Apartments",
+      "street": "Hunter",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0768s_lens1_pitch+0.jpg",
+          "sha256": "8cb0d6c8a8ada92c9f43edc63414926e7e968ed374e36c8dc7c8d86b6ff5fe38",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Churchill Manor is a tall pale apartment block with repeated horizontal balcony/window rows; angle captures a side face.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": [
+          "full-R24-face0-front.jpg",
+          "full-R24-face1-front.jpg"
+        ],
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/1006243541",
+      "name": "Low Hunter storefront beside brick corner",
+      "street": "Hunter",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0768s_lens0_pitch+0.jpg",
+          "sha256": "92b60e5c7484cbb46a837327dc70c02ef99c8f65cd843e626851139b015df4c1",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Low storefront next to the brick corner has dark sign/awning band and broad lower glazing.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": "full-R22-face0-front.jpg",
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/1006243540",
+      "name": "Hunter south house near bridge approach",
+      "street": "Hunter",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0774s_lens0_pitch+0.jpg",
+          "sha256": "c3cfef70b37ed7460943b0f9853d23bf96ba36e20bc87232674db9b868435d47",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "South Hunter house near bridge has brick exterior and simple residential openings; most of the visible view is oblique.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": "full-R23-face0-front.jpg",
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/1005975361",
+      "name": "Hunter north brick house by side street",
+      "street": "Hunter",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0774s_lens1_pitch+0.jpg",
+          "sha256": "f4ee4299abf92a4bf4301024541c3f10cc67b85bb1c12a1040e39c66cc7d8c12",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "North Hunter house is red brick with pale corner quoins and upper balcony/porch detail.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": "full-R25-face0-front.jpg",
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/1005975362",
+      "name": "Pale Hunter north house beside bridge",
+      "street": "Hunter",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0774s_lens1_pitch+0.jpg",
+          "sha256": "f4ee4299abf92a4bf4301024541c3f10cc67b85bb1c12a1040e39c66cc7d8c12",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Pale two-storey north-side house beside bridge; tree and oblique angle limit opening detail.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": "full-R26-face0-front.jpg",
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    },
+    {
+      "id": "way/1031894168",
+      "name": "way/1031894168",
+      "street": "Hunter",
+      "disposition": "already-represented",
+      "source": [
+        {
+          "path": "Peterborough-Building-References-20261024/sherbrooke-water-hunter/perspective-2048/0786s_lens1_pitch+0.jpg",
+          "sha256": "d0704af8f875ec543792e96ea37571cbf153dd77f6f5e1af0cead3aef91d8906",
+          "pixelInspected": true
+        }
+      ],
+      "evidence": "Current route profiles represent the source-backed stepped tower and low multi-bay wing volumes. Hidden portions of the compound remain simplified; no unseen facade detail is inferred.",
+      "appearance": {},
+      "rendererBaseline": {
+        "capturesReviewed": [
+          "full-R27-face0-front.jpg",
+          "full-R27-face1-front.jpg"
+        ],
+        "status": "reviewed-no-additional-correction",
+        "observation": "All listed frontage captures were reviewed in the all-target contact-sheet pass. No additional source-grounded correction was certain from this review; this does not assert a full visual match."
+      }
+    }
+  ],
+  "integration": {
+    "allSourcesComplete": false,
+    "runtimeOverlayCount": 5,
+    "comparison": "test-artifacts/recording-complete-20261025/comparison.html",
+    "verification": "docs/recording-completion-verification-2026-10-25.md",
+    "remaining": "Eight catalogue entries have no separable recorded facade or are roof-only/unseen. Eight represented targets remain simplified or uncertain. Outer collection house matching is separate and unresolved. A reviewed record is not a claim of complete reconstruction."
+  }
+}

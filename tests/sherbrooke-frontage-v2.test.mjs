@@ -111,27 +111,42 @@ test("reviewed S03/S05/S10 photos retain their real gable peaks above the eaves"
 test("house porch settings retain the default cap and can suppress only the porch", () => {
   const create = profile => createFootageFacade({ THREE, profile: { ...profileBase, style: "house", ...profile }, ring, base: 10, top: 18, project });
   const defaultHouse = create({}), explicitDefaults = create({ porchWidthFraction: .56, porchDepthMetres: 1.05, porchHeightMetres: 2.72 });
-  const trim = group => group.children.find(node => node.name === "frontage-procedural-details").children.find(node => node.name === "frontage-trim");
-  const widest = mesh => { const matrix = new THREE.Matrix4(), p = new THREE.Vector3(), q = new THREE.Quaternion(), s = new THREE.Vector3(); let width = 0; for (let i=0;i<mesh.count;i++) { mesh.getMatrixAt(i,matrix); matrix.decompose(p,q,s); width=Math.max(width,s.x); } return width; };
-  assert.ok(Math.abs(widest(trim(defaultHouse)) - 3.4) < 1e-5, "unset width keeps the old 3.2m porch plus roof eave cap");
-  assert.ok(Math.abs(widest(trim(explicitDefaults)) - 5.8) < 1e-5, "an explicit width fraction is honored even when it exceeds the default cap");
+  const trimMeshes = group => {
+    const details = group.children.find(node => node.name === "frontage-procedural-details");
+    return [details, ...group.children.filter(node => node.name === "frontage-supported-depth-details" || node.name === "frontage-photo-duplicate-members")]
+      .flatMap(parent => parent.children.filter(node => node.name.endsWith("trim") && node.isInstancedMesh));
+  };
+  const trimWidths = group => {
+    const matrix = new THREE.Matrix4(), p = new THREE.Vector3(), q = new THREE.Quaternion(), s = new THREE.Vector3();
+    return trimMeshes(group).flatMap(mesh => Array.from({length: mesh.count}, (_, i) => {
+      mesh.getMatrixAt(i, matrix); matrix.decompose(p, q, s); return s.x;
+    }));
+  };
+  const hasTrimWidth = (group, width) => trimWidths(group).some(value => Math.abs(value - width) < 1e-5);
+  assert.ok(hasTrimWidth(defaultHouse, 3.2), "unset width keeps the 3.2m porch platform cap");
+  assert.ok(hasTrimWidth(defaultHouse, 3.4), "default porch roof retains its 0.2m eave");
+  assert.ok(hasTrimWidth(explicitDefaults, 5.8), "an explicit width fraction is honored even when it exceeds the default cap");
   const noPorch = create({ porch: false });
   assert.ok(noPorch.children.find(node => node.name === "frontage-procedural-details").children.some(node => node.name === "frontage-door"), "door remains when porch is disabled");
-  assert.ok(trim(noPorch).count < trim(defaultHouse).count, "porch platform, columns and roof are omitted");
+  assert.ok(trimWidths(noPorch).length < trimWidths(defaultHouse).length, "porch platform, columns and roof are omitted");
 });
 
 test("reviewed S02 and S09 porch fractions are not clipped to the default width cap", () => {
   for (const label of ["S02", "S09"]) {
     const profile = Object.values(FOOTAGE_PROFILES).find(item => item.label === label), ring = sourceRing(profile.id);
     const group = createFootageFacade({ THREE, profile, ring, base: 10, top: 10 + profile.height, project: projectReal });
-    const trim = group.children.find(node => node.name === "frontage-procedural-details").children.find(node => node.name === "frontage-trim");
     const frame = frontageFrame({ profile, ring, project: projectReal });
+    const trimParents = [group.children.find(node => node.name === "frontage-procedural-details"),
+      ...group.children.filter(node => node.name === "frontage-supported-depth-details" || node.name === "frontage-photo-duplicate-members")];
+    const trimMeshes = trimParents.flatMap(parent => parent.children.filter(node => node.name.endsWith("trim") && node.isInstancedMesh));
     const matrix = new THREE.Matrix4(), position = new THREE.Vector3(), quaternion = new THREE.Quaternion(), scale = new THREE.Vector3();
-    let widest = 0;
-    for (let i=0;i<trim.count;i++) { trim.getMatrixAt(i, matrix); matrix.decompose(position, quaternion, scale); widest = Math.max(widest, scale.x); }
+    const widths = trimMeshes.flatMap(mesh => Array.from({length: mesh.count}, (_, i) => {
+      mesh.getMatrixAt(i, matrix); matrix.decompose(position, quaternion, scale); return scale.x;
+    }));
+    const expectedRoofWidth = frame.length * profile.porchWidthFraction + .2;
     assert.ok(profile.porchWidthFraction > 0.56, `${label} has a reviewed wide porch fraction`);
-    assert.ok(widest > 3.4, `${label} porch roof exceeds the 3.2m default cap`);
-    assert.ok(Math.abs(widest - (frame.length * profile.porchWidthFraction + .2)) < 1e-4, `${label} porch width follows the reviewed frontage fraction`);
+    assert.ok(expectedRoofWidth > 3.4, label + " reviewed roof width exceeds the 3.2m default cap plus eave");
+    assert.ok(widths.some(width => Math.abs(width - expectedRoofWidth) < 1e-4), label + " porch roof follows the reviewed frontage fraction");
   }
 });
 

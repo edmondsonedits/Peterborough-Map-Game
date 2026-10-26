@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-25",
+  "usagePolicy": {
+    "photosDownloadedIntoRuntime": false,
+    "imagesEmbedded": false,
+    "rule": "Use photographs as visual modeling references only; do not redistribute the source images without checking and satisfying their licenses."
+  },
+  "buildings": [
+    {
+      "buildingId": "way/1005977973",
+      "profileName": "Pappas Building",
+      "addresses": ["407 George Street North", "409 George Street North"],
+      "directoryBusinessNames": ["Pappas Billards", "Hock Shop"],
+      "observedPhotoSignText": "PAPPAS BILLIARDS",
+      "directoryNameNote": "Existing catalogue spelling is transcribed exactly above; the photograph spells Billiards. The shared catalogue is unchanged by this batch.",
+      "reference": {
+        "page": "https://commons.wikimedia.org/wiki/File:Pappas_Building_Peterborough.JPG",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/2/21/Pappas_Building_Peterborough.JPG",
+        "author": "Mykola Swarnyk",
+        "photoDate": "2012-07-07",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+        "reuseStatus": "The procedural Pappas appearance data is adapted from this CC BY-SA 3.0 reference. Attribute Mykola Swarnyk and the source page and follow the license terms for reuse. No photo pixels are embedded or redistributed.",
+        "adaptation": "Facade palette, window layout, and massing estimates are recreated as procedural geometry."
+      },
+      "observed": [
+        "Three storeys",
+        "Six upper window columns",
+        "Cream painted brick",
+        "Dark plum trim and ground-floor piers",
+        "Broad shop glazing",
+        "Flat parapet"
+      ],
+      "inferred": [
+        "Eave height approximately 11.7 metres, visually estimated from the photograph",
+        "Neutral dark roof material used for a surface not clearly visible in the photograph"
+      ],
+      "unknown": [
+        "Whether the photographed facade details and paint colors remain current",
+        "Exact surveyed building height"
+      ],
+      "intentionalLimits": [
+        "Upper window surrounds use simplified rectangular procedural frames."
+      ],
+      "footprint": {
+        "source": "Existing mapped OSM building way; unchanged",
+        "frontage": "First footprint edge checked against George Street North road geometry"
+      }
+    },
+    {
+      "buildingId": "way/1006243570",
+      "profileName": "Cork & Bean",
+      "addresses": ["382 George Street North"],
+      "directoryBusinessNames": ["Cork & Bean"],
+      "reference": {
+        "page": "https://www.th3rdwave.coffee/cork-bean-peterborough/",
+        "image": "https://cdn.th3rdwave.coffee/processed/merchants/2ySey8RhxCuycofS321z69RFFJq.png/768x768i_2x.jpeg",
+        "author": null,
+        "photoDate": null,
+        "rightsStatus": "No reuse license identified",
+        "reuseStatus": "Reference-only; do not redistribute the source photo."
+      },
+      "addressVerification": "https://order.toasttab.com/online/cork-and-bean-peterborough-",
+      "observed": [
+        "Buff-colored brick above the storefront",
+        "Rust-orange metal fascia/sign area",
+        "Off-white narrow glass frames",
+        "Broad storefront glazing",
+        "Entrance recessed on the right"
+      ],
+      "inferred": [
+        "Approximate frontage-detail height of 3.9 metres for the visible lower facade",
+        "Neutral dark roof material used for the unseen upper mass"
+      ],
+      "unknown": [
+        "Upper-storey count and roofline because the source photo is cropped",
+        "Exact facade dimensions and current photo date"
+      ],
+      "footprint": {
+        "source": "Existing mapped OSM building way; unchanged",
+        "frontage": "First footprint edge checked against George Street North road geometry"
+      }
+    }
+  ]
+}

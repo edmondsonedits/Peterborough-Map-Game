@@ -1,7 +1,8 @@
-import { FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js?v=frontages-20261021';
+import { FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js?v=1.6.130';
 import * as THREE from 'three';
 import { loadStreetscapeAsset } from './streetscape-assets.js';
-import { makeSherbrookePlan, sherbrookeBuildings, sherbrookeSidewalks, segmentDistance, landscapeClear } from './sherbrooke-plan.js';
+import { makeSherbrookePlan, sherbrookeBuildings, sherbrookeSidewalks, segmentDistance, landscapeClear } from './sherbrooke-plan.js?v=1.6.130';
+import { applySherbrookePolePlacement } from './sherbrooke-pole-placement.js?v=1.6.130';
 const ASSETS={railing:['props/railing-metal-module.glb',.7],fence:['props/fence-wood-module.glb',.7],pole:['props/utility-pole-transformer.glb',9.3],lamp:['props/streetlight.glb',7.5],tree:['trees/broad-irregular-lod1.glb',7],upright:['trees/upright-lod1.glb',8],vent:['props/facade-vent.glb',.6],planter:['props/planter.glb',.55],bench:['props/bench.glb',.85],canopy:['props/facade-canopy.glb',.5]};
 function lampHead(geometry){
  const src=geometry.index?geometry.toNonIndexed():geometry,keep=[],pos=src.getAttribute('position');
@@ -10,8 +11,9 @@ function lampHead(geometry){
  for(const [name,a]of Object.entries(src.attributes)){const values=[];for(const i of keep)for(let j=0;j<a.itemSize;j++)values.push(a.array[i*a.itemSize+j]);result.setAttribute(name,new THREE.Float32BufferAttribute(values,a.itemSize));}
  if(src!==geometry)src.dispose();geometry.dispose();return result;
 }
-export async function installSherbrookeDetails({group,project,terrainHeightAtWorld,lowPower=false}) {
+export async function installSherbrookeDetails({group,project,terrainHeightAtWorld,lowPower=false,resolvePole}) {
  const plan=makeSherbrookePlan(project,{lowPower});
+ const polePlacements=applySherbrookePolePlacement(plan,resolvePole);
  const root=new THREE.Group();root.name='SherbrookeReferenceStreetscape';root.userData={type:'decorative-streetscape',evidence:plan.source,collision:false};
  const loaded=await Promise.allSettled(Object.entries(ASSETS).map(async([key,[path]])=>[key,await loadStreetscapeAsset(path)]));
  const assets=new Map(loaded.filter(r=>r.status==='fulfilled').map(r=>r.value));
@@ -24,15 +26,18 @@ export async function installSherbrookeDetails({group,project,terrainHeightAtWor
   batches.get(key).items.push({p,scale,yaw,color});counts[kind]=(counts[kind]||0)+1;
  }
  function box(kind,x,y,z,sx,sy,sz,yaw,color){batch(kind,geometries.box,mat,{x,y,z},[sx,sy,sz],yaw,color);}
- function asset(kind,p,height,yaw=0){const a=assets.get(kind);if(!a)return;
+ function asset(kind,p,height,yaw=0,reach=null){const a=assets.get(kind);if(!a)return;
   // Flatten each source mesh once; every placed copy shares normalized geometry/material.
-  if(!a.parts){a.parts=[];a.scene.traverse(m=>{if(!m.isMesh)return;const g=m.geometry.clone().applyMatrix4(m.matrixWorld);const c=a.bounds.getCenter(new THREE.Vector3());g.translate(-c.x,-a.bounds.min.y,-c.z);g.scale(1/a.size.y,1/a.size.y,1/a.size.y);a.parts.push({g:kind==='lamp'?lampHead(g):g,m:m.material});});}
-  a.parts.forEach((part,i)=>batch(`${kind}-${i}`,part.g,part.m,p,[height,height,height],yaw));
+  if(!a.parts){a.parts=[];a.scene.traverse(m=>{if(!m.isMesh)return;const g=m.geometry.clone().applyMatrix4(m.matrixWorld);const c=a.bounds.getCenter(new THREE.Vector3());g.translate(-c.x,-a.bounds.min.y,-c.z);g.scale(1/a.size.y,1/a.size.y,1/a.size.y);a.parts.push({g:kind==='lamp'?lampHead(g):g,m:m.material});});
+   if(kind==='lamp')a.maxPositiveZ=Math.max(0,...a.parts.map(({g})=>{const z=g.getAttribute('position');let max=0;for(let i=0;i<z.count;i++)max=Math.max(max,z.getZ(i));return max;}));
+  }
+  const scaleZ=kind==='lamp'&&Number.isFinite(reach)&&reach>0&&a.maxPositiveZ>0?reach/a.maxPositiveZ:height;
+  a.parts.forEach((part,i)=>batch(`${kind}-${i}`,part.g,part.m,p,[height,height,scaleZ],yaw));
  }
  const at=(x,z,dy=0)=>({x,y:terrainHeightAtWorld(x,z)+dy,z});
  for(const f of plan.features){
   asset(f.kind,at(f.x,f.z),f.size,f.yaw);
-  if(f.kind==='pole'){asset('lamp',at(f.x,f.z,1),7.4,f.yaw+Math.PI/2);for(const dy of [5.6,6.05])batch('pole-bands',geometries.cylinder,mat,at(f.x,f.z,dy),[.32,.06,.32],0,0x656663);}
+  if(f.kind==='pole'){asset('lamp',at(f.x,f.z,1),7.4,Number.isFinite(f.lampYaw)?f.lampYaw:f.yaw+Math.PI/2,f.lampReach);for(const dy of [5.6,6.05])batch('pole-bands',geometries.cylinder,mat,at(f.x,f.z,dy),[.32,.06,.32],0,0x656663);}
  }
  // Thin sagging conductors are one line batch per spatial tile, not one draw per span.
  const wireTiles=new Map();
@@ -106,6 +111,7 @@ export async function installSherbrookeDetails({group,project,terrainHeightAtWor
   counts['detailed-frontages']=(counts['detailed-frontages']||0)+1;
  }
  for(const [key,b]of batches){const mesh=new THREE.InstancedMesh(b.geometry,b.material,b.items.length);b.items.forEach((v,i)=>{dummy.position.set(v.p.x,v.p.y,v.p.z);dummy.rotation.set(0,v.yaw,0);dummy.scale.set(...v.scale);dummy.updateMatrix();mesh.setMatrixAt(i,dummy.matrix);if(b.material===mat)mesh.setColorAt(i,new THREE.Color(v.color));});mesh.computeBoundingSphere();mesh.castShadow=!lowPower&&!/joint|slab|flower/.test(b.kind);mesh.receiveShadow=true;mesh.name=key;root.add(mesh);}
- const status={counts,instances:Object.entries(counts).filter(([k])=>k!=='detailed-frontages').reduce((s,[,v])=>s+v,0),batches:root.children.length,failedAssets:loaded.filter(r=>r.status==='rejected').length,profile:lowPower?'lite':'full',evidence:plan.source};
+ if(typeof resolvePole==='function')root.userData.poleAnchors=plan.features.filter(f=>f.kind==='pole').map(({id,x,z,lampYaw,lampReach,yaw})=>({id,x,z,lampYaw:lampYaw??null,lampReach:lampReach??null,yaw}));
+ const status={counts,polePlacements,instances:Object.entries(counts).filter(([k])=>k!=='detailed-frontages').reduce((s,[,v])=>s+v,0),batches:root.children.length,failedAssets:loaded.filter(r=>r.status==='rejected').length,profile:lowPower?'lite':'full',evidence:plan.source};
  root.userData.status=status;group.add(root);document.documentElement.dataset.sherbrookeDetails=JSON.stringify(status);return status;
 }

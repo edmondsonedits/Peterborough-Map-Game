@@ -32,5 +32,5 @@ test('garden clearance rejects building interiors and leaves real safe setbacks'
 // The capture record stores wallTop, not roofTop: retain the roof envelope at the runtime boundary.
 test('runtime passes the wall plus roof envelope to photographed gables', async()=>{
  const app=await readFile(new URL('../city-explorer/app.js',import.meta.url),'utf8');
- assert.match(app,/top: captured\.top \+ buildingDimensions\(\{\}, feature\.sourceId\)\.roofHeight/);
+ assert.match(app,/top:\s*captured\.top\s*\+\s*\(profile\.appearanceOnly\s*\?\s*0\s*:\s*buildingDimensions\(\{\},\s*feature\.sourceId\)\.roofHeight\)/);
 });

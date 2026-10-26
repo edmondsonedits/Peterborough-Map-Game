@@ -70,10 +70,10 @@ class Point {
   clone() { return new Point(this.x, this.y); }
   lerp(p, t) { this.x += (p.x-this.x)*t; this.y += (p.y-this.y)*t; return this; }
 }
-function draped(quality, lowPower, centerX) {
+function draped(quality, lowPower, centerX, hunterBridgeSurface = null) {
   const triangles = [];
   const subdivide = runInNewContext(routine + '\nappendDrapedOfficialRoadTriangle', {
-    project: () => new Point(centerX, 0), lowPowerProfile: lowPower,
+    project: () => new Point(centerX, 0), lowPowerProfile: lowPower, hunterBridgeSurface,
     CITY_ROAD_MESH_LEGACY: quality === 'legacy', officialRoadMeshEdgeLength,
     cachedOfficialRoadHeightAt: (_cache, p) => 5 + p.x * 0.02 + p.y * 0.01,
     appendRoadTriangle: (target, ...vertices) => target.push(vertices),
@@ -98,6 +98,8 @@ assert.ok(station.triangles > desktop.triangles);
 assert.ok(desktop.maxEdge <= 24 + 1e-8);
 assert.ok(mobile.maxEdge <= 34 + 1e-8);
 assert.ok(station.maxEdge <= 8 + 1e-8);
+const hunter = draped('citywide', true, 1000, { bounds: { minX:0,maxX:80,minZ:0,maxZ:80 } });
+assert.ok(hunter.maxEdge <= 4 + 1e-8, 'Hunter shared-profile surface remains densely sampled in lite mode');
 // Exercise the real mobile municipal-data loader, not a mocked replacement
 // implementation. These fixtures are in-memory and do not make network calls.
 const loaderSource = app.match(/^async function loadOfficialRoadSurfaces\([^]*?^\}/m)?.[0]

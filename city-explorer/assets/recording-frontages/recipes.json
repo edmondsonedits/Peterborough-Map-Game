@@ -1,0 +1,195 @@
+{
+  "schemaVersion": 1,
+  "referenceRoot": "H:/ChatGPT/Peterborough-Building-References-20261024",
+  "recipes": [
+    {
+      "id": "way/755554888",
+      "label": "No Frills George/Sherbrooke",
+      "file": "no-frills-maple-badge.jpg",
+      "source": "sherbrooke-water-hunter/perspective-2048/0582s_lens0_pitch+0.jpg",
+      "seconds": 582,
+      "lens": 0,
+      "view": "perspective-2048, pitch +0 degrees",
+      "quad": [
+        [
+          747,
+          1126
+        ],
+        [
+          819,
+          1118
+        ],
+        [
+          824,
+          1194
+        ],
+        [
+          751,
+          1200
+        ]
+      ],
+      "size": [
+        80,
+        92
+      ],
+      "quality": 90,
+      "centerFraction": 0.32,
+      "widthFraction": 0.023,
+      "bottomMetres": 3.3,
+      "heightMetres": 0.9,
+      "observations": "Isolated red maple badge on the yellow No Frills wall. The signal mast crosses the wordmark, so only the clear badge is retained.",
+      "uncertainties": [
+        "Facade endpoint fraction and badge dimensions are visual estimates, not surveyed.",
+        "The crop is a small identity detail; it does not represent the complete retail facade."
+      ]
+    },
+    {
+      "id": "way/1006243562",
+      "label": "Commerce Building / St. Veronus",
+      "file": "commerce-building-sign.jpg",
+      "source": "flat-priority-2048/0750s_lens1.jpg",
+      "seconds": 750,
+      "lens": 1,
+      "view": "flat-priority-2048, centered pitch 0 degrees",
+      "quad": [
+        [
+          282,
+          325
+        ],
+        [
+          420,
+          324
+        ],
+        [
+          411,
+          656
+        ],
+        [
+          275,
+          656
+        ]
+      ],
+      "size": [
+        128,
+        308
+      ],
+      "quality": 91,
+      "frontageIndex": 1,
+      "centerFraction": 0.25,
+      "widthFraction": 0.024,
+      "bottomMetres": 4.0,
+      "heightMetres": 3.6,
+      "observations": "Vertical COMMERCE BUILDING sign on the red-brick Water Street wing. Its two-column lettering is unobstructed.",
+      "uncertainties": [
+        "The sign position and dimensions are visual estimates.",
+        "Only additionalFrontages[0], the reviewed Water Street face, receives the patch. The primary Hunter face retains its prior profile."
+      ]
+    }
+  ],
+  "candidateReviews": [
+    {
+      "id": "way/755554888",
+      "label": "No Frills George/Sherbrooke",
+      "source": "sherbrooke-water-hunter/perspective-2048/0582s_lens0_pitch+0.jpg",
+      "seconds": 582,
+      "lens": 0,
+      "view": "perspective-2048, pitch +0 degrees",
+      "decision": "retain isolated badge crop",
+      "observations": "The main mapped facade is a large yellow wall. The signal mast crosses the right end of the wordmark; the small maple badge remains unobstructed.",
+      "uncertainties": [
+        "Badge-only coverage does not resolve the complete facade."
+      ]
+    },
+    {
+      "id": "way/1006243562",
+      "label": "Commerce Building / St. Veronus",
+      "source": "flat-priority-2048/0750s_lens1.jpg",
+      "seconds": 750,
+      "lens": 1,
+      "view": "flat-priority-2048, centered pitch 0 degrees",
+      "decision": "retain permanent sign crop",
+      "observations": "The vertical facade sign is clear and isolated between windows; the full facade view shows strong late-day lighting.",
+      "uncertainties": [
+        "The source is an upward oblique view; patch dimensions are estimated."
+      ]
+    },
+    {
+      "id": "way/1031042883",
+      "label": "364 Water Street office",
+      "source": "sherbrooke-water-hunter/perspective-2048/0714s_lens0_pitch+0.jpg",
+      "seconds": 714,
+      "lens": 0,
+      "view": "perspective-2048, pitch +0 degrees",
+      "decision": "reject crop; retain architectural reference only",
+      "observations": "364Water.com is part of a larger FOR SALE / LEASE board. Cropping out the other copy would falsely imply a standalone permanent plaque.",
+      "uncertainties": [
+        "Current advertising status is unknown; the full board is not shipped."
+      ]
+    },
+    {
+      "id": "way/1009651246",
+      "label": "Lower Water flat-roof commercial frontage",
+      "source": "sherbrooke-water-hunter/perspective-2048/0600s_lens1_pitch+0.jpg",
+      "seconds": 600,
+      "lens": 1,
+      "view": "perspective-2048, pitch +0 degrees",
+      "decision": "reject",
+      "observations": "Dark storefront plane is distant and oblique; foreground fencing, parking and a freestanding sign dominate the single-wall extraction.",
+      "uncertainties": [
+        "Business identity and exact facade boundary are unclear in this view."
+      ]
+    },
+    {
+      "id": "way/1006243552",
+      "label": "Water shop row north of 364",
+      "source": "sherbrooke-water-hunter/perspective-2048/0732s_lens0_pitch+0.jpg",
+      "seconds": 732,
+      "lens": 0,
+      "view": "perspective-2048, pitch +0 degrees",
+      "decision": "reject",
+      "observations": "Several attached storefronts share the view; facade depths, signs, windows, a streetlamp and a tree overlap the candidate wall.",
+      "uncertainties": [
+        "A clean patch cannot be assigned to this mapped profile with confidence."
+      ]
+    },
+    {
+      "id": "way/1006243559",
+      "label": "Water Street brick frontage beside Commerce",
+      "source": "sherbrooke-water-hunter/perspective-2048/0738s_lens1_pitch+0.jpg",
+      "seconds": 738,
+      "lens": 1,
+      "view": "perspective-2048, pitch +0 degrees",
+      "decision": "reject",
+      "observations": "The attached row has repeated windows, storefronts, changing depths, a streetlamp and foreground vegetation; no crop could be assigned to this narrow profile without crossing unit boundaries.",
+      "uncertainties": [
+        "The row is clear, but the exact unit and safe crop boundaries are not."
+      ]
+    },
+    {
+      "id": "way/1006243541",
+      "label": "Low Hunter storefront beside brick corner",
+      "source": "sherbrooke-water-hunter/perspective-2048/0768s_lens0_pitch+0.jpg",
+      "seconds": 768,
+      "lens": 0,
+      "view": "perspective-2048, pitch +0 degrees",
+      "decision": "reject",
+      "observations": "The low storefront is mostly obscured by mature trees and foreground street furniture.",
+      "uncertainties": [
+        "The frontage is not clean enough for a reliable photo patch."
+      ]
+    },
+    {
+      "id": "way/1006243563",
+      "label": "Red mansard-roof corner at Simcoe/Water",
+      "source": "sherbrooke-water-hunter/perspective-2048/0720s_lens1_pitch+0.jpg",
+      "seconds": 720,
+      "lens": 1,
+      "view": "perspective-2048, pitch +0 degrees",
+      "decision": "reject",
+      "observations": "Corner geometry and oblique views of two street faces, deep shadows and foreground furniture prevent assigning a reliable planar patch.",
+      "uncertainties": [
+        "The visible faces cannot be separated at confident crop boundaries."
+      ]
+    }
+  ]
+}

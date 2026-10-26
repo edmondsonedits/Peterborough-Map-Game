@@ -122,4 +122,12 @@ for (const file of ['city-explorer/app.js', 'city-explorer/business-signs.js', '
   write(file, source);
 }
 
+// Changed visual modules also need fresh cache keys; retaining an old profile or
+// road module with the new app can otherwise mix incompatible release behavior.
+const visualModules = ["building-appearance", "building-archetypes", "city-material-library", "city-visual-settings", "corridor-recording-appearances", "cricket-recording-appearances", "facade-components", "hunter-bridge-appearance", "hunter-bridge-source", "hunter-bridge-surface", "intersection-hologram-rules", "intersection-holograms", "recording-appearance", "recording-photo-profiles", "recording-reference-appearances", "recording-surface-appearance", "reviewed-photo-appearance", "road-appearance-rules", "road-network", "roadside-furniture-geometry", "roadside-furniture-placement", "sherbrooke-details", "sherbrooke-footage", "sherbrooke-footage-profiles", "sherbrooke-garden-clearance", "sherbrooke-plan", "sherbrooke-pole-placement", "web-building-profiles"];
+const visualImport = new RegExp('(\\./(?:' + visualModules.join('|') + ')\\.js)(?:\\?v=[^\"\']*)?(?=[\"\'])', 'g');
+for (const file of ['city-explorer/app.js', ...visualModules.map(name => `city-explorer/${name}.js`), 'city-explorer/material-preview.js']) {
+  write(file, read(file).replace(visualImport, `$1?v=${VERSION}`));
+}
+
 console.log(`Normalized GitHub Pages artifact to v${VERSION}.`);

@@ -109,7 +109,7 @@ const gameplayState = {
 };
 const gameplaySurfaceAt = runInNewContext(`${gameplayFunction}\ngameplaySurfaceAt`, {
   state: gameplayState,
-  terrainHeightAtWorld: () => terrainHeight,
+  terrainHeightAtWorld: () => terrainHeight, hunterBridgeSurface: null,
 });
 let surface = gameplaySurfaceAt(0, 10, 102);
 close(surface.height, 102, 'Gameplay follows sloping pavement outside centreline width');

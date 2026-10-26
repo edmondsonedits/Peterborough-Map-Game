@@ -1,0 +1,63 @@
+# Hunter Street / Ashburnham Bridge reference audit (2026-10-25)
+
+## Scope and evidence
+
+Reviewed the user recording's existing aimed perspective exports in `H:\ChatGPT\Peterborough-Building-References-20261024\sherbrooke-water-hunter\perspective-2048` at 0780–0810 s, plus the adjacent bridge-exit context at 0822–0834 s. These are 2048 px perspective reprojections from the Oct. 18, 2026 recording, with experimental lens calibration; they are useful for visible appearance and route context, not survey dimensions. The supplied source follows the eastbound Hunter approach and crossing; bridge scenes appear around 0780–0810 s, after which the east-end approach transitions to street frontage. The existing export set has a gap at 0816 s (no corresponding perspective frame in this set); avoid implying continuous frame coverage there.
+
+External references were searched and their source pages inspected. One external image was downloaded to the reference-only scratch area below for pixel inspection; it was not copied into game assets. Reuse rights are not established; retain it as a linked/local visual reference only. The City heritage register is the authority for heritage attributes, while the Oct. 18 footage is the best evidence for the present road-level appearance seen on this route.
+
+## Cheap, high-value visual targets
+
+1. **Parapet rhythm and finish.** Model a continuous, pale warm-gray concrete balustrade at sidewalk edge, with a broad cap and substantial rectangular posts/pilasters. Along the approach spans, repeat recessed rectangular bays with inset ornamental panels; some panels carry conspicuous green circular/quatrefoil-like centers bounded by lighter and darker trim. Do not reduce this to plain concrete blocks or a metal guardrail. The motifs are especially clear in 0786 and 0792.
+2. **End pylons and lamps.** Use occasional oversized square concrete lamp piers: broad stepped plinth/base, tall slightly tapered rectangular shaft, projecting cap/cornice, and a black ornamental lamp stem with a pale globe. One end pier in 0798 has a more elaborate multi-lantern top; the smaller repeated standard has a single globe (0780/0810). Keep these taller and more substantial than ordinary street lamps.
+3. **Road and walk edge.** Footage shows asphalt carriageway, curb-separated concrete sidewalk, painted lane marking, and a narrow sidewalk zone between traffic and balustrade. The bridge top reads as a straight, slightly elevated crossing; visible samples show two-way traffic context and a marked cycling lane near the west approach. Preserve a modest raised curb and sidewalk. Camera/bodywork and fisheye remapping distort widths, so do not derive exact dimensions from pixels.
+4. **Bridge mass below deck.** The crossing's defining structure is a large open-spandrel concrete arch over the Otonabee, with smaller approach arches. This is not resolved from the driving-level footage; use the official register / external overview images for a low-priority silhouette or riverside scene. Do not fabricate the arch profile from top-side footage.
+5. **Useful context.** The Quaker Oats brick factory forms a close backdrop beside the bridge; at the east end the view changes to trees / James Stevenson Park. Bridge, factory and park are a recognizable composition, though the car-facing camera often looks sideways and the factory should not be mistaken for bridge structure.
+
+## Best in-recording frames
+
+| Export | What it establishes | SHA-256 |
+|---|---|---|
+| `perspective-2048/0780s_lens1_pitch+0.jpg` | West/approach corner: a large square lamp pier and attached one-globe standard; concrete walkway and parapet commence. | `7d28ba6709cff730b02719669150bd0c058d6fe38b9651facf1ba2dd3e216709` |
+| `perspective-2048/0786s_lens1_pitch+0.jpg` | Long view along parapet: capped concrete wall, regularly spaced posts and plain recessed rectangular fields; gives road/sidewalk relationship. | `d0704af8f875ec543792e96ea37571cbf153dd77f6f5e1af0cead3aef91d8906` |
+| `perspective-2048/0792s_lens1_pitch+0.jpg` | Best repeated decorative-panel sample: pale framed panels with green circular centers, continuous cap and black single-globe lamp. | `f4125768460c52e5f1338705df8aaafcf5bb4fa8c41db1b51ad9aac36db46c41` |
+| `perspective-2048/0798s_lens0_pitch+0.jpg` | Close lamp pier: stepped base, tapered shaft, projecting shoulders and multi-lantern cap; adjacent decorated balustrade. | `11a1143016b44eeca5931ddd0ecc07b1bf063e1a7025c55d21479ab8ce895808` |
+| `perspective-2048/0804s_lens0_pitch+0.jpg` | Bridge-side Quaker factory context and a run of decorated railing panels. | `593cf51bcc9ed48474e78458704a79b2eef6436fc82c4d67822ecb4c1142987f` |
+| `perspective-2048/0810s_lens1_pitch+0.jpg` | Opposite/exit-side parapet, simpler inset panels, lamp spacing, sidewalk/road edge and tree/park context. | `998af72871b07c35091f7c214bbc638cd705c7dd637e6cdd5cf3855ef8ff57b3` |
+| `perspective-2048/0822s_lens0_pitch+0.jpg` | East-end transition and commercial gas-station context; useful only as bridge-exit context. | Not hashed for this audit. |
+| `perspective-2048/0834s_lens0_pitch+0.jpg` | Further east-end street frontage; bridge is behind the camera. | Not hashed for this audit. |
+
+## Online reference images (reference-only)
+
+- **City of Peterborough, Designated Heritage Properties register, “Hunter St. Bridge”**: [official heritage register PDF](https://www.peterborough.ca/en/explore-and-play/resources/Documents/Heritage/City-of-Peterborough-Heritage-Register-October-2019--For-Web-Publication.pdf). Its statement identifies the central open-spandrel arch, five shorter arch spans at each end, ornate railing and lamp standards, decking, terracotta and decorative details. This establishes what details merit preservation, not current paint/lighting condition.
+- **Doors Open Ontario / City event listing image**: [Hunter Street Bridge / Quaker Oats walking tour](https://www.doorsopenontario.on.ca/events/peterborough/hunter-street-bridge-quaker-oats-walking-tour/2000-012-001505-1.jpg). Opened image depicts the river arch, smaller spans, brick factory, and trees. The page is a public tourism reference; reuse/license not checked.
+- **PtboCanada photo essay, “Engineering Marvel: The Amazing Story Of The Hunter Street Bridge”**: [article and photo essay](https://www.ptbocanada.com/journal/2016/1/28/how-the-hunter-street-bridge-was-built). The inspected article has multiple present-day bridge photographs, including underside/river approaches and a close railing detail. Photos are credited to Scott Arnold (historical images to Trent Valley Archives); no reuse permission established.
+- **HistoricBridges.org, “Hunter Street Bridge (Asburnham Bridge)”**: [bridge record and photos](https://historicbridges.org/bridges/browser/?bridgebrowser=ontario%2Fpeterboroughhunterstreet%2F). Useful overview of the main arch, shorter approaches and heritage lamps/railings; its photo page notes the 2012 rehabilitation limited the photographer's view. Site photos are copyrighted unless otherwise stated; reference only.
+
+## Source-grounded / inferred boundary
+
+**Directly observed in the 2026 recording:** concrete parapet, panel/post rhythm, decorative green-center panels, pier and lamp silhouettes, asphalt, curb, sidewalk, road markings, park vegetation, and nearby factory. Golden-hour light warms concrete in the west-side frames; it should not be treated as the material's exact neutral color.
+
+**Supported by the City heritage register and historical bridge references, not measured from the route footage:** the river crossing is a large open-spandrel concrete arch with five smaller approach arches on each end; decorative railing and lamp standards are protected heritage features; terracotta is among the heritage attributes. The official City Heritage Register confirms five shorter arch spans at each end, flanking one large central open-spandrel arch. It does not state the central-span length. Secondary records report 234 ft (about 71 m), but that figure was not verified in an official source during this audit; do not use it as a measured placement constraint. Exact springer locations and arch curvature still require a plan or survey if built to scale.
+
+**Not established by this audit:** precise lane/sidewalk widths, exact parapet dimensions, material mix or reinforcement, exact arch curvature from street-level frames, present-day night lighting, or whether every lamp/panel is identical. The experimental perspective projection is unsuitable for extracting metric geometry.
+
+## Scratch audit area
+
+`H:\ChatGPT\Peterborough-Map-Game-Sherbrooke\test-artifacts\hunter-bridge-20261025\reference-audit\` contains one downloaded overview image strictly for local reference; do not ship it. External image links and rights notes provide the visual-reference trail; user footage remains primary for current road-level appearance.
+
+## Downloaded exterior overview image
+
+Downloaded one source-page-linked exterior overview from Doors Open Ontario into `test-artifacts/hunter-bridge-20261025/reference-audit/doors-open-hunter-bridge.jpg` and inspected its pixels. The file is 41,253 bytes; SHA-256 `654f58c9afd3b089c8c5cb163d951fe4a438e47a2162da80368444dcebeb489`. Current URL: `https://www.doorsopenontario.on.ca/events/peterborough/hunter-street-bridge-quaker-oats-walking-tour/Quaker.jpg`, the image URL embedded in the Doors Open event page's structured metadata. Source page: [Hunter Street Bridge/Quaker Oats Walking Tour](https://www.doorsopenontario.on.ca/peterborough/hunter-street-bridge-quaker-oats-walking-tour). The image is credited only to the Doors Open Ontario page in this audit; no photographer attribution is displayed on the source page. The site identifies itself as maintained by the Ontario Heritage Trust and carries an all-rights-reserved notice. Keep this downloaded image as local reference material only; do not bundle or publish it.
+
+From the river-side overview, the deck reads as a long, nearly level horizontal line. One broad central arch occupies the right-hand river span; its curved rib rises from low river-edge springings and is tied back to the deck by a rhythm of narrow vertical spandrel openings. Smaller, repeated approach arches sit close to the water/rail corridor toward the Quaker factory. The central opening is visibly much larger than each approach opening (rough visual ratio around four-to-five small openings across the central arch width, not a measured dimension). The bridge runs diagonally across the composition with the factory beside the left approach; river, wooded banks and distant low hills establish the setting. This image is an overview of the bridge's historical/currently representative structural form, but the vintage factory/staging details are not current-state evidence. For geometry, use the City register's explicit count of five shorter spans at either end; the photo perspective and edge crop obscure some spans.
+
+## Central arch dimension check
+
+The City of Peterborough heritage register describes the large central open-spandrel arch and five short arches at each end, but does not give the central span length. The City heritage district study similarly characterizes the bridge as a technical achievement and records the longest-span distinction without a dimension. Secondary sources (HistoricBridges.org, Trent University's magazine history, and the abstract for Mahmood et al., 2024) report 234 ft / about 71 m. Because an official dimension or plan was not located, 234 ft remains a secondary-source figure and is not used to place an arch in the appearance helper. The inspected Doors Open overview supports only broad form: one much larger central arch with a repeated sequence of narrow vertical spandrel openings, beside smaller approach arches; perspective and cropping prevent reliable springer measurement.
+
+## Surface integration and limits
+
+The shipped bridge changes use procedural geometry and colours only. No video frame or external photograph is shipped as a texture. The online image stays in the reference-only evidence directory. The small BR60 geometry snapshot is copied exactly from the repository's existing municipal dataset for lite mode; existing source attribution/terms still apply.
+
+The deck height is inferred from the existing bank/approach terrain and source road connectivity, not from the reference photographs. It does not represent an official structural survey. The original generic supports were misplaced and are omitted from the improved treatment; the complete central and approach arch structure remains deferred until its alignment/support positions can be grounded.

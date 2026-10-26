@@ -1,27 +1,39 @@
-import {mappedBuildingDimensions} from './mapped-building-dimensions.js?v=1.6.129';
-import {createBusinessSignLayer, loadBusinessDirectory} from './business-signs.js?v=1.6.129';
-import { recordSherbrookeBuilding, recordSherbrookeSidewalk, sherbrookeBuildings } from './sherbrooke-plan.js';
-import { installSherbrookeDetails } from './sherbrooke-details.js?v=frontages-20261021';
-import { FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js?v=corridor-20261024';
-import { createFootageFacade, frontageFrame } from './sherbrooke-footage.js?v=corridor-20261024';
-import { createGardenClearance } from './sherbrooke-garden-clearance.js';
+import { createIntersectionHologramLayer } from './intersection-holograms.js?v=1.6.130';
+import { createRoadsidePlacementResolver, sampleRoadsideRibbon } from './roadside-furniture-placement.js?v=1.6.130';
+import { createRoadsideFurnitureMeshes } from './roadside-furniture-geometry.js?v=1.6.130';
+import { createHunterBridgeSurface, isHunterBridgeLine } from './hunter-bridge-surface.js?v=1.6.130';
+import { createHunterBridgeAppearance } from './hunter-bridge-appearance.js?v=1.6.130';
+import { HUNTER_BRIDGE_FEATURE } from './hunter-bridge-source.js?v=1.6.130';
+import { applyReviewedPhotoAppearance } from './reviewed-photo-appearance.js?v=1.6.130';
+import { CITY_MATERIALS, CITY_PALETTE_SURFACES, installCityMaterialDetail, cloneCityMaterial } from './city-material-library.js?v=1.6.130';
+import { visualSettings, cityShadowSettings, CITY_DAYLIGHT, createCityGlazingEnvironment, glazingIntensity } from './city-visual-settings.js?v=1.6.130';
+import {mappedBuildingDimensions} from './mapped-building-dimensions.js?v=1.6.130';
+import {createBusinessSignLayer, loadBusinessDirectory} from './business-signs.js?v=1.6.130';
+import { recordSherbrookeBuilding, recordSherbrookeSidewalk, sherbrookeBuildings } from './sherbrooke-plan.js?v=1.6.130';
+import { installSherbrookeDetails } from './sherbrooke-details.js?v=1.6.130';
+import { FOOTAGE_PROFILES as BASE_FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js?v=1.6.130';
+import {applyRecordingAppearance, recordingReferencesEnabled} from './recording-appearance.js?v=1.6.130';
+import {applyRecordingSurfacePalette, recordingExpansionEnabled} from './recording-surface-appearance.js?v=1.6.130';
+import {addCricketRecordingProfiles} from './cricket-recording-appearances.js?v=1.6.130';
+import { createFootageFacade, frontageFrame } from './sherbrooke-footage.js?v=1.6.130';
+import { createGardenClearance } from './sherbrooke-garden-clearance.js?v=1.6.130';
 import { appendFootageRoof } from './sherbrooke-footage-roofs.js?v=corridor-20261024';
 import { appendFootageMassing } from './footage-building-massing.js';
 import * as THREE from 'three';
 import { reconcileStationPavement } from './station-pavement-layer.js?v=1.6.57';
 import { CURB_REVEAL, curbIsRaised, stationRoadWeight, splitRoadDetailSegment, pavementSupportBottom } from './station-road-detail.js?v=1.6.58';
 import { installQualityCapture } from './quality-capture.js?v=sherbrooke-20260915';
-import { buildingFacadePlan } from './building-archetypes.js?v=1.6.56';
+import { buildingFacadePlan } from './building-archetypes.js?v=1.6.130';
 import { loadVegetationAssets } from './vegetation-assets.js?v=sherbrooke-20260915';
 import { createVegetationVariant, stationOneVegetationPalette } from './vegetation-variants.js?v=streetscape-1';
 import { installStationStreetscape } from './streetscape-assets.js?v=streetscape-2';
 import { installStationApron } from './site-surface-materials.js?v=1.6.56';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
-import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js?v=1.6.129';
+import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js?v=1.6.130';
 import { createCatalogObject } from './editor/asset-catalog.js';
 import { createCommandHistory } from './editor/command-history.js';
-import { createDraftStore } from './editor/draft-store.js?v=1.6.129';
-import { createCityEditor } from './editor/city-editor.js?v=1.6.129';
+import { createDraftStore } from './editor/draft-store.js?v=1.6.130';
+import { createCityEditor } from './editor/city-editor.js?v=1.6.130';
 import { createEmptySceneDocument, sanitizeRenderableSceneDocument } from './editor/scene-document.js';
 import { createGeneratedRegistry } from './editor/generated-registry.js?v=footage-20261020';
 import { applyOverrides } from './editor/override-runtime.js';
@@ -32,7 +44,8 @@ import {
   createBuildingFootprintPlacement,
   createPeterboroughLandmarks,
 } from './landmark-models.js?v=corridor-20261024';
-import { ROAD_SURFACE_CLEARANCE, RoadSurfaceIndex, laneCountFor, reconcileRoadNetworkElevations, roadProfile, roadRibbonCrossSections, resampleRoadLine } from './road-network.js?v=street-evidence-2';
+import { ROAD_SURFACE_CLEARANCE, RoadSurfaceIndex, laneCountFor, reconcileRoadNetworkElevations, roadProfile, roadRibbonCrossSections, resampleRoadLine } from './road-network.js?v=1.6.130';
+import { createRoadMarkingContext, roadMarkingIntervals, roadCurbIntervals } from './road-appearance-rules.js?v=1.6.130';
 import { solveFallbackJunctions, polygonArea as junctionPolygonArea } from './fallback-junction-geometry.js';
 import { officialRoadMeshEdgeLength, officialCurbDisplayMode, nearbyMunicipalRoadHeight, municipalCurbTop } from './citywide-road-quality.js';
 import { sampleTruckWheelContacts, truckIsOnRoad } from './road-wheel-contact.js';
@@ -43,7 +56,7 @@ import { clearLandCoverRaster, paintLandCoverPolygon } from './land-cover-raster
 import { sampleOfficialTerrainElevation, validOfficialTerrainMetadata } from './terrain-heightmap.js?v=1.5.5-lidar1';
 import { sampleTriangulatedTerrainHeight } from './terrain-surface.js?v=1.5.5-terrain1';
 import { HydroSurfaceIndex, WATER_SURFACE_CLEARANCE, WATER_TERRAIN_RECESS, createWaterStageSampler, relativeWaterElevation, robustFallbackWaterHeight, subdivideWaterTriangle, watercourseWidth } from './water-system.js?v=1.5.5-hydro2';
-import { CitySplatLayer } from './city-splat-layer.js?v=1.6.129';
+import { CitySplatLayer } from './city-splat-layer.js?v=1.6.130';
 import {
   estimatedBuildingFloors,
   facadeDetailClass,
@@ -55,7 +68,7 @@ import {
 } from './city-detail-rules.js?v=street-evidence-2';
 import {
   createSkyAtmosphere,
-  installWorldSurfaceDetail,
+  installWorldSurfaceDetail as installLegacyWorldSurfaceDetail,
   projectedVerticalSliceBounds,
   worldPointInVerticalSlice,
 } from './vertical-slice-quality.js?v=1.5.6-material2';
@@ -101,6 +114,8 @@ const RENDER_TILE_SIZE = 1800;
 const ROAD_RENDER_TILE_SIZE = 3600;
 const explorerStartedAt = performance.now();
 let captureFrame = null;
+const hunterBridgeEnabled = new URLSearchParams(location.search).get('hunterBridge') !== 'legacy';
+let hunterBridgeSurface = null;
 const captureRequested = new URLSearchParams(location.search).has('capture');
 // Freeze interaction only in the explicit evidence mode. No saved settings change.
 if (captureRequested) {
@@ -295,6 +310,14 @@ const lowPowerProfile = compatibilityMode
   || innerWidth < 760
   || (Number(navigator.deviceMemory) > 0 && Number(navigator.deviceMemory) <= 4)
   || (Number(navigator.hardwareConcurrency) > 0 && Number(navigator.hardwareConcurrency) <= 4);
+const cityVisuals = visualSettings(location.search, lowPowerProfile);
+const roadAppearanceEnabled = new URLSearchParams(location.search).get('roadAppearance') !== 'legacy';
+document.documentElement.dataset.roadAppearance = roadAppearanceEnabled ? 'junction-aware' : 'legacy';
+const recordingReferences = recordingReferencesEnabled(location.search);
+const recordingExpansion = recordingExpansionEnabled(location.search);
+const cricketReferences = recordingReferences && recordingExpansion && new URLSearchParams(location.search).get('cricketReferences') !== 'off';
+const FOOTAGE_PROFILES = addCricketRecordingProfiles(Object.fromEntries(Object.entries(BASE_FOOTAGE_PROFILES).map(([id, profile]) => [id, applyRecordingAppearance(profile, recordingReferences, recordingExpansion)])), cricketReferences);
+document.documentElement.dataset.cityVisuals = cityVisuals.mode + '-' + cityVisuals.quality;
 document.documentElement.dataset.cityCompatibilityMode = compatibilityMode ? 'forced' : lowPowerProfile ? 'automatic' : 'full';
 const renderer = new THREE.WebGLRenderer({ canvas: els.canvas, antialias: !lowPowerProfile, powerPreference: 'high-performance' });
 renderer.setPixelRatio(Math.min(devicePixelRatio, lowPowerProfile ? 1.2 : 1.65));
@@ -496,6 +519,11 @@ function setRoadQuaternion(target, direction) {
   target.quaternion.setFromRotationMatrix(roadBasis);
 }
 
+function installWorldSurfaceDetail(material, kind, id = kind) {
+  if (cityVisuals.mode === 'legacy') return installLegacyWorldSurfaceDetail(material, kind);
+  return installCityMaterialDetail(material, {kind: kind === 'masonry' ? 'stone' : kind, id, quality: cityVisuals.quality, asphaltStyle: roadAppearanceEnabled ? 'filtered' : 'legacy'});
+}
+
 const standard = (color, options = {}) => new THREE.MeshStandardMaterial({
   color,
   roughness: options.roughness ?? 0.82,
@@ -578,7 +606,9 @@ const materials = {
   shelterGlass: standard(0x83aeb4, { roughness: 0.2, metalness: 0.08, transparent: true, opacity: 0.54, depthWrite: false }),
 };
 
-[
+const recordingSurfaceChanges = applyRecordingSurfacePalette(materials, recordingExpansion);
+
+const legacySurfaceAssignments = [
   ['residential', 'brick'], ['residentialBrick', 'brick'], ['civicBrick', 'brick'], ['stationBuffBrick', 'brick'],
   ['residentialPale', 'masonry'], ['residentialSlate', 'masonry'], ['commercial', 'masonry'],
   ['industrial', 'masonry'], ['industrialMetal', 'masonry'], ['civic', 'masonry'], ['tower', 'masonry'],
@@ -586,15 +616,38 @@ const materials = {
   ['roadHighway', 'asphalt'], ['roadArterial', 'asphalt'], ['roadCollector', 'asphalt'],
   ['roadLocal', 'asphalt'], ['roadService', 'asphalt'], ['roadTunnel', 'asphalt'], ['officialRoad', 'asphalt'], ['parking', 'asphalt'],
   ['park', 'grass'], ['grass', 'grass'], ['residentialLand', 'grass'], ['water', 'water'],
-].forEach(([materialKey, detailKind]) => installWorldSurfaceDetail(materials[materialKey], detailKind));
+];
+// One asphalt base avoids artificial colour patches at road-class boundaries.
+// World-space material variation supplies restrained age/aggregate detail.
+if (roadAppearanceEnabled) {
+  for (const key of ['roadHighway', 'roadArterial', 'roadCollector', 'roadLocal', 'roadService', 'roadTunnel', 'officialRoad', 'roadEdge']) {
+    materials[key].color.setHex(0x3d3e40);
+    materials[key].roughness = 0.95;
+  }
+}
+const surfaceAssignments = cityVisuals.mode === 'legacy' ? legacySurfaceAssignments : Object.entries(CITY_PALETTE_SURFACES);
+surfaceAssignments.forEach(([materialKey, detailKind]) => installWorldSurfaceDetail(materials[materialKey],
+  !roadAppearanceEnabled && materialKey === 'roadEdge' ? 'concrete' : detailKind, materialKey));
+const cityGlassEnvironment = cityVisuals.mode === 'legacy' ? null : createCityGlazingEnvironment(THREE, renderer, cityVisuals.quality);
+if (cityVisuals.mode !== 'legacy') {
+  for (const key of ['commercialGlass', 'windowGlass', 'storefrontGlass', 'shelterGlass']) {
+    const mat = materials[key];
+    mat.color.set(key === 'storefrontGlass' ? 0x536d76 : 0x607982);
+    mat.metalness = 0.035; mat.roughness = key === 'storefrontGlass' ? 0.24 : 0.32;
+    mat.envMap = cityGlassEnvironment?.texture || null; mat.envMapIntensity = glazingIntensity('day');
+    mat.userData.cityGlazing = true;
+  }
+}
 ['roadService', 'officialRoad', 'parking'].forEach((key) => installStationApron(materials[key], project));
 // A small palette only for this captured block; GIS footprints and road data are untouched.
 for (const [id, profile] of Object.entries(FOOTAGE_PROFILES)) {
   if (profile.style === 'station' || profile.confidence === 'inferred') continue;
-  materials[`footage-wall-${id}`] = standard(profile.wallColor, {side: THREE.DoubleSide});
-  materials[`footage-roof-${id}`] = standard(profile.roofColor, {side: THREE.DoubleSide});
-  installWorldSurfaceDetail(materials[`footage-wall-${id}`], profile.style === 'house' ? 'brick' : 'masonry');
-  installWorldSurfaceDetail(materials[`footage-roof-${id}`], 'roof');
+  materials[`footage-wall-${id}`] = standard(applyReviewedPhotoAppearance(profile, cityVisuals.mode).wallColor, {side: THREE.DoubleSide});
+  installWorldSurfaceDetail(materials[`footage-wall-${id}`], profile.wallSurface || (profile.style === 'house' ? 'brick' : 'masonry'));
+  if (!profile.appearanceOnly) {
+    materials[`footage-roof-${id}`] = standard(profile.roofColor, {side: THREE.DoubleSide});
+    installWorldSurfaceDetail(materials[`footage-roof-${id}`], 'roof');
+  }
 }
 const footageFacadeGroups = new Map();
 
@@ -1058,7 +1111,7 @@ function createTerrainMesh(hydroSurfaceIndex = null) {
 function buildingDimensions(tags = {}, featureId = '') {
   const footage = FOOTAGE_PROFILES[featureId];
   // Appearance estimates only. Preserve the reviewed station and unobserved rear masses.
-  if (footage && !footage.preserveMappedMassing && footage.style !== 'station' && footage.confidence !== 'inferred') {
+  if (footage && !footage.appearanceOnly && !footage.preserveMappedMassing && footage.style !== 'station' && footage.confidence !== 'inferred') {
     return {height: footage.eaveHeight, minHeight: 0,
       roofHeight: footage.roof === 'flat' ? 0.2 : footage.roofRise,
       roofShape: {gable: 'gabled', hip: 'hipped'}[footage.roof] || 'flat'};
@@ -1120,7 +1173,7 @@ function coordinatesToRing(coordinates, featureId = '') {
     .map(([lon, lat]) => project(lat, lon));
   // Captured facades use source edges. A point cap can cut across a concave
   // corner and leave their windows in the air on complex footprints (Quaker).
-  return FOOTAGE_PROFILES[featureId] ? ring : simplifyRing(ring, 0.72, 110);
+  return FOOTAGE_PROFILES[featureId] && !FOOTAGE_PROFILES[featureId].appearanceOnly ? ring : simplifyRing(ring, 0.72, 110);
 }
 
 function shapeFromRings(rings) {
@@ -1434,6 +1487,8 @@ function appendRingWalls(target, ring, bottomHeights, lowerHeight, upperHeight) 
 
 const FACADE_DETAIL_QUAD_LIMIT = lowPowerProfile ? 32000 : 132000;
 let facadeDetailQuads = 0;
+const cityAppearanceTileCounts = new Map();
+const cityAppearanceStats = {parts:0,panels:0,presets:{}};
 let prototypeFacadeQuads = 0;
 let prototypeRoadContextReady = false;
 const prototypeFacadeQueue = [];
@@ -1480,7 +1535,7 @@ function appendPrototypeFacade(outer, tags, featureId, foundationTop, wallTop, b
     const length = a.distanceTo(b);
     if (isCapturedFrontEdge(featureId, a, b)) return;
     const plan = buildingFacadePlan({ tags, featureId, edgeLength: length, wallHeight: wallTop - foundationTop,
-      edgeIndex: edge, footprintArea: Math.abs(area), lite: lowPowerProfile, front: !reviewedFront && edge === frontEdge });
+      edgeIndex: edge, footprintArea: Math.abs(area), lite: lowPowerProfile, visuals: cityVisuals.mode, front: !reviewedFront && edge === frontEdge });
     for (const panel of plan.panels) {
       if (prototypeFacadeQuads >= (lowPowerProfile ? 6500 : 20000)) break;
       const ux = (b.x - a.x) / length, uz = (b.y - a.y) / length;
@@ -1530,6 +1585,32 @@ function appendFacadePanel(target, a, b, center, t, width, lowerY, upperY) {
   return true;
 }
 
+function appendReusableCityFacade(outer, tags, featureId, foundationTop, wallTop, batches, anchor) {
+  const tileKey = `${Math.floor(anchor.x / RENDER_TILE_SIZE)}:${Math.floor(anchor.y / RENDER_TILE_SIZE)}`;
+  const tileBudget = lowPowerProfile ? 1100 : 4400;
+  let used = cityAppearanceTileCounts.get(tileKey) || 0;
+  if (used >= tileBudget) return;
+  const area = THREE.ShapeUtils.area(outer), outwardSign = area > 0 ? 1 : -1;
+  let emitted = 0, preset = null;
+  for (let edge = 0; edge < outer.length; edge++) {
+    const a = outer[edge], b = outer[(edge + 1) % outer.length], length = a.distanceTo(b);
+    if (length < 3.1 || length > 135 || isCapturedFrontEdge(featureId, a, b)) continue;
+    // Citywide density uses the compact plan; photographed/reviewed pilot keeps its richer plan.
+    const plan = buildingFacadePlan({tags,featureId,edgeIndex:edge,edgeLength:length,wallHeight:wallTop-foundationTop,footprintArea:Math.abs(area),lite:true,visuals:cityVisuals.mode,front:false});
+    if (facadeDetailQuads + plan.panels.length > FACADE_DETAIL_QUAD_LIMIT || used + plan.panels.length > tileBudget) break;
+    const ux = (b.x-a.x)/length, uz = (b.y-a.y)/length, nx = uz*outwardSign, nz = -ux*outwardSign;
+    for (const panel of plan.panels) {
+      const mx = a.x + ux*length*panel.t + nx*panel.offset, mz = a.y + uz*length*panel.t + nz*panel.offset, half = panel.width/2;
+      const bottom = foundationTop+panel.lowerY, top = foundationTop+panel.upperY;
+      appendQuad(batchPositions(batches,panel.materialKey,anchor),new THREE.Vector3(mx-ux*half,bottom,mz-uz*half),new THREE.Vector3(mx+ux*half,bottom,mz+uz*half),new THREE.Vector3(mx+ux*half,top,mz+uz*half),new THREE.Vector3(mx-ux*half,top,mz-uz*half));
+      emitted++; used++; facadeDetailQuads++;
+    }
+    preset = plan.archetype;
+  }
+  cityAppearanceTileCounts.set(tileKey,used);
+  if (emitted) {cityAppearanceStats.parts++;cityAppearanceStats.panels+=emitted;cityAppearanceStats.presets[preset]=(cityAppearanceStats.presets[preset]||0)+1;}
+}
+
 function appendBuildingFacadeDetails(outer, tags, featureId, foundationTop, wallTop, dimensions, batches, anchor) {
   if (appendPrototypeFacade(outer, tags, featureId, foundationTop, wallTop, batches, anchor)) return;
   if (facadeDetailQuads >= FACADE_DETAIL_QUAD_LIMIT || dimensions.height < 3.1) return;
@@ -1544,6 +1625,11 @@ function appendBuildingFacadeDetails(outer, tags, featureId, foundationTop, wall
   if (detailClass === 'windows') {
     const coverage = lowPowerProfile ? 14 : 42;
     if (stableHash(`${featureId}:facade-coverage`) % 100 >= coverage) return;
+  }
+
+  if (cityVisuals.mode !== 'legacy') {
+    appendReusableCityFacade(outer,tags,featureId,foundationTop,wallTop,batches,anchor);
+    return;
   }
 
   const floorCount = estimatedBuildingFloors(tags, dimensions.height);
@@ -1618,7 +1704,7 @@ function appendBufferedBuilding(rings, tags, featureId, batches, sourceId = feat
   const anchor = polygonCentroid(outer);
   const generatedFeatureKey = `${batchSetId(batches)}:${featureId}`;
   const wallKey = buildingMaterialKey(tags, dimensions.height + dimensions.minHeight + dimensions.roofHeight, featureId);
-  const roofKey = featureId === 'way/1009651229' ? 'stationRoof' : FOOTAGE_PROFILES[featureId] && FOOTAGE_PROFILES[featureId].confidence !== 'inferred' ? `footage-roof-${featureId}` : roofMaterialKey(tags, wallKey);
+  const roofKey = featureId === 'way/1009651229' ? 'stationRoof' : FOOTAGE_PROFILES[featureId] && !FOOTAGE_PROFILES[featureId].appearanceOnly && FOOTAGE_PROFILES[featureId].confidence !== 'inferred' ? `footage-roof-${featureId}` : roofMaterialKey(tags, wallKey);
   const rangeStarts = captureBatchLengths(batches);
   const wallPositions = batchPositions(batches, wallKey, anchor);
   const roofPositions = batchPositions(batches, roofKey, anchor);
@@ -1633,9 +1719,9 @@ function appendBufferedBuilding(rings, tags, featureId, batches, sourceId = feat
   }
 
   const footage = FOOTAGE_PROFILES[featureId];
-  const massing = appendFootageMassing({THREE, wallPositions, roofPositions, outer, holes, foundationTop, profile: footage, project, groundHeights});
+  const massing = appendFootageMassing({THREE, wallPositions, roofPositions, outer, holes, foundationTop, profile: footage?.appearanceOnly ? undefined : footage, project, groundHeights});
   if (massing) { wallTop = foundationTop + massing.maxHeight; roofTop = wallTop + .2; }
-  recordSherbrookeBuilding(featureId, outer, foundationTop, massing ? foundationTop + (footage.detailHeightMetres || massing.defaultHeight) : wallTop);
+  recordSherbrookeBuilding(featureId, outer, foundationTop, massing ? foundationTop + (footage.detailHeightMetres || massing.defaultHeight) : wallTop, footage);
   if (!massing) {
   let groundOffset = 0;
   appendRingWalls(wallPositions, outer, groundHeights.slice(groundOffset, groundOffset + outer.length), foundationTop, wallTop);
@@ -1677,7 +1763,7 @@ function appendBufferedBuilding(rings, tags, featureId, batches, sourceId = feat
     }
   }
   const pitchedRoof = dimensions.roofHeight > 0.3 && !holes.length && outerArea <= 1600
-    && ((FOOTAGE_PROFILES[featureId] && FOOTAGE_PROFILES[featureId].confidence !== 'inferred' && appendFootageRoof({THREE,
+    && ((FOOTAGE_PROFILES[featureId] && !FOOTAGE_PROFILES[featureId].appearanceOnly && FOOTAGE_PROFILES[featureId].confidence !== 'inferred' && appendFootageRoof({THREE,
       roofPositions, wallPositions, outer, wallTop, roofTop, profile: FOOTAGE_PROFILES[featureId], project}))
       || appendPitchedRoof(roofPositions, outer, wallTop, roofTop, dimensions.roofShape));
 
@@ -1758,7 +1844,7 @@ function buildBufferedBuildingBatches(batches) {
     geometry.computeVertexNormals();
     geometry.computeBoundingSphere();
     const sourceMaterial = materials[materialKey] || materials.residential;
-    const batchMaterial = sourceMaterial.clone();
+    const batchMaterial = cityVisuals.mode === 'legacy' ? sourceMaterial.clone() : cloneCityMaterial(sourceMaterial);
     batchMaterial.vertexColors = true;
     const mesh = new THREE.Mesh(geometry, batchMaterial);
     mesh.userData = { type: 'building-batch', material: materialKey, tile, tileSize: RENDER_TILE_SIZE, vertices: positions.length / 3 };
@@ -1794,7 +1880,7 @@ function buildBufferedBuildingBatches(batches) {
     const captured = sherbrookeBuildings.get(feature.sourceId);
     if (profile && profile.style !== 'station' && profile.confidence !== 'inferred' && captured && !footageFacadeGroups.has(feature.sourceId)) {
       const anchor = frontageFrame({profile, ring:captured.ring, project}).midpoint;
-      const detail = createFootageFacade({THREE, profile, ring: captured.ring, base: captured.base, top: captured.top + buildingDimensions({}, feature.sourceId).roofHeight, project,
+      const detail = createFootageFacade({THREE, profile: applyReviewedPhotoAppearance(profile, cityVisuals.mode), visuals: cityVisuals.mode, lite: cityVisuals.quality === 'lite', glassEnvironment: cityGlassEnvironment?.texture, ring: captured.ring, base: captured.base, top: captured.top + (profile.appearanceOnly ? 0 : buildingDimensions({}, feature.sourceId).roofHeight), project,
         terrainHeightAtWorld, gardenClear:profile.frontGarden ? createGardenClearance(project, anchor) : undefined});
       buildingGroup.add(detail);
       generatedRegistry.attachEditableGroup(id, detail);
@@ -2121,11 +2207,11 @@ function appendRoadRibbon(line, batches) {
     const leftGroundB = terrainHeightAtWorld(edgeB.leftX, edgeB.leftZ) + 0.02;
     const rightGroundA = terrainHeightAtWorld(edgeA.rightX, edgeA.rightZ) + 0.02;
     const rightGroundB = terrainHeightAtWorld(edgeB.rightX, edgeB.rightZ) + 0.02;
-    if (Math.max(aEdgeY - leftGroundA, bEdgeY - leftGroundB) > 0.24) {
+    if (!(hunterBridgeSurface && isHunterBridgeLine(line.id)) && Math.max(aEdgeY - leftGroundA, bEdgeY - leftGroundB) > 0.24) {
       appendRoadTriangle(edgeBatch.positions, edgeA.leftX, leftGroundA, edgeA.leftZ, edgeB.leftX, leftGroundB, edgeB.leftZ, edgeB.leftX, bEdgeY, edgeB.leftZ);
       appendRoadTriangle(edgeBatch.positions, edgeA.leftX, leftGroundA, edgeA.leftZ, edgeB.leftX, bEdgeY, edgeB.leftZ, edgeA.leftX, aEdgeY, edgeA.leftZ);
     }
-    if (Math.max(aEdgeY - rightGroundA, bEdgeY - rightGroundB) > 0.24) {
+    if (!(hunterBridgeSurface && isHunterBridgeLine(line.id)) && Math.max(aEdgeY - rightGroundA, bEdgeY - rightGroundB) > 0.24) {
       appendRoadTriangle(edgeBatch.positions, edgeA.rightX, rightGroundA, edgeA.rightZ, edgeB.rightX, bEdgeY, edgeB.rightZ, edgeB.rightX, rightGroundB, edgeB.rightZ);
       appendRoadTriangle(edgeBatch.positions, edgeA.rightX, rightGroundA, edgeA.rightZ, edgeA.rightX, aEdgeY, edgeA.rightZ, edgeB.rightX, bEdgeY, edgeB.rightZ);
     }
@@ -2142,7 +2228,7 @@ function buildBufferedRoadBatches(batches) {
     geometry.computeVertexNormals();
     geometry.computeBoundingSphere();
     const sourceMaterial = materials[materialKey] || materials.roadLocal;
-    const batchMaterial = sourceMaterial.clone();
+    const batchMaterial = cityVisuals.mode === 'legacy' ? sourceMaterial.clone() : cloneCityMaterial(sourceMaterial);
     batchMaterial.vertexColors = false;
     const mesh = new THREE.Mesh(geometry, batchMaterial);
     mesh.userData = { type: `road-${kind}-batch`, material: materialKey, tile, tileSize: ROAD_RENDER_TILE_SIZE, segments, vertices: positions.length / 3 };
@@ -2157,6 +2243,7 @@ function finalizeRoadLines(roadLines, buckets, roadBatches) {
   state.roadPaintRanges = new Map();
   applyBridgeElevationProfiles(roadLines);
   reconcileRoadElevationProfiles(roadLines);
+  hunterBridgeSurface = hunterBridgeEnabled ? createHunterBridgeSurface(roadLines, terrainSourceHeightAtWorld) : null;
   roadLines.forEach((line) => {
     const rangeStarts = captureBatchLengths(roadBatches);
     appendRoadRibbon(line, roadBatches);
@@ -2653,6 +2740,7 @@ function buildRoadJunctions(segments) {
 }
 
 function buildUrbanCurbs(segments, junctionTrims = null) {
+  const curbContext = roadAppearanceEnabled ? createRoadMarkingContext(segments, { maximumTrimMetres: 18 }) : null;
   const nodeLines = new Map();
   const nodeKey = (point, y) => `${Math.round(point.x * 10)}:${Math.round(point.y * 10)}:${Math.round(y * 2)}`;
   const recordNode = (point, y, lineId, sourceVertex) => {
@@ -2694,40 +2782,44 @@ function buildUrbanCurbs(segments, junctionTrims = null) {
     const requested = junctionTrims?.get(segment);
     const trimA = aJunction ? Math.min(Math.max(1.4, requested?.a || 0), length * (junctionTrims ? 0.45 : 0.22)) : 0;
     const trimB = bJunction ? Math.min(Math.max(1.4, requested?.b || 0), length * (junctionTrims ? 0.45 : 0.22)) : 0;
-    if (trimA + trimB >= length * 0.78) continue;
-    const tA = trimA / length;
-    const tB = 1 - trimB / length;
-    const ax = THREE.MathUtils.lerp(segment.a.x, segment.b.x, tA);
-    const az = THREE.MathUtils.lerp(segment.a.y, segment.b.y, tA);
-    const ay = THREE.MathUtils.lerp(segment.aY, segment.bY, tA);
-    const bx = THREE.MathUtils.lerp(segment.a.x, segment.b.x, tB);
-    const bz = THREE.MathUtils.lerp(segment.a.y, segment.b.y, tB);
-    const by = THREE.MathUtils.lerp(segment.aY, segment.bY, tB);
-    const batch = batchFor((ax + bx) / 2, (az + bz) / 2);
-    const halfRoad = segment.width / 2;
-
     for (const side of [-1, 1]) {
-      const inner = halfRoad + 0.025;
-      const outer = halfRoad + 0.255;
-      const aInnerX = ax + sideX * side * inner;
-      const aInnerZ = az + sideZ * side * inner;
-      const aOuterX = ax + sideX * side * outer;
-      const aOuterZ = az + sideZ * side * outer;
-      const bInnerX = bx + sideX * side * inner;
-      const bInnerZ = bz + sideZ * side * inner;
-      const bOuterX = bx + sideX * side * outer;
-      const bOuterZ = bz + sideZ * side * outer;
-      const aTop = ay + 0.14;
-      const bTop = by + 0.14;
-      const aBottom = ay + 0.012;
-      const bBottom = by + 0.012;
-      appendRoadTriangle(batch.positions, aInnerX, aTop, aInnerZ, aOuterX, aTop, aOuterZ, bOuterX, bTop, bOuterZ);
-      appendRoadTriangle(batch.positions, aInnerX, aTop, aInnerZ, bOuterX, bTop, bOuterZ, bInnerX, bTop, bInnerZ);
-      appendRoadTriangle(batch.positions, aOuterX, aBottom, aOuterZ, bOuterX, bBottom, bOuterZ, bOuterX, bTop, bOuterZ);
-      appendRoadTriangle(batch.positions, aOuterX, aBottom, aOuterZ, bOuterX, bTop, bOuterZ, aOuterX, aTop, aOuterZ);
+      const curbIntervals = curbContext ? roadCurbIntervals(curbContext, segment, side)
+      : (trimA + trimB >= length * 0.78 ? [] : [[trimA, length - trimB]]);
+      for (const [from, to] of curbIntervals) {
+        if (to - from < 0.35) continue;
+        const tA = from / length;
+        const tB = to / length;
+        const ax = THREE.MathUtils.lerp(segment.a.x, segment.b.x, tA);
+        const az = THREE.MathUtils.lerp(segment.a.y, segment.b.y, tA);
+        const ay = THREE.MathUtils.lerp(segment.aY, segment.bY, tA);
+        const bx = THREE.MathUtils.lerp(segment.a.x, segment.b.x, tB);
+        const bz = THREE.MathUtils.lerp(segment.a.y, segment.b.y, tB);
+        const by = THREE.MathUtils.lerp(segment.aY, segment.bY, tB);
+        const batch = batchFor((ax + bx) / 2, (az + bz) / 2);
+        const halfRoad = segment.width / 2;
+
+        const inner = halfRoad + 0.025;
+        const outer = halfRoad + 0.255;
+        const aInnerX = ax + sideX * side * inner;
+        const aInnerZ = az + sideZ * side * inner;
+        const aOuterX = ax + sideX * side * outer;
+        const aOuterZ = az + sideZ * side * outer;
+        const bInnerX = bx + sideX * side * inner;
+        const bInnerZ = bz + sideZ * side * inner;
+        const bOuterX = bx + sideX * side * outer;
+        const bOuterZ = bz + sideZ * side * outer;
+        const aTop = ay + 0.14;
+        const bTop = by + 0.14;
+        const aBottom = ay + 0.012;
+        const bBottom = by + 0.012;
+        appendRoadTriangle(batch.positions, aInnerX, aTop, aInnerZ, aOuterX, aTop, aOuterZ, bOuterX, bTop, bOuterZ);
+        appendRoadTriangle(batch.positions, aInnerX, aTop, aInnerZ, bOuterX, bTop, bOuterZ, bInnerX, bTop, bInnerZ);
+        appendRoadTriangle(batch.positions, aOuterX, aBottom, aOuterZ, bOuterX, bBottom, bOuterZ, bOuterX, bTop, bOuterZ);
+        appendRoadTriangle(batch.positions, aOuterX, aBottom, aOuterZ, bOuterX, bTop, bOuterZ, aOuterX, aTop, aOuterZ);
+        batch.segments += 1;
+        curbSegments += 1;
+      }
     }
-    batch.segments += 1;
-    curbSegments += 1;
   }
 
   batches.forEach(({ positions, tile, segments: tileSegments }) => {
@@ -2742,7 +2834,7 @@ function buildUrbanCurbs(segments, junctionTrims = null) {
     streetscapeGroup.add(mesh);
   });
   document.documentElement.dataset.urbanCurbSegments = String(curbSegments);
-  state.objectCount += curbSegments * 2;
+  state.objectCount += curbSegments;
 }
 
 function buildRoadSurfaceIndex(segments) {
@@ -2806,6 +2898,8 @@ function buildMapRoadLines(segments) {
 
 function buildRoadMarkings(segments) {
   const groups = new Map();
+  const paintContext = roadAppearanceEnabled ? createRoadMarkingContext(segments, { maximumTrimMetres: 18 }) : null;
+  document.documentElement.dataset.roadPaintJunctions = String(paintContext?.junctions.length || 0);
   const reviewedWayIds = new Set();
   const roadNodes = new Map();
   const nodeKey = (point, height) => `${Math.round(point.x * 20)}:${Math.round(point.y * 20)}:${Math.round(height * 4)}`;
@@ -2853,20 +2947,6 @@ function buildRoadMarkings(segments) {
     const dy = segment.bY - segment.aY;
     const direction = new THREE.Vector3(dx, dy, dz).normalize();
 
-    // Only an explicit on-carriageway bike lane implies this separator.
-    // A shoulder, separate track or shared bus lane is not a white stripe.
-    mappedCycleLaneSides(tags).forEach((mappedSide) => {
-      const side = mappedSide === 'left' ? 1 : -1;
-      const offset = side * Math.max(0.45, segment.width / 2 - 1.52);
-      addMarking({
-        direction,
-        length: Math.hypot(dx, dy, dz) + 0.06,
-        x: (segment.a.x + segment.b.x) / 2 + sideX * offset,
-        y: (segment.aY + segment.bY) / 2 + 0.019,
-        z: (segment.a.y + segment.b.y) / 2 + sideZ * offset,
-      }, 'roadPaintWhite', 'cycle-edge', segment.lineId);
-    });
-
     const lanes = laneCountFor(tags);
     const boundaries = roadLaneMarkingBoundaries(tags, { ...profile, lanes });
 
@@ -2876,9 +2956,26 @@ function buildRoadMarkings(segments) {
     const chainEnd = chainStart + planarLength;
     const firstDash = Math.floor(chainStart / period) * period;
     const junctionTrim = Math.max(2.8, segment.width * 0.62);
-    const localMinimum = isTrueIntersection(segment, 'a') ? Math.min(planarLength / 2, junctionTrim) : 0;
-    const localMaximum = planarLength - (isTrueIntersection(segment, 'b') ? Math.min(planarLength / 2, junctionTrim) : 0);
-    if (localMaximum - localMinimum < 0.35) continue;
+    const legacyMinimum = isTrueIntersection(segment, 'a') ? Math.min(planarLength / 2, junctionTrim) : 0;
+    const legacyMaximum = planarLength - (isTrueIntersection(segment, 'b') ? Math.min(planarLength / 2, junctionTrim) : 0);
+    const intervals = paintContext ? roadMarkingIntervals(paintContext, segment) : [[legacyMinimum, legacyMaximum]];
+    for (const [localMinimum, localMaximum] of intervals) {
+      if (localMaximum - localMinimum < 0.35) continue;
+      const edgeMinimum = paintContext ? localMinimum : 0;
+      const edgeMaximum = paintContext ? localMaximum : planarLength;
+    // Only an explicit on-carriageway bike lane implies this separator.
+    // A shoulder, separate track or shared bus lane is not a white stripe.
+    mappedCycleLaneSides(tags).forEach((mappedSide) => {
+      const side = mappedSide === 'left' ? 1 : -1;
+      const offset = side * Math.max(0.45, segment.width / 2 - 1.52);
+      addMarking({
+        direction,
+        length: paintContext ? edgeMaximum - edgeMinimum : Math.hypot(dx, dy, dz) + 0.06,
+        x: THREE.MathUtils.lerp(segment.a.x, segment.b.x, (edgeMinimum + edgeMaximum) / (2 * planarLength)) + sideX * offset,
+        y: THREE.MathUtils.lerp(segment.aY, segment.bY, (edgeMinimum + edgeMaximum) / (2 * planarLength)) + 0.019,
+        z: THREE.MathUtils.lerp(segment.a.y, segment.b.y, (edgeMinimum + edgeMaximum) / (2 * planarLength)) + sideZ * offset,
+      }, 'roadPaintWhite', 'cycle-edge', segment.lineId);
+    });
 
     for (const boundaryRule of boundaries) {
       const offset = segment.width / 2 - segment.width * boundaryRule.boundary / lanes
@@ -2918,15 +3015,17 @@ function buildRoadMarkings(segments) {
         const offset = side * Math.max(0.5, segment.width / 2 - 0.2);
         addMarking({
           direction,
-          length: Math.hypot(dx, dy, dz) + 0.08,
-          x: (segment.a.x + segment.b.x) / 2 + sideX * offset,
-          y: (segment.aY + segment.bY) / 2 + 0.017,
-          z: (segment.a.y + segment.b.y) / 2 + sideZ * offset,
+          length: paintContext ? edgeMaximum - edgeMinimum : Math.hypot(dx, dy, dz) + 0.08,
+          x: THREE.MathUtils.lerp(segment.a.x, segment.b.x, (edgeMinimum + edgeMaximum) / (2 * planarLength)) + sideX * offset,
+          y: THREE.MathUtils.lerp(segment.aY, segment.bY, (edgeMinimum + edgeMaximum) / (2 * planarLength)) + 0.017,
+          z: THREE.MathUtils.lerp(segment.a.y, segment.b.y, (edgeMinimum + edgeMaximum) / (2 * planarLength)) + sideZ * offset,
         }, profile.oneWay && side === (tags.oneway === '-1' ? -1 : 1)
           ? 'roadPaintYellow' : 'roadPaintWhite', 'edge', segment.lineId);
       });
     }
   }
+
+  } // all paint intervals for each source segment
 
   let markingCount = 0, vertexCount = 0;
   groups.forEach(({ kind, markings, materialKey, tile }, groupKey) => {
@@ -2949,7 +3048,7 @@ function buildRoadMarkings(segments) {
     geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
     geometry.setAttribute('color', new THREE.Float32BufferAttribute(new Float32Array(positions.length).fill(1), 3));
     geometry.computeVertexNormals(); geometry.computeBoundingSphere();
-    const material = materials[materialKey].clone();
+    const material = cityVisuals.mode === 'legacy' ? materials[materialKey].clone() : cloneCityMaterial(materials[materialKey]);
     material.vertexColors = true;
     material.polygonOffset = true; material.polygonOffsetFactor = -1; material.polygonOffsetUnits = -1;
     const mesh = new THREE.Mesh(geometry, material);
@@ -3152,7 +3251,7 @@ function buildCrossings(crossings) {
 }
 
 function buildBridgeDetails(segments) {
-  const bridgeSegments = segments.filter((segment) => segment.bridge && Math.hypot(segment.b.x - segment.a.x, segment.b.y - segment.a.y) > 4);
+  const bridgeSegments = segments.filter((segment) => segment.bridge && !(hunterBridgeSurface && isHunterBridgeLine(segment.lineId)) && Math.hypot(segment.b.x - segment.a.x, segment.b.y - segment.a.y) > 4);
   if (!bridgeSegments.length) return;
   const rail = new THREE.InstancedMesh(new THREE.BoxGeometry(0.13, 1.18, 1), materials.bridgeRail, bridgeSegments.length * 2);
   const dummy = new THREE.Object3D();
@@ -3284,7 +3383,20 @@ function buildStreetLabels(segments) {
   });
 }
 
-function buildStreetNameSigns(segments) {
+let intersectionHolograms = null;
+function buildStreetNameSigns(segments, roadsideResolver) {
+  const labelMode = new URLSearchParams(location.search).get('streetLabels');
+  if (labelMode === 'off') return;
+  if (labelMode === 'legacy') return buildLegacyStreetNameSigns(segments, roadsideResolver);
+  intersectionHolograms?.dispose();
+  intersectionHolograms = createIntersectionHologramLayer({ THREE, segments, lowPower: lowPowerProfile });
+  // Dynamic billboards live outside the static-transform-frozen city batches.
+  world.add(intersectionHolograms.group);
+  document.documentElement.dataset.streetSignIntersections = String(intersectionHolograms.junctions.length);
+  document.documentElement.dataset.streetLabelStyle = 'hologram';
+}
+
+function buildLegacyStreetNameSigns(segments, roadsideResolver) {
   const intersections = selectStreetSignIntersections(segments, lowPowerProfile ? 55 : 150);
   if (!intersections.length) return;
   const signEntries = intersections.flatMap((intersection) => intersection.signs.map((sign) => ({ intersection, sign })));
@@ -3337,16 +3449,25 @@ function buildStreetNameSigns(segments) {
   const uvs = [];
   const indices = [];
   const postLocations = [];
+  const anchors = new Map();
+  const posted = new Set();
+  let unresolvedPosts = 0;
 
   signEntries.forEach(({ intersection, sign }, index) => {
     const sideX = intersection.directionZ;
     const sideZ = -intersection.directionX;
     const offset = intersection.roadWidth / 2 + 1.05;
-    const x = intersection.x + sideX * offset;
-    const z = intersection.z + sideZ * offset;
-    const baseY = intersection.y;
-    const boardY = baseY + 2.7 + (index % 2) * 0.32;
-    if (index % 2 === 0) postLocations.push({ x, y: baseY, z });
+    if (!anchors.has(intersection)) {
+      const anchor = roadsideResolver.place({ x: intersection.x + sideX * offset, z: intersection.z + sideZ * offset,
+        sourceId: `street-name:${intersection.x.toFixed(2)}:${intersection.z.toFixed(2)}` }, 'sign');
+      anchors.set(intersection, anchor);
+      if (!anchor) unresolvedPosts++;
+    }
+    const anchor = anchors.get(intersection);
+    if (!anchor) return;
+    const { x, z, baseY } = anchor;
+    const boardY = baseY + 2.7 + intersection.signs.indexOf(sign) * 0.32;
+    if (!posted.has(intersection)) { postLocations.push({ x, y: baseY, z }); posted.add(intersection); }
     const halfWidth = Math.min(2.35, Math.max(1.45, 0.105 * sign.name.length + 0.72));
     const halfHeight = 0.31;
     const axisX = sign.directionX;
@@ -3390,7 +3511,8 @@ function buildStreetNameSigns(segments) {
   poles.computeBoundingSphere();
   poles.userData = { type: 'street-sign-posts', count: postLocations.length };
   streetscapeGroup.add(poles, boards);
-  document.documentElement.dataset.streetSignIntersections = String(intersections.length);
+  document.documentElement.dataset.streetSignIntersections = String(postLocations.length);
+  state.streetSignPlacementReport = { source: intersections.length, placed: postLocations.length, unresolved: unresolvedPosts };
   state.objectCount += intersections.length + signEntries.length;
 }
 
@@ -3416,85 +3538,78 @@ function updateMapLabelScale() {
   });
 }
 
-function buildStreetFurniture(props) {
-  const cap = innerWidth < 760 ? 500 : 1600;
-  const lamps = props.lamps.slice(0, cap);
-  if (lamps.length) {
-    const poles = new THREE.InstancedMesh(new THREE.CylinderGeometry(0.075, 0.12, 7.1, 6), materials.lightPole, lamps.length);
-    const heads = new THREE.InstancedMesh(new THREE.BoxGeometry(0.82, 0.22, 0.38), materials.lampLens, lamps.length);
-    const dummy = new THREE.Object3D();
-    lamps.forEach((point, index) => {
-      const ground = terrainHeightAtWorld(point.x, point.z);
-      dummy.position.set(point.x, ground + 3.55, point.z);
-      dummy.rotation.set(0, point.heading || 0, 0);
-      dummy.scale.setScalar(point.scale || 1);
-      dummy.updateMatrix();
-      poles.setMatrixAt(index, dummy.matrix);
-      dummy.position.y = ground + 7.02;
-      dummy.updateMatrix();
-      heads.setMatrixAt(index, dummy.matrix);
-    });
-    poles.instanceMatrix.needsUpdate = true;
-    heads.instanceMatrix.needsUpdate = true;
-    poles.userData = { type: 'street-lamp-poles', count: lamps.length };
-    heads.userData = { type: 'street-lamp-heads', count: lamps.length };
-    streetscapeGroup.add(poles, heads);
-    prepareGeneratedInstances([poles, heads]);
-    lamps.forEach((point, index) => {
-      const coordinates = unproject(point.x, point.z);
-      generatedRegistry.registerEditableObject(poles, {
-        sourceType: 'street-lamp', sourceId: point.sourceId || `lamp:${coordinates.lon.toFixed(6)}:${coordinates.lat.toFixed(6)}`,
-        geometry: { type: 'Point', coordinates: [coordinates.lon, coordinates.lat] },
-        label: 'Street lamp', transform: { longitude: coordinates.lon, latitude: coordinates.lat, elevation: 0, rotation: { x: 0, y: point.heading || 0, z: 0 }, scale: { x: point.scale || 1, y: point.scale || 1, z: point.scale || 1 } },
-        parts: [{ object: poles, instanceIndex: index }, { object: heads, instanceIndex: index }], canTransform: false,
-      });
-    });
-    state.objectCount += lamps.length * 2;
+function createCityRoadsideResolver() {
+  // Index existing source footprints once; lazily project only nearby buildings.
+  const cells = new Map(), rings = new Map(), cellSize = 80;
+  for (const feature of generatedBuildingFeatures.values()) {
+    for (let x = Math.floor(feature.minX / cellSize); x <= Math.floor(feature.maxX / cellSize); x++) {
+      for (let z = Math.floor(feature.minZ / cellSize); z <= Math.floor(feature.maxZ / cellSize); z++) {
+        const key = `${x}:${z}`;
+        if (!cells.has(key)) cells.set(key, []);
+        cells.get(key).push(feature);
+      }
+    }
   }
+  return createRoadsidePlacementResolver({
+    roadIndex: state.roadSurfaceIndex,
+    groundAt: terrainHeightAtWorld,
+    surfaceAt(x, z, height) {
+      const official = state.renderedPavementIndex.sample(x, z, height, { includeParking: false });
+      if (official) return official;
+      const junction = state.fallbackJunctionSurfaceIndex?.sample(x, z, height);
+      if (junction) return junction;
+      return sampleRoadsideRibbon(state.roadSurfaceIndex, x, z, height);
+    },
+    blockedAt(x, z) {
+      return (cells.get(`${Math.floor(x / cellSize)}:${Math.floor(z / cellSize)}`) || []).some(feature => {
+        if (x < feature.minX || x > feature.maxX || z < feature.minZ || z > feature.maxZ) return false;
+        if (!rings.has(feature)) rings.set(feature, feature.sourceGeometry.map(polygon => polygon.map(ring => ring.map(([lon, lat]) => project(lat, lon)))));
+        return rings.get(feature).some(polygon => pointInPolygon({ x, y: z }, polygon));
+      });
+    },
+  });
+}
 
-  const signalPoints = props.signals.slice(0, 260);
-  if (signalPoints.length) {
-    const poles = new THREE.InstancedMesh(new THREE.CylinderGeometry(0.09, 0.14, 5.8, 6), materials.lightPole, signalPoints.length);
-    const housings = new THREE.InstancedMesh(new THREE.BoxGeometry(0.58, 1.58, 0.34), materials.signalHousing, signalPoints.length);
-    const redLenses = new THREE.InstancedMesh(new THREE.SphereGeometry(0.13, 7, 5), materials.signalRed, signalPoints.length);
-    const greenLenses = new THREE.InstancedMesh(new THREE.SphereGeometry(0.13, 7, 5), materials.signalGreen, signalPoints.length);
-    const dummy = new THREE.Object3D();
-    signalPoints.forEach((point, index) => {
-      const ground = terrainHeightAtWorld(point.x, point.z);
-      dummy.position.set(point.x, ground + 2.9, point.z);
-      dummy.updateMatrix();
-      poles.setMatrixAt(index, dummy.matrix);
-      dummy.position.y = ground + 4.75;
-      dummy.updateMatrix();
-      housings.setMatrixAt(index, dummy.matrix);
-      dummy.position.set(point.x, ground + 5.2, point.z + 0.2);
-      dummy.updateMatrix();
-      redLenses.setMatrixAt(index, dummy.matrix);
-      dummy.position.y = ground + 4.3;
-      dummy.updateMatrix();
-      greenLenses.setMatrixAt(index, dummy.matrix);
-    });
-    poles.instanceMatrix.needsUpdate = true;
-    housings.instanceMatrix.needsUpdate = true;
-    redLenses.instanceMatrix.needsUpdate = true;
-    greenLenses.instanceMatrix.needsUpdate = true;
-    poles.userData = { type: 'traffic-signal-poles', count: signalPoints.length };
-    housings.userData = { type: 'traffic-signal-heads', count: signalPoints.length };
-    redLenses.userData = { type: 'traffic-signal-backs', count: signalPoints.length };
-    greenLenses.userData = { type: 'traffic-signal-arms', count: signalPoints.length };
-    streetscapeGroup.add(poles, housings, redLenses, greenLenses);
-    prepareGeneratedInstances([poles, housings, redLenses, greenLenses]);
-    signalPoints.forEach((point, index) => {
-      const coordinates = unproject(point.x, point.z);
-      generatedRegistry.registerEditableObject(poles, {
-        sourceType: 'traffic-signal', sourceId: point.sourceId || `signal:${coordinates.lon.toFixed(6)}:${coordinates.lat.toFixed(6)}`,
+function buildStreetFurniture(props) {
+  const started = performance.now();
+  const resolver = createCityRoadsideResolver();
+  const unresolved = [];
+  // All currently mapped lights fit in these nine shared batches in both modes.
+  const prepare = (points, kind) => [...points].sort((a, b) => String(a.sourceId).localeCompare(String(b.sourceId))).flatMap(point => {
+    const placed = resolver.place(point, kind);
+    if (!placed) { unresolved.push({ sourceId: point.sourceId, kind }); return []; }
+    return [{ ...placed, sourcePoint: point }];
+  });
+  const lamps = prepare(props.lamps, 'lamp'), signals = prepare(props.signals, 'signal');
+  const furniture = createRoadsideFurnitureMeshes({ THREE, lamps, signals, materials });
+  streetscapeGroup.add(...furniture.meshes);
+  prepareGeneratedInstances(furniture.meshes);
+  for (const [points, sourceType, partsFor, label] of [
+    [lamps, 'street-lamp', furniture.lampParts, 'Street lamp'],
+    [signals, 'traffic-signal', furniture.signalParts, 'Traffic signal'],
+  ]) {
+    points.forEach((placed, index) => {
+      const point = placed.sourcePoint, coordinates = unproject(point.x, point.z), parts = partsFor(index);
+      generatedRegistry.registerEditableObject(parts[0].object, {
+        sourceType, sourceId: placed.sourceId,
         geometry: { type: 'Point', coordinates: [coordinates.lon, coordinates.lat] },
-        label: 'Traffic signal', transform: { longitude: coordinates.lon, latitude: coordinates.lat, elevation: 0, rotation: { x: 0, y: point.heading || 0, z: 0 }, scale: { x: 1, y: 1, z: 1 } },
-        parts: [{ object: poles, instanceIndex: index }, { object: housings, instanceIndex: index }, { object: redLenses, instanceIndex: index }, { object: greenLenses, instanceIndex: index }], canTransform: false,
+        label, transform: { longitude: coordinates.lon, latitude: coordinates.lat, elevation: 0,
+          rotation: { x: 0, y: point.heading || 0, z: 0 }, scale: { x: 1, y: 1, z: 1 } },
+        parts, canTransform: false,
       });
     });
-    state.objectCount += signalPoints.length * 4;
   }
+  state.objectCount += furniture.meshes.reduce((total, mesh) => total + mesh.count, 0);
+  state.streetFurnitureReport = { lamps: lamps.length, signals: signals.length, sourceLamps: props.lamps.length,
+    sourceSignals: props.signals.length, batches: furniture.meshes.length, unresolved,
+    moved: [...lamps, ...signals].filter(p => p.moved > .01).length,
+    areaLights: lamps.filter(p => p.placement === 'area-light').length,
+    buildMs: performance.now() - started, decorative: true };
+  // Detailed per-source evidence is opt-in, never a production asset copy.
+  if (new URLSearchParams(location.search).has('qa')) state.streetFurniturePlacements = { lamps, signals };
+  document.documentElement.dataset.roadsideLights = `${lamps.length + signals.length}`;
+  state.roadsideFurnitureResolver = resolver;
+  return resolver;
 }
 
 function propertyValue(properties, ...names) {
@@ -3633,7 +3748,13 @@ async function loadOfficialCityBuildings() {
   return collection;
 }
 
-function officialRoadHeightAt(x, z, layer = 'road_surfaces') {
+function officialRoadHeightAt(x, z, layer = 'road_surfaces', metadata = {}) {
+  // One bank-anchored profile owns Hunter's overlapping road/deck faces.
+  // Other bridges, parking lots and stacked roads retain their existing rules.
+  if (hunterBridgeSurface && (layer === 'road_surfaces' || (layer === 'bridges' && metadata.properties?.FACILITYID === 'BR60'))) {
+    const height = hunterBridgeSurface.heightAt(x, z);
+    if (Number.isFinite(height)) return height + 0.012;
+  }
   const terrainY = terrainHeightAtWorld(x, z);
   const tolerance = layer === 'bridges' ? 20 : layer === 'parking_surfaces' ? 7 : 14;
   const candidates = state.roadSurfaceIndex.sampleAll(x, z, tolerance);
@@ -3671,15 +3792,15 @@ function stationCurbTop(point, fallback) {
   return fallback + stationRoadDetailWeight(point.x, point.y) * (pavement + CURB_REVEAL - fallback);
 }
 
-function cachedOfficialRoadHeightAt(cache, point, layer) {
-  const key = `${layer}:${Math.round(point.x * 1000)}:${Math.round(point.y * 1000)}`;
-  if (!cache.has(key)) cache.set(key, officialRoadHeightAt(point.x, point.y, layer));
+function cachedOfficialRoadHeightAt(cache, point, layer, metadata = {}) {
+  const key = `${layer}:${metadata.properties?.FACILITYID || ''}:${Math.round(point.x * 1000)}:${Math.round(point.y * 1000)}`;
+  if (!cache.has(key)) cache.set(key, officialRoadHeightAt(point.x, point.y, layer, metadata));
   return cache.get(key);
 }
 
 const CITY_ROAD_MESH_LEGACY = new URLSearchParams(location.search).get('roadMesh') === 'legacy';
 
-function appendDrapedOfficialRoadTriangle(target, a, b, c, layer, heightCache, depth = 0, localDetail = null) {
+function appendDrapedOfficialRoadTriangle(target, a, b, c, layer, heightCache, depth = 0, localDetail = null, metadata = {}) {
   const ab = a.distanceToSquared(b);
   const bc = b.distanceToSquared(c);
   const ca = c.distanceToSquared(a);
@@ -3695,30 +3816,33 @@ function appendDrapedOfficialRoadTriangle(target, a, b, c, layer, heightCache, d
     localDetail = layer !== 'bridges' && Math.hypot(closestX - center.x, closestZ - center.y) < 240;
   }
   // Higher resolution across the city; source polygon XY remains unchanged.
-  const maximumEdge = officialRoadMeshEdgeLength(layer, {
+  const hb = hunterBridgeSurface?.bounds;
+  const nearHunter = hb && Math.min(a.x,b.x,c.x) <= hb.maxX && Math.max(a.x,b.x,c.x) >= hb.minX
+    && Math.min(a.y,b.y,c.y) <= hb.maxZ && Math.max(a.y,b.y,c.y) >= hb.minZ;
+  const maximumEdge = nearHunter ? 4 : officialRoadMeshEdgeLength(layer, {
     lowPower: lowPowerProfile, nearStation: localDetail, legacy: CITY_ROAD_MESH_LEGACY,
   });
   if (longest > maximumEdge * maximumEdge && depth < (localDetail ? 20 : 14)) {
     if (longest === ab) {
       const midpoint = a.clone().lerp(b, 0.5);
-      appendDrapedOfficialRoadTriangle(target, a, midpoint, c, layer, heightCache, depth + 1, localDetail);
-      appendDrapedOfficialRoadTriangle(target, midpoint, b, c, layer, heightCache, depth + 1, localDetail);
+      appendDrapedOfficialRoadTriangle(target, a, midpoint, c, layer, heightCache, depth + 1, localDetail, metadata);
+      appendDrapedOfficialRoadTriangle(target, midpoint, b, c, layer, heightCache, depth + 1, localDetail, metadata);
     } else if (longest === bc) {
       const midpoint = b.clone().lerp(c, 0.5);
-      appendDrapedOfficialRoadTriangle(target, a, b, midpoint, layer, heightCache, depth + 1, localDetail);
-      appendDrapedOfficialRoadTriangle(target, a, midpoint, c, layer, heightCache, depth + 1, localDetail);
+      appendDrapedOfficialRoadTriangle(target, a, b, midpoint, layer, heightCache, depth + 1, localDetail, metadata);
+      appendDrapedOfficialRoadTriangle(target, a, midpoint, c, layer, heightCache, depth + 1, localDetail, metadata);
     } else {
       const midpoint = c.clone().lerp(a, 0.5);
-      appendDrapedOfficialRoadTriangle(target, a, b, midpoint, layer, heightCache, depth + 1, localDetail);
-      appendDrapedOfficialRoadTriangle(target, midpoint, b, c, layer, heightCache, depth + 1, localDetail);
+      appendDrapedOfficialRoadTriangle(target, a, b, midpoint, layer, heightCache, depth + 1, localDetail, metadata);
+      appendDrapedOfficialRoadTriangle(target, midpoint, b, c, layer, heightCache, depth + 1, localDetail, metadata);
     }
     return;
   }
   appendRoadTriangle(
     target,
-    a.x, cachedOfficialRoadHeightAt(heightCache, a, layer), a.y,
-    c.x, cachedOfficialRoadHeightAt(heightCache, c, layer), c.y,
-    b.x, cachedOfficialRoadHeightAt(heightCache, b, layer), b.y,
+    a.x, cachedOfficialRoadHeightAt(heightCache, a, layer, metadata), a.y,
+    c.x, cachedOfficialRoadHeightAt(heightCache, c, layer, metadata), c.y,
+    b.x, cachedOfficialRoadHeightAt(heightCache, b, layer, metadata), b.y,
   );
 }
 
@@ -3752,7 +3876,8 @@ function appendOfficialRoadPolygon(polygonCoordinates, layer, batches, heightCac
   }
   const vertices = outer.concat(...holes);
   const anchor = polygonCentroid(outer);
-  const materialKey = layer === 'parking_surfaces' ? 'parking' : layer === 'bridges' ? 'bridge' : 'officialRoad';
+  const hunterDeck = hunterBridgeSurface && layer === 'bridges' && metadata.properties?.FACILITYID === 'BR60';
+  const materialKey = hunterDeck ? 'roadArterial' : layer === 'parking_surfaces' ? 'parking' : layer === 'bridges' ? 'bridge' : 'officialRoad';
   const batch = roadBatchPositions(batches, materialKey, anchor.x, anchor.y, `official-${layer}`);
   const before = batch.positions.length;
   faces.forEach(([first, second, third]) => {
@@ -3760,7 +3885,7 @@ function appendOfficialRoadPolygon(polygonCoordinates, layer, batches, heightCac
     const b = vertices[second];
     const c = vertices[third];
     if (!a || !b || !c) return;
-    appendDrapedOfficialRoadTriangle(batch.positions, a, b, c, layer, heightCache);
+    appendDrapedOfficialRoadTriangle(batch.positions, a, b, c, layer, heightCache, 0, null, metadata);
   });
   batch.segments += 1;
   const p = batch.positions;
@@ -4210,14 +4335,14 @@ async function parseOsmWithGeoJson(data) {
     if (tags.highway === 'street_lamp' || tags.man_made === 'street_lamp') {
       geometryPoints(feature).forEach(([lon, lat], pointIndex) => {
         const p = project(lat, lon);
-        streetProps.lamps.push({ x: p.x, z: p.y, scale: deterministicNumber(featureId, 0.88, 1.14), sourceId: feature.id || tags.id ? `${feature.id || tags.id}:point:${pointIndex}` : null });
+        streetProps.lamps.push({ x: p.x, z: p.y, tags, scale: deterministicNumber(featureId, 0.88, 1.14), sourceId: feature.id || tags.id ? `${feature.id || tags.id}:point:${pointIndex}` : null });
       });
       continue;
     }
     if (tags.highway === 'traffic_signals') {
       geometryPoints(feature).forEach(([lon, lat], pointIndex) => {
         const p = project(lat, lon);
-        streetProps.signals.push({ x: p.x, z: p.y, sourceId: feature.id || tags.id ? `${feature.id || tags.id}:point:${pointIndex}` : null });
+        streetProps.signals.push({ x: p.x, z: p.y, tags, sourceId: feature.id || tags.id ? `${feature.id || tags.id}:point:${pointIndex}` : null });
       });
       continue;
     }
@@ -4297,8 +4422,7 @@ async function parseOsmWithGeoJson(data) {
   buildBridgeDetails(roadSegments);
   buildTunnelStructures(roadSegments);
   buildStreetLabels(roadSegments);
-  buildStreetNameSigns(roadSegments);
-  buildStreetFurniture(streetProps);
+  state.streetFurnitureProps = streetProps;
   buildTrees(treePoints);
   return { buildingCentroidIndex, buildings, roads, land, trees: Math.min(treePoints.length, treeInstanceLimit) };
 }
@@ -4382,7 +4506,6 @@ function parseOsmWayFallback(data) {
   buildBridgeDetails(roadSegments);
   buildTunnelStructures(roadSegments);
   buildStreetLabels(roadSegments);
-  buildStreetNameSigns(roadSegments);
   return { buildingCentroidIndex, buildings, roads, land, trees: 0 };
 }
 
@@ -4456,7 +4579,6 @@ function buildFallbackCity() {
   }
   state.roadMarkingSegments = roadSegments;
   buildMappedTurnArrows(roadSegments);
-  buildStreetNameSigns(roadSegments);
 
   const river = [
     new THREE.Vector2(450, -2300), new THREE.Vector2(400, -900), new THREE.Vector2(490, 250),
@@ -4622,12 +4744,31 @@ async function buildCity() {
     summary.totalBuildings = summary.buildings + (summary.officialRoadSurfaces?.supplementalBuildings || 0);
   }
 
+  // The 24-vertex municipal deck remains available without the full municipal
+  // city layer in lite mode. It owns the same visible faces and tire contacts.
+  if (hunterBridgeSurface && !officialRoadSurfaces) {
+    const batches = new Map();
+    appendOfficialRoadPolygon(HUNTER_BRIDGE_FEATURE.geometry.coordinates, 'bridges', batches, new Map(), {
+      id: HUNTER_BRIDGE_FEATURE.id, layer: 'bridges', properties: HUNTER_BRIDGE_FEATURE.properties, drivable: true, parking: false,
+    });
+    buildBufferedRoadBatches(batches);
+  }
+  if (hunterBridgeSurface) {
+    const bridgeRing = coordinatesToLandRing(HUNTER_BRIDGE_FEATURE.geometry.coordinates[0]);
+    const appearance = createHunterBridgeAppearance({ THREE, segments: state.roadMarkingSegments || [], bridgeRing, lowPower: lowPowerProfile });
+    streetscapeGroup.add(appearance);
+    document.documentElement.dataset.hunterBridge = 'bank-profile-and-source-panels';
+  }
+
   const cityOpenData = await cityOpenDataPromise;
   if (cityOpenData) {
     setProgress(92, 'Adding official parks, trails, sidewalks, civic places, and transit stops...');
     await nextFrame();
     summary.cityOpenData = buildCityOpenData(cityOpenData);
   }
+  // Roadside anchors must see the final full/lite pavement, including junctions.
+  const roadsideResolver = buildStreetFurniture(state.streetFurnitureProps || { lamps: [], signals: [] });
+  buildStreetNameSigns(state.roadMarkingSegments || [], roadsideResolver);
   // Drape paint only after the final municipal and station pavement exists.
   buildRoadMarkings(state.roadMarkingSegments || []);
   // All OSM and municipal polygons are now available. Paint once in a fixed
@@ -4641,7 +4782,10 @@ async function buildCity() {
     project,
     terrainHeightAtWorld,
     landmarkBuildingPlacements: state.landmarkBuildingPlacements,
-    sourceOwnedLandmarks: new Set(Object.values(FOOTAGE_PROFILES).filter(profile => profile.replacesAuthoredLandmark).map(profile => profile.id)),
+    sourceOwnedLandmarks: new Set([
+      ...Object.values(FOOTAGE_PROFILES).filter(profile => profile.replacesAuthoredLandmark).map(profile => profile.id),
+      ...(hunterBridgeSurface ? ['way/33954231', 'way/177049271'] : []),
+    ]),
   });
   landmarkGroup.traverse((object) => {
     if (!object.isMesh) return;
@@ -4866,9 +5010,16 @@ function gameplaySurfaceAt(x, z, referenceHeight = null) {
   const official = state.renderedPavementIndex.sample(x, z, referenceHeight);
   // Surveyed pavement wins. Only use prototype fallback polygons when the
   // authoritative mesh does not cover this point.
-  const fallbackJunction = !official ? state.fallbackJunctionSurfaceIndex?.sample(x, z, referenceHeight) : null;
+  let fallbackJunction = !official ? state.fallbackJunctionSurfaceIndex?.sample(x, z, referenceHeight) : null;
   const tolerance = official?.layer === 'bridges' ? 20 : official ? 15 : 2.2;
-  const road = state.roadSurfaceIndex.sample(x, z, tolerance, referenceHeight);
+  let road = state.roadSurfaceIndex.sample(x, z, tolerance, referenceHeight);
+  // A neighboring endpoint must not replace the actual Hunter ribbon under a tire.
+  // Keep all generic height-aware/underpass selection outside this small route.
+  const hunterRoad = hunterBridgeSurface?.roadAt(x, z);
+  if (hunterRoad && !official && (!road?.onRoad || road.name === 'Hunter Street East')) {
+    road = hunterRoad;
+    fallbackJunction = null;
+  }
   const onRoad = Boolean(official || fallbackJunction || road?.onRoad);
   const roadHeight = onRoad && Number.isFinite(road?.height) ? road.height : -Infinity;
   // A surveyed bridge polygon may overlap an OSM underpass with no separate
@@ -5612,7 +5763,11 @@ async function initializeSemanticSurvey() {
       document.documentElement.dataset.authoredVegetationCount = String(replaced);
     });
     if (captureRequested) await vegetationReady;
-    const streetscapeReady=installSherbrookeDetails({group:semanticSurveyGroup,project,terrainHeightAtWorld,lowPower:lowPowerProfile})
+    const streetscapeReady=installSherbrookeDetails({group:semanticSurveyGroup,project,terrainHeightAtWorld,lowPower:lowPowerProfile,
+      resolvePole(pole) {
+        return state.roadsideFurnitureResolver.place({ ...pole, sourceId: `sherbrooke-pole:${pole.id}` }, 'lamp');
+      },
+    })
       .catch(error=>{console.warn('Optional streetscape unavailable; base city remains active.',error);});
     if(captureRequested) await streetscapeReady;
     semanticSurveyOverlay = createOrthophotoOverlay({
@@ -5770,8 +5925,8 @@ const BUILDING_ROOF_MATERIALS = new Set(['roofDark', 'roofClay', 'roofMetal', 's
 const NEAR_STREETSCAPE_TYPES = new Set([
   'official-curb-ribbons', 'terrain-following-urban-curbs',
   'mapped-turn-arrows', 'mapped-crossing-bars', 'mapped-crossing-lines', 'mapped-crossing-dots',
-  'mapped-street-name-signs', 'street-sign-posts', 'street-lamp-poles', 'street-lamp-heads',
-  'traffic-signal-poles', 'traffic-signal-heads', 'traffic-signal-backs', 'traffic-signal-arms',
+  'mapped-street-name-signs', 'street-sign-posts', 'street-lamp-poles', 'street-lamp-heads', 'street-lamp-arms',
+  'traffic-signal-poles', 'traffic-signal-heads', 'traffic-signal-backs', 'traffic-signal-arms', 'traffic-signal-lenses',
   'vertical-slice-rooftop-equipment',
 ]);
 let cityVisualLod = '';
@@ -5879,13 +6034,21 @@ function animate() {
   const viewCamera = captureFrame?.camera || camera;
   updateCityVisualLod(viewCamera);
   businessSignLayer?.update(viewCamera,false,state.mode);
+  intersectionHolograms?.update(viewCamera, {
+    mode: state.mode,
+    // Looking around changes billboard orientation, never the driving street.
+    heading: state.mode === 'driving' ? directionFromHeading(truckState.heading)
+      : state.mode === 'onFoot' ? directionFromHeading(playerHeading) : null,
+    position: state.mode === 'driving' ? truckState : viewCamera.position,
+    altitude: viewCamera.position.y - terrainHeightAtWorld(viewCamera.position.x, viewCamera.position.z),
+  });
   updateLocation();
   updateFps();
   atmosphere.mesh.position.copy(viewCamera.position);
   if (sun.castShadow) {
-    // Spend the existing shadow map on human-scale contact detail in gameplay.
-    // Fly/map retain broad coverage; GIS geometry and light direction are intact.
-    const shadowExtent = state.mode === 'onFoot' || state.mode === 'driving' ? 100 : 1450;
+    const shadowSettings = cityShadowSettings(state.mode, viewCamera.position.y - terrainHeightAtWorld(viewCamera.position.x, viewCamera.position.z));
+    const shadowExtent = cityVisuals.mode === 'legacy' ? (state.mode === 'onFoot' || state.mode === 'driving' ? 100 : 1450) : shadowSettings.extent;
+    sun.shadow.normalBias = cityVisuals.mode === 'legacy' ? 0.055 : shadowSettings.normalBias;
     if (sun.shadow.camera.right !== shadowExtent) {
       Object.assign(sun.shadow.camera, { left: -shadowExtent, right: shadowExtent, top: shadowExtent, bottom: -shadowExtent });
       sun.shadow.camera.updateProjectionMatrix();
@@ -5977,6 +6140,8 @@ function exposeCityQualityQa() {
     businessSignRejections() { return businessSignLayer?.rejected() || []; },
     metrics() {
       return {
+        visuals: { ...cityVisuals, recordingReferences, recordingExpansion, recordingSurfaceChanges, shaderPrograms: renderer.info.programs?.length, materialFamilies: Object.keys(CITY_MATERIALS).length, reflectionGpuBytesEstimate: cityGlassEnvironment?.estimatedGpuBytes || 0, appearanceParts: cityAppearanceStats.parts, appearancePanels: cityAppearanceStats.panels, appearanceTiles: cityAppearanceTileCounts.size, presets: {...cityAppearanceStats.presets} },
+        sourceBuildings: generatedBuildingFeatures.size,
         businessSigns: businessSignLayer?.stats() || null,
         drawCalls: renderer.info.render.calls,
         geometries: renderer.info.memory.geometries,
@@ -6147,11 +6312,11 @@ function setTheme(theme) {
     scene.background.set(0x9bb6bd);
     scene.fog.color.set(0x9bb6bd);
     scene.fog.density = 0.000068;
-    ambient.color.set(0xe3f2eb);
-    ambient.groundColor.set(0x52644f);
-    ambient.intensity = 1.5;
-    sun.color.set(0xffefd1);
-    sun.intensity = 2.8;
+    ambient.color.set(cityVisuals.mode === 'legacy' ? 0xe3f2eb : CITY_DAYLIGHT.sky);
+    ambient.groundColor.set(cityVisuals.mode === 'legacy' ? 0x52644f : CITY_DAYLIGHT.ground);
+    ambient.intensity = cityVisuals.mode === 'legacy' ? 1.5 : CITY_DAYLIGHT.ambientIntensity;
+    sun.color.set(cityVisuals.mode === 'legacy' ? 0xffefd1 : CITY_DAYLIGHT.sun);
+    sun.intensity = cityVisuals.mode === 'legacy' ? 2.8 : CITY_DAYLIGHT.sunIntensity;
     materials.lampLens.emissiveIntensity = 0.12;
     materials.signalRed.emissiveIntensity = 0.6;
     materials.signalGreen.emissiveIntensity = 0.42;
@@ -6179,6 +6344,12 @@ function setTheme(theme) {
     materials.windowWarm.emissiveIntensity = 0.75;
     materials.storefrontGlass.emissiveIntensity = 0.2;
     els.timeButton.textContent = 'Night';
+  }
+  if (cityVisuals.mode !== 'legacy') {
+    const updated = new Set();
+    const apply = mat => { if (mat?.userData?.cityGlazing && !updated.has(mat)) { mat.envMapIntensity = glazingIntensity(theme); updated.add(mat); } };
+    Object.values(materials).forEach(apply);
+    scene.traverse(object => (Array.isArray(object.material) ? object.material : [object.material]).forEach(apply));
   }
 }
 

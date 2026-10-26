@@ -1,3 +1,6 @@
+import { resolveBuildingAppearance } from './building-appearance.js?v=1.6.130';
+import { facadeComponentPlan } from './facade-components.js?v=1.6.130';
+
 /** Inferred visual grammar only: never modifies surveyed geometry or dimensions. */
 function hash(value) {
   let result = 2166136261;
@@ -24,8 +27,20 @@ export function classifyBuildingArchetype(tags = {}, wallHeight = 0, footprintAr
  * or asserted here. Materials use the existing city building palette.
  */
 export function buildingFacadePlan({ tags = {}, featureId = '', edgeLength, wallHeight,
-  edgeIndex = 0, footprintArea = 0, lite = false, front = false } = {}) {
+  edgeIndex = 0, footprintArea = 0, lite = false, front = false, visuals = 'improved', quality = 'default', appearance, appearanceOverride } = {}) {
   const archetype = classifyBuildingArchetype(tags, wallHeight, footprintArea);
+  if (visuals !== 'legacy') {
+    const resolved = appearance || resolveBuildingAppearance({tags, featureId, wallHeight, footprintArea, override: appearanceOverride, quality});
+    return {
+      archetype: resolved.archetype || archetype,
+      inferred: resolved.confidence !== 'reviewed-appearance',
+      appearance: resolved,
+      panels: facadeComponentPlan({
+        appearance: resolved, edgeLength, wallHeight,
+        floorCount: Number.parseFloat(tags['building:levels']), front, lite: lite || quality === 'lite', featureId
+      })
+    };
+  }
   const panels = [];
   const result = { archetype, inferred: true, panels };
   if (!Number.isFinite(edgeLength) || !Number.isFinite(wallHeight)
