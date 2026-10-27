@@ -89,3 +89,5 @@ body #ptbo-training-use-notice:focus-visible{outline:3px solid #6de8dc;outline-o
   .ptbo-geo-compact #game[data-feedback] #guess-effect,.ptbo-geo-compact #game[data-feedback] #guess-effect::before,.ptbo-geo-compact #game[data-feedback]::after{animation:none;opacity:0}
   .ptbo-geo-compact #game[data-feedback=incorrect] #map .leaflet-map-pane{animation:none;filter:none}
 }
+#location-report-button{display:block;margin-top:6px;padding:6px 0;min-height:32px;font-size:12px;text-align:left}
+@media(max-width:760px),(pointer:coarse){#location-report-button{min-height:44px}}

@@ -30,7 +30,7 @@
   <iframe id="simulator" title="Fire and EMS Emergency Response Simulator"></iframe>
   <script>
     (()=>{
-      const VERSION='1.6.132';
+      const VERSION='1.6.135';
       const params=new URLSearchParams(location.search);
       let stored=null;try{stored=localStorage.getItem('ptboSelectedCity')}catch(_){}
       const requested=String(params.get('city')||stored||'peterborough').toLowerCase();
@@ -62,13 +62,13 @@
   <div class="control-hint">Drag the wheel to steer · Hold Gas to drive · Hold Reverse to back up</div>
   <div class="loading-cover" id="loading-cover"><div><strong id="loading-title">Loading mobile simulator</strong><span id="loading-status">Preparing city package, vehicle controls, and map…</span><button type="button" id="loading-refresh">Refresh Page</button></div></div>
 
-  <script src="../startup-trace-1.6.17.js?v=1.6.132"></script>
-  <script src="../../shared/build-version.js?v=1.6.132"></script>
-  <script src="../../shared/dispatch-locations.js?v=1.6.132"></script>
-  <script src="../../shared/dispatch-data-1.4.4.js?v=1.6.132"></script>
-  <script src="../../shared/dispatch-override-1.4.4.js?v=1.6.132"></script>
-  <script src="../../shared/stations.js?v=1.6.132"></script>
-  <script src="../service-selection.js?v=1.6.132"></script>
+  <script src="../startup-trace-1.6.17.js?v=1.6.135"></script>
+  <script src="../../shared/build-version.js?v=1.6.135"></script>
+  <script src="../../shared/dispatch-locations.js?v=1.6.135"></script>
+  <script src="../../shared/dispatch-data-1.4.4.js?v=1.6.135"></script>
+  <script src="../../shared/dispatch-override-1.4.4.js?v=1.6.135"></script>
+  <script src="../../shared/stations.js?v=1.6.135"></script>
+  <script src="../service-selection.js?v=1.6.135"></script>
   <script>
     (() => {
       const VERSION='1.6.17';
@@ -91,19 +91,21 @@
       function setFallbackSteering(value){const nextKey=value<-.08?'ArrowLeft':value>.08?'ArrowRight':null;if(fallbackSteeringKey===nextKey)return;if(fallbackSteeringKey)dispatchKey(fallbackSteeringKey,false);fallbackSteeringKey=nextKey;if(fallbackSteeringKey)dispatchKey(fallbackSteeringKey,true)}
       function bindPedal(button,name){let pointer=null;button.addEventListener('pointerdown',event=>{event.preventDefault();pointer=event.pointerId;button.setPointerCapture(event.pointerId);button.classList.add('pressed');sendKey(name,true);haptic(10)});const release=event=>{if(pointer!==null&&event.pointerId!==pointer)return;pointer=null;button.classList.remove('pressed');sendKey(name,false)};button.addEventListener('pointerup',release);button.addEventListener('pointercancel',release);button.addEventListener('lostpointercapture',release)}
       function setSteering(clientX){const rect=steering.getBoundingClientRect(),travel=rect.width*.25,offset=Math.max(-travel,Math.min(travel,clientX-(rect.left+rect.width/2))),value=offset/Math.max(1,travel);thumb.style.transform=`translate(calc(-50% + ${offset}px), -50%)`;const instruments=sim()?.PTBO_VEHICLE_INSTRUMENTS;if(instruments?.setAnalogSteering){setFallbackSteering(0);instruments.setAnalogSteering(value)}else setFallbackSteering(value)}
-      function releaseSteering(event){if(steeringPointer!==null&&event?.pointerId!==undefined&&event.pointerId!==steeringPointer)return;steeringPointer=null;steering.classList.remove('active');thumb.style.transform='translate(-50%,-50%)';setFallbackSteering(0);sim()?.PTBO_VEHICLE_INSTRUMENTS?.setAnalogSteering?.(0)}
+      function releaseSteering(event){if(event&&(steeringPointer===null||event.pointerId!==steeringPointer))return;steeringPointer=null;steering.classList.remove('active');thumb.style.transform='translate(-50%,-50%)';setFallbackSteering(0);sim()?.PTBO_VEHICLE_INSTRUMENTS?.setAnalogSteering?.(0)}
 
       audio.addEventListener('click',()=>{voiceEnabled=!voiceEnabled;localStorage.setItem(AUDIO_KEY,String(voiceEnabled));if(!voiceEnabled)sim()?.speechSynthesis?.cancel?.();updateAudio();haptic(10)});
       options.addEventListener('click',()=>{sim()?.togglePanel?.();haptic()});
       siren.addEventListener('click',()=>{const checkbox=frame.contentDocument?.getElementById('chk-siren');if(!checkbox)return;checkbox.checked=!checkbox.checked;sim()?.updateVehicleChassis?.();siren.classList.toggle('active',checkbox.checked);haptic(12)});
       recenter.addEventListener('click',()=>{sim()?.mobileRecenter?.();haptic()});
-      steering.addEventListener('pointerdown',event=>{event.preventDefault();steeringPointer=event.pointerId;steering.setPointerCapture(event.pointerId);steering.classList.add('active');setSteering(event.clientX)});
+      steering.addEventListener('pointerdown',event=>{if(steeringPointer!==null)return;event.preventDefault();steeringPointer=event.pointerId;steering.setPointerCapture(event.pointerId);steering.classList.add('active');setSteering(event.clientX)});
       steering.addEventListener('pointermove',event=>{if(event.pointerId!==steeringPointer)return;event.preventDefault();setSteering(event.clientX)});steering.addEventListener('pointerup',releaseSteering);steering.addEventListener('pointercancel',releaseSteering);steering.addEventListener('lostpointercapture',releaseSteering);bindPedal(gas,'gas');bindPedal(reverse,'reverse');
+      for(const type of ['pointerup','pointercancel','lostpointercapture'])document.addEventListener(type,releaseSteering,true);
 
-      function injectScript(doc,filename,marker,timeoutMs=6000){trace?.mark('Loading inner module',filename);return new Promise((resolve,reject)=>{let settled=false;const finish=(error,script)=>{if(settled)return;settled=true;clearTimeout(timer);error?reject(error):resolve(script)},timer=setTimeout(()=>finish(new Error(`Timed out loading ${filename} after ${timeoutMs} ms.`)),timeoutMs);const existing=doc.querySelector(`script[${marker}]`);if(existing){if(existing.dataset.ptboLoaded==='true'){trace?.ok('Inner module already loaded',filename);finish(null,existing);return}existing.remove()}const script=doc.createElement('script');script.src=new URL(`../${filename}?v=1.6.132`,location.href).href;script.setAttribute(marker,'true');script.onload=()=>{script.dataset.ptboLoaded='true';trace?.ok('Inner module loaded',filename);finish(null,script)};script.onerror=()=>finish(new Error(`Unable to load ${filename}.`));doc.body.appendChild(script)})}
+      function injectScript(doc,filename,marker,timeoutMs=6000){trace?.mark('Loading inner module',filename);return new Promise((resolve,reject)=>{let settled=false;const finish=(error,script)=>{if(settled)return;settled=true;clearTimeout(timer);error?reject(error):resolve(script)},timer=setTimeout(()=>finish(new Error(`Timed out loading ${filename} after ${timeoutMs} ms.`)),timeoutMs);const existing=doc.querySelector(`script[${marker}]`);if(existing){if(existing.dataset.ptboLoaded==='true'){trace?.ok('Inner module already loaded',filename);finish(null,existing);return}existing.remove()}const script=doc.createElement('script');script.src=new URL(`../${filename}?v=1.6.135`,location.href).href;script.setAttribute(marker,'true');script.onload=()=>{script.dataset.ptboLoaded='true';trace?.ok('Inner module loaded',filename);finish(null,script)};script.onerror=()=>finish(new Error(`Unable to load ${filename}.`));doc.body.appendChild(script)})}
       function showStartupError(error,generation){if(generation!==frameGeneration)return;console.error('Mobile simulator startup failed.',error);const cityName=sim()?.PTBO_CITY_PACKAGE?.name||frame.dataset.ptboCity||'selected city';const reason=String(error?.message||error||'Unknown startup error');trace?.fail('Mobile wrapper startup failed',error);const shell=loading.firstElementChild||loading;const title=document.getElementById('loading-title')||shell.querySelector('strong');if(title)title.textContent='Simulator did not finish loading';if(loadingStatus)loadingStatus.textContent=`${cityName} could not finish startup.`;let diagnostic=shell.querySelector('.diagnostic');if(!diagnostic){diagnostic=document.createElement('div');diagnostic.className='diagnostic';shell.insertBefore(diagnostic,document.getElementById('ptbo-startup-trace')||null)}diagnostic.textContent=`v${VERSION} · ${reason}`;let button=document.getElementById('startup-retry');if(!button){button=document.createElement('button');button.id='startup-retry';button.type='button';button.textContent='Refresh Page';shell.appendChild(button)}button.addEventListener('click',refreshPage,{once:true})}
 
       function initializeFrame(){const doc=frame.contentDocument,game=frame.contentWindow;if(!doc||!game||typeof game.initializeSimulator!=='function'||doc.documentElement.dataset.ptboMobileWrapperInitialized===VERSION)return;const generation=++frameGeneration;trace?.mark('Mobile wrapper attached to iframe',`generation=${generation}`);doc.documentElement.dataset.ptboMobileWrapperInitialized=VERSION;
+        game.addEventListener('ptbo-steering-mode-change',releaseAll);
         try{const boot=doc.createElement('script');boot.textContent=`if(typeof mapInstance!=='undefined'&&!mapInstance&&typeof initializeSimulator==='function')initializeSimulator();`;doc.body.appendChild(boot);trace?.mark('initializeSimulator() boot requested')}catch(error){trace?.warn('Unable to request immediate inner simulator start',error);console.warn('Unable to start the inner simulator immediately.',error)}
         const style=doc.createElement('style');style.textContent=`#game-home,#menu-toggle{display:none!important}#dispatch-hud{top:calc(66px + env(safe-area-inset-top))!important;left:10px!important;right:10px!important;width:auto!important;max-width:none!important;padding:11px 12px 11px 14px!important;transform:none!important;border-left-width:4px!important;border-radius:14px!important;display:grid!important;grid-template-columns:minmax(0,1fr) 98px!important;align-items:center!important;gap:10px!important}.hud-main{min-width:0!important}.hud-title{font-size:9px!important}.hud-address{font-size:15px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}.hud-meta{font-size:10px!important;line-height:1.3!important}.hud-timer-block{min-width:0!important;margin-left:0!important}.hud-clock-display{font-size:21px!important}.hud-btn{min-height:40px!important;padding:7px 8px!important;border-radius:10px!important;font-size:12px!important}#control-panel{width:min(360px,100vw)!important;z-index:3000!important}.panel-scroll{padding:calc(70px + env(safe-area-inset-top)) 18px calc(190px + env(safe-area-inset-bottom))!important}.leaflet-bottom{bottom:calc(174px + env(safe-area-inset-bottom))!important}#map-orientation-controls{display:none!important}`;doc.head.appendChild(style);
         injectScript(doc,'route-compare-1.4.2.js','data-ptbo-route-compare-core').catch(error=>trace?.warn('Route compare optional module failed',error));

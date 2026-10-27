@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Location report UI test</title><style>body{margin:0;padding:24px;background:#112130;color:#eef7fb;font:16px/1.5 system-ui}button{font:inherit;padding:12px;margin:5px}header{max-width:700px}p{max-width:650px}#test-notice{color:#fde68a}main{margin-top:30px;padding:20px;border:1px solid #52677a;max-width:650px;border-radius:12px}</style></head><body>
+<header class="site-header"><h1>Location report UI test</h1><p id="test-notice">Local vector-only test. Reports stay in this fixture; Firebase delivery and street tiles are not connected.</p><button id="test-player">Use player account</button><button id="test-developer">Use developer account</button></header>
+<main><h2>James Strath Public</h2><p>1175 Brealey Dr · Guess 165 m from the target · Target radius 60 m</p><button id="location-report-button" hidden>Report a problem with this location</button><p>Open Feedback after sending; switch to the test developer account to inspect the circles.</p></main>
+<script type="module">
+import {mountFeedback} from '/feedback/ui.mjs';
+import {normalizeLocationReport} from '/feedback/location-report.mjs';
+let account={uid:'test-player',isGuest:true,isDeveloper:false},accountListener,id=0;const rows=new Map(),messages=new Map(),listListeners=new Set();
+const page=()=>({rows:[...rows.values()].filter(t=>account.isDeveloper||t.ownerId===account.uid),more:false,cursor:null});
+const update=()=>{for(const fn of listListeners)fn(page());};
+const service={ready:Promise.resolve(),get account(){return account;},id:()=>`test-${++id}`,subscribeAccount(fn){accountListener=fn;fn(account);return()=>{};},ensureGuest:async()=>account,
+watchThreads(fn){listListeners.add(fn);fn(page());return()=>listListeners.delete(fn);},loadThreads:async()=>page(),
+watchMessages(t,fn){fn({rows:messages.get(t)||[],more:false,cursor:null});return()=>{};},markRead:async()=>{},watchNotes(id,fn){fn([]);return()=>{};},addNote:async()=>{},
+async updateThread(id,changes){Object.assign(rows.get(id),changes);update();},
+async sendLocationReport({threadId,messageId,report,note}){const r=normalizeLocationReport(report),s=r.snapshot;if(rows.has(threadId))return;rows.set(threadId,{id:threadId,ownerId:account.uid,title:`Location report · ${s.question.name||s.question.address||s.callId}`,city:s.city,mode:s.mode,department:s.service,version:s.version,status:'new',priority:'normal',locationReport:r,playerMessages:1,developerMessages:0,playerRead:0,developerRead:0});messages.set(threadId,[{id:messageId,body:note,authorRole:'player',createdAt:{toMillis:()=>1}}]);update();},
+async send(){throw Error('Reply delivery is outside this UI fixture.');}};
+// A local transparent tile isolates circle interactions from external provider availability.
+window.PTBO_GEO_MAP_PROVIDER={streetSpec:()=>({available:true,url:'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=',attribution:'Local vector-only test'})};
+window.PTBO_GEO={state:{review:{reportSnapshot:{resultId:'test-result-1',callId:'ptbo-location-b53711e5e3c867',city:'peterborough',service:'fire',mode:'geo',version:'1.6.134',datasetId:'peterborough:geo-locations',datasetRevision:null,question:{name:'James Strath Public',address:'1175 Brealey Dr',crossStreets:['Brealey Drive','Sherbrooke Street'],difficulty:'easy'},originalCircle:{center:{lat:44.2865615,lng:-78.3796371},radiusMeters:60},guess:{lat:44.2867184,lng:-78.3775783},distanceMeters:165,result:'incorrect',baseId:'fire-station-1'}}}};
+mountFeedback({config:{enabled:true},service});
+document.querySelector('#test-player').onclick=()=>{account={uid:'test-player',isGuest:true,isDeveloper:false};accountListener(account);};
+document.querySelector('#test-developer').onclick=()=>{account={uid:'test-developer',isGuest:false,isDeveloper:true,email:'developer@example.test'};accountListener(account);};
+</script></body></html>

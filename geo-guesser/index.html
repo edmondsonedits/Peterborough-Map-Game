@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#121218">
   <title>Peterborough Geo Guesser</title>
-  <link rel="stylesheet" href="../response-simulator/vendor/leaflet-1.9.4/leaflet.css?v=1.6.132">
-  <link rel="stylesheet" href="app.css?v=1.6.132">
+  <link rel="stylesheet" href="../response-simulator/vendor/leaflet-1.9.4/leaflet.css?v=1.6.135">
+  <link rel="stylesheet" href="app.css?v=1.6.135">
 </head>
 <body>
 <a id="game-home" href="../" target="_top">← All Games</a>
@@ -62,7 +62,7 @@
       <button id="reveal-cross-streets" class="text-button" hidden aria-controls="call-cross-streets" aria-expanded="false" onclick="PTBO_GEO.revealCrossStreets()">Show cross streets</button>
     </div>
     <p id="practice-feedback" role="status" aria-live="polite"></p>
-    <section id="practice-review" hidden aria-live="polite"><strong id="practice-review-title"></strong><p id="practice-review-detail"></p></section>
+    <section id="practice-review" hidden aria-live="polite"><strong id="practice-review-title"></strong><p id="practice-review-detail"></p><button id="location-report-button" class="text-button" type="button" hidden>Report a problem with this location</button></section>
   </div>
   <div id="practice-controls" class="panel hidden">
     <div class="map-buttons"><button onclick="PTBO_GEO.zoom(-1)" aria-label="Zoom out">−</button><button onclick="PTBO_GEO.zoom(1)" aria-label="Zoom in">+</button><button id="practice-reveal" onclick="PTBO_GEO.reveal()">Show location</button><button id="practice-continue" class="primary" hidden onclick="PTBO_GEO.next()">Next Call</button></div>
@@ -70,15 +70,16 @@
   </div>
   <button id="confirm" class="primary" onclick="PTBO_GEO.check()">Check location</button>
 </section>
-<script src="../shared/build-version.js?v=1.6.132"></script>
-<script src="../response-simulator/vendor/leaflet-1.9.4/leaflet.js?v=1.6.132"></script>
-<script src="../response-simulator/carto-basemap-policy-1.6.36.js?v=1.6.132"></script>
-<script src="map-provider-1.6.46.js?v=1.6.132"></script>
-<script src="../cities/city-registry.js?v=1.6.132"></script>
-<script src="../shared/location-changes.js?v=1.6.132"></script>
-<script src="../shared/city-location-runtime.js?v=1.6.132"></script>
-<script src="city-loader.js?v=1.6.132"></script>
-<script src="station-practice.js?v=1.6.132"></script>
-<script src="app.js?v=1.6.132"></script>
+<script src="../shared/build-version.js?v=1.6.135"></script>
+<script src="../response-simulator/vendor/leaflet-1.9.4/leaflet.js?v=1.6.135"></script>
+<script src="../response-simulator/carto-basemap-policy-1.6.36.js?v=1.6.135"></script>
+<script src="map-provider-1.6.46.js?v=1.6.135"></script>
+<script src="../cities/city-registry.js?v=1.6.135"></script>
+<script src="../shared/location-changes.js?v=1.6.135"></script>
+<script src="../shared/city-location-runtime.js?v=1.6.135"></script>
+<script src="city-loader.js?v=1.6.135"></script>
+<script src="station-practice.js?v=1.6.135"></script>
+<script src="location-report-context.js?v=1.6.135"></script>
+<script src="app.js?v=1.6.135"></script>
 </body>
 </html>

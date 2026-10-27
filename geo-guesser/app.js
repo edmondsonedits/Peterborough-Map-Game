@@ -117,6 +117,13 @@
   }
   function review(outcome,guess,distance){
     const center=state.map.getCenter(),zoom=state.map.getZoom();clearReview();state.review={outcome,center,zoom};
+    state.review.reportSnapshot=window.PTBO_GEO_REPORT_CONTEXT?.captureGeoResult({
+      resultId:window.crypto?.randomUUID?.()||`geo-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+      target:state.target,guess,distance,outcome,city:window.PTBO_CITY_PACKAGE,
+      service:state.service,difficulty:state.difficulty,base:state.base,
+      version:window.PTBO_BUILD?.version,
+      datasetRevision:state.target?.facilityType==='long-term-care'?null:window.PTBO_DISPATCH_STORE?.dataVersion,
+    })||null;
     $('game').dataset.feedback=outcome;
     if(outcome==='correct'||outcome==='incorrect'){
       $('guess-effect-icon').textContent=outcome==='correct'?'✓':'×';

@@ -24,6 +24,7 @@
   const tuningState = {
     installed: false,
     pointerActive: false,
+    pointerId: null,
     targetHeading: null,
     heldHeading: null,
     stickMagnitude: 0,
@@ -33,6 +34,7 @@
   let instruments = null;
   let steeringElement = null;
   let parentDocument = null;
+  let pointerGeneration = 0;
 
   const clamp = (value, minimum, maximum) => Math.max(minimum, Math.min(maximum, value));
   const normalizeHeading = value => (Number(value) % 360 + 360) % 360;
@@ -89,17 +91,29 @@
     instruments.state.directionalTargetHeading = null;
   }
 
-  function captureDirectionalTarget() {
+  function captureDirectionalTarget(event) {
     if (!directionalIsActive()) return;
+    if (tuningState.pointerActive && event.pointerId !== tuningState.pointerId) return;
+    if (!tuningState.pointerActive) {
+      tuningState.pointerId = event.pointerId;
+      tuningState.targetHeading = null;
+      tuningState.heldHeading = null;
+      tuningState.stickMagnitude = 0;
+      ++pointerGeneration;
+    }
     tuningState.pointerActive = true;
     queueMicrotask(suppressLegacyDirectionalTarget);
   }
 
-  function releaseDirectionalTarget() {
+  function releaseDirectionalTarget(event) {
+    if (event?.pointerId !== undefined && event.pointerId !== tuningState.pointerId) return;
     if (!tuningState.pointerActive && tuningState.targetHeading === null) return;
     tuningState.pointerActive = false;
+    tuningState.pointerId = null;
+    const generation = ++pointerGeneration;
 
     queueMicrotask(() => {
+      if (generation !== pointerGeneration) return;
       tuningState.heldHeading = readCurrentHeading();
       tuningState.targetHeading = null;
       tuningState.stickMagnitude = 0;
@@ -256,30 +270,34 @@
     // Listen on the parent document so these handlers run before the older
     // element-level steering code can stop propagation of the release event.
     parentDocument.addEventListener('pointerdown', event => {
-      if (eventBelongsToSteering(event)) captureDirectionalTarget();
+      if (eventBelongsToSteering(event)) captureDirectionalTarget(event);
     }, true);
     parentDocument.addEventListener('pointermove', event => {
-      if (tuningState.pointerActive || eventBelongsToSteering(event)) captureDirectionalTarget();
+      if (tuningState.pointerActive && event.pointerId === tuningState.pointerId) captureDirectionalTarget(event);
     }, true);
     parentDocument.addEventListener('pointerup', event => {
-      if (tuningState.pointerActive || eventBelongsToSteering(event)) releaseDirectionalTarget();
+      releaseDirectionalTarget(event);
     }, true);
     parentDocument.addEventListener('pointercancel', event => {
-      if (tuningState.pointerActive || eventBelongsToSteering(event)) releaseDirectionalTarget();
+      releaseDirectionalTarget(event);
     }, true);
     parentDocument.addEventListener('lostpointercapture', event => {
-      if (tuningState.pointerActive || eventBelongsToSteering(event)) releaseDirectionalTarget();
+      releaseDirectionalTarget(event);
     }, true);
 
     window.addEventListener('ptbo-steering-mode-change', event => {
       tuningState.pointerActive = false;
+      tuningState.pointerId = null;
+      ++pointerGeneration;
       tuningState.targetHeading = null;
       tuningState.heldHeading = readCurrentHeading();
       tuningState.stickMagnitude = 0;
       clearResidualSteeringInput();
       if (event.detail?.mode === DIRECTIONAL_MODE) updateOptionsDescription();
     });
-    window.parent.addEventListener('blur', releaseDirectionalTarget, true);
+    window.parent.addEventListener('blur', event => {
+      if (event.target === window.parent) releaseDirectionalTarget();
+    }, true);
     parentDocument.addEventListener('visibilitychange', () => {
       if (parentDocument.hidden) releaseDirectionalTarget();
     });

@@ -6,6 +6,7 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const canonicalSurfaces = [
   'index.html',
+  'feedback/index.html',
   'route-mapping/index.html',
   'route-mapping/play.html',
   'response-simulator/play/index.html',

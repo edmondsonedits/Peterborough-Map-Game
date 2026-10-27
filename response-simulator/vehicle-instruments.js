@@ -30,6 +30,7 @@
   window.PTBO_VEHICLE_INSTRUMENTS_BOOTSTRAP = true;
 
   const sourceUrl = new URL(document.currentScript?.src || document.baseURI, document.baseURI);
+  const CACHE_VERSION = sourceUrl.searchParams.get('v') || window.PTBO_BUILD?.version || VERSION;
   const sleep = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds));
 
   /* Load one nested steering/camera module with a hard timeout. A browser that
@@ -89,7 +90,7 @@
     let lastError;
     for (let attempt = 1; attempt <= 3; attempt += 1) {
       try {
-        await loadScript('vehicle-instruments-core.js', `${VERSION}-core`, attempt);
+        await loadScript('vehicle-instruments-core.js', `${CACHE_VERSION}-core`, attempt);
         return await waitForApi(5000);
       } catch (error) {
         lastError = error;
@@ -103,14 +104,14 @@
     const api = await loadCoreWithRetry();
 
     try {
-      await loadScript('directional-steering-tuning.js', `${VERSION}-tuning`, 1);
+      await loadScript('directional-steering-tuning.js', `${CACHE_VERSION}-tuning`, 1);
     } catch (error) {
       console.warn('Directional steering tuning did not load; standard steering remains available.', error);
     }
 
     try {
-      await loadScript('arcade-handling-1.5.1.js', `${VERSION}-arcade-core`, 1);
-      await loadScript('arcade-mobile-camera-1.5.3.js', `${VERSION}-stable-camera`, 1);
+      await loadScript('arcade-handling-1.5.1.js', `${CACHE_VERSION}-arcade-core`, 1);
+      await loadScript('arcade-mobile-camera-1.5.3.js', `${CACHE_VERSION}-stable-camera`, 1);
     } catch (error) {
       console.warn('Arcade handling or stable camera controls did not load; base steering remains available.', error);
     }

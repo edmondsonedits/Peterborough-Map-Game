@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+  </head>
+  <body>
+    <header class="site-header">Training</header>
+    <script type="module">
+      import { mountFeedback } from "/feedback/ui.mjs";
+      let account = {
+          uid: "alice",
+          email: "alice@example.test",
+          isGuest: false,
+          isDeveloper: true,
+        },
+        listener,
+        threadListener,
+        pendingMessages;
+      let id = 0;
+      const row = (uid) => ({
+        id: uid,
+        ownerId: uid,
+        title: `${uid} topic`,
+        city: "peterborough",
+        mode: "dispatch",
+        department: "fire",
+        version: "test",
+        status: "new",
+        priority: "normal",
+        updatedAt: 100,
+        playerMessages: 1,
+        developerMessages: 0,
+        playerRead: 0,
+        developerRead: 0,
+      });
+      const live = () => ({
+        rows: [row(account.uid)],
+        cursor: "first",
+        more: true,
+      });
+      const service = {
+        ready: Promise.resolve(),
+        get account() {
+          return account;
+        },
+        id: () => `id-${++id}`,
+        subscribeAccount(fn) {
+          listener = fn;
+          fn(account);
+          return () => {};
+        },
+        ensureGuest: async () => account,
+        watchThreads(fn) {
+          threadListener = fn;
+          fn(live());
+          return () => {};
+        },
+        watchMessages(uid, fn) {
+          fn({
+            rows: [
+              {
+                id: `${uid}-message`,
+                authorRole: "player",
+                body: `${uid} current message`,
+                createdAt: 100,
+              },
+            ],
+            cursor: "first-message",
+            more: true,
+          });
+          return () => {};
+        },
+        markRead: async () => {},
+        watchNotes(uid, fn) {
+          fn([{ id: "note", body: "Secret developer note" }]);
+          return () => {};
+        },
+        loadMessages() {
+          return new Promise((resolve) => {
+            pendingMessages = resolve;
+          });
+        },
+        loadThreads: async ({ cursor }) => {
+          fixture.cursors.push(cursor);
+          return {
+            rows: [{ ...row(account.uid), id: "older-thread" }],
+            cursor: "older",
+            more: true,
+          };
+        },
+        send: async (payload) => {
+          fixture.sends.push(payload);
+          if (fixture.deferSend)
+            return new Promise((resolve) => {
+              fixture.ack = resolve;
+            });
+          throw new Error("Connection lost before acknowledgement.");
+        },
+        updateThread: async () => {},
+        addNote: async () => {},
+      };
+      const fixture = (window.fixture = {
+        service,
+        sends: [],
+        cursors: [],
+        change(uid, isDeveloper = false) {
+          account = {
+            uid,
+            email: uid + "@example.test",
+            isGuest: false,
+            isDeveloper,
+          };
+          listener(account);
+        },
+        resolveMessages() {
+          pendingMessages({
+            rows: [
+              {
+                id: "old-secret",
+                body: "Alice old secret",
+                authorRole: "player",
+                createdAt: 1,
+              },
+            ],
+            cursor: "older-message",
+            more: false,
+          });
+        },
+        updateThreads() {
+          threadListener(live());
+        },
+        updateStatus() {
+          threadListener({
+            rows: [{ ...row(account.uid), status: "reviewing" }],
+            cursor: "first",
+            more: true,
+          });
+        },
+      });
+      mountFeedback({
+        rootUrl: new URL("/", location.href),
+        config: { enabled: true },
+        service,
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,104 @@
+rules_version = '2';
+service cloud.firestore {
+ match /databases/{database}/documents {
+  function signedIn() { return request.auth != null; }
+  function developer() { return signedIn() && request.auth.token.get('feedbackAdmin', false) == true; }
+  function threadPath(id) { return /databases/$(database)/documents/feedbackThreads/$(id); }
+  function ownerOrDeveloper(id) { return signedIn() && (developer() || get(threadPath(id)).data.ownerId == request.auth.uid); }
+  function validText(value,max) { return value is string && value.size() > 0 && value.size() <= max && value.matches('[\\s\\S]*\\S[\\s\\S]*'); }
+  function boundedNumber(value, min, max) { return value is number && value >= min && value <= max; }
+  function validPoint(p) {
+   let lat = p.lat;
+   let lng = p.lng;
+   return p is map && p.size() == 2
+    && lat is number && lat >= -90 && lat <= 90
+    && lng is number && lng >= -180 && lng <= 180;
+  }
+  function validCrossStreets(value) {
+   return value == null || (value is list && value.size() <= 4
+    && (value.size() < 1 || value[0].matches('\\S(?:[\\s\\S]{0,148}\\S)?')) && (value.size() < 2 || value[1].matches('\\S(?:[\\s\\S]{0,148}\\S)?'))
+    && (value.size() < 3 || value[2].matches('\\S(?:[\\s\\S]{0,148}\\S)?')) && (value.size() < 4 || value[3].matches('\\S(?:[\\s\\S]{0,148}\\S)?')));
+  }
+  function validSuggestion(value) {
+   return value == null || (value is map && value.keys().hasOnly(['center','radiusMeters']) && value.keys().size() > 0
+    && (!('center' in value) || validPoint(value.center))
+    && (!('radiusMeters' in value) || boundedNumber(value.radiusMeters,5,2000)));
+  }
+  // Validate every named field; exact map sizes reject missing/extra keys without
+  // repeatedly materializing long key lists within the 1,000-expression budget.
+  function validLocationReport(r,t) {
+   let s = r.snapshot;
+   let q = s.question;
+   let c = s.originalCircle;
+   let g = s.guess;
+   return (r is map && r.size() == 5) && r.schemaVersion == 1 && r.kind == 'geo-location'
+    && r.reason in ['point','radius','address','name','scoring','other']
+    && (s is map && s.size() == 14)
+    && s.resultId.matches('\\S(?:[\\s\\S]{0,158}\\S)?') && s.callId.matches('\\S(?:[\\s\\S]{0,158}\\S)?')
+    && s.city == t.city && s.mode == 'geo' && t.mode == 'geo' && s['service'] in ['fire','ems'] && s['service'] == t.department && s.version == t.version
+    && s.datasetId.matches('\\S(?:[\\s\\S]{0,238}\\S)?') && (s.datasetRevision == null || s.datasetRevision.matches('\\S(?:[\\s\\S]{0,158}\\S)?')) && (s.baseId == null || s.baseId.matches('\\S(?:[\\s\\S]{0,158}\\S)?'))
+    && (q is map && q.size() == 4) && q.name.matches('[\\s\\S]{0,200}') && q.address.matches('[\\s\\S]{0,300}')
+    && validCrossStreets(q.crossStreets) && (q.difficulty == null || q.difficulty.matches('\\S(?:[\\s\\S]{0,78}\\S)?'))
+    && (c is map && c.size() == 2) && validPoint(c.center)
+    && c.radiusMeters is number && c.radiusMeters > 0 && c.radiusMeters <= 20000
+    && ((g == null && s.distanceMeters == null) || (validPoint(g) && (s.distanceMeters is number && s.distanceMeters >= 0 && s.distanceMeters <= 40100000)))
+    && s.result in ['correct','incorrect','revealed'] && validSuggestion(r.suggestion);
+  }
+  function validThread(t) {
+   return t.keys().hasAll(['ownerId','title','category','city','mode','department','version','status','priority','createdAt','updatedAt','lastMessageId','lastSender','playerMessages','developerMessages','playerRead','developerRead'])
+    && t.size() == ('locationReport' in t ? 18 : 17)
+    && validText(t.title,120) && t.category in ['bug','map','idea','question']
+    && validText(t.city,80) && validText(t.mode,80) && validText(t.department,80) && validText(t.version,80)
+    && t.status in ['new','reviewing','planned','resolved','closed'] && t.priority in ['normal','high']
+    && t.createdAt is timestamp && t.updatedAt is timestamp && validText(t.lastMessageId,80)
+    && t.playerMessages is int && t.developerMessages is int && t.playerRead is int && t.developerRead is int;
+  }
+  function senderAllowed() {
+   return getAfter(/databases/$(database)/documents/feedbackWriters/$(request.auth.uid)).data.lastSentAt == request.time;
+  }
+  function matchingMessage(id,t,role) {
+   let m = getAfter(/databases/$(database)/documents/feedbackThreads/$(id)/messages/$(t.lastMessageId)).data;
+   return m.authorId == request.auth.uid && m.authorRole == role && m.createdAt == request.time && t.updatedAt == request.time && t.lastSender == role && senderAllowed();
+  }
+  match /feedbackWriters/{uid} {
+   allow read: if signedIn() && request.auth.uid == uid;
+   allow create: if signedIn() && request.auth.uid == uid && request.resource.data.keys().hasOnly(['lastSentAt']) && request.resource.data.lastSentAt == request.time;
+   allow update: if signedIn() && request.auth.uid == uid && request.resource.data.keys().hasOnly(['lastSentAt']) && request.resource.data.lastSentAt == request.time && request.time >= resource.data.lastSentAt + duration.value(1,'s');
+  }
+  match /feedbackThreads/{id} {
+   allow get: if signedIn() && (!exists(threadPath(id)) || developer() || resource.data.ownerId == request.auth.uid);
+   allow list: if signedIn() && (developer() || resource.data.ownerId == request.auth.uid);
+   allow create: if signedIn() && validThread(request.resource.data)
+    && (!('locationReport' in request.resource.data) || validLocationReport(request.resource.data.locationReport,request.resource.data))
+    && request.resource.data.ownerId == request.auth.uid && request.resource.data.createdAt == request.time
+    && request.resource.data.status == 'new' && request.resource.data.priority == 'normal'
+    && request.resource.data.playerMessages == 1 && request.resource.data.developerMessages == 0
+    && request.resource.data.playerRead == 0 && request.resource.data.developerRead == 0
+    && matchingMessage(id,request.resource.data,'player');
+   allow update: if signedIn() && validThread(request.resource.data) && (
+    // Each recipient can only advance their own read counter to the current total.
+    (request.auth.uid == resource.data.ownerId && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['playerRead']) && request.resource.data.playerRead == resource.data.developerMessages && request.resource.data.playerRead >= resource.data.playerRead)
+    || (developer() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['developerRead']) && request.resource.data.developerRead == resource.data.playerMessages && request.resource.data.developerRead >= resource.data.developerRead)
+    || (developer() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status','priority']))
+    || (request.auth.uid == resource.data.ownerId && !developer() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['updatedAt','lastMessageId','lastSender','playerMessages']) && request.resource.data.playerMessages == resource.data.playerMessages + 1 && matchingMessage(id,request.resource.data,'player'))
+    || (developer() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['updatedAt','lastMessageId','lastSender','developerMessages']) && request.resource.data.developerMessages == resource.data.developerMessages + 1 && matchingMessage(id,request.resource.data,'developer'))
+   );
+   match /messages/{mid} {
+    allow read: if ownerOrDeveloper(id);
+    allow create: if signedIn() && (developer() || getAfter(threadPath(id)).data.ownerId == request.auth.uid) && request.resource.data.keys().hasAll(['authorId','authorRole','body','createdAt'])
+     && request.resource.data.keys().hasOnly(['authorId','authorRole','body','createdAt'])
+     && request.resource.data.authorId == request.auth.uid && validText(request.resource.data.body,4000)
+     && request.resource.data.createdAt == request.time
+     && request.resource.data.authorRole == (developer() && exists(threadPath(id)) ? 'developer' : 'player')
+     && getAfter(threadPath(id)).data.lastMessageId == mid && getAfter(threadPath(id)).data.updatedAt == request.time;
+   }
+   match /notes/{nid} {
+    allow read: if developer();
+    allow create: if developer() && exists(threadPath(id)) && request.resource.data.keys().hasAll(['authorId','body','createdAt'])
+     && request.resource.data.keys().hasOnly(['authorId','body','createdAt']) && request.resource.data.authorId == request.auth.uid
+     && validText(request.resource.data.body,4000) && request.resource.data.createdAt == request.time;
+   }
+  }
+  match /{document=**} { allow read, write: if false; }
+ }
+}
