@@ -1,4 +1,4 @@
-import {planBusinessWallSigns,businessOpeningTop,signVisibilityChanged,wrapSignText} from './business-sign-layout.js?v=1.6.138';
+import {planBusinessWallSigns,businessOpeningTop,signVisibilityChanged,wrapSignText} from './business-sign-layout.js?v=1.6.140';
 
 export async function loadBusinessDirectory(fetcher=fetch,url=new URL('./data/business-directory.json',import.meta.url)){
  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);

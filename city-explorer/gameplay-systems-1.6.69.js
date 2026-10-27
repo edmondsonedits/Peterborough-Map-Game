@@ -41,7 +41,9 @@ const stationOne = Object.freeze({
   spawnSource: 'reviewed-station-1-gameplay',
 });
 
-const stationTwoPlayer = playerBesideTruck(44.335928, -78.316016, 202);
+// Reviewed in the simulator: position rounded to six decimals, heading inferred
+// from the stationary vehicle's right-side exit offset (approximately 2 degrees).
+const stationTwoPlayer = playerBesideTruck(44.335785, -78.316176, 153.637);
 export const FIRE_STATION_TWO = Object.freeze({
   id: 'peterborough-fire-station-2',
   number: 2,
@@ -54,13 +56,16 @@ export const FIRE_STATION_TWO = Object.freeze({
   buildingLon: -78.316209,
   playerLat: stationTwoPlayer.lat,
   playerLon: stationTwoPlayer.lon,
-  truckLat: 44.335928,
-  truckLon: -78.316016,
-  truckHeading: degreesToRadians(202),
-  spawnSource: 'cities/peterborough/package.js',
+  truckLat: 44.335785,
+  truckLon: -78.316176,
+  truckHeading: degreesToRadians(153.637),
+  spawnSource: 'user-reviewed-station-2-gameplay',
 });
 
-const stationThreePlayer = playerBesideTruck(44.284959, -78.350694, 127);
+// Station 3's real apparatus doors face Clonsilla. Start just outside the
+// mapped building shell, which does not yet model open bays or an interior.
+// playerBesideTruck takes a compass bearing; truckHeading uses the game axis.
+const stationThreePlayer = playerBesideTruck(44.284869, -78.350563, 125.5);
 export const FIRE_STATION_THREE = Object.freeze({
   id: 'peterborough-fire-station-3',
   number: 3,
@@ -73,10 +78,10 @@ export const FIRE_STATION_THREE = Object.freeze({
   buildingLon: -78.351068,
   playerLat: stationThreePlayer.lat,
   playerLon: stationThreePlayer.lon,
-  truckLat: 44.284959,
-  truckLon: -78.350694,
-  truckHeading: degreesToRadians(127),
-  spawnSource: 'cities/peterborough/package.js',
+  truckLat: 44.284869,
+  truckLon: -78.350563,
+  truckHeading: degreesToRadians(234.5),
+  spawnSource: 'station-3-clonsilla-apron',
 });
 
 export const FIRE_STATIONS = Object.freeze([stationOne, FIRE_STATION_TWO, FIRE_STATION_THREE]);
