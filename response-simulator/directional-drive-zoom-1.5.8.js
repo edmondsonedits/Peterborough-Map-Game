@@ -19,6 +19,11 @@
 
   const VERSION = '1.6.0';
   if (window.PTBO_DIRECTIONAL_DRIVE_ZOOM?.version === VERSION) return;
+  const frameElement = (() => {
+    try { return window.frameElement || (window.parent !== window ? window.parent.document.getElementById('simulator') : null); }
+    catch { return null; }
+  })();
+  const frameDocument = document;
 
   const DIRECTIONAL_MODE = 'directional';
   const DEFAULT_MIGRATION_KEY = 'ptboDirectionalDriveZoomDefaultV158';
@@ -52,9 +57,45 @@
   let gearLimit = null;
   let reverse = null;
   let hint = null;
+  let disposed = false;
+  let initialized = false;
+  let animationFrame = 0;
+  let installGeneration = 0;
+  const startupTimers = [];
+  const inputListeners = [];
+
+  function listenForInput(target, type, handler, capture = false) {
+    target.addEventListener(type, handler, capture);
+    inputListeners.push(() => target.removeEventListener(type, handler, capture));
+  }
+
+  function disconnectInput() {
+    if (disposed) return;
+    disposed = true;
+    ++installGeneration;
+    window.cancelAnimationFrame?.(animationFrame);
+    startupTimers.splice(0).forEach(timer => window.clearTimeout(timer));
+    releaseDirectionalDrive();
+    releaseGearPress();
+    inputListeners.splice(0).forEach(remove => remove());
+    if (parentDoc?.ptboDirectionalDriveDispose === disconnectInput) {
+      delete parentDoc.ptboDirectionalDriveDispose;
+      delete parentDoc.documentElement.dataset.ptboDirectionalDriveZoom;
+    }
+    state.installed = false;
+  }
+
+  window.addEventListener('pagehide', disconnectInput);
+  window.addEventListener('pageshow', event => {
+    if (!event.persisted || !disposed) return;
+    disposed = false;
+    state.lastPhysicsTimestamp = null;
+    install().catch(error => console.error('Directional drive / gear speed restore failed.', error));
+  });
 
   const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
   const clamp = (value, minimum, maximum) => Math.max(minimum, Math.min(maximum, value));
+  const frameIsCurrent = () => !frameElement || frameElement.contentDocument === frameDocument;
 
   function isMobileWrapper() {
     try {
@@ -380,36 +421,38 @@
   }
 
   function installEventBridges() {
-    if (!parentDoc || parentDoc.documentElement.dataset.ptboDirectionalDriveZoom === VERSION) return;
+    if (!parentDoc) return;
+    parentDoc.ptboDirectionalDriveDispose?.();
+    parentDoc.ptboDirectionalDriveDispose = disconnectInput;
     parentDoc.documentElement.dataset.ptboDirectionalDriveZoom = VERSION;
 
-    parentDoc.addEventListener('pointerdown', event => {
+    listenForInput(parentDoc, 'pointerdown', event => {
       handleSteeringDown(event);
       handleGearDown(event);
     }, true);
-    parentDoc.addEventListener('pointermove', handleSteeringMove, true);
-    parentDoc.addEventListener('click', handleGearClick, true);
-    parentDoc.addEventListener('pointerup', event => {
+    listenForInput(parentDoc, 'pointermove', handleSteeringMove, true);
+    listenForInput(parentDoc, 'click', handleGearClick, true);
+    listenForInput(parentDoc, 'pointerup', event => {
       handleSteeringRelease(event);
       handleGearRelease(event);
     }, true);
-    parentDoc.addEventListener('pointercancel', event => {
+    listenForInput(parentDoc, 'pointercancel', event => {
       handleSteeringRelease(event);
       handleGearRelease(event);
     }, true);
-    parentDoc.addEventListener('lostpointercapture', event => {
+    listenForInput(parentDoc, 'lostpointercapture', event => {
       handleSteeringRelease(event);
       handleGearRelease(event);
     }, true);
 
-    window.parent.addEventListener('blur', event => {
+    listenForInput(window.parent, 'blur', event => {
       if (event.target === window.parent) { releaseDirectionalDrive(); releaseGearPress(); }
     }, true);
-    parentDoc.addEventListener('visibilitychange', () => {
+    listenForInput(parentDoc, 'visibilitychange', () => {
       if (parentDoc.hidden) { releaseDirectionalDrive(); releaseGearPress(); }
     });
 
-    window.addEventListener('ptbo-steering-mode-change', () => {
+    listenForInput(window, 'ptbo-steering-mode-change', () => {
       releaseDirectionalDrive();
       releaseGearPress();
       window.PTBO_SPEED_STREAK?.reset?.('steering-mode');
@@ -447,14 +490,16 @@
       syncParentUi();
       wrapStationTeleport();
     }
-    requestAnimationFrame(tick);
+    animationFrame = requestAnimationFrame(tick);
   }
 
   async function install() {
-    if (!isMobileWrapper()) return;
+    if (disposed || state.installed || !frameIsCurrent() || !isMobileWrapper()) return;
+    const generation = ++installGeneration;
 
     while (!window.PTBO_VEHICLE_INSTRUMENTS || !window.PTBO_ARCADE_HANDLING) {
       await sleep(50);
+      if (disposed || generation !== installGeneration || !frameIsCurrent()) return;
     }
 
     instruments = window.PTBO_VEHICLE_INSTRUMENTS;
@@ -478,10 +523,15 @@
         if (mapInstance) break;
       } catch {}
       await sleep(50);
+      if (disposed || generation !== installGeneration || !frameIsCurrent()) return;
     }
 
-    makeDirectionalDefaultOnce();
-    resetGear();
+    if (!frameIsCurrent()) return;
+    if (!initialized) {
+      makeDirectionalDefaultOnce();
+      resetGear();
+      initialized = true;
+    }
     disableLegacySpeedZoom();
     configureMap();
     installMobileUiFixes();
@@ -491,17 +541,18 @@
     syncParentUi();
 
     // Run after wrapper recenter/startup helpers so v1.6.0 owns the initial view.
-    setTimeout(() => {
+    startupTimers.push(setTimeout(() => {
+      if (disposed) return;
       disableLegacySpeedZoom();
       applyNorthUp();
       setClosestView();
       installMobileUiFixes();
       syncParentUi();
-    }, 0);
-    setTimeout(setClosestView, 350);
+    }, 0));
+    startupTimers.push(setTimeout(() => { if (!disposed) setClosestView(); }, 350));
 
     state.installed = true;
-    requestAnimationFrame(tick);
+    animationFrame = requestAnimationFrame(tick);
   }
 
   window.PTBO_DIRECTIONAL_DRIVE_ZOOM = Object.freeze({
