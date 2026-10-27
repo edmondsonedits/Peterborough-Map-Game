@@ -30,7 +30,7 @@
   window.PTBO_VEHICLE_INSTRUMENTS_BOOTSTRAP = true;
 
   const sourceUrl = new URL(document.currentScript?.src || document.baseURI, document.baseURI);
-  const CACHE_VERSION = sourceUrl.searchParams.get('v') || window.PTBO_BUILD?.version || VERSION;
+  const CACHE_VERSION = window.PTBO_BUILD?.version || sourceUrl.searchParams.get('v') || VERSION;
   const sleep = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds));
 
   /* Load one nested steering/camera module with a hard timeout. A browser that

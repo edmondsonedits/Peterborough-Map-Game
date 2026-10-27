@@ -2,6 +2,7 @@
 (() => {
   'use strict';
   const VERSION = '1.6.15';
+  const CACHE_VERSION = window.PTBO_BUILD?.version || new URL(document.currentScript?.src || location.href).searchParams.get('v') || VERSION;
   if (window.PTBO_SIMULATOR_READY_VERSION === VERSION && window.PTBO_SIMULATOR_READY) return;
   window.PTBO_SIMULATOR_READY_VERSION = VERSION;
 
@@ -47,7 +48,7 @@
       }
       const script = document.createElement('script');
       const url = new URL(filename, document.baseURI);
-      url.searchParams.set('v', VERSION);
+      url.searchParams.set('v', CACHE_VERSION);
       script.src = url.href;
       script.setAttribute(marker, 'true');
       script.onload = () => { script.dataset.ptboLoaded = 'true'; resolve(script); };
