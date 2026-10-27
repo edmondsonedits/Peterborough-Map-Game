@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.137';
+  const VERSION = '1.6.138';
   const CITY_RUNTIME_VERSION = '1.6.17';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
@@ -119,10 +119,12 @@
     const expected = new URL(relativeUrl, SCRIPT_URL).href;
     return new Promise((resolve, reject) => {
       let settled = false;
+      let loadingScript = null;
       const finish = (error, script) => {
         if (settled) return;
         settled = true;
         clearTimeout(timer);
+        if (error && loadingScript) { loadingScript.dataset.ptboCancelled = 'true'; loadingScript.remove(); }
         error ? reject(error) : resolve(script);
       };
       const timer = setTimeout(() => finish(new Error(`Timed out loading ${relativeUrl} after ${timeoutMs} ms.`)), timeoutMs);
@@ -132,12 +134,13 @@
         existing.remove();
       }
       const script = targetDocument.createElement('script');
+      loadingScript = script;
       script.id = id;
       script.src = expected;
       script.dataset.ptboVersion = VERSION;
       script.dataset.ptboLoading = 'true';
       if (marker) script.setAttribute(marker,'true');
-      script.onload = () => { script.dataset.ptboLoading = 'false'; script.dataset.ptboLoaded = 'true'; finish(null, script); };
+      script.onload = () => { if (settled) return; script.dataset.ptboLoading = 'false'; script.dataset.ptboLoaded = 'true'; finish(null, script); };
       script.onerror = () => { script.remove(); finish(new Error(`Unable to load ${relativeUrl}.`)); };
       (targetDocument.body || targetDocument.head || targetDocument.documentElement).appendChild(script);
     });
@@ -207,9 +210,75 @@
 
   function installCitySelector() {
     if (!document.getElementById('dispatch-game-link')) return;
-    injectPageScript('ptbo-city-registry-loader', `../cities/city-registry.js?v=${VERSION}`)
-      .then(() => injectPageScript('ptbo-city-selector-loader', `city-selector.js?v=${VERSION}`))
-      .catch(error => console.error('City selector failed to initialize.', error));
+    const select = document.getElementById('home-city-select');
+    const status = document.getElementById('home-city-status');
+    const retry = document.getElementById('home-city-retry');
+    const links = [...document.querySelectorAll('[data-preview], [data-preview-launch], #city-explorer-link, #dispatch-editor-link')];
+    let ready = false;
+    let pending = null;
+    const lock = () => {
+      if (select) select.disabled = true;
+      links.forEach(link => { link.removeAttribute('href'); link.setAttribute('aria-disabled', 'true'); });
+    };
+    // Removing href also prevents stale destinations through modified/context-menu clicks.
+    const blockWhileLoading = event => {
+      if (ready || !select || (event.type === 'keydown' && !['Enter', ' '].includes(event.key))) return;
+      if (links.some(link => link === event.target || link.contains(event.target))) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+      }
+    };
+    if (select) {
+      ['click', 'auxclick', 'keydown', 'pointerdown'].forEach(type => document.addEventListener(type, blockWhileLoading, true));
+    }
+    const start = () => {
+      if (pending || ready) return pending;
+      if (select) {
+        lock();
+        if (status) status.textContent = 'Loading cities…';
+        if (retry) { retry.hidden = true; retry.disabled = true; }
+      }
+      pending = (async () => {
+        try {
+          await injectPageScript('ptbo-city-registry-loader', `../cities/city-registry.js?v=${VERSION}`);
+          if (!Array.isArray(window.PTBO_CITIES) || !window.PTBO_CITIES.some(city => city.id === 'peterborough')) {
+            document.getElementById('ptbo-city-registry-loader')?.remove();
+            throw new Error('City registry did not initialize.');
+          }
+          if (select && !window.PTBO_HOMEPAGE?.init) {
+            await injectPageScript('ptbo-homepage-loader', `../homepage/app.js?v=${VERSION}`);
+            if (!window.PTBO_HOMEPAGE?.init) {
+              document.getElementById('ptbo-homepage-loader')?.remove();
+              throw new Error('Homepage controller did not initialize.');
+            }
+          }
+          await injectPageScript('ptbo-city-selector-loader', `city-selector.js?v=${VERSION}`);
+          if (!window.PTBO_CITY_SELECTOR || (select && !window.PTBO_CITY_SELECTOR.homepage)) {
+            document.getElementById('ptbo-city-selector-loader')?.remove();
+            throw new Error('City selector did not initialize.');
+          }
+          if (select) {
+            links.forEach(link => link.removeAttribute('aria-disabled'));
+            window.PTBO_HOMEPAGE.sync();
+            select.disabled = false;
+          }
+          ready = true;
+        } catch (error) {
+          ready = false;
+          if (select) {
+            lock();
+            if (status) status.textContent = 'Cities couldn’t load. Retry to choose a city.';
+            if (retry) { retry.hidden = false; retry.disabled = false; }
+          }
+          console.error('City selector failed to initialize.', error);
+        } finally {
+          pending = null;
+        }
+      })();
+      return pending;
+    };
+    retry?.addEventListener('click', start);
+    void start();
   }
 
   function installMapAttribution() {

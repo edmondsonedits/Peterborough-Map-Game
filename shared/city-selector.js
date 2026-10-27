@@ -1,6 +1,8 @@
 /* Dispatch launcher city selector. All cities use the Peterborough simulator controls and UI. */
 (() => {
   'use strict';
+  // A timed-out request can finish fetching after a retry has started.
+  if (document.currentScript?.dataset?.ptboCancelled === 'true') return;
   const VERSION = '1.6.47';
   if (window.PTBO_CITY_SELECTOR?.version === VERSION) return;
 

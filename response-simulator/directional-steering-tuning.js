@@ -2,6 +2,11 @@
   'use strict';
 
   if (window.PTBO_DIRECTIONAL_STEERING_TUNING) return;
+  const frameElement = (() => {
+    try { return window.frameElement || (window.parent !== window ? window.parent.document.getElementById('simulator') : null); }
+    catch { return null; }
+  })();
+  const frameDocument = document;
 
   const DEFAULT_MIGRATION_KEY = 'ptboDirectionalSteeringDefaultV2';
   const DIRECTIONAL_MODE = 'directional';
@@ -35,6 +40,37 @@
   let steeringElement = null;
   let parentDocument = null;
   let pointerGeneration = 0;
+  let disposed = false;
+  let defaultsApplied = false;
+  let animationFrame = 0;
+  let retryTimer = 0;
+  const inputListeners = [];
+
+  function listenForInput(target, type, handler, capture = false) {
+    target.addEventListener(type, handler, capture);
+    inputListeners.push(() => target.removeEventListener(type, handler, capture));
+  }
+
+  function disconnectDirectionalSteering() {
+    if (disposed) return;
+    disposed = true;
+    window.cancelAnimationFrame?.(animationFrame);
+    window.clearTimeout(retryTimer);
+    releaseDirectionalTarget();
+    inputListeners.splice(0).forEach(remove => remove());
+    if (steeringElement?.ptboDirectionalTuningDispose === disconnectDirectionalSteering) {
+      delete steeringElement.ptboDirectionalTuningDispose;
+    }
+    tuningState.installed = false;
+  }
+
+  window.addEventListener('pagehide', disconnectDirectionalSteering);
+  window.addEventListener('pageshow', event => {
+    if (!event.persisted || !disposed) return;
+    disposed = false;
+    tuningState.lastTimestamp = 0;
+    install();
+  });
 
   const clamp = (value, minimum, maximum) => Math.max(minimum, Math.min(maximum, value));
   const normalizeHeading = value => (Number(value) % 360 + 360) % 360;
@@ -43,7 +79,7 @@
   ) - 180;
 
   function directionalIsActive() {
-    return instruments?.state?.steeringMode === DIRECTIONAL_MODE;
+    return !disposed && instruments?.state?.steeringMode === DIRECTIONAL_MODE;
   }
 
   function readCurrentHeading() {
@@ -228,6 +264,7 @@
   }
 
   function animationTick(timestamp) {
+    if (disposed) return;
     if (!tuningState.lastTimestamp) tuningState.lastTimestamp = timestamp;
     const deltaSeconds = Math.min(
       0.05,
@@ -238,13 +275,18 @@
     // Prevent the earlier fixed-rate directional routine from also steering.
     suppressLegacyDirectionalTarget();
     if (!window.PTBO_FIXED_STEP) applyAdaptiveDirectionalSteering(deltaSeconds);
-    requestAnimationFrame(animationTick);
+    animationFrame = requestAnimationFrame(animationTick);
   }
 
   function install() {
+    if (disposed || tuningState.installed) return;
+    if (frameElement && frameElement.contentDocument !== frameDocument) {
+      disconnectDirectionalSteering();
+      return;
+    }
     instruments = window.PTBO_VEHICLE_INSTRUMENTS;
     if (!instruments) {
-      setTimeout(install, CONFIG.retryDelayMs);
+      retryTimer = setTimeout(install, CONFIG.retryDelayMs);
       return;
     }
 
@@ -259,33 +301,38 @@
 
     if (!steeringElement || !parentDocument) {
       if (window.parent.document.readyState === 'loading') {
-        setTimeout(install, CONFIG.retryDelayMs);
+        retryTimer = setTimeout(install, CONFIG.retryDelayMs);
       }
       return;
     }
 
-    makeDirectionalDefault();
+    steeringElement.ptboDirectionalTuningDispose?.();
+    steeringElement.ptboDirectionalTuningDispose = disconnectDirectionalSteering;
+    if (!defaultsApplied) {
+      makeDirectionalDefault();
+      defaultsApplied = true;
+    }
     updateOptionsDescription();
 
     // Listen on the parent document so these handlers run before the older
     // element-level steering code can stop propagation of the release event.
-    parentDocument.addEventListener('pointerdown', event => {
+    listenForInput(parentDocument, 'pointerdown', event => {
       if (eventBelongsToSteering(event)) captureDirectionalTarget(event);
     }, true);
-    parentDocument.addEventListener('pointermove', event => {
+    listenForInput(parentDocument, 'pointermove', event => {
       if (tuningState.pointerActive && event.pointerId === tuningState.pointerId) captureDirectionalTarget(event);
     }, true);
-    parentDocument.addEventListener('pointerup', event => {
+    listenForInput(parentDocument, 'pointerup', event => {
       releaseDirectionalTarget(event);
     }, true);
-    parentDocument.addEventListener('pointercancel', event => {
+    listenForInput(parentDocument, 'pointercancel', event => {
       releaseDirectionalTarget(event);
     }, true);
-    parentDocument.addEventListener('lostpointercapture', event => {
+    listenForInput(parentDocument, 'lostpointercapture', event => {
       releaseDirectionalTarget(event);
     }, true);
 
-    window.addEventListener('ptbo-steering-mode-change', event => {
+    listenForInput(window, 'ptbo-steering-mode-change', event => {
       tuningState.pointerActive = false;
       tuningState.pointerId = null;
       ++pointerGeneration;
@@ -295,15 +342,15 @@
       clearResidualSteeringInput();
       if (event.detail?.mode === DIRECTIONAL_MODE) updateOptionsDescription();
     });
-    window.parent.addEventListener('blur', event => {
+    listenForInput(window.parent, 'blur', event => {
       if (event.target === window.parent) releaseDirectionalTarget();
     }, true);
-    parentDocument.addEventListener('visibilitychange', () => {
+    listenForInput(parentDocument, 'visibilitychange', () => {
       if (parentDocument.hidden) releaseDirectionalTarget();
     });
 
     tuningState.installed = true;
-    requestAnimationFrame(animationTick);
+    animationFrame = requestAnimationFrame(animationTick);
   }
 
   window.PTBO_DIRECTIONAL_STEERING_TUNING = Object.freeze({

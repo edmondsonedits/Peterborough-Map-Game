@@ -775,3 +775,5 @@ body[data-home-motion="off"] *, body[data-home-motion="off"] *::before, body[dat
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
 }
+
+.city-retry{min-height:44px;padding:8px 16px;border:1px solid #7096aa;border-radius:8px;background:#102b3b;color:#f1f7fa;font:inherit;cursor:pointer}.city-retry:focus-visible{outline:2px solid #7dd3fc;outline-offset:3px}#home-city-select:disabled{opacity:.6;cursor:wait}

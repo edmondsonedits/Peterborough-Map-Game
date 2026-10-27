@@ -2,6 +2,11 @@
   'use strict';
 
   if (window.PTBO_VEHICLE_INSTRUMENTS) return;
+  const frameElement = (() => {
+    try { return window.frameElement || (window.parent !== window ? window.parent.document.getElementById('simulator') : null); }
+    catch { return null; }
+  })();
+  const frameDocument = document;
 
   const STEERING_STORAGE_KEY = 'ptboMobileSteeringMode';
   const STEERING_MODES = Object.freeze({
@@ -60,6 +65,35 @@
   let standardThumbMarkup = '';
   let steeringSelect = null;
   let steeringModeLabel = null;
+  let disposed = false;
+  let animationFrame = 0;
+  const inputListeners = [];
+
+  function listenForInput(target, type, handler, capture = false) {
+    target.addEventListener(type, handler, capture);
+    inputListeners.push(() => target.removeEventListener(type, handler, capture));
+  }
+
+  function disconnectMobileSteering() {
+    if (disposed) return;
+    disposed = true;
+    window.cancelAnimationFrame?.(animationFrame);
+    resetSteeringInputs();
+    inputListeners.splice(0).forEach(remove => remove());
+    if (mobileSteeringElement?.ptboVehicleInputDispose === disconnectMobileSteering) {
+      delete mobileSteeringElement.ptboVehicleInputDispose;
+    }
+    state.mobileSteeringConnected = false;
+  }
+
+  window.addEventListener('pagehide', disconnectMobileSteering);
+  window.addEventListener('pageshow', event => {
+    if (!event.persisted || !disposed) return;
+    disposed = false;
+    state.lastTimestamp = 0;
+    connectMobileSteering();
+    animationFrame = requestAnimationFrame(tick);
+  });
 
   function normalizeHeading(value) {
     return (Number(value) % 360 + 360) % 360;
@@ -552,6 +586,11 @@
   }
 
   function connectMobileSteering() {
+    if (disposed) return false;
+    if (frameElement && frameElement.contentDocument !== frameDocument) {
+      disconnectMobileSteering();
+      return false;
+    }
     if (state.mobileSteeringConnected) return true;
     try {
       if (window.parent === window) return false;
@@ -563,12 +602,15 @@
     }
     if (!mobileSteeringElement) return false;
 
+    // The parent joystick survives an iframe navigation; retire its prior owner.
+    mobileSteeringElement.ptboVehicleInputDispose?.();
+    mobileSteeringElement.ptboVehicleInputDispose = disconnectMobileSteering;
     state.mobileSteeringConnected = true;
     resetSteeringInputs();
     installParentJoystickStyle();
     updateParentJoystickMode();
 
-    mobileSteeringElement.addEventListener('pointerdown', event => {
+    listenForInput(mobileSteeringElement, 'pointerdown', event => {
       if (state.steeringMode === STEERING_MODES.DIRECTIONAL) {
         event.preventDefault();
         event.stopImmediatePropagation();
@@ -584,7 +626,7 @@
       }
     }, true);
 
-    mobileSteeringElement.addEventListener('pointermove', event => {
+    listenForInput(mobileSteeringElement, 'pointermove', event => {
       if (mobileSteeringPointer === null || event.pointerId !== mobileSteeringPointer) return;
       if (state.steeringMode === STEERING_MODES.DIRECTIONAL) {
         event.preventDefault();
@@ -595,33 +637,34 @@
       }
     }, true);
 
-    mobileSteeringElement.addEventListener('pointerup', event => {
+    listenForInput(mobileSteeringElement, 'pointerup', event => {
       finishPointer(event, state.steeringMode === STEERING_MODES.DIRECTIONAL);
     }, true);
-    mobileSteeringElement.addEventListener('pointercancel', event => {
+    listenForInput(mobileSteeringElement, 'pointercancel', event => {
       finishPointer(event, state.steeringMode === STEERING_MODES.DIRECTIONAL);
     }, true);
-    mobileSteeringElement.addEventListener('lostpointercapture', event => {
+    listenForInput(mobileSteeringElement, 'lostpointercapture', event => {
       finishPointer(event, state.steeringMode === STEERING_MODES.DIRECTIONAL);
     }, true);
     // Capture can be lost or unavailable; an owner's release elsewhere must still stop input.
     for (const type of ['pointerup', 'pointercancel', 'lostpointercapture']) {
-      window.parent.document.addEventListener(type, event => finishPointer(event), true);
+      listenForInput(window.parent.document, type, event => finishPointer(event), true);
     }
 
-    window.parent.addEventListener('blur', event => {
+    listenForInput(window.parent, 'blur', event => {
       if (event.target === window.parent) finishPointer();
     }, true);
-    window.parent.document.addEventListener('visibilitychange', () => {
+    listenForInput(window.parent.document, 'visibilitychange', () => {
       if (window.parent.document.hidden) finishPointer();
     });
 
-    window.addEventListener('keydown', blockLegacyDigitalSteering, true);
-    window.addEventListener('keyup', blockLegacyDigitalSteering, true);
+    listenForInput(window, 'keydown', blockLegacyDigitalSteering, true);
+    listenForInput(window, 'keyup', blockLegacyDigitalSteering, true);
     return true;
   }
 
   function tick(timestamp) {
+    if (disposed) return;
     if (!state.lastTimestamp) state.lastTimestamp = timestamp;
     const deltaSeconds = Math.min(0.1, Math.max(0, (timestamp - state.lastTimestamp) / 1000));
     state.lastTimestamp = timestamp;
@@ -630,13 +673,13 @@
     installSteeringModeControl();
     sampleSpeed(deltaSeconds);
     if (!window.PTBO_FIXED_STEP) { applyAnalogSteering(deltaSeconds); applyDirectionalSteering(deltaSeconds); }
-    requestAnimationFrame(tick);
+    animationFrame = requestAnimationFrame(tick);
   }
 
   installSpeedometer();
   installSteeringModeControl();
   connectMobileSteering();
-  requestAnimationFrame(tick);
+  animationFrame = requestAnimationFrame(tick);
 
   window.PTBO_VEHICLE_INSTRUMENTS = Object.freeze({
     state,
