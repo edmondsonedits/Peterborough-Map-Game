@@ -1,0 +1,150 @@
+{
+  "format": "glTF 2.0 binary",
+  "file": "station2.glb",
+  "fileBytes": 1158344,
+  "units": "metres",
+  "orientation": "Y up; front -Z; bay +Z",
+  "frontDoorPivotCount": 12,
+  "rearPanelTranslationsValid": true,
+  "rearPanelBoundsInsideOpenings": true,
+  "clearOpeningSampleCount": 45,
+  "blockedStaticOpeningSamples": 0,
+  "rearPanelGLTFTranslations": {
+    "Door_R1_Panel0": [
+      0,
+      0.30480000376701355,
+      23.399999618530273
+    ],
+    "Door_R1_Panel1": [
+      0,
+      0.9143999814987183,
+      23.399999618530273
+    ],
+    "Door_R1_Panel2": [
+      0,
+      1.5240000486373901,
+      23.399999618530273
+    ],
+    "Door_R1_Panel3": [
+      0,
+      2.1335999965667725,
+      23.399999618530273
+    ],
+    "Door_R1_Panel4": [
+      0,
+      2.7432000637054443,
+      23.399999618530273
+    ],
+    "Door_R1_Panel5": [
+      0,
+      3.352799892425537,
+      23.399999618530273
+    ],
+    "Door_R1_Panel6": [
+      0,
+      3.962399959564209,
+      23.399999618530273
+    ],
+    "Door_R2_Panel0": [
+      5.699999809265137,
+      0.30480000376701355,
+      23.399999618530273
+    ],
+    "Door_R2_Panel1": [
+      5.699999809265137,
+      0.9143999814987183,
+      23.399999618530273
+    ],
+    "Door_R2_Panel2": [
+      5.699999809265137,
+      1.5240000486373901,
+      23.399999618530273
+    ],
+    "Door_R2_Panel3": [
+      5.699999809265137,
+      2.1335999965667725,
+      23.399999618530273
+    ],
+    "Door_R2_Panel4": [
+      5.699999809265137,
+      2.7432000637054443,
+      23.399999618530273
+    ],
+    "Door_R2_Panel5": [
+      5.699999809265137,
+      3.352799892425537,
+      23.399999618530273
+    ],
+    "Door_R2_Panel6": [
+      5.699999809265137,
+      3.962399959564209,
+      23.399999618530273
+    ]
+  },
+  "frontPivotsIndependentChildren": true,
+  "rearSectionPanelCount": 14,
+  "missingRequiredNodes": [],
+  "reimportNodeCount": 104,
+  "reimportMeshObjectCount": 76,
+  "glbMeshCount": 32,
+  "drawPrimitiveCount": 76,
+  "materialCount": 12,
+  "boundsReimported": {
+    "min": [
+      -23.049999237060547,
+      -30.450000762939453,
+      -0.23999999463558197
+    ],
+    "max": [
+      12.42500114440918,
+      0.625,
+      9.65999984741211
+    ]
+  },
+  "reimportTriangleCount": 23236,
+  "notes": [
+    "Original tiled masonry and timber PNG materials embedded in GLB; metric UVs",
+    "Photo-aligned exterior: rear-shifted tower, low side timber annex, single tall wing window and far-end glazed entry",
+    "Tower identifier is an extruded typographic numeral 2, not a reproduced or verified crest",
+    "Non-door dimensions estimated from completed reference photos and City site presentation",
+    "Rear sectional door placement inferred"
+  ],
+  "uniquePrimitiveCount": 32,
+  "instantiatedPrimitiveCount": 76,
+  "preDedupFileBytes": 1667476,
+  "bytesSaved": 509132,
+  "embeddedImageCount": 3,
+  "towerBounds": {
+    "minX": 9,
+    "maxX": 12.2,
+    "frontZ": 17,
+    "rearZ": 21,
+    "shaftHeight": 9.4,
+    "capTop": 9.66
+  },
+  "sideAnnexBounds": {
+    "minX": 9,
+    "maxX": 12.2,
+    "frontZ": 1,
+    "rearZ": 8,
+    "height": 3.2
+  },
+  "frontWingArrangement": "one tall window beneath vertical timber accent near bay; full-height glazed public entry with projecting canopy at far end",
+  "optimization": {
+    "tool": "glTF Transform CLI 4.5.1",
+    "command": "gltf-transform dedup station2.glb station2-dedup.glb",
+    "result": "32 unique meshes / primitives, 76 instantiated primitive draws; node transforms, geometry, materials and embedded image bytes preserved"
+  },
+  "validation": {
+    "validator": "Khronos glTF Validator",
+    "errors": 0,
+    "warnings": 0,
+    "sha256": "4e24998d5359b632fe27a278cc8dc4fe0b55ed8334c65f06376452d43e358901"
+  },
+  "exteriorPreview": {
+    "file": "model/station2-exterior.png",
+    "width": 1920,
+    "height": 1280,
+    "bytes": 2639396
+  }
+}

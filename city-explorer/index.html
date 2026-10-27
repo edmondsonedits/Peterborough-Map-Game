@@ -28,6 +28,16 @@
     <link rel="stylesheet" href="styles.css?v=1.6.138">
     <link rel="stylesheet" href="mobile-controls-1.6.68.css?v=1.6.138">
     <link rel="stylesheet" href="current-street-hud-1.6.77.css?v=1.6.138">
+    <style>
+      #station2-game-controls:not([hidden]) {
+        position: fixed; right: 28px; bottom: calc(116px + env(safe-area-inset-bottom, 0px)); z-index: 19;
+        display: flex; align-items: center; flex-wrap: wrap; gap: 7px; max-width: min(660px, calc(100vw - 24px)); pointer-events: auto;
+      }
+      #station2-game-controls .hud-button { min-height: 34px; padding: 0 11px; font-size: 10px; }
+      #station2-model-status { color: #d5e0da; font-size: 10px; text-shadow: 0 1px 4px #07131b; }
+      @media (max-width: 760px) { #station2-game-controls:not([hidden]) { right: 12px; bottom: calc(134px + env(safe-area-inset-bottom, 0px)); gap: 5px; } }
+      @media (pointer: coarse) { #station2-game-controls:not([hidden]) { display: none; } }
+    </style>
 
     <!--
     IMPORT MAP:
@@ -105,6 +115,10 @@
       </section>
 
       <div id="interaction-prompt" role="status" aria-live="polite"></div>
+      <div id="station2-game-controls" aria-label="Station 2 start" hidden>
+        <button id="station2-start-truck" class="hud-button" type="button">Start in truck</button>
+        <span id="station2-model-status" role="status" aria-live="polite">Station 2 model loading</span>
+      </div>
 
       <!-- Runtime diagnostics make data/performance problems easier to identify. -->
       <footer class="stats-bar">
@@ -156,6 +170,7 @@
             <span id="mobile-action-label">Enter</span>
             <span id="mobile-action-detail">Truck</span>
           </button>
+          <button id="station2-mobile-start" type="button" style="width:100%;min-height:28px;font-size:8px" hidden>Start in truck</button>
           <span class="mobile-control-caption">Action</span>
         </div>
         <div class="mobile-flight-pad" aria-label="Fly mode altitude controls">

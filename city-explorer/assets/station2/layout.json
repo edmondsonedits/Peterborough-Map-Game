@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "units": "metres",
+  "status": "source-grounded reconstruction with estimated nondoor dimensions",
+  "coordinateSystem": "glTF Y up; X facade left as viewed from street; Z into bay; origin front middle door at slab top; front faces -Z",
+  "doorWidth": 4.2672,
+  "doorHeight": 4.2672,
+  "frontDoorCenters": [
+    -5.7,
+    0,
+    5.7
+  ],
+  "rearDoorCenters": [
+    0,
+    5.7
+  ],
+  "bay": {
+    "minX": -9.0,
+    "maxX": 9.0,
+    "frontZ": 0,
+    "rearZ": 23.4,
+    "wallHeight": 7.0,
+    "roofTop": 7.65,
+    "wallThickness": 0.3
+  },
+  "wing": {
+    "minX": -22.8,
+    "maxX": -9.0,
+    "frontZ": 0.4,
+    "rearZ": 30.0,
+    "height": 3.8
+  },
+  "tower": {
+    "minX": 9,
+    "maxX": 12.2,
+    "frontZ": 17,
+    "rearZ": 21,
+    "height": 9.4
+  },
+  "sideAnnex": {
+    "minX": 9,
+    "maxX": 12.2,
+    "frontZ": 1,
+    "rearZ": 8,
+    "height": 3.2
+  },
+  "rearService": {
+    "minX": -8.7,
+    "maxX": -3.0,
+    "frontZ": 14.5,
+    "rearZ": 23.1,
+    "height": 3.2
+  },
+  "truckSpawn": {
+    "x": 0,
+    "z": 9.0,
+    "heading": 0
+  },
+  "playerSpawn": {
+    "x": -2.5,
+    "z": 7.5
+  },
+  "apron": {
+    "minX": -23.5,
+    "maxX": 10.5,
+    "frontZ": -75,
+    "rearZ": 0
+  },
+  "site": {
+    "anchorLat": 44.3357121,
+    "anchorLon": -78.3162262,
+    "rotationYDegrees": 153.637,
+    "candidateReplacementOsmId": "way/1022083769",
+    "placementStatus": "initial alignment preserves reviewed truck location at local bay z9; Marina OSM centreline intersects local x0 near z-74; verify surveyed pavement and visual connection in browser"
+  },
+  "evidence": {
+    "doorDimensions": "Northern Dock Systems installed door case study: 14 ft x 14 ft nominal; finished clear dimensions unverified",
+    "geometry": "completed JCB photos and City January 2022 site plan; nondoor dimensions estimated",
+    "rearDoors": "two sectional doors documented; rear placement inferred",
+    "rooms": "full room plan unavailable; only observed apparatus/service area represented"
+  },
+  "nodeContract": {
+    "front": "Door_F{1..3}_{L|R}_Outer and Door_F{1..3}_{L|R}_Inner. All four are independent pivot nodes in glTF, not nested. Closed absolute positions supplied by model; runtime uses local Y rotations and positions for two hinged leaves per jamb.",
+    "rear": "Door_R{1..2}_Panel{0..6} each is a mesh or pivot at panel center; runtime translates/rotates along overhead track. Seven panels span doorHeight.",
+    "static": "Station2_Static root for all fixed structure; Station2_Root exported root; dynamic nodes retained named",
+    "floor": "Slab top at y=0, slab below; no apron exported because terrain transition is runtime sampled"
+  }
+}
