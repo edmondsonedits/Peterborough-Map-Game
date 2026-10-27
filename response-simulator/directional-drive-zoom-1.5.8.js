@@ -280,9 +280,9 @@
 
   function makeDirectionalDefaultOnce() {
     if (!instruments?.setSteeringMode) return;
-    if (localStorage.getItem(DEFAULT_MIGRATION_KEY) === '1') return;
+    try { if (localStorage.getItem(DEFAULT_MIGRATION_KEY) === '1') return; } catch {}
     instruments.setSteeringMode(DIRECTIONAL_MODE);
-    localStorage.setItem(DEFAULT_MIGRATION_KEY, '1');
+    try { localStorage.setItem(DEFAULT_MIGRATION_KEY, '1'); } catch {}
   }
 
   function eventInside(element, event) {
