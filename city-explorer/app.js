@@ -24,6 +24,9 @@ import stationOneLayout from './assets/station1/layout.json' with { type: 'json'
 import stationTwoLayout from './assets/station2/layout.json' with { type: 'json' };
 import { hideStationTwoReplacementRecords, stationCameraOffsetScale } from './station-two-core.mjs';
 import { hideStationOneReplacementRecords } from './station-one-core.mjs';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { createEmergencyFacilityLayer, suppressFacilitySource } from './emergency-facilities.js';
+import { emergencyFacilityEntries } from './emergency-facilities-catalog.js';
 import { createStationOneRuntime, stationOneRequested } from './station-one-runtime.js';
 import { createStationTwoRuntime, stationTwoRequested } from './station-two-runtime.js';
 import { reconcileStationPavement } from './station-pavement-layer.js?v=1.6.57';
@@ -458,6 +461,7 @@ let citySplatLayer = null;
 let playerActor = null;
 let fireTruckActor = null;
 let fireStationDetail = null;
+let emergencyFacilityLayer = null;
 let stationOneRuntime = null;
 let stationOneReplacementReady = false;
 let stationOneReplacementDiagnostics = { matched: 0, hidden: 0, sourceIds: [] };
@@ -4853,6 +4857,13 @@ async function buildCity() {
   // Settle optional photographic geometry before editor source-copy replacements are loaded.
   await Promise.all([...footageFacadeGroups.values()].map(group => group.userData.photoReady));
   initializeGameplay();
+  emergencyFacilityLayer = createEmergencyFacilityLayer({
+    THREE, scene: gameplayGroup, loader: new GLTFLoader(),
+    entries: emergencyFacilityEntries({stationOneSelected:STATION_ONE_SELECTED,stationTwoSelected:STATION_TWO_SELECTED}),
+    project, baseSurface:(x,z)=>gameplaySurfaceBaseAt(x,z),
+    records:()=>generatedRegistry.records.values(), hide:id=>suppressFacilitySource(generatedRegistry,authoredRuntime,id),
+  });
+  void emergencyFacilityLayer.load();
   await Promise.all([fireTruckActor.userData.truck.ready, playerActor.userData.animation.ready]);
   cityVisualLod = '';
   updateCityVisualLod();
@@ -5155,6 +5166,7 @@ function selectedStationRuntime() {
 }
 
 function hideSelectedStationReplacement() {
+  if (typeof emergencyFacilityLayer !== 'undefined') emergencyFacilityLayer?.reapplyReplacements();
   if (STATION_ONE_SELECTED && stationOneReplacementReady) {
     stationOneReplacementDiagnostics = hideStationOneReplacementRecords(generatedRegistry.records.values(), id => generatedRegistry.hide(id));
     document.documentElement.dataset.stationOneReplacement = `${stationOneReplacementDiagnostics.hidden}/${stationOneReplacementDiagnostics.matched}`;
@@ -5329,6 +5341,7 @@ function initializeGameplay() {
         mode: state.mode,
         player: playerActor ? { x: playerActor.position.x, y: playerActor.position.y, z: playerActor.position.z } : null,
         truck: { ...truckState },
+        emergencyFacilities: emergencyFacilityLayer?.getStatus() ?? {},
         stationOne: STATION_ONE_SELECTED ? stationOneRuntime.getStatus() : null,
         stationOneReplacement: STATION_ONE_SELECTED ? { ...stationOneReplacementDiagnostics } : null,
         stationTwo: STATION_TWO_SELECTED ? stationTwoRuntime.getStatus() : null,

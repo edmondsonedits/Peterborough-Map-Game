@@ -1,0 +1,85 @@
+{
+  "id": "station3",
+  "name": "Peterborough Fire Station 3",
+  "address": "839 Clonsilla Avenue",
+  "sourceIds": [
+    "way/558402285"
+  ],
+  "origin": {
+    "lat": 44.28490065,
+    "lon": -78.35062429999999,
+    "yawDegrees": -125.50090320570597
+  },
+  "footprint": [
+    [
+      42.8891,
+      37.6554
+    ],
+    [
+      37.4531,
+      37.306
+    ],
+    [
+      37.4933,
+      37.9524
+    ],
+    [
+      9.7324,
+      36.6098
+    ],
+    [
+      10.3197,
+      24.8699
+    ],
+    [
+      3.5965,
+      24.3721
+    ],
+    [
+      3.6841,
+      21.335
+    ],
+    [
+      -14.6512,
+      20.5097
+    ],
+    [
+      -14.0465,
+      0
+    ],
+    [
+      14.0465,
+      0
+    ],
+    [
+      14.2613,
+      2.8899
+    ],
+    [
+      38.4527,
+      3.8921
+    ],
+    [
+      41.5309,
+      7.3128
+    ],
+    [
+      41.219,
+      14.737
+    ],
+    [
+      43.6051,
+      14.8842
+    ]
+  ],
+  "frontEdge": [
+    8,
+    9
+  ],
+  "coordinates": "metres; glTF Y up; local front=-Z; X positive toward red entry when facing building (viewer-left); exact packaged OSM outline",
+  "evidence": {
+    "front": "City July2018 photos2and44:3glazedsectionaldoors,charcoalbrick,paleopaquemetalupperband,redentranceblock,glazedcanopy,whiteframewindows,onehighventonexposedbayendwall. No rooftopclerestoryglass.",
+    "rear": "Noverifiedrearview. Retainfootprintandrepeatedmaterialfamily, noinventedrearbaydoorcount.",
+    "heights": "Photoestimated, notsurveyed."
+  }
+}

@@ -1,0 +1,47 @@
+[
+  {
+    "id": "station1",
+    "bytes": 1972316,
+    "sha256": "228909c654890e17149c8ec833077027b09f656093b2554ca836838f229186c4",
+    "errors": 0,
+    "warnings": 0,
+    "infos": 194,
+    "truncated": false
+  },
+  {
+    "id": "station2",
+    "bytes": 1111204,
+    "sha256": "a8edc41f24b0fd755b564438bd7b22c93ebe59d593f9efc5b1cf06dcab40ba01",
+    "errors": 0,
+    "warnings": 0,
+    "infos": 32,
+    "truncated": false
+  },
+  {
+    "id": "station3",
+    "bytes": 1952492,
+    "sha256": "a9e68f3859e1a12245de3235d5cefea9e71a8b0f67d6464b53e85f7ed22f77b5",
+    "errors": 0,
+    "warnings": 0,
+    "infos": 14,
+    "truncated": false
+  },
+  {
+    "id": "ems-armour",
+    "bytes": 360960,
+    "sha256": "3229cd5d3cfbd6da7bb7733ddbf173f9e90d2d92e2afa2fa023f5f14230b8517",
+    "errors": 0,
+    "warnings": 0,
+    "infos": 9,
+    "truncated": false
+  },
+  {
+    "id": "ems-clonsilla",
+    "bytes": 323816,
+    "sha256": "dd1eb07eb33e725ae69e87cfff7afa4898df8de2b81bc6529cb70434defc7edc",
+    "errors": 0,
+    "warnings": 0,
+    "infos": 9,
+    "truncated": false
+  }
+]

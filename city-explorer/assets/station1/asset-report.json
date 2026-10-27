@@ -1,7 +1,7 @@
 {
   "format": "glTF 2.0 binary",
   "file": "station1.glb",
-  "fileBytes": 1701316,
+  "fileBytes": 1972316,
   "units": "metres",
   "orientation": "Y up; front -Z; bay +Z",
   "fiveDoorCount": 5,
@@ -9,13 +9,13 @@
   "dynamicPanelTransformsValid": true,
   "missingRequiredNodes": [],
   "towerSeparateParent": true,
-  "glbMeshCount": 157,
-  "drawPrimitiveCount": 157,
+  "glbMeshCount": 200,
+  "drawPrimitiveCount": 200,
   "materialCount": 20,
   "embeddedImageCount": 1,
-  "reimportObjectCount": 200,
-  "reimportMeshObjectCount": 157,
-  "reimportTriangleCount": 51470,
+  "reimportObjectCount": 243,
+  "reimportMeshObjectCount": 200,
+  "reimportTriangleCount": 55134,
   "boundsReimported": {
     "min": [
       -42.92499923706055,
@@ -24,8 +24,8 @@
     ],
     "max": [
       11.989995956420898,
-      5.419999599456787,
-      12.84999942779541
+      5.420000076293945,
+      13.780000686645508
     ]
   },
   "notes": [
@@ -34,5 +34,25 @@
     "ancillary room layout is unresolved and not invented",
     "tower is separate for terrain-adjusted runtime placement"
   ],
-  "exhaustAssemblyCount": 5
+  "exhaustAssemblyCount": 5,
+  "rearDoorCount": 5,
+  "rearDoorCenters": [
+    -9.28,
+    -4.64,
+    0,
+    4.64,
+    9.28
+  ],
+  "rearDoorsVisualOnly": true,
+  "rearShedSideDoor": {
+    "count": 1,
+    "side": "outer maxX side of low practice shed",
+    "centerX": -35,
+    "centerZ": 33.34,
+    "estimatedSizeMetres": [
+      3.0,
+      3.0
+    ]
+  },
+  "towerPlatformGuardrail": true
 }

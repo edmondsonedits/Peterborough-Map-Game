@@ -51,3 +51,7 @@ Initial appearance-build acceptance (before the right-bay control revision):
 - Evidence is retained in the accompanying `../qa` directory, including `visual-result.json`, `fallback-result.json`, `other-stations-result.json`, source/model validation reports and screenshots.
 
 The surrounding city remains the existing GIS scenery. Unverified room arrangements and exact as-built dimensions remain unresolved. The user-authorized Pages release is v1.6.141. Its deployment and live verification receipts are retained in the accompanying ../qa directory.
+
+## 2026-10-27 local exterior revision
+
+The evidence-led exterior pass deepened the front-door red, cooled the masonry, replaced the tower numeral with an original generic shield silhouette, and revised the inferred rear doors' glazing. Current export: 1,111,204 bytes; SHA-256 a8edc41f24b0fd755b564438bd7b22c93ebe59d593f9efc5b1cf06dcab40ba01. Door-node geometry and gameplay are preserved; current validator, browser drive-out and multi-facility checks are recorded in [the facilities report](../facilities/README.md). This revision is local and has not been published.

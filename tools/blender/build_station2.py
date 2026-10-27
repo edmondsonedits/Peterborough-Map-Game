@@ -23,10 +23,13 @@ def material(name, color, rough=0.7, metallic=0.0, alpha=1.0):
     mats[name] = m
     return m
 
-masonry = material("Masonry | charcoal-grey running bond", (0.24,0.26,0.27), .9)
+masonry = material("Masonry | charcoal-grey running bond", (0.20,0.23,0.27), .9)
 fascia = material("Fascia | graphite metal", (.018,.024,.030), .62, .08)
-red = material("Door frames | fire-engine red", (.58,.018,.025), .34, .25)
+red = material("Door frames | subdued fire red", (.48,.022,.042), .34, .25)
 glass = material("Glazing | cool reflective glass", (.55,.68,.72), .09, .12, .045)
+rear_polycarbonate = material("Rear door glazing | dark reflective polycarbonate", (.035,.065,.09), .22, .28)
+firemark_navy = material("Tower firemark | navy enamel", (.018,.045,.09), .38, .12)
+firemark_gold = material("Tower firemark | warm gold", (.72,.49,.15), .42, .28)
 timber = material("Interior | honey glulam and CLT", (.48,.265,.105), .68)
 timber_vertical = material("Exterior | vertical honey timber", (.48,.265,.105), .68)
 
@@ -44,7 +47,7 @@ def create_tile_image(name, file_name, kind, light=False):
     n=512
     rng=random.Random(22418 if kind=="brick" else (611 if light else 610))
     px=[0.0]*(n*n*4)
-    brick_colors=[(0.27,0.29,0.30),(0.30,0.32,0.33),(0.34,0.35,0.35),(0.285,0.305,0.31)]
+    brick_colors=[(0.215,0.24,0.275),(0.235,0.26,0.295),(0.265,0.285,0.315),(0.225,0.25,0.285)]
     cell_colors={}
     row_h=41; tile_w=205; mortar=5
     for y in range(n):
@@ -52,7 +55,7 @@ def create_tile_image(name, file_name, kind, light=False):
         for x in range(n):
             xx=(x+off)%tile_w; yy=y%row_h
             if xx<mortar or yy<mortar:
-                base=(.40,.415,.42)
+                base=(.31,.34,.37)
             else:
                 key=(row,(x+off)//tile_w)
                 if key not in cell_colors:
@@ -135,6 +138,19 @@ def box_g(name,x,z,y,height,depth,mat,bevel=0): # x center, game z center, eleva
     return cube_obj(name,(x,-z,y),(depth,depth,depth),mat) if False else cube_obj(name,(x,-z,y),(depth,depth,height),mat,bevel)
 def wall(name, x,z,y, sx,sz,sy,mat,bevel=0):
     return cube_obj(name,(x,-z,y),(sx,sz,sy),mat,bevel)
+
+def shield_mesh(name, center_x, front_y, center_z, width, height, thickness, mat):
+    # Small original shield silhouette inspired by the JCB tower crest; not a traced emblem.
+    profile=[(-.50,.38),(.50,.38),(.50,-.10),(0,-.50),(-.50,-.10)]
+    front=[(center_x+px*width,front_y,center_z+pz*height) for px,pz in profile]
+    back=[(x,front_y-thickness,z) for x,_,z in front]
+    verts=front+back
+    faces=[tuple(range(5)),tuple(range(9,4,-1))]
+    faces.extend((i,(i+1)%5,(i+1)%5+5,i+5) for i in range(5))
+    mesh=bpy.data.meshes.new(name+"Mesh"); mesh.from_pydata(verts,[],faces); mesh.materials.append(mat); mesh.update()
+    obj=bpy.data.objects.new(name,mesh); bpy.context.collection.objects.link(obj)
+    assign_metric_uv(obj); static_by_mat.setdefault(mat.name,[]).append(obj)
+    return obj
 
 def bar(name,a,b,r,mat,collection=None):
     mid=(Vector(a)+Vector(b))/2; d=Vector(b)-Vector(a)
@@ -253,9 +269,9 @@ def build(layout):
             zc=(i+.5)*H/7
             pname=f"Door_R{di}_Panel{i}"
             pivot=bpy.data.objects.new(pname,None); bpy.context.collection.objects.link(pivot); pivot.location=(c,-23.4,zc); pivot.empty_display_type="PLAIN_AXES"; pivot.empty_display_size=.12; all_dynamic.append(pivot)
-            cube_obj(pname+"_section",(c,-23.4,zc),(3.9,.09,H/7-.025),fascia,.018,pivot)
-            cube_obj(pname+"_glazing",(c,-23.4-.052,zc),(3.4,.025,H/7*.43),glass,.012,pivot)
-            cube_obj(pname+"_stiffener",(c,-23.4-.07,zc-H/7*.34),(4.05,.045,.05),fascia,.012,pivot)
+            cube_obj(pname+"_section",(c,-23.4,zc),(3.9,.09,H/7-.025),metal,.018,pivot)
+            cube_obj(pname+"_glazing",(c,-23.4-.052,zc),(3.55,.025,H/7-.13),rear_polycarbonate,.012,pivot)
+            cube_obj(pname+"_stiffener",(c,-23.4-.07,zc-H/7*.34),(4.05,.045,.05),metal,.012,pivot)
     # Rear support/service massing on the left; no unverified room partitions or props.
     wall("Service support block",-5.85,18.8,1.6,5.7,8.6,3.2,white)
     wall("Service block wood accent",-5.85,14.35,2.45,5.4,.12,1.5,timber)
@@ -307,18 +323,12 @@ def build(layout):
     tower_panel=wall("Tower timber accent panel",tower_cfg["minX"]+.65,tower_front-.08,2.05,1.05,.12,3.9,timber_vertical)
     assign_vertical_grain_uv(tower_panel)
     sign_y=8.76
-    wall("Station 2 identifier backing",tower_x,tower_front-.10,sign_y,2.45,.14,.82,fascia)
-    # Real extruded glyph, facing the street (+Y) with its typographic right toward -X.
-    bpy.ops.object.text_add(location=(tower_x,-(tower_front-.21),sign_y), rotation=(math.pi/2,0,math.pi))
-    number=bpy.context.object; number.name="Station 2 numeral 2"
-    number.data.body="2"; number.data.size=.78
-    number.data.align_x="CENTER"; number.data.align_y="CENTER"
-    number.data.extrude=.025; number.data.bevel_depth=.004; number.data.bevel_resolution=2
-    number.data.resolution_u=16; number.data.fill_mode="BOTH"
-    number.data.materials.append(white)
-    bpy.ops.object.convert(target="MESH")
-    number=bpy.context.object; number.name="Station 2 numeral 2"
-    static_by_mat.setdefault(white.name,[]).append(number)
+    badge_front_y=-(tower_front-.21)
+    shield_mesh("Tower firemark gold shield",tower_x,badge_front_y,sign_y,.92,1.08,.045,firemark_gold)
+    shield_mesh("Tower firemark navy inset",tower_x,badge_front_y+.012,sign_y,.76,.89,.035,firemark_navy)
+    # Generic gold cross mark keeps the badge legible without copying the official crest artwork.
+    wall("Tower firemark vertical",tower_x,tower_front-.25,sign_y,.105,.35,.025,firemark_gold,.008)
+    wall("Tower firemark crossbar",tower_x,tower_front-.25,sign_y+.03,.29,.105,.025,firemark_gold,.008)
     for i in range(7):
         wall(f"Tower louver blade {i}",tower_x,tower_front+.14,3.55+i*.14,1.3,.12,.045,metal)
     # Low timber-clad side annex links the street-side approach to the station.
@@ -472,7 +482,7 @@ def export_and_validate():
             for v in o.bound_box: bounds.append(o.matrix_world@Vector(v))
     mins=[min(v[i] for v in bounds) for i in range(3)] if bounds else [0,0,0]
     maxs=[max(v[i] for v in bounds) for i in range(3)] if bounds else [0,0,0]
-    report={"format":"glTF 2.0 binary","file":"station2.glb","fileBytes":size,"units":"metres","orientation":"Y up; front -Z; bay +Z","frontDoorPivotCount":len(fronts),"rearPanelTranslationsValid":panel_translation_valid,"rearPanelBoundsInsideOpenings":panel_bounds_valid,"clearOpeningSampleCount":clear_samples,"blockedStaticOpeningSamples":blocked_samples,"rearPanelGLTFTranslations":panel_translations,"frontPivotsIndependentChildren":independent,"rearSectionPanelCount":sum(1 for n in rear_expected if n in names),"missingRequiredNodes":missing,"reimportNodeCount":len(names),"reimportMeshObjectCount":sum(1 for o in bpy.context.scene.objects if o.type=="MESH"),"glbMeshCount":mesh_count,"drawPrimitiveCount":primitive_count,"materialCount":material_count,"embeddedImageCount":embedded_images,"boundsReimported":{"min":mins,"max":maxs},"reimportTriangleCount":sum(len(o.data.polygons) for o in bpy.context.scene.objects if o.type=="MESH"),"notes":["original tiled masonry and timber PNG materials embedded in GLB; metric UVs","non-door dimensions estimated from completed reference photos and City site presentation","rear sectional door placement inferred","tower identifier is a simple Station 2 label, not a verified crest"]}
+    report={"format":"glTF 2.0 binary","file":"station2.glb","fileBytes":size,"units":"metres","orientation":"Y up; front -Z; bay +Z","frontDoorPivotCount":len(fronts),"rearPanelTranslationsValid":panel_translation_valid,"rearPanelBoundsInsideOpenings":panel_bounds_valid,"clearOpeningSampleCount":clear_samples,"blockedStaticOpeningSamples":blocked_samples,"rearPanelGLTFTranslations":panel_translations,"frontPivotsIndependentChildren":independent,"rearSectionPanelCount":sum(1 for n in rear_expected if n in names),"missingRequiredNodes":missing,"reimportNodeCount":len(names),"reimportMeshObjectCount":sum(1 for o in bpy.context.scene.objects if o.type=="MESH"),"glbMeshCount":mesh_count,"drawPrimitiveCount":primitive_count,"materialCount":material_count,"embeddedImageCount":embedded_images,"boundsReimported":{"min":mins,"max":maxs},"reimportTriangleCount":sum(len(o.data.polygons) for o in bpy.context.scene.objects if o.type=="MESH"),"notes":["original tiled masonry and timber PNG materials embedded in GLB; metric UVs","non-door dimensions estimated from completed reference photos and City site presentation","rear sectional door placement inferred","tower badge is an original generic navy-and-gold shield inspired by the photographed crest silhouette, not a verified reproduction of official arms"]}
     with open(REPORT_PATH,"w") as f: json.dump(report,f,indent=2)
     if missing or len(fronts)!=12 or not independent or report["rearSectionPanelCount"]!=14 or not panel_translation_valid or not panel_bounds_valid or blocked_samples: raise RuntimeError("Missing named door nodes or independent front pivots")
     if primitive_count>90: raise RuntimeError(f"Draw primitive budget exceeded: {primitive_count}")

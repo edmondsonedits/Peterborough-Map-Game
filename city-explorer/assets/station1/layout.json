@@ -20,7 +20,13 @@
     4.64,
     9.28
   ],
-  "rearDoorCenters": [],
+  "rearDoorCenters": [
+    -9.28,
+    -4.64,
+    0,
+    4.64,
+    9.28
+  ],
   "bay": {
     "minX": -11.959,
     "maxX": 11.959,
@@ -137,7 +143,8 @@
     "heights": "Estimated from owner 0149/0158/0170 frames; raised rear roof and sloped clerestory visible",
     "interior": "City 2018 Bay No.1 photo establishes mint/teal/cream block walls, exposed trusses, white inner door face, ductwork and yellow exhaust hose. 2011 original tour establishes watchroom, gym, display/storage/program only, not current room adjacency",
     "trainingTower": "Owner 0170_LEFT_SIDE photo and city footprint 6/3300; heights/facade estimated",
-    "rooms": "Full room floor plan unavailable. Visible bay and shallow watchroom represented; ancillary wing closed mass. Do not label invented internal rooms as surveyed"
+    "rooms": "Full room floor plan unavailable. Visible bay and shallow watchroom represented; ancillary wing closed mass. Do not label invented internal rooms as surveyed",
+    "rear": "Owner confirmed on 2026-10-27: same rear bay count as front (five), plus one side bay door on the rear shed. Rear door style/alignment/dimensions estimated from front; no verified rear elevation retrieved."
   },
   "nodeContract": {
     "root": "Station1_Root",
@@ -145,5 +152,10 @@
     "tower": "Station1_TrainingTower separate parent with local x/z coordinates; runtime adjusts its parent Y to local terrain",
     "doors": "Door_F{1..5}_Panel{0..7}, independent node at panel centre (x=door centre,y=(panel+.5)*height/8,z=0.06), with geometry in XY plane and identity rotations. Each panel node may group frame/glass/detail meshes. No nesting of dynamic nodes.",
     "floor": "Slab top y=0, slab extends below. Runtime transitions apron over existing authoritative pavement."
+  },
+  "rearDoorsVisualOnly": true,
+  "rearShed": {
+    "sideDoorCount": 1,
+    "status": "Existing rear low training-wing/shed; side door confirmed by owner; dimensions and exact placement estimated"
   }
 }

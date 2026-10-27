@@ -1,0 +1,74 @@
+{
+  "id": "ems-clonsilla",
+  "origin": {
+    "lat": 44.28965735,
+    "lon": -78.34575219999999,
+    "yawDegrees": -133.58945228734478
+  },
+  "sourceIds": [
+    "way/998877497"
+  ],
+  "footprint": [
+    [
+      -7.7714,
+      7.1229
+    ],
+    [
+      -7.8216,
+      0
+    ],
+    [
+      7.8216,
+      0
+    ],
+    [
+      7.8638,
+      7.1306
+    ],
+    [
+      19.4115,
+      7.1249
+    ],
+    [
+      19.4953,
+      20.9686
+    ],
+    [
+      7.9556,
+      20.9666
+    ],
+    [
+      -7.6876,
+      20.9666
+    ]
+  ],
+  "frontEdge": [
+    1,
+    2
+  ],
+  "status": "GIS footprint exact to packaged source; front assignment inferred from street-facing frontage; facade heights and hidden side/rear details estimated. No rear door count established.",
+  "units": "metres",
+  "modelNotes": {
+    "frontEdge": "GIS contract edge indices 1\u20132; positive local Z inward",
+    "overallHeightEstimateM": 3.9,
+    "confirmedVehicleBays": 2,
+    "estimatedExteriorDoors": [
+      {
+        "count": 2,
+        "side": "setback-side-wing front at local Z\u22487.12 m",
+        "centersX": [
+          10.9,
+          16.2
+        ],
+        "sizeM": [
+          4.12,
+          3.08
+        ]
+      }
+    ],
+    "doorPlacement": "Estimated; not visible in inspected exterior photo",
+    "roof": "Flat low-profile roof / parapet inferred from storefront photo",
+    "foundationBelowDatumM": 1.2,
+    "foundationPurpose": "Terrain skirt to avoid gaps on sloped GIS ground; not a surveyed foundation"
+  }
+}

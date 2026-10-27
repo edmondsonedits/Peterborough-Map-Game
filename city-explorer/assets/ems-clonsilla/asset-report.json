@@ -1,0 +1,38 @@
+{
+  "id": "ems-clonsilla",
+  "asset": "ems-clonsilla.glb",
+  "units": "metres",
+  "stats": {
+    "fileBytes": 323816,
+    "nodeCount": 10,
+    "meshDefinitions": 8,
+    "primitiveCount": 8,
+    "meshNodeInstances": 8,
+    "materialCount": 8,
+    "embeddedImageCount": 0,
+    "instancedTriangleCount": 6540
+  },
+  "sha256": "dd1eb07eb33e725ae69e87cfff7afa4898df8de2b81bc6529cb70434defc7edc",
+  "evidenceLedger": {
+    "confirmed": [
+      "Address 1003 Clonsilla and Station 7 identity are visible on County-hosted photo.",
+      "Broad glazed storefront, silver mullions, light fascia/parapet, blue/orange lower bands are visible in County-hosted photo.",
+      "Written 2017 opening account says converted auto-sales building with two vehicle bays.",
+      "GIS footprint vertices and source way/998877497."
+    ],
+    "estimated": [
+      "3.9 m overall height; flat roof; two closed bay doors on setback-side wing front at local Z≈7.12 m and their sizes/panel treatment; all side and rear wall details. Door count is text-confirmed for vehicle bays, but exterior door wall/placement is estimated."
+    ]
+  },
+  "sources": [
+    "https://www.ptbocounty.ca/living-in-our-community/emergency-services/community-paramedicine-and-health-monitoring/",
+    "https://themillbrooktimes.ca/new-paramedic-station-expected-improve-response-times/"
+  ],
+  "validation": {
+    "truncated": false,
+    "errors": 0,
+    "infos": 9,
+    "warnings": 0,
+    "tool": "Khronos glTF Validator"
+  }
+}

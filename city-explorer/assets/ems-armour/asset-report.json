@@ -1,0 +1,38 @@
+{
+  "id": "ems-armour",
+  "asset": "ems-armour.glb",
+  "units": "metres",
+  "stats": {
+    "fileBytes": 360960,
+    "nodeCount": 11,
+    "meshDefinitions": 9,
+    "primitiveCount": 9,
+    "meshNodeInstances": 9,
+    "materialCount": 9,
+    "embeddedImageCount": 1,
+    "instancedTriangleCount": 7494
+  },
+  "sha256": "3229cd5d3cfbd6da7bb7733ddbf173f9e90d2d92e2afa2fa023f5f14230b8517",
+  "evidenceLedger": {
+    "confirmed": [
+      "Address 310 Armour Road and headquarters identity (County service page).",
+      "Partial view of red-brick entrance, glass entry, pale horizontal canopy edge, and blue/orange-on-white headquarters sign (Global News photo, 2023-07-27).",
+      "GIS footprint vertices and source way/1029007124."
+    ],
+    "estimated": [
+      "5 m main and 3.7 m entrance heights; full red-brick massing beyond the visible entrance; canopy/sign scale and sign location; all side and rear finishes; roof details. No ambulance bay count or doors are claimed."
+    ]
+  },
+  "sources": [
+    "https://www.ptbocounty.ca/county-government/departments/paramedics/service-commitment/",
+    "https://globalnews.ca/news/9860539/peterborough-paramedics-union-staff-shortage-risks/",
+    "https://www.ptbocounty.ca/county-government/departments/paramedics/who-are-the-peterborough-county-city-paramedics/"
+  ],
+  "validation": {
+    "truncated": false,
+    "errors": 0,
+    "infos": 9,
+    "warnings": 0,
+    "tool": "Khronos glTF Validator"
+  }
+}

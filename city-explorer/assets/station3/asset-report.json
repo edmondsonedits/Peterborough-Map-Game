@@ -1,0 +1,59 @@
+{
+  "format": "glTF 2.0 binary",
+  "file": "station3.glb",
+  "fileBytes": 1952492,
+  "sha256": "a9e68f3859e1a12245de3235d5cefea9e71a8b0f67d6464b53e85f7ed22f77b5",
+  "units": "metres",
+  "orientation": "Y up; front -Z; local footprint coordinates preserved",
+  "sourceId": "way/558402285",
+  "anchor": {
+    "lat": 44.28490065,
+    "lon": -78.35062429999999,
+    "yawDegrees": -125.50090320570597
+  },
+  "footprintVertexCount": 15,
+  "footprintExactFromGIS": true,
+  "rootNode": "Station3_Root",
+  "staticNode": "Station3_Static",
+  "missingRequiredNodes": [],
+  "dynamicDoorPivots": 0,
+  "frontStaticDoorCount": 3,
+  "rearDoorCount": null,
+  "meshCount": 16,
+  "drawPrimitiveCount": 16,
+  "materialCount": 16,
+  "embeddedImageCount": 1,
+  "reimportObjectCount": 18,
+  "reimportMeshObjectCount": 16,
+  "reimportTriangleCount": 61043,
+  "boundsReimported": {
+    "min": [
+      -15.549999237060547,
+      -38.07725524902344,
+      -1.630000114440918
+    ],
+    "max": [
+      43.73004150390625,
+      2.705000162124634,
+      7.727927207946777
+    ]
+  },
+  "reviewImages": [
+    "station3-front.png",
+    "station3-rear.png",
+    "station3-left.png",
+    "station3-right.png",
+    "station3-overhead.png"
+  ],
+  "evidenceConfidence": {
+    "front": "City July 2018 photos 2 and 44",
+    "rear": "unverified; generic closed perimeter",
+    "sides": "only photo-visible exposed high louver and glazed exhibit corner modeled; remaining side surfaces conservative"
+  },
+  "notes": [
+    "No reference-photo pixels included; all materials and flags are original procedural geometry/texture.",
+    "Three glazed front sectional doors and entrance facade are photo-grounded; dimensions are estimates.",
+    "No rear door count or layout is inferred because no verified rear view is available.",
+    "GIS outline and anchor/yaw are copied without adjustment."
+  ]
+}

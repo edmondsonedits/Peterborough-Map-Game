@@ -1,0 +1,62 @@
+{
+  "id": "ems-armour",
+  "origin": {
+    "lat": 44.304597799999996,
+    "lon": -78.30334314999999,
+    "yawDegrees": 224.14150346619488
+  },
+  "sourceIds": [
+    "way/1029007124"
+  ],
+  "footprint": [
+    [
+      26.8396,
+      40.6806
+    ],
+    [
+      27.3952,
+      9.8887
+    ],
+    [
+      15.8675,
+      9.3454
+    ],
+    [
+      16.3009,
+      0
+    ],
+    [
+      -16.3009,
+      0
+    ],
+    [
+      -16.9498,
+      9.5675
+    ],
+    [
+      -29.5267,
+      9.4076
+    ],
+    [
+      -30.0261,
+      39.684
+    ]
+  ],
+  "frontEdge": [
+    3,
+    4
+  ],
+  "status": "GIS footprint exact to packaged source; front assignment inferred from street-facing frontage; facade heights and hidden side/rear details estimated. No rear door count established. Local +Z points inward from the projecting office entrance; orientation corrected by polygon interior.",
+  "units": "metres",
+  "modelNotes": {
+    "frontEdge": "GIS contract edge indices 3\u20134; positive local Z inward",
+    "buildingHeightEstimateM": {
+      "entranceProjection": 3.7,
+      "mainMass": 5.0
+    },
+    "apparatusDoors": "No count or positions asserted; unseen service faces remain simple",
+    "frontageSign": "Photo-based wording; freestanding position and scale estimated; outside GIS footprint",
+    "foundationBelowDatumM": 1.2,
+    "foundationPurpose": "Terrain skirt to avoid gaps on sloped GIS ground; not a surveyed foundation"
+  }
+}

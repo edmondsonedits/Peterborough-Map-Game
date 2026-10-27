@@ -25,3 +25,7 @@ Verify source-photo silhouette, colours and bay details in Blender and at game t
 The user's follow-up selects the second bay from the right, viewed from the street. Move the truck from local X=-9.28 to X=-4.64 and move its companion player by the same 4.64 m, to X=-2.01. Keep all doors closed at spawn and operate only the newly aligned door.
 
 Replace the twelve straight yellow rods with a restrained set of five stowed exhaust extraction assemblies. The City interior photo establishes flexible corrugated yellow hose connected to overhead metal servicework. Use curved ribbed tubes, compact couplings and thin support lines; keep the parked assemblies above and beside the driving lanes. Count, exact route and stowed position are representative details, not measured installation drawings. Verify the result in Blender and from the truck camera, then test the new spawn, entry, closed-door collision, targeted opening, reset, drive-out and touch operation.
+
+## All-elevation completion
+
+Owner confirmation supersedes the former unverified solid rear wall: five rear sectional doors and one side bay door on the low rear shed. Five rear centres follow the front lanes; matching styles and dimensions are estimates. The shed door is estimated at 3 x 3 m on its exposed max-X side. Added source-visible tower platform railings and two wing windows. All added doors are closed scenery; front door operation and collision remain unchanged.

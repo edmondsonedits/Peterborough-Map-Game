@@ -22,7 +22,8 @@ for (let door = 0; door < 5; door += 1) for (let panel = 0; panel < 8; panel += 
   assert.deepEqual(node.rotation || [0, 0, 0, 1], [0, 0, 0, 1], `${name} starts with the authored identity rotation`);
 }
 assert.equal(layout.frontDoorCenters.length, 5, 'layout preserves all five photo-confirmed apparatus bays');
-assert.deepEqual(layout.rearDoorCenters, [], 'Station 1 has no rear openings');
+assert.deepEqual(layout.rearDoorCenters, layout.frontDoorCenters, 'owner-confirmed five rear doors align to the five apparatus lanes');
+assert.equal(layout.rearDoorsVisualOnly, true, 'rear scenery doors remain closed in this exterior revision');
 assert.deepEqual(layout.truckSpawn, { x: -4.64, z: 9, heading: 0 }, 'truck starts in the second bay from viewer-right');
 assert.deepEqual(layout.playerSpawn, { x: -2.01, z: 7.5 }, 'player follows the truck to the second bay');
 
@@ -33,7 +34,7 @@ assert.equal(spawn.heading, layout.site.rotationYDegrees * Math.PI / 180);
 
 let doors = stationOneDoorState(layout);
 assert.deepEqual(doors.front.map(door => door.fraction), [0, 0, 0, 0, 0], 'all five sectional doors start closed');
-assert.deepEqual(doors.rear, [], 'no rear door state is created');
+assert.deepEqual(doors.rear, [], 'static closed rear doors do not create interactive door state');
 doors = toggleStationOneDoor(doors, 1);
 assert.deepEqual(doors.front.map(door => door.target), [0, 1, 0, 0, 0], 'only the second bay from viewer-right opens for the truck');
 for (let frame = 0; frame < 20; frame += 1) doors = stepStationOneDoors(doors, 0.1);

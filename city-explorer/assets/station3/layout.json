@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "id": "station3",
+  "stationNumber": 3,
+  "rootName": "Station3_Root",
+  "name": "Peterborough Fire Station 3",
+  "address": "839 Clonsilla Avenue",
+  "sourceIds": [
+    "way/558402285"
+  ],
+  "units": "metres",
+  "status": "source-grounded front; exact GIS footprint; rear and side facade details unverified",
+  "origin": {
+    "lat": 44.28490065,
+    "lon": -78.35062429999999,
+    "yawDegrees": -125.50090320570597
+  },
+  "coordinateSystem": "metres; glTF Y up; local front=-Z; X positive toward red entry when facing building (viewer-left); exact packaged OSM outline",
+  "footprint": [
+    [
+      42.8891,
+      37.6554
+    ],
+    [
+      37.4531,
+      37.306
+    ],
+    [
+      37.4933,
+      37.9524
+    ],
+    [
+      9.7324,
+      36.6098
+    ],
+    [
+      10.3197,
+      24.8699
+    ],
+    [
+      3.5965,
+      24.3721
+    ],
+    [
+      3.6841,
+      21.335
+    ],
+    [
+      -14.6512,
+      20.5097
+    ],
+    [
+      -14.0465,
+      0
+    ],
+    [
+      14.0465,
+      0
+    ],
+    [
+      14.2613,
+      2.8899
+    ],
+    [
+      38.4527,
+      3.8921
+    ],
+    [
+      41.5309,
+      7.3128
+    ],
+    [
+      41.219,
+      14.737
+    ],
+    [
+      43.6051,
+      14.8842
+    ]
+  ],
+  "frontEdge": [
+    8,
+    9
+  ],
+  "buildingMasses": {
+    "apparatusBay": {
+      "minX": -14.0465,
+      "maxX": 3.6841,
+      "frontZ": 0,
+      "rearZ": 20.5097,
+      "estimatedHeight": 7.55,
+      "doorCount": 3
+    },
+    "redEntry": {
+      "minX": 3.5965,
+      "maxX": 14.2613,
+      "frontZ": 0,
+      "rearZ": 24.8699,
+      "estimatedHeight": 6.31
+    },
+    "legacyExhibitWing": {
+      "minX": 14.0,
+      "maxX": 43.6051,
+      "frontZ": 2.8899,
+      "rearZ": 37.9524,
+      "estimatedHeight": 4.72
+    }
+  },
+  "frontDoorCenters": [
+    -11.05,
+    -5.25,
+    0.55
+  ],
+  "doorWidth": 4.95,
+  "doorHeight": 4.42,
+  "frontDoorType": "static glazed sectional appearance; no runtime panel pivots",
+  "materials": {
+    "brick": "#34383c",
+    "upperSiding": "#b3b6b5",
+    "doorFrames": "#b8bfbd",
+    "doorGlazing": "#0b181c",
+    "entry": "#8f111c",
+    "fascia": "#090b0c"
+  },
+  "evidence": {
+    "front": "City July2018 photos2and44:3glazedsectionaldoors,charcoalbrick,paleopaquemetalupperband,redentranceblock,glazedcanopy,whiteframewindows,onehighventonexposedbayendwall. No rooftopclerestoryglass.",
+    "rear": "Noverifiedrearview. Retainfootprintandrepeatedmaterialfamily, noinventedrearbaydoorcount.",
+    "heights": "Photoestimated, notsurveyed."
+  },
+  "rear": "No verified rear view; closed conservative perimeter surfaces only, no rear apparatus-door count or openings inferred.",
+  "dimensions": "Footprint copied from fire-station-gis-contract.json; all wall heights, openings, and door dimensions are photo-scaled estimates."
+}

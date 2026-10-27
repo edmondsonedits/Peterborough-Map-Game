@@ -1,7 +1,7 @@
 {
   "format": "glTF 2.0 binary",
   "file": "station2.glb",
-  "fileBytes": 1158344,
+  "fileBytes": 1111204,
   "units": "metres",
   "orientation": "Y up; front -Z; bay +Z",
   "frontDoorPivotCount": 12,
@@ -84,11 +84,12 @@
   "frontPivotsIndependentChildren": true,
   "rearSectionPanelCount": 14,
   "missingRequiredNodes": [],
-  "reimportNodeCount": 104,
-  "reimportMeshObjectCount": 76,
-  "glbMeshCount": 32,
-  "drawPrimitiveCount": 76,
-  "materialCount": 12,
+  "reimportNodeCount": 106,
+  "reimportMeshObjectCount": 78,
+  "glbMeshCount": 35,
+  "drawPrimitiveCount": 35,
+  "materialCount": 15,
+  "embeddedImageCount": 3,
   "boundsReimported": {
     "min": [
       -23.049999237060547,
@@ -101,50 +102,23 @@
       9.65999984741211
     ]
   },
-  "reimportTriangleCount": 23236,
+  "reimportTriangleCount": 21412,
   "notes": [
-    "Original tiled masonry and timber PNG materials embedded in GLB; metric UVs",
-    "Photo-aligned exterior: rear-shifted tower, low side timber annex, single tall wing window and far-end glazed entry",
-    "Tower identifier is an extruded typographic numeral 2, not a reproduced or verified crest",
-    "Non-door dimensions estimated from completed reference photos and City site presentation",
-    "Rear sectional door placement inferred"
+    "original tiled masonry and timber PNG materials embedded in GLB; metric UVs",
+    "non-door dimensions estimated from completed reference photos and City site presentation",
+    "rear sectional door placement inferred",
+    "tower badge is an original generic navy-and-gold shield inspired by the photographed crest silhouette, not a verified reproduction of official arms"
   ],
-  "uniquePrimitiveCount": 32,
-  "instantiatedPrimitiveCount": 76,
-  "preDedupFileBytes": 1667476,
-  "bytesSaved": 509132,
-  "embeddedImageCount": 3,
-  "towerBounds": {
-    "minX": 9,
-    "maxX": 12.2,
-    "frontZ": 17,
-    "rearZ": 21,
-    "shaftHeight": 9.4,
-    "capTop": 9.66
-  },
-  "sideAnnexBounds": {
-    "minX": 9,
-    "maxX": 12.2,
-    "frontZ": 1,
-    "rearZ": 8,
-    "height": 3.2
-  },
-  "frontWingArrangement": "one tall window beneath vertical timber accent near bay; full-height glazed public entry with projecting canopy at far end",
+  "preDedupFileBytes": 1623748,
   "optimization": {
-    "tool": "glTF Transform CLI 4.5.1",
-    "command": "gltf-transform dedup station2.glb station2-dedup.glb",
-    "result": "32 unique meshes / primitives, 76 instantiated primitive draws; node transforms, geometry, materials and embedded image bytes preserved"
-  },
-  "validation": {
-    "validator": "Khronos glTF Validator",
-    "errors": 0,
-    "warnings": 0,
-    "sha256": "4e24998d5359b632fe27a278cc8dc4fe0b55ed8334c65f06376452d43e358901"
-  },
-  "exteriorPreview": {
-    "file": "model/station2-exterior.png",
-    "width": 1920,
-    "height": 1280,
-    "bytes": 2639396
+    "tool": "glTF Transform dedup",
+    "meshNodeInstances": 78,
+    "triangleCount": 21412,
+    "bytesSaved": 512544,
+    "percentSaved": 31.6,
+    "validator": "Khronos glTF Validator 2.0.0-dev.3.10",
+    "validatorErrors": 0,
+    "validatorWarnings": 0,
+    "validatorInfoCount": 32
   }
 }

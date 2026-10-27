@@ -28,3 +28,7 @@ The main footprint and 23.918 m facade line follow packaged OSM source `way/1009
 The frontage proportions, projecting watchroom and roof shape are constrained by images and the footprint. Door opening dimensions, heights, wall thicknesses, roof construction, exact colours and tower elevations are photo-derived modelling estimates. The detailed apparatus bay is a gameplay interior; rear office, dispatch, gym and service-room adjacencies are not fabricated into a purported accurate floor plan. The side wing is retained as exterior massing. No public dimensioned complete floor plan was located in the retrieved sources.
 
 The model supports the simulator's existing truck envelope and closed-door start. The second bay from the right viewed from the street is the gameplay spawn, as subsequently requested by the user; this is a user-facing gameplay choice, not a claim about current operational parking assignments.
+
+## Owner-confirmed rear layout, 27 October 2026
+
+The owner states the rear has the same bay-door count as the five-door front and the shed behind the station has one on its side. This establishes five rear apparatus doors and one shed side bay door as owner-provided evidence. No inspected rear photograph or drawing established the exact rear alignment, dimensions, glazing or shed-door side/position; those are modelling estimates based on the front style, GIS footprint and visible low shed. The model keeps these rear/shed doors closed as scenery. The front forty panel nodes and second-from-right spawn remain interactive.

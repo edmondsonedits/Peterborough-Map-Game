@@ -182,6 +182,13 @@ def build(layout):
     # closed ancillary wing as simple source-grounded volume; room plan deliberately omitted.
     wall('West service wing mass',-20.697,11.0,2.825,17.476,18.7,5.65,brick)
     wall('Service wing roof parapet',-20.697,11.0,5.82,17.72,19.0,.34,roof)
+    # Side glazing visible in owner frame 0170 beside the detached tower; positions are image-scaled.
+    wall('West wing side ribbon glazing',-29.52,11.0,1.55,.16,2.60,.66,glass)
+    wall('West wing side ribbon sill',-29.55,11.0,1.17,.20,2.82,.12,darkbrick)
+    wall('West wing side ribbon head',-29.55,11.0,1.93,.20,2.82,.12,darkbrick)
+    wall('West wing high corner glazing',-29.52,2.55,4.62,.16,.50,1.35,glass)
+    wall('West wing corner glazing sill',-29.55,2.55,3.89,.20,.72,.12,darkbrick)
+    wall('West wing corner glazing head',-29.55,2.55,5.35,.20,.72,.12,darkbrick)
     # The source facade carries a long, high ribbon window with a deep vertical recess.
     wall('West wing upper ribbon glazing',-20.7,1.52,4.35,13.2,.16,.78,glass)
     wall('West wing ribbon dark sill',-20.7,1.60,3.94,13.5,.32,.12,darkbrick)
@@ -193,8 +200,45 @@ def build(layout):
         wall(f'Bay upper cream wall {side}',side,10.175,3.94,.28,20.35,3.08,cream)
         wall(f'Bay top lintel {side}',side,10.175,5.59,.34,20.35,.22,brick)
         wall(f'Raised roof side clerestory closure {side}',side,13.925,6.38,.20,12.85,1.42,glass)
-    # rear end wall in matching bands
-    for yy,hh,cy,mat in [(2.1,2.1,1.05,mint),(.3,.3,2.25,teal),(3.08,3.08,3.94,cream)]: wall(f'Rear bay colour band {mat.name}',0,rear,cy,23.918,.28,hh,mat)
+    # Rear doors are closed visual scenery. Keep them outside the front dynamic-node contract.
+    rear_centers=layout.get('rearDoorCenters') or layout['frontDoorCenters']
+    if len(rear_centers)!=5: raise RuntimeError('Expected five user-confirmed rear bay doors')
+    rear_door_w=layout['doorWidth']; rear_half=rear_door_w/2
+    rear_intervals=[]; cursor=-11.959
+    for c in rear_centers:
+        a,b=c-rear_half,c+rear_half
+        if a>cursor: rear_intervals.append((cursor,a))
+        cursor=b
+    if cursor<11.959: rear_intervals.append((cursor,11.959))
+    for i,(a,b) in enumerate(rear_intervals):
+        wall(f'Rear dark-brown structural pier {i+1}',(a+b)/2,rear,2.6,b-a,.42,5.2,darkbrick)
+    for i,c in enumerate(rear_centers,1):
+        wall(f'Rear fire door header {i}',c,rear,4.78,rear_door_w,.46,.44,brick)
+        for panel in range(PANEL_N):
+            z=(panel+.5)*PANEL_H
+            cube(f'Rear door {i} red section {panel+1}',(c,-rear,z),(rear_door_w,.14,PANEL_H-.012),red)
+            cube(f'Rear door {i} pale inner section {panel+1}',(c,-rear+.09,z),(rear_door_w-.04,.04,PANEL_H-.04),white)
+            for local_z in (-PANEL_H*.32,PANEL_H*.32):
+                cube(f'Rear door {i} rib {panel+1}',(c,-rear-.078,z+local_z),(rear_door_w-.10,.035,.028),rededge)
+            if panel==2:
+                for wx in (-1.40,-.47,.47,1.40):
+                    cube(f'Rear door {i} vision panel {wx}',(c+wx,-rear-.085,z),(.38,.025,.18),window)
+    wall('Rear door transom cream band',0,rear,5.45,23.918,.28,.36,cream)
+    wall('Rear door head rail',0,rear,5.12,23.918,.64,.30,metal)
+    # Upper brick wall continues above the rear openings, without covering their faces.
+    wall('Rear bay upper brick lintel',0,rear,6.38,23.918,.42,1.50,brick)
+    if layout.get('rearShed',{}).get('sideDoorCount')==1:
+        t=layout['trainingTower']; door_x=t['maxX']; door_z=(t['frontZ']+t['rearZ'])/2
+        # One user-confirmed closed bay door on the exposed side of the low rear practice shed.
+        cube('Rear shed side sectional door',(door_x+.025,-door_z,1.50),(.12,3.0,3.0),red,tower)
+        cube('Rear shed side pale inner door',(door_x-.055,-door_z,1.50),(.04,2.96,2.96),white,tower)
+        for k in range(1,6):
+            cube(f'Rear shed side door rib {k}',(door_x+.092,-door_z,3.0-k*.5),(.035,2.88,.028),rededge,tower)
+        for zz in (-.92,-.31,.31,.92):
+            cube(f'Rear shed side door vision panel {zz}',(door_x+.095,-door_z+zz,2.25),(.025,.24,.18),window,tower)
+        for side in (-1,1):
+            wall(f'Rear shed side door jamb {side}',door_x+.06,door_z+side*1.62,1.60,.18,.14,3.20,darkbrick,parent=tower)
+        wall('Rear shed side door upper reveal',door_x+.06,door_z,3.12,.18,3.18,.22,darkbrick,parent=tower)
     # Five facade openings; the door leaves occupy the exact shared centers and height.
     centers=layout['frontDoorCenters']; half=layout['doorWidth']/2
     intervals=[]; cursor=-11.959
@@ -306,8 +350,6 @@ def build(layout):
             wall(f'Turnout jacket {rack_x}_{coat_i}',x,18.05,2.65,.42,.34,.83,gear)
             wall(f'Turnout reflective torso band {rack_x}_{coat_i}',x,18.05,2.55,.44,.36,.09,reflect)
             wall(f'Turnout reflective cuff {rack_x}_{coat_i}',x,18.05,2.28,.44,.36,.07,reflect)
-    # rear service facade above bay opening
-    wall('Rear bay upper brick lintel',0,rear,6.38,23.918,.42,1.50,brick)
     # Separate rear training tower parent (runtime sets its world Y to sampled terrain).
     t=layout['trainingTower']; tx=(t['minX']+t['maxX'])/2; tz=(t['frontZ']+t['rearZ'])/2; tw=t['maxX']-t['minX']; td=t['rearZ']-t['frontZ']
     shaft_x=(t['shaftMinX']+t['shaftMaxX'])/2; shaft_w=t['shaftMaxX']-t['shaftMinX']
@@ -315,6 +357,21 @@ def build(layout):
     wall('Training tower base',tx,tz,t['baseHeight']/2,tw,td,t['baseHeight'],foliage,parent=tower)
     wall('Training tower shaft',shaft_x,tz,(t['baseHeight']+t['towerHeight'])/2,shaft_w,td,t['towerHeight']-t['baseHeight'],brick,parent=tower)
     wall('Training tower shaft cap',shaft_x,tz,t['towerHeight']+.10,shaft_w+.45,td+.4,.30,roof,parent=tower)
+    # Source-visible rooftop training platform guardrail.
+    cap_top=t['towerHeight']+.25; rail_mid=cap_top+.45; rail_top=cap_top+.90
+    rx=(shaft_w+.45)/2-.10; ry=(td+.4)/2-.10; rail_y=-tz
+    rail_posts=[]
+    for side in (-1,1):
+        rail_posts.extend([(shaft_x+side*rx,rail_y-ry),(shaft_x+side*rx,rail_y+ry)])
+        rail_posts.extend([(shaft_x+side*rx,rail_y-ry+2*ry*j/5) for j in range(1,5)])
+        bar(f'Tower platform side lower rail {side}',(shaft_x+side*rx,rail_y-ry,rail_mid),(shaft_x+side*rx,rail_y+ry,rail_mid),.026,metal,parent=tower)
+        bar(f'Tower platform side top rail {side}',(shaft_x+side*rx,rail_y-ry,rail_top),(shaft_x+side*rx,rail_y+ry,rail_top),.030,metal,parent=tower)
+    for side in (-1,1):
+        rail_posts.extend([(shaft_x-rx,rail_y+side*ry),(shaft_x+rx,rail_y+side*ry)])
+        rail_posts.extend([(shaft_x-rx+2*rx*j/4,rail_y+side*ry) for j in range(1,4)])
+        bar(f'Tower platform end lower rail {side}',(shaft_x-rx,rail_y+side*ry,rail_mid),(shaft_x+rx,rail_y+side*ry,rail_mid),.026,metal,parent=tower)
+        bar(f'Tower platform end top rail {side}',(shaft_x-rx,rail_y+side*ry,rail_top),(shaft_x+rx,rail_y+side*ry,rail_top),.030,metal,parent=tower)
+    for i,(x,y) in enumerate(sorted(set(rail_posts))): bar(f'Tower platform guardrail post {i+1}',(x,y,cap_top),(x,y,rail_top),.026,metal,parent=tower)
     # Low practice bay occupies the footprint east of the shaft and carries its own sloped roof.
     wall('Training tower practice volume',practice_x,tz,t['baseHeight']/2,practice_w,td,t['baseHeight'],foliage,parent=tower)
     make_roof_slope('Training tower practice sloping roof',t['shaftMaxX'],t['maxX'],t['frontZ'],t['rearZ'],t['baseHeight']+1.05,t['baseHeight'],roof,parent=tower)
@@ -362,7 +419,10 @@ def render_views():
     wall('Review ground',0,0,-.20,160,160,.12,concrete)
     area((10,18,18),(-3,0,3),18000,18,(1,.82,.67)); area((-22,12,14),(-8,0,3),11000,16,(.78,.87,1)); area((0,-10,10),(0,-12,3),6500,15,(1,.91,.77))
     cam=camera('Review exterior',(24,40,8.5),(-7,0,3.2),44); scene.camera=cam; scene.render.filepath=os.path.join(MODEL,'station1-exterior.png'); bpy.ops.render.render(write_still=True)
-    cam.location=(-8,-67,16); aim(cam,(-39,-33,5)); cam.data.lens=50; scene.camera=cam; scene.render.filepath=os.path.join(MODEL,'station1-tower-exterior.png'); bpy.ops.render.render(write_still=True)
+    cam.location=(-50,-10,19); aim(cam,(-39,-33,6.5)); cam.data.lens=32; scene.camera=cam; scene.render.filepath=os.path.join(MODEL,'station1-tower-exterior.png'); bpy.ops.render.render(write_still=True)
+    cam.location=(0,-52,11); aim(cam,(0,-20,3.5)); cam.data.lens=36; scene.camera=cam; scene.render.filepath=os.path.join(MODEL,'station1-rear.png'); bpy.ops.render.render(write_still=True)
+    cam.location=(-52,-10,11); aim(cam,(-8,-10,3.4)); cam.data.lens=34; scene.camera=cam; scene.render.filepath=os.path.join(MODEL,'station1-west-side.png'); bpy.ops.render.render(write_still=True)
+    cam.location=(38,-10,11); aim(cam,(-8,-10,3.4)); cam.data.lens=34; scene.camera=cam; scene.render.filepath=os.path.join(MODEL,'station1-east-side.png'); bpy.ops.render.render(write_still=True)
     cam.location=(6,-2,3.3); aim(cam,(-2,-16,5)); cam.data.lens=32; scene.camera=cam; scene.render.filepath=os.path.join(MODEL,'station1-bay-interior.png'); bpy.ops.render.render(write_still=True)
     cam.location=(1,-5.5,3.4); aim(cam,(-2.8,-11.4,5.0)); cam.data.lens=35; scene.camera=cam; scene.render.filepath=os.path.join(MODEL,'station1-exhaust-detail.png'); bpy.ops.render.render(write_still=True)
     cam.location=(6,18,100); aim(cam,(-16,-17,1)); cam.data.lens=30; scene.camera=cam; scene.render.filepath=os.path.join(MODEL,'station1-overhead.png'); bpy.ops.render.render(write_still=True)
@@ -393,6 +453,11 @@ def export_validate():
     mins=[min(v[i] for v in verts) for i in range(3)]; maxs=[max(v[i] for v in verts) for i in range(3)]
     report={'format':'glTF 2.0 binary','file':'station1.glb','fileBytes':len(data),'units':'metres','orientation':'Y up; front -Z; bay +Z','fiveDoorCount':5,'sectionPanelCount':40,'dynamicPanelTransformsValid':bool(valid_transforms),'missingRequiredNodes':missing,'towerSeparateParent':nodes.get('Station1_TrainingTower',{}).get('children') is not None,'glbMeshCount':meshes,'drawPrimitiveCount':primitives,'materialCount':mats_n,'embeddedImageCount':embedded,'reimportObjectCount':len(mesh_names),'reimportMeshObjectCount':imported,'reimportTriangleCount':sum(len(o.data.polygons) for o in bpy.context.scene.objects if o.type=='MESH'),'boundsReimported':{'min':mins,'max':maxs},'notes':['original procedural materials only; no reference-photo pixels included','front opening dimensions and building heights are photo-scaled estimates, not a survey','ancillary room layout is unresolved and not invented','tower is separate for terrain-adjusted runtime placement']}
     report['exhaustAssemblyCount']=5
+    layout=json.load(open(LAYOUT_PATH)); tower_layout=layout['trainingTower']
+    report['rearDoorCount']=len(layout.get('rearDoorCenters',[])); report['rearDoorCenters']=layout.get('rearDoorCenters',[])
+    report['rearDoorsVisualOnly']=bool(layout.get('rearDoorsVisualOnly',False))
+    report['rearShedSideDoor']={'count':layout.get('rearShed',{}).get('sideDoorCount',0),'side':'outer maxX side of low practice shed','centerX':tower_layout['maxX'],'centerZ':(tower_layout['frontZ']+tower_layout['rearZ'])/2,'estimatedSizeMetres':[3.0,3.0]}
+    report['towerPlatformGuardrail']=True
     os.makedirs(os.path.dirname(REPORT_PATH),exist_ok=True)
     with open(REPORT_PATH,'w') as f: json.dump(report,f,indent=2)
     if missing or not valid_transforms or report['fiveDoorCount']!=5 or report['sectionPanelCount']!=40: raise RuntimeError('GLB node contract validation failed')
