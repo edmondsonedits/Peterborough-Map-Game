@@ -138,3 +138,32 @@ test('the steering loader uses its release token for nested core and tuning asse
   assert.equal(urls.find(u=>u.pathname.endsWith('/vehicle-instruments-core.js')).searchParams.get('v'),'1.6.135-core');
   assert.equal(urls.find(u=>u.pathname.endsWith('/directional-steering-tuning.js')).searchParams.get('v'),'1.6.135-tuning');
 });
+test('the canonical build overrides an older steering-loader query token',async t=>{
+  const dom=new JSDOM('<body></body>',{url:'https://game.example.test/response-simulator/',runScripts:'outside-only'});t.after(()=>dom.window.close());
+  const w=dom.window,script=w.document.createElement('script');script.src='https://game.example.test/response-simulator/vehicle-instruments.js?v=1.6.15';
+  Object.defineProperty(w.document,'currentScript',{value:script});w.PTBO_BUILD={version:'1.6.136'};const urls=[];
+  w.document.body.appendChild=script=>{urls.push(new URL(script.src));if(script.src.includes('vehicle-instruments-core.js'))w.PTBO_VEHICLE_INSTRUMENTS={state:{}};queueMicrotask(()=>script.onload());return script;};
+  w.eval(read('response-simulator/vehicle-instruments.js'));await w.PTBO_VEHICLE_INSTRUMENTS_READY;
+  assert.equal(urls.find(u=>u.pathname.endsWith('/vehicle-instruments-core.js')).searchParams.get('v'),'1.6.136-core');
+  assert.equal(urls.find(u=>u.pathname.endsWith('/directional-steering-tuning.js')).searchParams.get('v'),'1.6.136-tuning');
+});
+test('the legacy readiness entry requests the current vehicle loader',async t=>{
+  const dom=new JSDOM('<body></body>',{url:'https://game.example.test/response-simulator/',runScripts:'outside-only'});t.after(()=>dom.window.close());
+  const w=dom.window,script=w.document.createElement('script');script.src='https://game.example.test/response-simulator/simulator-readiness-1.4.5.js?v=1.6.136';
+  Object.defineProperty(w.document,'currentScript',{value:script});w.PTBO_BUILD={version:'1.6.136'};let loaded;
+  w.document.body.appendChild=script=>{loaded=new URL(script.src);queueMicrotask(()=>script.onload());return script;};
+  const source=read('response-simulator/simulator-readiness-1.4.5.js');
+  w.eval(source.slice(0,source.indexOf('  async function waitForValue('))+'window.requestVehicle=()=>injectScript("vehicle-instruments.js","data-ptbo-readiness-vehicle");})();');
+  await w.requestVehicle();assert.equal(loaded.searchParams.get('v'),'1.6.136');
+});
+test('the stations bridge cannot start an obsolete vehicle-loader request',t=>{
+  const dom=new JSDOM('<body><iframe></iframe></body>',{url:'https://game.example.test/response-simulator/mobile/',runScripts:'outside-only'});t.after(()=>dom.window.close());
+  const w=dom.window,frame=w.document.querySelector('iframe'),game=frame.contentWindow;
+  game.initializeSimulator=()=>{};game.toggleAllLocations=()=>{};
+  const source=read('shared/stations.js');
+  const loader=source.slice(source.indexOf('  function loadSimulatorTool('),source.indexOf('  function installMobileLayoutPolish('));
+  const patch=source.slice(source.indexOf('  function patchSimulator('),source.indexOf('    const apply = async () => {'))+'}';
+  w.eval('var VERSION="1.6.13",CACHE_VERSION="1.6.136",sourceUrl="https://game.example.test/shared/stations.js?v=1.6.136";function installMobileLayoutPolish(){}function removeLegacyEditorControls(){}'+loader+patch+';patchSimulator(document.querySelector("iframe"),{});');
+  const loaded=new URL(game.document.querySelector('script[data-ptbo-vehicle-instruments]').src);
+  assert.equal(loaded.searchParams.get('v'),'1.6.136');
+});
