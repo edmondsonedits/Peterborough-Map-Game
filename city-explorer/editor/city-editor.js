@@ -5,13 +5,13 @@ import { createGeneratedReplacementDocument, isProtectedEditorTarget, pickEditor
 import { cancelTransformControlDrag, rebindEditorSelection } from './editor-interactions.js';
 import { createEditorCameraNavigation } from './editor-camera-navigation.js';
 import { restoreEditorCameraSession, startEditorCameraSession } from './editor-camera-session.js';
-import { createVersionSaver } from './version-saver.js?v=1.6.130';
+import { createVersionSaver } from './version-saver.js?v=1.6.131';
 import { authorizeEditorEntry } from './editor-entry.js';
-import { createRecoveryPrompt } from './recovery-prompt.js?v=1.6.130';
-import { createAIEditorTools } from './ai-editor-tools.js?v=1.6.130';
-import { createAIEditorCamera } from './ai-editor-camera.js?v=1.6.130';
-import { installAIEditorPanel } from './ai-editor-panel.js?v=1.6.130';
-import { editorFeatureBounds } from './ai-editor-bounds.js?v=1.6.130';
+import { createRecoveryPrompt } from './recovery-prompt.js?v=1.6.131';
+import { createAIEditorTools } from './ai-editor-tools.js?v=1.6.131';
+import { createAIEditorCamera } from './ai-editor-camera.js?v=1.6.131';
+import { installAIEditorPanel } from './ai-editor-panel.js?v=1.6.131';
+import { editorFeatureBounds } from './ai-editor-bounds.js?v=1.6.131';
 
 export { createGeneratedReplacementDocument, isProtectedEditorTarget, pickEditorSelection } from './city-editor-selection.js';
 

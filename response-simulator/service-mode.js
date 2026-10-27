@@ -61,21 +61,29 @@
       parent.document.documentElement.dataset.city = city.id;
       const shortcuts = parent.document.querySelector('.station-shortcuts');
       if (shortcuts) {
-        shortcuts.style.gridTemplateColumns = `repeat(${getBases().length},minmax(65px,1fr))`;
-        shortcuts.style.overflowX = 'auto';
-        shortcuts.replaceChildren(...getBases().map(base => {
-          const button = parent.document.createElement('button');
-          button.type = 'button';
-          button.className = 'station-button';
-          button.classList.toggle('active',base.number === state.baseNumber);
-          button.dataset.station = base.number;
-          button.textContent = base.shortName;
-          button.title = `${getProfile().label}: ${base.name} — ${base.address}`;
-          button.setAttribute('aria-label',`${getProfile().label}: ${base.name}`);
-          button.setAttribute('aria-pressed',String(base.number === state.baseNumber));
-          button.addEventListener('click',() => {spawn(base.number);window.mobileRecenter?.();});
-          return button;
-        }));
+        // A native select handles touch, keyboard navigation, and long lists on every platform.
+        shortcuts.style.display = 'block';
+        shortcuts.style.width = 'min(100%, 160px)';
+        shortcuts.style.overflow = 'visible';
+        const menu = parent.document.createElement('select');
+        menu.className = 'station-select';
+        menu.setAttribute('aria-label', state.mode === 'ems' ? 'Select paramedic base' : 'Select station');
+        menu.title = 'Choose a station to spawn at';
+        menu.style.cssText = 'width:100%;height:40px;padding:0 12px;color:#fff;border:1px solid rgba(255,255,255,.28);border-radius:11px;background:#111827;font:800 13px system-ui;cursor:pointer;touch-action:manipulation';
+        const placeholder = parent.document.createElement('option');
+        placeholder.value = '';
+        placeholder.textContent = 'Station';
+        placeholder.disabled = true;
+        placeholder.selected = true;
+        menu.appendChild(placeholder);
+        getBases().forEach(base => {
+          const option = parent.document.createElement('option');
+          option.value = String(base.number);
+          option.textContent = `${base.number === state.baseNumber ? '✓ ' : ''}${base.name}${base.address ? ` — ${base.address}` : ''}`;
+          menu.appendChild(option);
+        });
+        menu.addEventListener('change',() => {spawn(Number(menu.value));window.mobileRecenter?.();});
+        shortcuts.replaceChildren(menu);
       }
     } catch (_) {}
     const label = document.getElementById('vehicle-size-label');
