@@ -1,0 +1,444 @@
+#ptbo-feedback-dialog {
+  --fb-bg: #0b1723;
+  --fb-panel: #132332;
+  --fb-line: #2d4253;
+  --fb-ink: #f2f7fb;
+  --fb-muted: #abc0cf;
+  --fb-accent: #5cddc0;
+  color-scheme: dark;
+  -webkit-user-select: text;
+  user-select: text;
+  box-sizing: border-box;
+  width: min(960px, calc(100vw - 28px));
+  max-width: none;
+  height: min(760px, calc(100dvh - 32px));
+  max-height: calc(100dvh - 32px);
+  padding: 0;
+  border: 1px solid var(--fb-line);
+  border-radius: 18px;
+  background: var(--fb-bg);
+  color: var(--fb-ink);
+  box-shadow: 0 24px 100px #0008;
+  font:
+    14px/1.5 Inter,
+    system-ui,
+    sans-serif;
+  overflow: hidden;
+}
+#ptbo-feedback-dialog::backdrop {
+  background: #020b14b8;
+  backdrop-filter: blur(5px);
+}
+#ptbo-feedback-dialog * {
+  box-sizing: border-box;
+}
+#ptbo-feedback-dialog [hidden] {
+  display: none !important;
+}
+#ptbo-feedback-dialog button,
+#ptbo-feedback-dialog input,
+#ptbo-feedback-dialog select,
+#ptbo-feedback-dialog textarea {
+  font: inherit;
+}
+#ptbo-feedback-dialog button {
+  min-height: 42px;
+  padding: 9px 13px;
+  border: 1px solid var(--fb-line);
+  border-radius: 9px;
+  background: var(--fb-panel);
+  color: var(--fb-ink);
+  cursor: pointer;
+}
+#ptbo-feedback-dialog button:hover {
+  border-color: var(--fb-accent);
+}
+#ptbo-feedback-dialog button:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+#ptbo-feedback-dialog button:focus-visible,
+#ptbo-feedback-dialog a:focus-visible {
+  outline: 2px solid var(--fb-accent);
+  outline-offset: 3px;
+}
+#ptbo-feedback-dialog .fb-primary {
+  background: var(--fb-accent);
+  color: #05221d;
+  border-color: transparent;
+  font-weight: 750;
+}
+#ptbo-feedback-dialog .fb-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 18px;
+  border-bottom: 1px solid var(--fb-line);
+}
+#ptbo-feedback-dialog .fb-heading {
+  flex: 1;
+  min-width: 0;
+}
+#ptbo-feedback-dialog h2 {
+  margin: 0;
+  font-size: 18px;
+  letter-spacing: -0.03em;
+}
+#ptbo-feedback-dialog .fb-identity {
+  color: var(--fb-muted);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+#ptbo-feedback-dialog .fb-body {
+  height: calc(100% - 80px);
+  display: flex;
+  min-height: 0;
+}
+#ptbo-feedback-dialog .fb-welcome {
+  width: min(420px, 100%);
+  margin: auto;
+  padding: 28px;
+  overflow-y: auto;
+  max-height: 100%;
+}
+#ptbo-feedback-dialog h3 {
+  margin: 0 0 8px;
+  font-size: 22px;
+  letter-spacing: -0.03em;
+}
+#ptbo-feedback-dialog .fb-muted {
+  color: var(--fb-muted);
+}
+#ptbo-feedback-dialog .fb-stack {
+  display: grid;
+  gap: 12px;
+}
+#ptbo-feedback-dialog .fb-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+#ptbo-feedback-dialog label {
+  display: grid;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--fb-muted);
+}
+#ptbo-feedback-dialog input,
+#ptbo-feedback-dialog textarea,
+#ptbo-feedback-dialog select {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid var(--fb-line);
+  border-radius: 8px;
+  padding: 9px 11px;
+  background: #07121c;
+  color: var(--fb-ink);
+  font-size: 16px;
+  outline: none;
+}
+#ptbo-feedback-dialog input:focus,
+#ptbo-feedback-dialog textarea:focus,
+#ptbo-feedback-dialog select:focus {
+  border-color: var(--fb-accent);
+}
+#ptbo-feedback-dialog textarea {
+  resize: vertical;
+  min-height: 90px;
+  max-height: 210px;
+}
+#ptbo-feedback-dialog .fb-error {
+  color: #ffb5b5;
+  white-space: pre-wrap;
+  margin: 0;
+  min-height: 20px;
+}
+#ptbo-feedback-dialog .fb-sidebar {
+  width: 300px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--fb-line);
+  min-height: 0;
+}
+#ptbo-feedback-dialog .fb-tools {
+  display: grid;
+  gap: 8px;
+  padding: 13px;
+  border-bottom: 1px solid var(--fb-line);
+}
+#ptbo-feedback-dialog .fb-filters {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+}
+#ptbo-feedback-dialog .fb-filters label {
+  font-size: 11px;
+}
+#ptbo-feedback-dialog .fb-check {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+#ptbo-feedback-dialog .fb-check input {
+  width: 18px;
+  min-height: 18px;
+}
+#ptbo-feedback-dialog .fb-thread-list {
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  padding: 7px;
+}
+#ptbo-feedback-dialog .fb-thread {
+  display: block;
+  width: 100%;
+  text-align: left;
+  margin: 0 0 6px;
+  padding: 12px;
+  border-color: transparent;
+}
+#ptbo-feedback-dialog .fb-thread[aria-current="true"] {
+  border-color: var(--fb-accent);
+  background: #193c40;
+}
+#ptbo-feedback-dialog .fb-thread strong {
+  display: block;
+  overflow-wrap: anywhere;
+}
+#ptbo-feedback-dialog .fb-thread small {
+  display: block;
+  color: var(--fb-muted);
+  margin-top: 3px;
+}
+#ptbo-feedback-dialog .fb-thread[data-unread="true"] strong::before {
+  content: "●";
+  color: var(--fb-accent);
+  margin-right: 6px;
+  font-size: 10px;
+}
+#ptbo-feedback-dialog .fb-detail {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+#ptbo-feedback-dialog .fb-detail-header {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--fb-line);
+  flex-shrink: 0;
+}
+#ptbo-feedback-dialog .fb-detail-header h3 {
+  font-size: 17px;
+  overflow-wrap: anywhere;
+  margin-bottom: 4px;
+}
+#ptbo-feedback-dialog .fb-messages {
+  flex: 1 0 100px;
+  min-height: 100px;
+  overflow-y: auto;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overscroll-behavior: contain;
+}
+#ptbo-feedback-dialog .fb-message {
+  max-width: 90%;
+  padding: 11px 14px;
+  border-radius: 12px;
+  background: var(--fb-panel);
+  align-self: flex-start;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+#ptbo-feedback-dialog .fb-message[data-role="developer"] {
+  background: #143f3b;
+  align-self: flex-end;
+}
+#ptbo-feedback-dialog .fb-message small {
+  display: block;
+  color: var(--fb-muted);
+  font-size: 10px;
+  margin-bottom: 4px;
+}
+#ptbo-feedback-dialog .fb-compose {
+  padding: 12px 18px;
+  border-top: 1px solid var(--fb-line);
+  display: grid;
+  gap: 8px;
+  flex-shrink: 0;
+}
+#ptbo-feedback-dialog .fb-compose textarea {
+  min-height: 70px;
+  max-height: 150px;
+}
+#ptbo-feedback-dialog .fb-compose .fb-actions {
+  justify-content: space-between;
+}
+#ptbo-feedback-dialog .fb-new-form {
+  padding: 22px;
+  overflow-y: auto;
+  width: 100%;
+  max-width: 620px;
+  margin: auto;
+}
+#ptbo-feedback-dialog .fb-context {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+#ptbo-feedback-dialog .fb-notes {
+  padding: 10px 18px;
+  border-top: 1px solid var(--fb-line);
+  max-height: 185px;
+  overflow: auto;
+  flex-shrink: 0;
+}
+#ptbo-feedback-dialog .fb-notes summary {
+  cursor: pointer;
+  color: var(--fb-muted);
+  font-size: 12px;
+}
+#ptbo-feedback-dialog .fb-note {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  padding: 8px 0;
+  color: var(--fb-muted);
+  font-size: 12px;
+}
+#ptbo-feedback-dialog .fb-empty {
+  margin: auto;
+  padding: 24px;
+  text-align: center;
+  color: var(--fb-muted);
+}
+#ptbo-feedback-dialog .fb-back {
+  display: none;
+}
+.ptbo-feedback-menu-entry {
+  font: inherit;
+  min-height: 38px;
+  padding: 8px 12px;
+  border: 1px solid currentColor;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 4px;
+}
+.ptbo-feedback-menu-entry[data-unread="true"]::after {
+  content: "●";
+  font-size: 10px;
+  color: #34d399;
+}
+#ptbo-feedback-dialog .fb-report-form{width:100%;min-height:0;overflow-y:auto;overscroll-behavior:contain;display:grid;align-content:start;gap:14px;padding:20px 24px}
+#ptbo-feedback-dialog .fb-report-heading h3{font-size:21px;margin:0 0 5px}
+#ptbo-feedback-dialog .fb-report-heading p{margin:4px 0;overflow-wrap:anywhere}
+#ptbo-feedback-dialog .fb-report-place{font-weight:700}
+#ptbo-feedback-dialog .fb-report-map{height:clamp(180px,34dvh,340px);width:100%;border:1px solid var(--fb-line);border-radius:11px;background:#142531;position:relative;isolation:isolate;overflow:hidden;color:#122231;font-size:12px}
+#ptbo-feedback-dialog .fb-report-map .leaflet-control a{color:#142531}
+#ptbo-feedback-dialog .fb-report-map .leaflet-control-attribution{font-size:10px}
+#ptbo-feedback-dialog .fb-report-map .leaflet-control-attribution a{color:#075985}
+#ptbo-feedback-dialog .fb-correction{display:grid;gap:9px}
+#ptbo-feedback-dialog .fb-correction p{margin:0}
+#ptbo-feedback-dialog .fb-circle-fields{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px}
+#ptbo-feedback-dialog .fb-map-legend{display:flex;flex-wrap:wrap;gap:14px;color:#b5c5d4;font-size:12px}
+#ptbo-feedback-dialog .fb-proposed-key{color:#5cddc0}
+#ptbo-feedback-dialog .fb-guess-key{color:#f4bd59}
+#ptbo-feedback-dialog .fb-map-status{font-size:12px;color:var(--fb-muted)}
+#ptbo-feedback-dialog .fb-report-context{font-size:12px;color:var(--fb-muted);overflow-wrap:anywhere}
+#ptbo-feedback-dialog .fb-report-context summary,#ptbo-feedback-dialog .fb-report-comparison summary{cursor:pointer;padding:8px 0;min-height:36px}
+#ptbo-feedback-dialog .fb-report-context dl{display:grid;grid-template-columns:110px minmax(0,1fr);gap:7px 12px;margin:8px 0}
+#ptbo-feedback-dialog .fb-report-context dt{font-weight:700}
+#ptbo-feedback-dialog .fb-report-context dd{margin:0;white-space:pre-wrap}
+#ptbo-feedback-dialog .fb-report-actions{display:flex;justify-content:flex-end;gap:9px;position:sticky;bottom:-20px;padding:12px 0;background:var(--fb-bg);border-top:1px solid var(--fb-line);z-index:2}
+#ptbo-feedback-dialog .fb-report-form :is(button,input,select){min-height:44px}
+#ptbo-feedback-dialog .fb-report-coordinates{white-space:pre-wrap;overflow-wrap:anywhere}
+#ptbo-feedback-dialog .fb-report-map .leaflet-control-zoom a{width:40px;height:40px;line-height:40px}
+#ptbo-feedback-dialog .fb-location-details{margin-top:12px;padding-top:10px;border-top:1px solid var(--fb-line);font-size:12px;overflow-wrap:anywhere}
+#ptbo-feedback-dialog .fb-location-details p{margin:6px 0}
+#ptbo-feedback-dialog .fb-circle-handle{display:grid;place-items:center;background:transparent!important;border:0!important}
+#ptbo-feedback-dialog .fb-circle-handle span{display:block;width:20px;height:20px;border:3px solid #062b28;background:#5cddc0;border-radius:50%;box-shadow:0 0 0 3px #fff,0 2px 9px #0008}
+#ptbo-feedback-dialog .fb-radius-handle span{width:17px;height:17px;border-radius:4px;background:#fff;border-color:#0d8e7c;transform:rotate(45deg)}
+@media(max-width:640px){
+ #ptbo-feedback-dialog .fb-report-form{padding:14px;gap:11px}
+ #ptbo-feedback-dialog .fb-circle-fields{grid-template-columns:1fr 1fr}
+ #ptbo-feedback-dialog .fb-circle-fields label:last-child{grid-column:1/-1}
+ #ptbo-feedback-dialog .fb-report-actions{bottom:-14px}
+ #ptbo-feedback-dialog .fb-report-context dl{grid-template-columns:80px minmax(0,1fr);gap:6px}
+ #ptbo-feedback-dialog .fb-report-map .leaflet-control-zoom a{width:44px;height:44px;line-height:44px}
+}
+@media (max-width: 640px) {
+  #ptbo-feedback-dialog {
+    width: calc(100vw - 12px);
+    height: calc(100dvh - 12px);
+    max-height: calc(100dvh - 12px);
+    border-radius: 12px;
+  }
+  #ptbo-feedback-dialog .fb-header {
+    padding: 10px;
+    gap: 6px;
+  }
+  #ptbo-feedback-dialog h2 {
+    font-size: 16px;
+  }
+  #ptbo-feedback-dialog .fb-header button {
+    padding: 8px;
+    font-size: 12px;
+  }
+  #ptbo-feedback-dialog .fb-body {
+    height: calc(100% - 70px);
+  }
+  #ptbo-feedback-dialog .fb-sidebar {
+    width: 100%;
+    border: 0;
+  }
+  #ptbo-feedback-dialog .fb-detail {
+    display: none;
+  }
+  #ptbo-feedback-dialog[data-thread-open="true"] .fb-sidebar {
+    display: none;
+  }
+  #ptbo-feedback-dialog[data-thread-open="true"] .fb-detail {
+    display: flex;
+  }
+  #ptbo-feedback-dialog .fb-back {
+    display: inline-block;
+  }
+  #ptbo-feedback-dialog .fb-messages {
+    padding: 12px;
+  }
+  #ptbo-feedback-dialog .fb-compose {
+    padding: 10px;
+  }
+  #ptbo-feedback-dialog .fb-new-form {
+    padding: 16px;
+  }
+  #ptbo-feedback-dialog .fb-notes {
+    max-height: 150px;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  #ptbo-feedback-dialog[open] {
+    animation: fb-enter 0.16s ease-out;
+  }
+  @keyframes fb-enter {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

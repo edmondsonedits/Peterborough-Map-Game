@@ -1,0 +1,6 @@
+{
+  "name": "ptbo-location-report-checks",
+  "private": true,
+  "description": "Development-only DOM integration checks for location reports",
+  "devDependencies": { "jsdom": "26.1.0" }
+}

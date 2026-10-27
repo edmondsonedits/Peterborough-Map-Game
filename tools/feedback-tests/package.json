@@ -1,0 +1,20 @@
+{
+  "name": "ptbo-feedback-checks",
+  "private": true,
+  "description": "Development-only Firebase emulator and browser verification tools",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test:rules": "cd ../.. && NODE_PATH=tools/feedback-tests/node_modules tools/feedback-tests/node_modules/.bin/firebase emulators:exec --config feedback/firebase.json --project demo-ptbo-feedback --only auth,firestore 'node --test feedback/tests/rules.test.cjs'",
+    "test:browser": "cd ../.. && NODE_PATH=tools/feedback-tests/node_modules tools/feedback-tests/node_modules/.bin/firebase emulators:exec --config feedback/firebase.json --project demo-ptbo-feedback --only auth,firestore 'node tests/feedback-browser.cjs'",
+    "test:ui": "cd ../.. && NODE_PATH=tools/feedback-tests/node_modules node tests/feedback-ui-races.cjs"
+  },
+  "devDependencies": {
+    "@firebase/rules-unit-testing": "5.0.0",
+    "firebase": "12.5.0",
+    "firebase-admin": "13.5.0",
+    "firebase-tools": "14.17.0",
+    "playwright": "1.56.1"
+  }
+}

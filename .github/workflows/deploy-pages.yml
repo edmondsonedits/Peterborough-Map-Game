@@ -32,6 +32,11 @@ jobs:
       - name: Normalize production release
         run: node scripts/normalize-release.cjs
 
+      - name: Check structured location report state and UI
+        run: |
+          npm ci --prefix tools/location-report-tests --ignore-scripts --no-audit
+          node --test tests/location-report-model.test.mjs tests/location-circle.test.mjs tests/geo-location-report.test.cjs tests/location-report-ui.test.mjs tests/location-report-flow.test.mjs
+
       - name: Check gameplay regressions
         run: |
           node --check shared/legacy-release-forwarder.js

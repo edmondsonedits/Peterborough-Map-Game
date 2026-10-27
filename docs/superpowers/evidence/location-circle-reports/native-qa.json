@@ -1,0 +1,98 @@
+{
+  "scope": "Native desktop Chrome, local vector-only fixture with in-memory service; no Firebase delivery, external street tiles, physical phone, touch or keyboard verification.",
+  "events": [
+    {
+      "utc": "2026-10-27T11:08:39.536Z",
+      "label": "Final code: centre and125m correction entered",
+      "state": "Browser tab: 15, Title: \"Location report UI test\", URL: \"http://terminal.local:4173/\".\n1 AXWebArea Location report UI test, URL: terminal.local:4173/\n\t2 container Feedback & messages, ID: ptbo-feedback-dialog\n\t\t3 container\n\t\t\t4 heading Feedback & messages, Value: 2, ID: feedback-heading\n\t\t\t\t5 text Feedback & messages\n\t\t\t6 text Guest\n\t\t\t7 button Account, ID: feedback-account\n\t\t\t8 button Description: Close feedback, ID: feedback-close\n\t\t9 container\n\t\t\t10 heading Report a possible problem, Value: 3\n\t\t\t\t11 text Report a possible problem\n\t\t\t12 text James Strath Public · 1175 Brealey Dr Your report and any suggested correction go privately to the developer for review. What seems wrong?\n\t\t\t13 pop up button (collapsed, settable) What seems wrong?, Value: Circle location, Secondary Actions: Expand\n\t\t\t\t14 menu\n\t\t\t\t\t15 (selected) Circle location\n\t\t\t\t\t16 Circle size\n\t\t\t\t\t17 Address\n\t\t\t\t\t18 Place name\n\t\t\t\t\t19 Answer or scoring\n\t\t\t\t\t20 Something else\n\t\t\t21 checkbox (settable, integer) Description: Suggest a different circle location or size, Value: 1\n\t\t\t22 text Drag the centre to move the circle. Drag the edge to resize it, or use the fields below.\n\t\t\t23 container Original and proposed location circles\n\t\t\t\t24 container\n\t\t\t\t\t25 image\n\t\t\t\t\t\t26 image\n\t\t\t\t\t\t27 image\n\t\t\t\t\t\t28 image\n\t\t\t\t29 container\n\t\t\t\t\t30 container\n\t\t\t\t\t\t31 button Zoom in\n\t\t\t\t\t\t32 button Zoom out\n\t\t\t\t\t33 container\n\t\t\t\t\t\t34 link Description:  Leaflet, Help: A JavaScript library for interactive maps, Value: leafletjs.com/\n\t\t\t\t\t\t35 text  Local vector-only test\n\t\t\t36 text ◌ Original ● Proposed ● Player guess Latitude\n\t\t\t37 stepper (settable, float) Latitude, Value: 44.286720275878906, Details: 44.2867184\n\t\t\t38 text Longitude\n\t\t\t39 stepper (settable, float) Longitude, Value: -78.37757873535156, Details: -78.3775783\n\t\t\t40 text Radius (metres)\n\t\t\t41 stepper (settable, integer) Radius (metres), Value: 125\n\t\t\t42 button Use map centre\n\t\t\t43 button Reset circle\n\t\t\t44 text Anything else? (optional)\n\t\t\t45 text entry area (settable) Anything else? (optional), Value: Please review the centre and circle size.\n\t\t\t46 button (collapsed) Details included with this report, Secondary Actions: Expand\n\t\t\t\t47 text Details included with this report\n\t\t\t48 button Cancel\n\t\t\t49 button Send report\n\nThe focused UI element is 45 text entry area (settable) Anything else? (optional), Value: Please review the centre and circle size.",
+      "fields": [
+        {
+          "name": "reason",
+          "value": "point"
+        },
+        {
+          "checked": true,
+          "name": "correct-circle",
+          "value": "on"
+        },
+        {
+          "name": "latitude",
+          "value": "44.2867184"
+        },
+        {
+          "name": "longitude",
+          "value": "-78.3775783"
+        },
+        {
+          "name": "radius",
+          "value": "125"
+        },
+        {
+          "name": "note",
+          "value": "Please review the centre and circle size."
+        }
+      ]
+    },
+    {
+      "utc": "2026-10-27T11:08:49.548Z",
+      "label": "Final code: reopening retains the exact proposed circle and note",
+      "state": "Browser tab: 15, Title: \"Location report UI test\", URL: \"http://terminal.local:4173/\".\n1 AXWebArea Location report UI test, URL: terminal.local:4173/\n\t2 container Feedback & messages, ID: ptbo-feedback-dialog\n\t\t3 container\n\t\t\t4 heading Feedback & messages, Value: 2, ID: feedback-heading\n\t\t\t\t5 text Feedback & messages\n\t\t\t6 text Guest\n\t\t\t7 button Account, ID: feedback-account\n\t\t\t8 button Description: Close feedback, ID: feedback-close\n\t\t9 container\n\t\t\t10 heading Report a possible problem, Value: 3\n\t\t\t\t11 text Report a possible problem\n\t\t\t12 text James Strath Public · 1175 Brealey Dr Your report and any suggested correction go privately to the developer for review. What seems wrong?\n\t\t\t13 pop up button (collapsed, settable) What seems wrong?, Value: Circle location, Secondary Actions: Expand\n\t\t\t\t14 menu\n\t\t\t\t\t15 (selected) Circle location\n\t\t\t\t\t16 Circle size\n\t\t\t\t\t17 Address\n\t\t\t\t\t18 Place name\n\t\t\t\t\t19 Answer or scoring\n\t\t\t\t\t20 Something else\n\t\t\t21 checkbox (settable, integer) Description: Suggest a different circle location or size, Value: 1\n\t\t\t22 text Drag the centre to move the circle. Drag the edge to resize it, or use the fields below.\n\t\t\t23 container Original and proposed location circles\n\t\t\t\t24 container\n\t\t\t\t\t25 image\n\t\t\t\t\t\t26 image\n\t\t\t\t\t\t27 image\n\t\t\t\t\t\t28 image\n\t\t\t\t29 container\n\t\t\t\t\t30 container\n\t\t\t\t\t\t31 button Zoom in\n\t\t\t\t\t\t32 button Zoom out\n\t\t\t\t\t33 container\n\t\t\t\t\t\t34 link Description:  Leaflet, Help: A JavaScript library for interactive maps, Value: leafletjs.com/\n\t\t\t\t\t\t35 text  Local vector-only test\n\t\t\t36 text ◌ Original ● Proposed ● Player guess Latitude\n\t\t\t37 stepper (settable, float) Latitude, Value: 44.286720275878906, Details: 44.2867184\n\t\t\t38 text Longitude\n\t\t\t39 stepper (settable, float) Longitude, Value: -78.37757873535156, Details: -78.3775783\n\t\t\t40 text Radius (metres)\n\t\t\t41 stepper (settable, integer) Radius (metres), Value: 125\n\t\t\t42 button Use map centre\n\t\t\t43 button Reset circle\n\t\t\t44 text Anything else? (optional)\n\t\t\t45 text entry area (settable) Anything else? (optional), Value: Please review the centre and circle size.\n\t\t\t46 button (collapsed) Details included with this report, Secondary Actions: Expand\n\t\t\t\t47 text Details included with this report\n\t\t\t48 button Cancel\n\t\t\t49 button Send report\n\nThe focused UI element is 13 pop up button (collapsed, settable) What seems wrong?, Value: Circle location, Secondary Actions: Expand",
+      "fields": [
+        {
+          "name": "reason",
+          "value": "point"
+        },
+        {
+          "checked": true,
+          "name": "correct-circle",
+          "value": "on"
+        },
+        {
+          "name": "latitude",
+          "value": "44.2867184"
+        },
+        {
+          "name": "longitude",
+          "value": "-78.3775783"
+        },
+        {
+          "name": "radius",
+          "value": "125"
+        },
+        {
+          "name": "note",
+          "value": "Please review the centre and circle size."
+        }
+      ]
+    },
+    {
+      "utc": "2026-10-27T11:08:50.344Z",
+      "label": "Final code: local fixture acknowledged report once",
+      "state": "Browser tab: 15, Title: \"Location report UI test\", URL: \"http://terminal.local:4173/\".\n1 AXWebArea Location report UI test, URL: terminal.local:4173/\n\t2 container Feedback & messages, ID: ptbo-feedback-dialog\n\t\t3 container\n\t\t\t4 heading Feedback & messages, Value: 2, ID: feedback-heading\n\t\t\t\t5 text Feedback & messages\n\t\t\t6 text Guest\n\t\t\t7 button Account, ID: feedback-account\n\t\t\t8 button Description: Close feedback, ID: feedback-close\n\t\t9 container\n\t\t\t10 heading Report received, Value: 3\n\t\t\t\t11 text Report received\n\t\t\t12 text The developer can now review the original location and your suggestion. James Strath Public\n\t\t\t13 button Open conversation\n\t\t\t14 button Continue playing\n\nThe focused UI element is 1 AXWebArea Location report UI test, URL: terminal.local:4173/",
+      "fields": []
+    },
+    {
+      "utc": "2026-10-27T11:09:58.829Z",
+      "label": "Developer view shows stored125m proposal and readonly map",
+      "state": "Browser tab: 15, Title: \"Location report UI test\", URL: \"http://terminal.local:4173/\".\nThe following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.\n~\t\t\t\t76 button (expanded) View original and proposed circles, Secondary Actions: Collapse\n+\t\t\t\t88 container Reported original and proposed circles\n+\t\t\t\t\t89 container\n+\t\t\t\t\t\t90 image\n+\t\t\t\t\t\t\t91 image\n+\t\t\t\t\t\t\t92 image\n+\t\t\t\t\t\t\t93 image\n+\t\t\t\t\t94 container\n+\t\t\t\t\t\t95 container\n+\t\t\t\t\t\t\t96 button Zoom in\n+\t\t\t\t\t\t\t97 button Zoom out\n+\t\t\t\t\t\t98 container\n+\t\t\t\t\t\t\t99 link Description:  Leaflet, Help: A JavaScript library for interactive maps, Value: leafletjs.com/\n+\t\t\t\t\t\t\t100 text  Local vector-only test\nThe focused UI element is 76 button (expanded) View original and proposed circles, Secondary Actions: Collapse",
+      "fields": []
+    },
+    {
+      "utc": "2026-10-27T11:14:35.517Z",
+      "label": "Narrow CSS frame390x400: radius150 editable, no horizontal overflow, Send312–356px within400px",
+      "state": "Browser tab: 15, Title: \"Narrow location-report layout test\", URL: \"http://terminal.local:4173/location-report-phone.html\".\nThere has been no change in the accessibility tree.\nThe focused UI element is 47 stepper (settable, integer) Radius (metres), Value: 150",
+      "viewport": {
+        "width": 390,
+        "height": 400,
+        "scrollWidth": 390,
+        "sendTop": 312,
+        "sendBottom": 356
+      }
+    },
+    {
+      "utc": "2026-10-27T11:18:01.771Z",
+      "label": "390x400 local component Send acknowledged",
+      "state": "Browser tab: 15, Title: \"Narrow location-report layout test\", URL: \"http://terminal.local:4173/location-report-phone.html\".\n1 AXWebArea Narrow location-report layout test, URL: terminal.local:4173/location-report-phone.html\n\t2 text Desktop narrow-frame layout test. This does not emulate a physical phone, touch input or its keyboard.\n\t3 button 390 × 844, ID: tall\n\t4 button 390 × 400, ID: short\n\t5 container Narrow report form\n\t\t6 AXWebArea Report form component, URL: terminal.local:4173/location-report-component.html\n\t\t\t7 container ptbo-feedback-dialog\n\t\t\t\t8 heading Location report · local test, Value: 2\n\t\t\t\t\t9 text Location report · local test\n\t\t\t\t10 text Local layout test received the report.\n\nThe focused UI element is 6 AXWebArea Report form component, URL: terminal.local:4173/location-report-component.html"
+    }
+  ]
+}
