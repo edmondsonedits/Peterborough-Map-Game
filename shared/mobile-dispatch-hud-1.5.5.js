@@ -38,6 +38,7 @@
   function installIntoSimulator() {
     const doc = frame.contentDocument;
     if (!doc?.head || !doc.body) return false;
+    if (frame.contentWindow?.PTBO_DRIVING_UI) return true;
     const hud = doc.getElementById('dispatch-hud');
     const timerBlock = doc.querySelector('.hud-timer-block');
     if (!hud || !timerBlock) return false;
@@ -156,6 +157,11 @@
     const observer = new MutationObserver(synchronizeHudState);
     observer.observe(hud,{attributes:true,attributeFilter:['class'],childList:true,subtree:true});
     const watchdog = window.setInterval(enforceAutoCollapse,250);
+    frame.contentWindow.PTBO_LEGACY_MOBILE_HUD = {destroy() {
+      observer.disconnect(); window.clearInterval(watchdog);
+      style.remove(); closeButton.remove(); expandButton.remove();
+      hud.classList.remove('ptbo-mobile-dispatch-ready','ptbo-mobile-dispatch-collapsed');
+    }};
     synchronizeHudState();
     enforceAutoCollapse();
 

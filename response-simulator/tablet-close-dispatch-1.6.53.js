@@ -64,6 +64,7 @@
   }
 
   function minimizeDispatchHud() {
+    if (window.PTBO_DRIVING_UI) { window.PTBO_DRIVING_UI.refresh(); return true; }
     const hud = document.getElementById('dispatch-hud');
     if (!hud || !hud.classList.contains('incident-active')) return false;
 

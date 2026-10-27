@@ -142,6 +142,7 @@
   }
 
   function placeMapButtons() {
+    if (window.PTBO_DRIVING_UI?.managesLayout) { placeLeafletFooter(); return; }
     installStyle();
     const speed = document.getElementById('ptbo-speedometer');
     const mapToggle = document.getElementById('ptbo-map-toggle');
