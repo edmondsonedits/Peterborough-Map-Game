@@ -535,16 +535,13 @@
   }
 
   function finishPointer(event, intercept = false) {
-    if (
-      mobileSteeringPointer !== null
-      && event?.pointerId !== undefined
-      && event.pointerId !== mobileSteeringPointer
-    ) return;
-
     if (intercept && event) {
       event.preventDefault();
       event.stopImmediatePropagation();
     }
+    if (
+      event && (mobileSteeringPointer === null || event.pointerId !== mobileSteeringPointer)
+    ) return;
 
     mobileSteeringPointer = null;
     if (state.steeringMode === STEERING_MODES.DIRECTIONAL) {
@@ -572,10 +569,13 @@
     updateParentJoystickMode();
 
     mobileSteeringElement.addEventListener('pointerdown', event => {
-      mobileSteeringPointer = event.pointerId;
       if (state.steeringMode === STEERING_MODES.DIRECTIONAL) {
         event.preventDefault();
         event.stopImmediatePropagation();
+      }
+      if (mobileSteeringPointer !== null) return;
+      mobileSteeringPointer = event.pointerId;
+      if (state.steeringMode === STEERING_MODES.DIRECTIONAL) {
         mobileSteeringElement.setPointerCapture?.(event.pointerId);
         mobileSteeringElement.classList.add('active');
         updateDirectionalFromPointer(event);
@@ -585,7 +585,7 @@
     }, true);
 
     mobileSteeringElement.addEventListener('pointermove', event => {
-      if (mobileSteeringPointer !== null && event.pointerId !== mobileSteeringPointer) return;
+      if (mobileSteeringPointer === null || event.pointerId !== mobileSteeringPointer) return;
       if (state.steeringMode === STEERING_MODES.DIRECTIONAL) {
         event.preventDefault();
         event.stopImmediatePropagation();
@@ -604,8 +604,14 @@
     mobileSteeringElement.addEventListener('lostpointercapture', event => {
       finishPointer(event, state.steeringMode === STEERING_MODES.DIRECTIONAL);
     }, true);
+    // Capture can be lost or unavailable; an owner's release elsewhere must still stop input.
+    for (const type of ['pointerup', 'pointercancel', 'lostpointercapture']) {
+      window.parent.document.addEventListener(type, event => finishPointer(event), true);
+    }
 
-    window.parent.addEventListener('blur', () => finishPointer(), true);
+    window.parent.addEventListener('blur', event => {
+      if (event.target === window.parent) finishPointer();
+    }, true);
     window.parent.document.addEventListener('visibilitychange', () => {
       if (window.parent.document.hidden) finishPointer();
     });
