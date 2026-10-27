@@ -57,7 +57,7 @@
 - [x] Increment the feedback feature version to 1.6.134 and keep related active references consistent.
 - [x] Run all Node tests, real feedback rules tests, syntax and diff checks.
 - [x] Obtain an independent whole-change review and resolve material findings with reproductions.
-- [ ] Commit and create a reviewable PR without merging/deploying. State the Firebase activation dependency and actual verification scope.
+- [x] Commit and create a reviewable PR without merging/deploying. State the Firebase activation dependency and actual verification scope.
 
 ## Execution ruling
 

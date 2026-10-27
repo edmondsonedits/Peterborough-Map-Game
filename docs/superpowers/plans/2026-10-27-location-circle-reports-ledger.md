@@ -8,7 +8,7 @@
 - Ruling: Firebase is available but unconnected; existing recent suggestions are preserved rather than repeated. Build and test locally; leave delivery disabled until project activation is verified.
 - Task 1: complete (backend/model/rules, commit ffc0f52).
 - Task 2: complete (Geo capture, circle composer, private-thread details, root).
-- Task 3: verification and independent review in progress; branch delivery pending.
+- Task 3: complete for implementation/review delivery; live activation is blocked as documented below.
 
 ## Verification
 
@@ -44,3 +44,11 @@
 - Changed source syntax and `git diff --check` — clean.
 - Main rechecked through GitHub and git remote: 19cf059746ab5241fdc5ebb236f1d20f4fc81c2b, unchanged.
 - Only explicit feature/release/docs/test paths are staged; unrelated temporary geodata is excluded.
+
+## Delivery
+
+- Draft PR: https://github.com/edmondsonedits/Peterborough-Map-Game/pull/60 (open, mergeable, unmerged).
+- Remote branch: `feat/location-circle-reports`; initial remote commit `4a839c133d59d5bd6c5164c9f8ffdad556ef10a6`. Its tree `2f7c6f1cfa19a11fd74dc1ae99878d2cb2e220da` exactly matched the locally tested implementation commit `aaf3f26`.
+- Git HTTPS write authentication was unavailable, so the authenticated GitHub connector saved the identical tree as one commit atop main. The remote includes the required v1.6.133 foundation plus this v1.6.134 update. Local commit ancestry is retained; use the remote PR branch for future review work.
+- This documentation-only delivery record is a follow-up to that implementation commit. The local preview server and test tab were closed. No work continues after the turn ends.
+- To activate: connect the dedicated Firebase project; configure public browser fields; enable Auth; deploy only feedback rules/indexes; assign the verified developer custom claim; test real guest/owner/developer reporting and reply delivery; then enable feedback and publish after separate authorization.
