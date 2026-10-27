@@ -1,0 +1,96 @@
+{
+  "asset": "Peterborough Fire Station 3",
+  "glb": "city-explorer/assets/stations/station-3.glb",
+  "sourceBlend": "assets-source/stations/station-3.blend",
+  "buildScript": "tools/blender/build_station_three.py",
+  "anchor": {
+    "latitude": 44.28490065,
+    "longitude": -78.3506243
+  },
+  "anchorSource": "OSM way 558402285 SE-facing frontage midpoint, supplied coordinates",
+  "axes": {
+    "blender": "X east, Y north, Z up",
+    "gltf": "X east, Y up, Z south"
+  },
+  "edgeLengthMetres": 28.197,
+  "facadeTangentBearingDegreesNE": 35.37,
+  "outwardBearingDegreesSE": 125.37,
+  "blenderRootRotationAboutZDegrees": 54.63,
+  "footprintMetresApprox": {
+    "mappedAreaSquareMetres": 1656.9,
+    "mappedBoundsLocalMetres": {
+      "minX": -43.7,
+      "maxX": 14.8,
+      "minY": -0.0,
+      "maxY": 38.03
+    },
+    "apparatusHallClearDepth": 14.0
+  },
+  "bayOpenings": {
+    "count": 3,
+    "widthMetres": 4.6,
+    "heightMetres": 4.2,
+    "centresAlongFacadeMetres": [
+      -0.7,
+      5.0,
+      10.7
+    ]
+  },
+  "truckSpawn": {
+    "node": "Station3_TruckSpawn_Bay01",
+    "door": "Station3_Door_01",
+    "glbPositionMetresRelativeAnchor": {
+      "eastX": -4.972,
+      "upY": 0.0,
+      "southZ": -2.671
+    },
+    "headingDegrees": 234.63,
+    "headingRadians": 4.0951,
+    "forward": "vehicle local -Z",
+    "truckLengthMetres": 10.4,
+    "truckWidthMetres": 2.55,
+    "noseToThresholdMetres": 0.4,
+    "rearToBackWallMetres": 3.2
+  },
+  "exteriorView": {
+    "cameraPositionRelativeAnchorGLBMetres": {
+      "eastX": 6.118,
+      "upY": 2.0,
+      "southZ": 5.201
+    },
+    "targetDoor": "Station3_Door_01",
+    "standOffMetres": 8.0
+  },
+  "doorNodes": {
+    "parents": [
+      "Station3_Door_01",
+      "Station3_Door_02",
+      "Station3_Door_03"
+    ],
+    "slatsPerDoor": 10,
+    "slatPattern": "Station3_Door_##_Slat_00 through _09, bottom to top",
+    "closedChildLocalThree": "position=(0,0.21+0.42*i,0), rotation.x=0 radians",
+    "openChildLocalThree": "position=(0,4.20,-(i+0.5)*0.42), rotation.x=-pi/2 radians",
+    "parentPivot": "center of opening at door base; local +X follows frontage NE, local +Y is up, local +Z faces outward SE"
+  },
+  "provenance": {
+    "reference": "City of Peterborough Fire Services exterior reference photo supplied by user: https://www.peterborough.ca/media/55fdhfjh/peterborough-fire-services_2018_07_31_city_peterborough_2018_2.jpg",
+    "secondaryReference": "PtboCanada street photograph: https://images.squarespace-cdn.com/content/v1/50cca155e4b0c301a8212ad4/714fe747-bf30-4e88-81a8-a1c81b8804df/IMG_0347.JPG",
+    "renovationEvidence": "2024 substantial-performance certificate confirms second-floor work but does not establish its facade location or layout; no second-storey exterior was inferred.",
+    "photoUsage": "Visual reference only; photo is not embedded, traced, or used as a texture.",
+    "mappedFootprint": "OpenStreetMap way 558402285 from city-explorer/data/peterborough-osm.json; attribution and ODbL terms apply to derived footprint geometry.",
+    "geometry": "Original script-generated Blender geometry and procedural solid materials.",
+    "interior": "Approximate training/play space only. No floor plan was available; walls and room use are not claimed as surveyed.",
+    "facadeTreatment": "Red entrance cladding, two white-framed windows, single glazed entry, transparent canopy, tall silver crest-sign frame, compact right-side station/address lettering, stepped charcoal brick bay wing, three glazed doors with pale lower panels, broad elevated bay canopy, Canada/Ontario/city flag approximations, and varied planted beds follow visual references; dimensions remain approximate."
+  },
+  "renders": [
+    "docs/stations/renders/station-3-exterior-facade.png",
+    "docs/stations/renders/station-3-street-level.png",
+    "docs/stations/renders/station-3-exterior-wide.png",
+    "docs/stations/renders/station-3-interior-open.png"
+  ],
+  "limitations": [
+    "Exterior proportions and the inferred interior are approximate.",
+    "Apron is visual landmark scenery; GIS remains authoritative for roads, navigation, and collision."
+  ]
+}

@@ -1,4 +1,4 @@
-import { glazingIntensity } from './city-visual-settings.js?v=1.6.141';
+import { glazingIntensity } from './city-visual-settings.js?v=1.6.142';
 // Ground-level frontage details for the existing Sherbrooke building masses.
 // These objects add neither walls/roofs nor collision geometry.
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
