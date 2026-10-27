@@ -291,7 +291,7 @@
   }
 
   function handleSteeringDown(event) {
-    if (!isDirectional() || !eventInside(steering, event)) return;
+    if (!isDirectional() || !eventInside(steering, event) || state.steeringPointer !== null) return;
     state.steeringPointer = event.pointerId;
     updateDirectionalDrive(event);
   }
@@ -302,8 +302,7 @@
   }
 
   function handleSteeringRelease(event) {
-    if (!isDirectional()) return;
-    if (state.steeringPointer !== null && event?.pointerId !== undefined && event.pointerId !== state.steeringPointer) return;
+    if (!isDirectional() || state.steeringPointer === null || event?.pointerId !== state.steeringPointer) return;
     releaseDirectionalDrive();
   }
 
@@ -391,19 +390,21 @@
     parentDoc.addEventListener('pointermove', handleSteeringMove, true);
     parentDoc.addEventListener('click', handleGearClick, true);
     parentDoc.addEventListener('pointerup', event => {
-      if (eventInside(steering, event)) handleSteeringRelease(event);
+      handleSteeringRelease(event);
       handleGearRelease(event);
     }, true);
     parentDoc.addEventListener('pointercancel', event => {
-      if (eventInside(steering, event)) handleSteeringRelease(event);
+      handleSteeringRelease(event);
       handleGearRelease(event);
     }, true);
     parentDoc.addEventListener('lostpointercapture', event => {
-      if (eventInside(steering, event)) handleSteeringRelease(event);
+      handleSteeringRelease(event);
       handleGearRelease(event);
     }, true);
 
-    window.parent.addEventListener('blur', () => { releaseDirectionalDrive(); releaseGearPress(); }, true);
+    window.parent.addEventListener('blur', event => {
+      if (event.target === window.parent) { releaseDirectionalDrive(); releaseGearPress(); }
+    }, true);
     parentDoc.addEventListener('visibilitychange', () => {
       if (parentDoc.hidden) { releaseDirectionalDrive(); releaseGearPress(); }
     });
