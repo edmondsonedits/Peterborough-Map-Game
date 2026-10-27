@@ -10,11 +10,11 @@ The original result is copied before the review map changes or the question adva
 
 The developer can inspect original and proposed circles, copy exact coordinates/radius, reply and set status/priority. **Find similar loaded reports** filters the developer's already-loaded conversations; it does not claim a global count or merge player ownership. A report is a suggestion for review and never changes the live dataset or the player's score. These client snapshots are not certified catalog truth.
 
-Retry keeps the same immutable payload/IDs. Editing a failed report creates new submission IDs. Page-session drafts survive closing/reopening the same result and are cleared on identity changes. Received is shown only after acknowledgement; errors stay retryable. The feature remains disabled until the activation steps below have been completed.
+Retry keeps the same immutable payload/IDs. Editing a failed report creates new submission IDs. Page-session drafts survive closing/reopening the same result and are cleared on identity changes. Received is shown only after acknowledgement; errors stay retryable. The feedback feature uses the dedicated Firebase project configured below.
 
-## Activation required
+## Deployment and activation reference
 
-The UI is deliberately disabled in `config.mjs` until a real backend is configured. No live Firebase changes have been made by this feature branch. Local demo emulators are never accepted on a hosted game.
+The UI is enabled in `config.mjs` and uses the dedicated `peterborough-map-game-feedback` Firebase project. Local demo emulators are never accepted on a hosted game.
 
 Use a **dedicated Firebase project** for feedback. Existing root `firebase.json` / `firestore.rules` belong to a separate scoreboard/analytics migration; deploying them would be unrelated and may interrupt existing analytics.
 

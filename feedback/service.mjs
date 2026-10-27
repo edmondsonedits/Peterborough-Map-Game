@@ -173,15 +173,7 @@ export function createFeedbackService(config) {
         if (initial?.locationReport)
           throw new Error("This report ID has already been used. Start a new report to send a different correction.");
       }
-      const lastSent = await tx.get(writer);
-      if (
-        lastSent.exists() &&
-        Date.now() - lastSent.data().lastSentAt.toMillis() < 1100
-      )
-        throw Object.assign(
-          new Error("Please wait a second before sending another message."),
-          { code: "feedback/throttled" },
-        );
+      // Firestore rules enforce the cooldown using server time.
       const role = old && current.isDeveloper ? "developer" : "player";
       if (!old) {
         if (!initial) throw new Error("This conversation is unavailable.");

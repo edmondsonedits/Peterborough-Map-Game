@@ -190,6 +190,8 @@ const server = http.createServer((req, res) => {
       0,
     );
     await a.locator("#feedback-close").click();
+    // The server remains authoritative even if this device clock is behind.
+    await admin.evaluate(() => { window.originalFeedbackNow = Date.now; Date.now = () => window.originalFeedbackNow() - (new Error().stack.includes("feedback/service.mjs") ? 300000 : 0); });
     await admin.locator("#feedback-reply").fill("Second update.");
     await new Promise((r) => setTimeout(r, 1100));
     await admin.locator("#feedback-send").click();
@@ -207,6 +209,7 @@ const server = http.createServer((req, res) => {
           .locator("#ptbo-feedback-entry")
           .getAttribute("data-unread")) === "false",
     );
+    await admin.evaluate(() => { Date.now = window.originalFeedbackNow; delete window.originalFeedbackNow; });
     await a.locator("#feedback-reply").fill("Please retain this draft.");
     await a.context().setOffline(true);
     await a.locator("#feedback-send").click();
