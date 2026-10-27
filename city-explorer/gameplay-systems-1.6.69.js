@@ -62,8 +62,9 @@ export const FIRE_STATION_TWO = Object.freeze({
   spawnSource: 'user-reviewed-station-2-gameplay',
 });
 
-// Station 3's real apparatus doors face Clonsilla. Start just outside the
-// mapped building shell, which does not yet model open bays or an interior.
+// Station 3 keeps its apron spawn for the validated-model fallback. The
+// authored model uses the anchor and local offsets below only when its GLB and
+// all named overhead-door slats load successfully.
 // playerBesideTruck takes a compass bearing; truckHeading uses the game axis.
 const stationThreePlayer = playerBesideTruck(44.284869, -78.350563, 125.5);
 export const FIRE_STATION_THREE = Object.freeze({
@@ -81,6 +82,12 @@ export const FIRE_STATION_THREE = Object.freeze({
   truckLat: 44.284869,
   truckLon: -78.350563,
   truckHeading: degreesToRadians(234.5),
+  assetAnchorLat: 44.28490065,
+  assetAnchorLon: -78.3506243,
+  interiorTruckEast: -4.972,
+  interiorTruckSouth: -2.671,
+  interiorTruckHeading: degreesToRadians(234.63),
+  interiorPlayerRightOffset: 1.95,
   spawnSource: 'station-3-clonsilla-apron',
 });
 

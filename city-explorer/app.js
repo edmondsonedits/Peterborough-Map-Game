@@ -1,48 +1,49 @@
-import { createIntersectionHologramLayer } from './intersection-holograms.js?v=1.6.141';
-import { createRoadsidePlacementResolver, sampleRoadsideRibbon } from './roadside-furniture-placement.js?v=1.6.141';
-import { createRoadsideFurnitureMeshes } from './roadside-furniture-geometry.js?v=1.6.141';
-import { createHunterBridgeSurface, isHunterBridgeLine } from './hunter-bridge-surface.js?v=1.6.141';
-import { createHunterBridgeAppearance } from './hunter-bridge-appearance.js?v=1.6.141';
-import { HUNTER_BRIDGE_FEATURE } from './hunter-bridge-source.js?v=1.6.141';
-import { applyReviewedPhotoAppearance } from './reviewed-photo-appearance.js?v=1.6.141';
-import { CITY_MATERIALS, CITY_PALETTE_SURFACES, installCityMaterialDetail, cloneCityMaterial } from './city-material-library.js?v=1.6.141';
-import { visualSettings, cityShadowSettings, CITY_DAYLIGHT, createCityGlazingEnvironment, glazingIntensity } from './city-visual-settings.js?v=1.6.141';
-import {mappedBuildingDimensions} from './mapped-building-dimensions.js?v=1.6.141';
-import {createBusinessSignLayer, loadBusinessDirectory} from './business-signs.js?v=1.6.141';
-import { recordSherbrookeBuilding, recordSherbrookeSidewalk, sherbrookeBuildings } from './sherbrooke-plan.js?v=1.6.141';
-import { installSherbrookeDetails } from './sherbrooke-details.js?v=1.6.141';
-import { FOOTAGE_PROFILES as BASE_FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js?v=1.6.141';
-import {applyRecordingAppearance, recordingReferencesEnabled} from './recording-appearance.js?v=1.6.141';
-import {applyRecordingSurfacePalette, recordingExpansionEnabled} from './recording-surface-appearance.js?v=1.6.141';
-import {addCricketRecordingProfiles} from './cricket-recording-appearances.js?v=1.6.141';
-import { createFootageFacade, frontageFrame } from './sherbrooke-footage.js?v=1.6.141';
-import { createGardenClearance } from './sherbrooke-garden-clearance.js?v=1.6.141';
+import { createIntersectionHologramLayer } from './intersection-holograms.js?v=1.6.143';
+import { createRoadsidePlacementResolver, sampleRoadsideRibbon } from './roadside-furniture-placement.js?v=1.6.143';
+import { createRoadsideFurnitureMeshes } from './roadside-furniture-geometry.js?v=1.6.143';
+import { createHunterBridgeSurface, isHunterBridgeLine } from './hunter-bridge-surface.js?v=1.6.143';
+import { createHunterBridgeAppearance } from './hunter-bridge-appearance.js?v=1.6.143';
+import { HUNTER_BRIDGE_FEATURE } from './hunter-bridge-source.js?v=1.6.143';
+import { applyReviewedPhotoAppearance } from './reviewed-photo-appearance.js?v=1.6.143';
+import { CITY_MATERIALS, CITY_PALETTE_SURFACES, installCityMaterialDetail, cloneCityMaterial } from './city-material-library.js?v=1.6.143';
+import { visualSettings, cityShadowSettings, CITY_DAYLIGHT, createCityGlazingEnvironment, glazingIntensity } from './city-visual-settings.js?v=1.6.143';
+import {mappedBuildingDimensions} from './mapped-building-dimensions.js?v=1.6.143';
+import {createBusinessSignLayer, loadBusinessDirectory} from './business-signs.js?v=1.6.143';
+import { recordSherbrookeBuilding, recordSherbrookeSidewalk, sherbrookeBuildings } from './sherbrooke-plan.js?v=1.6.143';
+import { installSherbrookeDetails } from './sherbrooke-details.js?v=1.6.143';
+import { FOOTAGE_PROFILES as BASE_FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js?v=1.6.143';
+import {applyRecordingAppearance, recordingReferencesEnabled} from './recording-appearance.js?v=1.6.143';
+import {applyRecordingSurfacePalette, recordingExpansionEnabled} from './recording-surface-appearance.js?v=1.6.143';
+import {addCricketRecordingProfiles} from './cricket-recording-appearances.js?v=1.6.143';
+import { createFootageFacade, frontageFrame } from './sherbrooke-footage.js?v=1.6.143';
+import { createGardenClearance } from './sherbrooke-garden-clearance.js?v=1.6.143';
 import { appendFootageRoof } from './sherbrooke-footage-roofs.js?v=corridor-20261024';
 import { appendFootageMassing } from './footage-building-massing.js';
 import * as THREE from 'three';
-import stationOneLayout from './assets/station1/layout.json' with { type: 'json' };
-import stationTwoLayout from './assets/station2/layout.json' with { type: 'json' };
+import stationOneLayout from './assets/station1/layout.json?v=1.6.143' with { type: 'json' };
+import stationTwoLayout from './assets/station2/layout.json?v=1.6.143' with { type: 'json' };
 import { hideStationTwoReplacementRecords, stationCameraOffsetScale } from './station-two-core.mjs';
 import { hideStationOneReplacementRecords } from './station-one-core.mjs';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { createEmergencyFacilityLayer, suppressFacilitySource } from './emergency-facilities.js';
-import { emergencyFacilityEntries } from './emergency-facilities-catalog.js';
-import { createStationOneRuntime, stationOneRequested } from './station-one-runtime.js';
-import { createStationTwoRuntime, stationTwoRequested } from './station-two-runtime.js';
+import { createEmergencyFacilityLayer, suppressFacilitySource } from './emergency-facilities.js?v=1.6.143';
+import { emergencyFacilityEntries } from './emergency-facilities-catalog.js?v=1.6.143';
+import { createStationOneRuntime, stationOneRequested } from './station-one-runtime.js?v=1.6.143';
+import { createStationTwoRuntime, stationTwoRequested } from './station-two-runtime.js?v=1.6.143';
+import { attachStationThreeModel, createStationThreeDoorController, inspectStationThreeModel, loadStationThreeAsset, selectStationThreeSpawn, stationGameplayLabels, stationThreeLocalPosition, stationThreeThrottleInput, STATION_THREE_BAY_EXIT_LOCAL_Z, STATION_THREE_INITIAL_CAMERA_DISTANCE_SCALE, STATION_THREE_INTERIOR_DRIVE_CAMERA_HEIGHT } from './station-three-runtime.js?v=1.6.143';
 import { reconcileStationPavement } from './station-pavement-layer.js?v=1.6.57';
 import { CURB_REVEAL, curbIsRaised, stationRoadWeight, splitRoadDetailSegment, pavementSupportBottom } from './station-road-detail.js?v=1.6.58';
 import { installQualityCapture } from './quality-capture.js?v=sherbrooke-20260915';
-import { buildingFacadePlan } from './building-archetypes.js?v=1.6.141';
+import { buildingFacadePlan } from './building-archetypes.js?v=1.6.143';
 import { loadVegetationAssets } from './vegetation-assets.js?v=sherbrooke-20260915';
 import { createVegetationVariant, stationOneVegetationPalette } from './vegetation-variants.js?v=streetscape-1';
 import { installStationStreetscape } from './streetscape-assets.js?v=streetscape-2';
 import { installStationApron } from './site-surface-materials.js?v=1.6.56';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
-import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js?v=1.6.141';
+import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js?v=1.6.143';
 import { createCatalogObject } from './editor/asset-catalog.js';
 import { createCommandHistory } from './editor/command-history.js';
-import { createDraftStore } from './editor/draft-store.js?v=1.6.141';
-import { createCityEditor } from './editor/city-editor.js?v=1.6.141';
+import { createDraftStore } from './editor/draft-store.js?v=1.6.143';
+import { createCityEditor } from './editor/city-editor.js?v=1.6.143';
 import { createEmptySceneDocument, sanitizeRenderableSceneDocument } from './editor/scene-document.js';
 import { createGeneratedRegistry } from './editor/generated-registry.js?v=footage-20261020';
 import { applyOverrides } from './editor/override-runtime.js';
@@ -53,8 +54,8 @@ import {
   createBuildingFootprintPlacement,
   createPeterboroughLandmarks,
 } from './landmark-models.js?v=corridor-20261024';
-import { ROAD_SURFACE_CLEARANCE, RoadSurfaceIndex, laneCountFor, reconcileRoadNetworkElevations, roadProfile, roadRibbonCrossSections, resampleRoadLine } from './road-network.js?v=1.6.141';
-import { createRoadMarkingContext, roadMarkingIntervals, roadCurbIntervals } from './road-appearance-rules.js?v=1.6.141';
+import { ROAD_SURFACE_CLEARANCE, RoadSurfaceIndex, laneCountFor, reconcileRoadNetworkElevations, roadProfile, roadRibbonCrossSections, resampleRoadLine } from './road-network.js?v=1.6.143';
+import { createRoadMarkingContext, roadMarkingIntervals, roadCurbIntervals } from './road-appearance-rules.js?v=1.6.143';
 import { solveFallbackJunctions, polygonArea as junctionPolygonArea } from './fallback-junction-geometry.js';
 import { officialRoadMeshEdgeLength, officialCurbDisplayMode, nearbyMunicipalRoadHeight, municipalCurbTop } from './citywide-road-quality.js';
 import { sampleTruckWheelContacts, truckIsOnRoad } from './road-wheel-contact.js';
@@ -65,7 +66,7 @@ import { clearLandCoverRaster, paintLandCoverPolygon } from './land-cover-raster
 import { sampleOfficialTerrainElevation, validOfficialTerrainMetadata } from './terrain-heightmap.js?v=1.5.5-lidar1';
 import { sampleTriangulatedTerrainHeight } from './terrain-surface.js?v=1.5.5-terrain1';
 import { HydroSurfaceIndex, WATER_SURFACE_CLEARANCE, WATER_TERRAIN_RECESS, createWaterStageSampler, relativeWaterElevation, robustFallbackWaterHeight, subdivideWaterTriangle, watercourseWidth } from './water-system.js?v=1.5.5-hydro2';
-import { CitySplatLayer } from './city-splat-layer.js?v=1.6.141';
+import { CitySplatLayer } from './city-splat-layer.js?v=1.6.143';
 import {
   estimatedBuildingFloors,
   facadeDetailClass,
@@ -83,6 +84,7 @@ import {
 } from './vertical-slice-quality.js?v=1.5.6-material2';
 import {
   FIRE_STATION_ONE,
+  FIRE_STATION_THREE,
   PLAYER_TUNING,
   TRUCK_TUNING,
   createFireStationFacade,
@@ -470,6 +472,11 @@ let stationTwoRuntime = null;
 let stationTwoReplacementReady = false;
 let stationTwoReplacementDiagnostics = { candidate: null, matched: 0, hidden: 0, sourceIds: [] };
 let stationTwoFallbackSpawn = null;
+let stationThreeAssetReady = false;
+let stationThreeModel = null;
+let stationThreeGltf = null;
+let stationThreeDoorController = null;
+let stationThreeRevealTimer = null;
 let semanticSurveyCollection = null;
 let semanticSurveyOverlay = null;
 let semanticSurveyActive = false;
@@ -695,6 +702,92 @@ function setProgress(percent, message) {
 
 function nextFrame() {
   return new Promise((resolve) => requestAnimationFrame(resolve));
+}
+
+function releaseStationThreeGltf(gltf) {
+  gltf?.scene?.traverse((object) => {
+    object.geometry?.dispose?.();
+    const materials = Array.isArray(object.material) ? object.material : [object.material];
+    materials.filter(Boolean).forEach((material) => {
+      Object.values(material).forEach((value) => value?.isTexture && value.dispose?.());
+      material.dispose?.();
+    });
+  });
+}
+
+async function loadStationThreeModel() {
+  const loader = new GLTFLoader();
+  const assetUrl = new URL('./assets/stations/station-3.glb?v=1.6.143', import.meta.url).href;
+  const result = await loadStationThreeAsset({
+    url: assetUrl,
+    timeoutMs: 8000,
+    parseAsset: (data, url) => loader.parseAsync(data, new URL('.', url).href),
+    validateAsset: (gltf) => inspectStationThreeModel(gltf?.scene),
+    disposeAsset: releaseStationThreeGltf,
+  });
+  if (!result.asset) {
+    const detail = result.reason === 'timeout' ? 'timed out' : 'is unavailable or invalid';
+    console.info(`Station 3 authored model ${detail}; keeping the mapped shell and apron spawn.`, result.error || result.validation?.errors || '');
+    document.documentElement.dataset.stationThreeModel = `${result.reason || 'unavailable'}-fallback`;
+    return null;
+  }
+
+  const gltf = result.asset;
+  const inspection = result.validation;
+  let doorController;
+  try {
+    doorController = createStationThreeDoorController({
+      doors: inspection.doors,
+        doorNames: ['Station3_Door_01'],
+    });
+  } catch (error) {
+    console.info('Station 3 authored model could not prepare its bay door; using the mapped shell.', error);
+    releaseStationThreeGltf(gltf);
+    document.documentElement.dataset.stationThreeModel = 'invalid-fallback';
+    return null;
+  }
+  stationThreeGltf = gltf;
+  inspection.doors.forEach(({ slats }) => slats.forEach((slat) => {
+    slat.userData ||= {};
+    slat.userData.stationThreeAnimated = true;
+  }));
+  stationThreeDoorController = doorController;
+  stationThreeAssetReady = true;
+  document.documentElement.dataset.stationThreeModel = 'validated';
+  return gltf;
+}
+
+function placeStationThreeModel() {
+  if (!stationThreeAssetReady || !stationThreeGltf || stationThreeModel) return;
+  try {
+    const anchor = project(FIRE_STATION_THREE.assetAnchorLat, FIRE_STATION_THREE.assetAnchorLon);
+    const placement = attachStationThreeModel({
+      root: stationThreeGltf.scene,
+      parent: buildingGroup,
+      createGroup: () => new THREE.Group(),
+      position: { x: anchor.x, y: terrainHeightAtWorld(anchor.x, anchor.y), z: anchor.y },
+      configure: (group) => {
+        group.name = 'station-three-authored-building';
+        group.traverse((object) => {
+          if (!object.isMesh) return;
+          object.castShadow = !lowPowerProfile;
+          object.receiveShadow = !lowPowerProfile;
+        });
+      },
+    });
+    if (!placement.group) throw placement.error || new Error('Station 3 model placement failed');
+    stationThreeModel = placement.group;
+    document.documentElement.dataset.stationThreeModel = 'ready';
+  } catch (error) {
+    console.info('Station 3 authored model could not be positioned; keeping the mapped shell and apron spawn.', error);
+    stationThreeGltf.scene.removeFromParent?.();
+    releaseStationThreeGltf(stationThreeGltf);
+    stationThreeGltf = null;
+    stationThreeDoorController = null;
+    stationThreeAssetReady = false;
+    stationThreeModel = null;
+    document.documentElement.dataset.stationThreeModel = 'placement-fallback';
+  }
 }
 
 function project(lat, lon) {
@@ -1725,6 +1818,10 @@ function appendBuildingFacadeDetails(outer, tags, featureId, foundationTop, wall
 }
 
 function appendBufferedBuilding(rings, tags, featureId, batches, sourceId = featureId) {
+  // Keep the original footprint available to map-label/municipal gap-fill
+  // matching while omitting only its visual shell after the GLB is validated.
+  // Both the GeoJSON and internal-way OSM parsers pass through this function.
+  if (stationThreeAssetReady && (featureId === 'way/558402285' || sourceId === 'way/558402285')) return true;
   const outer = cleanRing(rings[0]);
   if (!outer.length) return false;
   const holes = rings.slice(1).map(cleanRing).filter((ring) => ring.length);
@@ -4702,6 +4799,7 @@ function setReadyStatus(summary) {
 async function buildCity() {
   setProgress(4, 'Reading the full Peterborough map extent…');
   await hydrateWorldBounds();
+  const stationThreeModelPromise = loadStationThreeModel();
   setProgress(7, 'Loading official Peterborough lidar terrain and map geometry…');
   const terrainPromise = loadTerrain().catch((error) => {
     console.warn('Terrain data unavailable; continuing with flat terrain.', error);
@@ -4739,12 +4837,14 @@ async function buildCity() {
     hydrographyPromise,
     officialRoadSurfacePromise,
     officialBuildingPromise,
+    stationThreeModelPromise,
   ]);
   const preparedHydrography = hydrography ? prepareHydrography(hydrography) : null;
   setProgress(31, terrain.source === 'ontario-lidar-2025'
     ? 'Shaping the landscape from Ontario lidar and hydrographic breaklines…'
     : state.terrainAvailable ? 'Decoding elevation tiles and shaping the landscape…' : 'Terrain service unavailable — using a flat landscape…');
   createTerrainMesh(preparedHydrography?.surfaceIndex || null);
+  placeStationThreeModel();
   if (preparedHydrography) buildOfficialHydrography(preparedHydrography);
   await nextFrame();
 
@@ -4859,7 +4959,7 @@ async function buildCity() {
   initializeGameplay();
   emergencyFacilityLayer = createEmergencyFacilityLayer({
     THREE, scene: gameplayGroup, loader: new GLTFLoader(),
-    entries: emergencyFacilityEntries({stationOneSelected:STATION_ONE_SELECTED,stationTwoSelected:STATION_TWO_SELECTED}),
+    entries: emergencyFacilityEntries({stationOneSelected:STATION_ONE_SELECTED,stationTwoSelected:STATION_TWO_SELECTED,stationThreeManaged:true}),
     project, baseSurface:(x,z)=>gameplaySurfaceBaseAt(x,z),
     records:()=>generatedRegistry.records.values(), hide:id=>suppressFacilitySource(generatedRegistry,authoredRuntime,id),
   });
@@ -4890,6 +4990,12 @@ async function buildCity() {
   captureFrame = installQualityCapture({ THREE, renderer, camera, state, project, terrainHeightAtWorld, stopMotion: stopFlyMotion, preparePlayerSpawn: resetGameplay, overlay: semanticSurveyOverlay, lowPower: lowPowerProfile, startedAt: explorerStartedAt,
     lighting: () => ({ theme:state.theme, exposure:renderer.toneMappingExposure, toneMapping:renderer.toneMapping, sunPosition:sun.position.toArray(), sunTarget:sunTarget.position.toArray(), sunIntensity:sun.intensity, shadows:sun.castShadow }) });
   setTimeout(() => els.loading.classList.add('is-hidden'), 420);
+  if (FIRE_STATION_ONE.number === 3 && stationThreeAssetReady && stationThreeDoorController) {
+    stationThreeRevealTimer = setTimeout(() => {
+      stationThreeRevealTimer = null;
+      stationThreeDoorController?.start(performance.now());
+    }, 1180);
+  }
 }
 
 function applyCityOverrides(documentValue) {
@@ -5131,6 +5237,45 @@ function startDrivingFromBay() {
   return true;
 }
 
+function stationThreeSpawnPoints() {
+  const fallback = {
+    playerPoint: project(FIRE_STATION_ONE.playerLat, FIRE_STATION_ONE.playerLon),
+    truckPoint: project(FIRE_STATION_ONE.truckLat, FIRE_STATION_ONE.truckLon),
+    heading: FIRE_STATION_ONE.truckHeading,
+    playerHeading: Math.PI,
+  };
+  const station = FIRE_STATION_THREE;
+  const anchor = project(station.assetAnchorLat, station.assetAnchorLon);
+  const heading = station.interiorTruckHeading;
+  const truckPoint = {
+    x: anchor.x + station.interiorTruckEast,
+    y: anchor.y + station.interiorTruckSouth,
+  };
+  const playerPoint = {
+    x: truckPoint.x + Math.cos(heading) * station.interiorPlayerRightOffset,
+    y: truckPoint.y - Math.sin(heading) * station.interiorPlayerRightOffset,
+  };
+  const interior = { playerPoint, truckPoint, heading, playerHeading: heading };
+  return selectStationThreeSpawn({
+    stationNumber: FIRE_STATION_ONE.number,
+    assetReady: stationThreeAssetReady,
+    fallback,
+    interior,
+  });
+}
+
+function stationThreeTruckLocalPosition() {
+  const anchor = project(FIRE_STATION_THREE.assetAnchorLat, FIRE_STATION_THREE.assetAnchorLon);
+  const forward = directionFromHeading(FIRE_STATION_THREE.interiorTruckHeading);
+  return stationThreeLocalPosition({
+    x: truckState.x,
+    z: truckState.z,
+    anchorX: anchor.x,
+    anchorZ: anchor.y,
+    modelYaw: Math.atan2(forward.x, forward.z),
+  });
+}
+
 function snapGameplayCamera() {
   if (gameplayReady) updateGameplayCamera(1, true);
 }
@@ -5152,11 +5297,7 @@ function gameplaySpawnPoints() {
       truckHeading: stationTwoRuntime.spawn.heading,
     };
   }
-  return {
-    playerPoint: project(FIRE_STATION_ONE.playerLat, FIRE_STATION_ONE.playerLon),
-    truckPoint: project(FIRE_STATION_ONE.truckLat, FIRE_STATION_ONE.truckLon),
-    truckHeading: FIRE_STATION_ONE.truckHeading,
-  };
+  return stationThreeSpawnPoints();
 }
 
 function selectedStationRuntime() {
@@ -5257,7 +5398,10 @@ function initializeGameplay() {
       onReady: () => { stationTwoReplacementReady = true; hideStationTwoReplacement(); snapGameplayCamera(); },
     });
   }
-  const { playerPoint, truckPoint, truckHeading } = gameplaySpawnPoints();
+  const spawn = gameplaySpawnPoints();
+  const { playerPoint, truckPoint } = spawn;
+  const truckHeading = spawn.heading ?? spawn.truckHeading;
+  const spawnPlayerHeading = spawn.playerHeading ?? ((STATION_ONE_SELECTED || STATION_TWO_SELECTED) ? truckHeading + Math.PI : Math.PI);
   const buildingPoint = STATION_ONE_SELECTED || STATION_TWO_SELECTED
     ? { x: selectedStationRuntime().spawn.anchor.x, y: selectedStationRuntime().spawn.anchor.z }
     : project(FIRE_STATION_ONE.buildingLat, FIRE_STATION_ONE.buildingLon);
@@ -5266,7 +5410,7 @@ function initializeGameplay() {
   playerActor = createFirefighter(THREE);
   const playerSurface = gameplaySurfaceAt(playerPoint.x, playerPoint.y);
   playerActor.position.set(playerPoint.x, playerSurface.height + 0.025, playerPoint.y);
-  if (STATION_ONE_SELECTED || STATION_TWO_SELECTED) playerHeading = truckHeading + Math.PI;
+  playerHeading = spawnPlayerHeading;
   playerActor.rotation.y = playerHeading;
   gameplayGroup.add(playerActor);
 
@@ -5294,9 +5438,10 @@ function initializeGameplay() {
   }
 
   gameplayReady = true;
-  state.gameplayYaw = STATION_ONE_SELECTED || STATION_TWO_SELECTED ? truckHeading : 0;
+  state.gameplayYaw = STATION_ONE_SELECTED || STATION_TWO_SELECTED ? truckHeading : (FIRE_STATION_ONE.number === 3 && stationThreeAssetReady ? spawn.heading : 0);
   state.gameplayPitch = -0.19;
-  state.gameplayCameraDistanceScale = 1;
+  state.gameplayCameraDistanceScale = FIRE_STATION_ONE.number === 3 && stationThreeAssetReady
+    ? STATION_THREE_INITIAL_CAMERA_DISTANCE_SCALE : 1;
   gameplayCameraTarget.copy(playerActor.position).add(new THREE.Vector3(0, PLAYER_TUNING.cameraHeight, 0));
   playerActor.visible = state.mode !== 'driving';
   syncGameplayRootClasses();
@@ -5336,6 +5481,12 @@ function initializeGameplay() {
   if ((STATION_ONE_SELECTED || STATION_TWO_SELECTED) && new URLSearchParams(location.search).get('spawn') === 'truck') startDrivingFromBay();
   globalThis.__PTBO_GAMEPLAY__ = Object.freeze({
     station: { ...FIRE_STATION_ONE },
+    stationThree: {
+      assetReady: stationThreeAssetReady,
+      doorPhase: () => stationThreeDoorController?.phase || 'unavailable',
+      forwardThrottleEnabled: () => FIRE_STATION_ONE.number !== 3
+        || !stationThreeAssetReady || stationThreeDoorController?.phase === 'open',
+    },
     state() {
       return {
         mode: state.mode,
@@ -5368,13 +5519,16 @@ function initializeGameplay() {
 
 function resetGameplay() {
   if (!gameplayReady) return false;
-  const { playerPoint, truckPoint, truckHeading } = gameplaySpawnPoints();
+  const spawn = gameplaySpawnPoints();
+  const { playerPoint, truckPoint } = spawn;
+  const truckHeading = spawn.heading ?? spawn.truckHeading;
+  const spawnPlayerHeading = spawn.playerHeading ?? ((STATION_ONE_SELECTED || STATION_TWO_SELECTED) ? truckHeading + Math.PI : Math.PI);
   const playerSurface = gameplaySurfaceAt(playerPoint.x, playerPoint.y);
   const truckSurface = gameplaySurfaceAt(truckPoint.x, truckPoint.y);
   playerActor.position.set(playerPoint.x, playerSurface.height + 0.025, playerPoint.y);
   playerVelocity.set(0, 0, 0);
   playerSpeed = 0;
-  playerHeading = STATION_ONE_SELECTED || STATION_TWO_SELECTED ? truckHeading + Math.PI : Math.PI;
+  playerHeading = spawnPlayerHeading;
   playerActor.rotation.y = playerHeading;
   Object.assign(truckState, {
     x: truckPoint.x, z: truckPoint.y, y: truckSurface.height + 0.035,
@@ -5385,10 +5539,19 @@ function resetGameplay() {
   fireTruckActor.rotation.set(0, truckState.heading, 0, 'YXZ');
   fireTruckActor.userData.truck.visual.rotation.set(0, 0, 0);
   selectedStationRuntime()?.resetDoors();
-  state.gameplayYaw = STATION_ONE_SELECTED || STATION_TWO_SELECTED ? truckHeading : 0;
+  state.gameplayYaw = STATION_ONE_SELECTED || STATION_TWO_SELECTED ? truckHeading : (FIRE_STATION_ONE.number === 3 && stationThreeAssetReady ? spawn.heading : 0);
   state.gameplayPitch = -0.19;
-  state.gameplayCameraDistanceScale = 1;
+  state.gameplayCameraDistanceScale = FIRE_STATION_ONE.number === 3 && stationThreeAssetReady
+    ? STATION_THREE_INITIAL_CAMERA_DISTANCE_SCALE : 1;
   setMode('onFoot', true);
+  if (stationThreeRevealTimer !== null) clearTimeout(stationThreeRevealTimer);
+  stationThreeRevealTimer = null;
+  if (stationThreeDoorController) {
+    stationThreeDoorController.reset();
+    if (FIRE_STATION_ONE.number === 3 && stationThreeAssetReady) {
+      stationThreeDoorController.start(performance.now());
+    }
+  }
   snapGameplayCamera();
   return true;
 }
@@ -5668,9 +5831,15 @@ function updateFireTruck(delta) {
   if (!gameplayReady) return;
   if (state.mode === 'driving') {
     const axes = currentGameplayAxes(delta);
+    const throttle = stationThreeThrottleInput({
+      stationNumber: FIRE_STATION_ONE.number,
+      assetReady: stationThreeAssetReady,
+      doorPhase: stationThreeDoorController?.phase,
+      throttle: axes.forward,
+    });
     const currentSurface = gameplaySurfaceAt(truckState.x, truckState.z, truckState.y);
     const next = stepFireTruckKinematics(truckState, {
-      throttle: axes.forward,
+      throttle,
       steering: axes.steering,
     }, delta, truckIsOnRoad(currentSurface.onRoad, truckState.lastRoadWheelCount));
     next.x = THREE.MathUtils.clamp(next.x, CITY.worldBounds.minX, CITY.worldBounds.maxX);
@@ -5740,7 +5909,11 @@ function updateGameplayCamera(delta, snap = false) {
   }
   const mobileCameraScale = !driving && innerWidth < 520 ? 1.45 : 1;
   const baseDistance = (driving ? TRUCK_TUNING.chaseDistance : PLAYER_TUNING.cameraDistance) * mobileCameraScale;
-  const baseHeight = driving ? TRUCK_TUNING.chaseHeight : 0.7;
+  const stationThreeDrivingInside = driving && FIRE_STATION_ONE.number === 3 && stationThreeAssetReady
+    && stationThreeTruckLocalPosition().z < STATION_THREE_BAY_EXIT_LOCAL_Z;
+  const baseHeight = driving
+    ? stationThreeDrivingInside ? STATION_THREE_INTERIOR_DRIVE_CAMERA_HEIGHT : TRUCK_TUNING.chaseHeight
+    : 0.7;
   const distance = baseDistance * state.gameplayCameraDistanceScale;
   const horizontalDistance = Math.cos(state.gameplayPitch) * distance;
   const cameraDirection = directionFromHeading(state.gameplayYaw);
@@ -5812,7 +5985,8 @@ function updateGameplayHud() {
       if (button.textContent !== label) button.textContent = label;
     });
   }
-  const role = driving ? ('Fire Rescue Engine ' + FIRE_STATION_ONE.number) : 'Firefighter · On foot';
+  const labels = { engine: 'Fire Rescue Engine ' + FIRE_STATION_ONE.number };
+  const role = driving ? labels.engine : 'Firefighter · On foot';
   const speedKmh=String(Math.round(Math.abs(truckState.speed)*3.6));
   const speedText=speedKmh.padStart(3,'0');
   const gear=Math.abs(truckState.speed)<0.18?'N':truckState.speed<0?'R':'D';
@@ -5822,7 +5996,7 @@ function updateGameplayHud() {
   let prompt = '';
   if (state.mode === 'onFoot') {
     const distance = Math.hypot(playerActor.position.x - truckState.x, playerActor.position.z - truckState.z);
-    if (distance <= PLAYER_TUNING.enterDistance) prompt = '<kbd>E</kbd> Enter Fire Rescue Engine ' + FIRE_STATION_ONE.number;
+    if (distance <= PLAYER_TUNING.enterDistance) prompt = `<kbd>E</kbd> Enter ${labels.engine}`;
   } else if (driving && Math.abs(truckState.speed) <= TRUCK_TUNING.exitSpeed) {
     prompt = '<kbd>E</kbd> Exit fire truck';
   }
@@ -5843,20 +6017,24 @@ function updateGameplayHud() {
 
 function enterOrExitVehicle() {
   if (!gameplayReady) return;
+  const labels = stationGameplayLabels(FIRE_STATION_ONE);
   if (state.mode === 'onFoot') {
     const distance = Math.hypot(playerActor.position.x - truckState.x, playerActor.position.z - truckState.z);
     if (distance > PLAYER_TUNING.enterDistance) {
-      showToast('Move closer to Fire Rescue Engine ' + FIRE_STATION_ONE.number);
+      showToast(`Move closer to ${labels.engine}`);
       return;
     }
     playerActor.visible = false;
     playerVelocity.set(0, 0, 0);
-    state.gameplayYaw = STATION_ONE_SELECTED || STATION_TWO_SELECTED ? truckState.heading : 0;
+    state.gameplayYaw = STATION_ONE_SELECTED || STATION_TWO_SELECTED || (FIRE_STATION_ONE.number === 3 && stationThreeAssetReady) ? truckState.heading : 0;
+    if (FIRE_STATION_ONE.number === 3 && stationThreeAssetReady) {
+      state.gameplayCameraDistanceScale = STATION_THREE_INITIAL_CAMERA_DISTANCE_SCALE;
+    }
     state.gameplayLastLookTime = performance.now();
     state.gameplayPitch = -0.17;
     setMode('driving', true);
     ensureVehicleAudio();
-    showToast('Fire Rescue Engine ' + FIRE_STATION_ONE.number + ' ready');
+    showToast(`${labels.engine} ready`);
     return;
   }
   if (state.mode !== 'driving') return;
@@ -6281,6 +6459,7 @@ function freezeStaticCityTransforms() {
     .forEach((group) => {
       group.updateMatrixWorld(true);
       group.traverse((object) => {
+        if (object.userData?.stationThreeAnimated) return;
         object.updateMatrix();
         object.matrixAutoUpdate = false;
       });
@@ -6294,6 +6473,7 @@ function animate() {
     return;
   }
   const delta = Math.min(clock.getDelta(), 0.05);
+  stationThreeDoorController?.update(performance.now());
   if (!captureFrame) {
     if(document.querySelector('dialog[open]')){state.keys.clear();currentGameplayAxes(0);}
     else if (cityEditor?.active) cityEditor.update(delta);

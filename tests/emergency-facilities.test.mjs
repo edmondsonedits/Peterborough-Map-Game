@@ -76,3 +76,11 @@ test('static station foundations reach sloped terrain without moving the model d
   assert.ok(bounds.max.y<=wrapper.position.y);
   assert.equal(f.layer.getStatus().test.status,'ready');
 });
+test('production Station 3 runtime owns its facade and fallback without a second static model', async () => {
+  const {emergencyFacilityEntries}=await import('../city-explorer/emergency-facilities-catalog.js');
+  const entries=emergencyFacilityEntries({stationThreeManaged:true});
+  assert.deepEqual(entries.map(e=>e.id),['station1','station2','ems-armour','ems-clonsilla']);
+  assert.ok(entries.every(e=>!e.sourceIds.includes('way/558402285')));
+  assert.equal(emergencyFacilityEntries({stationOneSelected:true,stationThreeManaged:true}).length,3);
+  assert.equal(emergencyFacilityEntries({stationTwoSelected:true,stationThreeManaged:true}).length,3);
+});

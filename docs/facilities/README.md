@@ -35,4 +35,10 @@ These are local assets only. This documentation does not assert that all elevati
 - EMS wall skirts extend 1.2 m below the model datum to meet the sloped GIS surface. This is a rendering accommodation, not a surveyed foundation.
 - Detailed browser receipts, model validation logs and screenshots are in H:/ChatGPT/Peterborough-Facilities-20261027/qa/. Playtest receipts: gameplay-facilities.json, ems-and-fallback-qa.json and final-visual-qa.json. Rebuild the original models with Blender 5.2 using the checked-in builders; the Station 3 and EMS builders read the checked-in GIS contracts.
 
-Public deployment was not performed for this revision.
+## Production integration: v1.6.143
+
+The local snapshot above was integrated with production v1.6.142 before publication. The production Station 3 model at city-explorer/assets/stations/station-3.glb and its working Bay 01 spawn, door, camera and failure fallback take precedence. The alternate static Station 3 model documented above is retained as a source artifact, but the production catalog does not load it or hide its GIS source. This prevents two Station 3 buildings from rendering together. Production Station 3 provenance is in ../stations/station-3-provenance.md.
+
+Stations 1 and 2 plus both EMS bases use the facility work documented here. Station 1 retains the second-from-right bay start and interactive front door, with five closed visual rear doors and a shed-side door. All changed facility modules, layout JSON and GLB requests use the canonical release cache version.
+
+Merged release verification: 905 Node game/editor tests pass; focused independent merge review found no code blocker. Browser checks and deployment/hash receipts are under H:/ChatGPT/Peterborough-Facilities-20261027/qa/release-v143-local and release-v143-live. Deployment status is authoritative in the GitHub Pages workflow.
