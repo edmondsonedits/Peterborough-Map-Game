@@ -1,5 +1,5 @@
-import { feedbackConfig } from "./config.mjs";
-import { createFeedbackService } from "./service.mjs";
+import { feedbackConfig } from "./config.mjs?v=feedback-activation-20261027";
+import { createFeedbackService } from "./service.mjs?v=feedback-activation-20261027";
 import { normalizeLocationReport, locationReportIdentity, locationReportGroupKey } from './location-report.mjs';
 import { mountLocationReportComposer, mountLocationReportDetails } from './location-report-ui.mjs';
 import {

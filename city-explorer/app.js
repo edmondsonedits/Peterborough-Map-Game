@@ -1,22 +1,22 @@
-import { createIntersectionHologramLayer } from './intersection-holograms.js?v=1.6.142';
-import { createRoadsidePlacementResolver, sampleRoadsideRibbon } from './roadside-furniture-placement.js?v=1.6.142';
-import { createRoadsideFurnitureMeshes } from './roadside-furniture-geometry.js?v=1.6.142';
-import { createHunterBridgeSurface, isHunterBridgeLine } from './hunter-bridge-surface.js?v=1.6.142';
-import { createHunterBridgeAppearance } from './hunter-bridge-appearance.js?v=1.6.142';
-import { HUNTER_BRIDGE_FEATURE } from './hunter-bridge-source.js?v=1.6.142';
-import { applyReviewedPhotoAppearance } from './reviewed-photo-appearance.js?v=1.6.142';
-import { CITY_MATERIALS, CITY_PALETTE_SURFACES, installCityMaterialDetail, cloneCityMaterial } from './city-material-library.js?v=1.6.142';
-import { visualSettings, cityShadowSettings, CITY_DAYLIGHT, createCityGlazingEnvironment, glazingIntensity } from './city-visual-settings.js?v=1.6.142';
-import {mappedBuildingDimensions} from './mapped-building-dimensions.js?v=1.6.142';
-import {createBusinessSignLayer, loadBusinessDirectory} from './business-signs.js?v=1.6.142';
-import { recordSherbrookeBuilding, recordSherbrookeSidewalk, sherbrookeBuildings } from './sherbrooke-plan.js?v=1.6.142';
-import { installSherbrookeDetails } from './sherbrooke-details.js?v=1.6.142';
-import { FOOTAGE_PROFILES as BASE_FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js?v=1.6.142';
-import {applyRecordingAppearance, recordingReferencesEnabled} from './recording-appearance.js?v=1.6.142';
-import {applyRecordingSurfacePalette, recordingExpansionEnabled} from './recording-surface-appearance.js?v=1.6.142';
-import {addCricketRecordingProfiles} from './cricket-recording-appearances.js?v=1.6.142';
-import { createFootageFacade, frontageFrame } from './sherbrooke-footage.js?v=1.6.142';
-import { createGardenClearance } from './sherbrooke-garden-clearance.js?v=1.6.142';
+import { createIntersectionHologramLayer } from './intersection-holograms.js?v=1.6.143';
+import { createRoadsidePlacementResolver, sampleRoadsideRibbon } from './roadside-furniture-placement.js?v=1.6.143';
+import { createRoadsideFurnitureMeshes } from './roadside-furniture-geometry.js?v=1.6.143';
+import { createHunterBridgeSurface, isHunterBridgeLine } from './hunter-bridge-surface.js?v=1.6.143';
+import { createHunterBridgeAppearance } from './hunter-bridge-appearance.js?v=1.6.143';
+import { HUNTER_BRIDGE_FEATURE } from './hunter-bridge-source.js?v=1.6.143';
+import { applyReviewedPhotoAppearance } from './reviewed-photo-appearance.js?v=1.6.143';
+import { CITY_MATERIALS, CITY_PALETTE_SURFACES, installCityMaterialDetail, cloneCityMaterial } from './city-material-library.js?v=1.6.143';
+import { visualSettings, cityShadowSettings, CITY_DAYLIGHT, createCityGlazingEnvironment, glazingIntensity } from './city-visual-settings.js?v=1.6.143';
+import {mappedBuildingDimensions} from './mapped-building-dimensions.js?v=1.6.143';
+import {createBusinessSignLayer, loadBusinessDirectory} from './business-signs.js?v=1.6.143';
+import { recordSherbrookeBuilding, recordSherbrookeSidewalk, sherbrookeBuildings } from './sherbrooke-plan.js?v=1.6.143';
+import { installSherbrookeDetails } from './sherbrooke-details.js?v=1.6.143';
+import { FOOTAGE_PROFILES as BASE_FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js?v=1.6.143';
+import {applyRecordingAppearance, recordingReferencesEnabled} from './recording-appearance.js?v=1.6.143';
+import {applyRecordingSurfacePalette, recordingExpansionEnabled} from './recording-surface-appearance.js?v=1.6.143';
+import {addCricketRecordingProfiles} from './cricket-recording-appearances.js?v=1.6.143';
+import { createFootageFacade, frontageFrame } from './sherbrooke-footage.js?v=1.6.143';
+import { createGardenClearance } from './sherbrooke-garden-clearance.js?v=1.6.143';
 import { appendFootageRoof } from './sherbrooke-footage-roofs.js?v=corridor-20261024';
 import { appendFootageMassing } from './footage-building-massing.js';
 import * as THREE from 'three';
@@ -28,17 +28,17 @@ import { attachStationThreeModel, createStationThreeDoorController, inspectStati
 import { reconcileStationPavement } from './station-pavement-layer.js?v=1.6.57';
 import { CURB_REVEAL, curbIsRaised, stationRoadWeight, splitRoadDetailSegment, pavementSupportBottom } from './station-road-detail.js?v=1.6.58';
 import { installQualityCapture } from './quality-capture.js?v=sherbrooke-20260915';
-import { buildingFacadePlan } from './building-archetypes.js?v=1.6.142';
+import { buildingFacadePlan } from './building-archetypes.js?v=1.6.143';
 import { loadVegetationAssets } from './vegetation-assets.js?v=sherbrooke-20260915';
 import { createVegetationVariant, stationOneVegetationPalette } from './vegetation-variants.js?v=streetscape-1';
 import { installStationStreetscape } from './streetscape-assets.js?v=streetscape-2';
 import { installStationApron } from './site-surface-materials.js?v=1.6.56';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
-import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js?v=1.6.142';
+import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js?v=1.6.143';
 import { createCatalogObject } from './editor/asset-catalog.js';
 import { createCommandHistory } from './editor/command-history.js';
-import { createDraftStore } from './editor/draft-store.js?v=1.6.142';
-import { createCityEditor } from './editor/city-editor.js?v=1.6.142';
+import { createDraftStore } from './editor/draft-store.js?v=1.6.143';
+import { createCityEditor } from './editor/city-editor.js?v=1.6.143';
 import { createEmptySceneDocument, sanitizeRenderableSceneDocument } from './editor/scene-document.js';
 import { createGeneratedRegistry } from './editor/generated-registry.js?v=footage-20261020';
 import { applyOverrides } from './editor/override-runtime.js';
@@ -49,8 +49,8 @@ import {
   createBuildingFootprintPlacement,
   createPeterboroughLandmarks,
 } from './landmark-models.js?v=corridor-20261024';
-import { ROAD_SURFACE_CLEARANCE, RoadSurfaceIndex, laneCountFor, reconcileRoadNetworkElevations, roadProfile, roadRibbonCrossSections, resampleRoadLine } from './road-network.js?v=1.6.142';
-import { createRoadMarkingContext, roadMarkingIntervals, roadCurbIntervals } from './road-appearance-rules.js?v=1.6.142';
+import { ROAD_SURFACE_CLEARANCE, RoadSurfaceIndex, laneCountFor, reconcileRoadNetworkElevations, roadProfile, roadRibbonCrossSections, resampleRoadLine } from './road-network.js?v=1.6.143';
+import { createRoadMarkingContext, roadMarkingIntervals, roadCurbIntervals } from './road-appearance-rules.js?v=1.6.143';
 import { solveFallbackJunctions, polygonArea as junctionPolygonArea } from './fallback-junction-geometry.js';
 import { officialRoadMeshEdgeLength, officialCurbDisplayMode, nearbyMunicipalRoadHeight, municipalCurbTop } from './citywide-road-quality.js';
 import { sampleTruckWheelContacts, truckIsOnRoad } from './road-wheel-contact.js';
@@ -61,7 +61,7 @@ import { clearLandCoverRaster, paintLandCoverPolygon } from './land-cover-raster
 import { sampleOfficialTerrainElevation, validOfficialTerrainMetadata } from './terrain-heightmap.js?v=1.5.5-lidar1';
 import { sampleTriangulatedTerrainHeight } from './terrain-surface.js?v=1.5.5-terrain1';
 import { HydroSurfaceIndex, WATER_SURFACE_CLEARANCE, WATER_TERRAIN_RECESS, createWaterStageSampler, relativeWaterElevation, robustFallbackWaterHeight, subdivideWaterTriangle, watercourseWidth } from './water-system.js?v=1.5.5-hydro2';
-import { CitySplatLayer } from './city-splat-layer.js?v=1.6.142';
+import { CitySplatLayer } from './city-splat-layer.js?v=1.6.143';
 import {
   estimatedBuildingFloors,
   facadeDetailClass,
