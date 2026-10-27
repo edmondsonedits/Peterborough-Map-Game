@@ -23,7 +23,8 @@ for (let door = 0; door < 5; door += 1) for (let panel = 0; panel < 8; panel += 
 }
 assert.equal(layout.frontDoorCenters.length, 5, 'layout preserves all five photo-confirmed apparatus bays');
 assert.deepEqual(layout.rearDoorCenters, [], 'Station 1 has no rear openings');
-assert.deepEqual(layout.truckSpawn, { x: -9.28, z: 9, heading: 0 }, 'truck starts in the viewer-right bay');
+assert.deepEqual(layout.truckSpawn, { x: -4.64, z: 9, heading: 0 }, 'truck starts in the second bay from viewer-right');
+assert.deepEqual(layout.playerSpawn, { x: -2.01, z: 7.5 }, 'player follows the truck to the second bay');
 
 const spawn = stationOneTruckSpawn(layout, () => ({ x: 100, y: 200 }));
 assert.ok(Number.isFinite(spawn.x) && Number.isFinite(spawn.z));
@@ -33,11 +34,11 @@ assert.equal(spawn.heading, layout.site.rotationYDegrees * Math.PI / 180);
 let doors = stationOneDoorState(layout);
 assert.deepEqual(doors.front.map(door => door.fraction), [0, 0, 0, 0, 0], 'all five sectional doors start closed');
 assert.deepEqual(doors.rear, [], 'no rear door state is created');
-doors = toggleStationOneDoor(doors, 0);
-assert.deepEqual(doors.front.map(door => door.target), [1, 0, 0, 0, 0], 'truck-aligned rightmost bay opens alone');
+doors = toggleStationOneDoor(doors, 1);
+assert.deepEqual(doors.front.map(door => door.target), [0, 1, 0, 0, 0], 'only the second bay from viewer-right opens for the truck');
 for (let frame = 0; frame < 20; frame += 1) doors = stepStationOneDoors(doors, 0.1);
-assert.equal(doors.front[0].fraction, 1);
-const panelBases = Array.from({ length: 8 }, (_, index) => ({ x: -9.28, y: (index + 0.5) * layout.doorHeight / 8, z: layout.doorTrack.closedZ }));
+assert.equal(doors.front[1].fraction, 1);
+const panelBases = Array.from({ length: 8 }, (_, index) => ({ x: -4.64, y: (index + 0.5) * layout.doorHeight / 8, z: layout.doorTrack.closedZ }));
 const closedPoses = panelBases.map((base, index) => stationOnePanelPose(base, index, 0, layout));
 assert.ok(closedPoses.every((pose, index) => Math.abs(pose.y - panelBases[index].y) < 1e-9 && Math.abs(pose.z - layout.doorTrack.closedZ) < 1e-9), 'all sections start at their authored closed center');
 const openPoses = panelBases.map((base, index) => stationOnePanelPose(base, index, 1, layout));
@@ -59,16 +60,16 @@ assert.equal(stationOneDoorObstructed(layout, 0, rotatedOccupant, null, { length
 assert.equal(stationOneDoorObstructed(layout, 1, rotatedOccupant, null, { length: 10.5, width: 3.2 }), false, 'rotated occupant does not obstruct the neighboring bay');
 assert.equal(stationOneDoorObstructed(layout, 0, null, { x: -9.28, z: 0 }, { length: 10.5, width: 3.2 }), true, 'on-foot envelope blocks its own door');
 assert.equal(stationOneDoorObstructed(layout, 1, null, { x: -9.28, z: 0 }, { length: 10.5, width: 3.2 }), false, 'on-foot envelope leaves neighboring doors clear');
-assert.equal(stationOneCollision({ x: -9.28, z: -4.5, heading: spawn.heading }, layout, closed, { length: 10.5, width: 3.2 }), true, 'closed rightmost door blocks the truck envelope');
-assert.equal(stationOneCollision({ x: -9.28, z: 9, heading: spawn.heading }, layout, closed, { length: 10.5, width: 3.2 }), false, 'parked spawn clears the closed facade');
-assert.equal(stationOneCollision({ x: -9.28, z: -4.5, heading: spawn.heading }, layout, doors, { length: 10.5, width: 3.2 }), false, 'open aligned bay permits the truck through');
-assert.equal(stationOneCollision({ x: 0, z: -4.5, heading: spawn.heading }, layout, doors, { length: 10.5, width: 3.2 }), true, 'closed neighboring bays remain solid');
-assert.equal(sweepStationOneTruck({ x: -9.28, z: 9, heading: spawn.heading }, { x: -9.28, z: -4.5, heading: spawn.heading }, layout, closed, { length: 10.5, width: 3.2 }), true, 'swept movement cannot skip the closed sectional door');
-assert.equal(stationOneDoorObstructed(layout, 0, { x: -9.28, z: 4, heading: spawn.heading }, null, { length: 10.5, width: 3.2 }), true, 'truck footprint keeps the target door from closing through it');
-assert.equal(stationOneDoorObstructed(layout, 1, { x: -9.28, z: 4, heading: spawn.heading }, null, { length: 10.5, width: 3.2 }), false, 'occupant does not obstruct an adjacent bay');
-let closing = { ...doors, front: doors.front.map((door, index) => index === 0 ? { ...door, target: 0 } : door) };
-closing = stepStationOneDoors(closing, 0.1, index => stationOneDoorObstructed(layout, index, { x: -9.28, z: 4, heading: spawn.heading }, null, { length: 10.5, width: 3.2 }));
-assert.equal(closing.front[0].target, 1, 'obstruction reverses only the occupied overhead door');
+assert.equal(stationOneCollision({ x: -4.64, z: -4.5, heading: 0 }, layout, closed, { length: 10.5, width: 3.2 }), true, 'closed second-from-right door blocks the truck envelope');
+assert.equal(stationOneCollision({ x: -4.64, z: 9, heading: 0 }, layout, closed, { length: 10.5, width: 3.2 }), false, 'parked spawn clears the closed facade');
+assert.equal(stationOneCollision({ x: -4.64, z: -4.5, heading: 0 }, layout, doors, { length: 10.5, width: 3.2 }), false, 'open aligned bay permits the truck through');
+assert.equal(stationOneCollision({ x: 0, z: -4.5, heading: 0 }, layout, doors, { length: 10.5, width: 3.2 }), true, 'closed neighboring bays remain solid');
+assert.equal(sweepStationOneTruck({ x: -4.64, z: 9, heading: 0 }, { x: -4.64, z: -4.5, heading: 0 }, layout, closed, { length: 10.5, width: 3.2 }), true, 'swept movement cannot skip the closed sectional door');
+assert.equal(stationOneDoorObstructed(layout, 1, { x: -4.64, z: 4, heading: 0 }, null, { length: 10.5, width: 3.2 }), true, 'truck footprint keeps the target door from closing through it');
+assert.equal(stationOneDoorObstructed(layout, 0, { x: -4.64, z: 4, heading: 0 }, null, { length: 10.5, width: 3.2 }), false, 'occupant does not obstruct an adjacent bay');
+let closing = { ...doors, front: doors.front.map((door, index) => index === 1 ? { ...door, target: 0 } : door) };
+closing = stepStationOneDoors(closing, 0.1, index => stationOneDoorObstructed(layout, index, { x: -4.64, z: 4, heading: 0 }, null, { length: 10.5, width: 3.2 }));
+assert.equal(closing.front[1].target, 1, 'obstruction reverses only the occupied overhead door');
 
 assert.equal(stationOneSourceMatches('way/1009651229'), true);
 assert.equal(stationOneSourceMatches('city-building/6/3300'), true);

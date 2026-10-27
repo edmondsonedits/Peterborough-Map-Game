@@ -96,12 +96,12 @@
     "height": 7.25
   },
   "truckSpawn": {
-    "x": -9.28,
+    "x": -4.64,
     "z": 9,
     "heading": 0
   },
   "playerSpawn": {
-    "x": -6.65,
+    "x": -2.01,
     "z": 7.5
   },
   "apron": {

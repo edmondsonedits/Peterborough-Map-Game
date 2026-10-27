@@ -6,7 +6,7 @@ Station 1 at 210 Sherbrooke Street is reconstructed as an original Blender asset
 
 Preview: http://127.0.0.1:4182/city-explorer/?station=1
 
-The truck starts in the rightmost bay when facing the front of the building. All five doors start closed. Use **G** or **Open bay door** to operate the door aligned with the truck, **E** to enter or leave the truck, and **W/S/A/D** to drive. **Start in truck** resets the truck to its bay and closes the doors. Touch controls provide the same door operation.
+The truck starts in the second bay from the right when facing the front of the building. All five doors start closed. Use **G** or **Open bay door** to operate the door aligned with the truck, **E** to enter or leave the truck, and **W/S/A/D** to drive. **Start in truck** resets the truck to its bay and closes the doors. Touch controls provide the same door operation.
 
 The doors use eight independently animated sections following vertical, curved and horizontal tracks. Closed openings and station walls block the truck's complete footprint; an occupied doorway reverses a closing door. The separate rear training tower follows the terrain beneath its actual footprint.
 
@@ -22,13 +22,15 @@ The current exterior follows the owner's street footage: five red overhead doors
 - Shared dimensions/placement: `city-explorer/assets/station1/layout.json`
 - Preserved source documents, photos and QA: `H:/ChatGPT/Peterborough-Station1-20261027/`
 
-The builder uses Blender's background Python interface. From the game root, run Blender with `--background --python tools/blender/build_station1.py`. It regenerates the native scene, GLB, original texture, audit JSON and review renders in the paths above. The GLB is 919,512 bytes and contains 40 independent door panels, 157 mesh primitives, 20 materials and one embedded original texture. Reference photos are not shipped as textures.
+The builder uses Blender's background Python interface. From the game root, run Blender with `--background --python tools/blender/build_station1.py`. It regenerates the native scene, GLB, original texture, audit JSON and review renders in the paths above. The GLB is 1,701,316 bytes and contains 40 independent door panels, 157 mesh primitives, 20 materials and one embedded original texture. Reference photos are not shipped as textures.
 
 ## Verification
 
-- Complete Node regression suite: **816 passed, zero failed** after the editor-restore and rotated-truck obstruction fixes. Final GLB contract and editor tests also passed.
-- Blender export/reimport: one model, correct panel origins and rotations, separate tower parent, measured bounds, 8,886 imported mesh polygons/triangles reported by the builder.
-- Independent glTF validator: **zero errors, zero warnings**. All 152 informational messages are unused UV attributes on untextured mesh primitives; the validation was not truncated.
+- Second-bay and hose revision: four focused station tests passed; full/lite browser checks passed for the second-bay spawn, entry, keyboard/button/touch door controls, blocked closed door, drive-out, reverse-in, reset and obstruction reopening. Final finer-rib hose export also passed asset validation and a refreshed preview check. Receipts are in the external project's qa/second-bay-hoses folder.
+
+- Baseline complete Node regression suite: **816 passed, zero failed** after the editor-restore and rotated-truck obstruction fixes. Final GLB contract and editor tests also passed.
+- Blender export/reimport: one model, correct panel origins and rotations, separate tower parent, measured bounds, 51,470 imported mesh polygons/triangles reported by the builder.
+- Independent glTF validator: **zero errors, zero warnings**. All 151 informational messages are unused UV attributes on untextured mesh primitives; the validation was not truncated.
 - Full/lite desktop and touch emulation: closed startup, single aligned door operation, truck entry, blocked closed door, drive-out, reversing into the bay, reset and occupied-door reopening.
 - Missing GLB and valid GLB with the wrong node contract: original scenery and safe apron spawn retained, new collisions disabled, driving and reset usable.
 - Station 2 and Station 3 browser movement preserved; Station 2 GLB hash unchanged.

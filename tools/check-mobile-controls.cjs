@@ -148,10 +148,10 @@ const angleDelta = (a, b) => Math.abs(Math.atan2(
 
     await page.locator('#station1-mobile-door').tap();
     await page.waitForFunction(() => {
-      const door = globalThis.__PTBO_GAMEPLAY__?.state?.().stationOne?.doors?.front?.[0];
+      const door = globalThis.__PTBO_GAMEPLAY__?.state?.().stationOne?.doors?.front?.[1];
       return Boolean(door) && Number(door.target) === 1 && Number(door.fraction) >= 0.98;
     }, null, { timeout: STATE_TIMEOUT_MS });
-    const touchDoorState = await page.evaluate(() => globalThis.__PTBO_GAMEPLAY__?.state?.().stationOne?.doors?.front?.[0] || null);
+    const touchDoorState = await page.evaluate(() => globalThis.__PTBO_GAMEPLAY__?.state?.().stationOne?.doors?.front?.[1] || null);
 
     const joystickBox = await page.locator('#movement-joystick').boundingBox();
     if (!joystickBox) throw new Error('Mobile joystick is not rendered');

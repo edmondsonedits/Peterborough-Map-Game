@@ -137,6 +137,45 @@ def make_roof_end_infill(name,x,front_z,rear_z,base_height,front_roof_height,mat
     else: static_by_mat.setdefault(mat.name,[]).append(o)
     return o
 
+def make_ribbed_hose(name, control_points, mat, parent=None):
+    # Arc-length-sampled Catmull-Rom centerline prevents corrugation aliasing.
+    pts=[Vector(p) for p in control_points]; coarse=[]
+    for i in range(len(pts)-1):
+        p0=pts[max(0,i-1)]; p1=pts[i]; p2=pts[i+1]; p3=pts[min(len(pts)-1,i+2)]
+        for step in range(10):
+            t=step/10; t2=t*t; t3=t2*t
+            coarse.append(.5*((2*p1)+(-p0+p2)*t+(2*p0-5*p1+4*p2-p3)*t2+(-p0+3*p1-3*p2+p3)*t3))
+    coarse.append(pts[-1]); cumulative=[0.0]
+    for i in range(1,len(coarse)): cumulative.append(cumulative[-1]+(coarse[i]-coarse[i-1]).length)
+    total=cumulative[-1]; count=max(1,math.ceil(total/.008)); path=[]; seg=0
+    for k in range(count+1):
+        d=total*k/count
+        while seg<len(cumulative)-2 and cumulative[seg+1]<d: seg+=1
+        span=cumulative[seg+1]-cumulative[seg]; t=(d-cumulative[seg])/span if span else 0
+        path.append(coarse[seg].lerp(coarse[seg+1],t))
+    rings=[]; length=0.0
+    for i,c in enumerate(path):
+        tangent=(path[min(i+1,len(path)-1)]-path[max(i-1,0)]).normalized()
+        ref=Vector((0,1,0)) if abs(tangent.y)<.92 else Vector((1,0,0))
+        u=tangent.cross(ref).normalized(); v=tangent.cross(u).normalized()
+        if i: length+=(c-path[i-1]).length
+        radius=.075+.007*math.cos(2*math.pi*length/.048)
+        ring=[c+radius*(u*math.cos(2*math.pi*j/12)+v*math.sin(2*math.pi*j/12)) for j in range(12)]
+        rings.append(ring)
+    verts=[tuple(p) for ring in rings for p in ring]; faces=[]; sides=12
+    faces.append(tuple(reversed(range(sides))))
+    for i in range(len(rings)-1):
+        for j in range(sides):
+            a=i*sides+j; b=i*sides+(j+1)%sides
+            faces.append((a,b,b+sides,a+sides))
+    faces.append(tuple((len(rings)-1)*sides+j for j in range(sides)))
+    me=bpy.data.meshes.new(name+'_Mesh'); me.from_pydata(verts,[],faces); me.materials.append(mat); me.update()
+    for poly in me.polygons: poly.use_smooth=True
+    o=bpy.data.objects.new(name,me); bpy.context.collection.objects.link(o)
+    if parent: o.parent=parent; o.matrix_parent_inverse=Matrix.Identity(4)
+    else: static_by_mat.setdefault(mat.name,[]).append(o)
+    return o
+
 def build(layout):
     root,stat,tower=setup(); bay=layout['bay']; xs=[-11.959,11.959]; rear=20.35
     wall('Continuous bay slab',0,10.175,-.12,23.918,20.35,.24,concrete)
@@ -244,10 +283,20 @@ def build(layout):
         # Front runs sit below the 5.9 m flat roof; rear runs sit below the 7.25 m raised roof.
         bar(f'Front exhaust duct {x}',(x,-.8,5.42),(x,-6.0,5.42),.15,steel,16)
         bar(f'Rear exhaust duct {x}',(x,-7.5,6.62),(x,-19.0,6.62),.15,steel,16)
-        for z in (3.0,8.5,14.0,19.0):
-            service_y=5.42 if z<6.2 else 6.62
-            bar(f'Yellow extraction hose {x}_{z}',(x,-z,service_y),(x,-z,3.55),.058,hose,12)
-            bar(f'Hose nozzle {x}_{z}',(x,-z,3.60),(x,-z,3.42),.075,yellow,12)
+    # One stowed, flexible extraction assembly sits along the offside of each bay.
+    for i,c in enumerate(centers):
+        x=c+1.88; z=10.0+.28*i; trunk=min((-8,0,8),key=lambda tx:abs(tx-x))
+        bar(f'Exhaust branch {i+1}',(trunk,-z,6.62),(x,-z,6.62),.075,steel,12)
+        bar(f'Exhaust elbow drop {i+1}',(x,-z,6.62),(x,-z,6.48),.085,steel,12)
+        bar(f'Hose ceiling balancer line {i+1}',(x+.22,-z,7.08),(x+.22,-z,6.34),.022,steel,8)
+        bar(f'Hose balancer cross pin {i+1}',(x+.13,-z,6.36),(x+.31,-z,6.36),.035,metal,10)
+        path=[(x,-z,6.43),(x,-z-.06,6.30),(x+.02,-z-.16,6.02),(x+.10,-z-.36,5.73),
+              (x+.15,-z-.64,5.40),(x+.15,-z-.91,5.06),(x+.09,-z-1.16,4.72),
+              (x+.01,-z-1.34,4.39),(x-.04,-z-1.39,4.08)]
+        make_ribbed_hose(f'Flexible exhaust hose {i+1}',path,hose)
+        bar(f'Hose inlet coupling {i+1}',(x,-z,6.49),(x,-z,6.30),.095,metal,12)
+        bar(f'Hose nozzle collar {i+1}',(x-.04,-z-1.39,4.08),(x-.04,-z-1.39,3.94),.09,steel,12)
+        bar(f'Hose nozzle mouth {i+1}',(x-.04,-z-1.39,3.96),(x-.04,-z-1.39,3.84),.075,metal,12)
     # restrained gear rack and coats on rear left wall; represent only documented storage type.
     for rack_x in (-10.7,-8.9):
         wall(f'Gear rack upright {rack_x}',rack_x,18.1,2.15,.07,.10,3.8,steel)
@@ -314,7 +363,8 @@ def render_views():
     area((10,18,18),(-3,0,3),18000,18,(1,.82,.67)); area((-22,12,14),(-8,0,3),11000,16,(.78,.87,1)); area((0,-10,10),(0,-12,3),6500,15,(1,.91,.77))
     cam=camera('Review exterior',(24,40,8.5),(-7,0,3.2),44); scene.camera=cam; scene.render.filepath=os.path.join(MODEL,'station1-exterior.png'); bpy.ops.render.render(write_still=True)
     cam.location=(-8,-67,16); aim(cam,(-39,-33,5)); cam.data.lens=50; scene.camera=cam; scene.render.filepath=os.path.join(MODEL,'station1-tower-exterior.png'); bpy.ops.render.render(write_still=True)
-    cam.location=(7,-14,2.3); aim(cam,(-2,-1,1.5)); cam.data.lens=20; scene.camera=cam; scene.render.filepath=os.path.join(MODEL,'station1-bay-interior.png'); bpy.ops.render.render(write_still=True)
+    cam.location=(6,-2,3.3); aim(cam,(-2,-16,5)); cam.data.lens=32; scene.camera=cam; scene.render.filepath=os.path.join(MODEL,'station1-bay-interior.png'); bpy.ops.render.render(write_still=True)
+    cam.location=(1,-5.5,3.4); aim(cam,(-2.8,-11.4,5.0)); cam.data.lens=35; scene.camera=cam; scene.render.filepath=os.path.join(MODEL,'station1-exhaust-detail.png'); bpy.ops.render.render(write_still=True)
     cam.location=(6,18,100); aim(cam,(-16,-17,1)); cam.data.lens=30; scene.camera=cam; scene.render.filepath=os.path.join(MODEL,'station1-overhead.png'); bpy.ops.render.render(write_still=True)
 
 def export_validate():
@@ -342,6 +392,7 @@ def export_validate():
         if o.type=='MESH': verts.extend(o.matrix_world@Vector(v) for v in o.bound_box)
     mins=[min(v[i] for v in verts) for i in range(3)]; maxs=[max(v[i] for v in verts) for i in range(3)]
     report={'format':'glTF 2.0 binary','file':'station1.glb','fileBytes':len(data),'units':'metres','orientation':'Y up; front -Z; bay +Z','fiveDoorCount':5,'sectionPanelCount':40,'dynamicPanelTransformsValid':bool(valid_transforms),'missingRequiredNodes':missing,'towerSeparateParent':nodes.get('Station1_TrainingTower',{}).get('children') is not None,'glbMeshCount':meshes,'drawPrimitiveCount':primitives,'materialCount':mats_n,'embeddedImageCount':embedded,'reimportObjectCount':len(mesh_names),'reimportMeshObjectCount':imported,'reimportTriangleCount':sum(len(o.data.polygons) for o in bpy.context.scene.objects if o.type=='MESH'),'boundsReimported':{'min':mins,'max':maxs},'notes':['original procedural materials only; no reference-photo pixels included','front opening dimensions and building heights are photo-scaled estimates, not a survey','ancillary room layout is unresolved and not invented','tower is separate for terrain-adjusted runtime placement']}
+    report['exhaustAssemblyCount']=5
     os.makedirs(os.path.dirname(REPORT_PATH),exist_ok=True)
     with open(REPORT_PATH,'w') as f: json.dump(report,f,indent=2)
     if missing or not valid_transforms or report['fiveDoorCount']!=5 or report['sectionPanelCount']!=40: raise RuntimeError('GLB node contract validation failed')

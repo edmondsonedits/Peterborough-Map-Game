@@ -62,7 +62,7 @@ const criticalConsolePattern = /\b(?:uncaught|typeerror|referenceerror|syntaxerr
 
     await page.locator('#station1-door-control').click();
     await page.waitForFunction(() => {
-      const door = globalThis.__PTBO_GAMEPLAY__?.state?.().stationOne?.doors?.front?.[0];
+      const door = globalThis.__PTBO_GAMEPLAY__?.state?.().stationOne?.doors?.front?.[1];
       return Boolean(door) && Number(door.target) === 1 && Number(door.fraction) >= 0.98;
     }, null, { timeout: DRIVE_STATE_TIMEOUT_MS });
 
@@ -192,7 +192,7 @@ const criticalConsolePattern = /\b(?:uncaught|typeerror|referenceerror|syntaxerr
       lightweightProfileForced: spawn.compatibilityMode === 'forced',
       stationOneModelReady: spawn.gameplay.stationOne?.status === 'ready',
       allDoorsClosedAtSpawn: doorsClosedAtSpawn,
-      alignedSectionalDoorOpened: Number(driveStart.stationOne?.doors?.front?.[0]?.fraction) >= 0.98,
+      alignedSectionalDoorOpened: Number(driveStart.stationOne?.doors?.front?.[1]?.fraction) >= 0.98,
       enteredTruck: report.finalGameplay?.mode === 'driving',
       sampledSimulationFrames: report.sampleCount >= 6,
       moved: report.pathDistanceMetres >= 0.25,
