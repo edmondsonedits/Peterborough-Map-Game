@@ -80,8 +80,11 @@ assert.equal(junctionIndex.sample(0, 0)?.id, 'test-junction');
 assert.equal(junctionIndex.sample(200, 200), null);
 
 const appSource = readFileSync(new URL('../city-explorer/app.js', import.meta.url), 'utf8');
-const gameplayFunction = appSource.match(/^function gameplaySurfaceAt\([^]*?^\}/m)?.[0];
-assert.ok(gameplayFunction, 'gameplay integration function exists');
+const gameplayStart = appSource.indexOf('function gameplaySurfaceBaseAt(');
+const gameplayEnd = appSource.indexOf('function syncGameplayRootClasses()', gameplayStart);
+const gameplayFunctions = gameplayStart >= 0 && gameplayEnd > gameplayStart ? appSource.slice(gameplayStart, gameplayEnd) : '';
+assert.match(gameplayFunctions, /function gameplaySurfaceBaseAt\(/, 'base gameplay surface function exists');
+assert.match(gameplayFunctions, /function gameplaySurfaceAt\(/, 'gameplay integration function exists');
 assert.match(appSource, /junctionPrototype/);
 assert.match(appSource, /!state\.officialRoadSurfacesAvailable/);
 const official = new RenderedPavementIndex();
@@ -90,8 +93,8 @@ const state = {
   fallbackJunctionSurfaceIndex: junctionIndex,
   roadSurfaceIndex: { sample: () => ({ onRoad: false, height: 10, name: 'Main Street' }) },
 };
-const gameplaySurfaceAt = runInNewContext(gameplayFunction + '\ngameplaySurfaceAt', {
-  state, terrainHeightAtWorld: () => 0, hunterBridgeSurface: null,
+const gameplaySurfaceAt = runInNewContext(gameplayFunctions + '\ngameplaySurfaceAt', {
+  state, terrainHeightAtWorld: () => 0, hunterBridgeSurface: null, stationTwoRuntime: null,
 });
 let contact = gameplaySurfaceAt(0, 0, 10);
 assert.equal(contact.heightSource, 'junction-polygon');

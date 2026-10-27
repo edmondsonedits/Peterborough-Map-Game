@@ -98,17 +98,21 @@ close(triangleMax, 0, 'Rendered-triangle maximum mismatch');
 // Exercise the actual gameplay integration without creating a WebGL renderer.
 // Keep this extraction tied to a top-level function boundary, not its internals.
 const appSource = readFileSync(new URL('../city-explorer/app.js', import.meta.url), 'utf8');
-const gameplayFunction = appSource.match(/^function gameplaySurfaceAt\([^]*?^\}/m)?.[0];
-assert.ok(gameplayFunction, 'Gameplay surface entry point exists');
+const gameplayStart = appSource.indexOf('function gameplaySurfaceBaseAt(');
+const gameplayEnd = appSource.indexOf('function syncGameplayRootClasses()', gameplayStart);
+const gameplayFunctions = gameplayStart >= 0 && gameplayEnd > gameplayStart ? appSource.slice(gameplayStart, gameplayEnd) : '';
+assert.match(gameplayFunctions, /function gameplaySurfaceBaseAt\(/, 'base gameplay surface function exists');
+assert.match(gameplayFunctions, /function gameplaySurfaceAt\(/, 'Gameplay surface entry point exists');
 let terrainHeight = 90;
 let nearbyRoad = { height: 103, name: 'Test Street', onRoad: false };
 let lastRoadQuery = null;
 const gameplayState = {
   renderedPavementIndex: index,
+  fallbackJunctionSurfaceIndex: null,
   roadSurfaceIndex: { sample(...args) { lastRoadQuery = args; return nearbyRoad; } },
 };
-const gameplaySurfaceAt = runInNewContext(`${gameplayFunction}\ngameplaySurfaceAt`, {
-  state: gameplayState,
+const gameplaySurfaceAt = runInNewContext(`${gameplayFunctions}\ngameplaySurfaceAt`, {
+  state: gameplayState, stationTwoRuntime: null,
   terrainHeightAtWorld: () => terrainHeight, hunterBridgeSurface: null,
 });
 let surface = gameplaySurfaceAt(0, 10, 102);
