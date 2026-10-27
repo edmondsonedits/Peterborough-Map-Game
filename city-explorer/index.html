@@ -115,8 +115,9 @@
       </section>
 
       <div id="interaction-prompt" role="status" aria-live="polite"></div>
-      <div id="station2-game-controls" aria-label="Station 2 start" hidden>
+      <div id="station2-game-controls" aria-label="Station 2 start and bay door controls" hidden>
         <button id="station2-start-truck" class="hud-button" type="button">Start in truck</button>
+        <button id="station2-door-control" class="hud-button" type="button" disabled>Open front bay door</button>
         <span id="station2-model-status" role="status" aria-live="polite">Station 2 model loading</span>
       </div>
 
@@ -171,6 +172,7 @@
             <span id="mobile-action-detail">Truck</span>
           </button>
           <button id="station2-mobile-start" type="button" style="width:100%;min-height:28px;font-size:8px" hidden>Start in truck</button>
+          <button id="station2-mobile-door" type="button" style="width:100%;min-height:28px;font-size:8px" disabled hidden>Open front bay door</button>
           <span class="mobile-control-caption">Action</span>
         </div>
         <div class="mobile-flight-pad" aria-label="Fly mode altitude controls">

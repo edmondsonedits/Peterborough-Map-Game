@@ -1,7 +1,9 @@
 # Station 2 implementation ledger
 
-Approved 27 October 2026; source baseline 90d3a4e. User subsequently clarified: "The doors don't need to open. I just want it to look pretty."
+Base scenery and local game integration are saved in commit e2ab7f8. The editable Blender source, source research, optimized GLB and visual evidence remain in the accompanying model/research/qa folders.
 
-Completed: source research, native Blender model, procedural masonry/timber textures, grey and red facade materials, true window openings, readable tower numeral, optimized GLB, independent review, static open middle bay, station placement, exact obsolete-arena suppression, paved apron/driveway, truck entry/start controls, focused model/runtime tests. Stations 1 and 3 passed browser entry/driving checks.
+Current requested behavior: the truck spawns in the rightmost bay as viewed from outside facing the station, facing out toward the street. All front and rear doors start closed. The front door aligned with the truck can be opened immediately using G or the desktop/touch button. Reset and Start in truck restore that spawn and close all doors.
 
-Final scope: appearance and an open driving route; no animated door operation. All room/footprint estimates remain disclosed. Public publication is not part of this local delivery. Final root visual/browser acceptance results belong in README.md.
+The building appearance, shared GIS transform, floor/foundation, exact obsolete-arena suppression, and load-failure fallback remain in place. The full internal room plan and surveyed non-door dimensions remain unverified. This remains a local game build; public publication is separate.
+
+Completed and verified: right-hand spawn, five closed doors, immediate G/button/touch operation, closed-door collision, drive-out, reset, obstruction reopening, and clear desktop/touch/driving cameras. Focused station and gameplay tests pass; browser runs report no uncaught JavaScript errors. Evidence is in ../qa/right-bay-result.json and ../qa/right-bay-camera-result.json.

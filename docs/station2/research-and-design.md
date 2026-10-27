@@ -107,3 +107,7 @@ The user authorized proceeding with documented geometry and disclosed estimates.
 
 ## Final scope clarification
 The user subsequently requested appearance rather than working door animation. The delivered local game holds the center front bay open and retains closed red glazing on the outer bays. Door controls are omitted. Editable door components remain in Blender.
+
+## Right-bay control revision
+
+The user requested the rightmost front bay when viewed from outside, all doors closed at spawn, and immediate control of the door in front of the truck. Runtime local X increases toward the viewer's left, so the selected bay center is x=-5.7 m, with the truck at z=9 m facing out. The player starts beside it toward the middle bay. G and pointer/touch buttons operate the aligned front door. The earlier static-open-middle-bay presentation is superseded; building geometry and the documented evidence limits remain unchanged.

@@ -1,12 +1,12 @@
 # Peterborough Fire Station 2
 
-This local game feature recreates the current Station 2 at 100 Marina Boulevard as an editable Blender asset and a playable Three.js station. Select Station 2, enter the truck inside the bay, drive through the open middle bay, and reach Marina Boulevard.
+This local game feature recreates the current Station 2 at 100 Marina Boulevard as an editable Blender asset and a playable Three.js station. Select Station 2, enter the truck inside the bay, open the right-hand bay door, and reach Marina Boulevard.
 
 ## Play
 
-Start `node tools/serve-preview.cjs 4182` from the game checkout and open `/city-explorer/?station=2&lite=1`. The normal start is beside the truck; press **E** to enter or exit when stopped. **W/S** accelerate, brake and reverse; **A/D** steer. The **Start in truck** button resets to the parked truck. `&spawn=truck` starts directly in it. The start control also supports pointer/touch input.
+Start `node tools/serve-preview.cjs 4182` from the game checkout and open `/city-explorer/?station=2&lite=1`. The truck starts in the rightmost bay as viewed from outside facing the building, with all five doors closed. The normal player start is beside that truck; press **E** to enter or exit when stopped. Press **G** or the **Open bay door** button to operate the front door aligned with the truck, immediately from the spawn. **W/S** accelerate, brake and reverse; **A/D** steer. The **Start in truck** button resets to the parked truck. `&spawn=truck` starts directly in it. The start and bay-door controls also support pointer/touch input.
 
-The user simplified the scope to visual appearance: the middle front door remains folded open, the two outer front doors display their red glazed leaves, and the rear doors stay closed. There are no bay-door controls. Walls, jambs and static door leaves still provide collision. Station-local collision is enabled only after the model passes its loading contract. A failed model retains the existing map and moves the spawn to the Marina approach with an unavailable message.
+The door directly in front of the truck opens into paired folding leaves. Other doors stay closed. Resetting or choosing Start in truck restores the right-hand bay spawn and closes every door. Walls, jambs and door leaves provide collision; the door reopens if a closing attempt is obstructed. Station-local collision is enabled only after the model passes its loading contract. A failed model retains the existing map and moves the spawn to the Marina approach with an unavailable message.
 
 ## Source fidelity
 
@@ -30,7 +30,16 @@ The measured existing pumper is 3.18 m across mirrors, 3.22 m high and 10.415 m 
 
 Final browser and automated results are recorded below after the completed checks. The local preview is separate from the public deployed game. Desktop browser emulation is not physical-phone performance evidence.
 
-Final acceptance on 27 October 2026:
+Right-bay control revision acceptance:
+
+- Fresh desktop browser: the truck starts at local x=-5.7, z=9 behind the rightmost door as viewed from outside. All three front and two rear doors start closed. G works from the initial on-foot spawn and immediately after Start in truck; the button opens only the aligned front door.
+- Closed-door collision holds the truck at the door without backward rebound. Opening the right-hand door permits driving out across the apron. Start in truck resets the parked position and closes every door; attempting to close onto the truck reopens the obstructed door.
+- Touch browser emulation at 390x844: the door button fits the viewport and opens the right-hand door from the initial spawn. No physical-device test was performed.
+- Fresh desktop, narrow-touch and direct-in-truck spawn screenshots confirm the camera stays clear of the rear service enclosure. Door controls passed again in all three views, with no uncaught JavaScript errors.
+- The focused Station 2 and related station tests, gameplay systems check, JavaScript syntax checks and whitespace check pass. The Blender/GLB asset is unchanged by this runtime revision.
+- Evidence: `../qa/right-bay-result.json`, `../qa/right-bay-camera-result.json`, `right-bay-all-closed.png`, and `right-bay-camera-*.png`.
+
+Initial appearance-build acceptance (before the right-bay control revision):
 
 - Blender generation and GLB reimport: 12 independent front pivots, 14 rear panels, 45 opening samples with zero static blockers; optimized GLB 1,158,344 bytes, Khronos validator zero errors/warnings. Final SHA-256: 4e24998d5359b632fe27a278cc8dc4fe0b55ed8334c65f06376452d43e358901.
 - Desktop browser: final static center opening, readable frontage and bay, obsolete arena absent even when the editor document loads late, Start in truck, E entry/exit, and keyboard driving across the apron to Marina approach. No uncaught JavaScript errors.

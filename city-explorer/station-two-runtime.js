@@ -1,9 +1,9 @@
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { createStationTwoApron } from './station-two-apron.js';
 import {
-  createStationTwoPresentationDoorState, foldedInnerPivot, nearestStationDoor, sampleStationFloor, sectionalPanelPose, stationLocalToWorld,
-  stationPlayerSpawn, stationTruckSpawn, stationWorldToLocal,
-  stationCollision, sweepStationTruck,
+  createDoorState, foldedInnerPivot, frontDoorForTruck as frontDoorForTruckCore, nearestStationDoor, sampleStationFloor, sectionalPanelPose, stationLocalToWorld,
+  stationPlayerSpawn, stationTruckSpawn, stationWorldToLocal, stepDoorState, toggleDoor,
+  stationCollision, stationDoorObstructed, sweepStationTruck,
 } from './station-two-core.mjs';
 
 const STATION_MODEL = './assets/station2/station2.glb';
@@ -78,7 +78,7 @@ export function createStationTwoRuntime({ THREE, scene, layout, project, baseSur
   // A level floor must clear the terrain at every bay corner in both terrain LODs.
   const datum = Math.max(baseSurface(spawn.anchor.x, spawn.anchor.z)?.height ?? 0, ...groundSamples) + 0.1;
   const state = {
-    status: 'loading', error: null, doors: createStationTwoPresentationDoorState(layout),
+    status: 'loading', error: null, doors: createDoorState(layout.frontDoorCenters.length, layout.rearDoorCenters.length),
     frontNodes: new Map(), rearNodes: new Map(), frontBaseRotations: new Map(), frontBasePositions: new Map(), rearBases: new Map(), bounds: null,
   };
   let loaded = false;
@@ -151,8 +151,16 @@ export function createStationTwoRuntime({ THREE, scene, layout, project, baseSur
     return sweepStationTruck(worldPoseToLocal(previous), worldPoseToLocal(next), layout, state.doors, TRUCK_DIMENSIONS);
   }
 
+  function obstruction(index, side, truck, player) {
+    if (side !== 'front') return false;
+    const truckLocal = truck ? worldPoseToLocal(truck) : null;
+    const playerLocal = player ? stationWorldToLocal(player, spawn.anchor, yaw) : null;
+    return stationDoorObstructed(layout, index, truckLocal, playerLocal, TRUCK_DIMENSIONS);
+  }
+
   function update(delta, truck, player) {
     if (!loaded) return;
+    state.doors = stepDoorState(state.doors, delta, (index, side) => obstruction(index, side, truck, player));
     for (const [name, node] of state.frontNodes) {
       const [, doorNumber, side, leaf] = name.match(FRONT_NODE);
       const fraction = state.doors.front[Number(doorNumber) - 1]?.fraction || 0;
@@ -185,6 +193,18 @@ export function createStationTwoRuntime({ THREE, scene, layout, project, baseSur
     return nearest && { side: nearest.side, index: nearest.index };
   }
 
+  function frontDoorForTruck(worldTruck) {
+    if (!loaded || !worldTruck) return -1;
+    return frontDoorForTruckCore(worldPoseToLocal(worldTruck), layout, 18);
+  }
+
+  function toggleFrontDoorForTruck(worldTruck) {
+    const index = frontDoorForTruck(worldTruck);
+    if (index < 0) return null;
+    state.doors = toggleDoor(state.doors, index, 'front');
+    return { side: 'front', index };
+  }
+
   function containsBay(worldPoint) {
     if (!loaded) return false;
     const local = stationWorldToLocal(worldPoint, spawn.anchor, yaw);
@@ -194,11 +214,11 @@ export function createStationTwoRuntime({ THREE, scene, layout, project, baseSur
   function localPoint(worldPoint) { return stationWorldToLocal(worldPoint, spawn.anchor, yaw); }
   function worldPoint(local) { const point = stationLocalToWorld(local, spawn.anchor, yaw); return { x: point.x, z: point.z }; }
 
-  function resetDoors() { state.doors = createStationTwoPresentationDoorState(layout); }
+  function resetDoors() { state.doors = createDoorState(layout.frontDoorCenters.length, layout.rearDoorCenters.length); }
 
   function getStatus() {
     return { status: state.status, error: state.error, datum, groundRange: [Math.min(...groundSamples), Math.max(...groundSamples)], bounds: state.bounds, doors: structuredClone(state.doors), loaded };
   }
 
-  return { root, spawn, playerSpawn, yaw, load, surfaceAt, collides, sweep, update, nearestDoor, getStatus, resetDoors, isReady: () => loaded, containsBay, localPoint, worldPoint, datum };
+  return { root, spawn, playerSpawn, yaw, load, surfaceAt, collides, sweep, update, nearestDoor, frontDoorForTruck, toggleFrontDoorForTruck, getStatus, resetDoors, isReady: () => loaded, containsBay, localPoint, worldPoint, datum };
 }

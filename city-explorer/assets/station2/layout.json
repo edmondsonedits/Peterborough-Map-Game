@@ -52,12 +52,12 @@
     "height": 3.2
   },
   "truckSpawn": {
-    "x": 0,
+    "x": -5.7,
     "z": 9.0,
     "heading": 0
   },
   "playerSpawn": {
-    "x": -2.5,
+    "x": -3.2,
     "z": 7.5
   },
   "apron": {
@@ -71,7 +71,7 @@
     "anchorLon": -78.3162262,
     "rotationYDegrees": 153.637,
     "candidateReplacementOsmId": "way/1022083769",
-    "placementStatus": "initial alignment preserves reviewed truck location at local bay z9; Marina OSM centreline intersects local x0 near z-74; verify surveyed pavement and visual connection in browser"
+    "placementStatus": "site anchor and heading retain the reviewed alignment; truck starts in the rightmost front bay at local x-5.7 z9; Marina OSM centreline intersects near local x0 z-74"
   },
   "evidence": {
     "doorDimensions": "Northern Dock Systems installed door case study: 14 ft x 14 ft nominal; finished clear dimensions unverified",

@@ -21,7 +21,7 @@ import { appendFootageRoof } from './sherbrooke-footage-roofs.js?v=corridor-2026
 import { appendFootageMassing } from './footage-building-massing.js';
 import * as THREE from 'three';
 import stationTwoLayout from './assets/station2/layout.json' with { type: 'json' };
-import { hideStationTwoReplacementRecords } from './station-two-core.mjs';
+import { hideStationTwoReplacementRecords, stationCameraOffsetScale } from './station-two-core.mjs';
 import { createStationTwoRuntime, stationTwoRequested } from './station-two-runtime.js';
 import { reconcileStationPavement } from './station-pavement-layer.js?v=1.6.57';
 import { CURB_REVEAL, curbIsRaised, stationRoadWeight, splitRoadDetailSegment, pavementSupportBottom } from './station-road-detail.js?v=1.6.58';
@@ -149,6 +149,8 @@ const CITY = {
 
 const els = {
   app: document.querySelector('#app'),
+  stationTwoDoor: document.querySelector('#station2-door-control'),
+  stationTwoMobileDoor: document.querySelector('#station2-mobile-door'),
   stationTwoMobileStart: document.querySelector('#station2-mobile-start'),
   stationTwoControls: document.querySelector('#station2-game-controls'),
   stationTwoModelStatus: document.querySelector('#station2-model-status'),
@@ -5080,14 +5082,16 @@ function syncGameplayRootClasses() {
 
 function updateGameplayHint() {
   const number = FIRE_STATION_ONE.number;
+  const doorHint = number === 2 ? ' · G opens/closes the front bay door aligned with the truck' : '';
   if (state.mode === 'onFoot') {
-    els.modeHint.innerHTML = `<strong>On foot at Fire Station ${number}.</strong> WASD or arrows move · Shift sprints · mouse looks · E enters the fire truck · F free camera.`;
+    els.modeHint.innerHTML = `<strong>On foot at Fire Station ${number}.</strong> WASD or arrows move · Shift sprints · mouse looks · E enters the fire truck${doorHint} · F free camera.`;
   } else if (state.mode === 'driving') {
-    els.modeHint.innerHTML = `<strong>Driving Fire Rescue Engine ${number}.</strong> W/S throttle and brake · A/D steer · E exits when stopped · C camera · L emergency lights.`;
+    els.modeHint.innerHTML = `<strong>Driving Fire Rescue Engine ${number}.</strong> W/S throttle and brake · A/D steer · E exits when stopped · C camera · L emergency lights${doorHint}.`;
   }
 }
 function startDrivingFromBay() {
   if (!gameplayReady) return false;
+  if (STATION_TWO_SELECTED) resetGameplay();
   playerActor.visible = false;
   playerVelocity.set(0, 0, 0);
   state.gameplayYaw = truckState.heading;
@@ -5158,7 +5162,7 @@ function initializeGameplay() {
     stationTwoRuntime = createStationTwoRuntime({
       THREE, scene: gameplayGroup, layout: stationTwoLayout, project,
       baseSurface: (x, z) => gameplaySurfaceBaseAt(x, z),
-      onReady: () => { stationTwoReplacementReady = true; hideStationTwoReplacement(); },
+      onReady: () => { stationTwoReplacementReady = true; hideStationTwoReplacement(); snapGameplayCamera(); },
     });
   }
   const { playerPoint, truckPoint, truckHeading } = gameplaySpawnPoints();
@@ -5210,10 +5214,13 @@ function initializeGameplay() {
   if (STATION_TWO_SELECTED) {
     els.stationTwoControls.hidden = false;
     els.stationTwoMobileStart.hidden = false;
+    els.stationTwoMobileDoor.hidden = false;
     void stationTwoRuntime.load().then(loaded => {
       document.documentElement.dataset.stationTwoModel = loaded ? 'ready' : `error:${stationTwoRuntime.getStatus().error}`;
       els.stationTwoModelStatus.textContent = loaded ? '' : 'Station model unavailable; starting at the approach';
       if (!loaded) {
+        els.stationTwoDoor.disabled = true;
+        els.stationTwoMobileDoor.disabled = true;
         moveStationTwoToFallbackSpawn();
         showToast('Station 2 model unavailable; starting from the Marina approach.');
       }
@@ -5557,7 +5564,7 @@ function updateFireTruck(delta) {
     }, delta, truckIsOnRoad(currentSurface.onRoad, truckState.lastRoadWheelCount));
     next.x = THREE.MathUtils.clamp(next.x, CITY.worldBounds.minX, CITY.worldBounds.maxX);
     next.z = THREE.MathUtils.clamp(next.z, CITY.worldBounds.minZ, CITY.worldBounds.maxZ);
-    if (stationTwoRuntime?.sweep(truckState, next)) { next.x = truckState.x; next.z = truckState.z; next.speed = 0; next.acceleration = -Math.sign(truckState.speed) * TRUCK_TUNING.serviceBrake; }
+    if (stationTwoRuntime?.sweep(truckState, next)) { next.x = truckState.x; next.z = truckState.z; next.speed = 0; next.acceleration = 0; }
     Object.assign(truckState, next);
 
     if (performance.now() - state.gameplayLastLookTime > 2200 && Math.abs(truckState.speed) > 1.5) {
@@ -5631,6 +5638,18 @@ function updateGameplayCamera(delta, snap = false) {
     gameplayDesiredTarget.y + baseHeight - Math.sin(state.gameplayPitch) * distance,
     gameplayDesiredTarget.z - cameraDirection.z * horizontalDistance,
   );
+  if (STATION_TWO_SELECTED && stationTwoRuntime?.isReady()) {
+    const targetLocal = stationTwoRuntime.localPoint({ x: gameplayDesiredTarget.x, z: gameplayDesiredTarget.z });
+    const cameraLocal = stationTwoRuntime.localPoint({ x: gameplayDesiredCamera.x, z: gameplayDesiredCamera.z });
+    const offsetScale = stationCameraOffsetScale(targetLocal, cameraLocal, stationTwoLayout.rearService, 0.65);
+    if (offsetScale < 1) {
+      gameplayDesiredCamera.set(
+        gameplayDesiredTarget.x + (gameplayDesiredCamera.x - gameplayDesiredTarget.x) * offsetScale,
+        gameplayDesiredTarget.y + (gameplayDesiredCamera.y - gameplayDesiredTarget.y) * offsetScale,
+        gameplayDesiredTarget.z + (gameplayDesiredCamera.z - gameplayDesiredTarget.z) * offsetScale,
+      );
+    }
+  }
   const cameraGround = terrainHeightAtWorld(gameplayDesiredCamera.x, gameplayDesiredCamera.z) + 0.65;
   gameplayDesiredCamera.y = Math.max(gameplayDesiredCamera.y, cameraGround);
   if (STATION_TWO_SELECTED && stationTwoRuntime?.containsBay(active)) {
@@ -5663,6 +5682,17 @@ function updateGameplayHud() {
   if (label !== lastRoadLabel) {
     lastRoadLabel = label;
     els.gameplayRoad.textContent = label;
+  }
+  if (STATION_TWO_SELECTED) {
+    const doorIndex = stationTwoRuntime?.frontDoorForTruck(truckState) ?? -1;
+    const door = doorIndex >= 0 ? stationTwoRuntime.getStatus().doors.front[doorIndex] : null;
+    const enabled = Boolean(stationTwoRuntime?.isReady() && door);
+    const text = door?.target > 0.5 ? 'Close bay door' : 'Open bay door';
+    [els.stationTwoDoor, els.stationTwoMobileDoor].forEach(button => {
+      if (!button) return;
+      button.disabled = !enabled;
+      button.textContent = enabled ? text : 'Front bay door';
+    });
   }
   const role = driving ? ('Fire Rescue Engine ' + FIRE_STATION_ONE.number) : 'Firefighter · On foot';
   const speedKmh=String(Math.round(Math.abs(truckState.speed)*3.6));
@@ -6629,6 +6659,17 @@ function onWheel(event) {
 }
 
 function wireEvents() {
+  const toggleStationTwoFrontDoor = () => {
+    if (!stationTwoRuntime?.isReady()) return;
+    const door = stationTwoRuntime.toggleFrontDoorForTruck(truckState);
+    if (door) {
+      const opening = stationTwoRuntime.getStatus().doors.front[door.index].target > 0.5;
+      showToast(`${opening ? 'Opening' : 'Closing'} front bay door ${door.index + 1}`);
+    } else showToast('Move the truck nearer a front bay door');
+    els.canvas.focus({ preventScroll: true });
+  };
+  els.stationTwoDoor?.addEventListener('click', toggleStationTwoFrontDoor);
+  els.stationTwoMobileDoor?.addEventListener('click', toggleStationTwoFrontDoor);
   els.stationTwoStartTruck?.addEventListener('click', startDrivingFromBay);
   els.stationTwoMobileStart?.addEventListener('click', startDrivingFromBay);
   els.playMode?.addEventListener('click', () => { setMode('play'); els.canvas.focus({ preventScroll: true }); });
@@ -6705,6 +6746,13 @@ function wireEvents() {
     }
     if (!event.repeat && event.code === 'KeyE' && (state.mode === 'onFoot' || state.mode === 'driving')) {
       enterOrExitVehicle();
+      event.preventDefault();
+    }
+    if (!event.repeat && event.code === 'KeyG' && STATION_TWO_SELECTED && !event.ctrlKey && !event.altKey && (state.mode === 'onFoot' || state.mode === 'driving')) {
+      if (stationTwoRuntime?.isReady()) {
+        const door = stationTwoRuntime.toggleFrontDoorForTruck(truckState);
+        if (door) showToast(`${stationTwoRuntime.getStatus().doors.front[door.index].target > 0.5 ? 'Opening' : 'Closing'} front bay door ${door.index + 1}`);
+      }
       event.preventDefault();
     }
     if (!event.repeat && event.code === 'KeyC' && (state.mode === 'onFoot' || state.mode === 'driving')) {

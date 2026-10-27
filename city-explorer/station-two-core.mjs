@@ -33,12 +33,6 @@ export function createDoorState(count = 3, rearCount = 2) {
   return { front: closed(count), rear: closed(rearCount) };
 }
 
-export function createStationTwoPresentationDoorState(layout) {
-  const state = createDoorState(layout.frontDoorCenters.length, layout.rearDoorCenters.length);
-  if (state.front[1]) state.front[1] = { fraction: 1, target: 1 };
-  return state;
-}
-
 export function stationTwoReplacementSourceMatches(sourceId, candidate = 'way/1022083769') {
   const normalize = value => String(value ?? '').replace(/^(?:(?:city-building|way|relation)\/)+/, '');
   return Boolean(normalize(candidate)) && normalize(sourceId) === normalize(candidate);
@@ -80,6 +74,30 @@ export function nearestFrontDoor(localPoint, layout, maxDistance = 5.5) {
     if (candidate < distance) { best = index; distance = candidate; }
   });
   return distance <= maxDistance ? best : -1;
+}
+
+export function frontDoorForTruck(localTruck, layout, maxDistance = 18) {
+  return nearestFrontDoor(localTruck, layout, maxDistance);
+}
+
+export function stationCameraOffsetScale(target, camera, volume, clearance = 0.65) {
+  if (!(target.z < volume.frontZ)) return 1;
+  const dx = camera.x - target.x, dz = camera.z - target.z;
+  let enter = 0, exit = 1;
+  for (const [start, delta, min, max] of [[target.x, dx, volume.minX, volume.maxX], [target.z, dz, volume.frontZ, volume.rearZ]]) {
+    if (Math.abs(delta) < 1e-9) {
+      if (start < min || start > max) return 1;
+      continue;
+    }
+    let first = (min - start) / delta, last = (max - start) / delta;
+    if (first > last) [first, last] = [last, first];
+    enter = Math.max(enter, first);
+    exit = Math.min(exit, last);
+    if (enter > exit) return 1;
+  }
+  const length = Math.hypot(dx, dz);
+  if (exit < 0 || enter > 1 || length < 1e-9) return 1;
+  return Math.max(0, Math.min(1, enter - clearance / length));
 }
 
 export function nearestStationDoor(localPoint, layout, maxDistance = 12) {
