@@ -212,10 +212,10 @@
 
   function makeDirectionalDefault() {
     if (!instruments?.setSteeringMode) return;
-    if (localStorage.getItem(DEFAULT_MIGRATION_KEY) !== '1') {
-      instruments.setSteeringMode(DIRECTIONAL_MODE);
-      localStorage.setItem(DEFAULT_MIGRATION_KEY, '1');
-    }
+    // Storage may be denied; keep the default usable for this session.
+    try { if (localStorage.getItem(DEFAULT_MIGRATION_KEY) === '1') return; } catch {}
+    instruments.setSteeringMode(DIRECTIONAL_MODE);
+    try { localStorage.setItem(DEFAULT_MIGRATION_KEY, '1'); } catch {}
   }
 
   function eventBelongsToSteering(event) {

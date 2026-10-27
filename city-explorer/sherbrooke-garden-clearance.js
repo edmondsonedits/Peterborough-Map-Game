@@ -1,7 +1,7 @@
 // Small, cached clearance model for reviewed visual front gardens only.
 import { SHERBROOKE_SOURCE } from './sherbrooke-source.js';
-import { roadProfile } from './road-network.js?v=1.6.136';
-import { landscapeClear, segmentDistance } from './sherbrooke-plan.js?v=1.6.136';
+import { roadProfile } from './road-network.js?v=1.6.137';
+import { landscapeClear, segmentDistance } from './sherbrooke-plan.js?v=1.6.137';
 const cache = new WeakMap();
 export function createGardenClearance(project, anchor) {
   if (typeof project !== 'function' || !Number.isFinite(anchor?.x) || !Number.isFinite(anchor?.z)) throw new TypeError('Projected garden anchor required');

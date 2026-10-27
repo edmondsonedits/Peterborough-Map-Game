@@ -105,7 +105,8 @@
   }
 
   function saveSettings() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state.settings));
+    // Live controls still apply when optional preference persistence is unavailable.
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state.settings)); } catch {}
   }
 
   function currentSpeedKmh() {
@@ -302,9 +303,9 @@
 
   function migrateDefaultMode() {
     if (!instruments?.setSteeringMode) return;
-    if (localStorage.getItem(DEFAULT_MIGRATION_KEY) === '1') return;
+    try { if (localStorage.getItem(DEFAULT_MIGRATION_KEY) === '1') return; } catch {}
     instruments.setSteeringMode(STANDARD_MODE);
-    localStorage.setItem(DEFAULT_MIGRATION_KEY, '1');
+    try { localStorage.setItem(DEFAULT_MIGRATION_KEY, '1'); } catch {}
   }
 
   function shapedSteeringInput(rawInput) {
