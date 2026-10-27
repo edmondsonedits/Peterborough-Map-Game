@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.131';
+  const VERSION = '1.6.132';
   const CITY_RUNTIME_VERSION = '1.6.17';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
@@ -391,6 +391,7 @@
               sleep(10000).then(() => traceWarn('Satellite map readiness timed out; continuing')),
             ]);
           }
+          await optionalInnerModule(doc, 'ptbo-driving-ui-loader', `../response-simulator/driving-ui.js?v=${VERSION}`, '', 6000);
           enhancementStage('complete', city?.name || selectedCityId());
           traceOk('Enhancement loader complete');
         } catch (error) {

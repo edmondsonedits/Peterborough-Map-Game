@@ -93,8 +93,7 @@
   function showAvailable() {
     document.getElementById('hud-content').innerHTML = `
       <div class="hud-title">${getProfile().label} / AVAILABLE · ${city.name.toUpperCase()}</div>
-      <p class="hud-address">${escapeDispatchText(getBase().name)}</p>
-      <div class="hud-meta">${state.mode === 'ems' ? 'Respond to the scene, then transport to hospital.' : `Choose a station and respond to calls across ${city.name}.`}</div>`;
+      <p class="hud-address">${escapeDispatchText(getBase().name)}</p>`;
   }
 
   function applySpawnHeading(base) {
