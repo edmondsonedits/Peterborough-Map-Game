@@ -5,26 +5,26 @@
     "public_osm_to_orn_within_20m_min_pct": 90,
     "orn_to_public_osm_within_20m_min_pct": 95
   },
-  "public_osm_feature_count": 2769,
-  "rendered_osm_feature_count": 5949,
+  "public_osm_feature_count": 2775,
+  "rendered_osm_feature_count": 5962,
   "orn_feature_count": 3179,
   "public_osm_to_orn": {
-    "samples": 49747,
-    "mean_m": 6.383,
+    "samples": 49730,
+    "mean_m": 6.373,
     "median_m": 0.639,
-    "p90_m": 2.343,
-    "p95_m": 3.63,
-    "p99_m": 53.811,
-    "within_5m_pct": 96.98,
-    "within_10m_pct": 98.43,
-    "within_20m_pct": 98.72,
-    "within_30m_pct": 98.83
+    "p90_m": 2.336,
+    "p95_m": 3.597,
+    "p99_m": 53.844,
+    "within_5m_pct": 97.04,
+    "within_10m_pct": 98.49,
+    "within_20m_pct": 98.75,
+    "within_30m_pct": 98.86
   },
   "orn_to_public_osm": {
     "samples": 50434,
     "mean_m": 2.578,
-    "median_m": 0.628,
-    "p90_m": 2.318,
+    "median_m": 0.629,
+    "p90_m": 2.317,
     "p95_m": 3.574,
     "p99_m": 61.844,
     "within_5m_pct": 96.85,
@@ -33,21 +33,21 @@
     "within_30m_pct": 98.27
   },
   "all_rendered_osm_to_orn": {
-    "samples": 76246,
-    "mean_m": 28.52,
-    "median_m": 1.234,
-    "p90_m": 80.14,
-    "p95_m": 134.32,
-    "p99_m": 334.312,
-    "within_5m_pct": 67.45,
-    "within_10m_pct": 68.62,
-    "within_20m_pct": 72.72,
-    "within_30m_pct": 77.69
+    "samples": 76281,
+    "mean_m": 28.543,
+    "median_m": 1.235,
+    "p90_m": 80.303,
+    "p95_m": 134.553,
+    "p99_m": 334.287,
+    "within_5m_pct": 67.44,
+    "within_10m_pct": 68.61,
+    "within_20m_pct": 72.71,
+    "within_30m_pct": 77.68
   },
   "street_names": {
-    "checked_segments": 2632,
-    "matching_segments": 2509,
-    "match_pct": 95.33,
+    "checked_segments": 2640,
+    "matching_segments": 2514,
+    "match_pct": 95.23,
     "sample_mismatches": [
       {
         "osm": "ST PATRICK S ST",
@@ -117,7 +117,7 @@
         "orn": [
           "FIFES BAY RD"
         ],
-        "p90_offset_m": 1.02
+        "p90_offset_m": 0.01
       },
       {
         "osm": "PETERBORO AVE",
@@ -642,19 +642,6 @@
       "within_10m_pct": 80.77,
       "within_20m_pct": 84.62,
       "within_30m_pct": 88.46
-    },
-    {
-      "name": "GZOWSKI WAY",
-      "samples": 61,
-      "mean_m": 11.582,
-      "median_m": 2.146,
-      "p90_m": 33.799,
-      "p95_m": 34.678,
-      "p99_m": 35.334,
-      "within_5m_pct": 52.46,
-      "within_10m_pct": 52.46,
-      "within_20m_pct": 77.05,
-      "within_30m_pct": 81.97
     }
   ],
   "scope": "Pass criteria cover public drivable streets. Service roads, parking aisles, driveways, tracks and explicitly private roads remain rendered but are reported separately because ORN is not a complete reference for them.",
@@ -664,6 +651,6 @@
     "Recent construction and private roads can be present in only one source.",
     "The test validates centrelines and names, not curbs, lanes, grades, turn rules or legal survey boundaries."
   ],
-  "generated_at": "2026-10-27T14:55:09+00:00",
+  "generated_at": "2026-10-27T15:23:08+00:00",
   "orn_named_feature_count": 3074
 }
