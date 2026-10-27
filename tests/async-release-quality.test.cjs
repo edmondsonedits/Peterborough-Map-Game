@@ -44,7 +44,7 @@ test('3D HUD leaves unchanged nodes intact across repeated gameplay frames',()=>
  let writes=0;const node=()=>{let text='',html='';return{get textContent(){return text;},set textContent(v){text=v;writes++;},get innerHTML(){return html;},set innerHTML(v){html=v;writes++;},classList:{toggle(){writes++;}}};};
  const els=Object.fromEntries(['gameplayRoad','gameplayRole','gameplaySpeed','gameplayGear','interactionPrompt'].map(k=>[k,node()]));
  const dataset=new Proxy({}, {set(o,k,v){writes++;o[k]=v;return true;}});
- const c=vm.createContext({gameplayReady:true,STATION_TWO_SELECTED:false,state:{mode:'driving'},fireTruckActor:{position:{x:0,y:0,z:0}},playerActor:{position:{x:0,y:0,z:0}},truckState:{x:0,z:0,y:0,speed:0},fireStationWorld:{x:0,z:0},FIRE_STATION_ONE:{number:2},lastRoadLabel:'',els,document:{documentElement:{dataset}},pavementQA:false,PLAYER_TUNING:{enterDistance:4},TRUCK_TUNING:{exitSpeed:1},gameplaySurfaceAt:()=>({onRoad:false,name:'',height:0})});
+ const c=vm.createContext({gameplayReady:true,STATION_ONE_SELECTED:false,STATION_TWO_SELECTED:false,state:{mode:'driving'},fireTruckActor:{position:{x:0,y:0,z:0}},playerActor:{position:{x:0,y:0,z:0}},truckState:{x:0,z:0,y:0,speed:0},fireStationWorld:{x:0,z:0},FIRE_STATION_ONE:{number:2},lastRoadLabel:'',els,document:{documentElement:{dataset}},pavementQA:false,PLAYER_TUNING:{enterDistance:4},TRUCK_TUNING:{exitSpeed:1},gameplaySurfaceAt:()=>({onRoad:false,name:'',height:0})});
  vm.runInContext(source.slice(a,b),c);c.updateGameplayHud();const initial=writes;
  for(let i=0;i<100;i++)c.updateGameplayHud();assert.equal(writes,initial);assert.match(els.gameplayRoad.textContent,/Station 2/);
  c.truckState.speed=3;c.updateGameplayHud();assert.equal(els.gameplaySpeed.textContent,'011');assert.equal(els.gameplayGear.textContent,'D');
@@ -57,12 +57,28 @@ test('Station 2 HUD leaves unchanged front-door controls intact across gameplay 
  const els=Object.fromEntries(['gameplayRoad','gameplayRole','gameplaySpeed','gameplayGear','interactionPrompt','stationTwoDoor','stationTwoMobileDoor'].map(k=>[k,node()]));
  const dataset=new Proxy({}, {set(o,k,v){writes++;o[k]=v;return true;}}),doors={front:[{target:0}]};
  const stationTwoRuntime={isReady:()=>true,frontDoorForTruck:()=>0,getStatus:()=>({doors})};
- const c=vm.createContext({gameplayReady:true,STATION_TWO_SELECTED:true,stationTwoRuntime,state:{mode:'driving'},fireTruckActor:{position:{x:0,y:0,z:0}},playerActor:{position:{x:0,y:0,z:0}},truckState:{x:0,z:0,y:0,speed:0},fireStationWorld:{x:0,z:0},FIRE_STATION_ONE:{number:2},lastRoadLabel:'',els,document:{documentElement:{dataset}},pavementQA:false,PLAYER_TUNING:{enterDistance:4},TRUCK_TUNING:{exitSpeed:1},gameplaySurfaceAt:()=>({onRoad:false,name:'',height:0})});
+ const c=vm.createContext({gameplayReady:true,STATION_ONE_SELECTED:false,STATION_TWO_SELECTED:true,stationTwoRuntime,selectedStationRuntime:()=>stationTwoRuntime,state:{mode:'driving'},fireTruckActor:{position:{x:0,y:0,z:0}},playerActor:{position:{x:0,y:0,z:0}},truckState:{x:0,z:0,y:0,speed:0},fireStationWorld:{x:0,z:0},FIRE_STATION_ONE:{number:2},lastRoadLabel:'',els,document:{documentElement:{dataset}},pavementQA:false,PLAYER_TUNING:{enterDistance:4},TRUCK_TUNING:{exitSpeed:1},gameplaySurfaceAt:()=>({onRoad:false,name:'',height:0})});
  vm.runInContext(source.slice(a,b),c);c.updateGameplayHud();
  assert.equal(els.stationTwoDoor.textContent,'Open bay door');assert.equal(els.stationTwoDoor.disabled,false);
  assert.equal(els.stationTwoMobileDoor.textContent,'Open bay door');assert.equal(els.stationTwoMobileDoor.disabled,false);
  const initial=writes;for(let i=0;i<100;i++)c.updateGameplayHud();assert.equal(writes,initial);
  doors.front[0].target=1;c.updateGameplayHud();assert.equal(els.stationTwoDoor.textContent,'Close bay door');assert.equal(els.stationTwoMobileDoor.textContent,'Close bay door');
+ const changed=writes;for(let i=0;i<20;i++)c.updateGameplayHud();assert.equal(writes,changed);
+});
+
+test('Station 1 HUD updates only its selected sectional-door controls',()=>{
+ const source=read('city-explorer/app.js').toString(),a=source.indexOf('function updateGameplayHud()'),b=source.indexOf('function enterOrExitVehicle()',a);
+ let writes=0;
+ const node=()=>{let text='',html='',disabled=true;return{get textContent(){return text;},set textContent(v){text=v;writes++;},get innerHTML(){return html;},set innerHTML(v){html=v;writes++;},get disabled(){return disabled;},set disabled(v){disabled=v;writes++;},classList:{toggle(){writes++;}}};};
+ const els=Object.fromEntries(['gameplayRoad','gameplayRole','gameplaySpeed','gameplayGear','interactionPrompt','stationOneDoor','stationOneMobileDoor'].map(k=>[k,node()]));
+ const dataset=new Proxy({}, {set(o,k,v){writes++;o[k]=v;return true;}}),doors={front:[{target:0}]};
+ const stationOneRuntime={isReady:()=>true,frontDoorForTruck:()=>0,getStatus:()=>({doors})};
+ const c=vm.createContext({gameplayReady:true,STATION_ONE_SELECTED:true,STATION_TWO_SELECTED:false,stationOneRuntime,selectedStationRuntime:()=>stationOneRuntime,state:{mode:'driving'},fireTruckActor:{position:{x:0,y:0,z:0}},playerActor:{position:{x:0,y:0,z:0}},truckState:{x:0,z:0,y:0,speed:0},fireStationWorld:{x:0,z:0},FIRE_STATION_ONE:{number:1},lastRoadLabel:'',els,document:{documentElement:{dataset}},pavementQA:false,PLAYER_TUNING:{enterDistance:4},TRUCK_TUNING:{exitSpeed:1},gameplaySurfaceAt:()=>({onRoad:false,name:'',height:0})});
+ vm.runInContext(source.slice(a,b),c);c.updateGameplayHud();
+ assert.equal(els.stationOneDoor.textContent,'Open bay door');assert.equal(els.stationOneDoor.disabled,false);
+ assert.equal(els.stationOneMobileDoor.textContent,'Open bay door');assert.equal(els.stationOneMobileDoor.disabled,false);
+ const initial=writes;for(let i=0;i<100;i++)c.updateGameplayHud();assert.equal(writes,initial);
+ doors.front[0].target=1;c.updateGameplayHud();assert.equal(els.stationOneDoor.textContent,'Close bay door');assert.equal(els.stationOneMobileDoor.textContent,'Close bay door');
  const changed=writes;for(let i=0;i<20;i++)c.updateGameplayHud();assert.equal(writes,changed);
 });
 

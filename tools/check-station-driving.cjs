@@ -39,10 +39,11 @@ const criticalConsolePattern = /\b(?:uncaught|typeerror|referenceerror|syntaxerr
       });
     });
 
-    const url = `${base.replace(/\/$/, '')}/city-explorer/?lite=1&pavementQA=1`;
+    const url = `${base.replace(/\/$/, '')}/city-explorer/?station=1&lite=1&pavementQA=1`;
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 90000 });
     await page.waitForFunction(() => document.documentElement.dataset.gameplayReady === 'true', null, { timeout: 180000 });
     await page.waitForFunction(() => Boolean(globalThis.__PTBO_GAMEPLAY__?.state), null, { timeout: 10000 });
+    await page.waitForFunction(() => document.documentElement.dataset.stationOneModel === 'ready', null, { timeout: 180000 });
 
     await page.locator('#play-mode').click();
     await page.locator('canvas').first().focus();
@@ -57,6 +58,13 @@ const criticalConsolePattern = /\b(?:uncaught|typeerror|referenceerror|syntaxerr
       pavement: JSON.parse(document.documentElement.dataset.pavementQa || 'null'),
       continuity: JSON.parse(document.documentElement.dataset.pavementContinuity || 'null'),
     }));
+    const doorsClosedAtSpawn = spawn.gameplay.stationOne?.doors?.front?.every(door => door.fraction === 0 && door.target === 0) === true;
+
+    await page.locator('#station1-door-control').click();
+    await page.waitForFunction(() => {
+      const door = globalThis.__PTBO_GAMEPLAY__?.state?.().stationOne?.doors?.front?.[0];
+      return Boolean(door) && Number(door.target) === 1 && Number(door.fraction) >= 0.98;
+    }, null, { timeout: DRIVE_STATE_TIMEOUT_MS });
 
     await page.keyboard.press('KeyE');
     await page.waitForFunction(() => document.documentElement.dataset.gameplayMode === 'driving', null, { timeout: 10000 });
@@ -182,6 +190,9 @@ const criticalConsolePattern = /\b(?:uncaught|typeerror|referenceerror|syntaxerr
     report.assertions = {
       buildIdentified: Boolean(spawn.build.explorer),
       lightweightProfileForced: spawn.compatibilityMode === 'forced',
+      stationOneModelReady: spawn.gameplay.stationOne?.status === 'ready',
+      allDoorsClosedAtSpawn: doorsClosedAtSpawn,
+      alignedSectionalDoorOpened: Number(driveStart.stationOne?.doors?.front?.[0]?.fraction) >= 0.98,
       enteredTruck: report.finalGameplay?.mode === 'driving',
       sampledSimulationFrames: report.sampleCount >= 6,
       moved: report.pathDistanceMetres >= 0.25,

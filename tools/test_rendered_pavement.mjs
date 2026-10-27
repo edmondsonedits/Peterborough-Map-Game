@@ -112,7 +112,7 @@ const gameplayState = {
   roadSurfaceIndex: { sample(...args) { lastRoadQuery = args; return nearbyRoad; } },
 };
 const gameplaySurfaceAt = runInNewContext(`${gameplayFunctions}\ngameplaySurfaceAt`, {
-  state: gameplayState, stationTwoRuntime: null,
+  state: gameplayState, stationTwoRuntime: null, selectedStationRuntime: () => null,
   terrainHeightAtWorld: () => terrainHeight, hunterBridgeSurface: null,
 });
 let surface = gameplaySurfaceAt(0, 10, 102);

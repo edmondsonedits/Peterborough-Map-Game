@@ -95,6 +95,7 @@ const angleDelta = (a, b) => Math.abs(Math.atan2(
       landscape: matchMedia('(orientation: landscape)').matches,
       gameplayMode: document.documentElement.dataset.gameplayMode || null,
       gameplayReady: document.documentElement.dataset.gameplayReady || null,
+      stationOneModel: document.documentElement.dataset.stationOneModel || null,
       explorerBuild: window.PTBO_CITY_EXPLORER_BUILD?.version || null,
       mobileControlsVersion: document.documentElement.dataset.cityExplorerMobileControls || null,
       mobileAnalogDriving: document.documentElement.dataset.mobileAnalogDriving || null,
@@ -121,10 +122,11 @@ const angleDelta = (a, b) => Math.abs(Math.atan2(
   });
 
   try {
-    const url = `${base.replace(/\/$/, '')}/city-explorer/?lite=1&pavementQA=1`;
+    const url = `${base.replace(/\/$/, '')}/city-explorer/?station=1&lite=1&pavementQA=1`;
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 90000 });
     await page.waitForFunction(() => document.documentElement.dataset.gameplayReady === 'true', null, { timeout: 180000 });
     await page.waitForFunction(() => Boolean(globalThis.__PTBO_GAMEPLAY__?.state), null, { timeout: 10000 });
+    await page.waitForFunction(() => document.documentElement.dataset.stationOneModel === 'ready', null, { timeout: 180000 });
     await page.waitForFunction(() => matchMedia('(pointer: coarse)').matches, null, { timeout: 5000 });
     await page.waitForFunction(() => Boolean(document.documentElement.dataset.cityExplorerMobileControls), null, { timeout: 5000 });
 
@@ -139,9 +141,17 @@ const angleDelta = (a, b) => Math.abs(Math.atan2(
     });
 
     const portraitInitial = await layoutSnapshot();
+    const doorsClosedAtSpawn = await page.evaluate(() => globalThis.__PTBO_GAMEPLAY__.state().stationOne?.doors?.front?.every(door => door.fraction === 0 && door.target === 0) === true);
     if (shouldCaptureArtifacts) {
       await page.screenshot({ path: path.join(artifactRoot, 'portrait-ready.png'), fullPage: false });
     }
+
+    await page.locator('#station1-mobile-door').tap();
+    await page.waitForFunction(() => {
+      const door = globalThis.__PTBO_GAMEPLAY__?.state?.().stationOne?.doors?.front?.[0];
+      return Boolean(door) && Number(door.target) === 1 && Number(door.fraction) >= 0.98;
+    }, null, { timeout: STATE_TIMEOUT_MS });
+    const touchDoorState = await page.evaluate(() => globalThis.__PTBO_GAMEPLAY__?.state?.().stationOne?.doors?.front?.[0] || null);
 
     const joystickBox = await page.locator('#movement-joystick').boundingBox();
     if (!joystickBox) throw new Error('Mobile joystick is not rendered');
@@ -213,12 +223,17 @@ const angleDelta = (a, b) => Math.abs(Math.atan2(
     await page.waitForFunction(() => document.getElementById('app')?.classList.contains('mobile-menu-open'), null, { timeout: 5000 });
     await page.locator('#map-mode').tap();
     await page.waitForFunction(() => document.getElementById('touch-controls')?.classList.contains('is-map-mode'), null, { timeout: 5000 });
+    // Mode buttons close the menu asynchronously (mobile-controls-1.6.68.js).
+    // Wait for that transition before tapping the toggle again so a delayed
+    // close cannot race with and undo the next open.
+    await page.waitForFunction(() => !document.getElementById('app')?.classList.contains('mobile-menu-open'), null, { timeout: 5000 });
     const mapMode = await layoutSnapshot();
 
     await page.locator('#mobile-menu-toggle').tap();
     await page.waitForFunction(() => document.getElementById('app')?.classList.contains('mobile-menu-open'), null, { timeout: 5000 });
     await page.locator('#play-mode').tap();
     await page.waitForFunction(() => !document.getElementById('touch-controls')?.classList.contains('is-map-mode'), null, { timeout: 5000 });
+    await page.waitForFunction(() => !document.getElementById('app')?.classList.contains('mobile-menu-open'), null, { timeout: 5000 });
 
     await page.setViewportSize({ width: 844, height: 390 });
     await page.waitForFunction(() => matchMedia('(orientation: landscape)').matches, null, { timeout: 5000 });
@@ -240,6 +255,7 @@ const angleDelta = (a, b) => Math.abs(Math.atan2(
       portraitInitial,
       portraitReadyToEnter,
       portraitDriving,
+      touchDoorState,
       mapMode,
       landscape,
       checkpoints: { driveStart, forwardState, steeredState },
@@ -255,6 +271,10 @@ const angleDelta = (a, b) => Math.abs(Math.atan2(
 
     report.assertions = {
       buildIdentified: /^\d+\.\d+\.\d+$/.test(String(report.build || '')),
+      stationOneModelReady: portraitInitial.stationOneModel === 'ready',
+      allDoorsClosedAtSpawn: doorsClosedAtSpawn,
+      touchDoorButtonOpenedAlignedBay:
+        Number(touchDoorState?.target) === 1 && Number(touchDoorState?.fraction) >= 0.98,
       coarsePointerEmulated: portraitInitial.coarsePointer === true,
       mobileControlsLoaded: Boolean(portraitInitial.mobileControlsVersion),
       portraitOrientationDetected: portraitInitial.portrait === true,

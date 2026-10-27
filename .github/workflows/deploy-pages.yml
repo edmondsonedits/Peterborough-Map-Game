@@ -64,7 +64,7 @@ jobs:
         run: node --test tests/city-building-appearance.test.mjs tests/city-material-library.test.mjs tests/city-visual-settings.test.mjs tests/corridor-recording-appearances.test.mjs tests/cricket-recording-appearances.test.mjs tests/cricket-runtime-integration.test.mjs tests/hunter-bridge-appearance.test.mjs tests/hunter-bridge-surface.test.mjs tests/intersection-hologram-rules.test.mjs tests/intersection-holograms.test.mjs tests/recording-appearance-integration.test.mjs tests/recording-arched-openings.test.mjs tests/recording-facade-runtime.test.mjs tests/recording-photo-assets.test.mjs tests/recording-reference-appearances.test.mjs tests/recording-surface-appearance.test.mjs tests/reviewed-photo-appearance.test.mjs tests/road-appearance-rules.test.mjs tests/road-curb-appearance.test.mjs tests/road-material-polish.test.mjs tests/road-surface-selection.test.mjs tests/roadside-furniture-geometry.test.mjs tests/roadside-furniture-placement.test.mjs tests/sherbrooke-pole-placement.test.mjs tests/web-building-frontages.test.mjs
 
       - name: Check authored actors and station architecture
-        run: node --test tests/pumper-asset.test.mjs tests/firefighter-asset.test.mjs tests/station-architecture.test.mjs tests/station-two.test.mjs tests/station-two-user-spawn.test.mjs tests/station-three-bay-departure.test.mjs
+        run: node --test tests/pumper-asset.test.mjs tests/firefighter-asset.test.mjs tests/station-architecture.test.mjs tests/station-one.test.mjs tests/station-one-editor-restore.test.mjs tests/station-two.test.mjs tests/station-two-user-spawn.test.mjs tests/station-three-bay-departure.test.mjs
 
       - name: Stress deterministic EMS transitions
         run: |

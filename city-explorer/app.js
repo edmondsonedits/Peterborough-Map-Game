@@ -20,8 +20,11 @@ import { createGardenClearance } from './sherbrooke-garden-clearance.js?v=1.6.14
 import { appendFootageRoof } from './sherbrooke-footage-roofs.js?v=corridor-20261024';
 import { appendFootageMassing } from './footage-building-massing.js';
 import * as THREE from 'three';
+import stationOneLayout from './assets/station1/layout.json' with { type: 'json' };
 import stationTwoLayout from './assets/station2/layout.json' with { type: 'json' };
 import { hideStationTwoReplacementRecords, stationCameraOffsetScale } from './station-two-core.mjs';
+import { hideStationOneReplacementRecords } from './station-one-core.mjs';
+import { createStationOneRuntime, stationOneRequested } from './station-one-runtime.js';
 import { createStationTwoRuntime, stationTwoRequested } from './station-two-runtime.js';
 import { reconcileStationPavement } from './station-pavement-layer.js?v=1.6.57';
 import { CURB_REVEAL, curbIsRaised, stationRoadWeight, splitRoadDetailSegment, pavementSupportBottom } from './station-road-detail.js?v=1.6.58';
@@ -111,6 +114,7 @@ import {
   validateSemanticSurvey,
 } from './semantic-survey.js?v=sherbrooke-20260915';
 
+const STATION_ONE_SELECTED = stationOneRequested();
 const STATION_TWO_SELECTED = stationTwoRequested();
 
 // Render tiles preserve a useful balance between material batching and
@@ -149,6 +153,12 @@ const CITY = {
 
 const els = {
   app: document.querySelector('#app'),
+  stationOneDoor: document.querySelector('#station1-door-control'),
+  stationOneMobileDoor: document.querySelector('#station1-mobile-door'),
+  stationOneMobileStart: document.querySelector('#station1-mobile-start'),
+  stationOneControls: document.querySelector('#station1-game-controls'),
+  stationOneModelStatus: document.querySelector('#station1-model-status'),
+  stationOneStartTruck: document.querySelector('#station1-start-truck'),
   stationTwoDoor: document.querySelector('#station2-door-control'),
   stationTwoMobileDoor: document.querySelector('#station2-mobile-door'),
   stationTwoMobileStart: document.querySelector('#station2-mobile-start'),
@@ -448,6 +458,10 @@ let citySplatLayer = null;
 let playerActor = null;
 let fireTruckActor = null;
 let fireStationDetail = null;
+let stationOneRuntime = null;
+let stationOneReplacementReady = false;
+let stationOneReplacementDiagnostics = { matched: 0, hidden: 0, sourceIds: [] };
+let stationOneFallbackSpawn = null;
 let stationTwoRuntime = null;
 let stationTwoReplacementReady = false;
 let stationTwoReplacementDiagnostics = { candidate: null, matched: 0, hidden: 0, sourceIds: [] };
@@ -4426,7 +4440,7 @@ async function parseOsmWithGeoJson(data) {
   buildRoadSurfaceIndex(roadSegments);
   flushPrototypeFacades();
   buildBufferedBuildingBatches(buildingBatches);
-  hideStationTwoReplacement();
+  hideSelectedStationReplacement();
   buildMapRoadLines(roadSegments);
   if (!state.officialRoadSurfacesAvailable) {
     const fallbackTrims = buildRoadJunctions(roadSegments);
@@ -4511,7 +4525,7 @@ function parseOsmWayFallback(data) {
   buildRoadSurfaceIndex(roadSegments);
   flushPrototypeFacades();
   buildBufferedBuildingBatches(buildingBatches);
-  hideStationTwoReplacement();
+  hideSelectedStationReplacement();
   buildMapRoadLines(roadSegments);
   if (!state.officialRoadSurfacesAvailable) {
     const fallbackTrims = buildRoadJunctions(roadSegments);
@@ -4871,7 +4885,7 @@ function applyCityOverrides(documentValue) {
   applyOverrides(documentValue, { registry: generatedRegistry, authoredRuntime, materials, THREE });
   // Applying editor overrides restores generated batches first. The installed
   // station owns this exact obsolete source after every restore, in either load order.
-  hideStationTwoReplacement();
+  hideSelectedStationReplacement();
 }
 
 async function loadPublishedAuthoredDetails() {
@@ -4909,6 +4923,7 @@ function initializeCityEditor(publishedDocument = createEmptySceneDocument()) {
     raycaster: editorRaycaster,
     camera,
     canvas: els.canvas,
+    onGeneratedRestore: () => hideSelectedStationReplacement(),
     project,
     terrainHeightAtWorld,
     aiMetadata: () => ({ version: window.PTBO_BUILD?.version || null, profile: lowPowerProfile ? 'lite' : 'full',
@@ -5064,8 +5079,9 @@ function gameplaySurfaceBaseAt(x, z, referenceHeight = null) {
 
 function gameplaySurfaceAt(x, z, referenceHeight = null) {
   const base = gameplaySurfaceBaseAt(x, z, referenceHeight);
-  if (!stationTwoRuntime?.isReady()) return base;
-  const station = stationTwoRuntime.surfaceAt(x, z);
+  const runtime = selectedStationRuntime();
+  if (!runtime?.isReady()) return base;
+  const station = runtime.surfaceAt(x, z);
   if (!station) return base;
   return { ...base, ...station, onRoad: station.onRoad ? base.onRoad : false, road: base.road, official: base.official };
 }
@@ -5082,7 +5098,7 @@ function syncGameplayRootClasses() {
 
 function updateGameplayHint() {
   const number = FIRE_STATION_ONE.number;
-  const doorHint = number === 2 ? ' · G opens/closes the front bay door aligned with the truck' : '';
+  const doorHint = number === 1 || number === 2 ? ' · G opens/closes the front bay door aligned with the truck' : '';
   if (state.mode === 'onFoot') {
     els.modeHint.innerHTML = `<strong>On foot at Fire Station ${number}.</strong> WASD or arrows move · Shift sprints · mouse looks · E enters the fire truck${doorHint} · F free camera.`;
   } else if (state.mode === 'driving') {
@@ -5091,7 +5107,7 @@ function updateGameplayHint() {
 }
 function startDrivingFromBay() {
   if (!gameplayReady) return false;
-  if (STATION_TWO_SELECTED) resetGameplay();
+  if (STATION_ONE_SELECTED || STATION_TWO_SELECTED) resetGameplay();
   playerActor.visible = false;
   playerVelocity.set(0, 0, 0);
   state.gameplayYaw = truckState.heading;
@@ -5109,7 +5125,15 @@ function snapGameplayCamera() {
 }
 
 function gameplaySpawnPoints() {
+  if (STATION_ONE_SELECTED && stationOneFallbackSpawn) return stationOneFallbackSpawn;
   if (STATION_TWO_SELECTED && stationTwoFallbackSpawn) return stationTwoFallbackSpawn;
+  if (STATION_ONE_SELECTED && stationOneRuntime) {
+    return {
+      playerPoint: { x: stationOneRuntime.playerSpawn.x, y: stationOneRuntime.playerSpawn.z },
+      truckPoint: { x: stationOneRuntime.spawn.x, y: stationOneRuntime.spawn.z },
+      truckHeading: stationOneRuntime.spawn.heading,
+    };
+  }
   if (STATION_TWO_SELECTED && stationTwoRuntime) {
     return {
       playerPoint: { x: stationTwoRuntime.playerSpawn.x, y: stationTwoRuntime.playerSpawn.z },
@@ -5122,6 +5146,22 @@ function gameplaySpawnPoints() {
     truckPoint: project(FIRE_STATION_ONE.truckLat, FIRE_STATION_ONE.truckLon),
     truckHeading: FIRE_STATION_ONE.truckHeading,
   };
+}
+
+function selectedStationRuntime() {
+  if (STATION_ONE_SELECTED) return stationOneRuntime;
+  if (STATION_TWO_SELECTED) return stationTwoRuntime;
+  return null;
+}
+
+function hideSelectedStationReplacement() {
+  if (STATION_ONE_SELECTED && stationOneReplacementReady) {
+    stationOneReplacementDiagnostics = hideStationOneReplacementRecords(generatedRegistry.records.values(), id => generatedRegistry.hide(id));
+    document.documentElement.dataset.stationOneReplacement = `${stationOneReplacementDiagnostics.hidden}/${stationOneReplacementDiagnostics.matched}`;
+    return stationOneReplacementDiagnostics;
+  }
+  if (STATION_TWO_SELECTED) return hideStationTwoReplacement();
+  return null;
 }
 
 function hideStationTwoReplacement() {
@@ -5156,8 +5196,48 @@ function moveStationTwoToFallbackSpawn() {
   state.gameplayPitch = -0.19;
   snapGameplayCamera();
 }
+
+function moveStationOneToFallbackSpawn() {
+  stationOneFallbackSpawn = {
+    playerPoint: project(FIRE_STATION_ONE.playerLat, FIRE_STATION_ONE.playerLon),
+    truckPoint: project(FIRE_STATION_ONE.truckLat, FIRE_STATION_ONE.truckLon),
+    truckHeading: FIRE_STATION_ONE.truckHeading,
+  };
+  const { playerPoint, truckPoint, truckHeading } = stationOneFallbackSpawn;
+  const playerSurface = gameplaySurfaceBaseAt(playerPoint.x, playerPoint.y);
+  const truckSurface = gameplaySurfaceBaseAt(truckPoint.x, truckPoint.y);
+  playerActor.position.set(playerPoint.x, playerSurface.height + 0.025, playerPoint.y);
+  playerActor.visible = true;
+  playerHeading = truckHeading + Math.PI;
+  playerVelocity.set(0, 0, 0);
+  Object.assign(truckState, { x: truckPoint.x, z: truckPoint.y, y: truckSurface.height + 0.035, heading: truckHeading, speed: 0, steering: 0, pitch: 0, roll: 0, wheelRotation: 0 });
+  fireTruckActor.position.set(truckState.x, truckState.y, truckState.z);
+  fireTruckActor.rotation.set(0, truckHeading, 0, 'YXZ');
+  setMode('onFoot', true);
+  state.gameplayYaw = playerHeading;
+  state.gameplayPitch = -0.19;
+  snapGameplayCamera();
+}
 function initializeGameplay() {
   if (gameplayReady) return;
+  if (STATION_ONE_SELECTED) {
+    stationOneRuntime = createStationOneRuntime({
+      THREE, scene: gameplayGroup, layout: stationOneLayout, project,
+      baseSurface: (x, z) => gameplaySurfaceBaseAt(x, z),
+      onReady: () => {
+        stationOneReplacementReady = true;
+        hideSelectedStationReplacement();
+        if (gameplayReady) {
+          const playerSurface = gameplaySurfaceAt(playerActor.position.x, playerActor.position.z);
+          const truckSurface = gameplaySurfaceAt(truckState.x, truckState.z);
+          playerActor.position.y = playerSurface.height + 0.025;
+          truckState.y = truckSurface.height + 0.035;
+          fireTruckActor.position.y = truckState.y;
+        }
+        snapGameplayCamera();
+      },
+    });
+  }
   if (STATION_TWO_SELECTED) {
     stationTwoRuntime = createStationTwoRuntime({
       THREE, scene: gameplayGroup, layout: stationTwoLayout, project,
@@ -5166,15 +5246,15 @@ function initializeGameplay() {
     });
   }
   const { playerPoint, truckPoint, truckHeading } = gameplaySpawnPoints();
-  const buildingPoint = STATION_TWO_SELECTED
-    ? { x: stationTwoRuntime.spawn.anchor.x, y: stationTwoRuntime.spawn.anchor.z }
+  const buildingPoint = STATION_ONE_SELECTED || STATION_TWO_SELECTED
+    ? { x: selectedStationRuntime().spawn.anchor.x, y: selectedStationRuntime().spawn.anchor.z }
     : project(FIRE_STATION_ONE.buildingLat, FIRE_STATION_ONE.buildingLon);
   fireStationWorld.set(buildingPoint.x, 0, buildingPoint.y);
 
   playerActor = createFirefighter(THREE);
   const playerSurface = gameplaySurfaceAt(playerPoint.x, playerPoint.y);
   playerActor.position.set(playerPoint.x, playerSurface.height + 0.025, playerPoint.y);
-  if (STATION_TWO_SELECTED) playerHeading = truckHeading + Math.PI;
+  if (STATION_ONE_SELECTED || STATION_TWO_SELECTED) playerHeading = truckHeading + Math.PI;
   playerActor.rotation.y = playerHeading;
   gameplayGroup.add(playerActor);
 
@@ -5202,7 +5282,7 @@ function initializeGameplay() {
   }
 
   gameplayReady = true;
-  state.gameplayYaw = STATION_TWO_SELECTED ? truckHeading : 0;
+  state.gameplayYaw = STATION_ONE_SELECTED || STATION_TWO_SELECTED ? truckHeading : 0;
   state.gameplayPitch = -0.19;
   state.gameplayCameraDistanceScale = 1;
   gameplayCameraTarget.copy(playerActor.position).add(new THREE.Vector3(0, PLAYER_TUNING.cameraHeight, 0));
@@ -5211,6 +5291,21 @@ function initializeGameplay() {
   updateGameplayHint();
   snapGameplayCamera();
   document.documentElement.dataset.gameplayReady = 'true';
+  if (STATION_ONE_SELECTED) {
+    els.stationOneControls.hidden = false;
+    els.stationOneMobileStart.hidden = false;
+    els.stationOneMobileDoor.hidden = false;
+    void stationOneRuntime.load().then(loaded => {
+      document.documentElement.dataset.stationOneModel = loaded ? 'ready' : `error:${stationOneRuntime.getStatus().error}`;
+      els.stationOneModelStatus.textContent = loaded ? '' : 'Station 1 model unavailable; using the existing apron start';
+      if (!loaded) {
+        els.stationOneDoor.disabled = true;
+        els.stationOneMobileDoor.disabled = true;
+        moveStationOneToFallbackSpawn();
+        showToast('Station 1 model unavailable; returned to its existing apron start.');
+      }
+    });
+  }
   if (STATION_TWO_SELECTED) {
     els.stationTwoControls.hidden = false;
     els.stationTwoMobileStart.hidden = false;
@@ -5225,8 +5320,8 @@ function initializeGameplay() {
         showToast('Station 2 model unavailable; starting from the Marina approach.');
       }
     });
-    if (new URLSearchParams(location.search).get('spawn') === 'truck') startDrivingFromBay();
   }
+  if ((STATION_ONE_SELECTED || STATION_TWO_SELECTED) && new URLSearchParams(location.search).get('spawn') === 'truck') startDrivingFromBay();
   globalThis.__PTBO_GAMEPLAY__ = Object.freeze({
     station: { ...FIRE_STATION_ONE },
     state() {
@@ -5234,6 +5329,8 @@ function initializeGameplay() {
         mode: state.mode,
         player: playerActor ? { x: playerActor.position.x, y: playerActor.position.y, z: playerActor.position.z } : null,
         truck: { ...truckState },
+        stationOne: STATION_ONE_SELECTED ? stationOneRuntime.getStatus() : null,
+        stationOneReplacement: STATION_ONE_SELECTED ? { ...stationOneReplacementDiagnostics } : null,
         stationTwo: STATION_TWO_SELECTED ? stationTwoRuntime.getStatus() : null,
         stationTwoReplacement: STATION_TWO_SELECTED ? { ...stationTwoReplacementDiagnostics } : null,
         firefighterAppearance: playerActor ? {
@@ -5264,7 +5361,7 @@ function resetGameplay() {
   playerActor.position.set(playerPoint.x, playerSurface.height + 0.025, playerPoint.y);
   playerVelocity.set(0, 0, 0);
   playerSpeed = 0;
-  playerHeading = STATION_TWO_SELECTED ? truckHeading + Math.PI : Math.PI;
+  playerHeading = STATION_ONE_SELECTED || STATION_TWO_SELECTED ? truckHeading + Math.PI : Math.PI;
   playerActor.rotation.y = playerHeading;
   Object.assign(truckState, {
     x: truckPoint.x, z: truckPoint.y, y: truckSurface.height + 0.035,
@@ -5274,8 +5371,8 @@ function resetGameplay() {
   fireTruckActor.position.set(truckState.x, truckState.y, truckState.z);
   fireTruckActor.rotation.set(0, truckState.heading, 0, 'YXZ');
   fireTruckActor.userData.truck.visual.rotation.set(0, 0, 0);
-  stationTwoRuntime?.resetDoors();
-  state.gameplayYaw = STATION_TWO_SELECTED ? truckHeading : 0;
+  selectedStationRuntime()?.resetDoors();
+  state.gameplayYaw = STATION_ONE_SELECTED || STATION_TWO_SELECTED ? truckHeading : 0;
   state.gameplayPitch = -0.19;
   state.gameplayCameraDistanceScale = 1;
   setMode('onFoot', true);
@@ -5519,9 +5616,10 @@ function updatePlayerActor(delta) {
   const previousX = playerActor.position.x, previousZ = playerActor.position.z;
   const nextX = THREE.MathUtils.clamp(previousX + playerVelocity.x * delta, CITY.worldBounds.minX, CITY.worldBounds.maxX);
   const nextZ = THREE.MathUtils.clamp(previousZ + playerVelocity.z * delta, CITY.worldBounds.minZ, CITY.worldBounds.maxZ);
-  if (stationTwoRuntime?.collides({ x: nextX, z: nextZ, heading: playerHeading }, { player: true })) {
-    const clearX = !stationTwoRuntime.collides({ x: nextX, z: previousZ, heading: playerHeading }, { player: true });
-    const clearZ = !stationTwoRuntime.collides({ x: previousX, z: nextZ, heading: playerHeading }, { player: true });
+  const stationRuntime = selectedStationRuntime();
+  if (stationRuntime?.collides({ x: nextX, z: nextZ, heading: playerHeading }, { player: true })) {
+    const clearX = !stationRuntime.collides({ x: nextX, z: previousZ, heading: playerHeading }, { player: true });
+    const clearZ = !stationRuntime.collides({ x: previousX, z: nextZ, heading: playerHeading }, { player: true });
     playerActor.position.x = clearX ? nextX : previousX;
     playerActor.position.z = clearZ ? nextZ : previousZ;
     if (!clearX) playerVelocity.x = 0;
@@ -5564,7 +5662,7 @@ function updateFireTruck(delta) {
     }, delta, truckIsOnRoad(currentSurface.onRoad, truckState.lastRoadWheelCount));
     next.x = THREE.MathUtils.clamp(next.x, CITY.worldBounds.minX, CITY.worldBounds.maxX);
     next.z = THREE.MathUtils.clamp(next.z, CITY.worldBounds.minZ, CITY.worldBounds.maxZ);
-    if (stationTwoRuntime?.sweep(truckState, next)) { next.x = truckState.x; next.z = truckState.z; next.speed = 0; next.acceleration = 0; }
+    if (selectedStationRuntime()?.sweep(truckState, next)) { next.x = truckState.x; next.z = truckState.z; next.speed = 0; next.acceleration = 0; }
     Object.assign(truckState, next);
 
     if (performance.now() - state.gameplayLastLookTime > 2200 && Math.abs(truckState.speed) > 1.5) {
@@ -5604,7 +5702,7 @@ function updateFireTruck(delta) {
     beacon.material.emissiveIntensity = state.emergencyLights ? 3.1 : 0.35;
   });
   updateVehicleAudio();
-  stationTwoRuntime?.update(delta, truckState, state.mode === 'onFoot' ? playerActor.position : null);
+  selectedStationRuntime()?.update(delta, truckState, state.mode === 'onFoot' ? playerActor.position : null);
 }
 
 function updateGameplayCamera(delta, snap = false) {
@@ -5638,10 +5736,12 @@ function updateGameplayCamera(delta, snap = false) {
     gameplayDesiredTarget.y + baseHeight - Math.sin(state.gameplayPitch) * distance,
     gameplayDesiredTarget.z - cameraDirection.z * horizontalDistance,
   );
-  if (STATION_TWO_SELECTED && stationTwoRuntime?.isReady()) {
-    const targetLocal = stationTwoRuntime.localPoint({ x: gameplayDesiredTarget.x, z: gameplayDesiredTarget.z });
-    const cameraLocal = stationTwoRuntime.localPoint({ x: gameplayDesiredCamera.x, z: gameplayDesiredCamera.z });
-    const offsetScale = stationCameraOffsetScale(targetLocal, cameraLocal, stationTwoLayout.rearService, 0.65);
+  const stationRuntime = selectedStationRuntime();
+  if (stationRuntime?.isReady()) {
+    const targetLocal = stationRuntime.localPoint({ x: gameplayDesiredTarget.x, z: gameplayDesiredTarget.z });
+    const cameraLocal = stationRuntime.localPoint({ x: gameplayDesiredCamera.x, z: gameplayDesiredCamera.z });
+    const blocker = STATION_ONE_SELECTED ? stationOneLayout.cameraBlocker : stationTwoLayout.rearService;
+    const offsetScale = stationCameraOffsetScale(targetLocal, cameraLocal, blocker, 0.65);
     if (offsetScale < 1) {
       gameplayDesiredCamera.set(
         gameplayDesiredTarget.x + (gameplayDesiredCamera.x - gameplayDesiredTarget.x) * offsetScale,
@@ -5652,8 +5752,9 @@ function updateGameplayCamera(delta, snap = false) {
   }
   const cameraGround = terrainHeightAtWorld(gameplayDesiredCamera.x, gameplayDesiredCamera.z) + 0.65;
   gameplayDesiredCamera.y = Math.max(gameplayDesiredCamera.y, cameraGround);
-  if (STATION_TWO_SELECTED && stationTwoRuntime?.containsBay(active)) {
-    gameplayDesiredCamera.y = THREE.MathUtils.clamp(gameplayDesiredCamera.y, stationTwoRuntime.datum + 1.2, stationTwoRuntime.datum + 6.1);
+  if (stationRuntime?.containsBay(active)) {
+    const ceilingClearance = STATION_ONE_SELECTED ? stationOneLayout.bay.roofTop - 1.3 : 6.1;
+    gameplayDesiredCamera.y = THREE.MathUtils.clamp(gameplayDesiredCamera.y, stationRuntime.datum + 1.2, stationRuntime.datum + ceilingClearance);
   }
   const positionResponse = driving ? TRUCK_TUNING.cameraPositionResponse : PLAYER_TUNING.cameraPositionResponse;
   const targetResponse = driving ? TRUCK_TUNING.cameraTargetResponse : PLAYER_TUNING.cameraTargetResponse;
@@ -5683,12 +5784,14 @@ function updateGameplayHud() {
     lastRoadLabel = label;
     els.gameplayRoad.textContent = label;
   }
-  if (STATION_TWO_SELECTED) {
-    const doorIndex = stationTwoRuntime?.frontDoorForTruck(truckState) ?? -1;
-    const door = doorIndex >= 0 ? stationTwoRuntime.getStatus().doors.front[doorIndex] : null;
-    const enabled = Boolean(stationTwoRuntime?.isReady() && door);
+  if (STATION_ONE_SELECTED || STATION_TWO_SELECTED) {
+    const runtime = selectedStationRuntime();
+    const doorIndex = runtime?.frontDoorForTruck(truckState) ?? -1;
+    const door = doorIndex >= 0 ? runtime.getStatus().doors.front[doorIndex] : null;
+    const enabled = Boolean(runtime?.isReady() && door);
     const text = door?.target > 0.5 ? 'Close bay door' : 'Open bay door';
-    [els.stationTwoDoor, els.stationTwoMobileDoor].forEach(button => {
+    const buttons = STATION_ONE_SELECTED ? [els.stationOneDoor, els.stationOneMobileDoor] : [els.stationTwoDoor, els.stationTwoMobileDoor];
+    buttons.forEach(button => {
       if (!button) return;
       const disabled = !enabled;
       const label = enabled ? text : 'Front bay door';
@@ -5735,7 +5838,7 @@ function enterOrExitVehicle() {
     }
     playerActor.visible = false;
     playerVelocity.set(0, 0, 0);
-    state.gameplayYaw = STATION_TWO_SELECTED ? truckState.heading : 0;
+    state.gameplayYaw = STATION_ONE_SELECTED || STATION_TWO_SELECTED ? truckState.heading : 0;
     state.gameplayLastLookTime = performance.now();
     state.gameplayPitch = -0.17;
     setMode('driving', true);
@@ -5750,7 +5853,8 @@ function enterOrExitVehicle() {
   }
   const right = { x: Math.cos(truckState.heading), z: -Math.sin(truckState.heading) };
   const exits = [1, -1].map(sign => ({ x: truckState.x + right.x * 2.45 * sign, z: truckState.z + right.z * 2.45 * sign }));
-  const exit = exits.find(point => !stationTwoRuntime?.collides({ ...point, heading: truckState.heading }, { player: true })) || (stationTwoRuntime?.playerSpawn ? { ...stationTwoRuntime.playerSpawn } : exits[0]);
+  const runtime = selectedStationRuntime();
+  const exit = exits.find(point => !runtime?.collides({ ...point, heading: truckState.heading }, { player: true })) || (runtime?.playerSpawn ? { ...runtime.playerSpawn } : exits[0]);
   const exitX = exit.x;
   const exitZ = exit.z;
   const surface = gameplaySurfaceAt(exitX, exitZ, truckState.y);
@@ -6661,17 +6765,22 @@ function onWheel(event) {
 }
 
 function wireEvents() {
-  const toggleStationTwoFrontDoor = () => {
-    if (!stationTwoRuntime?.isReady()) return;
-    const door = stationTwoRuntime.toggleFrontDoorForTruck(truckState);
+  const toggleSelectedFrontDoor = () => {
+    const runtime = selectedStationRuntime();
+    if (!runtime?.isReady()) return;
+    const door = runtime.toggleFrontDoorForTruck(truckState);
     if (door) {
-      const opening = stationTwoRuntime.getStatus().doors.front[door.index].target > 0.5;
+      const opening = runtime.getStatus().doors.front[door.index].target > 0.5;
       showToast(`${opening ? 'Opening' : 'Closing'} front bay door ${door.index + 1}`);
     } else showToast('Move the truck nearer a front bay door');
     els.canvas.focus({ preventScroll: true });
   };
-  els.stationTwoDoor?.addEventListener('click', toggleStationTwoFrontDoor);
-  els.stationTwoMobileDoor?.addEventListener('click', toggleStationTwoFrontDoor);
+  els.stationOneDoor?.addEventListener('click', toggleSelectedFrontDoor);
+  els.stationOneMobileDoor?.addEventListener('click', toggleSelectedFrontDoor);
+  els.stationTwoDoor?.addEventListener('click', toggleSelectedFrontDoor);
+  els.stationTwoMobileDoor?.addEventListener('click', toggleSelectedFrontDoor);
+  els.stationOneStartTruck?.addEventListener('click', startDrivingFromBay);
+  els.stationOneMobileStart?.addEventListener('click', startDrivingFromBay);
   els.stationTwoStartTruck?.addEventListener('click', startDrivingFromBay);
   els.stationTwoMobileStart?.addEventListener('click', startDrivingFromBay);
   els.playMode?.addEventListener('click', () => { setMode('play'); els.canvas.focus({ preventScroll: true }); });
@@ -6750,10 +6859,11 @@ function wireEvents() {
       enterOrExitVehicle();
       event.preventDefault();
     }
-    if (!event.repeat && event.code === 'KeyG' && STATION_TWO_SELECTED && !event.ctrlKey && !event.altKey && (state.mode === 'onFoot' || state.mode === 'driving')) {
-      if (stationTwoRuntime?.isReady()) {
-        const door = stationTwoRuntime.toggleFrontDoorForTruck(truckState);
-        if (door) showToast(`${stationTwoRuntime.getStatus().doors.front[door.index].target > 0.5 ? 'Opening' : 'Closing'} front bay door ${door.index + 1}`);
+    if (!event.repeat && event.code === 'KeyG' && (STATION_ONE_SELECTED || STATION_TWO_SELECTED) && !event.ctrlKey && !event.altKey && (state.mode === 'onFoot' || state.mode === 'driving')) {
+      const runtime = selectedStationRuntime();
+      if (runtime?.isReady()) {
+        const door = runtime.toggleFrontDoorForTruck(truckState);
+        if (door) showToast(`${runtime.getStatus().doors.front[door.index].target > 0.5 ? 'Opening' : 'Closing'} front bay door ${door.index + 1}`);
       }
       event.preventDefault();
     }

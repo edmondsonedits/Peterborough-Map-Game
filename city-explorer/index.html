@@ -35,6 +35,14 @@
       }
       #station2-game-controls .hud-button { min-height: 34px; padding: 0 11px; font-size: 10px; }
       #station2-model-status { color: #d5e0da; font-size: 10px; text-shadow: 0 1px 4px #07131b; }
+      #station1-game-controls:not([hidden]) {
+        position: fixed; right: 28px; bottom: calc(116px + env(safe-area-inset-bottom, 0px)); z-index: 19;
+        display: flex; align-items: center; flex-wrap: wrap; gap: 7px; max-width: min(660px, calc(100vw - 24px)); pointer-events: auto;
+      }
+      #station1-game-controls .hud-button { min-height: 34px; padding: 0 11px; font-size: 10px; }
+      #station1-model-status { color: #d5e0da; font-size: 10px; text-shadow: 0 1px 4px #07131b; }
+      @media (max-width: 760px) { #station1-game-controls:not([hidden]) { right: 12px; bottom: calc(134px + env(safe-area-inset-bottom, 0px)); gap: 5px; } }
+      @media (pointer: coarse) { #station1-game-controls:not([hidden]) { display: none; } }
       @media (max-width: 760px) { #station2-game-controls:not([hidden]) { right: 12px; bottom: calc(134px + env(safe-area-inset-bottom, 0px)); gap: 5px; } }
       @media (pointer: coarse) { #station2-game-controls:not([hidden]) { display: none; } }
     </style>
@@ -127,6 +135,11 @@
           <strong>Open geospatial city model</strong>
           <span>© OpenStreetMap contributors · City of Peterborough Open Data · Ontario lidar terrain, hydrography, and road validation · unofficial project</span>
         </div>
+        <div id="station1-game-controls" aria-label="Station 1 start and bay door controls" hidden>
+          <button id="station1-start-truck" class="hud-button" type="button">Start in truck</button>
+          <button id="station1-door-control" class="hud-button" type="button" disabled>Open front bay door</button>
+          <span id="station1-model-status" role="status" aria-live="polite">Station 1 model loading</span>
+        </div>
         <div class="stats-values"><span id="object-count">0 features</span><span id="fps-counter">-- FPS</span><span id="altitude-counter">0 m AGL</span></div>
       </footer>
 
@@ -173,6 +186,8 @@
           </button>
           <button id="station2-mobile-start" type="button" style="width:100%;min-height:28px;font-size:8px" hidden>Start in truck</button>
           <button id="station2-mobile-door" type="button" style="width:100%;min-height:28px;font-size:8px" disabled hidden>Open front bay door</button>
+          <button id="station1-mobile-start" type="button" style="width:100%;min-height:28px;font-size:8px" hidden>Start in truck</button>
+          <button id="station1-mobile-door" type="button" style="width:100%;min-height:28px;font-size:8px" disabled hidden>Open front bay door</button>
           <span class="mobile-control-caption">Action</span>
         </div>
         <div class="mobile-flight-pad" aria-label="Fly mode altitude controls">

@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "stationNumber": 1,
+  "units": "metres",
+  "status": "source-grounded reconstruction; GIS footprint, photo-derived heights and door dimensions, unresolved room adjacency",
+  "coordinateSystem": "glTF Y up; X facade left viewed from street; Z into bay; front=-Z; origin front facade midpoint at slab top",
+  "doorWidth": 4.1,
+  "doorHeight": 4.5,
+  "doorPanelCount": 8,
+  "doorTravel": 5.5,
+  "doorTrack": {
+    "verticalTop": 4.65,
+    "radius": 0.55,
+    "closedZ": 0.06
+  },
+  "frontDoorCenters": [
+    -9.28,
+    -4.64,
+    0,
+    4.64,
+    9.28
+  ],
+  "rearDoorCenters": [],
+  "bay": {
+    "minX": -11.959,
+    "maxX": 11.959,
+    "frontZ": 0,
+    "rearZ": 20.35,
+    "wallHeight": 5.65,
+    "roofTop": 5.9,
+    "wallThickness": 0.28
+  },
+  "wing": {
+    "minX": -29.435,
+    "maxX": -11.959,
+    "frontZ": 1.65,
+    "rearZ": 20.35,
+    "height": 5.65
+  },
+  "watchroom": {
+    "outline": [
+      [
+        -11.959,
+        0
+      ],
+      [
+        -11.903,
+        -5.365
+      ],
+      [
+        -16.412,
+        -5.154
+      ],
+      [
+        -17.869,
+        -3.743
+      ],
+      [
+        -18.074,
+        -1.683
+      ],
+      [
+        -16.553,
+        -0.004
+      ]
+    ],
+    "height": 4.5,
+    "glassBottom": 1.15,
+    "glassTop": 2.55
+  },
+  "raisedRoof": {
+    "minX": -29.435,
+    "maxX": 11.959,
+    "frontZ": 6.2,
+    "slopeRearZ": 7.5,
+    "rearZ": 20.35,
+    "lowerY": 5.9,
+    "upperY": 7.25
+  },
+  "trainingTower": {
+    "minX": -42.92,
+    "maxX": -35,
+    "frontZ": 30.17,
+    "rearZ": 36.51,
+    "baseHeight": 4.6,
+    "towerHeight": 12.6,
+    "shaftMinX": -42.7,
+    "shaftMaxX": -38.9,
+    "sourceId": "city-building/6/3300"
+  },
+  "cameraBlocker": {
+    "minX": -12.25,
+    "maxX": 12.25,
+    "frontZ": 20.02,
+    "rearZ": 20.7,
+    "height": 7.25
+  },
+  "truckSpawn": {
+    "x": -9.28,
+    "z": 9,
+    "heading": 0
+  },
+  "playerSpawn": {
+    "x": -6.65,
+    "z": 7.5
+  },
+  "apron": {
+    "minX": -11.959,
+    "maxX": 11.959,
+    "frontZ": -11.2,
+    "rearZ": 0
+  },
+  "site": {
+    "anchorLat": 44.3008921,
+    "anchorLon": -78.32226515,
+    "rotationYDegrees": -177.19203870294788,
+    "candidateReplacementOsmId": "way/1009651229",
+    "additionalReplacementSourceIds": [
+      "city-building/6/3300"
+    ],
+    "placementStatus": "front facade endpoints retained from packaged OSM; source geometry used without changing roads, terrain or sidewalk elevations"
+  },
+  "materials": {
+    "brick": "#997b65",
+    "door": "#b83246",
+    "metal": "#4b4440",
+    "glass": "#384c50",
+    "interiorLower": "#b7d6cf",
+    "interiorStripe": "#28676b",
+    "interiorUpper": "#dfd2bb",
+    "floor": "#babbb6"
+  },
+  "evidence": {
+    "frontDoorCount": "Five directly inspected in owner frame 0158_LEFT_SIDE.jpg, SHA256 ce4ce7085b801ee1e44690276c31b982c768dceff6fa4de000b02d940b896759; supersedes old four-bay annotation",
+    "doorDimensions": "Photo-scaled estimates within 23.918 m GIS facade; not manufacturer or as-built dimensions",
+    "doorType": "Overhead sectional doors visible in owner footage and City 2018 interior photograph; 2023 budget lists overhead-door replacement",
+    "heights": "Estimated from owner 0149/0158/0170 frames; raised rear roof and sloped clerestory visible",
+    "interior": "City 2018 Bay No.1 photo establishes mint/teal/cream block walls, exposed trusses, white inner door face, ductwork and yellow exhaust hose. 2011 original tour establishes watchroom, gym, display/storage/program only, not current room adjacency",
+    "trainingTower": "Owner 0170_LEFT_SIDE photo and city footprint 6/3300; heights/facade estimated",
+    "rooms": "Full room floor plan unavailable. Visible bay and shallow watchroom represented; ancillary wing closed mass. Do not label invented internal rooms as surveyed"
+  },
+  "nodeContract": {
+    "root": "Station1_Root",
+    "static": "Station1_Static",
+    "tower": "Station1_TrainingTower separate parent with local x/z coordinates; runtime adjusts its parent Y to local terrain",
+    "doors": "Door_F{1..5}_Panel{0..7}, independent node at panel centre (x=door centre,y=(panel+.5)*height/8,z=0.06), with geometry in XY plane and identity rotations. Each panel node may group frame/glass/detail meshes. No nesting of dynamic nodes.",
+    "floor": "Slab top y=0, slab extends below. Runtime transitions apron over existing authoritative pavement."
+  }
+}

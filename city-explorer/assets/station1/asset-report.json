@@ -1,0 +1,37 @@
+{
+  "format": "glTF 2.0 binary",
+  "file": "station1.glb",
+  "fileBytes": 919512,
+  "units": "metres",
+  "orientation": "Y up; front -Z; bay +Z",
+  "fiveDoorCount": 5,
+  "sectionPanelCount": 40,
+  "dynamicPanelTransformsValid": true,
+  "missingRequiredNodes": [],
+  "towerSeparateParent": true,
+  "glbMeshCount": 157,
+  "drawPrimitiveCount": 157,
+  "materialCount": 20,
+  "embeddedImageCount": 1,
+  "reimportObjectCount": 200,
+  "reimportMeshObjectCount": 157,
+  "reimportTriangleCount": 8886,
+  "boundsReimported": {
+    "min": [
+      -42.92499923706055,
+      -36.709999084472656,
+      -0.23999999463558197
+    ],
+    "max": [
+      11.989995956420898,
+      5.419999599456787,
+      12.84999942779541
+    ]
+  },
+  "notes": [
+    "original procedural materials only; no reference-photo pixels included",
+    "front opening dimensions and building heights are photo-scaled estimates, not a survey",
+    "ancillary room layout is unresolved and not invented",
+    "tower is separate for terrain-adjusted runtime placement"
+  ]
+}

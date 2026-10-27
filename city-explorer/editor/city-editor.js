@@ -462,6 +462,7 @@ export function createCityEditor(adapter) {
     } else {
       generatedRegistry.restore(record.id);
       documentWith({ overrides: documentValue.overrides.filter((item) => item.id !== record.id) });
+      adapter.onGeneratedRestore?.(record.id, record);
     }
     setStatus('Asset restored');
     refreshUI();
