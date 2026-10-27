@@ -18,7 +18,7 @@
     "gap_filter": {
       "centroid_tolerance_m": 4.5,
       "comparison": "nearest projected OSM building footprint",
-      "osm_footprint_count": 30568,
+      "osm_footprint_count": 30567,
       "projection": "EPSG:26917"
     },
     "layer_counts": {
@@ -192,7 +192,7 @@
     "file": "construction-audit.json",
     "policy": "Only authoritative completed geometry changes alter the packaged city"
   },
-  "generated_at": "2026-10-27T12:30:07+00:00",
+  "generated_at": "2026-10-27T12:38:40+00:00",
   "hydrography": {
     "cache_reused": false,
     "feature_count": 1312,
@@ -223,10 +223,10 @@
     "named_feature_count": 3074
   },
   "osm": {
-    "drivable_road_count": 5962,
-    "element_count": 43113,
+    "drivable_road_count": 5949,
+    "element_count": 43054,
     "file": "peterborough-osm.json",
-    "public_road_count": 2775,
+    "public_road_count": 2769,
     "public_road_file": "osm-public-roads.geojson",
     "road_file": "osm-roads.geojson",
     "source": "OpenStreetMap via Overpass API"
@@ -236,22 +236,22 @@
     "report": "../ROAD-VALIDATION.md",
     "status": "pass",
     "public_osm_to_orn": {
-      "samples": 49730,
-      "mean_m": 6.373,
+      "samples": 49747,
+      "mean_m": 6.383,
       "median_m": 0.639,
-      "p90_m": 2.336,
-      "p95_m": 3.597,
-      "p99_m": 53.844,
-      "within_5m_pct": 97.04,
-      "within_10m_pct": 98.49,
-      "within_20m_pct": 98.75,
-      "within_30m_pct": 98.86
+      "p90_m": 2.343,
+      "p95_m": 3.63,
+      "p99_m": 53.811,
+      "within_5m_pct": 96.98,
+      "within_10m_pct": 98.43,
+      "within_20m_pct": 98.72,
+      "within_30m_pct": 98.83
     },
     "orn_to_public_osm": {
       "samples": 50434,
       "mean_m": 2.578,
-      "median_m": 0.629,
-      "p90_m": 2.317,
+      "median_m": 0.628,
+      "p90_m": 2.318,
       "p95_m": 3.574,
       "p99_m": 61.844,
       "within_5m_pct": 96.85,
@@ -260,9 +260,9 @@
       "within_30m_pct": 98.27
     },
     "street_names": {
-      "checked_segments": 2640,
-      "matching_segments": 2514,
-      "match_pct": 95.23,
+      "checked_segments": 2632,
+      "matching_segments": 2509,
+      "match_pct": 95.33,
       "sample_mismatches": [
         {
           "osm": "ST PATRICK S ST",
@@ -332,7 +332,7 @@
           "orn": [
             "FIFES BAY RD"
           ],
-          "p90_offset_m": 0.01
+          "p90_offset_m": 1.02
         },
         {
           "osm": "PETERBORO AVE",

@@ -1,6 +1,6 @@
 # Peterborough Road Alignment Validation
 
-Generated: 2026-10-27T12:35:49+00:00
+Generated: 2026-10-27T13:01:11+00:00
 
 **Result: PASS**
 
@@ -12,8 +12,8 @@ ORN is downloaded through a spatial object-ID query followed by chunked object-I
 
 ## Coverage
 
-- Public OSM roads checked: **2,775**
-- All rendered OSM drivable features: **5,962**
+- Public OSM roads checked: **2,769**
+- All rendered OSM drivable features: **5,949**
 - Complete ORN roads: **3,179**
 - ORN layer: `ORN Road Net Element`
 
@@ -21,14 +21,14 @@ ORN is downloaded through a spatial object-ID query followed by chunked object-I
 
 | Comparison | Median | P90 | P95 | Within 10 m | Within 20 m |
 |---|---:|---:|---:|---:|---:|
-| Public OSM → ORN | 0.64 m | 2.34 m | 3.60 m | 98.49% | 98.75% |
+| Public OSM → ORN | 0.64 m | 2.34 m | 3.63 m | 98.43% | 98.72% |
 | ORN → public OSM | 0.63 m | 2.32 m | 3.57 m | 97.60% | 98.01% |
-| All rendered OSM → ORN | 1.24 m | 80.30 m | 134.55 m | 68.61% | 72.71% |
+| All rendered OSM → ORN | 1.23 m | 80.14 m | 134.32 m | 68.62% | 72.72% |
 
 ## Street names
 
-- Comparable named segments: **2,640**
-- Normalized official-name agreement: **95.23%**
+- Comparable named segments: **2,632**
+- Normalized official-name agreement: **95.33%**
 
 ## Streets requiring manual review
 
@@ -47,6 +47,7 @@ ORN is downloaded through a spatial object-ID query followed by chunked object-I
 | RAMSAY RD | 65.81 m | 75.00% | 24 |
 | DENNE LN | 44.06 m | 44.44% | 9 |
 | ALEXANDER AVE | 35.43 m | 84.62% | 26 |
+| GZOWSKI WAY | 33.80 m | 77.05% | 61 |
 
 ## Interpretation
 
