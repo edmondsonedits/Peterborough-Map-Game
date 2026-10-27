@@ -28,7 +28,7 @@ The measured existing pumper is 3.18 m across mirrors, 3.22 m high and 10.415 m 
 
 ## Verification
 
-Final browser and automated results are recorded below after the completed checks. The local preview is separate from the public deployed game. Desktop browser emulation is not physical-phone performance evidence.
+Final browser and automated results are recorded below after the completed checks. The local preview and public Pages release have separate verification receipts. Desktop browser emulation is not physical-phone performance evidence.
 
 Right-bay control revision acceptance:
 
@@ -50,4 +50,4 @@ Initial appearance-build acceptance (before the right-bay control revision):
 - `node --test tests/station-two.test.mjs tests/station-architecture.test.mjs tests/station-reference-details.test.mjs` passed (five reported Node tests, with the Station 2 file containing additional focused assertions). Gameplay, station-pavement and station-road-detail scripts passed; JavaScript syntax and staged whitespace checks passed.
 - Evidence is retained in the accompanying `../qa` directory, including `visual-result.json`, `fallback-result.json`, `other-stations-result.json`, source/model validation reports and screenshots.
 
-The surrounding city remains the existing GIS scenery. Unverified room arrangements and exact as-built dimensions remain unresolved. This feature is committed locally and served by the local preview, not uploaded or published.
+The surrounding city remains the existing GIS scenery. Unverified room arrangements and exact as-built dimensions remain unresolved. The user-authorized Pages release is v1.6.141. Its deployment and live verification receipts are retained in the accompanying ../qa directory.

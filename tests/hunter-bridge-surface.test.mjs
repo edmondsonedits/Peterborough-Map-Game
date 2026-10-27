@@ -55,15 +55,21 @@ test('lite bridge footprint is the exact existing municipal BR60 snapshot',()=>{
 });
 
 import { runInNewContext } from 'node:vm';
-const runtime=readFileSync(new URL('../city-explorer/app.js',import.meta.url),'utf8').match(/^function gameplaySurfaceAt\([^]*?^\}/m)[0];
+const appSource=readFileSync(new URL('../city-explorer/app.js',import.meta.url),'utf8');
+const runtimeStart=appSource.indexOf('function gameplaySurfaceBaseAt(');
+const runtimeEnd=appSource.indexOf('function syncGameplayRootClasses()',runtimeStart);
+const runtime=appSource.slice(runtimeStart,runtimeEnd);
 test('actual gameplay query chooses the Hunter ribbon beneath tires and preserves unrelated underpasses',()=>{
  const hit={height:5,onRoad:true,name:'Hunter Street East',bridge:true};
  const wrong={height:4.85,onRoad:true,name:'Hunter Street East',bridge:true};
  const state={renderedPavementIndex:{sample:()=>null},fallbackJunctionSurfaceIndex:{sample:()=>({height:4.9})},roadSurfaceIndex:{sample:()=>wrong}};
- const query=runInNewContext(runtime+'\ngameplaySurfaceAt',{terrainHeightAtWorld:()=>-10,state,hunterBridgeSurface:{roadAt:()=>hit}});
+ const context={terrainHeightAtWorld:()=>-10,state,hunterBridgeSurface:{roadAt:()=>hit},stationTwoRuntime:null};
+ const query=runInNewContext(runtime+'\ngameplaySurfaceAt',context);
  assert.equal(query(0,0,4.85).height,5);assert.equal(query(0,0,4.85).heightSource,'road-ribbon');
  wrong.name='Underpass';wrong.height=-2;state.fallbackJunctionSurfaceIndex.sample=()=>null;
  assert.equal(query(0,0,-2).height,-2);
  state.renderedPavementIndex.sample=()=>({height:5.012,layer:'bridges',heightSource:'rendered-pavement-triangle'});
  assert.equal(query(0,0,-2).height,-2,'retain existing lower-road hint');
+ context.stationTwoRuntime={isReady:()=>true,surfaceAt:()=>({height:12,heightSource:'station2-slab',name:'Fire Station 2 bay',onRoad:false})};
+ const stationFloor=query(0,0,12);assert.equal(stationFloor.height,12);assert.equal(stationFloor.heightSource,'station2-slab');assert.equal(stationFloor.onRoad,false);
 });
