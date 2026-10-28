@@ -2,6 +2,7 @@
 // The dedicated project's rules, index and developer access are deployed.
 export const feedbackConfig = Object.freeze({
   enabled: true,
+  appCheckSiteKey: "6LffEwQuAAAAABdf8nAoPyykIhHWs22TBCjYEmao",
   firebase: Object.freeze({
     apiKey: "AIzaSyAbDFlkP2IN3RLOOiyOb1e83FGx2ItFvPU",
     authDomain: "peterborough-map-game-feedback.firebaseapp.com",

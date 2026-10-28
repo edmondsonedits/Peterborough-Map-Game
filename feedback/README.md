@@ -38,7 +38,7 @@ Use a **dedicated Firebase project** for feedback. Existing root `firebase.json`
 5. Set `enabled: true`, publish the code, sign into the developer account, and choose **Developer inbox** in Feedback. A normal email/password account never gets developer permissions automatically. Existing browser editor passwords/localStorage flags cannot grant these permissions.
 6. Verify on the actual hosted origin with two separate browsers/accounts: send a guest message, link to a new account, check a second account cannot read it, reply from the developer inbox, verify the first player receives it and unread clears. Verify password reset using an address you own. Do not call activation complete until these hosted checks pass.
 
-The settings above are outside the repository and require project-owner access. Enable Firebase App Check and configure auth quotas for the public deployment. The per-identity sender cooldown is enforced by server rules but cannot prevent attackers creating multiple guest identities.
+The settings above are outside the repository and require project-owner access. App Check uses a domain-restricted score-based reCAPTCHA key; verify tokens and monitor traffic before enforcing it. The free reCAPTCHA allowance is shared across the Google Cloud organization, and exhausted assessments can prevent protected requests. The per-identity sender cooldown is enforced by server rules but cannot prevent attackers creating multiple guest identities.
 
 ## Data and access
 
@@ -46,7 +46,7 @@ The settings above are outside the repository and require project-owner access. 
 - `messages`: immutable plain text, author UID/role and server time. Every message and its thread/counters are written atomically. Retry IDs are stable; retrying an acknowledged write does not duplicate the message.
 - `notes`: separate developer-only subcollection. Notes never appear in player responses or parent documents.
 - `feedbackWriters`: server-enforced one-second sender cooldown across threads.
-- Messages remain in Firestore until an operator deletes them. This version does not add a deletion UI or retention schedule.
+- Reports and conversations remain in Firestore until the owner deletes them. There is no automatic retention schedule or deletion UI. To remove one, open the dedicated project’s Firestore Data console, choose `feedbackThreads`, inspect the intended document, and select **Delete document**; Firebase console deletion includes its message and note subcollections. Never choose Delete collection for an individual report.
 - Browser UI remembers welcome dismissal for the current session. Firebase stores its own authentication session. No guest cache-clearing warnings are shown. Unsent drafts are kept in memory during the page session and cleared on account changes.
 - Search and filters operate on loaded conversations; **Load more conversations** fetches older pages. Messages also paginate. Subscriptions are detached and private views cleared on identity or developer-role changes. Explicit reads require server authorization; cached snapshots are never displayed. Pending pagination is discarded if its account or conversation changes.
 

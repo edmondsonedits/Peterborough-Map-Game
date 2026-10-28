@@ -60,6 +60,13 @@ export function createFeedbackService(config) {
     const app =
       appModule.getApps().find((a) => a.name === "ptbo-feedback") ||
       appModule.initializeApp(config.firebase, "ptbo-feedback");
+    if (config.appCheckSiteKey && !config.emulators) {
+      const { initializeAppCheck, ReCaptchaEnterpriseProvider } = await import(`${SDK}/firebase-app-check.js`);
+      initializeAppCheck(app, {
+        provider: new ReCaptchaEnterpriseProvider(config.appCheckSiteKey),
+        isTokenAutoRefreshEnabled: true,
+      });
+    }
     auth = api.getAuth(app);
     db = api.getFirestore(app);
     if (config.emulators) {

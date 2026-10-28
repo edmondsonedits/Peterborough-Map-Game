@@ -1,8 +1,8 @@
-import { FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js?v=1.6.144';
+import { FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js?v=1.6.145';
 import * as THREE from 'three';
 import { loadStreetscapeAsset } from './streetscape-assets.js';
-import { makeSherbrookePlan, sherbrookeBuildings, sherbrookeSidewalks, segmentDistance, landscapeClear } from './sherbrooke-plan.js?v=1.6.144';
-import { applySherbrookePolePlacement } from './sherbrooke-pole-placement.js?v=1.6.144';
+import { makeSherbrookePlan, sherbrookeBuildings, sherbrookeSidewalks, segmentDistance, landscapeClear } from './sherbrooke-plan.js?v=1.6.145';
+import { applySherbrookePolePlacement } from './sherbrooke-pole-placement.js?v=1.6.145';
 const ASSETS={railing:['props/railing-metal-module.glb',.7],fence:['props/fence-wood-module.glb',.7],pole:['props/utility-pole-transformer.glb',9.3],lamp:['props/streetlight.glb',7.5],tree:['trees/broad-irregular-lod1.glb',7],upright:['trees/upright-lod1.glb',8],vent:['props/facade-vent.glb',.6],planter:['props/planter.glb',.55],bench:['props/bench.glb',.85],canopy:['props/facade-canopy.glb',.5]};
 function lampHead(geometry){
  const src=geometry.index?geometry.toNonIndexed():geometry,keep=[],pos=src.getAttribute('position');
