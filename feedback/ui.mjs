@@ -326,7 +326,7 @@ export function mountFeedback({
       }
       const guest = node(
         "button",
-        current && !current.isGuest ? "Back to inbox" : "Continue as guest",
+        current && !current.isGuest ? "Continue playing" : "Continue as guest",
         { id: "feedback-guest", type: "button" },
       );
       guest.onclick = () => {
