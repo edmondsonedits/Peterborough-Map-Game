@@ -16,13 +16,13 @@ test('Try again returns keyboard focus to the map after a miss',async()=>{
  assert.equal(g.activeElement.id,'map');
 });
 
-test('choosing a base returns keyboard focus to the map',async()=>{
- const g=await started();g.node('practice-bases-toggle').focus();g.api.chooseBase(0);
+test('choosing a base after Return restores keyboard focus to the map',async()=>{
+ const g=await started();g.api.finish();g.api.start(0);
  assert.equal(g.activeElement.id,'map');
 });
 
 test('Finish focuses the selected base when it remains available',async()=>{
- const g=await started();g.node('practice-finish').focus();g.api.finish();
+ const g=await started();g.node('practice-return').focus();g.api.finish();
  assert.equal(g.activeElement,g.node('practice-stations').children[0]);
 });
 

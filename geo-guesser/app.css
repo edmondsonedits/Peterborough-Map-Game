@@ -28,35 +28,47 @@ body #ptbo-training-use-notice:focus-visible{outline:3px solid #6de8dc;outline-o
 .ptbo-geo-compact #header h2,.ptbo-geo-compact #call-address{overflow-wrap:anywhere}
 .ptbo-geo-compact #practice-feedback:empty{display:none}
 .ptbo-geo-compact #reveal-cross-streets{display:block;min-height:32px;margin:0;padding:6px 0;text-align:left;line-height:1.25}
-#practice-bases{position:relative;pointer-events:auto}
-#practice-bases summary{display:flex;align-items:center;gap:10px;min-height:42px;padding:9px 14px;border:1px solid var(--line);border-radius:12px;background:var(--panel);cursor:pointer;list-style:none;touch-action:manipulation}
-#practice-bases summary::-webkit-details-marker{display:none}
-#practice-bases summary:hover{background:#262c3b}
-#practice-bases summary:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
-#practice-bases summary span{color:var(--accent);transition:transform .15s}
-#practice-bases[open] summary{border-color:var(--accent)}
-#practice-bases[open] summary span{transform:rotate(180deg)}
-#practice-base-options{position:absolute;top:calc(100% + 8px);left:0;width:min(340px,calc(100vw - 24px));max-height:min(55dvh,420px);overflow:auto;overscroll-behavior:contain;padding:6px;background:#191d29}
-#practice-base-options .base-option{display:block;width:100%;text-align:left;min-height:52px;padding:11px 12px;border-color:transparent;border-radius:10px}
-.base-option strong{display:block;font-size:.88rem;line-height:1.3}
-.base-option span{display:block;margin-top:3px;font-size:.75rem;line-height:1.4;color:var(--muted)}
-#practice-base-options .base-option[aria-pressed=true]{background:#69e0cf17;border-color:var(--accent)}
 @media(max-width:760px){
   .ptbo-geo-compact #header{top:calc(8px + env(safe-area-inset-top));left:12px;right:12px;transform:none;width:auto;padding:54px 16px 10px;max-height:calc(50dvh - 34px)}
-  .ptbo-geo-compact .map-top-actions{top:calc(14px + env(safe-area-inset-top));left:20px;right:20px}
   .ptbo-geo-compact #header h2{font-size:1.05rem;margin:4px 0;line-height:1.25}
   .ptbo-geo-compact #call-type{font-size:.65rem;letter-spacing:.1em}
   .ptbo-geo-compact #call-address{font-size:.95rem}
   .ptbo-geo-compact #call-cross-streets{font-size:.8rem}
   .ptbo-geo-compact #practice-review{margin-top:6px;padding-top:6px}
-  .ptbo-geo-compact #practice-base-options{left:-8px}
 }
 @media(orientation:landscape) and (max-height:560px){
   .ptbo-geo-compact #header{top:calc(12px + env(safe-area-inset-top));left:126px;right:auto;transform:none;width:min(360px,calc(50vw - 154px));padding:12px 14px;max-height:calc(100dvh - 24px)}
-  .ptbo-geo-compact .map-top-actions{left:12px;right:12px;top:calc(12px + env(safe-area-inset-top))}
-  .ptbo-geo-compact #practice-base-options{left:0}
 }
-@media(prefers-reduced-motion:reduce){#practice-bases summary span{transition:none}}
+/* Compact call card keeps the map clear during play. */
+.geo-ui-compact #header{top:calc(8px + env(safe-area-inset-top));padding:10px 122px 10px 15px;max-height:min(42dvh,340px)}
+.geo-ui-compact #practice-return{display:grid;place-items:center;position:absolute;top:calc(10px + env(safe-area-inset-top));right:max(59px, calc(50% - 223px));z-index:751;min-width:70px;height:44px;min-height:44px;padding:0 8px;border:0;background:transparent;color:#d2d9e5;font-size:.8rem;line-height:1;font-weight:650}
+.geo-ui-compact #header:not([data-collapsed=true]){padding-right:15px}
+.geo-ui-compact #header:not([data-collapsed=true]) #call-type{display:block;min-height:32px;padding-right:110px}
+.geo-ui-compact #call-toggle{display:grid;place-items:center;position:absolute;top:2px;right:3px;width:44px;min-width:44px;height:44px;padding:0;border:0;background:transparent;color:var(--accent);font-size:1.4rem}
+.geo-ui-compact #header[data-collapsed=true] #call-name,.geo-ui-compact #header[data-collapsed=true] #call-cross-streets,.geo-ui-compact #header[data-collapsed=true] #reveal-cross-streets{display:none!important}
+.geo-ui-compact #header[data-collapsed=true] #call-location-row{display:inline}
+.geo-ui-compact #header[data-collapsed=true] #call-type,.geo-ui-compact #header[data-collapsed=true] #call-address{display:inline;vertical-align:middle}
+.geo-ui-compact #header[data-collapsed=true] #call-type{margin-right:10px}
+.geo-ui-compact #header[data-collapsed=true] #call-address{font-size:.95rem}
+.geo-ui-compact #header h2{font-size:1rem;margin:3px 0}
+.geo-ui-compact #call-location-row{gap:3px 12px}
+.geo-ui-compact #call-cross-streets{font-size:.8rem}
+.geo-ui-compact #practice-controls{bottom:calc(12px + env(safe-area-inset-bottom));padding:6px}
+.geo-ui-compact .map-buttons button{min-height:44px;padding:8px 10px}
+.geo-ui-compact #confirm{bottom:calc(100px + env(safe-area-inset-bottom));min-height:44px;padding:8px 14px}
+@media(max-width:760px){
+  .geo-ui-compact #header{left:8px;right:8px;width:auto;transform:none;padding:10px 122px 10px 12px;max-height:min(35dvh,250px)}
+  .geo-ui-compact #practice-return{right:55px}
+  .geo-ui-compact #practice-controls{bottom:calc(32px + env(safe-area-inset-bottom));width:min(380px,calc(100% - 16px))}
+  .geo-ui-compact #confirm{bottom:calc(96px + env(safe-area-inset-bottom));width:min(260px,72vw)}
+}
+@media(orientation:landscape) and (max-height:560px){
+  .geo-ui-compact #header{top:calc(8px + env(safe-area-inset-top));left:8px;right:auto;width:min(330px,calc(50vw - 32px));max-height:calc(100dvh - 24px);padding:8px 122px 8px 12px}
+  .geo-ui-compact #practice-return{left:calc(8px + min(330px, 50vw - 32px) - 117px);right:auto}
+  .geo-ui-compact #practice-controls{left:auto;right:8px;bottom:calc(8px + env(safe-area-inset-bottom));width:auto;transform:none}
+  .geo-ui-compact #confirm{left:auto;right:8px;bottom:calc(72px + env(safe-area-inset-bottom));width:180px;transform:none}
+}
+
 @media(max-width:520px){
   .ptbo-geo-compact #practice-controls{width:min(380px,calc(100% - 24px));padding:8px}
   .ptbo-geo-compact .map-buttons{display:grid;grid-template-columns:40px 40px minmax(0,1fr) minmax(0,1fr);gap:6px}
@@ -64,6 +76,13 @@ body #ptbo-training-use-notice:focus-visible{outline:3px solid #6de8dc;outline-o
   .ptbo-geo-compact .map-buttons button{padding:8px 6px;font-size:.8rem}
   .ptbo-geo-compact #practice-reveal{white-space:normal;line-height:1.15}
 }
+
+@media(max-width:520px){
+  .geo-ui-compact .map-buttons,.geo-ui-compact #game[data-feedback] .map-buttons{grid-template-columns:44px 44px minmax(0,1fr) minmax(0,1fr)}
+  .geo-ui-compact #game[data-feedback] .map-buttons{grid-template-columns:44px 44px minmax(0,1fr)}
+}
+body.geo-ui-compact #ptbo-training-use-notice{bottom:calc(2px + env(safe-area-inset-bottom))!important;background:rgba(15,23,42,.72);border-color:transparent;box-shadow:none;color:#d3d9e2;padding:4px 6px;opacity:.8}
+body.geo-ui-compact #ptbo-training-use-notice strong{color:inherit}
 
 /* Outcome feedback stays brief, never captures input, and clears with the review. */
 .ptbo-geo-compact #game[data-feedback=correct]{--answer-color:#7aefae;--answer-panel:#102b20f7;--answer-wash:#26d77b38}

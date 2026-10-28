@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#121218">
   <title>Peterborough Geo Guesser</title>
-  <link rel="stylesheet" href="../response-simulator/vendor/leaflet-1.9.4/leaflet.css?v=1.6.149">
-  <link rel="stylesheet" href="app.css?v=1.6.149">
+  <link rel="stylesheet" href="../response-simulator/vendor/leaflet-1.9.4/leaflet.css?v=1.6.150">
+  <link rel="stylesheet" href="app.css?v=1.6.150">
 </head>
 <body>
 <a id="game-home" href="../" target="_top">← All Games</a>
@@ -48,14 +48,9 @@
 <section id="game" class="screen" hidden>
   <div id="map" aria-label="Pan the map to find the address"></div><div id="reticle" aria-hidden="true"></div>
   <div id="guess-effect" hidden aria-hidden="true"><span id="guess-effect-icon"></span><strong id="guess-effect-label"></strong></div>
-  <div class="map-top-actions">
-    <details id="practice-bases">
-      <summary id="practice-bases-toggle">Bases <span aria-hidden="true">⌄</span></summary>
-      <div id="practice-base-options" class="panel" role="group" aria-label="Starting bases"></div>
-    </details>
-    <button id="practice-finish" onclick="PTBO_GEO.finish()">Finish</button>
-  </div>
+  <button id="practice-return" type="button" aria-label="Return to base selection" onclick="PTBO_GEO.finish()">Return</button>
   <div id="header" class="panel">
+    <button id="call-toggle" type="button" aria-expanded="true" aria-controls="call-name call-cross-streets" aria-label="Collapse call details" onclick="PTBO_GEO.toggleCallDetails()">⌃</button>
     <span id="call-type" class="eyebrow"></span><h2 id="call-name"></h2>
     <div id="call-location-row">
       <div id="call-address"></div><div id="call-cross-streets"></div>
@@ -70,16 +65,16 @@
   </div>
   <button id="confirm" class="primary" onclick="PTBO_GEO.check()">Check location</button>
 </section>
-<script src="../shared/build-version.js?v=1.6.149"></script>
-<script src="../response-simulator/vendor/leaflet-1.9.4/leaflet.js?v=1.6.149"></script>
-<script src="../response-simulator/carto-basemap-policy-1.6.36.js?v=1.6.149"></script>
-<script src="map-provider-1.6.46.js?v=1.6.149"></script>
-<script src="../cities/city-registry.js?v=1.6.149"></script>
-<script src="../shared/location-changes.js?v=1.6.149"></script>
-<script src="../shared/city-location-runtime.js?v=1.6.149"></script>
-<script src="city-loader.js?v=1.6.149"></script>
-<script src="station-practice.js?v=1.6.149"></script>
-<script src="location-report-context.js?v=1.6.149"></script>
-<script src="app.js?v=1.6.149"></script>
+<script src="../shared/build-version.js?v=1.6.150"></script>
+<script src="../response-simulator/vendor/leaflet-1.9.4/leaflet.js?v=1.6.150"></script>
+<script src="../response-simulator/carto-basemap-policy-1.6.36.js?v=1.6.150"></script>
+<script src="map-provider-1.6.46.js?v=1.6.150"></script>
+<script src="../cities/city-registry.js?v=1.6.150"></script>
+<script src="../shared/location-changes.js?v=1.6.150"></script>
+<script src="../shared/city-location-runtime.js?v=1.6.150"></script>
+<script src="city-loader.js?v=1.6.150"></script>
+<script src="station-practice.js?v=1.6.150"></script>
+<script src="location-report-context.js?v=1.6.150"></script>
+<script src="app.js?v=1.6.150"></script>
 </body>
 </html>

@@ -17,6 +17,7 @@ assert.equal(cities.length,31);
    const context=await browser.newContext({viewport:{width,height},isMobile:surface==='mobile',hasTouch:surface==='mobile',ignoreHTTPSErrors:true});
    await context.route(/https:\/\/(?:[abc]\.)?tile\.openstreetmap\.org\//,route=>route.fulfill({contentType:'image/png',body:Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jRZkAAAAASUVORK5CYII=','base64')}));
    await context.route('https://firestore.googleapis.com/**',route=>route.fulfill({status:403,contentType:'application/json',body:'{}'}));
+   await context.addInitScript(()=>{try{localStorage.setItem('geoShowCrossStreets','true');}catch(_){}});
    const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
    page.on('response',r=>{if(r.url().startsWith(base)&&r.status()>=400)missing.push(r.url());});
    try{
@@ -32,26 +33,26 @@ assert.equal(cities.length,31);
     await frame.locator('#practice-stations button').first().click();
     const layout=await frame.evaluate(()=>{
      const rect=id=>{const r=document.getElementById(id).getBoundingClientRect();return{left:r.left,right:r.right,top:r.top,bottom:r.bottom};};
-     return{header:rect('header'),reticle:rect('reticle'),controls:['practice-bases-toggle','practice-finish','confirm','practice-controls'].map(rect)};
+     return{header:rect('header'),reticle:rect('reticle'),controls:['practice-return','call-toggle','confirm','practice-controls'].map(rect)};
     });
     assert.ok(layout.header.top<=14,'location starts at the top');assert.equal(overlap(layout.header,layout.reticle),false,'location leaves the crosshair clear');
     for(const rect of layout.controls)assert.ok(rect.left>=-1&&rect.right<=width+1&&rect.top>=0&&rect.bottom<=height+1,'controls fit the screen');
+    assert.equal(overlap(layout.controls[0],layout.controls[1]),false,'Return and the call toggle do not overlap');
     assert.equal(await frame.locator('#practice-feedback').innerText(),'');
-    assert.equal(await frame.locator('#call-cross-streets').isVisible(),surface==='desktop');
-    if(surface==='mobile'){
-     assert.equal(await frame.locator('#reveal-cross-streets').innerText(),'Show cross streets');
-     await frame.locator('#reveal-cross-streets').click();assert.equal(await frame.locator('#call-cross-streets').isVisible(),true);
-     assert.match(await frame.locator('#call-cross-streets').innerText(),/^Cross: /);
-     await frame.locator('#reveal-cross-streets').click();assert.equal(await frame.locator('#call-cross-streets').isVisible(),false);
-    }
-    const target=await frame.evaluate(()=>PTBO_GEO.state.target.id),available=await frame.evaluate(()=>PTBO_GEO.state.bases.map(b=>b.name));
-    await frame.locator('#practice-bases-toggle').click();
-    assert.deepEqual(await frame.locator('#practice-base-options strong').allTextContents(),available);result.bases=available.length;
-    await frame.locator('#practice-base-options button').last().click();
-    assert.equal(await frame.locator('#practice-base-options').isVisible(),false);
-    assert.equal(await frame.evaluate(()=>PTBO_GEO.state.target.id),target);
-    assert.equal(await frame.evaluate(()=>Math.abs(PTBO_GEO.state.map.getCenter().lat-PTBO_GEO.state.base.lat)<1e-8),true);
-    assert.equal(await frame.locator('#practice-base-options button').last().getAttribute('aria-pressed'),'true');
+    assert.equal(await frame.locator('#call-cross-streets').isVisible(),true,'cross streets are shown with the setting enabled');
+    assert.equal(await frame.locator('#call-toggle').getAttribute('aria-expanded'),'true');
+    const target=await frame.evaluate(()=>PTBO_GEO.state.target.id);
+    // Keyboard panning is a real player input; programmatic setView must not collapse the card.
+    const mapBefore=await frame.evaluate(()=>PTBO_GEO.state.map.getCenter().lng);
+    await frame.locator('#map').press('ArrowRight');
+    await frame.waitForFunction(lng=>Math.abs(PTBO_GEO.state.map.getCenter().lng-lng)>1e-7,mapBefore);
+    assert.equal(await frame.locator('#call-toggle').getAttribute('aria-expanded'),'false');
+    assert.equal(await frame.locator('#call-address').isVisible(),true);
+    assert.equal(await frame.locator('#call-cross-streets').isVisible(),false);
+    await frame.locator('#call-toggle').click();
+    assert.equal(await frame.locator('#call-toggle').getAttribute('aria-expanded'),'true');
+    assert.equal(await frame.locator('#call-cross-streets').isVisible(),true);
+    assert.equal(await frame.locator('#practice-return').isVisible(),true);
     await frame.evaluate(()=>{const g=PTBO_GEO,t=g.state.target;g.state.map.setView([t.lat+.05,t.lng+.05],18,{animate:false});});
     await frame.locator('#confirm').click();assert.equal(await frame.locator('#game').getAttribute('data-feedback'),'incorrect');
     assert.equal(await frame.locator('#practice-review-title').innerText(),'Try again');
@@ -63,10 +64,19 @@ assert.equal(cities.length,31);
     assert.equal(await frame.locator('#guess-effect-label').innerText(),'Correct');
     const green=await frame.locator('#header').evaluate(n=>getComputedStyle(n).borderColor.match(/\d+/g).map(Number));assert.ok(green[1]>green[0]);
     await frame.locator('#practice-continue').click();assert.equal(await frame.locator('#game').getAttribute('data-feedback'),null);
-    assert.equal(await frame.locator('#call-cross-streets').isVisible(),surface==='desktop');
+    assert.equal(await frame.locator('#call-toggle').getAttribute('aria-expanded'),'true');
+    assert.equal(await frame.locator('#call-cross-streets').isVisible(),true);
     await frame.locator('#practice-reveal').click();assert.equal(await frame.locator('#game').getAttribute('data-feedback'),'revealed');
     assert.equal(await frame.locator('#guess-effect').isVisible(),false);
-    await frame.locator('#practice-finish').click();assert.equal(await frame.locator('#station-practice').isVisible(),true);
+    assert.equal(await frame.locator('#practice-return').isVisible(),true);
+    await frame.locator('#practice-return').click();assert.equal(await frame.locator('#station-practice').isVisible(),true);
+    assert.equal(await frame.locator(`#service-${service}`).getAttribute('aria-pressed'),'true');
+    assert.equal(await frame.locator('#difficulty-medium').getAttribute('aria-pressed'),'true');
+    result.bases=await frame.locator('#practice-stations button').count();assert.ok(result.bases>0,'base options remain available');
+    const nextBaseName=await frame.locator('#practice-stations button').last().locator('strong').innerText();
+    await frame.locator('#practice-stations button').last().click();
+    assert.equal(await frame.evaluate(()=>PTBO_GEO.state.base.name),nextBaseName);
+    assert.equal(await frame.locator('#practice-return').isVisible(),true);
     assert.deepEqual(errors,[]);assert.deepEqual(missing,[]);result.pass=true;console.log(JSON.stringify(result));
    }catch(error){result.error=error.message;await page.screenshot({path:path.join(out,`${name}-failure.png`)});throw error;}
    finally{await context.close();}
