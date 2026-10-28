@@ -80,12 +80,12 @@
             pendingMessages = resolve;
           });
         },
-        loadThreads: async ({ cursor }) => {
+        loadThreads: async ({ cursor, developer }) => {
           fixture.cursors.push(cursor);
           return {
             rows: [{ ...row(account.uid), id: "older-thread" }],
             cursor: "older",
-            more: true,
+            more: !developer,
           };
         },
         send: async (payload) => {

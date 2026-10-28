@@ -1,8 +1,9 @@
+import {signInPreservingGuest,resumeGuestTransfers} from "./guest-transfer.mjs?v=feedback-workflow-20261028";
 import { normalizeBody, normalizeNewThread } from "./model.mjs";
 import { normalizeLocationReport, locationReportIdentity } from "./location-report.mjs";
 const SDK = "https://www.gstatic.com/firebasejs/12.5.0";
 export function createFeedbackService(config) {
-  let api,
+  let api, appApi, recoveryError = null,
     auth,
     db,
     account = null,
@@ -56,6 +57,7 @@ export function createFeedbackService(config) {
       import(`${SDK}/firebase-auth.js`),
       import(`${SDK}/firebase-firestore.js`),
     ]);
+    appApi = appModule;
     api = { ...authModule, ...firestoreModule };
     const app =
       appModule.getApps().find((a) => a.name === "ptbo-feedback") ||
@@ -88,7 +90,27 @@ export function createFeedbackService(config) {
         changed();
       });
     });
+    await recoverTransfers();
   })();
+  async function verifyCredentials(email,password) {
+    const app = appApi.initializeApp(config.firebase, `ptbo-feedback-verify-${crypto.randomUUID()}`);
+    const verificationAuth = api.initializeAuth(app,{persistence:api.inMemoryPersistence});
+    if (config.emulators) api.connectAuthEmulator(verificationAuth,config.emulators.auth,{disableWarnings:true});
+    try {
+      const result = await api.signInWithEmailAndPassword(verificationAuth,email,password);
+      return {user:{uid:result.user.uid}};
+    } finally {
+      await api.signOut(verificationAuth).catch(()=>{});
+      await appApi.deleteApp(app);
+    }
+  }
+  async function recoverTransfers() {
+    const uid = auth.currentUser?.uid;
+    recoveryError = null;
+    try { await resumeGuestTransfers({api,auth,db}); }
+    catch(error) { if (auth.currentUser?.uid === uid) recoveryError = error; }
+    if (auth.currentUser?.uid === uid) changed();
+  }
   function requireAccount() {
     if (!account) throw new Error("Open your inbox or sign in first.");
     return account;
@@ -222,9 +244,9 @@ export function createFeedbackService(config) {
 
   return {
     ready,
-    get account() {
-      return account;
-    },
+    get account() { return account; },
+    get transferError() { return recoveryError; },
+    async recoverConversations() { await ready; await recoverTransfers(); if (recoveryError) throw recoveryError; },
     id() {
       return crypto.randomUUID();
     },
@@ -243,6 +265,9 @@ export function createFeedbackService(config) {
         email.trim(),
         password,
       );
+      // Revoke any interrupted existing-account transfer before linking a new
+      // account to this guest UID. This prevents an old destination retaining access.
+      if (auth.currentUser?.isAnonymous) await api.deleteDoc(api.doc(db,"feedbackTransfers",auth.currentUser.uid));
       const result = auth.currentUser?.isAnonymous
         ? await api.linkWithCredential(auth.currentUser, credential)
         : await api.createUserWithEmailAndPassword(
@@ -256,12 +281,9 @@ export function createFeedbackService(config) {
     async signIn(email, password) {
       await ready;
       if (guestPromise) await guestPromise;
-      const result = await api.signInWithEmailAndPassword(
-        auth,
-        email.trim(),
-        password,
-      );
+      const result = await signInPreservingGuest({api,auth,db,verifyCredentials},email.trim(),password);
       await refreshAccount(result.user);
+      await recoverTransfers();
       return account;
     },
     async signOut() {
@@ -269,6 +291,7 @@ export function createFeedbackService(config) {
       clearSubscriptions();
       ++epoch;
       account = null;
+      recoveryError = null;
       changed();
       await api.signOut(auth);
     },
@@ -282,6 +305,9 @@ export function createFeedbackService(config) {
     async loadThreads({ developer = false, cursor } = {}) {
       await ready;
       return page(await api.getDocsFromServer(threadQuery(developer, cursor)));
+    },
+    watchThread(id, next, error) {
+      return trackedWatch(api.doc(db,"feedbackThreads",id),next,error,s=>s.exists()?{id:s.id,...s.data()}:null);
     },
     watchMessages(id, next, error) {
       const q = api.query(
@@ -325,13 +351,13 @@ export function createFeedbackService(config) {
         },
       });
     },
-    async markRead(id, developer = false) {
+    async markRead(id, developer = false, seenMessageId) {
       await ready;
       requireAccount();
       const ref = api.doc(db, "feedbackThreads", id);
       await api.runTransaction(db, async (tx) => {
         const snap = await tx.get(ref);
-        if (!snap.exists()) return;
+        if (!snap.exists() || snap.data().lastMessageId !== seenMessageId) return;
         const t = snap.data(),
           key = developer ? "developerRead" : "playerRead",
           count = developer ? t.playerMessages : t.developerMessages;
@@ -345,6 +371,12 @@ export function createFeedbackService(config) {
       for (const key of ["status", "priority"])
         if (key in changes) clean[key] = changes[key];
       await api.updateDoc(api.doc(db, "feedbackThreads", id), clean);
+    },
+    async loadNotes(id) {
+      await ready;
+      if (!requireAccount().isDeveloper) throw new Error("Developer access is required.");
+      const snap = await api.getDocsFromServer(api.query(api.collection(db,"feedbackThreads",id,"notes"),api.orderBy("createdAt","asc")));
+      return snap.docs.map(d=>({id:d.id,...d.data()}));
     },
     watchNotes(id, next, error) {
       return trackedWatch(

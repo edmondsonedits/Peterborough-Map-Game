@@ -3,7 +3,7 @@ const {test,before,after,beforeEach} = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const {initializeTestEnvironment,assertSucceeds,assertFails} = require('@firebase/rules-unit-testing');
-const {doc,setDoc,getDoc,getDocs,collection,query,where,writeBatch,updateDoc,serverTimestamp,Timestamp} = require('firebase/firestore');
+const {doc,setDoc,getDoc,getDocs,collection,query,where,deleteDoc,writeBatch,updateDoc,serverTimestamp,Timestamp} = require('firebase/firestore');
 let env;
 const base = (ownerId='alice')=>({ownerId,title:'Bridge curb',category:'map',city:'peterborough',mode:'explorer',department:'fire',version:'1.6.132',status:'new',priority:'normal',createdAt:Timestamp.fromMillis(1000),updatedAt:Timestamp.fromMillis(1000),lastMessageId:'first',lastSender:'player',playerMessages:1,developerMessages:0,playerRead:0,developerRead:0});
 const message = (authorId='alice',authorRole='player')=>({authorId,authorRole,body:'The curb is too high.',createdAt:serverTimestamp()});
@@ -124,6 +124,7 @@ test('real service retries a structured payload once and rejects changed circles
  const {pathToFileURL}=require('node:url');
  let source=fs.readFileSync('feedback/service.mjs','utf8').replace('"./model.mjs"',JSON.stringify(pathToFileURL(require('node:path').resolve('feedback/model.mjs')).href));
  source=source.replace('"./location-report.mjs"',JSON.stringify(pathToFileURL(require('node:path').resolve('feedback/location-report.mjs')).href));
+ source=source.replace('"./guest-transfer.mjs?v=feedback-workflow-20261028"',JSON.stringify(pathToFileURL(require('node:path').resolve('feedback/guest-transfer.mjs')).href));
  for(const part of ['app','auth','firestore']) source=source.replace('import(`${SDK}/firebase-'+part+'.js`)', 'import('+JSON.stringify(pathToFileURL(require.resolve('firebase/'+part)).href)+')');
  global.location={hostname:'localhost'};
  const {createFeedbackService}=await import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));
@@ -144,6 +145,24 @@ test('real service retries a structured payload once and rejects changed circles
   await assert.rejects(service.sendLocationReport({threadId:'service-report',messageId:'new-message',report}),/already|different|used/i);
   await assert.rejects(service.sendLocationReport({threadId:'service-report',messageId:'first',report,note:'Different note'}),/already|different|used/i);
   assert.equal((await service.loadThreads()).rows[0].playerMessages,1);
+  const email=`transfer-${Date.now()}@example.test`;
+  await service.register(email,'Test-pass-739!');const destination=service.account.uid;
+  await service.signOut();await service.ensureGuest();const oldGuest=service.account.uid;
+  await service.sendLocationReport({threadId:'guest-transfer-report',messageId:'first',report});
+  await assert.rejects(service.signIn(email,'wrong-password'));
+  assert.equal(service.account.uid,oldGuest,'wrong password retains guest access');
+  await service.signIn(email,'Test-pass-739!');assert.equal(service.account.uid,destination);
+  assert.equal(service.transferError,null);
+  const recovered=await service.loadThreads();assert.equal(recovered.rows.length,2);
+  assert.equal(recovered.rows.find(t=>t.id==='guest-transfer-report').ownerId,destination);
+  assert.equal((await service.loadMessages('guest-transfer-report')).rows.length,1);
+  await service.recoverConversations();assert.equal((await service.loadThreads()).rows.length,2);
+  await service.signOut();await service.ensureGuest();const separateGuest=service.account.uid;
+  const appSdk=require('firebase/app'),firestoreSdk=require('firebase/firestore');
+  const serviceDb=firestoreSdk.getFirestore(appSdk.getApp('ptbo-feedback'));
+  await setDoc(doc(serviceDb,'feedbackTransfers',separateGuest),{guestId:separateGuest,targetId:destination,createdAt:serverTimestamp()});
+  await service.register(`separate-${Date.now()}@example.test`,'Test-pass-739!');
+  assert.equal((await getDoc(doc(serviceDb,'feedbackTransfers',separateGuest))).exists(),false,'new account registration revokes an interrupted transfer grant');
  } finally {
   await service.signOut();
   const {getApp,deleteApp}=require('firebase/app');await deleteApp(getApp('ptbo-feedback'));
@@ -174,4 +193,41 @@ test('blank displayed names and addresses remain reportable with stable location
 test('revealed questions can report without a guess or optional context',async()=>{
  const report=locationReport();report.snapshot.guess=null;report.snapshot.distanceMeters=null;report.snapshot.result='revealed';report.snapshot.baseId=null;report.snapshot.question.crossStreets=null;report.snapshot.question.difficulty=null;report.suggestion=null;
  await assertSucceeds(send(db(),{id:'revealed',mid:'first',create:true,locationReport:report}));
+});
+
+test('guest-authorized transfers move only ownership to the verified destination',async()=>{
+ await seed();const guest=db('alice',{firebase:{sign_in_provider:'anonymous'}}),target=db('target',{firebase:{sign_in_provider:'password'}}),grant='feedbackTransfers/alice';
+ await assertSucceeds(setDoc(doc(guest,grant),{guestId:'alice',targetId:'target',createdAt:serverTimestamp()}));
+ await assertSucceeds(getDocs(query(collection(target,'feedbackThreads'),where('ownerId','==','alice'),where('createdAt','<=',(await getDoc(doc(target,grant))).data().createdAt))));
+ await assertFails(updateDoc(doc(target,'feedbackThreads','a'),{ownerId:'target',title:'tampered'}));
+ await assertSucceeds(updateDoc(doc(target,'feedbackThreads','a'),{ownerId:'target'}));
+ await assertSucceeds(getDoc(doc(target,'feedbackThreads','a','messages','first')));
+ await assertFails(getDoc(doc(guest,'feedbackThreads','a','messages','first')));
+ await assertFails(getDoc(doc(target,'feedbackThreads','a','notes','n')));
+ await assertSucceeds(send(target,{uid:'target'}));
+});
+test('transfers reject forged grants, registered-account merging, wrong targets and mutable grants',async()=>{
+ await seed();const target=db('target',{firebase:{sign_in_provider:'password'}}),guest=db('alice',{firebase:{sign_in_provider:'anonymous'}}),grant='feedbackTransfers/alice',data={guestId:'alice',targetId:'target',createdAt:serverTimestamp()};
+ await assertFails(setDoc(doc(target,grant),data));
+ await assertFails(setDoc(doc(db('alice',{firebase:{sign_in_provider:'password'}}),grant),data));
+ await assertFails(setDoc(doc(guest,grant),{...data,guestId:'someone-else'}));
+ await assertFails(setDoc(doc(guest,grant),{...data,targetId:'alice'}));
+ await assertFails(setDoc(doc(guest,grant),{...data,admin:true}));
+ await assertSucceeds(setDoc(doc(guest,grant),data));
+ await assertFails(updateDoc(doc(target,grant),{targetId:'bob'}));
+ await assertFails(getDocs(collection(db('bob'),'feedbackTransfers')));
+ await assertSucceeds(getDocs(query(collection(target,'feedbackTransfers'),where('targetId','==','target'))));
+ await assertFails(updateDoc(doc(db('bob'),'feedbackThreads','a'),{ownerId:'bob'}));
+ await assertFails(getDoc(doc(db('bob'),'feedbackThreads','a')));
+});
+
+test('an old guest grant cannot capture new conversations after source registration and can be revoked',async()=>{
+ await seed();const guest=db('alice',{firebase:{sign_in_provider:'anonymous'}}),target=db('target',{firebase:{sign_in_provider:'password'}});
+ const grant='feedbackTransfers/alice';
+ await assertSucceeds(setDoc(doc(guest,grant),{guestId:'alice',targetId:'target',createdAt:serverTimestamp()}));
+ await env.withSecurityRulesDisabled(async context=>{await setDoc(doc(context.firestore(),'feedbackThreads','future'),{...base('alice'),createdAt:Timestamp.fromMillis(Date.now()+10000),updatedAt:Timestamp.fromMillis(Date.now()+10000)});});
+ await assertFails(getDoc(doc(target,'feedbackThreads','future')));
+ await assertFails(updateDoc(doc(target,'feedbackThreads','future'),{ownerId:'target'}));
+ await assertSucceeds(deleteDoc(doc(guest,grant)));
+ await assertFails(updateDoc(doc(target,'feedbackThreads','a'),{ownerId:'target'}));
 });
