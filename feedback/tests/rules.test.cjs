@@ -12,9 +12,9 @@ async function seed() { await env.withSecurityRulesDisabled(async c=>{
  await setDoc(doc(c.firestore(),'feedbackThreads','a'),base());
  await setDoc(doc(c.firestore(),'feedbackThreads','a','messages','first'),{...message(),createdAt:Timestamp.fromMillis(1000)});
 }); }
-async function send(database,{id='a',mid='reply',uid='alice',role='player',create=false,body='A reply',locationReport}={}) {
+async function send(database,{id='a',mid='reply',uid='alice',role='player',create=false,body='A reply',locationReport,category='map'}={}) {
  const batch=writeBatch(database), ref=doc(database,'feedbackThreads',id);
- if(create)batch.set(ref,{...base(uid),...(locationReport ? {mode:'geo',version:'1.6.134',locationReport}:{}),createdAt:serverTimestamp(),updatedAt:serverTimestamp(),lastMessageId:mid});
+ if(create)batch.set(ref,{...base(uid),category,...(locationReport ? {mode:'geo',version:'1.6.134',locationReport}:{}),createdAt:serverTimestamp(),updatedAt:serverTimestamp(),lastMessageId:mid});
  else batch.update(ref,{updatedAt:serverTimestamp(),lastMessageId:mid,lastSender:role,[role==='developer'?'developerMessages':'playerMessages']:role==='developer'?1:2});
  batch.set(doc(database,'feedbackWriters',uid),{lastSentAt:serverTimestamp()});
  batch.set(doc(ref,'messages',mid),{authorId:uid,authorRole:role,body,createdAt:serverTimestamp()});
@@ -122,7 +122,7 @@ test('location reports cannot evade atomic-message requirements or cross-thread 
 
 test('real service retries a structured payload once and rejects changed circles with reused IDs',async()=>{
  const {pathToFileURL}=require('node:url');
- let source=fs.readFileSync('feedback/service.mjs','utf8').replace('"./model.mjs"',JSON.stringify(pathToFileURL(require('node:path').resolve('feedback/model.mjs')).href));
+ let source=fs.readFileSync('feedback/service.mjs','utf8').replace(/"\.\/model\.mjs(?:\?[^"]*)?"/,JSON.stringify(pathToFileURL(require('node:path').resolve('feedback/model.mjs')).href));
  source=source.replace('"./location-report.mjs"',JSON.stringify(pathToFileURL(require('node:path').resolve('feedback/location-report.mjs')).href));
  source=source.replace('"./guest-transfer.mjs?v=feedback-workflow-20261028"',JSON.stringify(pathToFileURL(require('node:path').resolve('feedback/guest-transfer.mjs')).href));
  for(const part of ['app','auth','firestore']) source=source.replace('import(`${SDK}/firebase-'+part+'.js`)', 'import('+JSON.stringify(pathToFileURL(require.resolve('firebase/'+part)).href)+')');
@@ -230,4 +230,16 @@ test('an old guest grant cannot capture new conversations after source registrat
  await assertFails(updateDoc(doc(target,'feedbackThreads','future'),{ownerId:'target'}));
  await assertSucceeds(deleteDoc(doc(guest,grant)));
  await assertFails(updateDoc(doc(target,'feedbackThreads','a'),{ownerId:'target'}));
+});
+
+test('demo requests use ordinary private thread rules and cannot forge another owner or unsupported category',async()=>{
+ const owner=db('demo-guest',{firebase:{sign_in_provider:'anonymous'}});
+ await assertSucceeds(send(owner,{id:'demo',mid:'first',uid:'demo-guest',create:true,category:'demo',body:'Please add Oshawa Route Mapping.'}));
+ const t=(await getDoc(doc(owner,'feedbackThreads','demo'))).data();
+ assert.equal(t.category,'demo');assert.ok(t.createdAt.toMillis()>1000);
+ await assertSucceeds(getDoc(doc(db('dev',{feedbackAdmin:true}),'feedbackThreads','demo')));
+ await assertFails(getDoc(doc(db('outsider'),'feedbackThreads','demo')));
+ await assertFails(getDoc(doc(db('outsider'),'feedbackThreads','demo','messages','first')));
+ await assertFails(send(db('outsider'),{id:'forged-demo',uid:'demo-guest',create:true,category:'demo'}));
+ await assertFails(send(db('other'),{id:'unsupported',uid:'other',create:true,category:'admin'}));
 });

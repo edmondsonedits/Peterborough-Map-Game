@@ -10,6 +10,7 @@ const expectedVersion=process.env.PTBO_EXPECTED_VERSION;fs.mkdirSync(out,{recurs
  try{
   browser=await chromium.launch({headless:true,...(process.env.PTBO_BROWSER_PROXY?{proxy:{server:process.env.PTBO_BROWSER_PROXY,bypass:'127.0.0.1,localhost'}}:{}),...(process.env.PTBO_CHROMIUM_PATH?{executablePath:process.env.PTBO_CHROMIUM_PATH}:{})});
   const context=await browser.newContext({viewport:{width:1440,height:900},reducedMotion:"reduce",ignoreHTTPSErrors:Boolean(process.env.PTBO_BROWSER_PROXY)});
+  await context.route('**/feedback/config.mjs*',route=>route.fulfill({contentType:'text/javascript',body:'export const feedbackConfig={enabled:false};'}));
   await context.route('https://firestore.googleapis.com/**',route=>route.fulfill({status:403,contentType:'application/json',body:'{"error":{"message":"QA write intercepted"}}'}));
   await context.route('**/cloudflareinsights.com/**',route=>route.abort());
   if(process.env.PTBO_QA_OFFLINE_TILES==='1'){
@@ -52,12 +53,12 @@ const expectedVersion=process.env.PTBO_EXPECTED_VERSION;fs.mkdirSync(out,{recurs
   assert.equal(await page.locator('#home-city-select option').count(),33);
   assert.match(await page.locator('#geo-game-link').getAttribute('href'),/city=ottawa/);assert.match(await page.locator('#route-game-link').getAttribute('href'),/city=ottawa/);assert.equal(await page.locator('#city-explorer-link').getAttribute('href'),null);
   await page.screenshot({path:path.join(out,'homepage-ottawa.png'),fullPage:true});await page.locator('#city-explorer-link').click();await page.locator('#home-demo-dialog').waitFor({state:'visible'});
-  const before=await page.evaluate(()=>PTBO_DEMO_REQUESTS.loadLocalStats());assert.equal(before.demoRequests.total,0);
-  await page.locator('#home-demo-close').click();assert.equal(await page.evaluate(()=>PTBO_DEMO_REQUESTS.loadLocalStats().demoRequests.total),0);
-  await page.locator('#city-explorer-link').press('Enter');await page.locator('#home-demo-submit').click();await page.waitForFunction(()=>document.getElementById('home-demo-submit').disabled&&/recorded|saved|sent/i.test(document.getElementById('home-demo-status').textContent));
-  const after=await page.evaluate(()=>PTBO_DEMO_REQUESTS.loadLocalStats());assert.equal(after.demoRequests.total,1);assert.match(await page.locator('#home-demo-status').innerText(),/device/i);
-  await page.screenshot({path:path.join(out,'request-recorded.png'),fullPage:true});await page.locator('#home-demo-close').click();assert.equal(await page.locator('#city-explorer-link').evaluate(n=>document.activeElement===n),true);
-  await page.goto(`${base}/site-stats/`);await page.waitForFunction(()=>document.body.innerText.includes('Ottawa'));await page.screenshot({path:path.join(out,'stats-local.png'),fullPage:true});report.requests={before,after,visibleInStats:true};
+  await page.evaluate(async()=>{const {createDemoRequests}=await import('./feedback/demo-requests.mjs');window.demoQaWrites=[];const service={account:{uid:'qa-guest'},id:()=>crypto.randomUUID(),ensureGuest:async()=>{},send:async payload=>{demoQaWrites.push(payload);}};const requests=createDemoRequests(service,()=>({department:'fire',version:PTBO_BUILD.version}));window.PTBO_FEEDBACK={requestDemo:requests.send,demoRequestStatus:requests.status};});
+  await page.locator('#home-demo-close').click();assert.equal(await page.evaluate(()=>demoQaWrites.length),0);
+  await page.locator('#city-explorer-link').press('Enter');await page.locator('#home-demo-submit').click();await page.waitForFunction(()=>/Request sent/.test(document.getElementById('home-demo-status').textContent));
+  const request=await page.evaluate(()=>demoQaWrites[0]);assert.equal(request.newThread.category,'demo');assert.equal(request.newThread.city,'ottawa');assert.equal(request.newThread.mode,'explorer');assert.equal(await page.evaluate(()=>demoQaWrites.length),1);
+  await page.screenshot({path:path.join(out,'request-sent.png'),fullPage:true});await page.locator('#home-demo-close').click();assert.equal(await page.locator('#city-explorer-link').evaluate(n=>document.activeElement===n),true);
+  await page.goto(`${base}/site-stats/`);assert.equal(await page.locator('a[href="../feedback/?category=demo"]').count(),1);assert.equal(await page.getByText('Demo requests on this device',{exact:true}).count(),0);report.requests={request,feedbackInboxLink:true};
   await page.goto(`${base}/geo-guesser/mobile/?city=made-up&analytics=off`);await page.frameLocator('#game-frame').locator('#load-retry').waitFor({state:'visible'});assert.match(await page.frameLocator('#game-frame').locator('#practice-setup-status').innerText(),/not available/);await captureVersions();
   // Unknown-city handled errors are expected console messages, not uncaught page errors.
   assert.deepEqual(report.errors,[]);assert.deepEqual(report.missing,[]);if(expectedVersion&&report.buildVersions.some(v=>v.version!==expectedVersion))throw Error(`Expected build ${expectedVersion}; observed ${JSON.stringify(report.buildVersions)}`);report.pass=true;

@@ -43,7 +43,7 @@
       requestMode: document.getElementById('home-demo-mode'),
       requestStatus: document.getElementById('home-demo-status'),
       requestButton: document.getElementById('home-demo-submit'),
-      request: null, pendingRequests: new Set(), sentRequests: new Map(),
+      request: null, pendingRequests: new Map(),
     };
 
     select.addEventListener('change', event => {
@@ -82,6 +82,11 @@
     });
     document.getElementById('home-demo-close')?.addEventListener('click', closeRequest);
     state.requestButton?.addEventListener('click', submitRequest);
+    document.getElementById('home-demo-conversation')?.addEventListener('click', openRequestConversation);
+    window.addEventListener('ptbo-feedback-account-change', event => {
+      if (event.detail?.replaced) state.pendingRequests.clear();
+      renderRequest();
+    });
     state.dialog?.addEventListener('cancel', event => { event.preventDefault(); closeRequest(); });
     state.dialog?.addEventListener('close', () => {
       if(state.dialog.open)return; // An earlier close event may arrive after a new showModal().
@@ -244,45 +249,40 @@
     const request = state.request;
     if (!request) return;
     const key = `${request.cityId}:${request.mode}`;
-    try {
-      const status = window.PTBO_DEMO_REQUESTS?.requestStatus?.(request.cityId, request.mode);
-      if (status?.remoteSaved || status?.localSaved) state.sentRequests.set(key, status.remoteSaved ? 'shared' : 'local');
-    } catch (_) { /* A storage read must not prevent requesting a demo. */ }
-    const sent = state.sentRequests.has(key);
-    const localOnly = state.sentRequests.get(key) === 'local';
+    const sent = window.PTBO_DEMO_REQUESTS?.requestStatus?.(request.cityId, request.mode)?.remoteSaved === true;
     const pending = state.pendingRequests.has(key);
     state.requestStatus.textContent = sent
-      ? localOnly ? 'Request recorded on this device. You can review it in Website Stats on this device.' : 'Request sent. Thanks for helping choose the next demo.'
-      : pending ? 'Saving your request…' : message;
+      ? 'Request sent to the developer. You can follow up in Feedback.'
+      : pending ? 'Sending your request…' : message;
     state.requestButton.disabled = sent || pending;
-    state.requestButton.textContent = sent ? localOnly ? 'Recorded on this device' : 'Request sent' : pending ? 'Saving…' : message ? 'Try again' : 'Request this demo';
+    state.requestButton.textContent = sent ? 'Request sent' : pending ? 'Sending…' : message ? 'Try again' : 'Request this demo';
+    const conversation = document.getElementById('home-demo-conversation');
+    if (conversation) conversation.hidden = !sent;
   }
 
   async function submitRequest() {
     const request = state.request;
     if (!request) return;
     const key = `${request.cityId}:${request.mode}`;
-    if (state.sentRequests.has(key) || state.pendingRequests.has(key)) return;
-    const analytics = window.PTBO_SITE_ANALYTICS;
     const adapter = window.PTBO_DEMO_REQUESTS;
-    const persistence = adapter?.recordDemoRequest ? adapter : analytics;
-    try {
-      if (persistence === analytics && analytics?.trackingAllowed?.() === false) {
-        renderRequest('Demo request tracking is disabled in this browser. No request was saved.');
-        return;
-      }
-    } catch (_) { /* The transport below determines whether the request saved. */ }
-    state.pendingRequests.add(key);
+    if (adapter?.requestStatus?.(request.cityId, request.mode)?.remoteSaved || state.pendingRequests.has(key)) return;
+    const operation = {};
+    state.pendingRequests.set(key, operation);
     renderRequest();
     let saved = false;
-    try { saved = await persistence?.recordDemoRequest?.(request.cityId, request.mode) === true; } catch (_) {}
+    try { saved = await adapter?.recordDemoRequest?.(request.cityId, request.mode) === true; } catch (_) {}
+    if (state.pendingRequests.get(key) !== operation) return;
     state.pendingRequests.delete(key);
-    if (saved) {
-      let remoteSaved = persistence === analytics;
-      try { remoteSaved = remoteSaved || adapter?.requestStatus?.(request.cityId, request.mode)?.remoteSaved === true; } catch (_) {}
-      state.sentRequests.set(key, remoteSaved ? 'shared' : 'local');
-    }
-    if (state.request?.cityId===request.cityId && state.request?.mode===request.mode) renderRequest(saved ? '' : 'Your request could not be saved. Please try again.');
+    if (state.request?.cityId === request.cityId && state.request?.mode === request.mode)
+      renderRequest(saved ? '' : 'Your request could not be sent. Please try again.');
+  }
+
+  async function openRequestConversation() {
+    const request = state.request;
+    if (!request) return;
+    closeRequest();
+    try { await window.PTBO_DEMO_REQUESTS.openConversation(request.cityId, request.mode); }
+    catch (_) { openRequest(request.mode, request.opener); renderRequest('Could not open Feedback. Please try again.'); }
   }
 
   function showPreview(mode) {

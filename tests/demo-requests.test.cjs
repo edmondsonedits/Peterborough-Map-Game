@@ -14,7 +14,7 @@ const registry = read('cities/city-registry.js');
 
 function storage(initial = {}) {
   const values = new Map(Object.entries(initial));
-  return { getItem:key => values.get(key) ?? null, setItem:(key, value) => values.set(key, String(value)), removeItem:key => values.delete(key) };
+  return { get length(){return values.size;}, key:index=>[...values.keys()][index]??null, getItem:key => values.get(key) ?? null, setItem:(key, value) => values.set(key, String(value)), removeItem:key => values.delete(key) };
 }
 
 // Run the complete shipped clients, with only browser/network boundaries replaced.
@@ -185,24 +185,6 @@ function statsPage(api, local = storage()) {
   return { elements, text:node => [node.textContent, ...node.children.map(child => [child.textContent, ...child.children.map(cell => cell.textContent)].join(' '))].join(' ') };
 }
 
-test('Website Stats renders authenticated aggregate city/mode demand', async () => {
-  const h = statsPage({ authorized:() => true, loadStats:async () => ({ demoRequests:{ total:3, byCity:{ toronto:2, belleville:1 }, byMode:{ route:1, dispatch:1, geo:1 }, byCityMode:{ toronto:{ dispatch:1, route:1 }, belleville:{ geo:1 } } } }) });
-  await new Promise(resolve => setImmediate(resolve));
-  assert.equal(h.elements.get('demo-requests-total')?.textContent, '3');
-  const demand = h.elements.get('demo-request-rows');
-  assert.ok(demand, 'city/mode breakdown exists');
-  assert.match(h.text(demand), /Toronto/);
-  assert.match(h.text(demand), /Belleville/);
-  assert.match(read('site-stats/index.html'), /Geo Guesser[\s\S]*Route Mapping[\s\S]*Dispatch[\s\S]*City Explorer/);
-});
-
-test('Website Stats distinguishes unavailable demand data from a real zero', async () => {
-  const h = statsPage({ authorized:true, loadStats:async () => ({ sessions:2 }) });
-  await new Promise(resolve => setImmediate(resolve));
-  assert.equal(h.elements.get('demo-requests-total')?.textContent, '—');
-  assert.match(h.text(h.elements.get('demo-request-rows')), /not.*returned|unavailable/i);
-});
-
 test('Website Stats stays locked without an authenticated admin integration', async () => {
   let called = false;
   const h = statsPage({ authorized:false, loadStats:async () => { called = true; return {}; } });
@@ -211,49 +193,23 @@ test('Website Stats stays locked without an authenticated admin integration', as
   assert.match(h.elements.get('status').textContent, /locked/);
 });
 
-test('device requests survive remote denial and render locally while secure stats stays locked', async () => {
-  const local = storage(), session = storage(), h = await client({ search:'?analytics=off', local, session });
-  vm.runInContext(read('shared/demo-requests.js'), h.context);
-  const api = h.context.PTBO_DEMO_REQUESTS;
-  assert.equal(await api.recordDemoRequest('toronto', 'route'), true);
-  assert.deepEqual(JSON.parse(JSON.stringify(api.requestStatus('toronto', 'route'))), { localSaved:true, remoteSaved:false });
-  assert.equal(await api.recordDemoRequest('toronto', 'route'), true);
-  assert.equal(api.loadLocalStats().demoRequests.total, 1);
-  const reloaded = await client({ local, session, search:'?analytics=off' });
-  vm.runInContext(read('shared/demo-requests.js'), reloaded.context);
-  assert.equal(reloaded.context.PTBO_DEMO_REQUESTS.isRequested('toronto', 'route'), true);
-  assert.equal(await reloaded.context.PTBO_DEMO_REQUESTS.recordDemoRequest('toronto', 'route'), true);
-  assert.equal(reloaded.context.PTBO_DEMO_REQUESTS.loadLocalStats().demoRequests.total, 1);
-  assert.equal(h.requests.length + reloaded.requests.length, 0);
-  const page = statsPage(undefined, local);
-  await new Promise(resolve => setImmediate(resolve));
-  assert.equal(page.elements.get('local-demo-requests-total')?.textContent, '1');
-  assert.match(page.text(page.elements.get('local-demo-request-rows')), /Toronto/);
-  assert.match(page.elements.get('status').textContent, /locked/);
-  assert.match(read('site-stats/index.html'), /Demo requests on this device/);
-});
 
-test('request fails honestly if device storage and remote saving both fail', async () => {
-  const broken = { getItem:() => null, setItem:() => { throw new Error('Storage blocked'); }, removeItem() {} };
-  const h = await client({ search:'?analytics=off', local:broken });
-  vm.runInContext(read('shared/demo-requests.js'), h.context);
-  assert.equal(await h.context.PTBO_DEMO_REQUESTS.recordDemoRequest('toronto', 'dispatch'), false);
-  assert.equal(h.context.PTBO_DEMO_REQUESTS.loadLocalStats().demoRequests.total, 0);
+function adapter({feedback,ready,local=storage(),session=storage()}={}){
+ const context=vm.createContext({console,localStorage:local,sessionStorage:session,PTBO_FEEDBACK:feedback,PTBO_FEEDBACK_READY:ready});context.window=context;vm.runInContext(registry,context);vm.runInContext(read('shared/demo-requests.js'),context);return{api:context.PTBO_DEMO_REQUESTS,context};
+}
+test('retiring the device counter removes its aggregate and markers, preserves unrelated storage and does not send old requests',()=>{
+ const local=storage({'ptbo-demo-requests-v1':'{"byCityMode":{"oshawa":{"route":1}}}','keep':'yes'}),session=storage({'ptbo-demo-request-session-v1':'old','ptbo-device-demo-request-v1:old:oshawa:route':'local','ptbo-site-session-id-v3':'keep'});
+ let calls=0;adapter({local,session,feedback:{requestDemo(){calls++;}}});assert.equal(local.getItem('ptbo-demo-requests-v1'),null);assert.equal(session.getItem('ptbo-device-demo-request-v1:old:oshawa:route'),null);assert.equal(local.getItem('keep'),'yes');assert.equal(session.getItem('ptbo-site-session-id-v3'),'keep');assert.equal(calls,0);
 });
-
-test('device aggregate reading ignores inherited-object names in damaged browser data', () => {
-  const local = storage({ 'ptbo-demo-requests-v1':'{"byCityMode":{"constructor":{"geo":8},"toronto":{"route":2}}}' });
-  const h = statsPage(undefined, local);
-  assert.equal(h.elements.get('local-demo-requests-total').textContent, '2');
+test('adapter routes explicit requests only into acknowledged private feedback and passes the city name',async()=>{
+ let received=false,payload,opened;const feedback={async requestDemo(input){payload=input;received=true;return{id:'private-thread'};},demoRequestStatus:()=>({remoteSaved:received}),async openDemoConversation(...args){opened=args;}};
+ const h=adapter({feedback});h.context.PTBO_SITE_ANALYTICS={recordDemoRequest(){throw Error('must not use analytics');}};
+ assert.equal(await h.api.recordDemoRequest('oshawa','route'),true);assert.deepEqual(JSON.parse(JSON.stringify(payload)),{city:'oshawa',cityName:'Oshawa',mode:'route'});assert.equal(h.api.requestStatus('oshawa','route').remoteSaved,true);await h.api.openConversation('oshawa','route');assert.deepEqual(opened,['oshawa','route']);
 });
-
-test('device request identity stays stable when analytics initializes later and across reload',async()=>{
- const local=storage(),session=storage();
- const context=vm.createContext({console,localStorage:local,sessionStorage:session});context.window=context;vm.runInContext(registry,context);vm.runInContext(read('shared/demo-requests.js'),context);
- assert.equal(await context.PTBO_DEMO_REQUESTS.recordDemoRequest('ottawa','route'),true);
- context.PTBO_SITE_ANALYTICS={health:()=>({sessionId:'late-analytics-session'}),recordDemoRequest:async()=>false};
- session.setItem('ptbo-site-session-id-v3','late-analytics-session');
- assert.equal(context.PTBO_DEMO_REQUESTS.requestStatus('ottawa','route').localSaved,true);
- const reload=vm.createContext({console,localStorage:local,sessionStorage:session,PTBO_SITE_ANALYTICS:context.PTBO_SITE_ANALYTICS});reload.window=reload;vm.runInContext(registry,reload);vm.runInContext(read('shared/demo-requests.js'),reload);
- assert.equal(reload.PTBO_DEMO_REQUESTS.isRequested('ottawa','route'),true);await reload.PTBO_DEMO_REQUESTS.recordDemoRequest('ottawa','route');assert.equal(reload.PTBO_DEMO_REQUESTS.loadLocalStats().demoRequests.total,1);
+test('adapter waits for feedback initialization and unavailable/invalid requests cannot report success',async()=>{
+ let finish,calls=0;const h=adapter({ready:new Promise(r=>finish=r)}),pending=h.api.recordDemoRequest('oshawa','route');await new Promise(r=>setImmediate(r));assert.equal(calls,0);finish({async requestDemo(){calls++;return{id:'ok'};}});assert.equal(await pending,true);
+ assert.equal(await adapter().api.recordDemoRequest('oshawa','route'),false);for(const [city,mode] of [['constructor','geo'],['unknown','geo'],['oshawa','invalid']])assert.equal(await h.api.recordDemoRequest(city,mode),false);assert.equal(calls,1);
+});
+test('retired demo demand no longer appears in Website Stats; demo conversations have an inbox link',()=>{
+ const html=read('site-stats/index.html');assert.doesNotMatch(html,/local-demo-request-rows|demo-requests-total|Demo requests on this device|Shared demo demand/);assert.match(html,/href="\.\.\/feedback\/\?category=demo"/);
 });

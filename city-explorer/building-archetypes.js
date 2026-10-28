@@ -1,5 +1,5 @@
-import { resolveBuildingAppearance } from './building-appearance.js?v=1.6.147';
-import { facadeComponentPlan } from './facade-components.js?v=1.6.147';
+import { resolveBuildingAppearance } from './building-appearance.js?v=1.6.148';
+import { facadeComponentPlan } from './facade-components.js?v=1.6.148';
 
 /** Inferred visual grammar only: never modifies surveyed geometry or dimensions. */
 function hash(value) {
