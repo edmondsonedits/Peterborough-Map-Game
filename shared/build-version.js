@@ -477,7 +477,7 @@
 
   function installPageEnhancements() {
     if (window.top === window) {
-      void import(new URL(`../feedback/ui.mjs?v=${VERSION}`, SCRIPT_URL).href)
+      void import(new URL(`../feedback/ui.mjs?v=${VERSION}&edit=report-details-1`, SCRIPT_URL).href)
         .then(module => module.mountFeedback({ rootUrl: new URL('../', SCRIPT_URL) }))
         .catch(error => console.warn('Feedback menu unavailable.', error));
     }

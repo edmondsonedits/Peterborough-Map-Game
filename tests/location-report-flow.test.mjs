@@ -6,12 +6,12 @@ import {mountFeedback} from '../feedback/ui.mjs';
 const require=createRequire(import.meta.url),{JSDOM}=require('../tools/location-report-tests/node_modules/jsdom');
 const snapshot=()=>({resultId:'result-1',callId:'school-1',city:'peterborough',service:'fire',mode:'geo',version:'1.6.134',datasetId:'peterborough:geo-locations',datasetRevision:null,question:{name:'School',address:'1175 Brealey Dr',crossStreets:null,difficulty:'easy'},originalCircle:{center:{lat:44.2865,lng:-78.3796},radiusMeters:60},guess:null,distanceMeters:null,result:'revealed',baseId:null});
 const tick=()=>new Promise(r=>setTimeout(r,0));
-function setup({fresh=false}={}){
+function setup({fresh=false,threadRows=[],messageRows=()=>[]}={}){
  const dom=new JSDOM('<header class="site-header"></header><button id="location-report-button" hidden>Report a problem</button>',{url:'https://game.example.test/geo-guesser/'});
  globalThis.window=dom.window;globalThis.document=dom.window.document;globalThis.location=dom.window.location;globalThis.sessionStorage=dom.window.sessionStorage;globalThis.Event=dom.window.Event;
  dom.window.HTMLDialogElement.prototype.showModal=function(){this.open=true;};dom.window.HTMLDialogElement.prototype.close=function(){this.open=false;};
  let current=fresh?null:{uid:'alice',isDeveloper:false,isGuest:true},listener,id=0,fail=true;const submissions=[];
- const service={ready:Promise.resolve(),get account(){return current;},id:()=>`id-${++id}`,subscribeAccount(fn){listener=fn;fn(current);},ensureGuest:async()=>{if(!current){current={uid:'alice',isDeveloper:false,isGuest:true};listener(current);}return current;},watchThreads(fn){fn({rows:[],more:false,cursor:null});return()=>{};},sendLocationReport:async args=>{submissions.push(args);if(fail)throw Error('Offline');},switchUser(uid){current={uid,isDeveloper:false,isGuest:true};listener(current);},receive(){fail=false;}};
+ const service={ready:Promise.resolve(),get account(){return current;},id:()=>`id-${++id}`,subscribeAccount(fn){listener=fn;fn(current);},ensureGuest:async()=>{if(!current){current={uid:'alice',isDeveloper:false,isGuest:true};listener(current);}return current;},watchThreads(fn){fn({rows:threadRows,more:false,cursor:null});return()=>{};},watchMessages(id,fn){fn({rows:messageRows(id),more:false,cursor:null});return()=>{};},markRead:async()=>{},sendLocationReport:async args=>{submissions.push(args);if(fail)throw Error('Offline');},switchUser(uid){current={uid,isDeveloper:false,isGuest:true};listener(current);},receive(){fail=false;}};
  const api=mountFeedback({config:{enabled:true},service,rootUrl:new URL('https://game.example.test/'),reportMapLoader:async()=>{throw new Error('Map unavailable in this fixture');}});
  const set=(name,value)=>{const el=document.querySelector(`[name="${name}"]`);assert.ok(el,name);if(el.type==='checkbox')el.checked=value;else el.value=value;el.dispatchEvent(new window.Event('input',{bubbles:true}));el.dispatchEvent(new window.Event('change',{bubbles:true}));};
  const submit=()=>document.querySelector('.fb-report-form').dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));
@@ -60,5 +60,44 @@ test('a stale inbox-opening failure cannot replace a newer location report',asyn
  const oldOpen=g.api.open();g.service.ensureGuest=ensureGuest;
  await g.api.openLocationReport(snapshot());rejectOld(new Error('Old inbox connection failed'));await oldOpen;
  assert.ok(document.querySelector('.fb-report-form'),'the current report must survive an earlier failed request');
+ g.api.close();g.dom.window.close();
+});
+
+
+test('existing report collapses only the automatically appended diagnostics of its initial message',async()=>{
+ const time=value=>({toMillis:()=>value});
+ const report={schemaVersion:1,kind:'geo-location',reason:'point',snapshot:snapshot(),suggestion:null};
+ const diagnostic='Browser: Test browser\nViewport: 338 × 656 CSS pixels\nReport opened: 2026-10-28T03:06:28.863Z';
+ const note='The address is wrong.\n\nBrowser: This is my own note';
+ const thread={id:'report-1',ownerId:'alice',title:'Geo report',category:'map',city:'peterborough',mode:'geo',department:'fire',version:'1.6.134',status:'new',priority:'normal',createdAt:time(100),locationReport:report};
+ const initial={id:'first',authorRole:'player',createdAt:time(100),body:note+'\n\n'+diagnostic};
+ const followup={id:'reply',authorRole:'player',createdAt:time(200),body:'Please keep this text.\n\n'+diagnostic};
+ const g=setup({threadRows:[thread],messageRows:()=>[initial,followup]});
+ await g.api.open();document.querySelector('[data-thread-id="report-1"]').click();
+ const first=document.querySelector('[data-message-id="first"]'),details=first.querySelector('details');
+ assert.ok(details,'automatic diagnostic context should be collapsible');assert.equal(details.open,false);
+ assert.equal(details.querySelector('summary').textContent,'Technical details');assert.equal(details.querySelector('span').textContent,diagnostic);
+ assert.equal(first.querySelector(':scope > span').textContent,note,'user text must remain visible and unchanged');
+ assert.equal(document.querySelector('[data-message-id="reply"] > span').textContent,followup.body,'later messages are not mistaken for generated data');
+ g.api.close();g.dom.window.close();
+});
+
+test('a newly submitted report can open its first message with diagnostics collapsed',async()=>{
+ const g=setup({messageRows:()=>g.submissions.map(s=>({id:s.messageId,authorRole:'player',body:s.note}))});
+ g.service.receive();await g.api.openLocationReport(snapshot());g.set('note','My note');g.submit();await tick();
+ [...document.querySelectorAll('button')].find(b=>b.textContent==='Open conversation').click();
+ const first=document.querySelector('.fb-message'),details=first.querySelector('details');
+ assert.ok(details);assert.equal(details.open,false);assert.equal(first.querySelector(':scope > span').textContent,'My note');
+ assert.match(details.textContent,/Browser:/);assert.match(g.submissions[0].note,/Browser:/,'the submitted payload still includes diagnostics');
+ g.api.close();g.dom.window.close();
+});
+
+test('ordinary conversations keep all message text visible, even when it resembles diagnostics',async()=>{
+ const time=value=>({toMillis:()=>value});
+ const body='My own message.\n\nBrowser: Test browser\nViewport: 338 × 656 CSS pixels\nReport opened: 2026-10-28T03:06:28.863Z';
+ const thread={id:'ordinary',ownerId:'alice',title:'Message',category:'bug',city:'peterborough',mode:'geo',department:'fire',version:'1.6.134',status:'new',priority:'normal',createdAt:time(100)};
+ const g=setup({threadRows:[thread],messageRows:()=>[{id:'first',authorRole:'player',createdAt:time(100),body}]});
+ await g.api.open();document.querySelector('[data-thread-id="ordinary"]').click();
+ const first=document.querySelector('[data-message-id="first"]');assert.equal(first.querySelector('details'),null);assert.equal(first.querySelector('span').textContent,body);
  g.api.close();g.dom.window.close();
 });
