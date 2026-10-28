@@ -4,6 +4,7 @@ export const categories = Object.freeze({
   map: "Map correction",
   idea: "Idea",
   question: "Question",
+  demo: "Demo request",
 });
 export const statuses = Object.freeze({
   new: "New",

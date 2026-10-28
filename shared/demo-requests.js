@@ -1,71 +1,36 @@
-/* Explicit demo requests: device aggregate storage plus optional shared analytics. */
+/* Explicit demo requests use the private feedback inbox. Retire obsolete device counts. */
 (() => {
   'use strict';
-  if (window.PTBO_DEMO_REQUESTS) return;
-  const KEY = 'ptbo-demo-requests-v1';
-  const MODES = ['geo', 'route', 'dispatch', 'explorer'];
-  const pending = new Map(), statuses = new Map();
-  let fallbackSession = '';
-  const get = (storage, key) => { try { return storage.getItem(key); } catch (_) { return null; } };
-  const set = (storage, key, value) => { try { storage.setItem(key, value); return true; } catch (_) { return false; } };
-  const cityValid = city => typeof city === 'string' && city.length <= 60 && /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/.test(city) && !Object.prototype.hasOwnProperty.call(Object.prototype, city);
-  const session = () => {
-    // Device deduplication must not change when the optional analytics client loads later.
-    if (!fallbackSession) {
-      fallbackSession = get(sessionStorage, 'ptbo-demo-request-session-v1') || `${Date.now().toString(36)}${Math.random().toString(36).slice(2)}`;
-      set(sessionStorage, 'ptbo-demo-request-session-v1', fallbackSession);
-    }
-    return fallbackSession;
-  };
-  const requestKey = (city, mode) => `${session()}:${city}:${mode}`;
-  const markerKey = key => `ptbo-device-demo-request-v1:${key}`;
-  function loadLocalStats() {
-    let stored = {};
-    try { stored = JSON.parse(get(localStorage, KEY) || '{}') || {}; } catch (_) {}
-    const demand = { total:0, byCity:{}, byMode:{}, byCityMode:{} };
-    for (const [city, modes] of Object.entries(stored.byCityMode || {})) {
-      if (!cityValid(city) || !modes || typeof modes !== 'object') continue;
-      for (const mode of MODES) {
-        const count = Number(modes[mode]);
-        if (!Number.isSafeInteger(count) || count <= 0) continue;
-        (demand.byCityMode[city] ||= {})[mode] = count;
-        demand.byCity[city] = (demand.byCity[city] || 0) + count;
-        demand.byMode[mode] = (demand.byMode[mode] || 0) + count;
-        demand.total += count;
+  // Delete only this retired feature's data when an updated page is loaded.
+  for (const name of ['localStorage', 'sessionStorage']) {
+    try {
+      const storage = window[name];
+      storage.removeItem('ptbo-demo-requests-v1');
+      storage.removeItem('ptbo-demo-request-session-v1');
+      for (let i = storage.length - 1; i >= 0; i--) {
+        const key = storage.key(i);
+        if (key?.startsWith('ptbo-device-demo-request-v1:') || key?.startsWith('ptbo-demo-request-v1:')) storage.removeItem(key);
       }
-    }
-    return { demoRequests:demand };
+    } catch (_) { /* Private feedback does not depend on browser counters. */ }
   }
+  if (window.PTBO_DEMO_REQUESTS) return;
+  const modes = ['geo', 'route', 'dispatch', 'explorer'];
+  const cityFor = city => window.PTBO_CITIES?.find(item => item.id === city);
+  const feedback = async () => window.PTBO_FEEDBACK || await window.PTBO_FEEDBACK_READY;
   function requestStatus(city, mode) {
-    const key = requestKey(city, mode);
-    const marker = get(sessionStorage, markerKey(key));
-    const current = statuses.get(key) || {};
-    return Object.freeze({ localSaved:current.localSaved === true || marker === 'local' || marker === 'both', remoteSaved:current.remoteSaved === true || marker === 'remote' || marker === 'both' });
+    return window.PTBO_FEEDBACK?.demoRequestStatus?.(city, mode) || { remoteSaved:false };
   }
   async function recordDemoRequest(city, mode) {
-    if (!cityValid(city) || !MODES.includes(mode) || !window.PTBO_CITIES?.some(item => item.id === city)) return false;
-    const key = requestKey(city, mode);
-    if (pending.has(key)) return pending.get(key);
-    const operation = (async () => {
-      let { localSaved, remoteSaved } = requestStatus(city, mode);
-      if (!localSaved) {
-        const demand = loadLocalStats().demoRequests;
-        const counts = demand.byCityMode[city] ||= {};
-        counts[mode] = (counts[mode] || 0) + 1;
-        localSaved = set(localStorage, KEY, JSON.stringify({ byCityMode:demand.byCityMode }));
-        // Keep only aggregates persistently; the deduplication marker is session-only.
-        statuses.set(key, { localSaved, remoteSaved });
-        if (localSaved) set(sessionStorage, markerKey(key), remoteSaved ? 'both' : 'local');
-      }
-      if (!remoteSaved) {
-        try { remoteSaved = await window.PTBO_SITE_ANALYTICS?.recordDemoRequest?.(city, mode) === true; } catch (_) {}
-      }
-      statuses.set(key, { localSaved, remoteSaved });
-      if (localSaved || remoteSaved) set(sessionStorage, markerKey(key), localSaved ? (remoteSaved ? 'both' : 'local') : 'remote');
-      return localSaved || remoteSaved;
-    })().finally(() => pending.delete(key));
-    pending.set(key, operation);
-    return operation;
+    const entry = cityFor(city);
+    if (!entry || !modes.includes(mode)) return false;
+    const api = await feedback();
+    if (!api?.requestDemo) return false;
+    return Boolean(await api.requestDemo({ city, cityName:entry.name, mode }));
   }
-  window.PTBO_DEMO_REQUESTS = Object.freeze({ recordDemoRequest, requestStatus, isRequested:(city, mode) => { const status = requestStatus(city, mode); return status.localSaved || status.remoteSaved; }, loadLocalStats });
+  async function openConversation(city, mode) {
+    const api = await feedback();
+    if (!api?.openDemoConversation) throw new Error('Feedback is unavailable. Please try again.');
+    return api.openDemoConversation(city, mode);
+  }
+  window.PTBO_DEMO_REQUESTS = Object.freeze({ recordDemoRequest, requestStatus, openConversation });
 })();

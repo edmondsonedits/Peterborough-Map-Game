@@ -2,7 +2,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.6.147';
+  const VERSION = '1.6.148';
   const CITY_RUNTIME_VERSION = '1.6.17';
   const LABEL = `v${VERSION}`;
   const SCRIPT_URL = document.currentScript?.src || new URL('shared/build-version.js', location.href).href;
@@ -477,7 +477,7 @@
 
   function installPageEnhancements() {
     if (window.top === window) {
-      void import(new URL(`../feedback/ui.mjs?v=${VERSION}`, SCRIPT_URL).href)
+      window.PTBO_FEEDBACK_READY = import(new URL(`../feedback/ui.mjs?v=${VERSION}`, SCRIPT_URL).href)
         .then(module => module.mountFeedback({ rootUrl: new URL('../', SCRIPT_URL) }))
         .catch(error => console.warn('Feedback menu unavailable.', error));
     }

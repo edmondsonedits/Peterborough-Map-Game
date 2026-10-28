@@ -16,7 +16,7 @@ function setup({admin=true,pages=[],readUpdatesThread=false}={}){
  const service={ready:Promise.resolve(),id:()=>`id-${++id}`,get account(){return account;},subscribeAccount(fn){listener=fn;fn(account);},ensureGuest:async()=>account,
   watchThreads(fn,error,scope){scopes.push(scope);const w={fn,scope};watchers.push(w);fn({rows:scope.developer?rows:rows.filter(t=>t.ownerId===account.uid),cursor:'page0',more:scope.developer&&pages.length>0});return()=>{watchers.splice(watchers.indexOf(w),1);};},
   async loadThreads({cursor}){loads.push(cursor);return pages[Number(cursor.replace('page',''))]||{rows:[],cursor:null,more:false};},
-  watchMessages(id,fn){messageNext=fn;fn({rows:[{id:'m1',authorRole:'player',body:'Original message',createdAt:{toMillis:()=>1}}],more:false});return()=>{};},
+  watchMessages(id,fn){messageNext=fn;fn({rows:[{id:'m1',authorRole:'player',body:'Original message',authorId:'player',createdAt:{toMillis:()=>1}}],more:false});return()=>{};},
   async send(payload){sends.push(payload);},
   watchThread(id,fn){threadListeners.set(id,fn);return()=>threadListeners.delete(id);},
   watchNotes(id,fn){fn([]);return()=>{};},markRead:async(...args)=>{reads.push(args);if(readUpdatesThread)threadListeners.get(args[0])?.(thread(args[0],{developerRead:1}));},
@@ -65,4 +65,11 @@ test('new feedback keeps game context collapsed and submits its automatically fi
  document.querySelector('#feedback-title').value='Training idea';document.querySelector('#feedback-body').value='Please add more locations.';
  document.querySelector('.fb-new-form').dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));await tick();
  assert.equal(g.sends.length,1);assert.equal(g.sends[0].newThread.city,city);assert.equal(g.sends[0].newThread.mode,mode);assert.equal(g.sends[0].newThread.department,department);assert.equal(g.sends[0].body,'Please add more locations.');g.close();
+});
+
+test('demo requests use existing inbox, timestamps, identity labels and category filters',async()=>{
+ const g=setup();await g.api.requestDemo({city:'oshawa',cityName:'Oshawa',mode:'route'});assert.equal(g.sends[0].newThread.category,'demo');
+ await g.api.openDemoConversation('oshawa','route');await tick();assert.match(document.querySelector('.fb-detail-header').textContent,/your account|You/i);assert.equal(document.querySelector('time').getAttribute('datetime'),'1970-01-01T00:00:00.001Z');
+ const filter=document.querySelector('[data-filter="category"]');assert.ok([...filter.options].some(x=>x.value==='demo'));
+ g.service.change('other');assert.equal(g.api.demoRequestStatus('oshawa','route').remoteSaved,false);await assert.rejects(g.api.openDemoConversation('oshawa','route'));g.close();
 });

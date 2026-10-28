@@ -81,3 +81,9 @@ npm --prefix tools/feedback-tests run test:ui
 The emulator requires Java 17+ for the pinned CLI. All emulator commands use the `demo-ptbo-feedback` project and never connect to production. If an existing Chromium is available, set `CHROME_PATH` to its executable. The browser test downloads pinned official Firebase CDN modules normally; a predownloaded SDK cache can be supplied via `PTBO_FEEDBACK_SDK_CACHE` for restricted environments.
 
 Official references: [Anonymous auth and account linking](https://firebase.google.com/docs/auth/web/anonymous-auth), [Password accounts](https://firebase.google.com/docs/auth/web/password-auth), [Rules conditions](https://firebase.google.com/docs/firestore/security/rules-conditions), [Rules testing](https://firebase.google.com/docs/rules/unit-tests).
+
+## Demo requests (v1.6.148)
+
+The homepage confirmation sends a generated city/mode-specific message through the existing private feedback service with category `demo`. A success receipt appears only after the Firestore transaction is acknowledged. Open conversation supports follow-up and developer replies; the developer category filter and AI exports include these threads. Requests carry the existing owner UID and server timestamps. Message times are visible and the developer's own submissions are labelled You; an anonymous UID is not proof of someone's real identity.
+
+In-page duplicate clicks and retries reuse the same immutable thread/message IDs and payload, scoped to the active account. Changing identity clears receipts. A later page load can submit a new request; existing conversations remain available in Feedback. The retired device aggregate and its deduplication markers are removed on the next updated homepage or stats load, without sending historical counts as new messages. No demo request uses the legacy analytics transport.

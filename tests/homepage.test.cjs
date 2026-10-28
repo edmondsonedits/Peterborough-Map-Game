@@ -55,7 +55,7 @@ function fixture({ stored, requested = '', mobile = false, reduced = false, deni
   const cards = ['geo', 'route', 'dispatch', 'explorer'].map(mode => { const node = new Element(); node.dataset.demoCard = mode; return node; });
   const previewCityNames = [new Element(), new Element(), new Element()];
   const demoLabels = [new Element(), new Element(), new Element()];
-  ['home-city-select', 'home-city-status', 'home-dispatch-title', 'home-dispatch-description', 'home-motion-toggle', 'home-preview', 'home-demo-dialog', 'home-demo-city', 'home-demo-mode', 'home-demo-status', 'home-demo-submit', 'home-demo-close', 'home-explorer-description','dispatch-editor-link','home-editor-name','home-editor-description'].forEach(get);
+  ['home-city-select', 'home-city-status', 'home-dispatch-title', 'home-dispatch-description', 'home-motion-toggle', 'home-preview', 'home-demo-dialog', 'home-demo-city', 'home-demo-mode', 'home-demo-status', 'home-demo-submit', 'home-demo-close', 'home-demo-conversation', 'home-explorer-description','dispatch-editor-link','home-editor-name','home-editor-description'].forEach(get);
   get('home-motion-toggle').motionLabel = new Element();
   const groups = { '[data-demo-card]': cards, '[data-preview-city-name]': previewCityNames, '[data-demo-label]': demoLabels, '[data-preview]': choices, '[data-preview-panel]': panels, '[data-preview-launch]': launches,
     '[data-peterborough-only]': badges, '[data-selected-city-name]': cityNames, '[data-dispatch-city]': dispatchNames,
@@ -375,86 +375,34 @@ test('unavailable mode card and preview launches have no redirect and open a nam
   assert.deepEqual(recorded, []);
 });
 
-test('request submission waits for a confirmed write, disables duplicate clicks, and keeps success for that city and mode', async () => {
-  let resolve; const recorded = [];
-  const h = fixture({ stored: 'london', analytics: { recordDemoRequest(city, mode) { recorded.push([city, mode]); return new Promise(done => { resolve = done; }); } } });
-  h.get('city-explorer-link').emit('click');
-  const button = h.get('home-demo-submit');
-  button.emit('click'); button.emit('click');
-  assert.equal(button.disabled, true);
-  assert.deepEqual(recorded, [['london', 'explorer']]);
-  assert.doesNotMatch(h.get('home-demo-status').textContent, /request sent/i);
-  resolve(true); await new Promise(done => setImmediate(done));
-  assert.match(h.get('home-demo-status').textContent, /request sent/i);
-  assert.equal(button.disabled, true);
-  h.get('home-demo-close').emit('click'); h.get('city-explorer-link').emit('click');
-  assert.match(h.get('home-demo-status').textContent, /request sent/i);
-  button.emit('click');
-  assert.equal(recorded.length, 1);
+test('request submission waits for feedback acknowledgement, disables duplicate clicks and opens the conversation action',async()=>{
+ let finish,saved=false,calls=0;
+ const demoRequests={recordDemoRequest(){calls++;return new Promise(r=>finish=()=>{saved=true;r(true);});},requestStatus:()=>({remoteSaved:saved})};
+ const h=fixture({stored:'london',demoRequests});h.get('city-explorer-link').emit('click');
+ h.get('home-demo-submit').emit('click');h.get('home-demo-submit').emit('click');assert.equal(calls,1);assert.equal(h.get('home-demo-submit').disabled,true);assert.doesNotMatch(h.get('home-demo-status').textContent,/request sent/i);
+ finish();await new Promise(r=>setImmediate(r));assert.match(h.get('home-demo-status').textContent,/request sent/i);assert.equal(h.get('home-demo-conversation').hidden,false);
+ h.get('home-demo-close').emit('click');h.get('city-explorer-link').emit('click');assert.match(h.get('home-demo-status').textContent,/request sent/i);assert.equal(h.get('home-demo-submit').disabled,true);
 });
-
-test('failed requests offer a retry and do not claim success; excluded tracking is explained neutrally', async () => {
-  for (const first of [false, new Error('offline')]) {
-    let count = 0;
-    const h = fixture({ stored: 'london', analytics: { async recordDemoRequest() { count++; if (count > 1) return true; if (first instanceof Error) throw first; return first; } } });
-    h.get('city-explorer-link').emit('click'); h.get('home-demo-submit').emit('click');
-    await new Promise(done => setImmediate(done));
-    assert.match(h.get('home-demo-status').textContent, /try again|retry/i);
-    assert.doesNotMatch(h.get('home-demo-status').textContent, /request sent/i);
-    assert.equal(h.get('home-demo-submit').disabled, false);
-    h.get('home-demo-submit').emit('click'); await new Promise(done => setImmediate(done));
-    assert.match(h.get('home-demo-status').textContent, /request sent/i);
-    assert.equal(count, 2);
-  }
-  let count = 0;
-  const h = fixture({ stored: 'london', analytics: { trackingAllowed: () => false, recordDemoRequest() { count++; return true; } } });
-  h.get('city-explorer-link').emit('click'); h.get('home-demo-submit').emit('click');
-  await new Promise(done => setImmediate(done));
-  assert.match(h.get('home-demo-status').textContent, /tracking.*disabled/i);
-  assert.doesNotMatch(h.get('home-demo-status').textContent, /request sent/i);
-  assert.equal(count, 0);
+test('failed feedback requests remain retryable and never fall back to analytics or local-only success',async()=>{
+ let calls=0,analyticsCalls=0,saved=false;
+ const demoRequests={async recordDemoRequest(){calls++;if(calls===1)throw Error('offline');saved=true;return true;},requestStatus:()=>({remoteSaved:saved})};
+ const h=fixture({stored:'london',demoRequests,analytics:{recordDemoRequest(){analyticsCalls++;return true;}}});h.get('city-explorer-link').emit('click');h.get('home-demo-submit').emit('click');await new Promise(r=>setImmediate(r));
+ assert.match(h.get('home-demo-status').textContent,/try again/i);assert.equal(h.get('home-demo-submit').disabled,false);assert.equal(analyticsCalls,0);
+ h.get('home-demo-submit').emit('click');await new Promise(r=>setImmediate(r));assert.match(h.get('home-demo-status').textContent,/request sent/i);
+ const unavailable=fixture({stored:'london',analytics:{recordDemoRequest(){analyticsCalls++;return true;}}});unavailable.get('city-explorer-link').emit('click');unavailable.get('home-demo-submit').emit('click');await new Promise(r=>setImmediate(r));assert.match(unavailable.get('home-demo-status').textContent,/try again/i);assert.equal(analyticsCalls,0);
 });
-
-test('request city and mode are captured when opened and late replies cannot overwrite a different dialog', async () => {
-  const recorded = []; let resolve;
-  const h = fixture({ stored: 'london', analytics: { recordDemoRequest(city, mode) { recorded.push([city, mode]); return new Promise(done => { resolve = done; }); } } });
-  h.get('city-explorer-link').emit('click'); h.changeCity('oshawa');
-  assert.equal(h.get('home-demo-city').textContent, 'London');
-  h.get('home-demo-submit').emit('click');
-  assert.deepEqual(recorded, [['london', 'explorer']]);
-  h.get('home-demo-close').emit('click'); h.get('city-explorer-link').emit('click');
-  assert.equal(h.get('home-demo-city').textContent, 'Oshawa');
-  resolve(true); await new Promise(done => setImmediate(done));
-  assert.doesNotMatch(h.get('home-demo-status').textContent, /request sent/i);
-  assert.equal(h.get('home-demo-submit').disabled, false);
+test('request city and mode are captured when opened and late replies cannot overwrite a different dialog',async()=>{
+ const recorded=[];let finish;const h=fixture({stored:'london',demoRequests:{recordDemoRequest(...args){recorded.push(args);return new Promise(r=>finish=r);},requestStatus:()=>({remoteSaved:false})}});
+ h.get('city-explorer-link').emit('click');h.changeCity('oshawa');h.get('home-demo-submit').emit('click');assert.deepEqual(recorded,[['london','explorer']]);
+ h.get('home-demo-close').emit('click');h.get('city-explorer-link').emit('click');finish(true);await new Promise(r=>setImmediate(r));assert.equal(h.get('home-demo-city').textContent,'Oshawa');assert.doesNotMatch(h.get('home-demo-status').textContent,/request sent/i);assert.equal(h.get('home-demo-submit').disabled,false);
 });
-
-test('device request persistence uses precise local confirmation and bypasses remote tracking exclusion', async () => {
-  let localSaved = false; let remoteCalls = 0; let localCalls = 0;
-  const demoRequests = {
-    async recordDemoRequest(city, mode) { assert.equal(city, 'london'); assert.equal(mode, 'explorer'); localCalls++; localSaved = true; return true; },
-    requestStatus() { return { localSaved, remoteSaved: false }; },
-  };
-  const h = fixture({ stored: 'london', demoRequests, analytics: { trackingAllowed: () => false, recordDemoRequest() { remoteCalls++; return false; } } });
-  h.get('city-explorer-link').emit('click'); h.get('home-demo-submit').emit('click');
-  await new Promise(done => setImmediate(done));
-  assert.equal(localCalls, 1); assert.equal(remoteCalls, 0);
-  assert.match(h.get('home-demo-status').textContent, /request recorded on this device/i);
-  assert.doesNotMatch(h.get('home-demo-status').textContent, /request sent/i);
-  assert.equal(h.get('home-demo-submit').disabled, true);
-  const restored = fixture({ stored: 'london', demoRequests }); restored.get('city-explorer-link').emit('click');
-  assert.match(restored.get('home-demo-status').textContent, /request recorded on this device/i);
-  assert.equal(restored.get('home-demo-submit').disabled, true);
+test('account changes discard another account request confirmation and explicit requests ignore analytics exclusions',async()=>{
+ let saved=false;const h=fixture({stored:'london',analytics:{trackingAllowed:()=>false},demoRequests:{async recordDemoRequest(){saved=true;return true;},requestStatus:()=>({remoteSaved:saved})}});
+ h.get('city-explorer-link').emit('click');h.get('home-demo-submit').emit('click');await new Promise(r=>setImmediate(r));assert.match(h.get('home-demo-status').textContent,/request sent/i);
+ saved=false;h.window.emit('ptbo-feedback-account-change');assert.equal(h.get('home-demo-conversation').hidden,true);assert.equal(h.get('home-demo-submit').disabled,false);
 });
-
-test('device adapter failure remains retryable and remote confirmation is only shown for a saved shared request', async () => {
-  let saved = false;
-  const h = fixture({ stored: 'london', demoRequests: { async recordDemoRequest() { return saved; }, requestStatus() { return { localSaved: saved, remoteSaved: saved }; } } });
-  h.get('city-explorer-link').emit('click'); h.get('home-demo-submit').emit('click'); await new Promise(done => setImmediate(done));
-  assert.match(h.get('home-demo-status').textContent, /try again/i);
-  assert.equal(h.get('home-demo-submit').disabled, false);
-  saved = true; h.get('home-demo-submit').emit('click'); await new Promise(done => setImmediate(done));
-  assert.match(h.get('home-demo-status').textContent, /request sent/i);
+test('Open conversation closes the confirmation and opens the private feedback thread',async()=>{
+ let opened;const h=fixture({stored:'london',demoRequests:{requestStatus:()=>({remoteSaved:true}),async openConversation(...args){opened=args;}}});h.get('city-explorer-link').emit('click');h.get('home-demo-conversation').emit('click');await new Promise(r=>setImmediate(r));assert.equal(h.get('home-demo-dialog').open,false);assert.deepEqual(opened,['london','explorer']);
 });
 
 function launcherAccessFixture(version) {
@@ -521,22 +469,31 @@ test('city selector retains the access patch module cache token without canonica
 });
 
 test('a queued close event cannot erase an immediately reopened demo request',async()=>{
- const calls=[],h=fixture({stored:'ottawa',demoRequests:{recordDemoRequest:async(...args)=>{calls.push(args);return true;},requestStatus:()=>({localSaved:calls.length>0,remoteSaved:false})}});
+ const calls=[],h=fixture({stored:'ottawa',demoRequests:{recordDemoRequest:async(...args)=>{calls.push(args);return true;},requestStatus:()=>({remoteSaved:calls.length>0})}});
  // Model the browser: dialog.close() queues its close event, rather than dispatching synchronously.
  const dialog=h.get('home-demo-dialog');dialog.close=function(){this.open=false;};
  h.get('city-explorer-link').emit('click');h.get('home-demo-close').emit('click');
  h.get('city-explorer-link').emit('keydown',{key:'Enter'});dialog.emit('close');
  h.get('home-demo-submit').emit('click');await new Promise(r=>setImmediate(r));
- assert.equal(calls.length,1);assert.equal(calls[0][0],'ottawa');assert.equal(dialog.open,true);assert.match(h.get('home-demo-status').textContent,/recorded on this device/);
+ assert.equal(calls.length,1);assert.equal(calls[0][0],'ottawa');assert.equal(dialog.open,true);assert.match(h.get('home-demo-status').textContent,/Request sent/);
 });
 test('a failed pending request updates an immediately reopened dialog so it can retry',async()=>{
  let finish;const h=fixture({stored:'ottawa',demoRequests:{recordDemoRequest:()=>new Promise(r=>finish=r),requestStatus:()=>({localSaved:false,remoteSaved:false})}});
  h.get('city-explorer-link').emit('click');h.get('home-demo-submit').emit('click');h.get('home-demo-close').emit('click');h.get('city-explorer-link').emit('click');
- finish(false);await new Promise(r=>setImmediate(r));assert.equal(h.get('home-demo-submit').disabled,false);assert.match(h.get('home-demo-status').textContent,/could not be saved/);
+ finish(false);await new Promise(r=>setImmediate(r));assert.equal(h.get('home-demo-submit').disabled,false);assert.match(h.get('home-demo-status').textContent,/could not be sent/);
 });
 test('editor utility links preserve the selected city for every registered catalog',()=>{
  const h=fixture({stored:'ottawa'}),link=h.get('dispatch-editor-link');
  assert.match(link.href,/dispatch-editor\/\?city=ottawa/);assert.match(link.getAttribute('aria-label'),/Ottawa/);
  h.changeCity('markham');assert.equal(new URL(link.href).searchParams.get('city'),'markham');
  h.changeCity('peterborough');assert.equal(new URL(link.href).searchParams.get('city'),'peterborough');
+});
+
+test('switching accounts frees pending demo actions and old completions cannot clear the new account operation',async()=>{
+ let sent=false;const finishes=[];
+ const h=fixture({stored:'london',demoRequests:{recordDemoRequest:()=>new Promise(r=>finishes.push(r)),requestStatus:()=>({remoteSaved:sent})}});
+ h.get('city-explorer-link').emit('click');h.get('home-demo-submit').emit('click');h.get('home-demo-close').emit('click');
+ h.window.emit('ptbo-feedback-account-change',{detail:{replaced:true}});h.get('city-explorer-link').emit('click');assert.equal(h.get('home-demo-submit').disabled,false);
+ h.get('home-demo-submit').emit('click');assert.equal(finishes.length,2);finishes[0](false);await new Promise(r=>setImmediate(r));assert.equal(h.get('home-demo-submit').disabled,true);assert.match(h.get('home-demo-status').textContent,/Sending/);
+ sent=true;finishes[1](true);await new Promise(r=>setImmediate(r));assert.match(h.get('home-demo-status').textContent,/Request sent/);
 });

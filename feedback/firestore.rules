@@ -67,7 +67,7 @@ service cloud.firestore {
   function validThread(t) {
    return t.keys().hasAll(['ownerId','title','category','city','mode','department','version','status','priority','createdAt','updatedAt','lastMessageId','lastSender','playerMessages','developerMessages','playerRead','developerRead'])
     && t.size() == ('locationReport' in t ? 18 : 17)
-    && validText(t.title,120) && t.category in ['bug','map','idea','question']
+    && validText(t.title,120) && t.category in ['bug','map','idea','question','demo']
     && validText(t.city,80) && validText(t.mode,80) && validText(t.department,80) && validText(t.version,80)
     && t.status in ['new','reviewing','planned','resolved','closed'] && t.priority in ['normal','high']
     && t.createdAt is timestamp && t.updatedAt is timestamp && validText(t.lastMessageId,80)

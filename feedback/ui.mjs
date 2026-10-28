@@ -1,6 +1,7 @@
+import { createDemoRequests } from './demo-requests.mjs?v=demo-feedback-20261028';
 import { editorUrlForReport, exportFeedback } from "./agent-tools.mjs?v=feedback-workflow-20261028";
 import { feedbackConfig } from "./config.mjs?v=feedback-workflow-20261028";
-import { createFeedbackService } from "./service.mjs?v=feedback-workflow-20261028";
+import { createFeedbackService } from "./service.mjs?v=demo-feedback-20261028";
 import { normalizeLocationReport, locationReportIdentity, locationReportGroupKey } from './location-report.mjs';
 import { mountLocationReportComposer, mountLocationReportDetails } from './location-report-ui.mjs?v=compact-feedback-20261028';
 import {
@@ -11,7 +12,7 @@ import {
   errorMessage,
   filterThreads,
   unreadCount,
-} from "./model.mjs";
+} from "./model.mjs?v=demo-feedback-20261028";
 
 const node = (tag, text, attrs = {}) => {
   const element = document.createElement(tag);
@@ -41,7 +42,7 @@ export function mountFeedback({
   service ||= createFeedbackService(config);
   const stylesheet = node("link", null, {
     rel: "stylesheet",
-    href: new URL("feedback/styles.css?v=compact-feedback-20261028", rootUrl),
+    href: new URL("feedback/styles.css?v=demo-feedback-20261028", rootUrl),
   });
   document.head.append(stylesheet);
   const dialog = node("dialog", null, {
@@ -65,6 +66,7 @@ export function mountFeedback({
     generation = 0,
     listGeneration = 0,
     overflow = "";
+  const demoRequests = createDemoRequests(service, context);
   const entries = new Set(),
     filters = {},
     drafts = new Map();
@@ -242,7 +244,7 @@ export function mountFeedback({
         node("strong", thread.title),
         node(
           "small",
-          `${thread.city} · ${thread.mode} · ${statuses[thread.status] || thread.status}`,
+          `${thread.city} · ${thread.mode} · ${statuses[thread.status] || thread.status}${developer && thread.ownerId === current?.uid ? " · You" : ""}`,
         ),
       );
       button.onclick = () => openThread(thread);
@@ -656,6 +658,9 @@ export function mountFeedback({
     detail.querySelector("h3").textContent = thread.title;
     detail.querySelector(".fb-detail-header small").textContent =
       `${thread.city} · ${thread.mode} · ${thread.department} · v${thread.version} · ${statuses[thread.status] || thread.status}`;
+    if (developer) detail.querySelector('.fb-detail-header').append(node('div',
+      thread.ownerId === current?.uid ? 'Sender: You (your account)' : `Player ID: ${thread.ownerId}`,
+      {class:'fb-muted fb-sender'}));
     detail.querySelector(".fb-back").onclick = () => {
       clearDetail();
       renderList();
@@ -766,10 +771,15 @@ export function mountFeedback({
       bubble.append(
         node(
           "small",
-          message.authorRole === "developer" ? "Developer" : "Player",
+          message.authorId === current?.uid ? "You" : message.authorRole === "developer" ? "Developer" : "Player",
         ),
         node("span", message.body),
       );
+      const milliseconds = message.createdAt?.toMillis?.();
+      if (Number.isFinite(milliseconds)) {
+        const date = new Date(milliseconds);
+        bubble.append(node('time', date.toLocaleString(undefined,{dateStyle:'medium',timeStyle:'short'}), {datetime:date.toISOString(),class:'fb-muted'}));
+      }
       list.append(bubble);
     }
     if (nearBottom || rows.length <= 2) list.scrollTop = list.scrollHeight;
@@ -1001,6 +1011,7 @@ export function mountFeedback({
   for (const type of ["keydown", "keyup", "keypress"])
     dialog.addEventListener(type, (event) => event.stopPropagation());
   service.subscribeAccount((next) => {
+    const previousUid = current?.uid;
     const changedUid =
       current?.uid !== next?.uid || current?.isDeveloper !== next?.isDeveloper;
     current = next;
@@ -1016,6 +1027,8 @@ export function mountFeedback({
       threads.clear();
       drafts.clear();
       reportDrafts.clear();
+      demoRequests.reset();
+      window.dispatchEvent(new window.CustomEvent("ptbo-feedback-account-change", {detail:{replaced:Boolean(previousUid)}}));
       developer = Boolean(next?.isDeveloper);
       readAttempt = "";
       startDeveloperQueue();
@@ -1036,7 +1049,19 @@ export function mountFeedback({
         installMenu(frame.contentDocument);
     } catch {}
   }
-  const api = { open, openLocationReport, close, service };
+  async function requestDemo(input) {
+    return demoRequests.send(input);
+  }
+  async function openDemoConversation(city, mode) {
+    const thread = demoRequests.status(city, mode).thread;
+    if (!thread || thread.ownerId !== current?.uid) throw new Error('Reopen Feedback from your request account.');
+    ++openRequest;
+    showDialog();
+    showInbox();
+    openThread(threads.get(thread.id) || thread);
+  }
+  const api = { open, openLocationReport, close, service, requestDemo,
+    demoRequestStatus:demoRequests.status, openDemoConversation };
   window.PTBO_FEEDBACK = api;
   service.ready
     .then(() => {
@@ -1048,7 +1073,11 @@ export function mountFeedback({
       const launcher =
         location.pathname === new URL(rootUrl).pathname ||
         location.pathname === new URL("index.html", rootUrl).pathname;
-      if (standalone) void open();
+      if (standalone) {
+        const category = new URLSearchParams(location.search).get('category');
+        if (Object.hasOwn(categories, category)) filters.category = category;
+        void open();
+      }
       else if (launcher && !current && !welcomed) {
         dialog.showModal();
         overflow = document.body.style.overflow;

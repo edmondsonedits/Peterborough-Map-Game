@@ -304,6 +304,44 @@ const server = http.createServer((req, res) => {
     await guestPage.locator("#ptbo-feedback-entry").click();
     await guestPage.locator(`[data-thread-id="${transferThreadId}"]`).click();
     await guestPage.getByText("A guest message before existing-account sign-in.",{exact:true}).waitFor();
+
+    // Actual homepage -> guest private demo request -> developer inbox -> reply/export.
+    const demo = await player({width:338,height:656});
+    await demo.locator('#feedback-guest').click();
+    await demo.evaluate(()=>{localStorage.setItem('ptbo-demo-requests-v1','{"byCityMode":{"oshawa":{"route":1}}}');sessionStorage.setItem('ptbo-device-demo-request-v1:old:oshawa:route','local');});
+    await demo.goto(base+'/?city=oshawa&analytics=off');
+    await demo.waitForFunction(()=>Boolean(window.PTBO_FEEDBACK));
+    assert.equal(await demo.evaluate(()=>localStorage.getItem('ptbo-demo-requests-v1')),null);
+    assert.equal(await demo.evaluate(()=>sessionStorage.getItem('ptbo-device-demo-request-v1:old:oshawa:route')),null);
+    await demo.locator('#city-explorer-link').click();
+    await demo.locator('#home-demo-submit').click();
+    await waitFor(async()=>/Request sent/.test(await demo.locator('#home-demo-status').innerText()));
+    const receipt=await demo.evaluate(()=>({thread:PTBO_FEEDBACK.demoRequestStatus('oshawa','explorer').thread,account:PTBO_FEEDBACK.service.account}));
+    assert.equal(receipt.account.isGuest,true);assert.equal(receipt.thread.category,'demo');assert.equal(receipt.thread.ownerId,receipt.account.uid);
+    const demoId=receipt.thread.id;
+    await demo.locator('#home-demo-conversation').click();
+    await demo.getByText('I would like a demo of City Explorer for Oshawa.',{exact:true}).waitFor();
+    const sentTime=await demo.locator('.fb-message time').getAttribute('datetime');assert.ok(Math.abs(Date.parse(sentTime)-Date.now())<120000);
+    const boundsDemo=await demo.locator('#ptbo-feedback-dialog').boundingBox();assert.ok(boundsDemo.x>=0&&boundsDemo.x+boundsDemo.width<=339);
+    await demo.screenshot({path:'/tmp/pmg-demo-mobile.png'});
+    await admin.locator('[data-filter="category"]').selectOption('demo');
+    await admin.locator(`[data-thread-id="${demoId}"]`).click();
+    await admin.getByText('I would like a demo of City Explorer for Oshawa.',{exact:true}).waitFor();
+    assert.match(await admin.locator('.fb-detail-header').innerText(),new RegExp(receipt.account.uid));
+    await admin.locator('#feedback-reply').fill('Thanks, I have your Oshawa City Explorer demo request.');
+    await admin.locator('#feedback-send').click();
+    await demo.getByText('Thanks, I have your Oshawa City Explorer demo request.',{exact:true}).waitFor();
+    await admin.locator('.fb-notes summary').click();await admin.locator('#feedback-note').fill('Private demo planning note');await admin.locator('#feedback-add-note').click();await admin.getByText('Private demo planning note',{exact:true}).waitFor();assert.equal(await demo.getByText('Private demo planning note',{exact:true}).count(),0);
+    const exported=await admin.evaluate(async(id)=>{const {exportFeedback}=await import('/feedback/agent-tools.mjs');const thread=(await PTBO_FEEDBACK.service.loadThreads({developer:true})).rows.find(t=>t.id===id);return exportFeedback(PTBO_FEEDBACK.service,[thread],new URL('/',location.href));},demoId);
+    assert.equal(exported.conversations[0].category,'demo');assert.equal(exported.conversations[0].messages.length,2);assert.equal(exported.conversations[0].notes[0].body,'Private demo planning note');assert.equal(exported.conversations[0].ownerId,receipt.account.uid);
+    assert.equal(await b.evaluate(async(id)=>{try{await PTBO_FEEDBACK.service.loadMessages(id);return false;}catch(e){return e.code==='permission-denied';}},demoId),true);
+    await demo.locator('#feedback-account').click();await demo.locator('#feedback-signin').click();await demo.locator('#feedback-email').fill(bobEmail);await demo.locator('#feedback-password').fill('Test-pass-739!');await demo.locator('#feedback-auth-submit').click();await demo.locator(`[data-thread-id="${demoId}"]`).waitFor();assert.equal(await demo.evaluate(()=>PTBO_FEEDBACK.demoRequestStatus('oshawa','explorer').remoteSaved),false);await demo.locator(`[data-thread-id="${demoId}"]`).click();await demo.getByText('I would like a demo of City Explorer for Oshawa.',{exact:true}).waitFor();
+    await demo.locator('#feedback-account').click();await demo.locator('#feedback-signout').click();
+    await new Promise(r=>setTimeout(r,1100));
+    await admin.evaluate(()=>PTBO_FEEDBACK.requestDemo({city:'oshawa',cityName:'Oshawa',mode:'explorer'}));await admin.evaluate(()=>PTBO_FEEDBACK.openDemoConversation('oshawa','explorer'));await admin.getByText('Sender: You (your account)',{exact:true}).waitFor();
+    await demo.goto(base+'/site-stats/');assert.equal(await demo.getByText('Demo requests on this device',{exact:true}).count(),0);assert.equal(await demo.locator('a[href="../feedback/?category=demo"]').count(),1);
+    await admin.goto(base+'/feedback/?category=demo');await admin.locator('[data-filter="category"]').waitFor();assert.equal(await admin.locator('[data-filter="category"]').inputValue(),'demo');
+    console.log('PASS: homepage demo request, guest ownership, timestamps, private reply/notes, developer category filter and own-account label, AI export, other-player denial, legacy cleanup and identity isolation.');
     console.log(
       "PASS: guest skip, guest linking, guest-to-existing-account recovery across reload, wrong-password preservation, privacy, developer reply/notes, unread, offline retry, sign-out isolation, mobile viewport.",
     );

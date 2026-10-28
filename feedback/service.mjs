@@ -1,5 +1,5 @@
 import {signInPreservingGuest,resumeGuestTransfers} from "./guest-transfer.mjs?v=feedback-workflow-20261028";
-import { normalizeBody, normalizeNewThread } from "./model.mjs";
+import { normalizeBody, normalizeNewThread } from "./model.mjs?v=demo-feedback-20261028";
 import { normalizeLocationReport, locationReportIdentity } from "./location-report.mjs";
 const SDK = "https://www.gstatic.com/firebasejs/12.5.0";
 export function createFeedbackService(config) {
