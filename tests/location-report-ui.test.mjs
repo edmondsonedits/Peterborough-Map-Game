@@ -69,3 +69,18 @@ test('map placement and centre dragging wrap repeated-world longitudes into vali
  assert.equal(sent[0].suggestion.center.lng,-77);assert.equal(g.host.querySelector('.fb-error').textContent,'');
  view.destroy();g.dom.window.close();
 });
+
+test('technical context starts collapsed while the unchanged snapshot and diagnostics remain attached',async()=>{
+ const g=setup(),sent=[],source=snapshot(),diagnostics='Browser: Mobile test browser\nViewport: 338 × 656 CSS pixels\nReport opened: 2026-10-28T03:06:28.863Z';
+ const view=mount(g,{snapshot:source,diagnosticsText:diagnostics,onSend:async report=>sent.push(report),onReceived(){}});
+ const details=g.host.querySelector('.fb-report-context');
+ assert.equal(details.open,false);
+ assert.equal(details.querySelector('summary').textContent,'Technical details');
+ const content=details.querySelector('.fb-auto-context-body');assert.ok(content,'all technical fields should share one collapsible container');
+ assert.ok(content.contains(details.querySelector('dl')));
+ assert.ok(content.textContent.includes(diagnostics));
+ g.change('[name="note"]','The circle seems too small.');g.submit();await flush();
+ assert.equal(sent.length,1);assert.deepEqual(sent[0].snapshot,source);
+ assert.equal(details.open,false,'sending should not expand technical data');
+ view.destroy();g.dom.window.close();
+});

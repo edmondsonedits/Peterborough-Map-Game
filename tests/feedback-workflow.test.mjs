@@ -12,11 +12,12 @@ function setup({admin=true,pages=[],readUpdatesThread=false}={}){
  dom.window.HTMLDialogElement.prototype.showModal=function(){this.open=true;};dom.window.HTMLDialogElement.prototype.close=function(){this.open=false;};
  Object.defineProperty(document,'visibilityState',{value:'visible',configurable:true});document.hasFocus=()=>true;
  let account={uid:admin?'dev':'player',isGuest:!admin,isDeveloper:admin},listener,rows=[thread()],id=0,messageNext;
- const scopes=[],reads=[],watchers=[],loads=[],threadListeners=new Map();
+ const scopes=[],reads=[],watchers=[],loads=[],sends=[],threadListeners=new Map();
  const service={ready:Promise.resolve(),id:()=>`id-${++id}`,get account(){return account;},subscribeAccount(fn){listener=fn;fn(account);},ensureGuest:async()=>account,
   watchThreads(fn,error,scope){scopes.push(scope);const w={fn,scope};watchers.push(w);fn({rows:scope.developer?rows:rows.filter(t=>t.ownerId===account.uid),cursor:'page0',more:scope.developer&&pages.length>0});return()=>{watchers.splice(watchers.indexOf(w),1);};},
   async loadThreads({cursor}){loads.push(cursor);return pages[Number(cursor.replace('page',''))]||{rows:[],cursor:null,more:false};},
   watchMessages(id,fn){messageNext=fn;fn({rows:[{id:'m1',authorRole:'player',body:'Original message',createdAt:{toMillis:()=>1}}],more:false});return()=>{};},
+  async send(payload){sends.push(payload);},
   watchThread(id,fn){threadListeners.set(id,fn);return()=>threadListeners.delete(id);},
   watchNotes(id,fn){fn([]);return()=>{};},markRead:async(...args)=>{reads.push(args);if(readUpdatesThread)threadListeners.get(args[0])?.(thread(args[0],{developerRead:1}));},
   emit(t){rows=[t];for(const w of [...watchers])w.fn({rows:w.scope.developer?rows:rows.filter(t=>t.ownerId===account.uid),more:false,cursor:'page0'});},
@@ -25,7 +26,7 @@ function setup({admin=true,pages=[],readUpdatesThread=false}={}){
  const api=mountFeedback({config:{enabled:true},service,rootUrl:new URL('https://game.example.test/')});
  const show=async()=>{await api.open();await tick();};
  const openThread=async(id='report')=>{document.querySelector(`[data-thread-id="${id}"]`).click();const list=document.querySelector('.fb-messages');list.getBoundingClientRect=()=>({top:100,bottom:400,height:300});Object.defineProperties(list,{scrollHeight:{value:300,configurable:true},clientHeight:{value:300,configurable:true}});document.querySelector('.fb-detail').getBoundingClientRect=()=>({top:50,bottom:500,height:450});for(const row of list.querySelectorAll('article'))row.getBoundingClientRect=()=>({top:200,bottom:250,height:50});list.dispatchEvent(new window.Event('scroll'));await tick();};
- return{dom,api,service,scopes,reads,loads,show,openThread,close(){api.close();dom.window.close();}};
+ return{dom,api,service,scopes,reads,loads,sends,show,openThread,close(){api.close();dom.window.close();}};
 }
 test('developer defaults to the full developer inbox and maintains notifications in personal view',async()=>{
  const g=setup();await g.show();assert.equal(g.scopes[0].developer,true);assert.ok(document.querySelector('[data-thread-id="report"]'));
@@ -55,4 +56,13 @@ test('queue search covers report identifiers, address and priority filtering',()
 test('reading an older scanned conversation refreshes its row and unread filter without a top-page update',async()=>{
  const g=setup({readUpdatesThread:true,pages:[{rows:[thread('older')],more:false,cursor:'page1'}]});await g.show();g.service.emit(thread('report',{developerRead:1}));await g.openThread('older');
  assert.equal(document.querySelector('[data-thread-id="older"]').dataset.unread,'false');assert.equal(document.querySelector('#ptbo-feedback-entry').dataset.unread,'false');g.close();
+});
+
+test('new feedback keeps game context collapsed and submits its automatically filled values',async()=>{
+ const g=setup({admin:false});await g.show();document.querySelector('#feedback-new').click();
+ const details=document.querySelector('.fb-message-context');assert.ok(details);assert.equal(details.open,false);
+ const city=document.querySelector('#feedback-city').value,mode=document.querySelector('#feedback-mode').value,department=document.querySelector('#feedback-department').value;
+ document.querySelector('#feedback-title').value='Training idea';document.querySelector('#feedback-body').value='Please add more locations.';
+ document.querySelector('.fb-new-form').dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));await tick();
+ assert.equal(g.sends.length,1);assert.equal(g.sends[0].newThread.city,city);assert.equal(g.sends[0].newThread.mode,mode);assert.equal(g.sends[0].newThread.department,department);assert.equal(g.sends[0].body,'Please add more locations.');g.close();
 });
