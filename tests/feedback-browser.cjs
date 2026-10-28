@@ -164,7 +164,6 @@ const server = http.createServer((req, res) => {
     await admin.locator("#feedback-email").fill(adminEmail);
     await admin.locator("#feedback-password").fill("Test-pass-739!");
     await admin.locator("#feedback-auth-submit").click();
-    await admin.locator("#feedback-developer").click();
     await admin.locator(`[data-thread-id="${threadId}"]`).click();
     await admin
       .locator("#feedback-reply")
@@ -203,11 +202,11 @@ const server = http.createServer((req, res) => {
     );
     await a.locator("#ptbo-feedback-entry").click();
     await a.locator(`[data-thread-id="${threadId}"]`).click();
+    await a.bringToFront();
+    await a.locator(".fb-messages").evaluate(el=>el.scrollTop=el.scrollHeight);
     await waitFor(
       async () =>
-        (await a
-          .locator("#ptbo-feedback-entry")
-          .getAttribute("data-unread")) === "false",
+        (await a.locator("#ptbo-feedback-entry").getAttribute("data-unread")) === "false",
     );
     await admin.evaluate(() => { Date.now = window.originalFeedbackNow; delete window.originalFeedbackNow; });
     await a.locator("#feedback-reply").fill("Please retain this draft.");
@@ -278,8 +277,35 @@ const server = http.createServer((req, res) => {
       path: "/tmp/ptbo-feedback-developer.png",
       fullPage: true,
     });
+    const guestPage = await player();
+    await guestPage.locator("#feedback-guest").click();
+    await guestPage.locator("#ptbo-feedback-entry").click();
+    await guestPage.locator("#feedback-new").click();
+    await guestPage.locator("#feedback-title").fill("Preserve this guest report");
+    await guestPage.locator("#feedback-body").fill("A guest message before existing-account sign-in.");
+    await guestPage.locator("#feedback-create-thread").click();
+    await guestPage.locator("[data-message-id]").waitFor();
+    const transferThreadId = await guestPage.locator("[data-thread-id]").first().getAttribute("data-thread-id");
+    const transferGuestId = await guestPage.evaluate(()=>PTBO_FEEDBACK.service.account.uid);
+    await guestPage.locator("#feedback-account").click();
+    await guestPage.locator("#feedback-signin").click();
+    await guestPage.locator("#feedback-email").fill(bobEmail);
+    await guestPage.locator("#feedback-password").fill("wrong-password");
+    await guestPage.locator("#feedback-auth-submit").click();
+    await guestPage.locator(".fb-error").filter({hasText:"Could not sign in"}).waitFor();
+    assert.equal(await guestPage.evaluate(()=>PTBO_FEEDBACK.service.account.uid),transferGuestId);
+    await guestPage.locator("#feedback-password").fill("Test-pass-739!");
+    await guestPage.locator("#feedback-auth-submit").click();
+    await guestPage.locator(`[data-thread-id="${transferThreadId}"]`).waitFor();
+    assert.notEqual(await guestPage.evaluate(()=>PTBO_FEEDBACK.service.account.uid),transferGuestId);
+    await guestPage.locator(`[data-thread-id="${transferThreadId}"]`).click();
+    await guestPage.getByText("A guest message before existing-account sign-in.",{exact:true}).waitFor();
+    await guestPage.reload();
+    await guestPage.locator("#ptbo-feedback-entry").click();
+    await guestPage.locator(`[data-thread-id="${transferThreadId}"]`).click();
+    await guestPage.getByText("A guest message before existing-account sign-in.",{exact:true}).waitFor();
     console.log(
-      "PASS: guest skip, guest linking, privacy, developer reply/notes, unread, offline retry, sign-out isolation, mobile viewport.",
+      "PASS: guest skip, guest linking, guest-to-existing-account recovery across reload, wrong-password preservation, privacy, developer reply/notes, unread, offline retry, sign-out isolation, mobile viewport.",
     );
   } finally {
     for (const c of contexts) await c.close();

@@ -442,3 +442,12 @@
     }
   }
 }
+
+#ptbo-feedback-dialog .fb-editor-link { display:inline-flex;align-items:center;min-height:40px;padding:8px 12px;border:1px solid var(--fb-border,#486078);border-radius:8px;color:inherit;text-decoration:none; }
+#ptbo-feedback-dialog .fb-queue-summary { margin:6px 12px;font-size:.8rem; }
+
+#ptbo-feedback-dialog .fb-sidebar { overflow-y:auto; }
+#ptbo-feedback-dialog .fb-thread-list { flex:1 0 140px; }
+#ptbo-feedback-dialog .fb-tools { flex-shrink:0; }
+#ptbo-feedback-dialog .fb-fix-section { width:100%;font-size:.8rem; }
+#ptbo-feedback-dialog .fb-fix-section summary { cursor:pointer;padding:8px 0; }

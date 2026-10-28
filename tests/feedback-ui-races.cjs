@@ -88,7 +88,6 @@ const server = http.createServer((req, res) => {
     await scenario(
       "role downgrade clears developer-only content",
       async (p) => {
-        await p.locator("#feedback-developer").click();
         await p.locator('[data-thread-id="alice"]').click();
         assert.equal(
           await p.getByText("Secret developer note", { exact: true }).count(),
@@ -162,7 +161,6 @@ const server = http.createServer((req, res) => {
       "short viewport keeps Send reachable",
       async (p) => {
         await p.locator(".fb-back").click();
-        await p.locator("#feedback-developer").click();
         await p.locator('[data-thread-id="alice"]').click();
         await p.locator(".fb-detail").evaluate((element) => {
           element.scrollTop = element.scrollHeight;
@@ -180,6 +178,8 @@ const server = http.createServer((req, res) => {
     await scenario(
       "live updates preserve oldest pagination cursor",
       async (p) => {
+        await p.locator("#feedback-developer").click();
+        await p.evaluate(() => { fixture.cursors = []; });
         await p.locator("#feedback-more-threads").click();
         await p.evaluate(() => fixture.updateThreads());
         await p.locator("#feedback-more-threads").click();

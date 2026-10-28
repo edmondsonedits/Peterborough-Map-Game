@@ -160,7 +160,7 @@
   $('city-select').onchange=()=>{
     const id=$('city-select').value;if(id===cityId)return;
     if(!(window.PTBO_CITIES||[]).some(x=>x.id===id)||!canDiscard()){$('city-select').value=cityId;return;}
-    const url=new URL(location.href);url.searchParams.set('city',id);if(!url.searchParams.has('v')&&window.PTBO_BUILD?.version)url.searchParams.set('v',window.PTBO_BUILD.version);leavingCity=true;location.assign(url.href);
+    const url=new URL(location.href);url.searchParams.set('city',id);url.searchParams.delete('callId');url.searchParams.delete('feedback');if(!url.searchParams.has('v')&&window.PTBO_BUILD?.version)url.searchParams.set('v',window.PTBO_BUILD.version);leavingCity=true;location.assign(url.href);
   };
   window.addEventListener('beforeunload',event=>{if(!leavingCity&&hasUnsavedChanges()){event.preventDefault();event.returnValue='';}});
   document.addEventListener('keydown',event=>{if(event.key==='Escape'&&placing){placing=null;$('placement-banner').classList.add('hidden');$('base-editor').classList.remove('placing');$('add-map').classList.remove('active');status('Map placement cancelled.');}});
@@ -173,7 +173,14 @@
     $('city-title').textContent=`${cityName} · Dispatch Editor`;document.title=`${cityName} Dispatch Editor`;
     const registry=[...(window.PTBO_CITIES||[])].sort((a,b)=>a.id==='peterborough'?-1:b.id==='peterborough'?1:a.name.localeCompare(b.name));
     $('city-select').innerHTML=registry.map(x=>`<option value="${escapeHtml(x.id)}">${escapeHtml(x.name)} · ${x.id==='peterborough'?200:x.modes?.geo?20:0} published calls</option>`).join('');$('city-select').value=cityId;
-    ready=true;document.querySelectorAll('[data-editor-control]').forEach(control=>control.disabled=false);updateSubs($('sub-filter'),'');updateModeControls();render();fit();status(`${cityName} ready · Edits stay on this device`);return city;
+    ready=true;document.querySelectorAll('[data-editor-control]').forEach(control=>control.disabled=false);updateSubs($('sub-filter'),'');updateModeControls();render();fit();status(`${cityName} ready · Edits stay on this device`);
+    const requestedCall=new URLSearchParams(location.search).get('callId');
+    if(requestedCall){
+      const match=locations.find(item=>item.id===requestedCall);
+      if(match){clearFilters();select(match.id);status(`Feedback location opened · ${cityName} · ${match.name}. Review the report before editing.`);}
+      else status(`Reported location ${requestedCall} is not in the current ${cityName} call catalog. No location was selected; check the report dataset.`);
+    }
+    return city;
   }).catch(error=>{status(error.message);$('editor-load-retry').hidden=false;throw error;});
   window.PTBO_EDITOR_UI_READY.catch(()=>{});
 })();

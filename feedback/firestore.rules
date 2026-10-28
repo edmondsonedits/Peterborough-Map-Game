@@ -5,6 +5,26 @@ service cloud.firestore {
   function developer() { return signedIn() && request.auth.token.get('feedbackAdmin', false) == true; }
   function threadPath(id) { return /databases/$(database)/documents/feedbackThreads/$(id); }
   function ownerOrDeveloper(id) { return signedIn() && (developer() || get(threadPath(id)).data.ownerId == request.auth.uid); }
+  // Source-keyed, revocable authorization. The server timestamp excludes future
+  // conversations if a guest later becomes a separately registered account.
+  function transferRecipient(t) {
+   let grant = get(/databases/$(database)/documents/feedbackTransfers/$(t.ownerId)).data;
+   return signedIn() && request.auth.token.get('firebase', {}).get('sign_in_provider', '') != 'anonymous'
+    && grant.guestId == t.ownerId && grant.targetId == request.auth.uid && t.createdAt <= grant.createdAt;
+  }
+  function validTransfer(guestId) {
+   return signedIn() && request.auth.uid == guestId
+    && request.auth.token.get('firebase', {}).get('sign_in_provider', '') == 'anonymous'
+    && request.resource.data.keys().hasAll(['guestId','targetId','createdAt']) && request.resource.data.keys().hasOnly(['guestId','targetId','createdAt'])
+    && request.resource.data.guestId == guestId && request.resource.data.targetId != guestId
+    && validText(request.resource.data.targetId,128) && request.resource.data.createdAt == request.time;
+  }
+  match /feedbackTransfers/{guestId} {
+   allow get: if signedIn() && (request.auth.uid == guestId || resource.data.targetId == request.auth.uid);
+   allow list: if signedIn() && resource.data.targetId == request.auth.uid;
+   allow create, update: if validTransfer(guestId);
+   allow delete: if signedIn() && request.auth.uid == guestId;
+  }
   function validText(value,max) { return value is string && value.size() > 0 && value.size() <= max && value.matches('[\\s\\S]*\\S[\\s\\S]*'); }
   function boundedNumber(value, min, max) { return value is number && value >= min && value <= max; }
   function validPoint(p) {
@@ -66,8 +86,8 @@ service cloud.firestore {
    allow update: if signedIn() && request.auth.uid == uid && request.resource.data.keys().hasOnly(['lastSentAt']) && request.resource.data.lastSentAt == request.time && request.time >= resource.data.lastSentAt + duration.value(1,'s');
   }
   match /feedbackThreads/{id} {
-   allow get: if signedIn() && (!exists(threadPath(id)) || developer() || resource.data.ownerId == request.auth.uid);
-   allow list: if signedIn() && (developer() || resource.data.ownerId == request.auth.uid);
+   allow get: if signedIn() && (!exists(threadPath(id)) || developer() || resource.data.ownerId == request.auth.uid || transferRecipient(resource.data));
+   allow list: if signedIn() && (developer() || resource.data.ownerId == request.auth.uid || transferRecipient(resource.data));
    allow create: if signedIn() && validThread(request.resource.data)
     && (!('locationReport' in request.resource.data) || validLocationReport(request.resource.data.locationReport,request.resource.data))
     && request.resource.data.ownerId == request.auth.uid && request.resource.data.createdAt == request.time
@@ -76,7 +96,8 @@ service cloud.firestore {
     && request.resource.data.playerRead == 0 && request.resource.data.developerRead == 0
     && matchingMessage(id,request.resource.data,'player');
    allow update: if signedIn() && validThread(request.resource.data) && (
-    // Each recipient can only advance their own read counter to the current total.
+    (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['ownerId']) && request.resource.data.ownerId == request.auth.uid && transferRecipient(resource.data))
+    || // Each recipient can only advance their own read counter to the current total.
     (request.auth.uid == resource.data.ownerId && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['playerRead']) && request.resource.data.playerRead == resource.data.developerMessages && request.resource.data.playerRead >= resource.data.playerRead)
     || (developer() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['developerRead']) && request.resource.data.developerRead == resource.data.playerMessages && request.resource.data.developerRead >= resource.data.developerRead)
     || (developer() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status','priority']))

@@ -1,5 +1,6 @@
-import { feedbackConfig } from "./config.mjs?v=feedback-app-check-20261027";
-import { createFeedbackService } from "./service.mjs?v=feedback-app-check-20261027";
+import { editorUrlForReport, exportFeedback } from "./agent-tools.mjs?v=feedback-workflow-20261028";
+import { feedbackConfig } from "./config.mjs?v=feedback-workflow-20261028";
+import { createFeedbackService } from "./service.mjs?v=feedback-workflow-20261028";
 import { normalizeLocationReport, locationReportIdentity, locationReportGroupKey } from './location-report.mjs';
 import { mountLocationReportComposer, mountLocationReportDetails } from './location-report-ui.mjs';
 import {
@@ -70,6 +71,34 @@ export function mountFeedback({
   let threadsPaginated = false,
     messagesPaginated = false;
   let reportView = null, openRequest = 0;
+  let queueStop, queueGeneration = 0, queueLoading = false, queueComplete = false, queueError = "";
+  const developerQueue = new Map();
+  let readScheduled = false, readAttempt = "";
+  function scheduleRead() {
+    if (readScheduled) return;
+    readScheduled = true;
+    const nextFrame = window.requestAnimationFrame?.bind(window) || (fn => window.setTimeout(fn,0));
+    nextFrame(() => { readScheduled = false; acknowledgeVisibleMessages(); });
+  }
+  function acknowledgeVisibleMessages() {
+    const list = $(".fb-messages"), detail = $(".fb-detail"), last = list?.lastElementChild;
+    if (!current || !selected || !dialog.open || view !== "inbox" || document.visibilityState !== "visible" || !document.hasFocus() || !last?.matches(".fb-message")) return;
+    const latest = [...messages.values()].sort((a,b)=>(a.createdAt?.toMillis?.() || 0)-(b.createdAt?.toMillis?.() || 0)).at(-1);
+    if (!latest || latest.id !== selected.lastMessageId || last.dataset.messageId !== latest.id) return;
+    const box = last.getBoundingClientRect(), area = list.getBoundingClientRect(), pane = detail.getBoundingClientRect();
+    if (box.height <= 0 || box.bottom > Math.min(area.bottom, pane.bottom, window.innerHeight) + 1 || box.bottom <= Math.max(area.top, pane.top, 0)) return;
+    if (!unreadCount(selected, developer ? "developer" : "player")) return;
+    const uid = current.uid, token = generation, id = selected.id, role = developer, messageId = latest.id;
+    const attempt = `${uid}:${role}:${id}:${messageId}`;
+    if (readAttempt === attempt) return;
+    readAttempt = attempt;
+    void service.markRead(id, role, messageId).catch(error => {
+      if (current?.uid === uid && generation === token) { readAttempt = ""; fail(error); }
+    });
+  }
+  document.addEventListener("visibilitychange", scheduleRead);
+  window.addEventListener("focus", scheduleRead);
+  dialog.addEventListener("scroll", scheduleRead, true);
   const reportDrafts = new Map();
   const $ = (selector) => dialog.querySelector(selector);
   const clearDetail = () => {
@@ -106,8 +135,8 @@ export function mountFeedback({
   };
 
   function setUnread() {
-    const unread = [...threads.values()].some(
-      (t) => unreadCount(t, developer ? "developer" : "player") > 0,
+    const unread = [...(current?.isDeveloper ? developerQueue : threads).values()].some(
+      (t) => unreadCount(t, current?.isDeveloper ? "developer" : "player") > 0,
     );
     for (const entry of entries) {
       entry.dataset.unread = String(unread);
@@ -117,30 +146,49 @@ export function mountFeedback({
       );
     }
   }
+  function receiveThreads(page) {
+    if (!threadsPaginated) threadPage = page;
+    for (const row of page.rows) threads.set(row.id, row);
+    if (selected && threads.has(selected.id)) selected = threads.get(selected.id);
+    updateDetailHeader(); renderList(); setUnread(); scheduleRead();
+  }
+  function startDeveloperQueue() {
+    const token = ++queueGeneration, uid = current?.uid;
+    queueStop?.(); developerQueue.clear(); queueComplete = false; queueLoading = true; queueError = "";
+    if (!current?.isDeveloper) { queueLoading = false; return; }
+    const valid = () => token === queueGeneration && current?.uid === uid && current?.isDeveloper;
+    let scanning = false;
+    const changed = () => {
+      if (developer) { threads = new Map(developerQueue); receiveThreads({rows:[],more:false}); }
+      else setUnread();
+    };
+    queueStop = service.watchThreads(page => {
+      if (!valid()) return;
+      for (const row of page.rows) developerQueue.set(row.id, row);
+      changed();
+      if (scanning || queueComplete) return;
+      scanning = true;
+      void (async () => {
+        try {
+          while (page.more) {
+            page = await service.loadThreads({developer:true,cursor:page.cursor});
+            if (!valid()) return;
+            for (const row of page.rows) developerQueue.set(row.id,row);
+            changed();
+          }
+          queueComplete = true;
+        } catch(error) { if (valid()) queueError = errorMessage(error); }
+        finally { if (valid()) { scanning = false; queueLoading = false; changed(); } }
+      })();
+    }, error => { if (valid()) { queueError = errorMessage(error); queueLoading = false; changed(); } }, {developer:true});
+  }
   function startThreads() {
     const listToken = ++listGeneration;
-    threadStop?.();
-    threads.clear();
-    threadPage = null;
-    threadsPaginated = false;
+    threadStop?.(); threadStop = null; threads = new Map(); threadPage = null; threadsPaginated = false;
     setUnread();
     if (!current) return;
-    threadStop = service.watchThreads(
-      (page) => {
-        if (listToken !== listGeneration) return;
-        if (!threadsPaginated) threadPage = page;
-        for (const row of page.rows) threads.set(row.id, row);
-        if (selected && threads.has(selected.id))
-          selected = threads.get(selected.id);
-        updateDetailHeader();
-        renderList();
-        setUnread();
-        if (selected && dialog.open && view === "inbox")
-          void service.markRead(selected.id, developer).catch(fail);
-      },
-      fail,
-      { developer },
-    );
+    if (developer) { threads = new Map(developerQueue); receiveThreads({rows:[],more:false}); return; }
+    threadStop = service.watchThreads(page => { if (listToken === listGeneration) receiveThreads(page); }, fail, {developer:false});
   }
   function updateDetailHeader() {
     const header = $(".fb-detail-header");
@@ -166,9 +214,17 @@ export function mountFeedback({
       catch { return false; }
     });
     list.replaceChildren();
+    const cities = $('[data-filter="city"]');
+    if (cities) {
+      const known = new Set([...cities.options].map(option=>option.value));
+      for (const city of [...new Set([...developerQueue.values()].map(t=>t.city))].sort())
+        if (!known.has(city)) cities.append(node("option",city.replaceAll('-',' '),{value:city}));
+    }
+    const summary = $(".fb-queue-summary");
+    if (summary) summary.textContent = queueError ? `Search incomplete: ${queueError}` : queueLoading ? `${rows.length} matches · searching all conversations (${threads.size} loaded)…` : `${rows.length} matches · all ${threads.size} conversations searched`;
     if (!rows.length)
       list.append(
-        node("p", "No conversations yet. Start a new message. ", {
+        node("p", "No matching conversations.", {
           class: "fb-empty",
         }),
       );
@@ -284,6 +340,7 @@ export function mountFeedback({
         }
       };
       panel.append(form);
+      if (mode === "signin" && current?.isGuest) panel.append(node("p","Signing in keeps this guest’s conversations in your account.",{class:"fb-muted"}));
       if (mode === "signin") {
         const reset = node("button", "Reset password", {
           id: "feedback-reset",
@@ -332,8 +389,15 @@ export function mountFeedback({
     }
     clearDetail();
     view = "inbox";
-    body.innerHTML = `<aside class="fb-sidebar"><div class="fb-tools"><button id="feedback-new" class="fb-primary" type="button">New message</button><div id="feedback-developer-controls"></div><p class="fb-error" role="status" aria-live="polite"></p></div><div class="fb-thread-list"></div><button id="feedback-more-threads" type="button" hidden>Load more conversations</button></aside><section class="fb-detail"><p class="fb-empty">Choose a conversation or start a new message.</p></section>`;
+    body.innerHTML = `<aside class="fb-sidebar"><div class="fb-tools"><button id="feedback-new" class="fb-primary" type="button">New message</button><div id="feedback-developer-controls"></div><p class="fb-error" role="status" aria-live="polite"></p></div><p class="fb-queue-summary fb-muted" role="status"></p><div class="fb-thread-list"></div><button id="feedback-more-threads" type="button" hidden>Load more conversations</button></aside><section class="fb-detail"><p class="fb-empty">Choose a conversation or start a new message.</p></section>`;
+    $(".fb-queue-summary").hidden = !developer;
     $("#feedback-new").onclick = newThread;
+    if (service.transferError) {
+      const pending = node("p","Some guest conversations are still being recovered.",{class:"fb-muted"});
+      const retry = node("button","Retry conversation recovery",{type:"button"});
+      retry.onclick = async () => { retry.disabled = true; try { await service.recoverConversations(); showInbox(); } catch(error) { fail(error); } finally { if(retry.isConnected) retry.disabled=false; } };
+      $(".fb-tools").append(pending,retry);
+    }
     if (current.isDeveloper) {
       const toggle = node(
         "button",
@@ -348,6 +412,7 @@ export function mountFeedback({
       };
       $("#feedback-developer-controls").append(toggle);
       if (developer) buildFilters();
+      else $(".fb-queue-summary").hidden = true;
     }
     $("#feedback-more-threads").onclick = async (event) => {
       const button = event.currentTarget,
@@ -372,18 +437,44 @@ export function mountFeedback({
     };
     renderList();
   }
+  function exportButton(label, getThreads) {
+    const button = node("button", label, {type:"button"});
+    button.onclick = async () => {
+      const uid = current?.uid;
+      button.disabled = true;
+      try {
+        if (!current?.isDeveloper) throw new Error("Developer access is required.");
+        const rows = getThreads();
+        const data = await exportFeedback(service, rows, rootUrl);
+        if (current?.uid !== uid || !current?.isDeveloper) return;
+        const blob = new Blob([JSON.stringify(data, (key,value)=>value?.toDate?.()?.toISOString() ?? value, 2)], {type:"application/json"});
+        const url = URL.createObjectURL(blob), link = node("a", null, {href:url,download:`game-feedback-${new Date().toISOString().slice(0,10)}.json`});
+        document.body.append(link); link.click(); link.remove();
+        window.setTimeout(()=>URL.revokeObjectURL(url),1000);
+      } catch(error) { if (current?.uid === uid) fail(error); }
+      finally { if (button.isConnected) button.disabled = false; }
+    };
+    return button;
+  }
   function buildFilters() {
     const controls = $("#feedback-developer-controls");
+    controls.append(exportButton("Export all feedback for AI", () => {
+      if (!queueComplete) throw new Error("Wait for all conversations to finish loading, then export again.");
+      return [...developerQueue.values()];
+    }));
+    const retry = node("button", "Refresh inbox", {type:"button"});
+    retry.onclick = () => startDeveloperQueue(); controls.append(retry);
     if (filters.reportGroup) {
-      const clear = node('button', 'Showing similar loaded reports · Clear', {type:'button'});
+      const clear = node('button', 'Showing similar reports · Clear', {type:'button'});
       clear.onclick = () => { delete filters.reportGroup; showInbox(); };
       controls.append(clear);
     }
     const search = node("input", null, {
       type: "search",
-      placeholder: "Search loaded conversations",
-      "aria-label": "Search loaded conversations",
+      placeholder: "Search titles, locations and IDs",
+      "aria-label": "Search titles, locations and IDs",
     });
+    search.value = filters.search || "";
     search.oninput = () => {
       filters.search = search.value;
       renderList();
@@ -391,7 +482,7 @@ export function mountFeedback({
     controls.append(search);
     const group = node("div", null, { class: "fb-filters" });
     for (const [key, label, values] of [
-      ["city", "City", null],
+      ["city", "City", {}],
       [
         "mode",
         "Mode",
@@ -405,6 +496,7 @@ export function mountFeedback({
       ],
       ["category", "Category", categories],
       ["status", "Status", statuses],
+      ["priority", "Priority", priorities],
     ]) {
       const labelNode = node("label", label),
         input = node(values ? "select" : "input", null, {
@@ -413,6 +505,8 @@ export function mountFeedback({
       if (values)
         input.append(node("option", "All", { value: "" }), ...options(values));
       else input.placeholder = "All cities";
+      input.dataset.filter = key;
+      if (key === "city") input.append(...options(Object.fromEntries([...new Set([...developerQueue.values()].map(t=>t.city))].sort().map(city=>[city,city.replaceAll('-',' ')]))));
       input.value = filters[key] || "";
       input.oninput = () => {
         filters[key] = input.value.trim();
@@ -424,6 +518,7 @@ export function mountFeedback({
     controls.append(group);
     const unread = node("label", "Unread only", { class: "fb-check" }),
       check = node("input", null, { type: "checkbox" });
+    check.checked = Boolean(filters.unread);
     check.onchange = () => {
       filters.unread = check.checked;
       renderList();
@@ -593,6 +688,19 @@ export function mountFeedback({
       catch { detail.querySelector('.fb-detail-header').append(node('p','The attached location report could not be displayed.',{class:'fb-error'})); }
     }
     if (developer) buildAdminThread(thread, detail, token);
+    // Older queue pages are fetched once. Keep the selected document live even
+    // when it is outside the top-40 subscription (read/status do not reorder it).
+    if (service.watchThread) stops.push(service.watchThread(thread.id,row=>{
+      if (token !== generation || selected?.id !== thread.id) return;
+      if (!row) { threads.delete(thread.id); developerQueue.delete(thread.id); showInbox(); return; }
+      selected = row; threads.set(row.id,row);
+      if (current?.isDeveloper) developerQueue.set(row.id,row);
+      updateDetailHeader(); renderList(); setUnread(); scheduleRead();
+    },error=>{
+      if (token !== generation) return;
+      if (error?.code === "permission-denied") { threads.delete(thread.id); developerQueue.delete(thread.id); showInbox(); setUnread(); }
+      fail(error);
+    }));
     stops.push(
       service.watchMessages(
         thread.id,
@@ -601,8 +709,7 @@ export function mountFeedback({
           if (!messagesPaginated) messagePage = page;
           page.rows.forEach((row) => messages.set(row.id, row));
           renderMessages();
-          if (dialog.open)
-            void service.markRead(thread.id, developer).catch(fail);
+          scheduleRead();
         },
         fail,
       ),
@@ -662,10 +769,35 @@ export function mountFeedback({
       list.append(bubble);
     }
     if (nearBottom || rows.length <= 2) list.scrollTop = list.scrollHeight;
+    scheduleRead();
   }
   function buildAdminThread(thread, detail, token) {
+    detail.querySelector('.fb-admin-status').append(exportButton("Export conversation for AI",()=>[selected]));
+    const fix = node("form",null,{class:"fb-fix-record fb-actions"});
+    fix.innerHTML = '<label>Published fix version<input name="fix-version" placeholder="1.6.146" required pattern="[0-9]+\\.[0-9]+\\.[0-9]+" maxlength="30"></label><button type="submit">Record published fix</button><span class="fb-fix-result" role="status"></span>';
+    fix.onsubmit = async event => {
+      event.preventDefault(); const button=fix.querySelector("button"), uid=current?.uid;
+      button.disabled=true;
+      try {
+        const version=fix.querySelector("input").value.trim();
+        if (!/^\d+\.\d+\.\d+$/.test(version)) throw new Error("Enter the published version, such as 1.6.146.");
+        await service.addNote(thread.id,`Fixed in version ${version}. Published fix recorded by the developer.`,service.id());
+        if (current?.uid===uid && token===generation) fix.querySelector('.fb-fix-result').textContent=`Recorded v${version}. Set the status to Resolved after verifying the fix.`;
+      } catch(error) { if(current?.uid===uid && token===generation) fail(error); }
+      finally { if(button.isConnected)button.disabled=false; }
+    };
+    const fixSection=node("details",null,{class:"fb-fix-section"});
+    fixSection.append(node("summary","Record a published fix"),fix);
+    detail.querySelector('.fb-admin-status').append(fixSection);
     if (thread.locationReport) {
-      const related = node('button','Find similar loaded reports',{type:'button'});
+      const editor = node("a", "Open in editor", {href:editorUrlForReport(thread.locationReport,rootUrl,thread.id),target:"_blank",rel:"noopener",class:"fb-editor-link"});
+      editor.onclick = event => {
+        if (!current?.isDeveloper) { event.preventDefault(); return; }
+        try { localStorage.setItem("ptbo-emergency-developer-mode","enabled"); }
+        catch { event.preventDefault(); fail(new Error("Enable developer editing on this device to open the editor.")); }
+      };
+      detail.querySelector('.fb-admin-status').append(editor);
+      const related = node('button','Find similar reports',{type:'button'});
       related.onclick = () => { filters.reportGroup = locationReportGroupKey(thread.locationReport); showInbox(); };
       detail.querySelector('.fb-admin-status').append(related);
     }
@@ -880,7 +1012,9 @@ export function mountFeedback({
       threads.clear();
       drafts.clear();
       reportDrafts.clear();
-      developer = false;
+      developer = Boolean(next?.isDeveloper);
+      readAttempt = "";
+      startDeveloperQueue();
       setUnread();
       if (dialog.open) accountView();
       if (next) startThreads();

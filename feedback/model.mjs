@@ -62,13 +62,16 @@ export function filterThreads(threads, filters = {}, uid, isDeveloper = false) {
     .filter(
       (t) =>
         (isDeveloper || t.ownerId === uid) &&
-        ["city", "mode", "category", "status"].every(
+        ["city", "mode", "category", "status", "priority"].every(
           (k) => !filters[k] || t[k] === filters[k],
         ) &&
         (!filters.unread ||
           unreadCount(t, isDeveloper ? "developer" : "player") > 0) &&
         (!search ||
-          [t.title, t.city, t.mode, t.department]
+          [t.id, t.title, t.city, t.mode, t.department, t.category, t.status, t.priority,
+           t.locationReport?.reason, t.locationReport?.snapshot?.callId, t.locationReport?.snapshot?.datasetId,
+           t.locationReport?.snapshot?.question?.name, t.locationReport?.snapshot?.question?.address,
+           ...(t.locationReport?.snapshot?.question?.crossStreets || [])]
             .join(" ")
             .toLocaleLowerCase()
             .includes(search)),

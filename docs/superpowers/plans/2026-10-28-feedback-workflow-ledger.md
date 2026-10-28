@@ -1,0 +1,11 @@
+# SDD ledger — plan: docs/superpowers/plans/2026-10-28-feedback-workflow.md
+
+Base: e4ca81738a991d22e218934bcfb9e999fc509459. Working on dedicated feature branch in separate review clone. Latest user explicitly authorizes live publishing, replacing earlier lack of publication permission.
+Preflight: tasks 1/2/3 share feedback/ui.mjs; implement sequentially. Task 4 changes service/read rules; keep visible-message acknowledgement interface. Deployment must precede frontend activation for transfer rules.
+
+Tasks 1–4 implemented. RED→GREEN: admin default/read visibility/full queue metadata filters (5 DOM/model tests); editor URL/export identity (3 tests); transfer orchestration (3 tests). Existing targeted suite: 70/70. Real rules/emulator suite: 21/21, including guest-to-existing-account recovery with the actual service. Real browser editor deep links pass exact/missing IDs. Existing browser privacy/unread/offline flow passed. Extended browser transfer + reload and fresh independent review running.
+Deployment prerequisite observed: Firebase CLI has no authorized accounts and no ADC/token variables are configured. Owner sign-in is required; do not weaken rules or publish a transfer UI against missing rules.
+
+Independent review: two Important findings confirmed and fixed in final pass. Added a failing older-thread badge test, then selected-document realtime watcher (read/status/priority metadata now follows server acknowledgements even outside top40). Replaced owner-wide grants with source-keyed grants bounded to existing thread creation time; new-account linking revokes prior grants. Added rules rejection for future conversations and grant revocation, plus actual service registration cleanup. Minor misleading personal-inbox count hidden; no deferred review findings.
+
+Final verification: 106 targeted Node/DOM/release/workflow tests pass; 22 real Auth/Firestore emulator rule tests pass; browser flow passes guest skip, new-account linking, existing-account transfer across reload, wrong-password guest retention, player privacy, developer replies/notes, unread, offline retry, sign-out isolation and phone layout; all 9 UI race scenarios pass; real editor exact/missing ID navigation passes. `git diff --check` and syntax checks clean. Prepared patch release 1.6.146 with canonical normalization.
