@@ -173,7 +173,9 @@ const server = http.createServer((req, res) => {
       async () => (await a.locator("[data-message-id]").count()) === 2,
     );
     await admin.locator("#feedback-status").selectOption("reviewing");
+    await admin.locator(".fb-thread-tools > summary").click();
     await admin.locator("#feedback-priority").selectOption("high");
+    await admin.locator(".fb-thread-tools > summary").click();
     await admin.locator(".fb-notes summary").click();
     await admin
       .locator("#feedback-note")
@@ -324,10 +326,14 @@ const server = http.createServer((req, res) => {
     const sentTime=await demo.locator('.fb-message time').getAttribute('datetime');assert.ok(Math.abs(Date.parse(sentTime)-Date.now())<120000);
     const boundsDemo=await demo.locator('#ptbo-feedback-dialog').boundingBox();assert.ok(boundsDemo.x>=0&&boundsDemo.x+boundsDemo.width<=339);
     await demo.screenshot({path:'/tmp/pmg-demo-mobile.png'});
+    await admin.locator('.fb-inbox-filters > summary').click();
     await admin.locator('[data-filter="category"]').selectOption('demo');
+    await admin.locator('.fb-inbox-filters > summary').click();
     await admin.locator(`[data-thread-id="${demoId}"]`).click();
     await admin.getByText('I would like a demo of City Explorer for Oshawa.',{exact:true}).waitFor();
+    await admin.locator('.fb-thread-tools > summary').click();
     assert.match(await admin.locator('.fb-detail-header').innerText(),new RegExp(receipt.account.uid));
+    await admin.locator('.fb-thread-tools > summary').click();
     await admin.locator('#feedback-reply').fill('Thanks, I have your Oshawa City Explorer demo request.');
     await admin.locator('#feedback-send').click();
     await demo.getByText('Thanks, I have your Oshawa City Explorer demo request.',{exact:true}).waitFor();
@@ -338,9 +344,9 @@ const server = http.createServer((req, res) => {
     await demo.locator('#feedback-account').click();await demo.locator('#feedback-signin').click();await demo.locator('#feedback-email').fill(bobEmail);await demo.locator('#feedback-password').fill('Test-pass-739!');await demo.locator('#feedback-auth-submit').click();await demo.locator(`[data-thread-id="${demoId}"]`).waitFor();assert.equal(await demo.evaluate(()=>PTBO_FEEDBACK.demoRequestStatus('oshawa','explorer').remoteSaved),false);await demo.locator(`[data-thread-id="${demoId}"]`).click();await demo.getByText('I would like a demo of City Explorer for Oshawa.',{exact:true}).waitFor();
     await demo.locator('#feedback-account').click();await demo.locator('#feedback-signout').click();
     await new Promise(r=>setTimeout(r,1100));
-    await admin.evaluate(()=>PTBO_FEEDBACK.requestDemo({city:'oshawa',cityName:'Oshawa',mode:'explorer'}));await admin.evaluate(()=>PTBO_FEEDBACK.openDemoConversation('oshawa','explorer'));await admin.getByText('Sender: You (your account)',{exact:true}).waitFor();
-    await demo.goto(base+'/site-stats/');assert.equal(await demo.getByText('Demo requests on this device',{exact:true}).count(),0);assert.equal(await demo.locator('a[href="../feedback/?category=demo"]').count(),1);
-    await admin.goto(base+'/feedback/?category=demo');await admin.locator('[data-filter="category"]').waitFor();assert.equal(await admin.locator('[data-filter="category"]').inputValue(),'demo');
+    await admin.evaluate(()=>PTBO_FEEDBACK.requestDemo({city:'oshawa',cityName:'Oshawa',mode:'explorer'}));await admin.evaluate(()=>PTBO_FEEDBACK.openDemoConversation('oshawa','explorer'));await admin.locator('.fb-thread-tools > summary').click();await admin.getByText('Sender: You (your account)',{exact:true}).waitFor();
+    await demo.goto(base+'/site-stats/');assert.equal(await demo.getByText('Demo requests on this device',{exact:true}).count(),0);assert.equal(await demo.locator('a[href="../feedback/"]').count(),1);
+    await admin.goto(base+'/feedback/?category=demo');await admin.locator('.fb-inbox-filters > summary').click();await admin.locator('[data-filter="category"]').waitFor();assert.equal(await admin.locator('[data-filter="category"]').inputValue(),'demo');
     console.log('PASS: homepage demo request, guest ownership, timestamps, private reply/notes, developer category filter and own-account label, AI export, other-player denial, legacy cleanup and identity isolation.');
     console.log(
       "PASS: guest skip, guest linking, guest-to-existing-account recovery across reload, wrong-password preservation, privacy, developer reply/notes, unread, offline retry, sign-out isolation, mobile viewport.",

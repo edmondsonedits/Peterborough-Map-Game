@@ -17,7 +17,7 @@ const server=http.createServer((req,res)=>{const pathname=decodeURIComponent(new
   assert.equal(saved.snapshot.callId,'ptbo-location-b53711e5e3c867');assert.match(saved.body,/Please review this circle\.[\s\S]*Browser:[\s\S]*Viewport:[\s\S]*Report opened:/);
   console.log(`PASS ${viewport.width}×${viewport.height}: technical details hidden, keyboard disclosure works, Send reachable, report context retained`);await page.close();
  }
- const page=await browser.newPage({viewport:{width:338,height:656}});await page.goto(base+'/tests/fixtures/feedback-ui.html');await page.locator('#ptbo-feedback-entry').click();await page.locator('#feedback-new').click();
+ const page=await browser.newPage({viewport:{width:338,height:656}});await page.goto(base+'/tests/fixtures/feedback-ui.html');await page.evaluate(()=>fixture.change('alice',false));await page.locator('#ptbo-feedback-entry').click();await page.locator('#feedback-new').click();
  const details=page.locator('.fb-message-context');assert.equal(await details.evaluate(el=>el.open),false);assert.equal(await page.locator('#feedback-city').isVisible(),false);
  await page.locator('#feedback-title').fill('Feedback');await page.locator('#feedback-body').fill('More practice locations please.');
  await page.locator('#feedback-city').evaluate(el=>{el.value='';el.form.requestSubmit();});assert.equal(await details.evaluate(el=>el.open),true);assert.equal(await page.locator('#feedback-city').isVisible(),true);assert.equal(await page.locator('#feedback-city').evaluate(el=>document.activeElement===el),true);
