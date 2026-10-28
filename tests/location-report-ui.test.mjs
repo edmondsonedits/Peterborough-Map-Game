@@ -69,3 +69,19 @@ test('map placement and centre dragging wrap repeated-world longitudes into vali
  assert.equal(sent[0].suggestion.center.lng,-77);assert.equal(g.host.querySelector('.fb-error').textContent,'');
  view.destroy();g.dom.window.close();
 });
+
+test('report context is disclosed concisely and can be reviewed before sending',async()=>{
+ const g=setup(),sent=[],original=snapshot();
+ const diagnostics='Browser: example browser\nViewport: 338 × 656 CSS pixels\nReport opened: 2026-10-28T03:06:28.863Z';
+ const view=mount(g,{snapshot:original,diagnosticsText:diagnostics,onSend:async (report,note)=>sent.push({report,note}),onReceived(){}});
+ const heading=g.host.querySelector('.fb-report-heading');
+ assert.match(heading.textContent,/location, result, and basic device details are included/i);
+ const details=g.host.querySelector('.fb-report-context');assert.ok(details);
+ assert.equal(details.open,false,'technical details start collapsed');
+ assert.match(details.querySelector('summary').textContent,/details/i);
+ details.open=true;
+ assert.match(details.textContent,/Location ID/);assert.match(details.textContent,/Browser: example browser/);
+ g.change('[name="note"]','Please review the circle');g.submit();await flush();
+ assert.equal(sent.length,1);assert.deepEqual(sent[0].report.snapshot,original);assert.equal(sent[0].note,'Please review the circle');
+ view.destroy();g.dom.window.close();
+});

@@ -1,7 +1,7 @@
 import { feedbackConfig } from "./config.mjs?v=feedback-app-check-20261027";
 import { createFeedbackService } from "./service.mjs?v=feedback-app-check-20261027";
 import { normalizeLocationReport, locationReportIdentity, locationReportGroupKey } from './location-report.mjs';
-import { mountLocationReportComposer, mountLocationReportDetails } from './location-report-ui.mjs';
+import { mountLocationReportComposer, mountLocationReportDetails } from './location-report-ui.mjs?v=report-details-1';
 import {
   categories,
   statuses,
@@ -652,13 +652,19 @@ export function mountFeedback({
         "data-message-id": message.id,
         "data-role": message.authorRole,
       });
-      bubble.append(
-        node(
-          "small",
-          message.authorRole === "developer" ? "Developer" : "Player",
-        ),
-        node("span", message.body),
-      );
+      bubble.append(node("small", message.authorRole === "developer" ? "Developer" : "Player"));
+      // Report creation writes the thread and first message at the same server
+      // timestamp. Keep the player's text intact and collapse only the generated
+      // suffix on that message; replies and ordinary conversations stay unchanged.
+      const created = selected?.createdAt?.toMillis?.(), messageCreated = message.createdAt?.toMillis?.();
+      const isInitial = selected?.initialMessageId === message.id ||
+        (Number.isFinite(created) && created === messageCreated);
+      const reportText = selected?.locationReport && message.authorRole === 'player' && isInitial &&
+        String(message.body).match(/^([\s\S]*)\n\n(Browser: [^\r\n]*\nViewport: (?:\d+ × \d+ CSS pixels|not recorded)\nReport opened: \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z)$/);
+      if (reportText) {
+        bubble.append(node('span',reportText[1]));
+        const details=node('details',null);details.append(node('summary','Technical details'),node('span',reportText[2]));bubble.append(details);
+      } else bubble.append(node('span',message.body));
       list.append(bubble);
     }
     if (nearBottom || rows.length <= 2) list.scrollTop = list.scrollHeight;
@@ -834,7 +840,7 @@ export function mountFeedback({
           const panel=node('section',null,{class:'fb-welcome fb-stack'});
           panel.append(node('h3','Report received'),node('p','The developer can now review the original location and your suggestion.'),node('p',captured.question.name||captured.question.address,{class:'fb-muted'}));
           const conversations=node('button','Open conversation',{type:'button',class:'fb-primary'});
-          conversations.onclick=()=>{showInbox();openThread(threads.get(id)||{id,ownerId:uid,title:`Location report · ${captured.question.name||captured.question.address}`,city:captured.city,mode:captured.mode,department:captured.service,version:captured.version,status:'new',priority:'normal',locationReport:report});};
+          conversations.onclick=()=>{showInbox();openThread({...((threads.get(id))||{id,ownerId:uid,title:`Location report · ${captured.question.name||captured.question.address}`,city:captured.city,mode:captured.mode,department:captured.service,version:captured.version,status:'new',priority:'normal',locationReport:report}),initialMessageId:record.attempt.messageId});};
           const done=node('button','Continue playing',{type:'button'});done.onclick=close;
           panel.append(conversations,done);body.replaceChildren(panel);
         },
