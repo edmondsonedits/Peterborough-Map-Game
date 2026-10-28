@@ -28,9 +28,9 @@ function setup({admin=true,pages=[],readUpdatesThread=false}={}){
  const openThread=async(id='report')=>{document.querySelector(`[data-thread-id="${id}"]`).click();const list=document.querySelector('.fb-messages');list.getBoundingClientRect=()=>({top:100,bottom:400,height:300});Object.defineProperties(list,{scrollHeight:{value:300,configurable:true},clientHeight:{value:300,configurable:true}});document.querySelector('.fb-detail').getBoundingClientRect=()=>({top:50,bottom:500,height:450});for(const row of list.querySelectorAll('article'))row.getBoundingClientRect=()=>({top:200,bottom:250,height:50});list.dispatchEvent(new window.Event('scroll'));await tick();};
  return{dom,api,service,scopes,reads,loads,sends,show,openThread,close(){api.close();dom.window.close();}};
 }
-test('developer defaults to the full developer inbox and maintains notifications in personal view',async()=>{
+test('developer has one inbox with no personal switch and keeps notifications',async()=>{
  const g=setup();await g.show();assert.equal(g.scopes[0].developer,true);assert.ok(document.querySelector('[data-thread-id="report"]'));
- document.querySelector('#feedback-developer').click();g.service.emit(thread('report',{playerMessages:2}));
+ assert.equal(document.querySelector('#feedback-developer'),null);assert.equal(document.querySelector('#feedback-new').hidden,true);assert.equal(document.querySelector('#feedback-heading').textContent,'Developer inbox');g.service.emit(thread('report',{playerMessages:2}));
  assert.equal(document.querySelector('#ptbo-feedback-entry').dataset.unread,'true');g.close();
 });
 test('developer read acknowledgement waits for rendered latest content in a visible tab',async()=>{
@@ -72,4 +72,24 @@ test('demo requests use existing inbox, timestamps, identity labels and category
  await g.api.openDemoConversation('oshawa','route');await tick();assert.match(document.querySelector('.fb-detail-header').textContent,/your account|You/i);assert.equal(document.querySelector('time').getAttribute('datetime'),'1970-01-01T00:00:00.001Z');
  const filter=document.querySelector('[data-filter="category"]');assert.ok([...filter.options].some(x=>x.value==='demo'));
  g.service.change('other');assert.equal(g.api.demoRequestStatus('oshawa','route').remoteSaved,false);await assert.rejects(g.api.openDemoConversation('oshawa','route'));g.close();
+});
+
+test('all feedback categories share one queue with collapsed secondary controls and clearable filters',async()=>{
+ const rows=['bug','map','idea','question','demo'].map((category,i)=>thread('category-'+i,{category}));
+ const g=setup({pages:[{rows,more:false,cursor:'page1'}]});await g.show();
+ assert.equal(document.querySelectorAll('[data-thread-id]').length,6);
+ assert.equal(document.querySelector('.fb-inbox-filters').open,false);assert.equal(document.querySelector('.fb-inbox-tools').open,false);
+ const category=document.querySelector('[data-filter="category"]');category.value='demo';category.dispatchEvent(new window.Event('input'));assert.equal(document.querySelectorAll('[data-thread-id]').length,1);assert.equal(document.querySelector('#feedback-clear-filters').hidden,false);
+ document.querySelector('#feedback-clear-filters').click();assert.equal(document.querySelectorAll('[data-thread-id]').length,6);
+ document.querySelector('#feedback-unread').click();assert.equal(document.querySelector('#feedback-unread').getAttribute('aria-pressed'),'true');g.close();
+});
+test('large queues render in batches but search still finds all older matching messages',async()=>{
+ const rows=Array.from({length:120},(_,i)=>thread('older-'+i,{title:i===119?'Oldest demo request':'Feedback '+i,category:'demo'}));
+ const g=setup({pages:[{rows,more:false,cursor:'page1'}]});await g.show();assert.equal(document.querySelectorAll('[data-thread-id]').length,40);
+ document.querySelector('#feedback-more-results').click();assert.equal(document.querySelectorAll('[data-thread-id]').length,80);
+ const search=document.querySelector('input[type="search"]');search.value='Oldest demo';search.dispatchEvent(new window.Event('input'));assert.equal(document.querySelectorAll('[data-thread-id]').length,1);assert.ok(document.querySelector('[data-thread-id="older-119"]'));g.close();
+});
+test('players and guests never receive developer controls and identity changes clear prior filters',async()=>{
+ const g=setup();await g.show();document.querySelector('#feedback-unread').click();g.service.change('player');await g.show();
+ assert.equal(document.querySelector('#feedback-heading').textContent,'Feedback & messages');assert.equal(document.querySelector('#feedback-new').hidden,false);assert.equal(document.querySelector('#feedback-unread'),null);assert.equal(document.querySelector('.fb-inbox-tools'),null);assert.ok(document.querySelector('[data-thread-id="report"]'));g.close();
 });

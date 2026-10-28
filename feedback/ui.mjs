@@ -42,7 +42,7 @@ export function mountFeedback({
   service ||= createFeedbackService(config);
   const stylesheet = node("link", null, {
     rel: "stylesheet",
-    href: new URL("feedback/styles.css?v=demo-feedback-20261028", rootUrl),
+    href: new URL("feedback/styles.css?v=simple-inbox-20261028", rootUrl),
   });
   document.head.append(stylesheet);
   const dialog = node("dialog", null, {
@@ -76,6 +76,14 @@ export function mountFeedback({
   let queueStop, queueGeneration = 0, queueLoading = false, queueComplete = false, queueError = "";
   const developerQueue = new Map();
   let readScheduled = false, readAttempt = "";
+  let visibleThreads = 40, listRenderScheduled = false;
+  function scheduleListRender() {
+    if (listRenderScheduled) return;
+    listRenderScheduled = true;
+    (window.requestAnimationFrame?.bind(window) || (fn => window.setTimeout(fn,0)))(() => {
+      listRenderScheduled = false; renderList();
+    });
+  }
   function scheduleRead() {
     if (readScheduled) return;
     readScheduled = true;
@@ -115,7 +123,8 @@ export function mountFeedback({
     selected = null;
     dialog.dataset.threadOpen = "false";
   };
-  const fail = (error, target = $(".fb-error")) => {
+  const fail = (error, target) => {
+    target ||= (selected && $(".fb-detail .fb-error")) || $(".fb-error");
     if (target) target.textContent = errorMessage(error);
   };
   const draftKey = () => `${current?.uid}:${selected?.id || "new"}`;
@@ -142,9 +151,10 @@ export function mountFeedback({
     );
     for (const entry of entries) {
       entry.dataset.unread = String(unread);
+      entry.textContent = current?.isDeveloper ? "Developer inbox" : "Feedback";
       entry.setAttribute(
         "aria-label",
-        unread ? "Feedback: unread messages" : "Feedback",
+        `${current?.isDeveloper ? "Developer inbox" : "Feedback"}${unread ? ": unread messages" : ""}`,
       );
     }
   }
@@ -152,7 +162,7 @@ export function mountFeedback({
     if (!threadsPaginated) threadPage = page;
     for (const row of page.rows) threads.set(row.id, row);
     if (selected && threads.has(selected.id)) selected = threads.get(selected.id);
-    updateDetailHeader(); renderList(); setUnread(); scheduleRead();
+    updateDetailHeader(); scheduleListRender(); setUnread(); scheduleRead();
   }
   function startDeveloperQueue() {
     const token = ++queueGeneration, uid = current?.uid;
@@ -161,7 +171,7 @@ export function mountFeedback({
     const valid = () => token === queueGeneration && current?.uid === uid && current?.isDeveloper;
     let scanning = false;
     const changed = () => {
-      if (developer) { threads = new Map(developerQueue); receiveThreads({rows:[],more:false}); }
+      if (developer) { threads = developerQueue; receiveThreads({rows:[],more:false}); }
       else setUnread();
     };
     queueStop = service.watchThreads(page => {
@@ -189,7 +199,7 @@ export function mountFeedback({
     threadStop?.(); threadStop = null; threads = new Map(); threadPage = null; threadsPaginated = false;
     setUnread();
     if (!current) return;
-    if (developer) { threads = new Map(developerQueue); receiveThreads({rows:[],more:false}); return; }
+    if (developer) { threads = developerQueue; receiveThreads({rows:[],more:false}); return; }
     threadStop = service.watchThreads(page => { if (listToken === listGeneration) receiveThreads(page); }, fail, {developer:false});
   }
   function updateDetailHeader() {
@@ -215,6 +225,7 @@ export function mountFeedback({
       try { return thread.locationReport && locationReportGroupKey(thread.locationReport) === filters.reportGroup; }
       catch { return false; }
     });
+    const focusedId = list.contains(document.activeElement) ? document.activeElement?.dataset.threadId : null;
     list.replaceChildren();
     const cities = $('[data-filter="city"]');
     if (cities) {
@@ -223,14 +234,14 @@ export function mountFeedback({
         if (!known.has(city)) cities.append(node("option",city.replaceAll('-',' '),{value:city}));
     }
     const summary = $(".fb-queue-summary");
-    if (summary) summary.textContent = queueError ? `Search incomplete: ${queueError}` : queueLoading ? `${rows.length} matches · searching all conversations (${threads.size} loaded)…` : `${rows.length} matches · all ${threads.size} conversations searched`;
+    if (summary) summary.textContent = queueError ? `Search incomplete: ${queueError}` : queueLoading ? `${rows.length} conversations · loading…` : `${rows.length} of ${threads.size} conversations`;
     if (!rows.length)
       list.append(
         node("p", "No matching conversations.", {
           class: "fb-empty",
         }),
       );
-    for (const thread of rows) {
+    for (const thread of (developer ? rows.slice(0, visibleThreads) : rows)) {
       const button = node("button", null, {
         type: "button",
         class: "fb-thread",
@@ -244,12 +255,22 @@ export function mountFeedback({
         node("strong", thread.title),
         node(
           "small",
-          `${thread.city} · ${thread.mode} · ${statuses[thread.status] || thread.status}${developer && thread.ownerId === current?.uid ? " · You" : ""}`,
+          `${categories[thread.category] || "Message"} · ${thread.city.replaceAll("-"," ")} · ${statuses[thread.status] || thread.status}${thread.priority === "high" ? " · High priority" : ""}${developer && thread.ownerId === current?.uid ? " · You" : ""}`,
         ),
       );
       button.onclick = () => openThread(thread);
       list.append(button);
     }
+    if (focusedId) [...list.children].find(row=>row.dataset.threadId===focusedId)?.focus({preventScroll:true});
+    const batch = $("#feedback-more-results");
+    if (batch) batch.hidden = rows.length <= visibleThreads;
+    const filterCount = Object.entries(filters).filter(([key,value])=>key !== 'search' && key !== 'unread' && Boolean(value)).length;
+    const filterSummary = $('.fb-inbox-filters > summary');
+    if (filterSummary) filterSummary.textContent = filterCount ? `Filters (${filterCount})` : 'Filters';
+    const clear = $('#feedback-clear-filters');
+    if (clear) clear.hidden = !Object.values(filters).some(Boolean);
+    const unread = $('#feedback-unread');
+    if (unread) unread.setAttribute('aria-pressed', String(Boolean(filters.unread)));
     const more = $("#feedback-more-threads");
     if (more) more.hidden = !threadPage?.more;
   }
@@ -265,9 +286,9 @@ export function mountFeedback({
           ? "Create your account"
           : mode === "signin"
             ? "Welcome back"
-            : "Your private inbox",
+            : current?.isDeveloper ? "Developer account" : "Your private inbox",
       ),
-      node("p", "Send feedback, ask a question, and read developer replies.", {
+      node("p", current?.isDeveloper ? "Manage your developer account and open the shared inbox." : "Send feedback, ask a question, and read developer replies.", {
         class: "fb-muted",
       }),
     );
@@ -305,7 +326,7 @@ export function mountFeedback({
       }
       const guest = node(
         "button",
-        current && !current.isGuest ? "Back to messages" : "Continue as guest",
+        current && !current.isGuest ? "Back to inbox" : "Continue as guest",
         { id: "feedback-guest", type: "button" },
       );
       guest.onclick = () => {
@@ -314,7 +335,7 @@ export function mountFeedback({
       };
       panel.append(guest);
       if (current) {
-        const inbox = node("button", "My conversations", { type: "button" });
+        const inbox = node("button", current.isDeveloper ? "Developer inbox" : "My conversations", { type: "button" });
         inbox.onclick = () => showInbox();
         panel.append(inbox);
       }
@@ -391,30 +412,21 @@ export function mountFeedback({
     }
     clearDetail();
     view = "inbox";
-    body.innerHTML = `<aside class="fb-sidebar"><div class="fb-tools"><button id="feedback-new" class="fb-primary" type="button">New message</button><div id="feedback-developer-controls"></div><p class="fb-error" role="status" aria-live="polite"></p></div><p class="fb-queue-summary fb-muted" role="status"></p><div class="fb-thread-list"></div><button id="feedback-more-threads" type="button" hidden>Load more conversations</button></aside><section class="fb-detail"><p class="fb-empty">Choose a conversation or start a new message.</p></section>`;
+    body.innerHTML = `<aside class="fb-sidebar"><div class="fb-tools"><button id="feedback-new" class="fb-primary" type="button">New message</button><div id="feedback-developer-controls"></div><p class="fb-error" role="status" aria-live="polite"></p></div><p class="fb-queue-summary fb-muted" role="status"></p><div class="fb-thread-list"></div><button id="feedback-more-threads" type="button" hidden>Load more conversations</button></aside><section class="fb-detail"><p class="fb-empty">Choose a conversation to read and reply.</p></section>`;
     $(".fb-queue-summary").hidden = !developer;
     $("#feedback-new").onclick = newThread;
+    $("#feedback-new").hidden = developer;
     if (service.transferError) {
       const pending = node("p","Some guest conversations are still being recovered.",{class:"fb-muted"});
       const retry = node("button","Retry conversation recovery",{type:"button"});
       retry.onclick = async () => { retry.disabled = true; try { await service.recoverConversations(); showInbox(); } catch(error) { fail(error); } finally { if(retry.isConnected) retry.disabled=false; } };
       $(".fb-tools").append(pending,retry);
     }
-    if (current.isDeveloper) {
-      const toggle = node(
-        "button",
-        developer ? "My conversations" : "Developer inbox",
-        { id: "feedback-developer", type: "button" },
-      );
-      toggle.onclick = () => {
-        developer = !developer;
-        Object.keys(filters).forEach((k) => delete filters[k]);
-        startThreads();
-        showInbox();
-      };
-      $("#feedback-developer-controls").append(toggle);
-      if (developer) buildFilters();
-      else $(".fb-queue-summary").hidden = true;
+    if (developer) {
+      buildFilters();
+      const more = node('button','Show more',{id:'feedback-more-results',type:'button',hidden:''});
+      more.onclick = () => { visibleThreads += 40; renderList(); };
+      $('.fb-sidebar').append(more);
     }
     $("#feedback-more-threads").onclick = async (event) => {
       const button = event.currentTarget,
@@ -460,28 +472,37 @@ export function mountFeedback({
   }
   function buildFilters() {
     const controls = $("#feedback-developer-controls");
-    controls.append(exportButton("Export all feedback for AI", () => {
+    const tools = node('details',null,{class:'fb-inbox-tools'});
+    const toolsBody = node('div',null,{class:'fb-disclosure-body fb-stack'});
+    tools.append(node('summary','Inbox tools'),toolsBody);
+    toolsBody.append(exportButton("Export all feedback for AI", () => {
       if (!queueComplete) throw new Error("Wait for all conversations to finish loading, then export again.");
       return [...developerQueue.values()];
     }));
     const retry = node("button", "Refresh inbox", {type:"button"});
-    retry.onclick = () => startDeveloperQueue(); controls.append(retry);
-    if (filters.reportGroup) {
-      const clear = node('button', 'Showing similar reports · Clear', {type:'button'});
-      clear.onclick = () => { delete filters.reportGroup; showInbox(); };
-      controls.append(clear);
-    }
+    retry.onclick = () => startDeveloperQueue(); toolsBody.append(retry);
     const search = node("input", null, {
       type: "search",
-      placeholder: "Search titles, locations and IDs",
-      "aria-label": "Search titles, locations and IDs",
+      placeholder: "Search inbox",
+      "aria-label": "Search inbox",
     });
     search.value = filters.search || "";
     search.oninput = () => {
       filters.search = search.value;
-      renderList();
+      visibleThreads = 40; renderList();
     };
     controls.append(search);
+    const actions = node('div',null,{class:'fb-inbox-actions'});
+    const unread = node('button','Unread',{id:'feedback-unread',type:'button','aria-pressed':String(Boolean(filters.unread))});
+    unread.onclick = () => { filters.unread = !filters.unread; visibleThreads = 40; renderList(); };
+    const disclosure = node('details',null,{class:'fb-inbox-filters'});
+    const filterBody = node('div',null,{class:'fb-disclosure-body'});
+    disclosure.append(node('summary','Filters'),filterBody);
+    actions.append(unread,disclosure,tools);
+    controls.append(actions);
+    const clear = node('button','Clear filters',{id:'feedback-clear-filters',type:'button',hidden:''});
+    clear.onclick = () => { Object.keys(filters).forEach(key=>delete filters[key]); visibleThreads=40; search.value=''; for (const select of controls.querySelectorAll('[data-filter]')) select.value=''; renderList(); };
+    controls.append(clear);
     const group = node("div", null, { class: "fb-filters" });
     for (const [key, label, values] of [
       ["city", "City", {}],
@@ -512,21 +533,12 @@ export function mountFeedback({
       input.value = filters[key] || "";
       input.oninput = () => {
         filters[key] = input.value.trim();
-        renderList();
+        visibleThreads = 40; renderList();
       };
       labelNode.append(input);
       group.append(labelNode);
     }
-    controls.append(group);
-    const unread = node("label", "Unread only", { class: "fb-check" }),
-      check = node("input", null, { type: "checkbox" });
-    check.checked = Boolean(filters.unread);
-    check.onchange = () => {
-      filters.unread = check.checked;
-      renderList();
-    };
-    unread.prepend(check);
-    controls.append(unread);
+    filterBody.append(group);
   }
   function context() {
     let game = window;
@@ -647,6 +659,7 @@ export function mountFeedback({
     body.append(form);
   }
   function openThread(thread) {
+    const listScroll = $('.fb-thread-list')?.scrollTop || 0;
     clearDetail();
     selected = thread;
     view = "inbox";
@@ -654,7 +667,7 @@ export function mountFeedback({
     const token = ++generation;
     const detail = $(".fb-detail");
     if (!detail) return;
-    detail.innerHTML = `<header class="fb-detail-header"><button type="button" class="fb-back">← Conversations</button><h3></h3><small class="fb-muted"></small><div class="fb-admin-status fb-actions"></div></header><div class="fb-messages" aria-label="Conversation messages"></div><div class="fb-notes" hidden></div><form class="fb-compose"><label>Reply<textarea id="feedback-reply" maxlength="4000" required rows="2" placeholder="Write a reply…"></textarea></label><p class="fb-error" role="status" aria-live="polite"></p><div class="fb-actions"><small class="fb-muted">Private conversation with the developer</small><button id="feedback-send" class="fb-primary" type="submit">Send</button></div></form>`;
+    detail.innerHTML = `<header class="fb-detail-header"><button type="button" class="fb-back">← Inbox</button><h3></h3><small class="fb-muted"></small><div class="fb-admin-status fb-actions"></div></header><div class="fb-messages" aria-label="Conversation messages"></div><div class="fb-notes" hidden></div><form class="fb-compose"><label>Reply<textarea id="feedback-reply" maxlength="4000" required rows="2" placeholder="Write a reply…"></textarea></label><p class="fb-error" role="status" aria-live="polite"></p><div class="fb-actions"><small class="fb-muted">Private conversation with the developer</small><button id="feedback-send" class="fb-primary" type="submit">Send</button></div></form>`;
     detail.querySelector("h3").textContent = thread.title;
     detail.querySelector(".fb-detail-header small").textContent =
       `${thread.city} · ${thread.mode} · ${thread.department} · v${thread.version} · ${statuses[thread.status] || thread.status}`;
@@ -664,7 +677,10 @@ export function mountFeedback({
     detail.querySelector(".fb-back").onclick = () => {
       clearDetail();
       renderList();
+      const list = $('.fb-thread-list');
+      if (list) { list.scrollTop = listScroll; [...list.children].find(row=>row.dataset.threadId===thread.id)?.focus({preventScroll:true}); }
     };
+    detail.querySelector(".fb-compose small").textContent = developer ? "Reply to this player" : "Private conversation with the developer";
     const reply = $("#feedback-reply"),
       key = draftKey();
     reply.value = draft();
@@ -723,6 +739,7 @@ export function mountFeedback({
         fail,
       ),
     );
+    if (window.innerWidth <= 640) detail.querySelector(".fb-back").focus({preventScroll:true});
     renderList();
   }
   function renderMessages() {
@@ -786,7 +803,14 @@ export function mountFeedback({
     scheduleRead();
   }
   function buildAdminThread(thread, detail, token) {
-    detail.querySelector('.fb-admin-status').append(exportButton("Export conversation for AI",()=>[selected]));
+    const tools = node('details',null,{class:'fb-thread-tools'});
+    const toolsBody = node('div',null,{class:'fb-disclosure-body fb-stack'});
+    tools.append(node('summary','Tools & details'),toolsBody);
+    for (const selector of ['.fb-detail-header small','.fb-sender','.fb-location-details']) {
+      const item = detail.querySelector(selector); if (item) toolsBody.append(item);
+    }
+    detail.querySelector('.fb-admin-status').append(tools);
+    toolsBody.append(exportButton("Export conversation for AI",()=>[selected]));
     const fix = node("form",null,{class:"fb-fix-record fb-actions"});
     fix.innerHTML = '<label>Published fix version<input name="fix-version" placeholder="1.6.146" required pattern="[0-9]+\\.[0-9]+\\.[0-9]+" maxlength="30"></label><button type="submit">Record published fix</button><span class="fb-fix-result" role="status"></span>';
     fix.onsubmit = async event => {
@@ -802,7 +826,7 @@ export function mountFeedback({
     };
     const fixSection=node("details",null,{class:"fb-fix-section"});
     fixSection.append(node("summary","Record a published fix"),fix);
-    detail.querySelector('.fb-admin-status').append(fixSection);
+    toolsBody.append(fixSection);
     if (thread.locationReport) {
       const editor = node("a", "Open in editor", {href:editorUrlForReport(thread.locationReport,rootUrl,thread.id),target:"_blank",rel:"noopener",class:"fb-editor-link"});
       editor.onclick = event => {
@@ -810,10 +834,10 @@ export function mountFeedback({
         try { localStorage.setItem("ptbo-emergency-developer-mode","enabled"); }
         catch { event.preventDefault(); fail(new Error("Enable developer editing on this device to open the editor.")); }
       };
-      detail.querySelector('.fb-admin-status').append(editor);
+      toolsBody.append(editor);
       const related = node('button','Find similar reports',{type:'button'});
       related.onclick = () => { filters.reportGroup = locationReportGroupKey(thread.locationReport); showInbox(); };
-      detail.querySelector('.fb-admin-status').append(related);
+      toolsBody.append(related);
     }
     for (const [key, values] of [
       ["status", statuses],
@@ -835,7 +859,8 @@ export function mountFeedback({
         }
       };
       label.append(select);
-      detail.querySelector(".fb-admin-status").append(label);
+      if (key === 'status') detail.querySelector('.fb-admin-status').prepend(label);
+      else toolsBody.append(label);
     }
     const notes = detail.querySelector(".fb-notes");
     notes.hidden = false;
@@ -1015,7 +1040,9 @@ export function mountFeedback({
     const changedUid =
       current?.uid !== next?.uid || current?.isDeveloper !== next?.isDeveloper;
     current = next;
-    identity.textContent = next
+    $('#feedback-heading').textContent = next?.isDeveloper ? 'Developer inbox' : 'Feedback & messages';
+    dialog.dataset.developer = String(Boolean(next?.isDeveloper));
+    identity.textContent = next?.isDeveloper ? 'All player messages' : next
       ? next.isGuest
         ? "Guest"
         : next.email
@@ -1026,6 +1053,8 @@ export function mountFeedback({
       clearDetail();
       threads.clear();
       drafts.clear();
+      Object.keys(filters).forEach(key=>delete filters[key]);
+      visibleThreads = 40;
       reportDrafts.clear();
       demoRequests.reset();
       window.dispatchEvent(new window.CustomEvent("ptbo-feedback-account-change", {detail:{replaced:Boolean(previousUid)}}));

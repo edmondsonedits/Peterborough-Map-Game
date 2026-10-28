@@ -124,6 +124,8 @@ const server = http.createServer((req, res) => {
     await scenario(
       "pending new report keeps IDs after reopening",
       async (p) => {
+        await p.evaluate(() => fixture.change('alice', false));
+        await p.evaluate(() => PTBO_FEEDBACK.open());
         await p.locator("#feedback-new").click();
         await p.locator("#feedback-title").fill("New topic");
         await p.locator("#feedback-body").fill("New report");
@@ -142,6 +144,8 @@ const server = http.createServer((req, res) => {
     await scenario(
       "completed old send cannot replace a newer view",
       async (p) => {
+        await p.evaluate(() => fixture.change('alice', false));
+        await p.evaluate(() => PTBO_FEEDBACK.open());
         await p.locator("#feedback-new").click();
         await p.locator("#feedback-title").fill("New topic");
         await p.locator("#feedback-body").fill("New report");
@@ -178,7 +182,8 @@ const server = http.createServer((req, res) => {
     await scenario(
       "live updates preserve oldest pagination cursor",
       async (p) => {
-        await p.locator("#feedback-developer").click();
+        await p.evaluate(() => fixture.change('alice', false));
+        await p.evaluate(() => PTBO_FEEDBACK.open());
         await p.evaluate(() => { fixture.cursors = []; });
         await p.locator("#feedback-more-threads").click();
         await p.evaluate(() => fixture.updateThreads());

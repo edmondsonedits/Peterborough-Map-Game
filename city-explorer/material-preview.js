@@ -1,8 +1,8 @@
 import * as THREE from 'three';
-import { CITY_MATERIALS, installCityMaterialDetail, cloneCityMaterial } from './city-material-library.js?v=1.6.148';
-import { resolveBuildingAppearance } from './building-appearance.js?v=1.6.148';
-import { facadeComponentPlan } from './facade-components.js?v=1.6.148';
-import { visualSettings } from './city-visual-settings.js?v=1.6.148';
+import { CITY_MATERIALS, installCityMaterialDetail, cloneCityMaterial } from './city-material-library.js?v=1.6.149';
+import { resolveBuildingAppearance } from './building-appearance.js?v=1.6.149';
+import { facadeComponentPlan } from './facade-components.js?v=1.6.149';
+import { visualSettings } from './city-visual-settings.js?v=1.6.149';
 
 const canvas = document.querySelector('#preview');
 const status = document.querySelector('#status');
