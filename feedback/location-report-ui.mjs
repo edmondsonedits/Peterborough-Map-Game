@@ -73,10 +73,11 @@ function createMap({host,support,snapshot,draft,onChange,readOnly=false,suggesti
   } catch(error) { map.remove(); throw error; }
 }
 
-function contextDetails(snapshot){
-  const details=node('details',null,{class:'fb-report-context'});details.append(node('summary','Details included with this report'));
+function contextDetails(snapshot,diagnosticsText=""){
+  const details=node('details',null,{class:'fb-report-context'});details.append(node('summary','Technical details'));
+  const content=node('div',null,{class:'fb-auto-context-body'});
   const values=[['Location ID',snapshot.callId],['Place',`${snapshot.question.name} · ${snapshot.question.address}`],['Cross streets',snapshot.question.crossStreets?.join(' / ')||'not recorded'],['Difficulty',snapshot.question.difficulty||'not recorded'],['City / mode',`${snapshot.city} / Geo Guesser`],['Service / base',`${snapshot.service} / ${snapshot.baseId||'not recorded'}`],['Version',snapshot.version],['Dataset',`${snapshot.datasetId} · ${snapshot.datasetRevision||'revision not recorded'}`],['Original circle',`${snapshot.originalCircle.center.lat}, ${snapshot.originalCircle.center.lng} · ${snapshot.originalCircle.radiusMeters} m`],['Player guess',snapshot.guess?`${snapshot.guess.lat}, ${snapshot.guess.lng}`:'not recorded'],['Result',`${snapshot.result}${snapshot.distanceMeters===null?'':` · ${Math.round(snapshot.distanceMeters)} m from target`}`]];
-  const list=node('dl');for(const [label,value]of values)list.append(node('dt',label),node('dd',value));details.append(list);return details;
+  const list=node('dl');for(const [label,value]of values)list.append(node('dt',label),node('dd',value));content.append(list);if(diagnosticsText)content.append(node('p',diagnosticsText,{class:'fb-report-coordinates'}));details.append(content);return details;
 }
 
 export function mountLocationReportComposer({host,snapshot,rootUrl,mapSpec,mapLoader=loadReportMap,draft={},diagnosticsText='',onSend,onReceived,onCancel=()=>{},onDraft=()=>{}}){
@@ -89,8 +90,8 @@ export function mountLocationReportComposer({host,snapshot,rootUrl,mapSpec,mapLo
   form.querySelector('.fb-report-place').textContent=[original.question.name,original.question.address].filter(Boolean).join(' · ');
   const reason=form.elements.namedItem('reason'),check=form.elements.namedItem('correct-circle'),note=form.elements.namedItem('note'),send=form.querySelector('[type="submit"]'),error=form.querySelector('.fb-error'),status=form.querySelector('.fb-map-status'),mapHost=form.querySelector('.fb-report-map');
   for(const [value,label]of Object.entries(reportReasons))reason.append(node('option',label,{value}));reason.value=draft.reason||'point';note.value=draft.note||'';check.checked=circle.enabled();
-  const details=contextDetails(original);if(diagnosticsText)details.append(node('p',diagnosticsText,{class:'fb-report-coordinates'}));
-  form.querySelector('.fb-report-details').append(details);host.replaceChildren(form);
+  const details=contextDetails(original,diagnosticsText);
+  form.querySelector('.fb-report-details').append(node('p','Game details are attached automatically.',{class:'fb-muted fb-auto-context-hint'}),details);host.replaceChildren(form);
   let alive=true,busy=false,geometry=null,mapPromise=null;
   const save=()=>{Object.assign(draft,{reason:reason.value,note:note.value,correctCircle:circle.enabled(),circle:circle.value()});onDraft(draft);};
   function syncFields(){const value=circle.value();for(const key of ['latitude','longitude','radius'])form.elements.namedItem(key).value=key==='radius'?String(value.radiusMeters):String(value.center[key==='latitude'?'lat':'lng']);save();}

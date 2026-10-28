@@ -1,6 +1,8 @@
-# Private in-game feedback — v1.6.146
+# Private in-game feedback — v1.6.147
 
 Optional email/password accounts, Continue as guest, private topic-based conversations, developer replies, unread indicators, status/priority filters and private developer notes. Guest registration uses `linkWithCredential` so the UID and conversations stay together. Signing into an existing account preserves the current guest’s conversations too: destination credentials are verified in a separate in-memory Auth session, the guest authorizes a target-specific transfer, and only thread ownership moves. Messages, report snapshots, and private notes stay unchanged. An interrupted transfer resumes on the destination account’s next load, with an in-game retry if necessary. Failed authentication or authorization leaves the guest session intact.
+
+Submission forms keep technical information collapsed by default. Location reports show a **Technical details** disclosure containing the full original snapshot and browser/viewport/report time; these are still attached automatically and retained in developer AI exports. General feedback keeps its prefilled city/mode/department under **Game details**, with validation revealing a field when it needs attention.
 
 ## Location and radius reports
 

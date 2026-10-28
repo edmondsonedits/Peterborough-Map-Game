@@ -2,7 +2,7 @@ import { editorUrlForReport, exportFeedback } from "./agent-tools.mjs?v=feedback
 import { feedbackConfig } from "./config.mjs?v=feedback-workflow-20261028";
 import { createFeedbackService } from "./service.mjs?v=feedback-workflow-20261028";
 import { normalizeLocationReport, locationReportIdentity, locationReportGroupKey } from './location-report.mjs';
-import { mountLocationReportComposer, mountLocationReportDetails } from './location-report-ui.mjs';
+import { mountLocationReportComposer, mountLocationReportDetails } from './location-report-ui.mjs?v=compact-feedback-20261028';
 import {
   categories,
   statuses,
@@ -41,7 +41,7 @@ export function mountFeedback({
   service ||= createFeedbackService(config);
   const stylesheet = node("link", null, {
     rel: "stylesheet",
-    href: new URL("feedback/styles.css", rootUrl),
+    href: new URL("feedback/styles.css?v=compact-feedback-20261028", rootUrl),
   });
   document.head.append(stylesheet);
   const dialog = node("dialog", null, {
@@ -571,7 +571,11 @@ export function mountFeedback({
       key = draftKey(),
       token = generation;
     const form = node("form", null, { class: "fb-new-form fb-stack" });
-    form.innerHTML = `<h3>New message</h3><label>Topic<input id="feedback-title" maxlength="120" required placeholder="A short description"></label><label>Category<select id="feedback-category"></select></label><label>Message<textarea id="feedback-body" required maxlength="4000" rows="5" placeholder="What happened, or what would you like to see?"></textarea></label><div class="fb-context"><label>City<input id="feedback-city" maxlength="80" required></label><label>Mode<select id="feedback-mode"></select></label><label>Department<select id="feedback-department"><option value="fire">Fire</option><option value="ems">EMS</option><option value="general">General</option></select></label></div><p class="fb-error" role="status" aria-live="polite"></p><div class="fb-actions"><button type="button" id="feedback-cancel-new">Back</button><button type="submit" id="feedback-create-thread" class="fb-primary">Send message</button></div>`;
+    form.innerHTML = `<h3>New message</h3><label>Topic<input id="feedback-title" maxlength="120" required placeholder="A short description"></label><label>Category<select id="feedback-category"></select></label><label>Message<textarea id="feedback-body" required maxlength="4000" rows="5" placeholder="What happened, or what would you like to see?"></textarea></label><details class="fb-message-context"><summary>Game details · included automatically</summary><div class="fb-context fb-auto-context-body"><label>City<input id="feedback-city" maxlength="80" required></label><label>Mode<select id="feedback-mode"></select></label><label>Department<select id="feedback-department"><option value="fire">Fire</option><option value="ems">EMS</option><option value="general">General</option></select></label></div></details><p class="fb-error" role="status" aria-live="polite"></p><div class="fb-actions"><button type="button" id="feedback-cancel-new">Back</button><button type="submit" id="feedback-create-thread" class="fb-primary">Send message</button></div>`;
+    form.addEventListener("invalid", event => {
+      const details = event.target.closest("details");
+      if (details) details.open = true;
+    }, true);
     form.querySelector("#feedback-category").append(...options(categories));
     form
       .querySelector("#feedback-mode")
