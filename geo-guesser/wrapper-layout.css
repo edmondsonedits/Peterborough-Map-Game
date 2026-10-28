@@ -12,3 +12,6 @@ body #ptbo-training-use-notice{top:auto!important;right:auto!important;bottom:8p
 body #ptbo-training-use-notice span{display:none}
 body #ptbo-training-use-notice strong{margin:0;font-size:9px}
 body #ptbo-training-use-notice:focus-visible{outline:3px solid #6de8dc;outline-offset:3px}
+
+body.station-practice-active #ptbo-training-use-notice{bottom:calc(2px + env(safe-area-inset-bottom))!important;background:rgba(15,23,42,.72);border-color:transparent;box-shadow:none;color:#d3d9e2;padding:4px 6px;opacity:.8}
+body.station-practice-active #ptbo-training-use-notice strong{color:inherit}

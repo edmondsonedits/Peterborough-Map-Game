@@ -11,49 +11,27 @@ async function started(options={}){
   const g=await game({cityPackage,baseRecords,...options});
   g.api.chooseService('fire');g.api.chooseDifficulty('easy');g.api.start(0);return g;
 }
-test('Peterborough base dropdown changes the start without losing the current call or session',async()=>{
-  const g=await started(),target=g.api.state.target,session=g.api.state.session;
-  assert.equal(g.node('practice-bases').hidden,false);
-  assert.equal(g.node('practice-base-options').children.length,2);
-  assert.equal(g.api.chooseBase(1),true);
-  assert.equal(g.api.state.base.id,'fire-2');assert.equal(g.api.state.target,target);assert.equal(g.api.state.session,session);
-  assert.equal(g.map.center.lat,baseRecords[1].lat);assert.equal(g.map.center.lng,baseRecords[1].lng);
-  assert.equal(g.node('practice-base-options').children[1]['aria-pressed'],'true');
-  assert.equal(g.activeElement.id,'map');
-  g.api.next();assert.equal(g.map.center.lat,baseRecords[1].lat);
-  g.api.finish();assert.equal(g.activeElement.id,'practice-base-1');
+test('Return retains the selected service and difficulty while ending the current call',async()=>{
+ const g=await started();g.api.check();g.api.finish();
+ assert.equal(g.api.state.review,null);assert.equal(g.api.state.session,null);assert.equal(g.node('base-step').hidden,false);
+ assert.equal(g.api.state.service,'fire');assert.equal(g.api.state.difficulty,'easy');assert.equal(g.activeElement.id,'practice-base-0');
+ assert.equal(g.api.start(1),true);assert.equal(g.api.state.base.id,'fire-2');
 });
-test('base switching clears a missed-answer review and rejects invalid choices',async()=>{
-  const g=await started(),target=g.api.state.target;g.api.check();
-  assert.equal(g.api.state.review.outcome,'incorrect');
-  assert.equal(g.api.chooseBase(1),true);assert.equal(g.api.state.review,null);assert.equal(g.api.state.target,target);
-  assert.equal(g.api.chooseBase(8),false);assert.equal(g.api.state.base.id,'fire-2');
-  g.api.finish();assert.equal(g.api.chooseBase(0),false);
+test('phone cross streets start visible, toggle and reset each call without changing the preference',async()=>{
+ const g=await started({mobile:true,savedCross:'true'});assert.equal(g.node('call-cross-streets').hidden,false);
+ assert.equal(g.node('reveal-cross-streets').textContent,'Hide');g.api.revealCrossStreets();assert.equal(g.node('call-cross-streets').hidden,true);
+ g.api.next();assert.equal(g.node('call-cross-streets').hidden,false);assert.equal(g.storage.get('geoShowCrossStreets'),'true');
 });
-test('Peterborough phone cross streets start collapsed, toggle both ways and reset each call',async()=>{
-  const g=await started({mobile:true,savedCross:'true'});
-  assert.equal(g.node('call-cross-streets').hidden,true);
-  assert.equal(g.node('reveal-cross-streets').textContent,'Show cross streets');
-  assert.equal(g.node('practice-feedback').textContent,'');
-  g.api.revealCrossStreets();assert.equal(g.node('call-cross-streets').hidden,false);
-  assert.equal(g.node('reveal-cross-streets')['aria-expanded'],'true');
-  g.api.revealCrossStreets();assert.equal(g.node('call-cross-streets').hidden,true);
-  g.api.revealCrossStreets();g.api.next();assert.equal(g.node('call-cross-streets').hidden,true);
-  assert.equal(g.storage.get('geoShowCrossStreets'),'true','phone disclosure does not rewrite the desktop preference');
+test('desktop cross streets keep their saved setting and EMS starts at an EMS base',async()=>{
+ const g=await started();assert.equal(g.node('call-cross-streets').hidden,false);
+ g.api.finish();g.api.chooseService('ems');g.api.chooseDifficulty('easy');g.api.start(0);
+ assert.equal(g.api.state.base.id,'ems-1');
+ const hidden=await started({savedCross:'false'});assert.equal(hidden.node('call-cross-streets').hidden,true);
 });
-test('desktop cross streets keep their saved setting and EMS menu contains only EMS bases',async()=>{
-  const g=await started();assert.equal(g.node('call-cross-streets').hidden,false);
-  g.api.finish();g.api.chooseService('ems');g.api.chooseDifficulty('easy');g.api.start(0);
-  assert.equal(g.node('practice-base-options').children.length,1);assert.equal(g.api.state.base.id,'ems-1');
-  const hidden=await started({savedCross:'false'});assert.equal(hidden.node('call-cross-streets').hidden,true);
-});
-test('other cities share the Bases dropdown and collapsed phone cross streets',async()=>{
-  const g=await started({cityPackage:{id:'toronto',name:'Toronto'},mobile:true});
-  assert.equal(g.node('body').classList.contains('ptbo-geo-compact'),true);
-  assert.equal(g.node('practice-bases').hidden,false);
-  assert.equal(g.node('practice-base-options').children.length,2);
-  assert.equal(g.node('call-cross-streets').hidden,true);
-  assert.equal(g.node('practice-feedback').textContent,'');
+test('other cities share the visible phone hints and return flow',async()=>{
+ const g=await started({cityPackage:{id:'toronto',name:'Toronto'},mobile:true});
+ assert.equal(g.node('body').classList.contains('geo-ui-compact'),true);assert.equal(g.node('call-cross-streets').hidden,false);
+ g.api.finish();assert.equal(g.node('base-step').hidden,false);assert.equal(g.api.state.service,'fire');
 });
 test('Peterborough uses compact cross-street labels and removes the desktop hide row',async()=>{
   const g=await started();
@@ -66,7 +44,7 @@ test('Peterborough uses compact cross-street labels and removes the desktop hide
   assert.equal(other.node('reveal-cross-streets').hidden,true);
 });
 test('phone cross streets keep an accessible inline hide control when expanded',async()=>{
-  const g=await started({mobile:true});g.api.revealCrossStreets();
+  const g=await started({mobile:true});
   assert.equal(g.node('reveal-cross-streets').hidden,false);
   assert.equal(g.node('reveal-cross-streets').textContent,'Hide');
   assert.equal(g.node('reveal-cross-streets')['aria-label'],'Hide cross streets');
