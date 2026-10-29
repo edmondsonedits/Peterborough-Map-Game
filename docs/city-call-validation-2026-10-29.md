@@ -4,6 +4,8 @@ Release **1.6.151**. Authorized session window: **2026-10-29 03:26:53–09:26:53
 
 The recorded suites passed with the distinct scopes below. Structural route proofs, injected UI/state fixtures, real map rendering and complete native-control drives are separate evidence; their case counts must not be combined into a claim that every mission was fully driven.
 
+The subsequent publication checks and the corrected City Explorer smoke-test timeout are recorded in the [CI follow-up](validation/city-calls-2026-10-29/ci-followup.md). The application and call-data acceptance hashes remain unchanged.
+
 ## Recorded results
 
 | Check | Recorded result | Evidence and scope |
