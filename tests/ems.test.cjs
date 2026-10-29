@@ -15,7 +15,8 @@ function node(id='') {
     get innerHTML(){return this._html ?? this.textContent.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');},
     set innerHTML(value){this._html=value;},
     setAttribute(key,value){this.attributes[key]=value;},getAttribute(key){return this.attributes[key];},
-    addEventListener(){},dispatchEvent(){},appendChild(child){this.children.push(child);},replaceChildren(...children){this.children=children;},
+    addEventListener(){},dispatchEvent(){},appendChild(child){this.children.push(child);},append(...children){this.children.push(...children);},replaceChildren(...children){this.children=children;},
+    showModal(){this.open=true;},close(){this.open=false;},remove(){this.removed=true;},focus(){},
     classList:{add(){},remove(){},toggle(){},contains(){return false;}},querySelector:()=>null,closest:()=>null};
 }
 function game({random=0}={}) {
@@ -58,6 +59,126 @@ function game({random=0}={}) {
   function arrive(){run('simLat=activeArrivalPoint.lat;simLng=activeArrivalPoint.lng;evaluateDistanceToTarget();');}
   return {c,run,filters,element,timers,intervals,spoken,alerts,advance,transition,arrive,service:c.PTBO_SERVICE};
 }
+
+function installDemo(g) {
+  const cityId='richmond-hill',calls=[],canonical=[],groups=[];
+  for(const service of ['fire','ems']) for(const base of g.c.PTBO_BASE_STORE.getBases(service)) {
+    const callIds=[];
+    for(let index=0;index<5;index++) {
+      const id=`${service}-${base.id}-${index}`,lat=44.318+index*.001,lng=-78.34;
+      const sub=service==='fire'?'Structure Fire':'Difficulty Breathing';
+      const call={id,canonicalCallId:`canonical-${id}`,cityId,routeBaseId:base.id,name:`Demo ${index}`,addr:`${index+1} Test St`,lat,lng,main:service==='fire'?'Fire':'Medical',sub,
+        locationKind:'sourced-address',simulatedIncident:true,trainingServices:[service],incidentProfiles:{[service]:{sub}},routeAccess:{lat,lng,method:'modeled-public-road-approach'}};
+      calls.push(call);canonical.push({...call,id:call.canonicalCallId});callIds.push(id);
+    }
+    groups.push({baseId:base.id,service,callIds});
+  }
+  const training={id:cityId,routeCalls:calls,routeResponses:{schemaVersion:1,minCallsPerBase:3,bases:groups},dispatchDemo:{schemaVersion:1,callLimit:5,bases:groups}};
+  g.c.PTBO_CITY_PACKAGE={...g.c.PTBO_CITY_PACKAGE,id:cityId,name:'Richmond Hill',dispatchDemo:{callLimit:5},serviceConfig:{...config,profiles:{
+    fire:{...config.profiles.fire,bases:g.c.PTBO_BASE_STORE.getBases('fire')},
+    ems:{...config.profiles.ems,bases:g.c.PTBO_BASE_STORE.getBases('ems')},
+  }}};
+  g.c.location={href:'https://example.test/response-simulator/index.html?city=richmond-hill'};
+  g.c.parent.PTBO_DISPATCH_STORE={cityId,getAll:()=>canonical,getTrainingData:()=>training,ready:()=>Promise.resolve()};
+  g.c.PTBO_ROAD_COLLISION={state:{status:'ready'},nearestRoad:(lat,lng)=>({lat,lng,distance:0})};
+  vm.runInContext(read('response-simulator/local-pool.js'),g.c);
+  vm.runInContext(read('response-simulator/dispatch-demo-session.js'),g.c);
+  if(fs.existsSync(path.join(__dirname,'../response-simulator/dispatch-demo.js'))) vm.runInContext(read('response-simulator/dispatch-demo.js'),g.c);
+  return {training,canonical};
+}
+
+test('native demo ends after five distinct Fire calls and replay restores driving and dispatch',()=>{
+  const g=game();installDemo(g);g.service.select('fire');
+  const ids=[];
+  for(let index=0;index<5;index++) {
+    g.run('triggerDispatchWorkflow()');
+    assert.ok(g.run('mission'),g.alerts.join(' | '));
+    ids.push(g.run('mission.scene.id'));
+    g.arrive();g.transition();
+  }
+  assert.equal(g.c.PTBO_DISPATCH_DEMO?.state.completed,5);
+  assert.equal(new Set(ids).size,5);
+  assert.equal(g.element('hud-action-btn').disabled,true);
+  g.run('keys.w=true;velocity=0.01;simulationStep();triggerDispatchWorkflow()');
+  assert.equal(g.run('velocity'),0,'completion overlay prevents residual driving');
+  assert.equal(g.run('mission.phase'),'complete','a sixth call is not created');
+  g.c.PTBO_DISPATCH_DEMO.replay();
+  assert.equal(g.c.PTBO_DISPATCH_DEMO.state.completed,0);
+  assert.equal(g.c.PTBO_DISPATCH_DEMO.state.finished,false);
+  assert.equal(g.run('mission'),null);
+  assert.equal(g.element('hud-action-btn').disabled,false);
+  g.run('triggerDispatchWorkflow()');
+  assert.equal(g.run('mission.phase'),'response');
+  assert.equal(g.alerts.length,0);
+});
+
+test('native demo EMS count waits for hospital handover and survives service/base cancellation',()=>{
+  const g=game();installDemo(g);g.service.select('ems');g.run('triggerDispatchWorkflow()');
+  g.arrive();
+  assert.equal(g.c.PTBO_DISPATCH_DEMO?.state.completed,0);
+  g.transition();
+  assert.equal(g.run('mission.phase'),'transport');
+  assert.equal(g.c.PTBO_DISPATCH_DEMO.state.completed,0);
+  g.arrive();g.transition();
+  assert.equal(g.c.PTBO_DISPATCH_DEMO.state.completed,1);
+  g.run('completeAssignment()');
+  assert.equal(g.c.PTBO_DISPATCH_DEMO.state.completed,1);
+  g.run('triggerDispatchWorkflow()');g.arrive();const stale=[...g.timers.values()][0];
+  g.service.spawn(2);g.service.select('fire');
+  assert.equal(g.c.PTBO_DISPATCH_DEMO.state.completed,1);
+  stale();
+  assert.equal(g.c.PTBO_DISPATCH_DEMO.state.completed,1);
+  g.run('triggerDispatchWorkflow()');assert.ok(g.run('mission'),g.alerts.join(' | '));g.arrive();g.transition();
+  assert.equal(g.c.PTBO_DISPATCH_DEMO.state.completed,2);
+});
+
+test('native demo rejects incomplete city pools and cannot silently dispatch Peterborough data',()=>{
+  const g=game();const data=installDemo(g);g.service.select('fire');
+  data.training.dispatchDemo.bases=[];
+  g.run('triggerDispatchWorkflow()');
+  assert.equal(g.run('mission'),null);
+  assert.equal(g.run('totalTrackedCalls'),0);
+  assert.ok(g.alerts.length>0);
+});
+
+test('a demo package cannot dispatch if its session controller fails to load',()=>{
+  const g=game();installDemo(g);g.run('window.PTBO_DISPATCH_DEMO=undefined');g.service.select('fire');
+  assert.equal(g.run('window.PTBO_DISPATCH_DEMO'),undefined);
+  g.run('triggerDispatchWorkflow()');
+  assert.equal(g.run('mission'),null);
+  assert.equal(g.run('totalTrackedCalls'),0);
+  assert.ok(g.alerts.length>0);
+});
+
+test('demo refuses a moved base and preserves the saved edit',()=>{
+  const g=game();installDemo(g);g.service.select('fire');
+  const baseId=g.service.getBase().id;
+  const moved=g.c.PTBO_BASE_STORE.getAll().map(base=>base.id===baseId?{...base,lat:base.lat+.02,spawnLat:base.spawnLat+.02}:base);
+  g.c.PTBO_BASE_STORE.replaceAll(moved);
+  g.run('triggerDispatchWorkflow()');
+  assert.equal(g.run('mission'),null);
+  assert.equal(g.service.getBase().lat,moved.find(base=>base.id===baseId).lat);
+  assert.ok(g.alerts.length>0);
+});
+
+test('demo refuses a deleted canonical call without recreating it',()=>{
+  const g=game();const data=installDemo(g);g.service.select('fire');
+  const deleted=data.canonical.shift();
+  g.run('triggerDispatchWorkflow()');
+  assert.equal(g.run('mission'),null);
+  assert.equal(data.canonical.some(call=>call.id===deleted.id),false);
+  assert.ok(g.alerts.length>0);
+});
+
+test('Peterborough remains unlimited and can dispatch a sixth completed-call successor',()=>{
+  const g=game();g.service.select('fire');
+  for(let index=0;index<5;index++) {g.run('triggerDispatchWorkflow()');g.arrive();g.transition();}
+  g.run('triggerDispatchWorkflow()');
+  assert.equal(g.run('totalTrackedCalls'),5);
+  assert.equal(g.run('mission.phase'),'response');
+  assert.equal(g.c.PTBO_DISPATCH_DEMO,undefined);
+  assert.equal(g.alerts.length,0);
+});
 
 test('choosing EMS changes bases and chassis and disables only alarm defaults; Fire preferences survive switching',()=>{
   const g=game();g.service.select('fire');

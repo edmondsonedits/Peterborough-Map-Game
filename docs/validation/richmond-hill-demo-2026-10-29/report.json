@@ -1,0 +1,1493 @@
+{
+  "liveTiles": true,
+  "startedAt": "2026-10-29T14:00:57.354Z",
+  "results": [
+    {
+      "name": "map-desktop",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "tileResponses": {
+        "server.arcgisonline.com:200": 114,
+        "services.arcgisonline.com:200": 114,
+        "tile.openstreetmap.org:200": 42
+      },
+      "tileFailures": {
+        "b.tile.openstreetmap.org:net::ERR_ABORTED": 117,
+        "c.tile.openstreetmap.org:net::ERR_ABORTED": 116,
+        "a.tile.openstreetmap.org:net::ERR_ABORTED": 117,
+        "server.arcgisonline.com:net::ERR_ABORTED": 112,
+        "services.arcgisonline.com:net::ERR_ABORTED": 112
+      },
+      "detail": {
+        "tiles": [
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          }
+        ],
+        "screenshot": "rendered-map-desktop.png"
+      },
+      "pass": true,
+      "durationMs": 50676
+    },
+    {
+      "name": "map-mobile",
+      "mobile": true,
+      "errors": [],
+      "dialogs": [],
+      "tileResponses": {
+        "c.tile.openstreetmap.org:200": 62,
+        "b.tile.openstreetmap.org:200": 63,
+        "a.tile.openstreetmap.org:200": 62,
+        "services.arcgisonline.com:200": 59,
+        "server.arcgisonline.com:200": 123,
+        "tile.openstreetmap.org:200": 30
+      },
+      "tileFailures": {
+        "b.tile.openstreetmap.org:net::ERR_ABORTED": 16,
+        "c.tile.openstreetmap.org:net::ERR_ABORTED": 16,
+        "a.tile.openstreetmap.org:net::ERR_ABORTED": 16,
+        "server.arcgisonline.com:net::ERR_ABORTED": 63,
+        "services.arcgisonline.com:net::ERR_ABORTED": 63
+      },
+      "detail": {
+        "tiles": [
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "server.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          },
+          {
+            "loaded": true,
+            "host": "services.arcgisonline.com"
+          }
+        ],
+        "screenshot": "rendered-map-mobile.png"
+      },
+      "pass": true,
+      "durationMs": 13480
+    },
+    {
+      "name": "launcher-desktop",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "tileResponses": {
+        "b.tile.openstreetmap.org:200": 60,
+        "a.tile.openstreetmap.org:200": 59,
+        "c.tile.openstreetmap.org:200": 63
+      },
+      "tileFailures": {
+        "c.tile.openstreetmap.org:net::ERR_ABORTED": 30,
+        "a.tile.openstreetmap.org:net::ERR_ABORTED": 30,
+        "b.tile.openstreetmap.org:net::ERR_ABORTED": 30,
+        "server.arcgisonline.com:net::ERR_ABORTED": 56,
+        "services.arcgisonline.com:net::ERR_ABORTED": 56
+      },
+      "detail": {
+        "screenshot": "popup-desktop.png",
+        "target": "/response-simulator/play/",
+        "request": "mocked explicit full-version request",
+        "selectedCity": "richmond-hill"
+      },
+      "pass": true,
+      "durationMs": 9220
+    },
+    {
+      "name": "launcher-mobile",
+      "mobile": true,
+      "errors": [],
+      "dialogs": [],
+      "tileResponses": {
+        "c.tile.openstreetmap.org:200": 39,
+        "a.tile.openstreetmap.org:200": 39,
+        "b.tile.openstreetmap.org:200": 39
+      },
+      "tileFailures": {
+        "c.tile.openstreetmap.org:net::ERR_ABORTED": 18,
+        "a.tile.openstreetmap.org:net::ERR_ABORTED": 18,
+        "b.tile.openstreetmap.org:net::ERR_ABORTED": 18,
+        "server.arcgisonline.com:net::ERR_ABORTED": 35,
+        "services.arcgisonline.com:net::ERR_ABORTED": 35
+      },
+      "detail": {
+        "screenshot": "popup-mobile.png",
+        "target": "/response-simulator/mobile/",
+        "request": "mocked explicit full-version request",
+        "selectedCity": "richmond-hill"
+      },
+      "pass": true,
+      "durationMs": 6483
+    },
+    {
+      "name": "bases",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "tileResponses": {
+        "a.tile.openstreetmap.org:200": 48,
+        "b.tile.openstreetmap.org:200": 61,
+        "services.arcgisonline.com:200": 1
+      },
+      "tileFailures": {
+        "b.tile.openstreetmap.org:net::ERR_ABORTED": 66,
+        "c.tile.openstreetmap.org:net::ERR_ABORTED": 89,
+        "a.tile.openstreetmap.org:net::ERR_ABORTED": 70,
+        "server.arcgisonline.com:net::ERR_ABORTED": 64,
+        "services.arcgisonline.com:net::ERR_ABORTED": 64
+      },
+      "detail": [
+        {
+          "id": "fire-richmond-hill-fire-8-1",
+          "service": "fire",
+          "spawn": [
+            43.8693875,
+            -79.4436973
+          ],
+          "expected": [
+            43.8693875,
+            -79.4436973
+          ],
+          "roadMetres": 0,
+          "calls": 5,
+          "accessible": 5
+        },
+        {
+          "id": "fire-richmond-hill-fire-8-2",
+          "service": "fire",
+          "spawn": [
+            43.9466983572658,
+            -79.45461275394953
+          ],
+          "expected": [
+            43.9466983572658,
+            -79.45461275394953
+          ],
+          "roadMetres": 3.477481157370918e-10,
+          "calls": 5,
+          "accessible": 5
+        },
+        {
+          "id": "fire-richmond-hill-fire-8-3",
+          "service": "fire",
+          "spawn": [
+            43.86103434686989,
+            -79.39058544295402
+          ],
+          "expected": [
+            43.86103434686989,
+            -79.39058544295402
+          ],
+          "roadMetres": 4.518638074808287e-10,
+          "calls": 5,
+          "accessible": 5
+        },
+        {
+          "id": "fire-richmond-hill-fire-8-4",
+          "service": "fire",
+          "spawn": [
+            43.89698857965589,
+            -79.40024302624761
+          ],
+          "expected": [
+            43.89698857965589,
+            -79.40024302624761
+          ],
+          "roadMetres": 5.5843270940417824e-11,
+          "calls": 5,
+          "accessible": 5
+        },
+        {
+          "id": "fire-richmond-hill-fire-8-5",
+          "service": "fire",
+          "spawn": [
+            43.8421578,
+            -79.4226634
+          ],
+          "expected": [
+            43.8421578,
+            -79.4226634
+          ],
+          "roadMetres": 0,
+          "calls": 5,
+          "accessible": 5
+        },
+        {
+          "id": "fire-richmond-hill-fire-8-6",
+          "service": "fire",
+          "spawn": [
+            43.906628,
+            -79.4498311
+          ],
+          "expected": [
+            43.906628,
+            -79.4498311
+          ],
+          "roadMetres": 0,
+          "calls": 5,
+          "accessible": 5
+        },
+        {
+          "id": "ems-richmond-hill-ems-28",
+          "service": "ems",
+          "spawn": [
+            43.86692183295849,
+            -79.44279599982337
+          ],
+          "expected": [
+            43.86692183295849,
+            -79.44279599982337
+          ],
+          "roadMetres": 4.827250222896246e-10,
+          "calls": 5,
+          "accessible": 5
+        },
+        {
+          "id": "ems-richmond-hill-ems-85",
+          "service": "ems",
+          "spawn": [
+            43.8421578,
+            -79.4226634
+          ],
+          "expected": [
+            43.8421578,
+            -79.4226634
+          ],
+          "roadMetres": 0,
+          "calls": 5,
+          "accessible": 5
+        }
+      ],
+      "pass": true,
+      "durationMs": 3019
+    },
+    {
+      "name": "native-fire",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "tileResponses": {
+        "b.tile.openstreetmap.org:200": 47,
+        "server.arcgisonline.com:200": 136,
+        "services.arcgisonline.com:200": 135,
+        "tile.openstreetmap.org:200": 40
+      },
+      "tileFailures": {
+        "b.tile.openstreetmap.org:net::ERR_ABORTED": 87,
+        "c.tile.openstreetmap.org:net::ERR_ABORTED": 133,
+        "a.tile.openstreetmap.org:net::ERR_ABORTED": 133,
+        "server.arcgisonline.com:net::ERR_ABORTED": 148,
+        "services.arcgisonline.com:net::ERR_ABORTED": 148
+      },
+      "detail": {
+        "initial": {
+          "city": "richmond-hill",
+          "base": "fire-richmond-hill-fire-8-4",
+          "service": "fire",
+          "demo": {
+            "cityId": "richmond-hill",
+            "callLimit": 5,
+            "completed": 0,
+            "remaining": 5,
+            "finished": false,
+            "activeGeneration": 3
+          },
+          "phase": "response",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-4-richmond-hill-osm-node-896663369",
+          "generation": 3,
+          "total": 0,
+          "pos": [
+            43.89698857965589,
+            -79.40024302624761
+          ],
+          "hospital": "Mackenzie Richmond Hill Hospital"
+        },
+        "final": {
+          "city": "richmond-hill",
+          "base": "fire-richmond-hill-fire-8-4",
+          "service": "fire",
+          "demo": {
+            "cityId": "richmond-hill",
+            "callLimit": 5,
+            "completed": 1,
+            "remaining": 4,
+            "finished": false,
+            "activeGeneration": null
+          },
+          "phase": "complete",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-4-richmond-hill-osm-node-896663369",
+          "generation": 3,
+          "total": 1,
+          "pos": [
+            43.897047731963355,
+            -79.4006072776136
+          ],
+          "hospital": "Mackenzie Richmond Hill Hospital"
+        },
+        "input": "native browser keyboard only; no GPS or heading mutation",
+        "deterministicCallSelection": true,
+        "samples": [
+          {
+            "lat": 43.89698857965589,
+            "lng": -79.40024302624761,
+            "heading": 180,
+            "phase": "response",
+            "target": {
+              "radius": 45,
+              "lat": 43.89713332156934,
+              "lng": -79.40115501160119,
+              "accessPoint": true
+            },
+            "collisions": 34,
+            "delta": 102.33682602644808,
+            "distance": 74.88484797609274
+          },
+          {
+            "lat": 43.897013957791934,
+            "lng": -79.40038793281542,
+            "heading": 282.06176158286553,
+            "phase": "response",
+            "target": {
+              "radius": 45,
+              "lat": 43.89713332156934,
+              "lng": -79.40115501160119,
+              "accessPoint": true
+            },
+            "collisions": 34,
+            "delta": 0.041081210039919824,
+            "distance": 62.93058585618836
+          }
+        ],
+        "screenshot": "native-fire-complete.png"
+      },
+      "pass": true,
+      "durationMs": 9433
+    },
+    {
+      "name": "fire-five-desktop",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "tileResponses": {
+        "b.tile.openstreetmap.org:200": 62,
+        "c.tile.openstreetmap.org:200": 60,
+        "a.tile.openstreetmap.org:200": 62,
+        "server.arcgisonline.com:200": 1777,
+        "server.arcgisonline.com:502": 60,
+        "services.arcgisonline.com:502": 60,
+        "services.arcgisonline.com:200": 1987,
+        "tile.openstreetmap.org:200": 223
+      },
+      "tileFailures": {
+        "b.tile.openstreetmap.org:net::ERR_ABORTED": 25,
+        "c.tile.openstreetmap.org:net::ERR_ABORTED": 26,
+        "a.tile.openstreetmap.org:net::ERR_ABORTED": 25,
+        "services.arcgisonline.com:net::ERR_ABORTED": 9126,
+        "server.arcgisonline.com:net::ERR_ABORTED": 9250
+      },
+      "detail": {
+        "calls": [
+          "route-civic-27-fire-richmond-hill-fire-8-1-richmond-hill-osm-way-1171265463",
+          "route-civic-27-fire-richmond-hill-fire-8-1-richmond-hill-osm-way-56297555",
+          "route-civic-27-fire-richmond-hill-fire-8-1-richmond-hill-odef-946625a3637fa713a4d0",
+          "route-civic-27-fire-richmond-hill-fire-8-1-richmond-hill-osm-node-4022932045",
+          "route-civic-27-fire-richmond-hill-fire-8-1-richmond-hill-osm-way-31812692"
+        ],
+        "screenshot": [
+          "map-fire-desktop.png",
+          "finish-fire-desktop.png"
+        ],
+        "finishRequest": "?city=richmond-hill&request=dispatch",
+        "arrivalFixture": "scene and hospital GPS injection; real transition timers",
+        "replay": {
+          "city": "richmond-hill",
+          "base": "fire-richmond-hill-fire-8-1",
+          "service": "fire",
+          "demo": {
+            "cityId": "richmond-hill",
+            "callLimit": 5,
+            "completed": 0,
+            "remaining": 5,
+            "finished": false,
+            "activeGeneration": 9
+          },
+          "phase": "response",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-1-richmond-hill-osm-node-4022932045",
+          "generation": 9,
+          "total": 5,
+          "pos": [
+            43.8693875,
+            -79.4436973
+          ],
+          "hospital": "Mackenzie Richmond Hill Hospital"
+        }
+      },
+      "pass": true,
+      "durationMs": 56082
+    },
+    {
+      "name": "ems-five-mobile",
+      "mobile": true,
+      "errors": [],
+      "dialogs": [],
+      "tileResponses": {
+        "server.arcgisonline.com:200": 639,
+        "services.arcgisonline.com:200": 279,
+        "tile.openstreetmap.org:200": 123
+      },
+      "tileFailures": {
+        "b.tile.openstreetmap.org:net::ERR_ABORTED": 76,
+        "c.tile.openstreetmap.org:net::ERR_ABORTED": 76,
+        "a.tile.openstreetmap.org:net::ERR_ABORTED": 75,
+        "server.arcgisonline.com:net::ERR_ABORTED": 59,
+        "services.arcgisonline.com:net::ERR_ABORTED": 59
+      },
+      "detail": {
+        "calls": [
+          "route-civic-24-ems-richmond-hill-ems-28-richmond-hill-osm-node-2775480409",
+          "route-civic-24-ems-richmond-hill-ems-28-richmond-hill-odef-946625a3637fa713a4d0",
+          "route-civic-24-ems-richmond-hill-ems-28-richmond-hill-osm-way-31812692",
+          "route-civic-24-ems-richmond-hill-ems-28-richmond-hill-osm-way-56297555",
+          "route-civic-24-ems-richmond-hill-ems-28-richmond-hill-odhf-ec8cdab0562f951338bc4e76e3724afb"
+        ],
+        "screenshot": [
+          "map-ems-mobile.png",
+          "finish-ems-mobile.png"
+        ],
+        "finishRequest": "?city=richmond-hill&request=dispatch",
+        "finishRequestOpenedWithoutSending": true,
+        "arrivalFixture": "scene and hospital GPS injection; real transition timers"
+      },
+      "pass": true,
+      "durationMs": 52511
+    },
+    {
+      "name": "abort-isolation",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "tileResponses": {
+        "b.tile.openstreetmap.org:200": 211,
+        "a.tile.openstreetmap.org:200": 209,
+        "c.tile.openstreetmap.org:200": 216,
+        "server.arcgisonline.com:200": 866,
+        "services.arcgisonline.com:200": 883,
+        "tile.openstreetmap.org:200": 65
+      },
+      "tileFailures": {
+        "c.tile.openstreetmap.org:net::ERR_ABORTED": 90,
+        "a.tile.openstreetmap.org:net::ERR_ABORTED": 102,
+        "b.tile.openstreetmap.org:net::ERR_ABORTED": 100,
+        "services.arcgisonline.com:net::ERR_ABORTED": 4038,
+        "server.arcgisonline.com:net::ERR_ABORTED": 4039,
+        "tile.openstreetmap.org:net::ERR_ABORTED": 136,
+        "services.arcgisonline.com:net::ERR_BLOCKED_BY_ORB": 1
+      },
+      "detail": {
+        "progressSurvivedBaseServiceAbort": true,
+        "reloadFresh": true,
+        "pb": {
+          "city": "peterborough",
+          "demo": false,
+          "transport": true,
+          "bases": 3
+        },
+        "other": {
+          "city": "oshawa",
+          "demo": false,
+          "transport": false
+        },
+        "unavailable": {
+          "requested": "kingston",
+          "city": null,
+          "demo": false,
+          "selected": false
+        },
+        "expectedStartupErrors": [
+          "City service configuration did not load before the base store.",
+          "City package/service configuration did not load."
+        ]
+      },
+      "pass": true,
+      "durationMs": 57228
+    }
+  ],
+  "limitations": [
+    "Native Fire trip uses only browser keyboard controls; other lifecycle checks set scene/hospital GPS to exercise the real arrival timers.",
+    "Only GET image requests to the shipped map tile providers are allowed externally. Feedback and telemetry remain blocked.",
+    "Launcher form submission replaces only PTBO_DEMO_REQUESTS with an in-memory adapter. No real message is sent."
+  ],
+  "finishedAt": "2026-10-29T14:05:23.010Z"
+}

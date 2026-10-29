@@ -1,0 +1,4 @@
+{
+  "coreScript": "http://127.0.0.1:37455/response-simulator/route-reveal.js?v=1.6.153",
+  "build": "1.6.153"
+}

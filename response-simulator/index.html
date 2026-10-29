@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Peterborough Fire & Emergency Dispatch Simulator</title>
     
-    <link rel="stylesheet" href="vendor/leaflet-1.9.4/leaflet.css?v=1.6.152" />
+    <link rel="stylesheet" href="vendor/leaflet-1.9.4/leaflet.css?v=1.6.153" />
     
     <style>
         html, body, #map {
@@ -116,6 +116,7 @@
         <div class="hud-timer-block">
             <div class="hud-clock-display" id="hud-clock">00:00.0</div>
             <button class="hud-btn" id="hud-action-btn" onclick="triggerDispatchWorkflow()">Start Call</button>
+            <div id="ptbo-dispatch-demo-progress" role="status" aria-live="polite" hidden style="margin-top:5px;font:700 10px/1.2 system-ui;color:#7dd3fc"></div>
         </div>
     </div>
 
@@ -201,17 +202,17 @@
 
     <div id="map"></div>
 
-    <script src="../shared/build-version.js?v=1.6.152"></script>
-    <script src="vendor/leaflet-1.9.4/leaflet.js?v=1.6.152"></script>
-    <script src="vendor/leaflet-1.9.4/leaflet.edgebuffer.js?v=1.6.152"></script>
-    <script src="vendor/leaflet-1.9.4/leaflet.rotatedMarker.js?v=1.6.152"></script>
+    <script src="../shared/build-version.js?v=1.6.153"></script>
+    <script src="vendor/leaflet-1.9.4/leaflet.js?v=1.6.153"></script>
+    <script src="vendor/leaflet-1.9.4/leaflet.edgebuffer.js?v=1.6.153"></script>
+    <script src="vendor/leaflet-1.9.4/leaflet.rotatedMarker.js?v=1.6.153"></script>
     
-    <script src="service-config.js?v=1.6.152"></script>
-    <script src="../shared/location-changes.js?v=1.6.152"></script>
-    <script src="../shared/base-locations.js?v=1.6.152"></script>
-    <script src="service-selection.js?v=1.6.152"></script>
-    <script src="gearbox-core.js?v=1.6.152"></script>
-    <script src="local-pool.js?v=1.6.152"></script>
+    <script src="service-config.js?v=1.6.153"></script>
+    <script src="../shared/location-changes.js?v=1.6.153"></script>
+    <script src="../shared/base-locations.js?v=1.6.153"></script>
+    <script src="service-selection.js?v=1.6.153"></script>
+    <script src="gearbox-core.js?v=1.6.153"></script>
+    <script src="local-pool.js?v=1.6.153"></script>
     <script>
         const dispatchDatabase = [
             { main:"Fire", sub:"Water & Ice Rescue", name:"Beavermead Park Beach", addr:"2015 Ashburnham Dr", lat:44.295749, lng:-78.303611 },
@@ -695,7 +696,7 @@
         window.PTBO_FIXED_STEP = FIXED_STEP_MS / 1000;
 
         function simulationStep() {
-            if (window.PTBO_SERVICE?.state.selected === false || simulationState === STATES.ONSCENE) {
+            if (window.PTBO_SERVICE?.state.selected === false || simulationState === STATES.ONSCENE || window.PTBO_DISPATCH_DEMO?.state.finished) {
                 velocity = 0;
                 return;
             }
@@ -788,6 +789,7 @@
         }
 
         function resetDispatchWorkflow() {
+            window.PTBO_DISPATCH_DEMO?.cancel();
             missionGeneration++;
             clearTimeout(sceneTransitionTimer);
             sceneTransitionTimer = null;
@@ -815,6 +817,7 @@
             button.disabled = disabled;
             button.className = 'hud-btn';
             button.style.opacity = disabled ? '0.5' : '1';
+            window.PTBO_DISPATCH_DEMO?.sync();
         }
 
         function startDispatchClock() {
@@ -842,9 +845,10 @@
         }
 
         function resolveIncidentArrival(incident) {
+            if (!incident) return null;
             const radius = Math.max(10, Math.min(500, Number(incident.radius) || 40));
             const roads = window.PTBO_ROAD_COLLISION;
-            if (window.PTBO_CITY_PACKAGE?.features?.sceneResponseDrills) {
+            if (window.PTBO_CITY_PACKAGE?.features?.sceneResponseDrills || (window.PTBO_CITY_PACKAGE?.dispatchDemo && incident.routeBaseId)) {
                 if (roads?.state?.status !== 'ready') return null;
                 if (incident.locationKind === 'mapped-intersection') {
                     const nearest=roads.nearestRoad(incident.lat,incident.lng,5);
@@ -903,6 +907,10 @@
         function fireRandomIncidentDispatch() {
             if (window.PTBO_SERVICE?.state.selected === false ||
                 (simulationState !== STATES.INACTIVE && simulationState !== STATES.INSERVICE)) return;
+            if (window.PTBO_CITY_PACKAGE?.dispatchDemo) {
+                if (!window.PTBO_DISPATCH_DEMO) { alert('The city’s demo session is still loading. Please refresh the page.'); return; }
+                if (!window.PTBO_DISPATCH_DEMO.canDispatch()) return;
+            }
             const checkedBoxes = document.querySelectorAll('.filter-chk:checked');
             const activeSubCategories = Array.from(checkedBoxes).map(cb => cb.getAttribute('data-sub'));
 
@@ -910,6 +918,11 @@
             let filteredPool;
             const drills=window.PTBO_CITY_PACKAGE?.features?.sceneResponseDrills === true;
             let candidates=dispatchDatabase;
+            if (window.PTBO_CITY_PACKAGE?.dispatchDemo) {
+                if (window.PTBO_ROAD_COLLISION?.state?.status !== 'ready') { alert('City road data is still loading.'); return; }
+                try { candidates=window.PTBO_DISPATCH_DEMO.pool(); }
+                catch (error) { alert(error.message); return; }
+            }
             if (drills) {
                 const store=window.parent?.PTBO_DISPATCH_STORE;
                 const base=window.PTBO_SERVICE?.getBase?.();
@@ -949,6 +962,10 @@
 
             mission = {generation:missionGeneration,service:ems ? 'ems' : 'fire',scene:{...activeIncident},
                 hospital:hospital ? {...hospital} : null,hospitalArrival,transportRequired,responseMs:0,transportMs:0,phase:'response'};
+            if (window.PTBO_CITY_PACKAGE?.dispatchDemo && !window.PTBO_DISPATCH_DEMO.started(mission)) {
+                resetDispatchWorkflow();
+                return;
+            }
             activeArrivalPoint = resolveIncidentArrival(activeIncident);
             activeArrivalRadius = activeArrivalPoint.radius;
             incidentCircleMarker = L.circle([activeArrivalPoint.lat, activeArrivalPoint.lng], {
@@ -1001,6 +1018,7 @@
                 <p class="hud-address">${ems && mission.transportRequired ? `Patient delivered to ${escapeDispatchText(mission.hospital.name)}` : ems ? 'Response exercise completed' : 'Assignment completed'}</p>
                 <div class="hud-meta">Response: ${(mission.responseMs/1000).toFixed(1)} s${ems && mission.transportRequired ? ` · Transport: ${(mission.transportMs/1000).toFixed(1)} s` : ''}</div>`;
             setDispatchAction('Next Call',false);
+            window.PTBO_DISPATCH_DEMO?.completed(mission);
         }
 
         function beginHospitalTransport() {
@@ -1066,7 +1084,9 @@
 
         window.onload = initializeSimulator;
     </script>
-    <script src="service-mode.js?v=1.6.152"></script>
-    <script src="scene-response-filters.js?v=1.6.152"></script>
+    <script src="service-mode.js?v=1.6.153"></script>
+    <script src="dispatch-demo-session.js?v=1.6.153"></script>
+    <script src="dispatch-demo.js?v=1.6.153"></script>
+    <script src="scene-response-filters.js?v=1.6.153"></script>
 </body>
 </html>

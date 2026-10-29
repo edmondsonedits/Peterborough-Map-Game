@@ -1,0 +1,456 @@
+{
+  "schemaVersion": 1,
+  "cityId": "richmond-hill",
+  "reviewedAt": "2026-10-29",
+  "scope": "Five fictional local Dispatch calls per service/base, using existing independently audited civic records and road snapshot.",
+  "bases": {
+    "source": "geo-data.json",
+    "activeFire": 6,
+    "activeEms": 2,
+    "spawnSource": "training-data.json#routeResponses.bases[].access",
+    "spawnMethod": "Previously audited modeled road starts; not a field survey of vehicle exits."
+  },
+  "hospital": {
+    "id": "mackenzie-richmond-hill",
+    "name": "Mackenzie Richmond Hill Hospital",
+    "addr": "10 Trench Street",
+    "checkpoint": {
+      "lat": 43.8714902,
+      "lng": -79.449977,
+      "radiusMetres": 40,
+      "road": "Trench Street",
+      "sourceWayId": "way/856561984",
+      "method": "modeled-public-road-approach",
+      "verifiedEntrance": false,
+      "ambulanceBayVerified": false
+    },
+    "officialSources": [
+      {
+        "url": "https://www.mackenziehealth.ca/programs-services/emergency-and-urgent-care",
+        "finding": "Mackenzie Richmond Hill Hospital has a 24/7 Emergency Department on the north side in D-wing at 10 Trench Street."
+      },
+      {
+        "url": "https://www.mackenziehealth.ca/about-us/contact-and-location-information",
+        "finding": "Mackenzie Richmond Hill Hospital address is 10 Trench Street, Richmond Hill, ON L4C 4Z3."
+      },
+      {
+        "url": "https://www.mackenziehealth.ca/staff-physicians/physicians-resource-centre/referral-and-consent-forms/6958-mh-referral-to-emergency-department.pdf",
+        "finding": "The emergency entrance is off Trench Street, north of Major Mackenzie Drive."
+      }
+    ],
+    "coordinateSource": "roads.geojson.gz; exact shared source vertex on Trench Street. The hospital is officially verified; the game checkpoint is a modeled nearby public-road approach."
+  },
+  "calls": {
+    "selection": "Five distinct source-backed civic destinations for each eligible Fire or EMS base, selected from existing routeCalls; all original metadata retained.",
+    "manifest": "training-data.json#dispatchDemo",
+    "existingCatalogueUnchanged": true,
+    "assignment": "Existing modeled response estimates, not certified operational station assignments."
+  },
+  "roadDataSha256": "fc422dcc631ef6f18c895b133679549ebf6cae13274d095938221c5d72488230",
+  "limitations": [
+    "Hospital checkpoint is not a surveyed ambulance entrance or actual transfer bay.",
+    "Game scenarios and base call pools are training simulations, not live dispatch advice.",
+    "Road connectivity follows packaged OpenStreetMap data and does not establish present-day vehicle access."
+  ],
+  "routeValidation": {
+    "command": "node --test tests/richmond-hill-dispatch-data.test.cjs",
+    "method": "Production route-mapping graph, A*, directed trace and finish checks on exact source-road approaches.",
+    "completedLegs": 180,
+    "dispatchLegs": 40,
+    "continuousFireLegs": 120,
+    "emsHospitalLegs": 20,
+    "profiles": [
+      {
+        "baseId": "fire-richmond-hill-fire-8-1",
+        "service": "fire",
+        "calls": [
+          {
+            "callId": "route-civic-27-fire-richmond-hill-fire-8-1-richmond-hill-osm-way-31812692",
+            "name": "40 Harding Boulevard West",
+            "addr": "40 Harding Boulevard West",
+            "dispatchMetres": 549,
+            "continuousNextCalls": 4,
+            "maximumNextCallMetres": 1617.5
+          },
+          {
+            "callId": "route-civic-27-fire-richmond-hill-fire-8-1-richmond-hill-odef-946625a3637fa713a4d0",
+            "name": "St Anne Catholic Elementary School",
+            "addr": "105 Don Head Village Blvd",
+            "dispatchMetres": 1363.7,
+            "continuousNextCalls": 4,
+            "maximumNextCallMetres": 2756.1
+          },
+          {
+            "callId": "route-civic-27-fire-richmond-hill-fire-8-1-richmond-hill-osm-way-1171265463",
+            "name": "Yanviriya Buddhist Temple",
+            "addr": "166 Cedar Avenue",
+            "dispatchMetres": 1454.1,
+            "continuousNextCalls": 4,
+            "maximumNextCallMetres": 2766.4
+          },
+          {
+            "callId": "route-civic-27-fire-richmond-hill-fire-8-1-richmond-hill-osm-node-4022932045",
+            "name": "33 Major Mackenzie Drive West",
+            "addr": "33 Major Mackenzie Drive West",
+            "dispatchMetres": 584.3,
+            "continuousNextCalls": 4,
+            "maximumNextCallMetres": 1932
+          },
+          {
+            "callId": "route-civic-27-fire-richmond-hill-fire-8-1-richmond-hill-osm-way-56297555",
+            "name": "Sunrise Senior Living of Richmond Hill",
+            "addr": "9800 Yonge Street",
+            "dispatchMetres": 955.9,
+            "continuousNextCalls": 4,
+            "maximumNextCallMetres": 1958.9
+          }
+        ]
+      },
+      {
+        "baseId": "fire-richmond-hill-fire-8-2",
+        "service": "fire",
+        "calls": [
+          {
+            "callId": "route-civic-27-fire-richmond-hill-fire-8-2-richmond-hill-osm-node-9831352819",
+            "name": "The Children\u2019s Montessori Academy",
+            "addr": "201 King Road",
+            "dispatchMetres": 862.2,
+            "continuousNextCalls": 4,
+            "maximumNextCallMetres": 2628.9
+          },
+          {
+            "callId": "route-civic-27-fire-richmond-hill-fire-8-2-richmond-hill-osm-node-9831318505",
+            "name": "Michele\u2019s Beauty Bar",
+            "addr": "148 King Road",
+            "dispatchMetres": 709.9,
+            "continuousNextCalls": 4,
+            "maximumNextCallMetres": 2476.6
+          },
+          {
+            "callId": "route-civic-27-fire-richmond-hill-fire-8-2-richmond-hill-odef-6328e7c17b31921f0c28",
+            "name": "Our Lady of the Annunciation Catholic Elementary School",
+            "addr": "30 Bayswater Ave",
+            "dispatchMetres": 1092.3,
+            "continuousNextCalls": 4,
+            "maximumNextCallMetres": 2080.4
+          },
+          {
+            "callId": "route-civic-27-fire-richmond-hill-fire-8-2-richmond-hill-osm-node-14305414354",
+            "name": "Rosmon Group",
+            "addr": "58 Blyth Street",
+            "dispatchMetres": 1328.6,
+            "continuousNextCalls": 4,
+            "maximumNextCallMetres": 3083.6
+          },
+          {
+            "callId": "route-civic-27-fire-richmond-hill-fire-8-2-richmond-hill-odef-054ecf2bc0485b7815f9",
+            "name": "Lake Wilcox Public School",
+            "addr": "80 Wildwood Ave",
+            "dispatchMetres": 1755,
+            "continuousNextCalls": 4,
+            "maximumNextCallMetres": 3083.6
+          }
+        ]
+      },
+      {
+        "baseId": "fire-richmond-hill-fire-8-3",
+        "service": "fire",
+        "calls": [
+          {
+            "callId": "route-civic-27-fire-richmond-hill-fire-8-3-richmond-hill-ontario-private-school-883635-170",
+            "name": "Base Academy",
+            "addr": "60 Granton Drive",
+            "dispatchMetres": 730.3,
+            "continuousNextCalls": 4,
+            "maximumNextCallMetres": 1881.8
+          },
+          {
+            "callId": "route-civic-27-fire-richmond-hill-fire-8-3-richmond-hill-osm-node-896824140",
+            "name": "9425 Leslie Street",
+            "addr": "9425 Leslie Street",
+            "dispatchMetres": 481.1,
+            "continuousNextCalls": 4,
+            "maximumNextCallMetres": 2360.6
+          },
+          {
+            "callId": "route-civic-27-fire-richmond-hill-fire-8-3-richmond-hill-osm-way-55218277",
+            "name": "Dayali",
+            "addr": "160 York Boulevard",
+            "dispatchMetres": 2612.1,
+            "continuousNextCalls": 4,
+            "maximumNextCallMetres": 3302.8
+          },
+          {
+            "callId": "route-civic-27-fire-richmond-hill-fire-8-3-richmond-hill-odef-435c6210791eab4cfaed",
+            "name": "Christ the King Catholic Elementary School",
+            "addr": "329 Valleymede Dr",
+            "dispatchMetres": 878.9,
+            "continuousNextCalls": 4,
+            "maximumNextCallMetres": 3336.6
+          },
+          {
+            "callId": "route-civic-27-fire-richmond-hill-fire-8-3-richmond-hill-osm-node-896823910",
+            "name": "Kirchhoff Van Rob Richmond Hill",
+            "addr": "25 Mural Street",
+            "dispatchMetres": 1112.5,
+            "continuousNextCalls": 4,
+            "maximumNextCallMetres": 1798.6
+          }
+        ]
+      },
+      {
+        "baseId": "fire-richmond-hill-fire-8-4",
+        "service": "fire",
+        "calls": [
+          {
+            "callId": "route-civic-27-fire-richmond-hill-fire-8-4-richmond-hill-osm-way-198690491",
+            "name": "1650 Elgin Mills Rd E",
+            "addr": "1650 Elgin Mills Rd E",
+            "dispatchMetres": 978.3,
+            "continuousNextCalls": 4,
+            "maximumNextCallMetres": 2921.3
+          },
+          {
+            "callId": "route-civic-27-fire-richmond-hill-fire-8-4-richmond-hill-osm-node-896663369",
+            "name": "1335 Elgin Mills Road East",
+            "addr": "1335 Elgin Mills Road East",
+            "dispatchMetres": 997.4,
+            "continuousNextCalls": 4,
+            "maximumNextCallMetres": 2134.2
+          },
+          {
+            "callId": "route-civic-27-fire-richmond-hill-fire-8-4-richmond-hill-osm-way-34584793",
+            "name": "Redstone Park",
+            "addr": "170 Frank Endean Road",
+            "dispatchMetres": 3020.9,
+            "continuousNextCalls": 4,
+            "maximumNextCallMetres": 3281.8
+          },
+          {
+            "callId": "route-civic-27-fire-richmond-hill-fire-8-4-richmond-hill-osm-node-1086652821",
+            "name": "1679 Elgin Mills Road East",
+            "addr": "1679 Elgin Mills Road East",
+            "dispatchMetres": 1157.6,
+            "continuousNextCalls": 4,
+            "maximumNextCallMetres": 4192.6
+          },
+          {
+            "callId": "route-civic-27-fire-richmond-hill-fire-8-4-richmond-hill-osm-node-896662403",
+            "name": "375 Redstone Road",
+            "addr": "375 Redstone Road",
+            "dispatchMetres": 1201.4,
+            "continuousNextCalls": 4,
+            "maximumNextCallMetres": 1825.6
+          }
+        ]
+      },
+      {
+        "baseId": "fire-richmond-hill-fire-8-5",
+        "service": "fire",
+        "calls": [
+          {
+            "callId": "route-civic-27-fire-richmond-hill-fire-8-5-richmond-hill-ontario-private-school-669986-1325",
+            "name": "Sophio",
+            "addr": "60 Nahanni Drive",
+            "dispatchMetres": 578.8,
+            "continuousNextCalls": 4,
+            "maximumNextCallMetres": 1857.2
+          },
+          {
+            "callId": "route-civic-27-fire-richmond-hill-fire-8-5-richmond-hill-osm-way-701664622",
+            "name": "9205 Leatherwood Ln",
+            "addr": "9205 Leatherwood Ln",
+            "dispatchMetres": 1702.1,
+            "continuousNextCalls": 4,
+            "maximumNextCallMetres": 2114.2
+          },
+          {
+            "callId": "route-civic-27-fire-richmond-hill-fire-8-5-richmond-hill-osm-node-896807770",
+            "name": "1 Waterton Crescent",
+            "addr": "1 Waterton Crescent",
+            "dispatchMetres": 398.5,
+            "continuousNextCalls": 4,
+            "maximumNextCallMetres": 1998.9
+          },
+          {
+            "callId": "route-civic-27-fire-richmond-hill-fire-8-5-richmond-hill-osm-node-12941617117",
+            "name": "Golden Glow Skin & Aesthetic Clinic",
+            "addr": "8868 Yonge Street",
+            "dispatchMetres": 1065.4,
+            "continuousNextCalls": 4,
+            "maximumNextCallMetres": 1488.3
+          },
+          {
+            "callId": "route-civic-27-fire-richmond-hill-fire-8-5-richmond-hill-osm-way-1416590304",
+            "name": "William Duncan Park",
+            "addr": "91 Northern Heights Drive",
+            "dispatchMetres": 1707.3,
+            "continuousNextCalls": 4,
+            "maximumNextCallMetres": 2054.2
+          }
+        ]
+      },
+      {
+        "baseId": "fire-richmond-hill-fire-8-6",
+        "service": "fire",
+        "calls": [
+          {
+            "callId": "route-civic-27-fire-richmond-hill-fire-8-6-richmond-hill-odef-c570cb7f1345d393eb96",
+            "name": "Moraine Hills Public School",
+            "addr": "85 Rollinghill Rd",
+            "dispatchMetres": 1061.3,
+            "continuousNextCalls": 4,
+            "maximumNextCallMetres": 1846.1
+          },
+          {
+            "callId": "route-civic-27-fire-richmond-hill-fire-8-6-richmond-hill-osm-node-896672545",
+            "name": "74 Gamble Road",
+            "addr": "74 Gamble Road",
+            "dispatchMetres": 292,
+            "continuousNextCalls": 4,
+            "maximumNextCallMetres": 2627.7
+          },
+          {
+            "callId": "route-civic-27-fire-richmond-hill-fire-8-6-richmond-hill-osm-node-5362289125",
+            "name": "FTR Contracting",
+            "addr": "7 Hayfield Crescent",
+            "dispatchMetres": 2907.4,
+            "continuousNextCalls": 4,
+            "maximumNextCallMetres": 2618.8
+          },
+          {
+            "callId": "route-civic-27-fire-richmond-hill-fire-8-6-richmond-hill-osm-node-4033190766",
+            "name": "106 Gamble Road",
+            "addr": "106 Gamble Road",
+            "dispatchMetres": 451.2,
+            "continuousNextCalls": 4,
+            "maximumNextCallMetres": 2456.2
+          },
+          {
+            "callId": "route-civic-27-fire-richmond-hill-fire-8-6-richmond-hill-osm-node-4033190908",
+            "name": "113 Tower Hill Road",
+            "addr": "113 Tower Hill Road",
+            "dispatchMetres": 1306.9,
+            "continuousNextCalls": 4,
+            "maximumNextCallMetres": 2291.4
+          }
+        ]
+      },
+      {
+        "baseId": "ems-richmond-hill-ems-28",
+        "service": "ems",
+        "calls": [
+          {
+            "callId": "route-civic-24-ems-richmond-hill-ems-28-richmond-hill-osm-way-31812692",
+            "name": "40 Harding Boulevard West",
+            "addr": "40 Harding Boulevard West",
+            "dispatchMetres": 191.1,
+            "toHospitalMetres": 1108.8,
+            "fromHospitalMetres": 1107.4
+          },
+          {
+            "callId": "route-civic-24-ems-richmond-hill-ems-28-richmond-hill-odef-946625a3637fa713a4d0",
+            "name": "St Anne Catholic Elementary School",
+            "addr": "105 Don Head Village Blvd",
+            "dispatchMetres": 1150.5,
+            "toHospitalMetres": 1545.9,
+            "fromHospitalMetres": 1529.4
+          },
+          {
+            "callId": "route-civic-24-ems-richmond-hill-ems-28-richmond-hill-osm-node-2775480409",
+            "name": "Mill Pond Gallery",
+            "addr": "314 Mill Street",
+            "dispatchMetres": 1597.7,
+            "toHospitalMetres": 680,
+            "fromHospitalMetres": 680
+          },
+          {
+            "callId": "route-civic-24-ems-richmond-hill-ems-28-richmond-hill-odhf-ec8cdab0562f951338bc4e76e3724afb",
+            "name": "Care Medical Imaging",
+            "addr": "9651 Yonge Street",
+            "dispatchMetres": 1640.2,
+            "toHospitalMetres": 1868,
+            "fromHospitalMetres": 2556.5
+          },
+          {
+            "callId": "route-civic-24-ems-richmond-hill-ems-28-richmond-hill-osm-way-56297555",
+            "name": "Sunrise Senior Living of Richmond Hill",
+            "addr": "9800 Yonge Street",
+            "dispatchMetres": 626.7,
+            "toHospitalMetres": 2027,
+            "fromHospitalMetres": 1543
+          }
+        ]
+      },
+      {
+        "baseId": "ems-richmond-hill-ems-85",
+        "service": "ems",
+        "calls": [
+          {
+            "callId": "route-civic-24-ems-richmond-hill-ems-85-richmond-hill-ontario-private-school-669986-1325",
+            "name": "Sophio",
+            "addr": "60 Nahanni Drive",
+            "dispatchMetres": 578.8,
+            "toHospitalMetres": 4915.5,
+            "fromHospitalMetres": 4912.5
+          },
+          {
+            "callId": "route-civic-24-ems-richmond-hill-ems-85-richmond-hill-osm-way-701664622",
+            "name": "9205 Leatherwood Ln",
+            "addr": "9205 Leatherwood Ln",
+            "dispatchMetres": 1702.1,
+            "toHospitalMetres": 3247.2,
+            "fromHospitalMetres": 3358.6
+          },
+          {
+            "callId": "route-civic-24-ems-richmond-hill-ems-85-richmond-hill-osm-node-896807770",
+            "name": "1 Waterton Crescent",
+            "addr": "1 Waterton Crescent",
+            "dispatchMetres": 398.5,
+            "toHospitalMetres": 5057.1,
+            "fromHospitalMetres": 5075.8
+          },
+          {
+            "callId": "route-civic-24-ems-richmond-hill-ems-85-richmond-hill-osm-node-12941617117",
+            "name": "Golden Glow Skin & Aesthetic Clinic",
+            "addr": "8868 Yonge Street",
+            "dispatchMetres": 1065.4,
+            "toHospitalMetres": 4546.6,
+            "fromHospitalMetres": 4076.5
+          },
+          {
+            "callId": "route-civic-24-ems-richmond-hill-ems-85-richmond-hill-osm-way-1416590304",
+            "name": "William Duncan Park",
+            "addr": "91 Northern Heights Drive",
+            "dispatchMetres": 1707.3,
+            "toHospitalMetres": 3307.2,
+            "fromHospitalMetres": 3328.3
+          }
+        ]
+      }
+    ],
+    "inputSha256": {
+      "cities/richmond-hill/package.js": "a2491a1657d99fd1203b6725ee62a50af7482828db2669518bc866285eccde41",
+      "cities/richmond-hill/training-data.json": "ac9bb3df1fa663744de3f005186248ad8cb495e500488fd08e9a50eb5a961705",
+      "cities/richmond-hill/geo-data.json": "1c26308c42c543a20996ab150693695dc5ff64207df32f5f2822d41c33366e98",
+      "route-mapping/app.js": "b18d3f88b8965d2059d2f42048dad85bce1a705c76c69dc6bb4687c821ef6823",
+      "route-mapping/trace-core.js": "914e665f07638613c08851f9c1332a682dfe4ea6d4ef0cca3909b1413f1734a2"
+    }
+  },
+  "savedEditsCompatibility": {
+    "dataVersion": "ontario-geo-1",
+    "reason": "Canonical Richmond Hill seed is unchanged and geo-data.json declares no dispatchDataVersion override. Native Dispatch and standalone editor descriptor retain the existing version.",
+    "regression": "tests/richmond-hill-dispatch-data.test.cjs",
+    "verified": [
+      "Native package and standalone descriptor both load the actual shared store with existing saved data.",
+      "Renamed canonical record, deleted canonical record, deleted supplemental record and user-created custom record survive startup.",
+      "A subsequent edit/save preserves these records and deletions under the same data version."
+    ],
+    "inputSha256": {
+      "cities/richmond-hill/package.js": "a2491a1657d99fd1203b6725ee62a50af7482828db2669518bc866285eccde41",
+      "cities/richmond-hill/dispatch-data.js": "535a162565f7cd6c5259568dc0d41db0f27c46c491cfb1cc5714624096fe47c1",
+      "shared/dispatch-locations.js": "fd6d675878d33e4d2dcef6fa3526b39428bc650b05a4ad6bec834b27e7446e2a",
+      "tests/richmond-hill-dispatch-data.test.cjs": "d1c9901e9689d91305ae735ce414db07ddb7da6d61cddc0fe229895fe67a50c1"
+    }
+  }
+}

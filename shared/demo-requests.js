@@ -17,20 +17,20 @@
   const modes = ['geo', 'route', 'dispatch', 'explorer'];
   const cityFor = city => window.PTBO_CITIES?.find(item => item.id === city);
   const feedback = async () => window.PTBO_FEEDBACK || await window.PTBO_FEEDBACK_READY;
-  function requestStatus(city, mode) {
-    return window.PTBO_FEEDBACK?.demoRequestStatus?.(city, mode) || { remoteSaved:false };
+  function requestStatus(city, mode, requestType = 'demo') {
+    return window.PTBO_FEEDBACK?.demoRequestStatus?.(city, mode, ...(requestType === 'full-version' ? [requestType] : [])) || { remoteSaved:false };
   }
-  async function recordDemoRequest(city, mode) {
+  async function recordDemoRequest(city, mode, requestType = 'demo') {
     const entry = cityFor(city);
-    if (!entry || !modes.includes(mode)) return false;
+    if (!entry || !modes.includes(mode) || !['demo','full-version'].includes(requestType)) return false;
     const api = await feedback();
     if (!api?.requestDemo) return false;
-    return Boolean(await api.requestDemo({ city, cityName:entry.name, mode }));
+    return Boolean(await api.requestDemo({ city, cityName:entry.name, mode, ...(requestType === 'full-version' ? {requestType} : {}) }));
   }
-  async function openConversation(city, mode) {
+  async function openConversation(city, mode, requestType = 'demo') {
     const api = await feedback();
     if (!api?.openDemoConversation) throw new Error('Feedback is unavailable. Please try again.');
-    return api.openDemoConversation(city, mode);
+    return api.openDemoConversation(city, mode, ...(requestType === 'full-version' ? [requestType] : []));
   }
   window.PTBO_DEMO_REQUESTS = Object.freeze({ recordDemoRequest, requestStatus, openConversation });
 })();

@@ -3,10 +3,13 @@
 
   if (window.PTBO_ROUTE_REVEAL) return;
 
+  const city = window.PTBO_CITY_PACKAGE;
+  const cityRoads = city?.roads || {};
+  const roadCenter = cityRoads.center || city?.map?.defaultCenter || [44.3091,-78.3197];
   const CONFIG = Object.freeze({
-    dataUrl: '../city-explorer/data/osm-public-roads.geojson',
-    centerLat: 44.3091,
-    centerLng: -78.3197,
+    dataUrl: cityRoads.dataUrl || '../city-explorer/data/osm-public-roads.geojson',
+    centerLat: Number.isFinite(Number(roadCenter[0])) ? Number(roadCenter[0]) : 44.3091,
+    centerLng: Number.isFinite(Number(roadCenter[1])) ? Number(roadCenter[1]) : -78.3197,
     gridSize: 120,
     startSnapRadius: 180,
     destinationSnapRadius: 500,
@@ -611,7 +614,12 @@
     try {
       const response = await fetch(CONFIG.dataUrl, { cache: 'force-cache' });
       if (!response.ok) throw new Error(`Routing data request failed: ${response.status}`);
-      const geojson = await response.json();
+      let geojson;
+      if (/\.gz(?:[?#]|$)/i.test(CONFIG.dataUrl)) {
+        if (typeof DecompressionStream !== 'function') throw new Error('Gzip routing data needs browser decompression support.');
+        const decoded = response.body.pipeThrough(new DecompressionStream('gzip'));
+        geojson = JSON.parse(await new Response(decoded).text());
+      } else geojson = await response.json();
       state.graph = buildGraph(geojson);
       state.status = 'ready';
       readyResolve({ nodes: state.graph.nodes.length, edges: state.graph.directedEdges });

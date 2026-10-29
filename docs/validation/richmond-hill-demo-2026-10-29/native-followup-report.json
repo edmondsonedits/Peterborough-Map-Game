@@ -1,0 +1,3071 @@
+{
+  "liveTiles": true,
+  "startedAt": "2026-10-29T14:11:29.245Z",
+  "results": [
+    {
+      "name": "native-street",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "tileResponses": {
+        "services.arcgisonline.com:200": 256,
+        "server.arcgisonline.com:200": 256,
+        "tile.openstreetmap.org:200": 48
+      },
+      "tileFailures": {
+        "b.tile.openstreetmap.org:net::ERR_ABORTED": 117,
+        "c.tile.openstreetmap.org:net::ERR_ABORTED": 116,
+        "a.tile.openstreetmap.org:net::ERR_ABORTED": 117,
+        "server.arcgisonline.com:net::ERR_ABORTED": 112,
+        "services.arcgisonline.com:net::ERR_ABORTED": 112
+      },
+      "detail": {
+        "initial": {
+          "city": "richmond-hill",
+          "base": "fire-richmond-hill-fire-8-1",
+          "service": "fire",
+          "demo": {
+            "cityId": "richmond-hill",
+            "callLimit": 5,
+            "completed": 0,
+            "remaining": 5,
+            "finished": false,
+            "activeGeneration": 2
+          },
+          "phase": "response",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-1-richmond-hill-osm-way-31812692",
+          "generation": 2,
+          "total": 0,
+          "pos": [
+            43.8693875,
+            -79.4436973
+          ],
+          "hospital": "Mackenzie Richmond Hill Hospital"
+        },
+        "route": {
+          "coordinates": [
+            [
+              43.8693875,
+              -79.4436973
+            ],
+            [
+              43.8694489,
+              -79.4433993
+            ],
+            [
+              43.8694627,
+              -79.4433271
+            ],
+            [
+              43.8692293,
+              -79.4432232
+            ],
+            [
+              43.8688565,
+              -79.4430721
+            ],
+            [
+              43.8687911,
+              -79.4430456
+            ],
+            [
+              43.8686833,
+              -79.4430019
+            ],
+            [
+              43.86858,
+              -79.44296
+            ],
+            [
+              43.86837,
+              -79.44291
+            ],
+            [
+              43.86817,
+              -79.44295
+            ],
+            [
+              43.8677811,
+              -79.4431946
+            ],
+            [
+              43.8673942,
+              -79.4434608
+            ],
+            [
+              43.8673,
+              -79.44353
+            ],
+            [
+              43.8672363,
+              -79.4433977
+            ],
+            [
+              43.8670272,
+              -79.4429635
+            ],
+            [
+              43.8664786,
+              -79.4420914
+            ],
+            [
+              43.8663487,
+              -79.4417824
+            ],
+            [
+              43.8662214,
+              -79.4412998
+            ],
+            [
+              43.866209,
+              -79.4410532
+            ],
+            [
+              43.866192330960814,
+              -79.44072256222283
+            ]
+          ],
+          "distance": 549.0165882093229,
+          "mainRoads": [
+            "Arnold Crescent",
+            "Harding Boulevard West"
+          ]
+        },
+        "revealed": {
+          "shown": true,
+          "coordinates": [
+            [
+              43.8693875,
+              -79.4436973
+            ],
+            [
+              43.8694489,
+              -79.4433993
+            ],
+            [
+              43.8694627,
+              -79.4433271
+            ],
+            [
+              43.8692293,
+              -79.4432232
+            ],
+            [
+              43.8688565,
+              -79.4430721
+            ],
+            [
+              43.8687911,
+              -79.4430456
+            ],
+            [
+              43.8686833,
+              -79.4430019
+            ],
+            [
+              43.86858,
+              -79.44296
+            ],
+            [
+              43.86837,
+              -79.44291
+            ],
+            [
+              43.86817,
+              -79.44295
+            ],
+            [
+              43.8677811,
+              -79.4431946
+            ],
+            [
+              43.8673942,
+              -79.4434608
+            ],
+            [
+              43.8673,
+              -79.44353
+            ],
+            [
+              43.8672363,
+              -79.4433977
+            ],
+            [
+              43.8670272,
+              -79.4429635
+            ],
+            [
+              43.8664786,
+              -79.4420914
+            ],
+            [
+              43.8663487,
+              -79.4417824
+            ],
+            [
+              43.8662214,
+              -79.4412998
+            ],
+            [
+              43.866209,
+              -79.4410532
+            ],
+            [
+              43.866192330960814,
+              -79.44072256222283
+            ]
+          ]
+        },
+        "input": "production route read only; browser keyboard steering/throttle only; no GPS/heading/velocity/physics writes",
+        "samples": [
+          {
+            "lat": 43.8693875,
+            "lng": -79.4436973,
+            "heading": 180,
+            "speedKmh": 0,
+            "phase": "response",
+            "road": {
+              "lat": 43.8693875,
+              "lng": -79.4436973,
+              "distance": 0,
+              "road": "Unnamed road",
+              "highway": "service"
+            },
+            "inBaseYard": true,
+            "collisions": 32,
+            "elapsedMs": 12,
+            "index": 1,
+            "distance": 24.859832435089924,
+            "delta": -105.84387301371834,
+            "onPublicRoad": false
+          },
+          {
+            "lat": 43.86938841284262,
+            "lng": -79.44369437000294,
+            "heading": 62.910109909650885,
+            "speedKmh": 21.710474401996795,
+            "phase": "response",
+            "road": {
+              "lat": 43.86938812673895,
+              "lng": -79.44369425817256,
+              "distance": 0.03287474981268596,
+              "road": "Unnamed road",
+              "highway": "service"
+            },
+            "inBaseYard": true,
+            "collisions": 32,
+            "elapsedMs": 479,
+            "index": 1,
+            "distance": 24.606097295965142,
+            "delta": 11.322566155605273,
+            "onPublicRoad": false
+          },
+          {
+            "lat": 43.86939949601066,
+            "lng": -79.44364637350616,
+            "heading": 73.61963675663634,
+            "speedKmh": 37.22397292586535,
+            "phase": "response",
+            "road": {
+              "lat": 43.869398104939386,
+              "lng": -79.44364582977303,
+              "distance": 0.15984108020875942,
+              "road": "Unnamed road",
+              "highway": "service"
+            },
+            "inBaseYard": true,
+            "collisions": 32,
+            "elapsedMs": 911,
+            "index": 1,
+            "distance": 20.56668412692328,
+            "delta": 0.9817843580585759,
+            "onPublicRoad": false
+          },
+          {
+            "lat": 43.86941087578351,
+            "lng": -79.44359267258899,
+            "heading": 73.61963675663634,
+            "speedKmh": 44.87775401505881,
+            "phase": "response",
+            "road": {
+              "lat": 43.869409192985216,
+              "lng": -79.44359201482746,
+              "distance": 0.19336198061195448,
+              "road": "Unnamed road",
+              "highway": "service"
+            },
+            "inBaseYard": true,
+            "collisions": 32,
+            "elapsedMs": 1386,
+            "index": 1,
+            "distance": 16.077858895563985,
+            "delta": 1.2255724424471737,
+            "onPublicRoad": false
+          },
+          {
+            "lat": 43.869420046813545,
+            "lng": -79.44354939467694,
+            "heading": 73.61963675663634,
+            "speedKmh": 18.33780810526441,
+            "phase": "response",
+            "road": {
+              "lat": 43.86941812891204,
+              "lng": -79.44354864501975,
+              "distance": 0.22037652132317312,
+              "road": "Unnamed road",
+              "highway": "service"
+            },
+            "inBaseYard": true,
+            "collisions": 32,
+            "elapsedMs": 1789,
+            "index": 1,
+            "distance": 12.460636792499264,
+            "delta": 1.549854572475624,
+            "onPublicRoad": false
+          },
+          {
+            "lat": 43.86942791058674,
+            "lng": -79.44351228567909,
+            "heading": 73.61963675663634,
+            "speedKmh": 20.4549364095352,
+            "phase": "response",
+            "road": {
+              "lat": 43.86942579109512,
+              "lng": -79.44351145722564,
+              "distance": 0.24354023807066724,
+              "road": "Unnamed road",
+              "highway": "service"
+            },
+            "inBaseYard": true,
+            "collisions": 32,
+            "elapsedMs": 2219,
+            "index": 1,
+            "distance": 9.35956716584114,
+            "delta": 2.0275066140635545,
+            "onPublicRoad": false
+          },
+          {
+            "lat": 43.86943634138864,
+            "lng": -79.44347248541456,
+            "heading": 73.61963675663634,
+            "speedKmh": 26.553688017560226,
+            "phase": "response",
+            "road": {
+              "lat": 43.869434008720624,
+              "lng": -79.44347157363607,
+              "distance": 0.2680352780821235,
+              "road": "Unnamed road",
+              "highway": "service"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 2647,
+            "index": 2,
+            "distance": 12.025909538955007,
+            "delta": 2.359002479869446,
+            "onPublicRoad": false
+          },
+          {
+            "lat": 43.86944457112382,
+            "lng": -79.44343324389283,
+            "heading": 73.61963675663634,
+            "speedKmh": 33.0950500935045,
+            "phase": "response",
+            "road": {
+              "lat": 43.86944210481699,
+              "lng": -79.44343227987845,
+              "distance": 0.2833910489444895,
+              "road": "Unnamed road",
+              "highway": "service"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 3071,
+            "index": 2,
+            "distance": 8.75090055590494,
+            "delta": 3.1420929690634694,
+            "onPublicRoad": false
+          },
+          {
+            "lat": 43.8694508994939,
+            "lng": -79.44340515739529,
+            "heading": 73.73911538109604,
+            "speedKmh": 11.450253502032634,
+            "phase": "response",
+            "road": {
+              "lat": 43.86944793212026,
+              "lng": -79.44340399752708,
+              "distance": 0.3409661436044056,
+              "road": "Unnamed road",
+              "highway": "service"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 3532,
+            "index": 3,
+            "distance": 28.51790601911176,
+            "delta": 75.46037626715997,
+            "onPublicRoad": false
+          },
+          {
+            "lat": 43.86944894829196,
+            "lng": -79.44339736476016,
+            "heading": 151.2753948160937,
+            "speedKmh": 5.061039916434632,
+            "phase": "response",
+            "road": {
+              "lat": 43.86944924904933,
+              "lng": -79.44339747381437,
+              "distance": 0.034378478429031814,
+              "road": "Unnamed road",
+              "highway": "service"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 3933,
+            "index": 3,
+            "distance": 28.015664978981036,
+            "delta": -1.2031446928344849,
+            "onPublicRoad": false
+          },
+          {
+            "lat": 43.86942681190639,
+            "lng": -79.44338154954474,
+            "heading": 147.68885285062083,
+            "speedKmh": 24.127925896647238,
+            "phase": "response",
+            "road": {
+              "lat": 43.869450641240924,
+              "lng": -79.44339019002938,
+              "distance": 2.7238443505882497,
+              "road": "Unnamed road",
+              "highway": "service"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 4350,
+            "index": 3,
+            "distance": 25.26206723422179,
+            "delta": 2.109334525149052,
+            "onPublicRoad": false
+          },
+          {
+            "lat": 43.869415805521804,
+            "lng": -79.44336848901636,
+            "heading": 147.68885285062083,
+            "speedKmh": 39.288819903821675,
+            "phase": "response",
+            "road": {
+              "lat": 43.869452262414605,
+              "lng": -79.44338170823664,
+              "distance": 4.167254497569358,
+              "road": "Unnamed road",
+              "highway": "service"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 4839,
+            "index": 3,
+            "distance": 23.6851273321055,
+            "delta": 2.820162451999181,
+            "onPublicRoad": false
+          },
+          {
+            "lat": 43.86939674813069,
+            "lng": -79.44334081364906,
+            "heading": 147.63697812032046,
+            "speedKmh": 37.71475330843135,
+            "phase": "response",
+            "road": {
+              "lat": 43.86940589943139,
+              "lng": -79.4433018147426,
+              "distance": 3.2893077085199103,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 5281,
+            "index": 3,
+            "distance": 20.777424825148017,
+            "delta": 5.344169559657075,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.869368554552345,
+            "lng": -79.44331433538116,
+            "heading": 144.09071169645773,
+            "speedKmh": 34.94861015367824,
+            "phase": "response",
+            "road": {
+              "lat": 43.86937474675806,
+              "lng": -79.44328794686446,
+              "distance": 2.2257021875495546,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 5687,
+            "index": 3,
+            "distance": 17.042403360940806,
+            "delta": 10.495135037512227,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.869355933131615,
+            "lng": -79.44330442092111,
+            "heading": 151.6950481736759,
+            "speedKmh": 47.27734332855734,
+            "phase": "response",
+            "road": {
+              "lat": 43.869361212616916,
+              "lng": -79.44328192202613,
+              "distance": 1.8976375341503897,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 6445,
+            "index": 3,
+            "distance": 15.441243196197908,
+            "delta": 3.3357645588899913,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.869311129736495,
+            "lng": -79.44327021431353,
+            "heading": 143.48565900625647,
+            "speedKmh": 19.31226451955797,
+            "phase": "response",
+            "road": {
+              "lat": 43.86931337909272,
+              "lng": -79.443260628525,
+              "distance": 0.8084998005286017,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 6883,
+            "index": 3,
+            "distance": 9.800825870219592,
+            "delta": 13.872338673083277,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.8692763020481,
+            "lng": -79.44324412679238,
+            "heading": 175.5336238020593,
+            "speedKmh": 31.570775879812008,
+            "phase": "response",
+            "road": {
+              "lat": 43.869276302776825,
+              "lng": -79.44324412368687,
+              "distance": 0.00026193052646777926,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 7382,
+            "index": 4,
+            "distance": 48.415013012363325,
+            "delta": -12.101620918619801,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86924047948555,
+            "lng": -79.44323169493856,
+            "heading": 173.43552190544392,
+            "speedKmh": 34.39178737587401,
+            "phase": "response",
+            "road": {
+              "lat": 43.86924122698891,
+              "lng": -79.44322850940081,
+              "distance": 0.2686796843007119,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 7822,
+            "index": 4,
+            "distance": 44.335434496854994,
+            "delta": -10.226950880784216,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.869207368832534,
+            "lng": -79.44321840175898,
+            "heading": 159.6017175847869,
+            "speedKmh": 24.268109441091358,
+            "phase": "response",
+            "road": {
+              "lat": 43.86920817316354,
+              "lng": -79.44321463705744,
+              "distance": 0.31495007351934867,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 8271,
+            "index": 4,
+            "distance": 40.52326334226299,
+            "delta": 3.5559251475360725,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.8691721969675,
+            "lng": -79.44321393263873,
+            "heading": 160.6277156910844,
+            "speedKmh": 39.215232706122634,
+            "phase": "response",
+            "road": {
+              "lat": 43.86917492554549,
+              "lng": -79.44320116142684,
+              "distance": 1.0684231079077295,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 8685,
+            "index": 4,
+            "distance": 36.70657478380883,
+            "delta": 1.3073159448257456,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86912783466619,
+            "lng": -79.44319118936566,
+            "heading": 160.6277156910844,
+            "speedKmh": 49.571368302109974,
+            "phase": "response",
+            "road": {
+              "lat": 43.86912962677565,
+              "lng": -79.44318280132994,
+              "distance": 0.7017322454466197,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 9149,
+            "index": 4,
+            "distance": 31.47923781793836,
+            "delta": 1.697904828545802,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86908894971242,
+            "lng": -79.44317183257678,
+            "heading": 160.6277156910844,
+            "speedKmh": 44.26841353469286,
+            "phase": "response",
+            "road": {
+              "lat": 43.86909003470624,
+              "lng": -79.4431667542224,
+              "distance": 0.4248485741885227,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 9566,
+            "index": 4,
+            "distance": 26.912722146338126,
+            "delta": 2.0707029092482117,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.8690508373455,
+            "lng": -79.44315313044319,
+            "heading": 160.6277156910844,
+            "speedKmh": 32.636621572846316,
+            "phase": "response",
+            "road": {
+              "lat": 43.869051282374166,
+              "lng": -79.44315104746978,
+              "distance": 0.17425886751517092,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 10012,
+            "index": 4,
+            "distance": 22.44475695266523,
+            "delta": 2.530353888087234,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.869006402768164,
+            "lng": -79.44313337868256,
+            "heading": 156.7719595319203,
+            "speedKmh": 30.53220748553247,
+            "phase": "response",
+            "road": {
+              "lat": 43.869006505291445,
+              "lng": -79.4431328988185,
+              "distance": 0.04014480814108164,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 10443,
+            "index": 4,
+            "distance": 17.284625725484002,
+            "delta": 6.697858803034933,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.868974034555904,
+            "lng": -79.44312046731942,
+            "heading": 160.08594438933153,
+            "speedKmh": 19.969685450851163,
+            "phase": "response",
+            "road": {
+              "lat": 43.86897417794443,
+              "lng": -79.44311979618402,
+              "distance": 0.05614632127508147,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 10889,
+            "index": 4,
+            "distance": 13.55972969423766,
+            "delta": 3.279698707441753,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.868957724651544,
+            "lng": -79.44311405229793,
+            "heading": 163.20611361548174,
+            "speedKmh": 19.78071817445829,
+            "phase": "response",
+            "road": {
+              "lat": 43.868957906492795,
+              "lng": -79.44311320118311,
+              "distance": 0.07120316811964217,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 11299,
+            "index": 4,
+            "distance": 11.684928441511953,
+            "delta": 0.04763249124346203,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86891454848812,
+            "lng": -79.44309597387078,
+            "heading": 163.20611361548174,
+            "speedKmh": 33.4906741770716,
+            "phase": "response",
+            "road": {
+              "lat": 43.86891461655361,
+              "lng": -79.44309565528769,
+              "distance": 0.026652250723978185,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 11708,
+            "index": 5,
+            "distance": 14.232234820848998,
+            "delta": 0.2917356689888493,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.868885735731496,
+            "lng": -79.4430839118092,
+            "heading": 163.20611361548174,
+            "speedKmh": 62.21594911442525,
+            "phase": "response",
+            "road": {
+              "lat": 43.86888572830717,
+              "lng": -79.44308394655904,
+              "distance": 0.0029071273580746973,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 12113,
+            "index": 5,
+            "distance": 10.90352136835751,
+            "delta": 0.41499272174644375,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86884949270927,
+            "lng": -79.44306874019611,
+            "heading": 163.20611361548174,
+            "speedKmh": 24.32988693255681,
+            "phase": "response",
+            "road": {
+              "lat": 43.86884939039854,
+              "lng": -79.44306921919818,
+              "distance": 0.040071809620806545,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 12518,
+            "index": 6,
+            "distance": 19.138073792832657,
+            "delta": 0.5164893835770954,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86881165343794,
+            "lng": -79.44305290516182,
+            "heading": 163.20611361548174,
+            "speedKmh": 18.401557209763844,
+            "phase": "response",
+            "road": {
+              "lat": 43.86881145232547,
+              "lng": -79.44305384673739,
+              "distance": 0.07876925628630002,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 12976,
+            "index": 6,
+            "distance": 14.766863897947973,
+            "delta": 0.7007999243869563,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86878301580402,
+            "lng": -79.44304092664248,
+            "heading": 163.20611361548174,
+            "speedKmh": 22.092961576543,
+            "phase": "response",
+            "road": {
+              "lat": 43.86878274124144,
+              "lng": -79.44304221152366,
+              "distance": 0.10749296422453236,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 13386,
+            "index": 6,
+            "distance": 11.45892795087687,
+            "delta": 0.9315384039539367,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86875514303696,
+            "lng": -79.44302927528403,
+            "heading": 163.20611361548174,
+            "speedKmh": 26.585338121162643,
+            "phase": "response",
+            "road": {
+              "lat": 43.86875479919639,
+              "lng": -79.44303088436811,
+              "distance": 0.13461572889280682,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 13796,
+            "index": 6,
+            "distance": 8.23981620822526,
+            "delta": 1.3301339053228958,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86872543941692,
+            "lng": -79.443016865845,
+            "heading": 163.20611361548174,
+            "speedKmh": 37.57191007535549,
+            "phase": "response",
+            "road": {
+              "lat": 43.868725023173795,
+              "lng": -79.44301881375412,
+              "distance": 0.16296178127931318,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 14216,
+            "index": 7,
+            "distance": 16.712068878431513,
+            "delta": 0.9463573124747882,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86869883442648,
+            "lng": -79.44300576611555,
+            "heading": 163.20611361548174,
+            "speedKmh": 43.39382547854861,
+            "phase": "response",
+            "road": {
+              "lat": 43.868698356318625,
+              "lng": -79.44300800353547,
+              "distance": 0.18718221010091277,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 14650,
+            "index": 7,
+            "distance": 13.639781681915402,
+            "delta": 1.1725064562687066,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86867227402914,
+            "lng": -79.44299469481949,
+            "heading": 163.20611361548174,
+            "speedKmh": 15.638992234378737,
+            "phase": "response",
+            "road": {
+              "lat": 43.86867173634018,
+              "lng": -79.44299720960943,
+              "distance": 0.21039664241038375,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 15112,
+            "index": 7,
+            "distance": 10.573186534858287,
+            "delta": 1.5252493798853948,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.8686244297864,
+            "lng": -79.44297842454678,
+            "heading": 176.17916112153307,
+            "speedKmh": 32.362628856333345,
+            "phase": "response",
+            "road": {
+              "lat": 43.86862450910953,
+              "lng": -79.44297805354975,
+              "distance": 0.031038985989859026,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 15560,
+            "index": 8,
+            "distance": 28.655747119086378,
+            "delta": -7.227173670886032,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.868581929472406,
+            "lng": -79.44296694348964,
+            "heading": 171.3086588004595,
+            "speedKmh": 27.200068312160536,
+            "phase": "response",
+            "road": {
+              "lat": 43.868583141609356,
+              "lng": -79.44296127428298,
+              "distance": 0.4743068315062717,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 16014,
+            "index": 8,
+            "distance": 23.868261949856496,
+            "delta": -2.3469748348724124,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.868471153268786,
+            "lng": -79.44294192512002,
+            "heading": 171.3086588004595,
+            "speedKmh": 3.7292565431337312,
+            "phase": "response",
+            "road": {
+              "lat": 43.86847210881269,
+              "lng": -79.44293431162207,
+              "distance": 0.6200909431096236,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 17587,
+            "index": 8,
+            "distance": 11.471269925782472,
+            "delta": -4.214618444570988,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86844379118653,
+            "lng": -79.44293092896923,
+            "heading": 145.3672526446801,
+            "speedKmh": 20.948612968344595,
+            "phase": "response",
+            "road": {
+              "lat": 43.8684442006087,
+              "lng": -79.4429276668116,
+              "distance": 0.2656905431358825,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 18038,
+            "index": 8,
+            "distance": 8.328015433949309,
+            "delta": 22.9972160975758,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86842263626925,
+            "lng": -79.44292397126176,
+            "heading": 174.74886344548486,
+            "speedKmh": 41.3488645014664,
+            "phase": "response",
+            "road": {
+              "lat": 43.86842281161054,
+              "lng": -79.44292257419299,
+              "distance": 0.11378602863470297,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 18477,
+            "index": 9,
+            "distance": 28.004430563901433,
+            "delta": 9.52893935851273,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86836254675299,
+            "lng": -79.44294246613039,
+            "heading": 189.2168457695385,
+            "speedKmh": 75.4241556537306,
+            "phase": "response",
+            "road": {
+              "lat": 43.868359348580995,
+              "lng": -79.4429121302838,
+              "distance": 2.460165929631864,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 18889,
+            "index": 9,
+            "distance": 21.292704260314864,
+            "delta": -7.5896607934203075,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86832276226716,
+            "lng": -79.44294113812043,
+            "heading": 184.1823068939973,
+            "speedKmh": 22.652624144702276,
+            "phase": "response",
+            "road": {
+              "lat": 43.868320522747915,
+              "lng": -79.44291989545042,
+              "distance": 1.7227306603695545,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 19303,
+            "index": 9,
+            "distance": 16.90131134722976,
+            "delta": -1.7705959703923781,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.8682847426308,
+            "lng": -79.44294251594121,
+            "heading": 184.1823068939973,
+            "speedKmh": 23.191106157345253,
+            "phase": "response",
+            "road": {
+              "lat": 43.868283145947714,
+              "lng": -79.44292737081045,
+              "distance": 1.2282345435427562,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 19735,
+            "index": 9,
+            "distance": 12.69786371952419,
+            "delta": -1.471113816647744,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.868246252555075,
+            "lng": -79.44294510875112,
+            "heading": 184.1823068939973,
+            "speedKmh": 32.74260877567035,
+            "phase": "response",
+            "road": {
+              "lat": 43.868245182976786,
+              "lng": -79.44293496340464,
+              "distance": 0.822763777984338,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 20171,
+            "index": 9,
+            "distance": 8.438093085696853,
+            "delta": -1.5159128188370232,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86822490512516,
+            "lng": -79.442949405677,
+            "heading": 198.82971587070074,
+            "speedKmh": 10.875182933715255,
+            "phase": "response",
+            "road": {
+              "lat": 43.86822383271374,
+              "lng": -79.44293923345725,
+              "distance": 0.8249431372129018,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 20622,
+            "index": 10,
+            "distance": 52.85764723383605,
+            "delta": 3.026716900307406,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86818691773769,
+            "lng": -79.44296763334819,
+            "heading": 202.44791927198173,
+            "speedKmh": 47.185846919134725,
+            "phase": "response",
+            "road": {
+              "lat": 43.8681847477747,
+              "lng": -79.44294705044506,
+              "distance": 1.669225115161275,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 21045,
+            "index": 10,
+            "distance": 48.41620274208878,
+            "delta": -0.3482171030233303,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86814747284061,
+            "lng": -79.44298650552673,
+            "heading": 202.44791927198173,
+            "speedKmh": 43.817041972140004,
+            "phase": "response",
+            "road": {
+              "lat": 43.86814134504611,
+              "lng": -79.44296802263234,
+              "distance": 1.6307021553461927,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 21449,
+            "index": 10,
+            "distance": 43.80713978396935,
+            "delta": -0.038093108853672675,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.868103294801536,
+            "lng": -79.44300902198044,
+            "heading": 202.44791927198173,
+            "speedKmh": 35.25487573424073,
+            "phase": "response",
+            "road": {
+              "lat": 43.86809861260324,
+              "lng": -79.44299489935008,
+              "distance": 1.2460063499349636,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 21911,
+            "index": 10,
+            "distance": 38.60407112214091,
+            "delta": 0.24559034684966718,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.8680633537811,
+            "lng": -79.44303058059776,
+            "heading": 202.44791927198173,
+            "speedKmh": 40.44425955829425,
+            "phase": "response",
+            "road": {
+              "lat": 43.86805964887698,
+              "lng": -79.44301940572046,
+              "distance": 0.9859330531703596,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 22336,
+            "index": 10,
+            "distance": 33.86346481995982,
+            "delta": 0.42683362542129544,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86801690180124,
+            "lng": -79.44305619859897,
+            "heading": 202.44791927198173,
+            "speedKmh": 39.685472904380084,
+            "phase": "response",
+            "road": {
+              "lat": 43.868014183986816,
+              "lng": -79.44304800102037,
+              "distance": 0.7232530142664413,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 22766,
+            "index": 10,
+            "distance": 28.333475043333703,
+            "delta": 0.6325297848192122,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86796998945538,
+            "lng": -79.44308260349968,
+            "heading": 202.44791927198173,
+            "speedKmh": 43.07401983405122,
+            "phase": "response",
+            "road": {
+              "lat": 43.867968122290485,
+              "lng": -79.44307697168358,
+              "distance": 0.4968818433583565,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 23194,
+            "index": 10,
+            "distance": 22.732282597922246,
+            "delta": 0.8427903189151493,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.867928196898255,
+            "lng": -79.44310635916284,
+            "heading": 202.44791927198173,
+            "speedKmh": 41.11221920241672,
+            "phase": "response",
+            "road": {
+              "lat": 43.867927023773525,
+              "lng": -79.44310282073796,
+              "distance": 0.3121868765933168,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 23595,
+            "index": 10,
+            "distance": 17.735330218625794,
+            "delta": 1.0866687260943309,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86788757235856,
+            "lng": -79.44312957611456,
+            "heading": 202.44791927198173,
+            "speedKmh": 40.37573325786352,
+            "phase": "response",
+            "road": {
+              "lat": 43.86788703952728,
+              "lng": -79.44312796896793,
+              "distance": 0.14179475473113573,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 24009,
+            "index": 10,
+            "distance": 12.874498713881055,
+            "delta": 1.464236218952692,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.867856016547236,
+            "lng": -79.44314765050281,
+            "heading": 202.44791927198173,
+            "speedKmh": 60.25060866797065,
+            "phase": "response",
+            "road": {
+              "lat": 43.86785597004097,
+              "lng": -79.4431475102288,
+              "distance": 0.012376045421820775,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 24468,
+            "index": 10,
+            "distance": 9.098178025618221,
+            "delta": 2.017350312595795,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86782237465564,
+            "lng": -79.44316766300336,
+            "heading": 205.88468519441483,
+            "speedKmh": 23.561329809715563,
+            "phase": "response",
+            "road": {
+              "lat": 43.86782264272355,
+              "lng": -79.44316847156034,
+              "distance": 0.07133707422038288,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 24875,
+            "index": 11,
+            "distance": 52.8547962215125,
+            "delta": 0.5451309032483778,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.867778207838604,
+            "lng": -79.44319738982816,
+            "heading": 205.88468519441483,
+            "speedKmh": 28.47321376566986,
+            "phase": "response",
+            "road": {
+              "lat": 43.86777797565822,
+              "lng": -79.44319674965051,
+              "distance": 0.057431785289591454,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 25287,
+            "index": 11,
+            "distance": 47.42101284991082,
+            "delta": 0.5894902460526055,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86773371416023,
+            "lng": -79.44322733569778,
+            "heading": 205.88468519441483,
+            "speedKmh": 54.638124093013296,
+            "phase": "response",
+            "road": {
+              "lat": 43.86773367565175,
+              "lng": -79.44322722952056,
+              "distance": 0.009525399184026055,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 25751,
+            "index": 11,
+            "distance": 41.94708490953952,
+            "delta": 0.6458872493045646,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.867689019843155,
+            "lng": -79.44325741875198,
+            "heading": 205.88468519441483,
+            "speedKmh": 26.538382021982716,
+            "phase": "response",
+            "road": {
+              "lat": 43.86768917525663,
+              "lng": -79.44325784726463,
+              "distance": 0.03844283908163812,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 26176,
+            "index": 11,
+            "distance": 36.448447411340055,
+            "delta": 0.7193456174918538,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.867643104546765,
+            "lng": -79.44328832890868,
+            "heading": 205.88468519441483,
+            "speedKmh": 29.5032168151572,
+            "phase": "response",
+            "road": {
+              "lat": 43.867643457647254,
+              "lng": -79.44328930249237,
+              "distance": 0.08734239654650898,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 26613,
+            "index": 11,
+            "distance": 30.799488507106926,
+            "delta": 0.8214135781443019,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86760421007522,
+            "lng": -79.44331452261278,
+            "heading": 205.88468519441483,
+            "speedKmh": 61.89105149363383,
+            "phase": "response",
+            "road": {
+              "lat": 43.86760472774282,
+              "lng": -79.44331594994794,
+              "distance": 0.12804946705544015,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 27027,
+            "index": 11,
+            "distance": 26.014046605458994,
+            "delta": 0.9409753921876245,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86756946603069,
+            "lng": -79.4433379345768,
+            "heading": 205.88468519441483,
+            "speedKmh": 23.23472058457934,
+            "phase": "response",
+            "road": {
+              "lat": 43.86757012681836,
+              "lng": -79.4433397565287,
+              "distance": 0.16345142700538945,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 27430,
+            "index": 11,
+            "distance": 21.73890620443659,
+            "delta": 1.0897608102047798,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86752350734919,
+            "lng": -79.44336891866035,
+            "heading": 205.88468519441483,
+            "speedKmh": 26.136772511784294,
+            "phase": "response",
+            "road": {
+              "lat": 43.86752435303056,
+              "lng": -79.44337125040906,
+              "distance": 0.20918645179498546,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 27883,
+            "index": 11,
+            "distance": 16.083643639914364,
+            "delta": 1.4041943308141072,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86747894633262,
+            "lng": -79.44339897970427,
+            "heading": 205.88468519441483,
+            "speedKmh": 30.58777876685429,
+            "phase": "response",
+            "road": {
+              "lat": 43.86747996570393,
+              "lng": -79.44340179035827,
+              "distance": 0.2521501294915274,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 28305,
+            "index": 11,
+            "distance": 10.600589604810931,
+            "delta": 2.0219805432697058,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86745359958501,
+            "lng": -79.44341612510095,
+            "heading": 205.88468519441483,
+            "speedKmh": 45.59820394849876,
+            "phase": "response",
+            "road": {
+              "lat": 43.867454704291795,
+              "lng": -79.44341917104555,
+              "distance": 0.27325858159354127,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 28741,
+            "index": 11,
+            "distance": 7.481170844495189,
+            "delta": 2.752259174737219,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86741481399358,
+            "lng": -79.44344232661813,
+            "heading": 205.88468519441483,
+            "speedKmh": 50.45998933960628,
+            "phase": "response",
+            "road": {
+              "lat": 43.867416059255994,
+              "lng": -79.44344576010869,
+              "distance": 0.30802620768238165,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 29142,
+            "index": 12,
+            "distance": 14.51152772850624,
+            "delta": 3.1196249915727776,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86738733942163,
+            "lng": -79.44346787851002,
+            "heading": 215.61132864119134,
+            "speedKmh": 13.877454442485552,
+            "phase": "response",
+            "road": {
+              "lat": 43.86738672481363,
+              "lng": -79.44346629132586,
+              "distance": 0.1443661790319968,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 29604,
+            "index": 12,
+            "distance": 10.865799138290527,
+            "delta": -8.299412300812946,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86735971241275,
+            "lng": -79.44348647376064,
+            "heading": 205.524960459706,
+            "speedKmh": 18.128486887782227,
+            "phase": "response",
+            "road": {
+              "lat": 43.86735961023429,
+              "lng": -79.44348620989159,
+              "distance": 0.024000849590110063,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 30026,
+            "index": 12,
+            "distance": 7.46797859734329,
+            "delta": 2.3640965779941325,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86732165589609,
+            "lng": -79.44350029210969,
+            "heading": 163.27949024816712,
+            "speedKmh": 31.426445490842465,
+            "phase": "response",
+            "road": {
+              "lat": 43.86732581602401,
+              "lng": -79.4435110353624,
+              "distance": 0.9771785713590303,
+              "road": "Arnold Crescent",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 30462,
+            "index": 13,
+            "distance": 12.522622193819009,
+            "delta": -24.38887786324085,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.867293264697764,
+            "lng": -79.4434687400581,
+            "heading": 139.44643575866843,
+            "speedKmh": 52.319099635949705,
+            "phase": "response",
+            "road": {
+              "lat": 43.867277456659544,
+              "lng": -79.44348317921596,
+              "distance": 2.0967503672630876,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 30927,
+            "index": 13,
+            "distance": 8.494490243125297,
+            "delta": -1.6050457068483865,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86726385327742,
+            "lng": -79.4434352718685,
+            "heading": 148.98572266328785,
+            "speedKmh": 58.70425777328756,
+            "phase": "response",
+            "road": {
+              "lat": 43.86725728070017,
+              "lng": -79.44344127530036,
+              "distance": 0.8717750778751073,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 31361,
+            "index": 14,
+            "distance": 46.02056461387536,
+            "delta": -24.34462732701354,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86723683295787,
+            "lng": -79.44339999852271,
+            "heading": 113.00140214028761,
+            "speedKmh": 40.30815953527587,
+            "phase": "response",
+            "road": {
+              "lat": 43.86723723144585,
+              "lng": -79.44339963454138,
+              "distance": 0.052854743728443884,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 32016,
+            "index": 14,
+            "distance": 42.002272472727945,
+            "delta": 10.48259994455043,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86720865748369,
+            "lng": -79.44334413762286,
+            "heading": 120.23016059817229,
+            "speedKmh": 34.77968137459231,
+            "phase": "response",
+            "road": {
+              "lat": 43.86720994099051,
+              "lng": -79.44334296503148,
+              "distance": 0.17025222128793185,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 32451,
+            "index": 14,
+            "distance": 36.54506508147657,
+            "delta": 3.059027240343312,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86718898837689,
+            "lng": -79.44329441501921,
+            "heading": 126.85101198262367,
+            "speedKmh": 48.49870895521052,
+            "phase": "response",
+            "road": {
+              "lat": 43.86718730230615,
+              "lng": -79.44329595538656,
+              "distance": 0.22365076850527923,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 32858,
+            "index": 14,
+            "distance": 32.018157495164644,
+            "delta": -2.8946872315063956,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86717487604875,
+            "lng": -79.44325906939623,
+            "heading": 128.05811575774237,
+            "speedKmh": 18.965685198904538,
+            "phase": "response",
+            "road": {
+              "lat": 43.867171169607865,
+              "lng": -79.44326245554154,
+              "distance": 0.491645061026471,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 33263,
+            "index": 14,
+            "distance": 28.795349686704117,
+            "delta": -3.5237162927757026,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86714827165026,
+            "lng": -79.44320776881781,
+            "heading": 125.11923634841338,
+            "speedKmh": 27.753956958199144,
+            "phase": "response",
+            "road": {
+              "lat": 43.867145884209286,
+              "lng": -79.44320994994582,
+              "distance": 0.3166848194893292,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 33697,
+            "index": 14,
+            "distance": 23.736678777333836,
+            "delta": -0.7987118650723914,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86711867418516,
+            "lng": -79.44314950140253,
+            "heading": 125.11923634841338,
+            "speedKmh": 36.37437697137911,
+            "phase": "response",
+            "road": {
+              "lat": 43.867117354355074,
+              "lng": -79.44315070717826,
+              "distance": 0.17507036057561035,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 34137,
+            "index": 14,
+            "distance": 18.029998491568577,
+            "delta": -1.0068160428168085,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86707335038659,
+            "lng": -79.44306013672087,
+            "heading": 125.11923634841338,
+            "speedKmh": 56.467331235511324,
+            "phase": "response",
+            "road": {
+              "lat": 43.867073619472144,
+              "lng": -79.4430598908886,
+              "distance": 0.0356931592581177,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 34570,
+            "index": 14,
+            "distance": 9.283081180182508,
+            "delta": -1.7834852346757089,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86705146291689,
+            "lng": -79.44302219414662,
+            "heading": 131.72875809606427,
+            "speedKmh": 21.198584153138015,
+            "phase": "response",
+            "road": {
+              "lat": 43.86705424267211,
+              "lng": -79.44301965460656,
+              "distance": 0.3687237891095314,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 34972,
+            "index": 15,
+            "distance": 97.93028815151101,
+            "delta": -1.4410637980331558,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86701910155694,
+            "lng": -79.44297165255489,
+            "heading": 131.72875809606427,
+            "speedKmh": 32.4584281042694,
+            "phase": "response",
+            "road": {
+              "lat": 43.86702665676305,
+              "lng": -79.44296263642556,
+              "distance": 1.1050221459717855,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 35391,
+            "index": 15,
+            "distance": 92.52309776237446,
+            "delta": -1.5066227328353534,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86698477547637,
+            "lng": -79.4429182676896,
+            "heading": 131.72875809606427,
+            "speedKmh": 33.68810976535877,
+            "phase": "response",
+            "road": {
+              "lat": 43.86699275565361,
+              "lng": -79.442908744414,
+              "distance": 1.1671782943756177,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 35852,
+            "index": 15,
+            "distance": 86.80158922747167,
+            "delta": -1.5927793439058178,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.866952521183364,
+            "lng": -79.44286810495339,
+            "heading": 131.72875809606427,
+            "speedKmh": 38.032779598598864,
+            "phase": "response",
+            "road": {
+              "lat": 43.86696090069222,
+              "lng": -79.44285810512883,
+              "distance": 1.2255844137811578,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 36257,
+            "index": 15,
+            "distance": 81.42561002008554,
+            "delta": -1.684768422604293,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86691994744299,
+            "lng": -79.44281744543161,
+            "heading": 131.72875809606427,
+            "speedKmh": 41.89715171573006,
+            "phase": "response",
+            "road": {
+              "lat": 43.866928730248326,
+              "lng": -79.44280696432658,
+              "distance": 1.284570434685051,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 36713,
+            "index": 15,
+            "distance": 75.99662857759104,
+            "delta": -1.7908757533934931,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.866886119680224,
+            "lng": -79.4427648356514,
+            "heading": 131.72875809606427,
+            "speedKmh": 70.29599958284199,
+            "phase": "response",
+            "road": {
+              "lat": 43.86689532131875,
+              "lng": -79.4427538547249,
+              "distance": 1.3458288494905915,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 37155,
+            "index": 15,
+            "distance": 70.35895993849026,
+            "delta": -1.9183987775259084,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86684619722229,
+            "lng": -79.4427027472875,
+            "heading": 131.72875809606427,
+            "speedKmh": 89.53130985109716,
+            "phase": "response",
+            "road": {
+              "lat": 43.86685589316826,
+              "lng": -79.44269117647109,
+              "distance": 1.418126106060919,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 37628,
+            "index": 15,
+            "distance": 63.70609385920648,
+            "delta": -2.0979308257501543,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86679541355444,
+            "lng": -79.44262191705941,
+            "heading": 131.72875809606427,
+            "speedKmh": 36.03967168580179,
+            "phase": "response",
+            "road": {
+              "lat": 43.866805073459616,
+              "lng": -79.44261038925288,
+              "distance": 1.4128547898574302,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 38099,
+            "index": 15,
+            "distance": 55.12964340969863,
+            "delta": -2.290949973537522,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86678785362019,
+            "lng": -79.44260885669442,
+            "heading": 131.72875809606427,
+            "speedKmh": 23.960349927139866,
+            "phase": "response",
+            "road": {
+              "lat": 43.86679713894797,
+              "lng": -79.44259777589596,
+              "distance": 1.3580692151760902,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 38515,
+            "index": 15,
+            "distance": 53.78927311007049,
+            "delta": -2.2691796560175135,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.866775296812996,
+            "lng": -79.44258789189384,
+            "heading": 131.72875809606427,
+            "speedKmh": 83.55503327453071,
+            "phase": "response",
+            "road": {
+              "lat": 43.8667842215795,
+              "lng": -79.44257724137711,
+              "distance": 1.3053336321249704,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 38937,
+            "index": 15,
+            "distance": 51.608079928630005,
+            "delta": -2.2717790313494106,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.8667313052242,
+            "lng": -79.44251742106881,
+            "heading": 131.72875809606427,
+            "speedKmh": 61.2709757329767,
+            "phase": "response",
+            "road": {
+              "lat": 43.86674003662306,
+              "lng": -79.44250700131055,
+              "distance": 1.2770517387122653,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 39427,
+            "index": 15,
+            "distance": 44.15125948731651,
+            "delta": -2.479933913273271,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86671078984695,
+            "lng": -79.44248361430398,
+            "heading": 131.72875809606427,
+            "speedKmh": 29.385764323070543,
+            "phase": "response",
+            "road": {
+              "lat": 43.86671909228398,
+              "lng": -79.44247370645435,
+              "distance": 1.2143119129311881,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 39916,
+            "index": 15,
+            "distance": 40.61536454837599,
+            "delta": -2.535738630095011,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.866675498977116,
+            "lng": -79.44242660557627,
+            "heading": 131.72875809606427,
+            "speedKmh": 41.21313354333305,
+            "phase": "response",
+            "road": {
+              "lat": 43.86668347535527,
+              "lng": -79.44241708683437,
+              "distance": 1.1666226408591331,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 40371,
+            "index": 15,
+            "distance": 34.60444197986345,
+            "delta": -2.754464755289405,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86663987473545,
+            "lng": -79.44236917454262,
+            "heading": 131.72875809606427,
+            "speedKmh": 65.80181840743361,
+            "phase": "response",
+            "road": {
+              "lat": 43.86664756373516,
+              "lng": -79.4423599987485,
+              "distance": 1.124590756586983,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 40796,
+            "index": 15,
+            "distance": 28.544745624480615,
+            "delta": -3.080392734518,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.866620503503746,
+            "lng": -79.44233413182731,
+            "heading": 147.03068436043532,
+            "speedKmh": 24.593562287030792,
+            "phase": "response",
+            "road": {
+              "lat": 43.86662666590421,
+              "lng": -79.44232677782549,
+              "distance": 0.9013108155946369,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 41221,
+            "index": 15,
+            "distance": 25.011093396608914,
+            "delta": -18.189617835980357,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.866606871016195,
+            "lng": -79.44231585101086,
+            "heading": 143.5702485382197,
+            "speedKmh": 76.47095366309534,
+            "phase": "response",
+            "road": {
+              "lat": 43.86661425169007,
+              "lng": -79.44230704316243,
+              "distance": 1.0794951147242746,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 41735,
+            "index": 15,
+            "distance": 22.924653627493893,
+            "delta": -15.362997380077331,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86659655935881,
+            "lng": -79.44230056059455,
+            "heading": 126.00048175625687,
+            "speedKmh": 51.11906958757671,
+            "phase": "response",
+            "road": {
+              "lat": 43.86660433594676,
+              "lng": -79.44229128027555,
+              "distance": 1.1374013865608954,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 42629,
+            "index": 15,
+            "distance": 21.25581362726714,
+            "delta": 1.8383823329115785,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86658191875602,
+            "lng": -79.44226045147558,
+            "heading": 127.62912328007292,
+            "speedKmh": 68.05100222589111,
+            "phase": "response",
+            "road": {
+              "lat": 43.86658364615025,
+              "lng": -79.4422583900613,
+              "distance": 0.25264815384065153,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 43082,
+            "index": 15,
+            "distance": 17.7345319261705,
+            "delta": 2.4608430128481587,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86655276521933,
+            "lng": -79.44221079171011,
+            "heading": 148.94937039113637,
+            "speedKmh": 21.698466941827093,
+            "phase": "response",
+            "road": {
+              "lat": 43.86655330151398,
+              "lng": -79.44221015171408,
+              "distance": 0.07843829252009997,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 44435,
+            "index": 15,
+            "distance": 12.610531986588809,
+            "delta": -18.399531908893437,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86654137917344,
+            "lng": -79.44219629095693,
+            "heading": 142.43321294194948,
+            "speedKmh": 71.9949620332144,
+            "phase": "response",
+            "road": {
+              "lat": 43.86654320881511,
+              "lng": -79.44219410752399,
+              "distance": 0.267602833867947,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 44968,
+            "index": 15,
+            "distance": 10.909835387965105,
+            "delta": -12.932524467534563,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86649561556298,
+            "lng": -79.44215080023194,
+            "heading": 122.33481255788672,
+            "speedKmh": 44.455427309855814,
+            "phase": "response",
+            "road": {
+              "lat": 43.86650723982136,
+              "lng": -79.44213692823224,
+              "distance": 1.7001604917996842,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 45441,
+            "index": 16,
+            "distance": 33.73315794912496,
+            "delta": -3.5561823690154597,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.866492246489734,
+            "lng": -79.44213272642074,
+            "heading": 92.18030567374007,
+            "speedKmh": 30.14531927332088,
+            "phase": "response",
+            "road": {
+              "lat": 43.866499300921234,
+              "lng": -79.44212430789902,
+              "distance": 1.0317790030607492,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 46022,
+            "index": 16,
+            "distance": 32.2846248195377,
+            "delta": 27.258376072007195,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.866447608339115,
+            "lng": -79.44205193213658,
+            "heading": 111.00018613583796,
+            "speedKmh": 47.34270867791199,
+            "phase": "response",
+            "road": {
+              "lat": 43.866458392604684,
+              "lng": -79.44204333160005,
+              "distance": 1.3775058240186033,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 46492,
+            "index": 16,
+            "distance": 24.23785194716678,
+            "delta": 5.813121979368361,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86643096068043,
+            "lng": -79.44200913766701,
+            "heading": 106.11838651896119,
+            "speedKmh": 86.1207743663177,
+            "phase": "response",
+            "road": {
+              "lat": 43.86644073942294,
+              "lng": -79.44200133904302,
+              "distance": 1.24906741919049,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 46948,
+            "index": 16,
+            "distance": 20.34269504296781,
+            "delta": 10.432702395916635,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.866416213732585,
+            "lng": -79.44195828379588,
+            "heading": 117.96947118207606,
+            "speedKmh": 28.75901906307515,
+            "phase": "response",
+            "road": {
+              "lat": 43.86642102609241,
+              "lng": -79.4419544459011,
+              "distance": 0.614696814243008,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 47577,
+            "index": 16,
+            "distance": 15.967297543090611,
+            "delta": -0.10441049306587047,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86641334546697,
+            "lng": -79.44195058835399,
+            "heading": 117.96947118207606,
+            "speedKmh": 22.51134619563783,
+            "phase": "response",
+            "road": {
+              "lat": 43.866417883118,
+              "lng": -79.44194696954163,
+              "distance": 0.5796074547924143,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 48145,
+            "index": 16,
+            "distance": 15.273109168571725,
+            "delta": -0.07300797607058485,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86639996788445,
+            "lng": -79.44191490516232,
+            "heading": 117.96947118207606,
+            "speedKmh": 51.14608180145536,
+            "phase": "response",
+            "road": {
+              "lat": 43.86640328988319,
+              "lng": -79.44191225584223,
+              "distance": 0.4243286282452347,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 48655,
+            "index": 16,
+            "distance": 12.05024904353427,
+            "delta": 0.08386877922202984,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86638755728628,
+            "lng": -79.4418822736829,
+            "heading": 117.96947118207606,
+            "speedKmh": 24.52983142321891,
+            "phase": "response",
+            "road": {
+              "lat": 43.86638990023026,
+              "lng": -79.44188040516666,
+              "distance": 0.2992710961053483,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 49089,
+            "index": 16,
+            "distance": 9.09388451523085,
+            "delta": 0.21596251071332517,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86637094324162,
+            "lng": -79.44183079894778,
+            "heading": 101.18135506317708,
+            "speedKmh": 57.91368893365376,
+            "phase": "response",
+            "road": {
+              "lat": 43.86636952263173,
+              "lng": -79.44183193189532,
+              "distance": 0.18145866164692126,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 49555,
+            "index": 17,
+            "distance": 45.710126802028554,
+            "delta": 10.019458295959225,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.866360146170216,
+            "lng": -79.44179292569487,
+            "heading": 150.71483108111465,
+            "speedKmh": 21.012192299149298,
+            "phase": "response",
+            "road": {
+              "lat": 43.866354887812385,
+              "lng": -79.44179711927656,
+              "distance": 0.6716654455169703,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 50178,
+            "index": 17,
+            "distance": 42.44464654996523,
+            "delta": -39.53224141409879,
+            "onPublicRoad": true
+          },
+          {
+            "lat": 43.86634522294868,
+            "lng": -79.44175497953492,
+            "heading": 107.08600168014618,
+            "speedKmh": 49.053389529710834,
+            "phase": "response",
+            "road": {
+              "lat": 43.86634190500387,
+              "lng": -79.4417566398654,
+              "distance": 0.3902216817838418,
+              "road": "Harding Boulevard West",
+              "highway": "tertiary"
+            },
+            "inBaseYard": false,
+            "collisions": 32,
+            "elapsedMs": 50636,
+            "index": 17,
+            "distance": 39.01136023722467,
+            "delta": 3.4537088564896976,
+            "onPublicRoad": true
+          }
+        ],
+        "publicRoadMetres": 426.6405250835499,
+        "outsideBaseYard": true,
+        "streetScreenshot": "native-street-enroute.png",
+        "final": {
+          "city": "richmond-hill",
+          "base": "fire-richmond-hill-fire-8-1",
+          "service": "fire",
+          "demo": {
+            "cityId": "richmond-hill",
+            "callLimit": 5,
+            "completed": 1,
+            "remaining": 4,
+            "finished": false,
+            "activeGeneration": null
+          },
+          "phase": "complete",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-1-richmond-hill-osm-way-31812692",
+          "generation": 2,
+          "total": 1,
+          "pos": [
+            43.8663441844364,
+            -79.44174757682602
+          ],
+          "hospital": "Mackenzie Richmond Hill Hospital"
+        },
+        "completionScreenshot": "native-street-complete.png"
+      },
+      "pass": true,
+      "durationMs": 59409
+    },
+    {
+      "name": "native-routes",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "tileResponses": {
+        "c.tile.openstreetmap.org:200": 30,
+        "b.tile.openstreetmap.org:200": 30,
+        "a.tile.openstreetmap.org:200": 30,
+        "server.arcgisonline.com:200": 128,
+        "services.arcgisonline.com:200": 71
+      },
+      "tileFailures": {
+        "b.tile.openstreetmap.org:net::ERR_ABORTED": 57,
+        "c.tile.openstreetmap.org:net::ERR_ABORTED": 56,
+        "a.tile.openstreetmap.org:net::ERR_ABORTED": 57,
+        "server.arcgisonline.com:net::ERR_ABORTED": 112,
+        "services.arcgisonline.com:net::ERR_ABORTED": 112
+      },
+      "detail": [
+        {
+          "base": "fire-richmond-hill-fire-8-1",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-1-richmond-hill-osm-way-31812692",
+          "routeMetres": 549.0165882093229,
+          "roads": [
+            "Arnold Crescent",
+            "Harding Boulevard West"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-1",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-1-richmond-hill-odef-946625a3637fa713a4d0",
+          "routeMetres": 1757.010575539852,
+          "roads": [
+            "Arnold Crescent",
+            "Major MacKenzie Drive West",
+            "Don Head Village Boulevard"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-1",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-1-richmond-hill-osm-way-1171265463",
+          "routeMetres": 1454.0722529980176,
+          "roads": [
+            "Arnold Crescent",
+            "Major MacKenzie Drive West",
+            "Major MacKenzie Drive East",
+            "Cedar Avenue"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-1",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-1-richmond-hill-osm-node-4022932045",
+          "routeMetres": 584.2709237934059,
+          "roads": [
+            "Arnold Crescent",
+            "Major MacKenzie Drive West"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-1",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-1-richmond-hill-osm-way-56297555",
+          "routeMetres": 1179.9730961258306,
+          "roads": [
+            "Arnold Crescent",
+            "Major MacKenzie Drive West",
+            "Yonge Street"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-2",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-2-richmond-hill-osm-node-9831352819",
+          "routeMetres": 864.2879413054793,
+          "roads": [
+            "North Lake Road",
+            "Yonge Street",
+            "King Road"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-2",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-2-richmond-hill-osm-node-9831318505",
+          "routeMetres": 711.9640891242537,
+          "roads": [
+            "North Lake Road",
+            "Yonge Street",
+            "King Road"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-2",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-2-richmond-hill-odef-6328e7c17b31921f0c28",
+          "routeMetres": 1156.9633850742366,
+          "roads": [
+            "North Lake Road",
+            "Yonge Street",
+            "Ashfield Drive",
+            "Bayswater Avenue"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-2",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-2-richmond-hill-osm-node-14305414354",
+          "routeMetres": 1615.1102812289332,
+          "roads": [
+            "North Lake Road",
+            "Yonge Street",
+            "Regatta Avenue",
+            "Coon's Road",
+            "Blyth Street"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-2",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-2-richmond-hill-odef-054ecf2bc0485b7815f9",
+          "routeMetres": 1755.0478135764456,
+          "roads": [
+            "North Lake Road",
+            "Wildwood Avenue"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-3",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-3-richmond-hill-ontario-private-school-883635-170",
+          "routeMetres": 730.3158042993352,
+          "roads": [
+            "16th Avenue",
+            "Granton Drive"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-3",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-3-richmond-hill-osm-node-896824140",
+          "routeMetres": 481.13297169485907,
+          "roads": [
+            "16th Avenue",
+            "Leslie Street"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-3",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-3-richmond-hill-osm-way-55218277",
+          "routeMetres": 2639.0249066359497,
+          "roads": [
+            "16th Avenue",
+            "Leslie Street",
+            "East Beaver Creek Road",
+            "York Boulevard"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-3",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-3-richmond-hill-odef-435c6210791eab4cfaed",
+          "routeMetres": 878.9178062061425,
+          "roads": [
+            "16th Avenue",
+            "Valleymede Drive"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-3",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-3-richmond-hill-osm-node-896823910",
+          "routeMetres": 1267.7883584577921,
+          "roads": [
+            "16th Avenue",
+            "Leslie Street",
+            "East Beaver Creek Road",
+            "Mural Street"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-4",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-4-richmond-hill-osm-way-198690491",
+          "routeMetres": 978.2980481026286,
+          "roads": [
+            "Elgin Mills Road East"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-4",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-4-richmond-hill-osm-node-896663369",
+          "routeMetres": 997.3988626740983,
+          "roads": [
+            "Elgin Mills Road East",
+            "Elgin Mills Road East"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-4",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-4-richmond-hill-osm-way-34584793",
+          "routeMetres": 3026.9566996766516,
+          "roads": [
+            "Elgin Mills Road East",
+            "Elgin Mills Road East",
+            "Redstone Road",
+            "Frank Endean Road"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-4",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-4-richmond-hill-osm-node-1086652821",
+          "routeMetres": 1157.5566721526468,
+          "roads": [
+            "Elgin Mills Road East"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-4",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-4-richmond-hill-osm-node-896662403",
+          "routeMetres": 1201.3673443465289,
+          "roads": [
+            "Elgin Mills Road East",
+            "Elgin Mills Road East",
+            "Redstone Road"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-5",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-5-richmond-hill-ontario-private-school-669986-1325",
+          "routeMetres": 578.8088592655375,
+          "roads": [
+            "High Tech Road",
+            "High Tech Road",
+            "Nahanni Drive"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-5",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-5-richmond-hill-osm-way-701664622",
+          "routeMetres": 1865.4040177939546,
+          "roads": [
+            "High Tech Road",
+            "Yonge Street",
+            "Leatherwood Lane"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-5",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-5-richmond-hill-osm-node-896807770",
+          "routeMetres": 398.45781240475924,
+          "roads": [
+            "High Tech Road",
+            "High Tech Road",
+            "Nahanni Drive"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-5",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-5-richmond-hill-osm-node-12941617117",
+          "routeMetres": 1065.3669605347254,
+          "roads": [
+            "High Tech Road",
+            "Yonge Street"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-5",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-5-richmond-hill-osm-way-1416590304",
+          "routeMetres": 1925.382198620463,
+          "roads": [
+            "High Tech Road",
+            "Yonge Street",
+            "Leatherwood Lane"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-6",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-6-richmond-hill-odef-c570cb7f1345d393eb96",
+          "routeMetres": 1061.2629282547796,
+          "roads": [
+            "Mack Clement Lane",
+            "Mazarine Lane",
+            "Lacewood Drive",
+            "Gamble Road",
+            "Rollinghill Road"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-6",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-6-richmond-hill-osm-node-896672545",
+          "routeMetres": 291.9990372219965,
+          "roads": [
+            "Mack Clement Lane",
+            "Mazarine Lane",
+            "Lacewood Drive"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-6",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-6-richmond-hill-osm-node-5362289125",
+          "routeMetres": 3026.3279017587415,
+          "roads": [
+            "Mack Clement Lane",
+            "Mazarine Lane",
+            "Lacewood Drive",
+            "Gamble Road",
+            "Selwyn Road",
+            "Hearthside Avenue"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-6",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-6-richmond-hill-osm-node-4033190766",
+          "routeMetres": 451.1926178046396,
+          "roads": [
+            "Mack Clement Lane",
+            "Mazarine Lane",
+            "Lacewood Drive",
+            "Gamble Road"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-6",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-6-richmond-hill-osm-node-4033190908",
+          "routeMetres": 1306.8541959644833,
+          "roads": [
+            "Mack Clement Lane",
+            "Mazarine Lane",
+            "Lacewood Drive",
+            "Gamble Road",
+            "Yonge Street"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "ems-richmond-hill-ems-28",
+          "service": "ems",
+          "call": "route-civic-24-ems-richmond-hill-ems-28-richmond-hill-osm-way-31812692",
+          "routeMetres": 191.12414080707697,
+          "roads": [
+            "Harding Boulevard West"
+          ],
+          "hospitalMetres": 1108.8030185889534,
+          "hospitalOnwardMetres": 1107.39530400698
+        },
+        {
+          "base": "ems-richmond-hill-ems-28",
+          "service": "ems",
+          "call": "route-civic-24-ems-richmond-hill-ems-28-richmond-hill-odef-946625a3637fa713a4d0",
+          "routeMetres": 1150.5183304929437,
+          "roads": [
+            "Harding Boulevard West",
+            "Kersey Crescent",
+            "Don Head Village Boulevard"
+          ],
+          "hospitalMetres": 1546.9030651138082,
+          "hospitalOnwardMetres": 1535.2296649751775
+        },
+        {
+          "base": "ems-richmond-hill-ems-28",
+          "service": "ems",
+          "call": "route-civic-24-ems-richmond-hill-ems-28-richmond-hill-osm-node-2775480409",
+          "routeMetres": 1602.0722081312308,
+          "roads": [
+            "Harding Boulevard West",
+            "Harding Boulevard",
+            "Trench Street",
+            "Mill Street"
+          ],
+          "hospitalMetres": 684.3933303483889,
+          "hospitalOnwardMetres": 684.393330348389
+        },
+        {
+          "base": "ems-richmond-hill-ems-28",
+          "service": "ems",
+          "call": "route-civic-24-ems-richmond-hill-ems-28-richmond-hill-odhf-ec8cdab0562f951338bc4e76e3724afb",
+          "routeMetres": 1640.1973021765748,
+          "roads": [
+            "Harding Boulevard West",
+            "Yonge Street",
+            "Yonge Street"
+          ],
+          "hospitalMetres": 2192.222265012856,
+          "hospitalOnwardMetres": 2903.792297347578
+        },
+        {
+          "base": "ems-richmond-hill-ems-28",
+          "service": "ems",
+          "call": "route-civic-24-ems-richmond-hill-ems-28-richmond-hill-osm-way-56297555",
+          "routeMetres": 626.6989206919186,
+          "roads": [
+            "Harding Boulevard West",
+            "Yonge Street"
+          ],
+          "hospitalMetres": 2351.1635565573924,
+          "hospitalOnwardMetres": 1890.2939158629197
+        },
+        {
+          "base": "ems-richmond-hill-ems-85",
+          "service": "ems",
+          "call": "route-civic-24-ems-richmond-hill-ems-85-richmond-hill-ontario-private-school-669986-1325",
+          "routeMetres": 578.8088592655375,
+          "roads": [
+            "High Tech Road",
+            "High Tech Road",
+            "Nahanni Drive"
+          ],
+          "hospitalMetres": 5239.653633083422,
+          "hospitalOnwardMetres": 5259.794287428657
+        },
+        {
+          "base": "ems-richmond-hill-ems-85",
+          "service": "ems",
+          "call": "route-civic-24-ems-richmond-hill-ems-85-richmond-hill-osm-way-701664622",
+          "routeMetres": 1865.4040177939546,
+          "roads": [
+            "High Tech Road",
+            "Yonge Street",
+            "Leatherwood Lane"
+          ],
+          "hospitalMetres": 3571.42760231633,
+          "hospitalOnwardMetres": 3705.926130480421
+        },
+        {
+          "base": "ems-richmond-hill-ems-85",
+          "service": "ems",
+          "call": "route-civic-24-ems-richmond-hill-ems-85-richmond-hill-osm-node-896807770",
+          "routeMetres": 398.45781240475924,
+          "roads": [
+            "High Tech Road",
+            "High Tech Road",
+            "Nahanni Drive"
+          ],
+          "hospitalMetres": 5544.594629682877,
+          "hospitalOnwardMetres": 5567.174079829769
+        },
+        {
+          "base": "ems-richmond-hill-ems-85",
+          "service": "ems",
+          "call": "route-civic-24-ems-richmond-hill-ems-85-richmond-hill-osm-node-12941617117",
+          "routeMetres": 1065.3669605347254,
+          "roads": [
+            "High Tech Road",
+            "Yonge Street"
+          ],
+          "hospitalMetres": 4870.794359024705,
+          "hospitalOnwardMetres": 4423.826760860216
+        },
+        {
+          "base": "ems-richmond-hill-ems-85",
+          "service": "ems",
+          "call": "route-civic-24-ems-richmond-hill-ems-85-richmond-hill-osm-way-1416590304",
+          "routeMetres": 1925.382198620463,
+          "roads": [
+            "High Tech Road",
+            "Yonge Street",
+            "Leatherwood Lane"
+          ],
+          "hospitalMetres": 3631.4057831428377,
+          "hospitalOnwardMetres": 3675.598669655201
+        }
+      ],
+      "pass": true,
+      "durationMs": 13168
+    }
+  ],
+  "limitations": [
+    "Native Fire trip uses only browser keyboard controls; other lifecycle checks set scene/hospital GPS to exercise the real arrival timers.",
+    "Only GET image requests to the shipped map tile providers are allowed externally. Feedback and telemetry remain blocked.",
+    "Launcher form submission replaces only PTBO_DEMO_REQUESTS with an in-memory adapter. No real message is sent."
+  ],
+  "finishedAt": "2026-10-29T14:12:42.531Z"
+}

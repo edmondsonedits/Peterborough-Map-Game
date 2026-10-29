@@ -1,0 +1,30 @@
+{
+  "build": "1.6.153",
+  "coreScript": "http://127.0.0.1:37455/response-simulator/route-reveal.js?v=1.6.153",
+  "cases": [
+    {
+      "name": "launcher-desktop",
+      "pass": true,
+      "errors": [],
+      "dialogs": []
+    },
+    {
+      "name": "launcher-mobile",
+      "pass": true,
+      "errors": [],
+      "dialogs": []
+    },
+    {
+      "name": "native-routes",
+      "pass": true,
+      "errors": [],
+      "dialogs": []
+    }
+  ],
+  "routeLegs": {
+    "dispatch": 40,
+    "emsToHospital": 10,
+    "hospitalOnward": 10
+  },
+  "scope": "Focused post-rebase checks only; prior full lifecycle/native street evidence was preserved unchanged."
+}

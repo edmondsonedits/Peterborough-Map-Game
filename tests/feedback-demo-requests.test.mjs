@@ -29,3 +29,22 @@ test('account switching cannot reveal a pending or completed demo receipt to ano
 test('invalid city and mode inputs cannot create feedback or a guest session',async()=>{
  const f=fixture();for(const input of [{...request,city:'constructor'},{...request,city:'../x'},{...request,mode:'other'},{...request,cityName:'x'.repeat(121)}])await assert.rejects(f.controller.send(input));assert.equal(f.writes.length,0);
 });
+
+test('full-version requests have explicit wording and a separate acknowledged identity from demo requests',async()=>{
+ const f=fixture(),input={city:'richmond-hill',cityName:'Richmond Hill',mode:'dispatch',requestType:'full-version'};
+ const first=f.controller.send(input);await new Promise(r=>setImmediate(r));
+ assert.match(f.writes[0].newThread.title,/Full version request.*Richmond Hill.*Dispatch Simulator/);
+ assert.match(f.writes[0].body,/full version of Dispatch Simulator for Richmond Hill/);
+ assert.equal(f.writes[0].newThread.category,'demo','use the existing private developer inbox');
+ assert.equal(f.controller.status(input.city,input.mode,'full-version').remoteSaved,false);
+ f.release();await first;
+ assert.equal(f.controller.status(input.city,input.mode,'full-version').remoteSaved,true);
+ assert.equal(f.controller.status(input.city,input.mode).remoteSaved,false);
+ const demo=f.controller.send({...input,requestType:'demo'});await new Promise(r=>setImmediate(r));
+ assert.equal(f.writes.length,2);assert.notEqual(f.writes[0].threadId,f.writes[1].threadId);
+ f.release();await demo;
+});
+
+test('unsupported request types cannot create feedback',async()=>{
+ const f=fixture();f.setFail(true);await assert.rejects(f.controller.send({...request,requestType:'purchase'}));assert.equal(f.writes.length,0);
+});

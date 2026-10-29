@@ -175,17 +175,24 @@ test('legacy matching retains civic identity and service when nearby station lab
   }
 });
 
-test('manifests add Geo data without inventing roads or enabling new driving cities', () => {
+test('manifests enable only researched scene cities and the Richmond Hill native Dispatch demo', () => {
   for (const id of ids) {
     const manifest = json(`cities/${id}/city.json`);
+    const nativeDemo = id === 'richmond-hill';
     assert.equal(manifest.id,id);
     assert.equal(manifest.features.geoGuesser,true,id);
     assert.equal(manifest.data.geoGuesser,'geo-data.json',id);
-    assert.equal(manifest.features.dispatch,previews.includes(id),id);
-    assert.equal(manifest.features.routeGuidance,false,id);
+    assert.equal(manifest.features.dispatch,previews.includes(id)||nativeDemo,id);
+    assert.equal(manifest.features.routeGuidance,nativeDemo,id);
     assert.equal(manifest.features.baseTraining,false,id);
-    assert.equal(manifest.data.roads,previews.includes(id)?'roads.geojson.gz':null,id);
-    if (previews.includes(id)) {
+    assert.equal(manifest.data.roads,previews.includes(id)||nativeDemo?'roads.geojson.gz':null,id);
+    if (nativeDemo) {
+      assert.equal(manifest.runtime,'./package.js',id);
+      assert.equal(manifest.status,'dispatch-demo',id);
+      assert.equal(manifest.dispatchDemo.callLimit,5,id);
+      assert.equal(manifest.features.hospitalTransport,true,id);
+      assert.equal(manifest.data.dispatchLocations,'geo-data.json',id);
+    } else if (previews.includes(id)) {
       assert.equal(manifest.data.bases,'geo-data.json',id);
       assert.equal(manifest.status,'scene-response',id);
       assert.equal(manifest.map.minZoom,10,id);

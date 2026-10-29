@@ -210,6 +210,17 @@ test('adapter waits for feedback initialization and unavailable/invalid requests
  let finish,calls=0;const h=adapter({ready:new Promise(r=>finish=r)}),pending=h.api.recordDemoRequest('oshawa','route');await new Promise(r=>setImmediate(r));assert.equal(calls,0);finish({async requestDemo(){calls++;return{id:'ok'};}});assert.equal(await pending,true);
  assert.equal(await adapter().api.recordDemoRequest('oshawa','route'),false);for(const [city,mode] of [['constructor','geo'],['unknown','geo'],['oshawa','invalid']])assert.equal(await h.api.recordDemoRequest(city,mode),false);assert.equal(calls,1);
 });
+test('adapter preserves full-version intent for sending, acknowledged status and opening the private thread',async()=>{
+ let payload,statusArgs,openArgs;
+ const h=adapter({feedback:{async requestDemo(input){payload=input;return{id:'full'};},demoRequestStatus(...args){statusArgs=args;return{remoteSaved:true};},async openDemoConversation(...args){openArgs=args;}}});
+ assert.equal(await h.api.recordDemoRequest('richmond-hill','dispatch','full-version'),true);
+ assert.deepEqual(JSON.parse(JSON.stringify(payload)),{city:'richmond-hill',cityName:'Richmond Hill',mode:'dispatch',requestType:'full-version'});
+ assert.equal(h.api.requestStatus('richmond-hill','dispatch','full-version').remoteSaved,true);
+ assert.deepEqual(statusArgs,['richmond-hill','dispatch','full-version']);
+ await h.api.openConversation('richmond-hill','dispatch','full-version');
+ assert.deepEqual(openArgs,['richmond-hill','dispatch','full-version']);
+ assert.equal(await h.api.recordDemoRequest('richmond-hill','dispatch','purchase'),false);
+});
 test('retired demo demand no longer appears in Website Stats; all feedback shares one inbox link',()=>{
  const html=read('site-stats/index.html');assert.doesNotMatch(html,/local-demo-request-rows|demo-requests-total|Demo requests on this device|Shared demo demand/);assert.match(html,/href="\.\.\/feedback\/"/);
 });

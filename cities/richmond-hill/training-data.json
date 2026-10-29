@@ -13640,5 +13640,99 @@
       "hard": 50
     },
     "scope": "Fictional Fire and EMS training scenarios at sourced civic locations; modeled street approaches are not surveyed vehicle entrances."
+  },
+  "dispatchDemo": {
+    "schemaVersion": 1,
+    "callLimit": 5,
+    "bases": [
+      {
+        "baseId": "fire-richmond-hill-fire-8-1",
+        "service": "fire",
+        "callIds": [
+          "route-civic-27-fire-richmond-hill-fire-8-1-richmond-hill-osm-way-31812692",
+          "route-civic-27-fire-richmond-hill-fire-8-1-richmond-hill-odef-946625a3637fa713a4d0",
+          "route-civic-27-fire-richmond-hill-fire-8-1-richmond-hill-osm-way-1171265463",
+          "route-civic-27-fire-richmond-hill-fire-8-1-richmond-hill-osm-node-4022932045",
+          "route-civic-27-fire-richmond-hill-fire-8-1-richmond-hill-osm-way-56297555"
+        ]
+      },
+      {
+        "baseId": "fire-richmond-hill-fire-8-2",
+        "service": "fire",
+        "callIds": [
+          "route-civic-27-fire-richmond-hill-fire-8-2-richmond-hill-osm-node-9831352819",
+          "route-civic-27-fire-richmond-hill-fire-8-2-richmond-hill-osm-node-9831318505",
+          "route-civic-27-fire-richmond-hill-fire-8-2-richmond-hill-odef-6328e7c17b31921f0c28",
+          "route-civic-27-fire-richmond-hill-fire-8-2-richmond-hill-osm-node-14305414354",
+          "route-civic-27-fire-richmond-hill-fire-8-2-richmond-hill-odef-054ecf2bc0485b7815f9"
+        ]
+      },
+      {
+        "baseId": "fire-richmond-hill-fire-8-3",
+        "service": "fire",
+        "callIds": [
+          "route-civic-27-fire-richmond-hill-fire-8-3-richmond-hill-ontario-private-school-883635-170",
+          "route-civic-27-fire-richmond-hill-fire-8-3-richmond-hill-osm-node-896824140",
+          "route-civic-27-fire-richmond-hill-fire-8-3-richmond-hill-osm-way-55218277",
+          "route-civic-27-fire-richmond-hill-fire-8-3-richmond-hill-odef-435c6210791eab4cfaed",
+          "route-civic-27-fire-richmond-hill-fire-8-3-richmond-hill-osm-node-896823910"
+        ]
+      },
+      {
+        "baseId": "fire-richmond-hill-fire-8-4",
+        "service": "fire",
+        "callIds": [
+          "route-civic-27-fire-richmond-hill-fire-8-4-richmond-hill-osm-way-198690491",
+          "route-civic-27-fire-richmond-hill-fire-8-4-richmond-hill-osm-node-896663369",
+          "route-civic-27-fire-richmond-hill-fire-8-4-richmond-hill-osm-way-34584793",
+          "route-civic-27-fire-richmond-hill-fire-8-4-richmond-hill-osm-node-1086652821",
+          "route-civic-27-fire-richmond-hill-fire-8-4-richmond-hill-osm-node-896662403"
+        ]
+      },
+      {
+        "baseId": "fire-richmond-hill-fire-8-5",
+        "service": "fire",
+        "callIds": [
+          "route-civic-27-fire-richmond-hill-fire-8-5-richmond-hill-ontario-private-school-669986-1325",
+          "route-civic-27-fire-richmond-hill-fire-8-5-richmond-hill-osm-way-701664622",
+          "route-civic-27-fire-richmond-hill-fire-8-5-richmond-hill-osm-node-896807770",
+          "route-civic-27-fire-richmond-hill-fire-8-5-richmond-hill-osm-node-12941617117",
+          "route-civic-27-fire-richmond-hill-fire-8-5-richmond-hill-osm-way-1416590304"
+        ]
+      },
+      {
+        "baseId": "fire-richmond-hill-fire-8-6",
+        "service": "fire",
+        "callIds": [
+          "route-civic-27-fire-richmond-hill-fire-8-6-richmond-hill-odef-c570cb7f1345d393eb96",
+          "route-civic-27-fire-richmond-hill-fire-8-6-richmond-hill-osm-node-896672545",
+          "route-civic-27-fire-richmond-hill-fire-8-6-richmond-hill-osm-node-5362289125",
+          "route-civic-27-fire-richmond-hill-fire-8-6-richmond-hill-osm-node-4033190766",
+          "route-civic-27-fire-richmond-hill-fire-8-6-richmond-hill-osm-node-4033190908"
+        ]
+      },
+      {
+        "baseId": "ems-richmond-hill-ems-28",
+        "service": "ems",
+        "callIds": [
+          "route-civic-24-ems-richmond-hill-ems-28-richmond-hill-osm-way-31812692",
+          "route-civic-24-ems-richmond-hill-ems-28-richmond-hill-odef-946625a3637fa713a4d0",
+          "route-civic-24-ems-richmond-hill-ems-28-richmond-hill-osm-node-2775480409",
+          "route-civic-24-ems-richmond-hill-ems-28-richmond-hill-odhf-ec8cdab0562f951338bc4e76e3724afb",
+          "route-civic-24-ems-richmond-hill-ems-28-richmond-hill-osm-way-56297555"
+        ]
+      },
+      {
+        "baseId": "ems-richmond-hill-ems-85",
+        "service": "ems",
+        "callIds": [
+          "route-civic-24-ems-richmond-hill-ems-85-richmond-hill-ontario-private-school-669986-1325",
+          "route-civic-24-ems-richmond-hill-ems-85-richmond-hill-osm-way-701664622",
+          "route-civic-24-ems-richmond-hill-ems-85-richmond-hill-osm-node-896807770",
+          "route-civic-24-ems-richmond-hill-ems-85-richmond-hill-osm-node-12941617117",
+          "route-civic-24-ems-richmond-hill-ems-85-richmond-hill-osm-way-1416590304"
+        ]
+      }
+    ]
   }
 }

@@ -1,14 +1,18 @@
 /* Incident filter controls for station-local response exercises. */
 (() => {
   'use strict';
-  if (!window.PTBO_CITY_PACKAGE?.features?.sceneResponseDrills) return;
+  if (!window.PTBO_CITY_PACKAGE?.features?.sceneResponseDrills && !window.PTBO_CITY_PACKAGE?.dispatchDemo) return;
   const preferences=new Map();
   function update() {
     const store=parent.PTBO_DISPATCH_STORE, service=window.PTBO_SERVICE?.state.mode;
     const data=store?.getTrainingData?.();
     if(!data || !service) return;
     const base=window.PTBO_SERVICE?.getBase?.();
-    const calls=window.PTBO_LOCAL_RESPONSE_POOL?.localPool(data,store.getAll(),{cityId:store.cityId,id:base?.id,service}) || [];
+    let calls;
+    try {
+      calls=window.PTBO_CITY_PACKAGE?.dispatchDemo ? window.PTBO_DISPATCH_DEMO?.pool(true) || []
+        : window.PTBO_LOCAL_RESPONSE_POOL?.localPool(data,store.getAll(),{cityId:store.cityId,id:base?.id,service}) || [];
+    } catch (_) {return;}
     const types=new Set(calls.map(c=>c.incidentProfiles?.[service]?.sub || c.sub));
     const groups=[...document.querySelectorAll('.sub-cat-group')];
     const target=groups[service==='fire'?0:1];

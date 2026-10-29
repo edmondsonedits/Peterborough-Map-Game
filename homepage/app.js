@@ -122,6 +122,8 @@
     const preferred = cityMap.has(requested) ? requested : cityMap.has(stored) ? stored : 'peterborough';
     setCity(preferred, cityMap.has(requested));
     syncMotion();
+    if (new URLSearchParams(location.search).get('request') === 'dispatch' && demoAvailable('dispatch', state.city))
+      openRequest('dispatch', dispatchLink);
     return true;
   }
 
@@ -134,6 +136,7 @@
     document.body.dataset.homeCity = city.id;
     const fullDispatch = city.id === 'peterborough';
     const freeDriving = !fullDispatch && available('dispatch');
+    const dispatchDemo = demoAvailable('dispatch', city);
     document.body.dataset.homeAvailability = fullDispatch ? 'full' : 'demo';
     if (persist) write(CITY_KEY, city.id);
     document.querySelectorAll('[data-selected-city-name]').forEach(node => { node.textContent = city.name; });
@@ -147,7 +150,7 @@
     if (title) title.textContent = freeDriving ? 'Free Driving' : 'Dispatch Simulator';
     if (description) description.textContent = fullDispatch
       ? 'Drive Fire & EMS responses.'
-      : freeDriving ? `Drive Fire & EMS in ${city.name}.` : `Request a ${city.name} driving demo.`;
+      : freeDriving ? `Drive Fire & EMS in ${city.name}.` : dispatchDemo ? `Try five Fire & EMS calls in ${city.name}.` : `Request a ${city.name} driving demo.`;
     document.querySelectorAll('[data-dispatch-mode-label]').forEach(node => {
       node.textContent = freeDriving ? 'Free Driving' : 'Dispatch Simulator';
     });
@@ -157,17 +160,17 @@
     document.querySelectorAll('[data-dispatch-preview-description]').forEach(node => {
       node.textContent = fullDispatch
         ? 'Choose Fire or EMS and practise your response.'
-        : freeDriving ? 'Choose Fire or EMS for free driving.' : 'Request this training mode for your city.';
+        : freeDriving ? 'Choose Fire or EMS for free driving.' : dispatchDemo ? 'Play five local calls, then request the full version.' : 'Request this training mode for your city.';
     });
     state.launches.filter(link => link.dataset.previewLaunch === 'dispatch').forEach(link => {
       const label = link.querySelector('[data-launch-label]');
-      if (label) label.textContent = freeDriving ? 'Start free driving' : available('dispatch') ? 'Play Dispatch Simulator' : 'Request a demo';
+      if (label) label.textContent = freeDriving ? 'Start free driving' : available('dispatch') ? 'Play Dispatch Simulator' : dispatchDemo ? 'Try Dispatch demo' : 'Request a demo';
     });
     const explorerDescription = document.getElementById('home-explorer-description');
     if (explorerDescription) explorerDescription.textContent = available('explorer') ? `Drive through ${city.name} streets.` : `Request a ${city.name} 3D demo.`;
     if (state.status) state.status.textContent = fullDispatch
       ? 'All training modes available in Peterborough.'
-      : `${city.name} demos · ${available('geo') ? 'Geo Guesser ready' : 'Geo Guesser on request'}${available('route') ? ' · Route Mapping ready' : ''}${freeDriving ? ' · Free driving ready' : ''}. Request other modes below.`;
+      : `${city.name} demos · ${available('geo') ? 'Geo Guesser ready' : 'Geo Guesser on request'}${available('route') ? ' · Route Mapping ready' : ''}${freeDriving ? ' · Free driving ready' : dispatchDemo ? ' · Five-call Dispatch demo ready' : ''}. Request other modes below.`;
     updateLinks();
     if (changed) {
       // A background storage update must not hide the preview link someone is using.
@@ -202,7 +205,7 @@
       link.dataset.modeAvailable = String(ready);
       link.setAttribute('aria-label', ready
         ? mode === 'dispatch' && state.city.id !== 'peterborough' ? `Open Fire & EMS free driving in ${state.city.name}` : `Open ${state.city.name} ${MODES[mode]}`
-        : `Request a ${state.city.name} ${MODES[mode]} demo`);
+        : demoAvailable(mode, state.city) ? `Try the ${state.city.name} ${MODES[mode]} demo` : `Request a ${state.city.name} ${MODES[mode]} demo`);
       if (ready) {
         const url = new URL(routes[mode], location.href);
         url.searchParams.set('city', state.city.id);
@@ -229,11 +232,14 @@
 
   function modeForLink(link) { return link.dataset.preview || link.dataset.previewLaunch || 'explorer'; }
   function available(mode) { return state?.city?.modes?.[mode] === true; }
+  function demoAvailable(mode, city) { return mode === 'dispatch' && city?.dispatchDemo?.callLimit === 5 && Boolean(city.dispatch?.desktop && city.dispatch?.mobile); }
+  function requestArgs(request) { return [request.cityId, request.mode, ...(request.fullVersion ? ['full-version'] : [])]; }
+  function requestKey(request) { return `${request.cityId}:${request.mode}:${request.fullVersion ? 'full-version' : 'demo'}`; }
 
   function openRequest(mode, opener) {
     if (!MODES[mode] || !state.dialog || state.dialog.open) return;
     // Keep the requested city fixed even if another tab changes the selected city.
-    state.request = { cityId: state.city.id, cityName: state.city.name, mode, opener };
+    state.request = { cityId: state.city.id, cityName: state.city.name, mode, opener, fullVersion:demoAvailable(mode, state.city) };
     state.requestCity.textContent = state.request.cityName;
     state.requestMode.textContent = MODES[mode];
     renderRequest();
@@ -248,14 +254,38 @@
   function renderRequest(message = '') {
     const request = state.request;
     if (!request) return;
-    const key = `${request.cityId}:${request.mode}`;
-    const sent = window.PTBO_DEMO_REQUESTS?.requestStatus?.(request.cityId, request.mode)?.remoteSaved === true;
+    const key = requestKey(request);
+    const sent = window.PTBO_DEMO_REQUESTS?.requestStatus?.(...requestArgs(request))?.remoteSaved === true;
     const pending = state.pendingRequests.has(key);
+    const playable = request.fullVersion;
+    state.dialog.dataset.playableDemo = String(playable);
+    const title = document.getElementById('home-demo-title');
+    const description = document.getElementById('home-demo-description');
+    if (title) title.textContent = playable ? 'Try Dispatch Simulator' : 'Request a demo';
+    if (description) description.textContent = playable
+      ? `Drive five Fire or EMS calls on ${request.cityName} streets. Request the full version through Feedback.`
+      : 'Send a private message to the developer for this city and mode. You can follow up and receive replies in Feedback.';
+    const demo = document.getElementById('home-demo-play');
+    if (demo) {
+      demo.hidden = !playable;
+      if (playable) {
+        const mobile = window.PTBO_DEVICE_SURFACE?.isMobile?.() === true;
+        const city = state.cityMap.get(request.cityId);
+        const url = new URL(mobile ? city.dispatch.mobile : city.dispatch.desktop, location.href);
+        url.searchParams.set('city', request.cityId);
+        url.searchParams.set('surface', mobile ? 'mobile' : 'desktop');
+        const version = window.PTBO_BUILD?.version || document.documentElement?.dataset.ptboBuild;
+        if (version) url.searchParams.set('v', version);
+        url.searchParams.set('fresh', String(Date.now()));
+        demo.href = url.href;
+        demo.setAttribute('aria-label', `Play five ${request.cityName} Dispatch Simulator calls`);
+      } else demo.removeAttribute('href');
+    }
     state.requestStatus.textContent = sent
       ? 'Request sent to the developer. You can follow up in Feedback.'
       : pending ? 'Sending your request…' : message;
     state.requestButton.disabled = sent || pending;
-    state.requestButton.textContent = sent ? 'Request sent' : pending ? 'Sending…' : message ? 'Try again' : 'Request this demo';
+    state.requestButton.textContent = sent ? 'Request sent' : pending ? 'Sending…' : message ? 'Try again' : playable ? 'Request full version' : 'Request this demo';
     const conversation = document.getElementById('home-demo-conversation');
     if (conversation) conversation.hidden = !sent;
   }
@@ -263,17 +293,17 @@
   async function submitRequest() {
     const request = state.request;
     if (!request) return;
-    const key = `${request.cityId}:${request.mode}`;
+    const key = requestKey(request);
     const adapter = window.PTBO_DEMO_REQUESTS;
-    if (adapter?.requestStatus?.(request.cityId, request.mode)?.remoteSaved || state.pendingRequests.has(key)) return;
+    if (adapter?.requestStatus?.(...requestArgs(request))?.remoteSaved || state.pendingRequests.has(key)) return;
     const operation = {};
     state.pendingRequests.set(key, operation);
     renderRequest();
     let saved = false;
-    try { saved = await adapter?.recordDemoRequest?.(request.cityId, request.mode) === true; } catch (_) {}
+    try { saved = await adapter?.recordDemoRequest?.(...requestArgs(request)) === true; } catch (_) {}
     if (state.pendingRequests.get(key) !== operation) return;
     state.pendingRequests.delete(key);
-    if (state.request?.cityId === request.cityId && state.request?.mode === request.mode)
+    if (state.request && requestKey(state.request) === key)
       renderRequest(saved ? '' : 'Your request could not be sent. Please try again.');
   }
 
@@ -281,7 +311,7 @@
     const request = state.request;
     if (!request) return;
     closeRequest();
-    try { await window.PTBO_DEMO_REQUESTS.openConversation(request.cityId, request.mode); }
+    try { await window.PTBO_DEMO_REQUESTS.openConversation(...requestArgs(request)); }
     catch (_) { openRequest(request.mode, request.opener); renderRequest('Could not open Feedback. Please try again.'); }
   }
 

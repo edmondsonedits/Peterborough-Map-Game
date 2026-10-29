@@ -39,6 +39,7 @@
   }
   window.PTBO_CITIES = Object.freeze(cities.map(city => Object.freeze({
     ...city,dispatch:simulatorRoutes,
+    ...(city.id === 'richmond-hill' ? {dispatchDemo:Object.freeze({callLimit:5})} : {}),
     ...(geoIds.has(city.id) ? {geoDataUrl:`cities/${city.id}/geo-data.json`} : {}),
     modes:Object.freeze({geo:city.id === 'peterborough' || geoIds.has(city.id),
       route:true,dispatch:originalIds.has(city.id),explorer:city.id === 'peterborough'}),

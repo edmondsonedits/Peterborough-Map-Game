@@ -1,0 +1,30 @@
+{
+  "uniqueBrowserCasesPassed": 11,
+  "uniqueBrowserCasesTotal": 11,
+  "allPass": true,
+  "canonicalBuild": "1.6.152",
+  "nativeRouteCore": "http://127.0.0.1:44543/response-simulator/route-reveal.js?v=1.6.152",
+  "routeLegs": {
+    "dispatch": 40,
+    "emsToHospital": 10,
+    "hospitalOnward": 10
+  },
+  "nativeDrive": {
+    "routeMetres": 549.0165882093229,
+    "namedStreetMetresOutsideBaseYard": 426.6405250835499,
+    "completed": 1,
+    "collisionCountBefore": 32,
+    "collisionCountAfter": 32,
+    "directPositionHeadingVelocityPhysicsWrites": false
+  },
+  "reports": [
+    "report.json",
+    "native-followup-report.json",
+    "native-cache-report.json"
+  ],
+  "limitations": [
+    "Fire/EMS five-call lifecycle scene/hospital arrivals use disclosed GPS fixtures with real transition timers.",
+    "One full native keyboard Fire trip follows the production route across named streets; it does not validate every route as a full driven trip.",
+    "All external traffic is blocked except allowed GET image tile requests in live mode; explicit form request uses an in-memory adapter and no real Feedback message is sent."
+  ]
+}

@@ -4,9 +4,9 @@
   "name": "Richmond Hill",
   "province": "Ontario",
   "country": "Canada",
-  "status": "geo-demo",
+  "status": "dispatch-demo",
   "playable": true,
-  "note": "Geo Guesser and Route Mapping with sourced Fire and EMS practice locations.",
+  "note": "Five-call Fire and EMS Dispatch demo with local roads and a modeled hospital approach; full Geo Guesser and Route Mapping remain available.",
   "map": {
     "bounds": [
       [
@@ -19,28 +19,37 @@
       ]
     ],
     "defaultCenter": [
-      43.867171820603346,
-      -79.44249767296054
+      43.869213,
+      -79.443971
     ],
-    "defaultZoom": 18,
-    "minZoom": 7,
-    "maxZoom": 19
+    "defaultZoom": 15,
+    "minZoom": 10,
+    "maxZoom": 19,
+    "defaultHeading": 180
   },
   "features": {
     "baseTraining": false,
-    "dispatch": false,
-    "roadBoundaries": false,
-    "routeGuidance": false,
+    "dispatch": true,
+    "roadBoundaries": true,
+    "routeGuidance": true,
     "geoGuesser": true,
-    "routeMapping": true
+    "routeMapping": true,
+    "hospitalTransport": true
   },
   "data": {
     "boundaries": null,
-    "roads": null,
-    "dispatchLocations": null,
+    "roads": "roads.geojson.gz",
+    "dispatchLocations": "geo-data.json",
     "bases": "geo-data.json",
-    "hospitals": null,
+    "hospitals": "./package.js",
     "geoGuesser": "geo-data.json",
-    "routeMapping": "training-data.json"
+    "routeMapping": "training-data.json",
+    "dispatchDescriptor": "./dispatch-data.js",
+    "services": "./package.js"
+  },
+  "integration": "city-package",
+  "runtime": "./package.js",
+  "dispatchDemo": {
+    "callLimit": 5
   }
 }

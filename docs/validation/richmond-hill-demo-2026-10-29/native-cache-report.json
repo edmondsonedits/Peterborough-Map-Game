@@ -1,0 +1,553 @@
+{
+  "liveTiles": false,
+  "startedAt": "2026-10-29T14:12:55.231Z",
+  "results": [
+    {
+      "name": "native-routes",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "tileResponses": {},
+      "tileFailures": {
+        "b.tile.openstreetmap.org:net::ERR_FAILED": 63,
+        "c.tile.openstreetmap.org:net::ERR_FAILED": 64,
+        "a.tile.openstreetmap.org:net::ERR_FAILED": 63,
+        "a.tile.openstreetmap.org:net::ERR_ABORTED": 24,
+        "c.tile.openstreetmap.org:net::ERR_ABORTED": 22,
+        "b.tile.openstreetmap.org:net::ERR_ABORTED": 24,
+        "server.arcgisonline.com:net::ERR_FAILED": 253,
+        "services.arcgisonline.com:net::ERR_FAILED": 216
+      },
+      "detail": [
+        {
+          "base": "fire-richmond-hill-fire-8-1",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-1-richmond-hill-osm-way-31812692",
+          "routeMetres": 549.0165882093229,
+          "roads": [
+            "Arnold Crescent",
+            "Harding Boulevard West"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-1",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-1-richmond-hill-odef-946625a3637fa713a4d0",
+          "routeMetres": 1757.010575539852,
+          "roads": [
+            "Arnold Crescent",
+            "Major MacKenzie Drive West",
+            "Don Head Village Boulevard"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-1",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-1-richmond-hill-osm-way-1171265463",
+          "routeMetres": 1454.0722529980176,
+          "roads": [
+            "Arnold Crescent",
+            "Major MacKenzie Drive West",
+            "Major MacKenzie Drive East",
+            "Cedar Avenue"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-1",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-1-richmond-hill-osm-node-4022932045",
+          "routeMetres": 584.2709237934059,
+          "roads": [
+            "Arnold Crescent",
+            "Major MacKenzie Drive West"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-1",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-1-richmond-hill-osm-way-56297555",
+          "routeMetres": 1179.9730961258306,
+          "roads": [
+            "Arnold Crescent",
+            "Major MacKenzie Drive West",
+            "Yonge Street"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-2",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-2-richmond-hill-osm-node-9831352819",
+          "routeMetres": 864.2879413054793,
+          "roads": [
+            "North Lake Road",
+            "Yonge Street",
+            "King Road"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-2",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-2-richmond-hill-osm-node-9831318505",
+          "routeMetres": 711.9640891242537,
+          "roads": [
+            "North Lake Road",
+            "Yonge Street",
+            "King Road"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-2",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-2-richmond-hill-odef-6328e7c17b31921f0c28",
+          "routeMetres": 1156.9633850742366,
+          "roads": [
+            "North Lake Road",
+            "Yonge Street",
+            "Ashfield Drive",
+            "Bayswater Avenue"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-2",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-2-richmond-hill-osm-node-14305414354",
+          "routeMetres": 1615.1102812289332,
+          "roads": [
+            "North Lake Road",
+            "Yonge Street",
+            "Regatta Avenue",
+            "Coon's Road",
+            "Blyth Street"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-2",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-2-richmond-hill-odef-054ecf2bc0485b7815f9",
+          "routeMetres": 1755.0478135764456,
+          "roads": [
+            "North Lake Road",
+            "Wildwood Avenue"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-3",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-3-richmond-hill-ontario-private-school-883635-170",
+          "routeMetres": 730.3158042993352,
+          "roads": [
+            "16th Avenue",
+            "Granton Drive"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-3",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-3-richmond-hill-osm-node-896824140",
+          "routeMetres": 481.13297169485907,
+          "roads": [
+            "16th Avenue",
+            "Leslie Street"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-3",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-3-richmond-hill-osm-way-55218277",
+          "routeMetres": 2639.0249066359497,
+          "roads": [
+            "16th Avenue",
+            "Leslie Street",
+            "East Beaver Creek Road",
+            "York Boulevard"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-3",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-3-richmond-hill-odef-435c6210791eab4cfaed",
+          "routeMetres": 878.9178062061425,
+          "roads": [
+            "16th Avenue",
+            "Valleymede Drive"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-3",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-3-richmond-hill-osm-node-896823910",
+          "routeMetres": 1267.7883584577921,
+          "roads": [
+            "16th Avenue",
+            "Leslie Street",
+            "East Beaver Creek Road",
+            "Mural Street"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-4",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-4-richmond-hill-osm-way-198690491",
+          "routeMetres": 978.2980481026286,
+          "roads": [
+            "Elgin Mills Road East"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-4",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-4-richmond-hill-osm-node-896663369",
+          "routeMetres": 997.3988626740983,
+          "roads": [
+            "Elgin Mills Road East",
+            "Elgin Mills Road East"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-4",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-4-richmond-hill-osm-way-34584793",
+          "routeMetres": 3026.9566996766516,
+          "roads": [
+            "Elgin Mills Road East",
+            "Elgin Mills Road East",
+            "Redstone Road",
+            "Frank Endean Road"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-4",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-4-richmond-hill-osm-node-1086652821",
+          "routeMetres": 1157.5566721526468,
+          "roads": [
+            "Elgin Mills Road East"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-4",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-4-richmond-hill-osm-node-896662403",
+          "routeMetres": 1201.3673443465289,
+          "roads": [
+            "Elgin Mills Road East",
+            "Elgin Mills Road East",
+            "Redstone Road"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-5",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-5-richmond-hill-ontario-private-school-669986-1325",
+          "routeMetres": 578.8088592655375,
+          "roads": [
+            "High Tech Road",
+            "High Tech Road",
+            "Nahanni Drive"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-5",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-5-richmond-hill-osm-way-701664622",
+          "routeMetres": 1865.4040177939546,
+          "roads": [
+            "High Tech Road",
+            "Yonge Street",
+            "Leatherwood Lane"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-5",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-5-richmond-hill-osm-node-896807770",
+          "routeMetres": 398.45781240475924,
+          "roads": [
+            "High Tech Road",
+            "High Tech Road",
+            "Nahanni Drive"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-5",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-5-richmond-hill-osm-node-12941617117",
+          "routeMetres": 1065.3669605347254,
+          "roads": [
+            "High Tech Road",
+            "Yonge Street"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-5",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-5-richmond-hill-osm-way-1416590304",
+          "routeMetres": 1925.382198620463,
+          "roads": [
+            "High Tech Road",
+            "Yonge Street",
+            "Leatherwood Lane"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-6",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-6-richmond-hill-odef-c570cb7f1345d393eb96",
+          "routeMetres": 1061.2629282547796,
+          "roads": [
+            "Mack Clement Lane",
+            "Mazarine Lane",
+            "Lacewood Drive",
+            "Gamble Road",
+            "Rollinghill Road"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-6",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-6-richmond-hill-osm-node-896672545",
+          "routeMetres": 291.9990372219965,
+          "roads": [
+            "Mack Clement Lane",
+            "Mazarine Lane",
+            "Lacewood Drive"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-6",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-6-richmond-hill-osm-node-5362289125",
+          "routeMetres": 3026.3279017587415,
+          "roads": [
+            "Mack Clement Lane",
+            "Mazarine Lane",
+            "Lacewood Drive",
+            "Gamble Road",
+            "Selwyn Road",
+            "Hearthside Avenue"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-6",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-6-richmond-hill-osm-node-4033190766",
+          "routeMetres": 451.1926178046396,
+          "roads": [
+            "Mack Clement Lane",
+            "Mazarine Lane",
+            "Lacewood Drive",
+            "Gamble Road"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "fire-richmond-hill-fire-8-6",
+          "service": "fire",
+          "call": "route-civic-27-fire-richmond-hill-fire-8-6-richmond-hill-osm-node-4033190908",
+          "routeMetres": 1306.8541959644833,
+          "roads": [
+            "Mack Clement Lane",
+            "Mazarine Lane",
+            "Lacewood Drive",
+            "Gamble Road",
+            "Yonge Street"
+          ],
+          "hospitalMetres": null,
+          "hospitalOnwardMetres": null
+        },
+        {
+          "base": "ems-richmond-hill-ems-28",
+          "service": "ems",
+          "call": "route-civic-24-ems-richmond-hill-ems-28-richmond-hill-osm-way-31812692",
+          "routeMetres": 191.12414080707697,
+          "roads": [
+            "Harding Boulevard West"
+          ],
+          "hospitalMetres": 1108.8030185889534,
+          "hospitalOnwardMetres": 1107.39530400698
+        },
+        {
+          "base": "ems-richmond-hill-ems-28",
+          "service": "ems",
+          "call": "route-civic-24-ems-richmond-hill-ems-28-richmond-hill-odef-946625a3637fa713a4d0",
+          "routeMetres": 1150.5183304929437,
+          "roads": [
+            "Harding Boulevard West",
+            "Kersey Crescent",
+            "Don Head Village Boulevard"
+          ],
+          "hospitalMetres": 1546.9030651138082,
+          "hospitalOnwardMetres": 1535.2296649751775
+        },
+        {
+          "base": "ems-richmond-hill-ems-28",
+          "service": "ems",
+          "call": "route-civic-24-ems-richmond-hill-ems-28-richmond-hill-osm-node-2775480409",
+          "routeMetres": 1602.0722081312308,
+          "roads": [
+            "Harding Boulevard West",
+            "Harding Boulevard",
+            "Trench Street",
+            "Mill Street"
+          ],
+          "hospitalMetres": 684.3933303483889,
+          "hospitalOnwardMetres": 684.393330348389
+        },
+        {
+          "base": "ems-richmond-hill-ems-28",
+          "service": "ems",
+          "call": "route-civic-24-ems-richmond-hill-ems-28-richmond-hill-odhf-ec8cdab0562f951338bc4e76e3724afb",
+          "routeMetres": 1640.1973021765748,
+          "roads": [
+            "Harding Boulevard West",
+            "Yonge Street",
+            "Yonge Street"
+          ],
+          "hospitalMetres": 2192.222265012856,
+          "hospitalOnwardMetres": 2903.792297347578
+        },
+        {
+          "base": "ems-richmond-hill-ems-28",
+          "service": "ems",
+          "call": "route-civic-24-ems-richmond-hill-ems-28-richmond-hill-osm-way-56297555",
+          "routeMetres": 626.6989206919186,
+          "roads": [
+            "Harding Boulevard West",
+            "Yonge Street"
+          ],
+          "hospitalMetres": 2351.1635565573924,
+          "hospitalOnwardMetres": 1890.2939158629197
+        },
+        {
+          "base": "ems-richmond-hill-ems-85",
+          "service": "ems",
+          "call": "route-civic-24-ems-richmond-hill-ems-85-richmond-hill-ontario-private-school-669986-1325",
+          "routeMetres": 578.8088592655375,
+          "roads": [
+            "High Tech Road",
+            "High Tech Road",
+            "Nahanni Drive"
+          ],
+          "hospitalMetres": 5239.653633083422,
+          "hospitalOnwardMetres": 5259.794287428657
+        },
+        {
+          "base": "ems-richmond-hill-ems-85",
+          "service": "ems",
+          "call": "route-civic-24-ems-richmond-hill-ems-85-richmond-hill-osm-way-701664622",
+          "routeMetres": 1865.4040177939546,
+          "roads": [
+            "High Tech Road",
+            "Yonge Street",
+            "Leatherwood Lane"
+          ],
+          "hospitalMetres": 3571.42760231633,
+          "hospitalOnwardMetres": 3705.926130480421
+        },
+        {
+          "base": "ems-richmond-hill-ems-85",
+          "service": "ems",
+          "call": "route-civic-24-ems-richmond-hill-ems-85-richmond-hill-osm-node-896807770",
+          "routeMetres": 398.45781240475924,
+          "roads": [
+            "High Tech Road",
+            "High Tech Road",
+            "Nahanni Drive"
+          ],
+          "hospitalMetres": 5544.594629682877,
+          "hospitalOnwardMetres": 5567.174079829769
+        },
+        {
+          "base": "ems-richmond-hill-ems-85",
+          "service": "ems",
+          "call": "route-civic-24-ems-richmond-hill-ems-85-richmond-hill-osm-node-12941617117",
+          "routeMetres": 1065.3669605347254,
+          "roads": [
+            "High Tech Road",
+            "Yonge Street"
+          ],
+          "hospitalMetres": 4870.794359024705,
+          "hospitalOnwardMetres": 4423.826760860216
+        },
+        {
+          "base": "ems-richmond-hill-ems-85",
+          "service": "ems",
+          "call": "route-civic-24-ems-richmond-hill-ems-85-richmond-hill-osm-way-1416590304",
+          "routeMetres": 1925.382198620463,
+          "roads": [
+            "High Tech Road",
+            "Yonge Street",
+            "Leatherwood Lane"
+          ],
+          "hospitalMetres": 3631.4057831428377,
+          "hospitalOnwardMetres": 3675.598669655201
+        }
+      ],
+      "pass": true,
+      "durationMs": 3925
+    }
+  ],
+  "limitations": [
+    "Native Fire trip uses only browser keyboard controls; other lifecycle checks set scene/hospital GPS to exercise the real arrival timers.",
+    "External HTTPS, including Feedback writes, telemetry and map tiles, is blocked. Local Leaflet, city roads, vehicle and HUD run normally; live basemap imagery is not validated.",
+    "Launcher form submission replaces only PTBO_DEMO_REQUESTS with an in-memory adapter. No real message is sent."
+  ],
+  "finishedAt": "2026-10-29T14:12:59.516Z"
+}

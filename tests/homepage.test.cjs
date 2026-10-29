@@ -55,7 +55,7 @@ function fixture({ stored, requested = '', mobile = false, reduced = false, deni
   const cards = ['geo', 'route', 'dispatch', 'explorer'].map(mode => { const node = new Element(); node.dataset.demoCard = mode; return node; });
   const previewCityNames = [new Element(), new Element(), new Element()];
   const demoLabels = [new Element(), new Element(), new Element()];
-  ['home-city-select', 'home-city-status', 'home-dispatch-title', 'home-dispatch-description', 'home-motion-toggle', 'home-preview', 'home-demo-dialog', 'home-demo-city', 'home-demo-mode', 'home-demo-status', 'home-demo-submit', 'home-demo-close', 'home-demo-conversation', 'home-explorer-description','dispatch-editor-link','home-editor-name','home-editor-description'].forEach(get);
+  ['home-city-select', 'home-city-status', 'home-dispatch-title', 'home-dispatch-description', 'home-motion-toggle', 'home-preview', 'home-demo-dialog', 'home-demo-title', 'home-demo-description', 'home-demo-play', 'home-demo-city', 'home-demo-mode', 'home-demo-status', 'home-demo-submit', 'home-demo-close', 'home-demo-conversation', 'home-explorer-description','dispatch-editor-link','home-editor-name','home-editor-description'].forEach(get);
   get('home-motion-toggle').motionLabel = new Element();
   const groups = { '[data-demo-card]': cards, '[data-preview-city-name]': previewCityNames, '[data-demo-label]': demoLabels, '[data-preview]': choices, '[data-preview-panel]': panels, '[data-preview-launch]': launches,
     '[data-peterborough-only]': badges, '[data-selected-city-name]': cityNames, '[data-dispatch-city]': dispatchNames,
@@ -373,6 +373,54 @@ test('unavailable mode card and preview launches have no redirect and open a nam
   h.get('home-demo-dialog').emit('click', { clientX: 5, clientY: 5 });
   assert.equal(h.get('home-demo-dialog').open, false);
   assert.deepEqual(recorded, []);
+});
+
+test('Richmond Hill offers a five-call demo in the popup on both device surfaces without sending a request',()=>{
+ for(const mobile of [false,true]){
+  let calls=0;const h=fixture({stored:'richmond-hill',mobile,demoRequests:{recordDemoRequest(){calls++;}}});
+  assert.equal(h.get('dispatch-game-link').href,'');
+  h.get('dispatch-game-link').emit('click');
+  assert.equal(h.get('home-demo-dialog').open,true);
+  assert.equal(h.get('home-demo-play').hidden,false);
+  const url=new URL(h.get('home-demo-play').href);
+  assert.equal(url.pathname,'/game/response-simulator/'+(mobile?'mobile/':'play/'));
+  assert.equal(url.searchParams.get('city'),'richmond-hill');
+  assert.equal(url.searchParams.get('surface'),mobile?'mobile':'desktop');
+  assert.equal(url.searchParams.get('v'),'1.6.105');
+  assert.equal(h.get('home-demo-submit').textContent,'Request full version');
+  assert.match(h.get('home-demo-description').textContent,/five.*Richmond Hill/i);
+  assert.equal(calls,0);
+  h.changeCity('london');
+  assert.equal(new URL(h.get('home-demo-play').href).searchParams.get('city'),'richmond-hill','open popup keeps its captured city');
+ }
+});
+
+test('unsupported cities retain their request flow without a working demo link',()=>{
+ const h=fixture({stored:'london'});h.get('dispatch-game-link').emit('click');
+ assert.equal(h.get('home-demo-play').hidden,true);
+ assert.equal(h.get('home-demo-play').href,'');
+ assert.equal(h.get('home-demo-submit').textContent,'Request this demo');
+});
+
+test('full-version requests carry their intent and open the matching feedback conversation',async()=>{
+ const sent=[],opened=[];let saved=false;
+ const h=fixture({stored:'richmond-hill',demoRequests:{requestStatus:(city,mode,type)=>({remoteSaved:type==='full-version'&&saved}),async recordDemoRequest(...args){sent.push(args);saved=true;return true;},async openConversation(...args){opened.push(args);}}});
+ h.get('dispatch-game-link').emit('click');h.get('home-demo-submit').emit('click');
+ await new Promise(r=>setImmediate(r));
+ assert.deepEqual(sent,[['richmond-hill','dispatch','full-version']]);
+ assert.equal(h.get('home-demo-conversation').hidden,false);
+ h.get('home-demo-conversation').emit('click');await new Promise(r=>setImmediate(r));
+ assert.deepEqual(opened,[['richmond-hill','dispatch','full-version']]);
+});
+
+test('demo finish request link opens the correct popup without sending automatically',()=>{
+ let calls=0;const h=fixture({stored:'peterborough',requested:'?city=richmond-hill&request=dispatch',demoRequests:{recordDemoRequest(){calls++;}}});
+ assert.equal(h.get('home-demo-dialog').open,true);
+ assert.equal(h.get('home-demo-city').textContent,'Richmond Hill');
+ assert.equal(h.get('home-demo-submit').textContent,'Request full version');
+ assert.equal(calls,0);
+ const unsupported=fixture({requested:'?city=london&request=dispatch'});
+ assert.notEqual(unsupported.get('home-demo-dialog').open,true);
 });
 
 test('request submission waits for feedback acknowledgement, disables duplicate clicks and opens the conversation action',async()=>{
