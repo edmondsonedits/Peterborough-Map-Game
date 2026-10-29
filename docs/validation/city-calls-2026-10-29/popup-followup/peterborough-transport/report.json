@@ -1,0 +1,156 @@
+{
+  "startedAt": "2026-10-29T08:02:49.711Z",
+  "base": "http://127.0.0.1:35059",
+  "requestedCities": [
+    "peterborough"
+  ],
+  "requestedRouteIds": [],
+  "modes": [
+    "transport"
+  ],
+  "tileWaitMs": 30000,
+  "results": [
+    {
+      "name": "transport-peterborough-desktop",
+      "mobile": false,
+      "stubbedTiles": true,
+      "errors": [],
+      "missingLocal": [],
+      "activeScreenshots": [],
+      "detail": {
+        "response": {
+          "sceneId": "moh-ltc-3304",
+          "source": {
+            "lat": 44.336057899056996,
+            "lng": -78.31531539999997
+          },
+          "arrival": {
+            "radius": 65,
+            "lat": 44.336057899056996,
+            "lng": -78.31531539999997,
+            "accessPoint": false
+          },
+          "hospital": {
+            "id": "prhc",
+            "main": "Medical",
+            "sub": "Hospital Transport",
+            "name": "Peterborough Regional Health Centre",
+            "addr": "1 Hospital Drive",
+            "lat": 44.300744,
+            "lng": -78.347467,
+            "radius": 40,
+            "checkpointLat": 44.300744,
+            "checkpointLng": -78.347467,
+            "checkpointRadius": 40,
+            "areaLat": 44.300944,
+            "areaLng": -78.347561,
+            "areaWidth": 58,
+            "areaLength": 75,
+            "areaRotation": 88
+          },
+          "before": 0
+        },
+        "transport": {
+          "hospitalId": "prhc-2",
+          "address": "1 Hospital Drive",
+          "name": "Peterborough Regional Health Centre",
+          "arrival": {
+            "radius": 40,
+            "lat": 44.300744,
+            "lng": -78.347467,
+            "accessPoint": false,
+            "hospitalDropoff": true
+          },
+          "phase": "transport"
+        },
+        "completionCount": 1,
+        "selectionRandomFixture": 0,
+        "gpsSetByTest": true,
+        "tripDriven": false
+      },
+      "pass": true,
+      "endScreenshot": "transport-peterborough-desktop-stubbed-map.png",
+      "durationMs": 11674
+    },
+    {
+      "name": "transport-peterborough-mobile",
+      "mobile": true,
+      "stubbedTiles": true,
+      "errors": [],
+      "missingLocal": [],
+      "activeScreenshots": [],
+      "detail": {
+        "response": {
+          "sceneId": "moh-ltc-3304",
+          "source": {
+            "lat": 44.336057899056996,
+            "lng": -78.31531539999997
+          },
+          "arrival": {
+            "radius": 65,
+            "lat": 44.336057899056996,
+            "lng": -78.31531539999997,
+            "accessPoint": false
+          },
+          "hospital": {
+            "id": "prhc",
+            "main": "Medical",
+            "sub": "Hospital Transport",
+            "name": "Peterborough Regional Health Centre",
+            "addr": "1 Hospital Drive",
+            "lat": 44.300744,
+            "lng": -78.347467,
+            "radius": 40,
+            "checkpointLat": 44.300744,
+            "checkpointLng": -78.347467,
+            "checkpointRadius": 40,
+            "areaLat": 44.300944,
+            "areaLng": -78.347561,
+            "areaWidth": 58,
+            "areaLength": 75,
+            "areaRotation": 88
+          },
+          "before": 0
+        },
+        "transport": {
+          "hospitalId": "prhc-2",
+          "address": "1 Hospital Drive",
+          "name": "Peterborough Regional Health Centre",
+          "arrival": {
+            "radius": 40,
+            "lat": 44.300744,
+            "lng": -78.347467,
+            "accessPoint": false,
+            "hospitalDropoff": true
+          },
+          "phase": "transport"
+        },
+        "completionCount": 1,
+        "selectionRandomFixture": 0,
+        "gpsSetByTest": true,
+        "tripDriven": false
+      },
+      "pass": true,
+      "endScreenshot": "transport-peterborough-mobile-stubbed-map.png",
+      "durationMs": 11216
+    }
+  ],
+  "limits": [
+    "Browser contexts are sequential. Desktop Fire and emulated mobile EMS are exhaustive by city; additional opposite-surface checks are sampled.",
+    "Geo selects every recognition tier and checks its real answer/return flow. EMS care-home tier overrides are counted separately from the shared canonical recognition target.",
+    "Route station/profile inventories are exhaustive; gameplay selects one published civic exercise per city/service where available. Exhaustive directed route/source audits run separately.",
+    "Most route submissions use a disclosed deterministic reference-trace fixture. Deeper samples use native mouse/touch events on published road paths.",
+    "Simulator transport samples set GPS at the published scene and hospital targets to exercise arrival/state transitions; they do not drive the trip or verify an entrance.",
+    "Active-game screenshots report visible decoded real tiles separately from request outcomes. Zero decoded real tiles means basemap rendering is unverified; screenshot inspection remains required.",
+    "Stubbed tiles establish UI/count/selection behavior only. Physical-device behavior, source truth and emergency-routing fidelity are not established by this harness."
+  ],
+  "finishedAt": "2026-10-29T08:03:13.014Z",
+  "summary": {
+    "cases": 2,
+    "passed": 2,
+    "failed": 0,
+    "activeMapScreenshots": 0,
+    "realTileScreenshotsWithLoadedTiles": 0,
+    "realTileScreenshotsUnavailable": 0
+  }
+}

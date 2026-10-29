@@ -471,7 +471,7 @@
                     const marker = L.marker([loc.lat, loc.lng], {
                         draggable: true,
                         icon: customDotIcon
-                    }).bindPopup(`<b>${loc.name}</b><br>${loc.sub}<br>${loc.addr}`);
+                    }).bindPopup(`<b>${escapeDispatchText(loc.name)}</b><br>${escapeDispatchText(loc.sub)}<br>${escapeDispatchText(loc.addr)}`);
 
                     marker.on('dragend', function(e) {
                         const newPos = e.target.getLatLng();
@@ -550,7 +550,7 @@
                 });
 
                 const marker = L.marker([newDispatch.lat, newDispatch.lng], { draggable: true, icon: customDotIcon })
-                    .bindPopup(`<b>${newDispatch.name}</b><br>${newDispatch.sub}<br>${newDispatch.addr}`);
+                    .bindPopup(`<b>${escapeDispatchText(newDispatch.name)}</b><br>${escapeDispatchText(newDispatch.sub)}<br>${escapeDispatchText(newDispatch.addr)}`);
 
                 marker.on('dragend', function(e) {
                     const newPos = e.target.getLatLng();

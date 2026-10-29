@@ -1,0 +1,2978 @@
+{
+  "startedAt": "2026-10-29T08:02:48.910Z",
+  "cities": [
+    "belleville",
+    "scarborough",
+    "oshawa",
+    "pickering",
+    "markham",
+    "toronto"
+  ],
+  "services": [
+    "fire",
+    "ems"
+  ],
+  "modes": [
+    "missions",
+    "bases",
+    "mobile",
+    "island",
+    "crossmode",
+    "legacy",
+    "support"
+  ],
+  "results": [
+    {
+      "name": "mission-belleville-fire-desktop",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "start": {
+          "phase": "response",
+          "service": "fire",
+          "base": "fire-fire-station-1-1",
+          "incident": "route-civic-21-fire-fire-station-1-1-belleville-odhf-aa401eef18302f500152ebc3d776895f",
+          "routeBase": "fire-fire-station-1-1",
+          "kind": "sourced-address",
+          "hospital": null,
+          "arrival": {
+            "radius": 65,
+            "lat": 44.16369900776151,
+            "lng": -77.36490299311336,
+            "accessPoint": true
+          },
+          "voice": "Fire Station 1, response exercise at Quinte Health - Belleville, 265 Dundas Street East, for Structure Fire."
+        },
+        "movement": {
+          "start": [
+            44.1781883,
+            -77.37418941601382
+          ],
+          "end": [
+            44.17783184756195,
+            -77.37418941601382
+          ],
+          "input": "keyboard"
+        },
+        "enrouteScreenshot": "enroute-belleville-fire-desktop.png",
+        "arrivalFixture": "position injection",
+        "completion": {
+          "phase": "complete",
+          "total": 1,
+          "history": {
+            "calls": 1,
+            "sessions": 1,
+            "emsTransports": 0,
+            "averageResponseSeconds": 2.2
+          },
+          "transport": false,
+          "hud": "FIRE / AVAILABLE\n\nAssignment completed\n\nResponse: 2.2 s\nSIMULATED INCIDENTBusiness and place names are used as geographic landmarks for training. No actual incident, occupant, affiliation, endorsement, or event is implied. Details"
+        },
+        "nextBase": "fire-fire-station-1-1"
+      },
+      "pass": true,
+      "screenshot": "mission-belleville-fire-desktop.png",
+      "durationMs": 10637
+    },
+    {
+      "name": "mission-belleville-ems-desktop",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "start": {
+          "phase": "response",
+          "service": "ems",
+          "base": "ems-base-00-headquarters-1",
+          "incident": "route-civic-26-ems-base-00-headquarters-1-belleville-osm-node-13162933617",
+          "routeBase": "ems-base-00-headquarters-1",
+          "kind": "sourced-address",
+          "hospital": null,
+          "arrival": {
+            "radius": 65,
+            "lat": 44.20255173600726,
+            "lng": -77.39960571802881,
+            "accessPoint": true
+          },
+          "voice": "Base 00 — Headquarters, response exercise at Smash Shack, 303 Maitland Drive, for Medical Assistance."
+        },
+        "movement": {
+          "start": [
+            44.192834149999996,
+            -77.40611642333934
+          ],
+          "end": [
+            44.19249530389388,
+            -77.40611642333934
+          ],
+          "input": "keyboard"
+        },
+        "enrouteScreenshot": null,
+        "arrivalFixture": "position injection",
+        "completion": {
+          "phase": "complete",
+          "total": 1,
+          "history": {
+            "calls": 1,
+            "sessions": 1,
+            "emsTransports": 0,
+            "averageResponseSeconds": 2
+          },
+          "transport": false,
+          "hud": "EMS / AVAILABLE\n\nResponse exercise completed\n\nResponse: 2.0 s\nSIMULATED INCIDENTBusiness and place names are used as geographic landmarks for training. No actual incident, occupant, affiliation, endorsement, or event is implied. Details"
+        },
+        "nextBase": "ems-base-00-headquarters-1"
+      },
+      "pass": true,
+      "durationMs": 10039
+    },
+    {
+      "name": "mission-scarborough-fire-desktop",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "start": {
+          "phase": "response",
+          "service": "fire",
+          "base": "fire-toronto-fire-211",
+          "incident": "route-civic-21-fire-toronto-fire-211-scarborough-osm-way-659463561",
+          "routeBase": "fire-toronto-fire-211",
+          "kind": "sourced-address",
+          "hospital": null,
+          "arrival": {
+            "radius": 65,
+            "lat": 43.83190701366614,
+            "lng": -79.23435599925973,
+            "accessPoint": true
+          },
+          "voice": "Fire Station 211, response exercise at Arul Oli Senior Centre, 8 Snowy Owl Way, for Structure Fire."
+        },
+        "movement": {
+          "start": [
+            43.82399272520154,
+            -79.24287003538682
+          ],
+          "end": [
+            43.82364895175942,
+            -79.24287003538682
+          ],
+          "input": "keyboard"
+        },
+        "enrouteScreenshot": null,
+        "arrivalFixture": "position injection",
+        "completion": {
+          "phase": "complete",
+          "total": 1,
+          "history": {
+            "calls": 1,
+            "sessions": 1,
+            "emsTransports": 0,
+            "averageResponseSeconds": 1.7
+          },
+          "transport": false,
+          "hud": "FIRE / AVAILABLE\n\nAssignment completed\n\nResponse: 1.7 s\nSIMULATED INCIDENTBusiness and place names are used as geographic landmarks for training. No actual incident, occupant, affiliation, endorsement, or event is implied. Details"
+        },
+        "nextBase": "fire-toronto-fire-211"
+      },
+      "pass": true,
+      "durationMs": 9882
+    },
+    {
+      "name": "mission-scarborough-ems-desktop",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "start": {
+          "phase": "response",
+          "service": "ems",
+          "base": "ems-ambulance-station-20-20",
+          "incident": "route-civic-27-ems-ambulance-station-20-20-scarborough-osm-node-896699816",
+          "routeBase": "ems-ambulance-station-20-20",
+          "kind": "sourced-address",
+          "hospital": null,
+          "arrival": {
+            "radius": 45,
+            "lat": 43.7558202515991,
+            "lng": -79.27738051393145,
+            "accessPoint": true
+          },
+          "voice": "Station 20, District 2 Office, response exercise at 1220 Kennedy Road, for Medical Assistance."
+        },
+        "movement": {
+          "start": [
+            43.75089720638386,
+            -79.27135957631407
+          ],
+          "end": [
+            43.75055305499388,
+            -79.27135957631407
+          ],
+          "input": "keyboard"
+        },
+        "enrouteScreenshot": null,
+        "arrivalFixture": "position injection",
+        "completion": {
+          "phase": "complete",
+          "total": 1,
+          "history": {
+            "calls": 1,
+            "sessions": 1,
+            "emsTransports": 0,
+            "averageResponseSeconds": 1.7
+          },
+          "transport": false,
+          "hud": "EMS / AVAILABLE\n\nResponse exercise completed\n\nResponse: 1.7 s\nSIMULATED INCIDENTBusiness and place names are used as geographic landmarks for training. No actual incident, occupant, affiliation, endorsement, or event is implied. Details"
+        },
+        "nextBase": "ems-ambulance-station-20-20"
+      },
+      "pass": true,
+      "durationMs": 9603
+    },
+    {
+      "name": "mission-oshawa-fire-desktop",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "start": {
+          "phase": "response",
+          "service": "fire",
+          "base": "fire-oshawa-fire-1",
+          "incident": "route-civic-18-fire-oshawa-fire-1-oshawa-osm-node-4035219540",
+          "routeBase": "fire-oshawa-fire-1",
+          "kind": "sourced-address",
+          "hospital": null,
+          "arrival": {
+            "radius": 45,
+            "lat": 43.90214283437005,
+            "lng": -78.87201886841076,
+            "accessPoint": true
+          },
+          "voice": "Fire Station 1, response exercise at 156 Adelaide Avenue West, for Structure Fire."
+        },
+        "movement": {
+          "start": [
+            43.90113390228075,
+            -78.87309370762237
+          ],
+          "end": [
+            43.90079920573777,
+            -78.87309370762237
+          ],
+          "input": "keyboard"
+        },
+        "enrouteScreenshot": null,
+        "arrivalFixture": "position injection",
+        "completion": {
+          "phase": "complete",
+          "total": 1,
+          "history": {
+            "calls": 1,
+            "sessions": 1,
+            "emsTransports": 0,
+            "averageResponseSeconds": 1.7
+          },
+          "transport": false,
+          "hud": "FIRE / AVAILABLE\n\nAssignment completed\n\nResponse: 1.7 s\nSIMULATED INCIDENTBusiness and place names are used as geographic landmarks for training. No actual incident, occupant, affiliation, endorsement, or event is implied. Details"
+        },
+        "nextBase": "fire-oshawa-fire-1"
+      },
+      "pass": true,
+      "durationMs": 7526
+    },
+    {
+      "name": "mission-oshawa-ems-desktop",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "start": {
+          "phase": "response",
+          "service": "ems",
+          "base": "ems-oshawa-ems-514",
+          "incident": "route-civic-18-ems-oshawa-ems-514-oshawa-odsrf-ccfb495a6805ba7fd8248befa89a5eba",
+          "routeBase": "ems-oshawa-ems-514",
+          "kind": "sourced-address",
+          "hospital": null,
+          "arrival": {
+            "radius": 77,
+            "lat": 43.94591136308335,
+            "lng": -78.85898610429008,
+            "accessPoint": true
+          },
+          "voice": "Oshawa North Paramedic Station, response exercise at Mount Joy Park, 900 Coldstream Dr, for Medical Assistance."
+        },
+        "movement": {
+          "start": [
+            43.93466545797818,
+            -78.85868565003685
+          ],
+          "end": [
+            43.9343175999454,
+            -78.85868565003685
+          ],
+          "input": "keyboard"
+        },
+        "enrouteScreenshot": null,
+        "arrivalFixture": "position injection",
+        "completion": {
+          "phase": "complete",
+          "total": 1,
+          "history": {
+            "calls": 1,
+            "sessions": 1,
+            "emsTransports": 0,
+            "averageResponseSeconds": 1.7
+          },
+          "transport": false,
+          "hud": "EMS / AVAILABLE\n\nResponse exercise completed\n\nResponse: 1.7 s\nSIMULATED INCIDENTBusiness and place names are used as geographic landmarks for training. No actual incident, occupant, affiliation, endorsement, or event is implied. Details"
+        },
+        "nextBase": "ems-oshawa-ems-514"
+      },
+      "pass": true,
+      "durationMs": 8183
+    },
+    {
+      "name": "mission-pickering-fire-desktop",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "start": {
+          "phase": "response",
+          "service": "fire",
+          "base": "fire-pickering-fire-1",
+          "incident": "route-civic-21-fire-pickering-fire-1-pickering-osm-node-896601526",
+          "routeBase": "fire-pickering-fire-1",
+          "kind": "sourced-address",
+          "hospital": null,
+          "arrival": {
+            "radius": 45,
+            "lat": 43.88552874983507,
+            "lng": -79.09040205765946,
+            "accessPoint": true
+          },
+          "voice": "Fire Station 1, response exercise at 2820 Brock Road, for Structure Fire."
+        },
+        "movement": {
+          "start": [
+            43.88016882897072,
+            -79.08924210036842
+          ],
+          "end": [
+            43.879826332568726,
+            -79.08924210036842
+          ],
+          "input": "keyboard"
+        },
+        "enrouteScreenshot": null,
+        "arrivalFixture": "position injection",
+        "completion": {
+          "phase": "complete",
+          "total": 1,
+          "history": {
+            "calls": 1,
+            "sessions": 1,
+            "emsTransports": 0,
+            "averageResponseSeconds": 1.7
+          },
+          "transport": false,
+          "hud": "FIRE / AVAILABLE\n\nAssignment completed\n\nResponse: 1.7 s\nSIMULATED INCIDENTBusiness and place names are used as geographic landmarks for training. No actual incident, occupant, affiliation, endorsement, or event is implied. Details"
+        },
+        "nextBase": "fire-pickering-fire-1"
+      },
+      "pass": true,
+      "durationMs": 8743
+    },
+    {
+      "name": "mission-pickering-ems-desktop",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "start": {
+          "phase": "response",
+          "service": "ems",
+          "base": "ems-pickering-ems-506",
+          "incident": "route-civic-21-ems-pickering-ems-506-pickering-odsrf-ad2423b7fd4e1523ef55cfbb6363a7da",
+          "routeBase": "ems-pickering-ems-506",
+          "kind": "sourced-address",
+          "hospital": null,
+          "arrival": {
+            "radius": 86,
+            "lat": 43.82668123472992,
+            "lng": -79.10197120279044,
+            "accessPoint": true
+          },
+          "voice": "Pickering Paramedic Station, response exercise at Dalewood Ravine, 1038 Dunbarton Rd, for Medical Assistance."
+        },
+        "movement": {
+          "start": [
+            43.829866376437806,
+            -79.09724117714009
+          ],
+          "end": [
+            43.82952289834875,
+            -79.09724117714009
+          ],
+          "input": "keyboard"
+        },
+        "enrouteScreenshot": null,
+        "arrivalFixture": "position injection",
+        "completion": {
+          "phase": "complete",
+          "total": 1,
+          "history": {
+            "calls": 1,
+            "sessions": 1,
+            "emsTransports": 0,
+            "averageResponseSeconds": 1.7
+          },
+          "transport": false,
+          "hud": "EMS / AVAILABLE\n\nResponse exercise completed\n\nResponse: 1.7 s\nSIMULATED INCIDENTBusiness and place names are used as geographic landmarks for training. No actual incident, occupant, affiliation, endorsement, or event is implied. Details"
+        },
+        "nextBase": "ems-pickering-ems-506"
+      },
+      "pass": true,
+      "durationMs": 8726
+    },
+    {
+      "name": "mission-markham-fire-desktop",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "start": {
+          "phase": "response",
+          "service": "fire",
+          "base": "fire-markham-fire-9-1",
+          "incident": "route-civic-21-fire-markham-fire-9-1-markham-osm-way-1271893187",
+          "routeBase": "fire-markham-fire-9-1",
+          "kind": "sourced-address",
+          "hospital": null,
+          "arrival": {
+            "radius": 76,
+            "lat": 43.8173569,
+            "lng": -79.3906332,
+            "accessPoint": true
+          },
+          "voice": "Fire Station 9-1, response exercise at Railside Park, 26 Coral Harbour Crescent, for Fire Investigation."
+        },
+        "movement": {
+          "start": [
+            43.821718,
+            -79.401171
+          ],
+          "end": [
+            43.82138276371266,
+            -79.401171
+          ],
+          "input": "keyboard"
+        },
+        "enrouteScreenshot": null,
+        "arrivalFixture": "position injection",
+        "completion": {
+          "phase": "complete",
+          "total": 1,
+          "history": {
+            "calls": 1,
+            "sessions": 1,
+            "emsTransports": 0,
+            "averageResponseSeconds": 1.7
+          },
+          "transport": false,
+          "hud": "FIRE / AVAILABLE\n\nAssignment completed\n\nResponse: 1.7 s\nSIMULATED INCIDENTBusiness and place names are used as geographic landmarks for training. No actual incident, occupant, affiliation, endorsement, or event is implied. Details"
+        },
+        "nextBase": "fire-markham-fire-9-1"
+      },
+      "pass": true,
+      "durationMs": 8845
+    },
+    {
+      "name": "mission-markham-ems-desktop",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "start": {
+          "phase": "response",
+          "service": "ems",
+          "base": "ems-markham-ems-23",
+          "incident": "route-civic-18-ems-markham-ems-23-markham-osm-node-383048203",
+          "routeBase": "ems-markham-ems-23",
+          "kind": "sourced-address",
+          "hospital": null,
+          "arrival": {
+            "radius": 65,
+            "lat": 43.8748232873632,
+            "lng": -79.258859547502,
+            "accessPoint": true
+          },
+          "voice": "Paramedic Station #23 (Markham-Church), response exercise at Lynde Dermatology & Esthetics, 5 Washington Street, for Medical Assistance."
+        },
+        "movement": {
+          "start": [
+            43.88468485724745,
+            -79.23575514385108
+          ],
+          "end": [
+            43.88434140079766,
+            -79.23575514385108
+          ],
+          "input": "keyboard"
+        },
+        "enrouteScreenshot": null,
+        "arrivalFixture": "position injection",
+        "completion": {
+          "phase": "complete",
+          "total": 1,
+          "history": {
+            "calls": 1,
+            "sessions": 1,
+            "emsTransports": 0,
+            "averageResponseSeconds": 1.7
+          },
+          "transport": false,
+          "hud": "EMS / AVAILABLE\n\nResponse exercise completed\n\nResponse: 1.7 s\nSIMULATED INCIDENTBusiness and place names are used as geographic landmarks for training. No actual incident, occupant, affiliation, endorsement, or event is implied. Details"
+        },
+        "nextBase": "ems-markham-ems-23"
+      },
+      "pass": true,
+      "durationMs": 8947
+    },
+    {
+      "name": "mission-toronto-fire-desktop",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "start": {
+          "phase": "response",
+          "service": "fire",
+          "base": "fire-toronto-fire-111",
+          "incident": "route-civic-21-fire-toronto-fire-111-toronto-osm-way-67091532",
+          "routeBase": "fire-toronto-fire-111",
+          "kind": "sourced-address",
+          "hospital": null,
+          "arrival": {
+            "radius": 89,
+            "lat": 43.79837975060308,
+            "lng": -79.41124499767727,
+            "accessPoint": true
+          },
+          "voice": "Fire Station 111, response exercise at 1087 Lillian Street, for Structure Fire."
+        },
+        "movement": {
+          "start": [
+            43.79012700729375,
+            -79.39365587991135
+          ],
+          "end": [
+            43.78978725282273,
+            -79.39365587991135
+          ],
+          "input": "keyboard"
+        },
+        "enrouteScreenshot": null,
+        "arrivalFixture": "position injection",
+        "completion": {
+          "phase": "complete",
+          "total": 1,
+          "history": {
+            "calls": 1,
+            "sessions": 1,
+            "emsTransports": 0,
+            "averageResponseSeconds": 1.7
+          },
+          "transport": false,
+          "hud": "FIRE / AVAILABLE\n\nAssignment completed\n\nResponse: 1.7 s\nSIMULATED INCIDENTBusiness and place names are used as geographic landmarks for training. No actual incident, occupant, affiliation, endorsement, or event is implied. Details"
+        },
+        "nextBase": "fire-toronto-fire-111"
+      },
+      "pass": true,
+      "durationMs": 11615
+    },
+    {
+      "name": "mission-toronto-ems-desktop",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "start": {
+          "phase": "response",
+          "service": "ems",
+          "base": "ems-toronto-ems-2135734",
+          "incident": "route-civic-23-ems-toronto-ems-2135734-toronto-osm-way-229484512",
+          "routeBase": "ems-toronto-ems-2135734",
+          "kind": "sourced-address",
+          "hospital": null,
+          "arrival": {
+            "radius": 65,
+            "lat": 43.63882375736482,
+            "lng": -79.413230098982,
+            "accessPoint": true
+          },
+          "voice": "Station 09, response exercise at 57 East Liberty Street, for Medical Assistance."
+        },
+        "movement": {
+          "start": [
+            43.64452360904476,
+            -79.41235786701866
+          ],
+          "end": [
+            43.644179571454025,
+            -79.41235786701866
+          ],
+          "input": "keyboard"
+        },
+        "enrouteScreenshot": null,
+        "arrivalFixture": "position injection",
+        "completion": {
+          "phase": "complete",
+          "total": 1,
+          "history": {
+            "calls": 1,
+            "sessions": 1,
+            "emsTransports": 0,
+            "averageResponseSeconds": 1.7
+          },
+          "transport": false,
+          "hud": "EMS / AVAILABLE\n\nResponse exercise completed\n\nResponse: 1.7 s\nSIMULATED INCIDENTBusiness and place names are used as geographic landmarks for training. No actual incident, occupant, affiliation, endorsement, or event is implied. Details"
+        },
+        "nextBase": "ems-toronto-ems-2135734"
+      },
+      "pass": true,
+      "durationMs": 11412
+    },
+    {
+      "name": "bases-belleville",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "count": 7,
+        "connectorGapCases": 2,
+        "rows": [
+          {
+            "id": "fire-fire-station-1-1",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 17.375555517025575,
+            "egress": null
+          },
+          {
+            "id": "fire-fire-station-2-2",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 38.23936665747837,
+            "egress": null
+          },
+          {
+            "id": "fire-fire-station-3-3",
+            "service": "fire",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 78.93452850799501,
+            "egress": {
+              "created": true,
+              "retained": true,
+              "insideBlocked": false,
+              "roadBlocked": false,
+              "completed": true
+            }
+          },
+          {
+            "id": "fire-fire-station-4-4",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 56.30502148852641,
+            "egress": null
+          },
+          {
+            "id": "fire-fire-station-5-5",
+            "service": "fire",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 88.51542881697205,
+            "egress": {
+              "created": true,
+              "retained": true,
+              "insideBlocked": false,
+              "roadBlocked": false,
+              "completed": true
+            }
+          },
+          {
+            "id": "ems-base-00-headquarters-1",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 47.69117190494791,
+            "egress": null
+          },
+          {
+            "id": "ems-base-01-farley-2",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 19.39322290706464,
+            "egress": null
+          }
+        ]
+      },
+      "pass": true,
+      "durationMs": 1042
+    },
+    {
+      "name": "bases-scarborough",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "count": 29,
+        "connectorGapCases": 0,
+        "rows": [
+          {
+            "id": "fire-toronto-fire-211",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 14.735946968516494,
+            "egress": null
+          },
+          {
+            "id": "fire-station-212-212",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 9.46539120782766,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-213",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 15.743717413713455,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-214",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 13.262142567810113,
+            "egress": null
+          },
+          {
+            "id": "fire-station-215-215",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 5.848448967634721,
+            "egress": null
+          },
+          {
+            "id": "fire-station-221-221",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 14.622957532101353,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-222",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 7.378726631279862,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-223",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 16.643238472767607,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-225",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 18.195772905545017,
+            "egress": null
+          },
+          {
+            "id": "fire-station-231-231",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 12.848072551552232,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-232",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 12.894346297372257,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-234",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 11.672792035909715,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-241",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 12.93755633774775,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-242",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 14.651695120838285,
+            "egress": null
+          },
+          {
+            "id": "fire-station-243-243",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 8.23324078034259,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-244",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 13.385988265393443,
+            "egress": null
+          },
+          {
+            "id": "fire-station-245-245",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 11.141784990785021,
+            "egress": null
+          },
+          {
+            "id": "ems-ambulance-station-20-20",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 18.906009281138164,
+            "egress": null
+          },
+          {
+            "id": "ems-ambulance-station-21-21",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 39.44484312470473,
+            "egress": null
+          },
+          {
+            "id": "ems-ambulance-station-22-22",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 29.47738539321847,
+            "egress": null
+          },
+          {
+            "id": "ems-ambulance-station-24-24",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 4.6176362453935464,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-2303629",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 5.818090077377706,
+            "egress": null
+          },
+          {
+            "id": "ems-ambulance-station-26-26",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 32.73528573392859,
+            "egress": null
+          },
+          {
+            "id": "ems-ambulance-station-27-27",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 14.735946968516494,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-2807376",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 5.459308200637817,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-2236216",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 8.23324078034259,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-3311686",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 14.700905548864078,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-3175714",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 27.72343026625732,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-2489114",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 8.82715015391491,
+            "egress": null
+          }
+        ]
+      },
+      "pass": true,
+      "durationMs": 1999
+    },
+    {
+      "name": "bases-oshawa",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "count": 8,
+        "connectorGapCases": 0,
+        "rows": [
+          {
+            "id": "fire-oshawa-fire-1",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 1.5001232755484168,
+            "egress": null
+          },
+          {
+            "id": "fire-oshawa-fire-2",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 24.829800640926738,
+            "egress": null
+          },
+          {
+            "id": "fire-oshawa-fire-3",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 37.74755207976375,
+            "egress": null
+          },
+          {
+            "id": "fire-oshawa-fire-4",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 38.62691739425883,
+            "egress": null
+          },
+          {
+            "id": "fire-oshawa-fire-5",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 28.4871948806199,
+            "egress": null
+          },
+          {
+            "id": "fire-oshawa-fire-6",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 15.073563663786077,
+            "egress": null
+          },
+          {
+            "id": "ems-oshawa-ems-514",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 5.225533639178485,
+            "egress": null
+          },
+          {
+            "id": "ems-oshawa-ems-537",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 46.02834374210743,
+            "egress": null
+          }
+        ]
+      },
+      "pass": true,
+      "durationMs": 1420
+    },
+    {
+      "name": "bases-pickering",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "count": 7,
+        "connectorGapCases": 0,
+        "rows": [
+          {
+            "id": "fire-pickering-fire-1",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 4.68184186753002,
+            "egress": null
+          },
+          {
+            "id": "fire-pickering-fire-2",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 34.399677998119216,
+            "egress": null
+          },
+          {
+            "id": "fire-pickering-fire-4",
+            "service": "fire",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 19.61526081750755,
+            "egress": null
+          },
+          {
+            "id": "fire-pickering-fire-5",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 11.250398130368433,
+            "egress": null
+          },
+          {
+            "id": "fire-pickering-fire-6",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 29.55495961614506,
+            "egress": null
+          },
+          {
+            "id": "ems-pickering-ems-506",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 19.88179945460648,
+            "egress": null
+          },
+          {
+            "id": "ems-pickering-ems-899",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 59.10427840689688,
+            "egress": null
+          }
+        ]
+      },
+      "pass": true,
+      "durationMs": 1614
+    },
+    {
+      "name": "bases-markham",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "count": 15,
+        "connectorGapCases": 0,
+        "rows": [
+          {
+            "id": "fire-markham-fire-9-1",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 37.86969131434497,
+            "egress": null
+          },
+          {
+            "id": "fire-markham-fire-9-2",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 30.85909926003941,
+            "egress": null
+          },
+          {
+            "id": "fire-markham-fire-9-3",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 8.877076707291437,
+            "egress": null
+          },
+          {
+            "id": "fire-markham-fire-9-4",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 6.91262687844186,
+            "egress": null
+          },
+          {
+            "id": "fire-markham-fire-9-5",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 40.265763163211666,
+            "egress": null
+          },
+          {
+            "id": "fire-markham-fire-9-6",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 37.70011262161564,
+            "egress": null
+          },
+          {
+            "id": "fire-markham-fire-9-7",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 35.01454675977048,
+            "egress": null
+          },
+          {
+            "id": "fire-markham-fire-9-8",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 31.84313611817804,
+            "egress": null
+          },
+          {
+            "id": "fire-markham-fire-9-9",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 20.527551498151393,
+            "egress": null
+          },
+          {
+            "id": "ems-markham-ems-23",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 34.80420696678328,
+            "egress": null
+          },
+          {
+            "id": "ems-markham-ems-24",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 36.44511048674736,
+            "egress": null
+          },
+          {
+            "id": "ems-markham-ems-25",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 13.216372295064074,
+            "egress": null
+          },
+          {
+            "id": "ems-markham-ems-26",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 30.1295073801408,
+            "egress": null
+          },
+          {
+            "id": "ems-markham-ems-27",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 88.1502725029655,
+            "egress": null
+          },
+          {
+            "id": "ems-markham-ems-29",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 6.582809406727958,
+            "egress": null
+          }
+        ]
+      },
+      "pass": true,
+      "durationMs": 1735
+    },
+    {
+      "name": "bases-toronto",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "count": 133,
+        "connectorGapCases": 0,
+        "rows": [
+          {
+            "id": "fire-toronto-fire-111",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 15.245716609442544,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-112",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 9.602395775693155,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-113",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 12.496539590156493,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-114",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 9.024105774292721,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-115",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 65.0662406555364,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-116",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 14.121052314491417,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-121",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 10.736757939279812,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-122",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 10.756009197043497,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-123",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 12.467934878037429,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-125",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 12.235395121064993,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-131",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 6.47734229006017,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-132",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 11.582814102372643,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-133",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 22.747216631721507,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-134",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 8.7656500103267,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-135",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 18.654033370212787,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-141",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 13.234736606911193,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-142",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 13.034642214150848,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-143",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 10.33288894196152,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-144",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 13.286175379890183,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-145",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 12.363611775325738,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-146",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 12.309171283159058,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-211",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 14.75455338904453,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-212",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 9.475491866203196,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-213",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 15.762566166492645,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-214",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 13.263594680467817,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-215",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 5.850670869438068,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-221",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 14.639985723495002,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-222",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 7.387346947314928,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-223",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 16.65983102637463,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-224",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 11.378467118402797,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-225",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 18.198437514821197,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-226",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 9.131669069698537,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-227",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 11.195000739669632,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-231",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 12.864397301658403,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-232",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 12.895597607350258,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-233",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 15.307965009633323,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-234",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 11.67783680160532,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-235",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 18.73500018756339,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-241",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 12.93896531899227,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-242",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 14.670323273535438,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-243",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 8.234141502826455,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-244",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 13.400742266786226,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-245",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 11.154340124498582,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-311",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 15.6218621203411,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-312",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 13.139966107427663,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-313",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 13.47800729702323,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-314",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 9.761707673759235,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-315",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 9.386613530426578,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-321",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 9.009224378870107,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-322",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 25.349308406372753,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-323",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 15.163395283166382,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-324",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 16.062474224649627,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-325",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 10.7907438354927,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-326",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 13.146843725545006,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-331",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 6.592858818979199,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-332",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 8.092209295999682,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-333",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 6.879594973526703,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-334",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 13.31488946765162,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-335",
+            "service": "fire",
+            "calls": 4,
+            "accessible": 4,
+            "minimum": 3,
+            "baseRoadMetres": 21.26790913716662,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-341",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 18.088074017290445,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-342",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 14.239995275009198,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-343",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 8.941502456775714,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-344",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 4.785026809221576,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-345",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 10.898477702270192,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-346",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 8.724164582863018,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-411",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 12.33001923757313,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-412",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 26.411038758445443,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-413",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 13.570934789639754,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-415",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 9.685811528100038,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-421",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 24.81653519702503,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-422",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 12.151609832363171,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-423",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 13.383303391699812,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-425",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 8.369541992975682,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-426",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 18.366977293471212,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-431",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 12.40846283997401,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-432",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 16.620405693969467,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-433",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 9.464161924616253,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-434",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 9.883312850206636,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-435",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 11.35299028437058,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-441",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 8.08894547541068,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-442",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 20.560208466497905,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-443",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 7.750549784260208,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-444",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 12.191735873647366,
+            "egress": null
+          },
+          {
+            "id": "fire-toronto-fire-445",
+            "service": "fire",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 12.1500812070001,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-2135734",
+            "service": "ems",
+            "calls": 7,
+            "accessible": 7,
+            "minimum": 3,
+            "baseRoadMetres": 12.507202375941796,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-3234576",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 20.560208466497905,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-2488706",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 22.893472698401922,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-2279123",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 9.162964814459059,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-3035708",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 10.627590053912161,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-2782812",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 27.852549537546313,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-2982185",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 13.034642214150848,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-3311713",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 16.15931413748234,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-4271262",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 15.191648650331192,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-3311695",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 18.928677361442542,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-3311716",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 39.49073683064645,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-3311701",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 29.493431732963185,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-1783376",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 65.0662406555364,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-3331452",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 4.623060684319188,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-2303629",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 5.819194005578446,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-2489114",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 8.838247990455578,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-1520443",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 14.75455338904453,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-2807376",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 5.465848957735529,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-2236216",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 8.234141502826455,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-3311634",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 9.33300789262655,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-4326823",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 6.711498098652976,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-2775911",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 22.945227623297935,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-2489899",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 8.608086827021936,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-2998314",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 20.653470198421047,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-2794777",
+            "service": "ems",
+            "calls": 7,
+            "accessible": 7,
+            "minimum": 3,
+            "baseRoadMetres": 22.12361856891785,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-4061713",
+            "service": "ems",
+            "calls": 8,
+            "accessible": 8,
+            "minimum": 3,
+            "baseRoadMetres": 13.31488946765162,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-2775827",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 9.859077488656668,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-3837843",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 13.547263585098081,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-2609714",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 16.620405693969467,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-3006960",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 17.84382948725302,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-1957340",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 11.554600271471163,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-3311686",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 14.708366730480652,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-2911467",
+            "service": "ems",
+            "calls": 7,
+            "accessible": 7,
+            "minimum": 3,
+            "baseRoadMetres": 16.255443029578167,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-2614832",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 17.530587832206013,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-3151930",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 9.133675805777207,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-3175714",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 27.75816044382391,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-3311745",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 21.240374365966794,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-3311689",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 15.532777676549214,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-3311692",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 11.08855787163414,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-3311704",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 32.91428147437026,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-3311629",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 9.602395775693155,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-3311708",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 15.245716609442544,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-4198065",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 7.357963422024692,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-3311726",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 9.024105774292721,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-4173463",
+            "service": "ems",
+            "calls": 4,
+            "accessible": 4,
+            "minimum": 3,
+            "baseRoadMetres": 21.26790913716662,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-1793120",
+            "service": "ems",
+            "calls": 7,
+            "accessible": 7,
+            "minimum": 3,
+            "baseRoadMetres": 33.29730459902651,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-2734375",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 37.426612994160614,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-3824182",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 32.73903650166415,
+            "egress": null
+          },
+          {
+            "id": "ems-toronto-ems-bering-post",
+            "service": "ems",
+            "calls": 6,
+            "accessible": 6,
+            "minimum": 3,
+            "baseRoadMetres": 12.936663700619233,
+            "egress": null
+          }
+        ]
+      },
+      "pass": true,
+      "durationMs": 7867
+    },
+    {
+      "name": "mission-belleville-fire-mobile",
+      "mobile": true,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "start": {
+          "phase": "response",
+          "service": "fire",
+          "base": "fire-fire-station-1-1",
+          "incident": "route-civic-21-fire-fire-station-1-1-belleville-odhf-928094d7cc59d527302f72a72322624f",
+          "routeBase": "fire-fire-station-1-1",
+          "kind": "sourced-address",
+          "hospital": null,
+          "arrival": {
+            "radius": 65,
+            "lat": 44.169047402496666,
+            "lng": -77.38583686682142,
+            "accessPoint": true
+          },
+          "voice": "Fire Station 1, Estimated support exercise, modeled first-due Fire Station 2 at Peer Support South East Ontario, 391 Front Street, for Structure Fire."
+        },
+        "movement": {
+          "start": [
+            44.1781883,
+            -77.37418941601382
+          ],
+          "end": [
+            44.17822898948439,
+            -77.37416985349306
+          ],
+          "input": "touch"
+        },
+        "enrouteScreenshot": null,
+        "arrivalFixture": "position injection",
+        "completion": {
+          "phase": "complete",
+          "total": 1,
+          "history": {
+            "calls": 1,
+            "sessions": 1,
+            "emsTransports": 0,
+            "averageResponseSeconds": 1.7
+          },
+          "transport": false,
+          "hud": "FIRE / AVAILABLE\n\nAssignment completed\n\nResponse: 1.7 s\nSIMULATED INCIDENTBusiness and place names are used as geographic landmarks for training. No actual incident, occupant, affiliation, endorsement, or event is implied. Details"
+        },
+        "nextBase": "fire-fire-station-1-1"
+      },
+      "pass": true,
+      "durationMs": 7237
+    },
+    {
+      "name": "mission-belleville-ems-mobile",
+      "mobile": true,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "start": {
+          "phase": "response",
+          "service": "ems",
+          "base": "ems-base-00-headquarters-1",
+          "incident": "route-civic-26-ems-base-00-headquarters-1-belleville-osm-way-191518650",
+          "routeBase": "ems-base-00-headquarters-1",
+          "kind": "sourced-address",
+          "hospital": null,
+          "arrival": {
+            "radius": 65,
+            "lat": 44.18476279519404,
+            "lng": -77.39629988059622,
+            "accessPoint": true
+          },
+          "voice": "Base 00 — Headquarters, response exercise at The Loyalist, 135 Tracey Street, for Medical Assistance."
+        },
+        "movement": {
+          "start": [
+            44.192834149999996,
+            -77.40611642333934
+          ],
+          "end": [
+            44.19287483948438,
+            -77.40609685595759
+          ],
+          "input": "touch"
+        },
+        "enrouteScreenshot": "enroute-belleville-ems-mobile.png",
+        "arrivalFixture": "position injection",
+        "completion": {
+          "phase": "complete",
+          "total": 1,
+          "history": {
+            "calls": 1,
+            "sessions": 1,
+            "emsTransports": 0,
+            "averageResponseSeconds": 1.8
+          },
+          "transport": false,
+          "hud": "EMS / AVAILABLE\n\nResponse exercise completed\n\nResponse: 1.8 s\nSIMULATED INCIDENTBusiness and place names are used as geographic landmarks for training. No actual incident, occupant, affiliation, endorsement, or event is implied. Details"
+        },
+        "nextBase": "ems-base-00-headquarters-1"
+      },
+      "pass": true,
+      "screenshot": "mission-belleville-ems-mobile.png",
+      "durationMs": 7302
+    },
+    {
+      "name": "island-fire",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "published": {
+          "civic": {
+            "id": "route-civic-21-fire-toronto-fire-335-toronto-osm-node-13854671025",
+            "addr": "355 Lakeshore Avenue",
+            "access": {
+              "lat": 43.61716140504847,
+              "lng": -79.37206435397376,
+              "road": "Lakeshore Avenue",
+              "distanceMetres": 18.6,
+              "method": "modeled-designated-emergency-road-approach",
+              "verifiedEntrance": false,
+              "publicRoad": false,
+              "designatedEmergencyRoad": true,
+              "sourceAccessRestrictions": {
+                "motor_vehicle": "private"
+              },
+              "officialPolicyUrl": "https://www.toronto.ca/explore-enjoy/toronto-island-ferries/commercial-emergency-vehicles/",
+              "isolatedStreetException": true,
+              "isolatedStreetExceptionReason": "Reviewed targeted Lakeshore Avenue civic point has no eligible genuine named connected ground-level cross street within 1500m in either direction under the public-road, 33 designated-way and three reference-way clue policy. Empty clues are retained; navigation complexity is limited. No street or vehicle connection is invented."
+            }
+          },
+          "ids": [
+            "route-civic-21-fire-toronto-fire-335-toronto-osm-node-13854671025",
+            "route-local-fire-toronto-fire-335-01",
+            "route-local-fire-toronto-fire-335-02",
+            "route-local-fire-toronto-fire-335-03"
+          ],
+          "intersections": 3
+        },
+        "civic": {
+          "phase": "response",
+          "id": "route-civic-21-fire-toronto-fire-335-toronto-osm-node-13854671025",
+          "addr": "355 Lakeshore Avenue",
+          "access": {
+            "lat": 43.61716140504847,
+            "lng": -79.37206435397376,
+            "road": "Lakeshore Avenue",
+            "distanceMetres": 18.6,
+            "method": "modeled-designated-emergency-road-approach",
+            "verifiedEntrance": false,
+            "publicRoad": false,
+            "designatedEmergencyRoad": true,
+            "sourceAccessRestrictions": {
+              "motor_vehicle": "private"
+            },
+            "officialPolicyUrl": "https://www.toronto.ca/explore-enjoy/toronto-island-ferries/commercial-emergency-vehicles/",
+            "isolatedStreetException": true,
+            "isolatedStreetExceptionReason": "Reviewed targeted Lakeshore Avenue civic point has no eligible genuine named connected ground-level cross street within 1500m in either direction under the public-road, 33 designated-way and three reference-way clue policy. Empty clues are retained; navigation complexity is limited. No street or vehicle connection is invented."
+          },
+          "arrival": {
+            "radius": 45,
+            "lat": 43.61716140504847,
+            "lng": -79.37206435397376,
+            "accessPoint": true
+          }
+        },
+        "fixture": {
+          "published": 3,
+          "fixture": "civic exercises suppressed in memory for this base"
+        },
+        "intersection": "Cibola Avenue & Withrow Street",
+        "ways": [
+          "way/1005985765",
+          "way/100974747"
+        ],
+        "arrivalFixture": "position injection",
+        "end": {
+          "phase": "complete",
+          "transport": false,
+          "history": {
+            "calls": 2,
+            "sessions": 1,
+            "emsTransports": 0,
+            "averageResponseSeconds": 0.2
+          }
+        }
+      },
+      "pass": true,
+      "durationMs": 14876
+    },
+    {
+      "name": "island-ems",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "published": {
+          "civic": {
+            "id": "route-civic-23-ems-toronto-ems-4173463-toronto-osm-node-13854671025",
+            "addr": "355 Lakeshore Avenue",
+            "access": {
+              "lat": 43.61716140504847,
+              "lng": -79.37206435397376,
+              "road": "Lakeshore Avenue",
+              "distanceMetres": 18.6,
+              "method": "modeled-designated-emergency-road-approach",
+              "verifiedEntrance": false,
+              "publicRoad": false,
+              "designatedEmergencyRoad": true,
+              "sourceAccessRestrictions": {
+                "motor_vehicle": "private"
+              },
+              "officialPolicyUrl": "https://www.toronto.ca/explore-enjoy/toronto-island-ferries/commercial-emergency-vehicles/",
+              "isolatedStreetException": true,
+              "isolatedStreetExceptionReason": "Reviewed targeted Lakeshore Avenue civic point has no eligible genuine named connected ground-level cross street within 1500m in either direction under the public-road, 33 designated-way and three reference-way clue policy. Empty clues are retained; navigation complexity is limited. No street or vehicle connection is invented."
+            }
+          },
+          "ids": [
+            "route-civic-23-ems-toronto-ems-4173463-toronto-osm-node-13854671025",
+            "route-local-ems-toronto-ems-4173463-01",
+            "route-local-ems-toronto-ems-4173463-02",
+            "route-local-ems-toronto-ems-4173463-03"
+          ],
+          "intersections": 3
+        },
+        "civic": {
+          "phase": "response",
+          "id": "route-civic-23-ems-toronto-ems-4173463-toronto-osm-node-13854671025",
+          "addr": "355 Lakeshore Avenue",
+          "access": {
+            "lat": 43.61716140504847,
+            "lng": -79.37206435397376,
+            "road": "Lakeshore Avenue",
+            "distanceMetres": 18.6,
+            "method": "modeled-designated-emergency-road-approach",
+            "verifiedEntrance": false,
+            "publicRoad": false,
+            "designatedEmergencyRoad": true,
+            "sourceAccessRestrictions": {
+              "motor_vehicle": "private"
+            },
+            "officialPolicyUrl": "https://www.toronto.ca/explore-enjoy/toronto-island-ferries/commercial-emergency-vehicles/",
+            "isolatedStreetException": true,
+            "isolatedStreetExceptionReason": "Reviewed targeted Lakeshore Avenue civic point has no eligible genuine named connected ground-level cross street within 1500m in either direction under the public-road, 33 designated-way and three reference-way clue policy. Empty clues are retained; navigation complexity is limited. No street or vehicle connection is invented."
+          },
+          "arrival": {
+            "radius": 45,
+            "lat": 43.61716140504847,
+            "lng": -79.37206435397376,
+            "accessPoint": true
+          }
+        },
+        "fixture": {
+          "published": 3,
+          "fixture": "civic exercises suppressed in memory for this base"
+        },
+        "intersection": "Cibola Avenue & Withrow Street",
+        "ways": [
+          "way/1005985765",
+          "way/100974747"
+        ],
+        "arrivalFixture": "position injection",
+        "end": {
+          "phase": "complete",
+          "transport": false,
+          "history": {
+            "calls": 2,
+            "sessions": 1,
+            "emsTransports": 0,
+            "averageResponseSeconds": 0.2
+          }
+        }
+      },
+      "pass": true,
+      "durationMs": 14701
+    },
+    {
+      "name": "crossmode-belleville",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "edited": "belleville-odhf-2158004f4e45a2dcbd9ed499f6f2b87f",
+        "deleted": "belleville-odhf-aa401eef18302f500152ebc3d776895f",
+        "version": "1.6.8",
+        "returnedToGeo": true
+      },
+      "pass": true,
+      "durationMs": 1247
+    },
+    {
+      "name": "crossmode-scarborough",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "edited": "scarborough-odef-0a644eca137bad355c95",
+        "deleted": "scarborough-odef-291a42d7c530c69a70d0",
+        "version": "1.6.8",
+        "returnedToGeo": true
+      },
+      "pass": true,
+      "durationMs": 2164
+    },
+    {
+      "name": "crossmode-oshawa",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "edited": "oshawa-call-01",
+        "deleted": "oshawa-call-02",
+        "version": "ontario-geo-1",
+        "returnedToGeo": true
+      },
+      "pass": true,
+      "durationMs": 1635
+    },
+    {
+      "name": "crossmode-pickering",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "edited": "pickering-call-01",
+        "deleted": "pickering-call-02",
+        "version": "ontario-geo-1",
+        "returnedToGeo": true
+      },
+      "pass": true,
+      "durationMs": 1969
+    },
+    {
+      "name": "crossmode-markham",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "edited": "markham-call-01",
+        "deleted": "markham-call-02",
+        "version": "ontario-geo-1",
+        "returnedToGeo": true
+      },
+      "pass": true,
+      "durationMs": 1825
+    },
+    {
+      "name": "crossmode-toronto",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "edited": "toronto-call-01",
+        "deleted": "toronto-call-02",
+        "version": "ontario-geo-1",
+        "returnedToGeo": true
+      },
+      "pass": true,
+      "durationMs": 5462
+    },
+    {
+      "name": "legacy-oshawa",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "edited": "oshawa-odhf-057d23b16ba4c3b557916a791d324e8b",
+        "deleted": "oshawa-osm-node-13932451952",
+        "newGeoSeed": "oshawa-call-01",
+        "version": "ontario-geo-1"
+      },
+      "pass": true,
+      "durationMs": 1160
+    },
+    {
+      "name": "legacy-pickering",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "edited": "pickering-odef-044103d93c501ef8ac17",
+        "deleted": "pickering-odef-aed907d4e9dd4e3bd0cd",
+        "newGeoSeed": "pickering-call-01",
+        "version": "ontario-geo-1"
+      },
+      "pass": true,
+      "durationMs": 1257
+    },
+    {
+      "name": "legacy-markham",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "edited": "markham-odef-cbd068605b6487172e92",
+        "deleted": "markham-odhf-8e532c89d30042a9b92c4147db41f6c2",
+        "newGeoSeed": "markham-call-01",
+        "version": "ontario-geo-1"
+      },
+      "pass": true,
+      "durationMs": 1393
+    },
+    {
+      "name": "legacy-toronto",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "edited": "toronto-odcaf-4208",
+        "deleted": "toronto-odef-004734bff3497e360684",
+        "newGeoSeed": "toronto-call-01",
+        "version": "ontario-geo-1"
+      },
+      "pass": true,
+      "durationMs": 4144
+    },
+    {
+      "name": "support-belleville",
+      "mobile": false,
+      "errors": [],
+      "dialogs": [],
+      "detail": {
+        "base": "Fire Station 1",
+        "primaryId": "fire-fire-station-2-2",
+        "primaryName": "Fire Station 2",
+        "deterministicSelection": true,
+        "hud": "🚨 ACTIVE ENROUTE DISPATCH: STRUCTURE FIRE\n\nPeer Support South East Ontario\n\nAddress: 391 Front Street · Respond to the marked modeled road approach · Training estimate · Estimated support exercise · modeled first-due Fire Station 2\nSIMULATED INCIDENTBusiness and place names are used as geographic landmarks for training. No actual incident, occupant, affiliation, endorsement, or event is implied. Details",
+        "voice": "Fire Station 1, Estimated support exercise, modeled first-due Fire Station 2 at Peer Support South East Ontario, 391 Front Street, for Structure Fire."
+      },
+      "pass": true,
+      "durationMs": 1092
+    }
+  ],
+  "limitations": [
+    "Native keyboard or touch controls move the vehicle from the selected base; scene arrival is triggered by setting the simulated position to the target.",
+    "These are state and control fixtures, not full driven routes, field entrance surveys, operational run cards, or traffic-rule validation.",
+    "External requests, including telemetry and map tiles, are blocked; screenshots do not validate a live basemap.",
+    "Island fallback may use a temporary in-memory training-data fixture to suppress civic calls for that base; published intersection records and source identities are unchanged."
+  ],
+  "finishedAt": "2026-10-29T08:06:07.306Z"
+}

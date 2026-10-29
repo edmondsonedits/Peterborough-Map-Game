@@ -1,0 +1,11 @@
+--- docs/validation/city-calls-2026-10-29/scene-browser/input-hashes.sha256	2026-10-29 03:44:17.460888860 -0300
++++ /workspace/scratch/b5779ff734b0/call-session/popup-followup/scene-browser/input-hashes-before.txt	2026-10-29 05:02:38.720112262 -0300
+@@ -105,7 +105,7 @@
+ 951d44690d4619937c72a25a453f00517dd9dc976f6ac3648118d2b346eca1d0  response-simulator/gearbox-core.js
+ 65ae959086d126ed26ce317ab2bd91ad4c3c0de5aea97bb0e83b58789e0248c3  response-simulator/hospital-dropoff-runtime-1.6.49.js
+ 515ee3efe55040d8c9313d9673dfbe7580fd596996c741473286b7eb955eb622  response-simulator/incident-formatting-1.6.44.js
+-d1c7d544a4cce2704f254bfa0c7be6b049ca75e89f7ce8fdc9329be35339eb93  response-simulator/index.html
++ec41834e1037e30f975ba1fe358d52553be9b5ee825d7ab571456bf7cf216752  response-simulator/index.html
+ 10750ebf14c6133836a5f84a116e2bb8230bb6b283221b0b15444339417689dd  response-simulator/local-pool.js
+ 38c44a0d8f87790163bd97c0400f9b58db5e258a40994aa4aae6bf64be932b48  response-simulator/max-speed.js
+ 858adc4dd38606d5813e30bd48a58675778748d1038f56c79a50a250f96da6c3  response-simulator/mobile-turn-response-v1.5.1.js
