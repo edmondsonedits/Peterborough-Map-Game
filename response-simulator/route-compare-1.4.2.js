@@ -2,6 +2,7 @@
   'use strict';
 
   const VERSION = '1.6.2';
+  if (window.PTBO_CITY_PACKAGE?.features?.routeGuidance === false) return;
   if (window.PTBO_ROUTE_COMPARE_BOOT_VERSION === VERSION) return;
   window.PTBO_ROUTE_COMPARE_BOOT_VERSION = VERSION;
 

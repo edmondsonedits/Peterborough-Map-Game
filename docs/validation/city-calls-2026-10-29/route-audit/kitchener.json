@@ -1,0 +1,95 @@
+{
+  "city": "kitchener",
+  "verifiedFingerprint": "008d4a778dbeff36546ee18176330cdfa46da2659c075e6eb3105a07c17a9afb",
+  "halls": [
+    {
+      "id": "fire-kitchener-fire-1",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 3762,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-kitchener-fire-2",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 8,
+      "maxRouteMetres": 3755,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-kitchener-fire-3",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 3961,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-kitchener-fire-4",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3453,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-kitchener-fire-5",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3937,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-kitchener-fire-6",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 4253,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-kitchener-fire-7",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 4563,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-kitchener-ems-doon",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 4276,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-kitchener-ems-ottawa",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 4328,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-kitchener-ems-queens",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2993,
+      "method": "modeled-road-response"
+    }
+  ],
+  "routes": 134,
+  "continuousOrigins": 134,
+  "officialCalls": 0,
+  "modeledCalls": 120,
+  "maxRouteMetres": 4562.874213403495,
+  "minCallsPerHall": 12,
+  "minChallengeCallsPerHall": 8,
+  "supportCalls": 14,
+  "durationMs": 12151
+}

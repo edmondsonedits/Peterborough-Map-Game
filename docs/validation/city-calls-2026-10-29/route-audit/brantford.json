@@ -1,0 +1,71 @@
+{
+  "city": "brantford",
+  "verifiedFingerprint": "414adcb58f25ea6ab1930022e3514bcb3687ae188f06ea91ce1c76018e9046e5",
+  "halls": [
+    {
+      "id": "fire-brantford-fire-1",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 9,
+      "maxRouteMetres": 2595,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-brantford-fire-2",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2609,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-brantford-fire-3",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 2748,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-brantford-fire-4",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 4497,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-brantford-ems-325",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 4436,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-brantford-ems-326",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3633,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-brantford-ems-327",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3872,
+      "method": "modeled-road-response"
+    }
+  ],
+  "routes": 92,
+  "continuousOrigins": 92,
+  "officialCalls": 0,
+  "modeledCalls": 84,
+  "maxRouteMetres": 4497.488780852533,
+  "minCallsPerHall": 12,
+  "minChallengeCallsPerHall": 9,
+  "supportCalls": 8,
+  "durationMs": 3533
+}

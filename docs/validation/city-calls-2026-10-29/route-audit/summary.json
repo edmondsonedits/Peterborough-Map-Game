@@ -1,0 +1,238 @@
+{
+  "schemaVersion": 1,
+  "cities": 33,
+  "halls": 622,
+  "routes": 8118,
+  "continuousOrigins": 8118,
+  "officialCalls": 1540,
+  "modeledCalls": 5874,
+  "maxRouteMetres": 6491,
+  "minCallsPerHall": 4,
+  "minChallengeCallsPerHall": 1,
+  "topologyExceptions": [
+    {
+      "city": "toronto",
+      "id": "fire-toronto-fire-335",
+      "service": "fire",
+      "calls": 4,
+      "challengeCalls": 1,
+      "maxRouteMetres": 1406,
+      "method": "official-run-area"
+    },
+    {
+      "city": "toronto",
+      "id": "ems-toronto-ems-4173463",
+      "service": "ems",
+      "calls": 4,
+      "challengeCalls": 1,
+      "maxRouteMetres": 1406,
+      "method": "modeled-road-response"
+    }
+  ],
+  "productionAppSha256": "b18d3f88b8965d2059d2f42048dad85bce1a705c76c69dc6bb4687c821ef6823",
+  "limits": [
+    "Official run-area endpoints enforced in six cities; all other Fire and all EMS catchments are explicit road-cost estimates, not certified operational dispatch areas.",
+    "Incidents are simulations at real source locations; road directions and connectivity follow packaged source data, not current traffic, apparatus availability or a field access survey."
+  ],
+  "reports": [
+    {
+      "city": "peterborough",
+      "halls": 5,
+      "routes": 30,
+      "maxRouteMetres": 2655
+    },
+    {
+      "city": "oshawa",
+      "halls": 8,
+      "routes": 108,
+      "maxRouteMetres": 4588
+    },
+    {
+      "city": "belleville",
+      "halls": 7,
+      "routes": 90,
+      "maxRouteMetres": 6193
+    },
+    {
+      "city": "scarborough",
+      "halls": 29,
+      "routes": 382,
+      "maxRouteMetres": 4659
+    },
+    {
+      "city": "pickering",
+      "halls": 7,
+      "routes": 92,
+      "maxRouteMetres": 5649
+    },
+    {
+      "city": "markham",
+      "halls": 15,
+      "routes": 198,
+      "maxRouteMetres": 5234
+    },
+    {
+      "city": "toronto",
+      "halls": 133,
+      "routes": 1746,
+      "maxRouteMetres": 5173
+    },
+    {
+      "city": "ajax",
+      "halls": 4,
+      "routes": 54,
+      "maxRouteMetres": 4589
+    },
+    {
+      "city": "barrie",
+      "halls": 8,
+      "routes": 108,
+      "maxRouteMetres": 4526
+    },
+    {
+      "city": "brampton",
+      "halls": 23,
+      "routes": 304,
+      "maxRouteMetres": 5405
+    },
+    {
+      "city": "brantford",
+      "halls": 7,
+      "routes": 92,
+      "maxRouteMetres": 4497
+    },
+    {
+      "city": "burlington",
+      "halls": 12,
+      "routes": 158,
+      "maxRouteMetres": 4902
+    },
+    {
+      "city": "cambridge",
+      "halls": 9,
+      "routes": 120,
+      "maxRouteMetres": 6364
+    },
+    {
+      "city": "chatham-kent",
+      "halls": 25,
+      "routes": 312,
+      "maxRouteMetres": 6176
+    },
+    {
+      "city": "clarington",
+      "halls": 7,
+      "routes": 84,
+      "maxRouteMetres": 4118
+    },
+    {
+      "city": "greater-sudbury",
+      "halls": 30,
+      "routes": 380,
+      "maxRouteMetres": 6442
+    },
+    {
+      "city": "guelph",
+      "halls": 8,
+      "routes": 108,
+      "maxRouteMetres": 6280
+    },
+    {
+      "city": "hamilton",
+      "halls": 44,
+      "routes": 566,
+      "maxRouteMetres": 5721
+    },
+    {
+      "city": "kingston",
+      "halls": 14,
+      "routes": 181,
+      "maxRouteMetres": 6308
+    },
+    {
+      "city": "kitchener",
+      "halls": 10,
+      "routes": 134,
+      "maxRouteMetres": 4563
+    },
+    {
+      "city": "london",
+      "halls": 22,
+      "routes": 294,
+      "maxRouteMetres": 6451
+    },
+    {
+      "city": "milton",
+      "halls": 9,
+      "routes": 116,
+      "maxRouteMetres": 4375
+    },
+    {
+      "city": "mississauga",
+      "halls": 36,
+      "routes": 478,
+      "maxRouteMetres": 6431
+    },
+    {
+      "city": "niagara-falls",
+      "halls": 9,
+      "routes": 120,
+      "maxRouteMetres": 4777
+    },
+    {
+      "city": "oakville",
+      "halls": 13,
+      "routes": 174,
+      "maxRouteMetres": 4930
+    },
+    {
+      "city": "ottawa",
+      "halls": 65,
+      "routes": 843,
+      "maxRouteMetres": 6471
+    },
+    {
+      "city": "richmond-hill",
+      "halls": 8,
+      "routes": 108,
+      "maxRouteMetres": 5056
+    },
+    {
+      "city": "st-catharines",
+      "halls": 8,
+      "routes": 108,
+      "maxRouteMetres": 4857
+    },
+    {
+      "city": "thunder-bay",
+      "halls": 12,
+      "routes": 158,
+      "maxRouteMetres": 6491
+    },
+    {
+      "city": "vaughan",
+      "halls": 14,
+      "routes": 188,
+      "maxRouteMetres": 5853
+    },
+    {
+      "city": "waterloo",
+      "halls": 5,
+      "routes": 68,
+      "maxRouteMetres": 5036
+    },
+    {
+      "city": "whitby",
+      "halls": 6,
+      "routes": 82,
+      "maxRouteMetres": 5591
+    },
+    {
+      "city": "windsor",
+      "halls": 10,
+      "routes": 134,
+      "maxRouteMetres": 5397
+    }
+  ],
+  "failures": []
+}

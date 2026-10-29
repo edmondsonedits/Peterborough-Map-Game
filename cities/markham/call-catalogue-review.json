@@ -1,0 +1,587 @@
+{
+  "schemaVersion": 1,
+  "coverage": {
+    "cityId": "markham",
+    "inputOfficial": 321,
+    "inputOsm": 2358,
+    "inputMajorRoad": 1125,
+    "existing": 25,
+    "accepted": 1824,
+    "selected": 180,
+    "target": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "existingByDifficulty": {
+      "easy": 10,
+      "medium": 5,
+      "hard": 5
+    },
+    "selectedByDifficulty": {
+      "easy": 90,
+      "medium": 45,
+      "hard": 45
+    },
+    "totalByDifficulty": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "deficits": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "baseStrata": [
+      {
+        "id": "fire-markham-fire-9-1",
+        "selected": 12,
+        "available": 177,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-markham-fire-9-2",
+        "selected": 12,
+        "available": 51,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-markham-fire-9-3",
+        "selected": 12,
+        "available": 138,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-markham-fire-9-4",
+        "selected": 12,
+        "available": 144,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-markham-fire-9-5",
+        "selected": 12,
+        "available": 116,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-markham-fire-9-6",
+        "selected": 12,
+        "available": 141,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-markham-fire-9-7",
+        "selected": 12,
+        "available": 170,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-markham-fire-9-8",
+        "selected": 12,
+        "available": 202,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-markham-fire-9-9",
+        "selected": 12,
+        "available": 98,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-markham-ems-23",
+        "selected": 12,
+        "available": 124,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-markham-ems-24",
+        "selected": 12,
+        "available": 146,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-markham-ems-25",
+        "selected": 12,
+        "available": 78,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-markham-ems-26",
+        "selected": 12,
+        "available": 64,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-markham-ems-27",
+        "selected": 12,
+        "available": 91,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-markham-ems-29",
+        "selected": 12,
+        "available": 84,
+        "method": "nearest-geographic-base-for-selection-only"
+      }
+    ],
+    "sharedBaseline": 20,
+    "baselineByService": {
+      "fire": {
+        "easy": 10,
+        "medium": 5,
+        "hard": 5
+      },
+      "ems": {
+        "easy": 10,
+        "medium": 10,
+        "hard": 5
+      }
+    },
+    "serviceTotalsByDifficulty": {
+      "fire": {
+        "easy": 100,
+        "medium": 50,
+        "hard": 50
+      },
+      "ems": {
+        "easy": 100,
+        "medium": 55,
+        "hard": 50
+      }
+    },
+    "serviceDeficits": {
+      "fire": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      },
+      "ems": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "rejected": 1980,
+    "rejectionCounts": {
+      "unresolved-2020-source-currentness": 15,
+      "production-snap-not-ground-public-road": 1082,
+      "production-snap-wrong-street": 413,
+      "not-one-exact-civic-number-and-street": 300,
+      "production-snap-over-80m-or-missing": 92,
+      "duplicate-existing-or-accepted-address-or-named-site": 67,
+      "unresolved-official-coordinate-or-current-address-conflict": 1,
+      "no-genuine-connected-cross-street-within-1500m": 10
+    },
+    "oneStreetExceptions": 49
+  },
+  "independentAudit": {
+    "cityId": "markham",
+    "selected": 180,
+    "accepted": 1824,
+    "crossStreetEvidence": 3014,
+    "oneStreet": 634,
+    "maxGap": 78.44010582071307,
+    "pass": true
+  },
+  "priorityFacilityExpansion": {
+    "reviewedOn": "2026-10-29",
+    "addedIds": [
+      "markham-osm-node-2627388399",
+      "markham-osm-node-383048203",
+      "markham-osm-way-162608838",
+      "markham-odhf-f3857d15ca58ad1313ff270902fdda9f",
+      "markham-odhf-f7beeb3a6baa67f54ea9bb93c9ce8944",
+      "markham-osm-way-58272357",
+      "markham-odhf-f7b97290654e0ce40b198fb7b8250c0c",
+      "markham-osm-way-659731459"
+    ],
+    "verification": {
+      "cityId": "markham",
+      "additions": 8,
+      "proposalSha256": "0aab1142cce832fa9f56cb3b4dc399816127387dafd0b66365fa216062f58b7c",
+      "pass": true,
+      "checks": [
+        "IDs absent from current shared/legacy/care catalogue",
+        "row exactly equals accepted source record",
+        "full per-record provenance exactly equals accepted pool",
+        "factual category/tags and coordinates match raw source record",
+        "source point and URLs unchanged",
+        "no normalized civic-address/near-identical-site duplicates",
+        "max40 per city",
+        "per-base rationale present; no dispatch ownership claim"
+      ]
+    },
+    "review": {
+      "purpose": "Bounded source-preserving priority facility and local variety additions; no recognition tier rewrites.",
+      "sourcePool": "external-build-cache/canonical-catalogues-reviewed/markham/accepted-candidates.json",
+      "sourcePoolSha256": "045baa5d3daec51755c32a8ef831dd6d8c654136fdada78582c486c0d98445fd",
+      "selectedDescriptor": "cities/markham/training-data.json",
+      "selectedDescriptorSha256": "5df89949d02f43c26770b174344d1a82f169b42b820b1b459d534fbb693ec01e",
+      "routeEvidence": "external-build-cache/civic-city-batch/markham.json",
+      "routeEvidenceScope": "scratch augmentation proposal; integration/audit status must be checked by root",
+      "selectionRules": {
+        "maxPerCity": 40,
+        "maxPotentialAddsPerBase": 6,
+        "maxPotentialAddsForConfirmedZeroToTwoBase": 10,
+        "twoCluePriority": true,
+        "maximumStraightLineBaseReviewDistanceMetres": 6000
+      },
+      "limitations": [
+        "At this selection-time review: Every row passed the existing all-accepted geographic/source/clue audit. These additions have not been graph-assigned or route-audited.",
+        "Published Fire polygons are respected for review proximity; EMS and other Fire review strata use straight-line proximity only. These are not dispatch ownership assignments.",
+        "Full original accepted source point, ID, address, recognition tier, incident profile and provenance are unchanged. Current-open status is not newly verified."
+      ],
+      "rationales": {
+        "markham-osm-node-2627388399": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "doctors",
+          "sourceEvidence": {
+            "sourceRecordId": "markham-osm-node-2627388399",
+            "category": null,
+            "tags": {
+              "addr:city": "Markham",
+              "addr:housenumber": "20",
+              "addr:postcode": "L6C 0A2",
+              "addr:street": "Bur Oak Avenue",
+              "addr:unit": "1",
+              "amenity": "doctors",
+              "email": "buroakdentalwest@rogers.com",
+              "healthcare": "doctor",
+              "healthcare:speciality": "dentist",
+              "name": "Bur Oak Dental West",
+              "opening_hours": "Mo-Sa 09:00-19:00; Su \"by appointment\"",
+              "website": "https://buroakdental.com/"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/2627388399",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-markham-fire-9-5",
+              "distance": 1420.815029737037,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1421
+            },
+            {
+              "baseId": "ems-markham-ems-24",
+              "distance": 1431.6884876998654,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1432
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 217
+        },
+        "markham-osm-node-383048203": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "doctors",
+          "sourceEvidence": {
+            "sourceRecordId": "markham-osm-node-383048203",
+            "category": null,
+            "tags": {
+              "addr:city": "Markham",
+              "addr:housenumber": "5",
+              "addr:postcode": "L3P 2R3",
+              "addr:province": "Ontario",
+              "addr:street": "Washington Street",
+              "amenity": "doctors",
+              "check_date": "2023-12-10",
+              "email": "patient@lynderma.com",
+              "healthcare": "doctor",
+              "healthcare:speciality": "dermatology",
+              "name": "Lynde Dermatology & Esthetics",
+              "opening_hours": "Mo-Fr 07:30-16:00",
+              "phone": "+1 905-471-5022"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/383048203",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-markham-fire-9-7",
+              "distance": 906.2655740183068,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 906
+            },
+            {
+              "baseId": "ems-markham-ems-23",
+              "distance": 2142.2808964347337,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2142
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 216
+        },
+        "markham-osm-way-162608838": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "markham-osm-way-162608838",
+            "category": null,
+            "tags": {
+              "addr:city": "Markham",
+              "addr:housenumber": "10720",
+              "addr:street": "Victoria Square Boulevard",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "name": "Victoria Square United Church",
+              "religion": "christian",
+              "source": "NRCan-CanVec-10.0",
+              "start_date": "1880"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/162608838",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-markham-fire-9-3",
+              "distance": 1797.0109959478273,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1797
+            },
+            {
+              "baseId": "ems-markham-ems-27",
+              "distance": 3744.699750725758,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 3745
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 197
+        },
+        "markham-odhf-f3857d15ca58ad1313ff270902fdda9f": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "healthcare (source broad category; no emergency/hospital status inferred)",
+          "sourceEvidence": {
+            "sourceRecordId": "markham-odhf-f3857d15ca58ad1313ff270902fdda9f",
+            "category": "healthcare",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://geohub.lio.gov.on.ca/datasets/e1e5983c59ff497baddf75f1d2bb4add_26/explore"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-markham-fire-9-4",
+              "distance": 1069.001636484884,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1069
+            },
+            {
+              "baseId": "ems-markham-ems-26",
+              "distance": 3223.090778322816,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 3223
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 195
+        },
+        "markham-odhf-f7beeb3a6baa67f54ea9bb93c9ce8944": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "healthcare (source broad category; no emergency/hospital status inferred)",
+          "sourceEvidence": {
+            "sourceRecordId": "markham-odhf-f7beeb3a6baa67f54ea9bb93c9ce8944",
+            "category": "healthcare",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://geohub.lio.gov.on.ca/datasets/e1e5983c59ff497baddf75f1d2bb4add_26/explore"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-markham-fire-9-9",
+              "distance": 743.4993400430501,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 743
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 150
+        },
+        "markham-osm-way-58272357": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "markham-osm-way-58272357",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "135",
+              "addr:street": "Pond Drive",
+              "building": "apartments",
+              "name": "Saddlecreek Tower",
+              "source": "yahoo"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/58272357",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "ems-markham-ems-27",
+              "distance": 3159.573321434839,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 3160
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 121
+        },
+        "markham-odhf-f7b97290654e0ce40b198fb7b8250c0c": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "healthcare (source broad category; no emergency/hospital status inferred)",
+          "sourceEvidence": {
+            "sourceRecordId": "markham-odhf-f7b97290654e0ce40b198fb7b8250c0c",
+            "category": "healthcare",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://geohub.lio.gov.on.ca/datasets/e1e5983c59ff497baddf75f1d2bb4add_26/explore"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-markham-fire-9-1",
+              "distance": 2326.6698239536,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 2,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 2327
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 115
+        },
+        "markham-osm-way-659731459": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "social facility: group_home",
+          "sourceEvidence": {
+            "sourceRecordId": "markham-osm-way-659731459",
+            "category": null,
+            "tags": {
+              "addr:city": "Markham",
+              "addr:housenumber": "2",
+              "addr:postcode": "L3R 5Z3",
+              "addr:street": "Sun Yat-sen Avenue",
+              "amenity": "social_facility",
+              "building": "yes",
+              "name": "Mon Sheong Private Care",
+              "social_facility": "group_home",
+              "social_facility:for": "senior"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/659731459",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "ems-markham-ems-25",
+              "distance": 3695.0273056083015,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 3695
+            }
+          ],
+          "twoGenuineCrossStreetClues": false,
+          "oneClueException": "No unselected accepted two-clue source in this priority family for the targeted review base(s); high-value source family retained.",
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 114
+        }
+      }
+    },
+    "note": "Add-only source-validated priority facilities; geographic review reasons are not operational districts. Station assignments require independent directed-road audit."
+  },
+  "routeCandidateExpansion": {
+    "reviewedOn": "2026-10-29",
+    "promotedIds": [],
+    "candidateVerification": null,
+    "selection": "Only source-verified additional locations used by independently audited station exercises are promoted; existing canonical IDs and fields remain unchanged."
+  },
+  "evidencePathConvention": {
+    "repositoryPaths": "Paths beginning cities/ are repository-relative.",
+    "externalBuildCache": "external-build-cache/ labels identify historical, reproducible build artifacts that are not shipped; adjacent SHA-256 values identify the exact reviewed bytes.",
+    "reviewScope": "Priority facility review records describe the selection-time review. Final integrated route and runtime validation is recorded in docs/city-call-validation-2026-10-29.md."
+  }
+}

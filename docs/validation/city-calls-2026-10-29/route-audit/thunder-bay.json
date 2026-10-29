@@ -1,0 +1,111 @@
+{
+  "city": "thunder-bay",
+  "verifiedFingerprint": "072fb064875959edf7b8f744370c65685ad129b9307d5803611e12d20ebcdcdb",
+  "halls": [
+    {
+      "id": "fire-thunder-bay-fire-1",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3000,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-thunder-bay-fire-2",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 2985,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-thunder-bay-fire-3",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2828,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-thunder-bay-fire-4",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3378,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-thunder-bay-fire-5",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3726,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-thunder-bay-fire-6",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 10,
+      "maxRouteMetres": 3111,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-thunder-bay-fire-7",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 4826,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-thunder-bay-fire-8",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 6480,
+      "method": "official-run-area"
+    },
+    {
+      "id": "ems-thunder-bay-ems-1",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2853,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-thunder-bay-ems-2",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 9,
+      "maxRouteMetres": 2786,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-thunder-bay-ems-3",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2644,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-thunder-bay-ems-4",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 6491,
+      "method": "modeled-road-response"
+    }
+  ],
+  "routes": 158,
+  "continuousOrigins": 158,
+  "officialCalls": 96,
+  "modeledCalls": 48,
+  "maxRouteMetres": 6490.902368548789,
+  "minCallsPerHall": 12,
+  "minChallengeCallsPerHall": 9,
+  "supportCalls": 14,
+  "durationMs": 8475
+}

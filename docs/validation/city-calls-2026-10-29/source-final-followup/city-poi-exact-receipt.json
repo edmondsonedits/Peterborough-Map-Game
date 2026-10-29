@@ -1,0 +1,5 @@
+{
+  "url": "https://services6.arcgis.com/hM5ymMLbxIyWTjn2/arcgis/rest/services/CITY_POI/FeatureServer/0/query?where=COMPKEY+IN+%28417425%2C417422%2C2033833%2C704897%29&outFields=%2A&returnGeometry=true&outSR=4326&f=json",
+  "retrievedAt": "2026-10-29T07:44:57.145600+00:00",
+  "sha256": "f7a819248fd1c8d8944436ec03eb63190ba15f1177f0bdf298cf9879e48f2b6a"
+}

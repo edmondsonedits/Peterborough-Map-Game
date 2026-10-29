@@ -1,0 +1,79 @@
+{
+  "city": "oshawa",
+  "verifiedFingerprint": "a4ca40178c13dfabcd3310f78a04bc3fb6d37d1e7a757f5b87fc6421c7bb5447",
+  "halls": [
+    {
+      "id": "fire-oshawa-fire-1",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3648,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-oshawa-fire-2",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 4264,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-oshawa-fire-3",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2604,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-oshawa-fire-4",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2975,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-oshawa-fire-5",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2876,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-oshawa-fire-6",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 4588,
+      "method": "official-run-area"
+    },
+    {
+      "id": "ems-oshawa-ems-514",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2595,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-oshawa-ems-537",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2860,
+      "method": "modeled-road-response"
+    }
+  ],
+  "routes": 108,
+  "continuousOrigins": 108,
+  "officialCalls": 72,
+  "modeledCalls": 24,
+  "maxRouteMetres": 4588.288298344802,
+  "minCallsPerHall": 12,
+  "minChallengeCallsPerHall": 12,
+  "supportCalls": 12,
+  "durationMs": 8914
+}

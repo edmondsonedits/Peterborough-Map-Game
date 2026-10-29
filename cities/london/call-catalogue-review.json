@@ -1,0 +1,1012 @@
+{
+  "schemaVersion": 1,
+  "coverage": {
+    "cityId": "london",
+    "inputOfficial": 1002,
+    "inputOsm": 2588,
+    "inputMajorRoad": 2000,
+    "existing": 36,
+    "accepted": 2438,
+    "selected": 180,
+    "target": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "existingByDifficulty": {
+      "easy": 10,
+      "medium": 5,
+      "hard": 5
+    },
+    "selectedByDifficulty": {
+      "easy": 90,
+      "medium": 45,
+      "hard": 45
+    },
+    "totalByDifficulty": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "deficits": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "baseStrata": [
+      {
+        "id": "fire-london-fire-1",
+        "selected": 8,
+        "available": 151,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-london-fire-2",
+        "selected": 8,
+        "available": 213,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-london-fire-3",
+        "selected": 8,
+        "available": 147,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-london-fire-4",
+        "selected": 9,
+        "available": 197,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-london-fire-5",
+        "selected": 8,
+        "available": 111,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-london-fire-6",
+        "selected": 8,
+        "available": 111,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-london-fire-7",
+        "selected": 9,
+        "available": 129,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-london-fire-8",
+        "selected": 9,
+        "available": 139,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-london-fire-9",
+        "selected": 8,
+        "available": 147,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-london-fire-10",
+        "selected": 8,
+        "available": 41,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-london-fire-11",
+        "selected": 8,
+        "available": 129,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-london-fire-12",
+        "selected": 9,
+        "available": 140,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-london-fire-13",
+        "selected": 8,
+        "available": 63,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-london-fire-14",
+        "selected": 8,
+        "available": 40,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-london-fire-15",
+        "selected": 8,
+        "available": 34,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-london-ems-adelaide",
+        "selected": 8,
+        "available": 130,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-london-ems-byron",
+        "selected": 8,
+        "available": 84,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-london-ems-horizon",
+        "selected": 8,
+        "available": 99,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-london-ems-hyde-park",
+        "selected": 8,
+        "available": 21,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-london-ems-trafalgar",
+        "selected": 8,
+        "available": 25,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-london-ems-waterloo",
+        "selected": 8,
+        "available": 240,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-london-ems-trossacks",
+        "selected": 8,
+        "available": 47,
+        "method": "nearest-geographic-base-for-selection-only"
+      }
+    ],
+    "sharedBaseline": 20,
+    "baselineByService": {
+      "fire": {
+        "easy": 10,
+        "medium": 5,
+        "hard": 5
+      },
+      "ems": {
+        "easy": 10,
+        "medium": 21,
+        "hard": 5
+      }
+    },
+    "serviceTotalsByDifficulty": {
+      "fire": {
+        "easy": 100,
+        "medium": 50,
+        "hard": 50
+      },
+      "ems": {
+        "easy": 100,
+        "medium": 66,
+        "hard": 50
+      }
+    },
+    "serviceDeficits": {
+      "fire": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      },
+      "ems": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "rejected": 3152,
+    "rejectionCounts": {
+      "unresolved-2020-source-currentness": 10,
+      "production-snap-not-ground-public-road": 2081,
+      "no-genuine-connected-cross-street-within-1500m": 17,
+      "unresolved-official-coordinate-or-current-address-conflict": 61,
+      "production-snap-wrong-street": 696,
+      "not-one-exact-civic-number-and-street": 46,
+      "duplicate-existing-or-accepted-address-or-named-site": 42,
+      "production-snap-over-80m-or-missing": 199
+    },
+    "oneStreetExceptions": 58
+  },
+  "independentAudit": {
+    "cityId": "london",
+    "selected": 180,
+    "accepted": 2438,
+    "crossStreetEvidence": 4181,
+    "oneStreet": 695,
+    "maxGap": 79.00392863793338,
+    "pass": true
+  },
+  "priorityFacilityExpansion": {
+    "reviewedOn": "2026-10-29",
+    "addedIds": [
+      "london-osm-way-135566398",
+      "london-osm-way-161320966",
+      "london-osm-way-493101148",
+      "london-osm-way-190824598",
+      "london-odef-02888122be03c86dbf81",
+      "london-odef-6e1770f0b396dc72bc3c",
+      "london-osm-way-189307261",
+      "london-osm-way-351188756",
+      "london-osm-way-141001305",
+      "london-osm-way-154418242",
+      "london-osm-way-139934389",
+      "london-osm-node-14318654798",
+      "london-osm-way-190852610",
+      "london-odhf-a7725abfd723b8d2b30ff1c2f3c75a07",
+      "london-osm-node-14077163402",
+      "london-osm-node-3243386558",
+      "london-ontario-private-school-881120-856",
+      "london-ontario-private-school-665298-1210"
+    ],
+    "verification": {
+      "cityId": "london",
+      "additions": 18,
+      "proposalSha256": "5e413b8a6f9501a0c455d547bc0c66916d5347dec567de8794411556085312d8",
+      "pass": true,
+      "checks": [
+        "IDs absent from current shared/legacy/care catalogue",
+        "row exactly equals accepted source record",
+        "full per-record provenance exactly equals accepted pool",
+        "factual category/tags and coordinates match raw source record",
+        "source point and URLs unchanged",
+        "no normalized civic-address/near-identical-site duplicates",
+        "max40 per city",
+        "per-base rationale present; no dispatch ownership claim"
+      ]
+    },
+    "review": {
+      "purpose": "Bounded source-preserving priority facility and local variety additions; no recognition tier rewrites.",
+      "sourcePool": "external-build-cache/canonical-catalogues-reviewed/london/accepted-candidates.json",
+      "sourcePoolSha256": "f1559989ff3a539c0f1356af55155eded484e297c279a2d72d9fc9ff9f7ec0ae",
+      "selectedDescriptor": "cities/london/training-data.json",
+      "selectedDescriptorSha256": "1e3b3f23ac041d5947304daa629954f1defe7ff93b5e2b54e52efac35f27570e",
+      "routeEvidence": "cities/london/training-data.json",
+      "routeEvidenceScope": "production",
+      "selectionRules": {
+        "maxPerCity": 40,
+        "maxPotentialAddsPerBase": 6,
+        "maxPotentialAddsForConfirmedZeroToTwoBase": 10,
+        "twoCluePriority": true,
+        "maximumStraightLineBaseReviewDistanceMetres": 6000
+      },
+      "limitations": [
+        "At this selection-time review: Every row passed the existing all-accepted geographic/source/clue audit. These additions have not been graph-assigned or route-audited.",
+        "Published Fire polygons are respected for review proximity; EMS and other Fire review strata use straight-line proximity only. These are not dispatch ownership assignments.",
+        "Full original accepted source point, ID, address, recognition tier, incident profile and provenance are unchanged. Current-open status is not newly verified."
+      ],
+      "rationales": {
+        "london-osm-way-135566398": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "london-osm-way-135566398",
+            "category": null,
+            "tags": {
+              "addr:city": "London",
+              "addr:housenumber": "387",
+              "addr:street": "Simcoe Street",
+              "amenity": "place_of_worship",
+              "building": "yes",
+              "denomination": "pentecostal",
+              "name": "Iglesia Pentecostal Church",
+              "religion": "christian"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/135566398",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-london-fire-1",
+              "distance": 213.59378792717916,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 214
+            },
+            {
+              "baseId": "ems-london-ems-waterloo",
+              "distance": 502.7146760759811,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 503
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 211
+        },
+        "london-osm-way-161320966": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "london-osm-way-161320966",
+            "category": null,
+            "tags": {
+              "addr:city": "London",
+              "addr:housenumber": "1470",
+              "addr:street": "Glenora Drive",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "name": "Ridgeview Community Church",
+              "religion": "christian"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/161320966",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-london-fire-13",
+              "distance": 924.5332914527846,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 925
+            },
+            {
+              "baseId": "ems-london-ems-trossacks",
+              "distance": 848.8064725048974,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 849
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 208
+        },
+        "london-osm-way-493101148": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "london-osm-way-493101148",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "320",
+              "addr:street": "Sugarcreek Trail",
+              "building": "apartments",
+              "building:levels": "4"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/493101148",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-london-fire-6",
+              "distance": 1182.65430720273,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1183
+            },
+            {
+              "baseId": "ems-london-ems-horizon",
+              "distance": 1402.1672736994722,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1402
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 208
+        },
+        "london-osm-way-190824598": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "london-osm-way-190824598",
+            "category": null,
+            "tags": {
+              "addr:city": "London",
+              "addr:housenumber": "4212",
+              "addr:street": "Campbell Street North",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "denomination": "baptist",
+              "name": "Bethel Baptist Church",
+              "religion": "christian"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/190824598",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-london-fire-11",
+              "distance": 889.4943282329484,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 889
+            },
+            {
+              "baseId": "ems-london-ems-byron",
+              "distance": 2917.3635527934266,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2917
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 202
+        },
+        "london-odef-02888122be03c86dbf81": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "london-odef-02888122be03c86dbf81",
+            "category": "school",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/37-26-0001/372600012022001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/en/pub/37-26-0001/2022001/ODEF_v3.0.zip",
+              "https://data.ontario.ca/dataset/school-information-and-student-demographics",
+              "https://data.ontario.ca/dataset/ontario-public-school-contact-information",
+              "https://data.ontario.ca/dataset/fb3a7c18-90af-453e-bc0a-a76ecc471862/resource/f3a8c2a3-09d9-4715-9044-d8a0189f572c/download/public_school_contact_list_september2026_en.txt"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-london-fire-13",
+              "distance": 1787.9098159826306,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1788
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 165
+        },
+        "london-odef-6e1770f0b396dc72bc3c": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "post-secondary",
+          "sourceEvidence": {
+            "sourceRecordId": "london-odef-6e1770f0b396dc72bc3c",
+            "category": "post-secondary",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/37-26-0001/372600012022001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/en/pub/37-26-0001/2022001/ODEF_v3.0.zip",
+              "https://www.canada.ca/en/employment-social-development/programs/designated-schools.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-london-fire-2",
+              "distance": 1902.241983591855,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1902
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 165
+        },
+        "london-osm-way-189307261": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "london-osm-way-189307261",
+            "category": null,
+            "tags": {
+              "addr:city": "London",
+              "addr:housenumber": "1344",
+              "addr:street": "Commissioners Road West",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "denomination": "anglican",
+              "name": "Saint Anne's Anglican Church",
+              "official_name": "St. Anne's Anglican Church",
+              "religion": "christian"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/189307261",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-london-fire-12",
+              "distance": 347.9862698914649,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 348
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 157
+        },
+        "london-osm-way-351188756": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "london-osm-way-351188756",
+            "category": null,
+            "tags": {
+              "addr:city": "London",
+              "addr:housenumber": "777",
+              "addr:postcode": "N5Z 1N1",
+              "addr:street": "Little Hill Street",
+              "building": "apartments",
+              "building:flats": "4"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/351188756",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-london-fire-2",
+              "distance": 1284.8844383087353,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1285
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 156
+        },
+        "london-osm-way-141001305": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "london-osm-way-141001305",
+            "category": null,
+            "tags": {
+              "addr:city": "London",
+              "addr:housenumber": "858",
+              "addr:street": "Dundas Street",
+              "amenity": "place_of_worship",
+              "building": "yes",
+              "check_date": "2026-10-01",
+              "name": "The Gathering Place and Revival Centre",
+              "religion": "christian"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/141001305",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-london-fire-2",
+              "distance": 922.2516302358116,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 922
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 155
+        },
+        "london-osm-way-154418242": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "london-osm-way-154418242",
+            "category": null,
+            "tags": {
+              "addr:city": "London",
+              "addr:housenumber": "640",
+              "addr:street": "Grosvenor Street",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "name": "Abundant Life Community Church",
+              "religion": "christian"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/154418242",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-london-fire-4",
+              "distance": 978.2183728060647,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 978
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 155
+        },
+        "london-osm-way-139934389": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "london-osm-way-139934389",
+            "category": null,
+            "tags": {
+              "addr:city": "London",
+              "addr:housenumber": "546",
+              "addr:postcode": "N6H 2M6",
+              "addr:province": "Ontario",
+              "addr:street": "Beaverbrook Avenue",
+              "alt_name": "Bait-ul-Ahad Mosque;Baitul Ahad;Bait-ul-Ahad",
+              "alt_name:ur": "بیت الاحد",
+              "amenity": "place_of_worship",
+              "building": "mosque",
+              "contact:website": "https://www.ahmadiyya.ca/mosques/baitul-ahad",
+              "denomination": "ahmadiyya",
+              "name": "Baitul Ahad Mosque",
+              "name:ur": "مسجد بیت الاحد",
+              "religion": "muslim"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/139934389",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-london-fire-6",
+              "distance": 1295.7674868145739,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1296
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 154
+        },
+        "london-osm-node-14318654798": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "london-osm-node-14318654798",
+            "category": null,
+            "tags": {
+              "addr:city": "London",
+              "addr:housenumber": "932",
+              "addr:postcode": "N5Z 3M5",
+              "addr:province": "Ontario",
+              "addr:street": "Leathorne Street",
+              "amenity": "place_of_worship",
+              "name": "Berean Baptist Church",
+              "phone": "+1-519-685-5414"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/14318654798",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-london-fire-5",
+              "distance": 1618.6922842141796,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1619
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 153
+        },
+        "london-osm-way-190852610": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "london-osm-way-190852610",
+            "category": null,
+            "tags": {
+              "addr:city": "London",
+              "addr:housenumber": "1268",
+              "addr:street": "Crumlin Sideroad",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "denomination": "anglican",
+              "name": "Saint Luke's Anglican Church",
+              "official_name": "St. Luke's Anglican Church",
+              "religion": "christian"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/190852610",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-london-fire-10",
+              "distance": 1817.5918392799208,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1818
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 153
+        },
+        "london-odhf-a7725abfd723b8d2b30ff1c2f3c75a07": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "healthcare (source broad category; no emergency/hospital status inferred)",
+          "sourceEvidence": {
+            "sourceRecordId": "london-odhf-a7725abfd723b8d2b30ff1c2f3c75a07",
+            "category": "healthcare",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://geohub.lio.gov.on.ca/datasets/e1e5983c59ff497baddf75f1d2bb4add_26/explore"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-london-fire-4",
+              "distance": 252.79369831938612,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 253
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 151
+        },
+        "london-osm-node-14077163402": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "london-osm-node-14077163402",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "41",
+              "addr:postcode": "N6J 2P9",
+              "addr:street": "Holborn Avenue",
+              "amenity": "place_of_worship",
+              "check_date": "2026-08-06",
+              "name": "Bosnian Canadian Islamic Centre",
+              "religion": "muslim",
+              "website": "https://bkic.ca/"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/14077163402",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-london-fire-3",
+              "distance": 2611.374877087905,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2611
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 151
+        },
+        "london-osm-node-3243386558": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "clinic",
+          "sourceEvidence": {
+            "sourceRecordId": "london-osm-node-3243386558",
+            "category": null,
+            "tags": {
+              "addr:city": "London",
+              "addr:housenumber": "320",
+              "addr:postcode": "N6B 6R2",
+              "addr:street": "Dundas Street",
+              "amenity": "clinic",
+              "brand": "LASIK MD",
+              "brand:wikidata": "Q3205934",
+              "email": "info@lasikmd.com",
+              "fax": "+1-519-963-0912",
+              "healthcare": "clinic",
+              "healthcare:speciality": "ophthalmology",
+              "name": "LASIK MD",
+              "opening_hours": "Tu,Th-Sa 08:30-16:00; We 11:30-19:30",
+              "phone": "+1-519-963-2222",
+              "website": "http://www.lasikmd.com/london"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/3243386558",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-london-fire-1",
+              "distance": 613.363830888613,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 613
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 138
+        },
+        "london-ontario-private-school-881120-856": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "london-ontario-private-school-881120-856",
+            "category": "school",
+            "tags": null,
+            "sourceUrls": [
+              "https://data.ontario.ca/dataset/private-school-location-list",
+              "https://data.ontario.ca/dataset/07586958-ffd4-4293-aec0-3b32e0f7de7b/resource/b0fef8bb-8b07-4962-8192-bbf899195cd5/download/private_school_location_list_en_2.xlsx"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-london-fire-4",
+              "distance": 1395.8001343116273,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1396
+            }
+          ],
+          "twoGenuineCrossStreetClues": false,
+          "oneClueException": "No unselected accepted two-clue source in this priority family for the targeted review base(s); high-value source family retained.",
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 134
+        },
+        "london-ontario-private-school-665298-1210": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "london-ontario-private-school-665298-1210",
+            "category": "school",
+            "tags": null,
+            "sourceUrls": [
+              "https://data.ontario.ca/dataset/private-school-location-list",
+              "https://data.ontario.ca/dataset/07586958-ffd4-4293-aec0-3b32e0f7de7b/resource/b0fef8bb-8b07-4962-8192-bbf899195cd5/download/private_school_location_list_en_2.xlsx"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-london-fire-11",
+              "distance": 1974.2625125943632,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1974
+            }
+          ],
+          "twoGenuineCrossStreetClues": false,
+          "oneClueException": "No unselected accepted two-clue source in this priority family for the targeted review base(s); high-value source family retained.",
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 132
+        }
+      }
+    },
+    "note": "Add-only source-validated priority facilities; geographic review reasons are not operational districts. Station assignments require independent directed-road audit."
+  },
+  "routeCandidateExpansion": {
+    "reviewedOn": "2026-10-29",
+    "promotedIds": [],
+    "candidateVerification": null,
+    "selection": "Only source-verified additional locations used by independently audited station exercises are promoted; existing canonical IDs and fields remain unchanged."
+  },
+  "evidencePathConvention": {
+    "repositoryPaths": "Paths beginning cities/ are repository-relative.",
+    "externalBuildCache": "external-build-cache/ labels identify historical, reproducible build artifacts that are not shipped; adjacent SHA-256 values identify the exact reviewed bytes.",
+    "reviewScope": "Priority facility review records describe the selection-time review. Final integrated route and runtime validation is recorded in docs/city-call-validation-2026-10-29.md."
+  }
+}

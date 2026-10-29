@@ -1,0 +1,1614 @@
+{
+  "schemaVersion": 1,
+  "coverage": {
+    "cityId": "scarborough",
+    "inputOfficial": 983,
+    "inputOsm": 2969,
+    "inputMajorRoad": 2000,
+    "existing": 20,
+    "accepted": 2265,
+    "selected": 200,
+    "target": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "existingByDifficulty": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "selectedByDifficulty": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "totalByDifficulty": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "deficits": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "baseStrata": [
+      {
+        "id": "fire-toronto-fire-211",
+        "selected": 8,
+        "available": 159,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-station-212-212",
+        "selected": 8,
+        "available": 52,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-213",
+        "selected": 8,
+        "available": 98,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-214",
+        "selected": 7,
+        "available": 138,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-station-215-215",
+        "selected": 7,
+        "available": 51,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-station-221-221",
+        "selected": 7,
+        "available": 89,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-222",
+        "selected": 7,
+        "available": 88,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-223",
+        "selected": 7,
+        "available": 62,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-225",
+        "selected": 7,
+        "available": 123,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-station-231-231",
+        "selected": 7,
+        "available": 78,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-232",
+        "selected": 7,
+        "available": 29,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-234",
+        "selected": 8,
+        "available": 71,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-241",
+        "selected": 7,
+        "available": 42,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-242",
+        "selected": 8,
+        "available": 114,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-station-243-243",
+        "selected": 8,
+        "available": 94,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-244",
+        "selected": 8,
+        "available": 120,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-station-245-245",
+        "selected": 8,
+        "available": 122,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-ambulance-station-20-20",
+        "selected": 7,
+        "available": 45,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-ambulance-station-21-21",
+        "selected": 7,
+        "available": 71,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-ambulance-station-22-22",
+        "selected": 8,
+        "available": 82,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-ambulance-station-24-24",
+        "selected": 8,
+        "available": 97,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-2303629",
+        "selected": 8,
+        "available": 42,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-ambulance-station-26-26",
+        "selected": 7,
+        "available": 57,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-ambulance-station-27-27",
+        "selected": 0,
+        "available": 0,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-2807376",
+        "selected": 7,
+        "available": 91,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-2236216",
+        "selected": 0,
+        "available": 0,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-3311686",
+        "selected": 7,
+        "available": 89,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-3175714",
+        "selected": 7,
+        "available": 129,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-2489114",
+        "selected": 7,
+        "available": 32,
+        "method": "nearest-geographic-base-for-selection-only"
+      }
+    ],
+    "sharedBaseline": 0,
+    "baselineByService": {
+      "fire": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      },
+      "ems": {
+        "easy": 0,
+        "medium": 20,
+        "hard": 0
+      }
+    },
+    "serviceTotalsByDifficulty": {
+      "fire": {
+        "easy": 100,
+        "medium": 50,
+        "hard": 50
+      },
+      "ems": {
+        "easy": 100,
+        "medium": 70,
+        "hard": 50
+      }
+    },
+    "serviceDeficits": {
+      "fire": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      },
+      "ems": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "rejected": 3687,
+    "rejectionCounts": {
+      "unresolved-2020-source-currentness": 2,
+      "outside-verified-municipality-or-boundary-unavailable": 238,
+      "production-snap-not-ground-public-road": 2763,
+      "production-snap-wrong-street": 369,
+      "production-snap-over-80m-or-missing": 152,
+      "not-one-exact-civic-number-and-street": 66,
+      "unresolved-official-coordinate-or-current-address-conflict": 6,
+      "duplicate-existing-or-accepted-address-or-named-site": 86,
+      "no-genuine-connected-cross-street-within-1500m": 5
+    },
+    "oneStreetExceptions": 52
+  },
+  "independentAudit": {
+    "cityId": "scarborough",
+    "selected": 200,
+    "accepted": 2265,
+    "crossStreetEvidence": 3974,
+    "oneStreet": 556,
+    "maxGap": 79.13957281530439,
+    "pass": true
+  },
+  "priorityFacilityExpansion": {
+    "reviewedOn": "2026-10-29",
+    "addedIds": [
+      "scarborough-osm-way-660980750",
+      "scarborough-osm-way-207616180",
+      "scarborough-osm-way-31756380",
+      "scarborough-osm-node-373179989",
+      "scarborough-osm-way-43806538",
+      "scarborough-osm-way-31560364",
+      "scarborough-osm-way-99094306",
+      "scarborough-odhf-f23f4c7fa2808b1c353963995d3617fe",
+      "scarborough-osm-way-82251132",
+      "scarborough-osm-way-99147823",
+      "scarborough-odhf-007ecb2af507d1e265aee49b6852a12f",
+      "scarborough-osm-node-2868793761",
+      "scarborough-osm-way-31754694",
+      "scarborough-odhf-e5fbee809aab69596e5412646007e523",
+      "scarborough-odhf-9b3d2f271315c3100ea08642054fb2da",
+      "scarborough-osm-way-662095476",
+      "scarborough-osm-way-660818287",
+      "scarborough-osm-way-135231764",
+      "scarborough-osm-way-660212891",
+      "scarborough-osm-way-659831328",
+      "scarborough-osm-way-660585647",
+      "scarborough-osm-way-34777544",
+      "scarborough-osm-way-36861767",
+      "scarborough-osm-node-2349510233",
+      "scarborough-osm-way-96908873",
+      "scarborough-osm-way-661204873",
+      "scarborough-osm-way-659463561",
+      "scarborough-osm-way-634616457",
+      "scarborough-odhf-2158a5e93449f82bb6d644f91758e5e9"
+    ],
+    "verification": {
+      "cityId": "scarborough",
+      "additions": 29,
+      "proposalSha256": "00e566c60c27c6dbe756e898bc3669f6fa8cb37b6e103fdb451b281432be8568",
+      "pass": true,
+      "checks": [
+        "IDs absent from current shared/legacy/care catalogue",
+        "row exactly equals accepted source record",
+        "full per-record provenance exactly equals accepted pool",
+        "factual category/tags and coordinates match raw source record",
+        "source point and URLs unchanged",
+        "no normalized civic-address/near-identical-site duplicates",
+        "max40 per city",
+        "per-base rationale present; no dispatch ownership claim"
+      ]
+    },
+    "review": {
+      "purpose": "Bounded source-preserving priority facility and local variety additions; no recognition tier rewrites.",
+      "sourcePool": "external-build-cache/canonical-catalogues-reviewed/scarborough/accepted-candidates.json",
+      "sourcePoolSha256": "29a1b8c63e98b3e9a25c7b6c51e795f81e52be9c8fd11bffe5d14cd0b97ec7ec",
+      "selectedDescriptor": "cities/scarborough/training-data.json",
+      "selectedDescriptorSha256": "5a708e482acf681ceeeb56c0406b6051a3c3160bbadbea44dabc8af6d09c9713",
+      "routeEvidence": "cities/scarborough/training-data.json",
+      "routeEvidenceScope": "production",
+      "selectionRules": {
+        "maxPerCity": 40,
+        "maxPotentialAddsPerBase": 6,
+        "maxPotentialAddsForConfirmedZeroToTwoBase": 10,
+        "twoCluePriority": true,
+        "maximumStraightLineBaseReviewDistanceMetres": 6000
+      },
+      "limitations": [
+        "At this selection-time review: Every row passed the existing all-accepted geographic/source/clue audit. These additions have not been graph-assigned or route-audited.",
+        "Published Fire polygons are respected for review proximity; EMS and other Fire review strata use straight-line proximity only. These are not dispatch ownership assignments.",
+        "Full original accepted source point, ID, address, recognition tier, incident profile and provenance are unchanged. Current-open status is not newly verified."
+      ],
+      "rationales": {
+        "scarborough-osm-way-660980750": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "library",
+          "sourceEvidence": {
+            "sourceRecordId": "scarborough-osm-way-660980750",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "1440",
+              "addr:street": "Kingston Road",
+              "amenity": "library",
+              "building": "yes",
+              "name": "Toronto Public Library - Taylor Memorial",
+              "operator": "Toronto Public Library",
+              "operator:short": "TPL",
+              "operator:type": "public",
+              "operator:wikidata": "Q2901516",
+              "operator:wikipedia": "en:Toronto Public Library",
+              "website": "https://www.torontopubliclibrary.ca/detail.jsp?R=LIB089"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/660980750",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-225",
+              "distance": 930.2413674213394,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 930
+            },
+            {
+              "baseId": "ems-toronto-ems-3311686",
+              "distance": 256.07592943872925,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 256
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 221
+        },
+        "scarborough-osm-way-207616180": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "scarborough-osm-way-207616180",
+            "category": null,
+            "tags": {
+              "addr:city": "Toronto",
+              "addr:housenumber": "137",
+              "addr:postcode": "M1K 1A1",
+              "addr:street": "Raleigh Avenue",
+              "building": "industrial",
+              "craft": "foundation",
+              "name": "Stonehenge Foundation",
+              "website": "https://www.stonehengefoundations.com/"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/207616180",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-225",
+              "distance": 1065.4778088884377,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1065
+            },
+            {
+              "baseId": "ems-toronto-ems-3175714",
+              "distance": 1583.8844911831648,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1584
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 214
+        },
+        "scarborough-osm-way-31756380": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "scarborough-osm-way-31756380",
+            "category": null,
+            "tags": {
+              "addr:city": "Toronto",
+              "addr:housenumber": "30",
+              "addr:street": "Gilder Drive",
+              "building": "apartments",
+              "opendata:type": "100002"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/31756380",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-station-221-221",
+              "distance": 285.457621849461,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 285
+            },
+            {
+              "baseId": "ems-toronto-ems-2807376",
+              "distance": 1912.7237336167373,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1913
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 209
+        },
+        "scarborough-osm-node-373179989": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "scarborough-osm-node-373179989",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "614",
+              "addr:street": "Birchmount Road",
+              "amenity": "place_of_worship",
+              "religion": "hindu",
+              "website": "https://www.voiceofdharmatemple.com/"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/373179989",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-222",
+              "distance": 1058.8470260967622,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1059
+            },
+            {
+              "baseId": "ems-toronto-ems-3175714",
+              "distance": 1309.6579578009976,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1310
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 206
+        },
+        "scarborough-osm-way-43806538": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "scarborough-osm-way-43806538",
+            "category": null,
+            "tags": {
+              "addr:city": "Scarborough",
+              "addr:housenumber": "2210",
+              "addr:street": "Lawrence Avenue East",
+              "amenity": "place_of_worship",
+              "attribution": "Natural Resources Canada",
+              "building": "church",
+              "canvec:CODE": "2010392",
+              "canvec:UUID": "ed4814c3b9324ce994e4a9a14b7080af",
+              "denomination": "catholic",
+              "name": "St. Lawrence the Martyr Catholic Church",
+              "phone": "+1-416-759-9359",
+              "religion": "christian",
+              "source": "CanVec_Import_2009"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/43806538",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-station-245-245",
+              "distance": 1765.1902722427396,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1765
+            },
+            {
+              "baseId": "ems-ambulance-station-20-20",
+              "distance": 776.366762607744,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 776
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 206
+        },
+        "scarborough-osm-way-31560364": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "scarborough-osm-way-31560364",
+            "category": null,
+            "tags": {
+              "addr:city": "Toronto",
+              "addr:housenumber": "15",
+              "addr:street": "Sewells Road",
+              "building": "apartments",
+              "building:levels": "13",
+              "opendata:type": "100002"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/31560364",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-213",
+              "distance": 1444.303684803577,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1444
+            },
+            {
+              "baseId": "ems-toronto-ems-2303629",
+              "distance": 2297.1921132302064,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2297
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 204
+        },
+        "scarborough-osm-way-99094306": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "scarborough-osm-way-99094306",
+            "category": null,
+            "tags": {
+              "addr:city": "Toronto",
+              "addr:housenumber": "90",
+              "addr:street": "Scottfield Drive",
+              "building": "apartments",
+              "building:levels": "7",
+              "name": "Yee Hong Garden Terrace",
+              "opendata:type": "100001",
+              "source": "Bing"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/99094306",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-242",
+              "distance": 1980.1493306114107,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1980
+            },
+            {
+              "baseId": "ems-ambulance-station-27-27",
+              "distance": 1763.789597416691,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1764
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 204
+        },
+        "scarborough-odhf-f23f4c7fa2808b1c353963995d3617fe": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "healthcare (source broad category; no emergency/hospital status inferred)",
+          "sourceEvidence": {
+            "sourceRecordId": "scarborough-odhf-f23f4c7fa2808b1c353963995d3617fe",
+            "category": "healthcare",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://open.toronto.ca/dataset/covid-19-immunization-clinics/",
+              "https://open.toronto.ca/dataset/wellbeing-youth-health-services/",
+              "https://open.toronto.ca/dataset/long-term-care-locations-city-operated/",
+              "https://open.toronto.ca/dataset/ambulance-station-locations/"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-222",
+              "distance": 1545.1807652856946,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1545
+            },
+            {
+              "baseId": "ems-ambulance-station-21-21",
+              "distance": 2.2862713414926648e-09,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 0
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 203
+        },
+        "scarborough-osm-way-82251132": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "scarborough-osm-way-82251132",
+            "category": null,
+            "tags": {
+              "addr:city": "Toronto",
+              "addr:housenumber": "75",
+              "addr:street": "Kirkdene Drive",
+              "amenity": "place_of_worship",
+              "building": "yes",
+              "name": "Usman Gousi Mosque",
+              "religion": "muslim"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/82251132",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-station-215-215",
+              "distance": 2063.755239177997,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2064
+            },
+            {
+              "baseId": "ems-toronto-ems-2489114",
+              "distance": 2071.8488052086414,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2072
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 201
+        },
+        "scarborough-osm-way-99147823": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "scarborough-osm-way-99147823",
+            "category": null,
+            "tags": {
+              "addr:city": "Toronto",
+              "addr:housenumber": "410",
+              "addr:street": "Goldhawk Trail",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "check_date": "2025-11-20",
+              "denomination": "presbyterian",
+              "name": "St Johns Presbyterian Church",
+              "opendata:type": "109001",
+              "religion": "christian"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/99147823",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-242",
+              "distance": 2132.659751230173,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2133
+            },
+            {
+              "baseId": "ems-ambulance-station-27-27",
+              "distance": 2905.826790515568,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2906
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 199
+        },
+        "scarborough-odhf-007ecb2af507d1e265aee49b6852a12f": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "healthcare (source broad category; no emergency/hospital status inferred)",
+          "sourceEvidence": {
+            "sourceRecordId": "scarborough-odhf-007ecb2af507d1e265aee49b6852a12f",
+            "category": "healthcare",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://geohub.lio.gov.on.ca/datasets/e1e5983c59ff497baddf75f1d2bb4add_26/explore"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-244",
+              "distance": 908.1812038512495,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 908
+            },
+            {
+              "baseId": "ems-toronto-ems-2236216",
+              "distance": 2113.712891123377,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2114
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 198
+        },
+        "scarborough-osm-node-2868793761": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "library",
+          "sourceEvidence": {
+            "sourceRecordId": "scarborough-osm-node-2868793761",
+            "category": null,
+            "tags": {
+              "addr:city": "Scarborough",
+              "addr:housenumber": "30",
+              "addr:street": "Sewells Road",
+              "after_hours_return": "no",
+              "amenity": "library",
+              "internet_access": "wlan",
+              "internet_access:fee": "no",
+              "name": "Toronto Public Library - Malvern",
+              "opening_hours": "Mo-Fr 09:00-20:30; Sa 09:00-17:00; Su 13:30-17:00",
+              "operator": "Toronto Public Library",
+              "operator:short": "TPL",
+              "operator:type": "public",
+              "operator:wikidata": "Q2901516",
+              "operator:wikipedia": "en:Toronto Public Library",
+              "return_machine": "yes",
+              "website": "https://www.torontopubliclibrary.ca/detail.jsp?R=LIB012",
+              "wikidata": "Q56613102"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/2868793761",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-213",
+              "distance": 1631.769335140888,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1632
+            },
+            {
+              "baseId": "ems-toronto-ems-2303629",
+              "distance": 2213.4987810250464,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 2213
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 183
+        },
+        "scarborough-osm-way-31754694": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "scarborough-osm-way-31754694",
+            "category": null,
+            "tags": {
+              "addr:city": "Scarborough",
+              "addr:housenumber": "5",
+              "addr:street": "Glamorgan Avenue",
+              "building": "apartments",
+              "building:levels": "10",
+              "opendata:type": "100002"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/31754694",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-station-245-245",
+              "distance": 900.1509487757503,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 900
+            },
+            {
+              "baseId": "ems-ambulance-station-20-20",
+              "distance": 2187.193421456518,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 2187
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 176
+        },
+        "scarborough-odhf-e5fbee809aab69596e5412646007e523": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "healthcare (source broad category; no emergency/hospital status inferred)",
+          "sourceEvidence": {
+            "sourceRecordId": "scarborough-odhf-e5fbee809aab69596e5412646007e523",
+            "category": "healthcare",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://geohub.lio.gov.on.ca/datasets/e1e5983c59ff497baddf75f1d2bb4add_26/explore"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-234",
+              "distance": 699.6311060094329,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 700
+            },
+            {
+              "baseId": "ems-ambulance-station-26-26",
+              "distance": 1672.3566412246435,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 1672
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 170
+        },
+        "scarborough-odhf-9b3d2f271315c3100ea08642054fb2da": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "healthcare (source broad category; no emergency/hospital status inferred)",
+          "sourceEvidence": {
+            "sourceRecordId": "scarborough-odhf-9b3d2f271315c3100ea08642054fb2da",
+            "category": "healthcare",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://geohub.lio.gov.on.ca/datasets/e1e5983c59ff497baddf75f1d2bb4add_26/explore"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-242",
+              "distance": 1377.231345634662,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1377
+            },
+            {
+              "baseId": "ems-ambulance-station-24-24",
+              "distance": 1769.7248498368865,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 1770
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 168
+        },
+        "scarborough-osm-way-662095476": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "social facility: group_home",
+          "sourceEvidence": {
+            "sourceRecordId": "scarborough-osm-way-662095476",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "707",
+              "addr:postcode": "M1P 2W1",
+              "addr:street": "Ellesmere Road",
+              "amenity": "social_facility",
+              "building": "detached",
+              "name": "Alexis Lodge Retirement Residence",
+              "social_facility": "group_home",
+              "social_facility:for": "senior"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/662095476",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-station-245-245",
+              "distance": 257.47653901192564,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 257
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 164
+        },
+        "scarborough-osm-way-660818287": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "social facility: group_home",
+          "sourceEvidence": {
+            "sourceRecordId": "scarborough-osm-way-660818287",
+            "category": null,
+            "tags": {
+              "addr:city": "Toronto",
+              "addr:housenumber": "602",
+              "addr:postcode": "M1J 1B5",
+              "addr:street": "Brimley Road",
+              "amenity": "social_facility",
+              "building": "detached",
+              "name": "Villa Karuna Home For Seniors",
+              "social_facility": "group_home",
+              "social_facility:for": "senior"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/660818287",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-station-221-221",
+              "distance": 833.3212290176766,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 833
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 163
+        },
+        "scarborough-osm-way-135231764": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "scarborough-osm-way-135231764",
+            "category": null,
+            "tags": {
+              "addr:city": "Toronto",
+              "addr:housenumber": "81",
+              "addr:postcode": "M1S 5R4",
+              "addr:province": "ON",
+              "addr:street": "Scottfield Drive",
+              "building": "industrial",
+              "name": "Oceans Seafood Company",
+              "opendata:type": "113001",
+              "source": "Bing"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/135231764",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-station-243-243",
+              "distance": 2405.06502317122,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2405
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 160
+        },
+        "scarborough-osm-way-660212891": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "social facility: group_home",
+          "sourceEvidence": {
+            "sourceRecordId": "scarborough-osm-way-660212891",
+            "category": null,
+            "tags": {
+              "addr:city": "Toronto",
+              "addr:housenumber": "22",
+              "addr:postcode": "M1E 4C7",
+              "addr:street": "Purpledusk Trail",
+              "amenity": "social_facility",
+              "building": "detached",
+              "name": "A Better Way Retirement Home",
+              "social_facility": "group_home",
+              "social_facility:for": "senior"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/660212891",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-213",
+              "distance": 1973.2352063803921,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1973
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 159
+        },
+        "scarborough-osm-way-659831328": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "social facility: group_home",
+          "sourceEvidence": {
+            "sourceRecordId": "scarborough-osm-way-659831328",
+            "category": null,
+            "tags": {
+              "addr:city": "Toronto",
+              "addr:housenumber": "34",
+              "addr:postcode": "M1B 4L1",
+              "addr:street": "Middleport Crescent",
+              "amenity": "social_facility",
+              "building": "detached",
+              "name": "A Better Way Retirement Home",
+              "social_facility": "group_home",
+              "social_facility:for": "senior"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/659831328",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "ems-ambulance-station-27-27",
+              "distance": 2281.3498532437798,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2281
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 158
+        },
+        "scarborough-osm-way-660585647": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "social facility: group_home",
+          "sourceEvidence": {
+            "sourceRecordId": "scarborough-osm-way-660585647",
+            "category": null,
+            "tags": {
+              "addr:city": "Toronto",
+              "addr:housenumber": "138",
+              "addr:postcode": "M1G 1Y9",
+              "addr:street": "Janray Drive",
+              "amenity": "social_facility",
+              "building": "detached",
+              "name": "The First Step Group Home",
+              "social_facility": "group_home",
+              "social_facility:for": "senior"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/660585647",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "ems-ambulance-station-22-22",
+              "distance": 3042.397167124375,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 3042
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 156
+        },
+        "scarborough-osm-way-34777544": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "scarborough-osm-way-34777544",
+            "category": null,
+            "tags": {
+              "addr:city": "Scarborough",
+              "addr:housenumber": "4091",
+              "addr:street": "Sheppard Avenue East",
+              "building": "apartments",
+              "building:colour": "grey",
+              "building:levels": "21",
+              "opendata:type": "115001"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/34777544",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "ems-toronto-ems-2236216",
+              "distance": 1828.1701085173527,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1828
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 155
+        },
+        "scarborough-osm-way-36861767": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "scarborough-osm-way-36861767",
+            "category": null,
+            "tags": {
+              "addr:city": "Toronto",
+              "addr:housenumber": "90",
+              "addr:street": "Mornelle Court",
+              "building": "apartments",
+              "building:levels": "13",
+              "opendata:type": "100002"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/36861767",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-station-212-212",
+              "distance": 2007.9461432397911,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2008
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 154
+        },
+        "scarborough-osm-node-2349510233": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "scarborough-osm-node-2349510233",
+            "category": null,
+            "tags": {
+              "addr:city": "Scarborough",
+              "addr:housenumber": "835",
+              "addr:street": "Birchmount Road",
+              "amenity": "place_of_worship",
+              "check_date": "2025-03-24",
+              "denomination": "presbyterian",
+              "name": "Westminster Presbyterian Church",
+              "opendata:type": "109001",
+              "religion": "christian"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/2349510233",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "ems-ambulance-station-21-21",
+              "distance": 1698.6322687690508,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1699
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 153
+        },
+        "scarborough-osm-way-96908873": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "scarborough-osm-way-96908873",
+            "category": null,
+            "tags": {
+              "addr:city": "Toronto",
+              "addr:housenumber": "115",
+              "addr:street": "Orton Park Road",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "denomination": "united",
+              "name": "St. Mark's United Church",
+              "religion": "christian"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/96908873",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "ems-ambulance-station-26-26",
+              "distance": 2713.1081872838954,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2713
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 150
+        },
+        "scarborough-osm-way-661204873": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "scarborough-osm-way-661204873",
+            "category": null,
+            "tags": {
+              "addr:city": "Toronto",
+              "addr:housenumber": "25",
+              "addr:street": "Parkette Place",
+              "building": "apartments",
+              "building:levels": "5"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/661204873",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-225",
+              "distance": 308.92307842037695,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 4,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 309
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 129
+        },
+        "scarborough-osm-way-659463561": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "social facility: group_home",
+          "sourceEvidence": {
+            "sourceRecordId": "scarborough-osm-way-659463561",
+            "category": null,
+            "tags": {
+              "addr:city": "Toronto",
+              "addr:housenumber": "8",
+              "addr:postcode": "M1X 0B4",
+              "addr:street": "Snowy Owl Way",
+              "amenity": "social_facility",
+              "building": "detached",
+              "name": "Arul Oli Senior Centre",
+              "social_facility": "group_home",
+              "social_facility:for": "senior"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/659463561",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-211",
+              "distance": 1128.2444701320135,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1128
+            }
+          ],
+          "twoGenuineCrossStreetClues": false,
+          "oneClueException": "No unselected accepted two-clue source in this priority family for the targeted review base(s); high-value source family retained.",
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 122
+        },
+        "scarborough-osm-way-634616457": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "scarborough-osm-way-634616457",
+            "category": null,
+            "tags": {
+              "addr:city": "Scarborough",
+              "addr:housenumber": "241",
+              "addr:postcode": "M1V 2W6",
+              "addr:street": "Alexmuir Boulevard",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "denomination": "baptist",
+              "name": "Calvary Logos Baptist Church",
+              "name:zh": "加略山證道浸信會",
+              "old_name": "Toronto Chinese Calvary Logos Baptist Church",
+              "religion": "christian",
+              "website": "https://calvarylogos.ca/"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/634616457",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "ems-ambulance-station-24-24",
+              "distance": 2357.136588454763,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 2357
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 121
+        },
+        "scarborough-odhf-2158a5e93449f82bb6d644f91758e5e9": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "healthcare (source broad category; no emergency/hospital status inferred)",
+          "sourceEvidence": {
+            "sourceRecordId": "scarborough-odhf-2158a5e93449f82bb6d644f91758e5e9",
+            "category": "healthcare",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://geohub.lio.gov.on.ca/datasets/e1e5983c59ff497baddf75f1d2bb4add_26/explore"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "ems-toronto-ems-3311686",
+              "distance": 1511.465760987912,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 1511
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 118
+        }
+      }
+    },
+    "note": "Add-only source-validated priority facilities; geographic review reasons are not operational districts. Station assignments require independent directed-road audit."
+  },
+  "routeCandidateExpansion": {
+    "reviewedOn": "2026-10-29",
+    "promotedIds": [],
+    "candidateVerification": null,
+    "selection": "Only source-verified additional locations used by independently audited station exercises are promoted; existing canonical IDs and fields remain unchanged."
+  },
+  "evidencePathConvention": {
+    "repositoryPaths": "Paths beginning cities/ are repository-relative.",
+    "externalBuildCache": "external-build-cache/ labels identify historical, reproducible build artifacts that are not shipped; adjacent SHA-256 values identify the exact reviewed bytes.",
+    "reviewScope": "Priority facility review records describe the selection-time review. Final integrated route and runtime validation is recorded in docs/city-call-validation-2026-10-29.md."
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "city": "richmond-hill",
+  "verifiedFingerprint": "50b61e846df663c2028f4c07d486c62a6e532a261018cea68f7a0ad193bfd6b1",
+  "halls": [
+    {
+      "id": "fire-richmond-hill-fire-8-1",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2794,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-richmond-hill-fire-8-2",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 4672,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-richmond-hill-fire-8-3",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3797,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-richmond-hill-fire-8-4",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 5056,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-richmond-hill-fire-8-5",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3371,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-richmond-hill-fire-8-6",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 5003,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-richmond-hill-ems-28",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2597,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-richmond-hill-ems-85",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2602,
+      "method": "modeled-road-response"
+    }
+  ],
+  "routes": 108,
+  "continuousOrigins": 108,
+  "officialCalls": 0,
+  "modeledCalls": 96,
+  "maxRouteMetres": 5055.970191597363,
+  "minCallsPerHall": 12,
+  "minChallengeCallsPerHall": 11,
+  "supportCalls": 12,
+  "durationMs": 6736
+}

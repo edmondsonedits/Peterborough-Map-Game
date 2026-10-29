@@ -1,0 +1,127 @@
+{
+  "city": "kingston",
+  "verifiedFingerprint": "7653227964e2b1dfc2f858193bcd3ce97bdc4876be7e2d966c23b869c0192e29",
+  "halls": [
+    {
+      "id": "fire-kingston-fire-8",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 6188,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-kingston-fire-4",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2588,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-kingston-fire-9",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 4783,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-kingston-fire-5",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3431,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-kingston-fire-2",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3060,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-kingston-fire-1",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 5477,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-kingston-fire-6",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2727,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-kingston-fire-10",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 11,
+      "maxRouteMetres": 5291,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-kingston-fire-7",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 6023,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-kingston-fire-3",
+      "service": "fire",
+      "calls": 13,
+      "challengeCalls": 12,
+      "maxRouteMetres": 5907,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-kingston-ems-1",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 4794,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-kingston-ems-3",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 6308,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-kingston-ems-2",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 6099,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-kingston-ems-9",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 3901,
+      "method": "modeled-road-response"
+    }
+  ],
+  "routes": 181,
+  "continuousOrigins": 181,
+  "officialCalls": 0,
+  "modeledCalls": 167,
+  "maxRouteMetres": 6308.195336987578,
+  "minCallsPerHall": 12,
+  "minChallengeCallsPerHall": 11,
+  "supportCalls": 14,
+  "durationMs": 13940
+}

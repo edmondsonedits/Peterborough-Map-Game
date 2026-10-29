@@ -91,6 +91,12 @@
         || base.yardRotation<0 || base.yardRotation>=360) {
         throw new Error('Use valid base/spawn coordinates, area width and length of 10–600 m, and rotation of 0–359°.');
       }
+      const conflict=raw.numberConflict;
+      if (conflict && Number.isInteger(conflict.requestedNumber) && conflict.requestedNumber>0 &&
+          conflict.assignedNumber===base.number && /^[a-z0-9-]+$/.test(conflict.conflictingBaseId || '')) {
+        base.numberConflict={requestedNumber:conflict.requestedNumber,assignedNumber:base.number,
+          conflictingBaseId:conflict.conflictingBaseId,reason:'published-base-number-conflict'};
+      }
       ids.add(base.id);
       numbers.add(`${base.service}:${base.number}`);
       return base;
@@ -108,6 +114,42 @@
 
   let seed = buildSeed();
 
+  function reconcileSavedNumbers(list) {
+    // Validate every record first; only the number collision introduced by an
+    // unchanged published claim is recoverable. Malformed snapshots still fail.
+    const rows=list.map(base=>validate([base])[0]);
+    const published=new Map(seed.map(base=>[base.id,base]));
+    const unchangedNumber=base=>{
+      const original=published.get(base.id);
+      return original && original.service===base.service && original.number===base.number;
+    };
+    validate(rows.filter(base=>!unchangedNumber(base)));
+    const byNumber=new Map();
+    for(const base of rows){
+      const key=`${base.service}:${base.number}`;
+      if(!byNumber.has(key))byNumber.set(key,[]);
+      byNumber.get(key).push(base);
+    }
+    const pending=[];
+    for(const group of byNumber.values()){
+      if(group.length<2)continue;
+      const official=group.find(unchangedNumber);
+      if(!official)throw new Error('Base numbers must be unique within each service.');
+      for(const base of group)if(base!==official)pending.push({base,conflictingBaseId:official.id});
+    }
+    const used=new Set(byNumber.keys());
+    pending.sort((a,b)=>a.base.id.localeCompare(b.base.id));
+    for(const {base,conflictingBaseId} of pending){
+      const requestedNumber=base.number;
+      let number=1;
+      while(used.has(`${base.service}:${number}`))number+=1;
+      used.add(`${base.service}:${number}`);
+      base.number=number;
+      base.numberConflict={requestedNumber,assignedNumber:number,conflictingBaseId,reason:'published-base-number-conflict'};
+    }
+    return validate(rows);
+  }
+
   function readSaved() {
     try {
       const delta = readJson(storageKey, legacyStorageKey);
@@ -121,7 +163,7 @@
       }
       for (const base of delta.added || []) if (!records.has(base.id)) records.set(base.id, base);
       for (const entry of delta.deleted || []) records.delete(canonical(entry.id));
-      return validate([...records.values()]);
+      return reconcileSavedNumbers([...records.values()]);
     } catch (error) {
       console.warn(`Unable to restore ${cityId} base edits.`, error);
       return validate(copy(seed));

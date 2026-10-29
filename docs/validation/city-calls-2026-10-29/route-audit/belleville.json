@@ -1,0 +1,71 @@
+{
+  "city": "belleville",
+  "verifiedFingerprint": "fe0fc3047ce3c644629d8e87510a2efcfa1f9fa8e860f36c21d53b4361d97a6d",
+  "halls": [
+    {
+      "id": "fire-fire-station-1-1",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2655,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-fire-station-2-2",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2600,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-fire-station-3-3",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 4195,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-fire-station-4-4",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 6193,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-fire-station-5-5",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3343,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-base-00-headquarters-1",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3005,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-base-01-farley-2",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2528,
+      "method": "modeled-road-response"
+    }
+  ],
+  "routes": 90,
+  "continuousOrigins": 90,
+  "officialCalls": 0,
+  "modeledCalls": 84,
+  "maxRouteMetres": 6192.6755404378,
+  "minCallsPerHall": 12,
+  "minChallengeCallsPerHall": 11,
+  "supportCalls": 6,
+  "durationMs": 3098
+}

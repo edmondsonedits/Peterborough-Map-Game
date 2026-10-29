@@ -34,6 +34,7 @@
     return {
       name: city.name || 'Peterborough',
       baseTraining: Boolean(city.features?.baseTraining || city.dispatch?.available === false),
+      sceneResponseDrills: Boolean(city.features?.sceneResponseDrills),
     };
   }
 
@@ -157,16 +158,16 @@
     if (!city.baseTraining) {
       steps.push(
         {
-          stage: 'dispatch', icon: ICONS.dispatch, eyebrow: 'A real call looks like this',
+          stage: 'dispatch', icon: ICONS.dispatch, eyebrow: city.sceneResponseDrills ? 'A training exercise looks like this' : 'A real call looks like this',
           title: 'Read the call, then respond',
-          copy: 'Start Call shows the incident, exact address, and timer. Drive to the marked arrival circle.',
+          copy: city.sceneResponseDrills ? 'Start Call shows the simulated incident, location, and timer. Drive to the marked arrival circle. Some bases use mapped intersection exercises.' : 'Start Call shows the incident, exact address, and timer. Drive to the marked arrival circle.',
           visual: dispatchExample(service),
         },
         {
-          stage: 'finish', icon: ICONS.finish, eyebrow: 'Arrival & route review',
-          title: 'Finish the call and learn your route',
-          copy: 'Fire finishes at the scene. EMS adds a hospital trip. Afterward, Compare Routes shows exactly where you drove beside the recommended route.',
-          visual: finishExample(),
+          stage: 'finish', icon: ICONS.finish, eyebrow: city.sceneResponseDrills ? 'Scene response' : 'Arrival & route review',
+          title: city.sceneResponseDrills ? 'Finish at the scene' : 'Finish the call and learn your route',
+          copy: city.sceneResponseDrills ? 'Fire and EMS exercises finish at the marked modeled road approach or intersection. Next Call returns you to your selected base. No hospital transport is included.' : 'Fire finishes at the scene. EMS adds a hospital trip. Afterward, Compare Routes shows exactly where you drove beside the recommended route.',
+          visual: city.sceneResponseDrills ? toolRow() : finishExample(),
         },
       );
     } else {

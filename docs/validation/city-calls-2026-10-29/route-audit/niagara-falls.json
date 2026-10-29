@@ -1,0 +1,87 @@
+{
+  "city": "niagara-falls",
+  "verifiedFingerprint": "b6678513e3c2e4fb45ae8d47d5b594b5e56374c44bbdcec9d0b0435eb581a87d",
+  "halls": [
+    {
+      "id": "fire-niagara-falls-fire-2",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3489,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-niagara-falls-fire-4",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 4187,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-niagara-falls-fire-5",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 4583,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-niagara-falls-fire-6",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3157,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-niagara-falls-fire-1",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2835,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-niagara-falls-fire-3",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2814,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-niagara-falls-fire-7",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 4597,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-niagara-falls-ems-north",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 9,
+      "maxRouteMetres": 4777,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-niagara-falls-ems-st-paul",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2558,
+      "method": "modeled-road-response"
+    }
+  ],
+  "routes": 120,
+  "continuousOrigins": 120,
+  "officialCalls": 0,
+  "modeledCalls": 108,
+  "maxRouteMetres": 4777.269383416977,
+  "minCallsPerHall": 12,
+  "minChallengeCallsPerHall": 9,
+  "supportCalls": 12,
+  "durationMs": 6291
+}

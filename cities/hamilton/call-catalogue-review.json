@@ -1,0 +1,1241 @@
+{
+  "schemaVersion": 1,
+  "coverage": {
+    "cityId": "hamilton",
+    "inputOfficial": 780,
+    "inputOsm": 3000,
+    "inputMajorRoad": 2000,
+    "existing": 46,
+    "accepted": 2886,
+    "selected": 220,
+    "target": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "existingByDifficulty": {
+      "easy": 10,
+      "medium": 5,
+      "hard": 5
+    },
+    "selectedByDifficulty": {
+      "easy": 94,
+      "medium": 60,
+      "hard": 66
+    },
+    "totalByDifficulty": {
+      "easy": 104,
+      "medium": 65,
+      "hard": 71
+    },
+    "deficits": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "baseStrata": [
+      {
+        "id": "fire-hamilton-fire-1",
+        "selected": 5,
+        "available": 100,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-hamilton-fire-2",
+        "selected": 5,
+        "available": 109,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-hamilton-fire-3",
+        "selected": 5,
+        "available": 81,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-hamilton-fire-4",
+        "selected": 5,
+        "available": 106,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-hamilton-fire-5",
+        "selected": 5,
+        "available": 39,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-hamilton-fire-6",
+        "selected": 5,
+        "available": 133,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-hamilton-fire-7",
+        "selected": 5,
+        "available": 35,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-hamilton-fire-8",
+        "selected": 5,
+        "available": 103,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-hamilton-fire-9",
+        "selected": 5,
+        "available": 120,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-hamilton-fire-10",
+        "selected": 5,
+        "available": 53,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-hamilton-fire-11",
+        "selected": 5,
+        "available": 194,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-hamilton-fire-12",
+        "selected": 5,
+        "available": 36,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-hamilton-fire-14",
+        "selected": 5,
+        "available": 44,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-hamilton-fire-15",
+        "selected": 5,
+        "available": 13,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-hamilton-fire-16",
+        "selected": 5,
+        "available": 70,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-hamilton-fire-17",
+        "selected": 5,
+        "available": 24,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-hamilton-fire-18",
+        "selected": 5,
+        "available": 19,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-hamilton-fire-19",
+        "selected": 5,
+        "available": 7,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-hamilton-fire-20",
+        "selected": 5,
+        "available": 85,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-hamilton-fire-21",
+        "selected": 5,
+        "available": 52,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-hamilton-fire-23",
+        "selected": 5,
+        "available": 78,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-hamilton-fire-24",
+        "selected": 5,
+        "available": 60,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-hamilton-fire-25",
+        "selected": 5,
+        "available": 21,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-hamilton-fire-26",
+        "selected": 5,
+        "available": 53,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-hamilton-fire-27",
+        "selected": 5,
+        "available": 83,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-hamilton-fire-28",
+        "selected": 5,
+        "available": 124,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-hamilton-ems-1",
+        "selected": 5,
+        "available": 245,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-hamilton-ems-3",
+        "selected": 5,
+        "available": 60,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-hamilton-ems-4",
+        "selected": 5,
+        "available": 28,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-hamilton-ems-7",
+        "selected": 5,
+        "available": 13,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-hamilton-ems-9",
+        "selected": 5,
+        "available": 80,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-hamilton-ems-10",
+        "selected": 5,
+        "available": 46,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-hamilton-ems-12",
+        "selected": 5,
+        "available": 57,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-hamilton-ems-15",
+        "selected": 5,
+        "available": 33,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-hamilton-ems-17",
+        "selected": 5,
+        "available": 42,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-hamilton-ems-18",
+        "selected": 5,
+        "available": 43,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-hamilton-ems-19",
+        "selected": 5,
+        "available": 42,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-hamilton-ems-20",
+        "selected": 5,
+        "available": 23,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-hamilton-ems-21",
+        "selected": 5,
+        "available": 55,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-hamilton-ems-23",
+        "selected": 5,
+        "available": 73,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-hamilton-ems-24",
+        "selected": 5,
+        "available": 65,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-hamilton-ems-25",
+        "selected": 5,
+        "available": 36,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-hamilton-ems-32",
+        "selected": 5,
+        "available": 57,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-hamilton-ems-30",
+        "selected": 5,
+        "available": 46,
+        "method": "nearest-geographic-base-for-selection-only"
+      }
+    ],
+    "sharedBaseline": 20,
+    "baselineByService": {
+      "fire": {
+        "easy": 10,
+        "medium": 5,
+        "hard": 5
+      },
+      "ems": {
+        "easy": 10,
+        "medium": 31,
+        "hard": 5
+      }
+    },
+    "serviceTotalsByDifficulty": {
+      "fire": {
+        "easy": 104,
+        "medium": 65,
+        "hard": 71
+      },
+      "ems": {
+        "easy": 104,
+        "medium": 91,
+        "hard": 71
+      }
+    },
+    "serviceDeficits": {
+      "fire": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      },
+      "ems": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "rejected": 2894,
+    "rejectionCounts": {
+      "unresolved-2020-source-currentness": 55,
+      "production-snap-not-ground-public-road": 1883,
+      "production-snap-wrong-street": 699,
+      "production-snap-over-80m-or-missing": 75,
+      "unresolved-official-coordinate-or-current-address-conflict": 7,
+      "not-one-exact-civic-number-and-street": 96,
+      "duplicate-existing-or-accepted-address-or-named-site": 42,
+      "no-genuine-connected-cross-street-within-1500m": 37
+    },
+    "oneStreetExceptions": 55
+  },
+  "independentAudit": {
+    "cityId": "hamilton",
+    "selected": 220,
+    "accepted": 2886,
+    "crossStreetEvidence": 5076,
+    "oneStreet": 696,
+    "maxGap": 78.13536008424472,
+    "pass": true
+  },
+  "priorityFacilityExpansion": {
+    "reviewedOn": "2026-10-29",
+    "addedIds": [
+      "hamilton-odhf-f95140535b2c6df7265a6f8231ff0f97",
+      "hamilton-osm-node-7931466636",
+      "hamilton-osm-way-775735106",
+      "hamilton-osm-way-255269311",
+      "hamilton-osm-way-263121972",
+      "hamilton-osm-node-13903108307",
+      "hamilton-osm-way-839462018",
+      "hamilton-osm-way-438221376",
+      "hamilton-osm-way-328694123",
+      "hamilton-osm-way-549932471",
+      "hamilton-osm-node-7793058345",
+      "hamilton-osm-node-13903031804",
+      "hamilton-ontario-private-school-883137-960",
+      "hamilton-odhf-dfbcffdac431b537bd6bd50cdb517497",
+      "hamilton-ontario-private-school-881605-607",
+      "hamilton-osm-way-97929056",
+      "hamilton-osm-way-429977236"
+    ],
+    "verification": {
+      "cityId": "hamilton",
+      "additions": 17,
+      "proposalSha256": "4375f2638d63f998c99917f86755e75941f4bc9469052770e3ba670785b2ff3d",
+      "pass": true,
+      "checks": [
+        "IDs absent from current shared/legacy/care catalogue",
+        "row exactly equals accepted source record",
+        "full per-record provenance exactly equals accepted pool",
+        "factual category/tags and coordinates match raw source record",
+        "source point and URLs unchanged",
+        "no normalized civic-address/near-identical-site duplicates",
+        "max40 per city",
+        "per-base rationale present; no dispatch ownership claim"
+      ]
+    },
+    "review": {
+      "purpose": "Bounded source-preserving priority facility and local variety additions; no recognition tier rewrites.",
+      "sourcePool": "external-build-cache/canonical-catalogues-reviewed/hamilton/accepted-candidates.json",
+      "sourcePoolSha256": "a248336243b1499c711972f55998af6aba7b082c47e456fe152e294844e2e704",
+      "selectedDescriptor": "cities/hamilton/training-data.json",
+      "selectedDescriptorSha256": "d26dc8607d52cecf8d2d14912bb9ecfe4d9fb7db1069f6eaf6f9a9f40088dcb5",
+      "routeEvidence": "cities/hamilton/training-data.json",
+      "routeEvidenceScope": "production",
+      "selectionRules": {
+        "maxPerCity": 40,
+        "maxPotentialAddsPerBase": 6,
+        "maxPotentialAddsForConfirmedZeroToTwoBase": 10,
+        "twoCluePriority": true,
+        "maximumStraightLineBaseReviewDistanceMetres": 6000
+      },
+      "limitations": [
+        "At this selection-time review: Every row passed the existing all-accepted geographic/source/clue audit. These additions have not been graph-assigned or route-audited.",
+        "Published Fire polygons are respected for review proximity; EMS and other Fire review strata use straight-line proximity only. These are not dispatch ownership assignments.",
+        "Full original accepted source point, ID, address, recognition tier, incident profile and provenance are unchanged. Current-open status is not newly verified."
+      ],
+      "rationales": {
+        "hamilton-odhf-f95140535b2c6df7265a6f8231ff0f97": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "hospital",
+          "sourceEvidence": {
+            "sourceRecordId": "hamilton-odhf-f95140535b2c6df7265a6f8231ff0f97",
+            "category": "hospital",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://geohub.lio.gov.on.ca/datasets/e1e5983c59ff497baddf75f1d2bb4add_26/explore",
+              "https://open.hamilton.ca/datasets/fb2a3ec56a4742c3afc7fb65045a8047_14/explore"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-hamilton-fire-7",
+              "distance": 924.8342865391771,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 925
+            },
+            {
+              "baseId": "ems-hamilton-ems-7",
+              "distance": 924.8342868266267,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 925
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 230
+        },
+        "hamilton-osm-node-7931466636": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "clinic",
+          "sourceEvidence": {
+            "sourceRecordId": "hamilton-osm-node-7931466636",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "182",
+              "addr:street": "King Street West",
+              "amenity": "clinic",
+              "healthcare": "clinic",
+              "healthcare:speciality": "chiropractic",
+              "name": "The MVMNT Clinic: Lilja Chiropractic + Wellness",
+              "website": "https://www.themvmntclinic.ca/"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/7931466636",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-hamilton-fire-23",
+              "distance": 414.1508209784125,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 414
+            },
+            {
+              "baseId": "ems-hamilton-ems-23",
+              "distance": 414.150821171036,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 414
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 223
+        },
+        "hamilton-osm-way-775735106": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "library",
+          "sourceEvidence": {
+            "sourceRecordId": "hamilton-osm-way-775735106",
+            "category": null,
+            "tags": {
+              "addr:city": "Hamilton",
+              "addr:housenumber": "285",
+              "addr:postcode": "L8P 4C2",
+              "addr:street": "Locke Street South",
+              "amenity": "library",
+              "building": "yes",
+              "contact:facebook": "hamiltonpubliclibrary",
+              "contact:instagram": "hamiltonlibrary",
+              "contact:twitter": "HamiltonLibrary",
+              "email": "dbernard@hpl.ca",
+              "internet_access": "wlan",
+              "name": "Hamilton Public Library - Locke Branch",
+              "opening_hours": "Mo-Th 09:00-19:00; Fr 09:00-18:00; Sa 09:00-17:00",
+              "operator": "Hamilton Public Library",
+              "operator:short": "HPL",
+              "operator:type": "public",
+              "operator:wikidata": "Q5645111",
+              "operator:wikipedia": "en:Hamilton Public Library (Ontario)",
+              "phone": "+1-905-546-3200",
+              "website": "https://www.hpl.ca/locke"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/775735106",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-hamilton-fire-11",
+              "distance": 966.8857198199543,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 967
+            },
+            {
+              "baseId": "ems-hamilton-ems-1",
+              "distance": 1787.2452875122856,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1787
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 216
+        },
+        "hamilton-osm-way-255269311": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "hamilton-osm-way-255269311",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "440",
+              "addr:street": "York Boulevard",
+              "building": "industrial"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/255269311",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-hamilton-fire-11",
+              "distance": 749.8043489592819,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 750
+            },
+            {
+              "baseId": "ems-hamilton-ems-1",
+              "distance": 1601.993557034716,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1602
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 215
+        },
+        "hamilton-osm-way-263121972": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "hamilton-osm-way-263121972",
+            "category": null,
+            "tags": {
+              "addr:city": "Dundas",
+              "addr:housenumber": "4000",
+              "addr:postcode": "L9H 7S9",
+              "addr:street": "Creekside Drive",
+              "building": "apartments",
+              "building:levels": "9"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/263121972",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-hamilton-fire-23",
+              "distance": 126.92894794090788,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 127
+            },
+            {
+              "baseId": "ems-hamilton-ems-23",
+              "distance": 126.92894741489908,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 127
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 214
+        },
+        "hamilton-osm-node-13903108307": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "doctors",
+          "sourceEvidence": {
+            "sourceRecordId": "hamilton-osm-node-13903108307",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "648",
+              "addr:street": "Upper James Street",
+              "amenity": "doctors",
+              "name": "Dr. Alipio"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/13903108307",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-hamilton-fire-3",
+              "distance": 1977.766514964845,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1978
+            },
+            {
+              "baseId": "ems-hamilton-ems-3",
+              "distance": 1977.7665151285266,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1978
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 214
+        },
+        "hamilton-osm-way-839462018": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "hamilton-osm-way-839462018",
+            "category": null,
+            "tags": {
+              "addr:city": "Hamilton",
+              "addr:housenumber": "112",
+              "addr:postcode": "L8H 3Z1",
+              "addr:province": "Ontario",
+              "addr:street": "Ottawa Street North",
+              "building": "apartments",
+              "building:flats": "8",
+              "building:levels": "4",
+              "notes": "https://www.forrent.com/on/hamilton/112-ottawa-st-n/qrs7gmz",
+              "year_of_construction": "1928"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/839462018",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-hamilton-fire-9",
+              "distance": 787.3816444125812,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 787
+            },
+            {
+              "baseId": "ems-hamilton-ems-9",
+              "distance": 787.3816445388687,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 787
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 211
+        },
+        "hamilton-osm-way-438221376": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "hamilton-osm-way-438221376",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "880",
+              "addr:street": "Garner Road East",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "check_date": "2025-07-01",
+              "denomination": "united",
+              "name": "Bowman United Church",
+              "religion": "christian",
+              "source": "NRCan-CanVec-7.0"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/438221376",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-hamilton-fire-20",
+              "distance": 909.5227699403465,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 910
+            },
+            {
+              "baseId": "ems-hamilton-ems-20",
+              "distance": 909.5227700020624,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 910
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 208
+        },
+        "hamilton-osm-way-328694123": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "hamilton-osm-way-328694123",
+            "category": null,
+            "tags": {
+              "addr:city": "Hamilton",
+              "addr:housenumber": "11",
+              "addr:postcode": "L8K 4E3",
+              "addr:province": "Ontario",
+              "addr:street": "Woodman Drive South",
+              "building": "apartments",
+              "name": "Sunrise Towers"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/328694123",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-hamilton-fire-8",
+              "distance": 1127.9381564662385,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1128
+            },
+            {
+              "baseId": "ems-hamilton-ems-7",
+              "distance": 1715.2905135471458,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1715
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 207
+        },
+        "hamilton-osm-way-549932471": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "hamilton-osm-way-549932471",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "541",
+              "addr:street": "James Street North",
+              "amenity": "place_of_worship",
+              "attribution": "Natural Resources Canada",
+              "building": "church",
+              "canvec:CODE": "2010390",
+              "canvec:UUID": "d3e95293f43148b2b61cc294293f82aa",
+              "check_date": "2025-06-01",
+              "name": "Beth-Eden Church",
+              "phone": "+1 2896670077",
+              "religion": "christian",
+              "source": "CanVec_Import_2009"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/549932471",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-hamilton-fire-1",
+              "distance": 1596.9506409362043,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1597
+            },
+            {
+              "baseId": "ems-hamilton-ems-30",
+              "distance": 1066.575930475863,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 5,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1067
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 205
+        },
+        "hamilton-osm-node-7793058345": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "library",
+          "sourceEvidence": {
+            "sourceRecordId": "hamilton-osm-node-7793058345",
+            "category": null,
+            "tags": {
+              "addr:city": "Flamborough",
+              "addr:housenumber": "1803",
+              "addr:street": "Brock Road",
+              "amenity": "library",
+              "name": "Hamilton Public Library - Freelton Branch",
+              "operator": "Hamilton Public Library",
+              "operator:type": "public"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/7793058345",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-hamilton-fire-28",
+              "distance": 14.597386354032507,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": true,
+              "currentNewFirstDue": 1,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 15
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 204
+        },
+        "hamilton-osm-node-13903031804": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "hamilton-osm-node-13903031804",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "606",
+              "addr:street": "Upper James Street",
+              "amenity": "place_of_worship",
+              "contact:facebook": "DRCHamilton",
+              "name": "Divine Restoration Centre",
+              "opening_hours": "We 19:30-20:30; Fr 19:30-21:30; Su 10:00-11:30",
+              "phone": "+1-289-925-3923",
+              "website": "http://www.drchamilton.org"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/13903031804",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-hamilton-fire-3",
+              "distance": 2157.091033889765,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2157
+            },
+            {
+              "baseId": "ems-hamilton-ems-3",
+              "distance": 2157.0910341008616,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2157
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 201
+        },
+        "hamilton-ontario-private-school-883137-960": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "hamilton-ontario-private-school-883137-960",
+            "category": "school",
+            "tags": null,
+            "sourceUrls": [
+              "https://data.ontario.ca/dataset/private-school-location-list",
+              "https://data.ontario.ca/dataset/07586958-ffd4-4293-aec0-3b32e0f7de7b/resource/b0fef8bb-8b07-4962-8192-bbf899195cd5/download/private_school_location_list_en_2.xlsx"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-hamilton-fire-8",
+              "distance": 440.0815646213006,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 440
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 177
+        },
+        "hamilton-odhf-dfbcffdac431b537bd6bd50cdb517497": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "hospital",
+          "sourceEvidence": {
+            "sourceRecordId": "hamilton-odhf-dfbcffdac431b537bd6bd50cdb517497",
+            "category": "hospital",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://geohub.lio.gov.on.ca/datasets/e1e5983c59ff497baddf75f1d2bb4add_26/explore"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-hamilton-fire-11",
+              "distance": 1362.9930989306006,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1363
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 176
+        },
+        "hamilton-ontario-private-school-881605-607": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "hamilton-ontario-private-school-881605-607",
+            "category": "school",
+            "tags": null,
+            "sourceUrls": [
+              "https://data.ontario.ca/dataset/private-school-location-list",
+              "https://data.ontario.ca/dataset/07586958-ffd4-4293-aec0-3b32e0f7de7b/resource/b0fef8bb-8b07-4962-8192-bbf899195cd5/download/private_school_location_list_en_2.xlsx"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-hamilton-fire-7",
+              "distance": 2415.6937685609596,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 2416
+            },
+            {
+              "baseId": "ems-hamilton-ems-7",
+              "distance": 2415.693768713227,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 2416
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 159
+        },
+        "hamilton-osm-way-97929056": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "hamilton-osm-way-97929056",
+            "category": null,
+            "tags": {
+              "addr:city": "Hamilton",
+              "addr:housenumber": "1393",
+              "addr:postcode": "L8H 1W2",
+              "addr:street": "Cannon Street East",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "denomination": "roman_catholic",
+              "name": "Giáo Xứ Đức Mẹ Việt Nam",
+              "name:en": "Our Lady of Vietnam Catholic Church",
+              "name:vi": "Giáo Xứ Đức Mẹ Việt Nam",
+              "old_name": "Holy Family Roman Catholic Church",
+              "operator": "Roman Catholic Diocese of Hamilton",
+              "operator:wikidata": "Q869416",
+              "religion": "christian",
+              "source": "NRCan-CanVec-7.0",
+              "wikidata": "Q131193590"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/97929056",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-hamilton-fire-9",
+              "distance": 170.42623870906326,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 170
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 158
+        },
+        "hamilton-osm-way-429977236": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "hamilton-osm-way-429977236",
+            "category": null,
+            "tags": {
+              "addr:city": "Freelton",
+              "addr:housenumber": "280",
+              "addr:postcode": "L8B 1H6",
+              "addr:street": "Concession 10 East",
+              "amenity": "school",
+              "fax": "+1-905-659-0901",
+              "isced:level": "1;2",
+              "name": "Balaclava Public School",
+              "operator": "Hamilton-Wentworth District School Board",
+              "operator:short": "HWDSB",
+              "operator:type": "public",
+              "operator:wikidata": "Q5644811",
+              "operator:wikipedia": "en:Hamilton-Wentworth District School Board",
+              "phone": "+1-905-659-3396",
+              "school:language": "english"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/429977236",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-hamilton-fire-28",
+              "distance": 3609.3840092526216,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": true,
+              "currentNewFirstDue": 1,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 3609
+            }
+          ],
+          "twoGenuineCrossStreetClues": false,
+          "oneClueException": "No unselected accepted two-clue source in this priority family for the targeted review base(s); high-value source family retained.",
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 155
+        }
+      }
+    },
+    "note": "Add-only source-validated priority facilities; geographic review reasons are not operational districts. Station assignments require independent directed-road audit."
+  },
+  "routeCandidateExpansion": {
+    "reviewedOn": "2026-10-29",
+    "promotedIds": [
+      "hamilton-osm-node-1906485552",
+      "hamilton-osm-way-837166956",
+      "hamilton-osm-node-1133424554",
+      "hamilton-odef-c4082d645b23b35946f1",
+      "hamilton-osm-node-1906485551",
+      "hamilton-osm-node-2267651407",
+      "hamilton-osm-node-1133425416",
+      "hamilton-osm-way-288967061",
+      "hamilton-osm-node-2267651356",
+      "hamilton-osm-node-906645161",
+      "hamilton-osm-node-1133416305",
+      "hamilton-osm-node-1134743846",
+      "hamilton-osm-node-1907200574",
+      "hamilton-osm-node-1133418784",
+      "hamilton-osm-node-1134746402",
+      "hamilton-osm-node-906643431",
+      "hamilton-osm-node-1907190142",
+      "hamilton-osm-node-906648594",
+      "hamilton-odsrf-4dbc82f89a62f40997c9a187865d315d",
+      "hamilton-osm-node-1907155936",
+      "hamilton-osm-node-1907156211",
+      "hamilton-odsrf-c34fd484c37ef4830ea43e52cad30c08",
+      "hamilton-osm-node-1907155054",
+      "hamilton-osm-node-4069729448",
+      "hamilton-odhf-c8a135898a832e84ac627df664a73420",
+      "hamilton-osm-node-3295721963",
+      "hamilton-osm-node-1907200609",
+      "hamilton-osm-node-1907192367",
+      "hamilton-osm-node-9564973317",
+      "hamilton-osm-node-4028777876",
+      "hamilton-osm-node-906646573",
+      "hamilton-osm-node-906640947"
+    ],
+    "candidateVerification": {
+      "pass": true,
+      "sourcePoolSha256": "a248336243b1499c711972f55998af6aba7b082c47e456fe152e294844e2e704",
+      "candidateArraySha256": "d8d73e14bfcb69a1a5a176d9572b137073b8ad6767f80e9aedb09dd299a7c3a1"
+    },
+    "selection": "Only source-verified additional locations used by independently audited station exercises are promoted; existing canonical IDs and fields remain unchanged."
+  },
+  "evidencePathConvention": {
+    "repositoryPaths": "Paths beginning cities/ are repository-relative.",
+    "externalBuildCache": "external-build-cache/ labels identify historical, reproducible build artifacts that are not shipped; adjacent SHA-256 values identify the exact reviewed bytes.",
+    "reviewScope": "Priority facility review records describe the selection-time review. Final integrated route and runtime validation is recorded in docs/city-call-validation-2026-10-29.md."
+  }
+}

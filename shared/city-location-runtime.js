@@ -42,7 +42,9 @@
       serviceConfig,futureBases:pack.bases.filter(base=>base.status!=='active' || !base.selectionEligible),constructionProjects:pack.constructionProjects || []};
     window.PTBO_ACTIVE_CITY=window.PTBO_CITY_PACKAGE;
     window.PTBO_STATIONS=profiles.fire.bases;
-    window.PTBO_DISPATCH_DATA_VERSION='ontario-geo-1';
+    // Legacy previews can adopt a Geo pack without retiring their saved edits.
+    window.PTBO_DISPATCH_DATA_VERSION=typeof pack.dispatchDataVersion==='string' && pack.dispatchDataVersion.trim()
+      ? pack.dispatchDataVersion.trim() : 'ontario-geo-1';
     window.PTBO_DISPATCH_DATA_READY=Promise.resolve(pack.locations);
   }
   let loading=null;

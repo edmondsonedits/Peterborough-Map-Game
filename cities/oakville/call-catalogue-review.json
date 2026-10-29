@@ -1,0 +1,559 @@
+{
+  "schemaVersion": 1,
+  "coverage": {
+    "cityId": "oakville",
+    "inputOfficial": 223,
+    "inputOsm": 2106,
+    "inputMajorRoad": 804,
+    "existing": 25,
+    "accepted": 1644,
+    "selected": 180,
+    "target": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "existingByDifficulty": {
+      "easy": 10,
+      "medium": 5,
+      "hard": 5
+    },
+    "selectedByDifficulty": {
+      "easy": 90,
+      "medium": 45,
+      "hard": 45
+    },
+    "totalByDifficulty": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "deficits": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "baseStrata": [
+      {
+        "id": "fire-oakville-fire-9",
+        "selected": 14,
+        "available": 58,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-oakville-fire-3",
+        "selected": 14,
+        "available": 257,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-oakville-fire-4",
+        "selected": 14,
+        "available": 110,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-oakville-fire-6",
+        "selected": 14,
+        "available": 152,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-oakville-fire-1",
+        "selected": 14,
+        "available": 213,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-oakville-fire-7",
+        "selected": 14,
+        "available": 123,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-oakville-fire-5",
+        "selected": 14,
+        "available": 69,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-oakville-fire-2",
+        "selected": 14,
+        "available": 142,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-oakville-fire-8",
+        "selected": 13,
+        "available": 33,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-oakville-ems-2",
+        "selected": 14,
+        "available": 139,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-oakville-ems-12",
+        "selected": 14,
+        "available": 139,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-oakville-ems-14",
+        "selected": 13,
+        "available": 68,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-oakville-ems-15",
+        "selected": 14,
+        "available": 141,
+        "method": "nearest-geographic-base-for-selection-only"
+      }
+    ],
+    "sharedBaseline": 20,
+    "baselineByService": {
+      "fire": {
+        "easy": 10,
+        "medium": 5,
+        "hard": 5
+      },
+      "ems": {
+        "easy": 10,
+        "medium": 10,
+        "hard": 5
+      }
+    },
+    "serviceTotalsByDifficulty": {
+      "fire": {
+        "easy": 100,
+        "medium": 50,
+        "hard": 50
+      },
+      "ems": {
+        "easy": 100,
+        "medium": 55,
+        "hard": 50
+      }
+    },
+    "serviceDeficits": {
+      "fire": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      },
+      "ems": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "rejected": 1489,
+    "rejectionCounts": {
+      "unresolved-2020-source-currentness": 14,
+      "production-snap-not-ground-public-road": 982,
+      "production-snap-over-80m-or-missing": 24,
+      "production-snap-wrong-street": 326,
+      "not-one-exact-civic-number-and-street": 71,
+      "duplicate-existing-or-accepted-address-or-named-site": 58,
+      "unresolved-official-coordinate-or-current-address-conflict": 1,
+      "no-genuine-connected-cross-street-within-1500m": 12,
+      "outside-verified-municipality-or-boundary-unavailable": 1
+    },
+    "oneStreetExceptions": 58
+  },
+  "independentAudit": {
+    "cityId": "oakville",
+    "selected": 180,
+    "accepted": 1644,
+    "crossStreetEvidence": 2831,
+    "oneStreet": 457,
+    "maxGap": 71.05864773987467,
+    "pass": true
+  },
+  "priorityFacilityExpansion": {
+    "reviewedOn": "2026-10-29",
+    "addedIds": [
+      "oakville-odef-928fb54e831de43fd473",
+      "oakville-osm-node-3994352177",
+      "oakville-osm-way-1378724546",
+      "oakville-osm-way-53747642",
+      "oakville-osm-way-170282274",
+      "oakville-osm-way-76948661",
+      "oakville-osm-node-11190099190"
+    ],
+    "verification": {
+      "cityId": "oakville",
+      "additions": 7,
+      "proposalSha256": "0596dc7ea1f56389a23ea3bff843ea511e0e17549ad65cdaa11d4758aa450520",
+      "pass": true,
+      "checks": [
+        "IDs absent from current shared/legacy/care catalogue",
+        "row exactly equals accepted source record",
+        "full per-record provenance exactly equals accepted pool",
+        "factual category/tags and coordinates match raw source record",
+        "source point and URLs unchanged",
+        "no normalized civic-address/near-identical-site duplicates",
+        "max40 per city",
+        "per-base rationale present; no dispatch ownership claim"
+      ]
+    },
+    "review": {
+      "purpose": "Bounded source-preserving priority facility and local variety additions; no recognition tier rewrites.",
+      "sourcePool": "external-build-cache/canonical-catalogues-reviewed/oakville/accepted-candidates.json",
+      "sourcePoolSha256": "790c35249cb119b02ee4e85e0d151489524492b676eea12efdf0fd52eec54384",
+      "selectedDescriptor": "cities/oakville/training-data.json",
+      "selectedDescriptorSha256": "b934c9edac1404e6063cc6aa464b964084dd6e081590a8aecef013ff2d0b8233",
+      "routeEvidence": "cities/oakville/training-data.json",
+      "routeEvidenceScope": "production",
+      "selectionRules": {
+        "maxPerCity": 40,
+        "maxPotentialAddsPerBase": 6,
+        "maxPotentialAddsForConfirmedZeroToTwoBase": 10,
+        "twoCluePriority": true,
+        "maximumStraightLineBaseReviewDistanceMetres": 6000
+      },
+      "limitations": [
+        "At this selection-time review: Every row passed the existing all-accepted geographic/source/clue audit. These additions have not been graph-assigned or route-audited.",
+        "Published Fire polygons are respected for review proximity; EMS and other Fire review strata use straight-line proximity only. These are not dispatch ownership assignments.",
+        "Full original accepted source point, ID, address, recognition tier, incident profile and provenance are unchanged. Current-open status is not newly verified."
+      ],
+      "rationales": {
+        "oakville-odef-928fb54e831de43fd473": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "oakville-odef-928fb54e831de43fd473",
+            "category": "school",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/37-26-0001/372600012022001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/en/pub/37-26-0001/2022001/ODEF_v3.0.zip",
+              "https://data.ontario.ca/dataset/school-information-and-student-demographics",
+              "https://data.ontario.ca/dataset/ontario-public-school-contact-information",
+              "https://data.ontario.ca/dataset/fb3a7c18-90af-453e-bc0a-a76ecc471862/resource/f3a8c2a3-09d9-4715-9044-d8a0189f572c/download/public_school_contact_list_september2026_en.txt"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-oakville-fire-8",
+              "distance": 523.1595565977168,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 523
+            },
+            {
+              "baseId": "ems-oakville-ems-14",
+              "distance": 573.1416223367372,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 573
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 222
+        },
+        "oakville-osm-node-3994352177": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "clinic",
+          "sourceEvidence": {
+            "sourceRecordId": "oakville-osm-node-3994352177",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "3050",
+              "addr:street": "Preserve Drive",
+              "amenity": "clinic",
+              "healthcare": "clinic",
+              "name": "Orthopedics In Motion"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/3994352177",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-oakville-fire-9",
+              "distance": 1568.4680320340358,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1568
+            },
+            {
+              "baseId": "ems-oakville-ems-2",
+              "distance": 1560.0165374198168,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1560
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 216
+        },
+        "oakville-osm-way-1378724546": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "oakville-osm-way-1378724546",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "2450",
+              "addr:street": "Old Bronte Road",
+              "building": "apartments"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/1378724546",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-oakville-fire-8",
+              "distance": 79.53297311065272,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 80
+            },
+            {
+              "baseId": "ems-oakville-ems-14",
+              "distance": 95.83841739450162,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 96
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 214
+        },
+        "oakville-osm-way-53747642": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "oakville-osm-way-53747642",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "2250",
+              "addr:street": "Eighth Line",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "name": "Oakridge Bible Chapel",
+              "religion": "christian",
+              "source": "Yahoo",
+              "website": "https://oakridgebiblechapel.org/"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/53747642",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-oakville-fire-7",
+              "distance": 1841.4999741497436,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1841
+            },
+            {
+              "baseId": "ems-oakville-ems-2",
+              "distance": 1328.5541710086031,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1329
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 204
+        },
+        "oakville-osm-way-170282274": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "social facility: group_home",
+          "sourceEvidence": {
+            "sourceRecordId": "oakville-osm-way-170282274",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "180",
+              "addr:postcode": "L6H 0A6",
+              "addr:street": "Oak Park Boulevard",
+              "amenity": "social_facility",
+              "building": "yes",
+              "name": "Chartwell Oakville",
+              "operator": "Chartwell",
+              "operator:type": "private",
+              "operator:wikidata": "Q5086953",
+              "social_facility": "group_home",
+              "social_facility:for": "senior",
+              "source": "Bing"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/170282274",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-oakville-fire-4",
+              "distance": 1639.979149716575,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1640
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 160
+        },
+        "oakville-osm-way-76948661": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "oakville-osm-way-76948661",
+            "category": null,
+            "tags": {
+              "addr:city": "Oakville",
+              "addr:housenumber": "89",
+              "addr:street": "Dunn Street",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "check_date": "2025-12-18",
+              "denomination": "presbyterian",
+              "name": "Knox Presbyterian Church",
+              "note": "Knox Oakville",
+              "operator": "The Presbyterian Church in Canada",
+              "religion": "christian",
+              "url": "https://knoxoakville.com",
+              "wikidata": "Q6423582"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/76948661",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-oakville-fire-3",
+              "distance": 1030.2815493627284,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1030
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 155
+        },
+        "oakville-osm-node-11190099190": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "clinic",
+          "sourceEvidence": {
+            "sourceRecordId": "oakville-osm-node-11190099190",
+            "category": null,
+            "tags": {
+              "addr:city": "Oakville",
+              "addr:country": "CA",
+              "addr:housenumber": "123",
+              "addr:postcode": "L6K 1E2",
+              "addr:province": "Ontario",
+              "addr:street": "Lakeshore Rd W",
+              "check_date": "2025-04-27",
+              "contact:facebook": "Newagespandlaser",
+              "contact:phone": "+1-905-845-2726",
+              "contact:website": "https://newagelaser.com",
+              "healthcare": "clinic",
+              "healthcare:speciality": "medical_spa;_facial_spa;_skin_care_clinic;_hair_removal_service",
+              "name": "New Age Medical Clinic",
+              "opening_hours": "Mo,Su off; Tu,Th 10:00-18:00; We 12:00-18:00; Fr-Sa 10:00-15:00",
+              "operator": "Bev Sikorski",
+              "operator:type": "private",
+              "payment:cash": "yes",
+              "payment:credit_cards": "yes",
+              "payment:debit_cards": "yes",
+              "shop": "beauty"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/11190099190",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-oakville-fire-3",
+              "distance": 194.4415966436723,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 2,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 194
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 139
+        }
+      }
+    },
+    "note": "Add-only source-validated priority facilities; geographic review reasons are not operational districts. Station assignments require independent directed-road audit."
+  },
+  "routeCandidateExpansion": {
+    "reviewedOn": "2026-10-29",
+    "promotedIds": [],
+    "candidateVerification": null,
+    "selection": "Only source-verified additional locations used by independently audited station exercises are promoted; existing canonical IDs and fields remain unchanged."
+  },
+  "evidencePathConvention": {
+    "repositoryPaths": "Paths beginning cities/ are repository-relative.",
+    "externalBuildCache": "external-build-cache/ labels identify historical, reproducible build artifacts that are not shipped; adjacent SHA-256 values identify the exact reviewed bytes.",
+    "reviewScope": "Priority facility review records describe the selection-time review. Final integrated route and runtime validation is recorded in docs/city-call-validation-2026-10-29.md."
+  }
+}

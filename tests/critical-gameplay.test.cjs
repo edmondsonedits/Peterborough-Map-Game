@@ -99,10 +99,10 @@ for (const mode of ['desktop','mobile','directional']) {
   });
 }
 
-async function roads(geojson) {
+async function roads(geojson, extra = {}) {
   const c = context({ simLat:44.3091, simLng:-78.3197, velocity:.000001, currentHeading:0,
     vehicleMarker:null, mapInstance:null, simulationState:'enroute', STATES:{ENROUTE:'enroute'},
-    simulationStep() {}, evaluateDistanceToTarget() {}, fetch:async () => ({ok:true,json:async () => geojson}) });
+    simulationStep() {}, evaluateDistanceToTarget() {}, fetch:async () => ({ok:true,json:async () => geojson}), ...extra });
   c.document.getElementById = () => null;
   vm.runInContext(read('response-simulator/road-collision-core.js'), c);
   await c.PTBO_ROAD_COLLISION.ready;
@@ -111,6 +111,24 @@ async function roads(geojson) {
 const lat = y => 44.3091+y/110540;
 const lng = x => -78.3197+x/(111320*Math.cos(44.3091*Math.PI/180));
 const road = (y,type) => ({ type:'Feature', properties:{highway:type}, geometry:{type:'LineString',coordinates:[[lng(-100),lat(y)],[lng(100),lat(y)]]} });
+
+test('station connector survives yard movement and ends only at a real road', async () => {
+  const base={id:'fire-yard',lat:lat(0),lng:lng(0)},other={id:'other-yard',lat:lat(0),lng:lng(200)};
+  const store={getAll:()=>[base,other],contains:(yard,la,lo)=>Math.abs((la-yard.lat)*110540)<=60 && Math.abs((lo-yard.lng)*111320*Math.cos(44.3091*Math.PI/180))<=60};
+  const c=await roads({type:'FeatureCollection',features:[road(80,'primary')]},{PTBO_BASE_STORE:store});
+  const api=c.PTBO_ROAD_COLLISION;
+  assert.equal(api.beginStationExit(base.lat,base.lng),true);assert.ok(api.state.stationExit,'road requires connector');
+  const sideways=api.resolveMovement(lat(0),lng(0),lat(0),lng(20),.000001);
+  assert.equal(sideways.blocked,false,'turning inside yard remains free');assert.ok(api.state.stationExit,'yard-only movement must not finish connector');
+  const farYard=api.resolveMovement(lat(0),lng(0),lat(0),lng(200),.000001);
+  assert.equal(farYard.blocked,true,'connector cannot jump into a different yard');assert.ok(api.state.stationExit);
+  const offCorridor=api.resolveMovement(lat(59),lng(20),lat(65),lng(20),.000001);
+  assert.equal(offCorridor.blocked,true,'outside-yard movement cannot leave the connector corridor');assert.ok(api.state.stationExit);
+  const approach=api.resolveMovement(lat(59),lng(0),lat(65),lng(0),.000001);
+  assert.equal(approach.blocked,false);assert.ok(api.state.stationExit,'connector persists between yard and road');
+  const arrival=api.resolveMovement(lat(74),lng(0),lat(80),lng(0),.000001);
+  assert.equal(arrival.blocked,false);assert.equal(api.state.stationExit,null,'actual road entry completes connector');
+});
 
 test('overlapping road widths remain drivable when the nearest narrow road excludes a point', async () => {
   const c = await roads({type:'FeatureCollection',features:[road(0,'service'),road(11,'primary')]});

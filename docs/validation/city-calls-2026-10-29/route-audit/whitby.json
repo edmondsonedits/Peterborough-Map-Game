@@ -1,0 +1,63 @@
+{
+  "city": "whitby",
+  "verifiedFingerprint": "9e3daae9688c390fc5be5051f23af0d552bbd87cce50e12fe4e1b3ceb6d8f27a",
+  "halls": [
+    {
+      "id": "fire-whitby-fire-1",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 5591,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-whitby-fire-2",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3723,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-whitby-fire-3",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2570,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-whitby-fire-4",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 3260,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-whitby-fire-5",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 11,
+      "maxRouteMetres": 5131,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-whitby-ems-513",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 5267,
+      "method": "modeled-road-response"
+    }
+  ],
+  "routes": 82,
+  "continuousOrigins": 82,
+  "officialCalls": 0,
+  "modeledCalls": 72,
+  "maxRouteMetres": 5590.524461935616,
+  "minCallsPerHall": 12,
+  "minChallengeCallsPerHall": 11,
+  "supportCalls": 10,
+  "durationMs": 6671
+}

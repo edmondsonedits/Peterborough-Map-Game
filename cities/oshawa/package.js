@@ -4,8 +4,8 @@
   const sourceUrl=new URL(document.currentScript?.src || location.href,location.href);
   const CACHE_VERSION=sourceUrl.searchParams.get('v') || VERSION;
   const config={
-    id:'oshawa',name:'Oshawa',
-    map:{defaultCenter:[43.8971,-78.8658],defaultHeading:180,defaultZoom:15,minZoom:10,maxZoom:19,bounds:[[43.83,-78.98],[44.01,-78.76]]},
+    sceneResponseDrills:true,id:'oshawa',name:'Oshawa',
+    map:{defaultCenter:[43.8971,-78.8658],defaultHeading:180,defaultZoom:15,minZoom:10,maxZoom:19,bounds:[[43.6009699037119,-78.95857818124192],[44.0474236775095,-78.69666526240337]]},
     sources:{
       fire:{type:'static',entries:[
         {number:1,name:'Fire Station 1',shortName:'Stn 1',address:'199 Adelaide Ave W',lat:43.901134,lng:-78.873094},

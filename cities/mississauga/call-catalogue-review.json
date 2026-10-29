@@ -1,0 +1,1676 @@
+{
+  "schemaVersion": 1,
+  "coverage": {
+    "cityId": "mississauga",
+    "inputOfficial": 1381,
+    "inputOsm": 3000,
+    "inputMajorRoad": 2000,
+    "existing": 36,
+    "accepted": 1860,
+    "selected": 181,
+    "target": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "existingByDifficulty": {
+      "easy": 10,
+      "medium": 5,
+      "hard": 5
+    },
+    "selectedByDifficulty": {
+      "easy": 90,
+      "medium": 45,
+      "hard": 46
+    },
+    "totalByDifficulty": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 51
+    },
+    "deficits": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "baseStrata": [
+      {
+        "id": "fire-mississauga-fire-119",
+        "selected": 5,
+        "available": 22,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-mississauga-fire-109",
+        "selected": 5,
+        "available": 30,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-mississauga-fire-122",
+        "selected": 5,
+        "available": 91,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-mississauga-fire-103",
+        "selected": 5,
+        "available": 89,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-mississauga-fire-101",
+        "selected": 5,
+        "available": 78,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-mississauga-fire-112",
+        "selected": 5,
+        "available": 68,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-mississauga-fire-106",
+        "selected": 5,
+        "available": 70,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-mississauga-fire-118",
+        "selected": 5,
+        "available": 74,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-mississauga-fire-120",
+        "selected": 5,
+        "available": 60,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-mississauga-fire-115",
+        "selected": 5,
+        "available": 54,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-mississauga-fire-107",
+        "selected": 5,
+        "available": 64,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-mississauga-fire-125",
+        "selected": 5,
+        "available": 52,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-mississauga-fire-114",
+        "selected": 5,
+        "available": 26,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-mississauga-fire-102",
+        "selected": 5,
+        "available": 96,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-mississauga-fire-105",
+        "selected": 5,
+        "available": 40,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-mississauga-fire-111",
+        "selected": 5,
+        "available": 22,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-mississauga-fire-121",
+        "selected": 5,
+        "available": 45,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-mississauga-fire-117",
+        "selected": 5,
+        "available": 54,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-mississauga-fire-104",
+        "selected": 5,
+        "available": 152,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-mississauga-fire-110",
+        "selected": 5,
+        "available": 48,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-mississauga-fire-108",
+        "selected": 5,
+        "available": 55,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-mississauga-fire-116",
+        "selected": 5,
+        "available": 27,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-mississauga-fire-123",
+        "selected": 5,
+        "available": 30,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-mississauga-ems-streetsville",
+        "selected": 5,
+        "available": 41,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-mississauga-ems-tomken",
+        "selected": 5,
+        "available": 24,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-mississauga-ems-airport",
+        "selected": 5,
+        "available": 15,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-mississauga-ems-east-avenue",
+        "selected": 5,
+        "available": 29,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-mississauga-ems-falbourne",
+        "selected": 5,
+        "available": 8,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-mississauga-ems-goreway",
+        "selected": 5,
+        "available": 21,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-mississauga-ems-kingsway",
+        "selected": 5,
+        "available": 26,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-mississauga-ems-kitimat",
+        "selected": 6,
+        "available": 39,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-mississauga-ems-lorne-park",
+        "selected": 5,
+        "available": 75,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-mississauga-ems-mavis",
+        "selected": 5,
+        "available": 47,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-mississauga-ems-sheridan",
+        "selected": 5,
+        "available": 36,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-mississauga-ems-tedlo",
+        "selected": 5,
+        "available": 75,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-mississauga-ems-winding",
+        "selected": 5,
+        "available": 77,
+        "method": "nearest-geographic-base-for-selection-only"
+      }
+    ],
+    "sharedBaseline": 20,
+    "baselineByService": {
+      "fire": {
+        "easy": 10,
+        "medium": 5,
+        "hard": 5
+      },
+      "ems": {
+        "easy": 10,
+        "medium": 20,
+        "hard": 5
+      }
+    },
+    "serviceTotalsByDifficulty": {
+      "fire": {
+        "easy": 100,
+        "medium": 50,
+        "hard": 51
+      },
+      "ems": {
+        "easy": 100,
+        "medium": 65,
+        "hard": 51
+      }
+    },
+    "serviceDeficits": {
+      "fire": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      },
+      "ems": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "rejected": 4521,
+    "rejectionCounts": {
+      "unresolved-2020-source-currentness": 32,
+      "production-snap-not-ground-public-road": 3548,
+      "unresolved-official-coordinate-or-current-address-conflict": 144,
+      "production-snap-wrong-street": 498,
+      "production-snap-over-80m-or-missing": 159,
+      "not-one-exact-civic-number-and-street": 84,
+      "duplicate-existing-or-accepted-address-or-named-site": 49,
+      "no-genuine-connected-cross-street-within-1500m": 6,
+      "outside-verified-municipality-or-boundary-unavailable": 1
+    },
+    "oneStreetExceptions": 56
+  },
+  "independentAudit": {
+    "cityId": "mississauga",
+    "selected": 181,
+    "accepted": 1860,
+    "crossStreetEvidence": 3135,
+    "oneStreet": 585,
+    "maxGap": 78.60372568716231,
+    "pass": true
+  },
+  "priorityFacilityExpansion": {
+    "reviewedOn": "2026-10-29",
+    "addedIds": [
+      "mississauga-ontario-private-school-669071-272",
+      "mississauga-osm-way-207431292",
+      "mississauga-osm-node-14201590901",
+      "mississauga-osm-way-32878956",
+      "mississauga-osm-way-34080761",
+      "mississauga-osm-way-33184343",
+      "mississauga-osm-way-76910337",
+      "mississauga-osm-way-329058197",
+      "mississauga-osm-way-33302274",
+      "mississauga-osm-way-34551395",
+      "mississauga-osm-way-86113730",
+      "mississauga-osm-way-233577651",
+      "mississauga-osm-way-76346706",
+      "mississauga-osm-way-116420443",
+      "mississauga-ontario-private-school-882306-1198",
+      "mississauga-odhf-7394f4d7cd275acca69b0f10d398ab5a",
+      "mississauga-ontario-private-school-881779-563",
+      "mississauga-ontario-private-school-883234-15",
+      "mississauga-osm-node-11264897915",
+      "mississauga-osm-way-32874934",
+      "mississauga-osm-way-76346130",
+      "mississauga-osm-way-33298473",
+      "mississauga-osm-way-32871964",
+      "mississauga-osm-way-141171633",
+      "mississauga-osm-way-92037205",
+      "mississauga-ontario-private-school-883736-757",
+      "mississauga-odef-9c8a4fa7fa7085ba2c2d",
+      "mississauga-osm-way-34204345",
+      "mississauga-osm-node-12784734127"
+    ],
+    "verification": {
+      "cityId": "mississauga",
+      "additions": 29,
+      "proposalSha256": "b063f25cb198e7825ddcc509267272e4ce617d2d82558b0c0f73429307fa970c",
+      "pass": true,
+      "checks": [
+        "IDs absent from current shared/legacy/care catalogue",
+        "row exactly equals accepted source record",
+        "full per-record provenance exactly equals accepted pool",
+        "factual category/tags and coordinates match raw source record",
+        "source point and URLs unchanged",
+        "no normalized civic-address/near-identical-site duplicates",
+        "max40 per city",
+        "per-base rationale present; no dispatch ownership claim"
+      ]
+    },
+    "review": {
+      "purpose": "Bounded source-preserving priority facility and local variety additions; no recognition tier rewrites.",
+      "sourcePool": "external-build-cache/canonical-catalogues-reviewed/mississauga/accepted-candidates.json",
+      "sourcePoolSha256": "f0204fd13235e238cef3b0faffcc410f528a1f547be5c11a70248594a52bd2bb",
+      "selectedDescriptor": "cities/mississauga/training-data.json",
+      "selectedDescriptorSha256": "d39cd884a73a8a11f4fc45ede7ebc490f0f3e4714ac8c4977aa5eb570dd8a34d",
+      "routeEvidence": "external-build-cache/civic-city-batch/mississauga.json",
+      "routeEvidenceScope": "scratch augmentation proposal; integration/audit status must be checked by root",
+      "selectionRules": {
+        "maxPerCity": 40,
+        "maxPotentialAddsPerBase": 6,
+        "maxPotentialAddsForConfirmedZeroToTwoBase": 10,
+        "twoCluePriority": true,
+        "maximumStraightLineBaseReviewDistanceMetres": 6000
+      },
+      "limitations": [
+        "At this selection-time review: Every row passed the existing all-accepted geographic/source/clue audit. These additions have not been graph-assigned or route-audited.",
+        "Published Fire polygons are respected for review proximity; EMS and other Fire review strata use straight-line proximity only. These are not dispatch ownership assignments.",
+        "Full original accepted source point, ID, address, recognition tier, incident profile and provenance are unchanged. Current-open status is not newly verified."
+      ],
+      "rationales": {
+        "mississauga-ontario-private-school-669071-272": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "mississauga-ontario-private-school-669071-272",
+            "category": "school",
+            "tags": null,
+            "sourceUrls": [
+              "https://data.ontario.ca/dataset/private-school-location-list",
+              "https://data.ontario.ca/dataset/07586958-ffd4-4293-aec0-3b32e0f7de7b/resource/b0fef8bb-8b07-4962-8192-bbf899195cd5/download/private_school_location_list_en_2.xlsx"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-mississauga-fire-104",
+              "distance": 1561.1106322778874,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 5,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1561
+            },
+            {
+              "baseId": "ems-mississauga-ems-east-avenue",
+              "distance": 1887.4564405591448,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1887
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 223
+        },
+        "mississauga-osm-way-207431292": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "mississauga-osm-way-207431292",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "880",
+              "addr:street": "Rangeview Road",
+              "building": "industrial"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/207431292",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-mississauga-fire-102",
+              "distance": 673.4812679806836,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 673
+            },
+            {
+              "baseId": "ems-mississauga-ems-east-avenue",
+              "distance": 268.1152526761155,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 268
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 219
+        },
+        "mississauga-osm-node-14201590901": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "clinic",
+          "sourceEvidence": {
+            "sourceRecordId": "mississauga-osm-node-14201590901",
+            "category": null,
+            "tags": {
+              "addr:city": "Mississauga",
+              "addr:housenumber": "1692",
+              "addr:postcode": "L5J 1J5",
+              "addr:province": "Ontario",
+              "addr:street": "Lakeshore Road West",
+              "amenity": "clinic",
+              "check_date": "2026-09-20",
+              "healthcare": "clinic",
+              "healthcare:speciality": "hyperbaric",
+              "name": "Under Pressure Hyperbaric Treatment Center",
+              "opening_hours": "Mo-Fr 08:00-16:00",
+              "phone": "+1-905-274-2032",
+              "website": "https://underpressurehbot.ca/"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/14201590901",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-mississauga-fire-103",
+              "distance": 1016.2008697948638,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1016
+            },
+            {
+              "baseId": "ems-mississauga-ems-lorne-park",
+              "distance": 1477.9461943346205,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1478
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 218
+        },
+        "mississauga-osm-way-32878956": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "mississauga-osm-way-32878956",
+            "category": null,
+            "tags": {
+              "addr:city": "Mississauga",
+              "addr:housenumber": "3446",
+              "addr:postcode": "L5C 1T8",
+              "addr:province": "ON",
+              "addr:street": "Mavis Road",
+              "building": "industrial",
+              "industrial": "logistics",
+              "name": "Henderson Machinery Moving Inc",
+              "source": "Yahoo"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/32878956",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-mississauga-fire-112",
+              "distance": 1860.9933503673428,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 4,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1861
+            },
+            {
+              "baseId": "ems-mississauga-ems-mavis",
+              "distance": 769.5265142119564,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 770
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 214
+        },
+        "mississauga-osm-way-34080761": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "mississauga-osm-way-34080761",
+            "category": null,
+            "tags": {
+              "addr:city": "Mississauga",
+              "addr:housenumber": "1395",
+              "addr:street": "Williamsport Drive",
+              "building": "apartments"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/34080761",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-mississauga-fire-106",
+              "distance": 277.01704491210916,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 277
+            },
+            {
+              "baseId": "ems-mississauga-ems-winding",
+              "distance": 285.14093435667706,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 285
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 213
+        },
+        "mississauga-osm-way-33184343": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "mississauga-osm-way-33184343",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "2185",
+              "addr:street": "Sheridan Park Drive",
+              "building": "apartments",
+              "building:levels": "14",
+              "operator": "Greenwin"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/33184343",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-mississauga-fire-107",
+              "distance": 1315.7257228001145,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1316
+            },
+            {
+              "baseId": "ems-mississauga-ems-sheridan",
+              "distance": 176.38452524951788,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 176
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 211
+        },
+        "mississauga-osm-way-76910337": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "mississauga-osm-way-76910337",
+            "category": null,
+            "tags": {
+              "addr:city": "Mississauga",
+              "addr:housenumber": "1020",
+              "addr:street": "Shaw Drive",
+              "building": "apartments",
+              "building:colour": "red",
+              "building:levels": "8",
+              "building:material": "brick",
+              "source": "CanVec 6.0 - NRCan"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/76910337",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-mississauga-fire-102",
+              "distance": 895.3368366460403,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 895
+            },
+            {
+              "baseId": "ems-mississauga-ems-east-avenue",
+              "distance": 1117.024159090332,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1117
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 209
+        },
+        "mississauga-osm-way-329058197": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "mississauga-osm-way-329058197",
+            "category": null,
+            "tags": {
+              "addr:city": "Mississauga",
+              "addr:housenumber": "3",
+              "addr:street": "Theodore Drive",
+              "amenity": "place_of_worship",
+              "building": "yes",
+              "name": "Yue Tak Temple",
+              "religion": "taoist"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/329058197",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-mississauga-fire-108",
+              "distance": 171.3144089184354,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 171
+            },
+            {
+              "baseId": "ems-mississauga-ems-streetsville",
+              "distance": 1590.5523750372993,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1591
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 208
+        },
+        "mississauga-osm-way-33302274": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "mississauga-osm-way-33302274",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "965",
+              "addr:street": "Inverhouse Drive",
+              "building": "apartments"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/33302274",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-mississauga-fire-103",
+              "distance": 354.9168016554599,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 355
+            },
+            {
+              "baseId": "ems-mississauga-ems-lorne-park",
+              "distance": 2133.6809694404947,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2134
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 208
+        },
+        "mississauga-osm-way-34551395": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "mississauga-osm-way-34551395",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "1771",
+              "addr:street": "Aimco Boulevard",
+              "building": "industrial",
+              "source": "Yahoo"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/34551395",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-mississauga-fire-117",
+              "distance": 1953.8082191157396,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1954
+            },
+            {
+              "baseId": "ems-mississauga-ems-winding",
+              "distance": 3234.8193661369273,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 3235
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 207
+        },
+        "mississauga-osm-way-86113730": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "mississauga-osm-way-86113730",
+            "category": null,
+            "tags": {
+              "addr:city": "Mississauga",
+              "addr:housenumber": "5961",
+              "addr:street": "Hurontario Street",
+              "amenity": "place_of_worship",
+              "building": "yes",
+              "building:colour": "red",
+              "building:material": "brick",
+              "denomination": "united",
+              "name": "Britannia United Church",
+              "religion": "christian"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/86113730",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-mississauga-fire-114",
+              "distance": 953.7593206586471,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 954
+            },
+            {
+              "baseId": "ems-mississauga-ems-falbourne",
+              "distance": 1101.9042777090178,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1102
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 207
+        },
+        "mississauga-osm-way-233577651": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "mississauga-osm-way-233577651",
+            "category": null,
+            "tags": {
+              "addr:city": "Mississauga",
+              "addr:housenumber": "1405",
+              "addr:street": "Alexandra Avenue",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "denomination": "baptist",
+              "name": "Lakeview Community Chruch",
+              "religion": "christian",
+              "source": "NRCan-CanVec-7.0"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/233577651",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-mississauga-fire-102",
+              "distance": 1289.4780157580683,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1289
+            },
+            {
+              "baseId": "ems-mississauga-ems-east-avenue",
+              "distance": 1465.0648439314227,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1465
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 205
+        },
+        "mississauga-osm-way-76346706": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "mississauga-osm-way-76346706",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "11",
+              "addr:postcode": "L5H 2G1",
+              "addr:street": "Peter Street South",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "denomination": "roman_catholic",
+              "email": "StMaryStaroftheSeaMI@archtoronto.org",
+              "name": "Saint Mary Star of the Sea Roman Catholic Church",
+              "opening_hours": "We-Sa 10:30-16:00; Su 09:00-13:00",
+              "phone": "+1 905 278 2058",
+              "religion": "christian",
+              "website": "https://stmarystarofthesea.ca"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/76346706",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-mississauga-fire-104",
+              "distance": 93.39125799792888,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 5,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 93
+            },
+            {
+              "baseId": "ems-mississauga-ems-lorne-park",
+              "distance": 2858.008168969049,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2858
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 205
+        },
+        "mississauga-osm-way-116420443": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "sports_centre",
+          "sourceEvidence": {
+            "sourceRecordId": "mississauga-osm-way-116420443",
+            "category": null,
+            "tags": {
+              "addr:city": "Mississauga",
+              "addr:housenumber": "1825",
+              "addr:postcode": "L5L1C6",
+              "addr:province": "ON",
+              "addr:street": "Outer Circle",
+              "alt_name": "RAWC",
+              "building": "university",
+              "check_date": "2023-06-26",
+              "leisure": "sports_centre",
+              "name": "Recreation, Athletics & Wellness Centre",
+              "operator": "Department of Recreation Athletics and Wellness",
+              "operator:type": "university",
+              "ref": "01",
+              "short_name": "RA",
+              "source": "Bing",
+              "wikidata": "Q136819994"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/116420443",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-mississauga-fire-107",
+              "distance": 1036.6417518232026,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1037
+            },
+            {
+              "baseId": "ems-mississauga-ems-sheridan",
+              "distance": 2456.7106243933304,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2457
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 203
+        },
+        "mississauga-ontario-private-school-882306-1198": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "mississauga-ontario-private-school-882306-1198",
+            "category": "school",
+            "tags": null,
+            "sourceUrls": [
+              "https://data.ontario.ca/dataset/private-school-location-list",
+              "https://data.ontario.ca/dataset/07586958-ffd4-4293-aec0-3b32e0f7de7b/resource/b0fef8bb-8b07-4962-8192-bbf899195cd5/download/private_school_location_list_en_2.xlsx"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-mississauga-fire-103",
+              "distance": 1569.2418542962703,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1569
+            },
+            {
+              "baseId": "ems-mississauga-ems-lorne-park",
+              "distance": 939.0504658981573,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 939
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 196
+        },
+        "mississauga-odhf-7394f4d7cd275acca69b0f10d398ab5a": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "healthcare (source broad category; no emergency/hospital status inferred)",
+          "sourceEvidence": {
+            "sourceRecordId": "mississauga-odhf-7394f4d7cd275acca69b0f10d398ab5a",
+            "category": "healthcare",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://data.peelregion.ca/datasets/2f28a4aa168e40fba85afda276c7af39_0/explore"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-mississauga-fire-106",
+              "distance": 2022.4427990039865,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2022
+            },
+            {
+              "baseId": "ems-mississauga-ems-winding",
+              "distance": 2004.430625683237,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2004
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 195
+        },
+        "mississauga-ontario-private-school-881779-563": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "mississauga-ontario-private-school-881779-563",
+            "category": "school",
+            "tags": null,
+            "sourceUrls": [
+              "https://data.ontario.ca/dataset/private-school-location-list",
+              "https://data.ontario.ca/dataset/07586958-ffd4-4293-aec0-3b32e0f7de7b/resource/b0fef8bb-8b07-4962-8192-bbf899195cd5/download/private_school_location_list_en_2.xlsx"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-mississauga-fire-114",
+              "distance": 1083.6535987457003,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1084
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 175
+        },
+        "mississauga-ontario-private-school-883234-15": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "mississauga-ontario-private-school-883234-15",
+            "category": "school",
+            "tags": null,
+            "sourceUrls": [
+              "https://data.ontario.ca/dataset/private-school-location-list",
+              "https://data.ontario.ca/dataset/07586958-ffd4-4293-aec0-3b32e0f7de7b/resource/b0fef8bb-8b07-4962-8192-bbf899195cd5/download/private_school_location_list_en_2.xlsx"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-mississauga-fire-120",
+              "distance": 1193.9267970095914,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1194
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 175
+        },
+        "mississauga-osm-node-11264897915": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "clinic",
+          "sourceEvidence": {
+            "sourceRecordId": "mississauga-osm-node-11264897915",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "120",
+              "addr:street": "Lakeshore Road West",
+              "addr:unit": "3",
+              "amenity": "clinic",
+              "check_date": "2025-10-13",
+              "healthcare": "clinic",
+              "name": "Laser Genesis",
+              "phone": "+1 905 891 3833",
+              "website": "https://www.lasergenesis.ca"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/11264897915",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-mississauga-fire-104",
+              "distance": 212.92740334043563,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 5,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 213
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 169
+        },
+        "mississauga-osm-way-32874934": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "mississauga-osm-way-32874934",
+            "category": null,
+            "tags": {
+              "addr:city": "Mississauga",
+              "addr:housenumber": "1630",
+              "addr:postcode": "L5L 1C6",
+              "addr:province": "ON",
+              "addr:street": "Outer Circle",
+              "building": "industrial",
+              "name": "Central Utilities Plant",
+              "operator": "University of Toronto",
+              "ref": "19",
+              "source": "Yahoo"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/32874934",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-mississauga-fire-107",
+              "distance": 1426.5239993786904,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1427
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 163
+        },
+        "mississauga-osm-way-76346130": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "mississauga-osm-way-76346130",
+            "category": null,
+            "tags": {
+              "addr:city": "Mississauga",
+              "addr:housenumber": "35",
+              "addr:street": "Stavebank Road North",
+              "building": "apartments",
+              "building:colour": "red;beige",
+              "building:levels": "11",
+              "operator": "Peel Living"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/76346130",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-mississauga-fire-104",
+              "distance": 644.8630740236579,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 5,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 645
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 158
+        },
+        "mississauga-osm-way-33298473": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "mississauga-osm-way-33298473",
+            "category": null,
+            "tags": {
+              "addr:city": "Mississauga",
+              "addr:housenumber": "935",
+              "addr:street": "Dundas Street East",
+              "building": "apartments"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/33298473",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "ems-mississauga-ems-tedlo",
+              "distance": 1382.241201322686,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1382
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 156
+        },
+        "mississauga-osm-way-32871964": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "mississauga-osm-way-32871964",
+            "category": null,
+            "tags": {
+              "addr:city": "Mississauga",
+              "addr:housenumber": "4010",
+              "addr:postcode": "L5L 3Y6",
+              "addr:province": "Ontario",
+              "addr:street": "Loyalist Drive",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "name": "Iglesia Ni Cristo",
+              "religion": "christian"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/32871964",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-mississauga-fire-123",
+              "distance": 953.0783493192622,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 4,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 953
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 155
+        },
+        "mississauga-osm-way-141171633": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "mississauga-osm-way-141171633",
+            "category": null,
+            "tags": {
+              "addr:city": "Mississauga",
+              "addr:housenumber": "2067",
+              "addr:street": "Stanfield Road",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "denomination": "united",
+              "name": "Applewood United Church",
+              "phone": "+1 905 277 4162",
+              "religion": "christian",
+              "source": "Bing",
+              "website": "https://www.applewoodunited.ca"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/141171633",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "ems-mississauga-ems-tedlo",
+              "distance": 1737.20445138965,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1737
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 153
+        },
+        "mississauga-osm-way-92037205": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "mississauga-osm-way-92037205",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "220",
+              "addr:street": "Forum Drive",
+              "building": "apartments",
+              "building:colour": "beige",
+              "building:levels": "18"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/92037205",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "ems-mississauga-ems-falbourne",
+              "distance": 2622.7633469252482,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2623
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 153
+        },
+        "mississauga-ontario-private-school-883736-757": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "mississauga-ontario-private-school-883736-757",
+            "category": "school",
+            "tags": null,
+            "sourceUrls": [
+              "https://data.ontario.ca/dataset/private-school-location-list",
+              "https://data.ontario.ca/dataset/07586958-ffd4-4293-aec0-3b32e0f7de7b/resource/b0fef8bb-8b07-4962-8192-bbf899195cd5/download/private_school_location_list_en_2.xlsx"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-mississauga-fire-123",
+              "distance": 1122.496031076086,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 4,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 1122
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 145
+        },
+        "mississauga-odef-9c8a4fa7fa7085ba2c2d": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "post-secondary",
+          "sourceEvidence": {
+            "sourceRecordId": "mississauga-odef-9c8a4fa7fa7085ba2c2d",
+            "category": "post-secondary",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/37-26-0001/372600012022001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/en/pub/37-26-0001/2022001/ODEF_v3.0.zip",
+              "https://www.canada.ca/en/employment-social-development/programs/designated-schools.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-mississauga-fire-110",
+              "distance": 1222.8950863377295,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 1223
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 137
+        },
+        "mississauga-osm-way-34204345": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "mississauga-osm-way-34204345",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "315",
+              "addr:street": "Watline Avenue",
+              "building": "industrial",
+              "name": "Delmo Molds",
+              "source": "Yahoo"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/34204345",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-mississauga-fire-114",
+              "distance": 1735.7873894208003,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 1736
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 132
+        },
+        "mississauga-osm-node-12784734127": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "doctors",
+          "sourceEvidence": {
+            "sourceRecordId": "mississauga-osm-node-12784734127",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "4033",
+              "addr:street": "Hurontario Street",
+              "amenity": "doctors",
+              "check_date": "2025-06-28",
+              "healthcare": "doctor",
+              "name": "Children’s Medical Centre"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/12784734127",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "ems-mississauga-ems-mavis",
+              "distance": 2884.3252354733686,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 2884
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 132
+        }
+      }
+    },
+    "note": "Add-only source-validated priority facilities; geographic review reasons are not operational districts. Station assignments require independent directed-road audit."
+  },
+  "routeCandidateExpansion": {
+    "reviewedOn": "2026-10-29",
+    "promotedIds": [
+      "mississauga-osm-way-32815001",
+      "mississauga-osm-node-1347415284",
+      "mississauga-osm-node-932484082",
+      "mississauga-osm-node-1313989586",
+      "mississauga-osm-way-34517148",
+      "mississauga-osm-node-932485830",
+      "mississauga-odhf-58927d586c106f02ffb6c30a5fdd1f49",
+      "mississauga-osm-way-330677111",
+      "mississauga-osm-node-932485662",
+      "mississauga-osm-node-896981283",
+      "mississauga-osm-node-1546681368",
+      "mississauga-osm-node-822191709",
+      "mississauga-osm-node-1546631376",
+      "mississauga-osm-node-932485137",
+      "mississauga-osm-node-1127035678",
+      "mississauga-osm-node-4033698203",
+      "mississauga-osm-node-944815631",
+      "mississauga-odsrf-176b3f1f2c4b339edb32ca7a3c08b5e3",
+      "mississauga-osm-way-76346123",
+      "mississauga-osm-node-1546682409",
+      "mississauga-osm-way-390256421",
+      "mississauga-osm-node-900304260",
+      "mississauga-osm-node-942236434",
+      "mississauga-osm-node-1311244577",
+      "mississauga-osm-node-932485308",
+      "mississauga-odsrf-ca8968e43a6e12de7d59521d07aa29b0",
+      "mississauga-osm-node-1546680997",
+      "mississauga-osm-node-1127023424",
+      "mississauga-osm-node-932484170",
+      "mississauga-osm-node-1127024290",
+      "mississauga-osm-node-932486214",
+      "mississauga-osm-node-1127035759",
+      "mississauga-osm-node-1127034917",
+      "mississauga-osm-node-1127037143",
+      "mississauga-osm-node-822185872",
+      "mississauga-odsrf-e84d27968f295b9f6ce7f2e7bef90fc2",
+      "mississauga-osm-node-1545400959",
+      "mississauga-osm-node-1546683010",
+      "mississauga-osm-node-944813467",
+      "mississauga-osm-node-1127036206",
+      "mississauga-osm-node-1546686434",
+      "mississauga-osm-node-1127039030",
+      "mississauga-osm-node-4033406604",
+      "mississauga-osm-node-1125796890",
+      "mississauga-osm-node-1127025840",
+      "mississauga-osm-node-1545401845",
+      "mississauga-osm-node-1546739255",
+      "mississauga-osm-node-1545401725",
+      "mississauga-osm-node-4033406627"
+    ],
+    "candidateVerification": {
+      "pass": true,
+      "sourcePoolSha256": "f0204fd13235e238cef3b0faffcc410f528a1f547be5c11a70248594a52bd2bb",
+      "candidateArraySha256": "4d75956ce7966da8fece6915b4fc7172aabc8f27482ede1166ccad841b562604"
+    },
+    "selection": "Only source-verified additional locations used by independently audited station exercises are promoted; existing canonical IDs and fields remain unchanged."
+  },
+  "evidencePathConvention": {
+    "repositoryPaths": "Paths beginning cities/ are repository-relative.",
+    "externalBuildCache": "external-build-cache/ labels identify historical, reproducible build artifacts that are not shipped; adjacent SHA-256 values identify the exact reviewed bytes.",
+    "reviewScope": "Priority facility review records describe the selection-time review. Final integrated route and runtime validation is recorded in docs/city-call-validation-2026-10-29.md."
+  }
+}

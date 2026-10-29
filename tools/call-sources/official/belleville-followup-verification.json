@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-29",
+  "reviewCount": 68,
+  "statusCounts": {
+    "corroborated": 58,
+    "corrected": 3,
+    "rejected": 5,
+    "unresolved": 2
+  },
+  "checks": {
+    "pythonSyntax": true,
+    "applyCliHelp": true,
+    "bellevilleRepeatApplicationIdempotent": true,
+    "bellevilleOriginalAliasPreserved": true,
+    "supersededUnresolvedFlagRemoved": true,
+    "addressAndCoordinatesUnchanged": true
+  },
+  "changedPortableFiles": [
+    "official_reviews.py",
+    "independent-source-reviews.json"
+  ],
+  "sha256": {
+    "official_reviews.py": "2a7b149600fb4455b6b6006e3b6e4cfad614d79d189b7dd11f9887edb508a206",
+    "independent-source-reviews.json": "d32ec7147d0171a263c48387733707e395a11a8d5856a7e4105f589342649727"
+  },
+  "note": "Existing full pipeline snapshot verification predates this one-record semantic follow-up. Only Belleville cache stages modified; other 31 remain frozen."
+}

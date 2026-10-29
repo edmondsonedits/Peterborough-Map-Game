@@ -1,90 +1,79 @@
 # City packages
 
-This folder is the geographic data boundary for the emergency-response games.
+This folder supplies geographic data to the shared emergency-response games. Only the selected city loads its heavy road assets; adding another city does not make a Peterborough player download that city's network.
 
-## Architecture
+## Modes and package status
 
-The simulator and Geo Guesser code stay shared. Each city supplies only the information that changes by place: map bounds, road configuration/data references, Fire/EMS bases, hospitals, dispatch data, and city-specific labels.
+Use each registry row's explicit `city.modes` flags for `geo`, `route`, `dispatch` and `explorer`. Historical labels such as `geo-demo` and `base-training` describe package lineage, not current catalogue size or the complete mode contract.
 
-Only the selected city should load its heavy geographic assets. Adding more city folders therefore does **not** make a Peterborough player download Toronto, Oshawa, or any other city's road network.
+All 33 cities expose Geo Guesser and Route Mapping. Seven cities also declare mission Dispatch: Peterborough retains its hospital-transport workflow and Explorer, while Oshawa, Belleville, Scarborough, Pickering, Markham and Toronto now offer Fire/EMS scene-response drills. The six scene-response cities finish both services on-scene and explicitly set `hospitalTransport: false`. The other 26 cities remain Geo/Route-only. The reporter reads registry modes, manifest features and local package configuration; a shared desktop/mobile URL alone is not evidence that a mode is implemented, and capability metadata is not a final mission/browser pass.
 
-## Package status
+Belleville and Scarborough now have general recognition catalogues through their shared training descriptors. The earlier statements that they have no Geo calls, and that thirty twenty-call demos describe all non-Peterborough coverage, are obsolete. The rerunnable [coverage ledger](../docs/city-call-coverage-2026-10-29.md) reports the actual current counts and outstanding targets; its status distinguishes interim runs from the intended final inventory snapshot. Inventory coverage is separate from route/browser verification.
 
-- `playable` — Peterborough's full production package.
-- `base-training` — an existing shared free-driving preview, with dispatch calls unavailable. Oshawa, Pickering, Markham and Toronto also have Geo demos; Belleville and Scarborough do not.
-- `geo-demo` — a researched Geo Guesser demo with twenty calls and Fire/EMS bases. This status does not supply driving roads or dispatch simulation.
+## Location data flow
 
-Launchers must use `city.modes` from `city-registry.js` for each mode: `geo`, `route`, `dispatch` and `explorer`. All 33 cities now support Route Mapping. Peterborough supports all four modes. The six existing previews retain `dispatch: true` to access their existing free-driving simulator. Other cities support Geo and Route Mapping. A common `dispatch.desktop` or `dispatch.mobile` URL is not evidence of dispatch capability.
+`city-registry.js` selects a package. `shared/city-location-runtime.js` loads the selected Geo/package seed, and `shared/dispatch-locations.js` merges that city's `training-data.json` shared locations and care homes while preserving city-scoped saved edits.
 
-## Route Mapping and EMS care homes
+- General canonical recognition locations are the unique-ID union of raw `geo-data.json.locations` and `training-data.json.sharedLocations`. Peterborough's readable authority is `locations.json`, compiled to the shared compressed dispatch payload. Original raw records remain authoritative when a matching ID is repeated in the descriptor.
+- General locations are shared between Fire and EMS and across starting bases. Recognition difficulty is explicit address-recognition metadata; it is not route length or station ownership. Expanded cities retain stable IDs and published easy/medium/hard tiers. Some larger cities legitimately contain more than the minimum 200 locations.
+- `careHomes` contains the Ontario MOHSERLO long-term-care snapshot. Matching civic records within the runtime's 100-metre check are marked as care homes; unmatched homes are EMS-only additions. The EMS policy can keep care homes eligible outside the selected recognition tier, so raw tier counts and actual EMS priority pools must be reported separately.
+- `routeCalls` are distinct station/service exercise records. `routeResponses.bases[].callIds` assigns them to canonical base IDs. An exercise can reference a shared `canonicalCallId`; repeated first-due/support assignments do not create additional city locations. Helper-only station-familiarization destinations are also distinct from the general catalogue.
 
-Each city's `training-data.json` identifies the selected road asset and Ontario MOHSERLO long-term-care homes. The shared dispatch store loads only that city's descriptor, retains canonical coordinates/IDs, and marks matching civic addresses within 100 metres as care homes. Additional homes are EMS-only. Saved edits remain city scoped. The shared EMS priority policy favors care homes in eligible pools while retaining general practice and avoiding immediate repeats where possible.
+`call-provenance.json` retains source-point, licence, retrieval, cross-street and modeled approach evidence for supplemental locations. `call-catalogue-review.json` records selection/rejection and review decisions. Compact runtime records point back to that evidence instead of implying that a building/parcel point is a surveyed vehicle entrance. Fictional incident profiles are training scenarios, not real incident history or hazard assessments.
 
-Peterborough keeps its existing public-road asset and its independently refreshed geospatial source manifest. The other 32 cities have independent `roads.geojson.gz` extracts from the recorded Geofabrik Ontario snapshot, retaining OSM way identity, access and direction tags. Visual tiles remain separate. Extracts include a buffer around the existing training bounds; they are not authoritative municipal boundary polygons. Each descriptor records source checksums/date or the maintained source manifest, and licenses. Only the selected road network is downloaded. Fire routes in the two legacy cities without a general-call catalog (Belleville and Scarborough) use verified fire-station destinations.
+## Bases, ownership and route limits
 
-Route exercises honor mapped one-way streets; the current graph does not include OSM turn-restriction relations, temporary closures or live emergency routing. A base needs a directed connection to an eligible training destination within the mapped network. Toronto's two Island bases have no reachable destination in the current catalog; users can choose another base without an invented mainland connection.
+Selectable bases must be active, explicitly eligible and have finite coordinates. Planned, disputed and active-but-ineligible records remain inspectable in the Geo source data; unknown coordinates must remain `null`, never coerced to zero. `shared/base-locations.js` supplies canonical runtime identities, and `legacyIds` preserves links to older preview/saved records. The [coverage JSON](../docs/city-call-coverage-2026-10-29.json) lists both selectable base ledgers and nonselectable source records without hard-coding a stale base total here.
 
-Build with `scripts/build-city-training.py` and PyOsmium 4.3.1 using the reviewed city descriptors, regional PBF and official MOHSERLO GeoJSON. It rejects missing care-home coverage, filters by community and training bounds, and records source checksums. Care-home catalogs are a training snapshot, not a complete or real-time facility inventory. Copyright: OpenStreetMap contributors (ODbL 1.0); Ontario health-provider data under the Open Government Licence – Ontario.
+Some Fire profiles use published official run-area polygons. Others, including EMS profiles, use declared same-service directed road-cost estimates. Explicit `responseAssignment.role` distinguishes new first-due and support exercises; older unlabelled exercises are not retrospectively claimed to have official first-due ownership. Modeled sharing/support is not an official run card or mutual-aid agreement.
+
+Each selected descriptor identifies its road asset and source snapshot. Peterborough retains its existing public-road asset; other cities use compressed OSM extracts. Extracts preserve way identity and mapped access/direction tags and include a game-bound buffer; these rectangles are not authoritative municipal boundaries. Visual tiles remain separate. Route Mapping's planner honors mapped one-way directions but does not implement the full OSM turn-restriction relation model, live closures, emergency exemptions or real dispatch routing. Dispatch driving has a different enforcement model: **Road boundaries apply; one-way and turn rules are not enforced. Access points are modeled.**
+
+Toronto's Island bases have local assigned exercises and a narrowly reviewed emergency-access supplement. The old assertion that they have no reachable destination is obsolete. Island exercises remain constrained by local topology, and individual coverage targets can remain unmet. The supplement does not create a mainland/ferry connection or grant general access to private roads; consult its exact approved-way evidence and current per-base ledger.
+
+Route quality stores measured distance, meaningful decisions and alternative-route penalties. New published numeric route scores can be summarized in 0–33, 34–66 and 67–100 bins, while legacy decision counts remain separate. These reporting bins are not a claim about fixed UI tier selectors. A successful data inventory does not replace directed graph/finish checks and browser interaction tests against the exact shipped inputs.
 
 ## Standard package layout
 
 ```text
 cities/<city-id>/
-  city.json          # lightweight manifest used by tools/people
-  geo-data.json      # compact Geo runtime data, where available
-  package.js         # existing driving configuration, where available
-  dispatch-data.js   # existing driving dispatch descriptor, where available
-  boundaries.geojson # optional city boundary asset
-  roads.geojson      # optional city-owned/simplified road asset
+  city.json                  # lightweight manifest
+  geo-data.json              # compact Geo seed and researched base records
+  package.js                 # driving configuration, where supported
+  dispatch-data.js           # existing driving descriptor, where supported
+  training-data.json         # shared recognition additions, care homes, route assignments
+  call-provenance.json        # supplemental source/coordinate/access evidence
+  call-catalogue-review.json # source selection/rejection audit
+  roads.geojson.gz            # selected-city road extract, where used
+  response-areas.geojson      # optional official Fire run-area subset
+  emergency-access-roads.geojson # optional narrowly approved supplement
 ```
 
-Large geographic assets may be physically shared with another game when the exact same authoritative file is reused. In that case `city.json` and `package.js` still own the reference, so the simulator never hard-codes another feature's data path.
+An asset may physically remain in an existing game directory when the exact file is intentionally reused. The city manifest/package owns the reference; consumers should not hard-code another feature's data path.
 
-## Peterborough
+## Peterborough and saved edits
 
-Peterborough is the first fully integrated city package as of **v1.6.5**.
+Peterborough's `package.js` owns map bounds, service/base configuration, yards, hospital transport target, EMS alarm defaults, road reference and dispatch descriptor. Its readable 200-location catalogue lives in `locations.json`; regenerate the shared payload with `scripts/build-dispatch-catalog.cjs`. The saved-data version is independent of the release build version and must not be reset merely to refresh labels.
 
-`cities/peterborough/package.js` is now the source of truth for:
+Shared stores use city-specific browser-storage keys. Existing Peterborough edits migrate from older keys, and the immutable published seed remains separate from user deltas. The scene-response integration bridges the Geo/Dispatch dataset version and migrates old preview edits while preserving user changes; a capability update must not reset those saved identities. Label/source review must preserve IDs, civic points, tiers, radii, incident profiles and source-call links. See the [source review](../docs/city-call-source-review-2026-10-29.md) for the dated 31-label benchmark review and its limits.
 
-- map centre, zoom limits and city bounds
-- Fire stations
-- EMS bases
-- base-yard defaults
-- Peterborough Regional Health Centre transport target
-- EMS alarm-filter defaults
-- road-network URL and collision projection origin
-- dispatch control label
-- dispatch dataset version/descriptor
+## Reproduction and reporting
 
-Shared stores are city-aware. Base, hospital and dispatch edits are saved under city-specific browser-storage keys. Existing Peterborough edits are read from the older keys and carried forward automatically.
+The [official and OSM source pipelines](../docs/city-call-source-review-2026-10-29.md) document pinned inputs, hashes, licences, currentness flags and reusable cache commands. OSM attribution is © OpenStreetMap contributors under ODbL 1.0; the selected Ontario and federal open datasets retain their respective open-government licence conditions. Operator/institution name/address corroboration is separate from bulk geometry licensing.
 
-The current Peterborough collision-road GeoJSON and compressed dispatch payload remain physically reused from their existing production asset locations to avoid duplicating megabytes of identical data. They are now referenced through the Peterborough package rather than being the architectural source of truth.
+`scripts/build-city-training.py` constructs the underlying road/care-home descriptors from reviewed inputs. `scripts/build-ontario-geo-data.cjs` reconstructs supplied compact raw Geo seeds from an external reviewed research package; it is not a standalone rebuild of the expanded shared catalogue and its provenance. Review the source-selection and route-generation tools before regeneration, preserving current shared locations, evidence and saved identities.
 
-`cities/city-registry.js` remains the lightweight launcher index. Peterborough keeps its existing call database, runtime and saved-edit migration; it does not use a new `geo-data.json`.
-
-## Ontario Geo demos
-
-Thirty researched municipalities have `geoDataUrl: cities/<id>/geo-data.json` in the registry and `features.geoGuesser: true` plus `data.geoGuesser: geo-data.json` in their manifests. There are 600 calls in total, with 10 Easy, 5 Medium and 5 Hard per city. Each city's single `locations` array is shared across both services and all starting bases. Difficulty describes address recognition, not distance from a base.
-
-The compact schema is version 1:
-
-- `id`, `name`, and the sourced `population` estimate.
-- `map`: municipality bounds, a default center at the first selectable base, default zoom 18 and limits 7–19. Gameplay can center on the chosen base.
-- `bases`: stable IDs/numbers, official numbers, service, name/short name, address, coordinates, status, selection eligibility, facility role, source URL and notes. Where researched, optional `constructionStage`, `expectedOpening` and `constructionProjectIds` preserve the facility's project context, including unknown (`null`) opening dates.
-- `locations`: stable ID, name, `addr`, coordinates, radius, `recognitionDifficulty`, optional `crossStreets`, `custom: false`, source URLs and difficulty reason. Evidence-backed indirect streets retain their `(via …)` display text.
-- `constructionProjects`: compact project history and future-facility metadata, including linked/replaced base IDs, stage, opening estimate and source. Project entries are not additional selectable bases.
-
-All 686 researched base records remain available for inspection. A base is selectable **only** when `status === 'active' && selectionEligible === true`; this yields 582 bases. Planned, disputed and active-but-ineligible records remain in `bases`. Unknown coordinates remain `null`. Runtime consumers must check that both coordinates are finite numbers before using a point; they must not convert `null` to zero.
-
-Optional `bases[].legacyIds` links 45 original preview IDs to their canonical research IDs: Oshawa 8, Pickering 6, Markham 15 and Toronto 16. The builder reads the actual preview factory and packaged fallback data offline, then matches the same service and normalized civic address; two Markham Main Street variants also require the same civic number/street anchor and coordinates within 30 metres. Pickering's `ems-seaton-rdps-2` remains unmatched because its old address lacks a civic number. Canonical IDs and original saved deltas stay unchanged; consumers can resolve these aliases when reading saved edits.
-
-The full research package remains the authority for boundary, coordinate and cross-street evidence. Compact runtime files omit the large research audit and road-graph payloads. They do not call per-city services or introduce map-provider tokens.
-
-Rebuild from the reviewed research package's `cities` directory:
+The coverage reporter does not build graphs or modify production data:
 
 ```sh
-node scripts/build-ontario-geo-data.cjs /path/to/package/cities
-node --test tests/ontario-city-data.test.cjs
+# First run: capture the approved before-state inventory.
+node tools/report-city-call-coverage.cjs --baseline /path/to/baseline.json
+# Later runs reuse the baseline embedded in the generated JSON.
+node tools/report-city-call-coverage.cjs
 ```
 
-The Geo builder checks source IDs and coordinate bounds, writes the thirty compact datasets, and adds Geo manifest fields while preserving existing driving configuration. It does not generate driving runtimes or roads; Route Mapping's separate training-data builder supplies its own road extracts. `package.js` and `dispatch-data.js` are never generated or changed by this command. When changing availability, also update the registry's explicit mode flags.
+It reports before/after city/service recognition pools, EMS-only enrichment, route score/decision metadata, city-scoped unique sites versus assignments, and per-base sources/methods, distances and deficits to 12 distinct local destinations (including civic sites and mapped intersection drills), six new first-due destinations and the three-destination floor. Peterborough remains the unchanged six/base reference benchmark: its 12/new-six figures are stretch comparisons and are separated from expansion failures. `--status final` labels an intended final inventory snapshot; it does not run or certify route/browser tests.
+
+The frozen-data inventory of 2026-10-29 records **7,882 city-scoped canonical IDs**, **8,118 station/service assignments** and **622 selectable bases**. All 33 cities meet the canonical recognition minimums and every selectable base retains the three-destination floor. All 615 non-Peterborough mainland training bases have at least 12 local destinations and six new first-due destinations. Only the two Toronto Island bases remain below those expansion targets, each with four total destinations and one new first-due destination; the published local-topology limits remain visible. Peterborough's five unchanged six/base pools remain the reference benchmark, with stretch targets reported separately. These are inventory findings, not route/browser execution results.
+
+Inventory verification is scoped explicitly as `executionVerifiedByThisInventory: false`: the reporter does not execute missions or browser interactions and makes no pass/fail assessment of them. Release test results belong in the [separate final validation report](../docs/city-call-validation-2026-10-29.md), published after the final suites.

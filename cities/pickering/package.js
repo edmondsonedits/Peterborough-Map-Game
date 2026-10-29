@@ -4,7 +4,7 @@
   const sourceUrl=new URL(document.currentScript?.src || location.href,location.href);
   const CACHE_VERSION=sourceUrl.searchParams.get('v') || VERSION;
   const config={
-    id:'pickering',name:'Pickering',
+    sceneResponseDrills:true,id:'pickering',name:'Pickering',
     map:{defaultCenter:[43.8358,-79.0890],defaultHeading:180,defaultZoom:15,minZoom:10,maxZoom:19,bounds:[[43.78,-79.22],[44.02,-78.96]]},
     sources:{
       fire:{type:'static',entries:[

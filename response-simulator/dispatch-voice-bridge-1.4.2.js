@@ -33,6 +33,13 @@
 
   window.buildCityDispatchPhrase = incident => {
     if (!incident) return '';
+    if (city?.features?.sceneResponseDrills) {
+      const base=window.PTBO_SERVICE?.getBase?.();
+      const support=typeof supportExerciseLabel==='function' ? supportExerciseLabel(incident) : '';
+      const role=incident.locationKind==='mapped-intersection' ? 'mapped intersection exercise' : support ? support.replace(' · ', ', ') : 'response exercise';
+      const place=incident.name===incident.addr ? incident.addr : `${incident.name}, ${incident.addr}`;
+      return `${base?.name || 'Selected base'}, ${role} at ${place}, for ${incident.sub}.`;
+    }
     const servicePhrase = window.PTBO_SERVICE?.dispatchPhrase(incident);
     if (servicePhrase) return servicePhrase;
     const primary = selectedStation();

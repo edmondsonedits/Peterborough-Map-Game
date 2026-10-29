@@ -1,0 +1,135 @@
+{
+  "city": "markham",
+  "verifiedFingerprint": "7d4f306529fd83cf9613a80ae1aedc2bff361e15b8a5e8d30bae36e13e91e44e",
+  "halls": [
+    {
+      "id": "fire-markham-fire-9-1",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 5234,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-markham-fire-9-2",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3923,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-markham-fire-9-3",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 5220,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-markham-fire-9-4",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3739,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-markham-fire-9-5",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2942,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-markham-fire-9-6",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3780,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-markham-fire-9-7",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 4486,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-markham-fire-9-8",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2896,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-markham-fire-9-9",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 3466,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-markham-ems-23",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 9,
+      "maxRouteMetres": 2682,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-markham-ems-24",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3614,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-markham-ems-25",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 4918,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-markham-ems-26",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 4372,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-markham-ems-27",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 4898,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-markham-ems-29",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2586,
+      "method": "modeled-road-response"
+    }
+  ],
+  "routes": 198,
+  "continuousOrigins": 198,
+  "officialCalls": 0,
+  "modeledCalls": 180,
+  "maxRouteMetres": 5233.60095184281,
+  "minCallsPerHall": 12,
+  "minChallengeCallsPerHall": 9,
+  "supportCalls": 18,
+  "durationMs": 21771
+}

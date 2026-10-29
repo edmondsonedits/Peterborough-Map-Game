@@ -1,0 +1,131 @@
+{
+  "reviewDate": "2026-10-29",
+  "reviewManifestSha256": "d21b0ad4b79fcbb302dee75a40bc9d8bb6ef5953992cb49362c160c44067f040",
+  "reviewCount": 70,
+  "statusCounts": {
+    "corroborated": 60,
+    "corrected": 3,
+    "rejected": 5,
+    "unresolved": 2
+  },
+  "pythonChecks": [
+    {
+      "family": "official",
+      "file": "acquire_lode.py",
+      "syntax": "pass",
+      "helpExitCode": 0
+    },
+    {
+      "family": "official",
+      "file": "acquire_ontario_schools.py",
+      "syntax": "pass",
+      "helpExitCode": 0
+    },
+    {
+      "family": "official",
+      "file": "acquire_snapshot.py",
+      "syntax": "pass",
+      "helpExitCode": 0
+    },
+    {
+      "family": "official",
+      "file": "apply_independent_reviews.py",
+      "syntax": "pass",
+      "helpExitCode": 0
+    },
+    {
+      "family": "official",
+      "file": "normalize_lode.py",
+      "syntax": "pass",
+      "helpExitCode": 0
+    },
+    {
+      "family": "official",
+      "file": "official_common.py",
+      "syntax": "pass"
+    },
+    {
+      "family": "official",
+      "file": "official_reviews.py",
+      "syntax": "pass"
+    },
+    {
+      "family": "official",
+      "file": "refine_bundles.py",
+      "syntax": "pass",
+      "helpExitCode": 0
+    },
+    {
+      "family": "official",
+      "file": "validate_bundles.py",
+      "syntax": "pass",
+      "helpExitCode": 0
+    },
+    {
+      "family": "osm",
+      "file": "acquire_osm.py",
+      "syntax": "pass",
+      "helpExitCode": 0
+    },
+    {
+      "family": "osm",
+      "file": "apply_osm_reviews.py",
+      "syntax": "pass",
+      "helpExitCode": 0
+    },
+    {
+      "family": "osm",
+      "file": "enrich_entrances.py",
+      "syntax": "pass",
+      "helpExitCode": 0
+    },
+    {
+      "family": "osm",
+      "file": "extract_entrances.py",
+      "syntax": "pass",
+      "helpExitCode": 0
+    },
+    {
+      "family": "osm",
+      "file": "extract_osm.py",
+      "syntax": "pass",
+      "helpExitCode": 0
+    },
+    {
+      "family": "osm",
+      "file": "major_road_supplements.py",
+      "syntax": "pass",
+      "helpExitCode": 0
+    },
+    {
+      "family": "osm",
+      "file": "normalize_bundles.py",
+      "syntax": "pass",
+      "helpExitCode": 0
+    },
+    {
+      "family": "osm",
+      "file": "osm_reviews.py",
+      "syntax": "pass"
+    },
+    {
+      "family": "osm",
+      "file": "target_toronto_candidates.py",
+      "syntax": "pass",
+      "helpExitCode": 0
+    },
+    {
+      "family": "osm",
+      "file": "validate_bundles.py",
+      "syntax": "pass",
+      "helpExitCode": 0
+    }
+  ],
+  "checksScope": "Portable syntax and --help only. No raw downloads or full normalization/route/browser run performed by this check.",
+  "officialPinnedOfflineCacheChecks": {
+    "resources": 8,
+    "verified": 8,
+    "downloads": 0,
+    "exitCode": 0
+  }
+}

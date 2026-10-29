@@ -1,0 +1,34 @@
+[
+  {
+    "baseId": "ems-toronto-ems-2794777",
+    "id": "toronto-osm-node-13882951203"
+  },
+  {
+    "baseId": "ems-toronto-ems-2911467",
+    "id": "toronto-odef-13132c95876e87288f60"
+  },
+  {
+    "baseId": "ems-toronto-ems-4061713",
+    "id": "toronto-osm-way-122204300"
+  },
+  {
+    "baseId": "ems-toronto-ems-4061713",
+    "id": "toronto-osm-way-184484915"
+  },
+  {
+    "baseId": "ems-toronto-ems-1793120",
+    "id": "toronto-osm-way-34614787"
+  },
+  {
+    "baseId": "ems-toronto-ems-2135734",
+    "id": "toronto-odef-24d181372a35c07852a0"
+  },
+  {
+    "baseId": "ems-ottawa-ems-439",
+    "id": "ottawa-osm-way-295420235"
+  },
+  {
+    "baseId": "ems-ottawa-ems-439",
+    "id": "ottawa-odef-ef578b0640a928ade830"
+  }
+]

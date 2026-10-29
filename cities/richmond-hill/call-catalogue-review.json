@@ -1,0 +1,305 @@
+{
+  "schemaVersion": 1,
+  "coverage": {
+    "cityId": "richmond-hill",
+    "inputOfficial": 193,
+    "inputOsm": 1867,
+    "inputMajorRoad": 670,
+    "existing": 25,
+    "accepted": 1672,
+    "selected": 180,
+    "target": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "existingByDifficulty": {
+      "easy": 10,
+      "medium": 5,
+      "hard": 5
+    },
+    "selectedByDifficulty": {
+      "easy": 90,
+      "medium": 45,
+      "hard": 45
+    },
+    "totalByDifficulty": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "deficits": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "baseStrata": [
+      {
+        "id": "fire-richmond-hill-fire-8-1",
+        "selected": 22,
+        "available": 203,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-richmond-hill-fire-8-2",
+        "selected": 24,
+        "available": 338,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-richmond-hill-fire-8-3",
+        "selected": 22,
+        "available": 191,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-richmond-hill-fire-8-4",
+        "selected": 23,
+        "available": 196,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-richmond-hill-fire-8-5",
+        "selected": 22,
+        "available": 56,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-richmond-hill-fire-8-6",
+        "selected": 23,
+        "available": 344,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-richmond-hill-ems-28",
+        "selected": 22,
+        "available": 205,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-richmond-hill-ems-85",
+        "selected": 22,
+        "available": 139,
+        "method": "nearest-geographic-base-for-selection-only"
+      }
+    ],
+    "sharedBaseline": 20,
+    "baselineByService": {
+      "fire": {
+        "easy": 10,
+        "medium": 5,
+        "hard": 5
+      },
+      "ems": {
+        "easy": 10,
+        "medium": 9,
+        "hard": 5
+      }
+    },
+    "serviceTotalsByDifficulty": {
+      "fire": {
+        "easy": 100,
+        "medium": 50,
+        "hard": 50
+      },
+      "ems": {
+        "easy": 100,
+        "medium": 54,
+        "hard": 50
+      }
+    },
+    "serviceDeficits": {
+      "fire": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      },
+      "ems": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "rejected": 1058,
+    "rejectionCounts": {
+      "unresolved-2020-source-currentness": 2,
+      "production-snap-not-ground-public-road": 655,
+      "duplicate-existing-or-accepted-address-or-named-site": 40,
+      "not-one-exact-civic-number-and-street": 105,
+      "production-snap-over-80m-or-missing": 20,
+      "production-snap-wrong-street": 230,
+      "unresolved-official-coordinate-or-current-address-conflict": 2,
+      "outside-verified-municipality-or-boundary-unavailable": 1,
+      "no-genuine-connected-cross-street-within-1500m": 2,
+      "outside-game-bounds-or-invalid-coordinate": 1
+    },
+    "oneStreetExceptions": 62
+  },
+  "independentAudit": {
+    "cityId": "richmond-hill",
+    "selected": 180,
+    "accepted": 1672,
+    "crossStreetEvidence": 2818,
+    "oneStreet": 526,
+    "maxGap": 74.61244891495043,
+    "pass": true
+  },
+  "priorityFacilityExpansion": {
+    "reviewedOn": "2026-10-29",
+    "addedIds": [
+      "richmond-hill-osm-way-701664622",
+      "richmond-hill-osm-way-56297555"
+    ],
+    "verification": {
+      "cityId": "richmond-hill",
+      "additions": 2,
+      "proposalSha256": "9e95cded41084916db5357929e0c8477be1371a646c9d042c61201217f6d4621",
+      "pass": true,
+      "checks": [
+        "IDs absent from current shared/legacy/care catalogue",
+        "row exactly equals accepted source record",
+        "full per-record provenance exactly equals accepted pool",
+        "factual category/tags and coordinates match raw source record",
+        "source point and URLs unchanged",
+        "no normalized civic-address/near-identical-site duplicates",
+        "max40 per city",
+        "per-base rationale present; no dispatch ownership claim"
+      ]
+    },
+    "review": {
+      "purpose": "Bounded source-preserving priority facility and local variety additions; no recognition tier rewrites.",
+      "sourcePool": "external-build-cache/canonical-catalogues-reviewed/richmond-hill/accepted-candidates.json",
+      "sourcePoolSha256": "e911724306f48252e12b4b800ff46c5e788b8a696674ffed9f936cacaa5932d3",
+      "selectedDescriptor": "cities/richmond-hill/training-data.json",
+      "selectedDescriptorSha256": "47e80cab00a2fdb1abe694040a1db2c2fc58685de95b14159e10c1ae87217207",
+      "routeEvidence": "cities/richmond-hill/training-data.json",
+      "routeEvidenceScope": "production",
+      "selectionRules": {
+        "maxPerCity": 40,
+        "maxPotentialAddsPerBase": 6,
+        "maxPotentialAddsForConfirmedZeroToTwoBase": 10,
+        "twoCluePriority": true,
+        "maximumStraightLineBaseReviewDistanceMetres": 6000
+      },
+      "limitations": [
+        "At this selection-time review: Every row passed the existing all-accepted geographic/source/clue audit. These additions have not been graph-assigned or route-audited.",
+        "Published Fire polygons are respected for review proximity; EMS and other Fire review strata use straight-line proximity only. These are not dispatch ownership assignments.",
+        "Full original accepted source point, ID, address, recognition tier, incident profile and provenance are unchanged. Current-open status is not newly verified."
+      ],
+      "rationales": {
+        "richmond-hill-osm-way-701664622": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "richmond-hill-osm-way-701664622",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "9205",
+              "addr:street": "Leatherwood Ln",
+              "building": "apartments"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/701664622",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-richmond-hill-fire-8-5",
+              "distance": 1296.5511602788654,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1297
+            },
+            {
+              "baseId": "ems-richmond-hill-ems-85",
+              "distance": 1295.5875799992195,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1296
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 208
+        },
+        "richmond-hill-osm-way-56297555": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "social facility: group_home",
+          "sourceEvidence": {
+            "sourceRecordId": "richmond-hill-osm-way-56297555",
+            "category": null,
+            "tags": {
+              "addr:city": "Richmond Hill",
+              "addr:housenumber": "9800",
+              "addr:postcode": "L4C 0P5",
+              "addr:street": "Yonge Street",
+              "amenity": "social_facility",
+              "building": "yes",
+              "building:colour": "red",
+              "building:levels": "4",
+              "building:material": "brick",
+              "name": "Sunrise Senior Living of Richmond Hill",
+              "operator": "Sunrise Senior Living",
+              "operator:wikidata": "Q612714",
+              "social_facility": "group_home",
+              "social_facility:for": "senior",
+              "source": "yahoo"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/56297555",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-richmond-hill-fire-8-1",
+              "distance": 691.5992418330286,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 692
+            },
+            {
+              "baseId": "ems-richmond-hill-ems-28",
+              "distance": 486.60964217382747,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 487
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 157
+        }
+      }
+    },
+    "note": "Add-only source-validated priority facilities; geographic review reasons are not operational districts. Station assignments require independent directed-road audit."
+  },
+  "routeCandidateExpansion": {
+    "reviewedOn": "2026-10-29",
+    "promotedIds": [],
+    "candidateVerification": null,
+    "selection": "Only source-verified additional locations used by independently audited station exercises are promoted; existing canonical IDs and fields remain unchanged."
+  },
+  "evidencePathConvention": {
+    "repositoryPaths": "Paths beginning cities/ are repository-relative.",
+    "externalBuildCache": "external-build-cache/ labels identify historical, reproducible build artifacts that are not shipped; adjacent SHA-256 values identify the exact reviewed bytes.",
+    "reviewScope": "Priority facility review records describe the selection-time review. Final integrated route and runtime validation is recorded in docs/city-call-validation-2026-10-29.md."
+  }
+}

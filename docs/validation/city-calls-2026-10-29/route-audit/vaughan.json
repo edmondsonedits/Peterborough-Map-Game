@@ -1,0 +1,127 @@
+{
+  "city": "vaughan",
+  "verifiedFingerprint": "357ad9634089d97fe0bbf3c5fa4c5b7cc9052e1b2829978b6d737ea8e48476f1",
+  "halls": [
+    {
+      "id": "fire-vaughan-fire-7-1",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2600,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-vaughan-fire-7-10",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 4661,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-vaughan-fire-7-2",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 4214,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-vaughan-fire-7-3",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 5596,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-vaughan-fire-7-4",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 5196,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-vaughan-fire-7-5",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2596,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-vaughan-fire-7-6",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3962,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-vaughan-fire-7-7",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3585,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-vaughan-fire-7-8",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3230,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-vaughan-fire-7-9",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 5112,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-vaughan-ems-30",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 5010,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-vaughan-ems-31",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 10,
+      "maxRouteMetres": 2634,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-vaughan-ems-32",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 4876,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-vaughan-ems-34",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 5853,
+      "method": "modeled-road-response"
+    }
+  ],
+  "routes": 188,
+  "continuousOrigins": 188,
+  "officialCalls": 0,
+  "modeledCalls": 168,
+  "maxRouteMetres": 5853.013802842514,
+  "minCallsPerHall": 12,
+  "minChallengeCallsPerHall": 10,
+  "supportCalls": 20,
+  "durationMs": 20299
+}

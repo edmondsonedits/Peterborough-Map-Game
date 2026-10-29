@@ -1,0 +1,41 @@
+{
+  "note": "Public primary source and licence URLs used for the source snapshot.",
+  "primarySourceReferences": [
+    {
+      "dataset": "odef",
+      "url": "https://www150.statcan.gc.ca/n1/pub/37-26-0001/372600012022001-eng.htm"
+    },
+    {
+      "dataset": "odhf",
+      "url": "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm"
+    },
+    {
+      "dataset": "odsrf",
+      "url": "https://www150.statcan.gc.ca/n1/pub/21-26-0002/212600022021001-eng.htm"
+    },
+    {
+      "dataset": "odcaf",
+      "url": "https://www.statcan.gc.ca/en/lode/databases/odcaf"
+    },
+    {
+      "dataset": "ogl-canada",
+      "url": "https://open.canada.ca/open-government-licence-canada"
+    },
+    {
+      "dataset": "thunder-bay-licence",
+      "url": "https://www.thunderbay.ca/city-hall/thunder-bay-open-data/"
+    },
+    {
+      "dataset": "thunder-bay-facilities-service",
+      "url": "https://services5.arcgis.com/h9xShea49ZANgOtx/ArcGIS/rest/services/City_of_Thunder_Bay_Facilities_view_Public/FeatureServer?f=pjson"
+    },
+    {
+      "dataset": "belleville-noncommercial-terms",
+      "url": "https://www.belleville.ca/council-and-administration/city-policies/terms-of-use/"
+    },
+    {
+      "dataset": "private-school-location-list",
+      "url": "https://open.canada.ca/data/en/dataset/07586958-ffd4-4293-aec0-3b32e0f7de7b"
+    }
+  ]
+}

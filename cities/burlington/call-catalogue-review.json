@@ -1,0 +1,316 @@
+{
+  "schemaVersion": 1,
+  "coverage": {
+    "cityId": "burlington",
+    "inputOfficial": 184,
+    "inputOsm": 2009,
+    "inputMajorRoad": 1173,
+    "existing": 29,
+    "accepted": 1830,
+    "selected": 180,
+    "target": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "existingByDifficulty": {
+      "easy": 10,
+      "medium": 5,
+      "hard": 5
+    },
+    "selectedByDifficulty": {
+      "easy": 90,
+      "medium": 45,
+      "hard": 45
+    },
+    "totalByDifficulty": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "deficits": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "baseStrata": [
+      {
+        "id": "fire-burlington-fire-1",
+        "selected": 15,
+        "available": 262,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-burlington-fire-2",
+        "selected": 15,
+        "available": 178,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-burlington-fire-3",
+        "selected": 15,
+        "available": 138,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-burlington-fire-4",
+        "selected": 15,
+        "available": 274,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-burlington-fire-5",
+        "selected": 15,
+        "available": 64,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-burlington-fire-6",
+        "selected": 15,
+        "available": 123,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-burlington-fire-7",
+        "selected": 15,
+        "available": 222,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-burlington-fire-8",
+        "selected": 15,
+        "available": 121,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-burlington-ems-3",
+        "selected": 15,
+        "available": 157,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-burlington-ems-4",
+        "selected": 15,
+        "available": 90,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-burlington-ems-5",
+        "selected": 15,
+        "available": 122,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-burlington-ems-10",
+        "selected": 15,
+        "available": 79,
+        "method": "nearest-geographic-base-for-selection-only"
+      }
+    ],
+    "sharedBaseline": 20,
+    "baselineByService": {
+      "fire": {
+        "easy": 10,
+        "medium": 5,
+        "hard": 5
+      },
+      "ems": {
+        "easy": 10,
+        "medium": 14,
+        "hard": 5
+      }
+    },
+    "serviceTotalsByDifficulty": {
+      "fire": {
+        "easy": 100,
+        "medium": 50,
+        "hard": 50
+      },
+      "ems": {
+        "easy": 100,
+        "medium": 59,
+        "hard": 50
+      }
+    },
+    "serviceDeficits": {
+      "fire": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      },
+      "ems": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "rejected": 1536,
+    "rejectionCounts": {
+      "unresolved-2020-source-currentness": 7,
+      "production-snap-wrong-street": 327,
+      "production-snap-not-ground-public-road": 1072,
+      "duplicate-existing-or-accepted-address-or-named-site": 51,
+      "not-one-exact-civic-number-and-street": 38,
+      "production-snap-over-80m-or-missing": 18,
+      "no-genuine-connected-cross-street-within-1500m": 23
+    },
+    "oneStreetExceptions": 67
+  },
+  "independentAudit": {
+    "cityId": "burlington",
+    "selected": 180,
+    "accepted": 1830,
+    "crossStreetEvidence": 3008,
+    "oneStreet": 652,
+    "maxGap": 69.86363784343904,
+    "pass": true
+  },
+  "priorityFacilityExpansion": {
+    "reviewedOn": "2026-10-29",
+    "addedIds": [
+      "burlington-osm-way-43938936",
+      "burlington-osm-way-225299544"
+    ],
+    "verification": {
+      "cityId": "burlington",
+      "additions": 2,
+      "proposalSha256": "2c9c49ed3589b21f25797041e86ce868fac6e5ee1f629b15966f52d889d7b77f",
+      "pass": true,
+      "checks": [
+        "IDs absent from current shared/legacy/care catalogue",
+        "row exactly equals accepted source record",
+        "full per-record provenance exactly equals accepted pool",
+        "factual category/tags and coordinates match raw source record",
+        "source point and URLs unchanged",
+        "no normalized civic-address/near-identical-site duplicates",
+        "max40 per city",
+        "per-base rationale present; no dispatch ownership claim"
+      ]
+    },
+    "review": {
+      "purpose": "Bounded source-preserving priority facility and local variety additions; no recognition tier rewrites.",
+      "sourcePool": "external-build-cache/canonical-catalogues-reviewed/burlington/accepted-candidates.json",
+      "sourcePoolSha256": "3321f4d469b1f14efc32bc2d402628c66d2c27250e216305282bf382fe73310b",
+      "selectedDescriptor": "cities/burlington/training-data.json",
+      "selectedDescriptorSha256": "f3ef298165afa525fd2eaa00312d2a5d658f09079df6d26718f0ac5dd386a418",
+      "routeEvidence": "cities/burlington/training-data.json",
+      "routeEvidenceScope": "production",
+      "selectionRules": {
+        "maxPerCity": 40,
+        "maxPotentialAddsPerBase": 6,
+        "maxPotentialAddsForConfirmedZeroToTwoBase": 10,
+        "twoCluePriority": true,
+        "maximumStraightLineBaseReviewDistanceMetres": 6000
+      },
+      "limitations": [
+        "At this selection-time review: Every row passed the existing all-accepted geographic/source/clue audit. These additions have not been graph-assigned or route-audited.",
+        "Published Fire polygons are respected for review proximity; EMS and other Fire review strata use straight-line proximity only. These are not dispatch ownership assignments.",
+        "Full original accepted source point, ID, address, recognition tier, incident profile and provenance are unchanged. Current-open status is not newly verified."
+      ],
+      "rationales": {
+        "burlington-osm-way-43938936": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "burlington-osm-way-43938936",
+            "category": null,
+            "tags": {
+              "addr:city": "Burlington",
+              "addr:housenumber": "2054",
+              "addr:street": "Mount Forest Drive",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "name": "Burlington Christian Fellowship",
+              "note": "appears to be a former school",
+              "religion": "christian",
+              "source": "CanVec 6.0 - NRCan",
+              "website": "http://bcfburlington.com/"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/43938936",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-burlington-fire-2",
+              "distance": 1271.8616121073997,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1272
+            },
+            {
+              "baseId": "ems-burlington-ems-5",
+              "distance": 1401.4301005951434,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1401
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 205
+        },
+        "burlington-osm-way-225299544": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "burlington-osm-way-225299544",
+            "category": null,
+            "tags": {
+              "addr:city": "Burlington",
+              "addr:housename": "The Maples Condominium",
+              "addr:housenumber": "1272",
+              "addr:postcode": "L7S 2L8",
+              "addr:street": "Ontario Street",
+              "building": "apartments",
+              "building:levels": "13",
+              "name": "The Maples"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/225299544",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "ems-burlington-ems-4",
+              "distance": 2831.377275964321,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2831
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 152
+        }
+      }
+    },
+    "note": "Add-only source-validated priority facilities; geographic review reasons are not operational districts. Station assignments require independent directed-road audit."
+  },
+  "routeCandidateExpansion": {
+    "reviewedOn": "2026-10-29",
+    "promotedIds": [],
+    "candidateVerification": null,
+    "selection": "Only source-verified additional locations used by independently audited station exercises are promoted; existing canonical IDs and fields remain unchanged."
+  },
+  "evidencePathConvention": {
+    "repositoryPaths": "Paths beginning cities/ are repository-relative.",
+    "externalBuildCache": "external-build-cache/ labels identify historical, reproducible build artifacts that are not shipped; adjacent SHA-256 values identify the exact reviewed bytes.",
+    "reviewScope": "Priority facility review records describe the selection-time review. Final integrated route and runtime validation is recorded in docs/city-call-validation-2026-10-29.md."
+  }
+}

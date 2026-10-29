@@ -1,0 +1,3077 @@
+{
+  "schemaVersion": 1,
+  "coverage": {
+    "cityId": "toronto",
+    "inputOfficial": 3864,
+    "inputOsm": 3000,
+    "inputMajorRoad": 2000,
+    "existing": 100,
+    "accepted": 2517,
+    "selected": 567,
+    "target": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "existingByDifficulty": {
+      "easy": 10,
+      "medium": 5,
+      "hard": 5
+    },
+    "selectedByDifficulty": {
+      "easy": 183,
+      "medium": 318,
+      "hard": 66
+    },
+    "totalByDifficulty": {
+      "easy": 193,
+      "medium": 323,
+      "hard": 71
+    },
+    "deficits": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "baseStrata": [
+      {
+        "id": "fire-toronto-fire-443",
+        "selected": 5,
+        "available": 13,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-422",
+        "selected": 5,
+        "available": 18,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-243",
+        "selected": 5,
+        "available": 20,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-241",
+        "selected": 5,
+        "available": 5,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-113",
+        "selected": 5,
+        "available": 31,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-112",
+        "selected": 5,
+        "available": 32,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-114",
+        "selected": 5,
+        "available": 23,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-122",
+        "selected": 5,
+        "available": 13,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-121",
+        "selected": 5,
+        "available": 11,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-131",
+        "selected": 5,
+        "available": 18,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-224",
+        "selected": 5,
+        "available": 19,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-111",
+        "selected": 5,
+        "available": 13,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-143",
+        "selected": 4,
+        "available": 4,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-145",
+        "selected": 5,
+        "available": 7,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-141",
+        "selected": 5,
+        "available": 12,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-411",
+        "selected": 0,
+        "available": 0,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-142",
+        "selected": 5,
+        "available": 12,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-146",
+        "selected": 5,
+        "available": 11,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-413",
+        "selected": 5,
+        "available": 11,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-412",
+        "selected": 3,
+        "available": 3,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-133",
+        "selected": 5,
+        "available": 15,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-221",
+        "selected": 5,
+        "available": 9,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-346",
+        "selected": 0,
+        "available": 0,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-123",
+        "selected": 5,
+        "available": 13,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-115",
+        "selected": 5,
+        "available": 31,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-245",
+        "selected": 5,
+        "available": 13,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-244",
+        "selected": 5,
+        "available": 12,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-232",
+        "selected": 5,
+        "available": 6,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-233",
+        "selected": 5,
+        "available": 31,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-235",
+        "selected": 5,
+        "available": 13,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-223",
+        "selected": 5,
+        "available": 20,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-215",
+        "selected": 5,
+        "available": 7,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-234",
+        "selected": 5,
+        "available": 7,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-231",
+        "selected": 5,
+        "available": 10,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-213",
+        "selected": 5,
+        "available": 26,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-214",
+        "selected": 5,
+        "available": 17,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-211",
+        "selected": 5,
+        "available": 35,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-242",
+        "selected": 5,
+        "available": 15,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-431",
+        "selected": 5,
+        "available": 10,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-433",
+        "selected": 5,
+        "available": 15,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-435",
+        "selected": 5,
+        "available": 36,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-335",
+        "selected": 0,
+        "available": 0,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-333",
+        "selected": 5,
+        "available": 52,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-222",
+        "selected": 5,
+        "available": 11,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-225",
+        "selected": 5,
+        "available": 13,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-227",
+        "selected": 5,
+        "available": 24,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-226",
+        "selected": 5,
+        "available": 22,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-323",
+        "selected": 5,
+        "available": 30,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-343",
+        "selected": 5,
+        "available": 52,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-345",
+        "selected": 5,
+        "available": 15,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-315",
+        "selected": 5,
+        "available": 51,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-314",
+        "selected": 5,
+        "available": 67,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-332",
+        "selected": 5,
+        "available": 59,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-331",
+        "selected": 5,
+        "available": 14,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-334",
+        "selected": 5,
+        "available": 14,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-426",
+        "selected": 5,
+        "available": 40,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-212",
+        "selected": 5,
+        "available": 9,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-425",
+        "selected": 5,
+        "available": 28,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-326",
+        "selected": 5,
+        "available": 10,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-324",
+        "selected": 5,
+        "available": 45,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-325",
+        "selected": 5,
+        "available": 54,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-313",
+        "selected": 5,
+        "available": 51,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-322",
+        "selected": 5,
+        "available": 12,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-321",
+        "selected": 5,
+        "available": 40,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-125",
+        "selected": 5,
+        "available": 13,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-144",
+        "selected": 2,
+        "available": 2,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-423",
+        "selected": 5,
+        "available": 26,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-342",
+        "selected": 5,
+        "available": 13,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-421",
+        "selected": 5,
+        "available": 38,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-341",
+        "selected": 5,
+        "available": 25,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-135",
+        "selected": 5,
+        "available": 21,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-132",
+        "selected": 5,
+        "available": 26,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-134",
+        "selected": 5,
+        "available": 107,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-311",
+        "selected": 5,
+        "available": 87,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-312",
+        "selected": 5,
+        "available": 36,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-344",
+        "selected": 5,
+        "available": 76,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-116",
+        "selected": 5,
+        "available": 11,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-434",
+        "selected": 5,
+        "available": 29,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-432",
+        "selected": 5,
+        "available": 23,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-445",
+        "selected": 5,
+        "available": 22,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-444",
+        "selected": 5,
+        "available": 19,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-441",
+        "selected": 5,
+        "available": 19,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-415",
+        "selected": 5,
+        "available": 6,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-toronto-fire-442",
+        "selected": 5,
+        "available": 37,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-2982185",
+        "selected": 0,
+        "available": 0,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-2782812",
+        "selected": 5,
+        "available": 7,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-3331452",
+        "selected": 5,
+        "available": 14,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-2236216",
+        "selected": 0,
+        "available": 0,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-3311692",
+        "selected": 3,
+        "available": 3,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-3035708",
+        "selected": 5,
+        "available": 20,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-3311695",
+        "selected": 3,
+        "available": 3,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-2614832",
+        "selected": 5,
+        "available": 35,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-2775911",
+        "selected": 5,
+        "available": 22,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-2609714",
+        "selected": 0,
+        "available": 0,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-2488706",
+        "selected": 5,
+        "available": 5,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-3311701",
+        "selected": 5,
+        "available": 17,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-3311704",
+        "selected": 5,
+        "available": 18,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-3311629",
+        "selected": 0,
+        "available": 0,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-3311708",
+        "selected": 0,
+        "available": 0,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-3234576",
+        "selected": 0,
+        "available": 0,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-3151930",
+        "selected": 5,
+        "available": 20,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-3311745",
+        "selected": 3,
+        "available": 3,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-3311716",
+        "selected": 5,
+        "available": 15,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-2794777",
+        "selected": 1,
+        "available": 1,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-3311726",
+        "selected": 0,
+        "available": 0,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-3175714",
+        "selected": 5,
+        "available": 5,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-3311634",
+        "selected": 5,
+        "available": 32,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-3824182",
+        "selected": 5,
+        "available": 6,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-2303629",
+        "selected": 2,
+        "available": 2,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-1957340",
+        "selected": 5,
+        "available": 41,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-3311686",
+        "selected": 2,
+        "available": 2,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-2807376",
+        "selected": 5,
+        "available": 12,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-2911467",
+        "selected": 5,
+        "available": 24,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-2279123",
+        "selected": 5,
+        "available": 10,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-3837843",
+        "selected": 5,
+        "available": 9,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-1520443",
+        "selected": 0,
+        "available": 0,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-3311689",
+        "selected": 2,
+        "available": 2,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-2998314",
+        "selected": 5,
+        "available": 30,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-4326823",
+        "selected": 5,
+        "available": 7,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-4198065",
+        "selected": 5,
+        "available": 7,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-4271262",
+        "selected": 5,
+        "available": 32,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-3006960",
+        "selected": 5,
+        "available": 54,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-2489899",
+        "selected": 5,
+        "available": 18,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-1783376",
+        "selected": 0,
+        "available": 0,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-2775827",
+        "selected": 5,
+        "available": 24,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-3311713",
+        "selected": 4,
+        "available": 4,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-4061713",
+        "selected": 0,
+        "available": 0,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-4173463",
+        "selected": 0,
+        "available": 0,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-1793120",
+        "selected": 5,
+        "available": 11,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-2489114",
+        "selected": 4,
+        "available": 4,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-2135734",
+        "selected": 5,
+        "available": 12,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-2734375",
+        "selected": 4,
+        "available": 4,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-toronto-ems-bering-post",
+        "selected": 5,
+        "available": 16,
+        "method": "nearest-geographic-base-for-selection-only"
+      }
+    ],
+    "sharedBaseline": 20,
+    "baselineByService": {
+      "fire": {
+        "easy": 10,
+        "medium": 5,
+        "hard": 5
+      },
+      "ems": {
+        "easy": 10,
+        "medium": 84,
+        "hard": 5
+      }
+    },
+    "serviceTotalsByDifficulty": {
+      "fire": {
+        "easy": 193,
+        "medium": 323,
+        "hard": 71
+      },
+      "ems": {
+        "easy": 193,
+        "medium": 402,
+        "hard": 71
+      }
+    },
+    "serviceDeficits": {
+      "fire": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      },
+      "ems": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "rejected": 6347,
+    "rejectionCounts": {
+      "unresolved-2020-source-currentness": 464,
+      "production-snap-not-ground-public-road": 4196,
+      "production-snap-wrong-street": 1018,
+      "production-snap-over-80m-or-missing": 203,
+      "unresolved-official-coordinate-or-current-address-conflict": 35,
+      "not-one-exact-civic-number-and-street": 212,
+      "outside-verified-municipality-or-boundary-unavailable": 4,
+      "duplicate-existing-or-accepted-address-or-named-site": 210,
+      "no-genuine-connected-cross-street-within-1500m": 5
+    },
+    "oneStreetExceptions": 91
+  },
+  "independentAudit": {
+    "cityId": "toronto",
+    "selected": 567,
+    "accepted": 2517,
+    "crossStreetEvidence": 4749,
+    "oneStreet": 285,
+    "maxGap": 79.23017725680448,
+    "pass": true
+  },
+  "priorityFacilityExpansion": {
+    "reviewedOn": "2026-10-29",
+    "addedIds": [
+      "toronto-odhf-a27598b4bd65633a8389824ae07c36f4",
+      "toronto-odhf-aa469690e568c2f78e87be8ebb7f3ba2",
+      "toronto-odhf-9b356299e1b5efc585da071b8ebc10ab",
+      "toronto-osm-node-6481876626",
+      "toronto-osm-way-120758351",
+      "toronto-osm-node-2351602388",
+      "toronto-osm-node-13125179954",
+      "toronto-osm-node-2691230432",
+      "toronto-osm-way-30926375",
+      "toronto-osm-way-24529293",
+      "toronto-osm-way-122320057",
+      "toronto-osm-node-2345177399",
+      "toronto-osm-way-232919416",
+      "toronto-osm-way-30955947",
+      "toronto-osm-way-1372817237",
+      "toronto-osm-way-213917632",
+      "toronto-osm-way-58867198",
+      "toronto-osm-way-1447839225",
+      "toronto-osm-way-43806239",
+      "toronto-osm-way-1512354272",
+      "toronto-osm-way-205715350",
+      "toronto-osm-way-32326084",
+      "toronto-osm-way-170051282",
+      "toronto-osm-node-373179989",
+      "toronto-odhf-cfe3d6e1dcecbb1b5e447bd5727d9b2d",
+      "toronto-odhf-2d61709251334d751eef4bd8e5cdac88",
+      "toronto-osm-way-31560364",
+      "toronto-osm-way-67091532",
+      "toronto-odhf-3e1f37a2d94363267fcc68a95f6fa477",
+      "toronto-odhf-f7d6445d61f9fd7ab13a1612818c760d",
+      "toronto-odhf-a7aef2e508e4e63be7afd22c0925ee80",
+      "toronto-ontario-private-school-877085-1235",
+      "toronto-odhf-4ae2d5164afc6dbb62b9434405e0a78a",
+      "toronto-odhf-1d835265dcef6813890ee542710eaf1f",
+      "toronto-osm-way-8027952",
+      "toronto-osm-node-2535697014",
+      "toronto-osm-way-224897360",
+      "toronto-osm-node-13151944264",
+      "toronto-osm-node-5577285044",
+      "toronto-odhf-31fc2e8996b858b0390fa25d44ef77ea"
+    ],
+    "verification": {
+      "cityId": "toronto",
+      "additions": 40,
+      "proposalSha256": "d34d3c8f6817e0bf4d77064c7a64bd23b16e65db2b8f943e8a420b107bc785f1",
+      "pass": true,
+      "checks": [
+        "IDs absent from current shared/legacy/care catalogue",
+        "row exactly equals accepted source record",
+        "full per-record provenance exactly equals accepted pool",
+        "factual category/tags and coordinates match raw source record",
+        "source point and URLs unchanged",
+        "no normalized civic-address/near-identical-site duplicates",
+        "max40 per city",
+        "per-base rationale present; no dispatch ownership claim"
+      ]
+    },
+    "review": {
+      "purpose": "Bounded source-preserving priority facility and local variety additions; no recognition tier rewrites.",
+      "sourcePool": "external-build-cache/canonical-catalogues-reviewed/toronto/accepted-candidates.json",
+      "sourcePoolSha256": "1f2cf61f7a770844e407015facc74a06517cea004621cf43ec75ec35f3e1a959",
+      "selectedDescriptor": "cities/toronto/training-data.json",
+      "selectedDescriptorSha256": "e19406288b6a8ff4cfc9a0e1e9f1cc1703d04560b5578f0094e6b95008c30cbe",
+      "routeEvidence": "cities/toronto/training-data.json",
+      "routeEvidenceScope": "production",
+      "selectionRules": {
+        "maxPerCity": 40,
+        "maxPotentialAddsPerBase": 6,
+        "maxPotentialAddsForConfirmedZeroToTwoBase": 10,
+        "twoCluePriority": true,
+        "maximumStraightLineBaseReviewDistanceMetres": 6000
+      },
+      "limitations": [
+        "At this selection-time review: Every row passed the existing all-accepted geographic/source/clue audit. These additions have not been graph-assigned or route-audited.",
+        "Published Fire polygons are respected for review proximity; EMS and other Fire review strata use straight-line proximity only. These are not dispatch ownership assignments.",
+        "Full original accepted source point, ID, address, recognition tier, incident profile and provenance are unchanged. Current-open status is not newly verified."
+      ],
+      "rationales": {
+        "toronto-odhf-a27598b4bd65633a8389824ae07c36f4": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "hospital",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-odhf-a27598b4bd65633a8389824ae07c36f4",
+            "category": "hospital",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://geohub.lio.gov.on.ca/datasets/e1e5983c59ff497baddf75f1d2bb4add_26/explore"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-112",
+              "distance": 488.4544212713857,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 488
+            },
+            {
+              "baseId": "ems-toronto-ems-3311629",
+              "distance": 488.4544212713857,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 488
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 232
+        },
+        "toronto-odhf-aa469690e568c2f78e87be8ebb7f3ba2": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "hospital",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-odhf-aa469690e568c2f78e87be8ebb7f3ba2",
+            "category": "hospital",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://geohub.lio.gov.on.ca/datasets/e1e5983c59ff497baddf75f1d2bb4add_26/explore"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-111",
+              "distance": 892.9319279849259,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 5,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 893
+            },
+            {
+              "baseId": "ems-toronto-ems-3311708",
+              "distance": 892.9319279849259,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 893
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 230
+        },
+        "toronto-odhf-9b356299e1b5efc585da071b8ebc10ab": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "hospital",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-odhf-9b356299e1b5efc585da071b8ebc10ab",
+            "category": "hospital",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://geohub.lio.gov.on.ca/datasets/e1e5983c59ff497baddf75f1d2bb4add_26/explore"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-142",
+              "distance": 1428.753386483432,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1429
+            },
+            {
+              "baseId": "ems-toronto-ems-2982185",
+              "distance": 1428.753386483432,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1429
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 227
+        },
+        "toronto-osm-node-6481876626": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "community_centre",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-osm-node-6481876626",
+            "category": null,
+            "tags": {
+              "addr:city": "Toronto",
+              "addr:housenumber": "1342",
+              "addr:street": "Queen Street West",
+              "amenity": "community_centre",
+              "check_date": "2026-05-28",
+              "community_centre": "family_centre",
+              "community_centre:for": "child;family",
+              "email": "creatingtogether@rogers.com",
+              "name": "Creating Together EarlyON Child and Family Centre",
+              "phone": "+1 4165371004",
+              "website": "https://creatingtogetherparkdale.com/"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/6481876626",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-426",
+              "distance": 674.2384702646236,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 674
+            },
+            {
+              "baseId": "ems-toronto-ems-2775827",
+              "distance": 150.95751108032826,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 151
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 222
+        },
+        "toronto-osm-way-120758351": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "library",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-osm-way-120758351",
+            "category": null,
+            "tags": {
+              "addr:city": "North York",
+              "addr:housenumber": "578",
+              "addr:street": "Finch Avenue West",
+              "amenity": "library",
+              "building": "public",
+              "building:levels": "1",
+              "internet_access": "wlan",
+              "internet_access:fee": "no",
+              "name": "Toronto Public Library - Centennial",
+              "opendata:type": "107009",
+              "operator": "Toronto Public Library",
+              "operator:short": "TPL",
+              "operator:type": "public",
+              "operator:wikidata": "Q2901516",
+              "operator:wikipedia": "en:Toronto Public Library",
+              "source": "Bing",
+              "website": "https://www.torontopubliclibrary.ca/detail.jsp?R=LIB031"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/120758351",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-112",
+              "distance": 564.4749357977742,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 564
+            },
+            {
+              "baseId": "ems-toronto-ems-3311629",
+              "distance": 564.4749357977742,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 564
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 221
+        },
+        "toronto-osm-node-2351602388": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "community_centre",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-osm-node-2351602388",
+            "category": null,
+            "tags": {
+              "addr:city": "York",
+              "addr:housenumber": "2017",
+              "addr:street": "Weston Road",
+              "amenity": "community_centre",
+              "name": "Weston King Neighbourhood Centre",
+              "opendata:type": "101005"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/2351602388",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-442",
+              "distance": 622.5287806532923,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 5,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 623
+            },
+            {
+              "baseId": "ems-toronto-ems-3234576",
+              "distance": 622.5287806532923,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 623
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 220
+        },
+        "toronto-osm-node-13125179954": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "community_centre",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-osm-node-13125179954",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "413",
+              "addr:street": "Dundas Street East",
+              "amenity": "community_centre",
+              "community_centre": "social_centre",
+              "name": "Thunder Woman Healing Lodge Society",
+              "opening_hours": "Mo-Fr 09:00-17:00",
+              "phone": "+1-647-598-4520",
+              "website": "https://twhls.ca/"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/13125179954",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-325",
+              "distance": 188.15581050095156,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 5,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 188
+            },
+            {
+              "baseId": "ems-toronto-ems-3006960",
+              "distance": 1064.220605419353,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1064
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 220
+        },
+        "toronto-osm-node-2691230432": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "community_centre",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-osm-node-2691230432",
+            "category": null,
+            "tags": {
+              "addr:city": "Toronto",
+              "addr:housenumber": "627",
+              "addr:street": "Queens Quay West",
+              "amenity": "community_centre",
+              "name": "Waterfront Neighbourhood Centre"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/2691230432",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-334",
+              "distance": 731.3911151238277,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 731
+            },
+            {
+              "baseId": "ems-toronto-ems-4061713",
+              "distance": 731.3911151238277,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 731
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 220
+        },
+        "toronto-osm-way-30926375": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "library",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-osm-way-30926375",
+            "category": null,
+            "tags": {
+              "addr:city": "North York",
+              "addr:housenumber": "184",
+              "addr:postcode": "M4A 2C4",
+              "addr:province": "Ontario",
+              "addr:street": "Sloane Avenue",
+              "air_conditioning": "yes",
+              "amenity": "library",
+              "building": "civic",
+              "internet_access": "wlan",
+              "internet_access:fee": "no",
+              "name": "Toronto Public Library - Victoria Village",
+              "opendata:type": "107009",
+              "opening_hours": "Mo 10:00-20:30; Tu,Th 12:30-20:30; We-Fr 10:00-18:00; Sa 09:00-17:00; Su 12:00-17:00; PH off",
+              "operator": "Toronto Public Library",
+              "operator:short": "TPL",
+              "operator:type": "public",
+              "operator:wikidata": "Q2901516",
+              "operator:wikipedia": "en:Toronto Public Library",
+              "website": "https://tpl.ca/locations/VV/",
+              "wheelchair": "yes"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/30926375",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-233",
+              "distance": 888.1117924478194,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 888
+            },
+            {
+              "baseId": "ems-toronto-ems-3311716",
+              "distance": 1361.9136197995751,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1362
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 218
+        },
+        "toronto-osm-way-24529293": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-osm-way-24529293",
+            "category": null,
+            "tags": {
+              "addr:city": "Toronto",
+              "addr:housenumber": "793",
+              "addr:street": "Davenport Road",
+              "building": "industrial",
+              "building:levels": "1",
+              "building:material": "brick",
+              "operator": "Toronto Transit Commission"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/24529293",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-344",
+              "distance": 653.2673089233333,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 653
+            },
+            {
+              "baseId": "ems-toronto-ems-2998314",
+              "distance": 1224.7059829572838,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1225
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 217
+        },
+        "toronto-osm-way-122320057": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "library",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-osm-way-122320057",
+            "category": null,
+            "tags": {
+              "addr:city": "Scarborough",
+              "addr:housenumber": "155",
+              "addr:street": "Bonis Avenue",
+              "amenity": "library",
+              "building": "yes",
+              "internet_access": "wlan",
+              "internet_access:fee": "no",
+              "name": "Toronto Public Library - Agincourt",
+              "opendata:type": "107009",
+              "operator": "Toronto Public Library",
+              "operator:short": "TPL",
+              "operator:type": "public",
+              "operator:wikidata": "Q2901516",
+              "operator:wikipedia": "en:Toronto Public Library",
+              "website": "https://www.torontopubliclibrary.ca/detail.jsp?R=LIB02",
+              "wheelchair": "yes",
+              "wikidata": "Q57560771"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/122320057",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-244",
+              "distance": 605.5555726425833,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 5,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 606
+            },
+            {
+              "baseId": "ems-toronto-ems-3331452",
+              "distance": 2281.5412793662413,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2282
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 216
+        },
+        "toronto-osm-node-2345177399": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "library",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-osm-node-2345177399",
+            "category": null,
+            "tags": {
+              "addr:city": "Scarborough",
+              "addr:housenumber": "1081",
+              "addr:postcode": "M1B 5Z6",
+              "addr:street": "Progress Avenue",
+              "amenity": "library",
+              "internet_access": "wlan",
+              "internet_access:fee": "no",
+              "name": "Toronto Public Library - Burrows Hall",
+              "operator": "Toronto Public Library",
+              "operator:short": "TPL",
+              "operator:type": "public",
+              "operator:wikidata": "Q2901516",
+              "operator:wikipedia": "en:Toronto Public Library",
+              "phone": "+1-416-396-8740",
+              "website": "https://www.torontopubliclibrary.ca/detail.jsp?R=LIB030"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/2345177399",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-213",
+              "distance": 688.871695100609,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 4,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 689
+            },
+            {
+              "baseId": "ems-toronto-ems-2236216",
+              "distance": 2365.252573624857,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2365
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 215
+        },
+        "toronto-osm-way-232919416": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-osm-way-232919416",
+            "category": null,
+            "tags": {
+              "addr:city": "York",
+              "addr:housenumber": "221",
+              "addr:street": "Todd Baylis Boulevard",
+              "building": "industrial",
+              "opendata:type": "113001"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/232919416",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-421",
+              "distance": 852.4292122282749,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 852
+            },
+            {
+              "baseId": "ems-toronto-ems-3311634",
+              "distance": 2170.0322252850897,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2170
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 213
+        },
+        "toronto-osm-way-30955947": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-osm-way-30955947",
+            "category": null,
+            "tags": {
+              "addr:city": "North York",
+              "addr:housenumber": "2775",
+              "addr:street": "Jane Street",
+              "building": "apartments",
+              "building:levels": "17",
+              "opendata:type": "115001"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/30955947",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-142",
+              "distance": 297.22656558005184,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 297
+            },
+            {
+              "baseId": "ems-toronto-ems-2982185",
+              "distance": 297.22656558005184,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 297
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 213
+        },
+        "toronto-osm-way-1372817237": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-osm-way-1372817237",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "999",
+              "addr:street": "Bathurst Street",
+              "building": "apartments",
+              "building:levels": "2",
+              "building:material": "brick",
+              "roof:levels": "1"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/1372817237",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-344",
+              "distance": 277.5162590852278,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 278
+            },
+            {
+              "baseId": "ems-toronto-ems-2998314",
+              "distance": 511.92789704256006,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 512
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 213
+        },
+        "toronto-osm-way-213917632": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-osm-way-213917632",
+            "category": null,
+            "tags": {
+              "addr:city": "Toronto",
+              "addr:housenumber": "2140",
+              "addr:street": "Bloor Street West",
+              "building": "apartments",
+              "building:levels": "3"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/213917632",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-425",
+              "distance": 642.1765556859713,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 642
+            },
+            {
+              "baseId": "ems-toronto-ems-2775911",
+              "distance": 236.39604878803087,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 236
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 212
+        },
+        "toronto-osm-way-58867198": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-osm-way-58867198",
+            "category": null,
+            "tags": {
+              "addr:city": "Toronto",
+              "addr:housenumber": "525",
+              "addr:street": "Milner Avenue",
+              "building": "industrial",
+              "opendata:type": "113001"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/58867198",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-213",
+              "distance": 350.8946331346861,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 4,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 351
+            },
+            {
+              "baseId": "ems-toronto-ems-2236216",
+              "distance": 2980.887511915727,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2981
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 212
+        },
+        "toronto-osm-way-1447839225": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-osm-way-1447839225",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "1285",
+              "addr:street": "Queen Street East",
+              "building": "apartments",
+              "name": "The Poet Condos"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/1447839225",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-326",
+              "distance": 349.0479646200844,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 349
+            },
+            {
+              "baseId": "ems-toronto-ems-2911467",
+              "distance": 814.2589049631661,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 814
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 212
+        },
+        "toronto-osm-way-43806239": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "social facility: nursing_home",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-osm-way-43806239",
+            "category": null,
+            "tags": {
+              "addr:city": "York",
+              "addr:housenumber": "429",
+              "addr:postcode": "M5P 2X9",
+              "addr:street": "Walmer Road",
+              "amenity": "social_facility",
+              "building": "apartments",
+              "building:colour": "red",
+              "building:levels": "6",
+              "building:material": "brick",
+              "check_date": "2024-06-24",
+              "name": "Cedarvale Terrace",
+              "social_facility": "nursing_home",
+              "social_facility:for": "senior"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/43806239",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-343",
+              "distance": 1598.0286221624474,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1598
+            },
+            {
+              "baseId": "ems-toronto-ems-4271262",
+              "distance": 1938.0786024699592,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1938
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 210
+        },
+        "toronto-osm-way-1512354272": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-osm-way-1512354272",
+            "category": null,
+            "tags": {
+              "addr:city": "Toronto",
+              "addr:housenumber": "980",
+              "addr:province": "Ontario",
+              "addr:street": "Lansdowne Avenue",
+              "building": "apartments",
+              "building:levels": "39"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/1512354272",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-345",
+              "distance": 754.7912390976693,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 755
+            },
+            {
+              "baseId": "ems-toronto-ems-2489899",
+              "distance": 1570.9910082833642,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1571
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 208
+        },
+        "toronto-osm-way-205715350": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-osm-way-205715350",
+            "category": null,
+            "tags": {
+              "addr:city": "Toronto",
+              "addr:housenumber": "722",
+              "addr:postcode": "M1J 1C2",
+              "addr:street": "Brimley Road",
+              "amenity": "place_of_worship",
+              "building": "yes",
+              "denomination": "vajrayana",
+              "name": "Jing Yin Temple",
+              "religion": "buddhist"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/205715350",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-232",
+              "distance": 1310.383520416594,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1310
+            },
+            {
+              "baseId": "ems-toronto-ems-2807376",
+              "distance": 683.8885069646147,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 684
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 207
+        },
+        "toronto-osm-way-32326084": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-osm-way-32326084",
+            "category": null,
+            "tags": {
+              "addr:city": "North York",
+              "addr:housenumber": "569",
+              "addr:street": "Sheppard Avenue West",
+              "building": "apartments",
+              "building:levels": "13",
+              "name": "El Cano Apartments",
+              "opendata:type": "100002",
+              "roof:levels": "0"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/32326084",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-143",
+              "distance": 1901.7274979949061,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1902
+            },
+            {
+              "baseId": "ems-toronto-ems-3311704",
+              "distance": 854.3745348225555,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 854
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 207
+        },
+        "toronto-osm-way-170051282": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-osm-way-170051282",
+            "category": null,
+            "tags": {
+              "addr:city": "North York",
+              "addr:housenumber": "120",
+              "addr:street": "Harrison Garden Boulevard",
+              "building": "apartments",
+              "building:levels": "20",
+              "opendata:type": "100002",
+              "source": "Bing"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/170051282",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-121",
+              "distance": 1007.2101232314733,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1007
+            },
+            {
+              "baseId": "ems-toronto-ems-3311726",
+              "distance": 1944.9061170328841,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1945
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 207
+        },
+        "toronto-osm-node-373179989": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-osm-node-373179989",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "614",
+              "addr:street": "Birchmount Road",
+              "amenity": "place_of_worship",
+              "religion": "hindu",
+              "website": "https://www.voiceofdharmatemple.com/"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/373179989",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-222",
+              "distance": 1058.8470260967622,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1059
+            },
+            {
+              "baseId": "ems-toronto-ems-3175714",
+              "distance": 1309.6579578009976,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1310
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 206
+        },
+        "toronto-odhf-cfe3d6e1dcecbb1b5e447bd5727d9b2d": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "healthcare (source broad category; no emergency/hospital status inferred)",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-odhf-cfe3d6e1dcecbb1b5e447bd5727d9b2d",
+            "category": "healthcare",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://open.toronto.ca/dataset/covid-19-immunization-clinics/",
+              "https://open.toronto.ca/dataset/wellbeing-youth-health-services/",
+              "https://open.toronto.ca/dataset/long-term-care-locations-city-operated/",
+              "https://open.toronto.ca/dataset/ambulance-station-locations/"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-425",
+              "distance": 863.8019657754247,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 864
+            },
+            {
+              "baseId": "ems-toronto-ems-2775911",
+              "distance": 7.909761734481435e-10,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 0
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 205
+        },
+        "toronto-odhf-2d61709251334d751eef4bd8e5cdac88": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "healthcare (source broad category; no emergency/hospital status inferred)",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-odhf-2d61709251334d751eef4bd8e5cdac88",
+            "category": "healthcare",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://open.toronto.ca/dataset/covid-19-immunization-clinics/",
+              "https://open.toronto.ca/dataset/wellbeing-youth-health-services/",
+              "https://open.toronto.ca/dataset/long-term-care-locations-city-operated/",
+              "https://open.toronto.ca/dataset/ambulance-station-locations/",
+              "https://geohub.lio.gov.on.ca/datasets/e1e5983c59ff497baddf75f1d2bb4add_26/explore"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-114",
+              "distance": 457.77810191625014,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 3,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 458
+            },
+            {
+              "baseId": "ems-toronto-ems-3311726",
+              "distance": 457.77810191625014,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 458
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 204
+        },
+        "toronto-osm-way-31560364": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-osm-way-31560364",
+            "category": null,
+            "tags": {
+              "addr:city": "Toronto",
+              "addr:housenumber": "15",
+              "addr:street": "Sewells Road",
+              "building": "apartments",
+              "building:levels": "13",
+              "opendata:type": "100002"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/31560364",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-213",
+              "distance": 1444.303684803577,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 4,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1444
+            },
+            {
+              "baseId": "ems-toronto-ems-2303629",
+              "distance": 2297.1921132302064,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2297
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 204
+        },
+        "toronto-osm-way-67091532": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-osm-way-67091532",
+            "category": null,
+            "tags": {
+              "addr:city": "North York",
+              "addr:housenumber": "1087",
+              "addr:street": "Lillian Street",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "opendata:type": "109001",
+              "religion": "christian",
+              "source": "CanVec 6.0 - NRCan"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/67091532",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-111",
+              "distance": 1642.499005174226,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 5,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1642
+            },
+            {
+              "baseId": "ems-toronto-ems-3311708",
+              "distance": 1642.499005174226,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1642
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 204
+        },
+        "toronto-odhf-3e1f37a2d94363267fcc68a95f6fa477": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "healthcare (source broad category; no emergency/hospital status inferred)",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-odhf-3e1f37a2d94363267fcc68a95f6fa477",
+            "category": "healthcare",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://geohub.lio.gov.on.ca/datasets/e1e5983c59ff497baddf75f1d2bb4add_26/explore",
+              "https://open.toronto.ca/dataset/covid-19-immunization-clinics/",
+              "https://open.toronto.ca/dataset/wellbeing-youth-health-services/",
+              "https://open.toronto.ca/dataset/long-term-care-locations-city-operated/",
+              "https://open.toronto.ca/dataset/ambulance-station-locations/"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-334",
+              "distance": 939.0910892242399,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 939
+            },
+            {
+              "baseId": "ems-toronto-ems-1793120",
+              "distance": 732.814123669088,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 733
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 202
+        },
+        "toronto-odhf-f7d6445d61f9fd7ab13a1612818c760d": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "healthcare (source broad category; no emergency/hospital status inferred)",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-odhf-f7d6445d61f9fd7ab13a1612818c760d",
+            "category": "healthcare",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://open.toronto.ca/dataset/covid-19-immunization-clinics/",
+              "https://open.toronto.ca/dataset/wellbeing-youth-health-services/",
+              "https://open.toronto.ca/dataset/long-term-care-locations-city-operated/",
+              "https://open.toronto.ca/dataset/ambulance-station-locations/"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-143",
+              "distance": 1928.0660653721245,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1928
+            },
+            {
+              "baseId": "ems-toronto-ems-3311704",
+              "distance": 3.2946430176005045e-09,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 0
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 201
+        },
+        "toronto-odhf-a7aef2e508e4e63be7afd22c0925ee80": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "healthcare (source broad category; no emergency/hospital status inferred)",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-odhf-a7aef2e508e4e63be7afd22c0925ee80",
+            "category": "healthcare",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://open.toronto.ca/dataset/covid-19-immunization-clinics/",
+              "https://open.toronto.ca/dataset/wellbeing-youth-health-services/",
+              "https://open.toronto.ca/dataset/long-term-care-locations-city-operated/",
+              "https://open.toronto.ca/dataset/ambulance-station-locations/"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-215",
+              "distance": 2213.064505350669,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2213
+            },
+            {
+              "baseId": "ems-toronto-ems-3824182",
+              "distance": 2.417741900452118e-09,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 0
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 201
+        },
+        "toronto-ontario-private-school-877085-1235": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-ontario-private-school-877085-1235",
+            "category": "school",
+            "tags": null,
+            "sourceUrls": [
+              "https://data.ontario.ca/dataset/private-school-location-list",
+              "https://data.ontario.ca/dataset/07586958-ffd4-4293-aec0-3b32e0f7de7b/resource/b0fef8bb-8b07-4962-8192-bbf899195cd5/download/private_school_location_list_en_2.xlsx"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-312",
+              "distance": 445.7963360193961,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 446
+            },
+            {
+              "baseId": "ems-toronto-ems-2614832",
+              "distance": 664.3022843627742,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 5,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 664
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 200
+        },
+        "toronto-odhf-4ae2d5164afc6dbb62b9434405e0a78a": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "hospital",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-odhf-4ae2d5164afc6dbb62b9434405e0a78a",
+            "category": "hospital",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://geohub.lio.gov.on.ca/datasets/e1e5983c59ff497baddf75f1d2bb4add_26/explore"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-241",
+              "distance": 1868.7558800134902,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 3,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1869
+            },
+            {
+              "baseId": "ems-toronto-ems-3331452",
+              "distance": 121.05621893890928,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 121
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 199
+        },
+        "toronto-odhf-1d835265dcef6813890ee542710eaf1f": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "healthcare (source broad category; no emergency/hospital status inferred)",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-odhf-1d835265dcef6813890ee542710eaf1f",
+            "category": "healthcare",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://geohub.lio.gov.on.ca/datasets/e1e5983c59ff497baddf75f1d2bb4add_26/explore"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-214",
+              "distance": 1404.5517881586852,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 4,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1405
+            },
+            {
+              "baseId": "ems-toronto-ems-2303629",
+              "distance": 2223.4126325901716,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2223
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 197
+        },
+        "toronto-osm-way-8027952": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "library",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-osm-way-8027952",
+            "category": null,
+            "tags": {
+              "addr:city": "Toronto",
+              "addr:housenumber": "113",
+              "addr:street": "St. Joseph Street",
+              "amenity": "library",
+              "building": "university",
+              "building:colour": "gray",
+              "building:levels": "4",
+              "building:material": "concrete",
+              "check_date": "2025-04-30",
+              "college": "St. Michael's College",
+              "description": "The John M. Kelly Library is the largest federated college library at the University of Toronto, with computers and printers available to students. Writing labs and related resources are also available at this library.",
+              "email": "kelly.library@utoronto.ca",
+              "internet_access": "wlan",
+              "internet_access:fee": "students",
+              "name": "John M. Kelly Library - St. Michael’s College",
+              "opening_hours": "Mo-Fr 08:30-16:30; Sa-Su off",
+              "operator": "University of Toronto",
+              "operator:type": "university",
+              "operator:wikidata": "Q180865",
+              "operator:wikipedia": "en:University of Toronto",
+              "phone": "+1 4169267114",
+              "website": "https://library.stmikes.utoronto.ca",
+              "wheelchair": "yes",
+              "wikidata": "Q64760824"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/8027952",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-314",
+              "distance": 443.67915939454804,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 444
+            },
+            {
+              "baseId": "ems-toronto-ems-2614832",
+              "distance": 1129.5794907398542,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 1130
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 190
+        },
+        "toronto-osm-node-2535697014": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "library",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-osm-node-2535697014",
+            "category": null,
+            "tags": {
+              "addr:city": "Toronto",
+              "addr:housenumber": "1748",
+              "addr:street": "St. Clair Avenue West",
+              "amenity": "library",
+              "internet_access": "wlan",
+              "internet_access:fee": "no",
+              "name": "Toronto Public Library - St. Clair/Silverthorn",
+              "opendata:type": "107009",
+              "operator": "Toronto Public Library",
+              "operator:short": "TPL",
+              "operator:type": "public",
+              "operator:wikidata": "Q2901516",
+              "operator:wikipedia": "en:Toronto Public Library",
+              "website": "https://www.torontopubliclibrary.ca/detail.jsp?R=LIB082"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/2535697014",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-342",
+              "distance": 1119.2450637155896,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1119
+            },
+            {
+              "baseId": "ems-toronto-ems-3311634",
+              "distance": 658.1380224291472,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 658
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 189
+        },
+        "toronto-osm-way-224897360": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-osm-way-224897360",
+            "category": null,
+            "tags": {
+              "addr:city": "Toronto",
+              "addr:housenumber": "76",
+              "addr:street": "Shuter Street",
+              "building": "apartments",
+              "opendata:type": "100002"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/224897360",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-325",
+              "distance": 960.6602109994423,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 5,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 961
+            },
+            {
+              "baseId": "ems-toronto-ems-3006960",
+              "distance": 337.00499918286164,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 337
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 181
+        },
+        "toronto-osm-node-13151944264": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "theatre",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-osm-node-13151944264",
+            "category": null,
+            "tags": {
+              "addr:city": "Toronto",
+              "addr:housenumber": "345",
+              "addr:postcode": "M4M 2T1",
+              "addr:province": "ON",
+              "addr:street": "Carlaw Avenue",
+              "amenity": "theatre",
+              "contact:facebook": "https://www.facebook.com/crowstheatre",
+              "contact:instagram": "https://www.instagram.com/crowstheatre/",
+              "contact:twitter": "https://x.com/crowstheatre",
+              "contact:youtube": "https://www.youtube.com/CrowsTheatreToronto",
+              "email": "info@crowstheatre.com",
+              "name": "Crow's Theater",
+              "phone": "+1 647-341-7390",
+              "website": "https://www.crowstheatre.com/"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/13151944264",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-324",
+              "distance": 331.7631256809912,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 332
+            },
+            {
+              "baseId": "ems-toronto-ems-2911467",
+              "distance": 350.1347847110351,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 350
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 181
+        },
+        "toronto-osm-node-5577285044": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-osm-node-5577285044",
+            "category": null,
+            "tags": {
+              "addr:city": "Toronto",
+              "addr:housenumber": "349",
+              "addr:postcode": "M2N 4V9",
+              "addr:street": "Kenneth Avenue",
+              "amenity": "place_of_worship",
+              "name": "Willowdale Emmanuel United Church",
+              "name:en": "Willowdale Emmanuel United Church",
+              "name:ko": "WE 연합교회",
+              "religion": "christian",
+              "website": "http://www.weunitedchurch.com/"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/5577285044",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-114",
+              "distance": 558.2965552914093,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 3,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 558
+            },
+            {
+              "baseId": "ems-toronto-ems-3311726",
+              "distance": 558.2965552914093,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 558
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 180
+        },
+        "toronto-odhf-31fc2e8996b858b0390fa25d44ef77ea": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "hospital",
+          "sourceEvidence": {
+            "sourceRecordId": "toronto-odhf-31fc2e8996b858b0390fa25d44ef77ea",
+            "category": "hospital",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://geohub.lio.gov.on.ca/datasets/e1e5983c59ff497baddf75f1d2bb4add_26/explore",
+              "https://open.toronto.ca/dataset/covid-19-immunization-clinics/",
+              "https://open.toronto.ca/dataset/wellbeing-youth-health-services/",
+              "https://open.toronto.ca/dataset/long-term-care-locations-city-operated/",
+              "https://open.toronto.ca/dataset/ambulance-station-locations/"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-toronto-fire-224",
+              "distance": 987.3662618707621,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 987
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 177
+        }
+      }
+    },
+    "note": "Add-only source-validated priority facilities; geographic review reasons are not operational districts. Station assignments require independent directed-road audit."
+  },
+  "finalRouteExpansion": {
+    "reviewedOn": "2026-10-29",
+    "preservedCanonicalRecords": 607,
+    "promotedSourceIds": [
+      "toronto-odef-cf7a36d365528692d10b",
+      "toronto-osm-way-225518793",
+      "toronto-odhf-61bc798dc056febb553c4c177a51fc61",
+      "toronto-osm-node-6491159748",
+      "toronto-osm-node-6359437300",
+      "toronto-osm-way-511361298",
+      "toronto-odef-f8d02f7fa71d2936a19c",
+      "toronto-odhf-9d6c80b6e009df6720f5d3a45f9bca01",
+      "toronto-osm-way-346553370",
+      "toronto-osm-node-9135587576",
+      "toronto-osm-way-31617620",
+      "toronto-odef-fee3250042bc23a2d676",
+      "toronto-osm-way-31618600",
+      "toronto-ontario-private-school-882866-430",
+      "toronto-osm-node-7103519112",
+      "toronto-osm-node-760159456",
+      "toronto-odef-dbd135c6880e864eb04e",
+      "toronto-odhf-8dd6bd8b939c1f724664b8006c9d729b",
+      "toronto-odsrf-89d0136bd80d51ed4dca1f6a9910b3d3",
+      "toronto-odef-7be3116aa444d214040c",
+      "toronto-odef-d1a52435746353cb08e8",
+      "toronto-odhf-dbe4995469efc00d64be41c8859ee0e8",
+      "toronto-odsrf-42349498a4e0ef0d84ba3d7fc50b8e9c",
+      "toronto-odsrf-9e6a66e83d52f7f581fa38f0a9866b9f",
+      "toronto-osm-way-227236039",
+      "toronto-osm-node-6994152432",
+      "toronto-osm-way-31619943",
+      "toronto-odhf-e267062b4cc963108f632980715d3808",
+      "toronto-ontario-private-school-876895-1054",
+      "toronto-odef-60f20c0e13b01b79af7c",
+      "toronto-osm-way-31619801",
+      "toronto-osm-way-31620005",
+      "toronto-odhf-007ecb2af507d1e265aee49b6852a12f",
+      "toronto-osm-way-122356169",
+      "toronto-odef-cc504bd9124e369b318b",
+      "toronto-osm-node-2348121828",
+      "toronto-odsrf-2570eb6ac78211d1215a57a0c3357da6",
+      "toronto-osm-way-32224947",
+      "toronto-osm-way-30926378",
+      "toronto-osm-way-31363296",
+      "toronto-odef-1c89181bc66072983822",
+      "toronto-osm-way-313908676",
+      "toronto-osm-way-228016846",
+      "toronto-odhf-168930e22f80e6c97a1e015d2380cf86",
+      "toronto-osm-way-86811945",
+      "toronto-osm-way-112440002",
+      "toronto-osm-node-896572483",
+      "toronto-odef-de001d77d03d74515195",
+      "toronto-odef-ba62e3e4e934549595fe",
+      "toronto-osm-node-13842091738",
+      "toronto-osm-way-659833352",
+      "toronto-osm-node-13833801989",
+      "toronto-osm-way-123532349",
+      "toronto-osm-node-380040877",
+      "toronto-odhf-05a56775abcc49d6b829ab15e6c23e1a",
+      "toronto-odef-865177cdb6194db1fbc9",
+      "toronto-osm-node-9633703338",
+      "toronto-odef-9d9fe822b10e529f8467",
+      "toronto-odhf-e1c67bb4dde3c3ddfb5eceab84e2199e",
+      "toronto-osm-node-293534178",
+      "toronto-odhf-a3ca46f69301fc876d27b7fe18b84fb3",
+      "toronto-osm-way-257141187",
+      "toronto-odef-c1d665bc6da288398403",
+      "toronto-odef-a7a03e62cf7480848f27",
+      "toronto-osm-way-300579756",
+      "toronto-osm-way-28931311",
+      "toronto-osm-way-31363794",
+      "toronto-osm-way-31363797",
+      "toronto-odhf-4664bb1e7ac1b39e81783646bdda1ba3",
+      "toronto-osm-node-2711767699",
+      "toronto-osm-node-12237657601",
+      "toronto-osm-way-186189574",
+      "toronto-odhf-190c0780619cc5ee57a3062fa11554de",
+      "toronto-osm-way-31372676",
+      "toronto-osm-node-7684885171",
+      "toronto-osm-way-60012643",
+      "toronto-ontario-private-school-880132-1441",
+      "toronto-osm-node-747356053",
+      "toronto-odhf-64f6545287121b417ec8751f3cda8d71",
+      "toronto-odef-f6062d90ea57686a3f7f",
+      "toronto-odsrf-3f6b7964e02312949f2105c0bce833cb",
+      "toronto-osm-node-302180548",
+      "toronto-odhf-b62896b6337c669dbecacf9fcc00b101",
+      "toronto-osm-way-79577982",
+      "toronto-osm-way-288357243",
+      "toronto-osm-way-1545155870",
+      "toronto-osm-way-288357241",
+      "toronto-osm-way-180175768",
+      "toronto-osm-way-657979501",
+      "toronto-odef-ea8a39130b3e14e52f26",
+      "toronto-osm-way-32804841",
+      "toronto-osm-way-658200389",
+      "toronto-osm-node-11989158556",
+      "toronto-odef-87ade4e25629b3f99b09",
+      "toronto-odhf-fe713d94c49c540d31eab4e728494e4e",
+      "toronto-osm-way-248608496",
+      "toronto-osm-way-275535397",
+      "toronto-osm-node-13859320525",
+      "toronto-osm-node-2337214598",
+      "toronto-osm-node-13859320524",
+      "toronto-osm-node-13859320523",
+      "toronto-osm-node-13859320537",
+      "toronto-osm-node-13859320522",
+      "toronto-osm-node-13859320532",
+      "toronto-osm-node-13859320530",
+      "toronto-odhf-84d20f39563e0eb1f39a278ca0da1069",
+      "toronto-osm-node-13854671025",
+      "toronto-osm-node-13832584234",
+      "toronto-osm-node-13832584309",
+      "toronto-osm-node-13832584311",
+      "toronto-osm-node-13832584402",
+      "toronto-osm-node-13843296273",
+      "toronto-osm-node-13843296278",
+      "toronto-osm-node-13854892439",
+      "toronto-osm-node-13882951037",
+      "toronto-osm-node-13882951043",
+      "toronto-osm-node-4035389296",
+      "toronto-osm-node-859687052",
+      "toronto-osm-way-1571451201",
+      "toronto-osm-node-13832697680",
+      "toronto-osm-node-13882951041",
+      "toronto-osm-node-13882951196",
+      "toronto-osm-node-803203787",
+      "toronto-osm-way-660369198",
+      "toronto-osm-way-660369216",
+      "toronto-osm-way-660369238",
+      "toronto-osm-way-660369520",
+      "toronto-osm-way-806532719"
+    ],
+    "sourceAcceptance": "Independent point, civic, boundary, snap, road and clue checks passed before directed response checks. Seven disconnected Island source proposals were excluded.",
+    "assignmentAudit": {
+      "halls": 133,
+      "routes": 1740,
+      "onwardOrigins": 1740,
+      "supportCalls": 166,
+      "descriptorSha256": "f6ed90e7ab092b0638e4aa0999d057b93b5d96266131c520d5fe8a82997b1d67"
+    },
+    "islandException": {
+      "id": "toronto-osm-node-13854671025",
+      "address": "355 Lakeshore Avenue",
+      "sourceReviewPassed": true,
+      "directedRouteReviewPassed": true,
+      "note": "Source point preserved; designated emergency-road model retains motor_vehicle=private. No eligible named cross-street clues under the documented policy. Other Island proposals are not routable and were not added."
+    }
+  },
+  "evidencePathConvention": {
+    "repositoryPaths": "Paths beginning cities/ are repository-relative.",
+    "externalBuildCache": "external-build-cache/ labels identify historical, reproducible build artifacts that are not shipped; adjacent SHA-256 values identify the exact reviewed bytes.",
+    "reviewScope": "Priority facility review records describe the selection-time review. Final integrated route and runtime validation is recorded in docs/city-call-validation-2026-10-29.md."
+  },
+  "finalEmsLocalCoverageTopUp": {
+    "reviewedOn": "2026-10-29",
+    "plan": "tools/response-floor-topups.json",
+    "planSha256": "1920b0fb3a822c0b47b5260294685311f0f525dc1347ff0d70d5873252c59ba7",
+    "tool": "tools/topup-response-calls.cjs",
+    "toolSha256": "d193764fbc0cd9e443937d03e6f84fc717d101c0461cc94b22b7b887d7066e87",
+    "purpose": "Fill twelve-destination EMS training target after preserving six existing civic first-due exercises and every prior assignment.",
+    "addedExerciseIds": [
+      "route-civic-23-ems-toronto-ems-2794777-toronto-osm-node-13882951203",
+      "route-civic-23-ems-toronto-ems-2911467-toronto-odef-13132c95876e87288f60",
+      "route-civic-23-ems-toronto-ems-4061713-toronto-osm-way-122204300",
+      "route-civic-23-ems-toronto-ems-4061713-toronto-osm-way-184484915",
+      "route-civic-23-ems-toronto-ems-1793120-toronto-osm-way-34614787",
+      "route-civic-23-ems-toronto-ems-2135734-toronto-odef-24d181372a35c07852a0"
+    ],
+    "promotedCanonicalIds": [
+      "toronto-osm-node-13882951203",
+      "toronto-osm-way-34614787"
+    ],
+    "sourceRecordPolicy": "Only exact already-reviewed source records; no new acquisition or moved source points.",
+    "preservedExistingExercises": 1740,
+    "preservedExistingCanonicalRecords": 735,
+    "auditedRoutes": 1746,
+    "trainingSha256": "9f8d02e358ebf84decf6b56fdb0385dc3324a8c79ab404ec4aeade5ea51b4af8",
+    "assignmentStatus": "Modeled navigation-training assignments, not operational run cards."
+  }
+}

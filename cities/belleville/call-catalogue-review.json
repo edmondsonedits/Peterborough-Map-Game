@@ -1,0 +1,277 @@
+{
+  "schemaVersion": 1,
+  "coverage": {
+    "cityId": "belleville",
+    "inputOfficial": 73,
+    "inputOsm": 1757,
+    "inputMajorRoad": 647,
+    "existing": 4,
+    "accepted": 1586,
+    "selected": 200,
+    "target": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "existingByDifficulty": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "selectedByDifficulty": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "totalByDifficulty": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "deficits": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "baseStrata": [
+      {
+        "id": "fire-fire-station-1-1",
+        "selected": 28,
+        "available": 260,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-fire-station-2-2",
+        "selected": 28,
+        "available": 580,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-fire-station-3-3",
+        "selected": 29,
+        "available": 44,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-fire-station-4-4",
+        "selected": 29,
+        "available": 145,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-fire-station-5-5",
+        "selected": 29,
+        "available": 142,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-base-00-headquarters-1",
+        "selected": 29,
+        "available": 208,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-base-01-farley-2",
+        "selected": 28,
+        "available": 207,
+        "method": "nearest-geographic-base-for-selection-only"
+      }
+    ],
+    "sharedBaseline": 0,
+    "baselineByService": {
+      "fire": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      },
+      "ems": {
+        "easy": 0,
+        "medium": 4,
+        "hard": 0
+      }
+    },
+    "serviceTotalsByDifficulty": {
+      "fire": {
+        "easy": 100,
+        "medium": 50,
+        "hard": 50
+      },
+      "ems": {
+        "easy": 100,
+        "medium": 54,
+        "hard": 50
+      }
+    },
+    "serviceDeficits": {
+      "fire": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      },
+      "ems": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "rejected": 891,
+    "rejectionCounts": {
+      "unresolved-2020-source-currentness": 2,
+      "production-snap-not-ground-public-road": 463,
+      "production-snap-wrong-street": 304,
+      "production-snap-over-80m-or-missing": 21,
+      "not-one-exact-civic-number-and-street": 16,
+      "duplicate-existing-or-accepted-address-or-named-site": 59,
+      "no-genuine-connected-cross-street-within-1500m": 26
+    },
+    "oneStreetExceptions": 90
+  },
+  "independentAudit": {
+    "cityId": "belleville",
+    "selected": 200,
+    "accepted": 1586,
+    "crossStreetEvidence": 2603,
+    "oneStreet": 569,
+    "maxGap": 78.93452850799501,
+    "pass": true
+  },
+  "priorityFacilityExpansion": {
+    "reviewedOn": "2026-10-29",
+    "addedIds": [
+      "belleville-osm-way-552499357",
+      "belleville-ontario-private-school-886209-189"
+    ],
+    "verification": {
+      "cityId": "belleville",
+      "additions": 2,
+      "proposalSha256": "ea897d3ce2f296100eef3470aab1a1bc3a3aef99559fbc3d6163b3565b7ef306",
+      "pass": true,
+      "checks": [
+        "IDs absent from current shared/legacy/care catalogue",
+        "row exactly equals accepted source record",
+        "full per-record provenance exactly equals accepted pool",
+        "factual category/tags and coordinates match raw source record",
+        "source point and URLs unchanged",
+        "no normalized civic-address/near-identical-site duplicates",
+        "max40 per city",
+        "per-base rationale present; no dispatch ownership claim"
+      ]
+    },
+    "review": {
+      "purpose": "Bounded source-preserving priority facility and local variety additions; no recognition tier rewrites.",
+      "sourcePool": "external-build-cache/canonical-catalogues-reviewed/belleville/accepted-candidates.json",
+      "sourcePoolSha256": "a45f6b428572788a479c98e3d6e657bb8b9ec15086cd6e7ba82eb85dd3c6cfe2",
+      "selectedDescriptor": "cities/belleville/training-data.json",
+      "selectedDescriptorSha256": "bd1929b9a0dfc5643aa45c8306956d3cd63617bc896722fb40977dcfafd74ee5",
+      "routeEvidence": "cities/belleville/training-data.json",
+      "routeEvidenceScope": "production",
+      "selectionRules": {
+        "maxPerCity": 40,
+        "maxPotentialAddsPerBase": 6,
+        "maxPotentialAddsForConfirmedZeroToTwoBase": 10,
+        "twoCluePriority": true,
+        "maximumStraightLineBaseReviewDistanceMetres": 6000
+      },
+      "limitations": [
+        "At this selection-time review: Every row passed the existing all-accepted geographic/source/clue audit. These additions have not been graph-assigned or route-audited.",
+        "Published Fire polygons are respected for review proximity; EMS and other Fire review strata use straight-line proximity only. These are not dispatch ownership assignments.",
+        "Full original accepted source point, ID, address, recognition tier, incident profile and provenance are unchanged. Current-open status is not newly verified."
+      ],
+      "rationales": {
+        "belleville-osm-way-552499357": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "belleville-osm-way-552499357",
+            "category": null,
+            "tags": {
+              "addr:city": "Belleville",
+              "addr:housenumber": "16",
+              "addr:postcode": "K8P 2X9",
+              "addr:street": "North Park Street",
+              "amenity": "place_of_worship",
+              "building": "yes",
+              "denomination": "united",
+              "email": "collegehillunitedchurch@cogeco.net",
+              "name": "College Hill United Church",
+              "religion": "christian"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/552499357",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-fire-station-2-2",
+              "distance": 1122.8256816327662,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 1123
+            },
+            {
+              "baseId": "ems-base-00-headquarters-1",
+              "distance": 2132.955382901632,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2133
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 174
+        },
+        "belleville-ontario-private-school-886209-189": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "belleville-ontario-private-school-886209-189",
+            "category": "school",
+            "tags": null,
+            "sourceUrls": [
+              "https://data.ontario.ca/dataset/private-school-location-list",
+              "https://data.ontario.ca/dataset/07586958-ffd4-4293-aec0-3b32e0f7de7b/resource/b0fef8bb-8b07-4962-8192-bbf899195cd5/download/private_school_location_list_en_2.xlsx"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-fire-station-1-1",
+              "distance": 1221.4289330413235,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 1221
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 145
+        }
+      }
+    },
+    "note": "Add-only source-validated priority facilities; geographic review reasons are not operational districts. Station assignments require independent directed-road audit."
+  },
+  "routeCandidateExpansion": {
+    "reviewedOn": "2026-10-29",
+    "promotedIds": [],
+    "candidateVerification": null,
+    "selection": "Only source-verified additional locations used by independently audited station exercises are promoted; existing canonical IDs and fields remain unchanged."
+  },
+  "evidencePathConvention": {
+    "repositoryPaths": "Paths beginning cities/ are repository-relative.",
+    "externalBuildCache": "external-build-cache/ labels identify historical, reproducible build artifacts that are not shipped; adjacent SHA-256 values identify the exact reviewed bytes.",
+    "reviewScope": "Priority facility review records describe the selection-time review. Final integrated route and runtime validation is recorded in docs/city-call-validation-2026-10-29.md."
+  }
+}

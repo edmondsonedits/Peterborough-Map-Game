@@ -1,0 +1,70 @@
+{
+  "city": "clarington",
+  "verifiedFingerprint": "d588ff3e8958f104a491e79cf8fe60e2ce3ebdc04b91caf8709f79c6895d645a",
+  "halls": [
+    {
+      "id": "fire-clarington-fire-1",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 3267,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-clarington-fire-2",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3931,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-clarington-fire-3",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2512,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-clarington-fire-4",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3286,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-clarington-fire-5",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 4118,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-clarington-ems-519",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3793,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-clarington-ems-548",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 3052,
+      "method": "modeled-road-response"
+    }
+  ],
+  "routes": 84,
+  "continuousOrigins": 84,
+  "officialCalls": 0,
+  "modeledCalls": 84,
+  "maxRouteMetres": 4118.472246415324,
+  "minCallsPerHall": 12,
+  "minChallengeCallsPerHall": 11,
+  "durationMs": 3686
+}

@@ -1,0 +1,373 @@
+{
+  "schemaVersion": 1,
+  "coverage": {
+    "cityId": "st-catharines",
+    "inputOfficial": 257,
+    "inputOsm": 1820,
+    "inputMajorRoad": 1226,
+    "existing": 21,
+    "accepted": 1956,
+    "selected": 180,
+    "target": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "existingByDifficulty": {
+      "easy": 10,
+      "medium": 5,
+      "hard": 5
+    },
+    "selectedByDifficulty": {
+      "easy": 90,
+      "medium": 45,
+      "hard": 45
+    },
+    "totalByDifficulty": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "deficits": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "baseStrata": [
+      {
+        "id": "fire-st-catharines-fire-1",
+        "selected": 22,
+        "available": 323,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-st-catharines-fire-2",
+        "selected": 22,
+        "available": 297,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-st-catharines-fire-3",
+        "selected": 23,
+        "available": 227,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-st-catharines-fire-4",
+        "selected": 22,
+        "available": 243,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-st-catharines-fire-5",
+        "selected": 23,
+        "available": 191,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-st-catharines-fire-6",
+        "selected": 23,
+        "available": 246,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-st-catharines-ems-linwell",
+        "selected": 23,
+        "available": 239,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-st-catharines-ems-ontario",
+        "selected": 22,
+        "available": 190,
+        "method": "nearest-geographic-base-for-selection-only"
+      }
+    ],
+    "sharedBaseline": 20,
+    "baselineByService": {
+      "fire": {
+        "easy": 10,
+        "medium": 5,
+        "hard": 5
+      },
+      "ems": {
+        "easy": 10,
+        "medium": 6,
+        "hard": 5
+      }
+    },
+    "serviceTotalsByDifficulty": {
+      "fire": {
+        "easy": 100,
+        "medium": 50,
+        "hard": 50
+      },
+      "ems": {
+        "easy": 100,
+        "medium": 51,
+        "hard": 50
+      }
+    },
+    "serviceDeficits": {
+      "fire": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      },
+      "ems": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "rejected": 1347,
+    "rejectionCounts": {
+      "unresolved-2020-source-currentness": 13,
+      "production-snap-not-ground-public-road": 689,
+      "unresolved-official-coordinate-or-current-address-conflict": 7,
+      "not-one-exact-civic-number-and-street": 126,
+      "production-snap-wrong-street": 432,
+      "production-snap-over-80m-or-missing": 19,
+      "duplicate-existing-or-accepted-address-or-named-site": 50,
+      "no-genuine-connected-cross-street-within-1500m": 11
+    },
+    "oneStreetExceptions": 31
+  },
+  "independentAudit": {
+    "cityId": "st-catharines",
+    "selected": 180,
+    "accepted": 1956,
+    "crossStreetEvidence": 3543,
+    "oneStreet": 369,
+    "maxGap": 77.69267142941348,
+    "pass": true
+  },
+  "priorityFacilityExpansion": {
+    "reviewedOn": "2026-10-29",
+    "addedIds": [
+      "st-catharines-osm-way-810641126",
+      "st-catharines-osm-way-810841978",
+      "st-catharines-osm-way-482932599",
+      "st-catharines-osm-way-185548261"
+    ],
+    "verification": {
+      "cityId": "st-catharines",
+      "additions": 4,
+      "proposalSha256": "7eb25e2bc23ce0d42b2caf39c0c09ebc954948d2c11974c6a062153b0643829c",
+      "pass": true,
+      "checks": [
+        "IDs absent from current shared/legacy/care catalogue",
+        "row exactly equals accepted source record",
+        "full per-record provenance exactly equals accepted pool",
+        "factual category/tags and coordinates match raw source record",
+        "source point and URLs unchanged",
+        "no normalized civic-address/near-identical-site duplicates",
+        "max40 per city",
+        "per-base rationale present; no dispatch ownership claim"
+      ]
+    },
+    "review": {
+      "purpose": "Bounded source-preserving priority facility and local variety additions; no recognition tier rewrites.",
+      "sourcePool": "external-build-cache/canonical-catalogues-reviewed/st-catharines/accepted-candidates.json",
+      "sourcePoolSha256": "569260d0dd1c76d609cf778d51461cb7ec7592cefa2f1168b450ecc430946743",
+      "selectedDescriptor": "cities/st-catharines/training-data.json",
+      "selectedDescriptorSha256": "ab9aced0e2e8fa98009371e5172d8466dc00c04525e3c0f5a370632affe4ef8a",
+      "routeEvidence": "cities/st-catharines/training-data.json",
+      "routeEvidenceScope": "production",
+      "selectionRules": {
+        "maxPerCity": 40,
+        "maxPotentialAddsPerBase": 6,
+        "maxPotentialAddsForConfirmedZeroToTwoBase": 10,
+        "twoCluePriority": true,
+        "maximumStraightLineBaseReviewDistanceMetres": 6000
+      },
+      "limitations": [
+        "At this selection-time review: Every row passed the existing all-accepted geographic/source/clue audit. These additions have not been graph-assigned or route-audited.",
+        "Published Fire polygons are respected for review proximity; EMS and other Fire review strata use straight-line proximity only. These are not dispatch ownership assignments.",
+        "Full original accepted source point, ID, address, recognition tier, incident profile and provenance are unchanged. Current-open status is not newly verified."
+      ],
+      "rationales": {
+        "st-catharines-osm-way-810641126": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "university",
+          "sourceEvidence": {
+            "sourceRecordId": "st-catharines-osm-way-810641126",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "573A",
+              "addr:street": "Glenridge Avenue",
+              "building": "university",
+              "building:levels": "2",
+              "building:material": "brick",
+              "name": "Glenridge Building",
+              "roof:shape": "gabled"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/810641126",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-st-catharines-fire-3",
+              "distance": 1746.654534266049,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1747
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 165
+        },
+        "st-catharines-osm-way-810841978": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "st-catharines-osm-way-810841978",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "149",
+              "addr:street": "Geneva Street",
+              "building": "apartments"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/810841978",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-st-catharines-fire-1",
+              "distance": 632.9693442251076,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 633
+            },
+            {
+              "baseId": "ems-st-catharines-ems-ontario",
+              "distance": 1523.0743101002247,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 1523
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 149
+        },
+        "st-catharines-osm-way-482932599": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "social facility: nursing_home",
+          "sourceEvidence": {
+            "sourceRecordId": "st-catharines-osm-way-482932599",
+            "category": null,
+            "tags": {
+              "addr:city": "St. Catharines",
+              "addr:housenumber": "103",
+              "addr:postcode": "L2S 1S9",
+              "addr:street": "Pelham Road",
+              "amenity": "social_facility",
+              "building": "yes",
+              "name": "West Park Health Centre",
+              "social_facility": "nursing_home",
+              "social_facility:for": "senior"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/482932599",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "ems-st-catharines-ems-ontario",
+              "distance": 1945.2270320686787,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 3,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 1945
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 129
+        },
+        "st-catharines-osm-way-185548261": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "st-catharines-osm-way-185548261",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "3",
+              "addr:postcode": "L2R 5M8",
+              "addr:street": "Lyman Street",
+              "amenity": "place_of_worship",
+              "building": "cathedral",
+              "denomination": "catholic",
+              "diocese": "Saint Catharines",
+              "fax": "+1 905-682-8235",
+              "name": "Cathedral of Saint Catherine of Alexandria",
+              "phone": "+1 905-684-3964",
+              "religion": "christian",
+              "source": "Bing",
+              "website": "https://www.thecathedralinstcatharines.com/",
+              "wikidata": "Q106918954",
+              "wikimedia_commons": "File:Cathedral of St. Catherine of Alexandria - St. Catherines, ON.jpg"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/185548261",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "ems-st-catharines-ems-ontario",
+              "distance": 598.830301286141,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 2,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 599
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 126
+        }
+      }
+    },
+    "note": "Add-only source-validated priority facilities; geographic review reasons are not operational districts. Station assignments require independent directed-road audit."
+  },
+  "routeCandidateExpansion": {
+    "reviewedOn": "2026-10-29",
+    "promotedIds": [],
+    "candidateVerification": null,
+    "selection": "Only source-verified additional locations used by independently audited station exercises are promoted; existing canonical IDs and fields remain unchanged."
+  },
+  "evidencePathConvention": {
+    "repositoryPaths": "Paths beginning cities/ are repository-relative.",
+    "externalBuildCache": "external-build-cache/ labels identify historical, reproducible build artifacts that are not shipped; adjacent SHA-256 values identify the exact reviewed bytes.",
+    "reviewScope": "Priority facility review records describe the selection-time review. Final integrated route and runtime validation is recorded in docs/city-call-validation-2026-10-29.md."
+  }
+}

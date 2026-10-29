@@ -48,8 +48,9 @@ test('existing driving cities launch through the same shared desktop and mobile 
   }
   for(const id of cities){
     const city=c.PTBO_CITIES.find(item=>item.id===id);
-    assert.equal(city.status,'base-training',id);
-    assert.equal(city.note,'calls unavailable',id);
+    assert.equal(city.status,'scene-response',id);
+    assert.match(city.note,/scene-response exercises; no hospital transport/,id);
+    assert.equal(city.modes.geo,true,id);assert.equal(city.modes.route,true,id);
   }
 });
 
@@ -74,7 +75,7 @@ test('every base-training city ships a packaged city definition and deliberately
 test('all six base-training city packages start without live network services', async () => {
   for(const id of cities){
     let fetchCount=0;
-    const c=browserContext({fetch:async()=>{fetchCount+=1;throw new Error('network unavailable')}});
+    const c=browserContext({fetch:async url=>{fetchCount+=1;assert.equal(String(url),`https://example.com/cities/${id}/geo-data.json`);return {ok:true,json:async()=>JSON.parse(read(`cities/${id}/geo-data.json`))};}});
     vm.runInContext(read('cities/preview-package-factory.js'),c);
     c.document.currentScript.src=`https://example.com/cities/${id}/package.js`;
     vm.runInContext(read(`cities/${id}/package.js`),c);
@@ -85,7 +86,7 @@ test('all six base-training city packages start without live network services', 
     assert.equal(c.PTBO_CITY_PACKAGE.id,id);
     assert.ok(c.PTBO_SERVICE_CONFIG.profiles.fire.bases.length,`${id} fire bases`);
     assert.ok(c.PTBO_SERVICE_CONFIG.profiles.ems.bases.length,`${id} EMS bases`);
-    assert.equal(fetchCount,0,`${id} startup must use packaged coordinates`);
+    assert.equal(fetchCount,1,`${id} startup must load only its packaged canonical roster`);
   }
 });
 
@@ -189,7 +190,7 @@ test('v1.6.31 reduces camera frame work and starts optional enhancements in para
   assert.match(camera,/if \(centerChanged\) \{\s*mapInstance\.setView/);
   assert.match(directional,/if \(pane && pane\.style\.rotate !== '0deg'\)/);
   assert.match(directional,/if \(orientationChanged\) updateMapOrientation\?\.\(\)/);
-  assert.match(build,/await Promise\.all\(\[\s*optionalInnerModule\([\s\S]*?ptbo-satellite-map-loader[\s\S]*?ptbo-route-reveal-review-loader[\s\S]*?ptbo-quick-tutorial-loader/);
+  assert.match(build,/await Promise\.all\(\[[\s\S]*?ptbo-satellite-map-loader[\s\S]*?ptbo-route-reveal-review-loader[\s\S]*?ptbo-quick-tutorial-loader/);
 });
 
 test('base-training mode only disables dispatch and keeps the shared simulator surface', () => {
@@ -217,7 +218,7 @@ test('compact settings accepts the base-training Incident Types label instead of
 test('city selector keeps the shared mobile and desktop wrapper URLs', () => {
   const source=read('shared/city-selector.js');
   assert.match(source,/const VERSION = '\d+\.\d+\.\d+'/);
-  assert.match(source,/Peterborough for the full game/);
+  assert.match(source,/Peterborough includes hospital transport/);
   assert.match(source,/url\.searchParams\.set\('surface', mobile \? 'mobile' : 'desktop'\)/);
   assert.match(source,/url\.searchParams\.set\('fresh', String\(Date\.now\(\)\)\)/);
 });

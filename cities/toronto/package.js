@@ -4,7 +4,7 @@
   const sourceUrl=new URL(document.currentScript?.src || location.href,location.href);
   const CACHE_VERSION=sourceUrl.searchParams.get('v') || VERSION;
   const config={
-    id:'toronto',name:'Toronto',
+    sceneResponseDrills:true,id:'toronto',name:'Toronto',
     map:{defaultCenter:[43.7001,-79.4163],defaultHeading:180,defaultZoom:14,minZoom:10,maxZoom:19,bounds:[[43.58,-79.65],[43.86,-79.10]]},
     sources:{
       fire:{type:'toronto-fire',url:'https://gis.toronto.ca/arcgis/rest/services/cot_geospatial25/FeatureServer/3',outFields:'ID,ADDRESS,ADDRESS_NUMBER,LINEAR_NAME_FULL,LATITUDE,LONGITUDE,MUNICIPALITY_NAME,STATION',preferFallback:true,fallback:[

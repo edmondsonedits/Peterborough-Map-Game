@@ -1,0 +1,199 @@
+{
+  "city": "brampton",
+  "verifiedFingerprint": "b8cb2bf30edff9c7e9cfb4576bdc4a5ee8bc2feaf457d91486be229870ffca3f",
+  "halls": [
+    {
+      "id": "fire-brampton-fire-203",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3620,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-brampton-fire-204",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 2586,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-brampton-fire-205",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 4168,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-brampton-fire-206",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 4448,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-brampton-fire-207",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2602,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-brampton-fire-202",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3067,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-brampton-fire-208",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3708,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-brampton-fire-209",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3636,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-brampton-fire-210",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 2594,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-brampton-fire-213",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 4665,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-brampton-fire-212",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 5405,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-brampton-fire-211",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 4398,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-brampton-fire-214",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 11,
+      "maxRouteMetres": 3478,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-brampton-fire-201",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2947,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-brampton-ems-fernforest",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2602,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-brampton-ems-rising-hill",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2603,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-brampton-ems-bovaird-west",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 5006,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-brampton-ems-inspire",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3567,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-brampton-ems-exchange",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3407,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-brampton-ems-sandalwood",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3563,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-brampton-ems-gore",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 4398,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-brampton-ems-trueman",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2744,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-brampton-ems-victoria",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2798,
+      "method": "modeled-road-response"
+    }
+  ],
+  "routes": 304,
+  "continuousOrigins": 304,
+  "officialCalls": 0,
+  "modeledCalls": 276,
+  "maxRouteMetres": 5404.798422959818,
+  "minCallsPerHall": 12,
+  "minChallengeCallsPerHall": 11,
+  "supportCalls": 28,
+  "durationMs": 27176
+}

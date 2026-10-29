@@ -22,6 +22,10 @@
   let trainingData = null;
   let trainingCareHomeIds = [];
   let savedTrainingCareHomeIds = null;
+  let trainingSharedLocationIds = [];
+  let savedTrainingSharedLocationIds = null;
+  let migrationCanonicalIds = new Set();
+  let legacyPreviewMigration = false;
 
   const normalizeText = value => String(value ?? '').trim().replace(/\s+/g, ' ');
   const keyText = value => normalizeText(value).toLowerCase().replace(/[’']/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
@@ -40,7 +44,14 @@
     return `call-${slug(location.name)}-${hash(identity)}`;
   }
 
+  function validPoint(point) {
+    return point && !Array.isArray(point) && ['lat','lng'].every(key =>
+      point[key] != null && typeof point[key] !== 'boolean' && String(point[key]).trim() !== '' && Number.isFinite(Number(point[key]))) &&
+      Math.abs(Number(point.lat)) <= 90 && Math.abs(Number(point.lng)) <= 180;
+  }
+
   function normalizeLocation(raw, source) {
+    if (raw?.routeAccess !== undefined && !validPoint(raw.routeAccess)) return null;
     const latValue=raw?.lat ?? raw?.latitude, lngValue=raw?.lng ?? raw?.longitude;
     if (latValue == null || lngValue == null || String(latValue).trim() === '' || String(lngValue).trim() === '') return null;
     const districtValue = Number(raw?.district);
@@ -66,6 +77,11 @@
       trainingServices:Array.isArray(raw?.trainingServices) ? [...new Set(raw.trainingServices.map(value=>normalizeText(value).toLowerCase()).filter(value=>['fire','ems'].includes(value)))] : undefined,
       providerId:normalizeText(raw?.providerId) || undefined,
       community:normalizeText(raw?.community) || undefined,
+      cityId:normalizeText(raw?.cityId) || undefined,
+      locationKind:normalizeText(raw?.locationKind) || undefined,
+      difficultyReason:normalizeText(raw?.difficultyReason) || undefined,
+      routeAccess:raw?.routeAccess ? {...JSON.parse(JSON.stringify(raw.routeAccess)),lat:Number(raw.routeAccess.lat),lng:Number(raw.routeAccess.lng)} : undefined,
+      geographicVerificationRef:normalizeText(raw?.geographicVerificationRef) || undefined,
     };
     if (!Number.isFinite(location.lat) || !Number.isFinite(location.lng) || Math.abs(location.lat)>90 || Math.abs(location.lng)>180) return null;
     if (!location.id) location.id = makeId(location);
@@ -81,11 +97,55 @@
     return 6371000*2*Math.asin(Math.sqrt(Math.min(1,h)));
   }
 
+  function mergeTrainingLocations(locations, descriptor) {
+    if (descriptor.sharedLocations !== undefined && !Array.isArray(descriptor.sharedLocations)) {
+      throw new Error(`Training data for ${CITY_ID} has an invalid sharedLocations array.`);
+    }
+    const canonical=normalizeList(locations,'source');
+    const byId=new Map(canonical.map(item=>[item.id,item]));
+    const seen=new Set(), supplemental=[];
+    for (const raw of descriptor.sharedLocations || []) {
+      const item=normalizeLocation(raw,'training');
+      if (!item || !validPoint({lat:raw.lat ?? raw.latitude,lng:raw.lng ?? raw.longitude}) || typeof raw.id !== 'string' || !raw.id.trim() || !normalizeText(raw.name) ||
+          !normalizeText(raw.addr ?? raw.address) || (raw.cityId !== undefined && raw.cityId !== descriptor.id)) {
+        throw new Error(`Training data for ${CITY_ID} contains an invalid shared location or city id.`);
+      }
+      if (seen.has(item.id)) throw new Error(`Training data for ${CITY_ID} repeats shared location id ${item.id}.`);
+      seen.add(item.id);
+      const existing=byId.get(item.id);
+      if (existing) {
+        if (keyText(existing.addr)!==keyText(item.addr) || distanceMetres(existing,item)>=20) {
+          throw new Error(`Training shared location id ${item.id} conflicts with a dispatch location.`);
+        }
+        // The original canonical seed remains authoritative for its coordinates and labels.
+        continue;
+      }
+      if (!item.recognitionDifficulty) {
+        throw new Error(`Training shared location ${item.id} has an invalid recognition difficulty.`);
+      }
+      if ([...canonical,...supplemental].some(other=>keyText(other.addr)===keyText(item.addr) && distanceMetres(other,item)<20)) {
+        throw new Error(`Training shared location ${item.id} conflicts with an existing address and point.`);
+      }
+      item.incidentProfiles={
+        fire:{sub:'Structure Fire'},ems:{sub:'Medical Assistance'},...item.incidentProfiles,
+      };
+      for (const service of ['fire','ems']) {
+        if (!normalizeText(item.incidentProfiles[service]?.sub)) {
+          throw new Error(`Training shared location ${item.id} has an invalid ${service} incident profile.`);
+        }
+      }
+      item.trainingServices=['fire','ems'];
+      supplemental.push(item);
+    }
+    trainingSharedLocationIds=supplemental.map(item=>item.id);
+    return [...canonical,...supplemental];
+  }
+
   function mergeTrainingHomes(locations, descriptor) {
     if (!descriptor || descriptor.schemaVersion!==1 || descriptor.id!==CITY_ID || !Array.isArray(descriptor.careHomes)) {
       throw new Error(`Training data for ${CITY_ID} has an invalid schema or city id.`);
     }
-    const canonical=normalizeList(locations,'source');
+    const canonical=mergeTrainingLocations(locations,descriptor);
     const byAddress=new Map();
     for (const item of canonical) {
       const address=keyText(item.addr);
@@ -158,13 +218,26 @@
     const savedById=new Map(savedItems.map(item=>[item.id,item]));
     const restored=savedItems.map(item=>{
       const original=seedById.get(item.id);
-      if(!original?.facilityType)return item;
-      return {...item,facilityType:original.facilityType,providerId:original.providerId,community:original.community,
+      if(!original)return item;
+      const metadata={};
+      for(const key of ['locationKind','difficultyReason','routeAccess','geographicVerificationRef','cityId']) {
+        if(item[key] == null && original[key] != null)metadata[key]=original[key];
+      }
+      if(original.facilityType)Object.assign(metadata,{facilityType:original.facilityType,providerId:original.providerId,community:original.community,
         ...(original.trainingServices?{trainingServices:original.trainingServices}:{}),
-        sources:[...new Set([...(item.sources||[]),...(original.sources||[])])]};
+        sources:[...new Set([...(item.sources||[]),...(original.sources||[])])]});
+      return {...item,...metadata};
     });
-    const priorIds=new Set(savedTrainingCareHomeIds||[]);
-    for(const home of seed.filter(item=>item.trainingServices?.includes('ems'))){
+    const priorIds=new Set([...(savedTrainingCareHomeIds||[]),...(savedTrainingSharedLocationIds||[])]);
+    const supplementalIds=new Set([...trainingCareHomeIds,...trainingSharedLocationIds]);
+    if (legacyPreviewMigration) {
+      // A pre-Geo preview had no Geo seed locations. Add those newly published
+      // records, but respect any IDs recorded in the old supplemental history.
+      if (!savedTrainingSharedLocationIds) trainingSharedLocationIds.forEach(id=>priorIds.add(id));
+      if (!savedTrainingCareHomeIds) trainingCareHomeIds.forEach(id=>priorIds.add(id));
+      for (const item of seed) if (migrationCanonicalIds.has(item.id) && !savedById.has(item.id) && !priorIds.has(item.id)) restored.push(item);
+    }
+    for(const home of seed.filter(item=>supplementalIds.has(item.id))){
       if(savedById.has(home.id)||priorIds.has(home.id))continue;
       restored.push(home);
     }
@@ -217,6 +290,23 @@
   }
 
   async function loadData() {
+    // Simulator wrappers start this store before the city package parser script.
+    // Wait for non-Peterborough packages to choose the canonical source once.
+    if (CITY_ID !== 'peterborough' && /\/response-simulator\/(?:play|mobile)\//.test(currentUrl.pathname)) {
+      const start=Date.now();
+      while (!window.PTBO_CITY_PACKAGE || window.PTBO_CITY_PACKAGE.id!==CITY_ID || !window.PTBO_CITY_PACKAGE_READY) {
+        if(window.PTBO_CITY_PACKAGE_LOAD_ERROR) throw window.PTBO_CITY_PACKAGE_LOAD_ERROR;
+        if(Date.now()-start>15000) throw new Error(`City package for ${CITY_ID} did not become ready.`);
+        await new Promise(resolve=>setTimeout(resolve,25));
+      }
+      await window.PTBO_CITY_PACKAGE_READY;
+    }
+    if (window.PTBO_CITY_PACKAGE?.features?.sceneResponseDrills === true) {
+      await window.PTBO_CITY_PACKAGE_READY;
+      if (window.PTBO_CITY_PACKAGE?.id !== CITY_ID || !window.PTBO_DISPATCH_DATA_READY) throw new Error(`Canonical dispatch locations for ${CITY_ID} did not initialize.`);
+      dataVersion=String(window.PTBO_DISPATCH_DATA_VERSION || 'ontario-geo-1');
+      return window.PTBO_DISPATCH_DATA_READY;
+    }
     // Tests and legacy standalone embeds may already supply a resolved payload.
     if (window.PTBO_DISPATCH_DATA_READY && !window.PTBO_CITY_DISPATCH_SOURCE) {
       dataVersion = String(window.PTBO_DISPATCH_DATA_VERSION || (CITY_ID === 'peterborough' ? '1.4.20' : '1'));
@@ -243,9 +333,12 @@
     } catch (error) { console.warn(`Dispatch edits for ${CITY_ID} could not be read.`,error); }
     for (const parsed of candidates) {
       const compatibleVersion = parsed.version === STORE_VERSION || (CITY_ID === 'peterborough' && parsed.version === 2);
-      if (!compatibleVersion || !Array.isArray(parsed.items)) continue;
-      if (parsed.dataVersion === dataVersion) {
+      if (!compatibleVersion || !Array.isArray(parsed.items) || (parsed.cityId != null && parsed.cityId !== CITY_ID)) continue;
+      const oldPreview = ['oshawa','pickering','markham','toronto'].includes(CITY_ID) && dataVersion === 'ontario-geo-1' && parsed.dataVersion === '1.6.8';
+      if (parsed.dataVersion === dataVersion || oldPreview) {
+        legacyPreviewMigration=oldPreview;
         savedTrainingCareHomeIds=Array.isArray(parsed.trainingCareHomeIds)?parsed.trainingCareHomeIds.map(normalizeText):null;
+        savedTrainingSharedLocationIds=Array.isArray(parsed.trainingSharedLocationIds)?parsed.trainingSharedLocationIds.map(normalizeText):null;
         return normalizeList(parsed.items,'saved');
       }
       if (CITY_ID === 'peterborough' && parsed.dataVersion === '1.4.20' && window.PTBO_DISPATCH_LEGACY_LOCATIONS) {
@@ -284,7 +377,7 @@
 
   function persist(nextItems = items) {
     try {
-      localStorage.setItem(STORAGE_KEY,JSON.stringify({version:STORE_VERSION,cityId:CITY_ID,dataVersion,trainingCareHomeIds,savedAt:new Date().toISOString(),items:nextItems}));
+      localStorage.setItem(STORAGE_KEY,JSON.stringify({version:STORE_VERSION,cityId:CITY_ID,dataVersion,trainingCareHomeIds,trainingSharedLocationIds:[...new Set([...(savedTrainingSharedLocationIds||[]),...trainingSharedLocationIds])],savedAt:new Date().toISOString(),items:nextItems}));
     } catch (error) {
       throw new Error('Changes could not be saved on this device. Free browser storage and try again, or export your edits.',{cause:error});
     }
@@ -296,6 +389,7 @@
     const supplied = await loadData();
     const [rawLocations,descriptor]=await Promise.all([supplied,loadTrainingData()]);
     await requireEmsPriority();
+    migrationCanonicalIds=new Set(normalizeList(rawLocations,'source').map(item=>item.id));
     seed = normalizeList(mergeTrainingHomes(rawLocations,descriptor),'source');
     items = restoreTrainingMetadata(readSaved());
     console.info(`${CITY_ID} dispatch database v${dataVersion} loaded: ${items.length} calls.`);

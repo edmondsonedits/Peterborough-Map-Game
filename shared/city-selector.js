@@ -75,9 +75,9 @@
   dialog.innerHTML = `
     <p class="city-kicker">Emergency Response Simulator</p>
     <h2 id="ptbo-city-title">Choose a city</h2>
-    <p class="city-intro">Choose Peterborough for the full game, including dispatch calls. All other cities are available for free driving only.</p>
+    <p class="city-intro">Peterborough includes hospital transport. Other listed cities offer modeled Fire and EMS scene-response exercises.</p>
     <div class="city-grid"></div>
-    <div class="city-foot"><span>Calls unavailable means the dispatch system is offline. Free driving mode is still enabled.</span><button class="city-close" type="button">Cancel</button></div>`;
+    <div class="city-foot"><span>Some bases may not yet have enough sourced exercises. These are navigation exercises, not operational dispatch advice.</span><button class="city-close" type="button">Cancel</button></div>`;
 
   const grid = dialog.querySelector('.city-grid');
   dispatchCities.forEach(city => {
@@ -86,7 +86,7 @@
     button.className = 'city-option';
     button.dataset.city = city.id;
     button.dataset.status = city.status || '';
-    button.setAttribute('aria-label', `Open ${city.name} ${city.status==='base-training'?'base training':'Dispatch Simulator'}`);
+    button.setAttribute('aria-label', `Open ${city.name} ${city.status==='scene-response'?'scene-response exercises':city.status==='base-training'?'base training':'Dispatch Simulator'}`);
     button.innerHTML = `<strong>${city.name}</strong><span class="province">${city.province || ''}</span><span class="status">${city.note || 'Available'}</span>`;
     button.addEventListener('click', () => launch(city));
     grid.appendChild(button);

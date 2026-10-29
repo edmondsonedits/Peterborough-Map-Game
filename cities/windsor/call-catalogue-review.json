@@ -1,0 +1,562 @@
+{
+  "schemaVersion": 1,
+  "coverage": {
+    "cityId": "windsor",
+    "inputOfficial": 493,
+    "inputOsm": 2036,
+    "inputMajorRoad": 709,
+    "existing": 30,
+    "accepted": 1505,
+    "selected": 180,
+    "target": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "existingByDifficulty": {
+      "easy": 10,
+      "medium": 5,
+      "hard": 5
+    },
+    "selectedByDifficulty": {
+      "easy": 90,
+      "medium": 45,
+      "hard": 45
+    },
+    "totalByDifficulty": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "deficits": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "baseStrata": [
+      {
+        "id": "fire-windsor-fire-1",
+        "selected": 15,
+        "available": 49,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-windsor-fire-2",
+        "selected": 20,
+        "available": 343,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-windsor-fire-3",
+        "selected": 19,
+        "available": 60,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-windsor-fire-4",
+        "selected": 15,
+        "available": 31,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-windsor-fire-5",
+        "selected": 15,
+        "available": 15,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-windsor-fire-6",
+        "selected": 20,
+        "available": 328,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-windsor-fire-7",
+        "selected": 20,
+        "available": 423,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-windsor-ems-mercer",
+        "selected": 18,
+        "available": 49,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-windsor-ems-dougall",
+        "selected": 18,
+        "available": 23,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-windsor-ems-jefferson",
+        "selected": 20,
+        "available": 184,
+        "method": "nearest-geographic-base-for-selection-only"
+      }
+    ],
+    "sharedBaseline": 20,
+    "baselineByService": {
+      "fire": {
+        "easy": 10,
+        "medium": 5,
+        "hard": 5
+      },
+      "ems": {
+        "easy": 10,
+        "medium": 15,
+        "hard": 5
+      }
+    },
+    "serviceTotalsByDifficulty": {
+      "fire": {
+        "easy": 100,
+        "medium": 50,
+        "hard": 50
+      },
+      "ems": {
+        "easy": 100,
+        "medium": 60,
+        "hard": 50
+      }
+    },
+    "serviceDeficits": {
+      "fire": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      },
+      "ems": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "rejected": 1733,
+    "rejectionCounts": {
+      "unresolved-2020-source-currentness": 15,
+      "production-snap-not-ground-public-road": 1112,
+      "production-snap-wrong-street": 457,
+      "duplicate-existing-or-accepted-address-or-named-site": 56,
+      "unresolved-official-coordinate-or-current-address-conflict": 19,
+      "not-one-exact-civic-number-and-street": 27,
+      "production-snap-over-80m-or-missing": 35,
+      "no-genuine-connected-cross-street-within-1500m": 11,
+      "outside-verified-municipality-or-boundary-unavailable": 1
+    },
+    "oneStreetExceptions": 37
+  },
+  "independentAudit": {
+    "cityId": "windsor",
+    "selected": 180,
+    "accepted": 1505,
+    "crossStreetEvidence": 2631,
+    "oneStreet": 379,
+    "maxGap": 74.1527484103842,
+    "pass": true
+  },
+  "priorityFacilityExpansion": {
+    "reviewedOn": "2026-10-29",
+    "addedIds": [
+      "windsor-osm-node-8026451493",
+      "windsor-osm-way-783702095",
+      "windsor-osm-way-93536110",
+      "windsor-odef-49d7a593fc96f6b367c9",
+      "windsor-osm-way-766406744",
+      "windsor-osm-way-488937448",
+      "windsor-osm-way-631294290",
+      "windsor-osm-way-233048277"
+    ],
+    "verification": {
+      "cityId": "windsor",
+      "additions": 8,
+      "proposalSha256": "9b64177eceb77009ef0a228137152595eb28ed718e5fccf9126a60c03a49fe15",
+      "pass": true,
+      "checks": [
+        "IDs absent from current shared/legacy/care catalogue",
+        "row exactly equals accepted source record",
+        "full per-record provenance exactly equals accepted pool",
+        "factual category/tags and coordinates match raw source record",
+        "source point and URLs unchanged",
+        "no normalized civic-address/near-identical-site duplicates",
+        "max40 per city",
+        "per-base rationale present; no dispatch ownership claim"
+      ]
+    },
+    "review": {
+      "purpose": "Bounded source-preserving priority facility and local variety additions; no recognition tier rewrites.",
+      "sourcePool": "external-build-cache/canonical-catalogues-reviewed/windsor/accepted-candidates.json",
+      "sourcePoolSha256": "9389e430ddda59ae8a96fa1de89b48e7b28c271a47e9c2a4d68ecc3fc4370e0e",
+      "selectedDescriptor": "cities/windsor/training-data.json",
+      "selectedDescriptorSha256": "a1267390d27741842879fbdfbf0348830b104789925b2d58ec7e971c4835a06d",
+      "routeEvidence": "cities/windsor/training-data.json",
+      "routeEvidenceScope": "production",
+      "selectionRules": {
+        "maxPerCity": 40,
+        "maxPotentialAddsPerBase": 6,
+        "maxPotentialAddsForConfirmedZeroToTwoBase": 10,
+        "twoCluePriority": true,
+        "maximumStraightLineBaseReviewDistanceMetres": 6000
+      },
+      "limitations": [
+        "At this selection-time review: Every row passed the existing all-accepted geographic/source/clue audit. These additions have not been graph-assigned or route-audited.",
+        "Published Fire polygons are respected for review proximity; EMS and other Fire review strata use straight-line proximity only. These are not dispatch ownership assignments.",
+        "Full original accepted source point, ID, address, recognition tier, incident profile and provenance are unchanged. Current-open status is not newly verified."
+      ],
+      "rationales": {
+        "windsor-osm-node-8026451493": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "library",
+          "sourceEvidence": {
+            "sourceRecordId": "windsor-osm-node-8026451493",
+            "category": null,
+            "tags": {
+              "addr:city": "Windsor",
+              "addr:housenumber": "185",
+              "addr:postcode": "N9A 5S8",
+              "addr:province": "ON",
+              "addr:street": "Ouellette Avenue",
+              "amenity": "library",
+              "designation": "Central Branch",
+              "name": "Windsor Public Library Central Branch",
+              "name:fr": "Bibliothèque publique de Windsor, Bibliothèque centrale",
+              "source": "local_knowledge"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/8026451493",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-windsor-fire-1",
+              "distance": 888.1128005832004,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 888
+            },
+            {
+              "baseId": "ems-windsor-ems-mercer",
+              "distance": 1153.4289651467461,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1153
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 218
+        },
+        "windsor-osm-way-783702095": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "windsor-osm-way-783702095",
+            "category": null,
+            "tags": {
+              "addr:city": "Windsor",
+              "addr:housenumber": "1235",
+              "addr:postcode": "N8Y 4W7",
+              "addr:province": "ON",
+              "addr:street": "St. Luke Road",
+              "alt_name": "valco manufacturing inc",
+              "building": "industrial"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/783702095",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-windsor-fire-2",
+              "distance": 1542.6384223969428,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1543
+            },
+            {
+              "baseId": "ems-windsor-ems-mercer",
+              "distance": 2286.824531789886,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2287
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 211
+        },
+        "windsor-osm-way-93536110": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "library",
+          "sourceEvidence": {
+            "sourceRecordId": "windsor-osm-way-93536110",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "6305",
+              "addr:postcode": "N8S 4S5",
+              "addr:street": "Wyandotte Street East",
+              "amenity": "library",
+              "building": "yes",
+              "name": "Riverside Library",
+              "source": "http://windsorpubliclibrary.com/branches/riverside/hours.php"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/93536110",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-windsor-fire-7",
+              "distance": 2049.3990619458955,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2049
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 163
+        },
+        "windsor-odef-49d7a593fc96f6b367c9": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "windsor-odef-49d7a593fc96f6b367c9",
+            "category": "school",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/37-26-0001/372600012022001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/en/pub/37-26-0001/2022001/ODEF_v3.0.zip",
+              "https://data.ontario.ca/dataset/school-information-and-student-demographics",
+              "https://data.ontario.ca/dataset/ontario-public-school-contact-information",
+              "https://data.ontario.ca/dataset/fb3a7c18-90af-453e-bc0a-a76ecc471862/resource/f3a8c2a3-09d9-4715-9044-d8a0189f572c/download/public_school_contact_list_september2026_en.txt"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-windsor-fire-1",
+              "distance": 446.3963744754172,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 3,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 446
+            },
+            {
+              "baseId": "ems-windsor-ems-mercer",
+              "distance": 873.7368178238444,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 8,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 874
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 161
+        },
+        "windsor-osm-way-766406744": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "windsor-osm-way-766406744",
+            "category": null,
+            "tags": {
+              "addr:city": "Windsor",
+              "addr:housenumber": "1372",
+              "addr:postcode": "N8Y 3K7",
+              "addr:province": "Ontario",
+              "addr:street": "Argyle Road",
+              "building": "apartments",
+              "building:flats": "81",
+              "building:levels": "3",
+              "check_date": "2025-03-02",
+              "name": "The Argyle"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/766406744",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-windsor-fire-2",
+              "distance": 1448.6894739037716,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1449
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 156
+        },
+        "windsor-osm-way-488937448": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "windsor-osm-way-488937448",
+            "category": null,
+            "tags": {
+              "addr:city": "Windsow",
+              "addr:housenumber": "3652",
+              "addr:street": "Peter Street",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "denomination": "baptist",
+              "historic": "building",
+              "name": "Sandwich First Baptist Church",
+              "phone": "+1-519-252-4917",
+              "religion": "christian",
+              "website": "http://www.sandwichbaptistchurch.ca/",
+              "wikidata": "Q23505125",
+              "wikimedia_commons": "Category:Sandwich First Baptist Church"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/488937448",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-windsor-fire-4",
+              "distance": 1698.651359263125,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1699
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 153
+        },
+        "windsor-osm-way-631294290": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "windsor-osm-way-631294290",
+            "category": null,
+            "tags": {
+              "addr:city": "Windsor",
+              "addr:housenumber": "659",
+              "addr:postcode": "N9A 6Y6",
+              "addr:street": "Dufferin Place",
+              "building": "apartments",
+              "name": "Cencourse"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/631294290",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-windsor-fire-1",
+              "distance": 250.53855533399258,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 251
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 129
+        },
+        "windsor-osm-way-233048277": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "dormitory",
+          "sourceEvidence": {
+            "sourceRecordId": "windsor-osm-way-233048277",
+            "category": null,
+            "tags": {
+              "addr:city": "Windsor",
+              "addr:housenumber": "125",
+              "addr:street": "Sunset Avenue",
+              "building": "dormitory",
+              "building:levels": "3",
+              "name": "Whitgift House",
+              "operator": "Canterbury College"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/233048277",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-windsor-fire-4",
+              "distance": 1249.074956948512,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 1249
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 126
+        }
+      }
+    },
+    "note": "Add-only source-validated priority facilities; geographic review reasons are not operational districts. Station assignments require independent directed-road audit."
+  },
+  "routeCandidateExpansion": {
+    "reviewedOn": "2026-10-29",
+    "promotedIds": [],
+    "candidateVerification": null,
+    "selection": "Only source-verified additional locations used by independently audited station exercises are promoted; existing canonical IDs and fields remain unchanged."
+  },
+  "evidencePathConvention": {
+    "repositoryPaths": "Paths beginning cities/ are repository-relative.",
+    "externalBuildCache": "external-build-cache/ labels identify historical, reproducible build artifacts that are not shipped; adjacent SHA-256 values identify the exact reviewed bytes.",
+    "reviewScope": "Priority facility review records describe the selection-time review. Final integrated route and runtime validation is recorded in docs/city-call-validation-2026-10-29.md."
+  }
+}

@@ -1,0 +1,191 @@
+{
+  "city": "london",
+  "verifiedFingerprint": "053d6b42b92c318359deb041fb76e9ac35c6b982adb4f0d26edcc001c0a2576e",
+  "halls": [
+    {
+      "id": "fire-london-fire-1",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2601,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-london-fire-2",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3365,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-london-fire-3",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3839,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-london-fire-4",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2624,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-london-fire-5",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 5066,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-london-fire-6",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3372,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-london-fire-7",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3408,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-london-fire-8",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3492,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-london-fire-9",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2958,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-london-fire-10",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 4677,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-london-fire-11",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 4127,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-london-fire-12",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3960,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-london-fire-13",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3688,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-london-fire-14",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 4653,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-london-fire-15",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 6451,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-london-ems-adelaide",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 4081,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-london-ems-byron",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3678,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-london-ems-horizon",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2594,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-london-ems-hyde-park",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2791,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-london-ems-trafalgar",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 5619,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-london-ems-waterloo",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2602,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-london-ems-trossacks",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3153,
+      "method": "modeled-road-response"
+    }
+  ],
+  "routes": 294,
+  "continuousOrigins": 294,
+  "officialCalls": 0,
+  "modeledCalls": 264,
+  "maxRouteMetres": 6450.546212309512,
+  "minCallsPerHall": 12,
+  "minChallengeCallsPerHall": 11,
+  "supportCalls": 30,
+  "durationMs": 20792
+}

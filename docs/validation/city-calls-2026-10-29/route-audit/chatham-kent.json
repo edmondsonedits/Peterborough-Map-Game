@@ -1,0 +1,215 @@
+{
+  "city": "chatham-kent",
+  "verifiedFingerprint": "bdc0e50faeaac9e3d9eca18382b19b9131055d37562076631ef5bec8339855ac",
+  "halls": [
+    {
+      "id": "fire-chatham-kent-fire-1",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 11,
+      "maxRouteMetres": 4737,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-chatham-kent-fire-2",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 4513,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-chatham-kent-fire-3",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 5928,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-chatham-kent-fire-4",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3200,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-chatham-kent-fire-5",
+      "service": "fire",
+      "calls": 13,
+      "challengeCalls": 13,
+      "maxRouteMetres": 6002,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-chatham-kent-fire-6",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 9,
+      "maxRouteMetres": 2592,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-chatham-kent-fire-7",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 5392,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-chatham-kent-fire-8",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2626,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-chatham-kent-fire-9",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3644,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-chatham-kent-fire-10",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2720,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-chatham-kent-fire-11",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2128,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-chatham-kent-fire-12",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3766,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-chatham-kent-fire-14",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 5,
+      "maxRouteMetres": 2349,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-chatham-kent-fire-15",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 6176,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-chatham-kent-fire-16",
+      "service": "fire",
+      "calls": 13,
+      "challengeCalls": 13,
+      "maxRouteMetres": 5748,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-chatham-kent-fire-17",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 5549,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-chatham-kent-fire-18",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 10,
+      "maxRouteMetres": 2637,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-chatham-kent-fire-19",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 9,
+      "maxRouteMetres": 2769,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-chatham-kent-fire-20",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 5386,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-chatham-kent-ems-chatham",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 5603,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-chatham-kent-ems-ridgetown",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2365,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-chatham-kent-ems-wallaceburg",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2593,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-chatham-kent-ems-blenheim",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 10,
+      "maxRouteMetres": 2637,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-chatham-kent-ems-thamesville",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2626,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-chatham-kent-ems-tilbury",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 9,
+      "maxRouteMetres": 2769,
+      "method": "modeled-road-response"
+    }
+  ],
+  "routes": 312,
+  "continuousOrigins": 312,
+  "officialCalls": 0,
+  "modeledCalls": 300,
+  "maxRouteMetres": 6175.828911523376,
+  "minCallsPerHall": 12,
+  "minChallengeCallsPerHall": 5,
+  "supportCalls": 12,
+  "durationMs": 9788
+}

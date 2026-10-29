@@ -1,0 +1,398 @@
+{
+  "scope": "Historical independent candidate/source audit receipts. Candidate counts overlap across stages; final accepted gameplay counts come from the coverage ledger, not the sum of these receipts.",
+  "initialCityCount": 32,
+  "initialAcceptedCandidates": 60094,
+  "initialAudits": [
+    {
+      "cityId": "ajax",
+      "selected": 180,
+      "accepted": 1427,
+      "crossStreetEvidence": 2346,
+      "oneStreet": 508,
+      "maxGap": 78.68212995668095,
+      "pass": true
+    },
+    {
+      "cityId": "barrie",
+      "selected": 180,
+      "accepted": 1709,
+      "crossStreetEvidence": 3037,
+      "oneStreet": 381,
+      "maxGap": 78.43263653904215,
+      "pass": true
+    },
+    {
+      "cityId": "belleville",
+      "selected": 200,
+      "accepted": 1586,
+      "crossStreetEvidence": 2603,
+      "oneStreet": 569,
+      "maxGap": 78.93452850799501,
+      "pass": true
+    },
+    {
+      "cityId": "brampton",
+      "selected": 180,
+      "accepted": 1810,
+      "crossStreetEvidence": 2977,
+      "oneStreet": 643,
+      "maxGap": 79.99790465516719,
+      "pass": true
+    },
+    {
+      "cityId": "brantford",
+      "selected": 180,
+      "accepted": 1680,
+      "crossStreetEvidence": 3004,
+      "oneStreet": 356,
+      "maxGap": 76.88336991419138,
+      "pass": true
+    },
+    {
+      "cityId": "burlington",
+      "selected": 180,
+      "accepted": 1830,
+      "crossStreetEvidence": 3008,
+      "oneStreet": 652,
+      "maxGap": 69.86363784343904,
+      "pass": true
+    },
+    {
+      "cityId": "cambridge",
+      "selected": 180,
+      "accepted": 1823,
+      "crossStreetEvidence": 3180,
+      "oneStreet": 466,
+      "maxGap": 78.32706044569689,
+      "pass": true
+    },
+    {
+      "cityId": "chatham-kent",
+      "selected": 180,
+      "accepted": 2449,
+      "crossStreetEvidence": 4042,
+      "oneStreet": 856,
+      "maxGap": 79.82106447859485,
+      "pass": true
+    },
+    {
+      "cityId": "clarington",
+      "selected": 180,
+      "accepted": 1699,
+      "crossStreetEvidence": 2734,
+      "oneStreet": 664,
+      "maxGap": 76.7710241072145,
+      "pass": true
+    },
+    {
+      "cityId": "greater-sudbury",
+      "selected": 180,
+      "accepted": 2017,
+      "crossStreetEvidence": 3511,
+      "oneStreet": 523,
+      "maxGap": 79.53858752897224,
+      "pass": true
+    },
+    {
+      "cityId": "guelph",
+      "selected": 180,
+      "accepted": 1633,
+      "crossStreetEvidence": 2886,
+      "oneStreet": 380,
+      "maxGap": 79.26537564516624,
+      "pass": true
+    },
+    {
+      "cityId": "hamilton",
+      "selected": 220,
+      "accepted": 2886,
+      "crossStreetEvidence": 5076,
+      "oneStreet": 696,
+      "maxGap": 78.13536008424472,
+      "pass": true
+    },
+    {
+      "cityId": "kingston",
+      "selected": 180,
+      "accepted": 2362,
+      "crossStreetEvidence": 4009,
+      "oneStreet": 715,
+      "maxGap": 79.35766703552002,
+      "pass": true
+    },
+    {
+      "cityId": "kitchener",
+      "selected": 180,
+      "accepted": 1898,
+      "crossStreetEvidence": 3372,
+      "oneStreet": 424,
+      "maxGap": 79.94561572819752,
+      "pass": true
+    },
+    {
+      "cityId": "london",
+      "selected": 180,
+      "accepted": 2438,
+      "crossStreetEvidence": 4181,
+      "oneStreet": 695,
+      "maxGap": 79.00392863793338,
+      "pass": true
+    },
+    {
+      "cityId": "markham",
+      "selected": 180,
+      "accepted": 1824,
+      "crossStreetEvidence": 3014,
+      "oneStreet": 634,
+      "maxGap": 78.44010582071307,
+      "pass": true
+    },
+    {
+      "cityId": "milton",
+      "selected": 180,
+      "accepted": 1547,
+      "crossStreetEvidence": 2618,
+      "oneStreet": 476,
+      "maxGap": 76.64865735457192,
+      "pass": true
+    },
+    {
+      "cityId": "mississauga",
+      "selected": 181,
+      "accepted": 1860,
+      "crossStreetEvidence": 3135,
+      "oneStreet": 585,
+      "maxGap": 78.60372568716231,
+      "pass": true
+    },
+    {
+      "cityId": "niagara-falls",
+      "selected": 180,
+      "accepted": 2031,
+      "crossStreetEvidence": 3514,
+      "oneStreet": 548,
+      "maxGap": 71.17511541486185,
+      "pass": true
+    },
+    {
+      "cityId": "oakville",
+      "selected": 180,
+      "accepted": 1644,
+      "crossStreetEvidence": 2831,
+      "oneStreet": 457,
+      "maxGap": 71.05864773987467,
+      "pass": true
+    },
+    {
+      "cityId": "oshawa",
+      "selected": 180,
+      "accepted": 2139,
+      "crossStreetEvidence": 3643,
+      "oneStreet": 635,
+      "maxGap": 79.698906472044,
+      "pass": true
+    },
+    {
+      "cityId": "ottawa",
+      "selected": 316,
+      "accepted": 1829,
+      "crossStreetEvidence": 3223,
+      "oneStreet": 435,
+      "maxGap": 79.92840810028054,
+      "pass": true
+    },
+    {
+      "cityId": "pickering",
+      "selected": 180,
+      "accepted": 1309,
+      "crossStreetEvidence": 2068,
+      "oneStreet": 550,
+      "maxGap": 76.28339087408094,
+      "pass": true
+    },
+    {
+      "cityId": "richmond-hill",
+      "selected": 180,
+      "accepted": 1672,
+      "crossStreetEvidence": 2818,
+      "oneStreet": 526,
+      "maxGap": 74.61244891495043,
+      "pass": true
+    },
+    {
+      "cityId": "scarborough",
+      "selected": 200,
+      "accepted": 2265,
+      "crossStreetEvidence": 3974,
+      "oneStreet": 556,
+      "maxGap": 79.13957281530439,
+      "pass": true
+    },
+    {
+      "cityId": "st-catharines",
+      "selected": 180,
+      "accepted": 1956,
+      "crossStreetEvidence": 3543,
+      "oneStreet": 369,
+      "maxGap": 77.69267142941348,
+      "pass": true
+    },
+    {
+      "cityId": "thunder-bay",
+      "selected": 180,
+      "accepted": 1837,
+      "crossStreetEvidence": 3216,
+      "oneStreet": 458,
+      "maxGap": 75.40911419832378,
+      "pass": true
+    },
+    {
+      "cityId": "toronto",
+      "selected": 567,
+      "accepted": 2517,
+      "crossStreetEvidence": 4749,
+      "oneStreet": 285,
+      "maxGap": 79.23017725680448,
+      "pass": true
+    },
+    {
+      "cityId": "vaughan",
+      "selected": 180,
+      "accepted": 1831,
+      "crossStreetEvidence": 3011,
+      "oneStreet": 651,
+      "maxGap": 79.98612458780913,
+      "pass": true
+    },
+    {
+      "cityId": "waterloo",
+      "selected": 180,
+      "accepted": 1466,
+      "crossStreetEvidence": 2531,
+      "oneStreet": 401,
+      "maxGap": 76.91916907474553,
+      "pass": true
+    },
+    {
+      "cityId": "whitby",
+      "selected": 180,
+      "accepted": 1615,
+      "crossStreetEvidence": 2631,
+      "oneStreet": 599,
+      "maxGap": 78.7152103339626,
+      "pass": true
+    },
+    {
+      "cityId": "windsor",
+      "selected": 180,
+      "accepted": 1505,
+      "crossStreetEvidence": 2631,
+      "oneStreet": 379,
+      "maxGap": 74.1527484103842,
+      "pass": true
+    }
+  ],
+  "laterTargetedStages": [
+    {
+      "artifact": "canonical-toronto-targeted/toronto/independent-audit.json",
+      "sha256": "6536c1b8787a7af8005a9772462b230c122accccf2e3c4d43b70baeb07de5efe",
+      "receipt": {
+        "preservedExisting": 567,
+        "cityId": "toronto",
+        "selected": 582,
+        "accepted": 4662,
+        "crossStreetEvidence": 8561,
+        "oneStreet": 763,
+        "maxGap": 79.77210655623401,
+        "pass": true
+      }
+    },
+    {
+      "artifact": "canonical-rural-targeted/greater-sudbury/targeted-independent-audit.json",
+      "sha256": "681b46c2c2ed39b545d17fbb1a3a4634379d49ab5166b9672a5251a43cce2b9b",
+      "receipt": {
+        "pass": true,
+        "cityId": "greater-sudbury",
+        "inputTargeted": 6,
+        "acceptedAddOnly": 6,
+        "maxGapMetres": 14.786534632217274,
+        "genuineCrossStreetProofs": 10,
+        "originalPublishedIdsAndPointsPreserved": 180,
+        "productionMutation": false,
+        "routeAssignmentsNotClaimed": true,
+        "sourceFile": "external-build-cache/osm-sources/bundles/greater-sudbury.rural-targeted-candidates.json",
+        "currentProductionIdsAndPointsPreserved": 210
+      }
+    },
+    {
+      "artifact": "canonical-rural-targeted/ottawa/targeted-independent-audit.json",
+      "sha256": "4dd3cbc8fb5bae847d0d3b33dda022ed6085a49c8b4695ab7af8398d03836fe2",
+      "receipt": {
+        "currentProductionIdsAndPointsPreserved": 356,
+        "pass": true,
+        "cityId": "ottawa",
+        "inputTargeted": 6,
+        "acceptedAddOnly": 6,
+        "maxGapMetres": 54.46447954928679,
+        "genuineCrossStreetProofs": 12,
+        "originalPublishedIdsAndPointsPreserved": 316,
+        "productionMutation": false,
+        "routeAssignmentsNotClaimed": true,
+        "sourceFile": "external-build-cache/osm-sources/bundles/ottawa.rural-targeted-candidates.json"
+      }
+    },
+    {
+      "artifact": "canonical-toronto-three-gap/toronto/targeted-independent-audit.json",
+      "sha256": "d89f80180b42ada184cffb83b6b5111dc0bc295f946f6cb76fe53c12b4e4bcf1",
+      "receipt": {
+        "currentProductionIdsAndPointsPreserved": 607,
+        "pass": true,
+        "cityId": "toronto",
+        "inputTargeted": 36,
+        "acceptedAddOnly": 33,
+        "maxGapMetres": 48.21987499330438,
+        "genuineCrossStreetProofs": 52,
+        "originalPublishedIdsAndPointsPreserved": 567,
+        "productionMutation": false,
+        "routeAssignmentsNotClaimed": true,
+        "sourceFile": "external-build-cache/osm-sources/bundles/toronto.three-gap-route-shortlist-candidates.json"
+      }
+    },
+    {
+      "artifact": "canonical-toronto-final-mainland/toronto/targeted-independent-audit.json",
+      "sha256": "4f6c1ac1a904a0be6e99b129561111d760c178d2c9d822986fa217ca2f61ce37",
+      "receipt": {
+        "currentProductionIdsAndPointsPreserved": 607,
+        "pass": true,
+        "cityId": "toronto",
+        "inputTargeted": 24,
+        "acceptedAddOnly": 23,
+        "maxGapMetres": 55.461090393763456,
+        "genuineCrossStreetProofs": 38,
+        "originalPublishedIdsAndPointsPreserved": 567,
+        "productionMutation": false,
+        "routeAssignmentsNotClaimed": true,
+        "sourceFile": "external-build-cache/osm-sources/bundles/toronto.final-mainland-route-shortlist-candidates.json"
+      }
+    },
+    {
+      "artifact": "canonical-ottawa63-final/ottawa/targeted-independent-audit.json",
+      "sha256": "c998b47844302de272c03768987670a47be3747dcb641a7f5b7a60d5cb5b1957",
+      "receipt": {
+        "currentProductionIdsAndPointsPreserved": 453,
+        "pass": true,
+        "cityId": "ottawa",
+        "inputTargeted": 12,
+        "acceptedAddOnly": 12,
+        "maxGapMetres": 45.590087894348414,
+        "genuineCrossStreetProofs": 21,
+        "originalPublishedIdsAndPointsPreserved": 316,
+        "productionMutation": false,
+        "routeAssignmentsNotClaimed": true,
+        "sourceFile": "external-build-cache/osm-sources/bundles/ottawa63.final-gap-targeted-candidates.json"
+      }
+    }
+  ],
+  "finalRecordContracts": "tests/city-call-catalogues.test.cjs validates every published supplement against its source point, current packaged road hash, source references, service tiers and scoped Island exception. Those tests are included in node-tests.txt.",
+  "limits": "Source geometry and public data checks are not field entrance surveys or a claim every named facility was independently confirmed currently open."
+}

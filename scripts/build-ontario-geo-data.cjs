@@ -22,6 +22,9 @@ async function loadLegacyBases(cityId) {
   });
   context.window = context;
   vm.runInContext(fs.readFileSync(path.join(root,'cities/preview-package-factory.js'),'utf8'),context,{timeout:1000});
+  // Geo generation must inspect the historical packaged preview roster, not the Geo file being built.
+  const factory=context.PTBO_PREVIEW_CITY_FACTORY;
+  context.PTBO_PREVIEW_CITY_FACTORY={version:factory.version,create:config=>factory.create({...config,sceneResponseDrills:false})};
   vm.runInContext(fs.readFileSync(path.join(root,'cities',cityId,'package.js'),'utf8'),context,{timeout:1000});
   await context.PTBO_CITY_PACKAGE_READY;
   if (fetchCount) throw new Error(`${cityId}: legacy IDs must come only from packaged fallback data`);

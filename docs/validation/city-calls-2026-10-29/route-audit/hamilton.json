@@ -1,0 +1,367 @@
+{
+  "city": "hamilton",
+  "verifiedFingerprint": "ae29723fa5bc27fdd50d2fb2ba503aa7fbaf12ac30eee2577e44f2c32e3fb24f",
+  "halls": [
+    {
+      "id": "fire-hamilton-fire-1",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2361,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-hamilton-fire-2",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2992,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-hamilton-fire-3",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3462,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-hamilton-fire-4",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2853,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-hamilton-fire-5",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 3360,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-hamilton-fire-6",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 2615,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-hamilton-fire-7",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 3066,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-hamilton-fire-8",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2807,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-hamilton-fire-9",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 9,
+      "maxRouteMetres": 2572,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-hamilton-fire-10",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2996,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-hamilton-fire-11",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2695,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-hamilton-fire-12",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2612,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-hamilton-fire-14",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 4117,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-hamilton-fire-15",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 10,
+      "maxRouteMetres": 2761,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-hamilton-fire-16",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3988,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-hamilton-fire-17",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3655,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-hamilton-fire-18",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 4061,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-hamilton-fire-19",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 10,
+      "maxRouteMetres": 4743,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-hamilton-fire-20",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 4075,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-hamilton-fire-21",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3869,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-hamilton-fire-23",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2932,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-hamilton-fire-24",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 5652,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-hamilton-fire-25",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 4217,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-hamilton-fire-26",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 3473,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-hamilton-fire-27",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3355,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-hamilton-fire-28",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 5721,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-hamilton-ems-1",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2602,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-hamilton-ems-3",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2791,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-hamilton-ems-4",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 10,
+      "maxRouteMetres": 2808,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-hamilton-ems-7",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2606,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-hamilton-ems-9",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 9,
+      "maxRouteMetres": 2572,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-hamilton-ems-10",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 9,
+      "maxRouteMetres": 2685,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-hamilton-ems-12",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2582,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-hamilton-ems-15",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 10,
+      "maxRouteMetres": 2761,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-hamilton-ems-17",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3483,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-hamilton-ems-18",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 4061,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-hamilton-ems-19",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 10,
+      "maxRouteMetres": 4743,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-hamilton-ems-20",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3499,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-hamilton-ems-21",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3264,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-hamilton-ems-23",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 10,
+      "maxRouteMetres": 2677,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-hamilton-ems-24",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 5652,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-hamilton-ems-25",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2758,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-hamilton-ems-32",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2448,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-hamilton-ems-30",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2574,
+      "method": "modeled-road-response"
+    }
+  ],
+  "routes": 566,
+  "continuousOrigins": 566,
+  "officialCalls": 0,
+  "modeledCalls": 528,
+  "maxRouteMetres": 5720.569182587557,
+  "minCallsPerHall": 12,
+  "minChallengeCallsPerHall": 9,
+  "supportCalls": 38,
+  "durationMs": 39599
+}

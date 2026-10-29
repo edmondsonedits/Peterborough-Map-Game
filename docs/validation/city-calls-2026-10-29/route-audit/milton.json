@@ -1,0 +1,87 @@
+{
+  "city": "milton",
+  "verifiedFingerprint": "ca5229f7266e0fc88f99add24e8861ac1074955bddf84d246df0977589e60cf5",
+  "halls": [
+    {
+      "id": "fire-milton-fire-1",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3490,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-milton-fire-2",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2988,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-milton-fire-3",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2548,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-milton-fire-4",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 4375,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-milton-fire-5",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2626,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-milton-ems-6",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2981,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-milton-ems-7",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 7,
+      "maxRouteMetres": 3853,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-milton-ems-16",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 4274,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-milton-ems-17",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2618,
+      "method": "modeled-road-response"
+    }
+  ],
+  "routes": 116,
+  "continuousOrigins": 116,
+  "officialCalls": 0,
+  "modeledCalls": 108,
+  "maxRouteMetres": 4374.644971355983,
+  "minCallsPerHall": 12,
+  "minChallengeCallsPerHall": 7,
+  "supportCalls": 8,
+  "durationMs": 9237
+}

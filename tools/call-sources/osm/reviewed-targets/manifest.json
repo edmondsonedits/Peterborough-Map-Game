@@ -1,0 +1,184 @@
+{
+  "attribution": "\u00a9 OpenStreetMap contributors",
+  "bundles": [
+    {
+      "archiveFilename": "greater-sudbury.rural-targeted-candidates.json.gz",
+      "candidateCount": 6,
+      "candidateLicenses": [
+        "ODbL-1.0"
+      ],
+      "cityId": "greater-sudbury",
+      "gzipBytes": 4124,
+      "gzipSha256": "e7e47d4af7ea3d9111049a5ab6618d2b672a018ccdd28c2c87968642643d61bb",
+      "license": "ODbL-1.0",
+      "originalFilename": "greater-sudbury.rural-targeted-candidates.json",
+      "provenance": {
+        "attribution": "\u00a9 OpenStreetMap contributors",
+        "copyrightUrl": "https://www.openstreetmap.org/copyright",
+        "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/",
+        "retrievedAt": "2026-10-29T03:35:46.278242+00:00",
+        "sha256": "4d53c536cd90335cd051190c23493218e002a3314d9b20a227e1a8ee15463273",
+        "snapshotTimestamp": "2026-10-28T21:21:02Z",
+        "sourcePage": "https://download.geofabrik.de/north-america/canada/ontario.html",
+        "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario-latest.osm.pbf"
+      },
+      "sourceGeometryQualityCounts": {
+        "mapped-node": 6
+      },
+      "uncompressedBytes": 33587,
+      "uncompressedSha256": "9cf5a4ac54b2124a3ca297023d6062c49a8de5531451118a325149ed575d78a8"
+    },
+    {
+      "archiveFilename": "ottawa.rural-targeted-candidates.json.gz",
+      "candidateCount": 6,
+      "candidateLicenses": [
+        "ODbL-1.0"
+      ],
+      "cityId": "ottawa",
+      "gzipBytes": 3712,
+      "gzipSha256": "90cf0d4ffa43fd4a854ce736545693d74c14d55c8283cc1f2fbab314dc90ada7",
+      "license": "ODbL-1.0",
+      "originalFilename": "ottawa.rural-targeted-candidates.json",
+      "provenance": {
+        "attribution": "\u00a9 OpenStreetMap contributors",
+        "copyrightUrl": "https://www.openstreetmap.org/copyright",
+        "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/",
+        "retrievedAt": "2026-10-29T03:35:46.278242+00:00",
+        "sha256": "4d53c536cd90335cd051190c23493218e002a3314d9b20a227e1a8ee15463273",
+        "snapshotTimestamp": "2026-10-28T21:21:02Z",
+        "sourcePage": "https://download.geofabrik.de/north-america/canada/ontario.html",
+        "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario-latest.osm.pbf"
+      },
+      "sourceGeometryQualityCounts": {
+        "building-interior-point": 2,
+        "mapped-node": 4
+      },
+      "uncompressedBytes": 31791,
+      "uncompressedSha256": "c2e2b4d6c908af3e46db4f97b5fc2f1f694e89fb4da3dae9655742f48cfca6a2"
+    },
+    {
+      "archiveFilename": "ottawa63.final-gap-targeted-candidates.json.gz",
+      "candidateCount": 12,
+      "candidateLicenses": [
+        "ODbL-1.0"
+      ],
+      "cityId": "ottawa",
+      "gzipBytes": 5647,
+      "gzipSha256": "91e14cf7980c2cc22bfcd9f6ad03914efdea3fbb39e7147597bbe43e36d99cdb",
+      "license": "ODbL-1.0",
+      "originalFilename": "ottawa63.final-gap-targeted-candidates.json",
+      "provenance": {
+        "attribution": "\u00a9 OpenStreetMap contributors",
+        "copyrightUrl": "https://www.openstreetmap.org/copyright",
+        "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/",
+        "retrievedAt": "2026-10-29T03:35:46.278242+00:00",
+        "sha256": "4d53c536cd90335cd051190c23493218e002a3314d9b20a227e1a8ee15463273",
+        "snapshotTimestamp": "2026-10-28T21:21:02Z",
+        "sourcePage": "https://download.geofabrik.de/north-america/canada/ontario.html",
+        "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario-latest.osm.pbf"
+      },
+      "sourceGeometryQualityCounts": {
+        "building-interior-point": 11,
+        "mapped-node": 1
+      },
+      "uncompressedBytes": 64563,
+      "uncompressedSha256": "ca2dbfda3b5badb80561aed2293e65a2fb4bd110184dc9402c6bf90dbe39804f"
+    },
+    {
+      "archiveFilename": "toronto.final-mainland-route-shortlist-candidates.json.gz",
+      "candidateCount": 24,
+      "candidateLicenses": [
+        "ODbL-1.0"
+      ],
+      "cityId": "toronto",
+      "gzipBytes": 6489,
+      "gzipSha256": "3d4f3928d0ad458283cb4d9a714c5500686a2e29e6144c95dc3dba9db313f4f1",
+      "license": "ODbL-1.0",
+      "originalFilename": "toronto.final-mainland-route-shortlist-candidates.json",
+      "provenance": {
+        "attribution": "\u00a9 OpenStreetMap contributors",
+        "copyrightUrl": "https://www.openstreetmap.org/copyright",
+        "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/",
+        "retrievedAt": "2026-10-29T03:35:46.278242+00:00",
+        "sha256": "4d53c536cd90335cd051190c23493218e002a3314d9b20a227e1a8ee15463273",
+        "snapshotTimestamp": "2026-10-28T21:21:02Z",
+        "sourcePage": "https://download.geofabrik.de/north-america/canada/ontario.html",
+        "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario-latest.osm.pbf"
+      },
+      "sourceGeometryQualityCounts": {
+        "building-interior-point": 14,
+        "mapped-node": 10
+      },
+      "uncompressedBytes": 111521,
+      "uncompressedSha256": "5341c3c0b01e2bca0ed643e3401a51e171e42b095511efb19fba883739e11d9d"
+    },
+    {
+      "archiveFilename": "toronto.targeted-candidates.json.gz",
+      "candidateCount": 3210,
+      "candidateLicenses": [
+        "ODbL-1.0"
+      ],
+      "cityId": "toronto",
+      "gzipBytes": 314681,
+      "gzipSha256": "3ef85a7aa598e77fd313e461434d031b82efbff175809724924c689db3a30558",
+      "license": "ODbL-1.0",
+      "originalFilename": "toronto.targeted-candidates.json",
+      "provenance": {
+        "attribution": "\u00a9 OpenStreetMap contributors",
+        "copyrightUrl": "https://www.openstreetmap.org/copyright",
+        "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/",
+        "retrievedAt": "2026-10-29T03:35:46.278242+00:00",
+        "sha256": "4d53c536cd90335cd051190c23493218e002a3314d9b20a227e1a8ee15463273",
+        "snapshotTimestamp": "2026-10-28T21:21:02Z",
+        "sourcePage": "https://download.geofabrik.de/north-america/canada/ontario.html",
+        "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario-latest.osm.pbf"
+      },
+      "sourceGeometryQualityCounts": {
+        "building-interior-point": 1010,
+        "mapped-node": 2194,
+        "site-interior-point": 6
+      },
+      "uncompressedBytes": 7988714,
+      "uncompressedSha256": "a6b55487acdbbaad22e666021d3c3265ed8419dd93a712045c36df9a6c9e2120"
+    },
+    {
+      "archiveFilename": "toronto.three-gap-route-shortlist-candidates.json.gz",
+      "candidateCount": 36,
+      "candidateLicenses": [
+        "ODbL-1.0"
+      ],
+      "cityId": "toronto",
+      "gzipBytes": 7886,
+      "gzipSha256": "a8a0f33b1856cc340ae2f7064e81ea83e59425000589e0a1efb1ec3af045ea04",
+      "license": "ODbL-1.0",
+      "originalFilename": "toronto.three-gap-route-shortlist-candidates.json",
+      "provenance": {
+        "attribution": "\u00a9 OpenStreetMap contributors",
+        "copyrightUrl": "https://www.openstreetmap.org/copyright",
+        "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/",
+        "retrievedAt": "2026-10-29T03:35:46.278242+00:00",
+        "sha256": "4d53c536cd90335cd051190c23493218e002a3314d9b20a227e1a8ee15463273",
+        "snapshotTimestamp": "2026-10-28T21:21:02Z",
+        "sourcePage": "https://download.geofabrik.de/north-america/canada/ontario.html",
+        "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario-latest.osm.pbf"
+      },
+      "sourceGeometryQualityCounts": {
+        "building-interior-point": 8,
+        "mapped-node": 28
+      },
+      "uncompressedBytes": 159614,
+      "uncompressedSha256": "235e446a1503c69fa0c47b0e89021bc2ec002c1b5e3f607a1bb9397b9027f31b"
+    }
+  ],
+  "format": "gzip-compresslevel9-filename-empty-mtime0",
+  "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/",
+  "limitations": [
+    "Candidate inclusion is not canonical acceptance, operating-status verification, an entrance or route assignment",
+    "Seven proposed isolated Island civic routes were rejected as disconnected or unreachable; no artificial connection was added",
+    "Original Island source bytes must remain separate when the canonical builder checks its reviewed bundle SHA256"
+  ],
+  "reviewDate": "2026-10-29",
+  "role": "Reviewed candidate evidence, not accepted locations or runtime calls",
+  "schemaVersion": 1,
+  "sourceBytesPolicy": "Exact original bytes, including historical metadata; no JSON reformatting or field removal"
+}

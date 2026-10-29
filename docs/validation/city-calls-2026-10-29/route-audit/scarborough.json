@@ -1,0 +1,247 @@
+{
+  "city": "scarborough",
+  "verifiedFingerprint": "9b997bc7299ee12f94e6cc08cd7bc0910d42738b8d28a6b35e7cd23ab0dd8c80",
+  "halls": [
+    {
+      "id": "fire-toronto-fire-211",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2605,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-station-212-212",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 4659,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-213",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2625,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-214",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3177,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-station-215-215",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3397,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-station-221-221",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2626,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-222",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2596,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-223",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 2944,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-225",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2983,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-station-231-231",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3159,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-232",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2595,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-234",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3323,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-241",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3494,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-242",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2592,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-station-243-243",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 3015,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-244",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 2582,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-station-245-245",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2458,
+      "method": "official-run-area"
+    },
+    {
+      "id": "ems-ambulance-station-20-20",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2679,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-ambulance-station-21-21",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2608,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-ambulance-station-22-22",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 9,
+      "maxRouteMetres": 2720,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-ambulance-station-24-24",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2612,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-2303629",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2768,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-ambulance-station-26-26",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3348,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-ambulance-station-27-27",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3767,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-2807376",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2621,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-2236216",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 3420,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-3311686",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 9,
+      "maxRouteMetres": 2606,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-3175714",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2599,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-2489114",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3488,
+      "method": "modeled-road-response"
+    }
+  ],
+  "routes": 382,
+  "continuousOrigins": 382,
+  "officialCalls": 204,
+  "modeledCalls": 144,
+  "maxRouteMetres": 4659.03860034665,
+  "minCallsPerHall": 12,
+  "minChallengeCallsPerHall": 9,
+  "supportCalls": 34,
+  "durationMs": 33035
+}

@@ -1,0 +1,504 @@
+{
+  "schemaVersion": 1,
+  "coverage": {
+    "cityId": "thunder-bay",
+    "inputOfficial": 213,
+    "inputOsm": 1776,
+    "inputMajorRoad": 957,
+    "existing": 26,
+    "accepted": 1837,
+    "selected": 180,
+    "target": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "existingByDifficulty": {
+      "easy": 10,
+      "medium": 5,
+      "hard": 5
+    },
+    "selectedByDifficulty": {
+      "easy": 90,
+      "medium": 45,
+      "hard": 45
+    },
+    "totalByDifficulty": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "deficits": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "baseStrata": [
+      {
+        "id": "fire-thunder-bay-fire-1",
+        "selected": 18,
+        "available": 237,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-thunder-bay-fire-2",
+        "selected": 18,
+        "available": 241,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-thunder-bay-fire-3",
+        "selected": 18,
+        "available": 302,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-thunder-bay-fire-4",
+        "selected": 18,
+        "available": 203,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-thunder-bay-fire-5",
+        "selected": 18,
+        "available": 129,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-thunder-bay-fire-6",
+        "selected": 18,
+        "available": 107,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-thunder-bay-fire-7",
+        "selected": 18,
+        "available": 178,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-thunder-bay-fire-8",
+        "selected": 18,
+        "available": 83,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-thunder-bay-ems-1",
+        "selected": 18,
+        "available": 239,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-thunder-bay-ems-2",
+        "selected": 0,
+        "available": 0,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-thunder-bay-ems-3",
+        "selected": 0,
+        "available": 0,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-thunder-bay-ems-4",
+        "selected": 18,
+        "available": 118,
+        "method": "nearest-geographic-base-for-selection-only"
+      }
+    ],
+    "sharedBaseline": 20,
+    "baselineByService": {
+      "fire": {
+        "easy": 10,
+        "medium": 5,
+        "hard": 5
+      },
+      "ems": {
+        "easy": 10,
+        "medium": 11,
+        "hard": 5
+      }
+    },
+    "serviceTotalsByDifficulty": {
+      "fire": {
+        "easy": 100,
+        "medium": 50,
+        "hard": 50
+      },
+      "ems": {
+        "easy": 100,
+        "medium": 56,
+        "hard": 50
+      }
+    },
+    "serviceDeficits": {
+      "fire": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      },
+      "ems": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "rejected": 1109,
+    "rejectionCounts": {
+      "duplicate-existing-or-accepted-address-or-named-site": 83,
+      "production-snap-not-ground-public-road": 405,
+      "production-snap-wrong-street": 518,
+      "production-snap-over-80m-or-missing": 19,
+      "not-one-exact-civic-number-and-street": 54,
+      "unresolved-2020-source-currentness": 9,
+      "unresolved-official-coordinate-or-current-address-conflict": 1,
+      "no-genuine-connected-cross-street-within-1500m": 20
+    },
+    "oneStreetExceptions": 45
+  },
+  "independentAudit": {
+    "cityId": "thunder-bay",
+    "selected": 180,
+    "accepted": 1837,
+    "crossStreetEvidence": 3216,
+    "oneStreet": 458,
+    "maxGap": 75.40911419832378,
+    "pass": true
+  },
+  "priorityFacilityExpansion": {
+    "reviewedOn": "2026-10-29",
+    "addedIds": [
+      "thunder-bay-odef-69af82d0b3060a21fac1",
+      "thunder-bay-odef-2d94f0f35002cb173102",
+      "thunder-bay-ontario-private-school-877280-716",
+      "thunder-bay-osm-way-714847907",
+      "thunder-bay-osm-way-372896193",
+      "thunder-bay-municipal-facility-26434",
+      "thunder-bay-odhf-d400f82429d7b66b775d1263986bc01e"
+    ],
+    "verification": {
+      "cityId": "thunder-bay",
+      "additions": 7,
+      "proposalSha256": "d1e1dec6b8c6efdc972fc112341e6ef0af35fbf5e8f5ae9fb6b20c680ed9b92b",
+      "pass": true,
+      "checks": [
+        "IDs absent from current shared/legacy/care catalogue",
+        "row exactly equals accepted source record",
+        "full per-record provenance exactly equals accepted pool",
+        "factual category/tags and coordinates match raw source record",
+        "source point and URLs unchanged",
+        "no normalized civic-address/near-identical-site duplicates",
+        "max40 per city",
+        "per-base rationale present; no dispatch ownership claim"
+      ]
+    },
+    "review": {
+      "purpose": "Bounded source-preserving priority facility and local variety additions; no recognition tier rewrites.",
+      "sourcePool": "external-build-cache/canonical-catalogues-reviewed/thunder-bay/accepted-candidates.json",
+      "sourcePoolSha256": "8d44b3ea3367e7b632920bb4c4a668242a4c444a3c20151824a9fce857638834",
+      "selectedDescriptor": "cities/thunder-bay/training-data.json",
+      "selectedDescriptorSha256": "320bdce7d33cb8b0dd614447da0f9bdb6f33f6800c5e86008bd5b94d30f06448",
+      "routeEvidence": "cities/thunder-bay/training-data.json",
+      "routeEvidenceScope": "production",
+      "selectionRules": {
+        "maxPerCity": 40,
+        "maxPotentialAddsPerBase": 6,
+        "maxPotentialAddsForConfirmedZeroToTwoBase": 10,
+        "twoCluePriority": true,
+        "maximumStraightLineBaseReviewDistanceMetres": 6000
+      },
+      "limitations": [
+        "At this selection-time review: Every row passed the existing all-accepted geographic/source/clue audit. These additions have not been graph-assigned or route-audited.",
+        "Published Fire polygons are respected for review proximity; EMS and other Fire review strata use straight-line proximity only. These are not dispatch ownership assignments.",
+        "Full original accepted source point, ID, address, recognition tier, incident profile and provenance are unchanged. Current-open status is not newly verified."
+      ],
+      "rationales": {
+        "thunder-bay-odef-69af82d0b3060a21fac1": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "post-secondary",
+          "sourceEvidence": {
+            "sourceRecordId": "thunder-bay-odef-69af82d0b3060a21fac1",
+            "category": "post-secondary",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/37-26-0001/372600012022001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/en/pub/37-26-0001/2022001/ODEF_v3.0.zip",
+              "https://www.canada.ca/en/employment-social-development/programs/designated-schools.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-thunder-bay-fire-1",
+              "distance": 755.6658739103489,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 756
+            },
+            {
+              "baseId": "ems-thunder-bay-ems-2",
+              "distance": 755.6658739103489,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 756
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 221
+        },
+        "thunder-bay-odef-2d94f0f35002cb173102": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "thunder-bay-odef-2d94f0f35002cb173102",
+            "category": "school",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/37-26-0001/372600012022001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/en/pub/37-26-0001/2022001/ODEF_v3.0.zip",
+              "https://data.ontario.ca/dataset/school-information-and-student-demographics",
+              "https://data.ontario.ca/dataset/ontario-public-school-contact-information",
+              "https://data.ontario.ca/dataset/fb3a7c18-90af-453e-bc0a-a76ecc471862/resource/f3a8c2a3-09d9-4715-9044-d8a0189f572c/download/public_school_contact_list_september2026_en.txt"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-thunder-bay-fire-7",
+              "distance": 188.09469046461686,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 188
+            },
+            {
+              "baseId": "ems-thunder-bay-ems-4",
+              "distance": 5866.223984219449,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 5866
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 208
+        },
+        "thunder-bay-ontario-private-school-877280-716": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "thunder-bay-ontario-private-school-877280-716",
+            "category": "school",
+            "tags": null,
+            "sourceUrls": [
+              "https://data.ontario.ca/dataset/private-school-location-list",
+              "https://data.ontario.ca/dataset/07586958-ffd4-4293-aec0-3b32e0f7de7b/resource/b0fef8bb-8b07-4962-8192-bbf899195cd5/download/private_school_location_list_en_2.xlsx"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-thunder-bay-fire-8",
+              "distance": 2507.5082728466386,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2508
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 171
+        },
+        "thunder-bay-osm-way-714847907": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "thunder-bay-osm-way-714847907",
+            "category": null,
+            "tags": {
+              "addr:city": "Thunder Bay",
+              "addr:housenumber": "220",
+              "addr:postcode": "P7A 0A4",
+              "addr:street": "Elgin Street",
+              "amenity": "school",
+              "denomination": "catholic",
+              "fax": "+1-807-344-1547",
+              "isced:level": "1",
+              "name": "École catholique Franco-Supérieur",
+              "operator": "Conseil scolaire de district catholique des Aurores boréales",
+              "operator:type": "public",
+              "phone": "+1-807-344-1169",
+              "religion": "christian",
+              "school:language": "french",
+              "website": "www.csdcab.on.ca/franco-superieur"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/714847907",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-thunder-bay-fire-3",
+              "distance": 1060.6592344178628,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1061
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 167
+        },
+        "thunder-bay-osm-way-372896193": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "thunder-bay-osm-way-372896193",
+            "category": null,
+            "tags": {
+              "addr:city": "Thunder Bay",
+              "addr:housenumber": "333",
+              "addr:postcode": "P7A 1G2",
+              "addr:province": "Ontario",
+              "addr:street": "Morse Street",
+              "amenity": "place_of_worship",
+              "building": "yes",
+              "denomination": "lutheran",
+              "name": "Epiphany Lutheran Church",
+              "religion": "christian"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/372896193",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-thunder-bay-fire-5",
+              "distance": 227.1690221840887,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 227
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 157
+        },
+        "thunder-bay-municipal-facility-26434": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "municipal-facility",
+          "sourceEvidence": {
+            "sourceRecordId": "thunder-bay-municipal-facility-26434",
+            "category": "municipal-facility",
+            "tags": null,
+            "sourceUrls": [
+              "https://opendata.thunderbay.ca/datasets/9e36432d19e14496b3d0c089925e7cf1",
+              "https://services5.arcgis.com/h9xShea49ZANgOtx/ArcGIS/rest/services/City_of_Thunder_Bay_Facilities_view_Public/FeatureServer/2/query?where=OBJECTID%3D26434&outFields=*&outSR=4326&f=json"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-thunder-bay-fire-3",
+              "distance": 458.6938358635149,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 459
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 157
+        },
+        "thunder-bay-odhf-d400f82429d7b66b775d1263986bc01e": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "healthcare (source broad category; no emergency/hospital status inferred)",
+          "sourceEvidence": {
+            "sourceRecordId": "thunder-bay-odhf-d400f82429d7b66b775d1263986bc01e",
+            "category": "healthcare",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://geohub.lio.gov.on.ca/datasets/e1e5983c59ff497baddf75f1d2bb4add_26/explore"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-thunder-bay-fire-2",
+              "distance": 2627.99869797722,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 2628
+            },
+            {
+              "baseId": "ems-thunder-bay-ems-1",
+              "distance": 2621.63470007828,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 7,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 2622
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 132
+        }
+      }
+    },
+    "note": "Add-only source-validated priority facilities; geographic review reasons are not operational districts. Station assignments require independent directed-road audit."
+  },
+  "routeCandidateExpansion": {
+    "reviewedOn": "2026-10-29",
+    "promotedIds": [],
+    "candidateVerification": null,
+    "selection": "Only source-verified additional locations used by independently audited station exercises are promoted; existing canonical IDs and fields remain unchanged."
+  },
+  "evidencePathConvention": {
+    "repositoryPaths": "Paths beginning cities/ are repository-relative.",
+    "externalBuildCache": "external-build-cache/ labels identify historical, reproducible build artifacts that are not shipped; adjacent SHA-256 values identify the exact reviewed bytes.",
+    "reviewScope": "Priority facility review records describe the selection-time review. Final integrated route and runtime validation is recorded in docs/city-call-validation-2026-10-29.md."
+  }
+}

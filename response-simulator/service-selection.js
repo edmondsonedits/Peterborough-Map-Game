@@ -95,10 +95,10 @@
       dialog.innerHTML = `<div class="service-eyebrow">${city.name} ${baseTraining ? 'Base Training' : 'Dispatch Simulator'}</div>
         <h1 id="service-choice-title">Choose your service</h1>
         <p id="service-choice-description">Choose the vehicle and response base you want to start from.</p>
-        ${baseTraining ? '<div class="service-mode-note">Dispatch calls are not available in this city yet. Fire and EMS base spawning and free driving are available.</div>' : ''}
+        ${baseTraining ? '<div class="service-mode-note">Dispatch calls are not available in this city yet. Fire and EMS base spawning and free driving are available.</div>' : city.features?.sceneResponseDrills ? '<div class="service-mode-note">Modeled address and intersection response training. Fire and EMS exercises finish on scene; no hospital transport. Road boundaries apply; one-way and turn rules are not enforced. Access points are modeled.</div>' : ''}
         <div class="service-choices">
           <button type="button" data-service="fire" aria-label="Fire"><strong>Fire</strong><span>Fire truck · ${fire.length} station${fire.length===1?'':'s'}<br>${baseTraining ? 'Free-drive base training' : 'Respond to the scene'}</span></button>
-          <button type="button" data-service="ems" aria-label="EMS"><strong>EMS</strong><span>Ambulance · ${ems.length} base${ems.length===1?'':'s'}<br>${baseTraining ? 'Free-drive base training' : 'Scene → hospital'}</span></button>
+          <button type="button" data-service="ems" aria-label="EMS"><strong>EMS</strong><span>Ambulance · ${ems.length} base${ems.length===1?'':'s'}<br>${baseTraining ? 'Free-drive base training' : city.features?.sceneResponseDrills ? 'Scene response only' : 'Scene → hospital'}</span></button>
         </div><p class="service-footnote">You can change services or bases in Options at any time.</p>`;
       dialog.addEventListener('cancel',event => event.preventDefault());
       dialog.querySelectorAll('[data-service]').forEach(button => button.addEventListener('click',() => {

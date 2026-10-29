@@ -1,0 +1,623 @@
+{
+  "schemaVersion": 1,
+  "coverage": {
+    "cityId": "barrie",
+    "inputOfficial": 294,
+    "inputOsm": 1966,
+    "inputMajorRoad": 728,
+    "existing": 29,
+    "accepted": 1709,
+    "selected": 180,
+    "target": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "existingByDifficulty": {
+      "easy": 10,
+      "medium": 5,
+      "hard": 5
+    },
+    "selectedByDifficulty": {
+      "easy": 90,
+      "medium": 45,
+      "hard": 45
+    },
+    "totalByDifficulty": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "deficits": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "baseStrata": [
+      {
+        "id": "fire-barrie-fire-1",
+        "selected": 22,
+        "available": 242,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-barrie-fire-2",
+        "selected": 23,
+        "available": 416,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-barrie-fire-3",
+        "selected": 23,
+        "available": 288,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-barrie-fire-4",
+        "selected": 23,
+        "available": 179,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-barrie-fire-5",
+        "selected": 22,
+        "available": 155,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-barrie-fire-6",
+        "selected": 23,
+        "available": 121,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-barrie-ems-fairview",
+        "selected": 22,
+        "available": 94,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-barrie-ems-ross",
+        "selected": 22,
+        "available": 214,
+        "method": "nearest-geographic-base-for-selection-only"
+      }
+    ],
+    "sharedBaseline": 20,
+    "baselineByService": {
+      "fire": {
+        "easy": 10,
+        "medium": 5,
+        "hard": 5
+      },
+      "ems": {
+        "easy": 10,
+        "medium": 14,
+        "hard": 5
+      }
+    },
+    "serviceTotalsByDifficulty": {
+      "fire": {
+        "easy": 100,
+        "medium": 50,
+        "hard": 50
+      },
+      "ems": {
+        "easy": 100,
+        "medium": 59,
+        "hard": 50
+      }
+    },
+    "serviceDeficits": {
+      "fire": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      },
+      "ems": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "rejected": 1279,
+    "rejectionCounts": {
+      "unresolved-2020-source-currentness": 3,
+      "production-snap-not-ground-public-road": 848,
+      "production-snap-wrong-street": 271,
+      "production-snap-over-80m-or-missing": 65,
+      "duplicate-existing-or-accepted-address-or-named-site": 48,
+      "not-one-exact-civic-number-and-street": 41,
+      "unresolved-official-coordinate-or-current-address-conflict": 1,
+      "no-genuine-connected-cross-street-within-1500m": 2
+    },
+    "oneStreetExceptions": 36
+  },
+  "independentAudit": {
+    "cityId": "barrie",
+    "selected": 180,
+    "accepted": 1709,
+    "crossStreetEvidence": 3037,
+    "oneStreet": 381,
+    "maxGap": 78.43263653904215,
+    "pass": true
+  },
+  "priorityFacilityExpansion": {
+    "reviewedOn": "2026-10-29",
+    "addedIds": [
+      "barrie-osm-way-804467657",
+      "barrie-osm-node-8881044145",
+      "barrie-osm-way-77143036",
+      "barrie-odef-288312d8bbb6732ee6c3",
+      "barrie-odef-b02dbe2cab970e8ccc9f",
+      "barrie-osm-way-198689829",
+      "barrie-osm-way-197560710",
+      "barrie-odef-6c6a1d3f292777d83d9f",
+      "barrie-osm-way-697246630",
+      "barrie-osm-way-1559426550"
+    ],
+    "verification": {
+      "cityId": "barrie",
+      "additions": 10,
+      "proposalSha256": "aee880d5238a2386011b501f890969163c15bfd2a9ad55d5783dd4741a5f2c74",
+      "pass": true,
+      "checks": [
+        "IDs absent from current shared/legacy/care catalogue",
+        "row exactly equals accepted source record",
+        "full per-record provenance exactly equals accepted pool",
+        "factual category/tags and coordinates match raw source record",
+        "source point and URLs unchanged",
+        "no normalized civic-address/near-identical-site duplicates",
+        "max40 per city",
+        "per-base rationale present; no dispatch ownership claim"
+      ]
+    },
+    "review": {
+      "purpose": "Bounded source-preserving priority facility and local variety additions; no recognition tier rewrites.",
+      "sourcePool": "external-build-cache/canonical-catalogues-reviewed/barrie/accepted-candidates.json",
+      "sourcePoolSha256": "90fb48162319947ce0c1edf4dee8cd5c7ef6825a28268744c4b6416659c8b2cb",
+      "selectedDescriptor": "cities/barrie/training-data.json",
+      "selectedDescriptorSha256": "8d42e7d2b78f2d4761e08f30969d5b775c09b03ba01ba53b5f867a877b5ba7cc",
+      "routeEvidence": "cities/barrie/training-data.json",
+      "routeEvidenceScope": "production",
+      "selectionRules": {
+        "maxPerCity": 40,
+        "maxPotentialAddsPerBase": 6,
+        "maxPotentialAddsForConfirmedZeroToTwoBase": 10,
+        "twoCluePriority": true,
+        "maximumStraightLineBaseReviewDistanceMetres": 6000
+      },
+      "limitations": [
+        "At this selection-time review: Every row passed the existing all-accepted geographic/source/clue audit. These additions have not been graph-assigned or route-audited.",
+        "Published Fire polygons are respected for review proximity; EMS and other Fire review strata use straight-line proximity only. These are not dispatch ownership assignments.",
+        "Full original accepted source point, ID, address, recognition tier, incident profile and provenance are unchanged. Current-open status is not newly verified."
+      ],
+      "rationales": {
+        "barrie-osm-way-804467657": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "barrie-osm-way-804467657",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "19",
+              "addr:street": "Parkside Drive",
+              "amenity": "place_of_worship",
+              "building": "yes",
+              "denomination": "ukrainian_greek_catholic",
+              "facebook": "https://www.facebook.com/Holy-Cross-Ukrainian-Catholic-Church-490595874642394/",
+              "landuse": "religious",
+              "name": "Holy Cross Ukrainian Catholic Church;Українська Православна Церква Воздвиження Чесного Хреста",
+              "name:en": "Holy Cross Ukrainian Catholic Church",
+              "name:uk": "Українська Православна Церква Воздвиження Чесного Хреста",
+              "not:name": "Holy Cross Ukranian Orthodox Church",
+              "official_name": "Exaltation of the Holy Cross Ukrainian Byzantine Catholic Church",
+              "official_name:en": "Exaltation of the Holy Cross Ukrainian Byzantine Catholic Church",
+              "religion": "christian"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/804467657",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-barrie-fire-1",
+              "distance": 220.51408324142474,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 221
+            },
+            {
+              "baseId": "ems-barrie-ems-ross",
+              "distance": 360.00648890298146,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 360
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 211
+        },
+        "barrie-osm-node-8881044145": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "clinic",
+          "sourceEvidence": {
+            "sourceRecordId": "barrie-osm-node-8881044145",
+            "category": null,
+            "tags": {
+              "addr:city": "Barrie",
+              "addr:housenumber": "50",
+              "addr:postcode": "L4M 6J9",
+              "addr:province": "Ontario",
+              "addr:street": "Dunlop Street East",
+              "addr:unit": "310",
+              "amenity": "clinic",
+              "healthcare": "clinic",
+              "name": "Lakeview Surgery Centre"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/8881044145",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-barrie-fire-1",
+              "distance": 769.4527678305628,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 769
+            },
+            {
+              "baseId": "ems-barrie-ems-ross",
+              "distance": 463.86081201736135,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 2,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 464
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 191
+        },
+        "barrie-osm-way-77143036": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "barrie-osm-way-77143036",
+            "category": null,
+            "tags": {
+              "addr:city": "Barrie",
+              "addr:housenumber": "35",
+              "addr:street": "Fraser Court",
+              "building": "industrial",
+              "name": "Gentem Inc.",
+              "source": "CanVec 6.0 - NRCan",
+              "website": "https://gentem.ca/"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/77143036",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-barrie-fire-4",
+              "distance": 1598.9512360402282,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1599
+            },
+            {
+              "baseId": "ems-barrie-ems-fairview",
+              "distance": 1630.2670053208121,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1630
+            }
+          ],
+          "twoGenuineCrossStreetClues": false,
+          "oneClueException": "No unselected accepted two-clue source in this priority family for the targeted review base(s); high-value source family retained.",
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 173
+        },
+        "barrie-odef-288312d8bbb6732ee6c3": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "barrie-odef-288312d8bbb6732ee6c3",
+            "category": "school",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/37-26-0001/372600012022001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/en/pub/37-26-0001/2022001/ODEF_v3.0.zip",
+              "https://data.ontario.ca/dataset/school-information-and-student-demographics",
+              "https://data.ontario.ca/dataset/ontario-public-school-contact-information",
+              "https://data.ontario.ca/dataset/fb3a7c18-90af-453e-bc0a-a76ecc471862/resource/f3a8c2a3-09d9-4715-9044-d8a0189f572c/download/public_school_contact_list_september2026_en.txt"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-barrie-fire-4",
+              "distance": 592.129140577846,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 592
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 168
+        },
+        "barrie-odef-b02dbe2cab970e8ccc9f": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "barrie-odef-b02dbe2cab970e8ccc9f",
+            "category": "school",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/37-26-0001/372600012022001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/en/pub/37-26-0001/2022001/ODEF_v3.0.zip",
+              "https://data.ontario.ca/dataset/school-information-and-student-demographics",
+              "https://data.ontario.ca/dataset/ontario-public-school-contact-information",
+              "https://data.ontario.ca/dataset/fb3a7c18-90af-453e-bc0a-a76ecc471862/resource/f3a8c2a3-09d9-4715-9044-d8a0189f572c/download/public_school_contact_list_september2026_en.txt"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-barrie-fire-1",
+              "distance": 938.9189670659772,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 2,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 939
+            },
+            {
+              "baseId": "ems-barrie-ems-ross",
+              "distance": 542.6711781084014,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 3,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 543
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 161
+        },
+        "barrie-osm-way-198689829": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "barrie-osm-way-198689829",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "125",
+              "addr:street": "Bayfield Street",
+              "building": "apartments"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/198689829",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-barrie-fire-1",
+              "distance": 828.8307268360544,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 829
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 158
+        },
+        "barrie-osm-way-197560710": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "barrie-osm-way-197560710",
+            "category": null,
+            "tags": {
+              "addr:city": "Barrie",
+              "addr:housenumber": "350",
+              "addr:street": "Grove Street East",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "denomination": "united",
+              "name": "Grace United Church",
+              "phone": "+1-705-734-0760",
+              "religion": "christian",
+              "website": "https://graceucc.ca/"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/197560710",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-barrie-fire-2",
+              "distance": 1256.501797800036,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1257
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 154
+        },
+        "barrie-odef-6c6a1d3f292777d83d9f": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "barrie-odef-6c6a1d3f292777d83d9f",
+            "category": "school",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/37-26-0001/372600012022001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/en/pub/37-26-0001/2022001/ODEF_v3.0.zip",
+              "https://data.ontario.ca/dataset/school-information-and-student-demographics",
+              "https://data.ontario.ca/dataset/ontario-public-school-contact-information",
+              "https://data.ontario.ca/dataset/fb3a7c18-90af-453e-bc0a-a76ecc471862/resource/f3a8c2a3-09d9-4715-9044-d8a0189f572c/download/public_school_contact_list_september2026_en.txt"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-barrie-fire-6",
+              "distance": 1202.1338627943624,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1202
+            }
+          ],
+          "twoGenuineCrossStreetClues": false,
+          "oneClueException": "No unselected accepted two-clue source in this priority family for the targeted review base(s); high-value source family retained.",
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 127
+        },
+        "barrie-osm-way-697246630": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "barrie-osm-way-697246630",
+            "category": null,
+            "tags": {
+              "addr:city": "Barrie",
+              "addr:housenumber": "106",
+              "addr:province": "Ontario",
+              "addr:street": "Peel Street",
+              "building": "apartments",
+              "building:levels": "3",
+              "roof:shape": "flat"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/697246630",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-barrie-fire-2",
+              "distance": 1223.6215095275534,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 1224
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 127
+        },
+        "barrie-osm-way-1559426550": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "barrie-osm-way-1559426550",
+            "category": null,
+            "tags": {
+              "addr:city": "Barrie",
+              "addr:housenumber": "430",
+              "addr:postcode": "L9J 0M1",
+              "addr:province": "Ontario",
+              "addr:street": "Essa Road",
+              "building": "apartments"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/1559426550",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "ems-barrie-ems-fairview",
+              "distance": 1671.7560499475333,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 1672
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 125
+        }
+      }
+    },
+    "note": "Add-only source-validated priority facilities; geographic review reasons are not operational districts. Station assignments require independent directed-road audit."
+  },
+  "routeCandidateExpansion": {
+    "reviewedOn": "2026-10-29",
+    "promotedIds": [],
+    "candidateVerification": null,
+    "selection": "Only source-verified additional locations used by independently audited station exercises are promoted; existing canonical IDs and fields remain unchanged."
+  },
+  "evidencePathConvention": {
+    "repositoryPaths": "Paths beginning cities/ are repository-relative.",
+    "externalBuildCache": "external-build-cache/ labels identify historical, reproducible build artifacts that are not shipped; adjacent SHA-256 values identify the exact reviewed bytes.",
+    "reviewScope": "Priority facility review records describe the selection-time review. Final integrated route and runtime validation is recorded in docs/city-call-validation-2026-10-29.md."
+  }
+}

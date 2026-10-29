@@ -1,0 +1,79 @@
+{
+  "city": "st-catharines",
+  "verifiedFingerprint": "258c865667c6254390949ab4e56419d79d770422defbd66c93f2285f2dd019c4",
+  "halls": [
+    {
+      "id": "fire-st-catharines-fire-1",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3445,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-st-catharines-fire-2",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 2886,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-st-catharines-fire-3",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 4108,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-st-catharines-fire-4",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 4512,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-st-catharines-fire-5",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 4137,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-st-catharines-fire-6",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 3545,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-st-catharines-ems-linwell",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2612,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-st-catharines-ems-ontario",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 4857,
+      "method": "modeled-road-response"
+    }
+  ],
+  "routes": 108,
+  "continuousOrigins": 108,
+  "officialCalls": 0,
+  "modeledCalls": 96,
+  "maxRouteMetres": 4856.939669854432,
+  "minCallsPerHall": 12,
+  "minChallengeCallsPerHall": 11,
+  "supportCalls": 12,
+  "durationMs": 8690
+}

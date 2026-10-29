@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Peterborough Fire & Emergency Dispatch Simulator</title>
     
-    <link rel="stylesheet" href="vendor/leaflet-1.9.4/leaflet.css?v=1.6.149" />
+    <link rel="stylesheet" href="vendor/leaflet-1.9.4/leaflet.css?v=1.6.151" />
     
     <style>
         html, body, #map {
@@ -66,6 +66,7 @@
         h2 { margin: 0 0 4px 0; font-size: 19px; color: #111; }
         .subtitle { font-size: 12px; color: #666; margin-bottom: 20px; }
         .section-title { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #777; border-bottom: 1px solid #ddd; padding-bottom: 4px; margin: 20px 0 10px 0; font-weight: 700; }
+        .sub-cat-group label[hidden], .sub-cat-group + [hidden], .panel-scroll div[hidden] { display:none !important; }
         .category-heading { margin: 22px -8px 10px; padding: 9px 10px; color:#0f3d57; border-radius:8px; background:#dceef7; font-size:12px; font-weight:850; letter-spacing:.06em; text-transform:uppercase; }
         .category-heading:first-of-type { margin-top:4px; }
         .control-row { margin-bottom: 14px; }
@@ -200,16 +201,17 @@
 
     <div id="map"></div>
 
-    <script src="../shared/build-version.js?v=1.6.149"></script>
-    <script src="vendor/leaflet-1.9.4/leaflet.js?v=1.6.149"></script>
-    <script src="vendor/leaflet-1.9.4/leaflet.edgebuffer.js?v=1.6.149"></script>
-    <script src="vendor/leaflet-1.9.4/leaflet.rotatedMarker.js?v=1.6.149"></script>
+    <script src="../shared/build-version.js?v=1.6.151"></script>
+    <script src="vendor/leaflet-1.9.4/leaflet.js?v=1.6.151"></script>
+    <script src="vendor/leaflet-1.9.4/leaflet.edgebuffer.js?v=1.6.151"></script>
+    <script src="vendor/leaflet-1.9.4/leaflet.rotatedMarker.js?v=1.6.151"></script>
     
-    <script src="service-config.js?v=1.6.149"></script>
-    <script src="../shared/location-changes.js?v=1.6.149"></script>
-    <script src="../shared/base-locations.js?v=1.6.149"></script>
-    <script src="service-selection.js?v=1.6.149"></script>
-    <script src="gearbox-core.js?v=1.6.149"></script>
+    <script src="service-config.js?v=1.6.151"></script>
+    <script src="../shared/location-changes.js?v=1.6.151"></script>
+    <script src="../shared/base-locations.js?v=1.6.151"></script>
+    <script src="service-selection.js?v=1.6.151"></script>
+    <script src="gearbox-core.js?v=1.6.151"></script>
+    <script src="local-pool.js?v=1.6.151"></script>
     <script>
         const dispatchDatabase = [
             { main:"Fire", sub:"Water & Ice Rescue", name:"Beavermead Park Beach", addr:"2015 Ashburnham Dr", lat:44.295749, lng:-78.303611 },
@@ -469,7 +471,7 @@
                     const marker = L.marker([loc.lat, loc.lng], {
                         draggable: true,
                         icon: customDotIcon
-                    }).bindPopup(`<b>${loc.name}</b><br>${loc.sub}<br>${loc.addr}`);
+                    }).bindPopup(`<b>${escapeDispatchText(loc.name)}</b><br>${escapeDispatchText(loc.sub)}<br>${escapeDispatchText(loc.addr)}`);
 
                     marker.on('dragend', function(e) {
                         const newPos = e.target.getLatLng();
@@ -548,7 +550,7 @@
                 });
 
                 const marker = L.marker([newDispatch.lat, newDispatch.lng], { draggable: true, icon: customDotIcon })
-                    .bindPopup(`<b>${newDispatch.name}</b><br>${newDispatch.sub}<br>${newDispatch.addr}`);
+                    .bindPopup(`<b>${escapeDispatchText(newDispatch.name)}</b><br>${escapeDispatchText(newDispatch.sub)}<br>${escapeDispatchText(newDispatch.addr)}`);
 
                 marker.on('dragend', function(e) {
                     const newPos = e.target.getLatLng();
@@ -842,6 +844,18 @@
         function resolveIncidentArrival(incident) {
             const radius = Math.max(10, Math.min(500, Number(incident.radius) || 40));
             const roads = window.PTBO_ROAD_COLLISION;
+            if (window.PTBO_CITY_PACKAGE?.features?.sceneResponseDrills) {
+                if (roads?.state?.status !== 'ready') return null;
+                if (incident.locationKind === 'mapped-intersection') {
+                    const nearest=roads.nearestRoad(incident.lat,incident.lng,5);
+                    return nearest && nearest.distance <= 5 ? {radius,lat:incident.lat,lng:incident.lng,accessPoint:false} : null;
+                }
+                const access=incident.routeAccess;
+                if (!access) return null;
+                const nearest=roads.nearestRoad(access.lat,access.lng,20);
+                if (!nearest || nearest.distance > 20) return null;
+                return {radius,lat:access.lat,lng:access.lng,accessPoint:true};
+            }
             if (!roads) return { radius, lat: incident.lat, lng: incident.lng, accessPoint: false };
             if (roads.state.status !== 'ready') return null;
             const nearest = roads.nearestRoad(incident.lat, incident.lng, 500);
@@ -855,6 +869,14 @@
             const node = document.createElement('span');
             node.textContent = String(value ?? '');
             return node.innerHTML;
+        }
+
+        function supportExerciseLabel(incident) {
+            if (incident?.responseAssignment?.role !== 'support') return '';
+            const id=incident.responseAssignment.primaryBaseId;
+            const service=window.PTBO_SERVICE?.state?.mode;
+            const primary=window.PTBO_SERVICE?.getBases?.().find(base=>base.id===id) || window.PTBO_CITY_PACKAGE?.serviceConfig?.profiles?.[service]?.bases?.find(base=>base.id===id);
+            return primary?.name ? `Estimated support exercise · modeled first-due ${primary.name}` : 'Estimated support exercise';
         }
 
         function filterDispatchCandidates(candidates, service, activeSubCategories, canReach = resolveIncidentArrival) {
@@ -884,31 +906,49 @@
             const checkedBoxes = document.querySelectorAll('.filter-chk:checked');
             const activeSubCategories = Array.from(checkedBoxes).map(cb => cb.getAttribute('data-sub'));
 
+            const selectedService = window.PTBO_SERVICE?.state.mode || 'fire';
+            let filteredPool;
+            const drills=window.PTBO_CITY_PACKAGE?.features?.sceneResponseDrills === true;
+            let candidates=dispatchDatabase;
+            if (drills) {
+                const store=window.parent?.PTBO_DISPATCH_STORE;
+                const base=window.PTBO_SERVICE?.getBase?.();
+                if (!store || store.cityId!==window.PTBO_CITY_PACKAGE.id || !base || !window.PTBO_LOCAL_RESPONSE_POOL) { alert('Station response data is still loading.'); return; }
+                const original=window.PTBO_CITY_PACKAGE.serviceConfig.profiles[selectedService].bases.find(item=>item.id===base.id);
+                if (!original || Number(base.lat)!==Number(original.lat) || Number(base.lng)!==Number(original.lng) || Number(base.spawnLat)!==Number(original.spawnLat ?? original.lat) || Number(base.spawnLng)!==Number(original.spawnLng ?? original.lng)) { alert('The selected base has changed. Restore its original location before starting this station response exercise.'); return; }
+                const training=store.getTrainingData();
+                candidates=window.PTBO_LOCAL_RESPONSE_POOL.localPool(training,store.getAll(),{cityId:store.cityId,id:base.id,service:selectedService});
+                if (window.PTBO_ROAD_COLLISION?.state?.status !== 'ready') { alert('City road data is still loading.'); return; }
+                candidates=candidates.filter(resolveIncidentArrival);
+                if(candidates.length < (training?.routeResponses?.minCallsPerBase || 3)) { alert('This base does not yet have enough reachable address or mapped-intersection exercises. Choose another base.'); return; }
+            }
             if (activeSubCategories.length === 0) {
                 alert("Filter Error: You must check at least one operation response profile inside the options panel.");
                 return;
             }
 
-            const selectedService = window.PTBO_SERVICE?.state.mode || 'fire';
-            let filteredPool;
-            try { filteredPool = filterDispatchCandidates(dispatchDatabase, selectedService, activeSubCategories); }
+            try { filteredPool = filterDispatchCandidates(candidates, selectedService, activeSubCategories); }
             catch (error) { alert(error?.message || 'City dispatch and EMS-priority data are still loading. Please try again.'); return; }
             if (filteredPool.length === 0) { alert('No reachable calls match these filters. Check road loading or select another call type.'); return; }
 
             const ems = window.PTBO_SERVICE?.state.mode === 'ems';
-            const hospital = window.PTBO_BASE_STORE?.getHospital() || window.PTBO_SERVICE_CONFIG.hospital;
-            const hospitalArrival = ems ? resolveIncidentArrival(hospital) : null;
-            if (ems && !hospitalArrival) { alert('Hospital access is still loading. Please try again.'); return; }
+            const transportRequired = ems && window.PTBO_CITY_PACKAGE?.features?.hospitalTransport !== false;
+            const hospital = drills || (ems && !transportRequired) ? null : (window.PTBO_BASE_STORE?.getHospital() || window.PTBO_SERVICE_CONFIG.hospital);
+            const hospitalArrival = transportRequired ? resolveIncidentArrival(hospital) : null;
+            if (transportRequired && !hospitalArrival) { alert('Hospital access is still loading. Please try again.'); return; }
             let selectionPool;
             try { selectionPool = selectDispatchPool(filteredPool, selectedService, lastDispatchedCallId); }
             catch (error) { alert(error?.message || 'EMS call-priority data is unavailable. Please try again.'); return; }
             if (!selectionPool.length) { alert('No reachable calls match these filters. Check road loading or select another call type.'); return; }
-            resetDispatchWorkflow();
+            if (drills) {
+                const base=window.PTBO_SERVICE.getBase();
+                if (!window.PTBO_SERVICE.spawn(base.number)) { alert('Selected response base is unavailable.'); return; }
+            } else resetDispatchWorkflow();
             activeIncident = selectionPool[Math.floor(Math.random() * selectionPool.length)];
             lastDispatchedCallId = activeIncident.id || null;
 
             mission = {generation:missionGeneration,service:ems ? 'ems' : 'fire',scene:{...activeIncident},
-                hospital:{...hospital},hospitalArrival,responseMs:0,transportMs:0,phase:'response'};
+                hospital:hospital ? {...hospital} : null,hospitalArrival,transportRequired,responseMs:0,transportMs:0,phase:'response'};
             activeArrivalPoint = resolveIncidentArrival(activeIncident);
             activeArrivalRadius = activeArrivalPoint.radius;
             incidentCircleMarker = L.circle([activeArrivalPoint.lat, activeArrivalPoint.lng], {
@@ -928,7 +968,7 @@
             document.getElementById('hud-content').innerHTML = `
                 <div class="hud-title">🚨 ACTIVE ENROUTE DISPATCH: ${escapeDispatchText(activeIncident.sub.toUpperCase())}</div>
                 <p class="hud-address">${escapeDispatchText(activeIncident.name)}</p>
-                <div class="hud-meta">Address: ${escapeDispatchText(activeIncident.addr)}${activeArrivalPoint.accessPoint ? " · Respond to the marked nearby road access point" : ""}</div>
+                <div class="hud-meta">${drills && activeIncident.locationKind==='mapped-intersection' ? 'Intersection' : 'Address'}: ${escapeDispatchText(activeIncident.addr)}${activeArrivalPoint.accessPoint ? " · Respond to the marked modeled road approach" : ""}${drills ? ` · ${activeIncident.locationKind==='mapped-intersection' ? 'Mapped intersection exercise' : 'Training estimate'}${supportExerciseLabel(activeIncident) ? ` · ${escapeDispatchText(supportExerciseLabel(activeIncident))}` : ''}` : ''}</div>
             `;
 
             setDispatchAction('Responding…',true);
@@ -947,6 +987,7 @@
                 hospital: mission.hospital ? {...mission.hospital} : null,
                 responseMs: mission.responseMs,
                 transportMs: mission.transportMs,
+                transportOccurred: mission.service === 'ems' && mission.transportRequired,
                 completedAt: Date.now()
             };
             if (window.PTBO_TRAINING_HISTORY?.recordCompletion) window.PTBO_TRAINING_HISTORY.recordCompletion(historySnapshot);
@@ -957,13 +998,13 @@
             const ems = mission.service === 'ems';
             document.getElementById('hud-content').innerHTML = `
                 <div class="hud-title">${ems ? 'EMS' : 'FIRE'} / AVAILABLE</div>
-                <p class="hud-address">${ems ? `Patient delivered to ${escapeDispatchText(mission.hospital.name)}` : 'Assignment completed'}</p>
-                <div class="hud-meta">Response: ${(mission.responseMs/1000).toFixed(1)} s${ems ? ` · Transport: ${(mission.transportMs/1000).toFixed(1)} s` : ''}</div>`;
+                <p class="hud-address">${ems && mission.transportRequired ? `Patient delivered to ${escapeDispatchText(mission.hospital.name)}` : ems ? 'Response exercise completed' : 'Assignment completed'}</p>
+                <div class="hud-meta">Response: ${(mission.responseMs/1000).toFixed(1)} s${ems && mission.transportRequired ? ` · Transport: ${(mission.transportMs/1000).toFixed(1)} s` : ''}</div>`;
             setDispatchAction('Next Call',false);
         }
 
         function beginHospitalTransport() {
-            if (!mission || mission.service !== 'ems' || mission.phase !== 'pickup') return;
+            if (!mission || mission.service !== 'ems' || !mission.transportRequired || mission.phase !== 'pickup') return;
             mission.phase = 'transport';
             releaseDrivingInput();
             activeIncident = {...mission.hospital,id:`prhc-${mission.generation}`};
@@ -992,7 +1033,7 @@
             stopDispatchClock();
             if (hospitalArrival) mission.transportMs = elapsedMilliseconds;
             else mission.responseMs = elapsedMilliseconds;
-            mission.phase = hospitalArrival ? 'handover' : mission.service === 'ems' ? 'pickup' : 'on-scene';
+            mission.phase = hospitalArrival ? 'handover' : mission.service === 'ems' && mission.transportRequired ? 'pickup' : 'on-scene';
             simulationState = STATES.ONSCENE;
             window.PTBO_ROUTE_COMPARE?.sync();
             releaseDrivingInput();
@@ -1001,9 +1042,9 @@
             document.getElementById('hud-content').innerHTML = `
                 <div class="hud-title">${hospitalArrival ? 'ARRIVED AT HOSPITAL' : 'ON SCENE'}</div>
                 <p class="hud-address">${escapeDispatchText(activeIncident.name)}</p>
-                <div class="hud-meta">${hospitalArrival ? 'Patient handover in progress…' : mission.service === 'ems' ? 'Preparing patient for hospital transport…' : 'Crew evaluating conditions on scene…'}</div>`;
+                <div class="hud-meta">${hospitalArrival ? 'Patient handover in progress…' : mission.service === 'ems' && mission.transportRequired ? 'Preparing patient for hospital transport…' : 'Crew evaluating conditions on scene…'}</div>`;
             incidentCircleMarker?.setStyle({color:'#5cb85c',fillColor:'#5cb85c'});
-            setDispatchAction(hospitalArrival ? 'Patient handover…' : mission.service === 'ems' ? 'Patient pickup…' : 'On scene…',true);
+            setDispatchAction(hospitalArrival ? 'Patient handover…' : mission.service === 'ems' && mission.transportRequired ? 'Patient pickup…' : 'On scene…',true);
             const generation = missionGeneration;
             clearTimeout(sceneTransitionTimer);
             sceneTransitionTimer = setTimeout(() => {
@@ -1025,6 +1066,7 @@
 
         window.onload = initializeSimulator;
     </script>
-    <script src="service-mode.js?v=1.6.149"></script>
+    <script src="service-mode.js?v=1.6.151"></script>
+    <script src="scene-response-filters.js?v=1.6.151"></script>
 </body>
 </html>

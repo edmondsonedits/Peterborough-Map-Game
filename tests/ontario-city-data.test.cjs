@@ -26,11 +26,11 @@ test('registry declares each mode independently for Peterborough, researched dem
   assert.equal(new Set(cities.map(city => city.id)).size,33);
   for (const city of cities) {
     assert.ok(Object.isFrozen(city.modes),`${city.id}: immutable capabilities`);
-    assert.equal(city.modes.geo,city.id === 'peterborough' || ids.includes(city.id),city.id);
+    assert.equal(city.modes.geo,true,city.id);
     assert.equal(city.modes.dispatch,city.id === 'peterborough' || previews.includes(city.id),city.id);
     assert.equal(city.modes.route,true,city.id);
     assert.equal(city.modes.explorer,city.id === 'peterborough',city.id);
-    if (ids.includes(city.id)) assert.equal(city.geoDataUrl,`cities/${city.id}/geo-data.json`);
+    if (city.id !== 'peterborough') assert.equal(city.geoDataUrl,`cities/${city.id}/geo-data.json`);
     assert.equal(city.dispatch.desktop,'response-simulator/play/');
     assert.equal(city.dispatch.mobile,'response-simulator/mobile/');
   }
@@ -104,7 +104,7 @@ test('all researched bases survive with future and disputed bases excluded from 
     }
   }
   assert.equal(total,686);
-  assert.equal(eligible,582);
+  assert.equal(eligible,581);
   assert.ok(nullCoordinates > 0);
   const disputed = json('cities/barrie/geo-data.json').bases.find(base => base.id === 'barrie-ems-bayfield-review');
   assert.equal(disputed.status,'needs-review');
@@ -113,6 +113,10 @@ test('all researched bases survive with future and disputed bases excluded from 
   assert.equal(future.status,'planned');
   assert.equal(future.lat,null);
   assert.equal(future.lng,null);
+  const temporary = json('cities/guelph/geo-data.json').bases.find(base => base.id === 'guelph-ems-12');
+  assert.equal(temporary.status,'needs-review');
+  assert.equal(temporary.selectionEligible,false);
+  assert.equal(temporary.operationalReview.status,'conflicting-current-deployment-evidence');
 });
 
 test('cross-street display retains evidence-backed indirect via connections', () => {
@@ -177,13 +181,13 @@ test('manifests add Geo data without inventing roads or enabling new driving cit
     assert.equal(manifest.id,id);
     assert.equal(manifest.features.geoGuesser,true,id);
     assert.equal(manifest.data.geoGuesser,'geo-data.json',id);
-    assert.equal(manifest.features.dispatch,false,id);
+    assert.equal(manifest.features.dispatch,previews.includes(id),id);
     assert.equal(manifest.features.routeGuidance,false,id);
-    assert.equal(manifest.features.baseTraining,previews.includes(id),id);
-    assert.equal(manifest.data.roads,null,id);
+    assert.equal(manifest.features.baseTraining,false,id);
+    assert.equal(manifest.data.roads,previews.includes(id)?'roads.geojson.gz':null,id);
     if (previews.includes(id)) {
-      assert.equal(manifest.data.bases,'package.js',id);
-      assert.equal(manifest.status,'base-training',id);
+      assert.equal(manifest.data.bases,'geo-data.json',id);
+      assert.equal(manifest.status,'scene-response',id);
       assert.equal(manifest.map.minZoom,10,id);
     } else {
       assert.equal(manifest.runtime,undefined,id);
@@ -197,9 +201,11 @@ test('manifests add Geo data without inventing roads or enabling new driving cit
   assert.equal(peterborough.data.roads,'../../city-explorer/data/osm-public-roads.geojson');
   for (const id of ['belleville','scarborough']) {
     const manifest = json(`cities/${id}/city.json`);
-    assert.equal(manifest.features.geoGuesser,false,id);
-    assert.equal(manifest.features.baseTraining,true,id);
-    assert.equal(manifest.data.bases,'package.js',id);
+    assert.equal(manifest.features.geoGuesser,true,id);
+    assert.equal(manifest.data.geoGuesser,'geo-data.json',id);
+    assert.equal(manifest.features.dispatch,previews.includes(id),id);
+    assert.equal(manifest.features.baseTraining,false,id);
+    assert.equal(manifest.data.bases,'geo-data.json',id);
   }
 });
 

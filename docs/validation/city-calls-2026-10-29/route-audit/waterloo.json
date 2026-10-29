@@ -1,0 +1,55 @@
+{
+  "city": "waterloo",
+  "verifiedFingerprint": "98e3bbf874b9ed4ab6f21890302c8d78985c449fbdd9d489e8ed3cddc9760388",
+  "halls": [
+    {
+      "id": "fire-waterloo-fire-1",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 2949,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-waterloo-fire-2",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 4385,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-waterloo-fire-3",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2718,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-waterloo-fire-4",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 5036,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-waterloo-ems-westmount",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2598,
+      "method": "modeled-road-response"
+    }
+  ],
+  "routes": 68,
+  "continuousOrigins": 68,
+  "officialCalls": 0,
+  "modeledCalls": 60,
+  "maxRouteMetres": 5036.181235131142,
+  "minCallsPerHall": 12,
+  "minChallengeCallsPerHall": 12,
+  "supportCalls": 8,
+  "durationMs": 7956
+}

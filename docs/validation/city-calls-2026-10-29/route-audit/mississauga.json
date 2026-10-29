@@ -1,0 +1,303 @@
+{
+  "city": "mississauga",
+  "verifiedFingerprint": "82ac060c03b8edabea89e3a1a15441a8b0ccba0dc494936b67098e6a0dd8e33e",
+  "halls": [
+    {
+      "id": "fire-mississauga-fire-119",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3447,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-mississauga-fire-109",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 3913,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-mississauga-fire-122",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 2914,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-mississauga-fire-103",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 4506,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-mississauga-fire-101",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2732,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-mississauga-fire-112",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 2840,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-mississauga-fire-106",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3718,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-mississauga-fire-118",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 2585,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-mississauga-fire-120",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2633,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-mississauga-fire-115",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2701,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-mississauga-fire-107",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2985,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-mississauga-fire-125",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2587,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-mississauga-fire-114",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 7,
+      "maxRouteMetres": 2897,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-mississauga-fire-102",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3170,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-mississauga-fire-105",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3465,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-mississauga-fire-111",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3148,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-mississauga-fire-121",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3796,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-mississauga-fire-117",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 5449,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-mississauga-fire-104",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 9,
+      "maxRouteMetres": 2597,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-mississauga-fire-110",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 3703,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-mississauga-fire-108",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 3209,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-mississauga-fire-116",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 4351,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-mississauga-fire-123",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2686,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-mississauga-ems-streetsville",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2976,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-mississauga-ems-tomken",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 10,
+      "maxRouteMetres": 3912,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-mississauga-ems-airport",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 10,
+      "maxRouteMetres": 2595,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-mississauga-ems-east-avenue",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2618,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-mississauga-ems-falbourne",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 4533,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-mississauga-ems-goreway",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2734,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-mississauga-ems-kingsway",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3358,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-mississauga-ems-kitimat",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3671,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-mississauga-ems-lorne-park",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2873,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-mississauga-ems-mavis",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 9,
+      "maxRouteMetres": 3776,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-mississauga-ems-sheridan",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 3902,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-mississauga-ems-tedlo",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2605,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-mississauga-ems-winding",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 6431,
+      "method": "modeled-road-response"
+    }
+  ],
+  "routes": 478,
+  "continuousOrigins": 478,
+  "officialCalls": 0,
+  "modeledCalls": 432,
+  "maxRouteMetres": 6430.581669999605,
+  "minCallsPerHall": 12,
+  "minChallengeCallsPerHall": 7,
+  "supportCalls": 46,
+  "durationMs": 53560
+}

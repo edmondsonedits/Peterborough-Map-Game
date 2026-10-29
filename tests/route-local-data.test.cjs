@@ -48,5 +48,5 @@ test('every published hall has multiple individually assigned, sourced local res
   }
   assert.equal(assigned.size,calls.size,city.id+' has no unassigned local calls');
  }
- assert.equal(halls,606);assert.ok(total>=1818);
+ assert.equal(halls,622);assert.ok(total>=1866);
 });

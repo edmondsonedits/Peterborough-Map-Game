@@ -4,7 +4,7 @@ const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=r
 const registry={};registry.window=registry;
 vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../cities/city-registry.js'),'utf8'),registry);
 const cities=Array.from(registry.PTBO_CITIES).filter(city=>city.modes.geo);
-assert.equal(cities.length,31);
+assert.equal(cities.length,33);
 (async()=>{
  const base=process.argv[2]||'http://127.0.0.1:4188',out=process.env.PTBO_GEO_QA_OUTPUT||'test-artifacts/geo-all-cities',report=[];
  fs.mkdirSync(out,{recursive:true});

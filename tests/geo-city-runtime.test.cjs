@@ -14,7 +14,7 @@ test('city loading readiness waits for data and both shared stores',async()=>{
  await new Promise(r=>setImmediate(r));assert.equal(ready,false);assert.equal(h.c.PTBO_BASE_STORE,undefined);h.release();await h.c.PTBO_GEO_CITY_READY;assert.equal(ready,true);assert.equal(h.c.PTBO_DISPATCH_STORE.getAll().length,1);
 });
 test('unknown or unsupported explicit Geo city fails rather than launching Peterborough',async()=>{
- for(const city of ['not-a-city','<script>','belleville','scarborough']){const h=runtime({search:'?city='+encodeURIComponent(city),stored:'peterborough'});assert.ok(h.c.PTBO_GEO_CITY_READY);await assert.rejects(h.c.PTBO_GEO_CITY_READY,/city|demo|available/i);assert.equal(h.requested.length,0);assert.equal(h.c.PTBO_CITY_PACKAGE,undefined);}
+ for(const city of ['not-a-city','<script>']){const h=runtime({search:'?city='+encodeURIComponent(city),stored:'peterborough'});assert.ok(h.c.PTBO_GEO_CITY_READY);await assert.rejects(h.c.PTBO_GEO_CITY_READY,/city|demo|available/i);assert.equal(h.requested.length,0);assert.equal(h.c.PTBO_CITY_PACKAGE,undefined);}
 });
 test('missing explicit city uses a supported remembered city and handles denied storage',async()=>{
  const h=runtime({search:'',stored:'toronto'});assert.ok(h.c.PTBO_GEO_CITY_READY);await h.c.PTBO_GEO_CITY_READY;assert.equal(h.c.PTBO_CITY_PACKAGE.id,'toronto');

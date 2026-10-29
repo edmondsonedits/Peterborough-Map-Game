@@ -1,0 +1,92 @@
+{
+  "reviewedAt": "2026-10-29T07:45:48.256457+00:00",
+  "readOnly": true,
+  "repoAtReview": "feeb7cf",
+  "rows": [
+    {
+      "id": "hamilton-odcaf-259",
+      "name": "Allsorts Gallery",
+      "address": "244 Ottawa Street North",
+      "publishedInGeoOrSharedOrRouteCalls": false,
+      "status": "current-gallery-operation-unresolved-withheld",
+      "facts": [
+        {
+          "sourceUrl": "https://krawchenkolaw.com/contact",
+          "fact": "Current Krawchenko Law operator contact page publishes244 Ottawa St. North, Hamilton ON L8H3Z7. This establishes a current law-office address association, not exclusive occupancy or exact entrance coordinates."
+        },
+        {
+          "sourceUrl": "https://www.factorymediacentre.ca/art-spaces-galleries-and-collectives/",
+          "fact": "Resource explicitly titled Art Spaces, Galleries, and Collectives:2018 Resources lists AllSorts Gallery at181 Ottawa Street North. Historical directory is not evidence of current operation at181."
+        }
+      ],
+      "recommendation": "Keep candidate withheld. No published row requires change. Do not infer permanent closure, move coordinates to181, or substitute law-office name without a separate verified point/site review.",
+      "coordinatesVerified": false,
+      "entranceVerified": false
+    },
+    {
+      "id": "mississauga-odsrf-2c670c659394dcfe0bdd3a3334b1548e",
+      "name": "Lakeside Park",
+      "address": "2266 Lakeshore Rd W",
+      "publishedInGeoOrSharedOrRouteCalls": true,
+      "publishedPoint": {
+        "lat": 43.4940732701237,
+        "lng": -79.6158098872065
+      },
+      "status": "exact-source-point-and-amenity-address-corroborated",
+      "facts": [
+        {
+          "sourceUrl": "https://services6.arcgis.com/hM5ymMLbxIyWTjn2/arcgis/rest/services/CITY_POI/FeatureServer/0/query?where=COMPKEY+IN+%28417425%2C417422%2C2033833%2C704897%29&outFields=%2A&returnGeometry=true&outSR=4326&f=json",
+          "fact": "Current City municipal CITY_POI featureCOMPKEY417425 /OBJECTID1370 /UNITIDP-037-PIC-1 is Picnic Area, parent Lakeside Park(P-037/417422), civic2266 Lakeshore Rd W, SERVSTAT OPEN; geometry43.494073270123685,-79.61580988720651 agrees with published point to floating-point precision. This is an amenity point, not a gate/vehicle-entrance point."
+        },
+        {
+          "sourceUrl": "https://services6.arcgis.com/hM5ymMLbxIyWTjn2/arcgis/rest/services/CITY_POI/FeatureServer/0/query?where=COMPKEY+IN+%28417425%2C417422%2C2033833%2C704897%29&outFields=%2A&returnGeometry=true&outSR=4326&f=json",
+          "fact": "Same current municipal API separately publishes parent Lakeside ParkCOMPKEY417422 /OBJECTID547 /UNITIDP-037 at2268 Lakeshore Rd W, SERVSTAT OPEN; different parent destination point. Adjacent picnic2033833 and spray-pad704897 also use2266."
+        },
+        {
+          "sourceUrl": "https://services6.arcgis.com/hM5ymMLbxIyWTjn2/arcgis/rest/services/City_Picnic_Sites/FeatureServer/0/query?where=COMPKEY%3D417425&outFields=*&outSR=4326&f=pjson",
+          "fact": "Current City Picnic Sites layer calls same feature Picnic Area Ne - Lakeside Park, retains same feature/parent IDs, civic2266, statusOPEN and exact point."
+        },
+        {
+          "sourceUrl": "https://www.mississauga.ca/events-and-attractions/parks/lakeside-park/",
+          "fact": "Current public whole-park page uses2268 Lakeshore Rd W and lists waterfront, leash-free zone, spray pad, trails and play structure."
+        },
+        {
+          "sourceUrl": "https://leashfreemississauga.ca/the-parks/",
+          "fact": "Current leash-free operator uses2266 for Lakeside leash-free zone. This supports a broader amenity civic association but does not make the published picnic point a leash-free-zone point."
+        }
+      ],
+      "recommendation": "No address/coordinate change required. Existing parent name Lakeside Park remains supported through exact feature parent linkage; optional future precision label Lakeside Park picnic area would distinguish amenity from whole-park locator. Do not retag this point as leash-free. Replace earlier unresolved subfacility caveat with precise picnic-source association if root chooses a later documentation/provenance update; no changes made here.",
+      "coordinatesVerifiedAgainstCurrentMunicipalSource": true,
+      "entranceVerified": false,
+      "currentnessLimit": "SERVSTAT OPEN is the current published municipal database status, not an independent real-time operational or daily-access inspection."
+    }
+  ],
+  "inputHashes": [
+    {
+      "path": "cities/hamilton/geo-data.json",
+      "sha256": "debbb5fd86be989321462c8c827d2dd3e3f98f992aba25960f5d84ed1ba60f77"
+    },
+    {
+      "path": "cities/hamilton/training-data.json",
+      "sha256": "e43fd97ec244b1d40e993eb215fc44615d1533eafaf2f3247f02c945414ad17a"
+    },
+    {
+      "path": "cities/mississauga/geo-data.json",
+      "sha256": "6a62a0a8bbe3405c54dbf01fb21b700f1d51d349beb970b8c54882d77a90f5a2"
+    },
+    {
+      "path": "cities/mississauga/training-data.json",
+      "sha256": "5bea31ffe5beefbd8ff30302327bd18c038012adc88b1117c1ea95e9d2ff35f9"
+    }
+  ],
+  "evidenceReceipt": {
+    "url": "https://services6.arcgis.com/hM5ymMLbxIyWTjn2/arcgis/rest/services/CITY_POI/FeatureServer/0/query?where=COMPKEY+IN+%28417425%2C417422%2C2033833%2C704897%29&outFields=%2A&returnGeometry=true&outSR=4326&f=json",
+    "retrievedAt": "2026-10-29T07:44:57.145600+00:00",
+    "sha256": "f7a819248fd1c8d8944436ec03eb63190ba15f1177f0bdf298cf9879e48f2b6a"
+  },
+  "limits": [
+    "No repository or application data edited.",
+    "No point relocation or public vehicle-entrance verification performed.",
+    "Historical business directories do not establish current operation."
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "city": "barrie",
+  "verifiedFingerprint": "01d0f05b5bafe01bc31b9573adac4a3e432ab36a53cc465cb25cffe4461af582",
+  "halls": [
+    {
+      "id": "fire-barrie-fire-1",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2508,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-barrie-fire-2",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2640,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-barrie-fire-3",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 4344,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-barrie-fire-4",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3889,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-barrie-fire-5",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3808,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-barrie-fire-6",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 4526,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-barrie-ems-fairview",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3726,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-barrie-ems-ross",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2596,
+      "method": "modeled-road-response"
+    }
+  ],
+  "routes": 108,
+  "continuousOrigins": 108,
+  "officialCalls": 0,
+  "modeledCalls": 96,
+  "maxRouteMetres": 4526.087220406624,
+  "minCallsPerHall": 12,
+  "minChallengeCallsPerHall": 12,
+  "supportCalls": 12,
+  "durationMs": 7095
+}

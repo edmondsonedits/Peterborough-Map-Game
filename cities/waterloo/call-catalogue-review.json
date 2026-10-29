@@ -1,0 +1,391 @@
+{
+  "schemaVersion": 1,
+  "coverage": {
+    "cityId": "waterloo",
+    "inputOfficial": 151,
+    "inputOsm": 2296,
+    "inputMajorRoad": 592,
+    "existing": 23,
+    "accepted": 1466,
+    "selected": 180,
+    "target": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "existingByDifficulty": {
+      "easy": 10,
+      "medium": 5,
+      "hard": 5
+    },
+    "selectedByDifficulty": {
+      "easy": 90,
+      "medium": 45,
+      "hard": 45
+    },
+    "totalByDifficulty": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "deficits": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "baseStrata": [
+      {
+        "id": "fire-waterloo-fire-1",
+        "selected": 36,
+        "available": 453,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-waterloo-fire-2",
+        "selected": 36,
+        "available": 312,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-waterloo-fire-3",
+        "selected": 36,
+        "available": 194,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-waterloo-fire-4",
+        "selected": 36,
+        "available": 225,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-waterloo-ems-westmount",
+        "selected": 36,
+        "available": 282,
+        "method": "nearest-geographic-base-for-selection-only"
+      }
+    ],
+    "sharedBaseline": 20,
+    "baselineByService": {
+      "fire": {
+        "easy": 10,
+        "medium": 5,
+        "hard": 5
+      },
+      "ems": {
+        "easy": 10,
+        "medium": 8,
+        "hard": 5
+      }
+    },
+    "serviceTotalsByDifficulty": {
+      "fire": {
+        "easy": 100,
+        "medium": 50,
+        "hard": 50
+      },
+      "ems": {
+        "easy": 100,
+        "medium": 53,
+        "hard": 50
+      }
+    },
+    "serviceDeficits": {
+      "fire": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      },
+      "ems": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "rejected": 1573,
+    "rejectionCounts": {
+      "unresolved-2020-source-currentness": 9,
+      "production-snap-not-ground-public-road": 1154,
+      "duplicate-existing-or-accepted-address-or-named-site": 59,
+      "production-snap-over-80m-or-missing": 44,
+      "production-snap-wrong-street": 274,
+      "not-one-exact-civic-number-and-street": 22,
+      "outside-verified-municipality-or-boundary-unavailable": 1,
+      "no-genuine-connected-cross-street-within-1500m": 10
+    },
+    "oneStreetExceptions": 43
+  },
+  "independentAudit": {
+    "cityId": "waterloo",
+    "selected": 180,
+    "accepted": 1466,
+    "crossStreetEvidence": 2531,
+    "oneStreet": 401,
+    "maxGap": 76.91916907474553,
+    "pass": true
+  },
+  "priorityFacilityExpansion": {
+    "reviewedOn": "2026-10-29",
+    "addedIds": [
+      "waterloo-osm-way-761315757",
+      "waterloo-osm-way-180905206",
+      "waterloo-odhf-d5050cc62bb0d6c8339ca9a55188fc37",
+      "waterloo-osm-way-243705395",
+      "waterloo-osm-way-308403716"
+    ],
+    "verification": {
+      "cityId": "waterloo",
+      "additions": 5,
+      "proposalSha256": "6bafad1e6bcacc4d46a21dfc5436c8f1a1c74c7d8c0957fe27956b444f12cda0",
+      "pass": true,
+      "checks": [
+        "IDs absent from current shared/legacy/care catalogue",
+        "row exactly equals accepted source record",
+        "full per-record provenance exactly equals accepted pool",
+        "factual category/tags and coordinates match raw source record",
+        "source point and URLs unchanged",
+        "no normalized civic-address/near-identical-site duplicates",
+        "max40 per city",
+        "per-base rationale present; no dispatch ownership claim"
+      ]
+    },
+    "review": {
+      "purpose": "Bounded source-preserving priority facility and local variety additions; no recognition tier rewrites.",
+      "sourcePool": "external-build-cache/canonical-catalogues-reviewed/waterloo/accepted-candidates.json",
+      "sourcePoolSha256": "307ec8b7c11adb6c315c8fbd50bfd8f235466a4c1d1393db0dfd69e9b5d323e5",
+      "selectedDescriptor": "cities/waterloo/training-data.json",
+      "selectedDescriptorSha256": "4c9884923a1f00990b8e570dde5f97c2ece6501d4167aa3df8eb4c95bbef6d9e",
+      "routeEvidence": "cities/waterloo/training-data.json",
+      "routeEvidenceScope": "production",
+      "selectionRules": {
+        "maxPerCity": 40,
+        "maxPotentialAddsPerBase": 6,
+        "maxPotentialAddsForConfirmedZeroToTwoBase": 10,
+        "twoCluePriority": true,
+        "maximumStraightLineBaseReviewDistanceMetres": 6000
+      },
+      "limitations": [
+        "At this selection-time review: Every row passed the existing all-accepted geographic/source/clue audit. These additions have not been graph-assigned or route-audited.",
+        "Published Fire polygons are respected for review proximity; EMS and other Fire review strata use straight-line proximity only. These are not dispatch ownership assignments.",
+        "Full original accepted source point, ID, address, recognition tier, incident profile and provenance are unchanged. Current-open status is not newly verified."
+      ],
+      "rationales": {
+        "waterloo-osm-way-761315757": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "waterloo-osm-way-761315757",
+            "category": null,
+            "tags": {
+              "addr:city": "Waterloo",
+              "addr:housenumber": "45",
+              "addr:street": "John Street West",
+              "building": "industrial",
+              "building:levels": "1"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/761315757",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-waterloo-fire-1",
+              "distance": 2217.128941674446,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2217
+            },
+            {
+              "baseId": "ems-waterloo-ems-westmount",
+              "distance": 1729.0685961030324,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1729
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 211
+        },
+        "waterloo-osm-way-180905206": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "waterloo-osm-way-180905206",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "480",
+              "addr:street": "Conestogo Road",
+              "building": "industrial",
+              "name": "Krown",
+              "opening_hours": "Mo-Fr 09:00-17:00; Sa 09:00-12:00",
+              "source": "Bing;local knowledge",
+              "website": "https://www.krown.com/en/locations/canada/ontario/waterloo/waterloo/"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/180905206",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-waterloo-fire-3",
+              "distance": 978.4245102461906,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 978
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 164
+        },
+        "waterloo-odhf-d5050cc62bb0d6c8339ca9a55188fc37": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "healthcare (source broad category; no emergency/hospital status inferred)",
+          "sourceEvidence": {
+            "sourceRecordId": "waterloo-odhf-d5050cc62bb0d6c8339ca9a55188fc37",
+            "category": "healthcare",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://geohub.lio.gov.on.ca/datasets/e1e5983c59ff497baddf75f1d2bb4add_26/explore"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-waterloo-fire-1",
+              "distance": 1243.9678073196994,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 1244
+            },
+            {
+              "baseId": "ems-waterloo-ems-westmount",
+              "distance": 1258.0257864001196,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 1258
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 140
+        },
+        "waterloo-osm-way-243705395": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "waterloo-osm-way-243705395",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "449",
+              "addr:street": "Hazel Street",
+              "building": "apartments"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/243705395",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-waterloo-fire-3",
+              "distance": 1533.4130455325922,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 1533
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 126
+        },
+        "waterloo-osm-way-308403716": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "waterloo-osm-way-308403716",
+            "category": null,
+            "tags": {
+              "addr:city": "Waterloo",
+              "addr:housenumber": "395",
+              "addr:street": "King Street North",
+              "amenity": "place_of_worship",
+              "attribution": "Natural Resources Canada",
+              "building": "church",
+              "canvec:CODE": "2010392",
+              "denomination": "pentecostal",
+              "name": "Waterloo Pentecostal Assembly",
+              "phone": "+1-519-884-0530",
+              "religion": "christian",
+              "source": "CanVec_Import_2009",
+              "website": "https://wpa.church/"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/308403716",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-waterloo-fire-1",
+              "distance": 1035.6954239417066,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 3,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 1036
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 125
+        }
+      }
+    },
+    "note": "Add-only source-validated priority facilities; geographic review reasons are not operational districts. Station assignments require independent directed-road audit."
+  },
+  "routeCandidateExpansion": {
+    "reviewedOn": "2026-10-29",
+    "promotedIds": [],
+    "candidateVerification": null,
+    "selection": "Only source-verified additional locations used by independently audited station exercises are promoted; existing canonical IDs and fields remain unchanged."
+  },
+  "evidencePathConvention": {
+    "repositoryPaths": "Paths beginning cities/ are repository-relative.",
+    "externalBuildCache": "external-build-cache/ labels identify historical, reproducible build artifacts that are not shipped; adjacent SHA-256 values identify the exact reviewed bytes.",
+    "reviewScope": "Priority facility review records describe the selection-time review. Final integrated route and runtime validation is recorded in docs/city-call-validation-2026-10-29.md."
+  }
+}

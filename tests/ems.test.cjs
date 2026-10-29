@@ -318,3 +318,22 @@ test('hospital export snapshot excludes staged geometry until it is saved',()=>{
   store.saveHospital(store.getHospital());
   assert.equal(store.getSavedHospital().areaWidth,saved.areaWidth+10,'Save makes the geometry exportable');
 });
+
+test('scene-only EMS completes once without hospital transport',()=>{
+  const g=game();g.c.PTBO_CITY_PACKAGE={features:{hospitalTransport:false}};
+  g.service.select('ems');g.run('triggerDispatchWorkflow()');g.advance(7000);g.arrive();
+  assert.equal(g.run('mission.phase'),'on-scene');g.transition();
+  assert.equal(g.run('totalTrackedCalls'),1);assert.equal(g.run('mission.hospital'),null);
+  assert.equal(g.c.PTBO_PENDING_TRAINING_HISTORY[0].transportOccurred,false);
+  assert.match(g.element('hud-content').innerHTML,/response exercise completed/i);
+  g.run('completeAssignment()');assert.equal(g.run('totalTrackedCalls'),1);
+});
+
+test('modeled support exercises identify the primary station in HUD wording and radio',()=>{
+ const g=game();g.c.PTBO_CITY_PACKAGE={features:{sceneResponseDrills:true},serviceConfig:{profiles:{fire:{bases:[{id:'fire-2',name:'Station 2'}]}}}};
+ g.c.PTBO_SERVICE={state:{mode:'fire'},getBase:()=>({name:'Station 1'}),getBases:()=>[{id:'fire-2',name:'Station 2'}]};
+ const call={name:'Place',addr:'10 Main',sub:'Structure Fire',responseAssignment:{role:'support',primaryBaseId:'fire-2'}};
+ assert.match(g.c.supportExerciseLabel(call),/estimated support exercise.*modeled first-due Station 2/i);
+ vm.runInContext(read('response-simulator/dispatch-voice-bridge-1.4.2.js'),g.c);
+ assert.match(g.c.buildCityDispatchPhrase(call),/estimated support exercise.*modeled first-due Station 2/i);
+});

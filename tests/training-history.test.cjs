@@ -192,3 +192,8 @@ test('the simulator completion path emits exactly one history snapshot hook', ()
   assert.match(simulatorSource, /responseMs:\s*mission\.responseMs/);
   assert.match(simulatorSource, /transportMs:\s*mission\.transportMs/);
 });
+
+test('scene-only EMS completion does not count as a transport',()=>{
+ const {api}=harness();const saved=api.recordCompletion({...fireSnapshot(),service:'ems',hospital:null,transportOccurred:false});
+ assert.equal(saved.transportOccurred,false);assert.equal(api.summary().emsTransports,0);
+});
