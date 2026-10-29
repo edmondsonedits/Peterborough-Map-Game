@@ -190,7 +190,7 @@
   #interaction-prompt kbd { display: none; }
 }
 
-@media (max-width: 760px) and (pointer: coarse) {
+@media (max-width: 760px) and (pointer: coarse), (orientation: landscape) and (max-height: 520px) and (pointer: coarse) {
   .stats-bar { display: none; }
   .help-panel { display: none; }
 
@@ -340,4 +340,11 @@
 
 @media (prefers-reduced-motion: reduce) {
   #app .control-panel, #mobile-menu-scrim, #mobile-action-button { transition-duration: .01ms !important; }
+}
+
+@media (max-width: 760px) and (pointer: coarse), (orientation: landscape) and (max-height: 520px) and (pointer: coarse) {
+  #app .control-panel { max-height: calc(100dvh - 210px - env(safe-area-inset-bottom, 0px)); overflow-y: auto; overscroll-behavior: contain; }
+  #app .control-panel .map-details { grid-column: 1 / -1; }
+  #app .map-details > summary { min-height: 44px; border-radius: 10px; font-size: 11px; }
+  #app .map-details-panel { position: static; width: auto; margin-top: 7px; padding: 12px; box-shadow: none; }
 }

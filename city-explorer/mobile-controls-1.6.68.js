@@ -189,6 +189,7 @@
 
   function setMenu(open) {
     menuOpen = Boolean(open);
+    if (!menuOpen) document.getElementById('map-details')?.removeAttribute('open');
     app?.classList.toggle('mobile-menu-open', menuOpen);
     menuToggle?.setAttribute('aria-expanded', String(menuOpen));
     if (menuOpen) resetJoystick();
