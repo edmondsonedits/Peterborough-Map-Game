@@ -1,0 +1,479 @@
+{
+  "schemaVersion": 1,
+  "coverage": {
+    "cityId": "clarington",
+    "inputOfficial": 97,
+    "inputOsm": 1797,
+    "inputMajorRoad": 819,
+    "existing": 22,
+    "accepted": 1699,
+    "selected": 180,
+    "target": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "existingByDifficulty": {
+      "easy": 10,
+      "medium": 5,
+      "hard": 5
+    },
+    "selectedByDifficulty": {
+      "easy": 90,
+      "medium": 45,
+      "hard": 45
+    },
+    "totalByDifficulty": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "deficits": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "baseStrata": [
+      {
+        "id": "fire-clarington-fire-1",
+        "selected": 26,
+        "available": 226,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-clarington-fire-2",
+        "selected": 26,
+        "available": 282,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-clarington-fire-3",
+        "selected": 26,
+        "available": 294,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-clarington-fire-4",
+        "selected": 25,
+        "available": 267,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-clarington-fire-5",
+        "selected": 26,
+        "available": 243,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-clarington-ems-519",
+        "selected": 25,
+        "available": 93,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-clarington-ems-548",
+        "selected": 26,
+        "available": 294,
+        "method": "nearest-geographic-base-for-selection-only"
+      }
+    ],
+    "sharedBaseline": 20,
+    "baselineByService": {
+      "fire": {
+        "easy": 10,
+        "medium": 5,
+        "hard": 5
+      },
+      "ems": {
+        "easy": 10,
+        "medium": 7,
+        "hard": 5
+      }
+    },
+    "serviceTotalsByDifficulty": {
+      "fire": {
+        "easy": 100,
+        "medium": 50,
+        "hard": 50
+      },
+      "ems": {
+        "easy": 100,
+        "medium": 52,
+        "hard": 50
+      }
+    },
+    "serviceDeficits": {
+      "fire": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      },
+      "ems": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "rejected": 1014,
+    "rejectionCounts": {
+      "unresolved-2020-source-currentness": 3,
+      "production-snap-not-ground-public-road": 394,
+      "duplicate-existing-or-accepted-address-or-named-site": 49,
+      "production-snap-over-80m-or-missing": 67,
+      "unresolved-official-coordinate-or-current-address-conflict": 1,
+      "production-snap-wrong-street": 450,
+      "not-one-exact-civic-number-and-street": 20,
+      "no-genuine-connected-cross-street-within-1500m": 30
+    },
+    "oneStreetExceptions": 69
+  },
+  "independentAudit": {
+    "cityId": "clarington",
+    "selected": 180,
+    "accepted": 1699,
+    "crossStreetEvidence": 2734,
+    "oneStreet": 664,
+    "maxGap": 76.7710241072145,
+    "pass": true
+  },
+  "priorityFacilityExpansion": {
+    "reviewedOn": "2026-10-29",
+    "addedIds": [
+      "clarington-osm-way-207830144",
+      "clarington-osm-way-39686780",
+      "clarington-odef-def25bd8bb82df972653",
+      "clarington-odhf-157913e6052e0e77f06d8dcb21cb6a59",
+      "clarington-osm-way-1128356924",
+      "clarington-osm-way-659124501",
+      "clarington-odef-6cd3a8c4c65cc3bcfd23"
+    ],
+    "verification": {
+      "cityId": "clarington",
+      "additions": 7,
+      "proposalSha256": "79ea647dc4245370fa579734a51a17faa5f70ffeeab0cfb141d4640a35f286af",
+      "pass": true,
+      "checks": [
+        "IDs absent from current shared/legacy/care catalogue",
+        "row exactly equals accepted source record",
+        "full per-record provenance exactly equals accepted pool",
+        "factual category/tags and coordinates match raw source record",
+        "source point and URLs unchanged",
+        "no normalized civic-address/near-identical-site duplicates",
+        "max40 per city",
+        "per-base rationale present; no dispatch ownership claim"
+      ]
+    },
+    "review": {
+      "purpose": "Bounded source-preserving priority facility and local variety additions; no recognition tier rewrites.",
+      "sourcePool": "external-build-cache/canonical-catalogues-reviewed/clarington/accepted-candidates.json",
+      "sourcePoolSha256": "4164daa794953f3caf3e5b9cd0f28226b68bb874a6b472ac6ae2986268f250e5",
+      "selectedDescriptor": "cities/clarington/training-data.json",
+      "selectedDescriptorSha256": "c845be63971bcee73b3d425a00e3418c470b051dd275d73ce6af08714921a899",
+      "routeEvidence": "cities/clarington/training-data.json",
+      "routeEvidenceScope": "production",
+      "selectionRules": {
+        "maxPerCity": 40,
+        "maxPotentialAddsPerBase": 6,
+        "maxPotentialAddsForConfirmedZeroToTwoBase": 10,
+        "twoCluePriority": true,
+        "maximumStraightLineBaseReviewDistanceMetres": 6000
+      },
+      "limitations": [
+        "At this selection-time review: Every row passed the existing all-accepted geographic/source/clue audit. These additions have not been graph-assigned or route-audited.",
+        "Published Fire polygons are respected for review proximity; EMS and other Fire review strata use straight-line proximity only. These are not dispatch ownership assignments.",
+        "Full original accepted source point, ID, address, recognition tier, incident profile and provenance are unchanged. Current-open status is not newly verified."
+      ],
+      "rationales": {
+        "clarington-osm-way-207830144": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "clarington-osm-way-207830144",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "81",
+              "addr:street": "Ontario Street",
+              "building": "apartments"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/207830144",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-clarington-fire-1",
+              "distance": 1874.825248602287,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1875
+            },
+            {
+              "baseId": "ems-clarington-ems-548",
+              "distance": 480.08087668333224,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 480
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 208
+        },
+        "clarington-osm-way-39686780": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "cinema",
+          "sourceEvidence": {
+            "sourceRecordId": "clarington-osm-way-39686780",
+            "category": null,
+            "tags": {
+              "addr:city": "Bowmanville",
+              "addr:housenumber": "111",
+              "addr:postcode": "L1C 4Z3",
+              "addr:street": "Clarington Boulevard",
+              "amenity": "cinema",
+              "brand": "Cineplex",
+              "brand:wikidata": "Q2972807",
+              "brand:wikipedia": "en:Cineplex Entertainment",
+              "building": "retail",
+              "name": "Cineplex Odeon Clarington Place Cinemas",
+              "operator": "Cineplex",
+              "phone": "+1-905-697-0308",
+              "website": "https://www.cineplex.com/Theatre/cineplex-odeon-clarington-place-cinemas",
+              "wikidata": "Q38400450"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/39686780",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-clarington-fire-1",
+              "distance": 144.68383170806044,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 145
+            },
+            {
+              "baseId": "ems-clarington-ems-548",
+              "distance": 2448.8592432409837,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2449
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 206
+        },
+        "clarington-odef-def25bd8bb82df972653": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "clarington-odef-def25bd8bb82df972653",
+            "category": "school",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/37-26-0001/372600012022001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/en/pub/37-26-0001/2022001/ODEF_v3.0.zip",
+              "https://data.ontario.ca/dataset/school-information-and-student-demographics",
+              "https://data.ontario.ca/dataset/ontario-public-school-contact-information",
+              "https://data.ontario.ca/dataset/fb3a7c18-90af-453e-bc0a-a76ecc471862/resource/f3a8c2a3-09d9-4715-9044-d8a0189f572c/download/public_school_contact_list_september2026_en.txt"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-clarington-fire-2",
+              "distance": 618.1056679185929,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 618
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 168
+        },
+        "clarington-odhf-157913e6052e0e77f06d8dcb21cb6a59": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "care-home",
+          "sourceEvidence": {
+            "sourceRecordId": "clarington-odhf-157913e6052e0e77f06d8dcb21cb6a59",
+            "category": "care-home",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://city-oshawa.opendata.arcgis.com/datasets/0fa830f84d9847a2af342c3254749d51_10/explore"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-clarington-fire-3",
+              "distance": 941.0316447078102,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 941
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 167
+        },
+        "clarington-osm-way-1128356924": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "clarington-osm-way-1128356924",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "8",
+              "addr:street": "Andrew Street",
+              "building": "apartments"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/1128356924",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-clarington-fire-2",
+              "distance": 1616.248589792359,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1616
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 155
+        },
+        "clarington-osm-way-659124501": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "clarington-osm-way-659124501",
+            "category": null,
+            "tags": {
+              "addr:city": "Courtice",
+              "addr:housenumber": "107",
+              "addr:postcode": "L1E 2T2",
+              "addr:province": "ON",
+              "addr:street": "Cigas Road",
+              "building": "industrial"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/659124501",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-clarington-fire-4",
+              "distance": 3041.515005104209,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 2,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 3042
+            },
+            {
+              "baseId": "ems-clarington-ems-519",
+              "distance": 3307.0122150941447,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 2,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 3307
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 144
+        },
+        "clarington-odef-6cd3a8c4c65cc3bcfd23": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "clarington-odef-6cd3a8c4c65cc3bcfd23",
+            "category": "school",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/37-26-0001/372600012022001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/en/pub/37-26-0001/2022001/ODEF_v3.0.zip",
+              "https://data.ontario.ca/dataset/school-information-and-student-demographics",
+              "https://data.ontario.ca/dataset/ontario-public-school-contact-information",
+              "https://data.ontario.ca/dataset/fb3a7c18-90af-453e-bc0a-a76ecc471862/resource/f3a8c2a3-09d9-4715-9044-d8a0189f572c/download/public_school_contact_list_september2026_en.txt"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-clarington-fire-4",
+              "distance": 816.0079548449891,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 816
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 138
+        }
+      }
+    },
+    "note": "Add-only source-validated priority facilities; geographic review reasons are not operational districts. Station assignments require independent directed-road audit."
+  },
+  "routeCandidateExpansion": {
+    "reviewedOn": "2026-10-29",
+    "promotedIds": [],
+    "candidateVerification": null,
+    "selection": "Only source-verified additional locations used by independently audited station exercises are promoted; existing canonical IDs and fields remain unchanged."
+  },
+  "evidencePathConvention": {
+    "repositoryPaths": "Paths beginning cities/ are repository-relative.",
+    "externalBuildCache": "external-build-cache/ labels identify historical, reproducible build artifacts that are not shipped; adjacent SHA-256 values identify the exact reviewed bytes.",
+    "reviewScope": "Priority facility review records describe the selection-time review. Final integrated route and runtime validation is recorded in docs/city-call-validation-2026-10-29.md."
+  }
+}

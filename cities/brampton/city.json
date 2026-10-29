@@ -6,7 +6,7 @@
   "country": "Canada",
   "status": "geo-demo",
   "playable": true,
-  "note": "Geo Guesser demo with 20 shared Fire and EMS call locations.",
+  "note": "Geo Guesser and Route Mapping with sourced Fire and EMS practice locations.",
   "map": {
     "bounds": [
       [

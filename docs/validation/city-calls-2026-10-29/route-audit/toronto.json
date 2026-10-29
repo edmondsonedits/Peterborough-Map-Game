@@ -1,0 +1,1079 @@
+{
+  "city": "toronto",
+  "verifiedFingerprint": "05ad6408f147579f49f0c19003093005b141a06568b23b0308318272501833d0",
+  "halls": [
+    {
+      "id": "fire-toronto-fire-443",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3226,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-422",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2450,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-243",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 2664,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-241",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2568,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-113",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3525,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-112",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2923,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-114",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2572,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-122",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3163,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-121",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2640,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-131",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2599,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-224",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2497,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-111",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2833,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-143",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3218,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-145",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3012,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-141",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3469,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-411",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 2985,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-142",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3319,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-146",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2558,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-413",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3165,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-412",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2609,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-133",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2617,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-221",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2628,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-346",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2051,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-123",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3053,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-115",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2291,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-245",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2445,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-244",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 2585,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-232",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2597,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-233",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2597,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-235",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2540,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-223",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2604,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-215",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3573,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-234",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 11,
+      "maxRouteMetres": 3577,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-231",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3049,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-213",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2612,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-214",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2583,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-211",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3177,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-242",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2905,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-431",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2516,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-433",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2661,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-435",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 2653,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-335",
+      "service": "fire",
+      "calls": 4,
+      "challengeCalls": 1,
+      "maxRouteMetres": 1406,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-333",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 2531,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-222",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2580,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-225",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2752,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-227",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2487,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-226",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2586,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-323",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2208,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-343",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2392,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-345",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 1947,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-315",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2057,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-314",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 1334,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-332",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 1382,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-331",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 11,
+      "maxRouteMetres": 1934,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-334",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 1634,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-426",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2583,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-212",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 3278,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-425",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 1948,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-326",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 8,
+      "maxRouteMetres": 2336,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-324",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 1746,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-325",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 9,
+      "maxRouteMetres": 1822,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-313",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 2394,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-322",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2717,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-321",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 2574,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-125",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2702,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-144",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 2465,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-423",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 11,
+      "maxRouteMetres": 1835,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-342",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 10,
+      "maxRouteMetres": 2080,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-421",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 2308,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-341",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 2380,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-135",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 2100,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-132",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2597,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-134",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2607,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-311",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2314,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-312",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 1485,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-344",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2219,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-116",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2515,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-434",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2585,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-432",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3488,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-445",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2563,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-444",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3249,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-441",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2935,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-415",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2968,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-toronto-fire-442",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 2565,
+      "method": "official-run-area"
+    },
+    {
+      "id": "ems-toronto-ems-2982185",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 5173,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-2782812",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 3137,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-3331452",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 4460,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-2236216",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 3027,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-3311692",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3398,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-3035708",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3755,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-3311695",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2576,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-2614832",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2589,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-2775911",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2678,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-2609714",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3381,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-2488706",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2600,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-3311701",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 10,
+      "maxRouteMetres": 2622,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-3311704",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3580,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-3311629",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2464,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-3311708",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3327,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-3234576",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2565,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-3151930",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 9,
+      "maxRouteMetres": 2613,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-3311745",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 7,
+      "maxRouteMetres": 2587,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-3311716",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 3604,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-2794777",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 1420,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-3311726",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2572,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-3175714",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2601,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-3311634",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2809,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-3824182",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2750,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-2303629",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 3612,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-1957340",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3777,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-3311686",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 10,
+      "maxRouteMetres": 2741,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-2807376",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2658,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-2911467",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2682,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-2279123",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3495,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-3837843",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2603,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-1520443",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3212,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-3311689",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2340,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-2998314",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2540,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-4326823",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2647,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-4198065",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2820,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-4271262",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2604,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-3006960",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 9,
+      "maxRouteMetres": 2463,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-2489899",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 10,
+      "maxRouteMetres": 2621,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-1783376",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3081,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-2775827",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2670,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-3311713",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2598,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-4061713",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2587,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-4173463",
+      "service": "ems",
+      "calls": 4,
+      "challengeCalls": 1,
+      "maxRouteMetres": 1406,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-1793120",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2187,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-2489114",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2592,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-2135734",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 10,
+      "maxRouteMetres": 2406,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-2734375",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2597,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-toronto-ems-bering-post",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2609,
+      "method": "modeled-road-response"
+    }
+  ],
+  "routes": 1746,
+  "continuousOrigins": 1746,
+  "officialCalls": 1000,
+  "modeledCalls": 580,
+  "maxRouteMetres": 5172.827250160026,
+  "minCallsPerHall": 4,
+  "minChallengeCallsPerHall": 1,
+  "supportCalls": 166,
+  "durationMs": 208970
+}

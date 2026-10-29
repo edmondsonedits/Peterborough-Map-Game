@@ -1,0 +1,1386 @@
+{
+  "schemaVersion": 1,
+  "reviewDate": "2026-10-29",
+  "scope": "Versioned independent name/address/current-operation review of 64 purposeful selected samples, four extra issue/alias checks, and two targeted Toronto corroborations. Prior Belleville supportive-housing resolution retained. No coordinate or civic-address replacements.",
+  "reviews": [
+    {
+      "id": "ajax-odef-0f73cd9f6da7f1e9f911",
+      "cityId": "ajax",
+      "originalName": "St Francis de Sales Catholic School",
+      "originalAddress": "72 Church St S",
+      "status": "corroborated",
+      "reason": "Current school operator page lists 72 Church Street South and current school hours; candidate name/address corroborated.",
+      "sourceUrls": [
+        "https://www.dcdsb.ca/stfrancis"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-first16",
+      "coordinatesVerified": false
+    },
+    {
+      "id": "ajax-odef-24e26bc502a4b10c449e",
+      "cityId": "ajax",
+      "originalName": "Michaëlle Jean Public School",
+      "originalAddress": "180 Williamson Drive E",
+      "status": "corroborated",
+      "reason": "Current school operator contact page lists 180 Williamson Drive East.",
+      "sourceUrls": [
+        "https://michaellejeanps.ddsb.ca/en/our-school/contact-us.aspx"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-first16",
+      "coordinatesVerified": false
+    },
+    {
+      "id": "barrie-odef-9e1fc2e286a3e1e7d315",
+      "cityId": "barrie",
+      "originalName": "Modern College of Hairstyling & Esthetics-Barrie",
+      "originalAddress": "400 Bayfield Street",
+      "status": "corroborated",
+      "reason": "Current operator campus page lists 400 Bayfield Street, programmes, and hours.",
+      "sourceUrls": [
+        "https://www.moderncollege.ca/contact/barrie-campus/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-first16",
+      "coordinatesVerified": false
+    },
+    {
+      "id": "barrie-osm-way-804955681",
+      "cityId": "barrie",
+      "originalName": "Allandale Station Retirement Residence",
+      "originalAddress": "357 Yonge Street",
+      "status": "corroborated",
+      "reason": "Current retirement operator describes Chartwell Allandale Station at 357 Yonge Street; existing shortened residence name remains valid.",
+      "sourceUrls": [
+        "https://chartwell.com/on/barrie/allandale-station"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-first16",
+      "coordinatesVerified": false
+    },
+    {
+      "id": "belleville-odhf-2158004f4e45a2dcbd9ed499f6f2b87f",
+      "cityId": "belleville",
+      "originalName": "Canadian Mental Health Association (Cmha) Hastings Prince Edward",
+      "originalAddress": "490 Sidney Street",
+      "status": "corrected",
+      "reason": "Current Hastings County housing roster identifies 490 Sidney Street as Home for Good Supportive Housing, with 40 units and CMHA Hastings Prince Edward among multiple agencies providing on-site resident support. Preserve the source point and civic address; name the building and classify it as supportive housing, not the CMHA head-office/walk-in clinic at 250 Sidney.",
+      "sourceUrls": [
+        "https://www.hastings.ca/communities/services/housing-services/housing-available-hastings-county/belleville-properties",
+        "https://cmhahpe.ca/who-we-are/contact-us/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-first16",
+      "coordinatesVerified": false,
+      "previousReview": {
+        "status": "unresolved",
+        "reason": "Current CMHA provider lists its Belleville office and walk-in services at 250 Sidney Street. County historical records identify 490 Sidney as Home for Good supportive housing. Current candidate name/type association at 490 was not independently established; do not relocate its point to 250.",
+        "sourceUrls": [
+          "https://cmhahpe.ca/who-we-are/contact-us/",
+          "https://cmhahpe.ca/find-help/",
+          "https://hastingscounty.civicweb.net/document/150682"
+        ],
+        "retrievedAt": "2026-10-29"
+      },
+      "changes": {
+        "name": "Home for Good Supportive Housing",
+        "category": "supportive-housing"
+      }
+    },
+    {
+      "id": "belleville-odhf-aa401eef18302f500152ebc3d776895f",
+      "cityId": "belleville",
+      "originalName": "Quinte Health - Belleville",
+      "originalAddress": "265 Dundas Street East",
+      "status": "corroborated",
+      "reason": "Current operator identifies Belleville General Hospital at 265 Dundas Street East with operating entrances/services; candidate address/site corroborated.",
+      "sourceUrls": [
+        "https://quintehealth.ca/hospital/belleville-general-hospital/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-first16",
+      "coordinatesVerified": false
+    },
+    {
+      "id": "brampton-odef-162706051de70ebca945",
+      "cityId": "brampton",
+      "originalName": "Sunview College - Brampton",
+      "originalAddress": "8897 The Gore Rd.",
+      "status": "corroborated",
+      "reason": "Current operator lists Brampton campus at 8897 The Gore Road, Suite 25, with admission/contact hours.",
+      "sourceUrls": [
+        "https://www.sunviewcollege.com/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-first16",
+      "coordinatesVerified": false
+    },
+    {
+      "id": "brampton-odhf-2446c38f61fbdf2771e23b05b7004a79",
+      "cityId": "brampton",
+      "originalName": "Prism Eye Institute - Brampton",
+      "originalAddress": "7700 Hurontario Street",
+      "status": "corroborated",
+      "reason": "Current provider lists Brampton at 7700 Hurontario Street Unit 605 and appointment hours.",
+      "sourceUrls": [
+        "https://www.prismeyeinstitute.com/locations/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-first16",
+      "coordinatesVerified": false
+    },
+    {
+      "id": "brantford-odef-0aa4bc05ff8def296e0f",
+      "cityId": "brantford",
+      "originalName": "Anderson College of Health, Business and Technology - Brantford",
+      "originalAddress": "39 King George Road",
+      "status": "corroborated",
+      "reason": "Current operator campus page lists 39 King George Road Suite 104 and in-person programmes.",
+      "sourceUrls": [
+        "https://andersoncollege.com/campuses/brantford"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-first16",
+      "coordinatesVerified": false
+    },
+    {
+      "id": "brantford-odef-3dce61f5f68abea04406",
+      "cityId": "brantford",
+      "originalName": "Allanti School of Hairstyling & Aesthetics",
+      "originalAddress": "134 West St.",
+      "status": "corroborated",
+      "reason": "Current institution site advertises programmes at 134 West Street; credential registry independently lists same institution/address.",
+      "sourceUrls": [
+        "https://allantischools.wixsite.com/home",
+        "https://www.cicic.ca/873/allanti_school_of_hairstyling_and_aesthetics%2C_brantford_.canada?id=1687"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-first16",
+      "coordinatesVerified": false
+    },
+    {
+      "id": "burlington-odef-054468676e4f3c4bb218",
+      "cityId": "burlington",
+      "originalName": "Corpus Christi Catholic Secondary School",
+      "originalAddress": "5150 UPPER MIDDLE RD",
+      "status": "corroborated",
+      "reason": "Current school contact page lists 5150 Upper Middle Road; October 15, 2026 information event corroborates current school operation.",
+      "sourceUrls": [
+        "https://secondary.hcdsb.org/corpuschristi/contact-us/",
+        "https://www.hcdsb.org/event/information-session-corpus-christi-c-s-s/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-first16",
+      "coordinatesVerified": false
+    },
+    {
+      "id": "burlington-odef-44d129155fd3f752140f",
+      "cityId": "burlington",
+      "originalName": "Oxford College of Arts, Business and Technology - Burlington",
+      "originalAddress": "760 Brant Street",
+      "status": "corroborated",
+      "reason": "Current campus page lists 760 Brant Street and training programmes; Ontario programme list independently corroborates campus address.",
+      "sourceUrls": [
+        "https://www.oxfordedu.net/burlington-campus/",
+        "https://www.ontario.ca/page/paramedic-training-programs-ontario"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-first16",
+      "coordinatesVerified": false
+    },
+    {
+      "id": "cambridge-odhf-027d0e4f777bfc54c0de3fb78779d12d",
+      "cityId": "cambridge",
+      "originalName": "Waterloo Region Nurse Practitioner-Led Clinic (Cambridge)",
+      "originalAddress": "11 Water Street North",
+      "status": "rejected",
+      "reason": "Operator says Cambridge clinic moved on August 26, 2026 from 13 Water Street North to 73 Water Street North Unit 202. Candidate at 11 Water Street North is stale/unmatched. No replacement coordinates established.",
+      "sourceUrls": [
+        "https://wrnplc.ca/",
+        "https://wrnplc.ca/contact-us/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-first16",
+      "coordinatesVerified": false
+    },
+    {
+      "id": "cambridge-osm-way-1148132538",
+      "cityId": "cambridge",
+      "originalName": "Greenway-Chaplin Community Centre",
+      "originalAddress": "116 Rouse Avenue",
+      "status": "corroborated",
+      "reason": "Operator advertises October–December 2026 programmes at 116 Rouse Avenue.",
+      "sourceUrls": [
+        "https://greenwaychaplin.com/program/",
+        "https://greenwaychaplin.com/programs/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-first16",
+      "coordinatesVerified": false
+    },
+    {
+      "id": "chatham-kent-odef-6f3c853be4ea6c839536",
+      "cityId": "chatham-kent",
+      "originalName": "Blenheim District High School",
+      "originalAddress": "163 Chatham St S",
+      "status": "corroborated",
+      "reason": "Current school board page lists Blenheim District High School at 163 Chatham Street South.",
+      "sourceUrls": [
+        "https://www.lkdsb.net/o/bdhs/page/contact-us"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-first16",
+      "coordinatesVerified": false
+    },
+    {
+      "id": "chatham-kent-odef-74c0923c2d41ece11621",
+      "cityId": "chatham-kent",
+      "originalName": "Holy Family Catholic School",
+      "originalAddress": "649 Murray St",
+      "status": "corroborated",
+      "reason": "School board 2026 renovation tender names Holy Family Catholic School at 649 Murray Street; board school newsletter corroborates name/address.",
+      "sourceUrls": [
+        "https://st-clair.bidsandtenders.ca/Module/Tenders/en/Tender/Detail/22fe0212-013b-4083-b2db-653f0bff23c5/",
+        "https://www.st-clair.net/schools/HFW/newsletter.pdf"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-first16",
+      "coordinatesVerified": false
+    },
+    {
+      "id": "clarington-odef-c72fe5c97f764ba7b2bc",
+      "cityId": "clarington",
+      "originalName": "M J Hobbs Senior Public School",
+      "originalAddress": "2296 Taunton Rd",
+      "status": "corroborated",
+      "reason": "Ontario current school profile identifies M J Hobbs Senior Public School at 2296 Taunton Road; independent of bundled CSV. Profile enrolment year is 2024–2025, so not a physical site visit.",
+      "sourceUrls": [
+        "https://www.app.edu.gov.on.ca/eng/sift/schoolProfile.asp?SCH_NUMBER=551333"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-first16",
+      "coordinatesVerified": false
+    },
+    {
+      "id": "clarington-odhf-bd01d6e00a39046f3a59ab3b4b683cdc",
+      "cityId": "clarington",
+      "originalName": "Lakeridge Health Pinewood, Bowmanville",
+      "originalAddress": "200 King St E",
+      "status": "corroborated",
+      "reason": "Current Region of Durham public-health supply-location list identifies Pinewood Centre of Lakeridge Health at 200 King Street East, Bowmanville. This is a community/outpatient location, not an ED confirmation.",
+      "sourceUrls": [
+        "https://tourismdirectory2.durham.ca/health-and-wellness/alcohol-cannabis-opioids-tobacco-and-vaping/opioids-and-overdose-prevention/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-first16",
+      "coordinatesVerified": false
+    },
+    {
+      "id": "greater-sudbury-odef-2667888f2cce26937620",
+      "cityId": "greater-sudbury",
+      "originalName": "École élémentaire catholique Félix-Ricard",
+      "originalAddress": "691 Lasalle boulevard",
+      "status": "corroborated",
+      "reason": "Current school and board pages list École Félix-Ricard at 691 boulevard Lasalle.",
+      "sourceUrls": [
+        "https://felixricard.nouvelon.ca/",
+        "https://www.nouvelon.ca/our-schools/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-first16",
+      "coordinatesVerified": false
+    },
+    {
+      "id": "greater-sudbury-odef-9ae5ec6c82037bad31f9",
+      "cityId": "greater-sudbury",
+      "originalName": "CTS Canadian Career College -Sudbury",
+      "originalAddress": "66 Elm St.",
+      "status": "corroborated",
+      "reason": "Current operator lists Sudbury campus at 66 Elm Street.",
+      "sourceUrls": [
+        "https://www.ctsccc.com/contact/sudbury-campus/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-first16",
+      "coordinatesVerified": false
+    },
+    {
+      "id": "guelph-odef-0065c203fcc7fe483cdf",
+      "cityId": "guelph",
+      "originalName": "Willow Road Public School",
+      "originalAddress": "125 Willow Rd",
+      "status": "corroborated",
+      "reason": "Current board school page identifies 125 Willow Road and school hours/programmes.",
+      "sourceUrls": [
+        "https://www.ugdsb.ca/o/ugdsb/page/willow-road-public-school",
+        "https://www.ugdsb.ca/o/wrps"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-first16",
+      "coordinatesVerified": false
+    },
+    {
+      "id": "guelph-odef-da4785a6d7e6b80b9bdf",
+      "cityId": "guelph",
+      "originalName": "Bishop Macdonell Catholic Secondary School",
+      "originalAddress": "200 Clair Rd W",
+      "status": "corroborated",
+      "reason": "Current school website lists 200 Clair Road West and October 2026 news/2026–2027 agenda.",
+      "sourceUrls": [
+        "https://bishopmacdonell.wellingtoncdsb.ca/our_school/contact",
+        "https://bishopmacdonell.wellingtoncdsb.ca/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-first16",
+      "coordinatesVerified": false
+    },
+    {
+      "id": "hamilton-odhf-fa747b3fc913325979c02cbe91fc6129",
+      "cityId": "hamilton",
+      "originalName": "Hamilton Health Sciences - St. Peter's Hospital",
+      "originalAddress": "88 Maplewood Avenue",
+      "status": "corroborated",
+      "reason": "Provider main page was HTTP 403; official hospital contractor report corroborates 88 Maplewood Avenue and current professional-regulator practice record identifies St Peters Hospital at that address. Operator-independent current-operation corroboration is limited to regulator listing.",
+      "sourceUrls": [
+        "https://www.hamiltonhealthsciences.ca/about-us/our-organization/our-locations/st-peters-hospital/",
+        "https://register.cpso.on.ca/physician-info/?cpsonum=71425",
+        "https://app.hhsc.ca/contractors/CD/Asbestos%20Reassessment%20Report%20SPH%2088%20Maplewood%20Ave%20HHS%20Dec%2030%202024.pdf"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-first16",
+      "coordinatesVerified": false
+    },
+    {
+      "id": "hamilton-odcaf-259",
+      "cityId": "hamilton",
+      "originalName": "Allsorts Gallery",
+      "originalAddress": "244 ottawa street north",
+      "status": "unresolved",
+      "reason": "Candidate uses 244 Ottawa Street North. Other listings, including an arts peer organisation historical directory, use 181 Ottawa Street North; no current authoritative operator source found. Address/current operation unresolved; do not relocate point.",
+      "sourceUrls": [
+        "https://www.factorymediacentre.ca/art-spaces-galleries-and-collectives/",
+        "https://www.cylex-canada.ca/company/allsorts-gallery-24290283.html"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-first16",
+      "coordinatesVerified": false
+    },
+    {
+      "id": "kingston-odcaf-149",
+      "cityId": "kingston",
+      "originalName": "Agnes Etherington Art Centre (Gallery)",
+      "originalAddress": "36 university ave",
+      "status": "rejected",
+      "reason": "Operator says main building is currently closed for transformation and welcomes visitors back in 2027; off-site galleries at 207 Stuart Street. Candidate 36 University Avenue must not imply a currently operating public gallery. No alternate coordinates substituted.",
+      "sourceUrls": [
+        "https://agnes.queensu.ca/",
+        "https://agnes.queensu.ca/visit/getting-here/",
+        "https://agnes.queensu.ca/visit/hours-and-admission/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-first16",
+      "coordinatesVerified": false
+    },
+    {
+      "id": "kingston-odef-b726106e59878b55eec5",
+      "cityId": "kingston",
+      "originalName": "Trillium College-Kingston",
+      "originalAddress": "797 Princess St.",
+      "status": "rejected",
+      "reason": "Current operator identifies Kingston campus at Cataraqui Centre lower level, 945 Gardiners Road. Candidate 797 Princess Street is stale despite older government directory listing. No replacement coordinates established.",
+      "sourceUrls": [
+        "https://www.trilliumcollege.ca/kingston-campus/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-first16",
+      "coordinatesVerified": false
+    },
+    {
+      "id": "kitchener-odhf-516083b8fef5f811d0757864aa98e60a",
+      "cityId": "kitchener",
+      "originalName": "Grand River Hospital - Freeport",
+      "originalAddress": "3570 King St. East",
+      "status": "corrected",
+      "reason": "Address 3570 King Street East remains current. Operator now calls this WRHN @ Chicopee; Region identifies it as formerly Freeport Site - Grand River Hospital.",
+      "sourceUrls": [
+        "https://www.wrhn.ca/patients-visitors/find-a-location",
+        "https://www.regionofwaterloo.ca/programs-and-services/emergency-services-and-preparedness/hospitals/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-first16",
+      "coordinatesVerified": false,
+      "changes": {
+        "name": "WRHN @ Chicopee (formerly Freeport Hospital)"
+      }
+    },
+    {
+      "id": "kitchener-odef-42b9846f8b03584c434a",
+      "cityId": "kitchener",
+      "originalName": "Forest Hill Public School",
+      "originalAddress": "255 Westmount Rd E",
+      "status": "corroborated",
+      "reason": "Current school board directory identifies Forest Hill Public School at 255 Westmount Road East.",
+      "sourceUrls": [
+        "https://www.wrdsb.ca/our-schools/schools/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-first16",
+      "coordinatesVerified": false
+    },
+    {
+      "id": "london-odef-2d7fdbc449bc2b9e19e4",
+      "cityId": "london",
+      "originalName": "Anderson College of Health, Business and Technology - London",
+      "originalAddress": "303 Richmond Street",
+      "status": "corroborated",
+      "reason": "Current operator identifies London campus at 303 Richmond Street Unit 100 with in-person programmes.",
+      "sourceUrls": [
+        "https://andersoncollege.com/campuses/london"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-first16",
+      "coordinatesVerified": false
+    },
+    {
+      "id": "london-odef-0322eaccd2f2dedbd364",
+      "cityId": "london",
+      "originalName": "Byron Northview Public School",
+      "originalAddress": "1370 Commissioners Rd W",
+      "status": "corroborated",
+      "reason": "Current school board directory identifies Byron Northview Public School at 1370 Commissioners Road West.",
+      "sourceUrls": [
+        "https://schooldirectory.tvdsb.ca/?CategoryIds=&CloseMap=false&FacilityTypeIds=&Keywords=&Page=2&Scroll=true"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-first16",
+      "coordinatesVerified": false
+    },
+    {
+      "id": "markham-odhf-be27345a09687c5dfe4c688b61baa78a",
+      "cityId": "markham",
+      "originalName": "Shouldice Hospital",
+      "originalAddress": "7750 Bayview Avenue",
+      "status": "corroborated",
+      "reason": "Current hospital operator contact page lists 7750 Bayview Avenue in Thornhill (Markham).",
+      "sourceUrls": [
+        "https://shouldice.com/contact-us/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-first16",
+      "coordinatesVerified": false
+    },
+    {
+      "id": "markham-odef-cbd068605b6487172e92",
+      "cityId": "markham",
+      "originalName": "St Robert Catholic High School",
+      "originalAddress": "8101 Leslie St",
+      "status": "corroborated",
+      "reason": "Current board/school pages list St Robert Catholic High School at 8101 Leslie Street with current school information.",
+      "sourceUrls": [
+        "https://stro.ycdsb.ca/contact/",
+        "https://www.ycdsb.ca/programs-services/secondary/secondary-school-directory/stro/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-first16",
+      "coordinatesVerified": false
+    },
+    {
+      "id": "oshawa-odsrf-fd135b95f25388f0bbcf741bd24e3a4d",
+      "cityId": "oshawa",
+      "originalName": "Harmony Valley Park",
+      "originalAddress": "259 Harmony Road South",
+      "reason": "Official City map distinguishes Harmony Village Park259 Harmony Rd S from Harmony Valley Park915 Grandview St N. Current off-leash page confirms broader Harmony Valley Park and June2025 dog-area rename. Quarantine or verify source point as Harmony Village; do not move point to another park.",
+      "sourceUrls": [
+        "https://map.oshawa.ca/culturemap/",
+        "https://www.oshawa.ca/living-here/animal-services/off-leash-parks/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-reviewed": {
+          "present": true,
+          "fileSha256": "f94e22e63d28823e6251c06245299b71d4e9cec7b2bab11f64ccde70d7dd4492",
+          "name": "Harmony Valley Park",
+          "addr": "259 HARMONY RD S"
+        },
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "70982da66c2ed2d2381577a860e9e95f610002b479584418eaba06222c19113b",
+          "name": "Harmony Valley Park",
+          "addr": "259 HARMONY RD S"
+        }
+      },
+      "status": "rejected"
+    },
+    {
+      "id": "pickering-odsrf-2b3db5052ee38949cf3bed95f1fbd098",
+      "cityId": "pickering",
+      "originalName": "Green River Community Centre",
+      "originalAddress": "190 Highway7",
+      "reason": "Official report CS07-25 May5,2025 page7: no public use for10years; building used for museum artifact storage and now no longer needed for storage. Building/address real; active recreation/community-assembly use unsupported.",
+      "sourceUrls": [
+        "https://pub-pickering.escribemeetings.com/FileStream.ashx?DocumentId=2088"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-reviewed": {
+          "present": true,
+          "fileSha256": "3814e2216e7188665c3fe14e6f60efb9578019a5bfcfe41580b18b877b50f873",
+          "name": "Green River Community Centre",
+          "addr": "190 Highway 7"
+        },
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "ed30106728971c955960547b7fbb94a5343d7369a9e7dd553b920a80cd7016ec",
+          "name": "Green River Community Centre",
+          "addr": "190 Highway 7"
+        }
+      },
+      "status": "rejected"
+    },
+    {
+      "id": "pickering-odhf-6fd86688e872aba2725ba4c9008b12ae",
+      "cityId": "pickering",
+      "originalName": "Jerry Coughlan Health & Wellness Centre",
+      "originalAddress": "1690 Dersan Street",
+      "reason": "Operator lists this under Community Locations as Surgical Centre/healthcare facility, separately from its five hospitals. Retag outpatient/healthcare. Do not imply emergency receiving hospital.",
+      "sourceUrls": [
+        "https://www.lh.ca/patients-visitors/locations/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-reviewed": {
+          "present": true,
+          "fileSha256": "3814e2216e7188665c3fe14e6f60efb9578019a5bfcfe41580b18b877b50f873",
+          "name": "Lakeridge Health - Jerry Coughlan",
+          "addr": "1690 Dersan Street"
+        },
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "ed30106728971c955960547b7fbb94a5343d7369a9e7dd553b920a80cd7016ec",
+          "name": "Lakeridge Health - Jerry Coughlan",
+          "addr": "1690 Dersan Street"
+        }
+      },
+      "status": "corrected",
+      "changes": {
+        "name": "Jerry Coughlan Health & Wellness Centre",
+        "category": "healthcare"
+      }
+    },
+    {
+      "id": "milton-odef-f41bde72d6ce70cdf887",
+      "cityId": "milton",
+      "originalName": "Our Lady of Fatima Catholic Elementary School",
+      "originalAddress": "709 Bolingbroke Drive",
+      "reason": "Official school contact footer and HCDSB family-of-schools agree. Embedded map caption mistakenly references another school address; do not use that caption for this school.",
+      "sourceUrls": [
+        "https://elem.hcdsb.org/ourladyoffatima/contact-us/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "d3acec84191f0312b2a4f69d6b7a850f0164dc3a7262ad4e8fb0b42e97682ab9",
+          "name": "Our Lady of Fatima Catholic Elementary School",
+          "addr": "709 Bolingbroke Drive"
+        }
+      },
+      "status": "corroborated"
+    },
+    {
+      "id": "milton-odef-12776f7f8214dfa95775",
+      "cityId": "milton",
+      "originalName": "Guardian Angels Catholic Elementary School",
+      "originalAddress": "650 Bennett Boulevard",
+      "reason": "Current official/operator source corroborates candidate name/address and named facility use.",
+      "sourceUrls": [
+        "https://elem.hcdsb.org/guardianangels/contact-us/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "d3acec84191f0312b2a4f69d6b7a850f0164dc3a7262ad4e8fb0b42e97682ab9",
+          "name": "Guardian Angels Catholic Elementary School",
+          "addr": "650 Bennett Blvd"
+        }
+      },
+      "status": "corroborated"
+    },
+    {
+      "id": "mississauga-odsrf-e83f7674b6ebbd8206dd9491f0fbc164",
+      "cityId": "mississauga",
+      "originalName": "Courtneypark Athletic Fields",
+      "originalAddress": "600 Courtneypark Drive West",
+      "reason": "Current official/operator source corroborates candidate name/address and named facility use.",
+      "sourceUrls": [
+        "https://www.mississauga.ca/events-and-attractions/parks/courtneypark-athletic-fields/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "a5f669400be89fc9ef6100c3caf952af456aac9c4f7f52c0a4328dc380e7d59d",
+          "name": "Courtneypark Athletic Fields",
+          "addr": "600 Courtneypark DR W"
+        }
+      },
+      "status": "corroborated"
+    },
+    {
+      "id": "mississauga-odef-11a6ee3435ae2b6acbd0",
+      "cityId": "mississauga",
+      "originalName": "Metalworks Institute of Sound & Music Production",
+      "originalAddress": "3611 Mavis Road",
+      "reason": "Institution contact page gives Metalworks Plaza3611 Mavis Road; current operator homepage describes on-campus college programs.",
+      "sourceUrls": [
+        "https://metalworksinstitute.com/contact/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "a5f669400be89fc9ef6100c3caf952af456aac9c4f7f52c0a4328dc380e7d59d",
+          "name": "Metalworks Institute of Sound & Music Production",
+          "addr": "3611 Mavis Rd."
+        }
+      },
+      "status": "corroborated"
+    },
+    {
+      "id": "niagara-falls-odef-d17fb92ac641768dd6fe",
+      "cityId": "niagara-falls",
+      "originalName": "Stamford Collegiate",
+      "originalAddress": "5775 Drummond Road",
+      "reason": "Current official/operator source corroborates candidate name/address and named facility use.",
+      "sourceUrls": [
+        "https://stamford.dsbn.org/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "7ee8b62bbf40282b1fc09862bdc2a9cac4cd40574d5d7bad001dfe69412be53f",
+          "name": "Stamford Collegiate",
+          "addr": "5775 Drummond Rd"
+        }
+      },
+      "status": "corroborated"
+    },
+    {
+      "id": "niagara-falls-odhf-287eb27a00eee08a6c0a5c4f8fc8e94e",
+      "cityId": "niagara-falls",
+      "originalName": "Niagara Falls Hospital (Greater Niagara General Hospital)",
+      "originalAddress": "5546 Portage Road",
+      "reason": "Current operator brand Niagara Falls Hospital. Province still lists Greater Niagara General Hospital at same address, so old name is an established alias. Operator lists Emergency Department; no particular emergency entrance verified here.",
+      "sourceUrls": [
+        "https://www.niagarahealth.on.ca/site/niagara-falls-hospital"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "7ee8b62bbf40282b1fc09862bdc2a9cac4cd40574d5d7bad001dfe69412be53f",
+          "name": "Niagara Health System - Greater Niagara",
+          "addr": "5546 Portage Road"
+        }
+      },
+      "status": "corroborated"
+    },
+    {
+      "id": "oakville-odcaf-7243",
+      "cityId": "oakville",
+      "originalName": "Palermo School House",
+      "originalAddress": "2431 Dundas Street West",
+      "reason": "Current historical-society operator and events-calendar both locate Palermo Schoolhouse at this address.",
+      "sourceUrls": [
+        "https://tths.ca/palermo",
+        "https://tths.ca/events-calendar"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "1ec5819a712eef651604c1c42832e720d39d15bbcc423e2cd8f304a3676bc8bd",
+          "name": "Palermo School House",
+          "addr": "2431 dundas street west"
+        }
+      },
+      "status": "corroborated"
+    },
+    {
+      "id": "oakville-odef-e40a6a38281eb1c448b0",
+      "cityId": "oakville",
+      "originalName": "Sheridan College — Trafalgar Campus",
+      "originalAddress": "1430 Trafalgar Road",
+      "reason": "Current official/operator source corroborates candidate name/address and named facility use.",
+      "sourceUrls": [
+        "https://www.sheridancollege.ca/about/campus-locations/trafalgar"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "1ec5819a712eef651604c1c42832e720d39d15bbcc423e2cd8f304a3676bc8bd",
+          "name": "Sheridan College",
+          "addr": "1430 Trafalgar Road"
+        }
+      },
+      "status": "corroborated"
+    },
+    {
+      "id": "oshawa-odef-11cf6164b5c7c9db4032",
+      "cityId": "oshawa",
+      "originalName": "Lakewoods Public School",
+      "originalAddress": "323 Chaleur Avenue",
+      "reason": "Current official/operator source corroborates candidate name/address and named facility use.",
+      "sourceUrls": [
+        "https://lakewoods.ddsb.ca/Modules/contact/search.aspx?s=gxl0q9kJzB35lA5H1JU92cULngeQuAleQuAl",
+        "https://www.ontario.ca/locations/schools/099872/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-reviewed": {
+          "present": true,
+          "fileSha256": "f94e22e63d28823e6251c06245299b71d4e9cec7b2bab11f64ccde70d7dd4492",
+          "name": "Lakewoods Public School",
+          "addr": "323 Chaleur Ave"
+        },
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "70982da66c2ed2d2381577a860e9e95f610002b479584418eaba06222c19113b",
+          "name": "Lakewoods Public School",
+          "addr": "323 Chaleur Ave"
+        }
+      },
+      "status": "corroborated"
+    },
+    {
+      "id": "oshawa-odef-71c0d63889f77667f509",
+      "cityId": "oshawa",
+      "originalName": "Northern Dancer Public School",
+      "originalAddress": "2200 Bridle Road",
+      "reason": "Current2026 boundary-review page identifies the active school and its November2025 consultation venue at2200 Bridle Road; school-issued parking/access map separately identifies same civic address.",
+      "sourceUrls": [
+        "https://www.ddsb.ca/schools/whats-happening-with-ddsb-properties/boundary-reviews/",
+        "https://northerndancer.ddsb.ca/en/our-school/resources/Documents/kiss-and-ride-protocols-letter.pdf"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-reviewed": {
+          "present": true,
+          "fileSha256": "f94e22e63d28823e6251c06245299b71d4e9cec7b2bab11f64ccde70d7dd4492",
+          "name": "Northern Dancer Public School",
+          "addr": "2200 Bridle Road"
+        },
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "70982da66c2ed2d2381577a860e9e95f610002b479584418eaba06222c19113b",
+          "name": "Northern Dancer Public School",
+          "addr": "2200 Bridle Road"
+        }
+      },
+      "status": "corroborated"
+    },
+    {
+      "id": "ottawa-odcaf-495",
+      "cityId": "ottawa",
+      "originalName": "Arts Court Theatre",
+      "originalAddress": "2 Daly Avenue",
+      "reason": "Current operator lists October2026 Arts Court Theatre events at2 Daly; LabO is separately10 Daly, so do not substitute that subfacility address.",
+      "sourceUrls": [
+        "https://artscourt.ca/events"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "0c769fa9b023b047054a401423081fa0137c26366c060f2d68d7862005b6486e",
+          "name": "Arts Court Theatre",
+          "addr": "2 daly ave"
+        }
+      },
+      "status": "corroborated"
+    },
+    {
+      "id": "ottawa-odcaf-4913",
+      "cityId": "ottawa",
+      "originalName": "Irving Greenberg Theatre Centre",
+      "originalAddress": "1233 Wellington Street West",
+      "reason": "Operator visit address1233 Wellington West differs from mailing address300-1227 Wellington West.2025 operator venue guide explicitly says GCTC operates Irving Greenberg Theatre Centre.",
+      "sourceUrls": [
+        "https://www.gctc.ca/visit-contact-gradient",
+        "https://static1.squarespace.com/static/5a26f5eef9a61e1eb0305f37/t/68afbe5fe33cf71ad531bc07/1756347999139/GCTC%2BVenue%2BAccess%2BGuide%2B2025.pdf"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "0c769fa9b023b047054a401423081fa0137c26366c060f2d68d7862005b6486e",
+          "name": "Irving Greenberg Theatre Centre",
+          "addr": "1233 wellington st w"
+        }
+      },
+      "status": "corroborated"
+    },
+    {
+      "id": "pickering-odef-044103d93c501ef8ac17",
+      "cityId": "pickering",
+      "originalName": "Claremont Public School",
+      "originalAddress": "1675 Central Street",
+      "reason": "Official school uses postal locality Claremont within municipal Pickering.",
+      "sourceUrls": [
+        "https://claremont.ddsb.ca/en/students/students.aspx"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-reviewed": {
+          "present": true,
+          "fileSha256": "3814e2216e7188665c3fe14e6f60efb9578019a5bfcfe41580b18b877b50f873",
+          "name": "Claremont Public School",
+          "addr": "1675 CENTRAL ST"
+        },
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "ed30106728971c955960547b7fbb94a5343d7369a9e7dd553b920a80cd7016ec",
+          "name": "Claremont Public School",
+          "addr": "1675 CENTRAL ST"
+        }
+      },
+      "status": "corroborated"
+    },
+    {
+      "id": "richmond-hill-odef-d61defca76ac3ff0cdd5",
+      "cityId": "richmond-hill",
+      "originalName": "Walter Scott Public School",
+      "originalAddress": "500 Major Mackenzie Drive East",
+      "reason": "Current official/operator source corroborates candidate name/address and named facility use.",
+      "sourceUrls": [
+        "https://walterscott-ps.yrdsb.ca/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "deba4b550f021cf911d0975232b7c1e65629071067589819ffa6ef036b9d4ad4",
+          "name": "Walter Scott Public School",
+          "addr": "500 Major Mackenzie Dr E"
+        }
+      },
+      "status": "corroborated"
+    },
+    {
+      "id": "richmond-hill-osm-node-2775480409",
+      "cityId": "richmond-hill",
+      "originalName": "Mill Pond Gallery",
+      "originalAddress": "314 Mill Street",
+      "reason": "Current gallery operator explicitly lists name, address and opening hours.",
+      "sourceUrls": [
+        "https://rhga.ca/contact-us/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "deba4b550f021cf911d0975232b7c1e65629071067589819ffa6ef036b9d4ad4",
+          "name": "Mill Pond Gallery",
+          "addr": "314 Mill Street"
+        }
+      },
+      "status": "corroborated"
+    },
+    {
+      "id": "scarborough-odef-4b8c013ba8ad56ba9a55",
+      "cityId": "scarborough",
+      "originalName": "Francis Libermann Catholic High School",
+      "originalAddress": "4640 Finch Avenue East",
+      "reason": "Current official/operator source corroborates candidate name/address and named facility use.",
+      "sourceUrls": [
+        "https://www.tcdsb.org/o/francislibermann"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-reviewed": {
+          "present": true,
+          "fileSha256": "2b55dc14dee9c047e863805d534734cda516e17b92331c968a82b603c2c3c549",
+          "name": "Francis Libermann Catholic High School",
+          "addr": "4640 Finch Ave E"
+        },
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "e156386d34a7ab8434d497fae4bead8230507aa8b329eb10dadae5d6ee5a0f69",
+          "name": "Francis Libermann Catholic High School",
+          "addr": "4640 Finch Ave E"
+        }
+      },
+      "status": "corroborated"
+    },
+    {
+      "id": "scarborough-odef-64cfdf732c6504ee57c0",
+      "cityId": "scarborough",
+      "originalName": "C D Farquharson Junior Public School",
+      "originalAddress": "1965 Brimley Road",
+      "reason": "Current official/operator source corroborates candidate name/address and named facility use.",
+      "sourceUrls": [
+        "https://schoolweb.tdsb.on.ca/cdfarquharson/About-Us"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-reviewed": {
+          "present": true,
+          "fileSha256": "2b55dc14dee9c047e863805d534734cda516e17b92331c968a82b603c2c3c549",
+          "name": "C D Farquharson Junior Public School",
+          "addr": "1965 Brimley Rd"
+        },
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "e156386d34a7ab8434d497fae4bead8230507aa8b329eb10dadae5d6ee5a0f69",
+          "name": "C D Farquharson Junior Public School",
+          "addr": "1965 Brimley Rd"
+        }
+      },
+      "status": "corroborated"
+    },
+    {
+      "id": "st-catharines-odef-5587f7b6f6c51afda9e8",
+      "cityId": "st-catharines",
+      "originalName": "Burleigh Hill Public School",
+      "originalAddress": "15 Burleigh Hill Drive",
+      "reason": "Current official/operator source corroborates candidate name/address and named facility use.",
+      "sourceUrls": [
+        "https://burleighhill.dsbn.org/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "803a5622f2509efe6b69470b33169dfc3017934dc33cf53e6b04239c4cf4a336",
+          "name": "Burleigh Hill Public School",
+          "addr": "15 Burleigh Hill Dr"
+        }
+      },
+      "status": "corroborated"
+    },
+    {
+      "id": "st-catharines-odhf-906f570f9f3810bb2b1b0d737d154b44",
+      "cityId": "st-catharines",
+      "originalName": "Hotel Dieu Shaver Health and Rehabilitation Centre",
+      "originalAddress": "541 Glenridge Avenue",
+      "reason": "Current operator location matches; a rehabilitation/complex-care hospital, not an asserted emergency destination.2026 referral guide confirms inpatient rehabilitation and complex-care services.",
+      "sourceUrls": [
+        "https://www.hoteldieushaver.org/site/contact-map",
+        "https://www.hoteldieushaver.org/files/ReferralManagementProcess-Feb2026.pdf"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "803a5622f2509efe6b69470b33169dfc3017934dc33cf53e6b04239c4cf4a336",
+          "name": "Hotel Dieu Shaver Health and Rehabilitation Centre (Religions Hospital of St. Joseph)",
+          "addr": "541 Glenridge Avenue"
+        }
+      },
+      "status": "corroborated"
+    },
+    {
+      "id": "thunder-bay-odhf-f6af4b502dc199a794dbd68fe1be1e58",
+      "cityId": "thunder-bay",
+      "originalName": "St. Joseph's Hospital / St. Joseph's Care Group",
+      "originalAddress": "35 Algoma Street North",
+      "reason": "Provider lists both corporate office and St. Joseph’s Hospital at same address; inpatient rehabilitation, mental-health and palliative services. No ED inference.",
+      "sourceUrls": [
+        "https://sjcg.net/aboutus/contact.aspx"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "b6faf5944054ad04787ad22763dc6ba1eed69a49d305215d77396cfc5cae8373",
+          "name": "St. Joseph's Care Group",
+          "addr": "35 Algoma St. N"
+        }
+      },
+      "status": "corroborated"
+    },
+    {
+      "id": "thunder-bay-odef-6a6dc3c602b0e40059f1",
+      "cityId": "thunder-bay",
+      "originalName": "Hammarskjold High School",
+      "originalAddress": "80 Clarkson Street South",
+      "reason": "Current official/operator source corroborates candidate name/address and named facility use.",
+      "sourceUrls": [
+        "https://hammarskjold.lakeheadschools.ca/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "b6faf5944054ad04787ad22763dc6ba1eed69a49d305215d77396cfc5cae8373",
+          "name": "Hammarskjold High School",
+          "addr": "80 Clarkson St S"
+        }
+      },
+      "status": "corroborated"
+    },
+    {
+      "id": "toronto-odcaf-4208",
+      "cityId": "toronto",
+      "originalName": "Gardiner Museum of Ceramic Art",
+      "originalAddress": "111 Queen’s Park",
+      "reason": "Current operator contact and open/admission page corroborate actual museum, current civic address and active visiting use.",
+      "sourceUrls": [
+        "https://www.gardinermuseum.on.ca/the-museum/contact-us/",
+        "https://www.gardinermuseum.on.ca/visit/hours-admission/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-reviewed": {
+          "present": true,
+          "fileSha256": "759fbb0cef76256e4f58255f86f8762dda0e751030e102960882c52d0e37cf38",
+          "name": "Gardiner Museum of Ceramic Art",
+          "addr": "111 queen's park"
+        },
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "394494dfc1a70648fe966fcd9f47d1d88e420c58856704560ae155992cfa8ab7",
+          "name": "Gardiner Museum of Ceramic Art",
+          "addr": "111 queen's park"
+        }
+      },
+      "status": "corroborated"
+    },
+    {
+      "id": "toronto-odef-47288d32e5ac40dd43ae",
+      "cityId": "toronto",
+      "originalName": "York Mills Collegiate Institute",
+      "originalAddress": "490 York Mills Road",
+      "reason": "Official school is active; CLOSED to out-of-area admissions is an admissions restriction, not a closed school.",
+      "sourceUrls": [
+        "https://schoolweb.tdsb.on.ca/yorkmillsci/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-reviewed": {
+          "present": true,
+          "fileSha256": "759fbb0cef76256e4f58255f86f8762dda0e751030e102960882c52d0e37cf38",
+          "name": "York Mills Collegiate Institute",
+          "addr": "490 York Mills Rd"
+        },
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "394494dfc1a70648fe966fcd9f47d1d88e420c58856704560ae155992cfa8ab7",
+          "name": "York Mills Collegiate Institute",
+          "addr": "490 York Mills Rd"
+        }
+      },
+      "status": "corroborated"
+    },
+    {
+      "id": "vaughan-odef-db691554e3a614aeb2a5",
+      "cityId": "vaughan",
+      "originalName": "Father John Kelly Catholic Elementary School",
+      "originalAddress": "9350 Keele Street",
+      "reason": "Postal locality Maple within Vaughan.",
+      "sourceUrls": [
+        "https://fjk.ycdsb.ca/contact/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "e119570306a4541affe9f3702bde167c7cfee7406c0daaf72a6bb64112e1696f",
+          "name": "Father John Kelly Catholic Elementary School",
+          "addr": "9350 Keele St"
+        }
+      },
+      "status": "corroborated"
+    },
+    {
+      "id": "vaughan-odef-38375d80da212bf748b3",
+      "cityId": "vaughan",
+      "originalName": "Ventura Park Public School",
+      "originalAddress": "121 Worth Boulevard",
+      "reason": "Postal locality Thornhill within Vaughan.",
+      "sourceUrls": [
+        "https://venturapark-ps.yrdsb.ca/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "e119570306a4541affe9f3702bde167c7cfee7406c0daaf72a6bb64112e1696f",
+          "name": "Ventura Park Public School",
+          "addr": "121 Worth Blvd"
+        }
+      },
+      "status": "corroborated"
+    },
+    {
+      "id": "waterloo-odef-7cfa7bf37910f2d7bfe1",
+      "cityId": "waterloo",
+      "originalName": "Cedarbrae Public School",
+      "originalAddress": "230 Cedarbrae Avenue",
+      "reason": "Current official/operator source corroborates candidate name/address and named facility use.",
+      "sourceUrls": [
+        "https://www.wrdsb.ca/our-schools/schools/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "eeb879087f05506ab8b91a2f75d9e653377d934406051e24d513ac1e94691307",
+          "name": "Cedarbrae Public School",
+          "addr": "230 Cedarbrae Ave"
+        }
+      },
+      "status": "corroborated"
+    },
+    {
+      "id": "waterloo-odef-84dc762975cc681b9fa8",
+      "cityId": "waterloo",
+      "originalName": "Millen Woods Public School",
+      "originalAddress": "640 New Hampshire Street",
+      "reason": "Current official/operator source corroborates candidate name/address and named facility use.",
+      "sourceUrls": [
+        "https://www.wrdsb.ca/our-schools/schools/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "eeb879087f05506ab8b91a2f75d9e653377d934406051e24d513ac1e94691307",
+          "name": "Millen Woods Public School",
+          "addr": "640 New Hampshire Street"
+        }
+      },
+      "status": "corroborated"
+    },
+    {
+      "id": "whitby-odef-60b76cdf7e68260e58d8",
+      "cityId": "whitby",
+      "originalName": "Sir Samuel Steele Public School",
+      "originalAddress": "55 Bakerville Street",
+      "reason": "School’s own current contact/childcare pages use Bakerville, agreeing with canonical civic street. Generic board rental table has a conflicting Bakersville typo; do not copy it.",
+      "sourceUrls": [
+        "https://sirsamuelsteele.ddsb.ca/Modules/contact/search.aspx?s=NGEUTCghp6B3ZCSZMhMNEQeQuAleQuAl"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "c69facf48d103c2608fa98745568f6b49ab9d24bc470e586da5e234c005fa6fd",
+          "name": "Sir Samuel Steele Public School",
+          "addr": "55 Bakerville St"
+        }
+      },
+      "status": "corroborated"
+    },
+    {
+      "id": "whitby-odef-1d35e1d58842b03cab07",
+      "cityId": "whitby",
+      "originalName": "Robert Munsch Public School",
+      "originalAddress": "20 Norista Street",
+      "reason": "Current official/operator source corroborates candidate name/address and named facility use.",
+      "sourceUrls": [
+        "https://robertmunsch.ddsb.ca/Modules/contact/search.aspx?s=PsYMZrgCQ69GEF56C9X1FQeQuAleQuAl"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "c69facf48d103c2608fa98745568f6b49ab9d24bc470e586da5e234c005fa6fd",
+          "name": "Robert Munsch Public School",
+          "addr": "20 Norista Street"
+        }
+      },
+      "status": "corroborated"
+    },
+    {
+      "id": "windsor-odhf-fbd609ea160b5aca872d6ee3aca75e11",
+      "cityId": "windsor",
+      "originalName": "Hôtel-Dieu Grace Healthcare",
+      "originalAddress": "1453 Prince Road",
+      "reason": "Current provider identifies multiple rehabilitation/healthy-aging/mental-health facilities on Prince Road campus. No ED inference; provider’s Urgent Crisis Centre is separately1030 Ouellette.",
+      "sourceUrls": [
+        "https://www.hdgh.org/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "15a7c6783933ac4d87ab475e8006d0bd83159e3d0c7797f8f84a4c10dbc811ff",
+          "name": "Hotel-Dieu Grace Healthcare",
+          "addr": "1453 Prince Road"
+        }
+      },
+      "status": "corroborated"
+    },
+    {
+      "id": "windsor-odhf-d726940d97b081854f1d5c376f638312",
+      "cityId": "windsor",
+      "originalName": "Windsor Regional Hospital — Ouellette Campus",
+      "originalAddress": "1030 Ouellette Avenue",
+      "reason": "Provider confirms Ouellette campus and ED; actual ED ground-floor access is from Goyeau Street. Canonical source site point is not automatically that receiving entrance.",
+      "sourceUrls": [
+        "https://www.wrh.on.ca/EmergencyServices"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "15a7c6783933ac4d87ab475e8006d0bd83159e3d0c7797f8f84a4c10dbc811ff",
+          "name": "Windsor Regional Hospital - Ouellette Campus",
+          "addr": "1030 Ouellette Avenue"
+        }
+      },
+      "status": "corroborated"
+    },
+    {
+      "id": "milton-odef-49d4db1da11bc5c040d4",
+      "cityId": "milton",
+      "originalName": "E C Drury/Trillium Demonstration School",
+      "originalAddress": "347 Ontario Street South",
+      "reason": "Current school contact body lists347, standardized footer and Ministry branch campus page list255. Shared campus alias; do not relocate based solely on campus mailing/footer address.",
+      "sourceUrls": [
+        "https://tri.pdsbnet.ca/contact_us",
+        "https://www.pdsbnet.ca/contact_us"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "d3acec84191f0312b2a4f69d6b7a850f0164dc3a7262ad4e8fb0b42e97682ab9",
+          "name": "E C Drury/Trillium Demonstration School",
+          "addr": "347 Ontario St S"
+        }
+      },
+      "status": "corroborated",
+      "reviewFlags": [
+        "campus-address-alias-disclosed"
+      ]
+    },
+    {
+      "id": "mississauga-odsrf-2c670c659394dcfe0bdd3a3334b1548e",
+      "cityId": "mississauga",
+      "originalName": "Lakeside Park",
+      "originalAddress": "2266 Lakeshore Road West",
+      "reason": "City lists whole park2268. Current leash-free operator lists Lakeside2266. Source point may identify specific leash-free subfacility/entrance. Do not overwrite point based only on whole-park address; verify exact subfacility or withhold ambiguous association.",
+      "sourceUrls": [
+        "https://www.mississauga.ca/events-and-attractions/parks/lakeside-park/",
+        "https://leashfreemississauga.ca/the-parks/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-official-source-review-osm-worker",
+      "coordinatesVerified": false,
+      "canonicalPresenceAtReview": {
+        "canonical-catalogues-final": {
+          "present": true,
+          "fileSha256": "a5f669400be89fc9ef6100c3caf952af456aac9c4f7f52c0a4328dc380e7d59d",
+          "name": "Lakeside Park",
+          "addr": "2266 Lakeshore Rd W"
+        }
+      },
+      "status": "unresolved"
+    },
+    {
+      "id": "toronto-osm-node-13115644154",
+      "cityId": "toronto",
+      "originalName": "Island Outpost Bike Rental",
+      "originalAddress": "101 Cibola Avenue",
+      "status": "corroborated",
+      "reason": "Current operator identifies Island Outpost as its physical rental/community hub at101 Cibola Avenue, the former Old Firehall, and explicitly offers bicycle rentals. This is the physical Outpost address; do not confuse it with the separate waterfront SUP launch, for which101 Cibola is only a mailing address.",
+      "sourceUrls": [
+        "https://www.islandoutpost.ca/about.html",
+        "https://www.islandoutpost.ca/contact.html"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-targeted-Toronto-source-review",
+      "coordinatesVerified": false
+    },
+    {
+      "id": "toronto-osm-node-2337214598",
+      "cityId": "toronto",
+      "originalName": "North Collision Reporting Centre",
+      "originalAddress": "113 Toryork Drive",
+      "status": "corroborated",
+      "reason": "Toronto Police Service current contact directory lists North Collision Reporting Centre at113 Toryork Drive with public reporting hours. Name/civic address are corroborated; no vehicle entrance or first-due assignment is established.",
+      "sourceUrls": [
+        "https://www.tps.ca/contact/"
+      ],
+      "retrievedAt": "2026-10-29",
+      "reviewer": "independent-targeted-Toronto-source-review",
+      "coordinatesVerified": false
+    }
+  ]
+}

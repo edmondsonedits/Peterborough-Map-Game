@@ -1,0 +1,579 @@
+{
+  "schemaVersion": 1,
+  "coverage": {
+    "cityId": "guelph",
+    "inputOfficial": 295,
+    "inputOsm": 2617,
+    "inputMajorRoad": 1770,
+    "existing": 24,
+    "accepted": 1633,
+    "selected": 180,
+    "target": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "existingByDifficulty": {
+      "easy": 10,
+      "medium": 5,
+      "hard": 5
+    },
+    "selectedByDifficulty": {
+      "easy": 90,
+      "medium": 45,
+      "hard": 45
+    },
+    "totalByDifficulty": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "deficits": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "baseStrata": [
+      {
+        "id": "fire-guelph-fire-1",
+        "selected": 23,
+        "available": 301,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-guelph-fire-2",
+        "selected": 23,
+        "available": 228,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-guelph-fire-3",
+        "selected": 23,
+        "available": 333,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-guelph-fire-4",
+        "selected": 23,
+        "available": 185,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-guelph-fire-5",
+        "selected": 23,
+        "available": 311,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-guelph-fire-6",
+        "selected": 20,
+        "available": 30,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-guelph-ems-0",
+        "selected": 22,
+        "available": 87,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-guelph-ems-3",
+        "selected": 23,
+        "available": 158,
+        "method": "nearest-geographic-base-for-selection-only"
+      }
+    ],
+    "sharedBaseline": 20,
+    "baselineByService": {
+      "fire": {
+        "easy": 10,
+        "medium": 5,
+        "hard": 5
+      },
+      "ems": {
+        "easy": 10,
+        "medium": 9,
+        "hard": 5
+      }
+    },
+    "serviceTotalsByDifficulty": {
+      "fire": {
+        "easy": 100,
+        "medium": 50,
+        "hard": 50
+      },
+      "ems": {
+        "easy": 100,
+        "medium": 54,
+        "hard": 50
+      }
+    },
+    "serviceDeficits": {
+      "fire": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      },
+      "ems": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "rejected": 3049,
+    "rejectionCounts": {
+      "unresolved-2020-source-currentness": 9,
+      "production-snap-wrong-street": 406,
+      "production-snap-not-ground-public-road": 2397,
+      "not-one-exact-civic-number-and-street": 18,
+      "duplicate-existing-or-accepted-address-or-named-site": 85,
+      "unresolved-official-coordinate-or-current-address-conflict": 3,
+      "production-snap-over-80m-or-missing": 129,
+      "outside-verified-municipality-or-boundary-unavailable": 1,
+      "no-genuine-connected-cross-street-within-1500m": 1
+    },
+    "oneStreetExceptions": 53
+  },
+  "independentAudit": {
+    "cityId": "guelph",
+    "selected": 180,
+    "accepted": 1633,
+    "crossStreetEvidence": 2886,
+    "oneStreet": 380,
+    "maxGap": 79.26537564516624,
+    "pass": true
+  },
+  "priorityFacilityExpansion": {
+    "reviewedOn": "2026-10-29",
+    "addedIds": [
+      "guelph-osm-way-166904568",
+      "guelph-osm-way-1436604416",
+      "guelph-osm-way-260550691",
+      "guelph-odef-d991a2588d1b25222f60",
+      "guelph-osm-way-388614813",
+      "guelph-osm-way-1344478066",
+      "guelph-osm-way-177928826",
+      "guelph-osm-way-502064547",
+      "guelph-osm-way-208493110"
+    ],
+    "verification": {
+      "cityId": "guelph",
+      "additions": 9,
+      "proposalSha256": "1c7d7d417efe5a4a9e0c99a8889a8b81ac8564993f97febcc7e1e0d673f2bc66",
+      "pass": true,
+      "checks": [
+        "IDs absent from current shared/legacy/care catalogue",
+        "row exactly equals accepted source record",
+        "full per-record provenance exactly equals accepted pool",
+        "factual category/tags and coordinates match raw source record",
+        "source point and URLs unchanged",
+        "no normalized civic-address/near-identical-site duplicates",
+        "max40 per city",
+        "per-base rationale present; no dispatch ownership claim"
+      ]
+    },
+    "review": {
+      "purpose": "Bounded source-preserving priority facility and local variety additions; no recognition tier rewrites.",
+      "sourcePool": "external-build-cache/canonical-catalogues-reviewed/guelph/accepted-candidates.json",
+      "sourcePoolSha256": "b3730b2d98a994c695505e9cbc17d70e683d01a99fe9881834b0b41513e60023",
+      "selectedDescriptor": "cities/guelph/training-data.json",
+      "selectedDescriptorSha256": "918d8793ab04018d56995de1c2698635f52ce96f35cfd4ed337544cc82acbdfa",
+      "routeEvidence": "cities/guelph/training-data.json",
+      "routeEvidenceScope": "production",
+      "selectionRules": {
+        "maxPerCity": 40,
+        "maxPotentialAddsPerBase": 6,
+        "maxPotentialAddsForConfirmedZeroToTwoBase": 10,
+        "twoCluePriority": true,
+        "maximumStraightLineBaseReviewDistanceMetres": 6000
+      },
+      "limitations": [
+        "At this selection-time review: Every row passed the existing all-accepted geographic/source/clue audit. These additions have not been graph-assigned or route-audited.",
+        "Published Fire polygons are respected for review proximity; EMS and other Fire review strata use straight-line proximity only. These are not dispatch ownership assignments.",
+        "Full original accepted source point, ID, address, recognition tier, incident profile and provenance are unchanged. Current-open status is not newly verified."
+      ],
+      "rationales": {
+        "guelph-osm-way-166904568": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "guelph-osm-way-166904568",
+            "category": null,
+            "tags": {
+              "addr:city": "Guelph",
+              "addr:housenumber": "220",
+              "addr:postcode": "N1G 5K5",
+              "addr:street": "Chancellors Way",
+              "building": "apartments",
+              "building:levels": "4",
+              "roof:levels": "1"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/166904568",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-guelph-fire-3",
+              "distance": 483.48940692894,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 483
+            },
+            {
+              "baseId": "ems-guelph-ems-3",
+              "distance": 4507.418502310957,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 4507
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 201
+        },
+        "guelph-osm-way-1436604416": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "guelph-osm-way-1436604416",
+            "category": null,
+            "tags": {
+              "addr:city": "Guelph",
+              "addr:housenumber": "80",
+              "addr:postcode": "N1H 6V9",
+              "addr:street": "Burns Drive",
+              "building": "apartments"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/1436604416",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-guelph-fire-2",
+              "distance": 1436.8521768147232,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1437
+            },
+            {
+              "baseId": "ems-guelph-ems-0",
+              "distance": 2940.088677084718,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 2,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 2940
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 172
+        },
+        "guelph-osm-way-260550691": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "guelph-osm-way-260550691",
+            "category": null,
+            "tags": {
+              "addr:city": "Guelph",
+              "addr:housenumber": "352",
+              "addr:postcode": "N1E 2X7",
+              "addr:street": "Elizabeth Street",
+              "building": "industrial"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/260550691",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-guelph-fire-5",
+              "distance": 283.0005211152947,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 283
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 166
+        },
+        "guelph-odef-d991a2588d1b25222f60": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "guelph-odef-d991a2588d1b25222f60",
+            "category": "school",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/37-26-0001/372600012022001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/en/pub/37-26-0001/2022001/ODEF_v3.0.zip",
+              "https://data.ontario.ca/dataset/school-information-and-student-demographics",
+              "https://data.ontario.ca/dataset/ontario-public-school-contact-information",
+              "https://data.ontario.ca/dataset/fb3a7c18-90af-453e-bc0a-a76ecc471862/resource/f3a8c2a3-09d9-4715-9044-d8a0189f572c/download/public_school_contact_list_september2026_en.txt"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-guelph-fire-1",
+              "distance": 2007.2605186485084,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 4,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 2007
+            },
+            {
+              "baseId": "ems-guelph-ems-0",
+              "distance": 3038.6064660755596,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 12,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 3039
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 151
+        },
+        "guelph-osm-way-388614813": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "doctors",
+          "sourceEvidence": {
+            "sourceRecordId": "guelph-osm-way-388614813",
+            "category": null,
+            "tags": {
+              "addr:city": "Guelph",
+              "addr:housenumber": "64",
+              "addr:postcode": "N1H 4G1",
+              "addr:street": "Baker Street",
+              "amenity": "doctors",
+              "building": "retail",
+              "health_specialty:obstetrics": "yes",
+              "healthcare": "doctor",
+              "name": "Beginnings Family Services"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/388614813",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "ems-guelph-ems-0",
+              "distance": 4475.629888689732,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 3,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 4476
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 127
+        },
+        "guelph-osm-way-1344478066": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "community_centre",
+          "sourceEvidence": {
+            "sourceRecordId": "guelph-osm-way-1344478066",
+            "category": null,
+            "tags": {
+              "addr:city": "Guelph",
+              "addr:housenumber": "133",
+              "addr:postcode": "N1H 3V1",
+              "addr:street": "Woolwich Street",
+              "amenity": "community_centre",
+              "building": "yes",
+              "community_centre": "youth_centre",
+              "contact:instagram": "wyndhamhouseguelph",
+              "email": "youthhub@wyndhamhouse.org",
+              "image": "http://www.wyndhamhouse.org/wp-content/uploads/2020/08/cropped-WH-Logo-House-hiRes-300x300.png",
+              "name": "Wyndham House - Concurrent Youth Hub",
+              "operator": "Wyndham House",
+              "phone": "+1 519-822-2768"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/1344478066",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "ems-guelph-ems-0",
+              "distance": 4670.243775810442,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 4670
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 126
+        },
+        "guelph-osm-way-177928826": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "guelph-osm-way-177928826",
+            "category": null,
+            "tags": {
+              "addr:city": "Guelph",
+              "addr:housenumber": "44",
+              "addr:postcode": "N1H 6P2",
+              "addr:street": "George Street",
+              "building": "industrial",
+              "name": "Armtec",
+              "source": "NRCan-CanVec-10.0"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/177928826",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-guelph-fire-2",
+              "distance": 647.595074273777,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 648
+            }
+          ],
+          "twoGenuineCrossStreetClues": false,
+          "oneClueException": "No unselected accepted two-clue source in this priority family for the targeted review base(s); high-value source family retained.",
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 125
+        },
+        "guelph-osm-way-502064547": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "guelph-osm-way-502064547",
+            "category": null,
+            "tags": {
+              "addr:city": "Guelph",
+              "addr:flats": "104-108;205-207;209;210;306-311;406-411",
+              "addr:housenumber": "7",
+              "addr:postcode": "N1H 2A9",
+              "addr:street": "Ajax Street",
+              "building": "apartments"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/502064547",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-guelph-fire-4",
+              "distance": 1893.1901579222852,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 1893
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 125
+        },
+        "guelph-osm-way-208493110": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "guelph-osm-way-208493110",
+            "category": null,
+            "tags": {
+              "addr:city": "Guelph",
+              "addr:housenumber": "23",
+              "addr:postcode": "N1H 2S5",
+              "addr:street": "Petrolia Street",
+              "building": "industrial"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/208493110",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-guelph-fire-1",
+              "distance": 1936.844491551865,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 1937
+            }
+          ],
+          "twoGenuineCrossStreetClues": false,
+          "oneClueException": "No unselected accepted two-clue source in this priority family for the targeted review base(s); high-value source family retained.",
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 91
+        }
+      }
+    },
+    "note": "Add-only source-validated priority facilities; geographic review reasons are not operational districts. Station assignments require independent directed-road audit."
+  },
+  "routeCandidateExpansion": {
+    "reviewedOn": "2026-10-29",
+    "promotedIds": [],
+    "candidateVerification": null,
+    "selection": "Only source-verified additional locations used by independently audited station exercises are promoted; existing canonical IDs and fields remain unchanged."
+  },
+  "evidencePathConvention": {
+    "repositoryPaths": "Paths beginning cities/ are repository-relative.",
+    "externalBuildCache": "external-build-cache/ labels identify historical, reproducible build artifacts that are not shipped; adjacent SHA-256 values identify the exact reviewed bytes.",
+    "reviewScope": "Priority facility review records describe the selection-time review. Final integrated route and runtime validation is recorded in docs/city-call-validation-2026-10-29.md."
+  }
+}

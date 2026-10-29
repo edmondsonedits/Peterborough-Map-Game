@@ -1,0 +1,71 @@
+{
+  "city": "pickering",
+  "verifiedFingerprint": "3a0fd71335d1c7a1114f40e2e936ac8c108764b9cae3c867da7e9e2cffde0414",
+  "halls": [
+    {
+      "id": "fire-pickering-fire-1",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 5278,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-pickering-fire-2",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 4076,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-pickering-fire-4",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2668,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-pickering-fire-5",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2984,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-pickering-fire-6",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2819,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-pickering-ems-506",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2590,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-pickering-ems-899",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 5649,
+      "method": "modeled-road-response"
+    }
+  ],
+  "routes": 92,
+  "continuousOrigins": 92,
+  "officialCalls": 0,
+  "modeledCalls": 84,
+  "maxRouteMetres": 5649.175966156943,
+  "minCallsPerHall": 12,
+  "minChallengeCallsPerHall": 11,
+  "supportCalls": 8,
+  "durationMs": 7148
+}

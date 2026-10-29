@@ -1,0 +1,352 @@
+{
+  "schemaVersion": 1,
+  "coverage": {
+    "cityId": "niagara-falls",
+    "inputOfficial": 267,
+    "inputOsm": 1930,
+    "inputMajorRoad": 1360,
+    "existing": 26,
+    "accepted": 2031,
+    "selected": 180,
+    "target": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "existingByDifficulty": {
+      "easy": 10,
+      "medium": 5,
+      "hard": 5
+    },
+    "selectedByDifficulty": {
+      "easy": 90,
+      "medium": 45,
+      "hard": 45
+    },
+    "totalByDifficulty": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "deficits": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "baseStrata": [
+      {
+        "id": "fire-niagara-falls-fire-2",
+        "selected": 20,
+        "available": 268,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-niagara-falls-fire-4",
+        "selected": 20,
+        "available": 199,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-niagara-falls-fire-5",
+        "selected": 20,
+        "available": 140,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-niagara-falls-fire-6",
+        "selected": 20,
+        "available": 192,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-niagara-falls-fire-1",
+        "selected": 20,
+        "available": 210,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-niagara-falls-fire-3",
+        "selected": 20,
+        "available": 262,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-niagara-falls-fire-7",
+        "selected": 20,
+        "available": 258,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-niagara-falls-ems-north",
+        "selected": 20,
+        "available": 323,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-niagara-falls-ems-st-paul",
+        "selected": 20,
+        "available": 179,
+        "method": "nearest-geographic-base-for-selection-only"
+      }
+    ],
+    "sharedBaseline": 20,
+    "baselineByService": {
+      "fire": {
+        "easy": 10,
+        "medium": 5,
+        "hard": 5
+      },
+      "ems": {
+        "easy": 10,
+        "medium": 11,
+        "hard": 5
+      }
+    },
+    "serviceTotalsByDifficulty": {
+      "fire": {
+        "easy": 100,
+        "medium": 50,
+        "hard": 50
+      },
+      "ems": {
+        "easy": 100,
+        "medium": 56,
+        "hard": 50
+      }
+    },
+    "serviceDeficits": {
+      "fire": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      },
+      "ems": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "rejected": 1526,
+    "rejectionCounts": {
+      "unresolved-2020-source-currentness": 10,
+      "production-snap-not-ground-public-road": 913,
+      "production-snap-wrong-street": 448,
+      "unresolved-official-coordinate-or-current-address-conflict": 8,
+      "not-one-exact-civic-number-and-street": 30,
+      "production-snap-over-80m-or-missing": 41,
+      "duplicate-existing-or-accepted-address-or-named-site": 51,
+      "no-genuine-connected-cross-street-within-1500m": 25
+    },
+    "oneStreetExceptions": 42
+  },
+  "independentAudit": {
+    "cityId": "niagara-falls",
+    "selected": 180,
+    "accepted": 2031,
+    "crossStreetEvidence": 3514,
+    "oneStreet": 548,
+    "maxGap": 71.17511541486185,
+    "pass": true
+  },
+  "priorityFacilityExpansion": {
+    "reviewedOn": "2026-10-29",
+    "addedIds": [
+      "niagara-falls-osm-way-782264840",
+      "niagara-falls-osm-node-5546083240",
+      "niagara-falls-osm-way-374827287"
+    ],
+    "verification": {
+      "cityId": "niagara-falls",
+      "additions": 3,
+      "proposalSha256": "8d483e23b07edd88a33d8d1014276f924af892684df80cb27e2c8a6d79d1703e",
+      "pass": true,
+      "checks": [
+        "IDs absent from current shared/legacy/care catalogue",
+        "row exactly equals accepted source record",
+        "full per-record provenance exactly equals accepted pool",
+        "factual category/tags and coordinates match raw source record",
+        "source point and URLs unchanged",
+        "no normalized civic-address/near-identical-site duplicates",
+        "max40 per city",
+        "per-base rationale present; no dispatch ownership claim"
+      ]
+    },
+    "review": {
+      "purpose": "Bounded source-preserving priority facility and local variety additions; no recognition tier rewrites.",
+      "sourcePool": "external-build-cache/canonical-catalogues-reviewed/niagara-falls/accepted-candidates.json",
+      "sourcePoolSha256": "89324f869e32a90bd9ce97651aaadc824a71b92e4b3e2c339f603e7e0de0995e",
+      "selectedDescriptor": "cities/niagara-falls/training-data.json",
+      "selectedDescriptorSha256": "361bdd047b10d3af8c92d7a7348a97c271a678a1cfd9bb46206127b3a778a4cb",
+      "routeEvidence": "cities/niagara-falls/training-data.json",
+      "routeEvidenceScope": "production",
+      "selectionRules": {
+        "maxPerCity": 40,
+        "maxPotentialAddsPerBase": 6,
+        "maxPotentialAddsForConfirmedZeroToTwoBase": 10,
+        "twoCluePriority": true,
+        "maximumStraightLineBaseReviewDistanceMetres": 6000
+      },
+      "limitations": [
+        "At this selection-time review: Every row passed the existing all-accepted geographic/source/clue audit. These additions have not been graph-assigned or route-audited.",
+        "Published Fire polygons are respected for review proximity; EMS and other Fire review strata use straight-line proximity only. These are not dispatch ownership assignments.",
+        "Full original accepted source point, ID, address, recognition tier, incident profile and provenance are unchanged. Current-open status is not newly verified."
+      ],
+      "rationales": {
+        "niagara-falls-osm-way-782264840": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "niagara-falls-osm-way-782264840",
+            "category": null,
+            "tags": {
+              "addr:city": "Niagara Falls",
+              "addr:housenumber": "4750",
+              "addr:postcode": "L2E 3M9",
+              "addr:province": "Ontario",
+              "addr:street": "Zimmerman Avenue",
+              "amenity": "place_of_worship",
+              "building": "yes",
+              "check_date": "2026-06-21",
+              "denomination": "anglican",
+              "name": "Christ Church",
+              "phone": "+1 9053589712",
+              "religion": "christian",
+              "service_times": "Th 10:00; Su 08:00,10:00"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/782264840",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-niagara-falls-fire-1",
+              "distance": 2457.316811712013,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2457
+            },
+            {
+              "baseId": "ems-niagara-falls-ems-north",
+              "distance": 2521.3511167871284,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2521
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 199
+        },
+        "niagara-falls-osm-node-5546083240": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "niagara-falls-osm-node-5546083240",
+            "category": null,
+            "tags": {
+              "addr:city": "Niagara Falls",
+              "addr:housenumber": "7020",
+              "addr:postcode": "L2G 7B7",
+              "addr:street": "Stanley Avenue",
+              "amenity": "place_of_worship",
+              "name": "Mount Carmel Spiritual Centre",
+              "phone": "+1-905-356-4113",
+              "toilets:wheelchair": "yes",
+              "website": "https://www.carmelniagara.com/",
+              "wheelchair": "yes",
+              "wheelchair:description": "2 accessible rooms"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/5546083240",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-niagara-falls-fire-5",
+              "distance": 2677.656703607237,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2678
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 150
+        },
+        "niagara-falls-osm-way-374827287": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "niagara-falls-osm-way-374827287",
+            "category": null,
+            "tags": {
+              "addr:city": "Niagara Falls",
+              "addr:housenumber": "4485",
+              "addr:postcode": "L2E 1A2",
+              "addr:street": "Hiram Street",
+              "building": "apartments"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/374827287",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-niagara-falls-fire-1",
+              "distance": 2091.1428845432247,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 2091
+            },
+            {
+              "baseId": "ems-niagara-falls-ems-north",
+              "distance": 1503.7962074663342,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 1504
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 145
+        }
+      }
+    },
+    "note": "Add-only source-validated priority facilities; geographic review reasons are not operational districts. Station assignments require independent directed-road audit."
+  },
+  "routeCandidateExpansion": {
+    "reviewedOn": "2026-10-29",
+    "promotedIds": [],
+    "candidateVerification": null,
+    "selection": "Only source-verified additional locations used by independently audited station exercises are promoted; existing canonical IDs and fields remain unchanged."
+  },
+  "evidencePathConvention": {
+    "repositoryPaths": "Paths beginning cities/ are repository-relative.",
+    "externalBuildCache": "external-build-cache/ labels identify historical, reproducible build artifacts that are not shipped; adjacent SHA-256 values identify the exact reviewed bytes.",
+    "reviewScope": "Priority facility review records describe the selection-time review. Final integrated route and runtime validation is recorded in docs/city-call-validation-2026-10-29.md."
+  }
+}

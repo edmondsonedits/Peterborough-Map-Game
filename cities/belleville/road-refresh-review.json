@@ -1,0 +1,233 @@
+{
+  "cityId": "belleville",
+  "createdAt": "2026-10-29T04:20:17.396605+00:00",
+  "bounds": [
+    [
+      44.08,
+      -77.5
+    ],
+    [
+      44.35,
+      -77.23
+    ]
+  ],
+  "padDegrees": 0.025,
+  "bufferedInclusionBounds": [
+    [
+      44.055,
+      -77.525
+    ],
+    [
+      44.375,
+      -77.205
+    ]
+  ],
+  "inclusion": "Source way geometry bounding box intersects padded rectangular bounds; full un-clipped way coordinates retained, exactly as existing builder. This is a game road extract, not municipal ownership proof.",
+  "roadSource": {
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-10-28T21:21:02Z",
+    "sha256": "4d53c536cd90335cd051190c23493218e002a3314d9b20a227e1a8ee15463273",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "rawSourceUrl": "https://download.geofabrik.de/north-america/canada/ontario-latest.osm.pbf",
+  "roadFeatureCount": 5242,
+  "roadDataSha256": "e7e73d0669ed730f970dc62885ca0152b1becad1dcea16ca9077f5a900a3e369",
+  "compressedSha256": "20db0378147b90a301d4252d580481cfed2b7d265535b5a827f82a3734a6b473",
+  "uncompressedBytes": 1471442,
+  "compressedBytes": 273193,
+  "oldFeatureCount": 4997,
+  "preservedOriginalIds": 4988,
+  "addedIds": 254,
+  "originalIdsAbsentFromNewSnapshotOrExtent": 9,
+  "sharedIdsWithChangedFeatures": 42,
+  "featureIdContract": "way/<original OSM way ID>; preserved whenever source way remains selected",
+  "properties": [
+    "highway",
+    "name",
+    "ref",
+    "oneway",
+    "junction",
+    "bridge",
+    "layer",
+    "access",
+    "vehicle",
+    "motor_vehicle",
+    "maxspeed"
+  ],
+  "roadTypes": [
+    "living_street",
+    "motorway",
+    "motorway_link",
+    "primary",
+    "primary_link",
+    "residential",
+    "road",
+    "secondary",
+    "secondary_link",
+    "service",
+    "tertiary",
+    "tertiary_link",
+    "trunk",
+    "trunk_link",
+    "unclassified"
+  ],
+  "accessFilter": "First present of motor_vehicle, vehicle, access; exclude no/private/agricultural/forestry. Exclude area=yes. Retain eligible service roads and original oneway/junction/bridge/layer tags unchanged.",
+  "oneWayHandling": "No changes or inferred direction: source oneway and junction tags retained for the existing production routing consumer.",
+  "geometryErrors": 0,
+  "highwayWaysScanned": 1650842,
+  "outerVertexExtent": {
+    "south": 44.0276584,
+    "west": -77.5755167,
+    "north": 44.3973959,
+    "east": -77.1188706
+  },
+  "elapsedSeconds": 56,
+  "peakResidentMemoryMiB": 4242,
+  "limitations": [
+    "All source OSM access and one-way semantics are unchanged; no turn-restriction/emergency-vehicle routing fidelity is added.",
+    "Production graph connectivity and new-call reachability must be regenerated/validated separately.",
+    "Snapshot update can contain normal OSM geometry, classification or way-split changes; absent old IDs are reported separately."
+  ],
+  "removedIdExplanations": [
+    {
+      "id": "way/55524616",
+      "currentTags": {
+        "access": "no",
+        "bridge": "yes",
+        "bridge:name": "Moira Bridge",
+        "check_date": "2026-10-05",
+        "construction": "yes",
+        "highway": "tertiary",
+        "lanes": "2",
+        "layer": "1",
+        "name": "Upper Front Street Bridge",
+        "old_ref": "14",
+        "sidewalk:both": "separate",
+        "source": "GeoBase NRN",
+        "surface": "asphalt"
+      },
+      "status": "present-but-excluded-by-current-drivable-or-access-filter"
+    },
+    {
+      "id": "way/55525683",
+      "currentTags": {
+        "access": "no",
+        "check_date": "2026-10-05",
+        "construction": "yes",
+        "highway": "tertiary",
+        "lanes": "2",
+        "name": "Upper Front Street Bridge",
+        "old_ref": "14",
+        "sidewalk:both": "separate",
+        "source": "GeoBase NRN",
+        "surface": "asphalt"
+      },
+      "status": "present-but-excluded-by-current-drivable-or-access-filter"
+    },
+    {
+      "id": "way/55526308",
+      "currentTags": {
+        "bus": "yes",
+        "highway": "service",
+        "lanes": "1",
+        "motor_vehicle": "no",
+        "oneway": "yes",
+        "source": "GeoBase NRN",
+        "surface": "asphalt"
+      },
+      "status": "present-but-excluded-by-current-drivable-or-access-filter"
+    },
+    {
+      "id": "way/55526850",
+      "currentTags": {
+        "access": "yes",
+        "highway": "track",
+        "name": "Frost Road",
+        "source": "GeoBase NRN",
+        "surface": "ground",
+        "tracktype": "grade5"
+      },
+      "status": "present-but-excluded-by-current-drivable-or-access-filter"
+    },
+    {
+      "id": "way/235982912",
+      "currentTags": {
+        "access": "no",
+        "check_date": "2026-10-05",
+        "construction": "yes",
+        "highway": "tertiary",
+        "lanes": "2",
+        "name": "Upper Front Street Bridge",
+        "old_ref": "14",
+        "sidewalk:both": "separate",
+        "source": "GeoBase NRN",
+        "surface": "asphalt"
+      },
+      "status": "present-but-excluded-by-current-drivable-or-access-filter"
+    },
+    {
+      "id": "way/463370576",
+      "currentTags": {
+        "bus": "yes",
+        "highway": "service",
+        "lanes": "1",
+        "motor_vehicle": "no",
+        "oneway": "yes",
+        "surface": "asphalt"
+      },
+      "status": "present-but-excluded-by-current-drivable-or-access-filter"
+    },
+    {
+      "id": "way/463370577",
+      "currentTags": {
+        "bus": "yes",
+        "highway": "service",
+        "lanes": "1",
+        "motor_vehicle": "no",
+        "oneway": "yes",
+        "surface": "asphalt"
+      },
+      "status": "present-but-excluded-by-current-drivable-or-access-filter"
+    },
+    {
+      "id": "way/492738916",
+      "currentTags": {
+        "bus": "yes",
+        "highway": "service",
+        "lanes": "1",
+        "motor_vehicle": "no",
+        "oneway": "yes",
+        "surface": "asphalt"
+      },
+      "status": "present-but-excluded-by-current-drivable-or-access-filter"
+    },
+    {
+      "id": "way/492738920",
+      "currentTags": {
+        "bus": "yes",
+        "highway": "service",
+        "lanes": "1",
+        "motor_vehicle": "no",
+        "oneway": "yes",
+        "source": "GeoBase NRN",
+        "surface": "asphalt"
+      },
+      "status": "present-but-excluded-by-current-drivable-or-access-filter"
+    }
+  ],
+  "allAbsentIdsRetainedInSourceButFailCurrentFilter": true,
+  "officialBridgeClosureEvidence": "official-bridge-closure-evidence.json",
+  "northMunicipalCivicAccessIndependentCheck": {
+    "reviewer": "baseline_inventory",
+    "geometricOnly": true,
+    "omittedSourceFeatures": 187,
+    "distinctCivicStrings": 185,
+    "allWithin120mAfterRefresh": true,
+    "within50m": 186,
+    "medianGapMetres": 9.8,
+    "maximumGapMetres": 54.1,
+    "report": "../bounds-audit/belleville-refreshed-road-buffer.json",
+    "directedRouteReachability": "must still be tested by canonical/route generators"
+  }
+}

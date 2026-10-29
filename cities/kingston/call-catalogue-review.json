@@ -1,0 +1,721 @@
+{
+  "schemaVersion": 1,
+  "coverage": {
+    "cityId": "kingston",
+    "inputOfficial": 538,
+    "inputOsm": 2540,
+    "inputMajorRoad": 1499,
+    "existing": 25,
+    "accepted": 2362,
+    "selected": 180,
+    "target": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "existingByDifficulty": {
+      "easy": 10,
+      "medium": 5,
+      "hard": 5
+    },
+    "selectedByDifficulty": {
+      "easy": 90,
+      "medium": 45,
+      "hard": 45
+    },
+    "totalByDifficulty": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "deficits": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "baseStrata": [
+      {
+        "id": "fire-kingston-fire-8",
+        "selected": 13,
+        "available": 50,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-kingston-fire-4",
+        "selected": 13,
+        "available": 527,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-kingston-fire-9",
+        "selected": 13,
+        "available": 57,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-kingston-fire-5",
+        "selected": 13,
+        "available": 255,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-kingston-fire-2",
+        "selected": 13,
+        "available": 54,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-kingston-fire-1",
+        "selected": 13,
+        "available": 93,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-kingston-fire-6",
+        "selected": 12,
+        "available": 170,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-kingston-fire-10",
+        "selected": 13,
+        "available": 174,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-kingston-fire-7",
+        "selected": 13,
+        "available": 250,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-kingston-fire-3",
+        "selected": 13,
+        "available": 232,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-kingston-ems-1",
+        "selected": 12,
+        "available": 173,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-kingston-ems-3",
+        "selected": 13,
+        "available": 111,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-kingston-ems-2",
+        "selected": 13,
+        "available": 191,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-kingston-ems-9",
+        "selected": 13,
+        "available": 25,
+        "method": "nearest-geographic-base-for-selection-only"
+      }
+    ],
+    "sharedBaseline": 20,
+    "baselineByService": {
+      "fire": {
+        "easy": 10,
+        "medium": 5,
+        "hard": 5
+      },
+      "ems": {
+        "easy": 10,
+        "medium": 10,
+        "hard": 5
+      }
+    },
+    "serviceTotalsByDifficulty": {
+      "fire": {
+        "easy": 100,
+        "medium": 50,
+        "hard": 50
+      },
+      "ems": {
+        "easy": 100,
+        "medium": 55,
+        "hard": 50
+      }
+    },
+    "serviceDeficits": {
+      "fire": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      },
+      "ems": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "rejected": 2215,
+    "rejectionCounts": {
+      "unresolved-2020-source-currentness": 70,
+      "independent-source-review-rejected": 2,
+      "production-snap-not-ground-public-road": 1380,
+      "unresolved-official-coordinate-or-current-address-conflict": 24,
+      "production-snap-wrong-street": 523,
+      "duplicate-existing-or-accepted-address-or-named-site": 81,
+      "not-one-exact-civic-number-and-street": 27,
+      "production-snap-over-80m-or-missing": 88,
+      "no-genuine-connected-cross-street-within-1500m": 20
+    },
+    "oneStreetExceptions": 70
+  },
+  "independentAudit": {
+    "cityId": "kingston",
+    "selected": 180,
+    "accepted": 2362,
+    "crossStreetEvidence": 4009,
+    "oneStreet": 715,
+    "maxGap": 79.35766703552002,
+    "pass": true
+  },
+  "priorityFacilityExpansion": {
+    "reviewedOn": "2026-10-29",
+    "addedIds": [
+      "kingston-osm-way-1055163636",
+      "kingston-osm-way-328678048",
+      "kingston-odef-373e391500affc54df19",
+      "kingston-osm-way-27785461",
+      "kingston-osm-way-195009538",
+      "kingston-osm-way-657790031",
+      "kingston-osm-way-656259821",
+      "kingston-osm-node-2696885849",
+      "kingston-osm-way-60106636",
+      "kingston-osm-way-657122114",
+      "kingston-odhf-982aced5fa2f40d74964237cab28436d"
+    ],
+    "verification": {
+      "cityId": "kingston",
+      "additions": 11,
+      "proposalSha256": "cedb1084dc2834c7f63e86c92b80f31e1d1fa294166913435a89d87017cf4034",
+      "pass": true,
+      "checks": [
+        "IDs absent from current shared/legacy/care catalogue",
+        "row exactly equals accepted source record",
+        "full per-record provenance exactly equals accepted pool",
+        "factual category/tags and coordinates match raw source record",
+        "source point and URLs unchanged",
+        "no normalized civic-address/near-identical-site duplicates",
+        "max40 per city",
+        "per-base rationale present; no dispatch ownership claim"
+      ]
+    },
+    "review": {
+      "purpose": "Bounded source-preserving priority facility and local variety additions; no recognition tier rewrites.",
+      "sourcePool": "external-build-cache/canonical-catalogues-reviewed/kingston/accepted-candidates.json",
+      "sourcePoolSha256": "6a24bc21ddf3292100b6b1cebcdeb96b907d4523902bb54d2dc18d89c30e55d5",
+      "selectedDescriptor": "cities/kingston/training-data.json",
+      "selectedDescriptorSha256": "1f9c73e3d232d5b2f4f9f54e1849ada5dea5f0d0c02ad01175cb86a99dc20d42",
+      "routeEvidence": "cities/kingston/training-data.json",
+      "routeEvidenceScope": "production",
+      "selectionRules": {
+        "maxPerCity": 40,
+        "maxPotentialAddsPerBase": 6,
+        "maxPotentialAddsForConfirmedZeroToTwoBase": 10,
+        "twoCluePriority": true,
+        "maximumStraightLineBaseReviewDistanceMetres": 6000
+      },
+      "limitations": [
+        "At this selection-time review: Every row passed the existing all-accepted geographic/source/clue audit. These additions have not been graph-assigned or route-audited.",
+        "Published Fire polygons are respected for review proximity; EMS and other Fire review strata use straight-line proximity only. These are not dispatch ownership assignments.",
+        "Full original accepted source point, ID, address, recognition tier, incident profile and provenance are unchanged. Current-open status is not newly verified."
+      ],
+      "rationales": {
+        "kingston-osm-way-1055163636": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "kingston-osm-way-1055163636",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "450",
+              "addr:street": "Dalton Avenue",
+              "building": "industrial",
+              "building:levels": "2"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/1055163636",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-kingston-fire-5",
+              "distance": 2746.056288101408,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2746
+            },
+            {
+              "baseId": "ems-kingston-ems-1",
+              "distance": 4135.963236644539,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 4136
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 202
+        },
+        "kingston-osm-way-328678048": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "kingston-osm-way-328678048",
+            "category": null,
+            "tags": {
+              "addr:city": "Kingston",
+              "addr:housenumber": "3526",
+              "addr:postcode": "K7L 4V2",
+              "addr:street": "Princess Street",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "denomination": "united",
+              "name": "Westbrook United Church",
+              "phone": "+1-613-389-3883",
+              "religion": "christian",
+              "wikidata": "Q63147889"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/328678048",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-kingston-fire-7",
+              "distance": 3372.5968788750265,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 3373
+            },
+            {
+              "baseId": "ems-kingston-ems-2",
+              "distance": 3352.5444382019655,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 3353
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 194
+        },
+        "kingston-odef-373e391500affc54df19": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "kingston-odef-373e391500affc54df19",
+            "category": "school",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/37-26-0001/372600012022001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/en/pub/37-26-0001/2022001/ODEF_v3.0.zip",
+              "https://data.ontario.ca/dataset/school-information-and-student-demographics",
+              "https://data.ontario.ca/dataset/ontario-public-school-contact-information",
+              "https://data.ontario.ca/dataset/fb3a7c18-90af-453e-bc0a-a76ecc471862/resource/f3a8c2a3-09d9-4715-9044-d8a0189f572c/download/public_school_contact_list_september2026_en.txt"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-kingston-fire-5",
+              "distance": 789.5288041537319,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 790
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 168
+        },
+        "kingston-osm-way-27785461": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "library",
+          "sourceEvidence": {
+            "sourceRecordId": "kingston-osm-way-27785461",
+            "category": null,
+            "tags": {
+              "addr:city": "Kingston",
+              "addr:housenumber": "130",
+              "addr:postcode": "K7L 1X8",
+              "addr:street": "Johnson Street",
+              "amenity": "library",
+              "building": "public",
+              "description": "Main branch with a hundred thousand books on two floors; CD/DVD's and media, public access computers, wi-fi, meeting, program and activity space. Also open Sun 1-5PM in winter. HQ for a sixteen-branch system which covers Kingston and Frontenac County.",
+              "email": "contact@kfpl.ca",
+              "internet_access": "wlan",
+              "internet_access:fee": "no",
+              "internet_access:ssid": "KFPLibrary",
+              "name": "Kingston Frontenac Public Library - Central Branch",
+              "opening_hours": "Mo-Th 09:00-21:00; Fr-Sa 09:00-17:00",
+              "operator": "Kingston Frontenac Public Library",
+              "operator:short": "KFPL",
+              "operator:type": "public",
+              "operator:wikidata": "Q6413526",
+              "operator:wikipedia": "en:Kingston Frontenac Public Library",
+              "phone": "+1-613-549-8888",
+              "ref:isil": "CA-OK",
+              "start_date": "1978",
+              "website": "https://www.kfpl.ca/hours-and-locations/central-branch"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/27785461",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-kingston-fire-4",
+              "distance": 479.0563859282125,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 479
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 168
+        },
+        "kingston-osm-way-195009538": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "kingston-osm-way-195009538",
+            "category": null,
+            "tags": {
+              "addr:city": "Kingston",
+              "addr:housenumber": "1483",
+              "addr:street": "Centennial Drive",
+              "building": "industrial",
+              "building:levels": "1",
+              "name": "Correctional Service CORCAN"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/195009538",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-kingston-fire-7",
+              "distance": 2846.137036635789,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2846
+            },
+            {
+              "baseId": "ems-kingston-ems-2",
+              "distance": 2855.3317847570634,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2855
+            }
+          ],
+          "twoGenuineCrossStreetClues": false,
+          "oneClueException": "No unselected accepted two-clue source in this priority family for the targeted review base(s); high-value source family retained.",
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 166
+        },
+        "kingston-osm-way-657790031": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "kingston-osm-way-657790031",
+            "category": null,
+            "tags": {
+              "addr:city": "Kingston",
+              "addr:housenumber": "112",
+              "addr:street": "Joseph Street",
+              "building": "apartments"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/657790031",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-kingston-fire-5",
+              "distance": 417.4589730175918,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 417
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 159
+        },
+        "kingston-osm-way-656259821": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "kingston-osm-way-656259821",
+            "category": null,
+            "tags": {
+              "addr:city": "Kingston",
+              "addr:housenumber": "31",
+              "addr:street": "Weller Avenue",
+              "amenity": "place_of_worship",
+              "building": "yes",
+              "denomination": "united",
+              "name": "St. Matthew's United Church",
+              "religion": "christian"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/656259821",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-kingston-fire-3",
+              "distance": 1874.0009084371345,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1874
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 153
+        },
+        "kingston-osm-node-2696885849": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "clinic",
+          "sourceEvidence": {
+            "sourceRecordId": "kingston-osm-node-2696885849",
+            "category": null,
+            "tags": {
+              "addr:city": "Kingston",
+              "addr:housenumber": "844A",
+              "addr:postcode": "K7L 1G5",
+              "addr:street": "Princess Street",
+              "amenity": "clinic",
+              "description": "HIV/AIDS Regional Services",
+              "fax": "+1-613-545-9805",
+              "healthcare": "clinic",
+              "name": "Trellis HIV & Community Care",
+              "phone": "+1-613-545-3698",
+              "website": "https://trellishiv.ca"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/2696885849",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-kingston-fire-6",
+              "distance": 973.0908170937397,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 973
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 137
+        },
+        "kingston-osm-way-60106636": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "kingston-osm-way-60106636",
+            "category": null,
+            "tags": {
+              "addr:city": "Kingston",
+              "addr:housenumber": "257",
+              "addr:postcode": "K7K 4P9",
+              "addr:street": "Kingscourt Avenue",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "denomination": "free_methodist",
+              "name": "Kingscourt Free Methodist Church (FMC)",
+              "phone": "+1-613-544-7963",
+              "religion": "christian",
+              "source": "CanVec_Import_2009",
+              "website": "https://kingscourtfmc.com"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/60106636",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-kingston-fire-5",
+              "distance": 608.1016842022518,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 608
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 126
+        },
+        "kingston-osm-way-657122114": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "kingston-osm-way-657122114",
+            "category": null,
+            "tags": {
+              "addr:city": "Kingston",
+              "addr:housenumber": "446",
+              "addr:street": "College Street",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "religion": "christian"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/657122114",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-kingston-fire-6",
+              "distance": 608.9947928138921,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 609
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 126
+        },
+        "kingston-odhf-982aced5fa2f40d74964237cab28436d": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "healthcare (source broad category; no emergency/hospital status inferred)",
+          "sourceEvidence": {
+            "sourceRecordId": "kingston-odhf-982aced5fa2f40d74964237cab28436d",
+            "category": "healthcare",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://opendatakingston.cityofkingston.ca/datasets/4c145e4f75ff413398da740f83da30a4_69/explore",
+              "https://opendatakingston.cityofkingston.ca/datasets/e9e04e74abc142dabc6654ebaece0091_66/explore",
+              "https://opendatakingston.cityofkingston.ca/datasets/d8a1c91954c74b5f83d0f8a21076f6f0_25/explore",
+              "https://opendatakingston.cityofkingston.ca/datasets/e60f1e9a93054556bb544842118b02ac_0/explore",
+              "https://geohub.lio.gov.on.ca/datasets/e1e5983c59ff497baddf75f1d2bb4add_26/explore"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "ems-kingston-ems-3",
+              "distance": 4296.266531790851,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 2,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 4296
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 110
+        }
+      }
+    },
+    "note": "Add-only source-validated priority facilities; geographic review reasons are not operational districts. Station assignments require independent directed-road audit."
+  },
+  "routeCandidateExpansion": {
+    "reviewedOn": "2026-10-29",
+    "promotedIds": [
+      "kingston-osm-node-855946057",
+      "kingston-osm-node-855939868",
+      "kingston-osm-node-855937652",
+      "kingston-osm-node-855944522",
+      "kingston-osm-node-855938253",
+      "kingston-osm-node-855946558"
+    ],
+    "candidateVerification": {
+      "pass": true,
+      "sourcePoolSha256": "6a24bc21ddf3292100b6b1cebcdeb96b907d4523902bb54d2dc18d89c30e55d5",
+      "candidateArraySha256": "7f7da5802dfd21e2ad7997b34336fba8e7d08b74953a31363f71a7e11274254d"
+    },
+    "selection": "Only source-verified additional locations used by independently audited station exercises are promoted; existing canonical IDs and fields remain unchanged."
+  },
+  "evidencePathConvention": {
+    "repositoryPaths": "Paths beginning cities/ are repository-relative.",
+    "externalBuildCache": "external-build-cache/ labels identify historical, reproducible build artifacts that are not shipped; adjacent SHA-256 values identify the exact reviewed bytes.",
+    "reviewScope": "Priority facility review records describe the selection-time review. Final integrated route and runtime validation is recorded in docs/city-call-validation-2026-10-29.md."
+  }
+}

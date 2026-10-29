@@ -1,0 +1,79 @@
+{
+  "city": "guelph",
+  "verifiedFingerprint": "42a3e06f6f01c926436e310ed4c96887a4a0807ccb3b915dabcb2d020d7b1d2f",
+  "halls": [
+    {
+      "id": "fire-guelph-fire-1",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 2719,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-guelph-fire-2",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 2883,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-guelph-fire-3",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 3095,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-guelph-fire-4",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 11,
+      "maxRouteMetres": 4639,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-guelph-fire-5",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2596,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-guelph-fire-6",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 5673,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-guelph-ems-0",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 6280,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-guelph-ems-3",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 6079,
+      "method": "modeled-road-response"
+    }
+  ],
+  "routes": 108,
+  "continuousOrigins": 108,
+  "officialCalls": 0,
+  "modeledCalls": 96,
+  "maxRouteMetres": 6279.764751725939,
+  "minCallsPerHall": 12,
+  "minChallengeCallsPerHall": 11,
+  "supportCalls": 12,
+  "durationMs": 12273
+}

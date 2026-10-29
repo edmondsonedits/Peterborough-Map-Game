@@ -1,0 +1,300 @@
+{
+  "schemaVersion": 1,
+  "coverage": {
+    "cityId": "milton",
+    "inputOfficial": 220,
+    "inputOsm": 1949,
+    "inputMajorRoad": 708,
+    "existing": 21,
+    "accepted": 1547,
+    "selected": 180,
+    "target": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "existingByDifficulty": {
+      "easy": 10,
+      "medium": 5,
+      "hard": 5
+    },
+    "selectedByDifficulty": {
+      "easy": 90,
+      "medium": 45,
+      "hard": 45
+    },
+    "totalByDifficulty": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "deficits": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "baseStrata": [
+      {
+        "id": "fire-milton-fire-1",
+        "selected": 20,
+        "available": 172,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-milton-fire-2",
+        "selected": 21,
+        "available": 88,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-milton-fire-3",
+        "selected": 20,
+        "available": 292,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-milton-fire-4",
+        "selected": 20,
+        "available": 225,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-milton-fire-5",
+        "selected": 19,
+        "available": 125,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-milton-ems-6",
+        "selected": 20,
+        "available": 67,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-milton-ems-7",
+        "selected": 20,
+        "available": 366,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-milton-ems-16",
+        "selected": 20,
+        "available": 108,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-milton-ems-17",
+        "selected": 20,
+        "available": 104,
+        "method": "nearest-geographic-base-for-selection-only"
+      }
+    ],
+    "sharedBaseline": 20,
+    "baselineByService": {
+      "fire": {
+        "easy": 10,
+        "medium": 5,
+        "hard": 5
+      },
+      "ems": {
+        "easy": 10,
+        "medium": 6,
+        "hard": 5
+      }
+    },
+    "serviceTotalsByDifficulty": {
+      "fire": {
+        "easy": 100,
+        "medium": 50,
+        "hard": 50
+      },
+      "ems": {
+        "easy": 100,
+        "medium": 51,
+        "hard": 50
+      }
+    },
+    "serviceDeficits": {
+      "fire": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      },
+      "ems": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "rejected": 1330,
+    "rejectionCounts": {
+      "unresolved-2020-source-currentness": 2,
+      "production-snap-not-ground-public-road": 605,
+      "production-snap-wrong-street": 405,
+      "production-snap-over-80m-or-missing": 54,
+      "unresolved-official-coordinate-or-current-address-conflict": 13,
+      "not-one-exact-civic-number-and-street": 134,
+      "duplicate-existing-or-accepted-address-or-named-site": 88,
+      "no-genuine-connected-cross-street-within-1500m": 29
+    },
+    "oneStreetExceptions": 72
+  },
+  "independentAudit": {
+    "cityId": "milton",
+    "selected": 180,
+    "accepted": 1547,
+    "crossStreetEvidence": 2618,
+    "oneStreet": 476,
+    "maxGap": 76.64865735457192,
+    "pass": true
+  },
+  "priorityFacilityExpansion": {
+    "reviewedOn": "2026-10-29",
+    "addedIds": [
+      "milton-osm-way-257870946",
+      "milton-odhf-583ad5b7e9cb1109282e58439ed03865"
+    ],
+    "verification": {
+      "cityId": "milton",
+      "additions": 2,
+      "proposalSha256": "1e4dcfce58a256b44edcf2e6d04b9f1ff10ac538b9537d75511e71436aa73872",
+      "pass": true,
+      "checks": [
+        "IDs absent from current shared/legacy/care catalogue",
+        "row exactly equals accepted source record",
+        "full per-record provenance exactly equals accepted pool",
+        "factual category/tags and coordinates match raw source record",
+        "source point and URLs unchanged",
+        "no normalized civic-address/near-identical-site duplicates",
+        "max40 per city",
+        "per-base rationale present; no dispatch ownership claim"
+      ]
+    },
+    "review": {
+      "purpose": "Bounded source-preserving priority facility and local variety additions; no recognition tier rewrites.",
+      "sourcePool": "external-build-cache/canonical-catalogues-reviewed/milton/accepted-candidates.json",
+      "sourcePoolSha256": "cfdab4f67b47dc0a7cf5417c3ed9e955bd0b8f55a8108e517267c44a00fbeda0",
+      "selectedDescriptor": "cities/milton/training-data.json",
+      "selectedDescriptorSha256": "570673a9ff7ea204818ddc0e53cf5b388180fd1ee7e47be4eb03d20732bd329d",
+      "routeEvidence": "cities/milton/training-data.json",
+      "routeEvidenceScope": "production",
+      "selectionRules": {
+        "maxPerCity": 40,
+        "maxPotentialAddsPerBase": 6,
+        "maxPotentialAddsForConfirmedZeroToTwoBase": 10,
+        "twoCluePriority": true,
+        "maximumStraightLineBaseReviewDistanceMetres": 6000
+      },
+      "limitations": [
+        "At this selection-time review: Every row passed the existing all-accepted geographic/source/clue audit. These additions have not been graph-assigned or route-audited.",
+        "Published Fire polygons are respected for review proximity; EMS and other Fire review strata use straight-line proximity only. These are not dispatch ownership assignments.",
+        "Full original accepted source point, ID, address, recognition tier, incident profile and provenance are unchanged. Current-open status is not newly verified."
+      ],
+      "rationales": {
+        "milton-osm-way-257870946": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "milton-osm-way-257870946",
+            "category": null,
+            "tags": {
+              "addr:city": "Milton",
+              "addr:housenumber": "306",
+              "addr:province": "ON",
+              "addr:street": "Ontario Street North",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "name": "Milton Bible Fellowship",
+              "religion": "christian",
+              "website": "https://miltonbiblefellowship.ca/"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/257870946",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-milton-fire-1",
+              "distance": 376.5649836020268,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 377
+            },
+            {
+              "baseId": "ems-milton-ems-7",
+              "distance": 1299.3861608983548,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1299
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 208
+        },
+        "milton-odhf-583ad5b7e9cb1109282e58439ed03865": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "healthcare (source broad category; no emergency/hospital status inferred)",
+          "sourceEvidence": {
+            "sourceRecordId": "milton-odhf-583ad5b7e9cb1109282e58439ed03865",
+            "category": "healthcare",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://geohub.lio.gov.on.ca/datasets/e1e5983c59ff497baddf75f1d2bb4add_26/explore"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-milton-fire-2",
+              "distance": 511.9955419822896,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 512
+            },
+            {
+              "baseId": "ems-milton-ems-6",
+              "distance": 497.38638594956115,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 497
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 204
+        }
+      }
+    },
+    "note": "Add-only source-validated priority facilities; geographic review reasons are not operational districts. Station assignments require independent directed-road audit."
+  },
+  "routeCandidateExpansion": {
+    "reviewedOn": "2026-10-29",
+    "promotedIds": [],
+    "candidateVerification": null,
+    "selection": "Only source-verified additional locations used by independently audited station exercises are promoted; existing canonical IDs and fields remain unchanged."
+  },
+  "evidencePathConvention": {
+    "repositoryPaths": "Paths beginning cities/ are repository-relative.",
+    "externalBuildCache": "external-build-cache/ labels identify historical, reproducible build artifacts that are not shipped; adjacent SHA-256 values identify the exact reviewed bytes.",
+    "reviewScope": "Priority facility review records describe the selection-time review. Final integrated route and runtime validation is recorded in docs/city-call-validation-2026-10-29.md."
+  }
+}

@@ -120,7 +120,8 @@
     const city = cityContext();
     const service = text(snapshot.service || 'fire').toLowerCase() === 'ems' ? 'ems' : 'fire';
     const responseMs = Math.max(0, finite(snapshot.responseMs));
-    const transportMs = service === 'ems' ? Math.max(0, finite(snapshot.transportMs)) : 0;
+    const transportOccurred = service === 'ems' && snapshot.transportOccurred !== false;
+    const transportMs = transportOccurred ? Math.max(0, finite(snapshot.transportMs)) : 0;
     const sessionId = currentSessionId();
     const generation = text(snapshot.generation || 'unknown');
     const completedAt = snapshot.completedAt ? new Date(snapshot.completedAt).toISOString() : new Date().toISOString();
@@ -144,6 +145,7 @@
       landmarkReference: Boolean(presented.landmarkReference),
       responseSeconds: Number((responseMs / 1000).toFixed(1)),
       transportSeconds: Number((transportMs / 1000).toFixed(1)),
+      transportOccurred,
       totalSeconds: Number(((responseMs + transportMs) / 1000).toFixed(1)),
       hospital: service === 'ems' ? text(snapshot.hospital?.name || '') : '',
     });
@@ -199,7 +201,7 @@
     const averageResponse = responseValues.length
       ? responseValues.reduce((sum, value) => sum + value, 0) / responseValues.length
       : 0;
-    const emsTransports = entries.filter(entry => entry.service === 'ems').length;
+    const emsTransports = entries.filter(entry => entry.service === 'ems' && entry.transportOccurred !== false).length;
     const sessions = new Set(entries.map(entry => entry.sessionId).filter(Boolean)).size;
     return Object.freeze({
       calls,
@@ -282,7 +284,7 @@
       : 'Browser storage is unavailable; history will last only for this page.';
     const rows = entries.map(entry => {
       const service = entry.service === 'ems' ? 'EMS' : 'Fire';
-      const times = entry.service === 'ems'
+      const times = entry.service === 'ems' && entry.transportOccurred !== false
         ? `Response ${finite(entry.responseSeconds).toFixed(1)}s · Transport ${finite(entry.transportSeconds).toFixed(1)}s`
         : `Response ${finite(entry.responseSeconds).toFixed(1)}s`;
       const place = [entry.location, entry.address].filter(Boolean).map(escapeHtml).join(' · ');

@@ -1,0 +1,18 @@
+[
+  {
+    "script": "normalize_lode.py",
+    "exitCode": 0
+  },
+  {
+    "script": "refine_bundles.py",
+    "exitCode": 0
+  },
+  {
+    "script": "validate_bundles.py",
+    "exitCode": 0
+  },
+  {
+    "uniqueSites": 18415,
+    "errors": []
+  }
+]

@@ -1,0 +1,45 @@
+[
+  {
+    "file": "acquire_lode.py",
+    "syntax": "pass",
+    "helpExitCode": 0
+  },
+  {
+    "file": "acquire_ontario_schools.py",
+    "syntax": "pass",
+    "helpExitCode": 0
+  },
+  {
+    "file": "acquire_snapshot.py",
+    "syntax": "pass",
+    "helpExitCode": 0
+  },
+  {
+    "file": "apply_independent_reviews.py",
+    "syntax": "pass",
+    "helpExitCode": 0
+  },
+  {
+    "file": "normalize_lode.py",
+    "syntax": "pass",
+    "helpExitCode": 0
+  },
+  {
+    "file": "official_common.py",
+    "syntax": "pass"
+  },
+  {
+    "file": "official_reviews.py",
+    "syntax": "pass"
+  },
+  {
+    "file": "refine_bundles.py",
+    "syntax": "pass",
+    "helpExitCode": 0
+  },
+  {
+    "file": "validate_bundles.py",
+    "syntax": "pass",
+    "helpExitCode": 0
+  }
+]

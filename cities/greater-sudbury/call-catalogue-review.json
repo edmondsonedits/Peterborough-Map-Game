@@ -1,0 +1,1220 @@
+{
+  "schemaVersion": 1,
+  "coverage": {
+    "cityId": "greater-sudbury",
+    "inputOfficial": 289,
+    "inputOsm": 2760,
+    "inputMajorRoad": 1399,
+    "existing": 27,
+    "accepted": 2017,
+    "selected": 180,
+    "target": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "existingByDifficulty": {
+      "easy": 10,
+      "medium": 5,
+      "hard": 5
+    },
+    "selectedByDifficulty": {
+      "easy": 90,
+      "medium": 45,
+      "hard": 45
+    },
+    "totalByDifficulty": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "deficits": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "baseStrata": [
+      {
+        "id": "fire-greater-sudbury-fire-1",
+        "selected": 10,
+        "available": 863,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-greater-sudbury-fire-3",
+        "selected": 10,
+        "available": 174,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-greater-sudbury-fire-4",
+        "selected": 10,
+        "available": 149,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-greater-sudbury-fire-23",
+        "selected": 10,
+        "available": 29,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-greater-sudbury-fire-20",
+        "selected": 10,
+        "available": 86,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-greater-sudbury-fire-17",
+        "selected": 9,
+        "available": 81,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-greater-sudbury-fire-16",
+        "selected": 10,
+        "available": 101,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-greater-sudbury-fire-2",
+        "selected": 10,
+        "available": 182,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-greater-sudbury-fire-7",
+        "selected": 9,
+        "available": 57,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-greater-sudbury-fire-24",
+        "selected": 10,
+        "available": 16,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-greater-sudbury-fire-11",
+        "selected": 9,
+        "available": 84,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-greater-sudbury-fire-14",
+        "selected": 9,
+        "available": 33,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-greater-sudbury-fire-22",
+        "selected": 9,
+        "available": 11,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-greater-sudbury-fire-18",
+        "selected": 8,
+        "available": 16,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-greater-sudbury-fire-8",
+        "selected": 10,
+        "available": 27,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-greater-sudbury-fire-12",
+        "selected": 9,
+        "available": 26,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-greater-sudbury-fire-6",
+        "selected": 10,
+        "available": 41,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-greater-sudbury-fire-10",
+        "selected": 9,
+        "available": 20,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-greater-sudbury-ems-post-1",
+        "selected": 0,
+        "available": 0,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-greater-sudbury-ems-post-3",
+        "selected": 0,
+        "available": 0,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-greater-sudbury-ems-post-4",
+        "selected": 0,
+        "available": 0,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-greater-sudbury-ems-post-23",
+        "selected": 0,
+        "available": 0,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-greater-sudbury-ems-post-2",
+        "selected": 0,
+        "available": 0,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-greater-sudbury-ems-azilda-central",
+        "selected": 0,
+        "available": 0,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-greater-sudbury-ems-garson-post",
+        "selected": 0,
+        "available": 0,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-greater-sudbury-ems-val-therese",
+        "selected": 0,
+        "available": 0,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-greater-sudbury-ems-chelmsford",
+        "selected": 0,
+        "available": 0,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-greater-sudbury-ems-levack",
+        "selected": 0,
+        "available": 0,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-greater-sudbury-ems-walden",
+        "selected": 0,
+        "available": 0,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-greater-sudbury-ems-capreol",
+        "selected": 9,
+        "available": 21,
+        "method": "nearest-geographic-base-for-selection-only"
+      }
+    ],
+    "sharedBaseline": 20,
+    "baselineByService": {
+      "fire": {
+        "easy": 10,
+        "medium": 5,
+        "hard": 5
+      },
+      "ems": {
+        "easy": 10,
+        "medium": 12,
+        "hard": 5
+      }
+    },
+    "serviceTotalsByDifficulty": {
+      "fire": {
+        "easy": 100,
+        "medium": 50,
+        "hard": 50
+      },
+      "ems": {
+        "easy": 100,
+        "medium": 57,
+        "hard": 50
+      }
+    },
+    "serviceDeficits": {
+      "fire": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      },
+      "ems": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "rejected": 2431,
+    "rejectionCounts": {
+      "unresolved-2020-source-currentness": 9,
+      "production-snap-not-ground-public-road": 1511,
+      "production-snap-wrong-street": 596,
+      "not-one-exact-civic-number-and-street": 27,
+      "production-snap-over-80m-or-missing": 124,
+      "duplicate-existing-or-accepted-address-or-named-site": 127,
+      "unresolved-official-coordinate-or-current-address-conflict": 1,
+      "no-genuine-connected-cross-street-within-1500m": 36
+    },
+    "oneStreetExceptions": 82
+  },
+  "independentAudit": {
+    "cityId": "greater-sudbury",
+    "selected": 180,
+    "accepted": 2017,
+    "crossStreetEvidence": 3511,
+    "oneStreet": 523,
+    "maxGap": 79.53858752897224,
+    "pass": true
+  },
+  "priorityFacilityExpansion": {
+    "reviewedOn": "2026-10-29",
+    "addedIds": [
+      "greater-sudbury-osm-way-224509020",
+      "greater-sudbury-osm-way-292773742",
+      "greater-sudbury-osm-way-269543542",
+      "greater-sudbury-osm-way-758744491",
+      "greater-sudbury-odef-6674c467db1888dbf838",
+      "greater-sudbury-osm-way-167228778",
+      "greater-sudbury-osm-way-1423658142",
+      "greater-sudbury-osm-way-213140281",
+      "greater-sudbury-osm-way-249645869",
+      "greater-sudbury-odhf-49b0a3a63bc3450f643b10bd0b704dca",
+      "greater-sudbury-odhf-c99d22b4d2f27d7b48509220fb370813",
+      "greater-sudbury-osm-way-292477284",
+      "greater-sudbury-osm-way-650390286",
+      "greater-sudbury-osm-way-241245602",
+      "greater-sudbury-odef-feb81930e99b3295d8d6",
+      "greater-sudbury-osm-way-169037078",
+      "greater-sudbury-osm-way-545737584",
+      "greater-sudbury-osm-way-281816529",
+      "greater-sudbury-osm-way-242548031"
+    ],
+    "verification": {
+      "cityId": "greater-sudbury",
+      "additions": 19,
+      "proposalSha256": "312ca6ecf21bd9ca73745a7a38f937fbadf86f53732c31208e5af51f66140a95",
+      "pass": true,
+      "checks": [
+        "IDs absent from current shared/legacy/care catalogue",
+        "row exactly equals accepted source record",
+        "full per-record provenance exactly equals accepted pool",
+        "factual category/tags and coordinates match raw source record",
+        "source point and URLs unchanged",
+        "no normalized civic-address/near-identical-site duplicates",
+        "max40 per city",
+        "per-base rationale present; no dispatch ownership claim"
+      ]
+    },
+    "review": {
+      "purpose": "Bounded source-preserving priority facility and local variety additions; no recognition tier rewrites.",
+      "sourcePool": "external-build-cache/canonical-catalogues-reviewed/greater-sudbury/accepted-candidates.json",
+      "sourcePoolSha256": "e8b2060cd67b4d9ddeb12ddfe6d24dffca372f9b2eab52bacf4eff73400a726c",
+      "selectedDescriptor": "cities/greater-sudbury/training-data.json",
+      "selectedDescriptorSha256": "86f841290da661a2e8a2d55f9a9e9e02e364da1f49d03d877d4e6fd975e0a776",
+      "routeEvidence": "cities/greater-sudbury/training-data.json",
+      "routeEvidenceScope": "production",
+      "selectionRules": {
+        "maxPerCity": 40,
+        "maxPotentialAddsPerBase": 6,
+        "maxPotentialAddsForConfirmedZeroToTwoBase": 10,
+        "twoCluePriority": true,
+        "maximumStraightLineBaseReviewDistanceMetres": 6000
+      },
+      "limitations": [
+        "At this selection-time review: Every row passed the existing all-accepted geographic/source/clue audit. These additions have not been graph-assigned or route-audited.",
+        "Published Fire polygons are respected for review proximity; EMS and other Fire review strata use straight-line proximity only. These are not dispatch ownership assignments.",
+        "Full original accepted source point, ID, address, recognition tier, incident profile and provenance are unchanged. Current-open status is not newly verified."
+      ],
+      "rationales": {
+        "greater-sudbury-osm-way-224509020": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "greater-sudbury-osm-way-224509020",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "120",
+              "addr:street": "Worthington Crescent",
+              "building": "industrial",
+              "building:levels": "1"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/224509020",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-greater-sudbury-fire-1",
+              "distance": 211.34566431910733,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 211
+            },
+            {
+              "baseId": "ems-greater-sudbury-ems-post-1",
+              "distance": 211.34566431910733,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 211
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 221
+        },
+        "greater-sudbury-osm-way-292773742": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "greater-sudbury-osm-way-292773742",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "1065",
+              "addr:street": "Auger Avenue",
+              "building": "industrial",
+              "building:levels": "1",
+              "name": "Total Power"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/292773742",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-greater-sudbury-fire-3",
+              "distance": 1338.2017556201208,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1338
+            },
+            {
+              "baseId": "ems-greater-sudbury-ems-post-3",
+              "distance": 1338.2017556201208,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1338
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 214
+        },
+        "greater-sudbury-osm-way-269543542": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "greater-sudbury-osm-way-269543542",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "1988",
+              "addr:street": "Kingsway",
+              "building": "industrial",
+              "building:levels": "1",
+              "name": "Laird Constructors"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/269543542",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-greater-sudbury-fire-2",
+              "distance": 1551.9943870402715,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1552
+            },
+            {
+              "baseId": "ems-greater-sudbury-ems-post-2",
+              "distance": 1551.9943870402715,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1552
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 213
+        },
+        "greater-sudbury-osm-way-758744491": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "greater-sudbury-osm-way-758744491",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "1248",
+              "addr:street": "Lauzon Avenue",
+              "amenity": "place_of_worship",
+              "building": "yes",
+              "denomination": "united",
+              "name": "St. Stephen's on the Hill United Church",
+              "religion": "christian"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/758744491",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-greater-sudbury-fire-3",
+              "distance": 506.11930677470804,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 506
+            },
+            {
+              "baseId": "ems-greater-sudbury-ems-post-3",
+              "distance": 506.11930677470804,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 506
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 210
+        },
+        "greater-sudbury-odef-6674c467db1888dbf838": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "greater-sudbury-odef-6674c467db1888dbf838",
+            "category": "school",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/37-26-0001/372600012022001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/en/pub/37-26-0001/2022001/ODEF_v3.0.zip",
+              "https://data.ontario.ca/dataset/school-information-and-student-demographics",
+              "https://data.ontario.ca/dataset/ontario-public-school-contact-information",
+              "https://data.ontario.ca/dataset/fb3a7c18-90af-453e-bc0a-a76ecc471862/resource/f3a8c2a3-09d9-4715-9044-d8a0189f572c/download/public_school_contact_list_september2026_en.txt"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-greater-sudbury-fire-17",
+              "distance": 1032.0289739704392,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1032
+            },
+            {
+              "baseId": "ems-greater-sudbury-ems-val-therese",
+              "distance": 5714.07865187166,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 5714
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 206
+        },
+        "greater-sudbury-osm-way-167228778": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "greater-sudbury-osm-way-167228778",
+            "category": null,
+            "tags": {
+              "addr:city": "Sudbury",
+              "addr:housenumber": "140",
+              "addr:postcode": "P3C 4J8",
+              "addr:province": "ON",
+              "addr:street": "Alder Street",
+              "amenity": "place_of_worship",
+              "building": "yes",
+              "name": "Croatian Catholic Church",
+              "religion": "christian"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/167228778",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-greater-sudbury-fire-1",
+              "distance": 1341.522458940681,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1342
+            },
+            {
+              "baseId": "ems-greater-sudbury-ems-post-1",
+              "distance": 1341.522458940681,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1342
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 205
+        },
+        "greater-sudbury-osm-way-1423658142": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "greater-sudbury-osm-way-1423658142",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "3017",
+              "addr:street": "Falconbridge Highway",
+              "building": "apartments"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/1423658142",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-greater-sudbury-fire-20",
+              "distance": 1694.324560542558,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1694
+            },
+            {
+              "baseId": "ems-greater-sudbury-ems-garson-post",
+              "distance": 1694.324560542558,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1694
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 205
+        },
+        "greater-sudbury-osm-way-213140281": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "greater-sudbury-osm-way-213140281",
+            "category": null,
+            "tags": {
+              "addr:city": "Sudbury",
+              "addr:housenumber": "1106",
+              "addr:postcode": "P3C 3B7",
+              "addr:street": "Webbwood Drive",
+              "building": "industrial",
+              "building:levels": "1",
+              "name": "Henninger's Diesel"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/213140281",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-greater-sudbury-fire-4",
+              "distance": 2963.5252555377524,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2964
+            },
+            {
+              "baseId": "ems-greater-sudbury-ems-post-4",
+              "distance": 2963.5252555377524,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2964
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 205
+        },
+        "greater-sudbury-osm-way-249645869": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "greater-sudbury-osm-way-249645869",
+            "category": null,
+            "tags": {
+              "addr:city": "Chelmsford",
+              "addr:housenumber": "3594",
+              "addr:postcode": "P0M 1L0",
+              "addr:province": "ON",
+              "addr:street": "Errington Avenue",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "denomination": "roman_catholic",
+              "name": "Paroisse St-Joseph",
+              "religion": "christian",
+              "source": "NRCan-CanVec-10.0"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/249645869",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-greater-sudbury-fire-11",
+              "distance": 1655.3307737710318,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1655
+            },
+            {
+              "baseId": "ems-greater-sudbury-ems-chelmsford",
+              "distance": 1655.3307737710318,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1655
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 204
+        },
+        "greater-sudbury-odhf-49b0a3a63bc3450f643b10bd0b704dca": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "healthcare (source broad category; no emergency/hospital status inferred)",
+          "sourceEvidence": {
+            "sourceRecordId": "greater-sudbury-odhf-49b0a3a63bc3450f643b10bd0b704dca",
+            "category": "healthcare",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://geohub.lio.gov.on.ca/datasets/e1e5983c59ff497baddf75f1d2bb4add_26/explore"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-greater-sudbury-fire-18",
+              "distance": 877.9556864800691,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 878
+            },
+            {
+              "baseId": "ems-greater-sudbury-ems-capreol",
+              "distance": 384.4452967082284,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 384
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 203
+        },
+        "greater-sudbury-odhf-c99d22b4d2f27d7b48509220fb370813": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "healthcare (source broad category; no emergency/hospital status inferred)",
+          "sourceEvidence": {
+            "sourceRecordId": "greater-sudbury-odhf-c99d22b4d2f27d7b48509220fb370813",
+            "category": "healthcare",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://geohub.lio.gov.on.ca/datasets/e1e5983c59ff497baddf75f1d2bb4add_26/explore"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-greater-sudbury-fire-7",
+              "distance": 17.782852281603095,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 18
+            },
+            {
+              "baseId": "ems-greater-sudbury-ems-walden",
+              "distance": 2311.796086485243,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2312
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 200
+        },
+        "greater-sudbury-osm-way-292477284": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "greater-sudbury-osm-way-292477284",
+            "category": null,
+            "tags": {
+              "addr:city": "Val Caron",
+              "addr:housenumber": "3015",
+              "addr:postcode": "P3N 1R8",
+              "addr:street": "Lina Street",
+              "building": "apartments",
+              "building:flats": "6",
+              "building:levels": "2"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/292477284",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-greater-sudbury-fire-16",
+              "distance": 3658.3896716804293,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 3658
+            },
+            {
+              "baseId": "ems-greater-sudbury-ems-val-therese",
+              "distance": 3658.3896716804293,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 3658
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 194
+        },
+        "greater-sudbury-osm-way-650390286": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "social_centre",
+          "sourceEvidence": {
+            "sourceRecordId": "greater-sudbury-osm-way-650390286",
+            "category": null,
+            "tags": {
+              "addr:city": "Falconbridge",
+              "addr:housenumber": "66",
+              "addr:postcode": "P0M 1S0",
+              "addr:street": "Edison Road",
+              "amenity": "social_centre",
+              "brand": "Royal Canadian Legion",
+              "brand:wikidata": "Q3270231",
+              "brand:wikipedia": "en:Royal Canadian Legion",
+              "building": "yes",
+              "name": "Royal Canadian Legion Hall",
+              "short_name": "RCL",
+              "social_centre:for": "veterans"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/650390286",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-greater-sudbury-fire-20",
+              "distance": 4043.175535085446,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 4043
+            },
+            {
+              "baseId": "ems-greater-sudbury-ems-garson-post",
+              "distance": 4043.175535085446,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 4043
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 190
+        },
+        "greater-sudbury-osm-way-241245602": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "greater-sudbury-osm-way-241245602",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "78",
+              "addr:street": "Balsam Street",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "building:levels": "3",
+              "denomination": "catholic",
+              "name": "St. Stanislaus Catholic Church",
+              "phone": "+1-705-682-4683",
+              "religion": "christian",
+              "service_times": "Su 11:15"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/241245602",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-greater-sudbury-fire-4",
+              "distance": 5082.956789992168,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 5083
+            },
+            {
+              "baseId": "ems-greater-sudbury-ems-post-4",
+              "distance": 5082.956789992168,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 5083
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 184
+        },
+        "greater-sudbury-odef-feb81930e99b3295d8d6": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "greater-sudbury-odef-feb81930e99b3295d8d6",
+            "category": "school",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/37-26-0001/372600012022001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/en/pub/37-26-0001/2022001/ODEF_v3.0.zip",
+              "https://data.ontario.ca/dataset/school-information-and-student-demographics",
+              "https://data.ontario.ca/dataset/ontario-public-school-contact-information",
+              "https://data.ontario.ca/dataset/fb3a7c18-90af-453e-bc0a-a76ecc471862/resource/f3a8c2a3-09d9-4715-9044-d8a0189f572c/download/public_school_contact_list_september2026_en.txt"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-greater-sudbury-fire-16",
+              "distance": 3521.9865253099083,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 3522
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 160
+        },
+        "greater-sudbury-osm-way-169037078": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "clinic",
+          "sourceEvidence": {
+            "sourceRecordId": "greater-sudbury-osm-way-169037078",
+            "category": null,
+            "tags": {
+              "addr:city": "Sudbury",
+              "addr:housenumber": "212",
+              "addr:postcode": "P3C 1N3",
+              "addr:street": "Applegrove Street",
+              "amenity": "clinic",
+              "building": "commercial",
+              "building:levels": "2",
+              "healthcare": "clinic",
+              "name": "Natural Health Solutions"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/169037078",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-greater-sudbury-fire-1",
+              "distance": 1167.1270238026666,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 2,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 1167
+            },
+            {
+              "baseId": "ems-greater-sudbury-ems-post-1",
+              "distance": 1167.1270238026666,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 2,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 1167
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 158
+        },
+        "greater-sudbury-osm-way-545737584": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "greater-sudbury-osm-way-545737584",
+            "category": null,
+            "tags": {
+              "addr:city": "Greater Sudbury",
+              "addr:housenumber": "1720",
+              "addr:postcode": "P3E 3C2",
+              "addr:province": "ON",
+              "addr:street": "Paris Street",
+              "building": "apartments",
+              "building:levels": "6",
+              "name": "Lakeshore Manor"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/545737584",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-greater-sudbury-fire-4",
+              "distance": 902.1352627232008,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 2,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 902
+            },
+            {
+              "baseId": "ems-greater-sudbury-ems-post-4",
+              "distance": 902.1352627232008,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 2,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 902
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 150
+        },
+        "greater-sudbury-osm-way-281816529": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "greater-sudbury-osm-way-281816529",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "15",
+              "addr:street": "Mumford Road",
+              "building": "industrial",
+              "building:levels": "1",
+              "name": "Equipment Sales & Service"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/281816529",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-greater-sudbury-fire-7",
+              "distance": 2759.8963316471727,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 2,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 2760
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 129
+        },
+        "greater-sudbury-osm-way-242548031": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "greater-sudbury-osm-way-242548031",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "16",
+              "addr:street": "Jessie Street",
+              "building": "school",
+              "building:levels": "1"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/242548031",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-greater-sudbury-fire-6",
+              "distance": 2083.0172299527326,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2083
+            }
+          ],
+          "twoGenuineCrossStreetClues": false,
+          "oneClueException": "No unselected accepted two-clue source in this priority family for the targeted review base(s); high-value source family retained.",
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 124
+        }
+      }
+    },
+    "note": "Add-only source-validated priority facilities; geographic review reasons are not operational districts. Station assignments require independent directed-road audit."
+  },
+  "routeCandidateExpansion": {
+    "reviewedOn": "2026-10-29",
+    "promotedIds": [
+      "greater-sudbury-osm-node-2545639803",
+      "greater-sudbury-osm-node-2547772365",
+      "greater-sudbury-osm-node-2547772436",
+      "greater-sudbury-osm-node-2547772487"
+    ],
+    "candidateVerification": {
+      "pass": true,
+      "sourcePoolSha256": "347a5959fee633a3bfad3f7508cf91ff783c66169f7839a8acf9e3421a6b5705",
+      "candidateArraySha256": "8fdc29c2bb4b59b2219e50e5cef82b19219cb0a12e5243428d1c7517fb9e3f18"
+    },
+    "selection": "Only source-verified additional locations used by independently audited station exercises are promoted; existing canonical IDs and fields remain unchanged."
+  },
+  "evidencePathConvention": {
+    "repositoryPaths": "Paths beginning cities/ are repository-relative.",
+    "externalBuildCache": "external-build-cache/ labels identify historical, reproducible build artifacts that are not shipped; adjacent SHA-256 values identify the exact reviewed bytes.",
+    "reviewScope": "Priority facility review records describe the selection-time review. Final integrated route and runtime validation is recorded in docs/city-call-validation-2026-10-29.md."
+  }
+}

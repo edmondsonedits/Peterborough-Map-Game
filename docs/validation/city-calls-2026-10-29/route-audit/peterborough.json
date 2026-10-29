@@ -1,0 +1,54 @@
+{
+  "city": "peterborough",
+  "verifiedFingerprint": "ec04255ab57ba822f2b1d51f305740b47d952fc7524b54fba380d2c365be8840",
+  "halls": [
+    {
+      "id": "fire-station-1",
+      "service": "fire",
+      "calls": 6,
+      "challengeCalls": 6,
+      "maxRouteMetres": 2655,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-station-2",
+      "service": "fire",
+      "calls": 6,
+      "challengeCalls": 6,
+      "maxRouteMetres": 2597,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-station-3",
+      "service": "fire",
+      "calls": 6,
+      "challengeCalls": 6,
+      "maxRouteMetres": 2595,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-armour",
+      "service": "ems",
+      "calls": 6,
+      "challengeCalls": 6,
+      "maxRouteMetres": 2596,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-clonsilla",
+      "service": "ems",
+      "calls": 6,
+      "challengeCalls": 6,
+      "maxRouteMetres": 2626,
+      "method": "modeled-road-response"
+    }
+  ],
+  "routes": 30,
+  "continuousOrigins": 30,
+  "officialCalls": 0,
+  "modeledCalls": 30,
+  "maxRouteMetres": 2655.3863547340843,
+  "minCallsPerHall": 6,
+  "minChallengeCallsPerHall": 6,
+  "durationMs": 973
+}

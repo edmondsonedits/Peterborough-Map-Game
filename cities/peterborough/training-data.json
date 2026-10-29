@@ -291,7 +291,15 @@
         ],
         "challengeCalls": 6
       }
-    ]
+    ],
+    "civicResponses": {
+      "schemaVersion": 1,
+      "firstDuePerBase": 6,
+      "supportPerBase": 2,
+      "supportPerCall": 2,
+      "maxSupportRouteMetres": 6500,
+      "description": "Estimated training assignments only; not official run cards or mutual aid. Eligible modeled cost ties are allocated to balance first-due training coverage."
+    }
   },
   "routeCalls": [
     {
@@ -559,16 +567,16 @@
         "fire"
       ],
       "routeQuality": {
-        "routeMetres": 1133.2,
-        "meaningfulDecisions": 2,
-        "maxAlternativePenaltyMetres": 2616,
+        "routeMetres": 869,
+        "meaningfulDecisions": 3,
+        "maxAlternativePenaltyMetres": 2880.1,
         "decisionKinds": [
           "turn",
           "departure"
         ],
         "departureRoad": "Marina Boulevard",
-        "estimatedCostSeconds": 133.8,
-        "bestSameServiceCostSeconds": 133.8
+        "estimatedCostSeconds": 69.5,
+        "bestSameServiceCostSeconds": 69.5
       }
     },
     {
@@ -597,7 +605,7 @@
       "routeQuality": {
         "routeMetres": 1649.8,
         "meaningfulDecisions": 4,
-        "maxAlternativePenaltyMetres": 3259.6,
+        "maxAlternativePenaltyMetres": 3218.3,
         "decisionKinds": [
           "turn",
           "departure"
@@ -681,7 +689,7 @@
       "routeQuality": {
         "routeMetres": 1728.2,
         "meaningfulDecisions": 3,
-        "maxAlternativePenaltyMetres": 2139.2,
+        "maxAlternativePenaltyMetres": 1476.5,
         "decisionKinds": [
           "turn",
           "departure"
@@ -720,16 +728,16 @@
         "fire"
       ],
       "routeQuality": {
-        "routeMetres": 2574.5,
-        "meaningfulDecisions": 2,
-        "maxAlternativePenaltyMetres": 1189.4,
+        "routeMetres": 1911.8,
+        "meaningfulDecisions": 5,
+        "maxAlternativePenaltyMetres": 1919.9,
         "decisionKinds": [
           "turn",
           "departure"
         ],
         "departureRoad": "Marina Boulevard",
-        "estimatedCostSeconds": 249.1,
-        "bestSameServiceCostSeconds": 249.1
+        "estimatedCostSeconds": 152.9,
+        "bestSameServiceCostSeconds": 152.9
       }
     },
     {
@@ -763,7 +771,7 @@
       "routeQuality": {
         "routeMetres": 1919.9,
         "meaningfulDecisions": 4,
-        "maxAlternativePenaltyMetres": 3423.9,
+        "maxAlternativePenaltyMetres": 2761.2,
         "decisionKinds": [
           "turn",
           "departure"

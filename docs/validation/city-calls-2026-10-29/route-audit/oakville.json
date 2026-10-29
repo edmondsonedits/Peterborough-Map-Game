@@ -1,0 +1,119 @@
+{
+  "city": "oakville",
+  "verifiedFingerprint": "dff88afa8562c93ecca4888e1cbc6da6c0b9ea3177f50cc0046d64d356cdb9e3",
+  "halls": [
+    {
+      "id": "fire-oakville-fire-9",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3878,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-oakville-fire-3",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2908,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-oakville-fire-4",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2852,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-oakville-fire-6",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3549,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-oakville-fire-1",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 4930,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-oakville-fire-7",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2996,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-oakville-fire-5",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3642,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-oakville-fire-2",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3203,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-oakville-fire-8",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3868,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-oakville-ems-2",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2614,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-oakville-ems-12",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2770,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-oakville-ems-14",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2988,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-oakville-ems-15",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3245,
+      "method": "modeled-road-response"
+    }
+  ],
+  "routes": 174,
+  "continuousOrigins": 174,
+  "officialCalls": 0,
+  "modeledCalls": 156,
+  "maxRouteMetres": 4929.9973375710315,
+  "minCallsPerHall": 12,
+  "minChallengeCallsPerHall": 11,
+  "supportCalls": 18,
+  "durationMs": 11980
+}

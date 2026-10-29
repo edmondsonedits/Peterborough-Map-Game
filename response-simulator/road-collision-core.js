@@ -9,6 +9,7 @@
   const CONFIG = Object.freeze({
     cityId: city?.id || 'peterborough',
     dataUrl: cityRoads.dataUrl || '../city-explorer/data/osm-public-roads.geojson',
+    manifestUrl: cityRoads.manifestUrl || null,
     centerLat: Number(roadCenter[0]) || 44.3091,
     centerLng: Number(roadCenter[1]) || -78.3197,
     gridSize: Number(cityRoads.gridSize) || 80,
@@ -191,8 +192,8 @@
     return best;
   }
 
-  function roadInfoAtXY(x, y, searchRadius = 45) {
-    const yard = yardAtXY(x,y);
+  function roadInfoAtXY(x, y, searchRadius = 45, ignoreYard = false) {
+    const yard = ignoreYard ? null : yardAtXY(x,y);
     if (yard) return {drivable:true,nearest:null,clearance:0,yard};
     let nearest = null;
     let allowed = null;
@@ -280,11 +281,16 @@
   function resolveStationExitMovement(previous, candidate) {
     const exit = state.stationExit;
     if (!exit) return null;
-    const roadInfo = roadInfoAtXY(candidate.x, candidate.y, CONFIG.stationExitSearchDistance);
+    // A yard is drivable, but it is not evidence that the connector reached a road.
+    const roadInfo = roadInfoAtXY(candidate.x, candidate.y, CONFIG.stationExitSearchDistance, true);
     if (roadInfo.drivable) {
       state.stationExit = null;
       return {...toLatLng(candidate.x,candidate.y),blocked:false,snapped:false,stationExitCompleted:true,segment:roadInfo.nearest?.segment || exit.roadSegment};
     }
+    // Preserve normal maneuvering within the yard; outside it, the narrow
+    // connector remains the only temporary route to the mapped road.
+    const originYard=yardAtXY(exit.ax,exit.ay);
+    if (originYard && yardAtXY(previous.x,previous.y)===originYard && yardAtXY(candidate.x,candidate.y)===originYard) return {...toLatLng(candidate.x,candidate.y),blocked:false,snapped:false,stationExitActive:true};
     const projection = projectPointToSegment(candidate.x,candidate.y,exit);
     const distanceFromStart = Math.hypot(candidate.x-exit.ax,candidate.y-exit.ay);
     const insideStartPad = distanceFromStart <= CONFIG.stationExitStartPadding;
@@ -466,7 +472,27 @@
     try {
       const response = await fetch(CONFIG.dataUrl,{cache:'force-cache'});
       if (!response.ok) throw new Error(`Road data request failed: ${response.status}`);
-      state.geojson = await response.json();
+      if (/\.gz(?:[?#]|$)/i.test(CONFIG.dataUrl)) {
+        if (typeof DecompressionStream !== 'function') throw new Error('Gzip road data needs browser decompression support.');
+        const decoded = response.body.pipeThrough(new DecompressionStream('gzip'));
+        state.geojson = JSON.parse(await new Response(decoded).text());
+      } else state.geojson = await response.json();
+      if (CONFIG.manifestUrl) {
+        const mr=await fetch(CONFIG.manifestUrl,{cache:'force-cache'});
+        if(!mr.ok)throw new Error('City road manifest could not load.');
+        const manifest=await mr.json();
+        if(manifest?.id!==CONFIG.cityId)throw new Error('City road manifest mismatch.');
+        const supplement=manifest.roadSource?.emergencyAccessSupplement;
+        if(supplement){
+          if(supplement.url!==`cities/${CONFIG.cityId}/emergency-access-roads.geojson`)throw new Error('Invalid emergency access supplement.');
+          const url=new URL(`./emergency-access-roads.geojson`,CONFIG.manifestUrl);
+          const sr=await fetch(url,{cache:'force-cache'});if(!sr.ok)throw new Error('Emergency access roads could not load.');
+          const extra=await sr.json(),excluded=new Set(supplement.excludedWayIds||[]),ids=new Set();
+          if(extra?.type!=='FeatureCollection'||!Array.isArray(extra.features)||extra.features.length!==supplement.wayCount)throw new Error('Emergency access roads invalid.');
+          for(const f of extra.features){if(!/^way\/\d+$/.test(f.id)||ids.has(f.id)||f.geometry?.type!=='LineString'||!f.properties?.trainingEmergencyAccess)throw new Error('Emergency access road invalid.');ids.add(f.id);}
+          state.geojson={...state.geojson,features:state.geojson.features.filter(f=>!excluded.has(f.id)&&!ids.has(f.id)).concat(extra.features.filter(f=>!excluded.has(f.id)))};
+        }
+      }
       buildRoadIndex(state.geojson);
       state.status = 'ready';
       updateStatusText();

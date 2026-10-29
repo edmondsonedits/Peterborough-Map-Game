@@ -1,0 +1,535 @@
+{
+  "city": "ottawa",
+  "verifiedFingerprint": "1d2c3e67e9c81a27428710ca3384c99ada4d6583ef061614fe59c7fc4190126e",
+  "halls": [
+    {
+      "id": "fire-ottawa-fire-34",
+      "service": "fire",
+      "calls": 13,
+      "challengeCalls": 13,
+      "maxRouteMetres": 3350,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-35",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3370,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-45",
+      "service": "fire",
+      "calls": 13,
+      "challengeCalls": 13,
+      "maxRouteMetres": 5849,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-72",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2589,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-41",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 4823,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-43",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 5330,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-44",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 3478,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-46",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 6300,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-51",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 3434,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-53",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 3690,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-56",
+      "service": "fire",
+      "calls": 13,
+      "challengeCalls": 13,
+      "maxRouteMetres": 2652,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-37",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 5068,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-47",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3299,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-32",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 5938,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-42",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 10,
+      "maxRouteMetres": 4183,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-24",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2810,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-83",
+      "service": "fire",
+      "calls": 13,
+      "challengeCalls": 13,
+      "maxRouteMetres": 6363,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-57",
+      "service": "fire",
+      "calls": 13,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2519,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-61",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3791,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-62",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 10,
+      "maxRouteMetres": 4544,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-25",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2583,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-52",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 4124,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-63",
+      "service": "fire",
+      "calls": 13,
+      "challengeCalls": 13,
+      "maxRouteMetres": 4545,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-64",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 10,
+      "maxRouteMetres": 5943,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-66",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 4539,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-71",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 5943,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-73",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 5304,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-81",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 5914,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-82",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 10,
+      "maxRouteMetres": 2692,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-91",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 6384,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-93",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 5378,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-94",
+      "service": "fire",
+      "calls": 13,
+      "challengeCalls": 13,
+      "maxRouteMetres": 5071,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-92",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 5734,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-23",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 4115,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-54",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 4393,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-84",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 7,
+      "maxRouteMetres": 3142,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-36",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 3819,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-55",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 4899,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-11",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2605,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-12",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2554,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-13",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2608,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-21",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2521,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-22",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 4265,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-31",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 6437,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ottawa-fire-33",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 3155,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-ottawa-ems-382",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 10,
+      "maxRouteMetres": 4982,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-ottawa-ems-383",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2471,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-ottawa-ems-384",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 6315,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-ottawa-ems-439",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 9,
+      "maxRouteMetres": 2122,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-ottawa-ems-450",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 10,
+      "maxRouteMetres": 2592,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-ottawa-ems-451",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 8,
+      "maxRouteMetres": 2598,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-ottawa-ems-510",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 5833,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-ottawa-ems-511",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 5943,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-ottawa-ems-512",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2595,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-ottawa-ems-537",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 5068,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-ottawa-ems-538",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 6427,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-ottawa-ems-561",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3575,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-ottawa-ems-562",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 6029,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-ottawa-ems-620",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 10,
+      "maxRouteMetres": 2692,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-ottawa-ems-630",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 4533,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-ottawa-ems-702",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 10,
+      "maxRouteMetres": 6471,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-ottawa-ems-756",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 6014,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-ottawa-ems-764",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 5432,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-ottawa-ems-765",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2775,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-ottawa-ems-766",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3881,
+      "method": "modeled-road-response"
+    }
+  ],
+  "routes": 843,
+  "continuousOrigins": 843,
+  "officialCalls": 0,
+  "modeledCalls": 777,
+  "maxRouteMetres": 6470.958135732621,
+  "minCallsPerHall": 12,
+  "minChallengeCallsPerHall": 7,
+  "supportCalls": 66,
+  "durationMs": 79137
+}

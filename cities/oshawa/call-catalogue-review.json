@@ -1,0 +1,371 @@
+{
+  "schemaVersion": 1,
+  "coverage": {
+    "cityId": "oshawa",
+    "inputOfficial": 357,
+    "inputOsm": 2133,
+    "inputMajorRoad": 1766,
+    "existing": 25,
+    "accepted": 2139,
+    "selected": 180,
+    "target": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "existingByDifficulty": {
+      "easy": 10,
+      "medium": 5,
+      "hard": 5
+    },
+    "selectedByDifficulty": {
+      "easy": 90,
+      "medium": 45,
+      "hard": 45
+    },
+    "totalByDifficulty": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "deficits": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "baseStrata": [
+      {
+        "id": "fire-oshawa-fire-1",
+        "selected": 23,
+        "available": 572,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-oshawa-fire-2",
+        "selected": 23,
+        "available": 266,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-oshawa-fire-3",
+        "selected": 22,
+        "available": 198,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-oshawa-fire-4",
+        "selected": 22,
+        "available": 327,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-oshawa-fire-5",
+        "selected": 23,
+        "available": 150,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-oshawa-fire-6",
+        "selected": 23,
+        "available": 264,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-oshawa-ems-514",
+        "selected": 22,
+        "available": 131,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-oshawa-ems-537",
+        "selected": 22,
+        "available": 231,
+        "method": "nearest-geographic-base-for-selection-only"
+      }
+    ],
+    "sharedBaseline": 20,
+    "baselineByService": {
+      "fire": {
+        "easy": 10,
+        "medium": 5,
+        "hard": 5
+      },
+      "ems": {
+        "easy": 10,
+        "medium": 10,
+        "hard": 5
+      }
+    },
+    "serviceTotalsByDifficulty": {
+      "fire": {
+        "easy": 100,
+        "medium": 50,
+        "hard": 50
+      },
+      "ems": {
+        "easy": 100,
+        "medium": 55,
+        "hard": 50
+      }
+    },
+    "serviceDeficits": {
+      "fire": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      },
+      "ems": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "rejected": 2117,
+    "rejectionCounts": {
+      "unresolved-2020-source-currentness": 7,
+      "production-snap-not-ground-public-road": 1251,
+      "production-snap-over-80m-or-missing": 114,
+      "production-snap-wrong-street": 572,
+      "unresolved-official-coordinate-or-current-address-conflict": 19,
+      "not-one-exact-civic-number-and-street": 32,
+      "duplicate-existing-or-accepted-address-or-named-site": 99,
+      "no-genuine-connected-cross-street-within-1500m": 22,
+      "independent-source-review-rejected": 1
+    },
+    "oneStreetExceptions": 55
+  },
+  "independentAudit": {
+    "cityId": "oshawa",
+    "selected": 180,
+    "accepted": 2139,
+    "crossStreetEvidence": 3643,
+    "oneStreet": 635,
+    "maxGap": 79.698906472044,
+    "pass": true
+  },
+  "priorityFacilityExpansion": {
+    "reviewedOn": "2026-10-29",
+    "addedIds": [
+      "oshawa-osm-node-3865470978",
+      "oshawa-osm-way-76813269",
+      "oshawa-odef-baf35ca63aa94661a181",
+      "oshawa-odhf-640f12d77e1bdbc07d64d493723c736a"
+    ],
+    "verification": {
+      "cityId": "oshawa",
+      "additions": 4,
+      "proposalSha256": "eceac93ca69d4b3ff72663ab532c8d98f66410f46300cfe9d3c285fa3c45f44c",
+      "pass": true,
+      "checks": [
+        "IDs absent from current shared/legacy/care catalogue",
+        "row exactly equals accepted source record",
+        "full per-record provenance exactly equals accepted pool",
+        "factual category/tags and coordinates match raw source record",
+        "source point and URLs unchanged",
+        "no normalized civic-address/near-identical-site duplicates",
+        "max40 per city",
+        "per-base rationale present; no dispatch ownership claim"
+      ]
+    },
+    "review": {
+      "purpose": "Bounded source-preserving priority facility and local variety additions; no recognition tier rewrites.",
+      "sourcePool": "external-build-cache/canonical-catalogues-reviewed/oshawa/accepted-candidates.json",
+      "sourcePoolSha256": "3fdf8e7d86aca58d11ad497dc3ce75b216349e97aadb81f453c58e7f1ca76785",
+      "selectedDescriptor": "cities/oshawa/training-data.json",
+      "selectedDescriptorSha256": "6350e8f23e9319b1ecbb6c75a8d3077692a05d6b81eb9af0231c5d59a962b4c8",
+      "routeEvidence": "cities/oshawa/training-data.json",
+      "routeEvidenceScope": "production",
+      "selectionRules": {
+        "maxPerCity": 40,
+        "maxPotentialAddsPerBase": 6,
+        "maxPotentialAddsForConfirmedZeroToTwoBase": 10,
+        "twoCluePriority": true,
+        "maximumStraightLineBaseReviewDistanceMetres": 6000
+      },
+      "limitations": [
+        "At this selection-time review: Every row passed the existing all-accepted geographic/source/clue audit. These additions have not been graph-assigned or route-audited.",
+        "Published Fire polygons are respected for review proximity; EMS and other Fire review strata use straight-line proximity only. These are not dispatch ownership assignments.",
+        "Full original accepted source point, ID, address, recognition tier, incident profile and provenance are unchanged. Current-open status is not newly verified."
+      ],
+      "rationales": {
+        "oshawa-osm-node-3865470978": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "community_centre",
+          "sourceEvidence": {
+            "sourceRecordId": "oshawa-osm-node-3865470978",
+            "category": null,
+            "tags": {
+              "addr:city": "Oshawa",
+              "addr:housenumber": "151",
+              "addr:street": "Athol Street East",
+              "amenity": "community_centre",
+              "name": "Baagwating Indigenous Student Centre",
+              "operator": "Ontario Tech University"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/3865470978",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-oshawa-fire-1",
+              "distance": 1305.0125547403388,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1305
+            },
+            {
+              "baseId": "ems-oshawa-ems-537",
+              "distance": 2192.7976863722783,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2193
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 214
+        },
+        "oshawa-osm-way-76813269": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "oshawa-osm-way-76813269",
+            "category": null,
+            "tags": {
+              "addr:city": "Oshawa",
+              "addr:housenumber": "1148",
+              "addr:postcode": "L1H 1H8",
+              "addr:street": "King Street East",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "denomination": "seventh_day_adventist",
+              "name": "Seventh-Day Adventist Church in Canada National Headquarters",
+              "phone": "+1-905-433-0011",
+              "religion": "christian",
+              "source": "CanVec 6.0 - NRCan",
+              "website": "https://www.adventist.ca/",
+              "wikipedia": "en:Seventh-day Adventist Church in Canada"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/76813269",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-oshawa-fire-4",
+              "distance": 1082.353134787192,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1082
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 155
+        },
+        "oshawa-odef-baf35ca63aa94661a181": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "oshawa-odef-baf35ca63aa94661a181",
+            "category": "school",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/37-26-0001/372600012022001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/en/pub/37-26-0001/2022001/ODEF_v3.0.zip",
+              "https://data.ontario.ca/dataset/school-information-and-student-demographics",
+              "https://data.ontario.ca/dataset/ontario-public-school-contact-information",
+              "https://data.ontario.ca/dataset/fb3a7c18-90af-453e-bc0a-a76ecc471862/resource/f3a8c2a3-09d9-4715-9044-d8a0189f572c/download/public_school_contact_list_september2026_en.txt"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-oshawa-fire-2",
+              "distance": 1571.481637788389,
+              "method": "inside-published-fire-polygon-for-review",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 1571
+            },
+            {
+              "baseId": "ems-oshawa-ems-537",
+              "distance": 2800.2371400839984,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 6,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 2800
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 153
+        },
+        "oshawa-odhf-640f12d77e1bdbc07d64d493723c736a": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "care-home",
+          "sourceEvidence": {
+            "sourceRecordId": "oshawa-odhf-640f12d77e1bdbc07d64d493723c736a",
+            "category": "care-home",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://city-oshawa.opendata.arcgis.com/datasets/0fa830f84d9847a2af342c3254749d51_10/explore"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "ems-oshawa-ems-537",
+              "distance": 2899.4688548654526,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 4,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 2899
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 132
+        }
+      }
+    },
+    "note": "Add-only source-validated priority facilities; geographic review reasons are not operational districts. Station assignments require independent directed-road audit."
+  },
+  "routeCandidateExpansion": {
+    "reviewedOn": "2026-10-29",
+    "promotedIds": [],
+    "candidateVerification": null,
+    "selection": "Only source-verified additional locations used by independently audited station exercises are promoted; existing canonical IDs and fields remain unchanged."
+  },
+  "evidencePathConvention": {
+    "repositoryPaths": "Paths beginning cities/ are repository-relative.",
+    "externalBuildCache": "external-build-cache/ labels identify historical, reproducible build artifacts that are not shipped; adjacent SHA-256 values identify the exact reviewed bytes.",
+    "reviewScope": "Priority facility review records describe the selection-time review. Final integrated route and runtime validation is recorded in docs/city-call-validation-2026-10-29.md."
+  }
+}

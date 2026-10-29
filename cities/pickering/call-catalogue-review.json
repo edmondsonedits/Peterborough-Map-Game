@@ -1,0 +1,358 @@
+{
+  "schemaVersion": 1,
+  "coverage": {
+    "cityId": "pickering",
+    "inputOfficial": 226,
+    "inputOsm": 1635,
+    "inputMajorRoad": 605,
+    "existing": 22,
+    "accepted": 1309,
+    "selected": 180,
+    "target": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "existingByDifficulty": {
+      "easy": 10,
+      "medium": 5,
+      "hard": 5
+    },
+    "selectedByDifficulty": {
+      "easy": 90,
+      "medium": 45,
+      "hard": 45
+    },
+    "totalByDifficulty": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "deficits": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "baseStrata": [
+      {
+        "id": "fire-pickering-fire-1",
+        "selected": 25,
+        "available": 107,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-pickering-fire-2",
+        "selected": 26,
+        "available": 343,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-pickering-fire-4",
+        "selected": 26,
+        "available": 144,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-pickering-fire-5",
+        "selected": 26,
+        "available": 184,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-pickering-fire-6",
+        "selected": 26,
+        "available": 271,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-pickering-ems-506",
+        "selected": 25,
+        "available": 142,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-pickering-ems-899",
+        "selected": 26,
+        "available": 118,
+        "method": "nearest-geographic-base-for-selection-only"
+      }
+    ],
+    "sharedBaseline": 20,
+    "baselineByService": {
+      "fire": {
+        "easy": 10,
+        "medium": 5,
+        "hard": 5
+      },
+      "ems": {
+        "easy": 10,
+        "medium": 7,
+        "hard": 5
+      }
+    },
+    "serviceTotalsByDifficulty": {
+      "fire": {
+        "easy": 100,
+        "medium": 50,
+        "hard": 50
+      },
+      "ems": {
+        "easy": 100,
+        "medium": 52,
+        "hard": 50
+      }
+    },
+    "serviceDeficits": {
+      "fire": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      },
+      "ems": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "rejected": 1157,
+    "rejectionCounts": {
+      "unresolved-2020-source-currentness": 1,
+      "production-snap-not-ground-public-road": 375,
+      "production-snap-wrong-street": 510,
+      "production-snap-over-80m-or-missing": 78,
+      "not-one-exact-civic-number-and-street": 122,
+      "no-genuine-connected-cross-street-within-1500m": 25,
+      "independent-source-review-rejected": 1,
+      "duplicate-existing-or-accepted-address-or-named-site": 45
+    },
+    "oneStreetExceptions": 76
+  },
+  "independentAudit": {
+    "cityId": "pickering",
+    "selected": 180,
+    "accepted": 1309,
+    "crossStreetEvidence": 2068,
+    "oneStreet": 550,
+    "maxGap": 76.28339087408094,
+    "pass": true
+  },
+  "priorityFacilityExpansion": {
+    "reviewedOn": "2026-10-29",
+    "addedIds": [
+      "pickering-osm-node-1207185059",
+      "pickering-osm-way-58942377",
+      "pickering-osm-way-170242197",
+      "pickering-odhf-884c017064879ca89fd0aeb20ee9094b"
+    ],
+    "verification": {
+      "cityId": "pickering",
+      "additions": 4,
+      "proposalSha256": "f5d6e395ed96d66998f2b58b1f8e4f38be12eb8c34dd23b720128b0ba5c2dd1d",
+      "pass": true,
+      "checks": [
+        "IDs absent from current shared/legacy/care catalogue",
+        "row exactly equals accepted source record",
+        "full per-record provenance exactly equals accepted pool",
+        "factual category/tags and coordinates match raw source record",
+        "source point and URLs unchanged",
+        "no normalized civic-address/near-identical-site duplicates",
+        "max40 per city",
+        "per-base rationale present; no dispatch ownership claim"
+      ]
+    },
+    "review": {
+      "purpose": "Bounded source-preserving priority facility and local variety additions; no recognition tier rewrites.",
+      "sourcePool": "external-build-cache/canonical-catalogues-reviewed/pickering/accepted-candidates.json",
+      "sourcePoolSha256": "28914a57df503ea121598201c6528e3b6420eeadca60a3516b54c55dadf4010f",
+      "selectedDescriptor": "cities/pickering/training-data.json",
+      "selectedDescriptorSha256": "53bf1ac8f2ab9af8544bfdc63fbfa773752db84d3712115f2e9ec84d804ff396",
+      "routeEvidence": "cities/pickering/training-data.json",
+      "routeEvidenceScope": "production",
+      "selectionRules": {
+        "maxPerCity": 40,
+        "maxPotentialAddsPerBase": 6,
+        "maxPotentialAddsForConfirmedZeroToTwoBase": 10,
+        "twoCluePriority": true,
+        "maximumStraightLineBaseReviewDistanceMetres": 6000
+      },
+      "limitations": [
+        "At this selection-time review: Every row passed the existing all-accepted geographic/source/clue audit. These additions have not been graph-assigned or route-audited.",
+        "Published Fire polygons are respected for review proximity; EMS and other Fire review strata use straight-line proximity only. These are not dispatch ownership assignments.",
+        "Full original accepted source point, ID, address, recognition tier, incident profile and provenance are unchanged. Current-open status is not newly verified."
+      ],
+      "rationales": {
+        "pickering-osm-node-1207185059": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "doctors",
+          "sourceEvidence": {
+            "sourceRecordId": "pickering-osm-node-1207185059",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "933",
+              "addr:street": "Liverpool Road",
+              "amenity": "doctors",
+              "healthcare": "doctor"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/1207185059",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-pickering-fire-5",
+              "distance": 1289.3940951805494,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1289
+            },
+            {
+              "baseId": "ems-pickering-ems-506",
+              "distance": 862.409343538645,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 862
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 219
+        },
+        "pickering-osm-way-58942377": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "pickering-osm-way-58942377",
+            "category": null,
+            "tags": {
+              "addr:city": "Pickering",
+              "addr:housenumber": "1530",
+              "addr:street": "Pickering Parkway",
+              "building": "apartments",
+              "name": "The Village at the Pines"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/58942377",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-pickering-fire-5",
+              "distance": 716.0843755679649,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 716
+            },
+            {
+              "baseId": "ems-pickering-ems-506",
+              "distance": 1700.045575790381,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1700
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 208
+        },
+        "pickering-osm-way-170242197": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "pickering-osm-way-170242197",
+            "category": null,
+            "tags": {
+              "addr:city": "Pickering",
+              "addr:housenumber": "400",
+              "addr:street": "Kingston Road",
+              "building": "apartments",
+              "name": "Rougemount",
+              "source": "Bing"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/170242197",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-pickering-fire-2",
+              "distance": 608.7160827506791,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 609
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 158
+        },
+        "pickering-odhf-884c017064879ca89fd0aeb20ee9094b": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "care-home",
+          "sourceEvidence": {
+            "sourceRecordId": "pickering-odhf-884c017064879ca89fd0aeb20ee9094b",
+            "category": "care-home",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://city-oshawa.opendata.arcgis.com/datasets/0fa830f84d9847a2af342c3254749d51_10/explore"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-pickering-fire-6",
+              "distance": 939.0881677674168,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 939
+            }
+          ],
+          "twoGenuineCrossStreetClues": false,
+          "oneClueException": "No unselected accepted two-clue source in this priority family for the targeted review base(s); high-value source family retained.",
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 127
+        }
+      }
+    },
+    "note": "Add-only source-validated priority facilities; geographic review reasons are not operational districts. Station assignments require independent directed-road audit."
+  },
+  "routeCandidateExpansion": {
+    "reviewedOn": "2026-10-29",
+    "promotedIds": [],
+    "candidateVerification": null,
+    "selection": "Only source-verified additional locations used by independently audited station exercises are promoted; existing canonical IDs and fields remain unchanged."
+  },
+  "evidencePathConvention": {
+    "repositoryPaths": "Paths beginning cities/ are repository-relative.",
+    "externalBuildCache": "external-build-cache/ labels identify historical, reproducible build artifacts that are not shipped; adjacent SHA-256 values identify the exact reviewed bytes.",
+    "reviewScope": "Priority facility review records describe the selection-time review. Final integrated route and runtime validation is recorded in docs/city-call-validation-2026-10-29.md."
+  }
+}

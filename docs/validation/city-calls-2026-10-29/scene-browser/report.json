@@ -1,0 +1,307 @@
+{
+  "startedAt": "2026-10-29T06:40:37.996Z",
+  "finishedAt": "2026-10-29T06:43:54.489Z",
+  "tests": 33,
+  "passed": 33,
+  "failed": 0,
+  "inputsStableBeforeAfter": true,
+  "inputManifest": "input-hashes.sha256",
+  "cities": [
+    "belleville",
+    "scarborough",
+    "oshawa",
+    "pickering",
+    "markham",
+    "toronto"
+  ],
+  "services": [
+    "fire",
+    "ems"
+  ],
+  "modes": [
+    "missions",
+    "bases",
+    "mobile",
+    "island",
+    "crossmode",
+    "legacy",
+    "support"
+  ],
+  "baseCounts": [
+    {
+      "city": "belleville",
+      "eligibleBases": 7,
+      "connectorGapCases": 2
+    },
+    {
+      "city": "scarborough",
+      "eligibleBases": 29,
+      "connectorGapCases": 0
+    },
+    {
+      "city": "oshawa",
+      "eligibleBases": 8,
+      "connectorGapCases": 0
+    },
+    {
+      "city": "pickering",
+      "eligibleBases": 7,
+      "connectorGapCases": 0
+    },
+    {
+      "city": "markham",
+      "eligibleBases": 15,
+      "connectorGapCases": 0
+    },
+    {
+      "city": "toronto",
+      "eligibleBases": 133,
+      "connectorGapCases": 0
+    }
+  ],
+  "islandCases": [
+    {
+      "service": "fire",
+      "civicId": "route-civic-21-fire-toronto-fire-335-toronto-osm-node-13854671025",
+      "address": "355 Lakeshore Avenue",
+      "publishedPoolIds": [
+        "route-civic-21-fire-toronto-fire-335-toronto-osm-node-13854671025",
+        "route-local-fire-toronto-fire-335-01",
+        "route-local-fire-toronto-fire-335-02",
+        "route-local-fire-toronto-fire-335-03"
+      ],
+      "publicRoad": false,
+      "motorVehicleRestriction": "private",
+      "intersectionFallbackFixture": "civic exercises suppressed in memory for this base",
+      "arrivalFixture": "position injection"
+    },
+    {
+      "service": "ems",
+      "civicId": "route-civic-23-ems-toronto-ems-4173463-toronto-osm-node-13854671025",
+      "address": "355 Lakeshore Avenue",
+      "publishedPoolIds": [
+        "route-civic-23-ems-toronto-ems-4173463-toronto-osm-node-13854671025",
+        "route-local-ems-toronto-ems-4173463-01",
+        "route-local-ems-toronto-ems-4173463-02",
+        "route-local-ems-toronto-ems-4173463-03"
+      ],
+      "publicRoad": false,
+      "motorVehicleRestriction": "private",
+      "intersectionFallbackFixture": "civic exercises suppressed in memory for this base",
+      "arrivalFixture": "position injection"
+    }
+  ],
+  "supportCase": {
+    "selectedBase": "Fire Station 1",
+    "modeledFirstDueId": "fire-fire-station-2-2",
+    "modeledFirstDueName": "Fire Station 2",
+    "deterministicSelection": true
+  },
+  "cases": [
+    {
+      "name": "mission-belleville-fire-desktop",
+      "pass": true,
+      "mobile": false,
+      "durationMs": 9352
+    },
+    {
+      "name": "mission-belleville-ems-desktop",
+      "pass": true,
+      "mobile": false,
+      "durationMs": 8748
+    },
+    {
+      "name": "mission-scarborough-fire-desktop",
+      "pass": true,
+      "mobile": false,
+      "durationMs": 9721
+    },
+    {
+      "name": "mission-scarborough-ems-desktop",
+      "pass": true,
+      "mobile": false,
+      "durationMs": 8310
+    },
+    {
+      "name": "mission-oshawa-fire-desktop",
+      "pass": true,
+      "mobile": false,
+      "durationMs": 8300
+    },
+    {
+      "name": "mission-oshawa-ems-desktop",
+      "pass": true,
+      "mobile": false,
+      "durationMs": 8344
+    },
+    {
+      "name": "mission-pickering-fire-desktop",
+      "pass": true,
+      "mobile": false,
+      "durationMs": 8568
+    },
+    {
+      "name": "mission-pickering-ems-desktop",
+      "pass": true,
+      "mobile": false,
+      "durationMs": 8647
+    },
+    {
+      "name": "mission-markham-fire-desktop",
+      "pass": true,
+      "mobile": false,
+      "durationMs": 8984
+    },
+    {
+      "name": "mission-markham-ems-desktop",
+      "pass": true,
+      "mobile": false,
+      "durationMs": 9008
+    },
+    {
+      "name": "mission-toronto-fire-desktop",
+      "pass": true,
+      "mobile": false,
+      "durationMs": 11303
+    },
+    {
+      "name": "mission-toronto-ems-desktop",
+      "pass": true,
+      "mobile": false,
+      "durationMs": 11068
+    },
+    {
+      "name": "bases-belleville",
+      "pass": true,
+      "mobile": false,
+      "durationMs": 996
+    },
+    {
+      "name": "bases-scarborough",
+      "pass": true,
+      "mobile": false,
+      "durationMs": 2055
+    },
+    {
+      "name": "bases-oshawa",
+      "pass": true,
+      "mobile": false,
+      "durationMs": 1429
+    },
+    {
+      "name": "bases-pickering",
+      "pass": true,
+      "mobile": false,
+      "durationMs": 1735
+    },
+    {
+      "name": "bases-markham",
+      "pass": true,
+      "mobile": false,
+      "durationMs": 1924
+    },
+    {
+      "name": "bases-toronto",
+      "pass": true,
+      "mobile": false,
+      "durationMs": 9190
+    },
+    {
+      "name": "mission-belleville-fire-mobile",
+      "pass": true,
+      "mobile": true,
+      "durationMs": 7203
+    },
+    {
+      "name": "mission-belleville-ems-mobile",
+      "pass": true,
+      "mobile": true,
+      "durationMs": 7281
+    },
+    {
+      "name": "island-fire",
+      "pass": true,
+      "mobile": false,
+      "durationMs": 14752
+    },
+    {
+      "name": "island-ems",
+      "pass": true,
+      "mobile": false,
+      "durationMs": 14306
+    },
+    {
+      "name": "crossmode-belleville",
+      "pass": true,
+      "mobile": false,
+      "durationMs": 1513
+    },
+    {
+      "name": "crossmode-scarborough",
+      "pass": true,
+      "mobile": false,
+      "durationMs": 2040
+    },
+    {
+      "name": "crossmode-oshawa",
+      "pass": true,
+      "mobile": false,
+      "durationMs": 1631
+    },
+    {
+      "name": "crossmode-pickering",
+      "pass": true,
+      "mobile": false,
+      "durationMs": 1682
+    },
+    {
+      "name": "crossmode-markham",
+      "pass": true,
+      "mobile": false,
+      "durationMs": 1902
+    },
+    {
+      "name": "crossmode-toronto",
+      "pass": true,
+      "mobile": false,
+      "durationMs": 5293
+    },
+    {
+      "name": "legacy-oshawa",
+      "pass": true,
+      "mobile": false,
+      "durationMs": 1255
+    },
+    {
+      "name": "legacy-pickering",
+      "pass": true,
+      "mobile": false,
+      "durationMs": 1407
+    },
+    {
+      "name": "legacy-markham",
+      "pass": true,
+      "mobile": false,
+      "durationMs": 1529
+    },
+    {
+      "name": "legacy-toronto",
+      "pass": true,
+      "mobile": false,
+      "durationMs": 4374
+    },
+    {
+      "name": "support-belleville",
+      "pass": true,
+      "mobile": false,
+      "durationMs": 1425
+    }
+  ],
+  "limitations": [
+    "Native keyboard or touch controls move the vehicle from the selected base; scene arrival is triggered by setting the simulated position to the target.",
+    "These are state and control fixtures, not full driven routes, field entrance surveys, operational run cards, or traffic-rule validation.",
+    "External requests, including telemetry and map tiles, are blocked; screenshots do not validate a live basemap.",
+    "Island fallback may use a temporary in-memory training-data fixture to suppress civic calls for that base; published intersection records and source identities are unchanged.",
+    "Connector-gap checks call the production collision API with fixture points; they are separate from the native driven journeys."
+  ]
+}

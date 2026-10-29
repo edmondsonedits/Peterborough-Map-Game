@@ -424,7 +424,7 @@
     {
       "id": "ptbo-location-2d19279bc7af07",
       "city": "peterborough",
-      "name": "Quality Inn",
+      "name": "Quality Inn Peterborough",
       "address": "1074 Lansdowne St W",
       "street": "Lansdowne St W",
       "lat": 44.282225,
@@ -453,16 +453,32 @@
       "cityAddressObjectIds": [
         8211
       ],
-      "placeNameSource": "Existing call label. Civic address verified; business label not independently rechecked.",
+      "placeNameSource": "https://www.choicehotels.com/en-ca/ontario/peterborough/quality-inn-hotels/cn290",
       "sourceCallIds": [
         "call-quality-inn-1w7pq14"
       ],
-      "notes": []
+      "notes": [],
+      "placeNameReview": {
+        "reviewedAt": "2026-10-29",
+        "status": "corroborated",
+        "originalName": "Quality Inn",
+        "aliases": [
+          "Quality Inn"
+        ],
+        "nameBasis": "current-operator-or-institution-source",
+        "reason": "Current Choice Hotels property page matches the exact civic address.",
+        "sourceUrls": [
+          "https://www.choicehotels.com/en-ca/ontario/peterborough/quality-inn-hotels/cn290"
+        ],
+        "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
+        "coordinatesVerified": false,
+        "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
+      }
     },
     {
       "id": "ptbo-location-e9b5c1759b3e50",
       "city": "peterborough",
-      "name": "Tim Hortons",
+      "name": "1140 Lansdowne St W",
       "address": "1140 Lansdowne St W",
       "street": "Lansdowne St W",
       "lat": 44.2811655,
@@ -491,11 +507,28 @@
       "cityAddressObjectIds": [
         22310
       ],
-      "placeNameSource": "Existing call label. Civic address verified; business label not independently rechecked.",
+      "placeNameSource": "City GIS civic address only; no current venue name asserted.",
       "sourceCallIds": [
         "call-tim-hortons-mv4a01"
       ],
-      "notes": []
+      "notes": [],
+      "placeNameReview": {
+        "reviewedAt": "2026-10-29",
+        "status": "unsupported-name-address",
+        "originalName": "Tim Hortons",
+        "aliases": [
+          "Tim Hortons"
+        ],
+        "nameBasis": "civic-address-only",
+        "reason": "Current Tim Hortons Peterborough roster lists 1200 Lansdowne and other locations but not 1140. This is not proof of closure or a move; retain civic point and use civic label.",
+        "sourceUrls": [
+          "https://locations.timhortons.ca/en/locations-list/on/peterborough/",
+          "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0"
+        ],
+        "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
+        "coordinatesVerified": false,
+        "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
+      }
     },
     {
       "id": "ptbo-location-949889a0ff4a03",
@@ -572,7 +605,7 @@
     {
       "id": "ptbo-location-2d74a802cfc837",
       "city": "peterborough",
-      "name": "Riverview Manor Nursing Home",
+      "name": "Riverview Manor",
       "address": "1155 Water St",
       "street": "Water St",
       "lat": 44.3362765,
@@ -601,16 +634,32 @@
       "cityAddressObjectIds": [
         6346
       ],
-      "placeNameSource": "Existing call label. Civic address verified; business label not independently rechecked.",
+      "placeNameSource": "https://omniqualityliving.ca/community/riverview-manor/",
       "sourceCallIds": [
         "call-riverview-manor-nursing-home-kppnpw"
       ],
-      "notes": []
+      "notes": [],
+      "placeNameReview": {
+        "reviewedAt": "2026-10-29",
+        "status": "corroborated",
+        "originalName": "Riverview Manor Nursing Home",
+        "aliases": [
+          "Riverview Manor Nursing Home"
+        ],
+        "nameBasis": "current-operator-or-institution-source",
+        "reason": "Current operator community page lists 1155 Water Street. Redevelopment discussions do not establish a completed move.",
+        "sourceUrls": [
+          "https://omniqualityliving.ca/community/riverview-manor/"
+        ],
+        "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
+        "coordinatesVerified": false,
+        "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
+      }
     },
     {
       "id": "ptbo-location-f69d1d3a255ce5",
       "city": "peterborough",
-      "name": "Boston Pizza Dining Facility",
+      "name": "Boston Pizza Peterborough North",
       "address": "1164 Chemong Rd",
       "street": "Chemong Rd",
       "lat": 44.3301336,
@@ -639,11 +688,27 @@
       "cityAddressObjectIds": [
         27900
       ],
-      "placeNameSource": "Existing call label. Civic address verified; business label not independently rechecked.",
+      "placeNameSource": "https://bostonpizza.com/en/locations/peterborough-north.html",
       "sourceCallIds": [
         "call-boston-pizza-dining-facility-rvum0r"
       ],
-      "notes": []
+      "notes": [],
+      "placeNameReview": {
+        "reviewedAt": "2026-10-29",
+        "status": "corroborated-normalize-label",
+        "originalName": "Boston Pizza Dining Facility",
+        "aliases": [
+          "Boston Pizza Dining Facility"
+        ],
+        "nameBasis": "current-operator-or-institution-source",
+        "reason": "Operator location page matches; Dining Facility is a scenario descriptor, not the published venue name.",
+        "sourceUrls": [
+          "https://bostonpizza.com/en/locations/peterborough-north.html"
+        ],
+        "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
+        "coordinatesVerified": false,
+        "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
+      }
     },
     {
       "id": "ptbo-location-b53711e5e3c867",
@@ -685,7 +750,7 @@
     {
       "id": "ptbo-location-34b710c05644d9",
       "city": "peterborough",
-      "name": "Parkhill West Single-Family Residence",
+      "name": "1180 Parkhill Rd W",
       "address": "1180 Parkhill Rd W",
       "street": "Parkhill Rd W",
       "lat": 44.3050996,
@@ -714,11 +779,27 @@
       "cityAddressObjectIds": [
         90
       ],
-      "placeNameSource": "Existing call label. Civic address verified; business label not independently rechecked.",
+      "placeNameSource": "City GIS civic address only; no current venue name asserted.",
       "sourceCallIds": [
         "call-parkhill-west-single-family-residence-1fwm8t0"
       ],
-      "notes": []
+      "notes": [],
+      "placeNameReview": {
+        "reviewedAt": "2026-10-29",
+        "status": "unresolved-building-type",
+        "originalName": "Parkhill West Single-Family Residence",
+        "aliases": [
+          "Parkhill West Single-Family Residence"
+        ],
+        "nameBasis": "civic-address-only",
+        "reason": "No current primary source found for the exact single-family-residence label in bounded review. Civic address was already GIS-confirmed; do not assert occupancy/building type.",
+        "sourceUrls": [
+          "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0"
+        ],
+        "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
+        "coordinatesVerified": false,
+        "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
+      }
     },
     {
       "id": "ptbo-location-10d86588ce28ef",
@@ -871,7 +952,7 @@
     {
       "id": "ptbo-location-b7b8b8d52762f9",
       "city": "peterborough",
-      "name": "Hunter Street Cafe Restroom",
+      "name": "130 Hunter St W",
       "address": "130 Hunter St W",
       "street": "Hunter St W",
       "lat": 44.3061546,
@@ -900,16 +981,33 @@
       "cityAddressObjectIds": [
         20400
       ],
-      "placeNameSource": "Existing call label. Civic address verified; business label not independently rechecked.",
+      "placeNameSource": "City GIS civic address only; no current venue name asserted.",
       "sourceCallIds": [
         "call-hunter-street-cafe-restroom-874tg0"
       ],
-      "notes": []
+      "notes": [],
+      "placeNameReview": {
+        "reviewedAt": "2026-10-29",
+        "status": "unsupported-venue-and-subfacility",
+        "originalName": "Hunter Street Cafe Restroom",
+        "aliases": [
+          "Hunter Street Cafe Restroom"
+        ],
+        "nameBasis": "civic-address-only",
+        "reason": "Fourcast operator annual report identifies its main office at this address. The cafe and restroom association was not corroborated; do not substitute the Fourcast name without verifying the same point/building association.",
+        "sourceUrls": [
+          "https://www.fourcast.ca/wp-content/uploads/2025/07/Fourcast-Annual-Report-2024-2025-3.pdf",
+          "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0"
+        ],
+        "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
+        "coordinatesVerified": false,
+        "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
+      }
     },
     {
       "id": "ptbo-location-7011ef21965b8c",
       "city": "peterborough",
-      "name": "Millennium Park Dock",
+      "name": "130 King St",
       "address": "130 King St",
       "street": "King St",
       "lat": 44.3022088,
@@ -938,11 +1036,28 @@
       "cityAddressObjectIds": [
         24224
       ],
-      "placeNameSource": "Existing call label. Civic address verified; business label not independently rechecked.",
+      "placeNameSource": "City GIS civic address only; no current venue name asserted.",
       "sourceCallIds": [
         "call-millennium-park-dock-1ndr22p"
       ],
-      "notes": []
+      "notes": [],
+      "placeNameReview": {
+        "reviewedAt": "2026-10-29",
+        "status": "unresolved-subfacility",
+        "originalName": "Millennium Park Dock",
+        "aliases": [
+          "Millennium Park Dock"
+        ],
+        "nameBasis": "civic-address-only",
+        "reason": "Silver Bean operator locates its Millennium Park cafe using 130 King but explicitly calls it a locator address rather than its mailing address. Evidence does not establish the specific dock or vehicle access.",
+        "sourceUrls": [
+          "https://www.silverbeancafe.com/contact-and-maps/",
+          "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0"
+        ],
+        "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
+        "coordinatesVerified": false,
+        "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
+      }
     },
     {
       "id": "ptbo-location-59f5f68d27a369",
@@ -983,7 +1098,7 @@
     {
       "id": "ptbo-location-4d29986b1788c4",
       "city": "peterborough",
-      "name": "Empress Gardens Senior Living",
+      "name": "Empress Gardens",
       "address": "131 Charlotte St",
       "street": "Charlotte St",
       "lat": 44.3032867,
@@ -1012,11 +1127,27 @@
       "cityAddressObjectIds": [
         18735
       ],
-      "placeNameSource": "Existing call label. Civic address verified; business label not independently rechecked.",
+      "placeNameSource": "https://www.empressgardens.ca/contact/",
       "sourceCallIds": [
         "call-empress-gardens-senior-living-3sg5ay"
       ],
-      "notes": []
+      "notes": [],
+      "placeNameReview": {
+        "reviewedAt": "2026-10-29",
+        "status": "corroborated",
+        "originalName": "Empress Gardens Senior Living",
+        "aliases": [
+          "Empress Gardens Senior Living"
+        ],
+        "nameBasis": "current-operator-or-institution-source",
+        "reason": "Operator contact page matches the exact civic address.",
+        "sourceUrls": [
+          "https://www.empressgardens.ca/contact/"
+        ],
+        "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
+        "coordinatesVerified": false,
+        "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
+      }
     },
     {
       "id": "ptbo-location-47b0b9ce7844b4",
@@ -1232,11 +1363,27 @@
       "cityAddressObjectIds": [
         9762
       ],
-      "placeNameSource": "Existing call label. Civic address verified; business label not independently rechecked.",
+      "placeNameSource": "https://levseniorliving.com/applewoodrr/contact/",
       "sourceCallIds": [
         "call-applewood-retirement-residence-3p064b"
       ],
-      "notes": []
+      "notes": [],
+      "placeNameReview": {
+        "reviewedAt": "2026-10-29",
+        "status": "corroborated",
+        "originalName": "Applewood Retirement Residence",
+        "aliases": [
+          "Applewood Retirement Residence"
+        ],
+        "nameBasis": "current-operator-or-institution-source",
+        "reason": "Current Lev Senior Living operator page matches the address; old applewoodrr domain alone was inaccessible.",
+        "sourceUrls": [
+          "https://levseniorliving.com/applewoodrr/contact/"
+        ],
+        "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
+        "coordinatesVerified": false,
+        "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
+      }
     },
     {
       "id": "ptbo-location-dda737140ccdfa",
@@ -1355,7 +1502,7 @@
     {
       "id": "ptbo-location-319afd40c33ba7",
       "city": "peterborough",
-      "name": "McThirsty's Pint",
+      "name": "172 Charlotte St",
       "address": "172 Charlotte St",
       "street": "Charlotte St",
       "lat": 44.3035458,
@@ -1384,12 +1531,29 @@
       "cityAddressObjectIds": [
         2016
       ],
-      "placeNameSource": "Existing call label. Civic address verified; business label not independently rechecked.",
+      "placeNameSource": "City GIS civic address only; no current venue name asserted.",
       "sourceCallIds": [
         "call-downtown-diner-property-1ckllt5",
         "call-mcthirstys-pint-wvq8x5"
       ],
-      "notes": []
+      "notes": [],
+      "placeNameReview": {
+        "reviewedAt": "2026-10-29",
+        "status": "conflicting-operator-address",
+        "originalName": "McThirsty's Pint",
+        "aliases": [
+          "McThirsty's Pint"
+        ],
+        "nameBasis": "civic-address-only",
+        "reason": "McThirsty's current operator gives 166 Charlotte Street. No evidence establishes 172 as a current alias/entrance. Keep existing point/address and use civic label; do not move point to 166.",
+        "sourceUrls": [
+          "https://www.mcthirstys-pint.com/",
+          "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0"
+        ],
+        "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
+        "coordinatesVerified": false,
+        "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
+      }
     },
     {
       "id": "ptbo-location-dafecbee347903",
@@ -1704,11 +1868,27 @@
       "cityAddressObjectIds": [
         23737
       ],
-      "placeNameSource": "Existing call label. Civic address verified; business label not independently rechecked.",
+      "placeNameSource": "https://www.peterborough.ca/parking",
       "sourceCallIds": [
         "call-king-street-parking-garage-12i4840"
       ],
-      "notes": []
+      "notes": [],
+      "placeNameReview": {
+        "reviewedAt": "2026-10-29",
+        "status": "corroborated",
+        "originalName": "King Street Parkade",
+        "aliases": [
+          "King Street Parkade"
+        ],
+        "nameBasis": "current-operator-or-institution-source",
+        "reason": "Current City parking roster names King Street Parkade at 202 King Street.",
+        "sourceUrls": [
+          "https://www.peterborough.ca/parking"
+        ],
+        "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
+        "coordinatesVerified": false,
+        "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
+      }
     },
     {
       "id": "ptbo-location-88753412113e54",
@@ -1895,7 +2075,7 @@
     {
       "id": "ptbo-location-656fac9ebc0035",
       "city": "peterborough",
-      "name": "Charlotte Towers High-Rise",
+      "name": "Citi Centre Apartments (245 Charlotte St)",
       "address": "245 Charlotte St",
       "street": "Charlotte St",
       "lat": 44.3029601,
@@ -1934,16 +2114,32 @@
         33090,
         33091
       ],
-      "placeNameSource": "Existing call label. Civic address verified; business label not independently rechecked.",
+      "placeNameSource": "https://aonapartments.ca/2025/01/09/citi-centre/",
       "sourceCallIds": [
         "call-charlotte-towers-high-rise-10hqygd"
       ],
-      "notes": []
+      "notes": [],
+      "placeNameReview": {
+        "reviewedAt": "2026-10-29",
+        "status": "current-operator-name-corroborated",
+        "originalName": "Charlotte Towers High-Rise",
+        "aliases": [
+          "Charlotte Towers High-Rise"
+        ],
+        "nameBasis": "current-operator-or-institution-source",
+        "reason": "Current AON operator names Citi Centre at 245 Charlotte, 303 Aylmer and 240 King. Legacy Charlotte Towers is a local/historical label; no entrance or specific tower footprint verified.",
+        "sourceUrls": [
+          "https://aonapartments.ca/2025/01/09/citi-centre/"
+        ],
+        "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
+        "coordinatesVerified": false,
+        "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
+      }
     },
     {
       "id": "ptbo-location-9303fb23f0cec8",
       "city": "peterborough",
-      "name": "Shoppers Drug Mart",
+      "name": "Shoppers Drug Mart Charlotte & Aylmer",
       "address": "250 Charlotte St",
       "street": "Charlotte St",
       "lat": 44.3034609,
@@ -1972,17 +2168,34 @@
       "cityAddressObjectIds": [
         27098
       ],
-      "placeNameSource": "Existing call label. Civic address verified; business label not independently rechecked.",
+      "placeNameSource": "https://www.shoppersdrugmart.ca/en/stores/995-shoppers-drug-mart-charlotte-and-alymer/",
       "sourceCallIds": [
         "call-charlotte-street-mid-rise-suite-1omtu73",
         "call-shoppers-drug-mart-1m21pz1"
       ],
-      "notes": []
+      "notes": [],
+      "placeNameReview": {
+        "reviewedAt": "2026-10-29",
+        "status": "corroborated",
+        "originalName": "Shoppers Drug Mart",
+        "aliases": [
+          "Shoppers Drug Mart"
+        ],
+        "nameBasis": "current-operator-or-institution-source",
+        "reason": "Current operator store 995 is named Charlotte & Aylmer. Its downloaded HTML contains the exact address 250 Charlotte Street, Peterborough, ON, K9J 2V1 (location image alt text), independently confirming the civic number even though the web text renderer omitted it.",
+        "sourceUrls": [
+          "https://www.shoppersdrugmart.ca/en/stores/995-shoppers-drug-mart-charlotte-and-alymer/",
+          "https://www.centraleasthealthline.ca/mobile/displayService.aspx?id=51412"
+        ],
+        "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
+        "coordinatesVerified": false,
+        "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
+      }
     },
     {
       "id": "ptbo-location-0038cf3a23f1b2",
       "city": "peterborough",
-      "name": "The Peterborough Clinic Medical Hub",
+      "name": "The Peterborough Clinic",
       "address": "26 Hospital Dr",
       "street": "Hospital Dr",
       "lat": 44.3011399,
@@ -2011,11 +2224,28 @@
       "cityAddressObjectIds": [
         23193
       ],
-      "placeNameSource": "Existing call label. Civic address verified; business label not independently rechecked.",
+      "placeNameSource": "https://www.ptboclinic.com/contact-us",
       "sourceCallIds": [
         "call-the-peterborough-clinic-medical-hub-gj809i"
       ],
-      "notes": []
+      "notes": [],
+      "placeNameReview": {
+        "reviewedAt": "2026-10-29",
+        "status": "corroborated-normalize-label",
+        "originalName": "The Peterborough Clinic Medical Hub",
+        "aliases": [
+          "The Peterborough Clinic Medical Hub"
+        ],
+        "nameBasis": "current-operator-or-institution-source",
+        "reason": "Operator contact and map pages match 26 Hospital Drive. Medical Hub is not its published name.",
+        "sourceUrls": [
+          "https://www.ptboclinic.com/contact-us",
+          "https://www.ptboclinic.com/map-directions"
+        ],
+        "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
+        "coordinatesVerified": false,
+        "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
+      }
     },
     {
       "id": "ptbo-location-64e6316ae8b020",
@@ -2202,7 +2432,7 @@
     {
       "id": "ptbo-location-ce20b1da6a31e1",
       "city": "peterborough",
-      "name": "East City Circle K",
+      "name": "Circle K",
       "address": "33 Hunter St E",
       "street": "Hunter St E",
       "lat": 44.3058241,
@@ -2231,11 +2461,27 @@
       "cityAddressObjectIds": [
         20939
       ],
-      "placeNameSource": "Existing call label. Civic address verified; business label not independently rechecked.",
+      "placeNameSource": "https://www.circlek.com/station/33-hunter-street-east-peterborough-ca",
       "sourceCallIds": [
         "call-east-city-circle-k-wwam87"
       ],
-      "notes": []
+      "notes": [],
+      "placeNameReview": {
+        "reviewedAt": "2026-10-29",
+        "status": "corroborated-normalize-label",
+        "originalName": "East City Circle K",
+        "aliases": [
+          "East City Circle K"
+        ],
+        "nameBasis": "current-operator-or-institution-source",
+        "reason": "Circle K current store page matches 33 Hunter Street East. East City is a geographic qualifier, not needed in the venue name.",
+        "sourceUrls": [
+          "https://www.circlek.com/station/33-hunter-street-east-peterborough-ca"
+        ],
+        "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
+        "coordinatesVerified": false,
+        "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
+      }
     },
     {
       "id": "ptbo-location-1299391522eb1a",
@@ -2314,7 +2560,7 @@
     {
       "id": "ptbo-location-89c36461b9ff24",
       "city": "peterborough",
-      "name": "Peterborough Public Library",
+      "name": "Peterborough Public Library – Main Library",
       "address": "345 Aylmer St N",
       "street": "Aylmer St N",
       "lat": 44.3039293,
@@ -2343,16 +2589,33 @@
       "cityAddressObjectIds": [
         3565
       ],
-      "placeNameSource": "Existing call label. Civic address verified; business label not independently rechecked.",
+      "placeNameSource": "https://www.ptbolibrary.ca/visiting-the-library/hours-locations/",
       "sourceCallIds": [
         "call-peterborough-public-library-1ov4qod"
       ],
-      "notes": []
+      "notes": [],
+      "placeNameReview": {
+        "reviewedAt": "2026-10-29",
+        "status": "corroborated",
+        "originalName": "Peterborough Public Library",
+        "aliases": [
+          "Peterborough Public Library"
+        ],
+        "nameBasis": "current-operator-or-institution-source",
+        "reason": "Current library hours roster matches; City October 22, 2026 release also confirms main library at this exact address.",
+        "sourceUrls": [
+          "https://www.ptbolibrary.ca/visiting-the-library/hours-locations/",
+          "https://www.peterborough.ca/news/posts/public-information-sessions-for-proposed-resiliency-upgrades-at-the-peterborough-public-library/"
+        ],
+        "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
+        "coordinatesVerified": false,
+        "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
+      }
     },
     {
       "id": "ptbo-location-ed5b4ee447617e",
       "city": "peterborough",
-      "name": "Peterborough Lift Lock 21",
+      "name": "Peterborough Visitor Centre at the Lift Lock",
       "address": "353 Hunter St E",
       "street": "Hunter St E",
       "lat": 44.3069332,
@@ -2381,11 +2644,28 @@
       "cityAddressObjectIds": [
         23226
       ],
-      "placeNameSource": "Existing call label. Civic address verified; business label not independently rechecked.",
+      "placeNameSource": "https://www.peterborough.ca/news/posts/new-peterborough-visitor-centre-to-open-at-the-lift-lock/",
       "sourceCallIds": [
         "call-peterborough-lift-lock-canal-d1yolo"
       ],
-      "notes": []
+      "notes": [],
+      "placeNameReview": {
+        "reviewedAt": "2026-10-29",
+        "status": "current-facility-scope-correction",
+        "originalName": "Peterborough Lift Lock 21",
+        "aliases": [
+          "Peterborough Lift Lock 21"
+        ],
+        "nameBasis": "current-operator-or-institution-source",
+        "reason": "Current City and Parks Canada identify 353 Hunter East as the visitor centre at the base of the Lift Lock, opened June 26, 2026. Avoid asserting this civic point is the lock structure itself.",
+        "sourceUrls": [
+          "https://www.peterborough.ca/news/posts/new-peterborough-visitor-centre-to-open-at-the-lift-lock/",
+          "https://parks.canada.ca/lhn-nhs/on/trentsevern/activ/interpretation"
+        ],
+        "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
+        "coordinatesVerified": false,
+        "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
+      }
     },
     {
       "id": "ptbo-location-d5e619a119f282",
@@ -2428,7 +2708,7 @@
     {
       "id": "ptbo-location-fe937c474c5dd9",
       "city": "peterborough",
-      "name": "Scotiabank Downtown Branch",
+      "name": "374 George St N",
       "address": "374 George St N",
       "street": "George St N",
       "lat": 44.3050981,
@@ -2458,11 +2738,29 @@
         24588,
         30312
       ],
-      "placeNameSource": "Existing call label. Civic address verified; business label not independently rechecked.",
+      "placeNameSource": "City GIS civic address only; no current venue name asserted.",
       "sourceCallIds": [
         "call-scotiabank-downtown-branch-1pcv574"
       ],
-      "notes": []
+      "notes": [],
+      "placeNameReview": {
+        "reviewedAt": "2026-10-29",
+        "status": "unsupported-name-address",
+        "originalName": "Scotiabank Downtown Branch",
+        "aliases": [
+          "Scotiabank Downtown Branch"
+        ],
+        "nameBasis": "civic-address-only",
+        "reason": "No primary corroboration of Scotiabank at this civic address. Current Scotiabank locator places Kawartha Centre at 111 Hunter West. Do not transfer its name or coordinates.",
+        "sourceUrls": [
+          "https://locator.scotiabank.com/fr/abm/AN03",
+          "https://locator.scotiabank.com/advisors/financial-planner/NHattin",
+          "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0"
+        ],
+        "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
+        "coordinatesVerified": false,
+        "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
+      }
     },
     {
       "id": "ptbo-location-63648c53a39a38",
@@ -2507,7 +2805,7 @@
     {
       "id": "ptbo-location-03966a972f0092",
       "city": "peterborough",
-      "name": "Westclox Apartment Building",
+      "name": "380 Armour Rd",
       "address": "380 Armour Rd",
       "street": "Armour Rd",
       "lat": 44.3068962,
@@ -2538,11 +2836,29 @@
         32459,
         32460
       ],
-      "placeNameSource": "Existing call label. Civic address verified; business label not independently rechecked.",
+      "placeNameSource": "City GIS civic address only; no current venue name asserted.",
       "sourceCallIds": [
         "call-westclox-apartment-building-mmv6m3"
       ],
-      "notes": []
+      "notes": [],
+      "placeNameReview": {
+        "reviewedAt": "2026-10-29",
+        "status": "historical-site-current-name-unresolved",
+        "originalName": "Westclox Apartment Building",
+        "aliases": [
+          "Westclox Apartment Building"
+        ],
+        "nameBasis": "civic-address-only",
+        "reason": "Public Health 2020 Q&A establishes former Westclox site at 201/211 Hunter East and 380 Armour; 2022 site-plan application discusses existing rentals. No current operator source establishes the benchmark Westclox Apartment Building name. Civic fallback avoids conflating entire historic complex, residential portion, and specific entrance.",
+        "sourceUrls": [
+          "https://www.peterboroughpublichealth.ca/wp-content/uploads/2020/06/20200602-QA-Skyline-Trichloroethylene-TCE.pdf",
+          "https://pub-peterborough.escribemeetings.com/filestream.ashx?DocumentId=34199",
+          "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0"
+        ],
+        "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
+        "coordinatesVerified": false,
+        "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
+      }
     },
     {
       "id": "ptbo-location-525b2a4beca887",
@@ -2622,7 +2938,7 @@
     {
       "id": "ptbo-location-44b0d4956a5571",
       "city": "peterborough",
-      "name": "Costco Wholesale Parking Lot",
+      "name": "Costco Wholesale Peterborough Warehouse",
       "address": "485 The Parkway",
       "street": "The Parkway",
       "lat": 44.2724858,
@@ -2651,11 +2967,27 @@
       "cityAddressObjectIds": [
         27926
       ],
-      "placeNameSource": "Existing call label. Civic address verified; business label not independently rechecked.",
+      "placeNameSource": "https://www.costco.ca/WAREHOUSE-LOCATIONS/PETERBOROUGH-ON-591.HTML",
       "sourceCallIds": [
         "call-costco-wholesale-parking-lot-q5bgdi"
       ],
-      "notes": []
+      "notes": [],
+      "placeNameReview": {
+        "reviewedAt": "2026-10-29",
+        "status": "corroborated-facility-subfacility-unverified",
+        "originalName": "Costco Wholesale Parking Lot",
+        "aliases": [
+          "Costco Wholesale Parking Lot"
+        ],
+        "nameBasis": "current-operator-or-institution-source",
+        "reason": "Operator matches warehouse civic address. Specific parking-lot point/entrance has not been verified; remove Parking Lot precision from the label unless separately supported.",
+        "sourceUrls": [
+          "https://www.costco.ca/WAREHOUSE-LOCATIONS/PETERBOROUGH-ON-591.HTML"
+        ],
+        "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
+        "coordinatesVerified": false,
+        "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
+      }
     },
     {
       "id": "ptbo-location-32d381c0f8b65b",
@@ -2732,7 +3064,7 @@
     {
       "id": "ptbo-location-49dd24b4c8908a",
       "city": "peterborough",
-      "name": "Peterborough Police Station",
+      "name": "Peterborough Police Service Headquarters",
       "address": "500 Water St",
       "street": "Water St",
       "lat": 44.309331,
@@ -2761,11 +3093,28 @@
       "cityAddressObjectIds": [
         26913
       ],
-      "placeNameSource": "Existing call label. Civic address verified; business label not independently rechecked.",
+      "placeNameSource": "https://www.peterboroughpolice.ca/",
       "sourceCallIds": [
         "call-peterborough-police-station-hw5vfh"
       ],
-      "notes": []
+      "notes": [],
+      "placeNameReview": {
+        "reviewedAt": "2026-10-29",
+        "status": "corroborated",
+        "originalName": "Peterborough Police Station",
+        "aliases": [
+          "Peterborough Police Station"
+        ],
+        "nameBasis": "current-operator-or-institution-source",
+        "reason": "Current Police home page matches; City project explicitly says operational presence remains at 500 Water through renovation phases, despite additional Lansdowne facility.",
+        "sourceUrls": [
+          "https://www.peterboroughpolice.ca/",
+          "https://www.peterborough.ca/business-building-development/city-projects/renovation-of-police-service-buildings/"
+        ],
+        "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
+        "coordinatesVerified": false,
+        "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
+      }
     },
     {
       "id": "ptbo-location-350bdfbce1877a",
@@ -2842,7 +3191,7 @@
     {
       "id": "ptbo-location-f7c1672aa31bb5",
       "city": "peterborough",
-      "name": "George Street Housing",
+      "name": "548 George St N",
       "address": "548 George St N",
       "street": "George St N",
       "lat": 44.3105094,
@@ -2871,11 +3220,28 @@
       "cityAddressObjectIds": [
         21537
       ],
-      "placeNameSource": "Existing call label. Civic address verified; business label not independently rechecked.",
+      "placeNameSource": "City GIS civic address only; no current venue name asserted.",
       "sourceCallIds": [
         "call-george-street-housing-11lwl9c"
       ],
-      "notes": []
+      "notes": [],
+      "placeNameReview": {
+        "reviewedAt": "2026-10-29",
+        "status": "generic-label-not-independent-facility",
+        "originalName": "George Street Housing",
+        "aliases": [
+          "George Street Housing"
+        ],
+        "nameBasis": "civic-address-only",
+        "reason": "City heritage inventory identifies the property, but George Street Housing is not a verified current facility/operator name or occupancy statement.",
+        "sourceUrls": [
+          "https://www.peterborough.ca/en/explore-and-play/resources/Documents/Heritage/City-of-Peterborough-Heritage-Register---Listed-Properties-Accessible-web-version-2023.pdf",
+          "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0"
+        ],
+        "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
+        "coordinatesVerified": false,
+        "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
+      }
     },
     {
       "id": "ptbo-location-88998a1c4bdbaf",
@@ -3356,7 +3722,7 @@
     {
       "id": "ptbo-location-ac5bdbdeeb0516",
       "city": "peterborough",
-      "name": "Tim Hortons Commercial Unit",
+      "name": "Tim Hortons",
       "address": "898 Monaghan Rd",
       "street": "Monaghan Rd",
       "lat": 44.287846,
@@ -3385,11 +3751,28 @@
       "cityAddressObjectIds": [
         11869
       ],
-      "placeNameSource": "Existing call label. Civic address verified; business label not independently rechecked.",
+      "placeNameSource": "https://locations.timhortons.ca/en/locations-list/on/peterborough/",
       "sourceCallIds": [
         "call-tim-hortons-commercial-unit-oplads"
       ],
-      "notes": []
+      "notes": [],
+      "placeNameReview": {
+        "reviewedAt": "2026-10-29",
+        "status": "corroborated-normalize-label",
+        "originalName": "Tim Hortons Commercial Unit",
+        "aliases": [
+          "Tim Hortons Commercial Unit"
+        ],
+        "nameBasis": "current-operator-or-institution-source",
+        "reason": "Current operator city roster includes 898 Monaghan Rd; Commercial Unit is an unsupported scenario qualifier.",
+        "sourceUrls": [
+          "https://locations.timhortons.ca/en/locations-list/on/peterborough/",
+          "https://locations.timhortons.ca/en/on/peterborough/898-monaghan-rd/"
+        ],
+        "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
+        "coordinatesVerified": false,
+        "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
+      }
     },
     {
       "id": "ptbo-location-4fe4e471909dab",
@@ -3497,11 +3880,27 @@
       "cityAddressObjectIds": [
         22170
       ],
-      "placeNameSource": "Existing call label. Civic address verified; business label not independently rechecked.",
+      "placeNameSource": "https://www.littlelakecemetery.com/contact-us",
       "sourceCallIds": [
         "call-little-lake-cemetery-18gnqsf"
       ],
-      "notes": []
+      "notes": [],
+      "placeNameReview": {
+        "reviewedAt": "2026-10-29",
+        "status": "corroborated",
+        "originalName": "Little Lake Cemetery",
+        "aliases": [
+          "Little Lake Cemetery"
+        ],
+        "nameBasis": "current-operator-or-institution-source",
+        "reason": "Current operator location roster gives 915 Haggart Street; administration is at Highland Park, not necessarily this point.",
+        "sourceUrls": [
+          "https://www.littlelakecemetery.com/contact-us"
+        ],
+        "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
+        "coordinatesVerified": false,
+        "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
+      }
     },
     {
       "id": "ptbo-location-6727facfb31979",
@@ -3551,7 +3950,7 @@
     {
       "id": "ptbo-location-ce728eac153584",
       "city": "peterborough",
-      "name": "Gas Station",
+      "name": "MacEwen Quickie Peterborough",
       "address": "971 Lansdowne St W",
       "street": "Lansdowne St W",
       "lat": 44.2820037,
@@ -3580,12 +3979,28 @@
       "cityAddressObjectIds": [
         16885
       ],
-      "placeNameSource": "Existing call label. Civic address verified; business label not independently rechecked.",
+      "placeNameSource": "https://macewen.ca/retail/find-a-macewen/macewen-quickie-peterborough/",
       "sourceCallIds": [
         "call-gas-station-qu0r7o",
         "call-shoppers-drug-mart-pharmacy-1wes8ze"
       ],
-      "notes": []
+      "notes": [],
+      "placeNameReview": {
+        "reviewedAt": "2026-10-29",
+        "status": "current-operator-name-corroborated",
+        "originalName": "Gas Station",
+        "aliases": [
+          "Gas Station"
+        ],
+        "nameBasis": "current-operator-or-institution-source",
+        "reason": "Current fuel operator page gives exact civic address and name. No vehicle entrance verification.",
+        "sourceUrls": [
+          "https://macewen.ca/retail/find-a-macewen/macewen-quickie-peterborough/"
+        ],
+        "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
+        "coordinatesVerified": false,
+        "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
+      }
     },
     {
       "id": "ptbo-location-81a31eb6de3b0b",
@@ -4390,7 +4805,7 @@
     {
       "id": "ptbo-location-f2c2b2b58a0332",
       "city": "peterborough",
-      "name": "Hillmar Apartments",
+      "name": "181 Marina Blvd",
       "address": "181 Marina Blvd",
       "street": "Marina Blvd",
       "lat": 44.3326155,
@@ -4423,16 +4838,33 @@
         32358,
         32359
       ],
-      "placeNameSource": "Existing call label. Civic address verified; business label not independently rechecked.",
+      "placeNameSource": "City GIS civic address only; no current venue name asserted.",
       "sourceCallIds": [
         "call-hillmar-apartments-1o0odpo"
       ],
-      "notes": []
+      "notes": [],
+      "placeNameReview": {
+        "reviewedAt": "2026-10-29",
+        "status": "historical-name-currentness-unresolved",
+        "originalName": "Hillmar Apartments",
+        "aliases": [
+          "Hillmar Apartments"
+        ],
+        "nameBasis": "civic-address-only",
+        "reason": "Provincial designated-housing regulation names Hillmar Apts at 181 Marina, but it is administrative/historical evidence, not a dated current operator confirmation. Keep legacy alias in provenance and use civic label pending current source.",
+        "sourceUrls": [
+          "https://www.ontario.ca/laws/regulation/r11368",
+          "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0"
+        ],
+        "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
+        "coordinatesVerified": false,
+        "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
+      }
     },
     {
       "id": "ptbo-location-712e2172992122",
       "city": "peterborough",
-      "name": "Brock Mission Emergency Shelter",
+      "name": "Brock Mission Men’s Shelter",
       "address": "217 Murray St",
       "street": "Murray St",
       "lat": 44.3080533,
@@ -4461,11 +4893,28 @@
       "cityAddressObjectIds": [
         2794
       ],
-      "placeNameSource": "Existing call label. Civic address verified; business label not independently rechecked.",
+      "placeNameSource": "https://www.peterborough.ca/recreation-culture-social-services/social-services/housing-and-shelter/emergency-shelter/",
       "sourceCallIds": [
         "call-brock-mission-emergency-shelter-uz38l4"
       ],
-      "notes": []
+      "notes": [],
+      "placeNameReview": {
+        "reviewedAt": "2026-10-29",
+        "status": "corroborated",
+        "originalName": "Brock Mission Emergency Shelter",
+        "aliases": [
+          "Brock Mission Emergency Shelter"
+        ],
+        "nameBasis": "current-operator-or-institution-source",
+        "reason": "Current municipal emergency-shelter roster gives 217 Murray and 24/7 service; January 30, 2026 City release also corroborates.",
+        "sourceUrls": [
+          "https://www.peterborough.ca/recreation-culture-social-services/social-services/housing-and-shelter/emergency-shelter/",
+          "https://www.peterborough.ca/news/posts/update-on-temporary-emergency-overnight-shelter/"
+        ],
+        "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
+        "coordinatesVerified": false,
+        "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
+      }
     },
     {
       "id": "ptbo-location-047440239831c5",
@@ -4542,7 +4991,7 @@
     {
       "id": "ptbo-location-24dfb5625d6654",
       "city": "peterborough",
-      "name": "Brock Towers High-Rise Housing",
+      "name": "221 Brock St",
       "address": "221 Brock St",
       "street": "Brock St",
       "lat": 44.3068753,
@@ -4571,11 +5020,28 @@
       "cityAddressObjectIds": [
         2642
       ],
-      "placeNameSource": "Existing call label. Civic address verified; business label not independently rechecked.",
+      "placeNameSource": "City GIS civic address only; no current venue name asserted.",
       "sourceCallIds": [
         "call-brock-towers-high-rise-housing-16729za"
       ],
-      "notes": []
+      "notes": [],
+      "placeNameReview": {
+        "reviewedAt": "2026-10-29",
+        "status": "unsupported-highrise-label",
+        "originalName": "Brock Towers High-Rise Housing",
+        "aliases": [
+          "Brock Towers High-Rise Housing"
+        ],
+        "nameBasis": "civic-address-only",
+        "reason": "No current primary operator corroboration of Brock Towers here. Current listing-agent property disclosure describes a small commercial tenant plus lower apartment, conflicting with high-rise housing; exact E suffix varies in listing, so do not alter the GIS civic or point.",
+        "sourceUrls": [
+          "https://www.realtor.ca/real-estate/29315078/221-brock-street-e-peterborough-town-ward-3",
+          "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0"
+        ],
+        "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
+        "coordinatesVerified": false,
+        "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
+      }
     },
     {
       "id": "ptbo-location-cd2637dff3bb84",
@@ -5016,7 +5482,7 @@
     {
       "id": "ptbo-location-70b1b7176870e0",
       "city": "peterborough",
-      "name": "Brooklawn Apartment",
+      "name": "486 Donegal Street – Peterborough Housing Corporation",
       "address": "486 Donegal St",
       "street": "Donegal St",
       "lat": 44.3082893,
@@ -5055,11 +5521,27 @@
         32994,
         33075
       ],
-      "placeNameSource": "Existing call label. Civic address verified; business label not independently rechecked.",
+      "placeNameSource": "https://www.ptbohousingcorp.ca/rgi_housing/486-donegal-street/",
       "sourceCallIds": [
         "call-brooklawn-apartment-1hyko81"
       ],
-      "notes": []
+      "notes": [],
+      "placeNameReview": {
+        "reviewedAt": "2026-10-29",
+        "status": "building-corroborated-name-unresolved",
+        "originalName": "Brooklawn Apartment",
+        "aliases": [
+          "Brooklawn Apartment"
+        ],
+        "nameBasis": "current-operator-or-institution-source",
+        "reason": "Current housing operator lists exact civic as a 10-storey, 100-unit property; Brooklawn alias is supported only by secondary listings in this review. Use operator civic label without inventing an entrance.",
+        "sourceUrls": [
+          "https://www.ptbohousingcorp.ca/rgi_housing/486-donegal-street/"
+        ],
+        "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
+        "coordinatesVerified": false,
+        "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
+      }
     },
     {
       "id": "ptbo-location-701fd737914bcf",
@@ -5100,7 +5582,7 @@
     {
       "id": "ptbo-location-1169f890e24b2c",
       "city": "peterborough",
-      "name": "Bonaccord Appartment",
+      "name": "Hunt Terraces",
       "address": "555 Bonaccord St",
       "street": "Bonaccord St",
       "lat": 44.3093288,
@@ -5129,12 +5611,30 @@
       "cityAddressObjectIds": [
         27921
       ],
-      "placeNameSource": "Existing call label. Civic address verified; business label not independently rechecked.",
+      "placeNameSource": "https://www.ptbohousingcorp.ca/affordable_housing/555-bonaccord-coming-late-2022-hunt-terraces/",
       "sourceCallIds": [
         "call-bonaccord-appartment-1c76vop",
         "call-bonaccord-high-density-block-u15wkm"
       ],
-      "notes": []
+      "notes": [],
+      "placeNameReview": {
+        "reviewedAt": "2026-10-29",
+        "status": "current-operator-name-corroborated",
+        "originalName": "Bonaccord Appartment",
+        "aliases": [
+          "Bonaccord Appartment"
+        ],
+        "nameBasis": "current-operator-or-institution-source",
+        "reason": "Current housing operator explicitly names 555 Bonaccord as Hunt Terraces; current 2026 market-rental application and 2023 federal opening announcement corroborate active residential facility.",
+        "sourceUrls": [
+          "https://www.ptbohousingcorp.ca/affordable_housing/555-bonaccord-coming-late-2022-hunt-terraces/",
+          "https://www.ptbohousingcorp.ca/looking-for-a-home/market-rentals/",
+          "https://www.cmhc-schl.gc.ca/media-newsroom/news-releases/2023/canada-ontario-support-affordable-homes-peterborough"
+        ],
+        "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
+        "coordinatesVerified": false,
+        "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
+      }
     },
     {
       "id": "ptbo-location-c5a86d92c4ed86",
@@ -5510,7 +6010,7 @@
     {
       "id": "ptbo-location-12463d8e8e48ff",
       "city": "peterborough",
-      "name": "Fairhaven Home",
+      "name": "Fairhaven Long Term Care",
       "address": "881 Dutton Rd",
       "street": "Dutton Rd",
       "lat": 44.3275099,
@@ -5534,14 +6034,31 @@
       "cityAddressObjectIds": [
         30254
       ],
-      "placeNameSource": "Existing call label. Civic address verified; business label not independently rechecked.",
+      "placeNameSource": "https://fairhavenltc.com/contactus/",
       "sourceCallIds": [
         "call-fairhaven-home-11liha8",
         "call-fairhaven-senior-care-facility-25p63y"
       ],
       "notes": [
         "Only 1 distinct named drivable cross street(s) were found on the address street. No second name was invented."
-      ]
+      ],
+      "placeNameReview": {
+        "reviewedAt": "2026-10-29",
+        "status": "corroborated-normalize-label",
+        "originalName": "Fairhaven Home",
+        "aliases": [
+          "Fairhaven Home"
+        ],
+        "nameBasis": "current-operator-or-institution-source",
+        "reason": "Current operator and provincial home profile match; provincial profile last updated August 31, 2026.",
+        "sourceUrls": [
+          "https://fairhavenltc.com/contactus/",
+          "https://www.ontario.ca/locations/longtermcare/homes/M520-fairhaven/"
+        ],
+        "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
+        "coordinatesVerified": false,
+        "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
+      }
     },
     {
       "id": "ptbo-location-b668eacd2711e9",

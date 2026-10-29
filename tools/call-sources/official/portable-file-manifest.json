@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "reviewDate": "2026-10-29",
+  "files": {
+    "README.md": {
+      "bytes": 14385,
+      "sha256": "46574a187b6918b8b6aab3f493cbf832f824808262c9a7e4ba62a32b332db86e"
+    },
+    "acquire_lode.py": {
+      "bytes": 173,
+      "sha256": "ce4684298f9eb049915bed1ef22e56d573a97887119293d80907b2f9ec0ba299"
+    },
+    "acquire_ontario_schools.py": {
+      "bytes": 171,
+      "sha256": "9361901f3852cd70d03150f8c39e732e324572d1b2e613d0c55e3e9beac0afa5"
+    },
+    "acquire_snapshot.py": {
+      "bytes": 4013,
+      "sha256": "8bbc6fb1677841a7c9d90231d64c6f916060271276f754745244c9b3c4654a11"
+    },
+    "apply_independent_reviews.py": {
+      "bytes": 1260,
+      "sha256": "93649c3b0dde0d15249124b47b4bff3bf644da485e526a7ed6a8c633fad4862c"
+    },
+    "belleville-followup-verification.json": {
+      "bytes": 896,
+      "sha256": "fbc26305e3ddc33df890643011d308ee7f97219c81c5b8f45b0ee39b98242b9a"
+    },
+    "citation-index.json": {
+      "bytes": 1361,
+      "sha256": "d1900c9a8d971c5cf472e29bdd36c2ecd09cfafc64c8760ed6f113ed256a3a75"
+    },
+    "download-manifest.json": {
+      "bytes": 1258,
+      "sha256": "5efc83649b1ec9c697135735ae2b5eef3f4ecec71f66a0434ad9a717f9a5ea34"
+    },
+    "independent-source-reviews.json": {
+      "bytes": 60568,
+      "sha256": "d21b0ad4b79fcbb302dee75a40bc9d8bb6ef5953992cb49362c160c44067f040"
+    },
+    "normalize_lode.py": {
+      "bytes": 7730,
+      "sha256": "8eddfa19a5457ce3daf5777eaf8954636fc272f2cc2c5beafa3f814c98997242"
+    },
+    "official_common.py": {
+      "bytes": 1852,
+      "sha256": "84305db07e4420a5e909f9d66b6df9571334f597861d87bec88fd4223370e9de"
+    },
+    "official_reviews.py": {
+      "bytes": 2887,
+      "sha256": "2a7b149600fb4455b6b6006e3b6e4cfad614d79d189b7dd11f9887edb508a206"
+    },
+    "ontario-school-download-manifest.json": {
+      "bytes": 2285,
+      "sha256": "5069f8dd889029a4334b435872c7a94980cb2fa5d415fcd50c844d923f3d7826"
+    },
+    "pipeline-review-verification.json": {
+      "bytes": 243,
+      "sha256": "d75adca7809b6a21d3c3b144bd96367dd37eecc26b335dcc9320e7e0c838b32c"
+    },
+    "pipeline-verification.json": {
+      "bytes": 306,
+      "sha256": "c8f36d87f03f2a96b5e72fc7fb215bc18a878a91fc18ef216b64c08c5453c1da"
+    },
+    "portable-verification.json": {
+      "bytes": 756,
+      "sha256": "a9ff9470adfc62bb80a910d57aace314e0715db9ee1f24118b7082e7184edbfe"
+    },
+    "refine_bundles.py": {
+      "bytes": 10799,
+      "sha256": "b0e7a2839cbd99b94047aba41ef9481691438947280efa3828c86a8985349322"
+    },
+    "release-verification.json": {
+      "bytes": 2816,
+      "sha256": "8667a72562104e1d515db58a022acc7a1343702a813cdd786ec7bfae15fd4a5d"
+    },
+    "requirements.txt": {
+      "bytes": 45,
+      "sha256": "007b2cdaf9c2b3b35d93e8d29279616fba85299955a788471607bd456536acd3"
+    },
+    "source-resources.json": {
+      "bytes": 7147,
+      "sha256": "cb1f0975a5d3d0a01a349440c318df3c52e9de136118e147ea1c2748972c3076"
+    },
+    "thunder-bay-facilities-features.json": {
+      "bytes": 14570,
+      "sha256": "1034d5aa8d60ade2dd22ca3a73b581777d44803e51f6dae2281c1343deab64f1"
+    },
+    "validate_bundles.py": {
+      "bytes": 2165,
+      "sha256": "0b5ed5fcffa45a945c64847a3f9780b4c9a644d89c4a6c491917b79517407a3b"
+    }
+  },
+  "note": "Exact small portable code/metadata bytes. Manifest excludes itself; raw acquisitions, generated candidate caches, bytecode and dependencies are not bundled."
+}

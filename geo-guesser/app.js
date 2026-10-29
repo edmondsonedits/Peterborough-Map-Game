@@ -183,9 +183,8 @@
     document.body.classList.add('ptbo-geo-compact');
     document.body.classList.add('geo-ui-compact');
     if(city){
-      const demo=city.id!=='peterborough';
-      $('geo-city-label').textContent=city.name+' · '+(demo?'Geo Guesser demo':'street practice');
-      document.title=city.name+' Geo Guesser'+(demo?' Demo':'');
+      $('geo-city-label').textContent=city.name+' · street practice';
+      document.title=city.name+' Geo Guesser';
       const back=new URL('../',location.href);back.searchParams.set('city',city.id);$('game-home').href=back.href;
       $('developer-settings').href='../dispatch-editor/?city='+encodeURIComponent(city.id);
     }

@@ -1,0 +1,87 @@
+{
+  "city": "cambridge",
+  "verifiedFingerprint": "88dcd0fe809eae8a712de5ad025757d8a2c60e0c4ca81f4475ec76b89148fb29",
+  "halls": [
+    {
+      "id": "fire-cambridge-fire-1",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3371,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-cambridge-fire-2",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 4274,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-cambridge-fire-3",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 11,
+      "maxRouteMetres": 3527,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-cambridge-fire-4",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2621,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-cambridge-fire-5",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2878,
+      "method": "official-run-area"
+    },
+    {
+      "id": "fire-cambridge-fire-6",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 4158,
+      "method": "official-run-area"
+    },
+    {
+      "id": "ems-cambridge-ems-maple-grove",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3829,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-cambridge-ems-st-andrews",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 10,
+      "maxRouteMetres": 6364,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-cambridge-ems-pinebush",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 4237,
+      "method": "modeled-road-response"
+    }
+  ],
+  "routes": 120,
+  "continuousOrigins": 120,
+  "officialCalls": 72,
+  "modeledCalls": 36,
+  "maxRouteMetres": 6364.194027317414,
+  "minCallsPerHall": 12,
+  "minChallengeCallsPerHall": 10,
+  "supportCalls": 12,
+  "durationMs": 9204
+}

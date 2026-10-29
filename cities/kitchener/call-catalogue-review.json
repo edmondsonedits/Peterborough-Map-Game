@@ -1,0 +1,742 @@
+{
+  "schemaVersion": 1,
+  "coverage": {
+    "cityId": "kitchener",
+    "inputOfficial": 659,
+    "inputOsm": 2910,
+    "inputMajorRoad": 1131,
+    "existing": 27,
+    "accepted": 1898,
+    "selected": 180,
+    "target": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "existingByDifficulty": {
+      "easy": 10,
+      "medium": 5,
+      "hard": 5
+    },
+    "selectedByDifficulty": {
+      "easy": 90,
+      "medium": 45,
+      "hard": 45
+    },
+    "totalByDifficulty": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "deficits": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "baseStrata": [
+      {
+        "id": "fire-kitchener-fire-1",
+        "selected": 18,
+        "available": 339,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-kitchener-fire-2",
+        "selected": 18,
+        "available": 618,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-kitchener-fire-3",
+        "selected": 18,
+        "available": 184,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-kitchener-fire-4",
+        "selected": 18,
+        "available": 137,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-kitchener-fire-5",
+        "selected": 18,
+        "available": 129,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-kitchener-fire-6",
+        "selected": 18,
+        "available": 123,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-kitchener-fire-7",
+        "selected": 18,
+        "available": 50,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-kitchener-ems-doon",
+        "selected": 18,
+        "available": 59,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-kitchener-ems-ottawa",
+        "selected": 18,
+        "available": 84,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-kitchener-ems-queens",
+        "selected": 18,
+        "available": 175,
+        "method": "nearest-geographic-base-for-selection-only"
+      }
+    ],
+    "sharedBaseline": 20,
+    "baselineByService": {
+      "fire": {
+        "easy": 10,
+        "medium": 5,
+        "hard": 5
+      },
+      "ems": {
+        "easy": 10,
+        "medium": 12,
+        "hard": 5
+      }
+    },
+    "serviceTotalsByDifficulty": {
+      "fire": {
+        "easy": 100,
+        "medium": 50,
+        "hard": 50
+      },
+      "ems": {
+        "easy": 100,
+        "medium": 57,
+        "hard": 50
+      }
+    },
+    "serviceDeficits": {
+      "fire": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      },
+      "ems": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "rejected": 2802,
+    "rejectionCounts": {
+      "unresolved-2020-source-currentness": 7,
+      "production-snap-not-ground-public-road": 1993,
+      "production-snap-wrong-street": 469,
+      "unresolved-official-coordinate-or-current-address-conflict": 50,
+      "production-snap-over-80m-or-missing": 127,
+      "not-one-exact-civic-number-and-street": 43,
+      "duplicate-existing-or-accepted-address-or-named-site": 93,
+      "no-genuine-connected-cross-street-within-1500m": 20
+    },
+    "oneStreetExceptions": 47
+  },
+  "independentAudit": {
+    "cityId": "kitchener",
+    "selected": 180,
+    "accepted": 1898,
+    "crossStreetEvidence": 3372,
+    "oneStreet": 424,
+    "maxGap": 79.94561572819752,
+    "pass": true
+  },
+  "priorityFacilityExpansion": {
+    "reviewedOn": "2026-10-29",
+    "addedIds": [
+      "kitchener-ontario-private-school-880268-273",
+      "kitchener-osm-way-67792411",
+      "kitchener-osm-way-233575230",
+      "kitchener-osm-way-246967444",
+      "kitchener-osm-way-168448053",
+      "kitchener-odef-dfeb09a31a0eae82ef2f",
+      "kitchener-osm-way-513725067",
+      "kitchener-osm-way-221477822",
+      "kitchener-osm-way-849512284",
+      "kitchener-osm-node-2168303644",
+      "kitchener-osm-way-611668357",
+      "kitchener-osm-way-173057941"
+    ],
+    "verification": {
+      "cityId": "kitchener",
+      "additions": 12,
+      "proposalSha256": "540d5dab5d86d54a33cde50c212b539e719b4d2e0cb019888fd84bf2807d4197",
+      "pass": true,
+      "checks": [
+        "IDs absent from current shared/legacy/care catalogue",
+        "row exactly equals accepted source record",
+        "full per-record provenance exactly equals accepted pool",
+        "factual category/tags and coordinates match raw source record",
+        "source point and URLs unchanged",
+        "no normalized civic-address/near-identical-site duplicates",
+        "max40 per city",
+        "per-base rationale present; no dispatch ownership claim"
+      ]
+    },
+    "review": {
+      "purpose": "Bounded source-preserving priority facility and local variety additions; no recognition tier rewrites.",
+      "sourcePool": "external-build-cache/canonical-catalogues-reviewed/kitchener/accepted-candidates.json",
+      "sourcePoolSha256": "2527c9aeec2b1397de299b7c0fc839ff8fc7a6bb1e40a223b3e0eb576d33ea48",
+      "selectedDescriptor": "cities/kitchener/training-data.json",
+      "selectedDescriptorSha256": "2c4386ba12ca8d2e07efd4850302fa9cae99ec89bed2584e29cda7d3ca33a663",
+      "routeEvidence": "external-build-cache/civic-city-batch/kitchener.json",
+      "routeEvidenceScope": "scratch augmentation proposal; integration/audit status must be checked by root",
+      "selectionRules": {
+        "maxPerCity": 40,
+        "maxPotentialAddsPerBase": 6,
+        "maxPotentialAddsForConfirmedZeroToTwoBase": 10,
+        "twoCluePriority": true,
+        "maximumStraightLineBaseReviewDistanceMetres": 6000
+      },
+      "limitations": [
+        "At this selection-time review: Every row passed the existing all-accepted geographic/source/clue audit. These additions have not been graph-assigned or route-audited.",
+        "Published Fire polygons are respected for review proximity; EMS and other Fire review strata use straight-line proximity only. These are not dispatch ownership assignments.",
+        "Full original accepted source point, ID, address, recognition tier, incident profile and provenance are unchanged. Current-open status is not newly verified."
+      ],
+      "rationales": {
+        "kitchener-ontario-private-school-880268-273": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "kitchener-ontario-private-school-880268-273",
+            "category": "school",
+            "tags": null,
+            "sourceUrls": [
+              "https://data.ontario.ca/dataset/private-school-location-list",
+              "https://data.ontario.ca/dataset/07586958-ffd4-4293-aec0-3b32e0f7de7b/resource/b0fef8bb-8b07-4962-8192-bbf899195cd5/download/private_school_location_list_en_2.xlsx"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-kitchener-fire-6",
+              "distance": 1126.9373976177708,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1127
+            },
+            {
+              "baseId": "ems-kitchener-ems-doon",
+              "distance": 2989.5139756114177,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2990
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 221
+        },
+        "kitchener-osm-way-67792411": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "kitchener-osm-way-67792411",
+            "category": null,
+            "tags": {
+              "addr:city": "Kitchener",
+              "addr:housenumber": "843",
+              "addr:postcode": "N2H 5Z2",
+              "addr:street": "Guelph Street",
+              "building": "industrial"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/67792411",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-kitchener-fire-2",
+              "distance": 322.39095284088717,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 322
+            },
+            {
+              "baseId": "ems-kitchener-ems-ottawa",
+              "distance": 3511.3534924333517,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 3511
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 211
+        },
+        "kitchener-osm-way-233575230": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "kitchener-osm-way-233575230",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "228",
+              "addr:street": "Madison Avenue South",
+              "building": "industrial",
+              "building:levels": "1",
+              "source": "Bing"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/233575230",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-kitchener-fire-1",
+              "distance": 1865.385630566282,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1865
+            },
+            {
+              "baseId": "ems-kitchener-ems-queens",
+              "distance": 3512.4643675239695,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 3512
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 207
+        },
+        "kitchener-osm-way-246967444": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "kitchener-osm-way-246967444",
+            "category": null,
+            "tags": {
+              "addr:city": "Kitchener",
+              "addr:housenumber": "71",
+              "addr:street": "Rothsay Avenue",
+              "amenity": "place_of_worship",
+              "building": "kingdom_hall",
+              "denomination": "jehovahs_witness",
+              "name": "Kingdom Hall of Jehovah's Witnesses",
+              "religion": "christian",
+              "source": "Bing"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/246967444",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-kitchener-fire-3",
+              "distance": 1940.9648217365861,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1941
+            },
+            {
+              "baseId": "ems-kitchener-ems-ottawa",
+              "distance": 1963.3410234577273,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1963
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 202
+        },
+        "kitchener-osm-way-168448053": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "kitchener-osm-way-168448053",
+            "category": null,
+            "tags": {
+              "addr:city": "Kitchener",
+              "addr:housenumber": "112",
+              "addr:street": "Spadina Road West",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "denomination": "evangelical",
+              "name": "Evangel Community Ministries",
+              "religion": "christian",
+              "source": "Bing",
+              "website": "http://www.evangelcommunity.com/"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/168448053",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-kitchener-fire-1",
+              "distance": 2029.4975915708312,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2029
+            },
+            {
+              "baseId": "ems-kitchener-ems-queens",
+              "distance": 2276.7044140710996,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 2,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 2277
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 171
+        },
+        "kitchener-odef-dfeb09a31a0eae82ef2f": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "kitchener-odef-dfeb09a31a0eae82ef2f",
+            "category": "school",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/37-26-0001/372600012022001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/en/pub/37-26-0001/2022001/ODEF_v3.0.zip",
+              "https://data.ontario.ca/dataset/school-information-and-student-demographics",
+              "https://data.ontario.ca/dataset/ontario-public-school-contact-information",
+              "https://data.ontario.ca/dataset/fb3a7c18-90af-453e-bc0a-a76ecc471862/resource/f3a8c2a3-09d9-4715-9044-d8a0189f572c/download/public_school_contact_list_september2026_en.txt",
+              "https://www150.statcan.gc.ca/n1/pub/21-26-0002/212600022021001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/21-26-0002/2021001/zip/odsrf_v2_gpkg.zip",
+              "https://open-kitchenergis.opendata.arcgis.com/datasets/62df6dc1bb2b45a9b98e79fadda529ab_0",
+              "https://open-kitchenergis.opendata.arcgis.com/datasets/664f8abcf380444fb95f1c6bcbcfc0ac_0",
+              "https://open-kitchenergis.opendata.arcgis.com/datasets/903d2624b81f431f8b4e045cca16dafb_0",
+              "https://open-kitchenergis.opendata.arcgis.com/datasets/13e34cd034bc40d6894eb719917bee6c_0",
+              "https://open-kitchenergis.opendata.arcgis.com/datasets/2523f52eaa0f4159b7bdc7c351fc9ae5_0",
+              "https://open-kitchenergis.opendata.arcgis.com/datasets/e3df9fe8c063417ba5aba7ab5033e218_0",
+              "https://open-kitchenergis.opendata.arcgis.com/datasets/4132f7df2c234868a676a23329166388_0",
+              "https://open-kitchenergis.opendata.arcgis.com/datasets/e1d24a4e5eda4072954ee3d57a004eb8_0",
+              "https://open-kitchenergis.opendata.arcgis.com/datasets/b35d2d768bbb4abb84bf4cef61e43e2c_0",
+              "https://open-kitchenergis.opendata.arcgis.com/datasets/0422aed12f924f25bd23cc4291b9761d_0",
+              "https://open-kitchenergis.opendata.arcgis.com/datasets/443172cdd0a34d39a45b7b69530afb07_0",
+              "https://open-kitchenergis.opendata.arcgis.com/datasets/9c7082ba9a5b423690160de3d16f9ff4_0",
+              "https://open-kitchenergis.opendata.arcgis.com/datasets/daeb44b4880140f88561840efe3ccfbe_0",
+              "https://open-kitchenergis.opendata.arcgis.com/datasets/5586508b64724e1bb29b313d218460ff_0"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-kitchener-fire-7",
+              "distance": 1246.5058193568989,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1247
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 166
+        },
+        "kitchener-osm-way-513725067": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "kitchener-osm-way-513725067",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "40",
+              "addr:street": "Webster Road",
+              "building": "industrial",
+              "name": "Home Hardware Stores Limited LBM Distribution"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/513725067",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-kitchener-fire-4",
+              "distance": 1573.8705778222634,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1574
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 163
+        },
+        "kitchener-osm-way-221477822": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "kitchener-osm-way-221477822",
+            "category": null,
+            "tags": {
+              "addr:city": "Kitchener",
+              "addr:housenumber": "316",
+              "addr:street": "Wellington Street North",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "denomination": "evangelical",
+              "name": "Spanish Church of God",
+              "official_name": "Spanish Church of God - Ebenezer",
+              "religion": "christian"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/221477822",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-kitchener-fire-2",
+              "distance": 660.5804033612612,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 661
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 156
+        },
+        "kitchener-osm-way-849512284": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "kitchener-osm-way-849512284",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "90",
+              "addr:street": "Fairfield Avenue",
+              "building": "school",
+              "building:levels": "1"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/849512284",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-kitchener-fire-2",
+              "distance": 689.5698404514628,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 690
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 138
+        },
+        "kitchener-osm-node-2168303644": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "clinic",
+          "sourceEvidence": {
+            "sourceRecordId": "kitchener-osm-node-2168303644",
+            "category": null,
+            "tags": {
+              "addr:city": "Kitchener",
+              "addr:housenumber": "101",
+              "addr:postcode": "N2H 6R2",
+              "addr:street": "Frederick Street",
+              "amenity": "clinic",
+              "brand": "LASIK MD",
+              "brand:wikidata": "Q3205934",
+              "check_date": "2023-05-22",
+              "email": "info@lasikmd.com",
+              "fax": "+1-519-772-1288",
+              "healthcare": "clinic",
+              "healthcare:speciality": "ophthalmology",
+              "name": "LASIK MD",
+              "phone": "+1-519-772-2020",
+              "website": "http://www.lasikmd.com/kitchener-waterloo"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/2168303644",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "ems-kitchener-ems-ottawa",
+              "distance": 3458.9539536501748,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 3459
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 130
+        },
+        "kitchener-osm-way-611668357": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "kitchener-osm-way-611668357",
+            "category": null,
+            "tags": {
+              "addr:city": "Kitchener",
+              "addr:housenumber": "142",
+              "addr:postcode": "N2C 1P1",
+              "addr:province": "ON",
+              "addr:street": "Fourth Avenue",
+              "building": "apartments"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/611668357",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-kitchener-fire-4",
+              "distance": 1923.7062966580684,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 1924
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 125
+        },
+        "kitchener-osm-way-173057941": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "kitchener-osm-way-173057941",
+            "category": null,
+            "tags": {
+              "addr:city": "Kitchener",
+              "addr:housenumber": "1720",
+              "addr:postcode": "N2N 0A7",
+              "addr:province": "Ontario",
+              "addr:street": "Glasgow Street",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "denomination": "baptist",
+              "name": "Kitchener Baptist Church",
+              "religion": "christian",
+              "source": "Bing"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/173057941",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-kitchener-fire-5",
+              "distance": 2815.661981172733,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 2816
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 120
+        }
+      }
+    },
+    "note": "Add-only source-validated priority facilities; geographic review reasons are not operational districts. Station assignments require independent directed-road audit."
+  },
+  "routeCandidateExpansion": {
+    "reviewedOn": "2026-10-29",
+    "promotedIds": [],
+    "candidateVerification": null,
+    "selection": "Only source-verified additional locations used by independently audited station exercises are promoted; existing canonical IDs and fields remain unchanged."
+  },
+  "evidencePathConvention": {
+    "repositoryPaths": "Paths beginning cities/ are repository-relative.",
+    "externalBuildCache": "external-build-cache/ labels identify historical, reproducible build artifacts that are not shipped; adjacent SHA-256 values identify the exact reviewed bytes.",
+    "reviewScope": "Priority facility review records describe the selection-time review. Final integrated route and runtime validation is recorded in docs/city-call-validation-2026-10-29.md."
+  }
+}

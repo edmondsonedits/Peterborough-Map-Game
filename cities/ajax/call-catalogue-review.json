@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "coverage": {
+    "cityId": "ajax",
+    "inputOfficial": 190,
+    "inputOsm": 1633,
+    "inputMajorRoad": 384,
+    "existing": 23,
+    "accepted": 1427,
+    "selected": 180,
+    "target": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "existingByDifficulty": {
+      "easy": 10,
+      "medium": 5,
+      "hard": 5
+    },
+    "selectedByDifficulty": {
+      "easy": 90,
+      "medium": 45,
+      "hard": 45
+    },
+    "totalByDifficulty": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "deficits": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "baseStrata": [
+      {
+        "id": "fire-ajax-fire-1",
+        "selected": 46,
+        "available": 475,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-ajax-fire-2",
+        "selected": 46,
+        "available": 357,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-ajax-fire-3",
+        "selected": 45,
+        "available": 468,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-ajax-ems-511",
+        "selected": 43,
+        "available": 127,
+        "method": "nearest-geographic-base-for-selection-only"
+      }
+    ],
+    "sharedBaseline": 20,
+    "baselineByService": {
+      "fire": {
+        "easy": 10,
+        "medium": 5,
+        "hard": 5
+      },
+      "ems": {
+        "easy": 10,
+        "medium": 8,
+        "hard": 5
+      }
+    },
+    "serviceTotalsByDifficulty": {
+      "fire": {
+        "easy": 100,
+        "medium": 50,
+        "hard": 50
+      },
+      "ems": {
+        "easy": 100,
+        "medium": 53,
+        "hard": 50
+      }
+    },
+    "serviceDeficits": {
+      "fire": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      },
+      "ems": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "rejected": 780,
+    "rejectionCounts": {
+      "unresolved-2020-source-currentness": 4,
+      "production-snap-not-ground-public-road": 372,
+      "unresolved-official-coordinate-or-current-address-conflict": 5,
+      "production-snap-wrong-street": 286,
+      "duplicate-existing-or-accepted-address-or-named-site": 43,
+      "production-snap-over-80m-or-missing": 31,
+      "no-genuine-connected-cross-street-within-1500m": 20,
+      "not-one-exact-civic-number-and-street": 17,
+      "outside-game-bounds-or-invalid-coordinate": 2
+    },
+    "oneStreetExceptions": 64
+  },
+  "independentAudit": {
+    "cityId": "ajax",
+    "selected": 180,
+    "accepted": 1427,
+    "crossStreetEvidence": 2346,
+    "oneStreet": 508,
+    "maxGap": 78.68212995668095,
+    "pass": true
+  },
+  "routeCandidateExpansion": {
+    "reviewedOn": "2026-10-29",
+    "promotedIds": [],
+    "candidateVerification": null,
+    "selection": "Only source-verified additional locations used by independently audited station exercises are promoted; existing canonical IDs and fields remain unchanged."
+  }
+}

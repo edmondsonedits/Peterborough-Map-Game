@@ -1,0 +1,1486 @@
+{
+  "capturedAt": "2026-10-29T06:39:41.407582+00:00",
+  "scope": "Runtime and harness hashes captured before the affected-city browser run and verified unchanged after completion. Browser engine and external tiles excluded.",
+  "files": [
+    {
+      "path": "cities/ajax/city.json",
+      "sha256": "00af39b2592a4235e1dfde2ad599273a184168c74048e0604997ee8f577c183b",
+      "bytes": 957
+    },
+    {
+      "path": "cities/ajax/geo-data.json",
+      "sha256": "f601d3884af02e0d4fa738b77c6e39ee88dba78b2970a7042d00d3451618e9a2",
+      "bytes": 17858
+    },
+    {
+      "path": "cities/ajax/roads.geojson.gz",
+      "sha256": "fff09f4b2a415a397e2950280386b06a999967da73daa9914568e065cf1ff3e2",
+      "bytes": 1146885
+    },
+    {
+      "path": "cities/ajax/training-data.json",
+      "sha256": "8cde18b0a2450fd214f57afa860eed3b8dac06feadf4660a046c6fb653e4429a",
+      "bytes": 329390
+    },
+    {
+      "path": "cities/barrie/city.json",
+      "sha256": "5704b948faf6a1a6c1dacacbab1075b0ad7634faaa2353939b24800c290fbfc1",
+      "bytes": 957
+    },
+    {
+      "path": "cities/barrie/geo-data.json",
+      "sha256": "b7678403fb04ea9313bdd00463fe198ed6631c96dbaa57cc523d5b662606f5a6",
+      "bytes": 24656
+    },
+    {
+      "path": "cities/barrie/roads.geojson.gz",
+      "sha256": "2d90e33a868b51ca7fb7ae14b061e933d908a21bd186d9db40dcf75450c06e85",
+      "bytes": 549047
+    },
+    {
+      "path": "cities/barrie/training-data.json",
+      "sha256": "aff30fecacee31b6f232932b71e821dcd456a0c1d414b3ffcb775c005a512fa9",
+      "bytes": 462221
+    },
+    {
+      "path": "cities/belleville/city.json",
+      "sha256": "ea8e14cfbfe29022ba3887a405140cd5582ddeb2f3e241cd4f77efd2f5404732",
+      "bytes": 1096
+    },
+    {
+      "path": "cities/belleville/dispatch-data.js",
+      "sha256": "21b8658b370c5d8ea9f2dbedd9e6e2ccacca4d156b740e5453dd083a7215d3ea",
+      "bytes": 387
+    },
+    {
+      "path": "cities/belleville/geo-data.json",
+      "sha256": "f9ea7a761bd5dc2ed70a3a5ddd3cdd662fb09133c149dfbf8bb6990aad0e60d0",
+      "bytes": 9099
+    },
+    {
+      "path": "cities/belleville/package.js",
+      "sha256": "1d60155f9473adb2971fa80ed9bfa078ecd98a010ca97da1684e684cdbe01e84",
+      "bytes": 2808
+    },
+    {
+      "path": "cities/belleville/road-refresh-review.json",
+      "sha256": "723d5eabae707f75a622c07a8beb5c35752e34ba2318756681e0fd479cb32f8f",
+      "bytes": 6964
+    },
+    {
+      "path": "cities/belleville/roads.geojson.gz",
+      "sha256": "20db0378147b90a301d4252d580481cfed2b7d265535b5a827f82a3734a6b473",
+      "bytes": 273193
+    },
+    {
+      "path": "cities/belleville/training-data.json",
+      "sha256": "14da101f229e03b20b29e2b2f0285a73e8e605067a827f1559eee5a331025bcf",
+      "bytes": 418186
+    },
+    {
+      "path": "cities/brampton/city.json",
+      "sha256": "607b49ecd05ef6e1df33f43a29b983a614ce3b85bd8818979c6cfa11168a7910",
+      "bytes": 964
+    },
+    {
+      "path": "cities/brampton/geo-data.json",
+      "sha256": "faa1a01e067658e4baf68d4d63f842df85f606da2b2b4d93fddefded7c5de623",
+      "bytes": 31991
+    },
+    {
+      "path": "cities/brampton/roads.geojson.gz",
+      "sha256": "5f33ea75237f8aa4c31689eb3a722a0ff94db514e78e44c60ff4d97a1a8952bf",
+      "bytes": 3040332
+    },
+    {
+      "path": "cities/brampton/training-data.json",
+      "sha256": "8dc829d8f363cd9ae5be60b5471ae3cdbeb3b11c93b874d1c8c60cbb4f8d27c7",
+      "bytes": 828284
+    },
+    {
+      "path": "cities/brantford/city.json",
+      "sha256": "c8f390edc29e6ed139feaf0bc7154ae38fe7734508831abea6ad6a3586ffb8c9",
+      "bytes": 966
+    },
+    {
+      "path": "cities/brantford/geo-data.json",
+      "sha256": "69f5ca063a5f310fce4a63e2ae716570f948c460f3baf01d85958f495067b2db",
+      "bytes": 25290
+    },
+    {
+      "path": "cities/brantford/roads.geojson.gz",
+      "sha256": "93e2342a33742538c05d9168b70eb2a34e43940e9dbd8ae94db6d4da08fc8120",
+      "bytes": 296558
+    },
+    {
+      "path": "cities/brantford/training-data.json",
+      "sha256": "3260de2b488207dae95b22f3834cd56acf3308084bc140cde0d7da07efa7beb5",
+      "bytes": 412526
+    },
+    {
+      "path": "cities/burlington/city.json",
+      "sha256": "ccb89bf09e127b48b7dcf62deb4cdba51a2b78bf48390b80febc5861bc68455d",
+      "bytes": 968
+    },
+    {
+      "path": "cities/burlington/geo-data.json",
+      "sha256": "a0a1c9084cd0c02fcbe6c0b9390a92f7e3e694b1dd9c363b4011d06b0018489e",
+      "bytes": 28100
+    },
+    {
+      "path": "cities/burlington/roads.geojson.gz",
+      "sha256": "fdf560857a25b2336fe3202aaf81f1cca4fd1dab56510bb5c88d12a7594a71eb",
+      "bytes": 1873934
+    },
+    {
+      "path": "cities/burlington/training-data.json",
+      "sha256": "1891196572a8519967176dca5adb638cc28d966554d3f320ffc9daec814c17ac",
+      "bytes": 524190
+    },
+    {
+      "path": "cities/cambridge/city.json",
+      "sha256": "2d946506649264ea29b8be57f1912ba2ce7435fe7a0f163006c0b8115cfb407a",
+      "bytes": 951
+    },
+    {
+      "path": "cities/cambridge/geo-data.json",
+      "sha256": "8b674c1c314d62572e693829b039576dd79f07a5bb9145efe9f3b60a0d43d57e",
+      "bytes": 24554
+    },
+    {
+      "path": "cities/cambridge/roads.geojson.gz",
+      "sha256": "a842a94251cf4f147ee1c2bc7119e27267e1812d421af6789d9abd000376fe67",
+      "bytes": 810346
+    },
+    {
+      "path": "cities/cambridge/training-data.json",
+      "sha256": "92146c97b6fb1abe5bc457b1bd5cbf8e34936ded44a369b90bf51cf880820cee",
+      "bytes": 468867
+    },
+    {
+      "path": "cities/chatham-kent/city.json",
+      "sha256": "3b2661493b61099bbab82004f1f4b580357bc42367ca5e00be23fcb8012a223d",
+      "bytes": 971
+    },
+    {
+      "path": "cities/chatham-kent/geo-data.json",
+      "sha256": "2112a62ac3dffb796ef0b58c3544be79fe9641ecf09ddab1c09f510eb404636f",
+      "bytes": 38393
+    },
+    {
+      "path": "cities/chatham-kent/roads.geojson.gz",
+      "sha256": "06e0801c895ab05a4802bbc9f67efc94244f3f5bcde7cdf26d1c244cc6772e31",
+      "bytes": 1068776
+    },
+    {
+      "path": "cities/chatham-kent/training-data.json",
+      "sha256": "c8e57f084ded95c3ec68b15520701fb9e2f4968dc605d366d0d50978d320813b",
+      "bytes": 854805
+    },
+    {
+      "path": "cities/city-registry.js",
+      "sha256": "a87dc319ca77e9b7b15cd10086854e1a01f7989b52929dcd2cae43724b7e79b2",
+      "bytes": 3581
+    },
+    {
+      "path": "cities/clarington/city.json",
+      "sha256": "fb583ff348590bc5142efdd4a227209585f6da467ee1eeec462f9c21bc728b46",
+      "bytes": 969
+    },
+    {
+      "path": "cities/clarington/geo-data.json",
+      "sha256": "4677c4eb5c74f686454f5dad40b35d7ad14354f8e21a246536f1a0a004a76227",
+      "bytes": 24284
+    },
+    {
+      "path": "cities/clarington/roads.geojson.gz",
+      "sha256": "1a3827ad4057b6f7065da1b58aa0244cf5f87d2ba484cf7804fdcb5c39677226",
+      "bytes": 792260
+    },
+    {
+      "path": "cities/clarington/training-data.json",
+      "sha256": "c80ff005feff2506411cc81f651470d12ed52f8e4a2086270180cb1eeabd8a90",
+      "bytes": 393374
+    },
+    {
+      "path": "cities/empty-dispatch.js",
+      "sha256": "28f1f201fd44be648b32782f861ad22adba2f13a0d0174b44b1c57a81b3e8cb9",
+      "bytes": 173
+    },
+    {
+      "path": "cities/greater-sudbury/city.json",
+      "sha256": "e4b3505de486780d56317224cc87667f59999c2aa2de2abdfd5fc5dbfe71cf4d",
+      "bytes": 979
+    },
+    {
+      "path": "cities/greater-sudbury/geo-data.json",
+      "sha256": "2605356404f1fa93886d204a76b8b5e7f272f2da3afb773958655d609ceff136",
+      "bytes": 64614
+    },
+    {
+      "path": "cities/greater-sudbury/roads.geojson.gz",
+      "sha256": "66cd652ddc38ef25c8bcb6557687c01d61e05bcec8b606a5d983c20c27332c26",
+      "bytes": 954831
+    },
+    {
+      "path": "cities/greater-sudbury/training-data.json",
+      "sha256": "d84aee143013fe8c3ec6ff0426f9a922bb1ba6a54a6b920a54a4d755eb1dbd9e",
+      "bytes": 975814
+    },
+    {
+      "path": "cities/guelph/city.json",
+      "sha256": "59fae77be6efd7c0f8cd521084cfdb27138ed32b3d7156bac0b3b7bc368629e2",
+      "bytes": 946
+    },
+    {
+      "path": "cities/guelph/geo-data.json",
+      "sha256": "7ce1f99a014df535fdfbced046cef050250293ad4b098b25e25a54d1746d20fe",
+      "bytes": 24502
+    },
+    {
+      "path": "cities/guelph/roads.geojson.gz",
+      "sha256": "1550ca7cee5f5fb189217f31f255b9f9663611fae5bb70fc9910c21045d7bd49",
+      "bytes": 819065
+    },
+    {
+      "path": "cities/guelph/training-data.json",
+      "sha256": "32acf74a82da8f5a568f8c07222afbad74dc9bcae091b173e81b86a1980fc0da",
+      "bytes": 460411
+    },
+    {
+      "path": "cities/hamilton/city.json",
+      "sha256": "0f3630a94d6bc3df3b0f2155ca3d88e609343af86a46fc5c3731b889fcfe492d",
+      "bytes": 964
+    },
+    {
+      "path": "cities/hamilton/geo-data.json",
+      "sha256": "debbb5fd86be989321462c8c827d2dd3e3f98f992aba25960f5d84ed1ba60f77",
+      "bytes": 55996
+    },
+    {
+      "path": "cities/hamilton/roads.geojson.gz",
+      "sha256": "ec5cf0915f84517062df5c551ec7a4d8a3780c2c5bb6125b8c530b5e744b0e52",
+      "bytes": 3388602
+    },
+    {
+      "path": "cities/hamilton/training-data.json",
+      "sha256": "e43fd97ec244b1d40e993eb215fc44615d1533eafaf2f3247f02c945414ad17a",
+      "bytes": 1380127
+    },
+    {
+      "path": "cities/kingston/city.json",
+      "sha256": "5a64cd8a88cefb26085c8db648e0d0ac22d6ffcd12a5fbd4e4ad36eafa704405",
+      "bytes": 963
+    },
+    {
+      "path": "cities/kingston/geo-data.json",
+      "sha256": "fc38bde0a39c227d1bb202e2813eb8bd18f123d551821cae070e17976b235293",
+      "bytes": 32830
+    },
+    {
+      "path": "cities/kingston/roads.geojson.gz",
+      "sha256": "48c60e6227ca5bb568b5704a4266bdc48cd19cfe9063786dd8afedc5b0188ec4",
+      "bytes": 677435
+    },
+    {
+      "path": "cities/kingston/training-data.json",
+      "sha256": "0079e56f6ba33e6b76613f8f6dadd42cd90de013bd53aae32a6f0ef982ad6281",
+      "bytes": 679425
+    },
+    {
+      "path": "cities/kitchener/city.json",
+      "sha256": "507eec260c3a8c034b883e8f73a1081ef50e7cd2f007223cb76205274c534756",
+      "bytes": 952
+    },
+    {
+      "path": "cities/kitchener/geo-data.json",
+      "sha256": "6819d199ddcf5578ad0e36630c4042d0abeb2e6fd7fa73e8ccffe78d8e2b9e6e",
+      "bytes": 32581
+    },
+    {
+      "path": "cities/kitchener/roads.geojson.gz",
+      "sha256": "5a094fd475290266f419d12708bd7f9b1128073a2b56f929085f38a4f238cca4",
+      "bytes": 1508505
+    },
+    {
+      "path": "cities/kitchener/training-data.json",
+      "sha256": "cb92414ab3d91c6f178cb8d46e3b4f16ec4e8fa1d57770fc07da28f823411854",
+      "bytes": 593335
+    },
+    {
+      "path": "cities/london/city.json",
+      "sha256": "ca8de1033105add1bb33a6cbd13f522d5b280911b62d671d1f3698c55e40c2d9",
+      "bytes": 959
+    },
+    {
+      "path": "cities/london/geo-data.json",
+      "sha256": "d1e07cf4aa5d4378582466f059234f92859cf691bcffcdfdc56ccd82b4b36e63",
+      "bytes": 29829
+    },
+    {
+      "path": "cities/london/roads.geojson.gz",
+      "sha256": "4d6b837b852071aa58319d7fd7ddcbfd2d026620f12b6a453b89521c763723ac",
+      "bytes": 1311446
+    },
+    {
+      "path": "cities/london/training-data.json",
+      "sha256": "ffbec3183e2f5229c2ee5ec5a873b7261827b72bf7217015b66961e30fd0ff17",
+      "bytes": 827835
+    },
+    {
+      "path": "cities/markham/city.json",
+      "sha256": "294ff65492a1a478c8c8fb72bcd1c3023a30fc920755de5bc4e264faf0d2891f",
+      "bytes": 974
+    },
+    {
+      "path": "cities/markham/dispatch-data.js",
+      "sha256": "b11fb7cb9be2358e9d4abca60b415716a38c6d6ca53f6c21d6fa97d3b4ce552c",
+      "bytes": 381
+    },
+    {
+      "path": "cities/markham/geo-data.json",
+      "sha256": "5a1a413d1e2eb3fa29e1f8ac4bc24c150f5e8e201d420c1a49ec018d1d90eb4b",
+      "bytes": 27523
+    },
+    {
+      "path": "cities/markham/package.js",
+      "sha256": "4086dd0bf18c1905db42e40341f5b5712649e987a3accec75dcb9a092aab0e89",
+      "bytes": 3742
+    },
+    {
+      "path": "cities/markham/roads.geojson.gz",
+      "sha256": "a665abc6475479b64ac28ce0fea0fce1b37c44a793d0f60fa8b916feffcff45c",
+      "bytes": 2313016
+    },
+    {
+      "path": "cities/markham/training-data.json",
+      "sha256": "10afd9de00653d08264257a93c5e9aa16367e3c6af0be06a73b32ba52cfe268e",
+      "bytes": 605504
+    },
+    {
+      "path": "cities/milton/city.json",
+      "sha256": "f3221b995cc097a9578aaeae96d373973d766f37abc64f98273a775ffdd44315",
+      "bytes": 958
+    },
+    {
+      "path": "cities/milton/geo-data.json",
+      "sha256": "075af1ce7296f82a5cc8ab4ded7f1294f8d7a2e0c349de6356c28a7f0145be13",
+      "bytes": 24523
+    },
+    {
+      "path": "cities/milton/roads.geojson.gz",
+      "sha256": "6bb4a1dd5342726746d8a0deda910a3895fa4e25889483bfa5454b8604962b69",
+      "bytes": 1920380
+    },
+    {
+      "path": "cities/milton/training-data.json",
+      "sha256": "ca5cdeccc0b7dc8f0e64f3d9777c590e3057c69b9ac5902b73d909c01c69b5c1",
+      "bytes": 444435
+    },
+    {
+      "path": "cities/mississauga/city.json",
+      "sha256": "5bce7dcf3ef2ba3bef851d7c6900f6f9b9c6a0df32266b50f19f6cbfb1a71517",
+      "bytes": 971
+    },
+    {
+      "path": "cities/mississauga/geo-data.json",
+      "sha256": "6a62a0a8bbe3405c54dbf01fb21b700f1d51d349beb970b8c54882d77a90f5a2",
+      "bytes": 43636
+    },
+    {
+      "path": "cities/mississauga/roads.geojson.gz",
+      "sha256": "764cdfb564d9e227a7db8543c73a162301e82b4ccc2ce58187f32859acece6ff",
+      "bytes": 6305212
+    },
+    {
+      "path": "cities/mississauga/training-data.json",
+      "sha256": "5bea31ffe5beefbd8ff30302327bd18c038012adc88b1117c1ea95e9d2ff35f9",
+      "bytes": 1286146
+    },
+    {
+      "path": "cities/niagara-falls/city.json",
+      "sha256": "5b950a99e133f6584bd8a7b717476715899c6fa6ca503ba1cbd09dae02ea7e54",
+      "bytes": 976
+    },
+    {
+      "path": "cities/niagara-falls/geo-data.json",
+      "sha256": "f37aff043b567c4b47529173856b4e936d0a298cb978d9fc8a0c00c9e9b115d0",
+      "bytes": 33078
+    },
+    {
+      "path": "cities/niagara-falls/roads.geojson.gz",
+      "sha256": "660be23aac3d83575e3ff4c268d230816c50c6a6c3ddcf155be152f44ddb273f",
+      "bytes": 609064
+    },
+    {
+      "path": "cities/niagara-falls/training-data.json",
+      "sha256": "50c880f6467cbe4a5c3225d2596b9cd1767af37f9eaf2c4e3b50b2d1c4c4e8a9",
+      "bytes": 472695
+    },
+    {
+      "path": "cities/oakville/city.json",
+      "sha256": "19300071c639670f87b7aa3f326cf4bd1d1b1e1afb0d09d5933457250cd4d062",
+      "bytes": 965
+    },
+    {
+      "path": "cities/oakville/geo-data.json",
+      "sha256": "6d6cc30e96e8d2fb49311548f76a8d68b3d29dd9c07a50da29edaac28e1566db",
+      "bytes": 31394
+    },
+    {
+      "path": "cities/oakville/roads.geojson.gz",
+      "sha256": "ac503df11415c1bdb8abf2c86bfffe17362b1ea930b03a53caac1fccc9335f77",
+      "bytes": 1535285
+    },
+    {
+      "path": "cities/oakville/training-data.json",
+      "sha256": "55a6b18372b22ad156505bcec737d7fa7841ae1473396c8f0fa05e0843f3196b",
+      "bytes": 555894
+    },
+    {
+      "path": "cities/oshawa/city.json",
+      "sha256": "91fc181dd05f833ef5c7d592f8a204240f5fef42466614f7fcaff39b53ccfc58",
+      "bytes": 973
+    },
+    {
+      "path": "cities/oshawa/dispatch-data.js",
+      "sha256": "31f52aea031c86b31a6da23a1df7512d0409785817fca89020686e1e4473e68b",
+      "bytes": 379
+    },
+    {
+      "path": "cities/oshawa/geo-data.json",
+      "sha256": "7dd3608180ec0b67ad01ac8bb7eac8b5c8a2e9ad8385b7630551d5437c449253",
+      "bytes": 22430
+    },
+    {
+      "path": "cities/oshawa/package.js",
+      "sha256": "1df03bfbbf9f34025308832c738bcbe7e18345df472a36c4a38715bead7b19b2",
+      "bytes": 2719
+    },
+    {
+      "path": "cities/oshawa/roads.geojson.gz",
+      "sha256": "3f7cec72eace965e4316ee4560f158eb346afbcd3c3bc929001df287a29eab5e",
+      "bytes": 1041182
+    },
+    {
+      "path": "cities/oshawa/training-data.json",
+      "sha256": "76ee3caf2fbfd830bd7ce908fef50f8fcdaf11c5b6e58166166724a52f30102c",
+      "bytes": 443033
+    },
+    {
+      "path": "cities/ottawa/base-source-review.json",
+      "sha256": "b4aca014b17354db27ccda2f0edf4c25335881029e3f89f8ea6912721f43ea46",
+      "bytes": 49784
+    },
+    {
+      "path": "cities/ottawa/city.json",
+      "sha256": "2e5d8d3f08713a0c1a5e32f5cc4611c6c078c52ffabb3f8ad4cb06cf93f54700",
+      "bytes": 960
+    },
+    {
+      "path": "cities/ottawa/geo-data.json",
+      "sha256": "802829d644ee15c5494c80af5c62fba7c9d299d97ca4ec5a89e0cc0fb379728f",
+      "bytes": 59382
+    },
+    {
+      "path": "cities/ottawa/roads.geojson.gz",
+      "sha256": "b6a3bae1603fd73311f93fc42c84eb30ffbaaeffca5395537001799e54bf2361",
+      "bytes": 4733402
+    },
+    {
+      "path": "cities/ottawa/training-data.json",
+      "sha256": "185e9d1722191bbb16dce839439214321c84083a41b913da0c2022be1adfa74d",
+      "bytes": 2526352
+    },
+    {
+      "path": "cities/peterborough/city.json",
+      "sha256": "64c3688a24320c664142c3c21eaa2c48b38e724840dba571093da3880e27f7b3",
+      "bytes": 1052
+    },
+    {
+      "path": "cities/peterborough/dispatch-data.js",
+      "sha256": "b6bf26e908711c3e536389a996e1d365030d9259d8e4ae9e9cd7eedaf0d98e71",
+      "bytes": 552
+    },
+    {
+      "path": "cities/peterborough/legacy-dispatch-1.4.20.json",
+      "sha256": "2c4d078cbfbaa58a0ddb5cd990ecc2dd884c5b0489057d56eb4813b2ae355663",
+      "bytes": 54324
+    },
+    {
+      "path": "cities/peterborough/locations.json",
+      "sha256": "f32d4a6985d4797e522fe28e9e17621e207a17c890518e7ea09d837429bc7ca8",
+      "bytes": 291761
+    },
+    {
+      "path": "cities/peterborough/package.js",
+      "sha256": "2ac500c09d46e8385756d10d6a152a4ec3c14d4b0cee9af783e7350435b5d68b",
+      "bytes": 4597
+    },
+    {
+      "path": "cities/peterborough/training-data.json",
+      "sha256": "01aec571abbc7fc060e2f3d78ea7d1eae04ddc8f4e7cb1d18152279410e7423c",
+      "bytes": 43129
+    },
+    {
+      "path": "cities/pickering/city.json",
+      "sha256": "bdee9cbb94eb0cefc25da7597b5ae6268ec363de4522efd44db83208101759cb",
+      "bytes": 978
+    },
+    {
+      "path": "cities/pickering/dispatch-data.js",
+      "sha256": "db9e2929b51403f8eb1e9cc9bcc7b4f306783b66c216190260f779fd74977a23",
+      "bytes": 385
+    },
+    {
+      "path": "cities/pickering/geo-data.json",
+      "sha256": "c25544313be54b2a3141ae78bf222c606e52f5f114add5795ea0da73d23fad13",
+      "bytes": 23333
+    },
+    {
+      "path": "cities/pickering/package.js",
+      "sha256": "630bde098b8d12ace4bc1cc5f5a80051f1c6e073d65d216583e66a40335e90d6",
+      "bytes": 2582
+    },
+    {
+      "path": "cities/pickering/roads.geojson.gz",
+      "sha256": "17bec6ff2407db6f118051744801726e97bb68a40a574b0b7f1dcd6e9d6328bb",
+      "bytes": 1748113
+    },
+    {
+      "path": "cities/pickering/training-data.json",
+      "sha256": "60c0fc8a45e8e8d337b95f5ee92163d9152fa819a3565172bfb59a5d1d0ca58c",
+      "bytes": 405484
+    },
+    {
+      "path": "cities/preview-package-factory.js",
+      "sha256": "afe844e5c0c9db2ffa3f07bb056a5a19fbcfb6f00689f5dc4c1c991d43b73cac",
+      "bytes": 18140
+    },
+    {
+      "path": "cities/richmond-hill/city.json",
+      "sha256": "e441cf53c001b05402ccc303489d1a9794ff46104f62238835162cbbb0959141",
+      "bytes": 975
+    },
+    {
+      "path": "cities/richmond-hill/geo-data.json",
+      "sha256": "1c26308c42c543a20996ab150693695dc5ff64207df32f5f2822d41c33366e98",
+      "bytes": 22529
+    },
+    {
+      "path": "cities/richmond-hill/roads.geojson.gz",
+      "sha256": "d502b6098d3552f32bd7eb15f8cc57622f15c3df741ba0c6720d9530b9916d98",
+      "bytes": 1133623
+    },
+    {
+      "path": "cities/richmond-hill/training-data.json",
+      "sha256": "8c02a955110eb1ba7dec6790ce14dd03ac85d41046fbcee472e2dc3676f25116",
+      "bytes": 441478
+    },
+    {
+      "path": "cities/scarborough/city.json",
+      "sha256": "94ce5b89e14b66ae7d35d2be8efb1e55770b5cbac64c73dc4bb7c6c26bfec23d",
+      "bytes": 983
+    },
+    {
+      "path": "cities/scarborough/dispatch-data.js",
+      "sha256": "9fc60b2193215e91e7e2c4827a852c94175be087b492eda39b7b78089c344dba",
+      "bytes": 389
+    },
+    {
+      "path": "cities/scarborough/geo-data.json",
+      "sha256": "f924971c889ea1379b5e6aa33484a81fa82cf38a83465fdaf6e1b879ae0eb999",
+      "bytes": 30662
+    },
+    {
+      "path": "cities/scarborough/package.js",
+      "sha256": "bbbdafc99401c8b57cb51a19f5780a824bcf628968a7fce6aa950f2068e91bda",
+      "bytes": 7122
+    },
+    {
+      "path": "cities/scarborough/roads.geojson.gz",
+      "sha256": "c2d2e82c6ba2eebe9f4a57ef07e0c4daed4e3addbdc826d40149a0f50fcca945",
+      "bytes": 2479195
+    },
+    {
+      "path": "cities/scarborough/training-data.json",
+      "sha256": "02d6d95aafa2beafaf1a7f239c0b11a08a5fe0b390afca633d51f82d1decc42b",
+      "bytes": 1021981
+    },
+    {
+      "path": "cities/st-catharines/city.json",
+      "sha256": "f4a7c4baaf68ed5cdf94a37ccb1a82a775443fb5b68af6f0f5db0d73d603dcaf",
+      "bytes": 971
+    },
+    {
+      "path": "cities/st-catharines/geo-data.json",
+      "sha256": "9e9ea66faae8bb9f2dddbe42787021cada1ccbe27a2fa5fcf57f2a6959fad1bd",
+      "bytes": 25895
+    },
+    {
+      "path": "cities/st-catharines/roads.geojson.gz",
+      "sha256": "85a1b1f9a8f6543d973561020b7cbef2038b07ff8403c5c9563224f7c4a66728",
+      "bytes": 603408
+    },
+    {
+      "path": "cities/st-catharines/training-data.json",
+      "sha256": "bc3ce46ebaae1736ad6509fd7e24e2edc0a568c7ece31f923613c04664b40235",
+      "bytes": 455013
+    },
+    {
+      "path": "cities/thunder-bay/city.json",
+      "sha256": "52a1be1ceb8af9000b9cbec1f48fdb784ea2228d75da4347670e30840c6cd1cb",
+      "bytes": 970
+    },
+    {
+      "path": "cities/thunder-bay/geo-data.json",
+      "sha256": "fa42a790f40c5da89a4c422d4f4597ce0fa242af9a2f1e82e0481230367a5018",
+      "bytes": 20347
+    },
+    {
+      "path": "cities/thunder-bay/roads.geojson.gz",
+      "sha256": "4665821cbd392a25f12c48d3bab14fb899d5967c0fdc8a6d618e5fefcdc6b9cb",
+      "bytes": 474491
+    },
+    {
+      "path": "cities/thunder-bay/training-data.json",
+      "sha256": "2744cd9cf34144872ec5e0931dfd663898a4d647a658038e84bd940c94e9995b",
+      "bytes": 533813
+    },
+    {
+      "path": "cities/toronto/city.json",
+      "sha256": "10102dae401af57c110a9fe7cf625b6b3c098048b3414453100ac53fc8dcd557",
+      "bytes": 975
+    },
+    {
+      "path": "cities/toronto/dispatch-data.js",
+      "sha256": "045ba4eeb1d8beee9459201636a66220d2e29dfdd52b9b0e2f1d0f17ec794644",
+      "bytes": 381
+    },
+    {
+      "path": "cities/toronto/geo-data.json",
+      "sha256": "6326818444ada89d11cc5d17135ae3852f27afe1b5b4ac3991e02408b73a3156",
+      "bytes": 108047
+    },
+    {
+      "path": "cities/toronto/package.js",
+      "sha256": "7ba43562ad796811c19e158498cf3368a147e357177f9329318de7c63511db4f",
+      "bytes": 3819
+    },
+    {
+      "path": "cities/toronto/roads.geojson.gz",
+      "sha256": "e74bc04fd20343cbd2f7826b0be9c564d69dccceae3eb94f3e368d9da232fae5",
+      "bytes": 7915021
+    },
+    {
+      "path": "cities/toronto/training-data.json",
+      "sha256": "9f8d02e358ebf84decf6b56fdb0385dc3324a8c79ab404ec4aeade5ea51b4af8",
+      "bytes": 4304795
+    },
+    {
+      "path": "cities/vaughan/city.json",
+      "sha256": "2d49453951563a6c047bbaa50cd46a16722554961e72a6064e6d89e48b85e225",
+      "bytes": 963
+    },
+    {
+      "path": "cities/vaughan/geo-data.json",
+      "sha256": "cf7d893d7ad6f8547f459811bd99d7d4540ea045c1b106d6a87eaa99779c5cd4",
+      "bytes": 34628
+    },
+    {
+      "path": "cities/vaughan/roads.geojson.gz",
+      "sha256": "bd92d3c0933efe379a4ed7afc3905096a7512e33784c73f4877b07ba13e4818d",
+      "bytes": 2697442
+    },
+    {
+      "path": "cities/vaughan/training-data.json",
+      "sha256": "7dcec39a31677a1363bf0e245f8d3f0bf741266abbdb87d0e488912ed6284df2",
+      "bytes": 581356
+    },
+    {
+      "path": "cities/waterloo/city.json",
+      "sha256": "436f69b6c47a9a172bb280b68622499d40079dcc1e2a494862a4c90eee0e8a4d",
+      "bytes": 950
+    },
+    {
+      "path": "cities/waterloo/geo-data.json",
+      "sha256": "4fe7b4fe7494f01469af5f5fbfca53834118d9be7c81dd346cea1fe840c0dc9b",
+      "bytes": 21423
+    },
+    {
+      "path": "cities/waterloo/roads.geojson.gz",
+      "sha256": "5ca3ce0f79521d33d5e859fec21ce168a1b4b95b0a0d948b0c5f1f2177440a2d",
+      "bytes": 1062092
+    },
+    {
+      "path": "cities/waterloo/training-data.json",
+      "sha256": "576766ee844d160d5af762165bcf804ea3d79d20ce0820b237da734c2d830ffa",
+      "bytes": 368097
+    },
+    {
+      "path": "cities/whitby/city.json",
+      "sha256": "f4ce5150a9457d659cb6c5186414e4e86ae900680bc92b3778d98d32dea9d0b2",
+      "bytes": 960
+    },
+    {
+      "path": "cities/whitby/geo-data.json",
+      "sha256": "3ffc38e33bde0e833c48e12f68778dea0673dc88202d5ddb968d762bfa0107b1",
+      "bytes": 20527
+    },
+    {
+      "path": "cities/whitby/roads.geojson.gz",
+      "sha256": "0a059322adfea1f1beee5b51d03419c3b454e07e75be06058f136f53c96d45af",
+      "bytes": 1315898
+    },
+    {
+      "path": "cities/whitby/training-data.json",
+      "sha256": "cd7c236adcf54a97ef852a19db125c90a3e9d91e5b7a8c9aefc9572014173568",
+      "bytes": 399468
+    },
+    {
+      "path": "cities/windsor/city.json",
+      "sha256": "5053548b857c8a482e28144f0d6d9e30c96d9b9157c0908ee1695308d6c93466",
+      "bytes": 953
+    },
+    {
+      "path": "cities/windsor/geo-data.json",
+      "sha256": "e5cf8a6ab644859d2d3d501059c5864f950e781bd18c6675d5da250ff9cc6844",
+      "bytes": 26350
+    },
+    {
+      "path": "cities/windsor/roads.geojson.gz",
+      "sha256": "6f6716a232eaabafd4f171d82a1f2a6a8aedd73c23dd7ad57912c09b1f9674a1",
+      "bytes": 867864
+    },
+    {
+      "path": "cities/windsor/training-data.json",
+      "sha256": "5e7d6e38e3111c0a3c2355cc8230d37e2ed81e464744ce6b8b60c4368b9aed89",
+      "bytes": 501142
+    },
+    {
+      "path": "geo-guesser/app.css",
+      "sha256": "8cc6e6c2b4735ef0435bd737b66d86aaf78bb0d36461a91e6708ea65f4e3d9d3",
+      "bytes": 15534
+    },
+    {
+      "path": "geo-guesser/app.js",
+      "sha256": "833162c7270699940bbc04f881d343d5401727af18e5b49833d6b80f90a0b1bc",
+      "bytes": 15616
+    },
+    {
+      "path": "geo-guesser/city-loader.js",
+      "sha256": "59875d190baa73a81889ad50b4c67c5825a044a27f0e7a1e4532ee18f2a04502",
+      "bytes": 235
+    },
+    {
+      "path": "geo-guesser/code-learning-comments-1.5.3.js",
+      "sha256": "38fb2ded7ebd0dfb9c75e2140d78c9de39c365c31410e4f3b1c12d346a85fa50",
+      "bytes": 11980
+    },
+    {
+      "path": "geo-guesser/desktop/index.html",
+      "sha256": "1922d107a95db1c8c3aa3dac5d3fa16b220a8ccc7b83466b6279182103997e8b",
+      "bytes": 1219
+    },
+    {
+      "path": "geo-guesser/firebase-scoreboard-compat.js",
+      "sha256": "d2d1a225289532dbc1ae10a2b5e860531c844a5ea697e868477cf35a2255ee8c",
+      "bytes": 9527
+    },
+    {
+      "path": "geo-guesser/firebase-scoreboard.js",
+      "sha256": "aa3ea1f6b11d0aae2d6132dd5ca8da1df41d26cff23c997233a30f1342252905",
+      "bytes": 11032
+    },
+    {
+      "path": "geo-guesser/index.html",
+      "sha256": "607b09c21c1b1161289899c7de377bbf4274fd08fca3561957282e9723159117",
+      "bytes": 6388
+    },
+    {
+      "path": "geo-guesser/location-report-context.js",
+      "sha256": "8bc6c57c519e9eee36600dba1e4462e254df04fb75a5a1e9cc97d776a3c7783a",
+      "bytes": 1646
+    },
+    {
+      "path": "geo-guesser/map-provider-1.6.46.js",
+      "sha256": "1cd30d4df32d565bf7f29f6006f74a09d1e478d4ab71b654b50ee9c5abe26f3b",
+      "bytes": 4394
+    },
+    {
+      "path": "geo-guesser/mobile/index.html",
+      "sha256": "0205c9a469680dbebe08e64ac03ea9fb2f1e56711a78bd1f01d6b771c5665264",
+      "bytes": 2235
+    },
+    {
+      "path": "geo-guesser/online/index.html",
+      "sha256": "bf3e164e2e612f6b80582ee37e9da158dd7fe26b6108f3d28a7f50b50cf818e3",
+      "bytes": 1580
+    },
+    {
+      "path": "geo-guesser/station-practice.css",
+      "sha256": "a3675c2102ff78183afc531ff497273add2ac7747f24b67189e3353eba44c82c",
+      "bytes": 10624
+    },
+    {
+      "path": "geo-guesser/station-practice.js",
+      "sha256": "0d3785fbe35393e6353655c5668d5b0c86dc8ef35dc45f7cba8b3d8f884c88f3",
+      "bytes": 4832
+    },
+    {
+      "path": "geo-guesser/text-fix.js",
+      "sha256": "90e9ecd7a3449de0e7c95dc39ed26ac957f6ed5e0992c53eb90d032dc8c10d12",
+      "bytes": 2519
+    },
+    {
+      "path": "geo-guesser/wrapper-layout.css",
+      "sha256": "7b1a93d5519ba8502b819de806cccf12902c89c7a4f810cbc31ede72eddbb03f",
+      "bytes": 1281
+    },
+    {
+      "path": "geo-guesser/wrapper-layout.js",
+      "sha256": "d3f3e8b2c9433a076cdd33de4597441467c867bb954b707d2c7e821a9d2db1ae",
+      "bytes": 704
+    },
+    {
+      "path": "geo-guesser/wrapper.js",
+      "sha256": "075d1049e19d58ec12bcca34b531759ce7a533adaa82c1d203faf051853034e3",
+      "bytes": 1560
+    },
+    {
+      "path": "index.html",
+      "sha256": "6645777622676ec1e65db5199d78730a88d7bf6c549e37f92672d0082ec52535",
+      "bytes": 22644
+    },
+    {
+      "path": "response-simulator/arcade-camera-smoother-1.5.1.js",
+      "sha256": "768ea7c11fafc151097213df19100ff439a17135d288b5187d80f4ede17cb6a2",
+      "bytes": 3535
+    },
+    {
+      "path": "response-simulator/arcade-handling-1.5.1.js",
+      "sha256": "e95cb0c754bc90809e3dbc1cbf85ee1b5365d2acadbb17cb59880837549f7bbf",
+      "bytes": 22601
+    },
+    {
+      "path": "response-simulator/arcade-mobile-camera-1.5.2.js",
+      "sha256": "5c51f4337fbb2c60b93bd240f47e61b2ff0ce45f553ff888020a7cd6107fd466",
+      "bytes": 8027
+    },
+    {
+      "path": "response-simulator/arcade-mobile-camera-1.5.3.js",
+      "sha256": "899bb8f78dcab7a94c8eee7dd835fc49d0cf56f2a202a91d5f5204daaffa3603",
+      "bytes": 15093
+    },
+    {
+      "path": "response-simulator/base-training-mode-1.6.8.js",
+      "sha256": "3ee54dfd9e19466ee446764f23eae8bc2993201efcab9f30d3a31a06cfa80064",
+      "bytes": 6710
+    },
+    {
+      "path": "response-simulator/base-training/index.html",
+      "sha256": "6aeff8ed2472444afa53f6cd5740ffcb4cd8941ae595de06fb38d0cc21986624",
+      "bytes": 19009
+    },
+    {
+      "path": "response-simulator/camera-fix.js",
+      "sha256": "34ba5531036db5b23defa91a5f7faea6bf2775dc0d88f51029cac5ece532faf7",
+      "bytes": 7673
+    },
+    {
+      "path": "response-simulator/camera-game-test/index.html",
+      "sha256": "fe0c21bde5363d83912f4d1bbaa60036b6d0d1645730092c4460ed3f1c9d117b",
+      "bytes": 5572
+    },
+    {
+      "path": "response-simulator/carto-basemap-policy-1.6.36.js",
+      "sha256": "fc7d409e9611e9403716a84f1b09ac60a34ba625b46f63f60e2467912b659e5f",
+      "bytes": 11666
+    },
+    {
+      "path": "response-simulator/city-runtime-bootstrap-1.6.10.js",
+      "sha256": "3c633b9f23300e943c40bcedafe9cbea653433ba924be9e873bcbd36c964ffb5",
+      "bytes": 4332
+    },
+    {
+      "path": "response-simulator/city-runtime-bootstrap-1.6.14.js",
+      "sha256": "2601a72c73cce653bf2ce21fa2581af6a945fb102533d8d12eee1a9732663749",
+      "bytes": 5425
+    },
+    {
+      "path": "response-simulator/city-runtime-bootstrap-1.6.15.js",
+      "sha256": "fdc41a7dc5a8f5da192d2f27f5768f192e91a7b51d7933c7a04055195b08c0fd",
+      "bytes": 6225
+    },
+    {
+      "path": "response-simulator/city-runtime-bootstrap-1.6.16.js",
+      "sha256": "5f0bc06e73eb046dd4a1de6e9e07c3b560f139b1732beedcbf076628e51162c9",
+      "bytes": 6225
+    },
+    {
+      "path": "response-simulator/city-runtime-bootstrap-1.6.17.js",
+      "sha256": "63fca4d1b8595fd260e662e5938587428c4caa2335c2bbf2d89c2142429417d8",
+      "bytes": 6225
+    },
+    {
+      "path": "response-simulator/city-runtime-bootstrap-1.6.9.js",
+      "sha256": "3765e4dca6e006da06a6f736b4e6e728411e6cdb214c3f4b0fddf93dab909ed6",
+      "bytes": 4452
+    },
+    {
+      "path": "response-simulator/code-learning-comments-1.5.3.js",
+      "sha256": "7233baee0cd20f609ba6e5e382775c6072b572bb60e7587099d4a7ce63e65884",
+      "bytes": 23208
+    },
+    {
+      "path": "response-simulator/current-street-hud-1.6.68.js",
+      "sha256": "f5dd8de066c45e40f4c9b1387baccb9be6655dab089a71c11d19fedbc2773e39",
+      "bytes": 4244
+    },
+    {
+      "path": "response-simulator/desktop-drivetrain-1.6.67.js",
+      "sha256": "2e5ad86f273abe6c1cb654945cfbf8dd854eb793ceb484ac142f4bfde19e76ad",
+      "bytes": 783
+    },
+    {
+      "path": "response-simulator/desktop-drivetrain-1.6.68.js",
+      "sha256": "a9bc85c110905a5e09e2fc8cd1f3418f3e5b7e1d7a42ea8e97e6c71b5a6a3922",
+      "bytes": 4954
+    },
+    {
+      "path": "response-simulator/desktop-fixed-map-default-1.6.34.js",
+      "sha256": "ce8ea84abd08bd2e03d4ca8227ac2dfbbc403c483f56c2a3e00c8397f03d3a42",
+      "bytes": 1001
+    },
+    {
+      "path": "response-simulator/desktop-fixed-map-default-1.6.35.js",
+      "sha256": "58f3d21b8cc489188b052771f142605106bfff52f07ed2bdf1cbd36ba0e45867",
+      "bytes": 7060
+    },
+    {
+      "path": "response-simulator/desktop-keyboard.js",
+      "sha256": "a59d16e10f6b6dadb3d7df65c5020d81409e5465c2295cac7e8a52617e0890b6",
+      "bytes": 2387
+    },
+    {
+      "path": "response-simulator/desktop-map-follow-toggle-1.6.36.js",
+      "sha256": "602739aac7466da211702709681a2d3ecbb2b597fc2afcd6f2fdd9b4726ecf39",
+      "bytes": 5161
+    },
+    {
+      "path": "response-simulator/desktop-map-follow-toggle-1.6.39.js",
+      "sha256": "266dde513a697578f6aa85420cfa6c698ed9a93f89908e98f9e4bc28165dfbb3",
+      "bytes": 5897
+    },
+    {
+      "path": "response-simulator/directional-drive-zoom-1.5.7.js",
+      "sha256": "1ff830b99a7bad3e3205b6e708501261a8ffd2438cf6f6145317f9fcab2ab8bd",
+      "bytes": 655
+    },
+    {
+      "path": "response-simulator/directional-drive-zoom-1.5.8.js",
+      "sha256": "22427f98dafad658887fd99036d2985164825129cd99a05a3ca3b28b91eaa26d",
+      "bytes": 20526
+    },
+    {
+      "path": "response-simulator/directional-steering-tuning.js",
+      "sha256": "d4663f361b62fd170e1a6181cd01489b35832fa44fd5734d876e6450a9f1b0f4",
+      "bytes": 12868
+    },
+    {
+      "path": "response-simulator/dispatch-voice-bridge-1.4.2.js",
+      "sha256": "1bbcf4c7e7ee0f12f55bc282ecc9420e682390aed1dfecc07850fd3130375211",
+      "bytes": 3839
+    },
+    {
+      "path": "response-simulator/driving-ui.js",
+      "sha256": "b50a7d4d0c291e6d503e655efba47664e91a9723bc0ce2ed056b52f872b07aea",
+      "bytes": 18774
+    },
+    {
+      "path": "response-simulator/gearbox-core.js",
+      "sha256": "951d44690d4619937c72a25a453f00517dd9dc976f6ac3648118d2b346eca1d0",
+      "bytes": 1572
+    },
+    {
+      "path": "response-simulator/hospital-dropoff-runtime-1.6.49.js",
+      "sha256": "65ae959086d126ed26ce317ab2bd91ad4c3c0de5aea97bb0e83b58789e0248c3",
+      "bytes": 3289
+    },
+    {
+      "path": "response-simulator/incident-formatting-1.6.44.js",
+      "sha256": "515ee3efe55040d8c9313d9673dfbe7580fd596996c741473286b7eb955eb622",
+      "bytes": 8860
+    },
+    {
+      "path": "response-simulator/index.html",
+      "sha256": "d1c7d544a4cce2704f254bfa0c7be6b049ca75e89f7ce8fdc9329be35339eb93",
+      "bytes": 71042
+    },
+    {
+      "path": "response-simulator/local-pool.js",
+      "sha256": "10750ebf14c6133836a5f84a116e2bb8230bb6b283221b0b15444339417689dd",
+      "bytes": 4663
+    },
+    {
+      "path": "response-simulator/max-speed.js",
+      "sha256": "38c44a0d8f87790163bd97c0400f9b58db5e258a40994aa4aae6bf64be932b48",
+      "bytes": 3246
+    },
+    {
+      "path": "response-simulator/mobile-turn-response-v1.5.1.js",
+      "sha256": "858adc4dd38606d5813e30bd48a58675778748d1038f56c79a50a250f96da6c3",
+      "bytes": 4185
+    },
+    {
+      "path": "response-simulator/mobile-turn-response-v1.5.2.js",
+      "sha256": "18e43497d0ab22081d34ca5d46e8585d18f695fe4a9eee9343ff57b7291be5a0",
+      "bytes": 3879
+    },
+    {
+      "path": "response-simulator/mobile-ui-layout-1.5.9.js",
+      "sha256": "130b63b152d4255fa5ec975e611a3555e6b432633ceca0dd79b6f57d8162ec30",
+      "bytes": 8400
+    },
+    {
+      "path": "response-simulator/mobile-v1.5.1/index.html",
+      "sha256": "9aca7ba5374fd761aa1ada942c0bdd1b9e61a9c22ecdd8c52c81c6d256daf336",
+      "bytes": 3218
+    },
+    {
+      "path": "response-simulator/mobile-v1.5.2/index.html",
+      "sha256": "c737e758aed6f58a08c11f0fc00d51ff4791992f026b6b8fd4b8cb4da5f0f8d3",
+      "bytes": 3217
+    },
+    {
+      "path": "response-simulator/mobile/index.html",
+      "sha256": "bac6820cf5b0b6b32743adcbe957f7d6da3686e87bec22d9330bb6a45792a278",
+      "bytes": 26920
+    },
+    {
+      "path": "response-simulator/mobile/v1.5.9.html",
+      "sha256": "33b85882644165fe044dd7c1b8e6c319aaf3a28fc642c116e9dcb21340182ecb",
+      "bytes": 2833
+    },
+    {
+      "path": "response-simulator/play/index.html",
+      "sha256": "73d158feed2d9f7726cdf8dbb02d3acd10f72b0aea7fe5b5dbf4dc3ac8202a7e",
+      "bytes": 16517
+    },
+    {
+      "path": "response-simulator/quick-tutorial-1.6.28.js",
+      "sha256": "8cbd2c15f9291b3aaf9efa0680035f761046bb38a2a07be530771bf3fae25218",
+      "bytes": 29008
+    },
+    {
+      "path": "response-simulator/response-tablet-1.6.48.js",
+      "sha256": "5eaa0d851ebbec7c699874352cc69c77f10ca1fd40b1fffae261d304afff52ea",
+      "bytes": 24457
+    },
+    {
+      "path": "response-simulator/road-collision-core.js",
+      "sha256": "1320ec0ceda0103d652754ea854cd27c07dffe4f5983a1cf9dd0f1f77143f4a1",
+      "bytes": 25619
+    },
+    {
+      "path": "response-simulator/road-collision.js",
+      "sha256": "c4d25fba5d561cdefb78f4c307e50f1338b6652191a6d1d34433882732ea88e1",
+      "bytes": 3398
+    },
+    {
+      "path": "response-simulator/road-hard-boundary-1.6.6.js",
+      "sha256": "d3b4942af9a1295661842ead391bfcb55d7e0a4a71419578d19abc1b5cbc4f9d",
+      "bytes": 3388
+    },
+    {
+      "path": "response-simulator/road-intersection-softener.js",
+      "sha256": "7ef574ccca32f39fc3aeb1feba5f377c86fa7117e683dc4bc53b8b26aca82ede",
+      "bytes": 7398
+    },
+    {
+      "path": "response-simulator/route-compare-1.4.2.js",
+      "sha256": "adde6b1e0d58cffdb6a311246aa35663dd5ea8899947ae7710c4bb47d9a6faa5",
+      "bytes": 20680
+    },
+    {
+      "path": "response-simulator/route-compare.js",
+      "sha256": "ea5ca98892233e4e810d77611545b6573fb2a943f4b4bc52b7640c3151924bf3",
+      "bytes": 7234
+    },
+    {
+      "path": "response-simulator/route-opacity-1.4.4.js",
+      "sha256": "bbe0f6c4af8e2c0ae21079f255e4d9c1617b4eeb5decfe4203e8fd1fc69aab3f",
+      "bytes": 1279
+    },
+    {
+      "path": "response-simulator/route-reveal-review-1.6.26.js",
+      "sha256": "7d71554c9e0f59660e0c4ccab43fe035f84e74f897140b63793b3c5c2b1e47eb",
+      "bytes": 8256
+    },
+    {
+      "path": "response-simulator/route-reveal-review-core-1.6.26.js",
+      "sha256": "4e6c27f23d80e607d5f1fe6912954670b450cbb28772c51a2a7a90164d2c23e7",
+      "bytes": 6457
+    },
+    {
+      "path": "response-simulator/route-reveal.js",
+      "sha256": "2fc604e78d825289b689bc99af9f065191114ba0ad39c611b742a112f1926020",
+      "bytes": 24054
+    },
+    {
+      "path": "response-simulator/route-review-ui-1.4.3.js",
+      "sha256": "9696e3928a1242c894bab2c5b5506bf8cb1b714f2392920f4ad24c0426ea3cb9",
+      "bytes": 16774
+    },
+    {
+      "path": "response-simulator/satellite-map-1.5.6.js",
+      "sha256": "e55a1fccd1d21cc505e621428db5e7211df6379d13d57f3394e01c243eea6ba9",
+      "bytes": 19649
+    },
+    {
+      "path": "response-simulator/scene-response-filters.js",
+      "sha256": "d03ad7f04f2a83013fe183a094311f1b87ea385cc71540614dfe7275754485be",
+      "bytes": 2125
+    },
+    {
+      "path": "response-simulator/sensitive-location-framing-1.6.34.js",
+      "sha256": "288eddd5684783f8fb1632804e01d1c037b1ea2b490e9c0086724613b73df499",
+      "bytes": 4402
+    },
+    {
+      "path": "response-simulator/service-config.js",
+      "sha256": "11d9864c5ac572171fb93b74668a7e4b6d33dc62ff22b4eec65f0f48ef1f8aa5",
+      "bytes": 6471
+    },
+    {
+      "path": "response-simulator/service-mode.js",
+      "sha256": "db30fd9ec4264b18a356e3a334ba4ddf3e5d59fed8034011f396f07e77361b10",
+      "bytes": 13356
+    },
+    {
+      "path": "response-simulator/service-selection.js",
+      "sha256": "b063045437fb309590dededa50c6090f655d325bb84e821f4a138da7890d2dd1",
+      "bytes": 8282
+    },
+    {
+      "path": "response-simulator/settings-menu-compact-1.5.2.js",
+      "sha256": "dfb04b9b2847eaa096b3c53891cec342d64b2179b098258c93804b1adb7b5935",
+      "bytes": 5494
+    },
+    {
+      "path": "response-simulator/settings-menu-compact-1.5.3.js",
+      "sha256": "1ccb4bc5bf8fe4385101b9ae1853af86f3df0c37374742004e7b7788cc3bece4",
+      "bytes": 9912
+    },
+    {
+      "path": "response-simulator/simulated-incident-notice-1.6.33.js",
+      "sha256": "a4da92121228894f926606e16912c99ededb8144128095c0c65f6b2bcf56b2ea",
+      "bytes": 4134
+    },
+    {
+      "path": "response-simulator/simulator-readiness-1.4.5.js",
+      "sha256": "05ad5ce7976d82e505114c2914ae11672ab426ebc3958dfbc2caeae9c4f63b3d",
+      "bytes": 10340
+    },
+    {
+      "path": "response-simulator/simulator-readiness-1.6.17.js",
+      "sha256": "4d7b0a1de306d2e97a9404eb0d0bf5253689b1629d492954d035d23fc666ca07",
+      "bytes": 14363
+    },
+    {
+      "path": "response-simulator/smooth-driving-camera-1.4.19.js",
+      "sha256": "2d31b626a14f1172346d09beb9041ae7ca5e6165236f2282f51a307e6a50afd3",
+      "bytes": 28690
+    },
+    {
+      "path": "response-simulator/speed-streak.js",
+      "sha256": "533447365e4c98c5623e58069e17952750e062c43118a98152e026518034671d",
+      "bytes": 4704
+    },
+    {
+      "path": "response-simulator/startup-trace-1.6.15.js",
+      "sha256": "40e3d41adeef229d34268199e284bae7c6f8e9387771b454090bf7a88b63424d",
+      "bytes": 13000
+    },
+    {
+      "path": "response-simulator/startup-trace-1.6.16.js",
+      "sha256": "7360fcae1554029c7fd088ed4bef69b85856a04e3f468baf887066d400459acc",
+      "bytes": 13421
+    },
+    {
+      "path": "response-simulator/startup-trace-1.6.17.js",
+      "sha256": "4eb370595d9435ba696e171e988ddc76b83e9cc8d73d112a9620a71242329a0e",
+      "bytes": 13962
+    },
+    {
+      "path": "response-simulator/tablet-button-stability-1.6.54.js",
+      "sha256": "973d53dc8e31de85da99af9e69ddca3d4c7b4c2b3e4471d896bd6fb11f90e3e4",
+      "bytes": 2137
+    },
+    {
+      "path": "response-simulator/tablet-close-dispatch-1.6.53.js",
+      "sha256": "861569fd07854298b2b816519439fbe17728ce11269cb68ca218c33cd49a00c4",
+      "bytes": 5211
+    },
+    {
+      "path": "response-simulator/training-history-1.6.45.js",
+      "sha256": "2f1cf81b927fb20e808958611662342c075956a35ace5ebf1eda44d32a4de537",
+      "bytes": 15984
+    },
+    {
+      "path": "response-simulator/training-ui-1.6.57.js",
+      "sha256": "219e04d4c06d9bad487285abd82337653f4142e15e0a05388a5c4db4e71aeee7",
+      "bytes": 5905
+    },
+    {
+      "path": "response-simulator/tutorial-route-grid-1.6.32.js",
+      "sha256": "4601e3ceced81bedbcfd0b4e77570f9c3bb8c1cf0fb327dce9cdd34459f0205d",
+      "bytes": 8569
+    },
+    {
+      "path": "response-simulator/tutorial-route-grid-1.6.33.js",
+      "sha256": "e3fe03bf0633bcfda5c4616d0ac39e9274ea03433cb25de250e717685e28e22f",
+      "bytes": 6833
+    },
+    {
+      "path": "response-simulator/vehicle-instruments-core.js",
+      "sha256": "d64d62e6a12391340057be2d63608fc3ef038dff9c7c8c97f5da90f34658d9a1",
+      "bytes": 25312
+    },
+    {
+      "path": "response-simulator/vehicle-instruments.js",
+      "sha256": "ad8c8c2cb3fd9ab3d3adb5d0e46b8210223f633755e44252371b881dac84198c",
+      "bytes": 5014
+    },
+    {
+      "path": "response-simulator/vendor/leaflet-1.9.4/leaflet.css",
+      "sha256": "337bfca5cabd03b39815b2700febe2b3b7edf55921c59cd49f88ecb328212303",
+      "bytes": 14145
+    },
+    {
+      "path": "response-simulator/vendor/leaflet-1.9.4/leaflet.edgebuffer.js",
+      "sha256": "a4bfdb28e21256977cf120615d8cae0d1eb7a0cfa43c7dd61012f60c62c75ab4",
+      "bytes": 1412
+    },
+    {
+      "path": "response-simulator/vendor/leaflet-1.9.4/leaflet.js",
+      "sha256": "4f1ac3296897403e0a84881c974dbdf36d9a8488f0ef4b5626a952b1b6190d80",
+      "bytes": 147553
+    },
+    {
+      "path": "response-simulator/vendor/leaflet-1.9.4/leaflet.rotatedMarker.js",
+      "sha256": "f8fccc92ae939f5d02d1c8cc1dc5aa9f0f952f33674e9ecb7185836d8ee49fdf",
+      "bytes": 2031
+    },
+    {
+      "path": "route-mapping/app.js",
+      "sha256": "b18d3f88b8965d2059d2f42048dad85bce1a705c76c69dc6bb4687c821ef6823",
+      "bytes": 96881
+    },
+    {
+      "path": "route-mapping/index.html",
+      "sha256": "d08b2020f2646467d3b332996d4270d10da7b9e9765ed34115be9f965290d608",
+      "bytes": 2159
+    },
+    {
+      "path": "route-mapping/learning-core.js",
+      "sha256": "1db6d0f1676cf11b678e70cde09954496a17149655b7451fa11b4024452d04cb",
+      "bytes": 3230
+    },
+    {
+      "path": "route-mapping/play.html",
+      "sha256": "eaeaca98cd0a44b77bd8f081f99f15522d1f325567bf7709fbf67a094db73697",
+      "bytes": 6451
+    },
+    {
+      "path": "route-mapping/station-core.js",
+      "sha256": "0ce1d96617e5f8597a6b770df7a79bb601c232b98bf186fef4e628aa6ae5ef49",
+      "bytes": 2393
+    },
+    {
+      "path": "route-mapping/stations.js",
+      "sha256": "e83c1136f9624dbd2d7bf52fa4bce1e6ac461090841f702606533945f6813a6b",
+      "bytes": 3617
+    },
+    {
+      "path": "route-mapping/styles.css",
+      "sha256": "d6d66aceb95c3fa516f49d2ea932cfb998eac2e774aabb60902008b8ffb7838c",
+      "bytes": 12091
+    },
+    {
+      "path": "route-mapping/trace-core.js",
+      "sha256": "914e665f07638613c08851f9c1332a682dfe4ea6d4ef0cca3909b1413f1734a2",
+      "bytes": 18420
+    },
+    {
+      "path": "shared/analytics-privacy-upgrade-1.6.33.js",
+      "sha256": "336fb9b6b804b33cb07aa28bfa7b95640032e425013df3855e752e01f4d9ddb5",
+      "bytes": 9111
+    },
+    {
+      "path": "shared/base-locations.js",
+      "sha256": "fe76bf3529d83dccf7ef43bc29c0239b059cb30c7e374ba6c3257b79eb480c11",
+      "bytes": 14366
+    },
+    {
+      "path": "shared/build-version.js",
+      "sha256": "e21125da175582ad92ee35fb365d81f14ffaff1433b4e56f9a17e17199a5aafa",
+      "bytes": 28616
+    },
+    {
+      "path": "shared/city-location-runtime.js",
+      "sha256": "1db7bd6eb12d6ac74e6f9037256f6cf5cc554c6944da19a8e8c7c0fbbcbba296",
+      "bytes": 4982
+    },
+    {
+      "path": "shared/city-selector.js",
+      "sha256": "d289661523e43226f70cbec4404ca8b518ea9676d60119cbe85826127a950980",
+      "bytes": 8040
+    },
+    {
+      "path": "shared/cloudflare-web-analytics.js",
+      "sha256": "6e08e220965331b537ca7382b4f57dc16bdcdb0abc869da85d5add597f6ece44",
+      "bytes": 861
+    },
+    {
+      "path": "shared/demo-requests.js",
+      "sha256": "c1ddbb469f1f99baffa44f0aca2327628de3aa73ba525228fd92d9c3cd2e23db",
+      "bytes": 1757
+    },
+    {
+      "path": "shared/dispatch-data-1.4.4.js",
+      "sha256": "65f3ae6f104404b4d6aa875586cb4d3517d00d115516f068a985456ea665a559",
+      "bytes": 26638
+    },
+    {
+      "path": "shared/dispatch-data.js",
+      "sha256": "0e5b5a446f2bba064985d5a5a88cbdb472176167d08fab08d2475696a6003837",
+      "bytes": 295
+    },
+    {
+      "path": "shared/dispatch-locations.js",
+      "sha256": "fd6d675878d33e4d2dcef6fa3526b39428bc650b05a4ad6bec834b27e7446e2a",
+      "bytes": 24637
+    },
+    {
+      "path": "shared/dispatch-override-1.4.4.js",
+      "sha256": "c0908009861537dab0d83fd58974bcb446882383befc4fc7781f15897be8bae3",
+      "bytes": 2341
+    },
+    {
+      "path": "shared/ems-priority.js",
+      "sha256": "ba92ded5daeabce9b805c34e48c8aeec494301d7a2134fdfe7d265c804b0d3bd",
+      "bytes": 1911
+    },
+    {
+      "path": "shared/hospital-dropoff-store-1.6.49.js",
+      "sha256": "87e274a6e6c50c6af7cea4d744d1facd369932cb247cbddb8ef65e5da28f3fe1",
+      "bytes": 9548
+    },
+    {
+      "path": "shared/launcher-access-1.6.47.js",
+      "sha256": "652b0246f98c6b76b8da5821dc0e7985012864fab77de9e5ad225ca6b08c44c4",
+      "bytes": 7827
+    },
+    {
+      "path": "shared/legacy-release-forwarder.js",
+      "sha256": "96cd468da02e480d92d8ae7784be36d44eff0241891600bd889bdab677e5192f",
+      "bytes": 1836
+    },
+    {
+      "path": "shared/location-changes.js",
+      "sha256": "7e9140436326aa42fc715fc1879cdd92363658fae9dc2c96f2fd7588683592a9",
+      "bytes": 1347
+    },
+    {
+      "path": "shared/map-attribution-1.6.35.js",
+      "sha256": "be6d6c6897d8c4c00f286bf81702f95dca3f1c6d961f729efd99a7f46b44e690",
+      "bytes": 6285
+    },
+    {
+      "path": "shared/mobile-dispatch-hud-1.5.4.js",
+      "sha256": "d49345e714b5382f5cd3bc99c13a96614f59b4c65ac6a2caba3c723c502af4fa",
+      "bytes": 8410
+    },
+    {
+      "path": "shared/mobile-dispatch-hud-1.5.5.js",
+      "sha256": "f7907c4ae52a3c4e90499ffb392af1eddcb1e298b0942759c5de9afb44736381",
+      "bytes": 11464
+    },
+    {
+      "path": "shared/release-bootstrap-1.6.49.js",
+      "sha256": "552d61fa3ecb9115b5c3db4a7b83b32dad9e233f22f23ff2e1bb8adafb5f6955",
+      "bytes": 487
+    },
+    {
+      "path": "shared/release-bootstrap-1.6.50.js",
+      "sha256": "552d61fa3ecb9115b5c3db4a7b83b32dad9e233f22f23ff2e1bb8adafb5f6955",
+      "bytes": 487
+    },
+    {
+      "path": "shared/release-bootstrap-1.6.51.js",
+      "sha256": "552d61fa3ecb9115b5c3db4a7b83b32dad9e233f22f23ff2e1bb8adafb5f6955",
+      "bytes": 487
+    },
+    {
+      "path": "shared/release-bootstrap-1.6.52.js",
+      "sha256": "552d61fa3ecb9115b5c3db4a7b83b32dad9e233f22f23ff2e1bb8adafb5f6955",
+      "bytes": 487
+    },
+    {
+      "path": "shared/release-bootstrap-1.6.53.js",
+      "sha256": "552d61fa3ecb9115b5c3db4a7b83b32dad9e233f22f23ff2e1bb8adafb5f6955",
+      "bytes": 487
+    },
+    {
+      "path": "shared/release-bootstrap-1.6.54.js",
+      "sha256": "552d61fa3ecb9115b5c3db4a7b83b32dad9e233f22f23ff2e1bb8adafb5f6955",
+      "bytes": 487
+    },
+    {
+      "path": "shared/release-bootstrap-1.6.55.js",
+      "sha256": "552d61fa3ecb9115b5c3db4a7b83b32dad9e233f22f23ff2e1bb8adafb5f6955",
+      "bytes": 487
+    },
+    {
+      "path": "shared/release-bootstrap-1.6.56.js",
+      "sha256": "552d61fa3ecb9115b5c3db4a7b83b32dad9e233f22f23ff2e1bb8adafb5f6955",
+      "bytes": 487
+    },
+    {
+      "path": "shared/release-bootstrap-1.6.57.js",
+      "sha256": "552d61fa3ecb9115b5c3db4a7b83b32dad9e233f22f23ff2e1bb8adafb5f6955",
+      "bytes": 487
+    },
+    {
+      "path": "shared/release-bootstrap.js",
+      "sha256": "91aea511a071c30447bc08f9e5ae98dd34d312aa7b17bb4e06b58dca14407786",
+      "bytes": 3494
+    },
+    {
+      "path": "shared/site-analytics-1.6.23.js",
+      "sha256": "bd2f97d29e6ff4f5cc72e1cfad2d342caabb17c672126c2fefec45ef439f913b",
+      "bytes": 9535
+    },
+    {
+      "path": "shared/site-analytics-1.6.24.js",
+      "sha256": "2a735021560833195190584281c13a53e55614514ccc24e2bf38582dc40a8c81",
+      "bytes": 23696
+    },
+    {
+      "path": "shared/site-analytics-1.6.25.js",
+      "sha256": "35a4dfcbc13ec8dd46a36aa7e8d1dc364473cb3701c43638bbb3d53a1104f911",
+      "bytes": 39494
+    },
+    {
+      "path": "shared/stations.js",
+      "sha256": "e6f04bdd1aa2f0f264c6f511e173ebb063bd1fd77a6a7cefcd178c6a179df59b",
+      "bytes": 12113
+    },
+    {
+      "path": "tests/city-call-expansion-browser.cjs",
+      "sha256": "e7e5e91f8f58246d3bd20dfd15c3e198f12c5584133963fb17ac672fd2419ed3",
+      "bytes": 36529
+    }
+  ]
+}

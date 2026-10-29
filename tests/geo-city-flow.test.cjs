@@ -2,13 +2,17 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
 const {game}=require('./helpers/geo-game.cjs'),root=path.resolve(__dirname,'..'),read=f=>fs.readFileSync(path.join(root,f),'utf8');
 const {runtime}=require('./helpers/city-runtime.cjs');
-test('all 31 Geo cities share the compact call card, return flow and answer feedback on desktop and phones',async()=>{
+async function actualCity(id){
+ const pack=id==='peterborough'?undefined:JSON.parse(read(`cities/${id}/geo-data.json`));
+ const loaded=runtime({search:'?city='+id,pack,training:JSON.parse(read(`cities/${id}/training-data.json`))});
+ Object.assign(loaded.c,{atob:s=>Buffer.from(s,'base64').toString('binary'),Uint8Array,Response,Blob,DecompressionStream});
+ await loaded.c.PTBO_GEO_CITY_READY;return loaded;
+}
+test('all 33 Geo cities share the compact call card, return flow and answer feedback on desktop and phones',async()=>{
  const ids=['peterborough',...fs.readdirSync(path.join(root,'cities')).filter(id=>fs.existsSync(path.join(root,'cities',id,'geo-data.json')))];
- assert.equal(ids.length,31);let sessions=0;
+ assert.equal(ids.length,33);let sessions=0;
  for(const id of ids){
-  const pack=id==='peterborough'?undefined:JSON.parse(read(`cities/${id}/geo-data.json`)),loaded=runtime({search:'?city='+id,pack});
-  Object.assign(loaded.c,{atob:s=>Buffer.from(s,'base64').toString('binary'),Uint8Array,Response,Blob,DecompressionStream});
-  await loaded.c.PTBO_GEO_CITY_READY;
+  const loaded=await actualCity(id);
   const cityPackage=loaded.c.PTBO_CITY_PACKAGE,locations=loaded.c.PTBO_DISPATCH_STORE.getAll(),baseRecords=['fire','ems'].flatMap(service=>loaded.c.PTBO_BASE_STORE.getBases(service));
   for(const mobile of [false,true])for(const service of ['fire','ems']){
    const label=`${id} ${service} ${mobile?'phone':'desktop'}`,g=await game({cityPackage,locations,baseRecords,mobile}),available=baseRecords.filter(b=>b.service===service);
@@ -31,19 +35,30 @@ test('all 31 Geo cities share the compact call card, return flow and answer feed
    g.api.reveal();assert.equal(g.node('game').dataset.feedback,'revealed',label);assert.equal(g.node('guess-effect').hidden,true,label);
    g.api.finish();assert.equal(g.node('game').dataset.feedback,undefined,label);
   }
- }assert.equal(sessions,124);
+ }assert.equal(sessions,132);
 });
 test('Geo setup identifies the selected city and starts every eligible base/tier through the same engine',async()=>{
- const dirs=fs.readdirSync(path.join(root,'cities')).filter(id=>fs.existsSync(path.join(root,'cities',id,'geo-data.json')));assert.equal(dirs.length,30);let starts=0;
- for(const id of dirs){const pack=JSON.parse(read(`cities/${id}/geo-data.json`)),bases=pack.bases.filter(b=>b.status==='active'&&b.selectionEligible),g=await game({cityPackage:pack,locations:pack.locations,baseRecords:bases});
+ const dirs=fs.readdirSync(path.join(root,'cities')).filter(id=>fs.existsSync(path.join(root,'cities',id,'geo-data.json')));assert.equal(dirs.length,32);let starts=0,totalBases=0;
+ for(const id of ['peterborough',...dirs]){
+  const loaded=await actualCity(id),pack=loaded.c.PTBO_CITY_PACKAGE,locations=loaded.c.PTBO_DISPATCH_STORE.getAll();
+  const bases=['fire','ems'].flatMap(service=>loaded.c.PTBO_BASE_STORE.getBases(service));totalBases+=bases.length;
+  const g=await game({cityPackage:pack,locations,baseRecords:bases});vm.runInContext(read('shared/ems-priority.js'),g.c);
   assert.match(g.node('geo-city-label').textContent,new RegExp(pack.name));
-  for(const tier of ['easy','medium','hard']){assert.equal(g.node('count-'+tier).textContent,tier==='easy'?'10':'5');
-   for(const service of ['fire','ems']){g.api.chooseService(service);g.api.chooseDifficulty(tier);const pool=g.api.state.locations.filter(l=>l.recognitionDifficulty===tier).map(l=>l.id).sort();
-    for(let i=0;i<bases.filter(b=>b.service===service).length;i++){assert.equal(g.api.start(i),true);starts++;assert.equal(g.map.getCenter().lat,g.api.state.base.lat);assert.equal(g.map.getZoom(),18);assert.equal(g.api.state.target.recognitionDifficulty,tier);assert.deepEqual(g.api.state.pool.map(l=>l.id).sort(),pool);
-     g.api.reveal();assert.equal(g.node('practice-continue').hidden,false);g.api.next();assert.equal(g.map.getCenter().lng,g.api.state.base.lng);assert.equal(g.map.getZoom(),18);g.api.finish();}
+  for(const service of ['fire','ems'])for(const [tier,min] of Object.entries({easy:100,medium:50,hard:50})){
+   g.api.chooseService(service);g.api.chooseDifficulty(tier);
+   const common=locations.filter(row=>!row.trainingServices||['fire','ems'].every(s=>row.trainingServices.includes(s)));
+   assert.ok(common.filter(row=>row.recognitionDifficulty===tier).length>=min,id+' '+tier+' canonical floor');
+   const expected=g.c.PTBO_STATION_PRACTICE.serviceLocations(locations,service,tier),pool=Array.from(expected,row=>row.id).sort();
+   assert.equal(g.node('count-'+tier).textContent,String(pool.length),id+' '+service+' '+tier+' eligible count');
+   assert.ok(expected.every(row=>row.recognitionDifficulty===tier||service==='ems'&&row.facilityType==='long-term-care'),'only EMS care homes override the selected tier');
+   for(let i=0;i<bases.filter(base=>base.service===service).length;i++){
+    assert.equal(g.api.start(i),true,id+' '+service+' '+tier);starts++;assert.equal(g.map.getCenter().lat,g.api.state.base.lat);assert.equal(g.map.getZoom(),18);
+    assert.ok(pool.includes(g.api.state.target.id));assert.ok(g.api.state.target.recognitionDifficulty===tier||service==='ems'&&g.api.state.target.facilityType==='long-term-care');
+    assert.deepEqual(Array.from(g.api.state.pool,row=>row.id).sort(),pool);
+    g.api.reveal();assert.equal(g.node('practice-continue').hidden,false);g.api.next();assert.equal(g.map.getCenter().lng,g.api.state.base.lng);assert.equal(g.map.getZoom(),18);g.api.finish();
    }
   }
- }assert.equal(starts,1746);
+ }assert.equal(totalBases,622);assert.equal(starts,totalBases*3);
 });
 test('readiness failure leaves Start unavailable with an explicit city error and retry',async()=>{
  const g=await game({cityReady:Promise.reject(new Error('Geo Guesser demo is not available for this city.'))});

@@ -197,7 +197,7 @@
     } catch(error) { return fallback(error); }
   }
 
-  function installPreviewSubsystemShims(cityId) {
+  function installPreviewSubsystemShims(cityId, sceneResponseDrills) {
     const roadState={status:'ready',enabled:false,originalLoop:true,segments:[],grid:new Map(),stationExit:null};
     const roadApi={
       state:roadState,config:Object.freeze({cityId,available:false,freeDrive:true}),
@@ -205,12 +205,14 @@
       snapVehicleToRoad:()=>false,beginStationExit:()=>false,nearestRoad:()=>null,
     };
     roadApi.ready=Promise.resolve(roadApi);
-    window.PTBO_ROAD_COLLISION=Object.freeze(roadApi);
-    window.PTBO_ROAD_COLLISION_BOOTSTRAP_READY=Promise.resolve(window.PTBO_ROAD_COLLISION);
+    if (!sceneResponseDrills) {
+      window.PTBO_ROAD_COLLISION=Object.freeze(roadApi);
+      window.PTBO_ROAD_COLLISION_BOOTSTRAP_READY=Promise.resolve(window.PTBO_ROAD_COLLISION);
+    }
     const hardState={installed:true,disabled:true};
     const hard={version:VERSION,state:hardState};
     hard.ready=Promise.resolve(hard);
-    window.PTBO_HARD_ROAD_BOUNDARY=Object.freeze(hard);
+    if (!sceneResponseDrills) window.PTBO_HARD_ROAD_BOUNDARY=Object.freeze(hard);
     window.PTBO_ROUTE_REVEAL=Object.freeze({available:false,ready:Promise.resolve(null),state:Object.freeze({status:'disabled'}),hide:()=>{},hideRoute:()=>{},calculateRoute:()=>null});
     window.PTBO_ROUTE_COMPARE_BOOT_VERSION='preview';
     window.PTBO_ROUTE_COMPARE=Object.freeze({available:false,state:{reviewOpen:false},sync:()=>{},reset:()=>{},stop:()=>{}});
@@ -226,20 +228,32 @@
     const alarmCategories=Object.freeze(['Auto Alarm / Vehicle Fire','Alarms No Apparent Problem']);
     const unavailableHospital=Object.freeze({id:`${config.id}-hospital-unavailable`,main:'Medical',sub:'Hospital Transport',name:'Hospital transport unavailable',addr:'Dispatch calls are not available for this city yet.',lat:config.map.defaultCenter[0],lng:config.map.defaultCenter[1],radius:30,disabled:true});
     const profiles=Object.freeze({fire:Object.freeze({id:'fire',label:'Fire',vehicle:'Fire truck',bases:fireBases}),ems:Object.freeze({id:'ems',label:'EMS',vehicle:'Ambulance',bases:emsBases})});
-    const serviceConfig=Object.freeze({profiles,hospital:unavailableHospital,alarmCategories});
-    const features=Object.freeze({baseTraining:true,dispatch:false,roadBoundaries:false,routeGuidance:false,hospitalTransport:false});
-    const roads=Object.freeze({available:false,center:Object.freeze([...config.map.defaultCenter]),sourceAsset:null});
-    const dispatch=Object.freeze({available:false,controlName:`${config.name} Control`,dataVersion:'preview-1',descriptorUrl:new URL('./dispatch-data.js',config.sourceUrl).href});
+    const drills=config.sceneResponseDrills===true;
+    const serviceConfig=Object.freeze({profiles,hospital:drills?null:unavailableHospital,alarmCategories});
+    const features=Object.freeze({baseTraining:!drills,dispatch:drills,sceneResponseDrills:drills,roadBoundaries:drills,routeGuidance:false,hospitalTransport:false});
+    const roads=Object.freeze({available:drills,center:Object.freeze([...config.map.defaultCenter]),dataUrl:drills?new URL('./roads.geojson.gz',config.sourceUrl).href:null,manifestUrl:drills?new URL('./training-data.json',config.sourceUrl).href:null});
+    const dispatch=Object.freeze({available:drills,controlName:`${config.name} Control`,dataVersion:'preview-1',descriptorUrl:new URL('./dispatch-data.js',config.sourceUrl).href});
     const map=Object.freeze({...config.map,defaultCenter:Object.freeze([...config.map.defaultCenter]),bounds:Object.freeze(config.map.bounds.map(pair=>Object.freeze([...pair])))});
-    const cityPackage=Object.freeze({schemaVersion:3,version:VERSION,id:config.id,name:config.name,province:'Ontario',country:'Canada',playable:true,status:'base-training',features,map,roads,dispatch,serviceConfig,sources:Object.freeze({...config.sources})});
+    const cityPackage=Object.freeze({schemaVersion:3,version:VERSION,id:config.id,name:config.name,province:'Ontario',country:'Canada',playable:true,status:drills?'scene-response':'base-training',features,map,roads,dispatch,serviceConfig,sources:Object.freeze({...config.sources})});
 
     window.PTBO_CITY_PACKAGE=cityPackage;window.PTBO_ACTIVE_CITY=cityPackage;window.PTBO_SERVICE_CONFIG=serviceConfig;window.PTBO_STATIONS=fireBases;
     window.getPtboStation=number=>fireBases.find(station=>station.number===Number(number));
-    document.documentElement.dataset.city=config.id;document.documentElement.dataset.cityPackageVersion=VERSION;document.documentElement.dataset.dispatchAvailable='false';
-    installPreviewSubsystemShims(config.id);
+    document.documentElement.dataset.city=config.id;document.documentElement.dataset.cityPackageVersion=VERSION;document.documentElement.dataset.dispatchAvailable=String(drills);
+    installPreviewSubsystemShims(config.id,drills);
 
     const ready=(async()=>{
-      const [fire,ems]=await Promise.all([loadSource(config.sources.fire,config,'fire'),loadSource(config.sources.ems,config,'ems')]);
+      let fire,ems;
+      if (drills) {
+        const response=await fetch(new URL('./geo-data.json',config.sourceUrl).href,{cache:'force-cache'});
+        if(!response.ok)throw new Error(`${config.name} canonical bases could not load.`);
+        const geo=await response.json();
+        if(geo?.schemaVersion!==1 || geo.id!==config.id || !Array.isArray(geo.bases) || !Array.isArray(geo.locations))throw new Error(`${config.name} canonical base data is invalid.`);
+        window.PTBO_DISPATCH_DATA_VERSION=typeof geo.dispatchDataVersion==='string' && geo.dispatchDataVersion.trim() ? geo.dispatchDataVersion.trim() : 'ontario-geo-1';
+        window.PTBO_DISPATCH_DATA_READY=Promise.resolve(geo.locations);
+        const eligible=geo.bases.filter(b=>b.status==='active'&&b.selectionEligible===true&&Number.isFinite(b.lat)&&Number.isFinite(b.lng)&&Math.abs(b.lat)<=85&&Math.abs(b.lng)<=180);
+        fire=finalizeRecords(eligible.filter(b=>b.service==='fire'),config,'fire');
+        ems=finalizeRecords(eligible.filter(b=>b.service==='ems'),config,'ems');
+      } else [fire,ems]=await Promise.all([loadSource(config.sources.fire,config,'fire'),loadSource(config.sources.ems,config,'ems')]);
       if(!fire.length||!ems.length)throw new Error(`${config.name} needs at least one Fire and one EMS base.`);
       fireBases.splice(0,fireBases.length,...fire);emsBases.splice(0,emsBases.length,...ems);window.PTBO_STATIONS=fireBases;
       document.documentElement.dataset.fireBaseCount=String(fireBases.length);document.documentElement.dataset.emsBaseCount=String(emsBases.length);

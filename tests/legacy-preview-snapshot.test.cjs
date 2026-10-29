@@ -1,0 +1,11 @@
+'use strict';const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
+const root=path.resolve(__dirname,'..'),read=p=>fs.readFileSync(path.join(root,p),'utf8'),json=p=>JSON.parse(read(p));
+for(const city of ['oshawa','pickering','markham','toronto'])test(`${city} retains old 1.6.8 preview edits and deletions when adopting Geo canonical data`,async()=>{
+ const geo=json(`cities/${city}/geo-data.json`),training=json(`cities/${city}/training-data.json`),[first,second]=training.sharedLocations;
+ const saved={version:3,cityId:city,dataVersion:'1.6.8',trainingSharedLocationIds:training.sharedLocations.map(x=>x.id),trainingCareHomeIds:[],items:[{...first,name:'My legacy edit'}]};
+ const savedText=JSON.stringify(saved),values=new Map([[`ptboSharedDispatchLocationsV3:${city}`,savedText]]);
+ const c=vm.createContext({console,URL,URLSearchParams,AbortController,setTimeout,clearTimeout,CustomEvent:class{},location:{href:`https://example.test/geo-guesser/?city=${city}`},localStorage:{getItem:k=>values.get(k)||null,setItem:(k,v)=>values.set(k,v)},dispatchEvent(){},document:{currentScript:{src:`https://example.test/shared/dispatch-locations.js?city=${city}`}},fetch:async()=>({ok:true,json:async()=>training}),PTBO_DISPATCH_DATA_VERSION:'ontario-geo-1',PTBO_DISPATCH_DATA_READY:Promise.resolve(geo.locations)});
+ c.window=c;vm.runInContext(read('shared/ems-priority.js'),c);vm.runInContext(read('shared/dispatch-locations.js'),c);await c.PTBO_DISPATCH_STORE.ready();
+ let rows=c.PTBO_DISPATCH_STORE.getAll();assert.equal(c.PTBO_DISPATCH_STORE.dataVersion,'ontario-geo-1');assert.equal(rows.find(r=>r.id===first.id)?.name,'My legacy edit');assert.ok(!rows.some(r=>r.id===second.id),'old saved deletion remains deleted');assert.ok(rows.some(r=>r.id===geo.locations[0].id),'new Geo seed locations are added');assert.equal(values.get(`ptboSharedDispatchLocationsV3:${city}`),savedText,'read does not rewrite saved data');
+ c.PTBO_DISPATCH_STORE.upsert({...rows.find(r=>r.id===first.id),name:'Edit after migration'});assert.equal(JSON.parse(values.get(`ptboSharedDispatchLocationsV3:${city}`)).dataVersion,'ontario-geo-1');
+});

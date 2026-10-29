@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "retrievedAt": "2026-10-29T03:35:46.278242+00:00",
+    "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario-latest.osm.pbf",
+    "sourcePage": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "snapshotTimestamp": "2026-10-28T21:21:02Z",
+    "sha256": "4d53c536cd90335cd051190c23493218e002a3314d9b20a227e1a8ee15463273",
+    "bytes": 1032663471,
+    "license": "ODbL-1.0",
+    "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "attribution": "© OpenStreetMap contributors",
+    "copyrightUrl": "https://www.openstreetmap.org/copyright",
+    "records": 2491621,
+    "boundaries": 33,
+    "geometryErrors": 0,
+    "elapsedSeconds": 170
+  },
+  "rawPbfBundled": false,
+  "selectedBoundaryGeometrySha256": "c90f3a75b63603427a4e63e7f63200344333efc7690dc17ed0268c036d5bef65",
+  "boundaryOutput": "bundles/selected-boundaries.geojson",
+  "initialShortlistValidation": {
+    "candidateCount": 71760,
+    "cityCount": 32,
+    "failed": 0
+  },
+  "majorRoadSupplementValidation": {
+    "candidateCount": 38830,
+    "cityCount": 32,
+    "failed": 0
+  },
+  "scope": "Recorded source snapshot and historical structural validation. These are research pools, not final gameplay counts or a current vehicle-entrance/route/browser certification."
+}

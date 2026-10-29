@@ -1,0 +1,29 @@
+[
+  {
+    "dataset": "odef",
+    "catalogueUrl": "https://www150.statcan.gc.ca/n1/pub/37-26-0001/372600012022001-eng.htm",
+    "downloadUrl": "https://www150.statcan.gc.ca/n1/en/pub/37-26-0001/2022001/ODEF_v3.0.zip",
+    "filename": "ODEF_v3.0.zip",
+    "size": 1526592,
+    "sha256": "a9ead09cc099fc36534a0e1da94883f18c8b3e814e4688dc2c5e191285f6d765",
+    "retrievedAt": "2026-10-29T03:30:34.959554+00:00"
+  },
+  {
+    "dataset": "odhf",
+    "catalogueUrl": "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+    "downloadUrl": "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+    "filename": "odhf_v2_geojson.zip",
+    "size": 2292416,
+    "sha256": "13b3fae7bc07ead747eb5653c0127e6d86bc19804966801fcced3effe09bfdae",
+    "retrievedAt": "2026-10-29T03:30:35.214936+00:00"
+  },
+  {
+    "dataset": "odsrf",
+    "catalogueUrl": "https://www150.statcan.gc.ca/n1/pub/21-26-0002/212600022021001-eng.htm",
+    "downloadUrl": "https://www150.statcan.gc.ca/n1/pub/21-26-0002/2021001/zip/odsrf_v2_gpkg.zip",
+    "filename": "odsrf_v2_gpkg.zip",
+    "size": 269254784,
+    "sha256": "ea1d96aff71e1e9a03d8337fb1b9e038781a97829687e9e16eeac4076c674a41",
+    "retrievedAt": "2026-10-29T03:31:36.140580+00:00"
+  }
+]

@@ -1,0 +1,213 @@
+{
+  "description": "Belleville native-control scene-drive feasibility checks",
+  "records": [
+    {
+      "service": "fire",
+      "base": "Fire Station 1",
+      "address": "1 Cannifton Road Parkway",
+      "passed": true,
+      "coreSha256": "7aa2398d549650cbac43e04f874805c1329fa897980d3a3d5c5049661fea529e",
+      "runtimeScope": "Before the station connector fix; not a validation of the final collision core.",
+      "normalSelectionAttempts": 11,
+      "responseSeconds": 26.2,
+      "start": {
+        "lat": 44.1781883,
+        "lng": -77.37418941601382,
+        "heading": 180
+      },
+      "arrival": {
+        "lat": 44.175930037896734,
+        "lng": -77.37748280161405,
+        "headingDegrees": 265.9700812431262
+      },
+      "sampledPositions": [
+        {
+          "seconds": 0,
+          "lat": 44.1781883,
+          "lng": -77.37418941601382,
+          "headingDegrees": 180
+        },
+        {
+          "seconds": 3.8,
+          "lat": 44.17792722792141,
+          "lng": -77.3742281292231,
+          "headingDegrees": 166.2
+        },
+        {
+          "seconds": 7.5,
+          "lat": 44.17758201506954,
+          "lng": -77.37434190958705,
+          "headingDegrees": 229.9
+        },
+        {
+          "seconds": 11.2,
+          "lat": 44.17731342937439,
+          "lng": -77.37471756352359,
+          "headingDegrees": 172.6
+        },
+        {
+          "seconds": 14.9,
+          "lat": 44.176784870270076,
+          "lng": -77.37447402245793,
+          "headingDegrees": 174.9
+        },
+        {
+          "seconds": 18.6,
+          "lat": 44.17642276467169,
+          "lng": -77.37517360977618,
+          "headingDegrees": 244
+        },
+        {
+          "seconds": 22.4,
+          "lat": 44.17613643914393,
+          "lng": -77.3763160270827,
+          "headingDegrees": 247.5
+        }
+      ],
+      "screenshot": "station1-completion.png"
+    },
+    {
+      "service": "fire",
+      "base": "Fire Station 3",
+      "address": "4800 Old Highway 2",
+      "passed": true,
+      "coreSha256": "1320ec0ceda0103d652754ea854cd27c07dffe4f5983a1cf9dd0f1f77143f4a1",
+      "runtimeScope": "Final collision core, after the origin-yard guard was tightened.",
+      "normalSelectionAttempts": 8,
+      "responseSeconds": 21.3,
+      "start": {
+        "lat": 44.18317945,
+        "lng": -77.27781219226566,
+        "heading": 180
+      },
+      "arrival": {
+        "lat": 44.18093477808044,
+        "lng": -77.28065371768737,
+        "headingDegrees": 215.90679955242615
+      },
+      "sampledPositions": [
+        {
+          "seconds": 0,
+          "lat": 44.18317945,
+          "lng": -77.27781219226566,
+          "headingDegrees": 180
+        },
+        {
+          "seconds": 3.7,
+          "lat": 44.18290402266977,
+          "lng": -77.27766035416631,
+          "headingDegrees": 153.1
+        },
+        {
+          "seconds": 7.4,
+          "lat": 44.18250302139581,
+          "lng": -77.27750555068795,
+          "headingDegrees": 270.3
+        },
+        {
+          "seconds": 11.1,
+          "lat": 44.18225756102215,
+          "lng": -77.27819229449926,
+          "headingDegrees": 238.9
+        },
+        {
+          "seconds": 14.8,
+          "lat": 44.18185932676215,
+          "lng": -77.27911338078563,
+          "headingDegrees": 236.1
+        },
+        {
+          "seconds": 18.5,
+          "lat": 44.18134114963329,
+          "lng": -77.28007929305336,
+          "headingDegrees": 233.6
+        }
+      ],
+      "screenshot": "station3-completion.png"
+    },
+    {
+      "service": "ems",
+      "base": "Base 01 — Farley",
+      "address": "584 Dundas Street East",
+      "passed": true,
+      "coreSha256": "1320ec0ceda0103d652754ea854cd27c07dffe4f5983a1cf9dd0f1f77143f4a1",
+      "runtimeScope": "Final collision core, after the origin-yard guard was tightened.",
+      "normalSelectionAttempts": 1,
+      "responseSeconds": 26.9,
+      "start": {
+        "lat": 44.16672235,
+        "lng": -77.3489036,
+        "heading": 180
+      },
+      "arrival": {
+        "lat": 44.16842794267061,
+        "lng": -77.3447280244571,
+        "headingDegrees": 78.82734286739179
+      },
+      "sampledPositions": [
+        {
+          "seconds": 0,
+          "lat": 44.16672235,
+          "lng": -77.3489036,
+          "headingDegrees": 180
+        },
+        {
+          "seconds": 3.7,
+          "lat": 44.166924501539775,
+          "lng": -77.34888274017483,
+          "headingDegrees": 58.7
+        },
+        {
+          "seconds": 7.4,
+          "lat": 44.167222877258865,
+          "lng": -77.34859271442838,
+          "headingDegrees": 359.6
+        },
+        {
+          "seconds": 11.3,
+          "lat": 44.16766707114885,
+          "lng": -77.34880147925873,
+          "headingDegrees": 355.5
+        },
+        {
+          "seconds": 15,
+          "lat": 44.16801908388255,
+          "lng": -77.34865283321867,
+          "headingDegrees": 102.4
+        },
+        {
+          "seconds": 18.7,
+          "lat": 44.168151090974995,
+          "lng": -77.34742160312638,
+          "headingDegrees": 81.2
+        },
+        {
+          "seconds": 22.4,
+          "lat": 44.1682642756619,
+          "lng": -77.34613689856857,
+          "headingDegrees": 82.8
+        },
+        {
+          "seconds": 26.1,
+          "lat": 44.168418124810756,
+          "lng": -77.34491507862094,
+          "headingDegrees": 69.4
+        }
+      ],
+      "screenshot": "ems-completion.png"
+    }
+  ],
+  "inputHashes": {
+    "bellevilleTrainingSha256": "14da101f229e03b20b29e2b2f0285a73e8e605067a827f1559eee5a331025bcf",
+    "bellevilleGeoSha256": "f9ea7a761bd5dc2ed70a3a5ddd3cdd662fb09133c149dfbf8bb6990aad0e60d0",
+    "bellevilleRoadsSha256": "20db0378147b90a301d4252d580481cfed2b7d265535b5a827f82a3734a6b473",
+    "finalCollisionCoreSha256": "1320ec0ceda0103d652754ea854cd27c07dffe4f5983a1cf9dd0f1f77143f4a1"
+  },
+  "method": "A Playwright controller pressed native keyboard throttle and steering while reading position and heading; it followed points derived from the packaged road graph. The speed slider was changed through the normal UI. Calls were obtained by normal random selection and station resets.",
+  "limitations": [
+    "No coordinates, targets, vehicle state or simulation time were injected or modified.",
+    "The route was driven in the game, not by a human; this is not a physical road, entrance, traffic-rule, or operational response verification.",
+    "The game stops on entering the simulated arrival circle, not necessarily at the surveyed entrance or address point.",
+    "External map requests were blocked, so screenshots do not verify live basemap rendering."
+  ]
+}

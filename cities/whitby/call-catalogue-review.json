@@ -1,0 +1,367 @@
+{
+  "schemaVersion": 1,
+  "coverage": {
+    "cityId": "whitby",
+    "inputOfficial": 289,
+    "inputOsm": 1741,
+    "inputMajorRoad": 737,
+    "existing": 23,
+    "accepted": 1615,
+    "selected": 180,
+    "target": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "existingByDifficulty": {
+      "easy": 10,
+      "medium": 5,
+      "hard": 5
+    },
+    "selectedByDifficulty": {
+      "easy": 90,
+      "medium": 45,
+      "hard": 45
+    },
+    "totalByDifficulty": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "deficits": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "baseStrata": [
+      {
+        "id": "fire-whitby-fire-1",
+        "selected": 30,
+        "available": 337,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-whitby-fire-2",
+        "selected": 30,
+        "available": 337,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-whitby-fire-3",
+        "selected": 30,
+        "available": 187,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-whitby-fire-4",
+        "selected": 30,
+        "available": 345,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-whitby-fire-5",
+        "selected": 30,
+        "available": 269,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-whitby-ems-513",
+        "selected": 30,
+        "available": 140,
+        "method": "nearest-geographic-base-for-selection-only"
+      }
+    ],
+    "sharedBaseline": 20,
+    "baselineByService": {
+      "fire": {
+        "easy": 10,
+        "medium": 5,
+        "hard": 5
+      },
+      "ems": {
+        "easy": 10,
+        "medium": 8,
+        "hard": 5
+      }
+    },
+    "serviceTotalsByDifficulty": {
+      "fire": {
+        "easy": 100,
+        "medium": 50,
+        "hard": 50
+      },
+      "ems": {
+        "easy": 100,
+        "medium": 53,
+        "hard": 50
+      }
+    },
+    "serviceDeficits": {
+      "fire": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      },
+      "ems": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "rejected": 1152,
+    "rejectionCounts": {
+      "unresolved-2020-source-currentness": 4,
+      "production-snap-over-80m-or-missing": 72,
+      "production-snap-not-ground-public-road": 587,
+      "production-snap-wrong-street": 410,
+      "unresolved-official-coordinate-or-current-address-conflict": 2,
+      "not-one-exact-civic-number-and-street": 14,
+      "duplicate-existing-or-accepted-address-or-named-site": 53,
+      "outside-verified-municipality-or-boundary-unavailable": 1,
+      "no-genuine-connected-cross-street-within-1500m": 9
+    },
+    "oneStreetExceptions": 61
+  },
+  "independentAudit": {
+    "cityId": "whitby",
+    "selected": 180,
+    "accepted": 1615,
+    "crossStreetEvidence": 2631,
+    "oneStreet": 599,
+    "maxGap": 78.7152103339626,
+    "pass": true
+  },
+  "priorityFacilityExpansion": {
+    "reviewedOn": "2026-10-29",
+    "addedIds": [
+      "whitby-odef-9ad4c7ddc8ea49f09bb7",
+      "whitby-odhf-d1afbeba5cc415428f0e53020833cbcc",
+      "whitby-odhf-28b48bade6f566f9d2e68e21839b5043",
+      "whitby-osm-way-76825042",
+      "whitby-odhf-9836c631f96bada51e7ef1a1018bbd78"
+    ],
+    "verification": {
+      "cityId": "whitby",
+      "additions": 5,
+      "proposalSha256": "6ba521d389443087ba9e8bef9cab78908a2726f1081483fcda356383f22be789",
+      "pass": true,
+      "checks": [
+        "IDs absent from current shared/legacy/care catalogue",
+        "row exactly equals accepted source record",
+        "full per-record provenance exactly equals accepted pool",
+        "factual category/tags and coordinates match raw source record",
+        "source point and URLs unchanged",
+        "no normalized civic-address/near-identical-site duplicates",
+        "max40 per city",
+        "per-base rationale present; no dispatch ownership claim"
+      ]
+    },
+    "review": {
+      "purpose": "Bounded source-preserving priority facility and local variety additions; no recognition tier rewrites.",
+      "sourcePool": "external-build-cache/canonical-catalogues-reviewed/whitby/accepted-candidates.json",
+      "sourcePoolSha256": "80097bf3655cf3baf42d81e90833ed727dd344f37ba33de8cbeb9211afd73a0f",
+      "selectedDescriptor": "cities/whitby/training-data.json",
+      "selectedDescriptorSha256": "765934ae517797b1a51c5ef2729447123cd8cad570d0994f0dbfe18ecd701737",
+      "routeEvidence": "cities/whitby/training-data.json",
+      "routeEvidenceScope": "production",
+      "selectionRules": {
+        "maxPerCity": 40,
+        "maxPotentialAddsPerBase": 6,
+        "maxPotentialAddsForConfirmedZeroToTwoBase": 10,
+        "twoCluePriority": true,
+        "maximumStraightLineBaseReviewDistanceMetres": 6000
+      },
+      "limitations": [
+        "At this selection-time review: Every row passed the existing all-accepted geographic/source/clue audit. These additions have not been graph-assigned or route-audited.",
+        "Published Fire polygons are respected for review proximity; EMS and other Fire review strata use straight-line proximity only. These are not dispatch ownership assignments.",
+        "Full original accepted source point, ID, address, recognition tier, incident profile and provenance are unchanged. Current-open status is not newly verified."
+      ],
+      "rationales": {
+        "whitby-odef-9ad4c7ddc8ea49f09bb7": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "whitby-odef-9ad4c7ddc8ea49f09bb7",
+            "category": "school",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/37-26-0001/372600012022001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/en/pub/37-26-0001/2022001/ODEF_v3.0.zip",
+              "https://data.ontario.ca/dataset/school-information-and-student-demographics",
+              "https://data.ontario.ca/dataset/ontario-public-school-contact-information",
+              "https://data.ontario.ca/dataset/fb3a7c18-90af-453e-bc0a-a76ecc471862/resource/f3a8c2a3-09d9-4715-9044-d8a0189f572c/download/public_school_contact_list_september2026_en.txt"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-whitby-fire-4",
+              "distance": 677.1043428353127,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 677
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 168
+        },
+        "whitby-odhf-d1afbeba5cc415428f0e53020833cbcc": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "care-home",
+          "sourceEvidence": {
+            "sourceRecordId": "whitby-odhf-d1afbeba5cc415428f0e53020833cbcc",
+            "category": "care-home",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://city-oshawa.opendata.arcgis.com/datasets/0fa830f84d9847a2af342c3254749d51_10/explore"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-whitby-fire-2",
+              "distance": 1335.1274562118404,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1335
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 166
+        },
+        "whitby-odhf-28b48bade6f566f9d2e68e21839b5043": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "care-home",
+          "sourceEvidence": {
+            "sourceRecordId": "whitby-odhf-28b48bade6f566f9d2e68e21839b5043",
+            "category": "care-home",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://city-oshawa.opendata.arcgis.com/datasets/0fa830f84d9847a2af342c3254749d51_10/explore"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-whitby-fire-5",
+              "distance": 1773.3633765945085,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1773
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 165
+        },
+        "whitby-osm-way-76825042": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "whitby-osm-way-76825042",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "113",
+              "addr:street": "Warren Road",
+              "building": "industrial",
+              "building:levels": "2",
+              "name": "Simtor Environmental"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/76825042",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-whitby-fire-2",
+              "distance": 1961.540418684495,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1962
+            },
+            {
+              "baseId": "ems-whitby-ems-513",
+              "distance": 5160.374834703561,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 5160
+            }
+          ],
+          "twoGenuineCrossStreetClues": false,
+          "oneClueException": "No unselected accepted two-clue source in this priority family for the targeted review base(s); high-value source family retained.",
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 162
+        },
+        "whitby-odhf-9836c631f96bada51e7ef1a1018bbd78": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "healthcare (source broad category; no emergency/hospital status inferred)",
+          "sourceEvidence": {
+            "sourceRecordId": "whitby-odhf-9836c631f96bada51e7ef1a1018bbd78",
+            "category": "healthcare",
+            "tags": null,
+            "sourceUrls": [
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/132600012020001-eng.htm",
+              "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+              "https://opendata.durham.ca/datasets/2f1b94123092412c89495f95a2932b45_8/explore"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-whitby-fire-1",
+              "distance": 1553.8816029634436,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1554
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 148
+        }
+      }
+    },
+    "note": "Add-only source-validated priority facilities; geographic review reasons are not operational districts. Station assignments require independent directed-road audit."
+  },
+  "routeCandidateExpansion": {
+    "reviewedOn": "2026-10-29",
+    "promotedIds": [],
+    "candidateVerification": null,
+    "selection": "Only source-verified additional locations used by independently audited station exercises are promoted; existing canonical IDs and fields remain unchanged."
+  },
+  "evidencePathConvention": {
+    "repositoryPaths": "Paths beginning cities/ are repository-relative.",
+    "externalBuildCache": "external-build-cache/ labels identify historical, reproducible build artifacts that are not shipped; adjacent SHA-256 values identify the exact reviewed bytes.",
+    "reviewScope": "Priority facility review records describe the selection-time review. Final integrated route and runtime validation is recorded in docs/city-call-validation-2026-10-29.md."
+  }
+}

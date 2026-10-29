@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "reviewDate": "2026-10-29",
+  "files": {
+    "README.md": {
+      "bytes": 17013,
+      "sha256": "0f71b28a57c2046bfdfae98558cbb55392e7f00a03384f454770e16b60c19abc"
+    },
+    "acquire_osm.py": {
+      "bytes": 3087,
+      "sha256": "b39a76ee2912b25fd8adcbcfd2e217aed395b25dccddfbc92c0f15841bf94d12"
+    },
+    "apply_osm_reviews.py": {
+      "bytes": 1873,
+      "sha256": "9cf7773ff97de8bc2522dceb844557c071a4fe3a2a0cdf33cdd0034b639907ba"
+    },
+    "enrich_entrances.py": {
+      "bytes": 2863,
+      "sha256": "b61c3f4799a1500bf9c6657bfa545654e12bb6e4171a25559dfc02a4d6dd2603"
+    },
+    "extract_entrances.py": {
+      "bytes": 1292,
+      "sha256": "0581393963785e823ff922f54df518cadef38199ac73e1f0b677de58caac6d2c"
+    },
+    "extract_osm.py": {
+      "bytes": 4863,
+      "sha256": "f323d1e50d5f11669e0fd28878eed9045faae40557b4b243e605f20021ac6439"
+    },
+    "independent-source-reviews.json": {
+      "bytes": 60568,
+      "sha256": "d21b0ad4b79fcbb302dee75a40bc9d8bb6ef5953992cb49362c160c44067f040"
+    },
+    "major_road_supplements.py": {
+      "bytes": 5489,
+      "sha256": "a1dee50ff93004c9fdd334f263a93b4366f85898a77f88a5d7d1947ce64dc8ae"
+    },
+    "mine_targeted_candidates.py": {
+      "bytes": 8467,
+      "sha256": "bf6e0155645eac560d4b011802ba97f7dec91f423b66cd883a93a31641a0ada1"
+    },
+    "normalize_bundles.py": {
+      "bytes": 8898,
+      "sha256": "62aa24fb1fad286678195742e9165635245e07cdc464cca7d94835c7bac953a3"
+    },
+    "osm_reviews.py": {
+      "bytes": 2750,
+      "sha256": "bc13d6d456d79b207702518c4c75a35fb1076c3c331d96220878935c87d36d38"
+    },
+    "requirements.txt": {
+      "bytes": 29,
+      "sha256": "7900a42321bca69c05b21570ae96f6286907def64b74c9c69147329b3c6cc669"
+    },
+    "reviewed-targets/greater-sudbury.rural-targeted-candidates.json.gz": {
+      "bytes": 4124,
+      "sha256": "e7e47d4af7ea3d9111049a5ab6618d2b672a018ccdd28c2c87968642643d61bb"
+    },
+    "reviewed-targets/manifest.json": {
+      "bytes": 8480,
+      "sha256": "48338468c7cccb3c27e5cae633d3c17ea6f56ec69a59f2a6105ee9dca1af1d8a"
+    },
+    "reviewed-targets/ottawa.rural-targeted-candidates.json.gz": {
+      "bytes": 3712,
+      "sha256": "90cf0d4ffa43fd4a854ce736545693d74c14d55c8283cc1f2fbab314dc90ada7"
+    },
+    "reviewed-targets/ottawa63.final-gap-targeted-candidates.json.gz": {
+      "bytes": 5647,
+      "sha256": "91e14cf7980c2cc22bfcd9f6ad03914efdea3fbb39e7147597bbe43e36d99cdb"
+    },
+    "reviewed-targets/toronto.final-mainland-route-shortlist-candidates.json.gz": {
+      "bytes": 6489,
+      "sha256": "3d4f3928d0ad458283cb4d9a714c5500686a2e29e6144c95dc3dba9db313f4f1"
+    },
+    "reviewed-targets/toronto.targeted-candidates.json.gz": {
+      "bytes": 314681,
+      "sha256": "3ef85a7aa598e77fd313e461434d031b82efbff175809724924c689db3a30558"
+    },
+    "reviewed-targets/toronto.three-gap-route-shortlist-candidates.json.gz": {
+      "bytes": 7886,
+      "sha256": "a8a0f33b1856cc340ae2f7064e81ea83e59425000589e0a1efb1ec3af045ea04"
+    },
+    "reviewed_targets.py": {
+      "bytes": 10072,
+      "sha256": "d4f25717ff021dda59520fe306867b313e7aa33771829c3c2dae6e027134d938"
+    },
+    "source-snapshot.json": {
+      "bytes": 1331,
+      "sha256": "eda3983236d533d3547edfba5e83e3fb25c13da7389b469afb50ef4f7323e69a"
+    },
+    "target_toronto_candidates.py": {
+      "bytes": 7834,
+      "sha256": "f7ade958baa84eb3a54dabe9a81f86f52ac3aeb32df640c929305a4ab208e5ca"
+    },
+    "validate_bundles.py": {
+      "bytes": 3188,
+      "sha256": "fcb5892d4f9470f7c2c41061c7774ea78e65e588e2a00d809eb7a49c7ed9e152"
+    }
+  },
+  "note": "Exact small portable code/metadata and six frozen reviewed candidate-evidence gzip bundles. Manifest excludes itself; province PBF/full JSONL, acquisition caches, bytecode, indexes and dependencies are not bundled. Historical metadata inside exact reviewed source bytes is intentionally preserved."
+}

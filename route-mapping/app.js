@@ -1052,13 +1052,20 @@
     return call;
   }
 
+  function responseCallLabel(call){
+    const label=call.sub||call.main||'Dispatch Call';
+    if(call.responseAssignment?.generator!=='civic-v1'||call.responseAssignment.role!=='support')return label;
+    const primary=state.routeResponses?.bases?.find(base=>base.baseId===call.responseAssignment.primaryBaseId&&base.service==='fire');
+    return label+' · Estimated support exercise'+(primary?.name?' · First-due: '+primary.name:'');
+  }
+
   function newCall(){
     clearRaw();clearReference();clearLayers(state.playerLayers);
     clearLayer(state.endpointMarker);state.endpointMarker=null;
     const previousPhase=state.phase?.index;
     let phase;
     try{phase=applyProgressionStart();state.call=chooseCall();}catch(error){showFailure(error);return;}
-    state.callCount+=1;state.playerRoute=null;state.shortestRoute=null;state.history=[];ui.callNumber.textContent='CALL '+state.callCount;ui.baseLabel.textContent=state.base.shortName||state.base.name;ui.callType.textContent=state.call.sub||state.call.main||'Dispatch Call';ui.callAddress.textContent=state.call.addr||state.call.name;
+    state.callCount+=1;state.playerRoute=null;state.shortestRoute=null;state.history=[];ui.callNumber.textContent='CALL '+state.callCount;ui.baseLabel.textContent=state.base.shortName||state.base.name;ui.callType.textContent=responseCallLabel(state.call);ui.callAddress.textContent=state.call.addr||state.call.name;
     const difficulty=clamp(Math.round(Number(state.call.sessionDifficulty??state.call.difficulty)||0),0,100);
     ui.difficultyLabel.textContent=state.call.decisionAnalysis?.traps?.length?'DECISION CHALLENGE':'ROUTE REFRESHER';
     ui.difficultyLabel.dataset.level=difficulty>=80?'extreme':difficulty>=60?'hard':difficulty>=35?'medium':'easy';

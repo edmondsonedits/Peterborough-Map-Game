@@ -4,9 +4,9 @@
   "name": "Belleville",
   "province": "Ontario",
   "country": "Canada",
-  "status": "base-training",
+  "status": "scene-response",
   "playable": true,
-  "note": "Fire and EMS base training available. Dispatch calls unavailable.",
+  "note": "Modeled Fire and EMS address-response exercises end at the scene; hospital transport is unavailable. Some bases may not yet have exercises.",
   "map": {
     "defaultCenter": [
       44.1628,
@@ -14,23 +14,36 @@
     ],
     "defaultZoom": 15,
     "minZoom": 10,
-    "maxZoom": 19
+    "maxZoom": 19,
+    "bounds": [
+      [
+        44.08,
+        -77.5
+      ],
+      [
+        44.35,
+        -77.23
+      ]
+    ]
   },
   "features": {
-    "baseTraining": true,
-    "dispatch": false,
-    "roadBoundaries": false,
+    "baseTraining": false,
+    "dispatch": true,
+    "roadBoundaries": true,
     "routeGuidance": false,
-    "geoGuesser": false,
+    "sceneResponseDrills": true,
+    "hospitalTransport": false,
+    "geoGuesser": true,
     "routeMapping": true
   },
   "data": {
     "boundaries": null,
-    "roads": null,
+    "roads": "roads.geojson.gz",
     "dispatchLocations": "dispatch-data.js",
     "serviceConfig": "package.js",
-    "bases": "package.js",
+    "bases": "geo-data.json",
     "hospitals": null,
-    "routeMapping": "training-data.json"
+    "routeMapping": "training-data.json",
+    "geoGuesser": "geo-data.json"
   }
 }

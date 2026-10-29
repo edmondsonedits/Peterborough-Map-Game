@@ -1,0 +1,47 @@
+{
+  "city": "ajax",
+  "verifiedFingerprint": "cbc70f9edbdb2220e8bae826251aa4151365b5189af89ba5595c4e7d5a585abc",
+  "halls": [
+    {
+      "id": "fire-ajax-fire-1",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 4384,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ajax-fire-2",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3613,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-ajax-fire-3",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 3896,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-ajax-ems-511",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 9,
+      "maxRouteMetres": 4589,
+      "method": "modeled-road-response"
+    }
+  ],
+  "routes": 54,
+  "continuousOrigins": 54,
+  "officialCalls": 0,
+  "modeledCalls": 48,
+  "maxRouteMetres": 4589.109156937464,
+  "minCallsPerHall": 12,
+  "minChallengeCallsPerHall": 9,
+  "supportCalls": 6,
+  "durationMs": 4622
+}

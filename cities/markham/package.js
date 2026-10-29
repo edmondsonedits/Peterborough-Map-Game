@@ -4,8 +4,8 @@
   const sourceUrl=new URL(document.currentScript?.src || location.href,location.href);
   const CACHE_VERSION=sourceUrl.searchParams.get('v') || VERSION;
   const config={
-    id:'markham',name:'Markham',
-    map:{defaultCenter:[43.8561,-79.3370],defaultHeading:180,defaultZoom:15,minZoom:10,maxZoom:19,bounds:[[43.78,-79.48],[44.00,-79.18]]},
+    sceneResponseDrills:true,id:'markham',name:'Markham',
+    map:{defaultCenter:[43.8561,-79.3370],defaultHeading:180,defaultZoom:15,minZoom:10,maxZoom:19,bounds:[[43.79803520873777,-79.4287925145521],[43.96257754689307,-79.170274133742]]},
     sources:{
       fire:{type:'york',url:'https://ww3.yorkmaps.ca/arcgis/rest/services/General/CommunityResources/MapServer/52',outFields:'NAME,ADDRESS',preferFallback:true,fallback:[
         {number:91,name:'Fire Station 91',shortName:'Stn 91',address:'7801 Bayview Avenue',lat:43.821718,lng:-79.401171},

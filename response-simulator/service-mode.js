@@ -197,6 +197,7 @@
     applySpawnHeading(base);
     updateControls();
     showAvailable();
+    window.dispatchEvent(new CustomEvent('ptbo-service-base-change',{detail:{cityId:city.id,mode:state.mode,baseId:base.id}}));
     return true;
   }
 

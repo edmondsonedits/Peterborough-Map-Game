@@ -1,0 +1,95 @@
+{
+  "city": "windsor",
+  "verifiedFingerprint": "ef10c7158522e8510db9f54711e65910ee656469087d18f371eb4a5eb93da007",
+  "halls": [
+    {
+      "id": "fire-windsor-fire-1",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 9,
+      "maxRouteMetres": 3122,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-windsor-fire-2",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 4174,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-windsor-fire-3",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 2648,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-windsor-fire-4",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3053,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-windsor-fire-5",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3481,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-windsor-fire-6",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 13,
+      "maxRouteMetres": 4802,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-windsor-fire-7",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 11,
+      "maxRouteMetres": 5397,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-windsor-ems-mercer",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3072,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-windsor-ems-dougall",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3893,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-windsor-ems-jefferson",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 4487,
+      "method": "modeled-road-response"
+    }
+  ],
+  "routes": 134,
+  "continuousOrigins": 134,
+  "officialCalls": 0,
+  "modeledCalls": 120,
+  "maxRouteMetres": 5396.720549371691,
+  "minCallsPerHall": 12,
+  "minChallengeCallsPerHall": 9,
+  "supportCalls": 14,
+  "durationMs": 9859
+}

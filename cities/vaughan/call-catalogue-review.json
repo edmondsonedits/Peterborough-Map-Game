@@ -1,0 +1,537 @@
+{
+  "schemaVersion": 1,
+  "coverage": {
+    "cityId": "vaughan",
+    "inputOfficial": 268,
+    "inputOsm": 2397,
+    "inputMajorRoad": 1239,
+    "existing": 27,
+    "accepted": 1831,
+    "selected": 180,
+    "target": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "existingByDifficulty": {
+      "easy": 10,
+      "medium": 5,
+      "hard": 5
+    },
+    "selectedByDifficulty": {
+      "easy": 90,
+      "medium": 45,
+      "hard": 45
+    },
+    "totalByDifficulty": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "deficits": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "baseStrata": [
+      {
+        "id": "fire-vaughan-fire-7-1",
+        "selected": 13,
+        "available": 220,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-vaughan-fire-7-10",
+        "selected": 13,
+        "available": 163,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-vaughan-fire-7-2",
+        "selected": 13,
+        "available": 130,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-vaughan-fire-7-3",
+        "selected": 12,
+        "available": 35,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-vaughan-fire-7-4",
+        "selected": 13,
+        "available": 86,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-vaughan-fire-7-5",
+        "selected": 13,
+        "available": 199,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-vaughan-fire-7-6",
+        "selected": 13,
+        "available": 120,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-vaughan-fire-7-7",
+        "selected": 13,
+        "available": 291,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-vaughan-fire-7-8",
+        "selected": 12,
+        "available": 62,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-vaughan-fire-7-9",
+        "selected": 13,
+        "available": 126,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-vaughan-ems-30",
+        "selected": 13,
+        "available": 80,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-vaughan-ems-31",
+        "selected": 13,
+        "available": 161,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-vaughan-ems-32",
+        "selected": 13,
+        "available": 88,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-vaughan-ems-34",
+        "selected": 13,
+        "available": 70,
+        "method": "nearest-geographic-base-for-selection-only"
+      }
+    ],
+    "sharedBaseline": 20,
+    "baselineByService": {
+      "fire": {
+        "easy": 10,
+        "medium": 5,
+        "hard": 5
+      },
+      "ems": {
+        "easy": 10,
+        "medium": 12,
+        "hard": 5
+      }
+    },
+    "serviceTotalsByDifficulty": {
+      "fire": {
+        "easy": 100,
+        "medium": 50,
+        "hard": 50
+      },
+      "ems": {
+        "easy": 100,
+        "medium": 57,
+        "hard": 50
+      }
+    },
+    "serviceDeficits": {
+      "fire": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      },
+      "ems": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "rejected": 2073,
+    "rejectionCounts": {
+      "outside-verified-municipality-or-boundary-unavailable": 1,
+      "unresolved-2020-source-currentness": 3,
+      "production-snap-not-ground-public-road": 1539,
+      "production-snap-wrong-street": 335,
+      "unresolved-official-coordinate-or-current-address-conflict": 1,
+      "duplicate-existing-or-accepted-address-or-named-site": 50,
+      "production-snap-over-80m-or-missing": 72,
+      "not-one-exact-civic-number-and-street": 65,
+      "no-genuine-connected-cross-street-within-1500m": 7
+    },
+    "oneStreetExceptions": 68
+  },
+  "independentAudit": {
+    "cityId": "vaughan",
+    "selected": 180,
+    "accepted": 1831,
+    "crossStreetEvidence": 3011,
+    "oneStreet": 651,
+    "maxGap": 79.98612458780913,
+    "pass": true
+  },
+  "priorityFacilityExpansion": {
+    "reviewedOn": "2026-10-29",
+    "addedIds": [
+      "vaughan-osm-way-175628193",
+      "vaughan-osm-way-429074869",
+      "vaughan-osm-way-973194886",
+      "vaughan-osm-way-659632899",
+      "vaughan-osm-way-56062680",
+      "vaughan-osm-way-93811231",
+      "vaughan-osm-way-34588335"
+    ],
+    "verification": {
+      "cityId": "vaughan",
+      "additions": 7,
+      "proposalSha256": "647e7dc2c24aa0b305461ffab34f9042177e628fa89b1a690bfa9a60deeec62e",
+      "pass": true,
+      "checks": [
+        "IDs absent from current shared/legacy/care catalogue",
+        "row exactly equals accepted source record",
+        "full per-record provenance exactly equals accepted pool",
+        "factual category/tags and coordinates match raw source record",
+        "source point and URLs unchanged",
+        "no normalized civic-address/near-identical-site duplicates",
+        "max40 per city",
+        "per-base rationale present; no dispatch ownership claim"
+      ]
+    },
+    "review": {
+      "purpose": "Bounded source-preserving priority facility and local variety additions; no recognition tier rewrites.",
+      "sourcePool": "external-build-cache/canonical-catalogues-reviewed/vaughan/accepted-candidates.json",
+      "sourcePoolSha256": "c6f47f03ba41fa211313ea2e6783e8c3d5cc17e3ad96f63dcca22a49b373752a",
+      "selectedDescriptor": "cities/vaughan/training-data.json",
+      "selectedDescriptorSha256": "23289a217a2d3aecd71b30eb8dde789912510dfc5092f73b0d1b8f8631a66012",
+      "routeEvidence": "cities/vaughan/training-data.json",
+      "routeEvidenceScope": "production",
+      "selectionRules": {
+        "maxPerCity": 40,
+        "maxPotentialAddsPerBase": 6,
+        "maxPotentialAddsForConfirmedZeroToTwoBase": 10,
+        "twoCluePriority": true,
+        "maximumStraightLineBaseReviewDistanceMetres": 6000
+      },
+      "limitations": [
+        "At this selection-time review: Every row passed the existing all-accepted geographic/source/clue audit. These additions have not been graph-assigned or route-audited.",
+        "Published Fire polygons are respected for review proximity; EMS and other Fire review strata use straight-line proximity only. These are not dispatch ownership assignments.",
+        "Full original accepted source point, ID, address, recognition tier, incident profile and provenance are unchanged. Current-open status is not newly verified."
+      ],
+      "rationales": {
+        "vaughan-osm-way-175628193": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "vaughan-osm-way-175628193",
+            "category": null,
+            "tags": {
+              "addr:city": "Vaughan",
+              "addr:housenumber": "88",
+              "addr:street": "Promenade Circle",
+              "building": "apartments",
+              "source": "Bing"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/175628193",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-vaughan-fire-7-1",
+              "distance": 608.3341079210062,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 608
+            },
+            {
+              "baseId": "ems-vaughan-ems-34",
+              "distance": 1827.0997638877716,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1827
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 208
+        },
+        "vaughan-osm-way-429074869": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "vaughan-osm-way-429074869",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "10150",
+              "addr:street": "Pine Valley Drive",
+              "amenity": "place_of_worship",
+              "building": "yes",
+              "name": "St Paul's Presbyterian Church (Vaughan)",
+              "religion": "christian"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/429074869",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-vaughan-fire-7-9",
+              "distance": 2657.385160422644,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2657
+            },
+            {
+              "baseId": "ems-vaughan-ems-30",
+              "distance": 2649.6781699030585,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2650
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 198
+        },
+        "vaughan-osm-way-973194886": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "vaughan-osm-way-973194886",
+            "category": null,
+            "tags": {
+              "addr:city": "Vaughan",
+              "addr:housenumber": "950",
+              "addr:province": "Ontario",
+              "addr:street": "Portage Parkway",
+              "building": "apartments",
+              "building:flats": "592",
+              "building:levels": "55",
+              "fixme": "Need some improvements/tuning after new imagery is available.",
+              "height": "178",
+              "name": "Transit City 3",
+              "start_date": "2021"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/973194886",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-vaughan-fire-7-6",
+              "distance": 1161.4705006374015,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1161
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 157
+        },
+        "vaughan-osm-way-659632899": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "vaughan-osm-way-659632899",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "121",
+              "addr:street": "Woodbridge Avenue",
+              "building": "apartments",
+              "building:levels": "6",
+              "name": "The Terraces of Woodbridge"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/659632899",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-vaughan-fire-7-3",
+              "distance": 1863.3833557564985,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1863
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 155
+        },
+        "vaughan-osm-way-56062680": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "vaughan-osm-way-56062680",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "731",
+              "addr:street": "Millway Avenue",
+              "building": "industrial",
+              "source": "yahoo"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/56062680",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "ems-vaughan-ems-32",
+              "distance": 3359.1867824822048,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 2,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 3359
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 127
+        },
+        "vaughan-osm-way-93811231": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "vaughan-osm-way-93811231",
+            "category": null,
+            "tags": {
+              "addr:city": "Concord",
+              "addr:housenumber": "91",
+              "addr:postcode": "L4K 1A5",
+              "addr:street": "Maplecrete Road",
+              "building": "industrial",
+              "source": "NRCan-CanVec-7.0"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/93811231",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "ems-vaughan-ems-34",
+              "distance": 4562.676138280925,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 4563
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 124
+        },
+        "vaughan-osm-way-34588335": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "vaughan-osm-way-34588335",
+            "category": null,
+            "tags": {
+              "addr:city": "Concord",
+              "addr:housenumber": "158",
+              "addr:postcode": "L4K 1T8",
+              "addr:street": "Glen Shields Avenue",
+              "amenity": "school",
+              "check_date": "2025-08-04",
+              "fax": "+1-905-738-8058",
+              "isced:level": "1;2",
+              "name": "Glen Shields Public School",
+              "operator": "York Region District School Board",
+              "operator:short": "YRDSB",
+              "operator:type": "public",
+              "operator:wikidata": "Q5275021",
+              "operator:wikipedia": "en:York Region District School Board",
+              "phone": "+1-905-738-0333",
+              "school:language": "english",
+              "start_date": "1982-09-01",
+              "website": "http://glenshields.ps.yrdsb.ca/"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/34588335",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-vaughan-fire-7-6",
+              "distance": 2670.0213367403626,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 2670
+            }
+          ],
+          "twoGenuineCrossStreetClues": false,
+          "oneClueException": "No unselected accepted two-clue source in this priority family for the targeted review base(s); high-value source family retained.",
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 122
+        }
+      }
+    },
+    "note": "Add-only source-validated priority facilities; geographic review reasons are not operational districts. Station assignments require independent directed-road audit."
+  },
+  "routeCandidateExpansion": {
+    "reviewedOn": "2026-10-29",
+    "promotedIds": [],
+    "candidateVerification": null,
+    "selection": "Only source-verified additional locations used by independently audited station exercises are promoted; existing canonical IDs and fields remain unchanged."
+  },
+  "evidencePathConvention": {
+    "repositoryPaths": "Paths beginning cities/ are repository-relative.",
+    "externalBuildCache": "external-build-cache/ labels identify historical, reproducible build artifacts that are not shipped; adjacent SHA-256 values identify the exact reviewed bytes.",
+    "reviewScope": "Priority facility review records describe the selection-time review. Final integrated route and runtime validation is recorded in docs/city-call-validation-2026-10-29.md."
+  }
+}

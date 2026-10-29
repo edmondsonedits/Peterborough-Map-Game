@@ -1,0 +1,255 @@
+{
+  "city": "greater-sudbury",
+  "verifiedFingerprint": "a50bc3a66f6d96b1fe409130c170dd433918a54d557d934e23c4f1fe9dbc1c3f",
+  "halls": [
+    {
+      "id": "fire-greater-sudbury-fire-1",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 4282,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-greater-sudbury-fire-3",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3873,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-greater-sudbury-fire-4",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 5762,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-greater-sudbury-fire-23",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 12,
+      "maxRouteMetres": 5117,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-greater-sudbury-fire-20",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 4528,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-greater-sudbury-fire-17",
+      "service": "fire",
+      "calls": 13,
+      "challengeCalls": 13,
+      "maxRouteMetres": 4429,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-greater-sudbury-fire-16",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 5803,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-greater-sudbury-fire-2",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3774,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-greater-sudbury-fire-7",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 3850,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-greater-sudbury-fire-24",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 6442,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-greater-sudbury-fire-11",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3202,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-greater-sudbury-fire-14",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3349,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-greater-sudbury-fire-22",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 4,
+      "maxRouteMetres": 2671,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-greater-sudbury-fire-18",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 11,
+      "maxRouteMetres": 2498,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-greater-sudbury-fire-8",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 5767,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-greater-sudbury-fire-12",
+      "service": "fire",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3203,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-greater-sudbury-fire-6",
+      "service": "fire",
+      "calls": 14,
+      "challengeCalls": 14,
+      "maxRouteMetres": 5264,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "fire-greater-sudbury-fire-10",
+      "service": "fire",
+      "calls": 13,
+      "challengeCalls": 13,
+      "maxRouteMetres": 6184,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-greater-sudbury-ems-post-1",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 2596,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-greater-sudbury-ems-post-3",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 10,
+      "maxRouteMetres": 2593,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-greater-sudbury-ems-post-4",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 5762,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-greater-sudbury-ems-post-23",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 10,
+      "maxRouteMetres": 4180,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-greater-sudbury-ems-post-2",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3507,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-greater-sudbury-ems-azilda-central",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 6010,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-greater-sudbury-ems-garson-post",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 4528,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-greater-sudbury-ems-val-therese",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 4234,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-greater-sudbury-ems-chelmsford",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3202,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-greater-sudbury-ems-levack",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 3349,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-greater-sudbury-ems-walden",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 12,
+      "maxRouteMetres": 5264,
+      "method": "modeled-road-response"
+    },
+    {
+      "id": "ems-greater-sudbury-ems-capreol",
+      "service": "ems",
+      "calls": 12,
+      "challengeCalls": 10,
+      "maxRouteMetres": 2249,
+      "method": "modeled-road-response"
+    }
+  ],
+  "routes": 380,
+  "continuousOrigins": 380,
+  "officialCalls": 0,
+  "modeledCalls": 360,
+  "maxRouteMetres": 6442.19797115838,
+  "minCallsPerHall": 12,
+  "minChallengeCallsPerHall": 4,
+  "supportCalls": 20,
+  "durationMs": 26204
+}

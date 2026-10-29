@@ -45,7 +45,12 @@ function junctionCall(candidate,service,index){
  const sub=(service==='fire'?fireIncidents:emsIncidents)[index%3],addr=candidate.names.join(' & ');
  return {name:addr,addr,lat:candidate.lat,lng:candidate.lng,radius:40,main:service==='fire'?'Fire':'Medical',sub,incidentProfiles:{[service]:{sub}},trainingServices:[service],simulatedIncident:true,locationKind:'mapped-intersection',osmWays:candidate.ways,sources:candidate.ways.map(id=>'https://www.openstreetmap.org/'+id),_node:candidate.nodeId,_kind:'junction'};
 }
-async function buildCity(city){
+function writeTrainingData(city,training,{outputDir}={}){
+ const file=outputDir?path.join(outputDir,city.id+'.json'):path.join(data.root,`cities/${city.id}/training-data.json`);
+ if(outputDir)fs.mkdirSync(outputDir,{recursive:true});
+ fs.writeFileSync(file,JSON.stringify(training,null,2)+'\n');
+}
+async function buildCity(city,{outputDir}={}){
  const began=Date.now(),{training,bases,calls,roads,areas}=await data.loadCity(city),api=data.app(city,training,bases);
  if(city.id==='peterborough'){
   const source=JSON.parse(fs.readFileSync(path.join(data.root,'city-explorer/data/peterborough-osm.json'))),nodes=new Map(source.elements.filter(e=>e.type==='node').map(e=>[e.id,e]));
@@ -138,11 +143,11 @@ async function buildCity(city){
   }
  }
  training.routeResponses=manifest;training.routeCalls=routeCalls;
- fs.writeFileSync(path.join(data.root,`cities/${city.id}/training-data.json`),JSON.stringify(training,null,2)+'\n');
+ writeTrainingData(city,training,{outputDir});
  console.log(JSON.stringify({city:city.id,halls:bases.length,calls:routeCalls.length,ms:Date.now()-began}));return {city:city.id,halls:bases.length,calls:routeCalls.length};
 }
 async function main(){
- for(const city of data.registry.filter(c=>c.modes.route&&(!process.env.PTBO_RESPONSE_CITY||process.env.PTBO_RESPONSE_CITY.split(',').includes(c.id))))await buildCity(city);
+ for(const city of data.registry.filter(c=>c.modes.route&&(!process.env.PTBO_RESPONSE_CITY||process.env.PTBO_RESPONSE_CITY.split(',').includes(c.id))))await buildCity(city,{outputDir:process.env.PTBO_RESPONSE_OUTPUT});
 }
-module.exports={dijkstra,starts,costToAnchor,findAccess,buildCity};
+module.exports={dijkstra,starts,costToAnchor,findAccess,writeTrainingData,buildCity};
 if(require.main===module)main().catch(e=>{console.error(e);process.exitCode=1;});

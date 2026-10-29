@@ -1,0 +1,778 @@
+{
+  "schemaVersion": 1,
+  "coverage": {
+    "cityId": "chatham-kent",
+    "inputOfficial": 114,
+    "inputOsm": 2030,
+    "inputMajorRoad": 2000,
+    "existing": 27,
+    "accepted": 2449,
+    "selected": 180,
+    "target": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "existingByDifficulty": {
+      "easy": 10,
+      "medium": 5,
+      "hard": 5
+    },
+    "selectedByDifficulty": {
+      "easy": 90,
+      "medium": 45,
+      "hard": 45
+    },
+    "totalByDifficulty": {
+      "easy": 100,
+      "medium": 50,
+      "hard": 50
+    },
+    "deficits": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 0
+    },
+    "baseStrata": [
+      {
+        "id": "fire-chatham-kent-fire-1",
+        "selected": 8,
+        "available": 158,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-chatham-kent-fire-2",
+        "selected": 8,
+        "available": 187,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-chatham-kent-fire-3",
+        "selected": 8,
+        "available": 229,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-chatham-kent-fire-4",
+        "selected": 8,
+        "available": 121,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-chatham-kent-fire-5",
+        "selected": 8,
+        "available": 73,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-chatham-kent-fire-6",
+        "selected": 8,
+        "available": 153,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-chatham-kent-fire-7",
+        "selected": 8,
+        "available": 89,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-chatham-kent-fire-8",
+        "selected": 8,
+        "available": 114,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-chatham-kent-fire-9",
+        "selected": 8,
+        "available": 91,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-chatham-kent-fire-10",
+        "selected": 8,
+        "available": 125,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-chatham-kent-fire-11",
+        "selected": 9,
+        "available": 109,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-chatham-kent-fire-12",
+        "selected": 8,
+        "available": 43,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-chatham-kent-fire-14",
+        "selected": 9,
+        "available": 114,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-chatham-kent-fire-15",
+        "selected": 8,
+        "available": 26,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-chatham-kent-fire-16",
+        "selected": 8,
+        "available": 26,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-chatham-kent-fire-17",
+        "selected": 8,
+        "available": 90,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-chatham-kent-fire-18",
+        "selected": 9,
+        "available": 248,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-chatham-kent-fire-19",
+        "selected": 8,
+        "available": 95,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "fire-chatham-kent-fire-20",
+        "selected": 8,
+        "available": 51,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-chatham-kent-ems-chatham",
+        "selected": 8,
+        "available": 161,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-chatham-kent-ems-ridgetown",
+        "selected": 9,
+        "available": 84,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-chatham-kent-ems-wallaceburg",
+        "selected": 8,
+        "available": 62,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-chatham-kent-ems-blenheim",
+        "selected": 0,
+        "available": 0,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-chatham-kent-ems-thamesville",
+        "selected": 0,
+        "available": 0,
+        "method": "nearest-geographic-base-for-selection-only"
+      },
+      {
+        "id": "ems-chatham-kent-ems-tilbury",
+        "selected": 0,
+        "available": 0,
+        "method": "nearest-geographic-base-for-selection-only"
+      }
+    ],
+    "sharedBaseline": 20,
+    "baselineByService": {
+      "fire": {
+        "easy": 10,
+        "medium": 5,
+        "hard": 5
+      },
+      "ems": {
+        "easy": 10,
+        "medium": 12,
+        "hard": 5
+      }
+    },
+    "serviceTotalsByDifficulty": {
+      "fire": {
+        "easy": 100,
+        "medium": 50,
+        "hard": 50
+      },
+      "ems": {
+        "easy": 100,
+        "medium": 57,
+        "hard": 50
+      }
+    },
+    "serviceDeficits": {
+      "fire": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      },
+      "ems": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "rejected": 1695,
+    "rejectionCounts": {
+      "unresolved-2020-source-currentness": 6,
+      "production-snap-wrong-street": 852,
+      "production-snap-not-ground-public-road": 597,
+      "production-snap-over-80m-or-missing": 42,
+      "duplicate-existing-or-accepted-address-or-named-site": 60,
+      "not-one-exact-civic-number-and-street": 75,
+      "unresolved-official-coordinate-or-current-address-conflict": 1,
+      "no-genuine-connected-cross-street-within-1500m": 62
+    },
+    "oneStreetExceptions": 76
+  },
+  "independentAudit": {
+    "cityId": "chatham-kent",
+    "selected": 180,
+    "accepted": 2449,
+    "crossStreetEvidence": 4042,
+    "oneStreet": 856,
+    "maxGap": 79.82106447859485,
+    "pass": true
+  },
+  "priorityFacilityExpansion": {
+    "reviewedOn": "2026-10-29",
+    "addedIds": [
+      "chatham-kent-osm-node-1907713891",
+      "chatham-kent-osm-node-6134993268",
+      "chatham-kent-osm-way-750615971",
+      "chatham-kent-osm-way-525983645",
+      "chatham-kent-osm-way-488125222",
+      "chatham-kent-osm-way-750190361",
+      "chatham-kent-osm-way-750912518",
+      "chatham-kent-osm-node-2190641634",
+      "chatham-kent-osm-node-1913381165"
+    ],
+    "verification": {
+      "cityId": "chatham-kent",
+      "additions": 9,
+      "proposalSha256": "d3226415d403963e64312c454d0abc352033ea4cca506666274c7667cc902fda",
+      "pass": true,
+      "checks": [
+        "IDs absent from current shared/legacy/care catalogue",
+        "row exactly equals accepted source record",
+        "full per-record provenance exactly equals accepted pool",
+        "factual category/tags and coordinates match raw source record",
+        "source point and URLs unchanged",
+        "no normalized civic-address/near-identical-site duplicates",
+        "max40 per city",
+        "per-base rationale present; no dispatch ownership claim"
+      ]
+    },
+    "review": {
+      "purpose": "Bounded source-preserving priority facility and local variety additions; no recognition tier rewrites.",
+      "sourcePool": "external-build-cache/canonical-catalogues-reviewed/chatham-kent/accepted-candidates.json",
+      "sourcePoolSha256": "91a1d3c6c8fc5b59f70d3df0989e5b205deaf2c81cdc33878c9dec0a4cb3f549",
+      "selectedDescriptor": "cities/chatham-kent/training-data.json",
+      "selectedDescriptorSha256": "7aa9fbd122e6c005956533d412b4ac9e29bed353d94b78e17f422c527dc168a0",
+      "routeEvidence": "cities/chatham-kent/training-data.json",
+      "routeEvidenceScope": "production",
+      "selectionRules": {
+        "maxPerCity": 40,
+        "maxPotentialAddsPerBase": 6,
+        "maxPotentialAddsForConfirmedZeroToTwoBase": 10,
+        "twoCluePriority": true,
+        "maximumStraightLineBaseReviewDistanceMetres": 6000
+      },
+      "limitations": [
+        "At this selection-time review: Every row passed the existing all-accepted geographic/source/clue audit. These additions have not been graph-assigned or route-audited.",
+        "Published Fire polygons are respected for review proximity; EMS and other Fire review strata use straight-line proximity only. These are not dispatch ownership assignments.",
+        "Full original accepted source point, ID, address, recognition tier, incident profile and provenance are unchanged. Current-open status is not newly verified."
+      ],
+      "rationales": {
+        "chatham-kent-osm-node-1907713891": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "chatham-kent-osm-node-1907713891",
+            "category": null,
+            "tags": {
+              "addr:city": "Thamesville",
+              "addr:housenumber": "97",
+              "addr:street": "Victoria Street",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "name": "Thamesville Family Christian Centre",
+              "religion": "christian",
+              "source": "NRCan-CanVec-10.0"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/1907713891",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-chatham-kent-fire-8",
+              "distance": 87.51832566626726,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": true,
+              "currentNewFirstDue": 2,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 88
+            },
+            {
+              "baseId": "ems-chatham-kent-ems-thamesville",
+              "distance": 87.51832566626726,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": true,
+              "currentNewFirstDue": 2,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 88
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 282
+        },
+        "chatham-kent-osm-node-6134993268": {
+          "priorityFamily": "healthcare_and_care",
+          "factualTypeClaim": "clinic",
+          "sourceEvidence": {
+            "sourceRecordId": "chatham-kent-osm-node-6134993268",
+            "category": null,
+            "tags": {
+              "addr:city": "Blenheim",
+              "addr:housenumber": "30",
+              "addr:street": "Chatham Street North",
+              "amenity": "clinic",
+              "healthcare": "clinic",
+              "name": "Chatham-Kent Family Health Team – Blenheim"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/6134993268",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-chatham-kent-fire-18",
+              "distance": 459.04757568197005,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 459
+            },
+            {
+              "baseId": "ems-chatham-kent-ems-blenheim",
+              "distance": 459.04757568197005,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 459
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 222
+        },
+        "chatham-kent-osm-way-750615971": {
+          "priorityFamily": "multiunit_and_accommodation",
+          "factualTypeClaim": "apartments",
+          "sourceEvidence": {
+            "sourceRecordId": "chatham-kent-osm-way-750615971",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "9",
+              "addr:street": "Orchard Heights Drive",
+              "building": "apartments",
+              "building:levels": "2",
+              "roof:levels": "0",
+              "roof:shape": "gabled"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/750615971",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-chatham-kent-fire-1",
+              "distance": 1655.5732359416859,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1656
+            },
+            {
+              "baseId": "ems-chatham-kent-ems-chatham",
+              "distance": 1047.9319150948174,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 1048
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "hard",
+          "notAFirstDueAssignment": true,
+          "score": 207
+        },
+        "chatham-kent-osm-way-525983645": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "chatham-kent-osm-way-525983645",
+            "category": null,
+            "tags": {
+              "addr:city": "Ridgetown",
+              "addr:housenumber": "33",
+              "addr:postcode": "N0P 2C0",
+              "addr:street": "West Street",
+              "building": "industrial",
+              "name": "Ridgetown Feed Supply",
+              "phone": "+1-519-674-0737"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/525983645",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-chatham-kent-fire-11",
+              "distance": 566.4594664426845,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 566
+            },
+            {
+              "baseId": "ems-chatham-kent-ems-ridgetown",
+              "distance": 741.174109898289,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 741
+            }
+          ],
+          "twoGenuineCrossStreetClues": false,
+          "oneClueException": "No unselected accepted two-clue source in this priority family for the targeted review base(s); high-value source family retained.",
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 178
+        },
+        "chatham-kent-osm-way-488125222": {
+          "priorityFamily": "industrial_and_warehouse",
+          "factualTypeClaim": "industrial",
+          "sourceEvidence": {
+            "sourceRecordId": "chatham-kent-osm-way-488125222",
+            "category": null,
+            "tags": {
+              "addr:housenumber": "95",
+              "addr:street": "Lyon Street North",
+              "building": "industrial",
+              "name": "AWC Manufacturing LP Tilbury"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/488125222",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-chatham-kent-fire-19",
+              "distance": 767.9141024631832,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 4,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 768
+            },
+            {
+              "baseId": "ems-chatham-kent-ems-tilbury",
+              "distance": 767.9141024631832,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 4,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 768
+            }
+          ],
+          "twoGenuineCrossStreetClues": false,
+          "oneClueException": "No unselected accepted two-clue source in this priority family for the targeted review base(s); high-value source family retained.",
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 178
+        },
+        "chatham-kent-osm-way-750190361": {
+          "priorityFamily": "education_and_childcare",
+          "factualTypeClaim": "school",
+          "sourceEvidence": {
+            "sourceRecordId": "chatham-kent-osm-way-750190361",
+            "category": null,
+            "tags": {
+              "addr:city": "Chatham",
+              "addr:housenumber": "9399",
+              "addr:postcode": "N7M 5J7",
+              "addr:street": "Mcnaughton Line",
+              "amenity": "school",
+              "denomination": "catholic",
+              "fax": "+1-519-354-5670",
+              "isced:level": "1;2",
+              "name": "St. Vincent Catholic School",
+              "operator": "St. Clair Catholic District School Board",
+              "operator:short": "SCCDSB",
+              "operator:type": "public",
+              "operator:wikidata": "Q7587563",
+              "phone": "+1-519-354-4066",
+              "religion": "christian",
+              "school:language": "english",
+              "website": "https://www.st-clair.net/schools/school.asp?loc=109"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/750190361",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-chatham-kent-fire-7",
+              "distance": 3904.2288061525273,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 5,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 3904
+            },
+            {
+              "baseId": "ems-chatham-kent-ems-chatham",
+              "distance": 5439.722075490623,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 5440
+            }
+          ],
+          "twoGenuineCrossStreetClues": false,
+          "oneClueException": "No unselected accepted two-clue source in this priority family for the targeted review base(s); high-value source family retained.",
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 158
+        },
+        "chatham-kent-osm-way-750912518": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "chatham-kent-osm-way-750912518",
+            "category": null,
+            "tags": {
+              "addr:city": "Dresden",
+              "addr:housenumber": "121",
+              "addr:street": "Queen Street East",
+              "amenity": "place_of_worship",
+              "building": "yes",
+              "denomination": "baptist",
+              "name": "First Regular Baptist Church",
+              "religion": "christian",
+              "source": "NRCan-CanVec-10.0"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/way/750912518",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-chatham-kent-fire-6",
+              "distance": 118.51534769986723,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 0,
+              "reason": "adds a missing local source facility family",
+              "distanceMetres": 119
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 158
+        },
+        "chatham-kent-osm-node-2190641634": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "community_centre",
+          "sourceEvidence": {
+            "sourceRecordId": "chatham-kent-osm-node-2190641634",
+            "category": null,
+            "tags": {
+              "addr:city": "Wallaceburg",
+              "addr:housenumber": "800",
+              "addr:postcode": "N8A 1W3",
+              "addr:province": "Ontario",
+              "addr:street": "Murray Street",
+              "amenity": "community_centre",
+              "building": "yes",
+              "name": "Knights of Columbus, Council 2102",
+              "source": "NRCan-CanVec-10.0;local knowledge"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/2190641634",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "ems-chatham-kent-ems-wallaceburg",
+              "distance": 324.7801754453293,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 6,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 325
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "easy",
+          "notAFirstDueAssignment": true,
+          "score": 138
+        },
+        "chatham-kent-osm-node-1913381165": {
+          "priorityFamily": "public_and_assembly",
+          "factualTypeClaim": "place_of_worship",
+          "sourceEvidence": {
+            "sourceRecordId": "chatham-kent-osm-node-1913381165",
+            "category": null,
+            "tags": {
+              "addr:city": "Highgate",
+              "addr:housenumber": "263",
+              "addr:street": "Victoria Street",
+              "amenity": "place_of_worship",
+              "building": "church",
+              "denomination": "anglican",
+              "name": "Church of the Redeemer",
+              "religion": "christian",
+              "source": "NRCan-CanVec-10.0"
+            },
+            "sourceUrls": [
+              "https://www.openstreetmap.org/node/1913381165",
+              "https://download.geofabrik.de/north-america/canada/ontario.html"
+            ]
+          },
+          "beneficiaries": [
+            {
+              "baseId": "fire-chatham-kent-fire-10",
+              "distance": 88.9869823678911,
+              "method": "nearest-geographic-base-for-review-only",
+              "confirmedNewFirstDueDeficit": false,
+              "currentNewFirstDue": 3,
+              "recognitionGroupCount": 1,
+              "reason": "offers an alternative facility family absent from current new first-due exercises",
+              "distanceMetres": 89
+            }
+          ],
+          "twoGenuineCrossStreetClues": true,
+          "oneClueException": null,
+          "recognitionUnchanged": "medium",
+          "notAFirstDueAssignment": true,
+          "score": 128
+        }
+      }
+    },
+    "note": "Add-only source-validated priority facilities; geographic review reasons are not operational districts. Station assignments require independent directed-road audit."
+  },
+  "routeCandidateExpansion": {
+    "reviewedOn": "2026-10-29",
+    "promotedIds": [
+      "chatham-kent-osm-way-1159470330",
+      "chatham-kent-osm-node-2146020542",
+      "chatham-kent-osm-node-1913381184",
+      "chatham-kent-osm-node-7238045493",
+      "chatham-kent-osm-node-2186337787",
+      "chatham-kent-osm-node-2174319922",
+      "chatham-kent-osm-node-1907694892",
+      "chatham-kent-osm-way-1351443267",
+      "chatham-kent-osm-node-7238045492",
+      "chatham-kent-osm-node-7238045496",
+      "chatham-kent-osm-node-2186337653",
+      "chatham-kent-osm-node-2182828747",
+      "chatham-kent-osm-way-1352809663",
+      "chatham-kent-osm-node-9693988939",
+      "chatham-kent-osm-node-2182916142",
+      "chatham-kent-osm-way-1528913462",
+      "chatham-kent-osm-node-1913380865",
+      "chatham-kent-osm-node-2182916144",
+      "chatham-kent-osm-node-2146020295",
+      "chatham-kent-osm-node-1913380871",
+      "chatham-kent-osm-node-1739873301",
+      "chatham-kent-osm-node-1913380204",
+      "chatham-kent-osm-way-1479448933",
+      "chatham-kent-osm-way-1351443279",
+      "chatham-kent-osm-node-1739873302",
+      "chatham-kent-osm-node-1739873299",
+      "chatham-kent-osm-node-13086078447",
+      "chatham-kent-osm-node-13086078439",
+      "chatham-kent-osm-node-1739873300",
+      "chatham-kent-osm-node-13085747296",
+      "chatham-kent-osm-node-2184683805",
+      "chatham-kent-osm-node-2184684453",
+      "chatham-kent-osm-node-2182916047",
+      "chatham-kent-osm-node-2182916051",
+      "chatham-kent-osm-node-2182916059",
+      "chatham-kent-osm-node-2182916056",
+      "chatham-kent-osm-node-2182916111",
+      "chatham-kent-osm-node-2182916118",
+      "chatham-kent-osm-node-1913380891",
+      "chatham-kent-osm-way-527663593",
+      "chatham-kent-osm-node-2174320017",
+      "chatham-kent-osm-node-2174319921",
+      "chatham-kent-osm-node-2186337166",
+      "chatham-kent-osm-node-2174319918",
+      "chatham-kent-osm-node-2186337100",
+      "chatham-kent-osm-node-2174319914",
+      "chatham-kent-osm-node-2179094027"
+    ],
+    "candidateVerification": {
+      "pass": true,
+      "sourcePoolSha256": "91a1d3c6c8fc5b59f70d3df0989e5b205deaf2c81cdc33878c9dec0a4cb3f549",
+      "candidateArraySha256": "e6a2f6076c1f04f7aa63105cc35999d20d966d901488fcfea866ff8097dae418"
+    },
+    "selection": "Only source-verified additional locations used by independently audited station exercises are promoted; existing canonical IDs and fields remain unchanged."
+  },
+  "evidencePathConvention": {
+    "repositoryPaths": "Paths beginning cities/ are repository-relative.",
+    "externalBuildCache": "external-build-cache/ labels identify historical, reproducible build artifacts that are not shipped; adjacent SHA-256 values identify the exact reviewed bytes.",
+    "reviewScope": "Priority facility review records describe the selection-time review. Final integrated route and runtime validation is recorded in docs/city-call-validation-2026-10-29.md."
+  }
+}

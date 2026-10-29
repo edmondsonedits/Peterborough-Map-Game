@@ -1,0 +1,90 @@
+{
+  "scope": "Representative real-tile visual checks; separate from fixture-only full-matrix results.",
+  "screenshots": [
+    {
+      "case": "geo-belleville-fire",
+      "runStartedAt": "2026-10-29T06:26:39.495Z",
+      "runFinishedAt": "2026-10-29T06:28:35.758Z",
+      "screenshot": {
+        "filename": "geo-belleville-fire-geo-active-easy.png",
+        "stage": "geo-active-easy",
+        "visibleTileImages": 24,
+        "loaded": 24,
+        "failed": 0,
+        "pending": 0,
+        "nonMapPixels": 0,
+        "callAddress": "4252 Old Highway 2",
+        "geoPhase": "active",
+        "stubbedTiles": false,
+        "realTilePixelsLoaded": true,
+        "basemapStatus": "loaded",
+        "tileRequests": {
+          "loaded": 24,
+          "httpFailed": 0,
+          "networkFailed": 0
+        },
+        "visualInspection": "Inspected by root: readable call card/controls, decoded map imagery, and visible route overlay in the route case."
+      }
+    },
+    {
+      "case": "geo-belleville-ems",
+      "runStartedAt": "2026-10-29T06:38:58.256Z",
+      "runFinishedAt": "2026-10-29T06:39:31.229Z",
+      "screenshot": {
+        "filename": "geo-belleville-ems-geo-active-easy.png",
+        "stage": "geo-active-easy",
+        "visibleTileImages": 12,
+        "loaded": 12,
+        "failed": 0,
+        "pending": 0,
+        "nonMapPixels": 0,
+        "callAddress": "125 Cannifton Road Parkway",
+        "geoPhase": "active",
+        "stubbedTiles": false,
+        "realTilePixelsLoaded": true,
+        "basemapStatus": "loaded",
+        "tileRequests": {
+          "loaded": 12,
+          "httpFailed": 0,
+          "networkFailed": 0
+        },
+        "visualInspection": "Inspected by root: readable call card/controls, decoded map imagery, and visible route overlay in the route case."
+      }
+    },
+    {
+      "case": "route-belleville-ems",
+      "runStartedAt": "2026-10-29T06:38:58.256Z",
+      "runFinishedAt": "2026-10-29T06:39:31.229Z",
+      "screenshot": {
+        "filename": "route-belleville-ems-route-review.png",
+        "stage": "route-review",
+        "visibleTileImages": 10,
+        "loaded": 10,
+        "failed": 0,
+        "pending": 0,
+        "nonMapPixels": 0,
+        "callAddress": "135 Tracey Street",
+        "routeMode": "results",
+        "referenceOverlayLayers": 2,
+        "playerOverlayLayers": 0,
+        "visibleRoutePaths": 0,
+        "visibleRouteCanvases": 1,
+        "routeOverlaysInViewport": 2,
+        "stubbedTiles": false,
+        "realTilePixelsLoaded": true,
+        "basemapStatus": "loaded",
+        "tileRequests": {
+          "loaded": 14,
+          "httpFailed": 0,
+          "networkFailed": 10
+        },
+        "visualInspection": "Inspected by root: readable call card/controls, decoded map imagery, and visible route overlay in the route case."
+      }
+    }
+  ],
+  "limitations": [
+    "The initial 12-case real-tile run passed UI assertions, but nine active screenshots had unavailable external tiles during a workspace connection interruption. They are not counted as basemap validation.",
+    "A bounded two-case Belleville EMS retry loaded all visible tiles (12 Geo,10 Route). The desktop Geo capture loaded24 visible tiles.",
+    "Map rendering does not verify source facts, field entrances, complete driven routes, physical devices, or live routing restrictions."
+  ]
+}
