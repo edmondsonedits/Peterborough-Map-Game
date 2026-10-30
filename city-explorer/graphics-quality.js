@@ -1,7 +1,7 @@
 const PROFILES=Object.freeze({
- low:Object.freeze({name:'low',pixelRatio:0.85,shadows:false,roadRadius:650,roadRetainRadius:1000,buildingRadius:1700,streetDetailRadius:700,fogDensity:0.00145,roadSurface:'canonical'}),
- balanced:Object.freeze({name:'balanced',pixelRatio:1.1,shadows:false,roadRadius:900,roadRetainRadius:1350,buildingRadius:2400,streetDetailRadius:1050,fogDensity:0.001,roadSurface:'canonical'}),
- high:Object.freeze({name:'high',pixelRatio:1.65,shadows:true,roadRadius:1450,roadRetainRadius:1950,buildingRadius:4200,streetDetailRadius:1800,fogDensity:0.00065,roadSurface:'canonical'}),
+ low:Object.freeze({name:'low',pixelRatio:0.85,antialias:false,shadows:false,roadRadius:650,roadRetainRadius:1000,buildingRadius:1700,streetDetailRadius:700,fogDensity:0.00145,roadSurface:'canonical'}),
+ balanced:Object.freeze({name:'balanced',pixelRatio:1.35,antialias:true,shadows:false,roadRadius:900,roadRetainRadius:1350,buildingRadius:2400,streetDetailRadius:1050,fogDensity:0.001,roadSurface:'canonical'}),
+ high:Object.freeze({name:'high',pixelRatio:1.65,antialias:true,shadows:true,roadRadius:1450,roadRetainRadius:1950,buildingRadius:4200,streetDetailRadius:1800,fogDensity:0.00065,roadSurface:'canonical'}),
 });
 export function resolveGraphicsQuality({search='',saved=null}={}){
  const params=new URLSearchParams(search);const requested=params.get('quality');

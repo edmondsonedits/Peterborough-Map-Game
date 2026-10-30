@@ -28,6 +28,11 @@ on:
       - 'city-explorer/road-surface-finish.js'
       - 'city-explorer/road-terrain-envelope.js'
       - 'city-explorer/road-paint-geometry.js'
+      - 'city-explorer/road-marking-layout.js'
+      - 'city-explorer/road-marking-pack-finish.js'
+      - 'tools/finalize-road-markings.mjs'
+      - 'city-explorer/road-marking-paths.js'
+      - 'city-explorer/road-marking-projection.js'
       - 'city-explorer/street-paint.js'
       - 'city-explorer/road-appearance-rules.js'
       - 'city-explorer/city-detail-rules.js'
@@ -89,6 +94,11 @@ on:
       - 'city-explorer/road-surface-finish.js'
       - 'city-explorer/road-terrain-envelope.js'
       - 'city-explorer/road-paint-geometry.js'
+      - 'city-explorer/road-marking-layout.js'
+      - 'city-explorer/road-marking-pack-finish.js'
+      - 'tools/finalize-road-markings.mjs'
+      - 'city-explorer/road-marking-paths.js'
+      - 'city-explorer/road-marking-projection.js'
       - 'city-explorer/street-paint.js'
       - 'city-explorer/road-appearance-rules.js'
       - 'city-explorer/city-detail-rules.js'
@@ -245,7 +255,9 @@ jobs:
           done
           curl --fail --silent --show-error http://127.0.0.1:4174/city-explorer/ >/dev/null
           NODE_PATH="$RUNNER_TEMP/road-pack-node/node_modules" ROAD_BUILD_URL=http://127.0.0.1:4174 node tools/build-road-pack.cjs
+          node --test tests/road-marking-paths.test.mjs tests/road-marking-layout.test.mjs tests/road-marking-projection.test.mjs tests/road-marking-pack.test.mjs tests/road-marking-pack-finish.test.mjs tests/road-marking-finalization-inputs.test.mjs
           node tools/verify-road-pack.mjs
+          node tools/verify-road-markings.mjs
 
       - name: Upload generated map assets
         if: always()

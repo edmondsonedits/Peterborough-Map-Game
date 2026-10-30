@@ -1,3 +1,4 @@
+import {projectMarkingTriangles} from './road-marking-projection.js?v=1.6.155';
 /** Reviewed paint corrections, independent of geographic/physics road widths.
  * Evidence and uncertainty: docs/street-audit/README.md. No external live fetch.
  * These four way IDs cover Park Street to George Street, not all Sherbrooke.
@@ -22,12 +23,17 @@ export function reviewedPaintTags(tags, lineId) {
  * No thick floating boxes, road-width changes or data-derived curb guesses.
  * Missing supports are omitted instead of spanning an island/terrain hole.
  */
-export function drapePaintStrip(a, b, width, sampleHeight, { spacing = 2, lift = 0.008 } = {}) {
+export function drapePaintStrip(a, b, width, sampleHeight, { spacing = 2, lift = 0.008, pavementIndices = null, referenceHeight = null } = {}) {
   if (![a?.x,a?.z,b?.x,b?.z,width,spacing,lift].every(Number.isFinite)
     || width <= 0 || spacing <= 0 || typeof sampleHeight !== 'function') throw new TypeError('Invalid paint strip');
   const dx=b.x-a.x, dz=b.z-a.z, length=Math.hypot(dx,dz);
   if (length<0.001) return [];
   const nX=dz/length*width/2, nZ=-dx/length*width/2;
+  if(pavementIndices){
+    const point=(p,side)=>({x:p.x+side*nX,z:p.z+side*nZ,referenceHeight});
+    const al=point(a,1),ar=point(a,-1),bl=point(b,1),br=point(b,-1);
+    return projectMarkingTriangles([[al,ar,br],[al,br,bl]],pavementIndices,{lift,referenceHeight});
+  }
   const steps=Math.ceil(length/spacing), positions=[];
   const sample = t => {
     const x=a.x+dx*t,z=a.z+dz*t;

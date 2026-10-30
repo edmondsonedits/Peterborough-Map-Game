@@ -1,3 +1,4 @@
+import {projectMarkingTriangles} from './road-marking-projection.js?v=1.6.155';
 const DEFAULT_SPACING = 1.5;
 const DEFAULT_MAX_TRIANGLES = 4096;
 const DEFAULT_MAX_DEPTH = 12;
@@ -106,6 +107,7 @@ export function drapePaintPolygon(pointsXZ, sampleHeight, options = {}) {
     || (!(maxHeightJump === Infinity) && (!Number.isFinite(maxHeightJump) || maxHeightJump < 0))) {
     throw new TypeError('Invalid paint projection options');
   }
+  if(options.pavementIndices)return makeBatch(sourceId,projectMarkingTriangles(triangulate(pointsXZ),options.pavementIndices,{lift,referenceHeight}));
   const positions = [];
   let emitted = 0;
   const emit = (a, b, c) => {

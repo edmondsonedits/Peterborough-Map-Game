@@ -1,6 +1,6 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 import {resolveGraphicsQuality} from '../city-explorer/graphics-quality.js';
-test('balanced is the default on an average phone and leaves a bounded road budget',()=>{const p=resolveGraphicsQuality({search:'',saved:null});assert.equal(p.name,'balanced');assert.ok(p.roadRadius<=1000);assert.ok(p.pixelRatio<=1.2);assert.equal(p.shadows,false);});
+test('balanced is the default on an average phone and leaves a bounded road budget',()=>{const p=resolveGraphicsQuality({search:'',saved:null});assert.equal(p.name,'balanced');assert.ok(p.roadRadius<=1000);assert.ok(p.pixelRatio<=1.5);assert.equal(p.shadows,false);});
 test('explicit low and high override saved quality while all retain canonical roads',()=>{for(const name of ['low','balanced','high']){const p=resolveGraphicsQuality({search:'?quality='+name,saved:'low'});assert.equal(p.name,name);assert.equal(p.roadSurface,'canonical');}assert.equal(resolveGraphicsQuality({search:'?lite=1',saved:'high'}).name,'low');assert.equal(resolveGraphicsQuality({search:'',saved:'high'}).name,'high');});
 
 
@@ -14,3 +14,5 @@ test('canonical road profiles share the same physical terrain mesh',async()=>{
  assert.ok(run(false)<=340,'canonical terrain keeps the average-phone geometry budget');
  assert.equal(run(false,false),530,'explicit legacy rollback preserves its former full terrain');
 });
+
+test('balanced smooths phone edges with bounded multisampling and pixel density',()=>{const balanced=resolveGraphicsQuality({});assert.equal(balanced.antialias,true);assert.ok(balanced.pixelRatio>=1.25&&balanced.pixelRatio<=1.5);assert.equal(resolveGraphicsQuality({search:'?quality=low'}).antialias,false);assert.equal(resolveGraphicsQuality({search:'?quality=high'}).antialias,true);});

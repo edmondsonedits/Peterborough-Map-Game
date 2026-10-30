@@ -59,15 +59,21 @@ test('paint stays absent over holes or missing ground, no speculative bridging',
  assert.ok(p.every(Number.isFinite));
 });
 import fs from 'node:fs';
+import {RenderedPavementIndex} from '../city-explorer/official-road-surfaces.js';
+import {buildRoadMarkingLayout} from '../city-explorer/road-marking-layout.js';
+import {projectMarkingTriangles} from '../city-explorer/road-marking-projection.js';
 import * as THREE from '../city-explorer/vendor/three-r180/build/three.module.min.js';
 import { laneCountFor } from '../city-explorer/road-network.js';
 import { createFeatureBatchBinding } from '../city-explorer/editor/feature-batch-binding.js';
 const app = fs.readFileSync(new URL('../city-explorer/app.js',import.meta.url),'utf8');
 function renderPaint(tags, lineId = 'way/460581459', { roadAppearance = true, segments = null } = {}) {
- const state={roadPaintRanges:new Map([[lineId,[]]]),objectCount:0};
+ const pavement=new RenderedPavementIndex(60),y=(x,z)=>10+.02*x+.01*z;
+ pavement.addTriangle(-100,y(-100,-100),-100,100,y(100,-100),-100,100,y(100,100),100,{layer:'road_surfaces'});
+ pavement.addTriangle(-100,y(-100,-100),-100,100,y(100,100),100,-100,y(-100,100),100,{layer:'road_surfaces'});
+ const state={roadPaintRanges:new Map([[lineId,[]]]),objectCount:0,renderedPavementIndex:pavement,connectedRoadSurfaceIndex:null};
  const group=new THREE.Group(), meshes=new Map();
- const fn=app.match(/^function buildRoadMarkings\([^]*?^\}/m)[0];
- const env={THREE, state, roadTileLayer:null, streetscapeGroup:group, generatedRoadMeshes:meshes, roadAppearanceEnabled:roadAppearance,
+ const fn=app.match(/^function buildRoadMarkings\([^]*?^\}/m)[0]+'\n'+app.match(/^function buildLegacyRoadMarkings\([^]*?^\}/m)[0];
+ const env={THREE, state,ROAD_PACK_BUILD:false, roadTileLayer:null,CONNECTED_ROADS_ENABLED:roadAppearance,buildRoadMarkingLayout,projectMarkingTriangles,roadPaintProjectionOptions:()=>({pavementIndices:[pavement]}), streetscapeGroup:group, generatedRoadMeshes:meshes, roadAppearanceEnabled:roadAppearance,
   cityVisuals:{mode:'legacy'},
   roadProfile,laneCountFor,roadLaneMarkingBoundaries,mappedCycleLaneSides,
   createRoadMarkingContext,roadMarkingIntervals,
@@ -76,7 +82,7 @@ function renderPaint(tags, lineId = 'way/460581459', { roadAppearance = true, se
   materials:{roadPaintYellow:new THREE.MeshBasicMaterial(),roadPaintWhite:new THREE.MeshBasicMaterial()},
   document:{documentElement:{dataset:{}}},gameplaySurfaceAt:(x,z)=>({height:10+.02*x+.01*z,onRoad:true})};
  const run=Function(...Object.keys(env), fn+';return buildRoadMarkings;')(...Object.values(env));
- run(segments || [{a:new THREE.Vector2(0,0),b:new THREE.Vector2(20,0),aY:1,bY:2,
+ run(segments || [{a:new THREE.Vector2(0,0),b:new THREE.Vector2(20,0),aY:10,bY:10.4,
    aSourceVertex:true,bSourceVertex:true,lineId,chainStart:0,width:9,name:tags.name,
    profile:roadProfile(tags),tags}]);
  return {state,group,meshes};
@@ -87,13 +93,13 @@ test('actual app renderer draws only one solid yellow centre on reviewed Sherbro
  const mesh=group.children[0];assert.equal(mesh.userData.material,'roadPaintYellow');
  assert.equal(mesh.userData.type,'road-centre-lines');
  const p=mesh.geometry.getAttribute('position');
- for(let i=0;i<p.count;i++)assert.ok(Math.abs(p.getY(i)-(10+.02*p.getX(i)+.01*p.getZ(i)+.008))<2e-6);
+ for(let i=0;i<p.count;i++)assert.ok(Math.abs(p.getY(i)-(10+.02*p.getX(i)+.01*p.getZ(i)+.012))<2e-6);
 });
 test('asymmetric backward lanes place the yellow boundary on the correct side',()=>{
  const {group}=renderPaint({highway:'secondary',lanes:'3','lanes:backward':'2','lanes:forward':'1'},'way/other');
  const yellow=group.children.find(m=>m.userData.material==='roadPaintYellow');
- const p=yellow.geometry.getAttribute('position');let z=0;for(let i=0;i<p.count;i++)z+=p.getZ(i);
- assert.ok(Math.abs(z/p.count-1.5)<1e-5);
+ const p=yellow.geometry.getAttribute('position'),zs=Array.from({length:p.count},(_,i)=>p.getZ(i));
+ assert.ok(Math.abs((Math.min(...zs)+Math.max(...zs))/2-1.5)<1e-5);
 });
 test('existing road editor bindings can hide and restore final draped paint',()=>{
  const {state,meshes,group}=renderPaint({highway:'secondary',name:'Sherbrooke Street',lanes:'4'});
@@ -104,7 +110,7 @@ test('existing road editor bindings can hide and restore final draped paint',()=
  binding.restore();assert.deepEqual(attr.array,before);
 });
 function mainWaySegments(tags) {
- const make=(id,a,b,chainStart=0)=>({a:new THREE.Vector2(...a),b:new THREE.Vector2(...b),aY:1,bY:1,
+ const make=(id,a,b,chainStart=0)=>({a:new THREE.Vector2(...a),b:new THREE.Vector2(...b),aY:10+.02*a[0]+.01*a[1],bY:10+.02*b[0]+.01*b[1],
   aSourceVertex:true,bSourceVertex:true,lineId:id,chainStart,width:roadProfile(tags).width,
   name:tags.name,profile:roadProfile(tags),tags});
  return [make('way/main',[-30,0],[0,0]),

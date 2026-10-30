@@ -110,3 +110,10 @@ test('ignored asset workflow completions cannot cancel real Pages deployments', 
   }
   assert.notEqual(group('workflow_run', 'success', 'pull_request'), 'pages', 'pull-request completions stay isolated');
 });
+
+test('road asset refresh and publication both gate final packed marking support',()=>{
+ for(const file of ['.github/workflows/build-peterborough-assets.yml','.github/workflows/deploy-pages.yml']){
+  const source=read(file);assert.match(source,/node tools\/verify-road-markings\.mjs/,file+' must reject unsupported or sunk packed paint');
+  for(const name of ['road-marking-paths','road-marking-layout','road-marking-projection','road-marking-pack','road-marking-pack-finish','road-marking-finalization-inputs'])assert.ok(source.includes('tests/'+name+'.test.mjs'),file+' must run '+name+' regressions');
+ }
+});

@@ -1,80 +1,82 @@
-import { createIntersectionHologramLayer } from './intersection-holograms.js?v=1.6.154';
-import { createRoadsidePlacementResolver, sampleRoadsideRibbon } from './roadside-furniture-placement.js?v=1.6.154';
-import { createRoadsideFurnitureMeshes } from './roadside-furniture-geometry.js?v=1.6.154';
-import { createHunterBridgeSurface, isHunterBridgeLine } from './hunter-bridge-surface.js?v=1.6.154';
-import { createHunterBridgeAppearance } from './hunter-bridge-appearance.js?v=1.6.154';
-import { HUNTER_BRIDGE_FEATURE } from './hunter-bridge-source.js?v=1.6.154';
-import { applyReviewedPhotoAppearance } from './reviewed-photo-appearance.js?v=1.6.154';
-import { CITY_MATERIALS, CITY_PALETTE_SURFACES, installCityMaterialDetail, cloneCityMaterial } from './city-material-library.js?v=1.6.154';
-import { visualSettings, cityShadowSettings, CITY_DAYLIGHT, createCityGlazingEnvironment, glazingIntensity } from './city-visual-settings.js?v=1.6.154';
-import {mappedBuildingDimensions} from './mapped-building-dimensions.js?v=1.6.154';
-import {createBusinessSignLayer, loadBusinessDirectory} from './business-signs.js?v=1.6.154';
-import { recordSherbrookeBuilding, recordSherbrookeSidewalk, sherbrookeBuildings } from './sherbrooke-plan.js?v=1.6.154';
-import { installSherbrookeDetails } from './sherbrooke-details.js?v=1.6.154';
-import { FOOTAGE_PROFILES as BASE_FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js?v=1.6.154';
-import {applyRecordingAppearance, recordingReferencesEnabled} from './recording-appearance.js?v=1.6.154';
-import {applyRecordingSurfacePalette, recordingExpansionEnabled} from './recording-surface-appearance.js?v=1.6.154';
-import {addCricketRecordingProfiles} from './cricket-recording-appearances.js?v=1.6.154';
-import { createFootageFacade, frontageFrame } from './sherbrooke-footage.js?v=1.6.154';
-import { createGardenClearance } from './sherbrooke-garden-clearance.js?v=1.6.154';
+import {buildRoadMarkingLayout} from './road-marking-layout.js?v=1.6.155';
+import {projectMarkingTriangles} from './road-marking-projection.js?v=1.6.155';
+import { createIntersectionHologramLayer } from './intersection-holograms.js?v=1.6.155';
+import { createRoadsidePlacementResolver, sampleRoadsideRibbon } from './roadside-furniture-placement.js?v=1.6.155';
+import { createRoadsideFurnitureMeshes } from './roadside-furniture-geometry.js?v=1.6.155';
+import { createHunterBridgeSurface, isHunterBridgeLine } from './hunter-bridge-surface.js?v=1.6.155';
+import { createHunterBridgeAppearance } from './hunter-bridge-appearance.js?v=1.6.155';
+import { HUNTER_BRIDGE_FEATURE } from './hunter-bridge-source.js?v=1.6.155';
+import { applyReviewedPhotoAppearance } from './reviewed-photo-appearance.js?v=1.6.155';
+import { CITY_MATERIALS, CITY_PALETTE_SURFACES, installCityMaterialDetail, cloneCityMaterial } from './city-material-library.js?v=1.6.155';
+import { visualSettings, cityShadowSettings, CITY_DAYLIGHT, createCityGlazingEnvironment, glazingIntensity } from './city-visual-settings.js?v=1.6.155';
+import {mappedBuildingDimensions} from './mapped-building-dimensions.js?v=1.6.155';
+import {createBusinessSignLayer, loadBusinessDirectory} from './business-signs.js?v=1.6.155';
+import { recordSherbrookeBuilding, recordSherbrookeSidewalk, sherbrookeBuildings } from './sherbrooke-plan.js?v=1.6.155';
+import { installSherbrookeDetails } from './sherbrooke-details.js?v=1.6.155';
+import { FOOTAGE_PROFILES as BASE_FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js?v=1.6.155';
+import {applyRecordingAppearance, recordingReferencesEnabled} from './recording-appearance.js?v=1.6.155';
+import {applyRecordingSurfacePalette, recordingExpansionEnabled} from './recording-surface-appearance.js?v=1.6.155';
+import {addCricketRecordingProfiles} from './cricket-recording-appearances.js?v=1.6.155';
+import { createFootageFacade, frontageFrame } from './sherbrooke-footage.js?v=1.6.155';
+import { createGardenClearance } from './sherbrooke-garden-clearance.js?v=1.6.155';
 import { appendFootageRoof } from './sherbrooke-footage-roofs.js?v=corridor-20261024';
 import { appendFootageMassing } from './footage-building-massing.js';
 import * as THREE from 'three';
-import stationOneLayout from './assets/station1/layout.json?v=1.6.154' with { type: 'json' };
-import stationTwoLayout from './assets/station2/layout.json?v=1.6.154' with { type: 'json' };
+import stationOneLayout from './assets/station1/layout.json?v=1.6.155' with { type: 'json' };
+import stationTwoLayout from './assets/station2/layout.json?v=1.6.155' with { type: 'json' };
 import { hideStationTwoReplacementRecords, stationCameraOffsetScale } from './station-two-core.mjs';
 import { hideStationOneReplacementRecords } from './station-one-core.mjs';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { createEmergencyFacilityLayer, suppressFacilitySource } from './emergency-facilities.js?v=1.6.154';
-import { emergencyFacilityEntries } from './emergency-facilities-catalog.js?v=1.6.154';
-import { createStationOneRuntime, stationOneRequested } from './station-one-runtime.js?v=1.6.154';
-import { createStationTwoRuntime, stationTwoRequested } from './station-two-runtime.js?v=1.6.154';
-import { attachStationThreeModel, createStationThreeDoorController, inspectStationThreeModel, loadStationThreeAsset, selectStationThreeSpawn, stationGameplayLabels, stationThreeLocalPosition, stationThreeThrottleInput, STATION_THREE_BAY_EXIT_LOCAL_Z, STATION_THREE_INITIAL_CAMERA_DISTANCE_SCALE, STATION_THREE_INTERIOR_DRIVE_CAMERA_HEIGHT } from './station-three-runtime.js?v=1.6.154';
+import { createEmergencyFacilityLayer, suppressFacilitySource } from './emergency-facilities.js?v=1.6.155';
+import { emergencyFacilityEntries } from './emergency-facilities-catalog.js?v=1.6.155';
+import { createStationOneRuntime, stationOneRequested } from './station-one-runtime.js?v=1.6.155';
+import { createStationTwoRuntime, stationTwoRequested } from './station-two-runtime.js?v=1.6.155';
+import { attachStationThreeModel, createStationThreeDoorController, inspectStationThreeModel, loadStationThreeAsset, selectStationThreeSpawn, stationGameplayLabels, stationThreeLocalPosition, stationThreeThrottleInput, STATION_THREE_BAY_EXIT_LOCAL_Z, STATION_THREE_INITIAL_CAMERA_DISTANCE_SCALE, STATION_THREE_INTERIOR_DRIVE_CAMERA_HEIGHT } from './station-three-runtime.js?v=1.6.155';
 import { reconcileStationPavement } from './station-pavement-layer.js?v=1.6.57';
 import { CURB_REVEAL, curbIsRaised, stationRoadWeight, splitRoadDetailSegment, pavementSupportBottom } from './station-road-detail.js?v=1.6.58';
 import { installQualityCapture } from './quality-capture.js?v=sherbrooke-20260915';
-import { buildingFacadePlan } from './building-archetypes.js?v=1.6.154';
+import { buildingFacadePlan } from './building-archetypes.js?v=1.6.155';
 import { loadVegetationAssets } from './vegetation-assets.js?v=sherbrooke-20260915';
 import { createVegetationVariant, stationOneVegetationPalette } from './vegetation-variants.js?v=streetscape-1';
 import { installStationStreetscape } from './streetscape-assets.js?v=streetscape-2';
 import { installStationApron } from './site-surface-materials.js?v=1.6.56';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
-import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js?v=1.6.154';
+import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js?v=1.6.155';
 import { createCatalogObject } from './editor/asset-catalog.js';
 import { createCommandHistory } from './editor/command-history.js';
-import { createDraftStore } from './editor/draft-store.js?v=1.6.154';
-import { createCityEditor } from './editor/city-editor.js?v=1.6.154';
+import { createDraftStore } from './editor/draft-store.js?v=1.6.155';
+import { createCityEditor } from './editor/city-editor.js?v=1.6.155';
 import { createEmptySceneDocument, sanitizeRenderableSceneDocument } from './editor/scene-document.js';
 import { createGeneratedRegistry } from './editor/generated-registry.js?v=footage-20261020';
 import { applyOverrides } from './editor/override-runtime.js';
-import { captureBatchLengths, collectBatchRanges, createFeatureBatchBinding } from './editor/feature-batch-binding.js?v=1.6.154';
+import { captureBatchLengths, collectBatchRanges, createFeatureBatchBinding } from './editor/feature-batch-binding.js?v=1.6.155';
 import {
   LANDMARKS,
   LANDMARK_BUILDING_HEIGHT_OVERRIDES,
   createBuildingFootprintPlacement,
   createPeterboroughLandmarks,
 } from './landmark-models.js?v=corridor-20261024';
-import { ROAD_SURFACE_CLEARANCE, RoadSurfaceIndex, laneCountFor, reconcileRoadNetworkElevations, roadProfile, roadRibbonCrossSections, resampleRoadLine } from './road-network.js?v=1.6.154';
-import { createRoadMarkingContext, roadMarkingIntervals, roadCurbIntervals } from './road-appearance-rules.js?v=1.6.154';
+import { ROAD_SURFACE_CLEARANCE, RoadSurfaceIndex, laneCountFor, reconcileRoadNetworkElevations, roadProfile, roadRibbonCrossSections, resampleRoadLine } from './road-network.js?v=1.6.155';
+import { createRoadMarkingContext, roadMarkingIntervals, roadCurbIntervals } from './road-appearance-rules.js?v=1.6.155';
 import { solveFallbackJunctions, polygonArea as junctionPolygonArea } from './fallback-junction-geometry.js';
 import { officialRoadMeshEdgeLength, officialCurbDisplayMode, nearbyMunicipalRoadHeight, municipalCurbTop } from './citywide-road-quality.js';
 import { sampleTruckWheelContacts, truckIsOnRoad } from './road-wheel-contact.js';
-import { buildConnectedRoadSurface } from './connected-road-surface.js?v=1.6.154';
-import { paintArrowTriangles, paintCrossingTriangles } from './road-paint-geometry.js?v=1.6.154';
-import { createRoadTileLayer, loadRoadTileManifest } from './road-tile-layer.js?v=1.6.154';
-import { finishRoadSurfaces } from './road-surface-finish.js?v=1.6.154';
-import { exportRoadScene, collectRoadSourceRanges } from './road-pack-export.js?v=1.6.154';
-import { ROAD_PACK_ID } from './road-pack-version.js?v=1.6.154';
-import {createRoadRecovery,roadFallbackUrl,readRoadResume} from './road-recovery.js?v=1.6.154';
-import {resolveGraphicsQuality,readGraphicsPreference,installGraphicsQualityControl} from './graphics-quality.js?v=1.6.154';
-import { reviewedPaintTags, drapePaintStrip } from './street-paint.js?v=street-evidence-2';
+import { buildConnectedRoadSurface } from './connected-road-surface.js?v=1.6.155';
+import { paintArrowTriangles, paintCrossingTriangles } from './road-paint-geometry.js?v=1.6.155';
+import { createRoadTileLayer, loadRoadTileManifest } from './road-tile-layer.js?v=1.6.155';
+import { finishRoadSurfaces } from './road-surface-finish.js?v=1.6.155';
+import { exportRoadScene, collectRoadSourceRanges } from './road-pack-export.js?v=1.6.155';
+import { ROAD_PACK_ID } from './road-pack-version.js?v=1.6.155';
+import {createRoadRecovery,roadFallbackUrl,readRoadResume} from './road-recovery.js?v=1.6.155';
+import {resolveGraphicsQuality,readGraphicsPreference,installGraphicsQualityControl} from './graphics-quality.js?v=1.6.155';
+import { reviewedPaintTags, drapePaintStrip } from './street-paint.js?v=1.6.155';
 import { OfficialDrivableSurfaceIndex, RenderedPavementIndex, officialSurfaceStatusActive, officialBridgeIsVehicular } from './official-road-surfaces.js?v=1.6.101';
 import { FLY_TUNING, adjustFlySpeedScale, applyFlyLookDelta, dampingFactors, flyAxesFromKeys, flySpeedFor, flyYawToward, isFlyControlCode, wrapFlyYaw } from './fly-controls.js?v=1.5.5-fly4';
 import { clearLandCoverRaster, paintLandCoverPolygon } from './land-cover-raster.js?v=1.5.5-raster1';
 import { sampleOfficialTerrainElevation, validOfficialTerrainMetadata } from './terrain-heightmap.js?v=1.5.5-lidar1';
 import { sampleTriangulatedTerrainHeight } from './terrain-surface.js?v=1.5.5-terrain1';
 import { HydroSurfaceIndex, WATER_SURFACE_CLEARANCE, WATER_TERRAIN_RECESS, createWaterStageSampler, relativeWaterElevation, robustFallbackWaterHeight, subdivideWaterTriangle, watercourseWidth } from './water-system.js?v=1.5.5-hydro2';
-import { CitySplatLayer } from './city-splat-layer.js?v=1.6.154';
+import { CitySplatLayer } from './city-splat-layer.js?v=1.6.155';
 import {
   estimatedBuildingFloors,
   facadeDetailClass,
@@ -140,7 +142,7 @@ const CONNECTED_ROADS_ENABLED = roadParams.get('roadSurface') !== 'legacy';
 let roadTileLayer = null;
 let roadTileManifest = null;
 let roadTileNextUpdate = 0;
-let roadBuildPaused=false;
+let roadBuildPaused=ROAD_PACK_BUILD;
 const roadRecovery=createRoadRecovery({onFallback(){
   if(!roadTileLayer||!gameplayReady)return;
   const point=state.mode==='driving'?truckState:playerActor?.position||truckState;
@@ -374,7 +376,7 @@ const cricketReferences = recordingReferences && recordingExpansion && new URLSe
 const FOOTAGE_PROFILES = addCricketRecordingProfiles(Object.fromEntries(Object.entries(BASE_FOOTAGE_PROFILES).map(([id, profile]) => [id, applyRecordingAppearance(profile, recordingReferences, recordingExpansion)])), cricketReferences);
 document.documentElement.dataset.cityVisuals = cityVisuals.mode + '-' + cityVisuals.quality;
 document.documentElement.dataset.cityCompatibilityMode = compatibilityMode ? 'forced' : lowPowerProfile ? 'automatic' : 'full';
-const renderer = new THREE.WebGLRenderer({ canvas: els.canvas, antialias: !lowPowerProfile, powerPreference: 'high-performance' });
+const renderer = new THREE.WebGLRenderer({ canvas: els.canvas, antialias: graphicsQuality.antialias, powerPreference: 'high-performance' });
 renderer.setPixelRatio(ROAD_PACK_BUILD ? 0.05 : Math.min(devicePixelRatio, graphicsQuality.pixelRatio));
 renderer.setSize(innerWidth, innerHeight, false);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -746,7 +748,7 @@ function releaseStationThreeGltf(gltf) {
 
 async function loadStationThreeModel() {
   const loader = new GLTFLoader();
-  const assetUrl = new URL('./assets/stations/station-3.glb?v=1.6.154', import.meta.url).href;
+  const assetUrl = new URL('./assets/stations/station-3.glb?v=1.6.155', import.meta.url).href;
   const result = await loadStationThreeAsset({
     url: assetUrl,
     timeoutMs: 8000,
@@ -2437,9 +2439,11 @@ function finalizeRoadLines(roadLines, buckets, roadBatches) {
         b: new THREE.Vector2(b.x, b.y),
         aLineEndpoint: index === 1,
         aSourceVertex: a.sourceVertex,
+        aNodeId: a.nodeId,
         aY: a.height,
         bLineEndpoint: index === line.samples.length - 1,
         bSourceVertex: b.sourceVertex,
+        bNodeId: b.nodeId,
         bY: b.height,
         bridge: line.profile.bridge,
         chainStart: a.distance,
@@ -3093,7 +3097,67 @@ function buildMapRoadLines(segments) {
   addLines(majorPositions, materials.mapRoadMajor, 'map-road-major');
 }
 
+function roadPaintProjectionOptions(referenceHeight=null){
+  return CONNECTED_ROADS_ENABLED?{pavementIndices:[state.renderedPavementIndex,state.connectedRoadSurfaceIndex],referenceHeight,lift:.012}:{};
+}
 function buildRoadMarkings(segments) {
+  if(roadTileLayer)return;
+  if(!CONNECTED_ROADS_ENABLED)return buildLegacyRoadMarkings(segments);
+  const paintContext=createRoadMarkingContext(segments,{maximumTrimMetres:18});
+  if(ROAD_PACK_BUILD)console.info("Roadbuild: constructing joined marking paths");
+  const layout=buildRoadMarkingLayout(segments,{paintContext});
+  if(ROAD_PACK_BUILD)console.info("Roadbuild: marking layout "+JSON.stringify(layout.stats));
+  const groups=new Map(),indices=roadPaintProjectionOptions().pavementIndices;
+  let vertices=0,supportedPaths=0;
+  let projectedMarkings=0;
+  for(const marking of layout.markings){
+    if(ROAD_PACK_BUILD&&++projectedMarkings%1000===0)console.info("Roadbuild: projected "+projectedMarkings+"/"+layout.markings.length+" markings");
+    let supported=false;
+    for(const piece of marking.pieces){
+    const positions=projectMarkingTriangles(piece.triangles,indices,{lift:.012});
+    if(!positions.length)continue;supported=true;
+    const chunks=new Map();
+    for(let i=0;i<positions.length;i+=9){
+      const tile=roadRenderTileCoordinates((positions[i]+positions[i+3]+positions[i+6])/3,(positions[i+2]+positions[i+5]+positions[i+8])/3);
+      const key=`${tile.x}:${tile.z}:${marking.materialKey}:${marking.kind}`;
+      if(!chunks.has(key))chunks.set(key,{tile,positions:[]});
+      chunks.get(key).positions.push(...positions.slice(i,i+9));
+    }
+    for(const[key,chunk]of chunks){
+      if(!groups.has(key))groups.set(key,{kind:marking.kind,materialKey:marking.materialKey,tile:chunk.tile,positions:[],ranges:[]});
+      const group=groups.get(key),startVertex=group.positions.length/3;
+      for(const value of chunk.positions)group.positions.push(value);
+      group.ranges.push({lineIds:piece.lineIds,startVertex,vertexCount:chunk.positions.length/3});
+    }
+    }
+    if(supported)supportedPaths++;
+  }
+  for(const[key,group]of groups){
+    const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(group.positions,3));
+    geometry.setAttribute('color',new THREE.Float32BufferAttribute(new Float32Array(group.positions.length).fill(1),3));
+    geometry.computeVertexNormals();geometry.computeBoundingSphere();
+    const material=cityVisuals.mode==='legacy'?materials[group.materialKey].clone():cloneCityMaterial(materials[group.materialKey]);
+    material.vertexColors=true;material.polygonOffset=true;material.polygonOffsetFactor=-1;material.polygonOffsetUnits=-1;
+    const mesh=new THREE.Mesh(geometry,material);mesh.renderOrder=6;
+    mesh.userData={type:group.kind==='dash'?'road-lane-dashes':group.kind==='solid'?'road-centre-lines':group.kind==='cycle-edge'?'mapped-cycle-lane-edges':'road-edge-lines',material:group.materialKey,tile:group.tile,tileSize:ROAD_RENDER_TILE_SIZE,count:group.ranges.length,paintSurface:'exact-pavement-faces',paintLiftMetres:.012};
+    const bindingKey=`paint:${key}`;generatedRoadMeshes.set(bindingKey,mesh);streetscapeGroup.add(mesh);
+    for(const range of group.ranges)for(const id of range.lineIds){
+      if(!state.roadPaintRanges.has(id))state.roadPaintRanges.set(id,[]);
+      state.roadPaintRanges.get(id).push({key:bindingKey,startVertex:range.startVertex,vertexCount:range.vertexCount});
+    }
+    vertices+=group.positions.length/3;
+  }
+  const stats={...layout.stats,supportedPaths,unsupportedPaths:layout.markings.length-supportedPaths,vertices,triangles:vertices/3,junctions:paintContext.junctions.length};
+  if(ROAD_PACK_BUILD)console.info("Roadbuild: paint complete "+JSON.stringify(stats));
+  state.roadMarkingStats=stats;
+  document.documentElement.dataset.roadMarkingQuality=JSON.stringify(stats);
+  document.documentElement.dataset.roadPaintJunctions=String(stats.junctions);
+  document.documentElement.dataset.roadPaintVertices=String(vertices);
+  document.documentElement.dataset.roadPaintVersion='joined-paths-exact-faces-1';
+  document.documentElement.dataset.roadPaintReviewedWays=String(new Set(segments.filter(segment=>reviewedPaintTags(segment.tags||{},segment.lineId)!==segment.tags).map(s=>s.lineId)).size);
+  state.objectCount+=supportedPaths;
+}
+function buildLegacyRoadMarkings(segments) {
   if (roadTileLayer) return;
   const groups = new Map();
   const paintContext = roadAppearanceEnabled ? createRoadMarkingContext(segments, { maximumTrimMetres: 18 }) : null;
@@ -3350,7 +3414,7 @@ function buildMappedTurnArrows(segments) {
   for (const [symbol, marks] of arrows) for (const mark of marks) {
     const batch=paintArrowTriangles({x:mark.x,z:mark.z,heading:Math.atan2(mark.direction.x,mark.direction.z),symbol,length:3.6,width:1.2},
       (x,z,referenceHeight)=>{const hit=gameplaySurfaceAt(x,z,referenceHeight);return hit.onRoad?hit.height:null;},
-      {sourceId:mark.lineId,referenceHeight:mark.y,spacing:1.5,lift:0.008,maxHeightJump:0.5});
+      {sourceId:mark.lineId,referenceHeight:mark.y,lift:.008,spacing:1.5,maxHeightJump:0.5,...roadPaintProjectionOptions(mark.y)});
     entries.push({positions:batch.positions,lineId:mark.lineId});
   }
   buildFinalPaintBatches(entries,'mapped-turn-arrows','roadPaintWhite');
@@ -3390,7 +3454,7 @@ function buildCrossings(crossings) {
     const center=gameplaySurfaceAt((crossing.a.x+crossing.b.x)/2,(crossing.a.y+crossing.b.y)/2);
     const batch=paintCrossingTriangles({a:{x:crossing.a.x,z:crossing.a.y},b:{x:crossing.b.x,z:crossing.b.y},width:crossing.width,style:crossing.markingStyle},
       (x,z,referenceHeight)=>{const hit=gameplaySurfaceAt(x,z,referenceHeight);return hit.onRoad?hit.height:null;},
-      {referenceHeight:center.height,lift:0.008,spacing:1.5,maxHeightJump:0.5});
+      {referenceHeight:center.height,lift:.008,spacing:1.5,maxHeightJump:0.5,...roadPaintProjectionOptions(center.height)});
     entries.push({positions:batch.positions,lineId:crossing.tags?.id||`crossing:${crossing.a.x.toFixed(3)}:${crossing.a.y.toFixed(3)}`});
   }
   buildFinalPaintBatches(entries,'mapped-crossing-bars','crossingPaint');
@@ -3398,7 +3462,7 @@ function buildCrossings(crossings) {
 }
 function buildExplicitStopBars(){
   if(roadTileLayer)return;
-  const entries=explicitStopBars.map(bar=>({lineId:bar.id,positions:drapePaintStrip(bar.a,bar.b,bar.width,(x,z)=>{const hit=gameplaySurfaceAt(x,z);return hit.onRoad?hit.height:null;},{spacing:1,lift:0.008})}));
+  const entries=explicitStopBars.map(bar=>({lineId:bar.id,positions:drapePaintStrip(bar.a,bar.b,bar.width,(x,z)=>{const hit=gameplaySurfaceAt(x,z);return hit.onRoad?hit.height:null;},{spacing:1,...roadPaintProjectionOptions()})}));
   buildFinalPaintBatches(entries,'mapped-stop-bars','roadPaintWhite');
   document.documentElement.dataset.mappedStopBars=String(entries.filter(entry=>entry.positions.length).length);
 }
@@ -3889,7 +3953,8 @@ async function tryLoadRoadTilePack(){
   state.officialDrivableSurfaceIndex={contains:(x,z,options)=>Boolean(layer.sample(x,z,null,{...options,contact:'official'})),get polygonCount(){return manifest.inventory?.road_surfaces||0;}};
   state.officialRoadSurfacesAvailable=true;
   document.documentElement.dataset.officialRoadDetail=lowPowerProfile?'prebuilt-municipal-mobile':'prebuilt-municipal-desktop';
-  document.documentElement.dataset.roadPaintVersion='street-evidence-2';
+  document.documentElement.dataset.roadPaintVersion=manifest.markings?.version||'street-evidence-2';
+  if(manifest.markings?.quality)document.documentElement.dataset.roadMarkingQuality=JSON.stringify(manifest.markings.quality);
   document.documentElement.dataset.roadPaintSurface='connected-final-pavement';
   return {features:[],roadTileManifest:manifest};
 }
@@ -4855,6 +4920,15 @@ function setReadyStatus(summary) {
   document.documentElement.dataset.cityReadyMs = String(Math.round(performance.now() - explorerStartedAt));
 }
 
+function installRoadBuildExport(){const buildRanges=collectRoadSourceRanges(generatedRoadMeshes,state.roadPaintRanges);globalThis.__PTBO_ROAD_BUILD__=Object.freeze({
+    meshIds:()=>roadGroup.children.concat(streetscapeGroup.children).filter(mesh=>mesh.geometry?.getAttribute('position')&&/^(road-(surface|foundation|official-.*)-batch|connected-road-|official-curb-ribbons|terrain-following-urban-curbs|prototype-junction-|road-lane-dashes|road-centre-lines|mapped-cycle-lane-edges|road-edge-lines|mapped-turn-arrows|mapped-crossing-|mapped-stop-)/.test(mesh.userData.type||'')).map(mesh=>mesh.uuid),
+    exportMesh:onlyMeshId=>exportRoadScene({THREE,roadGroup,streetscapeGroup,generatedRoadMeshes,roadPaintRanges:state.roadPaintRanges,onlyMeshId,sourceRangesByMesh:buildRanges}),
+    heightNodes:points=>points.map(point=>state.finishedRoadHeightAt(point.x,point.z)),
+    terrainProbes:points=>points.map(({x,z})=>{const hit=gameplaySurfaceBaseAt(x,z);return{x,z,terrainHeight:terrainHeightAtWorld(x,z),roadHeight:hit.height,onRoad:hit.onRoad,heightSource:hit.heightSource};}),
+    pause(){roadBuildPaused=true;cancelAnimationFrame(animationFrameId);animationFrameId=0;},
+    report:()=>({sourceGeneratedAt:state.manifest?.generated_at,terrain:{source:terrain.source,segments:terrain.renderGrid?.segments,size:terrain.renderGrid?.size},connected:state.connectedRoadStats,finish:state.roadFinishStats,inventory:globalThis.__PTBO_OFFICIAL_ROADS__,markings:{version:document.documentElement.dataset.roadPaintVersion,quality:state.roadMarkingStats,reviewedWays:Number(document.documentElement.dataset.roadPaintReviewedWays||0),arrows:Number(document.documentElement.dataset.mappedTurnArrows||0),crossings:Number(document.documentElement.dataset.mappedCrossings||0),stopBars:Number(document.documentElement.dataset.mappedStopBars||0)},projection:{center:CITY.center,bounds:CITY.worldBounds}})
+  });}
+
 async function buildCity() {
   setProgress(4, 'Reading the full Peterborough map extent…');
   await hydrateWorldBounds();
@@ -4984,6 +5058,7 @@ async function buildCity() {
   // Drape paint only after the final municipal and station pavement exists.
   buildRoadMarkings(state.roadMarkingSegments || []);
   document.documentElement.dataset.roadPaintSurface='connected-final-pavement';
+  if(ROAD_PACK_BUILD){installRoadBuildExport();return;}
   // All OSM and municipal polygons are now available. Paint once in a fixed
   // class-priority order so overlaps do not depend on source feature order.
   flushLandCoverRaster();
@@ -5062,14 +5137,6 @@ async function buildCity() {
   setProgress(100, 'Peterborough is ready');
   setReadyStatus(summary);
   globalThis.__PTBO_EXPLORER_BOOTSTRAP__?.ready?.();
-  if(ROAD_PACK_BUILD){const buildRanges=collectRoadSourceRanges(generatedRoadMeshes,state.roadPaintRanges);globalThis.__PTBO_ROAD_BUILD__=Object.freeze({
-    meshIds:()=>roadGroup.children.concat(streetscapeGroup.children).filter(mesh=>mesh.geometry?.getAttribute('position')&&/^(road-(surface|foundation|official-.*)-batch|connected-road-|official-curb-ribbons|terrain-following-urban-curbs|prototype-junction-|road-lane-dashes|road-centre-lines|mapped-cycle-lane-edges|road-edge-lines|mapped-turn-arrows|mapped-crossing-|mapped-stop-)/.test(mesh.userData.type||'')).map(mesh=>mesh.uuid),
-    exportMesh:onlyMeshId=>exportRoadScene({THREE,roadGroup,streetscapeGroup,generatedRoadMeshes,roadPaintRanges:state.roadPaintRanges,onlyMeshId,sourceRangesByMesh:buildRanges}),
-    heightNodes:points=>points.map(point=>state.finishedRoadHeightAt(point.x,point.z)),
-    terrainProbes:points=>points.map(({x,z})=>{const hit=gameplaySurfaceBaseAt(x,z);return{x,z,terrainHeight:terrainHeightAtWorld(x,z),roadHeight:hit.height,onRoad:hit.onRoad,heightSource:hit.heightSource};}),
-    pause(){roadBuildPaused=true;cancelAnimationFrame(animationFrameId);animationFrameId=0;},
-    report:()=>({sourceGeneratedAt:state.manifest?.generated_at,terrain:{source:terrain.source,segments:terrain.renderGrid?.segments,size:terrain.renderGrid?.size},connected:state.connectedRoadStats,finish:state.roadFinishStats,inventory:globalThis.__PTBO_OFFICIAL_ROADS__,markings:{reviewedWays:Number(document.documentElement.dataset.roadPaintReviewedWays||0),arrows:Number(document.documentElement.dataset.mappedTurnArrows||0),crossings:Number(document.documentElement.dataset.mappedCrossings||0),stopBars:Number(document.documentElement.dataset.mappedStopBars||0)},projection:{center:CITY.center,bounds:CITY.worldBounds}})
-  });}
   const qaParams = new URLSearchParams(location.search);
   if (qaParams.has('qaLat') && qaParams.has('qaLon')) {
     window.__PTBO_CITY_QA__?.setView({
