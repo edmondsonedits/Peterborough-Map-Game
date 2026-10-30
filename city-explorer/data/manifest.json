@@ -192,7 +192,7 @@
     "file": "construction-audit.json",
     "policy": "Only authoritative completed geometry changes alter the packaged city"
   },
-  "generated_at": "2026-10-29T14:07:49+00:00",
+  "generated_at": "2026-10-30T19:10:44+00:00",
   "hydrography": {
     "cache_reused": false,
     "feature_count": 1312,
@@ -224,7 +224,7 @@
   },
   "osm": {
     "drivable_road_count": 5962,
-    "element_count": 43113,
+    "element_count": 43119,
     "file": "peterborough-osm.json",
     "public_road_count": 2775,
     "public_road_file": "osm-public-roads.geojson",
