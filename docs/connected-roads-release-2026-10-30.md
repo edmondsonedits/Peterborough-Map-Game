@@ -1,6 +1,6 @@
 # Connected roads release - 2026-10-30
 
-Release: v1.6.153. Source base: a105632703a88917789e936b71a59654b3351224. Road pack: b7790afc289c024c2519.
+Release: v1.6.154 (roads first published in v1.6.153). Source base: a105632703a88917789e936b71a59654b3351224. Road pack: b7790afc289c024c2519.
 
 ## Result
 
@@ -24,7 +24,7 @@ Pack totals: 58,900,639 compressed bytes; 259,127,768 raw packet bytes; 3,580,76
 
 ## Verification
 
-- Full related automated suite after automatic refresh and CI fixes: 1,178 passed, zero failures/skips (198 test files); saved at artifacts/road-rebuild/full-tests-post-refresh.log.
+- Full related automated suite after automatic refresh and CI fixes: 1,178 passed, zero failures/skips (198 test files); saved at artifacts/road-rebuild/full-tests-v154.log.
 - The pack fingerprints 42 road/terrain/compiler/data inputs. Road-pack verifier decodes every tile and checks raw/transport hashes, exact counts, conservative bounds, source identities and version module.
 - Both previously occluded Sherbrooke points pass in the decoded final packets: 0.213416 m and 0.207253 m above the canonical ground; packet/source height differences below 0.0000001 m.
 - Exact before evidence uses detached source base a105632 with matched overhead and truck-eye views: artifacts/road-rebuild/baseline-exact/report.json.
@@ -52,3 +52,5 @@ The feature release commit f5c2a6ac0ede862433814d8bd4b89c1972822013 deployed suc
 The subsequent automatic geospatial refresh commit dfd6e1926bc55b4170c71df3ab9b7e5629a0cada is retained. It produces pack 712c470565392906d959: 669 tiles, 58,896,868 compressed bytes, 259,107,960 raw bytes and 3,580,484 triangles. Four packets changed (-8:0, -7:0, -4:0, -1:2); the other 665 are byte-identical to the qualified pack. Its canonical terrain and the repaired Sherbrooke clearance probes are unchanged, and the full pack verifier passes. Every supporting packet recorded by the six accepted driving routes is byte-identical; artifacts/road-rebuild/refreshed-pack-qualification.json records that evidence boundary.
 
 CI follow-up pins both browser-dependent jobs to Ubuntu 24.04 with Playwright 1.62.1 and Chromium dependencies. The prior browser job failed during installation because its older Playwright 1.55.0 did not support the changed ubuntu-latest image. The automatic refresh also exposed an exact-double bridge snapshot comparison at a roughly 7e-15 degree rounding difference; the follow-up retains bridge identity, properties, ring structure and tightly bounded coordinates. Final current public-response verification is saved in artifacts/road-rebuild/publication-receipt.json and live-browser-smoke.json.
+
+The final v1.6.154 follow-up starts optional authored proxies when gameplay and their registered world bridge are ready, independently of asynchronous firefighter/pumper appearances. A local timeline reproduced the unrelated actor wait; the concrete readiness regression and two-startup authored-scene browser integration pass. Independent review confirmed the bridge registers before gameplay readiness and this layer adds validated proxies without actor controls. The predicate stays in bootstrap, preserving the existing cached runtime API. Normalized v1.6.154 outer-module URLs deliver the new bootstrap; normalized road source hashes and the qualified pack remain valid.

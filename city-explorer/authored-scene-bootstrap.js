@@ -1,4 +1,4 @@
-import { CitySplatLayer } from './city-splat-layer.js?v=1.6.153';
+import { CitySplatLayer } from './city-splat-layer.js?v=1.6.154';
 import {
   authoredSceneDiagnostics,
   initializeAuthoredScene,
@@ -6,6 +6,9 @@ import {
 } from './authored-scene-runtime.js?v=1.6.79';
 
 const PATCH_FLAG = Symbol.for('ptbo.authored-scene.city-splat-bridge.v1');
+function authoredSceneStartupReady({ gameplayReady, bridgeReady }) {
+  return gameplayReady === true && bridgeReady === true;
+}
 
 if (!CitySplatLayer.prototype[PATCH_FLAG]) {
   const originalInitialize = CitySplatLayer.prototype.initialize;
@@ -29,24 +32,22 @@ function authoredEnabled() {
 if (authoredEnabled() && globalThis.document?.documentElement) {
   const root = document.documentElement;
   let started = false;
-  const startWhenGameplayAssetsReady = () => {
+  const startWhenGameplayReady = () => {
     if (started) return;
-    const actorsReady = root.dataset.gameplayReady === 'true'
-      && Boolean(root.dataset.firefighterAsset)
-      && Boolean(root.dataset.pumperAsset);
-    if (!actorsReady) return;
+    const bridgeReady = globalThis.__PTBO_AUTHORED_SCENE__?.status?.().bridgeReady === true;
+    if (!authoredSceneStartupReady({ gameplayReady: root.dataset.gameplayReady === 'true', bridgeReady })) return;
     started = true;
     observer.disconnect();
     initializeAuthoredScene().then(status => {
       if (status.status === 'ready') console.info(`Editor-authored detail layer ready: ${status.count} proxy object(s).`);
     });
   };
-  const observer = new MutationObserver(startWhenGameplayAssetsReady);
+  const observer = new MutationObserver(startWhenGameplayReady);
   observer.observe(root, {
     attributes: true,
     attributeFilter: ['data-gameplay-ready', 'data-firefighter-asset', 'data-pumper-asset'],
   });
-  startWhenGameplayAssetsReady();
+  startWhenGameplayReady();
   globalThis.addEventListener?.('pagehide', () => globalThis.__PTBO_AUTHORED_SCENE__?.dispose?.(), { once: true });
 } else {
   authoredSceneDiagnostics();

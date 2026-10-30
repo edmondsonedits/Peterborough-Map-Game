@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
+import { runInNewContext } from 'node:vm';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const runtimeUrl = pathToFileURL(path.resolve(here, '../city-explorer/authored-scene-runtime.js')).href;
@@ -10,6 +11,22 @@ const fixturePath = path.resolve(here, '../city-explorer/data/authored/peterboro
 const fixture = JSON.parse(await fs.readFile(fixturePath, 'utf8'));
 
 assert.equal(runtime.validateAuthoredSceneHandoff(fixture).valid, true, 'reviewed handoff should validate');
+const bootstrapSource = await fs.readFile(path.resolve(here, '../city-explorer/authored-scene-bootstrap.js'), 'utf8');
+const readinessGate = bootstrapSource.match(/function authoredSceneStartupReady\(\{ gameplayReady, bridgeReady \}\) \{[\s\S]*?\n\}/)?.[0];
+assert.ok(readinessGate, 'bootstrap exposes a concrete startup readiness predicate');
+const canStartAuthoredScene = runInNewContext(`(${readinessGate})`);
+assert.equal(canStartAuthoredScene({ gameplayReady: true, bridgeReady: true }), true,
+  'authored details may start once gameplay and their world bridge are ready, even before actor appearance assets');
+assert.equal(canStartAuthoredScene({ gameplayReady: true, bridgeReady: false }), false,
+  'authored details must wait for the simulator world bridge');
+assert.equal(canStartAuthoredScene({ gameplayReady: false, bridgeReady: true }), false,
+  'authored details must wait for gameplay readiness');
+assert.match(bootstrapSource, /authoredSceneStartupReady\(\{ gameplayReady: root\.dataset\.gameplayReady === 'true', bridgeReady \}\)/,
+  'the bootstrap must gate on gameplay and authored-world bridge readiness');
+assert.match(bootstrapSource, /__PTBO_AUTHORED_SCENE__\?\.status\?\.\(\)\.bridgeReady === true/,
+  'bridge readiness must come from the active authored runtime API');
+assert.doesNotMatch(bootstrapSource, /dataset\.(?:firefighterAsset|pumperAsset)/,
+  'optional authored details must not wait on asynchronous actor appearance assets');
 
 const duplicate = structuredClone(fixture);
 duplicate.sourceScene.objects.push(structuredClone(duplicate.sourceScene.objects[0]));

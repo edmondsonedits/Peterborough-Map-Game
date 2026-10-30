@@ -6,7 +6,7 @@ import {
   stationCollision, stationDoorObstructed, sweepStationTruck,
 } from './station-two-core.mjs';
 
-const STATION_MODEL = './assets/station2/station2.glb?v=1.6.153';
+const STATION_MODEL = './assets/station2/station2.glb?v=1.6.154';
 const TRUCK_DIMENSIONS = Object.freeze({ length: 10.5, width: 3.2 });
 const FRONT_NODE = /^Door_F([1-3])_([LR])_(Outer|Inner)$/;
 const REAR_NODE = /^Door_R([1-2])_Panel([0-6])$/;
