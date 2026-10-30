@@ -1,0 +1,2 @@
+/* Demo uses the packaged canonical roster; full dispatch stays data-dependent. */
+(() => {const sourceUrl=new URL(document.currentScript.src,location.href);window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"greater-sudbury","name":"Greater Sudbury","map":{"bounds":[[46.19584441021693,-81.59843186607993],[46.973065066084374,-80.54882726163908]],"defaultCenter":[46.48744001132133,-80.99004528426735],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sources":{}},sourceUrl});})();

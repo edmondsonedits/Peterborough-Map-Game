@@ -41,6 +41,7 @@ function fixture({ stored, requested = '', mobile = false, reduced = false, deni
   document.currentScript = { src: 'https://example.test/game/shared/city-selector.js?v=1.6.105' };
   document.getElementById = id => elements.get(id) || null;
   document.createElement = tag => { const node = new Element(); node.tagName = tag.toUpperCase(); return node; };
+  get('request-full-dispatch');get('home-demo-play');
   const choices = ['geo', 'route', 'dispatch'].map(mode => { const node = get(mode + '-game-link'); node.dataset.preview = mode; return node; });
   choices[0].href = 'https://example.test/game/geo-guesser/desktop/';
   choices[1].href = 'https://example.test/game/route-mapping/?v=1.6.105';
@@ -95,7 +96,7 @@ test('defaults to Peterborough and keeps the three games and 3D entry reachable'
 test('restores a valid city, keeps its Geo demo local, and blocks unavailable modes', () => {
   const h = fixture({ stored: 'oshawa' });
   assert.equal(h.get('home-city-select').value, 'oshawa');
-  assert.equal(h.get('home-dispatch-title').textContent, 'Free Driving');
+  assert.equal(h.get('home-dispatch-title').textContent, 'Dispatch Simulator');
   assert.match(h.get('home-dispatch-description').textContent, /Oshawa/);
   assert.match(h.get('home-city-status').textContent, /Oshawa.*demo/i);
   assert.ok(h.badges.every(node => node.hidden));
@@ -217,11 +218,11 @@ test('existing launcher keeps its city dialog when the new homepage controller i
   assert.equal(h.document.listeners.get('click')?.length, 1);
 });
 
-test('legacy Dispatch fallback exposes only the seven cities with driving data', () => {
+test('legacy Dispatch fallback exposes all cities with simulator demos', () => {
   const h = fixture({ initialize: false }); h.window.PTBO_HOMEPAGE = undefined;
   h.runSelector();
-  assert.deepEqual(Array.from(h.window.PTBO_CITY_SELECTOR.cities, city => city.id), ['peterborough', 'oshawa', 'belleville', 'scarborough', 'pickering', 'markham', 'toronto']);
-  assert.equal(h.document.body.children.find(node => node.id === 'ptbo-city-dialog').querySelector('.city-grid').children.length, 7);
+  assert.deepEqual(Array.from(h.window.PTBO_CITY_SELECTOR.cities, city => city.id), Array.from(h.window.PTBO_CITIES, city => city.id));
+  assert.equal(h.document.body.children.find(node => node.id === 'ptbo-city-dialog').querySelector('.city-grid').children.length, 33);
   const home = fixture({ initialize: false }); home.runSelector();
   assert.equal(home.window.PTBO_CITY_SELECTOR.cities.length, 33);
 });
@@ -262,9 +263,9 @@ test('Dispatch preview distinguishes calls from free driving and keeps screensho
   h.changeCity('toronto');
   assert.equal(h.get('home-dispatch-description').textContent, 'Drive Fire & EMS in Toronto.');
   assert.equal(h.dispatchPreviewTitles[0].textContent, 'Get to know the streets.');
-  assert.equal(h.dispatchModeLabels[0].textContent, 'Free Driving');
+  assert.equal(h.dispatchModeLabels[0].textContent, 'Dispatch Simulator');
   assert.equal(h.dispatchPreviewDescriptions[0].textContent, 'Choose Fire or EMS for free driving.');
-  assert.equal(h.launches[2].querySelector('[data-launch-label]').textContent, 'Start free driving');
+  assert.equal(h.launches[2].querySelector('[data-launch-label]').textContent, 'Play Demo');
   assert.equal(h.panels[2].querySelector('img').alt, 'Peterborough Dispatch Simulator gameplay');
   h.changeCity('peterborough');
   assert.equal(h.dispatchPreviewTitles[0].textContent, 'Take the next call.');
@@ -319,7 +320,7 @@ test('city options are built from every registered capability entry', () => {
 test('homepage markup provides the native request dialog and DEMO treatment for every mode', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   assert.match(html, /<dialog[^>]+id="home-demo-dialog"[^>]+aria-labelledby="home-demo-title"/);
-  assert.match(html, /id="home-demo-title">Request a demo/);
+  assert.match(html, /id="home-demo-title">Request Full Version/);
   for (const mode of ['geo', 'route', 'dispatch', 'explorer']) assert.match(html, new RegExp('data-demo-card="' + mode + '"'));
   assert.doesNotMatch(html, /data-peterborough-only/);
   assert.match(html, /event\.defaultPrevented/);
@@ -337,7 +338,7 @@ test('all Geo demo links preserve the selected city, canonical version, surface 
     const click = h.choices[0].emit('click', { ctrlKey: true, button: 0 });
     assert.equal(click.defaultPrevented, false);
     assert.equal(h.get('home-demo-dialog').open, undefined);
-    assert.equal(h.get('dispatch-game-link').href, '');
+    assert.equal(dispatchURL(h).searchParams.get('city'), 'london');
     assert.equal(h.get('city-explorer-link').href, '');
     assert.ok(h.previewCityNames.every(node => node.textContent === 'London'));
     h.changeCity('peterborough');
@@ -350,7 +351,7 @@ test('all Geo demo links preserve the selected city, canonical version, surface 
 test('unavailable mode card and preview launches have no redirect and open a named keyboard accessible request dialog without counting', () => {
   const recorded = [];
   const h = fixture({ stored: 'london', analytics: { recordDemoRequest: (...args) => recorded.push(args) } });
-  for (const [link, modeName] of [[h.launches[2], 'Dispatch Simulator'], [h.get('city-explorer-link'), 'Explore 3D']]) {
+  for (const [link, modeName] of [[h.get('city-explorer-link'), 'Explore 3D']]) {
     assert.equal(link.href, '');
     assert.equal(link.getAttribute('tabindex'), '0');
     const click = link.emit('click');
@@ -496,4 +497,21 @@ test('switching accounts frees pending demo actions and old completions cannot c
  h.window.emit('ptbo-feedback-account-change',{detail:{replaced:true}});h.get('city-explorer-link').emit('click');assert.equal(h.get('home-demo-submit').disabled,false);
  h.get('home-demo-submit').emit('click');assert.equal(finishes.length,2);finishes[0](false);await new Promise(r=>setImmediate(r));assert.equal(h.get('home-demo-submit').disabled,true);assert.match(h.get('home-demo-status').textContent,/Sending/);
  sent=true;finishes[1](true);await new Promise(r=>setImmediate(r));assert.match(h.get('home-demo-status').textContent,/Request sent/);
+});
+
+test('every city offers a real Dispatch demo route independent of account state',()=>{
+ const h=fixture();
+ for(const city of h.window.PTBO_CITIES){h.changeCity(city.id);assert.equal(h.get('dispatch-game-link').dataset.modeAvailable,'true',city.id);assert.equal(dispatchURL(h).searchParams.get('city'),city.id);}
+});
+
+test('full version request preserves a separate playable dispatch demo',()=>{const h=fixture({stored:'richmond-hill'});h.get('request-full-dispatch').emit('click');assert.equal(h.get('home-demo-dialog').open,true);assert.equal(h.get('home-demo-play').hidden,false);assert.equal(new URL(h.get('home-demo-play').href).searchParams.get('city'),'richmond-hill');h.get('home-demo-close').emit('click');h.changeCity('peterborough');assert.equal(h.get('request-full-dispatch').hidden,true);});
+
+test('3D entry always offers Peterborough play and a request for the selected city',()=>{
+ for(const city of ['peterborough','richmond-hill','london']){
+  const h=fixture({stored:city});const click=h.get('city-explorer-link').emit('click');
+  assert.equal(click.defaultPrevented,true);assert.equal(h.get('home-demo-dialog').open,true);
+  assert.equal(h.get('home-demo-play').hidden,false);assert.equal(h.get('home-demo-play').textContent,'Play in Peterborough');
+  const url=new URL(h.get('home-demo-play').href);assert.equal(url.searchParams.get('city'),'peterborough');assert.equal(url.searchParams.get('v'),'1.6.105');
+  assert.equal(h.get('home-demo-submit').textContent,'Request Your City demo');assert.equal(h.get('home-demo-city').textContent,h.window.PTBO_CITIES.find(c=>c.id===city).name);
+ }
 });

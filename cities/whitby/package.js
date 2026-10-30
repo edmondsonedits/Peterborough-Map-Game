@@ -1,0 +1,2 @@
+/* Demo uses the packaged canonical roster; full dispatch stays data-dependent. */
+(() => {const sourceUrl=new URL(document.currentScript.src,location.href);window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"whitby","name":"Whitby","map":{"bounds":[[43.571073994601214,-79.04728690796199],[44.02890937043863,-78.77584288535326]],"defaultCenter":[43.92188290782409,-78.9391260286899],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sources":{}},sourceUrl});})();

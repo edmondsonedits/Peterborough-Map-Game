@@ -167,3 +167,16 @@ test('the stations bridge cannot start an obsolete vehicle-loader request',t=>{
   const loaded=new URL(game.document.querySelector('script[data-ptbo-vehicle-instruments]').src);
   assert.equal(loaded.searchParams.get('v'),'1.6.136');
 });
+
+ test('directional stick uses the active camera bearing in Driving View', async t => {
+  const s=simulator(t);s.game.PTBO_DRIVING_CAMERA={getBearing:()=>90};
+  s.pointer('pointerdown',10,s.steering,{clientX:50,clientY:0});await flush();
+  assert.equal(s.tuning.targetHeading,90,'up points along the screen heading, east');
+ });
+
+test('held stick follows changing camera bearing without a new pointer event',async t=>{
+ const s=simulator(t);let bearing=90;s.game.PTBO_DRIVING_CAMERA={getBearing:()=>bearing};
+ s.pointer('pointerdown',10,s.steering,{clientX:50,clientY:0});await flush();assert.equal(s.tuning.targetHeading,90);
+ bearing=120;s.game.PTBO_DIRECTIONAL_STEERING_TUNING.step(1/60);assert.equal(s.tuning.targetHeading,120);
+ s.pointer('pointerup',10);await flush();bearing=180;s.game.PTBO_DIRECTIONAL_STEERING_TUNING.step(1/60);assert.equal(s.tuning.targetHeading,null);
+});

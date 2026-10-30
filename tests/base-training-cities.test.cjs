@@ -40,8 +40,8 @@ const noChangesDiff = (before,after) => ({
 test('existing driving cities launch through the same shared desktop and mobile simulator wrappers', () => {
   const c=browserContext();
   vm.runInContext(read('cities/city-registry.js'),c);
-  assert.equal(c.PTBO_CITIES.filter(city=>city.modes.dispatch).length,7);
-  for(const city of c.PTBO_CITIES.filter(city=>city.modes.dispatch)){
+  assert.equal(c.PTBO_CITIES.filter(city=>city.modes.dispatch).length,33);
+  for(const city of c.PTBO_CITIES.filter(city=>cities.includes(city.id)||city.id==='peterborough')){
     assert.equal(city.playable,true,city.id);
     assert.equal(city.dispatch.desktop,'response-simulator/play/',`${city.id} desktop route`);
     assert.equal(city.dispatch.mobile,'response-simulator/mobile/',`${city.id} mobile route`);
@@ -376,4 +376,15 @@ test('inner simulator loads Leaflet locally without a blocking CDN dependency', 
     assert.ok(source.includes(`vendor/leaflet-1.9.4/${file}?v=${canonicalBuildVersion}`),file);
     assert.ok(fs.statSync(path.join(root,'response-simulator/vendor/leaflet-1.9.4',file)).size>100,file);
   }
+});
+
+test('every additional city demo boots from its own canonical roster without external services',async()=>{
+ const registry=browserContext();vm.runInContext(read('cities/city-registry.js'),registry);
+ for(const city of registry.PTBO_CITIES.filter(c=>c.id!=='peterborough'&&!cities.includes(c.id))){
+  let calls=0;const c=browserContext({fetch:async url=>{calls++;assert.equal(String(url),`https://example.com/cities/${city.id}/geo-data.json`);return{ok:true,json:async()=>JSON.parse(read(`cities/${city.id}/geo-data.json`))};}});
+  vm.runInContext(read('cities/preview-package-factory.js'),c);c.document.currentScript.src=`https://example.com/cities/${city.id}/package.js`;
+  vm.runInContext(read(`cities/${city.id}/package.js`),c);await c.PTBO_CITY_PACKAGE_READY;
+  assert.equal(c.PTBO_CITY_PACKAGE.id,city.id);assert.equal(c.PTBO_CITY_PACKAGE.features.baseTraining,true);
+  assert.ok(c.PTBO_SERVICE_CONFIG.profiles.fire.bases.length,city.id);assert.ok(c.PTBO_SERVICE_CONFIG.profiles.ems.bases.length,city.id);assert.equal(calls,1);
+ }
 });

@@ -1,0 +1,2 @@
+/* Demo uses the packaged canonical roster; full dispatch stays data-dependent. */
+(() => {const sourceUrl=new URL(document.currentScript.src,location.href);window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"thunder-bay","name":"Thunder Bay","map":{"bounds":[[48.26835354064214,-89.42757863595611],[48.51500506527655,-89.06077480177011]],"defaultCenter":[48.38867738806357,-89.25080703242487],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sources":{}},sourceUrl});})();

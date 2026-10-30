@@ -13,3 +13,6 @@ node_modules/
 *-debug.log
 .cache/call-sources/
 .venv-call-sources/
+
+# Local release browser evidence and temporary browser tooling
+artifacts/release-qa/

@@ -1,0 +1,2 @@
+/* Demo uses the packaged canonical roster; full dispatch stays data-dependent. */
+(() => {const sourceUrl=new URL(document.currentScript.src,location.href);window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"mississauga","name":"Mississauga","map":{"bounds":[[43.361099429953754,-79.81010111417292],[43.73703438782441,-79.41785747084073]],"defaultCenter":[43.69232288253442,-79.62549081534043],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sources":{}},sourceUrl});})();

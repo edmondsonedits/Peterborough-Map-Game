@@ -118,8 +118,8 @@
     if (doc.documentElement.dataset.sharedDispatchPatched === VERSION) return;
     doc.documentElement.dataset.sharedDispatchPatched = VERSION;
     removeLegacyEditorControls(doc);
-    loadSimulatorTool(doc,'camera-fix.js?v=1.5.10','data-ptbo-smooth-camera','Unable to load the stable simulator camera base.');
-    loadSimulatorTool(doc,'smooth-driving-camera-1.4.19.js?v=1.5.10','data-ptbo-driving-camera','Unable to load the Fixed Map and Driving View camera.');
+    loadSimulatorTool(doc,`camera-fix.js?v=${CACHE_VERSION}`,'data-ptbo-smooth-camera','Unable to load the stable simulator camera base.');
+    loadSimulatorTool(doc,`smooth-driving-camera-1.4.19.js?v=${CACHE_VERSION}`,'data-ptbo-driving-camera','Unable to load the Fixed Map and Driving View camera.');
     loadSimulatorTool(doc,`road-collision.js?v=${VERSION}`,'data-ptbo-road-collision','Unable to load the selected city road boundary system.');
     loadSimulatorTool(doc,'speed-streak.js?v=1.5.10','data-ptbo-speed-streak','Unable to load the collision speed streak system.');
     loadSimulatorTool(doc,`vehicle-instruments.js?v=${CACHE_VERSION}`,'data-ptbo-vehicle-instruments','Unable to load the speedometer and mobile steering systems.');

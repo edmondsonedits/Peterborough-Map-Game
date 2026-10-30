@@ -1,0 +1,2 @@
+/* Demo uses the packaged canonical roster; full dispatch stays data-dependent. */
+(() => {const sourceUrl=new URL(document.currentScript.src,location.href);window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"guelph","name":"Guelph","map":{"bounds":[[43.47383021580297,-80.32691267333436],[43.594361533143115,-80.15350481534446]],"defaultCenter":[43.5435157,-80.243612],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sources":{}},sourceUrl});})();

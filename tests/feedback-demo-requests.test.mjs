@@ -29,3 +29,9 @@ test('account switching cannot reveal a pending or completed demo receipt to ano
 test('invalid city and mode inputs cannot create feedback or a guest session',async()=>{
  const f=fixture();for(const input of [{...request,city:'constructor'},{...request,city:'../x'},{...request,mode:'other'},{...request,cityName:'x'.repeat(121)}])await assert.rejects(f.controller.send(input));assert.equal(f.writes.length,0);
 });
+
+test('3D requests ask for a city demo and dispatch requests ask for the full version',async()=>{
+ for(const [mode,expected] of [['explorer','I would like a demo of City Explorer for Oshawa.'],['dispatch','I would like the full version of Dispatch Simulator for Oshawa.']]){
+  const f=fixture(),pending=f.controller.send({...request,mode});await new Promise(r=>setImmediate(r));assert.equal(f.writes[0].body,expected);f.release();await pending;
+ }
+});

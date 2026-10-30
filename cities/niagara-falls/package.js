@@ -1,0 +1,2 @@
+/* Demo uses the packaged canonical roster; full dispatch stays data-dependent. */
+(() => {const sourceUrl=new URL(document.currentScript.src,location.href);window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"niagara-falls","name":"Niagara Falls","map":{"bounds":[[42.95957477184699,-79.17728197415228],[43.147930911173624,-78.99966731055994]],"defaultCenter":[43.070105467000076,-79.11242146399996],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sources":{}},sourceUrl});})();

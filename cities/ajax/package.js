@@ -1,0 +1,2 @@
+/* Demo uses the packaged canonical roster; full dispatch stays data-dependent. */
+(() => {const sourceUrl=new URL(document.currentScript.src,location.href);window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"ajax","name":"Ajax","map":{"bounds":[[43.548364587676005,-79.08813331174792],[43.92240514955695,-78.86023960978459]],"defaultCenter":[43.84540501890784,-79.02694560796613],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sources":{}},sourceUrl});})();

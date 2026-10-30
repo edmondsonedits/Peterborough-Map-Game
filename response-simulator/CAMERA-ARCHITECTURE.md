@@ -1,6 +1,6 @@
-# Driving camera architecture (v1.4.20)
+# Driving camera architecture (v1.4.21)
 
-The v1.4.20 camera is shared by the desktop and mobile simulator wrappers and by `response-simulator/camera-game-test/`. Desktop exposes the Fixed Map and Driving View controls over the map. Mobile keeps the map clear and places one mode-toggle button inside the existing Options panel.
+The v1.4.21 camera is shared by the desktop and mobile simulator wrappers and by `response-simulator/camera-game-test/`. Desktop exposes the Fixed Map and Driving View controls over the map. Mobile keeps the map clear and places one mode-toggle button inside the existing Options panel.
 
 ## Root cause
 
@@ -27,3 +27,5 @@ Production mode stores the selected camera mode in `localStorage` under `ptboCam
 ## Test telemetry
 
 The test module exposes `window.PTBO_CAMERA_TEST_TELEMETRY`, `window.PTBO_DRIVING_CAMERA`, and the hidden DOM output `#ptbo-camera-telemetry`. Telemetry includes exact coordinates, raw and smoothed headings, bearing, screen anchor, position error, nearest-road error, frame timing, device pixel ratio, coordinate-space values, and captured JavaScript errors.
+
+North-up (Fixed Map) is the primary view as of release 1.6.155, migrated once; later explicit view selections persist. The directional joystick retains its screen vector and maps it through the live camera bearing, including while held. Dragging pauses follow; a small mobile Recenter hint remains until follow resumes. The public camera API exposes `getBearing()` for directional input.

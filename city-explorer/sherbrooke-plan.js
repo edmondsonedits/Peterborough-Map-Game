@@ -1,6 +1,6 @@
 import { SHERBROOKE_SOURCE } from './sherbrooke-source.js';
-import { FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js?v=1.6.155';
-import { roadProfile } from './road-network.js?v=1.6.155';
+import { FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js?v=1.6.156';
+import { roadProfile } from './road-network.js?v=1.6.156';
 export const sherbrookeBuildings = new Map();
 export const sherbrookeSidewalks = [];
 export function recordSherbrookeSidewalk(segment, al, ar, bl, br) {

@@ -1,4 +1,4 @@
-import { createDemoRequests } from './demo-requests.mjs?v=demo-feedback-20261028';
+import { createDemoRequests } from './demo-requests.mjs?v=full-version-20261030';
 import { editorUrlForReport, exportFeedback } from "./agent-tools.mjs?v=feedback-workflow-20261028";
 import { feedbackConfig } from "./config.mjs?v=feedback-workflow-20261028";
 import { createFeedbackService } from "./service.mjs?v=demo-feedback-20261028";

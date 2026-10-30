@@ -111,7 +111,7 @@
 
   function suppressLegacyDirectionalTarget() {
     if (!directionalIsActive() || !tuningState.pointerActive) return;
-    const rawTarget = instruments.state.directionalTargetHeading;
+    const rawTarget = instruments.getDirectionalHeading ? instruments.getDirectionalHeading() : instruments.state.directionalTargetHeading;
     if (rawTarget === null || rawTarget === undefined || rawTarget === '') return;
 
     const target = Number(rawTarget);

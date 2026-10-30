@@ -27,7 +27,7 @@ test('registry declares each mode independently for Peterborough, researched dem
   for (const city of cities) {
     assert.ok(Object.isFrozen(city.modes),`${city.id}: immutable capabilities`);
     assert.equal(city.modes.geo,true,city.id);
-    assert.equal(city.modes.dispatch,city.id === 'peterborough' || previews.includes(city.id),city.id);
+    assert.equal(city.modes.dispatch,true,city.id);
     assert.equal(city.modes.route,true,city.id);
     assert.equal(city.modes.explorer,city.id === 'peterborough',city.id);
     if (city.id !== 'peterborough') assert.equal(city.geoDataUrl,`cities/${city.id}/geo-data.json`);

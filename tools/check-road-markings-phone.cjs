@@ -75,6 +75,11 @@ async function discoverContract(page) {
     }
     let junction=null;for(const roads of nodeMap.values())if(roads.size>=3){const samples=[...roads.values()];const p=samples[0].point;const score=Math.hypot(p.x-show.x,p.z-show.z);if(!junction||score<junction.score)junction={point:p,segment:samples[0].segment,score};}
     const bridges=segments.filter(s=>Boolean(s.bridge)||['yes','viaduct','bridge'].includes(String(tags(s).bridge||'').toLowerCase()));
+    // Anchor the bridge screenshot to the mapped Hunter Street East deck rather
+    // than whichever bridge happens to be nearest the Showplace comparison.
+    const hunterBridgeAnchor=q.project(44.30578,-78.31375),hunterBridgePoint={x:hunterBridgeAnchor.x,z:hunterBridgeAnchor.y};
+    const hunterBridgeSegments=bridges.filter(s=>/hunter street east/i.test(s.name||tags(s).name||''));
+    hunterBridgeSegments.sort((a,b)=>distanceTo(a,hunterBridgePoint)-distanceTo(b,hunterBridgePoint));
     bridges.sort((a,b)=>distanceTo(a,show)-distanceTo(b,show));
     const sherbrooke=segments.filter(s=>/sherbrooke street/i.test(s.name||tags(s).name||''));
     const sherbrookeAnchor=q.project(44.3006997,-78.3221781),sherbrookePoint={x:sherbrookeAnchor.x,z:sherbrookeAnchor.y};
@@ -84,7 +89,7 @@ async function discoverContract(page) {
       'water-showplace-cycle':make('water-showplace-cycle',selectedWater,{cyclewayTagFound:Boolean(selectedWater&&cycle(selectedWater)),showplaceProjected:show,distanceToShowplace: selectedWater?distanceTo(selectedWater,show):null}),
       'curved-road':curve?make('curved-road',curve.segment,{turnRadians:curve.turn}):null,
       junction:junction?make('junction',junction.segment,{node:[junction.point.x,junction.point.z]}):null,
-      bridge:make('bridge',bridges[0]),
+      bridge:make('bridge',hunterBridgeSegments[0]||bridges[0],{bridgeDeckSource:Boolean(hunterBridgeSegments[0]),bridgeAnchorProjected:hunterBridgePoint}),
       sherbrooke:make('sherbrooke',sherbrooke[0]||null),
     };
     return Object.fromEntries(targetNames.map(name=>[name,result[name]]));
@@ -135,6 +140,7 @@ async function settle(page, pose) {
     q.placeTruck(p);q.refresh();
     const stats=await q.roadTileLayer.update(q.camera.position.x,q.camera.position.z,{protectX:p.x,protectZ:p.z,protectRadius:100});
     if(!q.roadTileLayer.readyAt(p.x,p.z,12))throw new Error(`Road tile coverage not ready at ${p.name}: ${JSON.stringify({stats,tiles:q.roadTileLayer.stats(),camera:[q.camera.position.x,q.camera.position.z],truck:[p.x,p.z],tileError:document.documentElement.dataset.roadTileError||null})}`);
+    await new Promise((resolve,reject)=>{const started=performance.now(),check=()=>{const toast=document.querySelector('#toast');if(!toast||!toast.classList.contains('is-visible'))return resolve();if(performance.now()-started>10000)return reject(new Error('Driving toast did not expire before pose capture'));setTimeout(check,100);};check();});
     const placed=q.placeTruck(p);q.suspendRender(true);q.refresh();await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));q.refresh();q.renderOnce();
     const hud=document.querySelector('#gameplay-hud'),hudStyle=hud&&getComputedStyle(hud),canvas=document.querySelector('canvas');
     const gl=q.renderer.getContext(),attributes=gl.getContextAttributes()||{};
@@ -199,10 +205,11 @@ function persistReport(report){if(!report)return;fs.writeFileSync(path.join(outp
     contract=fs.existsSync(contractPath)?JSON.parse(fs.readFileSync(contractPath,'utf8')):null;
     if(contract){const validation=await validateContract(first.page,contract);if(validation.some(item=>!item.valid))contract=null;}
     if(!contract)contract=await discoverContract(first.page);
+    if(targets.includes('bridge')&&!contract.bridge?.bridgeDeckSource)throw new Error('No source-tagged Hunter Street East bridge deck segment was found; refusing the generic nearest-bridge fallback.');
     fs.writeFileSync(contractPath,JSON.stringify(contract,null,2));
     const present=targets.filter(name=>contract[name]);
-    if(!present.includes('water-showplace-cycle'))throw new Error('No one-way Water Street segment was found for the requested Showplace-area pose.');
-    report.poseContract={path:contractPath,poses:present.map(name=>({name,lineId:contract[name].lineId,street:contract[name].street,x:contract[name].x,z:contract[name].z,heading:contract[name].heading,cyclewayTagFound:contract[name].cyclewayTagFound||false}))};
+    if(targets.includes('water-showplace-cycle')&&!present.includes('water-showplace-cycle'))throw new Error('No one-way Water Street segment was found for the requested Showplace-area pose.');
+    report.poseContract={path:contractPath,poses:present.map(name=>({name,lineId:contract[name].lineId,street:contract[name].street,x:contract[name].x,z:contract[name].z,heading:contract[name].heading,sourceTags:contract[name].tags||{},bridgeDeckSource:contract[name].bridgeDeckSource||false,bridgeAnchorProjected:contract[name].bridgeAnchorProjected||null,cyclewayTagFound:contract[name].cyclewayTagFound||false}))};
     await runRoot(browser,process.env.ROAD_MARKING_PHONE_LABEL||'before',beforeUrl,contract,first);
     if(afterUrl!==beforeUrl)await runRoot(browser,'after',afterUrl,contract);
     const failures=report.runs.flatMap(run=>[
@@ -217,8 +224,9 @@ function persistReport(report){if(!report)return;fs.writeFileSync(path.join(outp
       expectedPack:!expectedPack||captured.every(p=>p.roadPack===expectedPack),
       actualPhoneDrivingView:captured.length>0&&captured.every(p=>p.mode==='driving'&&p.viewport.isMobile&&p.viewport.dpr>=2),
       requestedRenderQuality:!expectedPack||captured.every(p=>p.profile==='low'?p.rendering.antialias===false&&Math.abs(p.rendering.pixelRatio-.85)<.001:p.rendering.antialias===true&&Math.abs(p.rendering.pixelRatio-(p.profile==='balanced'?1.35:1.65))<.001),
-      sameFrozenPoses:report.poseContract.poses.length>=1,waterStreetOneWayFound:true,
-      waterCyclewayTagObserved:Boolean(contract['water-showplace-cycle'].cyclewayTagFound),allRequestedContextsFound:present.length===targets.length,
+      sameFrozenPoses:report.poseContract.poses.length>=1,waterStreetOneWayFound:!targets.includes('water-showplace-cycle')||Boolean(contract['water-showplace-cycle']),
+      waterCyclewayTagObserved:!targets.includes('water-showplace-cycle')||Boolean(contract['water-showplace-cycle']?.cyclewayTagFound),
+      hunterBridgeSource:!targets.includes('bridge')||Boolean(contract.bridge?.bridgeDeckSource),allRequestedContextsFound:present.length===targets.length,
       allProfilesHaveRuns:profiles.length>0&&report.runs.length===profiles.length*(afterUrl===beforeUrl?1:2),
       everyPoseOnRoad:report.runs.every(run=>run.poses.filter(p=>p.placement).every(p=>p.placement.placed.surface.onRoad)),
       gameplayHudVisible:report.runs.every(run=>run.poses.filter(p=>p.placement).every(p=>{const h=p.placement.hud,v=p.placement.viewport;return h.present&&h.visibility!=='hidden'&&h.display!=='none'&&h.opacity>.01&&h.box&&h.box.width>0&&h.box.height>0&&h.box.x>=0&&h.box.y>=0&&h.box.x+h.box.width<=v.width+1&&h.box.y+h.box.height<=v.height+1})),
