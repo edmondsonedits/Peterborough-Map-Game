@@ -1,0 +1,14 @@
+{
+  "reason": "Measured terrain/landcover occlusion in Sherbrooke truck-eye QA, 2026-10-30",
+  "minimumClearance": 0.1399,
+  "points": [
+    {
+      "x": -232.247,
+      "z": 926.538
+    },
+    {
+      "x": -237.32,
+      "z": 926.24
+    }
+  ]
+}

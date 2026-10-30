@@ -72,3 +72,8 @@ test('tolerance-only hits remain available when no candidate contains the query'
   assert.equal(hit.onRoad, false);
   assert.equal(hit.distance, 1.5);
 });
+
+test('road contacts expose the actual projected centerline point for ownership masks',()=>{
+ const hit=indexOf(road('projection',[0,0],[20,0],{aY:1,bY:3})).sample(7,2,3,1);
+ assert.equal(hit.nearestX,7);assert.equal(hit.nearestZ,0);assert.equal(hit.directionX,1);assert.equal(hit.directionZ,0);
+});

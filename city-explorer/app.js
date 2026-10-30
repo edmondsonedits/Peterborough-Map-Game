@@ -1,64 +1,72 @@
-import { createIntersectionHologramLayer } from './intersection-holograms.js?v=1.6.152';
-import { createRoadsidePlacementResolver, sampleRoadsideRibbon } from './roadside-furniture-placement.js?v=1.6.152';
-import { createRoadsideFurnitureMeshes } from './roadside-furniture-geometry.js?v=1.6.152';
-import { createHunterBridgeSurface, isHunterBridgeLine } from './hunter-bridge-surface.js?v=1.6.152';
-import { createHunterBridgeAppearance } from './hunter-bridge-appearance.js?v=1.6.152';
-import { HUNTER_BRIDGE_FEATURE } from './hunter-bridge-source.js?v=1.6.152';
-import { applyReviewedPhotoAppearance } from './reviewed-photo-appearance.js?v=1.6.152';
-import { CITY_MATERIALS, CITY_PALETTE_SURFACES, installCityMaterialDetail, cloneCityMaterial } from './city-material-library.js?v=1.6.152';
-import { visualSettings, cityShadowSettings, CITY_DAYLIGHT, createCityGlazingEnvironment, glazingIntensity } from './city-visual-settings.js?v=1.6.152';
-import {mappedBuildingDimensions} from './mapped-building-dimensions.js?v=1.6.152';
-import {createBusinessSignLayer, loadBusinessDirectory} from './business-signs.js?v=1.6.152';
-import { recordSherbrookeBuilding, recordSherbrookeSidewalk, sherbrookeBuildings } from './sherbrooke-plan.js?v=1.6.152';
-import { installSherbrookeDetails } from './sherbrooke-details.js?v=1.6.152';
-import { FOOTAGE_PROFILES as BASE_FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js?v=1.6.152';
-import {applyRecordingAppearance, recordingReferencesEnabled} from './recording-appearance.js?v=1.6.152';
-import {applyRecordingSurfacePalette, recordingExpansionEnabled} from './recording-surface-appearance.js?v=1.6.152';
-import {addCricketRecordingProfiles} from './cricket-recording-appearances.js?v=1.6.152';
-import { createFootageFacade, frontageFrame } from './sherbrooke-footage.js?v=1.6.152';
-import { createGardenClearance } from './sherbrooke-garden-clearance.js?v=1.6.152';
+import { createIntersectionHologramLayer } from './intersection-holograms.js?v=1.6.153';
+import { createRoadsidePlacementResolver, sampleRoadsideRibbon } from './roadside-furniture-placement.js?v=1.6.153';
+import { createRoadsideFurnitureMeshes } from './roadside-furniture-geometry.js?v=1.6.153';
+import { createHunterBridgeSurface, isHunterBridgeLine } from './hunter-bridge-surface.js?v=1.6.153';
+import { createHunterBridgeAppearance } from './hunter-bridge-appearance.js?v=1.6.153';
+import { HUNTER_BRIDGE_FEATURE } from './hunter-bridge-source.js?v=1.6.153';
+import { applyReviewedPhotoAppearance } from './reviewed-photo-appearance.js?v=1.6.153';
+import { CITY_MATERIALS, CITY_PALETTE_SURFACES, installCityMaterialDetail, cloneCityMaterial } from './city-material-library.js?v=1.6.153';
+import { visualSettings, cityShadowSettings, CITY_DAYLIGHT, createCityGlazingEnvironment, glazingIntensity } from './city-visual-settings.js?v=1.6.153';
+import {mappedBuildingDimensions} from './mapped-building-dimensions.js?v=1.6.153';
+import {createBusinessSignLayer, loadBusinessDirectory} from './business-signs.js?v=1.6.153';
+import { recordSherbrookeBuilding, recordSherbrookeSidewalk, sherbrookeBuildings } from './sherbrooke-plan.js?v=1.6.153';
+import { installSherbrookeDetails } from './sherbrooke-details.js?v=1.6.153';
+import { FOOTAGE_PROFILES as BASE_FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js?v=1.6.153';
+import {applyRecordingAppearance, recordingReferencesEnabled} from './recording-appearance.js?v=1.6.153';
+import {applyRecordingSurfacePalette, recordingExpansionEnabled} from './recording-surface-appearance.js?v=1.6.153';
+import {addCricketRecordingProfiles} from './cricket-recording-appearances.js?v=1.6.153';
+import { createFootageFacade, frontageFrame } from './sherbrooke-footage.js?v=1.6.153';
+import { createGardenClearance } from './sherbrooke-garden-clearance.js?v=1.6.153';
 import { appendFootageRoof } from './sherbrooke-footage-roofs.js?v=corridor-20261024';
 import { appendFootageMassing } from './footage-building-massing.js';
 import * as THREE from 'three';
-import stationOneLayout from './assets/station1/layout.json?v=1.6.152' with { type: 'json' };
-import stationTwoLayout from './assets/station2/layout.json?v=1.6.152' with { type: 'json' };
+import stationOneLayout from './assets/station1/layout.json?v=1.6.153' with { type: 'json' };
+import stationTwoLayout from './assets/station2/layout.json?v=1.6.153' with { type: 'json' };
 import { hideStationTwoReplacementRecords, stationCameraOffsetScale } from './station-two-core.mjs';
 import { hideStationOneReplacementRecords } from './station-one-core.mjs';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { createEmergencyFacilityLayer, suppressFacilitySource } from './emergency-facilities.js?v=1.6.152';
-import { emergencyFacilityEntries } from './emergency-facilities-catalog.js?v=1.6.152';
-import { createStationOneRuntime, stationOneRequested } from './station-one-runtime.js?v=1.6.152';
-import { createStationTwoRuntime, stationTwoRequested } from './station-two-runtime.js?v=1.6.152';
-import { attachStationThreeModel, createStationThreeDoorController, inspectStationThreeModel, loadStationThreeAsset, selectStationThreeSpawn, stationGameplayLabels, stationThreeLocalPosition, stationThreeThrottleInput, STATION_THREE_BAY_EXIT_LOCAL_Z, STATION_THREE_INITIAL_CAMERA_DISTANCE_SCALE, STATION_THREE_INTERIOR_DRIVE_CAMERA_HEIGHT } from './station-three-runtime.js?v=1.6.152';
+import { createEmergencyFacilityLayer, suppressFacilitySource } from './emergency-facilities.js?v=1.6.153';
+import { emergencyFacilityEntries } from './emergency-facilities-catalog.js?v=1.6.153';
+import { createStationOneRuntime, stationOneRequested } from './station-one-runtime.js?v=1.6.153';
+import { createStationTwoRuntime, stationTwoRequested } from './station-two-runtime.js?v=1.6.153';
+import { attachStationThreeModel, createStationThreeDoorController, inspectStationThreeModel, loadStationThreeAsset, selectStationThreeSpawn, stationGameplayLabels, stationThreeLocalPosition, stationThreeThrottleInput, STATION_THREE_BAY_EXIT_LOCAL_Z, STATION_THREE_INITIAL_CAMERA_DISTANCE_SCALE, STATION_THREE_INTERIOR_DRIVE_CAMERA_HEIGHT } from './station-three-runtime.js?v=1.6.153';
 import { reconcileStationPavement } from './station-pavement-layer.js?v=1.6.57';
 import { CURB_REVEAL, curbIsRaised, stationRoadWeight, splitRoadDetailSegment, pavementSupportBottom } from './station-road-detail.js?v=1.6.58';
 import { installQualityCapture } from './quality-capture.js?v=sherbrooke-20260915';
-import { buildingFacadePlan } from './building-archetypes.js?v=1.6.152';
+import { buildingFacadePlan } from './building-archetypes.js?v=1.6.153';
 import { loadVegetationAssets } from './vegetation-assets.js?v=sherbrooke-20260915';
 import { createVegetationVariant, stationOneVegetationPalette } from './vegetation-variants.js?v=streetscape-1';
 import { installStationStreetscape } from './streetscape-assets.js?v=streetscape-2';
 import { installStationApron } from './site-surface-materials.js?v=1.6.56';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
-import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js?v=1.6.152';
+import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js?v=1.6.153';
 import { createCatalogObject } from './editor/asset-catalog.js';
 import { createCommandHistory } from './editor/command-history.js';
-import { createDraftStore } from './editor/draft-store.js?v=1.6.152';
-import { createCityEditor } from './editor/city-editor.js?v=1.6.152';
+import { createDraftStore } from './editor/draft-store.js?v=1.6.153';
+import { createCityEditor } from './editor/city-editor.js?v=1.6.153';
 import { createEmptySceneDocument, sanitizeRenderableSceneDocument } from './editor/scene-document.js';
 import { createGeneratedRegistry } from './editor/generated-registry.js?v=footage-20261020';
 import { applyOverrides } from './editor/override-runtime.js';
-import { captureBatchLengths, collectBatchRanges, createFeatureBatchBinding } from './editor/feature-batch-binding.js?v=footage-20261020';
+import { captureBatchLengths, collectBatchRanges, createFeatureBatchBinding } from './editor/feature-batch-binding.js?v=1.6.153';
 import {
   LANDMARKS,
   LANDMARK_BUILDING_HEIGHT_OVERRIDES,
   createBuildingFootprintPlacement,
   createPeterboroughLandmarks,
 } from './landmark-models.js?v=corridor-20261024';
-import { ROAD_SURFACE_CLEARANCE, RoadSurfaceIndex, laneCountFor, reconcileRoadNetworkElevations, roadProfile, roadRibbonCrossSections, resampleRoadLine } from './road-network.js?v=1.6.152';
-import { createRoadMarkingContext, roadMarkingIntervals, roadCurbIntervals } from './road-appearance-rules.js?v=1.6.152';
+import { ROAD_SURFACE_CLEARANCE, RoadSurfaceIndex, laneCountFor, reconcileRoadNetworkElevations, roadProfile, roadRibbonCrossSections, resampleRoadLine } from './road-network.js?v=1.6.153';
+import { createRoadMarkingContext, roadMarkingIntervals, roadCurbIntervals } from './road-appearance-rules.js?v=1.6.153';
 import { solveFallbackJunctions, polygonArea as junctionPolygonArea } from './fallback-junction-geometry.js';
 import { officialRoadMeshEdgeLength, officialCurbDisplayMode, nearbyMunicipalRoadHeight, municipalCurbTop } from './citywide-road-quality.js';
 import { sampleTruckWheelContacts, truckIsOnRoad } from './road-wheel-contact.js';
+import { buildConnectedRoadSurface } from './connected-road-surface.js?v=1.6.153';
+import { paintArrowTriangles, paintCrossingTriangles } from './road-paint-geometry.js?v=1.6.153';
+import { createRoadTileLayer, loadRoadTileManifest } from './road-tile-layer.js?v=1.6.153';
+import { finishRoadSurfaces } from './road-surface-finish.js?v=1.6.153';
+import { exportRoadScene, collectRoadSourceRanges } from './road-pack-export.js?v=1.6.153';
+import { ROAD_PACK_ID } from './road-pack-version.js?v=1.6.153';
+import {createRoadRecovery,roadFallbackUrl,readRoadResume} from './road-recovery.js?v=1.6.153';
+import {resolveGraphicsQuality,readGraphicsPreference,installGraphicsQualityControl} from './graphics-quality.js?v=1.6.153';
 import { reviewedPaintTags, drapePaintStrip } from './street-paint.js?v=street-evidence-2';
 import { OfficialDrivableSurfaceIndex, RenderedPavementIndex, officialSurfaceStatusActive, officialBridgeIsVehicular } from './official-road-surfaces.js?v=1.6.101';
 import { FLY_TUNING, adjustFlySpeedScale, applyFlyLookDelta, dampingFactors, flyAxesFromKeys, flySpeedFor, flyYawToward, isFlyControlCode, wrapFlyYaw } from './fly-controls.js?v=1.5.5-fly4';
@@ -66,7 +74,7 @@ import { clearLandCoverRaster, paintLandCoverPolygon } from './land-cover-raster
 import { sampleOfficialTerrainElevation, validOfficialTerrainMetadata } from './terrain-heightmap.js?v=1.5.5-lidar1';
 import { sampleTriangulatedTerrainHeight } from './terrain-surface.js?v=1.5.5-terrain1';
 import { HydroSurfaceIndex, WATER_SURFACE_CLEARANCE, WATER_TERRAIN_RECESS, createWaterStageSampler, relativeWaterElevation, robustFallbackWaterHeight, subdivideWaterTriangle, watercourseWidth } from './water-system.js?v=1.5.5-hydro2';
-import { CitySplatLayer } from './city-splat-layer.js?v=1.6.152';
+import { CitySplatLayer } from './city-splat-layer.js?v=1.6.153';
 import {
   estimatedBuildingFloors,
   facadeDetailClass,
@@ -125,7 +133,25 @@ const STATION_TWO_SELECTED = stationTwoRequested();
 // Render tiles preserve a useful balance between material batching and
 // camera-local culling. The semantic GIS features remain independent.
 const RENDER_TILE_SIZE = 1800;
-const ROAD_RENDER_TILE_SIZE = 3600;
+const ROAD_RENDER_TILE_SIZE = 512;
+const roadParams = new URLSearchParams(location.search);
+const ROAD_PACK_BUILD = roadParams.get('roadPack') === 'build';
+const CONNECTED_ROADS_ENABLED = roadParams.get('roadSurface') !== 'legacy';
+let roadTileLayer = null;
+let roadTileManifest = null;
+let roadTileNextUpdate = 0;
+let roadBuildPaused=false;
+const roadRecovery=createRoadRecovery({onFallback(){
+  if(!roadTileLayer||!gameplayReady)return;
+  const point=state.mode==='driving'?truckState:playerActor?.position||truckState;
+  showToast('Road detail unavailable. Loading source roads...');
+  const url=roadFallbackUrl(location.href,{x:point.x,z:point.z,y:point.y,heading:truckState.heading,mode:state.mode});
+  location.replace(url);
+}});
+const compiledRoadRanges = new Map();
+let sourceRoadNodeIds = new Map();
+let explicitStopBars = [];
+let pendingRoadCrossings = [];
 const explorerStartedAt = performance.now();
 let captureFrame = null;
 const hunterBridgeEnabled = new URLSearchParams(location.search).get('hunterBridge') !== 'legacy';
@@ -331,12 +357,15 @@ const camera = new THREE.PerspectiveCamera(58, innerWidth / innerHeight, 0.5, 27
 camera.position.copy(state.lastFlyPosition);
 camera.rotation.order = 'YXZ';
 
+let graphicsStorage=null;
+try{graphicsStorage=window.localStorage;}catch{}
+const graphicsQuality=resolveGraphicsQuality({search:location.search,saved:readGraphicsPreference(graphicsStorage)});
 const compatibilityMode = new URLSearchParams(location.search).get('lite') === '1';
-const lowPowerProfile = compatibilityMode
-  || innerWidth < 760
-  || (Number(navigator.deviceMemory) > 0 && Number(navigator.deviceMemory) <= 4)
-  || (Number(navigator.hardwareConcurrency) > 0 && Number(navigator.hardwareConcurrency) <= 4);
+const lowPowerProfile = graphicsQuality.name !== 'high';
+document.documentElement.dataset.graphicsQuality=graphicsQuality.name;
+installGraphicsQualityControl({document,location,storage:graphicsStorage,profile:graphicsQuality});
 const cityVisuals = visualSettings(location.search, lowPowerProfile);
+scene.fog.density=graphicsQuality.fogDensity;
 const roadAppearanceEnabled = new URLSearchParams(location.search).get('roadAppearance') !== 'legacy';
 document.documentElement.dataset.roadAppearance = roadAppearanceEnabled ? 'junction-aware' : 'legacy';
 const recordingReferences = recordingReferencesEnabled(location.search);
@@ -346,7 +375,7 @@ const FOOTAGE_PROFILES = addCricketRecordingProfiles(Object.fromEntries(Object.e
 document.documentElement.dataset.cityVisuals = cityVisuals.mode + '-' + cityVisuals.quality;
 document.documentElement.dataset.cityCompatibilityMode = compatibilityMode ? 'forced' : lowPowerProfile ? 'automatic' : 'full';
 const renderer = new THREE.WebGLRenderer({ canvas: els.canvas, antialias: !lowPowerProfile, powerPreference: 'high-performance' });
-renderer.setPixelRatio(Math.min(devicePixelRatio, lowPowerProfile ? 1.2 : 1.65));
+renderer.setPixelRatio(ROAD_PACK_BUILD ? 0.05 : Math.min(devicePixelRatio, graphicsQuality.pixelRatio));
 renderer.setSize(innerWidth, innerHeight, false);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -717,7 +746,7 @@ function releaseStationThreeGltf(gltf) {
 
 async function loadStationThreeModel() {
   const loader = new GLTFLoader();
-  const assetUrl = new URL('./assets/stations/station-3.glb?v=1.6.152', import.meta.url).href;
+  const assetUrl = new URL('./assets/stations/station-3.glb?v=1.6.153', import.meta.url).href;
   const result = await loadStationThreeAsset({
     url: assetUrl,
     timeoutMs: 8000,
@@ -1028,8 +1057,10 @@ async function loadTerrainTiles() {
 
 function configureTerrainMeshResolution() {
   const official = terrain.source === 'ontario-lidar-2025';
-  const targetSpacing = official ? (lowPowerProfile ? 56 : 34) : 58;
-  const maximumSegments = official ? (lowPowerProfile ? 340 : 560) : 320;
+  // A prebuilt road surface must sit on the same physical terrain in every profile.
+  const mobileTerrain = CONNECTED_ROADS_ENABLED || lowPowerProfile;
+  const targetSpacing = official ? (mobileTerrain ? 56 : 34) : 58;
+  const maximumSegments = official ? (mobileTerrain ? 340 : 560) : 320;
   CITY.terrainSegments = THREE.MathUtils.clamp(
     Math.ceil(CITY.terrainSize / targetSpacing),
     192,
@@ -2370,14 +2401,33 @@ function buildBufferedRoadBatches(batches) {
 }
 
 function finalizeRoadLines(roadLines, buckets, roadBatches) {
-  state.roadPaintRanges = new Map();
+  state.roadPaintRanges = roadTileLayer ? compiledRoadRanges : new Map();
   applyBridgeElevationProfiles(roadLines);
   reconcileRoadElevationProfiles(roadLines);
   hunterBridgeSurface = hunterBridgeEnabled ? createHunterBridgeSurface(roadLines, terrainSourceHeightAtWorld) : null;
+  const connected = CONNECTED_ROADS_ENABLED && !roadTileLayer ? buildConnectedRoadSurface(roadLines) : null;
+  const connectedById = new Map(connected?.lines.map(line => [line.lineId, line]) || []);
+  state.connectedRoadSurfaceIndex = connected ? new RenderedPavementIndex() : null;
+  state.connectedRoadStats = connected?.stats || roadTileManifest?.connected || null;
+  document.documentElement.dataset.connectedRoads = roadTileLayer ? 'prebuilt-connected-surface' : connected ? 'connected-source-surface' : 'legacy';
+  const appendConnected = (positions, materialKey, line, kind) => {
+    if (!positions.length) return;
+    const sample = line.samples[Math.floor(line.samples.length / 2)];
+    const batch = roadBatchPositions(roadBatches, materialKey, sample.x, sample.y, kind);
+    for (const value of positions) batch.positions.push(value);
+    batch.segments += Math.max(1, line.samples.length - 1);
+    if (kind === 'surface') for (let i = 0; i < positions.length; i += 9)
+      state.connectedRoadSurfaceIndex.addTriangle(...positions.slice(i, i + 9), {layer:'road_surfaces',id:line.id});
+  };
   roadLines.forEach((line) => {
     const rangeStarts = captureBatchLengths(roadBatches);
-    appendRoadRibbon(line, roadBatches);
-    line.generatedBatchRanges = namespacedRanges(roadBatches, rangeStarts);
+    const rebuilt = connectedById.get(line.id);
+    if (rebuilt) {
+      line.samples = rebuilt.samples;
+      appendConnected(rebuilt.surfacePositions, rebuilt.surfaceKey, line, 'surface');
+      appendConnected(rebuilt.foundationPositions, rebuilt.edgeKey, line, 'foundation');
+    } else if (!roadTileLayer) appendRoadRibbon(line, roadBatches);
+    line.generatedBatchRanges = roadTileLayer ? (compiledRoadRanges.get(String(line.id)) || []) : namespacedRanges(roadBatches, rangeStarts);
     state.roadPaintRanges.set(String(line.id), line.generatedBatchRanges);
     for (let index = 1; index < line.samples.length; index += 1) {
       const a = line.samples[index - 1];
@@ -2402,9 +2452,20 @@ function finalizeRoadLines(roadLines, buckets, roadBatches) {
       });
     }
   });
+  for (const junction of connected?.junctions || []) {
+    const starts = captureBatchLengths(roadBatches);
+    const anchor = junction.positions;
+    const batch = roadBatchPositions(roadBatches, junction.materialKey, anchor[0], anchor[2], 'surface');
+    for (const value of junction.positions) batch.positions.push(value);
+    batch.segments++;
+    for (let i=0;i<junction.positions.length;i+=9) state.connectedRoadSurfaceIndex.addTriangle(...junction.positions.slice(i,i+9),{layer:'road_surfaces',id:junction.id});
+    const ranges = namespacedRanges(roadBatches, starts);
+    for (const lineId of junction.lineIds) state.roadPaintRanges.get(String(lineId))?.push(...ranges);
+  }
   buildBufferedRoadBatches(roadBatches);
+  sourceRoadNodeIds.clear();
   roadLines.forEach((line) => {
-    if (!line.generatedBatchRanges?.length) return;
+    if (!line.generatedBatchRanges?.length && !roadTileLayer) return;
     const samples = line.samples;
     const minX = Math.min(...samples.map((sample) => sample.x)) - line.profile.width / 2;
     const maxX = Math.max(...samples.map((sample) => sample.x)) + line.profile.width / 2;
@@ -2433,6 +2494,10 @@ function queueProjectedLine(points, tags, buckets, roadLines, lineId) {
     const profile = roadProfile(tags);
     const samples = resampleRoadLine(points, tags, terrainHeightAtWorld, lowPowerProfile);
     if (!profile || samples.length < 2) return 0;
+    const wayId = /^(?:way\/)?(\d+)/.exec(String(lineId || ''))?.[1];
+    const nodeMap = sourceRoadNodeIds.get(wayId);
+    if (nodeMap) for (const sample of samples) if (sample.sourceVertex)
+      sample.nodeId = nodeMap.get(`${Math.round(sample.x * 1000)}:${Math.round(sample.y * 1000)}`);
     roadLines.push({ bucket, id: lineId, profile, samples, tags });
     return samples.length - 1;
   }
@@ -2761,6 +2826,7 @@ function buildFallbackPolygonJunctionMeshes(polygons) {
 }
 
 function buildRoadJunctions(segments) {
+  if (CONNECTED_ROADS_ENABLED) return null;
   const prototype = new URLSearchParams(location.search).get('junctionPrototype') === '1'
     ? solveFallbackJunctions(segments) : null;
   const vertices = new Map();
@@ -2870,6 +2936,7 @@ function buildRoadJunctions(segments) {
 }
 
 function buildUrbanCurbs(segments, junctionTrims = null) {
+  if (roadTileLayer) return;
   const curbContext = roadAppearanceEnabled ? createRoadMarkingContext(segments, { maximumTrimMetres: 18 }) : null;
   const nodeLines = new Map();
   const nodeKey = (point, y) => `${Math.round(point.x * 10)}:${Math.round(point.y * 10)}:${Math.round(y * 2)}`;
@@ -2921,10 +2988,10 @@ function buildUrbanCurbs(segments, junctionTrims = null) {
         const tB = to / length;
         const ax = THREE.MathUtils.lerp(segment.a.x, segment.b.x, tA);
         const az = THREE.MathUtils.lerp(segment.a.y, segment.b.y, tA);
-        const ay = THREE.MathUtils.lerp(segment.aY, segment.bY, tA);
+        const ay = state.finishedRoadHeightAt&&!profile.bridge&&!profile.tunnel ? state.finishedRoadHeightAt(ax,az) : THREE.MathUtils.lerp(segment.aY, segment.bY, tA);
         const bx = THREE.MathUtils.lerp(segment.a.x, segment.b.x, tB);
         const bz = THREE.MathUtils.lerp(segment.a.y, segment.b.y, tB);
-        const by = THREE.MathUtils.lerp(segment.aY, segment.bY, tB);
+        const by = state.finishedRoadHeightAt&&!profile.bridge&&!profile.tunnel ? state.finishedRoadHeightAt(bx,bz) : THREE.MathUtils.lerp(segment.aY, segment.bY, tB);
         const batch = batchFor((ax + bx) / 2, (az + bz) / 2);
         const halfRoad = segment.width / 2;
 
@@ -3027,6 +3094,7 @@ function buildMapRoadLines(segments) {
 }
 
 function buildRoadMarkings(segments) {
+  if (roadTileLayer) return;
   const groups = new Map();
   const paintContext = roadAppearanceEnabled ? createRoadMarkingContext(segments, { maximumTrimMetres: 18 }) : null;
   document.documentElement.dataset.roadPaintJunctions = String(paintContext?.junctions.length || 0);
@@ -3235,8 +3303,8 @@ function buildMappedTurnArrows(segments) {
     if (!lines.has(segment.lineId)) lines.set(segment.lineId, []);
     lines.get(segment.lineId).push(segment);
   });
-  const arrows = { left: [], right: [], through: [] };
-  const normalizedKind = (symbol) => /left|reverse/.test(symbol) ? 'left' : /right/.test(symbol) ? 'right' : 'through';
+  if (roadTileLayer) return;
+  const arrows = new Map();
   for (const lineSegments of lines.values()) {
     lineSegments.sort((a, b) => (a.chainStart || 0) - (b.chainStart || 0));
     const exemplar = lineSegments[0];
@@ -3267,7 +3335,8 @@ function buildMappedTurnArrows(segments) {
         const offset = group.oneWay
           ? -segment.width / 2 + laneWidth * (laneIndex + 0.5)
           : laneWidth * (laneIndex + 0.5);
-        arrows[normalizedKind(symbol)].push({
+        if (!arrows.has(symbol)) arrows.set(symbol, []);
+        arrows.get(symbol).push({
           direction,
           lineId: segment.lineId,
           x: THREE.MathUtils.lerp(segment.a.x, segment.b.x, t) + sideX * offset,
@@ -3277,107 +3346,61 @@ function buildMappedTurnArrows(segments) {
       });
     });
   }
-  const dummy = new THREE.Object3D();
-  let count = 0;
-  Object.entries(arrows).forEach(([kind, entries]) => {
-    if (!entries.length) return;
-    const mesh = new THREE.InstancedMesh(turnArrowGeometry(kind), materials.roadPaintWhite, entries.length);
-    entries.forEach((entry, index) => {
-      dummy.position.set(entry.x, entry.y, entry.z);
-      setRoadQuaternion(dummy, entry.direction);
-      dummy.scale.setScalar(1);
-      dummy.updateMatrix();
-      mesh.setMatrixAt(index, dummy.matrix);
-      attachRoadInstance(entry.lineId, mesh, index);
-    });
-    mesh.instanceMatrix.needsUpdate = true;
-    mesh.computeBoundingSphere();
-    mesh.renderOrder = 7;
-    mesh.userData = { type: 'mapped-turn-arrows', kind, count: entries.length };
-    streetscapeGroup.add(mesh);
-    count += entries.length;
-  });
-  document.documentElement.dataset.mappedTurnArrows = String(count);
-  state.objectCount += count;
+  const entries=[];
+  for (const [symbol, marks] of arrows) for (const mark of marks) {
+    const batch=paintArrowTriangles({x:mark.x,z:mark.z,heading:Math.atan2(mark.direction.x,mark.direction.z),symbol,length:3.6,width:1.2},
+      (x,z,referenceHeight)=>{const hit=gameplaySurfaceAt(x,z,referenceHeight);return hit.onRoad?hit.height:null;},
+      {sourceId:mark.lineId,referenceHeight:mark.y,spacing:1.5,lift:0.008,maxHeightJump:0.5});
+    entries.push({positions:batch.positions,lineId:mark.lineId});
+  }
+  buildFinalPaintBatches(entries,'mapped-turn-arrows','roadPaintWhite');
+  document.documentElement.dataset.mappedTurnArrows=String(entries.filter(entry=>entry.positions.length).length);
 }
 
-function buildCrossings(crossings) {
-  const bars = [];
-  const rails = [];
-  const dots = [];
-  for (const crossing of crossings) {
-    const dx = crossing.b.x - crossing.a.x;
-    const dz = crossing.b.y - crossing.a.y;
-    const length = Math.hypot(dx, dz);
-    if (length < 1) continue;
-    const heading = Math.atan2(dx, dz);
-    const sideX = Math.cos(heading);
-    const sideZ = -Math.sin(heading);
-    const style = crossing.markingStyle;
-    const aRoad = state.roadSurfaceIndex.sample(crossing.a.x, crossing.a.y, 4);
-    const bRoad = state.roadSurfaceIndex.sample(crossing.b.x, crossing.b.y, 4);
-    const aY = (aRoad?.height ?? terrainHeightAtWorld(crossing.a.x, crossing.a.y) + ROAD_SURFACE_CLEARANCE) + 0.019;
-    const bY = (bRoad?.height ?? terrainHeightAtWorld(crossing.b.x, crossing.b.y) + ROAD_SURFACE_CLEARANCE) + 0.019;
-    const direction3 = new THREE.Vector3(dx, bY - aY, dz).normalize();
-
-    if (style === 'lines' || style === 'ladder') {
-      const x = (crossing.a.x + crossing.b.x) / 2;
-      const z = (crossing.a.y + crossing.b.y) / 2;
-      const y = (aY + bY) / 2;
-      const offset = Math.max(0.45, crossing.width / 2 - 0.1);
-      rails.push({ x: x + sideX * offset, z: z + sideZ * offset, y, direction: direction3, length });
-      rails.push({ x: x - sideX * offset, z: z - sideZ * offset, y, direction: direction3, length });
-    }
-
-    if (style === 'dots') {
-      const offset = Math.max(0.45, crossing.width / 2 - 0.12);
-      for (let distance = 0.3; distance < length; distance += 0.72) {
-        const t = distance / length;
-        const x = THREE.MathUtils.lerp(crossing.a.x, crossing.b.x, t);
-        const z = THREE.MathUtils.lerp(crossing.a.y, crossing.b.y, t);
-        const y = THREE.MathUtils.lerp(aY, bY, t);
-        dots.push({ x: x + sideX * offset, z: z + sideZ * offset, y, direction: direction3 });
-        dots.push({ x: x - sideX * offset, z: z - sideZ * offset, y, direction: direction3 });
-      }
-    } else if (!['lines'].includes(style)) {
-      for (let distance = 0.35; distance < length; distance += 0.92) {
-        const t = distance / length;
-        const x = THREE.MathUtils.lerp(crossing.a.x, crossing.b.x, t);
-        const z = THREE.MathUtils.lerp(crossing.a.y, crossing.b.y, t);
-        bars.push({ x, z, y: THREE.MathUtils.lerp(aY, bY, t), direction: direction3, width: crossing.width });
-      }
+function buildFinalPaintBatches(entries,type,materialKey) {
+  if(roadTileLayer)return;
+  const groups=new Map();
+  for(const entry of entries){
+    if(!entry.positions?.length)continue;
+    const p=entry.positions,tile=roadRenderTileCoordinates(p[0],p[2]),key=`${type}:${tile.x}:${tile.z}`;
+    if(!groups.has(key))groups.set(key,{tile,positions:[],ranges:[]});
+    const group=groups.get(key),startVertex=group.positions.length/3;
+    for(const value of p)group.positions.push(value);
+    group.ranges.push({lineId:entry.lineId,startVertex,vertexCount:p.length/3});
+  }
+  for(const [key,group] of groups){
+    const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(group.positions,3));
+    geometry.computeVertexNormals();geometry.computeBoundingSphere();
+    const material=cityVisuals.mode==='legacy'?materials[materialKey].clone():cloneCityMaterial(materials[materialKey]);
+    material.polygonOffset=true;material.polygonOffsetFactor=-1;material.polygonOffsetUnits=-1;
+    const mesh=new THREE.Mesh(geometry,material);mesh.renderOrder=7;
+    mesh.userData={type,material:materialKey,tile:group.tile,tileSize:ROAD_RENDER_TILE_SIZE,paintSurface:'final-pavement',paintLiftMetres:0.008};
+    generatedRoadMeshes.set(key,mesh);streetscapeGroup.add(mesh);
+    for(const range of group.ranges){
+      const id=String(range.lineId||'');if(!state.roadPaintRanges.has(id))state.roadPaintRanges.set(id,[]);
+      state.roadPaintRanges.get(id).push({key,startVertex:range.startVertex,vertexCount:range.vertexCount});
     }
   }
-  const dummy = new THREE.Object3D();
-  const addPaintMesh = (geometry, instances, type, setScale) => {
-    if (!instances.length) return;
-    const groups = new Map();
-    instances.forEach((mark) => {
-      const tile = roadRenderTileCoordinates(mark.x, mark.z);
-      const key = `${tile.x}:${tile.z}`;
-      if (!groups.has(key)) groups.set(key, { tile, instances: [] });
-      groups.get(key).instances.push(mark);
-    });
-    groups.forEach(({ tile, instances: tileInstances }) => {
-      const mesh = new THREE.InstancedMesh(geometry, materials.crossingPaint, tileInstances.length);
-      tileInstances.forEach((mark, index) => {
-        dummy.position.set(mark.x, mark.y, mark.z);
-        setRoadQuaternion(dummy, mark.direction);
-        setScale(dummy.scale, mark);
-        dummy.updateMatrix();
-        mesh.setMatrixAt(index, dummy.matrix);
-      });
-      mesh.instanceMatrix.needsUpdate = true;
-      mesh.computeBoundingSphere();
-      mesh.renderOrder = 7;
-      mesh.userData = { type, tile, tileSize: ROAD_RENDER_TILE_SIZE, count: tileInstances.length };
-      streetscapeGroup.add(mesh);
-    });
-  };
-  if (bars.length) addPaintMesh(new THREE.BoxGeometry(1, 0.035, 0.5), bars, 'mapped-crossing-bars', (scale, mark) => scale.set(mark.width, 1, 1));
-  if (rails.length) addPaintMesh(new THREE.BoxGeometry(0.16, 0.035, 1), rails, 'mapped-crossing-lines', (scale, mark) => scale.set(1, 1, mark.length));
-  if (dots.length) addPaintMesh(new THREE.BoxGeometry(0.28, 0.035, 0.28), dots, 'mapped-crossing-dots', (scale) => scale.set(1, 1, 1));
-  state.objectCount += bars.length + rails.length + dots.length;
+}
+function buildCrossings(crossings) {
+  if(roadTileLayer)return;
+  const entries=[];
+  for(const crossing of crossings){
+    if(crossing.a.distanceTo(crossing.b)<1)continue;
+    const center=gameplaySurfaceAt((crossing.a.x+crossing.b.x)/2,(crossing.a.y+crossing.b.y)/2);
+    const batch=paintCrossingTriangles({a:{x:crossing.a.x,z:crossing.a.y},b:{x:crossing.b.x,z:crossing.b.y},width:crossing.width,style:crossing.markingStyle},
+      (x,z,referenceHeight)=>{const hit=gameplaySurfaceAt(x,z,referenceHeight);return hit.onRoad?hit.height:null;},
+      {referenceHeight:center.height,lift:0.008,spacing:1.5,maxHeightJump:0.5});
+    entries.push({positions:batch.positions,lineId:crossing.tags?.id||`crossing:${crossing.a.x.toFixed(3)}:${crossing.a.y.toFixed(3)}`});
+  }
+  buildFinalPaintBatches(entries,'mapped-crossing-bars','crossingPaint');
+  document.documentElement.dataset.mappedCrossings=String(entries.filter(entry=>entry.positions.length).length);
+}
+function buildExplicitStopBars(){
+  if(roadTileLayer)return;
+  const entries=explicitStopBars.map(bar=>({lineId:bar.id,positions:drapePaintStrip(bar.a,bar.b,bar.width,(x,z)=>{const hit=gameplaySurfaceAt(x,z);return hit.onRoad?hit.height:null;},{spacing:1,lift:0.008})}));
+  buildFinalPaintBatches(entries,'mapped-stop-bars','roadPaintWhite');
+  document.documentElement.dataset.mappedStopBars=String(entries.filter(entry=>entry.positions.length).length);
 }
 
 function buildBridgeDetails(segments) {
@@ -3836,7 +3859,43 @@ async function loadCityOpenData() {
   return collection;
 }
 
+function prepareRoadNodeIdentities(data){
+  sourceRoadNodeIds=new Map();explicitStopBars=[];
+  for(const way of data.elements||[]){
+    if(way.type!=='way'||!way.geometry?.length)continue;
+    if(way.tags?.highway){const nodes=new Map();way.geometry.forEach((point,index)=>{const p=project(point.lat,point.lon);if(way.nodes?.[index]!=null)nodes.set(`${Math.round(p.x*1000)}:${Math.round(p.y*1000)}`,String(way.nodes[index]));});sourceRoadNodeIds.set(String(way.id),nodes);}
+    if(!['stop_line','solid_stop_line'].includes(way.tags?.road_marking)&&way.tags?.highway!=='stop_line')continue;
+    for(let i=1;i<way.geometry.length;i++){const a=project(way.geometry[i-1].lat,way.geometry[i-1].lon),b=project(way.geometry[i].lat,way.geometry[i].lon);explicitStopBars.push({id:`way/${way.id}`,a:{x:a.x,z:a.y},b:{x:b.x,z:b.y},width:0.32});}
+  }
+}
+async function tryLoadRoadTilePack(){
+  if(!CONNECTED_ROADS_ENABLED||ROAD_PACK_BUILD||roadParams.get('roadPack')==='0'||terrain.source!=='ontario-lidar-2025')return null;
+  configureTerrainMeshResolution();
+  const url=new URL('data/road-pack/manifest.json',import.meta.url);
+  const manifest=await loadRoadTileManifest({url:url.href,sourceGeneratedAt:state.manifest?.generated_at,terrain:{source:terrain.source,segments:CITY.terrainSegments,size:CITY.terrainSize}});
+  const layer=createRoadTileLayer({THREE,parent:roadGroup,materials,manifest,baseUrl:new URL('./',url),
+    radius:graphicsQuality.roadRadius,retainRadius:graphicsQuality.roadRetainRadius,
+    materialFactory:material=>cityVisuals.mode==='legacy'?material.clone():cloneCityMaterial(material),
+    onRanges(mesh,ranges,key){generatedRoadMeshes.set(key,mesh);for(const range of ranges){const id=String(range.sourceId);if(!compiledRoadRanges.has(id))compiledRoadRanges.set(id,[]);compiledRoadRanges.get(id).push({key,startVertex:range.startVertex,vertexCount:range.vertexCount});
+      const record=generatedRegistry.records.get(generatedRegistry.makeGeneratedId({sourceType:'road',sourceId:id}));record?.batchBinding?.refresh?.();}},
+    onReleaseRanges(key){generatedRoadMeshes.delete(key);for(const ranges of compiledRoadRanges.values())for(let i=ranges.length-1;i>=0;i--)if(ranges[i].key===key)ranges.splice(i,1);},
+    onError(id,error){console.warn(`Road tile ${id} retained safe loading boundary.`,error);document.documentElement.dataset.roadTileError=id;if(roadTileLayer&&gameplayReady)roadRecovery.failed(id);}});
+  try{const spawn=project(FIRE_STATION_ONE.lat,FIRE_STATION_ONE.lon);const stats=await layer.update(spawn.x,spawn.y);if(stats.failures||!stats.residentCount)throw new Error('Initial road tiles unavailable');}
+  catch(error){await layer.dispose();compiledRoadRanges.clear();throw error;}
+  roadTileLayer=layer;roadTileManifest=manifest;
+  document.documentElement.dataset.roadPackId=manifest.buildId;
+  document.documentElement.dataset.roadPackBuildHint=ROAD_PACK_ID;
+  state.renderedPavementIndex={sample:(...args)=>layer.sample(...args),get triangleCount(){return layer.stats().triangleCount;}};
+  state.officialDrivableSurfaceIndex={contains:(x,z,options)=>Boolean(layer.sample(x,z,null,{...options,contact:'official'})),get polygonCount(){return manifest.inventory?.road_surfaces||0;}};
+  state.officialRoadSurfacesAvailable=true;
+  document.documentElement.dataset.officialRoadDetail=lowPowerProfile?'prebuilt-municipal-mobile':'prebuilt-municipal-desktop';
+  document.documentElement.dataset.roadPaintVersion='street-evidence-2';
+  document.documentElement.dataset.roadPaintSurface='connected-final-pavement';
+  return {features:[],roadTileManifest:manifest};
+}
 async function loadOfficialRoadSurfaces() {
+  try { const packed=await tryLoadRoadTilePack();if(packed)return packed; }
+  catch(error){console.warn('Prebuilt roads unavailable; retaining source road generation.',error);}
   // Retain an explicit escape hatch for low-memory devices.
   if (lowPowerProfile && new URLSearchParams(location.search).get('municipalRoads') !== '1') {
     state.officialRoadSurfacesAvailable = false;
@@ -3892,7 +3951,9 @@ function officialRoadHeightAt(x, z, layer = 'road_surfaces', metadata = {}) {
   if (layer === 'bridges') road = candidates.find((candidate) => candidate.bridge) || candidates[0];
   else road = candidates[0];
   const surfaceOffset = layer === 'bridges' ? 0.012 : layer === 'road_surfaces' ? 0.008 : 0.004;
-  return Math.max(road?.height ?? -Infinity, terrainY + ROAD_SURFACE_CLEARANCE) + surfaceOffset;
+  const connected=state.connectedRoadSurfaceIndex?.sample(x,z,road?.height);
+  const matching=connected&&(!road||Math.abs(connected.height-road.height)<0.5)?connected.height:road?.height;
+  return Math.max(matching ?? -Infinity, terrainY + ROAD_SURFACE_CLEARANCE) + surfaceOffset;
 }
 
 function stationRoadDetailWeight(x, z) {
@@ -4038,20 +4099,20 @@ function appendOfficialRoadPolygon(polygonCoordinates, layer, batches, heightCac
 }
 
 async function buildOfficialRoadSurfaces(collection, osmBuildingIndex = null) {
-  if (!collection?.features?.length || !state.officialRoadSurfacesAvailable) return null;
+  if ((!collection?.features?.length&&!collection?.roadTileManifest) || !state.officialRoadSurfacesAvailable) return null;
   const municipalBuildStartedAt = performance.now();
   const curbModeCounts = { raised: 0, 'edge-of-pavement': 0, unclassified: 0 };
   const batches = new Map();
   const heightCache = new Map();
   const curbs = [];
   const pavementPolygons = [];
-  const counts = { road_surfaces: 0, parking_surfaces: 0, bridges: 0, curb_edges: 0 };
+  const counts = { road_surfaces: 0, parking_surfaces: 0, bridges: 0, curb_edges: 0,...(collection.roadTileManifest?.inventory||{}) };
   const excludedBridgeUses = {};
   const municipalBuildingBatches = createBuildingBufferBatches();
   let supplementalBuildings = 0;
   let triangles = 0;
-  state.officialDrivableSurfaceIndex = new OfficialDrivableSurfaceIndex();
-  state.renderedPavementIndex = new RenderedPavementIndex();
+  if(!collection.roadTileManifest){state.officialDrivableSurfaceIndex = new OfficialDrivableSurfaceIndex();
+  state.renderedPavementIndex = new RenderedPavementIndex();}
 
   for (let featureIndex = 0; featureIndex < collection.features.length; featureIndex += 1) {
     if (featureIndex > 0 && featureIndex % 900 === 0) {
@@ -4133,7 +4194,7 @@ async function buildOfficialRoadSurfaces(collection, osmBuildingIndex = null) {
 
   buildBufferedRoadBatches(batches);
   const stationCenter = project(44.3010, -78.32212);
-  if (new URLSearchParams(location.search).get('pavementContinuity') !== '0') {
+  if (!collection.roadTileManifest&&new URLSearchParams(location.search).get('pavementContinuity') !== '0') {
     try {
       const result = reconcileStationPavement({ THREE, group: roadGroup, polygons: pavementPolygons,
         center: { x: stationCenter.x, z: stationCenter.y }, terrainHeight: terrainHeightAtWorld,
@@ -4152,7 +4213,7 @@ async function buildOfficialRoadSurfaces(collection, osmBuildingIndex = null) {
       }
     } catch (error) { console.warn('Station pavement continuity retained original geometry:', error); }
   }
-  buildOfficialCurbRibbons(curbs);
+  if(CONNECTED_ROADS_ENABLED&&!roadTileLayer)state.pendingOfficialCurbs=curbs;else buildOfficialCurbRibbons(curbs);
   buildBufferedBuildingBatches(municipalBuildingBatches);
   heightCache.clear();
   state.officialRoadSurfaceCount = counts.road_surfaces + counts.parking_surfaces + counts.bridges;
@@ -4545,11 +4606,10 @@ async function parseOsmWithGeoJson(data) {
   buildMapRoadLines(roadSegments);
   if (!state.officialRoadSurfacesAvailable) {
     const fallbackTrims = buildRoadJunctions(roadSegments);
-    buildUrbanCurbs(roadSegments, fallbackTrims);
+    if(CONNECTED_ROADS_ENABLED)state.pendingGeneratedCurbs={segments:roadSegments,trims:fallbackTrims};else buildUrbanCurbs(roadSegments, fallbackTrims);
   }
   state.roadMarkingSegments = roadSegments;
-  buildMappedTurnArrows(roadSegments);
-  buildCrossings(crossings);
+  pendingRoadCrossings = crossings;
   buildBridgeDetails(roadSegments);
   buildTunnelStructures(roadSegments);
   buildStreetLabels(roadSegments);
@@ -4630,11 +4690,10 @@ function parseOsmWayFallback(data) {
   buildMapRoadLines(roadSegments);
   if (!state.officialRoadSurfacesAvailable) {
     const fallbackTrims = buildRoadJunctions(roadSegments);
-    buildUrbanCurbs(roadSegments, fallbackTrims);
+    if(CONNECTED_ROADS_ENABLED)state.pendingGeneratedCurbs={segments:roadSegments,trims:fallbackTrims};else buildUrbanCurbs(roadSegments, fallbackTrims);
   }
   state.roadMarkingSegments = roadSegments;
-  buildMappedTurnArrows(roadSegments);
-  buildCrossings(crossings);
+  pendingRoadCrossings = crossings;
   buildBridgeDetails(roadSegments);
   buildTunnelStructures(roadSegments);
   buildStreetLabels(roadSegments);
@@ -4707,10 +4766,10 @@ function buildFallbackCity() {
   buildMapRoadLines(roadSegments);
   if (!state.officialRoadSurfacesAvailable) {
     const fallbackTrims = buildRoadJunctions(roadSegments);
-    buildUrbanCurbs(roadSegments, fallbackTrims);
+    if(CONNECTED_ROADS_ENABLED)state.pendingGeneratedCurbs={segments:roadSegments,trims:fallbackTrims};else buildUrbanCurbs(roadSegments, fallbackTrims);
   }
   state.roadMarkingSegments = roadSegments;
-  buildMappedTurnArrows(roadSegments);
+
 
   const river = [
     new THREE.Vector2(450, -2300), new THREE.Vector2(400, -900), new THREE.Vector2(490, 250),
@@ -4816,7 +4875,7 @@ async function buildCity() {
     console.info('Official City eMaps detail layer is unavailable; the OSM city remains usable.', error);
     return null;
   });
-  const officialRoadSurfacePromise = loadOfficialRoadSurfaces().catch((error) => {
+  const officialRoadSurfacePromise = terrainPromise.then(() => loadOfficialRoadSurfaces()).catch((error) => {
     console.info('Official City pavement geometry is unavailable; using the complete OSM road fallback.', error);
     state.officialRoadSurfacesAvailable = false;
     return null;
@@ -4851,6 +4910,7 @@ async function buildCity() {
   let summary = { buildings: 0, roads: 0, land: 0, trees: 0 };
   try {
     const data = await osmPromise;
+    prepareRoadNodeIdentities(data);
     setProgress(52, 'Resolving OSM multipolygons, roads, water, and land cover…');
     await nextFrame();
     try {
@@ -4901,11 +4961,29 @@ async function buildCity() {
     await nextFrame();
     summary.cityOpenData = buildCityOpenData(cityOpenData);
   }
+  if(CONNECTED_ROADS_ENABLED&&!roadTileLayer){
+    setProgress(93,'Joining road surfaces and smoothing shared pavement grades...');
+    await nextFrame();
+    const sourceRangesByMesh=new Map();
+    for(const [sourceId,ranges] of state.roadPaintRanges||[])for(const range of ranges){const mesh=generatedRoadMeshes.get(range.key);if(!mesh)continue;if(!sourceRangesByMesh.has(mesh))sourceRangesByMesh.set(mesh,[]);sourceRangesByMesh.get(mesh).push({...range,sourceId});}
+    const finished=finishRoadSurfaces({THREE,roadGroup,roadIndex:state.roadSurfaceIndex,officialIndex:state.officialDrivableSurfaceIndex,renderedOfficialIndex:state.renderedPavementIndex,terrainHeight:terrainHeightAtWorld,Index:RenderedPavementIndex,clearance:ROAD_SURFACE_CLEARANCE,hunterBridgeSurface,sourceRangesByMesh,terrainGrid:terrain.renderGrid});
+    state.renderedPavementIndex=finished.officialIndex;state.connectedRoadSurfaceIndex=finished.fallbackIndex;
+    state.finishedRoadSurfaces=true;state.finishedRoadHeightAt=finished.heightAt;state.roadFinishStats=finished.stats;
+    for(const ranges of state.roadPaintRanges.values())ranges.length=0;
+    for(const ranges of finished.sourceRangesByMesh.values())for(const range of ranges){if(!state.roadPaintRanges.has(String(range.sourceId)))state.roadPaintRanges.set(String(range.sourceId),[]);state.roadPaintRanges.get(String(range.sourceId)).push({key:range.key,startVertex:range.startVertex,vertexCount:range.vertexCount});}
+    document.documentElement.dataset.roadSurfaceFinish=JSON.stringify(finished.stats);
+  }
+  if(state.pendingOfficialCurbs){buildOfficialCurbRibbons(state.pendingOfficialCurbs);state.pendingOfficialCurbs=null;}
+  if(state.pendingGeneratedCurbs){buildUrbanCurbs(state.pendingGeneratedCurbs.segments,state.pendingGeneratedCurbs.trims);state.pendingGeneratedCurbs=null;}
+  buildMappedTurnArrows(state.roadMarkingSegments||[]);
+  buildCrossings(pendingRoadCrossings);
+  buildExplicitStopBars();
   // Roadside anchors must see the final full/lite pavement, including junctions.
   const roadsideResolver = buildStreetFurniture(state.streetFurnitureProps || { lamps: [], signals: [] });
   buildStreetNameSigns(state.roadMarkingSegments || [], roadsideResolver);
   // Drape paint only after the final municipal and station pavement exists.
   buildRoadMarkings(state.roadMarkingSegments || []);
+  document.documentElement.dataset.roadPaintSurface='connected-final-pavement';
   // All OSM and municipal polygons are now available. Paint once in a fixed
   // class-priority order so overlaps do not depend on source feature order.
   flushLandCoverRaster();
@@ -4957,6 +5035,15 @@ async function buildCity() {
   // Settle optional photographic geometry before editor source-copy replacements are loaded.
   await Promise.all([...footageFacadeGroups.values()].map(group => group.userData.photoReady));
   initializeGameplay();
+  const roadResume=readRoadResume(location.search,CITY.worldBounds);
+  if(roadResume){
+    const surface=gameplaySurfaceAt(roadResume.x,roadResume.z,roadResume.y);
+    Object.assign(truckState,roadResume,{y:surface.height+0.035,speed:0,acceleration:0});
+    if(playerActor)playerActor.position.set(roadResume.x,surface.height,roadResume.z);
+    state.gameplayYaw=roadResume.heading;setMode(roadResume.mode,true);snapGameplayCamera();
+    const resumedUrl=new URL(location.href);resumedUrl.searchParams.delete('roadResume');history.replaceState(null,'',resumedUrl);
+    document.documentElement.dataset.roadRecovery='source-restored';
+  }
   emergencyFacilityLayer = createEmergencyFacilityLayer({
     THREE, scene: gameplayGroup, loader: new GLTFLoader(),
     entries: emergencyFacilityEntries({stationOneSelected:STATION_ONE_SELECTED,stationTwoSelected:STATION_TWO_SELECTED,stationThreeManaged:true}),
@@ -4975,6 +5062,14 @@ async function buildCity() {
   setProgress(100, 'Peterborough is ready');
   setReadyStatus(summary);
   globalThis.__PTBO_EXPLORER_BOOTSTRAP__?.ready?.();
+  if(ROAD_PACK_BUILD){const buildRanges=collectRoadSourceRanges(generatedRoadMeshes,state.roadPaintRanges);globalThis.__PTBO_ROAD_BUILD__=Object.freeze({
+    meshIds:()=>roadGroup.children.concat(streetscapeGroup.children).filter(mesh=>mesh.geometry?.getAttribute('position')&&/^(road-(surface|foundation|official-.*)-batch|connected-road-|official-curb-ribbons|terrain-following-urban-curbs|prototype-junction-|road-lane-dashes|road-centre-lines|mapped-cycle-lane-edges|road-edge-lines|mapped-turn-arrows|mapped-crossing-|mapped-stop-)/.test(mesh.userData.type||'')).map(mesh=>mesh.uuid),
+    exportMesh:onlyMeshId=>exportRoadScene({THREE,roadGroup,streetscapeGroup,generatedRoadMeshes,roadPaintRanges:state.roadPaintRanges,onlyMeshId,sourceRangesByMesh:buildRanges}),
+    heightNodes:points=>points.map(point=>state.finishedRoadHeightAt(point.x,point.z)),
+    terrainProbes:points=>points.map(({x,z})=>{const hit=gameplaySurfaceBaseAt(x,z);return{x,z,terrainHeight:terrainHeightAtWorld(x,z),roadHeight:hit.height,onRoad:hit.onRoad,heightSource:hit.heightSource};}),
+    pause(){roadBuildPaused=true;cancelAnimationFrame(animationFrameId);animationFrameId=0;},
+    report:()=>({sourceGeneratedAt:state.manifest?.generated_at,terrain:{source:terrain.source,segments:terrain.renderGrid?.segments,size:terrain.renderGrid?.size},connected:state.connectedRoadStats,finish:state.roadFinishStats,inventory:globalThis.__PTBO_OFFICIAL_ROADS__,markings:{reviewedWays:Number(document.documentElement.dataset.roadPaintReviewedWays||0),arrows:Number(document.documentElement.dataset.mappedTurnArrows||0),crossings:Number(document.documentElement.dataset.mappedCrossings||0),stopBars:Number(document.documentElement.dataset.mappedStopBars||0)},projection:{center:CITY.center,bounds:CITY.worldBounds}})
+  });}
   const qaParams = new URLSearchParams(location.search);
   if (qaParams.has('qaLat') && qaParams.has('qaLon')) {
     window.__PTBO_CITY_QA__?.setView({
@@ -5164,6 +5259,7 @@ function keyboardInputIsBlocked(event) {
 function gameplaySurfaceBaseAt(x, z, referenceHeight = null) {
   const terrainY = terrainHeightAtWorld(x, z);
   const official = state.renderedPavementIndex.sample(x, z, referenceHeight);
+  const connected = !official ? state.connectedRoadSurfaceIndex?.sample(x,z,referenceHeight) : null;
   // Surveyed pavement wins. Only use prototype fallback polygons when the
   // authoritative mesh does not cover this point.
   let fallbackJunction = !official ? state.fallbackJunctionSurfaceIndex?.sample(x, z, referenceHeight) : null;
@@ -5176,17 +5272,18 @@ function gameplaySurfaceBaseAt(x, z, referenceHeight = null) {
     road = hunterRoad;
     fallbackJunction = null;
   }
-  const onRoad = Boolean(official || fallbackJunction || road?.onRoad);
+  const exact = Boolean(roadTileLayer || state.finishedRoadSurfaces);
+  const onRoad = Boolean(official || fallbackJunction || connected || (!exact && road?.onRoad));
   const roadHeight = onRoad && Number.isFinite(road?.height) ? road.height : -Infinity;
   // A surveyed bridge polygon may overlap an OSM underpass with no separate
   // municipal face. Keep that lower road only when the actor's height clearly
   // identifies it; ordinary centimetre-separated overlays use the mesh height.
-  const useLowerRoad = official && road?.onRoad && Number.isFinite(referenceHeight)
+  const useLowerRoad = !roadTileLayer && official && road?.onRoad && Number.isFinite(referenceHeight)
     && (official.layer === 'bridges' || road.bridge) && official.height - road.height > 1
     && Math.abs(road.height - referenceHeight) + 0.5 < Math.abs(official.height - referenceHeight);
   return {
-    height: official && !useLowerRoad ? official.height : fallbackJunction ? fallbackJunction.height : Math.max(terrainY, roadHeight),
-    heightSource: official && !useLowerRoad ? official.heightSource : fallbackJunction ? 'junction-polygon' : road?.onRoad ? 'road-ribbon' : 'terrain',
+    height: official && !useLowerRoad ? official.height : fallbackJunction ? fallbackJunction.height : connected ? connected.height : exact ? terrainY : Math.max(terrainY, roadHeight),
+    heightSource: official && !useLowerRoad ? official.heightSource : fallbackJunction ? 'junction-polygon' : connected ? 'connected-road-triangle' : !exact&&road?.onRoad ? 'road-ribbon' : 'terrain',
     name: road?.name || (official?.parking ? 'Parking / apron' : onRoad ? 'Peterborough road' : 'Off road'),
     onRoad,
     official,
@@ -5845,6 +5942,8 @@ function updateFireTruck(delta) {
     next.x = THREE.MathUtils.clamp(next.x, CITY.worldBounds.minX, CITY.worldBounds.maxX);
     next.z = THREE.MathUtils.clamp(next.z, CITY.worldBounds.minZ, CITY.worldBounds.maxZ);
     if (selectedStationRuntime()?.sweep(truckState, next)) { next.x = truckState.x; next.z = truckState.z; next.speed = 0; next.acceleration = 0; }
+    if(roadTileLayer&&!roadTileLayer.readyAt(next.x,next.z,12)){next.x=truckState.x;next.z=truckState.z;next.speed=0;next.acceleration=0;document.documentElement.dataset.roadStreaming='waiting';}
+    else document.documentElement.dataset.roadStreaming='ready';
     Object.assign(truckState, next);
 
     if (performance.now() - state.gameplayLastLookTime > 2200 && Math.abs(truckState.speed) > 1.5) {
@@ -6412,13 +6511,13 @@ function updateCityVisualLod(viewCamera = camera) {
     else if (object.userData?.type === 'building-batch' && object.userData.tile) {
       const distance = distanceToRenderTile(object, viewCamera);
       if (FAR_BUILDING_DETAIL_MATERIALS.has(object.userData.material)) {
-        object.visible = nearDetail && distance < 2200;
+        object.visible = nearDetail && distance < Math.min(2200,graphicsQuality.buildingRadius);
       } else if (BUILDING_ROOF_MATERIALS.has(object.userData.material)) {
         object.visible = distance < (state.mode === 'map' ? 14000 : 9400);
       } else {
         // Full wall volumes are retained around the player. Far districts keep
         // their exact roof footprint as a much cheaper aerial silhouette.
-        object.visible = distance < (nearDetail ? 4200 : 3000);
+        object.visible = distance < (nearDetail ? graphicsQuality.buildingRadius : Math.min(3000,graphicsQuality.buildingRadius));
       }
     }
   });
@@ -6426,7 +6525,7 @@ function updateCityVisualLod(viewCamera = camera) {
   // Authoritative road geometry remains loaded and queryable, but only tiles
   // that can contribute visible pixels are submitted. Map mode keeps the
   // complete network, while street and fly views use the atmospheric horizon.
-  const roadRadius = nearDetail ? 5600 : 9000;
+  const roadRadius = nearDetail ? graphicsQuality.roadRadius+600 : graphicsQuality.roadRetainRadius+700;
   roadGroup.children.forEach((object) => {
     if (state.mode === 'map') {
       object.visible = false;
@@ -6440,7 +6539,7 @@ function updateCityVisualLod(viewCamera = camera) {
   streetscapeGroup.children.forEach((object) => {
     if (!NEAR_STREETSCAPE_TYPES.has(object.userData?.type)) return;
     const tiled = object.userData?.tile && object.userData?.tileSize;
-    object.visible = nearDetail && (!tiled || distanceToRenderTile(object, viewCamera) < 3500);
+    object.visible = nearDetail && (!tiled || distanceToRenderTile(object, viewCamera) < graphicsQuality.streetDetailRadius);
   });
   vegetationGroup.children.forEach((object) => {
     if (state.mode === 'map') object.visible = false;
@@ -6468,6 +6567,7 @@ function freezeStaticCityTransforms() {
 }
 
 function animate() {
+  if(ROAD_PACK_BUILD&&roadBuildPaused){animationFrameId=0;return;}
   if (document.hidden) {
     animationFrameId = 0;
     return;
@@ -6515,6 +6615,11 @@ function animate() {
   }
   citySplatLayer?.update(viewCamera, captureFrame ? 0 : performance.now());
   if (animatedFountain) animatedFountain.scale.y = 1 + Math.sin((captureFrame ? 0 : performance.now()) * 0.0018) * 0.018;
+  if(roadTileLayer&&performance.now()>roadTileNextUpdate){
+    roadTileNextUpdate=performance.now()+250;
+    const x=viewCamera.position.x,z=viewCamera.position.z;
+    void roadTileLayer.update(x,z,{protectX:truckState.x,protectZ:truckState.z,protectRadius:100}).then(stats=>{document.documentElement.dataset.roadTiles=JSON.stringify(stats);}).catch(error=>console.warn('Road tile update retained existing geometry.',error));
+  }
   renderer.render(scene, viewCamera);
   captureFrame?.(performance.now());
   animationFrameId = requestAnimationFrame(animate);
@@ -6800,6 +6905,7 @@ function setTheme(theme) {
     materials.storefrontGlass.emissiveIntensity = 0.2;
     els.timeButton.textContent = 'Night';
   }
+  scene.fog.density=Math.max(scene.fog.density,graphicsQuality.fogDensity);
   if (cityVisuals.mode !== 'legacy') {
     const updated = new Set();
     const apply = mat => { if (mat?.userData?.cityGlazing && !updated.has(mat)) { mat.envMapIntensity = glazingIntensity(theme); updated.add(mat); } };
@@ -7087,7 +7193,7 @@ function wireEvents() {
   });
   window.addEventListener('keyup', (event) => { if (!cityEditor?.active) state.keys.delete(event.code); });
   window.addEventListener('blur', () => { stopFlyMotion(); endCanvasLook(); });
-  window.addEventListener('pagehide', () => { citySplatLayer?.dispose(); cityEditor?.dispose(); }, { once: true });
+  window.addEventListener('pagehide', () => { citySplatLayer?.dispose(); cityEditor?.dispose();void roadTileLayer?.dispose(); }, { once: true });
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
       stopFlyMotion();
@@ -7126,7 +7232,7 @@ function wireEvents() {
   window.addEventListener('resize', () => {
     camera.aspect = innerWidth / innerHeight;
     camera.updateProjectionMatrix();
-    renderer.setPixelRatio(Math.min(devicePixelRatio, lowPowerProfile ? 1.2 : innerWidth < 760 ? 1.25 : 1.65));
+    renderer.setPixelRatio(ROAD_PACK_BUILD?0.05:Math.min(devicePixelRatio,graphicsQuality.pixelRatio));
     renderer.setSize(innerWidth, innerHeight, false);
     streetLabelGroup.visible = state.mode === 'map' && innerWidth >= 760;
     updateMapGuide();

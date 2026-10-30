@@ -67,7 +67,7 @@ function renderPaint(tags, lineId = 'way/460581459', { roadAppearance = true, se
  const state={roadPaintRanges:new Map([[lineId,[]]]),objectCount:0};
  const group=new THREE.Group(), meshes=new Map();
  const fn=app.match(/^function buildRoadMarkings\([^]*?^\}/m)[0];
- const env={THREE, state, streetscapeGroup:group, generatedRoadMeshes:meshes, roadAppearanceEnabled:roadAppearance,
+ const env={THREE, state, roadTileLayer:null, streetscapeGroup:group, generatedRoadMeshes:meshes, roadAppearanceEnabled:roadAppearance,
   cityVisuals:{mode:'legacy'},
   roadProfile,laneCountFor,roadLaneMarkingBoundaries,mappedCycleLaneSides,
   createRoadMarkingContext,roadMarkingIntervals,

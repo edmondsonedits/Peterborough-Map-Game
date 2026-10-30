@@ -21,13 +21,13 @@
     <meta name="city-editor-publisher" content="">
     <meta name="description" content="A playable full-city 3D simulation of Peterborough, Ontario, generated from validated road, building, land-cover, and elevation data.">
     <meta name="road-release" content="citywide-road-2026-10-09">
-    <title>Peterborough 3D Simulator — v1.6.152</title>
+    <title>Peterborough 3D Simulator — v1.6.153</title>
 
     <!-- Terrain has an optional live fallback; the rendering runtime is shipped locally. -->
     <link rel="preconnect" href="https://s3.amazonaws.com">
-    <link rel="stylesheet" href="styles.css?v=1.6.152">
-    <link rel="stylesheet" href="mobile-controls-1.6.68.css?v=1.6.152">
-    <link rel="stylesheet" href="current-street-hud-1.6.77.css?v=1.6.152">
+    <link rel="stylesheet" href="styles.css?v=1.6.153">
+    <link rel="stylesheet" href="mobile-controls-1.6.68.css?v=1.6.153">
+    <link rel="stylesheet" href="current-street-hud-1.6.77.css?v=1.6.153">
     <style>
       #station2-game-controls:not([hidden]) {
         position: fixed; right: 28px; bottom: calc(116px + env(safe-area-inset-bottom, 0px)); z-index: 19;
@@ -58,7 +58,7 @@
           "three": "./vendor/three-r180/build/three.module.min.js",
           "three/addons/": "./vendor/three-r180/examples/jsm/",
           "@sparkjsdev/spark": "./vendor/spark-2.1.0/spark.module.min.js",
-          "./gameplay-systems.js?v=firefighter4": "./gameplay-systems-1.6.69.js?v=1.6.152"
+          "./gameplay-systems.js?v=firefighter4": "./gameplay-systems-1.6.69.js?v=1.6.153"
         }
       }
     </script>
@@ -80,6 +80,7 @@
       <!-- Buttons switch explorer modes or open dialogs; JavaScript owns behaviour. -->
       <nav class="control-panel" aria-label="Simulator controls">
         <a class="hud-button menu-link" href="../" aria-label="Return to all games">Main menu</a>
+        <button class="hud-button" id="graphics-quality-open" type="button">Graphics</button>
         <button id="play-mode" class="hud-button is-active" type="button">Play</button>
         <button id="fly-mode" class="hud-button" type="button">Fly mode</button>
         <button id="map-mode" class="hud-button" type="button">Map</button>
@@ -170,6 +171,19 @@
         </form>
       </dialog>
 
+      <dialog id="graphics-quality-dialog" class="explorer-dialog" aria-labelledby="graphics-quality-title">
+        <form method="dialog" class="dialog-shell">
+          <header><h2 id="graphics-quality-title">Graphics quality</h2><button class="hud-button" value="cancel" aria-label="Close graphics settings">Close</button></header>
+          <p>Choose the detail level that runs smoothly on your device. Roads and driving stay the same.</p>
+          <label for="graphics-quality-select">Quality</label>
+          <select id="graphics-quality-select" style="width:100%;min-height:44px;padding:10px;margin:10px 0 18px;color:inherit;background:#14252c;border:1px solid #647580;border-radius:8px">
+            <option value="low">Low � lighter on battery and memory</option>
+            <option value="balanced" selected>Balanced � recommended</option>
+            <option value="high">High � more detail and shadows</option>
+          </select>
+          <button id="graphics-quality-apply" type="button" class="hud-button">Apply and restart</button>
+        </form>
+      </dialog>
       <dialog id="landmarks-dialog" class="explorer-dialog">
         <form method="dialog" class="dialog-shell">
           <header><div><p>Quick travel</p><h2>Peterborough landmarks</h2></div><button class="close-button" value="cancel" aria-label="Close landmarks">×</button></header>
@@ -405,12 +419,12 @@
         }, 2000);
       })();
     </script>
-    <script src="../shared/build-version.js?v=1.6.152"></script>
-    <script src="release.js?v=1.6.152"></script>
-    <script type="module" src="data-loader.js?v=1.6.152"></script>
-    <script src="vendor/osmtogeojson-3.0.0-beta.5/osmtogeojson.js?v=1.6.152"></script>
-    <script type="module" src="road-orientation-fix.js?v=1.6.152&streetEvidence=2"></script>
-    <script src="mobile-controls-1.6.68.js?v=1.6.152"></script>
-    <script src="driving-refinement-1.6.69.js?v=1.6.152"></script>
+    <script src="../shared/build-version.js?v=1.6.153"></script>
+    <script src="release.js?v=1.6.153"></script>
+    <script type="module" src="data-loader.js?v=1.6.153"></script>
+    <script src="vendor/osmtogeojson-3.0.0-beta.5/osmtogeojson.js?v=1.6.153"></script>
+    <script type="module" src="road-orientation-fix.js?v=1.6.153&streetEvidence=2"></script>
+    <script src="mobile-controls-1.6.68.js?v=1.6.153"></script>
+    <script src="driving-refinement-1.6.69.js?v=1.6.153"></script>
   </body>
 </html>

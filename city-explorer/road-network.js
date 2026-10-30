@@ -645,6 +645,8 @@ export class RoadSurfaceIndex {
           candidates.push({
             bridge: Boolean(segment.bridge),
             distance,
+            nearestX, nearestZ,
+            directionX: dx / Math.sqrt(lengthSquared), directionZ: dz / Math.sqrt(lengthSquared),
             height: segment.aY + (segment.bY - segment.aY) * t,
             highway: segment.tags?.highway || '',
             layer: Number.isFinite(Number.parseFloat(segment.tags?.layer))

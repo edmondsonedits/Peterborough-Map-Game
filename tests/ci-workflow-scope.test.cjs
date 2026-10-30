@@ -45,8 +45,31 @@ test('Pages deployment stages only the production-facing artifact', () => {
   assert.match(deploy, /name: Stage production Pages artifact/);
   assert.match(deploy, /path: _site/);
   assert.doesNotMatch(deploy, /path: \./);
-  for (const excluded of ['.git/','.github/','tests/','tools/','scripts/','test-artifacts/']) {
+  for (const excluded of ['.git/','.github/','tests/','tools/','scripts/','test-artifacts/','artifacts/']) {
     assert.match(deploy, new RegExp(`--exclude '${excluded.replace(/[.*+?^$()|[\]{}\\]/g, '\\$&')}'`), excluded);
   }
   assert.match(deploy, /test -f _site\/docs\/ANALYTICS-PRIVACY-SECURITY\.md/);
+});
+
+
+test('successful main geospatial refresh deploys its final bot commit',()=>{
+ const deploy=read('.github/workflows/deploy-pages.yml');
+ const build=read('.github/workflows/build-peterborough-assets.yml');
+ const name=build.match(/^name: (.+)$/m)[1];
+ assert.match(deploy,/workflow_run:/);
+ assert.ok(deploy.includes(`workflows: ['${name}']`));
+ assert.match(deploy,/types: \[completed\]/);
+ assert.match(deploy,/github\.event\.workflow_run\.conclusion == 'success'/);
+ assert.match(deploy,/github\.event\.workflow_run\.event != 'pull_request'/);
+ assert.match(deploy,/github\.event_name == 'workflow_run' && 'main' \|\| github\.ref/);
+});
+
+
+test('every fingerprinted road source triggers the geospatial rebuild',()=>{
+ const workflow=read('.github/workflows/build-peterborough-assets.yml');
+ const push=workflow.slice(workflow.indexOf('  push:'),workflow.indexOf('  pull_request:'));
+ const patterns=[...push.matchAll(/^\s*-\s*'([^']+)'\s*$/gm)].map(match=>match[1]);
+ const sources=Object.keys(JSON.parse(read('city-explorer/data/road-pack/manifest.json')).sources);
+ const matches=(pattern,file)=>new RegExp('^'+pattern.replace(/[.+?^${}()|[\]\\]/g,'\\$&').replaceAll('**','\0').replaceAll('*','[^/]*').replaceAll('\0','.*')+'$').test(file);
+ for(const file of sources)assert.ok(patterns.some(pattern=>matches(pattern,file)),`Road source does not trigger rebuild: ${file}`);
 });

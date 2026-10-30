@@ -24,6 +24,7 @@ export function createFeatureBatchBinding(ranges, resolveMesh) {
   const originals = new Map();
   const sourceColors = new Map();
   let hidden = false;
+  let requestedAppearance = null;
   const rangeIdentity = (range) => JSON.stringify([range.key, range.startVertex, range.vertexCount]);
 
   function attributeFor(range, name) {
@@ -31,7 +32,6 @@ export function createFeatureBatchBinding(ranges, resolveMesh) {
   }
 
   function setVisible(visible) {
-    if (visible === !hidden) return;
     for (const range of ranges) {
       const attribute = attributeFor(range, 'position');
       if (!attribute) continue;
@@ -51,6 +51,7 @@ export function createFeatureBatchBinding(ranges, resolveMesh) {
     if (appearance.color === undefined) return false;
     const color = parseColor(appearance.color);
     if (!color) return false;
+    requestedAppearance = appearance;
     for (const range of ranges) {
       const attribute = attributeFor(range, 'color');
       if (!attribute) return false;
@@ -65,6 +66,7 @@ export function createFeatureBatchBinding(ranges, resolveMesh) {
   }
 
   function restore() {
+    requestedAppearance = null;
     setVisible(true);
     for (const range of ranges) {
       const source = sourceColors.get(rangeIdentity(range));
@@ -118,5 +120,6 @@ export function createFeatureBatchBinding(ranges, resolveMesh) {
     return root;
   }
 
-  return { setVisible, setAppearance, restore, cloneGeometry };
+  function refresh() { if (hidden) setVisible(false); if (requestedAppearance) setAppearance(requestedAppearance); }
+  return { setVisible, setAppearance, restore, cloneGeometry, refresh };
 }

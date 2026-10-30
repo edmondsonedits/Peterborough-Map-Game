@@ -90,13 +90,13 @@ test('retry after an uncertain upload outcome reuses the same score document',as
 });
 
 
-test('low-power renderer keeps its pixel budget after window resizing',()=>{
+test('selected graphics profile keeps its pixel budget after window resizing',()=>{
  const source=read('city-explorer/app.js').toString();
  const calls=[...source.matchAll(/renderer\.setPixelRatio\([^;\n]+\);/g)].map(x=>x[0]);assert.ok(calls.length>=2);
- for(const width of [390,1440,2560]){
-  const ratios=[],c=vm.createContext({devicePixelRatio:3,innerWidth:width,lowPowerProfile:true,renderer:{setPixelRatio:r=>ratios.push(r)}});
+ for(const pixelRatio of [.85,1.1,1.65])for(const width of [390,1440,2560]){
+  const ratios=[],c=vm.createContext({devicePixelRatio:3,innerWidth:width,ROAD_PACK_BUILD:false,graphicsQuality:{pixelRatio},renderer:{setPixelRatio:r=>ratios.push(r)}});
   for(const call of calls)vm.runInContext(call,c);
-  assert.ok(ratios.every(r=>r===1.2),JSON.stringify(ratios));
+  assert.ok(ratios.every(r=>r===pixelRatio),JSON.stringify(ratios));
  }
 });
 

@@ -9,7 +9,7 @@ function run(enabled,lite=false){
  for(let i=-20;i<20;i+=2)roads.push({a:{x:i,y:0},b:{x:i+2,y:0},aY:2,bY:2,lineId:'main',chainStart:i+20,width:8,aSourceVertex:i===-20||i===0,bSourceVertex:i===-2||i===18,profile});
  roads.push({a:{x:0,y:0},b:{x:0,y:25},aY:2,bY:2,lineId:'side',chainStart:0,width:8,aSourceVertex:true,bSourceVertex:true,profile});
  const group=new THREE.Group(),state={objectCount:0},dataset={};
- const env={roads,THREE,state,roadAppearanceEnabled:enabled,lowPowerProfile:lite,createRoadMarkingContext,roadMarkingIntervals,roadCurbIntervals,shouldRenderUrbanCurb:()=>true,stableHash:()=>0,roadRenderTileCoordinates:()=>({x:0,z:0}),materials:{curbConcrete:new THREE.MeshBasicMaterial()},streetscapeGroup:group,document:{documentElement:{dataset}},ROAD_RENDER_TILE_SIZE:400,appendRoadTriangle:(out,...values)=>out.push(...values)};
+ const env={roads,THREE,state,roadTileLayer:null,roadAppearanceEnabled:enabled,lowPowerProfile:lite,createRoadMarkingContext,roadMarkingIntervals,roadCurbIntervals,shouldRenderUrbanCurb:()=>true,stableHash:()=>0,roadRenderTileCoordinates:()=>({x:0,z:0}),materials:{curbConcrete:new THREE.MeshBasicMaterial()},streetscapeGroup:group,document:{documentElement:{dataset}},ROAD_RENDER_TILE_SIZE:400,appendRoadTriangle:(out,...values)=>out.push(...values)};
  const fn=app.match(/^function buildUrbanCurbs\([^]*?^\}/m)[0];
  Function(...Object.keys(env),fn+';buildUrbanCurbs(roads);')(...Object.values(env));
  return group;

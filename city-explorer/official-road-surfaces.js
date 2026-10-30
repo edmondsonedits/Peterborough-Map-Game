@@ -141,6 +141,7 @@ export class OfficialDrivableSurfaceIndex {
     const candidates = this.cells.get(`${Math.floor(x / this.cellSize)}:${Math.floor(z / this.cellSize)}`) || [];
     for (let index = candidates.length - 1; index >= 0; index -= 1) {
       const entry = candidates[index];
+      if (options.includeBridges === false && entry.layer === 'bridges') continue;
       if (!includeParking && !entry.drivable) continue;
       const bounds = entry.bounds;
       if (x < bounds.minX || x > bounds.maxX || z < bounds.minZ || z > bounds.maxZ) continue;

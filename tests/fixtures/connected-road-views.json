@@ -1,0 +1,12 @@
+{
+  "sourceBaseline": "a105632703a88917789e936b71a59654b3351224",
+  "views": [
+    { "name": "george-hunter", "kind": "overhead", "lat": 44.305907, "lon": -78.3200676, "camera": { "position": [-29.2824888079409, 42.0941795600894, 330.95422000034375], "yaw": -3.141592653589793, "pitch": -1.12 } },
+    { "name": "sherbrooke-george", "kind": "overhead", "lat": 44.3007961, "lon": -78.3197008, "camera": { "position": [-0.06372685342722487, 36.00447355906892, 895.9131060001507], "yaw": -3.141592653589793, "pitch": -1.12 } },
+    { "name": "stewart-dublin", "kind": "overhead", "lat": 44.3119016, "lon": -78.3260676, "camera": { "position": [-507.2338839267589, 61.61198123212224, -331.68886399977464], "yaw": -3.141592653589793, "pitch": -1.12 } },
+    { "name": "ashburnham-maria", "kind": "overhead", "lat": 44.3009722, "lon": -78.3022676, "camera": { "position": [1388.6399833784897, 35.37952593289095, 876.4470120004438], "yaw": -3.141592653589793, "pitch": -1.12 } },
+    { "name": "chemong-parkhill", "kind": "overhead", "lat": 44.3141676, "lon": -78.3267751, "camera": { "position": [-563.5923192681935, 62.87195452203672, -582.1725039996386], "yaw": -3.141592653589793, "pitch": -1.12 } },
+    { "name": "sherbrooke-truck-eye", "kind": "truck-eye", "lat": 44.3006997, "lon": -78.3221781, "requestedLat": 44.3008, "requestedLon": -78.32212, "offsetMeters": 12.086853, "camera": { "x": -197.40189204102418, "y": -5.300911889825553, "z": 928.5691619997943, "yaw": 1.512577111427425, "pitch": -0.03 }, "headingSource": "OSM way 460581459 segment 4; local tangent; centerline offset recorded from baseline" },
+    { "name": "hunter-bridge-truck-eye", "kind": "truck-eye", "lat": 44.30605308422257, "lon": -78.31541373226162, "camera": { "x": 341.43794090186253, "y": 0.05096115906443277, "z": 336.8060700373323, "yaw": 4.899139210348083, "pitch": -0.03 }, "headingSource": "OSM way 177049271 bridge midpoint; Ashburnham Bridge" }
+  ]
+}

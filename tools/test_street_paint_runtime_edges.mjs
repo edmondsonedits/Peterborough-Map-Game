@@ -15,7 +15,7 @@ test('legacy fallback junction contact follows its actual cap top, not the lower
  const state={objectCount:0,fallbackJunctionSurfaceIndex:null};
  const group=new THREE.Group();
  const fn=app.match(/^function buildRoadJunctions\([^]*?^\}/m)[0];
- const env={THREE,state,roadGroup:group,RenderedPavementIndex,URLSearchParams,location:{search:''},
+ const env={THREE,state,roadGroup:group,roadTileLayer:null,CONNECTED_ROADS_ENABLED:false,RenderedPavementIndex,URLSearchParams,location:{search:''},
   materials:{roadLocal:new THREE.MeshBasicMaterial(),roadEdge:new THREE.MeshBasicMaterial()},
   roadRenderTileCoordinates:()=>({x:0,z:0}),ROAD_RENDER_TILE_SIZE:400,
   roadProfilePriority:()=>3,attachRoadInstance:()=>{},solveFallbackJunctions:()=>null};

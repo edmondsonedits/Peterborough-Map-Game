@@ -4,6 +4,10 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  workflow_run:
+    workflows: ['Build Peterborough geospatial assets']
+    types: [completed]
+    branches: [main]
 
 permissions:
   contents: read
@@ -16,6 +20,7 @@ concurrency:
 
 jobs:
   deploy:
+    if: ${{ github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event != 'pull_request') }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -23,6 +28,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_run' && 'main' || github.ref }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -72,6 +79,14 @@ jobs:
             node --test tests/ems.test.cjs >/dev/null
           done
 
+      - name: Verify connected roads and road-pack asset
+        run: |
+          node --test tests/connected-road-surface.test.mjs tests/graphics-quality.test.mjs tests/road-appearance-rules.test.mjs tests/road-pack-build.test.mjs tests/road-pack-export.test.mjs tests/road-pack-optimize.test.mjs tests/road-pack-verifier.test.mjs tests/road-paint-geometry.test.mjs tests/road-recovery.test.mjs tests/road-stacked-ownership.test.mjs tests/road-surface-finish.test.mjs tests/road-tile-layer.test.mjs tests/road-tile-pack.test.mjs tests/streamed-road-bindings.test.mjs
+          node tools/test_fallback_junction_geometry.mjs
+          node tools/test_rendered_pavement.mjs
+          node tools/test_street_paint_runtime_edges.mjs
+          node tools/verify-road-pack.mjs
+
       - name: Stage production Pages artifact
         run: |
           rm -rf _site
@@ -83,7 +98,8 @@ jobs:
             --exclude 'tests/' \
             --exclude 'tools/' \
             --exclude 'scripts/' \
-            --exclude 'test-artifacts/'
+            --exclude 'test-artifacts/' \
+            --exclude 'artifacts/'
           test -f _site/index.html
           test -f _site/city-explorer/index.html
           test -f _site/response-simulator/index.html
@@ -97,6 +113,7 @@ jobs:
           test ! -e _site/tools
           test ! -e _site/scripts
           test ! -e _site/test-artifacts
+          test ! -e _site/artifacts
           node -e "const fs=require('node:fs'); for(const city of fs.readdirSync('cities')) { const file='cities/'+city+'/training-data.json'; if(!fs.existsSync(file)) continue; const data=JSON.parse(fs.readFileSync(file)); for(const asset of [file,data.roadsUrl,'shared/ems-priority.js']) if(!fs.existsSync('_site/'+asset)) throw Error('Missing published training asset: '+asset); }"
 
       - name: Configure Pages

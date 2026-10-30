@@ -62,8 +62,8 @@ const runtime=appSource.slice(runtimeStart,runtimeEnd);
 test('actual gameplay query chooses the Hunter ribbon beneath tires and preserves unrelated underpasses',()=>{
  const hit={height:5,onRoad:true,name:'Hunter Street East',bridge:true};
  const wrong={height:4.85,onRoad:true,name:'Hunter Street East',bridge:true};
- const state={renderedPavementIndex:{sample:()=>null},fallbackJunctionSurfaceIndex:{sample:()=>({height:4.9})},roadSurfaceIndex:{sample:()=>wrong}};
- const context={terrainHeightAtWorld:()=>-10,state,hunterBridgeSurface:{roadAt:()=>hit},stationTwoRuntime:null,selectedStationRuntime:()=>context.stationTwoRuntime};
+ const state={renderedPavementIndex:{sample:()=>null},connectedRoadSurfaceIndex:undefined,fallbackJunctionSurfaceIndex:{sample:()=>({height:4.9})},roadSurfaceIndex:{sample:()=>wrong}};
+ const context={terrainHeightAtWorld:()=>-10,state,roadTileLayer:null,hunterBridgeSurface:{roadAt:()=>hit},stationTwoRuntime:null,selectedStationRuntime:()=>context.stationTwoRuntime};
  const query=runInNewContext(runtime+'\ngameplaySurfaceAt',context);
  assert.equal(query(0,0,4.85).height,5);assert.equal(query(0,0,4.85).heightSource,'road-ribbon');
  wrong.name='Underpass';wrong.height=-2;state.fallbackJunctionSurfaceIndex.sample=()=>null;

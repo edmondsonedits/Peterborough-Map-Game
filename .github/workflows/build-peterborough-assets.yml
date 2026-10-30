@@ -14,6 +14,34 @@ on:
       - 'tools/test_city_detail_rules.mjs'
       - 'tools/test_terrain_heightmap.mjs'
       - 'city-explorer/app.js'
+      - 'tools/build-road-pack.cjs'
+      - 'tests/fixtures/road-terrain-clearance.json'
+      - 'city-explorer/citywide-road-quality.js'
+      - 'city-explorer/fallback-junction-geometry.js'
+      - 'city-explorer/assets/station1/layout.json'
+      - 'city-explorer/assets/station2/layout.json'
+      - 'city-explorer/data/peterborough-osm.json'
+      - 'city-explorer/data/peterborough-road-surfaces.geojson'
+      - 'city-explorer/data/peterborough-city-open-data.geojson'
+      - 'city-explorer/connected-road-surface.js'
+      - 'city-explorer/official-road-surfaces.js'
+      - 'city-explorer/road-surface-finish.js'
+      - 'city-explorer/road-terrain-envelope.js'
+      - 'city-explorer/road-paint-geometry.js'
+      - 'city-explorer/street-paint.js'
+      - 'city-explorer/road-appearance-rules.js'
+      - 'city-explorer/city-detail-rules.js'
+      - 'city-explorer/pavement-continuity.js'
+      - 'city-explorer/station-pavement-layer.js'
+      - 'city-explorer/station-road-detail.js'
+      - 'city-explorer/hunter-bridge-surface.js'
+      - 'city-explorer/hunter-bridge-source.js'
+      - 'city-explorer/road-pack-build.js'
+      - 'city-explorer/road-pack-optimize.js'
+      - 'city-explorer/road-pack-export.js'
+      - 'city-explorer/road-tile-pack.js'
+      - 'city-explorer/road-pack-version.js'
+      - 'city-explorer/graphics-quality.js'
       - 'city-explorer/feature-utils.js'
       - 'tests/city-feature-utils.test.mjs'
       - 'city-explorer/fly-controls.js'
@@ -47,6 +75,34 @@ on:
       - 'tools/test_city_detail_rules.mjs'
       - 'tools/test_terrain_heightmap.mjs'
       - 'city-explorer/app.js'
+      - 'tools/build-road-pack.cjs'
+      - 'tests/fixtures/road-terrain-clearance.json'
+      - 'city-explorer/citywide-road-quality.js'
+      - 'city-explorer/fallback-junction-geometry.js'
+      - 'city-explorer/assets/station1/layout.json'
+      - 'city-explorer/assets/station2/layout.json'
+      - 'city-explorer/data/peterborough-osm.json'
+      - 'city-explorer/data/peterborough-road-surfaces.geojson'
+      - 'city-explorer/data/peterborough-city-open-data.geojson'
+      - 'city-explorer/connected-road-surface.js'
+      - 'city-explorer/official-road-surfaces.js'
+      - 'city-explorer/road-surface-finish.js'
+      - 'city-explorer/road-terrain-envelope.js'
+      - 'city-explorer/road-paint-geometry.js'
+      - 'city-explorer/street-paint.js'
+      - 'city-explorer/road-appearance-rules.js'
+      - 'city-explorer/city-detail-rules.js'
+      - 'city-explorer/pavement-continuity.js'
+      - 'city-explorer/station-pavement-layer.js'
+      - 'city-explorer/station-road-detail.js'
+      - 'city-explorer/hunter-bridge-surface.js'
+      - 'city-explorer/hunter-bridge-source.js'
+      - 'city-explorer/road-pack-build.js'
+      - 'city-explorer/road-pack-optimize.js'
+      - 'city-explorer/road-pack-export.js'
+      - 'city-explorer/road-tile-pack.js'
+      - 'city-explorer/road-pack-version.js'
+      - 'city-explorer/graphics-quality.js'
       - 'city-explorer/feature-utils.js'
       - 'tests/city-feature-utils.test.mjs'
       - 'city-explorer/fly-controls.js'
@@ -82,7 +138,7 @@ concurrency:
 jobs:
   build-and-validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 60
     steps:
       - name: Check out source branch
         uses: actions/checkout@v4
@@ -98,6 +154,11 @@ jobs:
 
       - name: Install geospatial dependencies
         run: python -m pip install --disable-pip-version-check -r tools/geospatial/requirements.txt
+
+      - name: Set up Node.js for road-pack compilation
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
 
       - name: Build cached Peterborough assets
         run: >-
@@ -168,6 +229,24 @@ jobs:
           node tools/test_city_detail_rules.mjs
           python tools/geospatial/test_official_lidar_terrain.py
 
+      - name: Compile and verify connected road pack
+        if: steps.complete_validation.outcome == 'success'
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --prefix "$RUNNER_TEMP/road-pack-node" --no-save --no-package-lock --ignore-scripts --no-audit playwright@1.62.1
+          npx --yes playwright@1.62.1 install --with-deps chromium
+          python -m http.server 4174 --bind 127.0.0.1 --directory . > "$RUNNER_TEMP/road-pack-http.log" 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:4174/city-explorer/ >/dev/null; then break; fi
+            sleep 1
+          done
+          curl --fail --silent --show-error http://127.0.0.1:4174/city-explorer/ >/dev/null
+          NODE_PATH="$RUNNER_TEMP/road-pack-node/node_modules" ROAD_BUILD_URL=http://127.0.0.1:4174 node tools/build-road-pack.cjs
+          node tools/verify-road-pack.mjs
+
       - name: Upload generated map assets
         if: always()
         uses: actions/upload-artifact@v4
@@ -189,7 +268,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           rm -f city-explorer/data/complete-validator.log
-          git add city-explorer/data city-explorer/ROAD-VALIDATION.md
+          git add city-explorer/data city-explorer/road-pack-version.js city-explorer/ROAD-VALIDATION.md
           if git diff --cached --quiet; then
             echo 'Generated assets are already current.'
           else

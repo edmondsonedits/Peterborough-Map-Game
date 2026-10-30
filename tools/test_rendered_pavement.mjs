@@ -108,11 +108,12 @@ let nearbyRoad = { height: 103, name: 'Test Street', onRoad: false };
 let lastRoadQuery = null;
 const gameplayState = {
   renderedPavementIndex: index,
+  connectedRoadSurfaceIndex: undefined,
   fallbackJunctionSurfaceIndex: null,
   roadSurfaceIndex: { sample(...args) { lastRoadQuery = args; return nearbyRoad; } },
 };
 const gameplaySurfaceAt = runInNewContext(`${gameplayFunctions}\ngameplaySurfaceAt`, {
-  state: gameplayState, stationTwoRuntime: null, selectedStationRuntime: () => null,
+  state: gameplayState, roadTileLayer: null, stationTwoRuntime: null, selectedStationRuntime: () => null,
   terrainHeightAtWorld: () => terrainHeight, hunterBridgeSurface: null,
 });
 let surface = gameplaySurfaceAt(0, 10, 102);
