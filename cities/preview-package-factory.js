@@ -243,7 +243,7 @@
 
     const ready=(async()=>{
       let fire,ems;
-      if (drills) {
+      if (drills || config.canonicalRoster === true) {
         const response=await fetch(new URL('./geo-data.json',config.sourceUrl).href,{cache:'force-cache'});
         if(!response.ok)throw new Error(`${config.name} canonical bases could not load.`);
         const geo=await response.json();

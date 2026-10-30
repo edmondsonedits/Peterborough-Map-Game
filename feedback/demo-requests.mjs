@@ -20,7 +20,11 @@ export function createDemoRequests(service,context){
   if(!uid)throw new Error('Could not open a private request session. Please try again.');
   const requestKey=key(city,mode);
   if(!attempts.has(requestKey)){
-   const value=normalizeNewThread({category:'demo',title:`Demo request · ${cityName} · ${modes[mode]}`,body:`I would like a demo of ${modes[mode]} for ${cityName}.`,city,mode},context());
+   const title = `${mode === 'explorer' ? 'City demo request' : 'Full version request'} · ${cityName} · ${modes[mode]}`;
+   const body = mode === 'explorer'
+     ? `I would like a demo of ${modes[mode]} for ${cityName}.`
+     : `I would like the full version of ${modes[mode]} for ${cityName}.`;
+   const value=normalizeNewThread({category:'demo',title,body,city,mode},context());
    attempts.set(requestKey,{thread:{id:service.id(),ownerId:uid,...value,status:'new',priority:'normal'},messageId:service.id(),received:false});
   }
   const attempt=attempts.get(requestKey);

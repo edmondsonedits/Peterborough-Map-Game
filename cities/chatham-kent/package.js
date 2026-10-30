@@ -1,0 +1,2 @@
+/* Demo uses the packaged canonical roster; full dispatch stays data-dependent. */
+(() => {const sourceUrl=new URL(document.currentScript.src,location.href);window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"chatham-kent","name":"Chatham-Kent","map":{"bounds":[[41.6765674895705,-82.80334914415752],[42.65148318982502,-81.37929928143433]],"defaultCenter":[42.40458100516701,-82.19165049253854],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sources":{}},sourceUrl});})();

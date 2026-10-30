@@ -1,0 +1,2 @@
+/* Demo uses the packaged canonical roster; full dispatch stays data-dependent. */
+(() => {const sourceUrl=new URL(document.currentScript.src,location.href);window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"st-catharines","name":"St. Catharines","map":{"bounds":[[43.10667039328994,-79.32093332328418],[43.44759965664617,-79.17783387431142]],"defaultCenter":[43.163031150051,-79.239771514153],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sources":{}},sourceUrl});})();

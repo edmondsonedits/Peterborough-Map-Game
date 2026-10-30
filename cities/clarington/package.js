@@ -1,0 +1,2 @@
+/* Demo uses the packaged canonical roster; full dispatch stays data-dependent. */
+(() => {const sourceUrl=new URL(document.currentScript.src,location.href);window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"clarington","name":"Clarington","map":{"bounds":[[43.628934512235816,-78.8720704544943],[44.098806602887926,-78.32381944306856]],"defaultCenter":[43.91101074419609,-78.77688318358734],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sources":{}},sourceUrl});})();

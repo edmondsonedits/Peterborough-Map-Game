@@ -1,0 +1,2 @@
+/* Demo uses the packaged canonical roster; full dispatch stays data-dependent. */
+(() => {const sourceUrl=new URL(document.currentScript.src,location.href);window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"oakville","name":"Oakville","map":{"bounds":[[43.3021701117181,-79.81094940084876],[43.528255347215165,-79.46145258337704]],"defaultCenter":[43.470748970897404,-79.75469654706342],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sources":{}},sourceUrl});})();

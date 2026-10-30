@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '1.4.20';
+  const VERSION = '1.4.21';
   const MODE = Object.freeze({ FIXED: 'fixed', DRIVING: 'driving' });
   const MODE_LABEL = Object.freeze({ [MODE.FIXED]: 'Fixed Map', [MODE.DRIVING]: 'Driving View' });
   const MODE_STORAGE_KEY = 'ptboCameraMode';
@@ -51,9 +51,13 @@
   function initialMode() {
     if (CAMERA_TEST) return MODE.DRIVING;
     try {
-      return localStorage.getItem(MODE_STORAGE_KEY) === MODE.FIXED ? MODE.FIXED : MODE.DRIVING;
+      if (localStorage.getItem('ptboNorthUpDefaultV1') !== '1') {
+        localStorage.setItem(MODE_STORAGE_KEY, MODE.FIXED);
+        localStorage.setItem('ptboNorthUpDefaultV1', '1');
+      }
+      return localStorage.getItem(MODE_STORAGE_KEY) === MODE.DRIVING ? MODE.DRIVING : MODE.FIXED;
     } catch (_) {
-      return MODE.DRIVING;
+      return MODE.FIXED;
     }
   }
 
@@ -283,7 +287,37 @@
       (panel || document.getElementById('ptbo-camera-settings'))?.appendChild(routeTestButton);
     }
 
+    let followHint = null;
+    if (mobileUi) {
+      const doc = parent.document;
+      doc.getElementById('ptbo-follow-hint')?.remove();
+      followHint = doc.createElement('div');
+      followHint.id = 'ptbo-follow-hint';
+      followHint.setAttribute('role', 'status');
+      followHint.textContent = 'Map follow paused. Tap Recenter to follow the truck.';
+      followHint.hidden = true;
+      const hintStyle = doc.getElementById('ptbo-follow-hint-style') || doc.createElement('style');
+      hintStyle.id = 'ptbo-follow-hint-style';
+      hintStyle.textContent = '#ptbo-follow-hint[hidden]{display:none}#ptbo-follow-hint{position:fixed;z-index:5000;box-sizing:border-box;width:124px;padding:9px 11px;border-radius:10px;background:#102033;color:#fff;box-shadow:0 3px 12px #0008;font:600 11px/1.35 system-ui;pointer-events:none;transform:translateY(-50%)}#ptbo-follow-hint::after{content:"";position:absolute;right:-6px;top:calc(50% - 6px);border-top:6px solid transparent;border-bottom:6px solid transparent;border-left:6px solid #102033}';
+      doc.head.appendChild(hintStyle);
+      doc.body.appendChild(followHint);
+      const repositionHint = () => updateUi();
+      parent.addEventListener('resize', repositionHint);
+      addEventListener('pagehide', () => { parent.removeEventListener('resize', repositionHint); followHint.remove(); }, { once:true });
+    }
+
     function updateUi() {
+      if (followHint) {
+        followHint.hidden = state.following || state.reviewActive;
+        const button = parent.document.getElementById('recenter-button');
+        if (button && !followHint.hidden) {
+          const rect = button.getBoundingClientRect();
+          const width = Math.min(124, Math.max(90, rect.left - 18));
+          followHint.style.width = `${width}px`;
+          followHint.style.left = `${Math.max(8, rect.left - width - 10)}px`;
+          followHint.style.top = `${rect.top + rect.height / 2}px`;
+        }
+      }
       const fixed = state.mode === MODE.FIXED;
       fixedButton?.classList.toggle('active', fixed);
       drivingButton?.classList.toggle('active', !fixed);
@@ -581,6 +615,7 @@
       setMode,
       setReviewMode,
       recenter,
+      getBearing: () => state.mapBearing,
       getTelemetry: () => ({ ...window.PTBO_CAMERA_TEST_TELEMETRY, javascriptErrors: errors.slice() }),
       runModeSwitchTest,
       setTestHeading,

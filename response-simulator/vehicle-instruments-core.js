@@ -51,6 +51,7 @@
     steeringApplied: 0,
     directionalTargetHeading: null,
     directionalMagnitude: 0,
+    directionalScreenAngle: null,
     lastTimestamp: 0,
     previousLat: null,
     previousLng: null,
@@ -303,6 +304,7 @@
     mobileSteeringPointer = null;
     state.directionalTargetHeading = null;
     state.directionalMagnitude = 0;
+    state.directionalScreenAngle = null;
     if (mobileSteeringElement) mobileSteeringElement.classList.remove('active');
     if (mobileSteeringThumb) mobileSteeringThumb.style.transform = 'translate(-50%, -50%)';
   }
@@ -441,10 +443,12 @@
     state.directionalMagnitude = magnitude;
     if (magnitude <= CONFIG.directionalDeadzone) {
       state.directionalTargetHeading = null;
+      state.directionalScreenAngle = null;
       return;
     }
 
-    state.directionalTargetHeading = normalizeHeading(Math.atan2(x, -y) * 180 / Math.PI);
+    state.directionalScreenAngle = Math.atan2(x, -y) * 180 / Math.PI;
+    state.directionalTargetHeading = getDirectionalHeading();
   }
 
   function applyAnalogSteering(deltaSeconds) {
@@ -485,7 +489,14 @@
     }
   }
 
+  function getDirectionalHeading() {
+    if (state.steeringMode !== STEERING_MODES.DIRECTIONAL || state.directionalScreenAngle === null || state.directionalMagnitude <= CONFIG.directionalDeadzone) return null;
+    return normalizeHeading(state.directionalScreenAngle + (window.PTBO_DRIVING_CAMERA?.getBearing?.() || 0));
+  }
+
   function applyDirectionalSteering(deltaSeconds) {
+    if (window.PTBO_DIRECTIONAL_STEERING_TUNING?.state?.installed) return;
+    state.directionalTargetHeading = getDirectionalHeading();
     if (
       state.steeringMode !== STEERING_MODES.DIRECTIONAL
       || state.directionalTargetHeading === null
@@ -687,6 +698,7 @@
     setSteeringMode,
     setAnalogSteering: shapeSteering,
     setDirectionalSteering: setDirectionalVector,
+    getDirectionalHeading,
     clearDirectionalSteering: releaseDirectionalPointer,
     stepSteering(seconds) { applyAnalogSteering(seconds); applyDirectionalSteering(seconds); },
     resetSpeedometer() {

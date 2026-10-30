@@ -1,0 +1,2 @@
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
+test('all registered cities have playable simulator packages',()=>{const c={};c.window=c;vm.runInNewContext(fs.readFileSync('cities/city-registry.js','utf8'),c);for(const city of c.PTBO_CITIES){assert.equal(city.modes.dispatch,true,city.id);assert.ok(fs.existsSync(`cities/${city.id}/package.js`),city.id);}});

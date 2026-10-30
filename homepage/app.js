@@ -70,16 +70,17 @@
       link.addEventListener('pointerdown', updateLinks);
       link.addEventListener('click', event => {
         const mode = modeForLink(link);
-        if (available(mode)) { updateLinks(); return; }
+        if (available(mode) && mode !== 'explorer') { updateLinks(); return; }
         event.preventDefault();
         openRequest(mode, link);
       });
       link.addEventListener('keydown', event => {
-        if (available(modeForLink(link)) || !['Enter', ' '].includes(event.key)) return;
+        if ((available(modeForLink(link)) && modeForLink(link) !== 'explorer') || !['Enter', ' '].includes(event.key)) return;
         event.preventDefault();
         openRequest(modeForLink(link), link);
       });
     });
+    document.getElementById('request-full-dispatch')?.addEventListener('click', event => openRequest('dispatch', event.currentTarget));
     document.getElementById('home-demo-close')?.addEventListener('click', closeRequest);
     state.requestButton?.addEventListener('click', submitRequest);
     document.getElementById('home-demo-conversation')?.addEventListener('click', openRequestConversation);
@@ -142,14 +143,18 @@
     document.querySelectorAll('[data-peterborough-only]').forEach(node => { node.hidden = true; });
     document.querySelectorAll('[data-demo-label]').forEach(node => { node.hidden = fullDispatch; });
     state.cards.forEach(card => { card.dataset.homeDemo = String(!fullDispatch); });
+    const requestFull = document.getElementById('request-full-dispatch');
+    if (requestFull) requestFull.hidden = fullDispatch;
     const title = document.getElementById('home-dispatch-title');
     const description = document.getElementById('home-dispatch-description');
-    if (title) title.textContent = freeDriving ? 'Free Driving' : 'Dispatch Simulator';
+    const action = document.getElementById('home-dispatch-action');
+    if (action) action.textContent = fullDispatch ? 'Play Dispatch Simulator' : 'Play Demo · Fire & EMS driving';
+    if (title) title.textContent = 'Dispatch Simulator';
     if (description) description.textContent = fullDispatch
       ? 'Drive Fire & EMS responses.'
       : freeDriving ? `Drive Fire & EMS in ${city.name}.` : `Request a ${city.name} driving demo.`;
     document.querySelectorAll('[data-dispatch-mode-label]').forEach(node => {
-      node.textContent = freeDriving ? 'Free Driving' : 'Dispatch Simulator';
+      node.textContent = 'Dispatch Simulator';
     });
     document.querySelectorAll('[data-dispatch-preview-title]').forEach(node => {
       node.textContent = freeDriving ? 'Get to know the streets.' : 'Take the next call.';
@@ -161,7 +166,7 @@
     });
     state.launches.filter(link => link.dataset.previewLaunch === 'dispatch').forEach(link => {
       const label = link.querySelector('[data-launch-label]');
-      if (label) label.textContent = freeDriving ? 'Start free driving' : available('dispatch') ? 'Play Dispatch Simulator' : 'Request a demo';
+      if (label) label.textContent = freeDriving ? 'Play Demo' : available('dispatch') ? 'Play Dispatch Simulator' : 'Request Full Version';
     });
     const explorerDescription = document.getElementById('home-explorer-description');
     if (explorerDescription) explorerDescription.textContent = available('explorer') ? `Drive through ${city.name} streets.` : `Request a ${city.name} 3D demo.`;
@@ -194,7 +199,7 @@
       geo: `geo-guesser/${mobile ? 'mobile' : 'desktop'}/`,
       route: 'route-mapping/',
       dispatch: mobile ? state.city.dispatch?.mobile : state.city.dispatch?.desktop,
-      explorer: 'city-explorer/?release=v1.5.6&accuracy=district1',
+      explorer: 'city-explorer/?accuracy=district1',
     };
     [...state.choices, ...state.launches, state.explorerLink].filter(Boolean).forEach(link => {
       const mode = modeForLink(link);
@@ -222,7 +227,7 @@
       }
       if (mode !== 'dispatch' && link.dataset.previewLaunch) {
         const label = link.querySelector('[data-launch-label]');
-        if (label) label.textContent = ready ? `Play ${MODES[mode]}` : 'Request a demo';
+        if (label) label.textContent = ready ? `Play ${MODES[mode]}` : 'Request Full Version';
       }
     });
   }
@@ -235,7 +240,23 @@
     // Keep the requested city fixed even if another tab changes the selected city.
     state.request = { cityId: state.city.id, cityName: state.city.name, mode, opener };
     state.requestCity.textContent = state.request.cityName;
+    const title = document.getElementById('home-demo-title');
+    if (title) title.textContent = mode === 'explorer' ? 'Explore 3D' : 'Request Full Version';
+    const description = document.getElementById('home-demo-description');
+    if (description) description.textContent = mode === 'explorer' ? 'Play the Peterborough simulator, or request a demo for your selected city.' : 'Send a private message to the developer for this city and mode. You can follow up and receive replies in Feedback.';
     state.requestMode.textContent = MODES[mode];
+    const play = document.getElementById('home-demo-play');
+    if (play) {
+      play.hidden = !['dispatch', 'explorer'].includes(mode);
+      play.textContent = mode === 'explorer' ? 'Play in Peterborough' : 'Play Demo';
+      if (mode === 'explorer') {
+        const url = new URL('city-explorer/?accuracy=district1', location.href);
+        url.searchParams.set('city', 'peterborough');
+        url.searchParams.set('v', window.PTBO_BUILD?.version || document.documentElement?.dataset.ptboBuild || '1.6.155');
+        play.href = url.href;
+      }
+      if (mode === 'dispatch') play.href = state.launches.find(link => link.dataset.previewLaunch === 'dispatch')?.href || state.dispatchLink.href;
+    }
     renderRequest();
     state.dialog.showModal();
   }
@@ -255,7 +276,7 @@
       ? 'Request sent to the developer. You can follow up in Feedback.'
       : pending ? 'Sending your request…' : message;
     state.requestButton.disabled = sent || pending;
-    state.requestButton.textContent = sent ? 'Request sent' : pending ? 'Sending…' : message ? 'Try again' : 'Request this demo';
+    state.requestButton.textContent = sent ? 'Request sent' : pending ? 'Sending…' : message ? 'Try again' : request.mode === 'explorer' ? 'Request Your City demo' : 'Request Full Version';
     const conversation = document.getElementById('home-demo-conversation');
     if (conversation) conversation.hidden = !sent;
   }

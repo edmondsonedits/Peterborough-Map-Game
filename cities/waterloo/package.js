@@ -1,0 +1,2 @@
+/* Demo uses the packaged canonical roster; full dispatch stays data-dependent. */
+(() => {const sourceUrl=new URL(document.currentScript.src,location.href);window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"waterloo","name":"Waterloo","map":{"bounds":[[43.43223549018835,-80.62609406300471],[43.53121851196465,-80.46736521643916]],"defaultCenter":[43.4771548,-80.5182471],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sources":{}},sourceUrl});})();
