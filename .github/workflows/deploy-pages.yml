@@ -15,7 +15,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: ${{ github.event_name == 'workflow_run' && (github.event.workflow_run.conclusion != 'success' || github.event.workflow_run.event == 'pull_request') && format('pages-ignored-{0}', github.run_id) || 'pages' }}
   cancel-in-progress: true
 
 jobs:

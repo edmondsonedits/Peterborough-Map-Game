@@ -90,3 +90,23 @@ test('browser-dependent workflows pin a supported runner and the tested Playwrig
     assert.match(source, /playwright@1\.62\.1 install --with-deps chromium/, `${file} must install Chromium and runner dependencies`);
   }
 });
+
+test('ignored asset workflow completions cannot cancel real Pages deployments', () => {
+  const deploy = read('.github/workflows/deploy-pages.yml');
+  const expression = deploy.match(/^  group: \$\{\{ (.+) \}\}$/m)?.[1];
+  assert.ok(expression, 'Pages concurrency must classify workflow completion before scheduling');
+  const group = (eventName, conclusion = '', event = 'push', runId = 1) =>
+    require('node:vm').runInNewContext(expression, {
+      github: { event_name: eventName, event: { workflow_run: { conclusion, event } }, run_id: runId },
+      format: (template, value) => template.replace('{0}', String(value)),
+    });
+  assert.equal(group('push'), 'pages');
+  assert.equal(group('workflow_dispatch'), 'pages');
+  assert.equal(group('workflow_run', 'success'), 'pages');
+  for (const conclusion of ['failure', 'cancelled', 'timed_out', 'skipped']) {
+    const first = group('workflow_run', conclusion, 'push', 123);
+    assert.notEqual(first, 'pages', `${conclusion} must not join the live deployment group`);
+    assert.notEqual(first, group('workflow_run', conclusion, 'push', 124), 'ignored completions use unique groups');
+  }
+  assert.notEqual(group('workflow_run', 'success', 'pull_request'), 'pages', 'pull-request completions stay isolated');
+});
