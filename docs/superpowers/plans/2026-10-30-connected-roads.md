@@ -48,5 +48,5 @@
 **Files:** relevant regression tests, docs/connected-roads-release-2026-10-30.md, shared/build-version.js, normalized release markers, .github/workflows/deploy-pages.yml where required.
 - [x] Run relevant road/GIS and release-critical tests, syntax and whitespace checks.
 - [x] Independent architecture/code and visual review; resolve blocking findings with targeted regression tests.
-- [ ] Refresh upstream, preserve ancestry, bump/normalize release and push authorized finished change.
-- [ ] Verify Pages workflow success and fresh live build/pack hashes plus browser smoke. Record physical-device and geographic evidence limits honestly.
+- [x] Refresh upstream, preserve ancestry, bump/normalize release and push authorized finished change.
+- [x] Verify Pages workflow success and fresh live build/pack hashes plus browser smoke. Record physical-device and geographic evidence limits honestly.

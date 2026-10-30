@@ -73,3 +73,20 @@ test('every fingerprinted road source triggers the geospatial rebuild',()=>{
  const matches=(pattern,file)=>new RegExp('^'+pattern.replace(/[.+?^${}()|[\]\\]/g,'\\$&').replaceAll('**','\0').replaceAll('*','[^/]*').replaceAll('\0','.*')+'$').test(file);
  for(const file of sources)assert.ok(patterns.some(pattern=>matches(pattern,file)),`Road source does not trigger rebuild: ${file}`);
 });
+test('browser-dependent workflows pin a supported runner and the tested Playwright version', () => {
+  const files = [
+    '.github/workflows/city-explorer-browser-qa.yml',
+    '.github/workflows/build-peterborough-assets.yml',
+  ];
+  for (const file of files) {
+    const source = read(file);
+    const runners = [...source.matchAll(/^\s+runs-on:\s*(\S+)\s*$/gm)].map(match => match[1]);
+    assert.ok(runners.length > 0, `${file} has no runner declaration`);
+    assert.deepEqual([...new Set(runners)], ['ubuntu-24.04'], `${file} must pin every job to ubuntu-24.04`);
+
+    const versions = [...source.matchAll(/\bplaywright@(\d+\.\d+\.\d+)/g)].map(match => match[1]);
+    assert.ok(versions.length > 0, `${file} must pin Playwright`);
+    assert.deepEqual([...new Set(versions)], ['1.62.1'], `${file} must use the tested Playwright version`);
+    assert.match(source, /playwright@1\.62\.1 install --with-deps chromium/, `${file} must install Chromium and runner dependencies`);
+  }
+});

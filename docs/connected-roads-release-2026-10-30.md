@@ -24,7 +24,7 @@ Pack totals: 58,900,639 compressed bytes; 259,127,768 raw packet bytes; 3,580,76
 
 ## Verification
 
-- Full related automated suite: 1,174 passed, zero failures/skips; saved at artifacts/road-rebuild/full-tests-final.log.
+- Full related automated suite after automatic refresh and CI fixes: 1,178 passed, zero failures/skips (198 test files); saved at artifacts/road-rebuild/full-tests-post-refresh.log.
 - The pack fingerprints 42 road/terrain/compiler/data inputs. Road-pack verifier decodes every tile and checks raw/transport hashes, exact counts, conservative bounds, source identities and version module.
 - Both previously occluded Sherbrooke points pass in the decoded final packets: 0.213416 m and 0.207253 m above the canonical ground; packet/source height differences below 0.0000001 m.
 - Exact before evidence uses detached source base a105632 with matched overhead and truck-eye views: artifacts/road-rebuild/baseline-exact/report.json.
@@ -44,3 +44,11 @@ Final local qualification: artifacts/road-rebuild/final/report-final-composite.j
 Run tools/build-road-pack.cjs against a local server after a road source change, then tools/verify-road-pack.mjs. The geospatial refresh workflow rebuilds and verifies the pack before committing refreshed data. Pages CI verifies the pack and excludes test/tool/diagnostic artifacts from publication. A successful main geospatial workflow completion deploys the latest main commit, including bot-generated pack updates. Compiler-owned prior compressed packets are pruned only after their saved transport hashes match.
 
 The normal URL loads the new roads. Diagnostic legacy rendering is available with ?roadSurface=legacy&roadPack=0&roadAppearance=legacy; use quality=high to request the former full graphics budget. The isolated development checkout and exact before checkout are preserved under H:/ChatGPT.
+
+## Publication evidence
+
+The feature release commit f5c2a6ac0ede862433814d8bd4b89c1972822013 deployed successfully in Pages run 41113035962. Fresh public responses matched all 48 changed code assets and all 669 compressed/raw tile hashes for qualified pack b7790afc289c024c2519. An uninjected live browser confirmed the Balanced default, official terrain, hidden loading overlay, truck model, entry/exit controls and no first-party failures. URL: https://edmondsonedits.github.io/Peterborough-Map-Game/city-explorer/?v=1.6.153.
+
+The subsequent automatic geospatial refresh commit dfd6e1926bc55b4170c71df3ab9b7e5629a0cada is retained. It produces pack 712c470565392906d959: 669 tiles, 58,896,868 compressed bytes, 259,107,960 raw bytes and 3,580,484 triangles. Four packets changed (-8:0, -7:0, -4:0, -1:2); the other 665 are byte-identical to the qualified pack. Its canonical terrain and the repaired Sherbrooke clearance probes are unchanged, and the full pack verifier passes. Every supporting packet recorded by the six accepted driving routes is byte-identical; artifacts/road-rebuild/refreshed-pack-qualification.json records that evidence boundary.
+
+CI follow-up pins both browser-dependent jobs to Ubuntu 24.04 with Playwright 1.62.1 and Chromium dependencies. The prior browser job failed during installation because its older Playwright 1.55.0 did not support the changed ubuntu-latest image. The automatic refresh also exposed an exact-double bridge snapshot comparison at a roughly 7e-15 degree rounding difference; the follow-up retains bridge identity, properties, ring structure and tightly bounded coordinates. Final current public-response verification is saved in artifacts/road-rebuild/publication-receipt.json and live-browser-smoke.json.

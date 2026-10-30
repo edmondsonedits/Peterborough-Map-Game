@@ -48,10 +48,37 @@ for(const [mode,original] of Object.entries(fixture)) test(`${mode}: reproduced 
    const b=before.find(p=>p.x===x),a=all.find(p=>p.x===x);assert.equal(a.height,b.height,'outer join preserved');
  }
 });
-test('lite bridge footprint is the exact existing municipal BR60 snapshot',()=>{
+const BR60_COORDINATE_TOLERANCE_DEGREES=1e-12;
+function assertMunicipalBridgeSnapshot(expected,actual){
+ const {geometry:expectedGeometry,...expectedIdentity}=expected;
+ const {geometry:actualGeometry,...actualIdentity}=actual;
+ assert.deepEqual(actualIdentity,expectedIdentity,'municipal feature identity and properties remain exact');
+ const {coordinates:expectedCoordinates,...expectedGeometryMetadata}=expectedGeometry;
+ const {coordinates:actualCoordinates,...actualGeometryMetadata}=actualGeometry;
+ assert.deepEqual(actualGeometryMetadata,expectedGeometryMetadata,'municipal geometry type and metadata remain exact');
+ const compareCoordinates=(left,right,path='coordinates')=>{
+  if(Array.isArray(left)){
+   assert.ok(Array.isArray(right),`${path} retains its coordinate nesting`);
+   assert.equal(right.length,left.length,`${path} retains its ring and vertex count`);
+   left.forEach((value,index)=>compareCoordinates(value,right[index],`${path}[${index}]`));
+   return;
+  }
+  assert.equal(typeof right,'number',`${path} remains numeric`);
+  assert.ok(Math.abs(right-left)<=BR60_COORDINATE_TOLERANCE_DEGREES,
+   `${path} drift ${Math.abs(right-left)}° exceeds ${BR60_COORDINATE_TOLERANCE_DEGREES}°`);
+ };
+ compareCoordinates(expectedCoordinates,actualCoordinates);
+}
+
+test('lite bridge footprint matches the municipal BR60 identity and bounded coordinate snapshot',()=>{
  const data=JSON.parse(readFileSync(new URL('../city-explorer/data/peterborough-road-surfaces.geojson',import.meta.url)));
  const current=data.features.find(f=>f.properties?.FACILITYID==='BR60');
- assert.deepEqual(HUNTER_BRIDGE_FEATURE,current);
+ assertMunicipalBridgeSnapshot(HUNTER_BRIDGE_FEATURE,current);
+});
+test('municipal BR60 snapshot rejects coordinate drift beyond floating-point tolerance',()=>{
+ const changed=structuredClone(HUNTER_BRIDGE_FEATURE);
+ changed.geometry.coordinates[0][12][1]+=BR60_COORDINATE_TOLERANCE_DEGREES*2;
+ assert.throws(()=>assertMunicipalBridgeSnapshot(HUNTER_BRIDGE_FEATURE,changed),/drift .* exceeds/);
 });
 
 import { runInNewContext } from 'node:vm';
