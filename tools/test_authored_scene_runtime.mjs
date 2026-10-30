@@ -73,4 +73,6 @@ const browserQaSource = await fs.readFile(browserQaPath, 'utf8');
 assert.equal((browserQaSource.match(/browser\.newPage\(/g) || []).length, 2, 'browser QA should use only disabled + enabled simulator startups');
 assert.match(browserQaSource, /for \(const mode of \['missing', 'corrupt', 'invalid'\]\)/);
 assert.match(browserQaSource, /await validPage\.unroute\(handoffRoute\)/);
+assert.match(browserQaSource, /routeEvidence\.hits !== 1 \|\| reloadResult\?\.status !== 'failed' \|\| failed\.status !== 'failed'/,
+  'each fail-open fixture must report the intercepted response, reload status, and page status');
 assert.match(browserQaSource, /did not recover after fail-open checks/);

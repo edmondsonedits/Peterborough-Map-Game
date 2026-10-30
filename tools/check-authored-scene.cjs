@@ -21,15 +21,18 @@ async function diagnostics(page) {
 }
 
 async function reloadAuthoredScene(page) {
-  await page.evaluate(() => globalThis.__PTBO_AUTHORED_SCENE__.reload());
+  return page.evaluate(() => globalThis.__PTBO_AUTHORED_SCENE__.reload());
 }
 
-async function installFailureRoute(page, mode) {
+async function installFailureRoute(page, mode, evidence) {
   await page.unroute(handoffRoute);
   await page.route(handoffRoute, async route => {
-    if (mode === 'missing') return route.fulfill({ status: 404, contentType: 'application/json', body: '{}' });
-    if (mode === 'corrupt') return route.fulfill({ status: 200, contentType: 'application/json', body: '{broken' });
-    return route.fulfill({
+    evidence.hits++;
+    evidence.url = route.request().url();
+    let response;
+    if (mode === 'missing') response = { status: 404, contentType: 'application/json', body: '{}' };
+    else if (mode === 'corrupt') response = { status: 200, contentType: 'application/json', body: '{broken' };
+    else response = {
       status: 200,
       contentType: 'application/json',
       body: JSON.stringify({
@@ -48,7 +51,9 @@ async function installFailureRoute(page, mode) {
           }],
         },
       }),
-    });
+    };
+    evidence.fulfilledStatus = response.status;
+    await route.fulfill(response);
   });
 }
 
@@ -93,10 +98,13 @@ async function installFailureRoute(page, mode) {
     }
 
     for (const mode of ['missing', 'corrupt', 'invalid']) {
-      await installFailureRoute(validPage, mode);
-      await reloadAuthoredScene(validPage);
-      await validPage.waitForFunction(() => document.documentElement.dataset.authoredSceneStatus === 'failed', null, { timeout: 15000 });
+      const routeEvidence = { hits: 0, url: '', fulfilledStatus: null };
+      await installFailureRoute(validPage, mode, routeEvidence);
+      const reloadResult = await reloadAuthoredScene(validPage);
       const failed = await diagnostics(validPage);
+      if (routeEvidence.hits !== 1 || reloadResult?.status !== 'failed' || failed.status !== 'failed') {
+        throw new Error(`${mode} authored scene failure injection did not fail: ${JSON.stringify({ mode, routeEvidence, reloadResult, diagnostics: failed })}`);
+      }
       if (failed.gameplayReady !== 'true' || failed.count !== 0 || failed.api?.groupChildren !== 0) {
         throw new Error(`${mode} authored scene did not fail open: ${JSON.stringify(failed)}`);
       }
