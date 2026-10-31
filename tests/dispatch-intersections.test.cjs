@@ -9,7 +9,7 @@ async function roads(features,{gridSize=80}={}){
  return{c,api:c.PTBO_ROAD_COLLISION,at:(x,y)=>{const [lng,lat]=point(x,y);return c.PTBO_ROAD_COLLISION.isPointDrivable(lat,lng);},async soften(){vm.runInContext(read('response-simulator/road-intersection-softener.js'),c);await flush();}};
 }
 test('near-matching road ends get a rounded turning area without opening distant private ground',async()=>{
- const h=await roads([feature('Main',[[-40,0],[0,0],[40,0]]),feature('Side',[[.3,.25],[.3,40]])]);assert.equal(h.at(9,9),false);await h.soften();assert.equal(h.at(9,9),true);assert.equal(h.at(25,25),false);
+ const h=await roads([feature('Main',[[-40,0],[0,0],[40,0]]),feature('Side',[[.3,.25],[.3,40]])]);assert.equal(h.at(12,12),false);await h.soften();assert.equal(h.at(12,12),true);assert.equal(h.at(25,25),false);
  h.api.state.laneAssist=0;let prev=point(0,30);
  for(let i=1;i<=30;i++){const a=i/30*Math.PI/2,next=point(30*(1-Math.cos(a)),30*(1-Math.sin(a)));const result=h.api.resolveMovement(prev[1],prev[0],next[1],next[0],.000001);assert.equal(result.blocked,false,`turn step ${i}`);prev=[result.lng,result.lat];}
 });
@@ -17,7 +17,7 @@ test('rounded corners use the road index grid size supplied by the city',async()
  const h=await roads([feature('Main',[[160,200],[200,200],[240,200]]),feature('Side',[[200,200],[200,240]])],{gridSize:32});await h.soften();assert.equal(h.at(209,209),true);
 });
 test('same-position roads on different bridge levels do not create a ground-level corner shortcut',async()=>{
- const h=await roads([feature('Ground',[[-40,0],[0,0],[40,0]]),feature('Bridge',[[0,0],[0,40]],{layer:'1',bridge:'yes'})]);await h.soften();assert.equal(h.c.PTBO_ROAD_INTERSECTION_SOFTENER.state.junctionCount,0);assert.equal(h.at(9,9),false);
+ const h=await roads([feature('Ground',[[-40,0],[0,0],[40,0]]),feature('Bridge',[[0,0],[0,40]],{layer:'1',bridge:'yes'})]);await h.soften();assert.equal(h.c.PTBO_ROAD_INTERSECTION_SOFTENER.state.junctionCount,0);assert.equal(h.at(12,12),false);
 });
 test('nearest-road queries respect the requested maximum distance',async()=>{
  const h=await roads([feature('Main',[[-40,0],[40,0]])]);const [lng,lat]=point(0,30);assert.equal(h.api.nearestRoad(lat,lng,10),null);assert.ok(Math.abs(h.api.nearestRoad(lat,lng,40).distance-30)<.01);
@@ -36,4 +36,13 @@ test('near-endpoint matching stays bounded and does not chain across successive 
 for(const degrees of [45,90,180,270])test(`rounded turning room survives road rotation ${degrees}`,async()=>{
  const a=degrees*Math.PI/180,rotate=([x,y])=>[x*Math.cos(a)-y*Math.sin(a),x*Math.sin(a)+y*Math.cos(a)];
  const h=await roads([feature('Main',[[-40,0],[0,0],[40,0]].map(rotate)),feature('Side',[[.3,.25],[.3,40]].map(rotate))]);await h.soften();assert.equal(h.at(...rotate([9,9])),true);assert.equal(h.at(...rotate([25,25])),false);
+});
+
+test('wide roads provide extra driving room while small residential roads stay bounded',async()=>{
+ const wide=await roads([feature('Wide',[[-40,0],[40,0]])]);assert.equal(wide.at(0,8.5),true);assert.equal(wide.at(0,12),false);
+ const small=await roads([feature('Small',[[-40,0],[40,0]],{highway:'residential'})]);assert.equal(small.at(0,5.5),false);
+ const lanes=await roads([feature('Six lanes',[[-40,0],[40,0]],{lanes:'6'})]);assert.equal(lanes.at(0,12.5),true);assert.equal(lanes.at(0,16),false);
+});
+test('enlarged rounded corners allow a deeper inside cut and retain an outer boundary',async()=>{
+ const h=await roads([feature('Main',[[-40,0],[0,0],[40,0]]),feature('Side',[[0,0],[0,40]])]);await h.soften();assert.equal(h.at(13,13),true);assert.equal(h.at(25,25),false);
 });

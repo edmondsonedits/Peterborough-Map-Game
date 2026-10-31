@@ -10,10 +10,10 @@
     endpointSnapToleranceMeters: 1,
     minimumJunctionAngleDegrees: 18,
     maximumJunctionAngleDegrees: 162,
-    minimumRadiusMeters: 7.5,
-    maximumRadiusMeters: 18,
-    radiusWidthMultiplier: 1.45,
-    radiusPaddingMeters: 2.25,
+    minimumRadiusMeters: 9,
+    maximumRadiusMeters: 23,
+    radiusWidthMultiplier: 1.70,
+    radiusPaddingMeters: 3,
     markerLengthMeters: 0.6,
   });
 

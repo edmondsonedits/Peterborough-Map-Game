@@ -91,7 +91,9 @@
     let width = ROAD_WIDTHS[type] || 6;
     const lanes = Number.parseFloat(properties.lanes);
     if (Number.isFinite(lanes)) width = Math.max(width, lanes * 3.15);
-    return Math.min(20, Math.max(5.5, width));
+    // Give wider road classes and multi-lane roads more forgiving driving room.
+    if (width >= 8.5) width *= 1.20;
+    return Math.min(26, Math.max(5.5, width));
   }
 
   function roadLevel(properties = {}) {

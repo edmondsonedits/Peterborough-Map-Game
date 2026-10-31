@@ -40,3 +40,9 @@ All three local startup cases had installed corner geometry before the service c
 Long response/transport legs use controlled arrival fixtures. This audit does not establish that every intersection has been physically driven or that an actual phone has been tested.
 
 Repeat with Playwright installed: `node tools/check-dispatch-intersections.cjs [base-url]` and `node tools/check-richmond-dispatch.cjs [base-url]`. Eleven corner/readiness/cache/lookup regressions run in Pages CI via `tests/dispatch-intersections.test.cjs`.
+
+## Follow-up tuning: 1.6.159
+
+User requested deeper corner cutting and wider driving corridors on wide roads. Raised rounded-junction radius range from 7.5–18 m to 9–23 m, width multiplier from 1.45 to 1.70 and padding from 2.25 to 3 m. Road classes or lane-derived widths of at least 8.5 m gain 20 percent driving width; the full-width cap rises from 20 to 26 m. Smaller residential/service defaults are unchanged. These are gameplay allowances, not edits to mapped road geometry.
+
+Verification: 92 dispatch/release/geometry checks passed. Local desktop and mobile-layout Richmond Hill controlled turns passed with zero blocking/corrections and an off-road negative probe still blocked. Peterborough startup also passed.
