@@ -10,6 +10,7 @@
 
   const source = document.currentScript?.src || location.href;
   const base = new URL('.', source);
+  const cacheVersion = new URL(source, location.href).searchParams.get('v') || BUNDLE_REVISION;
 
   function load(id, filename) {
     return new Promise((resolve, reject) => {
@@ -23,7 +24,7 @@
       const script = document.createElement('script');
       script.id = id;
       script.async = false;
-      script.src = new URL(`${filename}?v=${BUNDLE_REVISION}`, base).href;
+      script.src = new URL(`${filename}?v=${cacheVersion}`, base).href;
       script.onload = () => { script.dataset.ptboLoaded = 'true'; resolve(script); };
       script.onerror = () => reject(new Error(`Unable to load ${filename}.`));
       (document.body || document.head || document.documentElement).appendChild(script);

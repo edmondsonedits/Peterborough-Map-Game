@@ -380,11 +380,28 @@ test('inner simulator loads Leaflet locally without a blocking CDN dependency', 
 
 test('every additional city demo boots from its own canonical roster without external services',async()=>{
  const registry=browserContext();vm.runInContext(read('cities/city-registry.js'),registry);
- for(const city of registry.PTBO_CITIES.filter(c=>c.id!=='peterborough'&&!cities.includes(c.id))){
+ for(const city of registry.PTBO_CITIES.filter(c=>c.id!=='peterborough'&&c.id!=='richmond-hill'&&!cities.includes(c.id))){
   let calls=0;const c=browserContext({fetch:async url=>{calls++;assert.equal(String(url),`https://example.com/cities/${city.id}/geo-data.json`);return{ok:true,json:async()=>JSON.parse(read(`cities/${city.id}/geo-data.json`))};}});
   vm.runInContext(read('cities/preview-package-factory.js'),c);c.document.currentScript.src=`https://example.com/cities/${city.id}/package.js`;
   vm.runInContext(read(`cities/${city.id}/package.js`),c);await c.PTBO_CITY_PACKAGE_READY;
   assert.equal(c.PTBO_CITY_PACKAGE.id,city.id);assert.equal(c.PTBO_CITY_PACKAGE.features.baseTraining,true);
   assert.ok(c.PTBO_SERVICE_CONFIG.profiles.fire.bases.length,city.id);assert.ok(c.PTBO_SERVICE_CONFIG.profiles.ems.bases.length,city.id);assert.equal(calls,1);
  }
+});
+
+test('Richmond Hill demo enables the full response workflow with its own roads and hospital',async()=>{
+ const c=browserContext({fetch:async url=>({ok:true,json:async()=>JSON.parse(read('cities/richmond-hill/geo-data.json'))})});
+ vm.runInContext(read('cities/preview-package-factory.js'),c);c.document.currentScript.src='https://example.com/cities/richmond-hill/package.js';vm.runInContext(read('cities/richmond-hill/package.js'),c);await c.PTBO_CITY_PACKAGE_READY;
+ const city=c.PTBO_CITY_PACKAGE;for(const key of ['dispatch','roadBoundaries','routeGuidance','hospitalTransport'])assert.equal(city.features[key],true,key);
+ assert.equal(city.features.baseTraining,false);assert.equal(city.serviceConfig.profiles.fire.bases.length,6);assert.equal(city.serviceConfig.profiles.ems.bases.length,2);
+ assert.match(city.roads.dataUrl,/richmond-hill\/roads.geojson.gz$/);assert.equal(c.PTBO_ROUTE_REVEAL,undefined,'do not install disabled route shims');
+ const canonical=JSON.parse(read('cities/richmond-hill/geo-data.json')).locations.find(r=>r.id==='richmond-hill-call-10');assert.equal(city.serviceConfig.hospital.lat,canonical.lat);assert.equal(city.serviceConfig.hospital.lng,canonical.lng);assert.equal(city.serviceConfig.hospital.sourceCallId,canonical.id);
+});
+
+test('Richmond Hill dispatch descriptor resolves only existing city locations',async()=>{
+ const data=JSON.parse(read('cities/richmond-hill/geo-data.json'));let requests=0;
+ const c=browserContext({fetch:async url=>{requests++;assert.equal(String(url),'https://example.com/cities/richmond-hill/geo-data.json');return{ok:true,json:async()=>data};}});
+ c.document.currentScript.src='https://example.com/cities/richmond-hill/dispatch-data.js';vm.runInContext(read('cities/richmond-hill/dispatch-data.js'),c);
+ assert.equal(c.PTBO_CITY_DISPATCH_SOURCE.available,true);assert.deepEqual(await c.PTBO_DISPATCH_DATA_READY,data.locations);
+ vm.runInContext(read('cities/richmond-hill/dispatch-data.js'),c);assert.equal(requests,1,'reuse canonical ready promise');
 });

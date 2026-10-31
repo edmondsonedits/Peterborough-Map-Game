@@ -175,17 +175,21 @@ test('legacy matching retains civic identity and service when nearby station lab
   }
 });
 
-test('manifests add Geo data without inventing roads or enabling new driving cities', () => {
+test('manifests preserve researched capability flags and enable the Richmond Hill response demo', () => {
   for (const id of ids) {
     const manifest = json(`cities/${id}/city.json`);
     assert.equal(manifest.id,id);
     assert.equal(manifest.features.geoGuesser,true,id);
     assert.equal(manifest.data.geoGuesser,'geo-data.json',id);
-    assert.equal(manifest.features.dispatch,previews.includes(id),id);
-    assert.equal(manifest.features.routeGuidance,false,id);
+    assert.equal(manifest.features.dispatch,previews.includes(id) || id === 'richmond-hill',id);
+    assert.equal(manifest.features.routeGuidance,id === 'richmond-hill',id);
     assert.equal(manifest.features.baseTraining,false,id);
-    assert.equal(manifest.data.roads,previews.includes(id)?'roads.geojson.gz':null,id);
-    if (previews.includes(id)) {
+    assert.equal(manifest.data.roads,(previews.includes(id) || id === 'richmond-hill')?'roads.geojson.gz':null,id);
+    if (id === 'richmond-hill') {
+      assert.equal(manifest.features.hospitalTransport,true);
+      assert.equal(manifest.status,'dispatch-demo');
+      assert.equal(manifest.data.dispatchLocations,'dispatch-data.js');
+    } else if (previews.includes(id)) {
       assert.equal(manifest.data.bases,'geo-data.json',id);
       assert.equal(manifest.status,'scene-response',id);
       assert.equal(manifest.map.minZoom,10,id);
@@ -203,7 +207,7 @@ test('manifests add Geo data without inventing roads or enabling new driving cit
     const manifest = json(`cities/${id}/city.json`);
     assert.equal(manifest.features.geoGuesser,true,id);
     assert.equal(manifest.data.geoGuesser,'geo-data.json',id);
-    assert.equal(manifest.features.dispatch,previews.includes(id),id);
+    assert.equal(manifest.features.dispatch,previews.includes(id) || id === 'richmond-hill',id);
     assert.equal(manifest.features.baseTraining,false,id);
     assert.equal(manifest.data.bases,'geo-data.json',id);
   }

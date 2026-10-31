@@ -5,7 +5,7 @@ import {
   sampleStationOneFloor, stepStationOneDoors, toggleStationOneDoor,
 } from './station-one-core.mjs';
 
-const STATION_MODEL = './assets/station1/station1.glb?v=1.6.156';
+const STATION_MODEL = './assets/station1/station1.glb?v=1.6.157';
 const TRUCK_DIMENSIONS = Object.freeze({ length: 10.5, width: 3.2 });
 const PANEL_NODE = /^Door_F([1-5])_Panel([0-7])$/;
 

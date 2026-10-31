@@ -337,3 +337,21 @@ test('modeled support exercises identify the primary station in HUD wording and 
  vm.runInContext(read('response-simulator/dispatch-voice-bridge-1.4.2.js'),g.c);
  assert.match(g.c.buildCityDispatchPhrase(call),/estimated support exercise.*modeled first-due Station 2/i);
 });
+
+test('response demos resolve the configured hospital through local roads even before the optional dropoff bridge loads',()=>{
+ const g=game(),hospital={id:'rh-hospital',name:'Mackenzie Richmond Hill Hospital',sub:'Hospital Transport',lat:43.8703779,lng:-79.4507104,radius:100};
+ g.c.PTBO_CITY_PACKAGE={features:{sceneResponseDrills:true,hospitalTransport:true}};g.c.PTBO_SERVICE_CONFIG={...g.c.PTBO_SERVICE_CONFIG,hospital};
+ g.c.PTBO_ROAD_COLLISION={state:{status:'ready'},nearestRoad:()=>({lat:43.8701,lng:-79.4505,distance:35})};
+ assert.deepEqual(JSON.parse(JSON.stringify(g.c.resolveIncidentArrival(hospital))),{radius:100,lat:43.8701,lng:-79.4505,accessPoint:true});
+ assert.ok(g.c.resolveIncidentArrival({...hospital,id:'rh-hospital-2'}),'transport-phase identity must retain the configured hospital access');
+ g.c.PTBO_ROAD_COLLISION.nearestRoad=()=>null;assert.equal(g.c.resolveIncidentArrival(hospital),null,'unresolved access must remain unavailable');
+});
+
+test('Richmond Hill routing loads its compressed city roads and computes a local hospital route',async()=>{
+ const g=game();g.c.PTBO_CITY_PACKAGE={id:'richmond-hill',roads:{dataUrl:'https://game.test/cities/richmond-hill/roads.geojson.gz',center:[43.867171820603346,-79.44249767296054]}};
+ g.c.Response=Response;g.c.DecompressionStream=DecompressionStream;let requested;
+ g.c.fetch=async url=>{requested=url;return new Response(fs.readFileSync(path.join(__dirname,'../cities/richmond-hill/roads.geojson.gz')));};
+ vm.runInContext(read('response-simulator/route-reveal.js'),g.c);await g.c.PTBO_ROUTE_REVEAL.ready;
+ assert.equal(requested,g.c.PTBO_CITY_PACKAGE.roads.dataUrl);assert.ok(g.c.PTBO_ROUTE_REVEAL.state.graph.nodes.length>1000);
+ const route=g.c.PTBO_ROUTE_REVEAL.calculateRoute(43.869213,-79.443971,43.87037792541019,-79.45071040970561);assert.ok(route);assert.ok(route.coordinates.length>2);assert.ok(route.distance>300);
+});

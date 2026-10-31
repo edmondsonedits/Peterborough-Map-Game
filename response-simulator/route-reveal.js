@@ -3,10 +3,12 @@
 
   if (window.PTBO_ROUTE_REVEAL) return;
 
+  const cityRoads = window.PTBO_CITY_PACKAGE?.roads;
+  const center = cityRoads?.center || window.PTBO_CITY_PACKAGE?.map?.defaultCenter || [44.3091,-78.3197];
   const CONFIG = Object.freeze({
-    dataUrl: '../city-explorer/data/osm-public-roads.geojson',
-    centerLat: 44.3091,
-    centerLng: -78.3197,
+    dataUrl: cityRoads?.dataUrl || '../city-explorer/data/osm-public-roads.geojson',
+    centerLat: Number(center[0]),
+    centerLng: Number(center[1]),
     gridSize: 120,
     startSnapRadius: 180,
     destinationSnapRadius: 500,
@@ -611,7 +613,9 @@
     try {
       const response = await fetch(CONFIG.dataUrl, { cache: 'force-cache' });
       if (!response.ok) throw new Error(`Routing data request failed: ${response.status}`);
-      const geojson = await response.json();
+      const geojson = /\.gz(?:\?|$)/.test(CONFIG.dataUrl)
+        ? await new Response(response.body.pipeThrough(new DecompressionStream('gzip'))).json()
+        : await response.json();
       state.graph = buildGraph(geojson);
       state.status = 'ready';
       readyResolve({ nodes: state.graph.nodes.length, edges: state.graph.directedEdges });

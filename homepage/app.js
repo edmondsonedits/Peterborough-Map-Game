@@ -135,6 +135,7 @@
     document.body.dataset.homeCity = city.id;
     const fullDispatch = city.id === 'peterborough';
     const freeDriving = !fullDispatch && available('dispatch');
+    const responseDemo = city.status === 'dispatch-demo';
     document.body.dataset.homeAvailability = fullDispatch ? 'full' : 'demo';
     if (persist) write(CITY_KEY, city.id);
     document.querySelectorAll('[data-selected-city-name]').forEach(node => { node.textContent = city.name; });
@@ -152,17 +153,17 @@
     if (title) title.textContent = 'Dispatch Simulator';
     if (description) description.textContent = fullDispatch
       ? 'Drive Fire & EMS responses.'
-      : freeDriving ? `Drive Fire & EMS in ${city.name}.` : `Request a ${city.name} driving demo.`;
+      : responseDemo ? `Practise Fire and EMS responses, hospital transport, and route review in ${city.name}.` : freeDriving ? `Drive Fire & EMS in ${city.name}.` : `Request a ${city.name} driving demo.`;
     document.querySelectorAll('[data-dispatch-mode-label]').forEach(node => {
       node.textContent = 'Dispatch Simulator';
     });
     document.querySelectorAll('[data-dispatch-preview-title]').forEach(node => {
-      node.textContent = freeDriving ? 'Get to know the streets.' : 'Take the next call.';
+      node.textContent = freeDriving && !responseDemo ? 'Get to know the streets.' : 'Take the next call.';
     });
     document.querySelectorAll('[data-dispatch-preview-description]').forEach(node => {
       node.textContent = fullDispatch
         ? 'Choose Fire or EMS and practise your response.'
-        : freeDriving ? 'Choose Fire or EMS for free driving.' : 'Request this training mode for your city.';
+        : responseDemo ? 'Choose Fire or EMS. Complete the call, then review your route.' : freeDriving ? 'Choose Fire or EMS for free driving.' : 'Request this training mode for your city.';
     });
     state.launches.filter(link => link.dataset.previewLaunch === 'dispatch').forEach(link => {
       const label = link.querySelector('[data-launch-label]');

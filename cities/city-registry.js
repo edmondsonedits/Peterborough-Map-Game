@@ -37,6 +37,7 @@
     if (!originalIds.has(id)) cities.push({id,name,province:'Ontario',status:'geo-demo',playable:true,
       note:'Geo Guesser and Route Mapping available',packageUrl:`cities/${id}/city.json`});
   }
+  Object.assign(cities.find(city => city.id === 'richmond-hill'), {status:'dispatch-demo',note:'Fire and EMS response demo with hospital transport and route review.'});
   window.PTBO_CITIES = Object.freeze(cities.map(city => Object.freeze({
     ...city,dispatch:simulatorRoutes,
     ...(geoIds.has(city.id) ? {geoDataUrl:`cities/${city.id}/geo-data.json`} : {}),

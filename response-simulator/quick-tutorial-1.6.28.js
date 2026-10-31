@@ -34,7 +34,7 @@
     return {
       name: city.name || 'Peterborough',
       baseTraining: Boolean(city.features?.baseTraining || city.dispatch?.available === false),
-      sceneResponseDrills: Boolean(city.features?.sceneResponseDrills),
+      sceneResponseDrills: Boolean(city.features?.sceneResponseDrills && !city.features?.hospitalTransport),
     };
   }
 

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Peterborough Fire & Emergency Dispatch Simulator</title>
     
-    <link rel="stylesheet" href="vendor/leaflet-1.9.4/leaflet.css?v=1.6.156" />
+    <link rel="stylesheet" href="vendor/leaflet-1.9.4/leaflet.css?v=1.6.157" />
     
     <style>
         html, body, #map {
@@ -201,17 +201,17 @@
 
     <div id="map"></div>
 
-    <script src="../shared/build-version.js?v=1.6.156"></script>
-    <script src="vendor/leaflet-1.9.4/leaflet.js?v=1.6.156"></script>
-    <script src="vendor/leaflet-1.9.4/leaflet.edgebuffer.js?v=1.6.156"></script>
-    <script src="vendor/leaflet-1.9.4/leaflet.rotatedMarker.js?v=1.6.156"></script>
+    <script src="../shared/build-version.js?v=1.6.157"></script>
+    <script src="vendor/leaflet-1.9.4/leaflet.js?v=1.6.157"></script>
+    <script src="vendor/leaflet-1.9.4/leaflet.edgebuffer.js?v=1.6.157"></script>
+    <script src="vendor/leaflet-1.9.4/leaflet.rotatedMarker.js?v=1.6.157"></script>
     
-    <script src="service-config.js?v=1.6.156"></script>
-    <script src="../shared/location-changes.js?v=1.6.156"></script>
-    <script src="../shared/base-locations.js?v=1.6.156"></script>
-    <script src="service-selection.js?v=1.6.156"></script>
-    <script src="gearbox-core.js?v=1.6.156"></script>
-    <script src="local-pool.js?v=1.6.156"></script>
+    <script src="service-config.js?v=1.6.157"></script>
+    <script src="../shared/location-changes.js?v=1.6.157"></script>
+    <script src="../shared/base-locations.js?v=1.6.157"></script>
+    <script src="service-selection.js?v=1.6.157"></script>
+    <script src="gearbox-core.js?v=1.6.157"></script>
+    <script src="local-pool.js?v=1.6.157"></script>
     <script>
         const dispatchDatabase = [
             { main:"Fire", sub:"Water & Ice Rescue", name:"Beavermead Park Beach", addr:"2015 Ashburnham Dr", lat:44.295749, lng:-78.303611 },
@@ -846,6 +846,10 @@
             const roads = window.PTBO_ROAD_COLLISION;
             if (window.PTBO_CITY_PACKAGE?.features?.sceneResponseDrills) {
                 if (roads?.state?.status !== 'ready') return null;
+                if (window.PTBO_CITY_PACKAGE.features.hospitalTransport && (incident.id === window.PTBO_SERVICE_CONFIG?.hospital?.id || (incident.sub === 'Hospital Transport' && incident.name && incident.name === window.PTBO_SERVICE_CONFIG?.hospital?.name))) {
+                    const access = roads.nearestRoad(incident.lat, incident.lng, 500);
+                    return access && access.distance <= 500 ? {radius,lat:access.lat,lng:access.lng,accessPoint:true} : null;
+                }
                 if (incident.locationKind === 'mapped-intersection') {
                     const nearest=roads.nearestRoad(incident.lat,incident.lng,5);
                     return nearest && nearest.distance <= 5 ? {radius,lat:incident.lat,lng:incident.lng,accessPoint:false} : null;
@@ -933,7 +937,7 @@
 
             const ems = window.PTBO_SERVICE?.state.mode === 'ems';
             const transportRequired = ems && window.PTBO_CITY_PACKAGE?.features?.hospitalTransport !== false;
-            const hospital = drills || (ems && !transportRequired) ? null : (window.PTBO_BASE_STORE?.getHospital() || window.PTBO_SERVICE_CONFIG.hospital);
+            const hospital = ems && transportRequired ? (window.PTBO_BASE_STORE?.getHospital() || window.PTBO_SERVICE_CONFIG.hospital) : null;
             const hospitalArrival = transportRequired ? resolveIncidentArrival(hospital) : null;
             if (transportRequired && !hospitalArrival) { alert('Hospital access is still loading. Please try again.'); return; }
             let selectionPool;
@@ -1007,7 +1011,7 @@
             if (!mission || mission.service !== 'ems' || !mission.transportRequired || mission.phase !== 'pickup') return;
             mission.phase = 'transport';
             releaseDrivingInput();
-            activeIncident = {...mission.hospital,id:`prhc-${mission.generation}`};
+            activeIncident = {...mission.hospital,id:`${mission.hospital.id || 'hospital'}-${mission.generation}`};
             activeArrivalPoint = mission.hospitalArrival;
             activeArrivalRadius = activeArrivalPoint.radius;
             if (incidentCircleMarker) mapInstance.removeLayer(incidentCircleMarker);
@@ -1066,7 +1070,7 @@
 
         window.onload = initializeSimulator;
     </script>
-    <script src="service-mode.js?v=1.6.156"></script>
-    <script src="scene-response-filters.js?v=1.6.156"></script>
+    <script src="service-mode.js?v=1.6.157"></script>
+    <script src="scene-response-filters.js?v=1.6.157"></script>
 </body>
 </html>

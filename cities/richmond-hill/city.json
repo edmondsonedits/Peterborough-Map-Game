@@ -4,9 +4,9 @@
   "name": "Richmond Hill",
   "province": "Ontario",
   "country": "Canada",
-  "status": "geo-demo",
+  "status": "dispatch-demo",
   "playable": true,
-  "note": "Geo Guesser and Route Mapping with sourced Fire and EMS practice locations.",
+  "note": "Fire and EMS response demo with hospital transport and route review using existing sourced exercises.",
   "map": {
     "bounds": [
       [
@@ -28,19 +28,22 @@
   },
   "features": {
     "baseTraining": false,
-    "dispatch": false,
-    "roadBoundaries": false,
-    "routeGuidance": false,
+    "dispatch": true,
+    "roadBoundaries": true,
+    "routeGuidance": true,
     "geoGuesser": true,
-    "routeMapping": true
+    "routeMapping": true,
+    "sceneResponseDrills": true,
+    "hospitalTransport": true
   },
   "data": {
     "boundaries": null,
-    "roads": null,
-    "dispatchLocations": null,
+    "roads": "roads.geojson.gz",
+    "dispatchLocations": "dispatch-data.js",
     "bases": "geo-data.json",
-    "hospitals": null,
+    "hospitals": "geo-data.json",
     "geoGuesser": "geo-data.json",
-    "routeMapping": "training-data.json"
+    "routeMapping": "training-data.json",
+    "serviceConfig": "package.js"
   }
 }
