@@ -6,6 +6,7 @@
 
   window.PTBO_ROAD_COLLISION_BOOTSTRAP = true;
   const sourceUrl = new URL(document.currentScript?.src || document.baseURI, document.baseURI);
+  const CACHE_VERSION = sourceUrl.searchParams.get('v') || VERSION;
   const sleep = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds));
 
   function loadScript(filename, version, attempt = 1) {
@@ -27,7 +28,7 @@
 
   function ensureRouteComparison() {
     if (window.PTBO_ROUTE_COMPARE || document.querySelector('script[data-ptbo-route-compare-core]')) return Promise.resolve();
-    return loadScript('route-compare-1.4.2.js', `${VERSION}-route-compare`);
+    return loadScript('route-compare-1.4.2.js', `${CACHE_VERSION}-route-compare`);
   }
 
   async function waitForApi(timeoutMilliseconds = 5000) {

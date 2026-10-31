@@ -3,10 +3,14 @@
 
   if (window.PTBO_ROUTE_REVEAL) return;
 
+  const city = window.PTBO_CITY_PACKAGE;
+  const cityRoads = city?.roads || {};
+  const center = cityRoads.center || city?.map?.defaultCenter || [44.3091, -78.3197];
   const CONFIG = Object.freeze({
-    dataUrl: '../city-explorer/data/osm-public-roads.geojson',
-    centerLat: 44.3091,
-    centerLng: -78.3197,
+    cityId: city?.id || 'peterborough',
+    dataUrl: cityRoads.dataUrl || '../city-explorer/data/osm-public-roads.geojson',
+    centerLat: Number(center[0]),
+    centerLng: Number(center[1]),
     gridSize: 120,
     startSnapRadius: 180,
     destinationSnapRadius: 500,
@@ -605,13 +609,31 @@
     updateButton();
   }
 
+  async function loadRoads() {
+    let collision = window.PTBO_ROAD_COLLISION;
+    if (!collision && window.PTBO_ROAD_COLLISION_BOOTSTRAP_READY) {
+      collision = await window.PTBO_ROAD_COLLISION_BOOTSTRAP_READY;
+    }
+    if (collision?.config?.cityId === CONFIG.cityId && collision.ready) {
+      // Routing must see the same streets and emergency-access supplements as
+      // driving. Wait for collision initialization to finish its manifest merge.
+      await collision.ready;
+      if (collision.state?.geojson) return collision.state.geojson;
+    }
+    const response = await fetch(CONFIG.dataUrl, { cache: 'force-cache' });
+    if (!response.ok) throw new Error(`Routing data request failed: ${response.status}`);
+    if (/\.gz(?:[?#]|$)/i.test(CONFIG.dataUrl)) {
+      if (typeof DecompressionStream !== 'function') throw new Error('Gzip road data needs browser decompression support.');
+      return JSON.parse(await new Response(response.body.pipeThrough(new DecompressionStream('gzip'))).text());
+    }
+    return response.json();
+  }
+
   async function initialize() {
     installUi();
     setInterval(syncIncidentState, 300);
     try {
-      const response = await fetch(CONFIG.dataUrl, { cache: 'force-cache' });
-      if (!response.ok) throw new Error(`Routing data request failed: ${response.status}`);
-      const geojson = await response.json();
+      const geojson = await loadRoads();
       state.graph = buildGraph(geojson);
       state.status = 'ready';
       readyResolve({ nodes: state.graph.nodes.length, edges: state.graph.directedEdges });

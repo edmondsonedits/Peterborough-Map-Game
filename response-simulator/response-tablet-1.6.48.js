@@ -20,6 +20,7 @@
     freezeFrame: 0,
     basemapToken: 0,
     fallbackUsed: false,
+    localBasemap: false,
     basemapTimer: 0,
   };
 
@@ -295,18 +296,86 @@
     });
   }
 
+  function createLocalStreetLayer() {
+    const roads = window.PTBO_ROAD_COLLISION;
+    if (!L.gridLayer || roads?.config?.cityId !== window.PTBO_CITY_PACKAGE?.id || roads.state?.status !== 'ready') return null;
+    const features = roads.state.geojson?.features;
+    if (!Array.isArray(features) || !features.length) return null;
+    // Keep coordinate references and cheap bounds, rather than thousands of
+    // Leaflet paths/labels. GridLayer manages a small set of canvas tiles.
+    const records = [];
+    for (const feature of features) {
+      const geometry = feature.geometry, properties = feature.properties || {};
+      const lines = geometry?.type === 'LineString' ? [geometry.coordinates] : geometry?.type === 'MultiLineString' ? geometry.coordinates : [];
+      for (const coordinates of lines) {
+        if (!coordinates?.length) continue;
+        let west=Infinity,east=-Infinity,south=Infinity,north=-Infinity;
+        for (const [lng,lat] of coordinates) {west=Math.min(west,lng);east=Math.max(east,lng);south=Math.min(south,lat);north=Math.max(north,lat);}
+        const major = /^(motorway|trunk|primary|secondary)/.test(properties.highway || '');
+        records.push({coordinates,west,east,south,north,major,service:properties.highway==='service',name:String(properties.name || properties.ref || '')});
+      }
+    }
+    records.sort((a,b)=>Number(a.major)-Number(b.major));
+    const layer = L.gridLayer({tileSize:256,keepBuffer:1,updateWhenIdle:true,attribution:'© OpenStreetMap contributors · packaged streets'});
+    layer.createTile = coords => {
+      const canvas = document.createElement('canvas'), ratio = Math.min(2,window.devicePixelRatio || 1);
+      canvas.width=canvas.height=256*ratio;canvas.style.width=canvas.style.height='256px';
+      const ctx=canvas.getContext('2d');
+      if (!ctx) return canvas;
+      ctx.scale(ratio,ratio);ctx.fillStyle='#e9eef1';ctx.fillRect(0,0,256,256);
+      const map=state.tabletMap, origin={x:coords.x*256,y:coords.y*256};
+      const nw=map.unproject([origin.x,origin.y],coords.z),se=map.unproject([origin.x+256,origin.y+256],coords.z);
+      const west=Math.min(nw.lng,se.lng),east=Math.max(nw.lng,se.lng),south=Math.min(nw.lat,se.lat),north=Math.max(nw.lat,se.lat);
+      const labels=[],names=new Set(),scale=Math.pow(2,(coords.z-16)/2);
+      ctx.lineCap=ctx.lineJoin='round';
+      for (const record of records) {
+        if(record.east<west || record.west>east || record.north<south || record.south>north || (record.service && coords.z<15))continue;
+        const points=record.coordinates.map(([lng,lat])=>{const p=map.project([lat,lng],coords.z);return{x:p.x-origin.x,y:p.y-origin.y};});
+        const width=Math.max(1.5,Math.min(24,(record.major?6:record.service?2.5:4)*scale));
+        ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));
+        ctx.strokeStyle='#ffffff';ctx.lineWidth=width+2;ctx.stroke();
+        ctx.strokeStyle=record.major?'#ead8a4':'#c2cbd2';ctx.lineWidth=width;ctx.stroke();
+        if(!record.name || names.has(record.name) || labels.length>=12 || coords.z<(record.major?12:15))continue;
+        ctx.font='600 11px system-ui,sans-serif';
+        const textWidth=ctx.measureText(record.name).width;
+        for(let i=1;i<points.length;i++){
+          const a=points[i-1],b=points[i],x=(a.x+b.x)/2,y=(a.y+b.y)/2;
+          if(Math.hypot(b.x-a.x,b.y-a.y)<Math.max(55,textWidth+12) || x<textWidth/2+5 || x>251-textWidth/2 || y<18 || y>238)continue;
+          if(labels.some(label=>Math.abs(label.x-x)<(label.width+textWidth)/2+12 && Math.abs(label.y-y)<28))continue;
+          let angle=Math.atan2(b.y-a.y,b.x-a.x);if(angle>Math.PI/2 || angle< -Math.PI/2)angle+=Math.PI;
+          labels.push({x,y,width:textWidth,angle,name:record.name});names.add(record.name);break;
+        }
+      }
+      ctx.font='600 11px system-ui,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+      for(const label of labels){ctx.save();ctx.translate(label.x,label.y);ctx.rotate(label.angle);ctx.lineWidth=3;ctx.strokeStyle='#f8fafc';ctx.strokeText(label.name,0,0);ctx.fillStyle='#334155';ctx.fillText(label.name,0,0);ctx.restore();}
+      return canvas;
+    };
+    return layer;
+  }
+
   function installBasemap() {
     if (!state.tabletMap || !window.L?.tileLayer) return;
     clearMapLayers();
     clearTimeout(state.basemapTimer);
     const token = ++state.basemapToken;
     state.fallbackUsed = false;
+    state.localBasemap = false;
+    if (window.PTBO_CITY_PACKAGE?.map?.tabletBasemap === 'local-streets') {
+      const local = createLocalStreetLayer();
+      if (local) {
+        state.fallbackUsed = true;
+        state.localBasemap = true;
+        local.addTo(state.tabletMap);state.baseLayers.push(local);
+        setMapStatus('Local street map · driving paused');
+        return;
+      }
+    }
     setMapStatus('Loading street map…', 'loading');
     const primary = createStreetLayer('simulator');
     let primaryLoaded = 0;
     let primaryFailures = 0;
     const markPrimaryLoaded = () => {
-      if (token !== state.basemapToken) return;
+      if (token !== state.basemapToken || state.fallbackUsed) return;
       primaryLoaded += 1;
       clearTimeout(state.basemapTimer);
       setMapStatus('Street-map incident view · driving paused');
@@ -316,8 +385,20 @@
       primaryFailures += 1;
       if (primaryFailures < 1 || primaryLoaded > 0) return;
       state.fallbackUsed = true;
+      clearTimeout(state.basemapTimer);
       clearMapLayers();
+      const local = createLocalStreetLayer();
+      if (local) {
+        state.localBasemap = true;
+        local.addTo(state.tabletMap);state.baseLayers.push(local);
+        setMapStatus('Local street map · driving paused');
+        return;
+      }
       const fallback = createStreetLayer('positron');
+      if (fallback._url === primary._url) {
+        setMapStatus('Street map unavailable. Reopen after city roads finish loading.', 'error');
+        return;
+      }
       fallback.once('load', () => setMapStatus('Backup street map · driving paused'));
       fallback.on('tileerror', () => setMapStatus('Map tiles are unavailable. Check your connection and reopen the tablet.', 'error'));
       fallback.addTo(state.tabletMap);
@@ -355,7 +436,7 @@
     if (address) address.textContent = dest ? `${dest.callType} · ${dest.address}` : 'No active destination';
     if (status && status.dataset.state !== 'loading' && status.dataset.state !== 'error') status.textContent = dest?.phase === 'transporting'
       ? 'Transport destination · driving paused'
-      : `${state.fallbackUsed ? 'Backup street map' : 'Street-map incident view'} · driving paused`;
+      : `${state.localBasemap ? 'Local street map' : state.fallbackUsed ? 'Backup street map' : 'Street-map incident view'} · driving paused`;
   }
 
   function drawTabletMarkers(dest) {

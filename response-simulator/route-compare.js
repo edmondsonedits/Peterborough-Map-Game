@@ -4,11 +4,12 @@
   const VERSION = '1.6.70';
   const current = document.currentScript;
   const base = current?.src || document.baseURI;
+  const cacheVersion = window.PTBO_BUILD?.version || new URL(base,document.baseURI).searchParams.get('v') || VERSION;
 
   function load(filename, marker, errorMessage) {
     if (document.querySelector(`script[${marker}]`)) return;
     const script = document.createElement('script');
-    script.src = new URL(`${filename}?v=${VERSION}`, base).href;
+    script.src = new URL(`${filename}?v=${cacheVersion}`, base).href;
     script.setAttribute(marker, VERSION);
     script.onerror = () => console.error(errorMessage);
     document.body.appendChild(script);

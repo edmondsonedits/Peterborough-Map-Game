@@ -384,7 +384,7 @@ test('every additional city demo boots from its own canonical roster without ext
   let calls=0;const c=browserContext({fetch:async url=>{calls++;assert.equal(String(url),`https://example.com/cities/${city.id}/geo-data.json`);return{ok:true,json:async()=>JSON.parse(read(`cities/${city.id}/geo-data.json`))};}});
   vm.runInContext(read('cities/preview-package-factory.js'),c);c.document.currentScript.src=`https://example.com/cities/${city.id}/package.js`;
   vm.runInContext(read(`cities/${city.id}/package.js`),c);await c.PTBO_CITY_PACKAGE_READY;
-  assert.equal(c.PTBO_CITY_PACKAGE.id,city.id);assert.equal(c.PTBO_CITY_PACKAGE.features.baseTraining,true);
+  assert.equal(c.PTBO_CITY_PACKAGE.id,city.id);assert.equal(c.PTBO_CITY_PACKAGE.features.baseTraining,city.id!=='richmond-hill');
   assert.ok(c.PTBO_SERVICE_CONFIG.profiles.fire.bases.length,city.id);assert.ok(c.PTBO_SERVICE_CONFIG.profiles.ems.bases.length,city.id);assert.equal(calls,1);
  }
 });

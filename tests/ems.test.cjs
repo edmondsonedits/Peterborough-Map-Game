@@ -18,7 +18,7 @@ function node(id='') {
     addEventListener(){},dispatchEvent(){},appendChild(child){this.children.push(child);},replaceChildren(...children){this.children=children;},
     classList:{add(){},remove(){},toggle(){},contains(){return false;}},querySelector:()=>null,closest:()=>null};
 }
-function game({random=0}={}) {
+function game({random=0,demoCallIds=null}={}) {
   let time=0,serial=0;
   const timers=new Map(),intervals=new Map(),elements=new Map(),spoken=[],alerts=[];
   // Keep dispatch selection deterministic. A randomly selected scene near the hospital can
@@ -29,7 +29,7 @@ function game({random=0}={}) {
     const box=node();box.dataset.sub=match[1];box.attributes['data-sub']=match[1];return box;
   });
   const element=id=>{if(!elements.has(id))elements.set(id,node(id));return elements.get(id);};
-  const c=vm.createContext({console,URL,Math:testMath,performance:{now:()=>time},Event:class{},CustomEvent:class{},
+  const c=vm.createContext({console,URL,location:{href:'https://game.test/response-simulator/?city=peterborough'},Math:testMath,performance:{now:()=>time},Event:class{},CustomEvent:class{},
     setTimeout:fn=>{timers.set(++serial,fn);return serial;},clearTimeout:id=>timers.delete(id),
     setInterval:fn=>{intervals.set(++serial,fn);return serial;},clearInterval:id=>intervals.delete(id),
     requestAnimationFrame(){},queueMicrotask:fn=>fn(),addEventListener(){},dispatchEvent(){},
@@ -51,6 +51,12 @@ function game({random=0}={}) {
   c.marker={setLatLng(){},setRotationOrigin(){},setRotationAngle(){},setIcon(icon){this.icon=icon;}};
   c.speak=message=>spoken.push(message);
   vm.runInContext('mapInstance=map;vehicleMarker=marker;updateMapOrientation=()=>{};playDispatchAudioText=speak;',c);
+  if(demoCallIds){
+    c.PTBO_CITY_PACKAGE={...c.PTBO_CITY_PACKAGE,dispatch:{...c.PTBO_CITY_PACKAGE.dispatch,demoCallIds}};
+    c.demoScenes=demoCallIds.map((id,index)=>({id,name:'Demo '+id,addr:(index+1)+' Main St',main:'Fire',sub:'Structure Fire',incidentProfiles:{fire:{sub:'Structure Fire'},ems:{sub:'Medical Assistance'}},lat:44.305+index*.003,lng:-78.32,radius:40}));
+    vm.runInContext('dispatchDatabase.splice(0,dispatchDatabase.length,...demoScenes);',c);
+    vm.runInContext(read('response-simulator/dispatch-demo.js'),c);
+  }
   vm.runInContext(read('response-simulator/service-mode.js'),c);
   const run=source=>vm.runInContext(source,c);
   function advance(ms){time+=ms;for(const fn of intervals.values())fn();}
@@ -254,8 +260,8 @@ test('change exports omit untouched records, record fields/deletions, and remove
   assert.equal(count(diff(baseline,[{...baseline[0]}, {...baseline[1]}])),0);
 });
 
-function comparisonGame() {
-  const g=game();
+function comparisonGame(options) {
+  const g=game(options);
   g.c.document.querySelector=selector=>selector==='.hud-timer-block'?g.element('timer-block'):null;
   for(const id of ['ptbo-route-legend','ptbo-compare-route-btn']){g.element(id).isConnected=true;g.element(id).querySelectorAll=()=>[];}
   const line=(points,options)=>({points,options,addTo(){return this;},setStyle(style){Object.assign(this.options,style);},bindTooltip(){return this;}});
@@ -290,6 +296,19 @@ test('Fire comparison remains two routes and stale asynchronous reviews cannot r
   compare.state.suggestedRoute=null;
   const review=compare.open();compare.reset();resolve();await review;
   assert.equal(compare.state.reviewOpen,false);assert.equal(compare.state.layers.length,0);
+});
+
+test('the fifth demo call retains route comparison alongside Replay Demo',async()=>{
+ const ids=['a','b','c','d','e'],g=comparisonGame({demoCallIds:ids}),compare=g.c.PTBO_ROUTE_COMPARE;
+ g.service.select('fire');
+ for(let i=0;i<5;i++){g.run('triggerDispatchWorkflow()');g.advance(5000);g.arrive();g.transition();compare.sync();}
+ assert.equal(g.c.PTBO_DISPATCH_DEMO.progress().finished,true);
+ assert.equal(g.element('hud-action-btn').textContent,'Replay Demo');
+ assert.notEqual(g.element('ptbo-compare-route-btn').style.display,'none');
+ await compare.open();assert.equal(compare.state.lineEntries.length,2);
+ g.service.spawn(2);assert.equal(g.element('hud-action-btn').textContent,'Replay Demo');
+ g.service.select('ems');assert.equal(g.element('hud-action-btn').textContent,'Replay Demo');
+ assert.equal(g.c.PTBO_DISPATCH_DEMO.progress().completed,5);
 });
 
 test('the shared 200-address catalog dispatches Fire and EMS while retaining the hospital workflow',()=>{
@@ -336,4 +355,30 @@ test('modeled support exercises identify the primary station in HUD wording and 
  assert.match(g.c.supportExerciseLabel(call),/estimated support exercise.*modeled first-due Station 2/i);
  vm.runInContext(read('response-simulator/dispatch-voice-bridge-1.4.2.js'),g.c);
  assert.match(g.c.buildCityDispatchPhrase(call),/estimated support exercise.*modeled first-due Station 2/i);
+});
+
+
+test('five-call demo uses real Fire completion flow, avoids repeats, and replays from its finished action',()=>{
+  const ids=['demo-a','demo-b','demo-c','demo-d','demo-e'];
+  const g=game({demoCallIds:ids});g.service.select('fire');
+  const observed=[];
+  for(let i=0;i<5;i++){
+    g.run('triggerDispatchWorkflow()');observed.push(g.run('mission.scene.id'));
+    assert.equal(g.c.PTBO_DISPATCH_DEMO.progress().completed,i);
+    g.arrive();g.transition();assert.equal(g.c.PTBO_DISPATCH_DEMO.progress().completed,i+1);
+  }
+  assert.equal(new Set(observed).size,5);assert.equal(g.c.PTBO_DISPATCH_DEMO.progress().finished,true);
+  assert.equal(g.element('hud-action-btn').textContent,'Replay Demo');
+  g.run('fireRandomIncidentDispatch()');assert.equal(g.run('mission.phase'),'complete');
+  g.run('triggerDispatchWorkflow()');assert.equal(g.c.PTBO_DISPATCH_DEMO.progress().completed,0);assert.equal(g.run('mission.phase'),'response');
+});
+
+test('EMS demo counts only hospital delivery and an abandoned call does not consume a slot',()=>{
+  const ids=['demo-a','demo-b','demo-c','demo-d','demo-e'];
+  const g=game({demoCallIds:ids});g.service.select('ems');g.run('triggerDispatchWorkflow()');
+  g.service.spawn(g.service.getBase().number);assert.equal(g.c.PTBO_DISPATCH_DEMO.progress().completed,0);
+  g.run('triggerDispatchWorkflow()');g.arrive();assert.equal(g.run('mission.phase'),'pickup');
+  assert.equal(g.c.PTBO_DISPATCH_DEMO.progress().completed,0);g.transition();assert.equal(g.run('mission.phase'),'transport');
+  assert.equal(g.c.PTBO_DISPATCH_DEMO.progress().completed,0);g.arrive();g.transition();assert.equal(g.c.PTBO_DISPATCH_DEMO.progress().completed,1);
+  assert.equal(g.run('totalTrackedCalls'),1);
 });
