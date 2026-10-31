@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Peterborough Fire & Emergency Dispatch Simulator</title>
     
-    <link rel="stylesheet" href="vendor/leaflet-1.9.4/leaflet.css?v=1.6.156" />
+    <link rel="stylesheet" href="vendor/leaflet-1.9.4/leaflet.css?v=1.6.157" />
     
     <style>
         html, body, #map {
@@ -201,17 +201,18 @@
 
     <div id="map"></div>
 
-    <script src="../shared/build-version.js?v=1.6.156"></script>
-    <script src="vendor/leaflet-1.9.4/leaflet.js?v=1.6.156"></script>
-    <script src="vendor/leaflet-1.9.4/leaflet.edgebuffer.js?v=1.6.156"></script>
-    <script src="vendor/leaflet-1.9.4/leaflet.rotatedMarker.js?v=1.6.156"></script>
+    <script src="../shared/build-version.js?v=1.6.157"></script>
+    <script src="vendor/leaflet-1.9.4/leaflet.js?v=1.6.157"></script>
+    <script src="vendor/leaflet-1.9.4/leaflet.edgebuffer.js?v=1.6.157"></script>
+    <script src="vendor/leaflet-1.9.4/leaflet.rotatedMarker.js?v=1.6.157"></script>
     
-    <script src="service-config.js?v=1.6.156"></script>
-    <script src="../shared/location-changes.js?v=1.6.156"></script>
-    <script src="../shared/base-locations.js?v=1.6.156"></script>
-    <script src="service-selection.js?v=1.6.156"></script>
-    <script src="gearbox-core.js?v=1.6.156"></script>
-    <script src="local-pool.js?v=1.6.156"></script>
+    <script src="service-config.js?v=1.6.157"></script>
+    <script src="../shared/location-changes.js?v=1.6.157"></script>
+    <script src="../shared/base-locations.js?v=1.6.157"></script>
+    <script src="service-selection.js?v=1.6.157"></script>
+    <script src="gearbox-core.js?v=1.6.157"></script>
+    <script src="local-pool.js?v=1.6.157"></script>
+    <script src="dispatch-demo.js?v=1.6.157"></script>
     <script>
         const dispatchDatabase = [
             { main:"Fire", sub:"Water & Ice Rescue", name:"Beavermead Park Beach", addr:"2015 Ashburnham Dr", lat:44.295749, lng:-78.303611 },
@@ -837,6 +838,7 @@
         function triggerDispatchWorkflow() {
             if (window.PTBO_SERVICE?.state.selected === false) return;
             if (simulationState === STATES.INACTIVE || simulationState === STATES.INSERVICE) {
+                if (window.PTBO_DISPATCH_DEMO?.progress().finished) window.PTBO_DISPATCH_DEMO.reset();
                 fireRandomIncidentDispatch();
             }
         }
@@ -903,13 +905,14 @@
         function fireRandomIncidentDispatch() {
             if (window.PTBO_SERVICE?.state.selected === false ||
                 (simulationState !== STATES.INACTIVE && simulationState !== STATES.INSERVICE)) return;
+            if (window.PTBO_DISPATCH_DEMO?.canStart() === false) return;
             const checkedBoxes = document.querySelectorAll('.filter-chk:checked');
             const activeSubCategories = Array.from(checkedBoxes).map(cb => cb.getAttribute('data-sub'));
 
             const selectedService = window.PTBO_SERVICE?.state.mode || 'fire';
             let filteredPool;
             const drills=window.PTBO_CITY_PACKAGE?.features?.sceneResponseDrills === true;
-            let candidates=dispatchDatabase;
+            let candidates=window.PTBO_DISPATCH_DEMO?.filterCandidates(dispatchDatabase) || dispatchDatabase;
             if (drills) {
                 const store=window.parent?.PTBO_DISPATCH_STORE;
                 const base=window.PTBO_SERVICE?.getBase?.();
@@ -972,6 +975,7 @@
             `;
 
             setDispatchAction('Responding…',true);
+            window.PTBO_DISPATCH_DEMO?.render();
 
             playDispatchAudioText(`Attention station company. Respond emergency to ${activeIncident.name}, at ${activeIncident.addr}, for a reported ${activeIncident.sub}.`);
         }
@@ -1001,6 +1005,7 @@
                 <p class="hud-address">${ems && mission.transportRequired ? `Patient delivered to ${escapeDispatchText(mission.hospital.name)}` : ems ? 'Response exercise completed' : 'Assignment completed'}</p>
                 <div class="hud-meta">Response: ${(mission.responseMs/1000).toFixed(1)} s${ems && mission.transportRequired ? ` · Transport: ${(mission.transportMs/1000).toFixed(1)} s` : ''}</div>`;
             setDispatchAction('Next Call',false);
+            window.PTBO_DISPATCH_DEMO?.complete(mission.scene);
         }
 
         function beginHospitalTransport() {
@@ -1066,7 +1071,7 @@
 
         window.onload = initializeSimulator;
     </script>
-    <script src="service-mode.js?v=1.6.156"></script>
-    <script src="scene-response-filters.js?v=1.6.156"></script>
+    <script src="service-mode.js?v=1.6.157"></script>
+    <script src="scene-response-filters.js?v=1.6.157"></script>
 </body>
 </html>

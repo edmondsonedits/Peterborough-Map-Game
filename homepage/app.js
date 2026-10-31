@@ -134,6 +134,7 @@
     state.select.value = city.id;
     document.body.dataset.homeCity = city.id;
     const fullDispatch = city.id === 'peterborough';
+    const dispatchDemo = city.dispatchDemo === true;
     const freeDriving = !fullDispatch && available('dispatch');
     document.body.dataset.homeAvailability = fullDispatch ? 'full' : 'demo';
     if (persist) write(CITY_KEY, city.id);
@@ -148,21 +149,21 @@
     const title = document.getElementById('home-dispatch-title');
     const description = document.getElementById('home-dispatch-description');
     const action = document.getElementById('home-dispatch-action');
-    if (action) action.textContent = fullDispatch ? 'Play Dispatch Simulator' : 'Play Demo · Fire & EMS driving';
+    if (action) action.textContent = fullDispatch ? 'Play Dispatch Simulator' : dispatchDemo ? 'Play Demo · 5 calls' : 'Play Demo · Fire & EMS driving';
     if (title) title.textContent = 'Dispatch Simulator';
     if (description) description.textContent = fullDispatch
       ? 'Drive Fire & EMS responses.'
-      : freeDriving ? `Drive Fire & EMS in ${city.name}.` : `Request a ${city.name} driving demo.`;
+      : dispatchDemo ? `Respond to 5 Fire or EMS calls in ${city.name}.` : freeDriving ? `Drive Fire & EMS in ${city.name}.` : `Request a ${city.name} driving demo.`;
     document.querySelectorAll('[data-dispatch-mode-label]').forEach(node => {
       node.textContent = 'Dispatch Simulator';
     });
     document.querySelectorAll('[data-dispatch-preview-title]').forEach(node => {
-      node.textContent = freeDriving ? 'Get to know the streets.' : 'Take the next call.';
+      node.textContent = dispatchDemo ? 'Take the next call.' : freeDriving ? 'Get to know the streets.' : 'Take the next call.';
     });
     document.querySelectorAll('[data-dispatch-preview-description]').forEach(node => {
       node.textContent = fullDispatch
         ? 'Choose Fire or EMS and practise your response.'
-        : freeDriving ? 'Choose Fire or EMS for free driving.' : 'Request this training mode for your city.';
+        : dispatchDemo ? 'Choose Fire or EMS. Complete 5 calls on Richmond Hill streets.' : freeDriving ? 'Choose Fire or EMS for free driving.' : 'Request this training mode for your city.';
     });
     state.launches.filter(link => link.dataset.previewLaunch === 'dispatch').forEach(link => {
       const label = link.querySelector('[data-launch-label]');
@@ -172,7 +173,7 @@
     if (explorerDescription) explorerDescription.textContent = available('explorer') ? `Drive through ${city.name} streets.` : `Request a ${city.name} 3D demo.`;
     if (state.status) state.status.textContent = fullDispatch
       ? 'All training modes available in Peterborough.'
-      : `${city.name} demos · ${available('geo') ? 'Geo Guesser ready' : 'Geo Guesser on request'}${available('route') ? ' · Route Mapping ready' : ''}${freeDriving ? ' · Free driving ready' : ''}. Request other modes below.`;
+      : `${city.name} demos · ${available('geo') ? 'Geo Guesser ready' : 'Geo Guesser on request'}${available('route') ? ' · Route Mapping ready' : ''}${dispatchDemo ? ' · 5-call dispatch ready' : freeDriving ? ' · Free driving ready' : ''}. Request other modes below.`;
     updateLinks();
     if (changed) {
       // A background storage update must not hide the preview link someone is using.

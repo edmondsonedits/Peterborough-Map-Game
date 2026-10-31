@@ -1,4 +1,4 @@
-import {markingSurfaceAt, projectMarkingTriangles} from './road-marking-projection.js?v=1.6.156';
+import {markingSurfaceAt, projectMarkingTriangles} from './road-marking-projection.js?v=1.6.157';
 
 const DEFAULTS={lift:.012,minClearance:.006,maxClearance:.025,maxHeightDelta:.5,maxLowering:.025,maxSubdivisionDepth:6};
 const cross=(a,b,c)=>(b[0]-a[0])*(c[2]-a[2])-(b[2]-a[2])*(c[0]-a[0]);

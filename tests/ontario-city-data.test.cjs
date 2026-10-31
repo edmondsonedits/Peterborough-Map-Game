@@ -181,10 +181,10 @@ test('manifests add Geo data without inventing roads or enabling new driving cit
     assert.equal(manifest.id,id);
     assert.equal(manifest.features.geoGuesser,true,id);
     assert.equal(manifest.data.geoGuesser,'geo-data.json',id);
-    assert.equal(manifest.features.dispatch,previews.includes(id),id);
-    assert.equal(manifest.features.routeGuidance,false,id);
+    assert.equal(manifest.features.dispatch,previews.includes(id)||id==='richmond-hill',id);
+    assert.equal(manifest.features.routeGuidance,id==='richmond-hill',id);
     assert.equal(manifest.features.baseTraining,false,id);
-    assert.equal(manifest.data.roads,previews.includes(id)?'roads.geojson.gz':null,id);
+    assert.equal(manifest.data.roads,previews.includes(id)||id==='richmond-hill'?'roads.geojson.gz':null,id);
     if (previews.includes(id)) {
       assert.equal(manifest.data.bases,'geo-data.json',id);
       assert.equal(manifest.status,'scene-response',id);
@@ -192,7 +192,7 @@ test('manifests add Geo data without inventing roads or enabling new driving cit
     } else {
       assert.equal(manifest.runtime,undefined,id);
       assert.equal(manifest.data.bases,'geo-data.json',id);
-      assert.equal(manifest.data.dispatchLocations,null,id);
+      assert.equal(manifest.data.dispatchLocations,id==='richmond-hill'?'training-data.json':null,id);
     }
   }
   const peterborough = json('cities/peterborough/city.json');
@@ -203,7 +203,7 @@ test('manifests add Geo data without inventing roads or enabling new driving cit
     const manifest = json(`cities/${id}/city.json`);
     assert.equal(manifest.features.geoGuesser,true,id);
     assert.equal(manifest.data.geoGuesser,'geo-data.json',id);
-    assert.equal(manifest.features.dispatch,previews.includes(id),id);
+    assert.equal(manifest.features.dispatch,previews.includes(id)||id==='richmond-hill',id);
     assert.equal(manifest.features.baseTraining,false,id);
     assert.equal(manifest.data.bases,'geo-data.json',id);
   }

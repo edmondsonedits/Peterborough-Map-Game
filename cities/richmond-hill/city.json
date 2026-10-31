@@ -4,9 +4,9 @@
   "name": "Richmond Hill",
   "province": "Ontario",
   "country": "Canada",
-  "status": "geo-demo",
+  "status": "dispatch-demo",
   "playable": true,
-  "note": "Geo Guesser and Route Mapping with sourced Fire and EMS practice locations.",
+  "note": "Five-call Fire and EMS dispatch demo using the shared Peterborough simulator workflow.",
   "map": {
     "bounds": [
       [
@@ -28,18 +28,19 @@
   },
   "features": {
     "baseTraining": false,
-    "dispatch": false,
-    "roadBoundaries": false,
-    "routeGuidance": false,
+    "dispatch": true,
+    "roadBoundaries": true,
+    "routeGuidance": true,
     "geoGuesser": true,
-    "routeMapping": true
+    "routeMapping": true,
+    "hospitalTransport": true
   },
   "data": {
     "boundaries": null,
-    "roads": null,
-    "dispatchLocations": null,
+    "roads": "roads.geojson.gz",
+    "dispatchLocations": "training-data.json",
     "bases": "geo-data.json",
-    "hospitals": null,
+    "hospitals": "package.js",
     "geoGuesser": "geo-data.json",
     "routeMapping": "training-data.json"
   }

@@ -473,7 +473,7 @@
     }
 
     const actionButton = document.getElementById('hud-action-btn');
-    const nextCallReady = Boolean(actionButton && /next call/i.test(actionButton.textContent || ''));
+    const nextCallReady = Boolean(actionButton && (/next call/i.test(actionButton.textContent || '') || window.PTBO_DISPATCH_DEMO?.progress().finished));
     setButtonVisible(Boolean(state.completed && nextCallReady));
   }
 

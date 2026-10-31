@@ -229,22 +229,28 @@
     const unavailableHospital=Object.freeze({id:`${config.id}-hospital-unavailable`,main:'Medical',sub:'Hospital Transport',name:'Hospital transport unavailable',addr:'Dispatch calls are not available for this city yet.',lat:config.map.defaultCenter[0],lng:config.map.defaultCenter[1],radius:30,disabled:true});
     const profiles=Object.freeze({fire:Object.freeze({id:'fire',label:'Fire',vehicle:'Fire truck',bases:fireBases}),ems:Object.freeze({id:'ems',label:'EMS',vehicle:'Ambulance',bases:emsBases})});
     const drills=config.sceneResponseDrills===true;
-    const serviceConfig=Object.freeze({profiles,hospital:drills?null:unavailableHospital,alarmCategories});
-    const features=Object.freeze({baseTraining:!drills,dispatch:drills,sceneResponseDrills:drills,roadBoundaries:drills,routeGuidance:false,hospitalTransport:false});
-    const roads=Object.freeze({available:drills,center:Object.freeze([...config.map.defaultCenter]),dataUrl:drills?new URL('./roads.geojson.gz',config.sourceUrl).href:null,manifestUrl:drills?new URL('./training-data.json',config.sourceUrl).href:null});
-    const dispatch=Object.freeze({available:drills,controlName:`${config.name} Control`,dataVersion:'preview-1',descriptorUrl:new URL('./dispatch-data.js',config.sourceUrl).href});
+    const demo=Boolean(config.dispatchDemo);
+    const dispatchEnabled=drills||demo;
+    const serviceConfig=Object.freeze({profiles,hospital:demo?Object.freeze({...config.dispatchDemo.hospital}):drills?null:unavailableHospital,alarmCategories});
+    const features=Object.freeze({baseTraining:!dispatchEnabled,dispatch:dispatchEnabled,sceneResponseDrills:drills,roadBoundaries:dispatchEnabled,routeGuidance:demo,hospitalTransport:demo});
+    const roads=Object.freeze({available:dispatchEnabled,center:Object.freeze([...config.map.defaultCenter]),dataUrl:dispatchEnabled?new URL('./roads.geojson.gz',config.sourceUrl).href:null,manifestUrl:dispatchEnabled?new URL('./training-data.json',config.sourceUrl).href:null});
+    const dispatch=Object.freeze({available:dispatchEnabled,controlName:`${config.name} Control`,dataVersion:'preview-1',descriptorUrl:new URL('./dispatch-data.js',config.sourceUrl).href,
+      ...(demo?{demoCallIds:Object.freeze([...config.dispatchDemo.callIds])}:{})});
     const map=Object.freeze({...config.map,defaultCenter:Object.freeze([...config.map.defaultCenter]),bounds:Object.freeze(config.map.bounds.map(pair=>Object.freeze([...pair])))});
-    const cityPackage=Object.freeze({schemaVersion:3,version:VERSION,id:config.id,name:config.name,province:'Ontario',country:'Canada',playable:true,status:drills?'scene-response':'base-training',features,map,roads,dispatch,serviceConfig,sources:Object.freeze({...config.sources})});
+    const cityPackage=Object.freeze({schemaVersion:3,version:VERSION,id:config.id,name:config.name,province:'Ontario',country:'Canada',playable:true,status:demo?'dispatch-demo':drills?'scene-response':'base-training',features,map,roads,dispatch,serviceConfig,sources:Object.freeze({...config.sources})});
 
     window.PTBO_CITY_PACKAGE=cityPackage;window.PTBO_ACTIVE_CITY=cityPackage;window.PTBO_SERVICE_CONFIG=serviceConfig;window.PTBO_STATIONS=fireBases;
     window.getPtboStation=number=>fireBases.find(station=>station.number===Number(number));
-    document.documentElement.dataset.city=config.id;document.documentElement.dataset.cityPackageVersion=VERSION;document.documentElement.dataset.dispatchAvailable=String(drills);
-    installPreviewSubsystemShims(config.id,drills);
+    document.documentElement.dataset.city=config.id;document.documentElement.dataset.cityPackageVersion=VERSION;document.documentElement.dataset.dispatchAvailable=String(dispatchEnabled);
+    if(!demo)installPreviewSubsystemShims(config.id,drills);
 
     const ready=(async()=>{
       let fire,ems;
-      if (drills || config.canonicalRoster === true) {
-        const response=await fetch(new URL('./geo-data.json',config.sourceUrl).href,{cache:'force-cache'});
+      if (dispatchEnabled || config.canonicalRoster === true) {
+        const geoUrl=new URL('./geo-data.json',config.sourceUrl);
+        const cacheVersion=new URL(config.sourceUrl).searchParams.get('v');
+        if(demo&&cacheVersion)geoUrl.searchParams.set('v',cacheVersion);
+        const response=await fetch(geoUrl.href,{cache:'force-cache'});
         if(!response.ok)throw new Error(`${config.name} canonical bases could not load.`);
         const geo=await response.json();
         if(geo?.schemaVersion!==1 || geo.id!==config.id || !Array.isArray(geo.bases) || !Array.isArray(geo.locations))throw new Error(`${config.name} canonical base data is invalid.`);
@@ -257,7 +263,7 @@
       if(!fire.length||!ems.length)throw new Error(`${config.name} needs at least one Fire and one EMS base.`);
       fireBases.splice(0,fireBases.length,...fire);emsBases.splice(0,emsBases.length,...ems);window.PTBO_STATIONS=fireBases;
       document.documentElement.dataset.fireBaseCount=String(fireBases.length);document.documentElement.dataset.emsBaseCount=String(emsBases.length);
-      window.dispatchEvent(new CustomEvent('ptbo-city-package-data-ready',{detail:{id:config.id,version:VERSION,fireBases:fireBases.length,emsBases:emsBases.length,dispatch:false}}));
+      window.dispatchEvent(new CustomEvent('ptbo-city-package-data-ready',{detail:{id:config.id,version:VERSION,fireBases:fireBases.length,emsBases:emsBases.length,dispatch:dispatchEnabled}}));
       return cityPackage;
     })();
     window.PTBO_CITY_PACKAGE_READY=ready;
