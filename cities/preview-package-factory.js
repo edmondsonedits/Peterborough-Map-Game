@@ -101,7 +101,11 @@
       let suffix=2;
       while(usedIds.has(id))id=`${serviceRoot}-${number}-${suffix++}`;
       usedIds.add(id);
-      return Object.freeze({...base,id,number});
+      // Canonical site points remain in geo-data; reviewed driving rectangles can
+      // use their own center and a modeled apron spawn.
+      const area=base.drivingArea;
+      const driving=area ? Object.fromEntries(['lat','lng','yardSize','yardWidth','yardLength','yardRotation','spawnLat','spawnLng','spawnHeading'].filter(k=>Number.isFinite(area[k])).map(k=>[k,area[k]])) : {};
+      return Object.freeze({...base,...driving,id,number});
     });
   }
 

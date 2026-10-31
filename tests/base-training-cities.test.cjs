@@ -405,3 +405,22 @@ test('Richmond Hill dispatch descriptor resolves only existing city locations',a
  assert.equal(c.PTBO_CITY_DISPATCH_SOURCE.available,true);assert.deepEqual(await c.PTBO_DISPATCH_DATA_READY,data.locations);
  vm.runInContext(read('cities/richmond-hill/dispatch-data.js'),c);assert.equal(requests,1,'reuse canonical ready promise');
 });
+
+
+test('Richmond Hill loads fitted rotated base areas and keeps canonical source points intact',async()=>{
+ const data=JSON.parse(read('cities/richmond-hill/geo-data.json'));
+ const c=browserContext({fetch:async()=>({ok:true,json:async()=>data})});
+ vm.runInContext(read('cities/preview-package-factory.js'),c);
+ c.document.currentScript.src='https://example.com/cities/richmond-hill/package.js';
+ vm.runInContext(read('cities/richmond-hill/package.js'),c);await c.PTBO_CITY_PACKAGE_READY;
+ c.PTBO_LOCATION_CHANGES={diff:noChangesDiff};vm.runInContext(read('shared/base-locations.js'),c);
+ const bases=c.PTBO_BASE_STORE.getAll();assert.equal(bases.length,8);
+ for(const b of bases){
+  const original=data.bases.find(row=>b.id.endsWith(row.id));const a=original.drivingArea;
+  assert.equal(b.lat,a.lat);assert.equal(b.lng,a.lng);assert.equal(b.yardWidth,a.yardWidth);assert.equal(b.yardLength,a.yardLength);assert.equal(b.yardRotation,a.yardRotation);
+  assert.ok(b.yardRotation>0);assert.ok(c.PTBO_BASE_STORE.contains(b,b.spawnLat,b.spawnLng),b.id+' spawn stays inside fitted site');
+  const mx=111320*Math.cos(c.PTBO_CITY_PACKAGE.roads.center[0]*Math.PI/180),my=110540,angle=b.yardRotation*Math.PI/180;
+  for(const [x,y] of [[b.yardWidth*.49,0],[0,b.yardLength*.49]])assert.ok(c.PTBO_BASE_STORE.contains(b,b.lat+(x*Math.sin(angle)+y*Math.cos(angle))/my,b.lng+(x*Math.cos(angle)-y*Math.sin(angle))/mx));
+ }
+ const station28=bases.find(b=>b.id.endsWith('ems-28'));assert.ok(station28.spawnLat>43.8688);assert.equal(data.bases.find(b=>b.id==='richmond-hill-ems-28').lat,43.867171820603346);
+});
