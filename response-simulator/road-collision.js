@@ -6,6 +6,7 @@
 
   window.PTBO_ROAD_COLLISION_BOOTSTRAP = true;
   const sourceUrl = new URL(document.currentScript?.src || document.baseURI, document.baseURI);
+  const CACHE_VERSION = window.PTBO_BUILD?.version || sourceUrl.searchParams.get('v') || VERSION;
   const sleep = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds));
 
   function loadScript(filename, version, attempt = 1) {
@@ -27,7 +28,7 @@
 
   function ensureRouteComparison() {
     if (window.PTBO_ROUTE_COMPARE || document.querySelector('script[data-ptbo-route-compare-core]')) return Promise.resolve();
-    return loadScript('route-compare-1.4.2.js', `${VERSION}-route-compare`);
+    return loadScript('route-compare-1.4.2.js', `${CACHE_VERSION}-route-compare`);
   }
 
   async function waitForApi(timeoutMilliseconds = 5000) {
@@ -44,7 +45,7 @@
     let lastError;
     for (let attempt = 1; attempt <= 3; attempt += 1) {
       try {
-        await loadScript('road-collision-core.js', `${VERSION}-core`, attempt);
+        await loadScript('road-collision-core.js', `${CACHE_VERSION}-core`, attempt);
         return await waitForApi(5000);
       } catch (error) {
         lastError = error;
@@ -59,15 +60,20 @@
     await api.ready;
     if (api.state?.status !== 'ready' || !api.state?.originalLoop) throw new Error('Road boundaries loaded without attaching to vehicle physics.');
 
-    await loadScript('road-hard-boundary-1.6.6.js', `${VERSION}-hard-boundary`);
+    await loadScript('road-hard-boundary-1.6.6.js', `${CACHE_VERSION}-hard-boundary`);
     const hardBoundary = window.PTBO_HARD_ROAD_BOUNDARY;
     if (!hardBoundary?.ready) throw new Error('Hard road-boundary guard did not initialize.');
     await hardBoundary.ready;
     if (!hardBoundary.state?.installed) throw new Error('Hard road-boundary guard did not attach to vehicle physics.');
 
+    await loadScript('road-intersection-softener.js', `${CACHE_VERSION}-intersections`);
+    const intersections = window.PTBO_ROAD_INTERSECTION_SOFTENER;
+    if (!intersections?.ready) throw new Error('Intersection corner geometry did not initialize.');
+    await intersections.ready;
+    if (!intersections.state.installed) throw new Error('Intersection corner geometry did not attach to road boundaries.');
+
     Promise.allSettled([
-      loadScript('road-intersection-softener.js', `${VERSION}-intersections`),
-      loadScript('dispatch-voice-bridge-1.4.2.js', `${VERSION}-voice`),
+      loadScript('dispatch-voice-bridge-1.4.2.js', `${CACHE_VERSION}-voice`),
       ensureRouteComparison(),
     ]).then(results => results.forEach(result => {if(result.status==='rejected')console.warn(result.reason);}));
 

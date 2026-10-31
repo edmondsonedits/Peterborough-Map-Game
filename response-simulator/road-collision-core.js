@@ -94,6 +94,12 @@
     return Math.min(20, Math.max(5.5, width));
   }
 
+  function roadLevel(properties = {}) {
+    const enabled = value => value != null && !['no','false','0',''].includes(String(value).toLowerCase());
+    const layer = Number.isFinite(Number(properties.layer)) ? Number(properties.layer) : 0;
+    return `${layer}:${enabled(properties.bridge) ? 'bridge' : enabled(properties.tunnel) ? 'tunnel' : 'ground'}`;
+  }
+
   function addSegment(aCoordinate, bCoordinate, properties, featureIndex) {
     if (!Array.isArray(aCoordinate) || !Array.isArray(bCoordinate)) return;
     const a = toXY(Number(aCoordinate[1]), Number(aCoordinate[0]));
@@ -118,6 +124,7 @@
       allowed,
       width,
       featureIndex,
+      levelKey: roadLevel(properties),
       highway: properties.highway || 'road',
       name: properties.name || properties.ref || 'Unnamed road',
     };
@@ -184,10 +191,11 @@
   }
 
   function nearestRoadXY(x, y, searchRadius = 45) {
+    if (![x,y,searchRadius].every(Number.isFinite) || searchRadius < 0) return null;
     let best = null;
     for (const index of nearbySegmentIndexes(x, y, searchRadius)) {
       const projection = projectPointToSegment(x, y, state.segments[index]);
-      if (!best || projection.distance < best.distance) best = projection;
+      if (projection.distance <= searchRadius + 1e-6 && (!best || projection.distance < best.distance)) best = projection;
     }
     return best;
   }

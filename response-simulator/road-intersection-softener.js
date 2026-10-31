@@ -7,6 +7,7 @@
     laneAssistDefault: 0.60,
     gridSize: 80,
     endpointPrecisionMeters: 0.25,
+    endpointSnapToleranceMeters: 1,
     minimumJunctionAngleDegrees: 18,
     maximumJunctionAngleDegrees: 162,
     minimumRadiusMeters: 7.5,
@@ -20,6 +21,7 @@
     installed: false,
     junctionCount: 0,
     originalSegmentCount: 0,
+    matchedNearEndpoints: 0,
   };
 
   const clamp = (value, minimum, maximum) => Math.max(minimum, Math.min(maximum, value));
@@ -37,12 +39,34 @@
     return (Math.atan2(dx, dy) * 180 / Math.PI + 360) % 360;
   }
 
-  function registerEndpoint(nodes, x, y, segment, segmentIndex, outwardDx, outwardDy) {
-    const key = endpointKey(x, y);
+  function registerEndpoint(nodes, buckets, x, y, segment, segmentIndex, outwardDx, outwardDy) {
+    const level = segment.levelKey || '0:ground';
+    const key = `${level}:${endpointKey(x, y)}`;
     let node = nodes.get(key);
+    const tolerance = CONFIG.endpointSnapToleranceMeters;
+    const cellX = Math.floor(x / tolerance), cellY = Math.floor(y / tolerance);
     if (!node) {
-      node = { xTotal: 0, yTotal: 0, samples: 0, incidents: [] };
+      let bestDistance = Infinity;
+      for (let dx = -1; dx <= 1; dx += 1) for (let dy = -1; dy <= 1; dy += 1) {
+        for (const candidate of buckets.get(`${level}:${cellX+dx},${cellY+dy}`) || []) {
+          const distance = Math.hypot(x-candidate.anchorX,y-candidate.anchorY);
+          // Match distinct road features, not successive vertices along one curve.
+          // A fixed anchor bounds the cluster and prevents chained gap expansion.
+          if (distance <= tolerance && distance < bestDistance
+            && candidate.incidents.some(item => item.segment.featureIndex !== segment.featureIndex)) {
+            node = candidate;
+            bestDistance = distance;
+          }
+        }
+      }
+      if (node) state.matchedNearEndpoints += 1;
+    }
+    if (!node) {
+      node = { anchorX:x, anchorY:y, xTotal:0, yTotal:0, samples:0, incidents:[] };
       nodes.set(key, node);
+      const cellKey = `${level}:${cellX},${cellY}`;
+      if (!buckets.has(cellKey)) buckets.set(cellKey, []);
+      buckets.get(cellKey).push(node);
     }
     const length = Math.hypot(outwardDx, outwardDy);
     if (length <= 0) return;
@@ -104,12 +128,12 @@
     }, null);
   }
 
-  function registerSyntheticSegment(roadState, segment, segmentIndex) {
+  function registerSyntheticSegment(roadState, segment, segmentIndex, gridSize) {
     const padding = segment.allowed + 3;
-    const minCellX = Math.floor((Math.min(segment.ax, segment.bx) - padding) / CONFIG.gridSize);
-    const maxCellX = Math.floor((Math.max(segment.ax, segment.bx) + padding) / CONFIG.gridSize);
-    const minCellY = Math.floor((Math.min(segment.ay, segment.by) - padding) / CONFIG.gridSize);
-    const maxCellY = Math.floor((Math.max(segment.ay, segment.by) + padding) / CONFIG.gridSize);
+    const minCellX = Math.floor((Math.min(segment.ax, segment.bx) - padding) / gridSize);
+    const maxCellX = Math.floor((Math.max(segment.ax, segment.bx) + padding) / gridSize);
+    const minCellY = Math.floor((Math.min(segment.ay, segment.by) - padding) / gridSize);
+    const maxCellY = Math.floor((Math.max(segment.ay, segment.by) + padding) / gridSize);
 
     for (let cellX = minCellX; cellX <= maxCellX; cellX += 1) {
       for (let cellY = minCellY; cellY <= maxCellY; cellY += 1) {
@@ -121,7 +145,7 @@
     }
   }
 
-  function addRoundedJunction(roadState, node, junctionIndex) {
+  function addRoundedJunction(roadState, node, junctionIndex, gridSize) {
     const centerX = node.xTotal / node.samples;
     const centerY = node.yTotal / node.samples;
     const radius = junctionRadius(node);
@@ -148,6 +172,7 @@
       allowed: radius,
       width: radius * 2,
       featureIndex: -1000000 - junctionIndex,
+      levelKey: dominant?.segment.levelKey || '0:ground',
       highway: 'intersection',
       name: 'Rounded intersection',
       syntheticIntersection: true,
@@ -155,7 +180,7 @@
     };
 
     const segmentIndex = roadState.segments.push(segment) - 1;
-    registerSyntheticSegment(roadState, segment, segmentIndex);
+    registerSyntheticSegment(roadState, segment, segmentIndex, gridSize);
   }
 
   function applyLaneAssistDefault(roadState) {
@@ -166,7 +191,7 @@
     if (assistValue) assistValue.textContent = `${Math.round(CONFIG.laneAssistDefault * 100)}%`;
   }
 
-  function softenIntersections(roadState) {
+  function softenIntersections(roadState, gridSize) {
     if (state.installed || !Array.isArray(roadState.segments) || !roadState.grid) return;
     if (roadState.segments.some(segment => segment.syntheticIntersection)) {
       state.installed = true;
@@ -176,16 +201,17 @@
 
     const originalSegments = roadState.segments.slice();
     const nodes = new Map();
+    const buckets = new Map();
     originalSegments.forEach((segment, segmentIndex) => {
-      registerEndpoint(nodes, segment.ax, segment.ay, segment, segmentIndex, segment.dx, segment.dy);
-      registerEndpoint(nodes, segment.bx, segment.by, segment, segmentIndex, -segment.dx, -segment.dy);
+      registerEndpoint(nodes, buckets, segment.ax, segment.ay, segment, segmentIndex, segment.dx, segment.dy);
+      registerEndpoint(nodes, buckets, segment.bx, segment.by, segment, segmentIndex, -segment.dx, -segment.dy);
     });
 
     state.originalSegmentCount = originalSegments.length;
     let junctionIndex = 0;
     nodes.forEach(node => {
       if (!isRoadJunction(node)) return;
-      addRoundedJunction(roadState, node, junctionIndex);
+      addRoundedJunction(roadState, node, junctionIndex, gridSize);
       junctionIndex += 1;
     });
 
@@ -198,6 +224,9 @@
     }));
   }
 
+  let resolveReady, rejectReady;
+  const ready = new Promise((resolve, reject) => { resolveReady = resolve; rejectReady = reject; });
+
   function install() {
     const roadSystem = window.PTBO_ROAD_COLLISION;
     if (!roadSystem) {
@@ -207,14 +236,21 @@
 
     applyLaneAssistDefault(roadSystem.state);
     roadSystem.ready
-      .then(() => softenIntersections(roadSystem.state))
-      .catch(() => {});
+      .then(() => {
+        const gridSize = Number(roadSystem.config?.gridSize) || CONFIG.gridSize;
+        softenIntersections(roadSystem.state, gridSize);
+        if (!state.installed) throw new Error('Intersection corner geometry could not be installed.');
+        resolveReady({junctionCount:state.junctionCount,matchedNearEndpoints:state.matchedNearEndpoints});
+      })
+      .catch(rejectReady);
   }
 
   window.PTBO_ROAD_INTERSECTION_SOFTENER = Object.freeze({
     state,
     config: CONFIG,
+    ready,
   });
 
+  ready.catch(() => {});
   install();
 })();
