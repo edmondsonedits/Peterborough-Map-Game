@@ -45,6 +45,8 @@ const criticalConsolePattern = /\b(?:uncaught|typeerror|referenceerror|syntaxerr
     await page.waitForFunction(() => Boolean(globalThis.__PTBO_GAMEPLAY__?.state), null, { timeout: 10000 });
     await page.waitForFunction(() => document.documentElement.dataset.stationOneModel === 'ready', null, { timeout: 180000 });
 
+    // Models become ready before the city loading overlay releases pointer input.
+    await page.waitForFunction(() => document.querySelector('#loading-screen')?.classList.contains('is-hidden'), null, { timeout: 240000 });
     await page.locator('#play-mode').click();
     await page.locator('canvas').first().focus();
 
