@@ -3,36 +3,35 @@
   "asset": "ems-clonsilla.glb",
   "units": "metres",
   "stats": {
-    "fileBytes": 323816,
-    "nodeCount": 10,
-    "meshDefinitions": 8,
-    "primitiveCount": 8,
-    "meshNodeInstances": 8,
-    "materialCount": 8,
+    "fileBytes": 349792,
+    "nodeCount": 12,
+    "meshDefinitions": 10,
+    "primitiveCount": 10,
+    "meshNodeInstances": 10,
+    "materialCount": 10,
     "embeddedImageCount": 0,
-    "instancedTriangleCount": 6540
+    "instancedTriangleCount": 7140
   },
-  "sha256": "dd1eb07eb33e725ae69e87cfff7afa4898df8de2b81bc6529cb70434defc7edc",
+  "sha256": "b7e64ba9adff990ab39603532351141038321def8ffa2a813b842c814f780d06",
+  "validation": {
+    "tool": "gltf-transform 4.5.1 validate",
+    "errors": 0,
+    "warnings": 0
+  },
   "evidenceLedger": {
     "confirmed": [
-      "Address 1003 Clonsilla and Station 7 identity are visible on County-hosted photo.",
-      "Broad glazed storefront, silver mullions, light fascia/parapet, blue/orange lower bands are visible in County-hosted photo.",
-      "Written 2017 opening account says converted auto-sales building with two vehicle bays.",
+      "County-hosted photo identifies Station 7 at 1003 Clonsilla and shows the broad glazed storefront, silver mullions, light fascia, and blue/orange lower bands.",
+      "Google Street View September 2021 panorama YhKp1v44kxUww_U4FWJ3fw (heading 279.63 degrees) shows two white sectional doors in the recessed wing on the viewer-left of the signed storefront; each has one narrow dark horizontal window band with silver dividers. This is dated appearance and relative-placement evidence, not a current-condition claim.",
+      "Written 2017 opening account says the converted auto-sales building opened at 1003 Clonsilla with two vehicle bays.",
       "GIS footprint vertices and source way/998877497."
     ],
     "estimated": [
-      "3.9 m overall height; flat roof; two closed bay doors on setback-side wing front at local Z≈7.12 m and their sizes/panel treatment; all side and rear wall details. Door count is text-confirmed for vehicle bays, but exterior door wall/placement is estimated."
+      "3.9 m overall height; flat roof; door widths, heights, precise centers, and local offsets; all unseen side and rear wall details. The July 2024 Street View includes construction and changed cladding at the parcel, but does not establish the finished current station facade."
     ]
   },
   "sources": [
     "https://www.ptbocounty.ca/living-in-our-community/emergency-services/community-paramedicine-and-health-monitoring/",
+    "https://www.google.com/maps/@?api=1&map_action=pano&pano=YhKp1v44kxUww_U4FWJ3fw&heading=279.63&pitch=0&fov=15",
     "https://themillbrooktimes.ca/new-paramedic-station-expected-improve-response-times/"
-  ],
-  "validation": {
-    "truncated": false,
-    "errors": 0,
-    "infos": 9,
-    "warnings": 0,
-    "tool": "Khronos glTF Validator"
-  }
+  ]
 }

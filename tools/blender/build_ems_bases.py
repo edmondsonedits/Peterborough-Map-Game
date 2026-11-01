@@ -258,7 +258,10 @@ def build_clonsilla():
     silver=mat("Clonsilla | silver storefront frames",(.59,.64,.65),.34,.62)
     blue=mat("EMS identity | deep blue",(.012,.075,.23),.42,.18)
     orange=mat("EMS identity | orange",(.92,.27,.035),.42,.15)
-    baymat=mat("Clonsilla estimated bay doors | blue grey",(.16,.23,.27),.35,.28)
+    panelmat=mat("Clonsilla | warm white sectional door panels",(.95,.95,.92),.56,.03)
+    bandmat=mat("Clonsilla | dark horizontal door glazing",(.025,.045,.052),.16,.32)
+    seammat=mat("Clonsilla | pale sectional door seams",(.82,.84,.83),.62,.08)
+
     roof=mat("Clonsilla | flat roof membrane",(.49,.54,.56),.72,.04)
     full=contract["footprint"]
     prism("Clonsilla GIS shell exact L footprint",full,-1.2,3.65,wallmat)
@@ -278,22 +281,31 @@ def build_clonsilla():
     box("Clonsilla branded white sign panel",0,-.10,3.28,15.45,.12,.68,parapet,.012)
     add_text("PETERBOROUGH PARAMEDICS",0,.18,3.42,.42,blue,"Clonsilla sign title")
     add_text("STATION 7  |  1003 CLONSILLA",0,.18,3.08,.23,blue,"Clonsilla sign address")
-    # Two bay doors are an estimate on the GIS setback-side wing front, based on the written two-bay program only.
+    # September 2021 imagery shows two closed white sectional doors in the recessed wing left of the storefront.
+    # Keep the existing approximate door centers and dimensions; the photo confirms appearance and relative placement, not measurements.
     bay_front=7.1229
     for idx,x in enumerate((10.9,16.2),1):
-        box(f"Clonsilla estimated bay {idx} surround",x,bay_front-.075,1.68,4.32,.14,3.28,silver,.012)
-        box(f"Clonsilla estimated bay {idx} closed leaf",x,bay_front-.17,1.68,4.12,.045,3.08,baymat,.008)
-        for z in (.48,1.25,2.02,2.79): box(f"Clonsilla estimated bay {idx} panel seam",x,bay_front-.205,z,4.08,.03,.045,silver)
+        box(f"Clonsilla observed sectional door {idx} surround",x,bay_front-.075,1.68,4.32,.14,3.28,silver,.012)
+        box(f"Clonsilla white sectional door {idx} leaf",x,bay_front-.17,1.68,4.12,.045,3.08,panelmat,.008)
+        for z in (.38,.78,1.18,2.18,2.58,2.98):
+            box(f"Clonsilla sectional door {idx} pale seam",x,bay_front-.205,z,4.04,.03,.035,seammat)
+        # A dark horizontal glazed strip crosses each door near mid-height, with narrow silver dividers.
+        box(f"Clonsilla door {idx} glazing band frame",x,bay_front-.22,1.68,3.72,.045,.34,silver,.006)
+        box(f"Clonsilla door {idx} dark window band",x,bay_front-.245,1.68,3.58,.025,.23,bandmat)
+        for offset in (-1.32,-.66,0,.66,1.32):
+            box(f"Clonsilla door {idx} glazing mullion",x+offset,bay_front-.265,1.68,.035,.025,.25,silver,.003)
     # Low-profile roof and perimeter coping follow GIS outline; unseen walls remain plain.
     prism("Clonsilla flat roof plane",full,3.82,3.9,roof)
     group_static(root,static)
     root.name="EMSClonsilla_Root"; static.name="EMSClonsilla_Static"
     bpy.ops.wm.save_as_mainfile(filepath=str(model_dir/"ems-clonsilla.blend"))
     glb=export_glb(root,asset_dir)
-    write_layout(contract,asset_dir,{"frontEdge":"GIS contract edge indices 1–2; positive local Z inward","overallHeightEstimateM":3.9,"confirmedVehicleBays":2,"estimatedExteriorDoors":[{"count":2,"side":"setback-side-wing front at local Z≈7.12 m","centersX":[10.9,16.2],"sizeM":[4.12,3.08]}],"doorPlacement":"Estimated; not visible in inspected exterior photo","roof":"Flat low-profile roof / parapet inferred from storefront photo"})
+    write_layout(contract,asset_dir,{"frontEdge":"GIS contract edge indices 1–2; positive local Z inward","overallHeightEstimateM":3.9,"confirmedVehicleBays":2,"confirmedExteriorDoorAppearance":{"count":2,"side":"recessed wing on viewer-left of the signed street-facing storefront","panelFinish":"white sectional","windowBandsPerDoor":1,"windowBand":"narrow dark horizontal glazing strip around mid-height with silver mullions","source":"Google Street View, September 2021, panorama YhKp1v44kxUww_U4FWJ3fw; heading 279.63 degrees"},"estimatedExteriorDoorGeometry":{"centersX":[10.9,16.2],"frontLocalZ":7.1229,"sizeM":[4.12,3.08],"status":"Approximate modeling offsets and dimensions; not surveyed"},"currentExteriorCondition":"Unknown. July 2024 Street View shows construction and changed cladding at the parcel; it does not establish the finished current station facade.","roof":"Flat low-profile roof / parapet inferred from storefront photo"})
+
     render_views(asset_id,full,3.9,model_dir)
     stats=glb_stats(glb)
-    write_report(asset_id,glb,stats,["Address 1003 Clonsilla and Station 7 identity are visible on County-hosted photo.","Broad glazed storefront, silver mullions, light fascia/parapet, blue/orange lower bands are visible in County-hosted photo.","Written 2017 opening account says converted auto-sales building with two vehicle bays.","GIS footprint vertices and source way/998877497."],["3.9 m overall height; flat roof; two closed bay doors on setback-side wing front at local Z≈7.12 m and their sizes/panel treatment; all side and rear wall details. Door count is text-confirmed for vehicle bays, but exterior door wall/placement is estimated."],["https://www.ptbocounty.ca/living-in-our-community/emergency-services/community-paramedicine-and-health-monitoring/","https://themillbrooktimes.ca/new-paramedic-station-expected-improve-response-times/"])
+    write_report(asset_id,glb,stats,["County-hosted photo identifies Station 7 at 1003 Clonsilla and shows the broad glazed storefront, silver mullions, light fascia, and blue/orange lower bands.","Google Street View September 2021 panorama YhKp1v44kxUww_U4FWJ3fw (heading 279.63 degrees) shows two white sectional doors in the recessed wing on the viewer-left of the signed storefront; each has one narrow dark horizontal window band with silver dividers. This is dated appearance and relative-placement evidence, not a current-condition claim.","Written 2017 opening account says the converted auto-sales building opened at 1003 Clonsilla with two vehicle bays.","GIS footprint vertices and source way/998877497."],["3.9 m overall height; flat roof; door widths, heights, precise centers, and local offsets; all unseen side and rear wall details. The July 2024 Street View includes construction and changed cladding at the parcel, but does not establish the finished current station facade."],["https://www.ptbocounty.ca/living-in-our-community/emergency-services/community-paramedicine-and-health-monitoring/","https://www.google.com/maps/@?api=1&map_action=pano&pano=YhKp1v44kxUww_U4FWJ3fw&heading=279.63&pitch=0&fov=15","https://themillbrooktimes.ca/new-paramedic-station-expected-improve-response-times/"])
+
     return glb
 
 def main():

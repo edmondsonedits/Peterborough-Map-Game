@@ -37,11 +37,11 @@
   },
   {
     "id": "ems-clonsilla",
-    "bytes": 323816,
-    "sha256": "dd1eb07eb33e725ae69e87cfff7afa4898df8de2b81bc6529cb70434defc7edc",
+    "bytes": 349792,
+    "sha256": "b7e64ba9adff990ab39603532351141038321def8ffa2a813b842c814f780d06",
     "errors": 0,
     "warnings": 0,
-    "infos": 9,
+    "infos": 11,
     "truncated": false
   }
 ]

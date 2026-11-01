@@ -14,9 +14,13 @@ The County’s Community Paramedicine page photo visibly identifies “Peterboro
 
 A 2017 opening story says the base was converted from an auto-sales building to include two vehicle bays, office and training space. This verifies the two-bay program, not where operational doors appear on the exterior. [The Millbrook Times, 2017-05-05](https://themillbrooktimes.ca/new-paramedic-station-expected-improve-response-times/).
 
-## Evidence boundary
+## Original evidence boundary (superseded by follow-up below)
 
 - Armour Road: only a sign/entrance glimpse is confirmed. Complete massing, colors beyond the photographed brick/canopy, all roof details, bay-door count, and side/rear elevations remain unknown. The model asserts no apparatus-door count.
 - Clonsilla: the branded storefront is photo-backed; two vehicle bays are text-backed. Their exterior door count/location, side/rear treatment, and roof plane are not established by inspected images. Two estimated static doors are shown on the setback-side wing; treat their placement, size, and panel details as estimates.
 - Do not confuse 1003 Clonsilla with the current Paul Tinney listing at 801 Clonsilla; do not substitute Fire Station 3 at 839 Clonsilla or unverified 1013 Clonsilla.
 - Search/review accounting and fuller notes are preserved in `H:\ChatGPT\Peterborough-Facilities-20261027\research\ems\evidence.md`.
+
+## Follow-up: 27 October 2026
+
+The historical notes above describe the first research pass. [Additional photo research](ems-photo-followup-2026-10-27.md) now confirms two white sectional garage doors with narrow window bands in Clonsilla Station 7's recessed viewer-left street-facing wing in September 2021 imagery. Dimensions, unseen elevations and the current finished state remain unverified. Armour Street View adds office-window and fascia details; its garage arrangement is still unresolved.

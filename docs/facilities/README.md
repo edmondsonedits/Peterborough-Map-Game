@@ -10,7 +10,7 @@
 | Fire Station 2 | 100 Marina Boulevard | 1,111,204 | `a8edc41f24b0fd755b564438bd7b22c93ebe59d593f9efc5b1cf06dcab40ba01` |
 | Fire Station 3 | 839 Clonsilla Avenue | 1,952,492 | `a9e68f3859e1a12245de3235d5cefea9e71a8b0f67d6464b53e85f7ed22f77b5` |
 | Paramedics Headquarters | 310 Armour Road | 360,960 | `3229cd5d3cfbd6da7bb7733ddbf173f9e90d2d92e2afa2fa023f5f14230b8517` |
-| Paramedics Station 7 | 1003 Clonsilla Avenue | 323,816 | `dd1eb07eb33e725ae69e87cfff7afa4898df8de2b81bc6529cb70434defc7edc` |
+| Paramedics Station 7 | 1003 Clonsilla Avenue | 349,792 | `b7e64ba9adff990ab39603532351141038321def8ffa2a813b842c814f780d06` |
 
 All assets are under `city-explorer/assets/<facility-id>/`; each includes a `layout.json` and `asset-report.json`. Materials and textures are original/procedural. No reference-photo pixels are embedded. Blender builders are under `tools/blender/`. Native Blender sources and review renders are outside the game tree: Station 1 is under H:/ChatGPT/Peterborough-Station1-20261027/model/; Station 2 is under `H:\ChatGPT\Peterborough-Station2-20261027\model\`; Station 3 and the EMS bases are under `H:\ChatGPT\Peterborough-Facilities-20261027\model\`.
 
@@ -19,12 +19,12 @@ All assets are under `city-explorer/assets/<facility-id>/`; each includes a `lay
 - **Station 1:** The user confirmed five apparatus doors on the rear and one door on the side of the rear shed. This is user-provided layout information, not rear-photo evidence. The documented front remains dynamic; rear doors and the shed-side door are static visual geometry.
 - **Station 2:** JCB photos support the three red glazed front doors, dark masonry, tall front tower, fascia and timber/glazing treatment. The installer specifies two additional sectional doors, but their wall position is not verified. Rear placement is inferred; rear panels remain closed in the current play controls, and their independent nodes are preserved. Front door pivots and gameplay behavior remain intact.
 - **Station 3:** City photos from July 2018 show the front and a short side return, including three glazed doors and an upper louver. Rear elevation and rear door count remain unknown. The three rendered front doors are static.
-- **Armour Road EMS:** Evidence confirms only the headquarters sign and a partial brick-and-glass entrance with pale canopy edge. Full massing, roof, sides, rear, and any apparatus openings are not established. No door count is asserted.
-- **Clonsilla EMS:** County photo supports the branded storefront, glazing, mullions, light fascia and blue/orange bands. A 2017 opening story documents two vehicle bays, but not exterior door placement. Two doors on the setback-side wing are modeled as estimates; EMS doors are static.
+- **Armour Road EMS:** August 2024 Street View adds a long brick office elevation, upper and basement windows, pale fascia and entrance/parking details. Complete massing, roof, rear and apparatus openings remain unverified. This follow-up records those observations; the Armour model is unchanged and no door count is asserted.
+- **Clonsilla EMS:** County photo supports the branded storefront, glazing, mullions, light fascia and blue/orange bands. September 2021 Street View directly shows two white sectional doors with narrow window bands in the recessed viewer-left wing. The local export now follows that dated appearance; dimensions, unseen elevations and the finished current exterior remain unverified. EMS doors are static.
 
 These are local assets only. This documentation does not assert that all elevations, dimensions, plans, or roof details have been verified, and it does not describe an upload or public release.
 
-## Local verification
+## Original local snapshot verification
 
 - All 894 Node game/editor regressions passed, including seven facility replacement tests and editor restore coverage. CI includes the new facility tests.
 - All five final GLBs passed the Khronos validator with zero errors/warnings and untruncated reports. See [asset-validation.json](asset-validation.json).
@@ -43,3 +43,10 @@ Stations 1 and 2 plus both EMS bases use the facility work documented here. Stat
 
 Merged release verification: 905 Node game/editor tests pass; focused independent merge review found no code blocker. Browser checks and deployment/hash receipts are under H:/ChatGPT/Peterborough-Facilities-20261027/qa/release-v143-local and release-v144-live. Deployment status is authoritative in the GitHub Pages workflow.
 The existing v1.6.143 feedback-account release was preserved byte-for-byte for its configuration/service/UI; no Firebase rules, permissions or backend were changed by the facility publication.
+
+
+## Unpublished EMS photo follow-up: 27 October 2026
+
+The Clonsilla export in the table now includes the photo-backed white door panels and dark window bands. This local correction has not been published; v1.6.144 is the previous deployment. See [the dated evidence and remaining gaps](ems-photo-followup-2026-10-27.md).
+
+The regenerated GLB passed fresh Khronos validation with zero errors and warnings (11 informational findings, untruncated). All eight existing emergency-facility tests passed. The local simulator rendered both closed doors on the left of the storefront with no captured console warnings or errors, and its served GLB hash matches the file above. No reference images are embedded. Armour and fire assets were not modified. Receipts: H:/ChatGPT/Peterborough-Facilities-20261027/qa/ems-photo-followup-validation.json and ems-clonsilla-corrected-in-game.png.

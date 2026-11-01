@@ -52,21 +52,27 @@
     "frontEdge": "GIS contract edge indices 1\u20132; positive local Z inward",
     "overallHeightEstimateM": 3.9,
     "confirmedVehicleBays": 2,
-    "estimatedExteriorDoors": [
-      {
-        "count": 2,
-        "side": "setback-side-wing front at local Z\u22487.12 m",
-        "centersX": [
-          10.9,
-          16.2
-        ],
-        "sizeM": [
-          4.12,
-          3.08
-        ]
-      }
-    ],
-    "doorPlacement": "Estimated; not visible in inspected exterior photo",
+    "confirmedExteriorDoorAppearance": {
+      "count": 2,
+      "side": "recessed wing on viewer-left of the signed street-facing storefront",
+      "panelFinish": "white sectional",
+      "windowBandsPerDoor": 1,
+      "windowBand": "narrow dark horizontal glazing strip around mid-height with silver mullions",
+      "source": "Google Street View, September 2021, panorama YhKp1v44kxUww_U4FWJ3fw; heading 279.63 degrees"
+    },
+    "estimatedExteriorDoorGeometry": {
+      "centersX": [
+        10.9,
+        16.2
+      ],
+      "frontLocalZ": 7.1229,
+      "sizeM": [
+        4.12,
+        3.08
+      ],
+      "status": "Approximate modeling offsets and dimensions; not surveyed"
+    },
+    "currentExteriorCondition": "Unknown. July 2024 Street View shows construction and changed cladding at the parcel; it does not establish the finished current station facade.",
     "roof": "Flat low-profile roof / parapet inferred from storefront photo",
     "foundationBelowDatumM": 1.2,
     "foundationPurpose": "Terrain skirt to avoid gaps on sloped GIS ground; not a surveyed foundation"
