@@ -1,20 +1,27 @@
 import {roadLaneMarkingBoundaries,mappedCycleLaneSides} from './city-detail-rules.js?v=1.6.154';
-import {laneCountFor,roadProfile} from './road-network.js?v=1.6.160';
-import {reviewedPaintTags} from './street-paint.js?v=1.6.160';
-import {roadMarkingIntervals} from './road-appearance-rules.js?v=1.6.160';
-import {buildRoadMarkingPaths,strokeMarkingPath,sourceIntervalsToPathIntervals} from './road-marking-paths.js?v=1.6.160';
+import {laneCountFor,roadProfile} from './road-network.js?v=1.6.161';
+import {reviewedPaintTags} from './street-paint.js?v=1.6.161';
+import {roadMarkingIntervals} from './road-appearance-rules.js?v=1.6.161';
+import {buildRoadMarkingPaths,strokeMarkingPath,sourceIntervalsToPathIntervals} from './road-marking-paths.js?v=1.6.161';
 const EPS=1e-5;
+const STANDARD_LANE_LINE_WIDTH=.10;
+const HIGHWAY_EDGE_LINE_WIDTH=.15;
 const length=s=>Math.hypot(s.b.x-s.a.x,s.b.y-s.a.y);
 const grade=s=>`${s.tags?.layer||0}:${Boolean(s.profile?.bridge||s.bridge)}:${Boolean(s.profile?.tunnel)}`;
 const flow=s=>s.profile?.oneWay?(String(s.tags?.oneway)==='-1'?-1:1):0;
-const signature=(rules,direction=1)=>JSON.stringify(rules.map(r=>[r.kind,r.materialKey,Math.round(r.offset*direction*10000),r.width]).sort((a,b)=>JSON.stringify(a).localeCompare(JSON.stringify(b))));
+const signature=(rules,direction=1)=>JSON.stringify(rules.map(r=>[r.kind,r.materialKey,Math.round(r.offset*direction*10000),r.width,r.dash,r.gap]).sort((a,b)=>JSON.stringify(a).localeCompare(JSON.stringify(b))));
 function rulesFor(s){
  const tags=reviewedPaintTags(s.tags||{},s.lineId),profile=s.profile||roadProfile(tags);
  if(!profile||profile.unpaved||profile.tunnel||tags.junction==='roundabout'||tags.lane_markings==='no')return [];
  const lanes=laneCountFor(tags),width=s.width,rules=[];
- for(const rule of roadLaneMarkingBoundaries(tags,{...profile,lanes}))rules.push({kind:rule.pattern==='solid'?'solid':'dash',materialKey:rule.materialKey,offset:width/2-width*rule.boundary/lanes+(rule.offsetMetres||0),width:.15});
- for(const side of mappedCycleLaneSides(tags))rules.push({kind:'cycle-edge',materialKey:'roadPaintWhite',offset:(side==='left'?1:-1)*Math.max(.45,width/2-1.52),width:.15});
- if(/^(motorway|trunk)(?:_link)?$/.test(profile.highway))for(const side of [-1,1])rules.push({kind:'edge',materialKey:profile.oneWay&&side===(tags.oneway==='-1'?-1:1)?'roadPaintYellow':'roadPaintWhite',offset:side*Math.max(.5,width/2-.2),width:.15});
+ const highway=String(profile.highway||tags.highway||'').toLowerCase(),speed=Number.parseFloat(tags.maxspeed??profile.maxspeed);
+ for(const rule of roadLaneMarkingBoundaries(tags,{...profile,lanes})){
+  const highSpeedWhiteLaneLine=rule.pattern==='dash'&&rule.materialKey==='roadPaintWhite'&&speed>=70&&/^(motorway|trunk|primary|secondary|tertiary)(?:_link)?$/.test(highway);
+  const dash=highSpeedWhiteLaneLine?{dash:3,gap:9}:{dash:3,gap:6};
+  rules.push({kind:rule.pattern==='solid'?'solid':'dash',materialKey:rule.materialKey,offset:width/2-width*rule.boundary/lanes+(rule.offsetMetres||0),width:STANDARD_LANE_LINE_WIDTH,...(rule.pattern==='dash'?dash:{})});
+ }
+ for(const side of mappedCycleLaneSides(tags))rules.push({kind:'cycle-edge',materialKey:'roadPaintWhite',offset:(side==='left'?1:-1)*Math.max(.45,width/2-1.52),width:STANDARD_LANE_LINE_WIDTH});
+ if(/^(motorway|trunk)(?:_link)?$/.test(profile.highway))for(const side of [-1,1])rules.push({kind:'edge',materialKey:profile.oneWay&&side===(tags.oneway==='-1'?-1:1)?'roadPaintYellow':'roadPaintWhite',offset:side*Math.max(.5,width/2-.2),width:HIGHWAY_EDGE_LINE_WIDTH});
  return rules;
 }
 function endpoint(run,end){return end==='start'?run.points[0]:run.points.at(-1);}
@@ -79,9 +86,9 @@ export function buildRoadMarkingLayout(segments,{paintContext=null}={}){
   const options={offset:rule.offset,width:rule.width,miterLimit:3};
   const full=buildRoadMarkingPaths(chain.points,options);
   const clips=full.flatMap(path=>sourceIntervalsToPathIntervals(path.points,chain.allowed));
-  let dashPattern=rule.kind==='dash'?{dash:4.2,gap:6.3}:null;
+  let dashPattern=rule.kind==='dash'?{dash:rule.dash,gap:rule.gap}:null;
   const loop=full.length===1&&Math.hypot(full[0].points[0].x-full[0].points.at(-1).x,full[0].points[0].z-full[0].points.at(-1).z)<EPS;
-  if(dashPattern&&loop){const length=full[0].endDistance-full[0].startDistance,period=length/Math.max(1,Math.round(length/10.5));dashPattern={dash:period*.4,gap:period*.6};}
+  if(dashPattern&&loop){const length=full[0].endDistance-full[0].startDistance,base=dashPattern.dash+dashPattern.gap,period=length/Math.max(1,Math.round(length/base)),on=dashPattern.dash/base;dashPattern={dash:period*on,gap:period*(1-on)};}
   const paths=buildRoadMarkingPaths(chain.points,{...options,clipIntervals:clips,dashPattern});
   for(const path of paths){
    if(rule.kind==='dash'&&path.endDistance-path.startDistance<.6){droppedTinyDashes++;continue;}
@@ -97,5 +104,5 @@ export function buildRoadMarkingLayout(segments,{paintContext=null}={}){
    markings.push({path,polygons:stroke.quads,triangles:stroke.trianglesXZ,pieces,materialKey:rule.materialKey,kind:rule.kind,lineIds});
   }
  }
- return {markings,stats:{sourceLines:byLine.size,runs:runs.length,chains:chains.length,joinedWayEndpoints,markingPaths:markings.length,droppedTinyDashes,dashLength:4.2,gapLength:6.3,strokeWidth:.15}};
+ return {markings,stats:{sourceLines:byLine.size,runs:runs.length,chains:chains.length,joinedWayEndpoints,markingPaths:markings.length,droppedTinyDashes,dashLength:3,gapLength:6,strokeWidth:STANDARD_LANE_LINE_WIDTH,edgeLineWidth:HIGHWAY_EDGE_LINE_WIDTH}};
 }
