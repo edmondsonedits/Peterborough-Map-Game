@@ -1,0 +1,166 @@
+{
+  "checkedAt": "2026-11-01T17:20:09.9916546-05:00",
+  "status": "local unpublished pilot",
+  "method": "Standalone headless Playwright Chromium; D3D11; 1440x900",
+  "preview": "http://127.0.0.1:4183/city-explorer/?station=2",
+  "tests": {
+    "focusedTestsPassed": 24,
+    "editorOverrides": "passed",
+    "editorIntegration": "passed",
+    "syntax": "passed",
+    "trackedDiffWhitespace": "passed"
+  },
+  "limitations": [
+    "Frame samples are vsync limited and do not measure physical-phone performance.",
+    "Generated facades and untagged roof shapes are illustrative, not surveyed."
+  ],
+  "runs": [
+    {
+      "mode": "baseline",
+      "considered": 165,
+      "wallCovered": 0,
+      "uncoveredCount": 0,
+      "exclusionCount": 165,
+      "driveOutMetres": null,
+      "errors": [
+        "Known baseline Firestore siteAnalytics HTTP 403"
+      ],
+      "views": [
+        {
+          "name": "overview",
+          "drawCalls": 287,
+          "triangles": 1217665,
+          "textures": 35,
+          "frameIntervals": {
+            "medianMs": 16.69999999999709,
+            "p95Ms": 16.79999999998836,
+            "maxMs": 16.80000000000291
+          },
+          "screenshot": "H:\\ChatGPT\\Peterborough-Facilities-20261027\\qa\\station2-neighborhood/baseline-overview.png"
+        },
+        {
+          "name": "street",
+          "drawCalls": 273,
+          "triangles": 1214026,
+          "textures": 35,
+          "frameIntervals": {
+            "medianMs": 16.69999999999709,
+            "p95Ms": 16.70000000001164,
+            "maxMs": 16.80000000000291
+          },
+          "screenshot": "H:\\ChatGPT\\Peterborough-Facilities-20261027\\qa\\station2-neighborhood/baseline-street.png"
+        },
+        {
+          "name": "north",
+          "drawCalls": 104,
+          "triangles": 963189,
+          "textures": 35,
+          "frameIntervals": {
+            "medianMs": 16.69999999999709,
+            "p95Ms": 16.79999999998836,
+            "maxMs": 16.80000000000291
+          },
+          "screenshot": "H:\\ChatGPT\\Peterborough-Facilities-20261027\\qa\\station2-neighborhood/baseline-north.png"
+        }
+      ]
+    },
+    {
+      "mode": "pilot",
+      "considered": 165,
+      "wallCovered": 164,
+      "uncoveredCount": 0,
+      "exclusionCount": 1,
+      "driveOutMetres": 40.45677193480577,
+      "errors": [
+        "Known baseline Firestore siteAnalytics HTTP 403"
+      ],
+      "views": [
+        {
+          "name": "overview",
+          "drawCalls": 294,
+          "triangles": 1232233,
+          "textures": 42,
+          "frameIntervals": {
+            "medianMs": 16.69999999999709,
+            "p95Ms": 16.79999999998836,
+            "maxMs": 16.80000000000291
+          },
+          "screenshot": "H:\\ChatGPT\\Peterborough-Facilities-20261027\\qa\\station2-neighborhood/pilot-overview.png"
+        },
+        {
+          "name": "street",
+          "drawCalls": 279,
+          "triangles": 1228286,
+          "textures": 42,
+          "frameIntervals": {
+            "medianMs": 16.69999999999709,
+            "p95Ms": 16.70000000001164,
+            "maxMs": 16.80000000000291
+          },
+          "screenshot": "H:\\ChatGPT\\Peterborough-Facilities-20261027\\qa\\station2-neighborhood/pilot-street.png"
+        },
+        {
+          "name": "north",
+          "drawCalls": 110,
+          "triangles": 977449,
+          "textures": 42,
+          "frameIntervals": {
+            "medianMs": 16.69999999999709,
+            "p95Ms": 16.80000000000291,
+            "maxMs": 16.80000000000291
+          },
+          "screenshot": "H:\\ChatGPT\\Peterborough-Facilities-20261027\\qa\\station2-neighborhood/pilot-north.png"
+        }
+      ]
+    },
+    {
+      "mode": "lite",
+      "considered": 165,
+      "wallCovered": 164,
+      "uncoveredCount": 0,
+      "exclusionCount": 1,
+      "driveOutMetres": null,
+      "errors": [
+        "Known baseline Firestore siteAnalytics HTTP 403"
+      ],
+      "views": [
+        {
+          "name": "overview",
+          "drawCalls": 270,
+          "triangles": 1152602,
+          "textures": 42,
+          "frameIntervals": {
+            "medianMs": 16.69999999999709,
+            "p95Ms": 16.70000000001164,
+            "maxMs": 16.80000000000291
+          },
+          "screenshot": "H:\\ChatGPT\\Peterborough-Facilities-20261027\\qa\\station2-neighborhood/lite-overview.png"
+        },
+        {
+          "name": "street",
+          "drawCalls": 250,
+          "triangles": 1138283,
+          "textures": 42,
+          "frameIntervals": {
+            "medianMs": 16.69999999999709,
+            "p95Ms": 16.70000000001164,
+            "maxMs": 16.80000000000291
+          },
+          "screenshot": "H:\\ChatGPT\\Peterborough-Facilities-20261027\\qa\\station2-neighborhood/lite-street.png"
+        },
+        {
+          "name": "north",
+          "drawCalls": 100,
+          "triangles": 904128,
+          "textures": 42,
+          "frameIntervals": {
+            "medianMs": 16.69999999999709,
+            "p95Ms": 16.79999999998836,
+            "maxMs": 16.80000000000291
+          },
+          "screenshot": "H:\\ChatGPT\\Peterborough-Facilities-20261027\\qa\\station2-neighborhood/lite-north.png"
+        }
+      ]
+    }
+  ]
+}

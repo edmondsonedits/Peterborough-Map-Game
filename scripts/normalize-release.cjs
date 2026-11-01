@@ -132,6 +132,11 @@ for (const file of ['city-explorer/app.js', ...visualModules.map(name => `city-e
 }
 
 
+// Shared neighborhood textures and geometry follow the current app cache token.
+write('city-explorer/app.js', read('city-explorer/app.js').replace(
+  /(\.\/station2-neighborhood-(?:facades|openings|roofs)\.mjs)(?:\?v=[^"']*)?(?=["'])/g,
+  `$1?v=${VERSION}`,
+));
 // Authored facility geometry and layout revisions must bypass earlier cached copies.
 for (const file of ['city-explorer/app.js','city-explorer/station-one-runtime.js','city-explorer/station-two-runtime.js','city-explorer/emergency-facilities-catalog.js']) {
   const assetImport = /(\.\/assets\/(?:station1|station2|station3|stations|ems-armour|ems-clonsilla)\/[^'"?]+\.(?:glb|json))(?:\?v=[^"']*)?(?=["'])/g;
