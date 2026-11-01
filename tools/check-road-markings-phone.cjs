@@ -15,7 +15,7 @@ const allProfiles = [
   { name: 'high', width: 390, height: 720, dpr: 3, query: '&quality=high' },
 ];
 const profiles = String(process.env.ROAD_MARKING_PHONE_PROFILES || 'low,balanced,high').split(',').map(name=>allProfiles.find(profile=>profile.name===name.trim())).filter(Boolean);
-const allTargets = ['water-showplace-cycle', 'curved-road', 'junction', 'bridge', 'sherbrooke'];
+const allTargets = ['water-south-bend','water-north-bend','water-showplace-cycle', 'curved-road', 'junction', 'bridge', 'sherbrooke'];
 const targets = String(process.env.ROAD_MARKING_PHONE_TARGETS || allTargets.join(',')).split(',').map(name=>name.trim()).filter(name=>allTargets.includes(name));
 const appOriginFor = url => new URL(url).origin;
 
@@ -85,7 +85,10 @@ async function discoverContract(page) {
     const sherbrookeAnchor=q.project(44.3006997,-78.3221781),sherbrookePoint={x:sherbrookeAnchor.x,z:sherbrookeAnchor.y};
     sherbrooke.sort((a,b)=>distanceTo(a,sherbrookePoint)-distanceTo(b,sherbrookePoint));
     const make=(name,s,extra={})=>{if(!s)return null;const reverse=String(tags(s).oneway||'').toLowerCase()==='-1';const p=point(s,.5);return {name,x:p.x,z:p.z,heading:heading(s,reverse),lineId:ids(s),street:s.name||tags(s).name||null,segment:{a:[s.a.x,s.a.y],b:[s.b.x,s.b.y],chainStart:s.chainStart||0,width:s.width||0},tags:tags(s),...extra}};
+    const waterAt=(name,lat)=>{const target=q.project(lat,-78.3189),p={x:target.x,z:target.y};const list=segments.filter(s=>ids(s)==='way/33966726:0').sort((a,b)=>distanceTo(a,p)-distanceTo(b,p));return make(name,list[0]);};
     const result={
+      'water-south-bend':waterAt('water-south-bend',44.30220),
+      'water-north-bend':waterAt('water-north-bend',44.30320),
       'water-showplace-cycle':make('water-showplace-cycle',selectedWater,{cyclewayTagFound:Boolean(selectedWater&&cycle(selectedWater)),showplaceProjected:show,distanceToShowplace: selectedWater?distanceTo(selectedWater,show):null}),
       'curved-road':curve?make('curved-road',curve.segment,{turnRadians:curve.turn}):null,
       junction:junction?make('junction',junction.segment,{node:[junction.point.x,junction.point.z]}):null,

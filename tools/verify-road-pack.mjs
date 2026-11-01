@@ -89,6 +89,10 @@ export function verifyRoadPack(repositoryRoot = path.resolve(path.dirname(fileUR
   if (!version) fail('ROAD_PACK_ID is missing or invalid');
   if (version[1] !== manifest.buildId) fail(`ROAD_PACK_ID mismatch: module ${version[1]}, manifest ${manifest.buildId}`);
   verifySourceIdentity(manifest, root);
+  if(manifest.sources?.['city-explorer/water-street-paint.js']){
+    const water=manifest.markings?.quality?.waterStreet;
+    if(!water?.coreAccepted||!water.coverageComplete||!(water.paintPaths>0)||!(water.validSamples>=50)||!(water.supportCoverage?.checked>0)||water.supportCoverage.missing!==0)fail('Reviewed Water Street paint is missing or uncalibrated');
+  }
 
   if (!Array.isArray(manifest.tiles) || manifest.tiles.length === 0) fail('Road pack must contain at least one tile');
   const ids = new Set();

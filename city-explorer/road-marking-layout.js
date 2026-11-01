@@ -1,8 +1,8 @@
 import {roadLaneMarkingBoundaries,mappedCycleLaneSides} from './city-detail-rules.js?v=1.6.154';
-import {laneCountFor,roadProfile} from './road-network.js?v=1.6.161';
-import {reviewedPaintTags} from './street-paint.js?v=1.6.161';
-import {roadMarkingIntervals} from './road-appearance-rules.js?v=1.6.161';
-import {buildRoadMarkingPaths,strokeMarkingPath,sourceIntervalsToPathIntervals} from './road-marking-paths.js?v=1.6.161';
+import {laneCountFor,roadProfile} from './road-network.js?v=1.6.162';
+import {reviewedPaintTags} from './street-paint.js?v=1.6.162';
+import {roadMarkingIntervals} from './road-appearance-rules.js?v=1.6.162';
+import {buildRoadMarkingPaths,strokeMarkingPath,sourceIntervalsToPathIntervals} from './road-marking-paths.js?v=1.6.162';
 const EPS=1e-5;
 const STANDARD_LANE_LINE_WIDTH=.10;
 const HIGHWAY_EDGE_LINE_WIDTH=.15;
@@ -10,6 +10,11 @@ const length=s=>Math.hypot(s.b.x-s.a.x,s.b.y-s.a.y);
 const grade=s=>`${s.tags?.layer||0}:${Boolean(s.profile?.bridge||s.bridge)}:${Boolean(s.profile?.tunnel)}`;
 const flow=s=>s.profile?.oneWay?(String(s.tags?.oneway)==='-1'?-1:1):0;
 const signature=(rules,direction=1)=>JSON.stringify(rules.map(r=>[r.kind,r.materialKey,Math.round(r.offset*direction*10000),r.width,r.dash,r.gap]).sort((a,b)=>JSON.stringify(a).localeCompare(JSON.stringify(b))));
+function subtractIntervals(intervals, exclusions){
+ let result=intervals.map(([start,end])=>[start,end]);
+ for(const[cutStart,cutEnd]of exclusions){const next=[];for(const[start,end]of result){if(cutEnd<=start||cutStart>=end)next.push([start,end]);else{if(cutStart>start+EPS)next.push([start,cutStart]);if(cutEnd<end-EPS)next.push([cutEnd,end]);}}result=next;}
+ return result;
+}
 function rulesFor(s){
  const tags=reviewedPaintTags(s.tags||{},s.lineId),profile=s.profile||roadProfile(tags);
  if(!profile||profile.unpaved||profile.tunnel||tags.junction==='roundabout'||tags.lane_markings==='no')return [];
@@ -26,7 +31,7 @@ function rulesFor(s){
 }
 function endpoint(run,end){return end==='start'?run.points[0]:run.points.at(-1);}
 /** One coherent lane-layout chain, preserving source-node topology and intentional mouths. */
-export function buildRoadMarkingLayout(segments,{paintContext=null}={}){
+export function buildRoadMarkingLayout(segments,{paintContext=null,suppressedRanges=[]}={}){
  const byLine=new Map(),arms=new Map(),runs=[];
  for(const s of segments){
   if(!s.a||!s.b||!Number.isFinite(s.width)||length(s)<EPS)continue;
@@ -48,7 +53,10 @@ export function buildRoadMarkingLayout(segments,{paintContext=null}={}){
    if(!run||key!==run.key||Math.hypot(previous.b.x-s.a.x,previous.b.y-s.a.y)>.02||Math.abs(previous.bY-s.aY)>.35||Math.abs((previous.chainStart||0)+length(previous)-(s.chainStart||0))>.02){
     run={key,segments:[],points:[{x:s.a.x,z:s.a.y,y:s.aY,nodeId:s.aNodeId,lineId:String(s.lineId),sourceDistance:0}],allowed:[],rules,first:s,length:0,links:{}};runs.push(run);
    }
-   for(const[a,b]of roadMarkingIntervals(paintContext,s))run.allowed.push([run.length+a,run.length+b]);
+   const exclusions=suppressedRanges.filter(range=>String(range.lineId)===String(s.lineId)).map(range=>[
+    Math.max(0,Number(range.start)-(Number(s.chainStart)||0)),Math.min(len,Number(range.end)-(Number(s.chainStart)||0)),
+   ]).filter(([a,b])=>b-a>EPS);
+   for(const[a,b]of subtractIntervals(roadMarkingIntervals(paintContext,s),exclusions))run.allowed.push([run.length+a,run.length+b]);
    run.length+=len;run.points.push({x:s.b.x,z:s.b.y,y:s.bY,nodeId:s.bNodeId,lineId:String(s.lineId),sourceDistance:run.length});run.segments.push(s);
   }
  }
