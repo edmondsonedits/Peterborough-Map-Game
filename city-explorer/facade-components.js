@@ -56,7 +56,8 @@ export function facadeComponentPlan({appearance, edgeLength, wallHeight, floorCo
     entryColumn = (hash >>> 0) % columns;
     const entry = components.entry || {};
     const center = margin + (entryColumn + 0.5) * spacing;
-    const width = bounded(entry.widthMetres, 1, 0.65, Math.min(3, spacing * 0.8));
+    const maxEntryWidth=archetype==='industrial'?Math.min(5.5,spacing*.9):Math.min(3,spacing*.8);
+    const width = bounded(entry.widthMetres, 1, 0.65, maxEntryWidth);
     const height = Math.min(bounded(entry.heightMetres, 2.25, 1.8, 3.5), wallHeight - 0.2);
     const frameWidth = bounded(entry.frameWidthMetres, 0.2, 0.05, 0.45);
     if (panels.length + 2 <= limit) {

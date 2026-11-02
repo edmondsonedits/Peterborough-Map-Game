@@ -7,6 +7,10 @@ import {
   cityFacadeEdgeSegments,
   cityFacadeAppearanceTags,
   cityFacadeWindowMaterialKey,
+  cityFacadeUsesRepeatedWindowStrip,
+  shouldFlattenInferredCommercialRoof,
+  cityBuildingRoofGeometryPlan,
+  isConvexCityFootprint,
   isOpenSidedRoofShell,
   selectCityFacadeEntranceEdge,
   createCityRoadSegmentIndex,
@@ -135,6 +139,34 @@ test('curtain glazing is limited to residential and apartment facades',()=>{
   }
 });
 
+test('low-profile tall apartments use shared repeated window texture bands',()=>{
+  assert.equal(cityFacadeUsesRepeatedWindowStrip('apartment','low',44.1),true);
+  assert.equal(cityFacadeUsesRepeatedWindowStrip('apartment','balanced',44.1),false);
+  assert.equal(cityFacadeUsesRepeatedWindowStrip('residential','low',44.1),false);
+  assert.equal(cityFacadeUsesRepeatedWindowStrip('apartment','low',8),false);
+});
+
+test('only eligible inferred low-pitch commercial roofs flatten for shared rooftop equipment',()=>{
+  const inferred={eligible:true,wallKey:'industrial',footprintArea:920,wallHeight:8,roofRise:2.04};
+  assert.equal(shouldFlattenInferredCommercialRoof(inferred),true);
+  assert.equal(shouldFlattenInferredCommercialRoof({...inferred,explicitRoofShape:true}),false);
+  assert.equal(shouldFlattenInferredCommercialRoof({...inferred,wallKey:'residential'}),false);
+  assert.equal(shouldFlattenInferredCommercialRoof({...inferred,roofRise:2.41}),false);
+  assert.equal(shouldFlattenInferredCommercialRoof({...inferred,footprintArea:319}),false);
+});
+
+test('intentional roof flattening bypasses pitched/ring-wall helpers and emits a cap',()=>{
+  assert.deepEqual(cityBuildingRoofGeometryPlan({roofHeight:1.8,flattenedCommercialRoof:true}),{tryPitched:false,raisedRingWalls:false,flatCap:true});
+  assert.deepEqual(cityBuildingRoofGeometryPlan({roofHeight:1.8}),{tryPitched:true,raisedRingWalls:true,flatCap:false});
+  assert.deepEqual(cityBuildingRoofGeometryPlan({roofHeight:.2}),{tryPitched:false,raisedRingWalls:true,flatCap:true});
+});
+
+test('rooftop rectangles accept only convex footprints',()=>{
+  assert.equal(isConvexCityFootprint([{x:0,y:0},{x:4,y:0},{x:4,y:3},{x:0,y:3}]),true);
+  assert.equal(isConvexCityFootprint([{x:0,y:0},{x:4,y:0},{x:2,y:1},{x:4,y:3},{x:0,y:3}]),false);
+  assert.equal(isConvexCityFootprint([{x:0,y:0},{x:4,y:0},{x:2,y:0},{x:0,y:3}]),false);
+});
+
 test('tall balanced facades keep four aligned columns across every floor within a hard cap',()=>{
   const faces=Array.from({length:4},(_,edge)=>({edge,role:edge===0?'front':'side',panels:Array.from({length:14},(_,floor)=>[
     ...Array.from({length:8},(_,column)=>({kind:'window',lowerY:floor*3.1+1,t:(column+1)/10})).filter(panel=>!(edge===0&&floor===0&&panel.t===.4)),
@@ -174,16 +206,20 @@ test('over-cap low facades sample evenly from every face and the full floor rang
   assert.ok(Math.max(...perFaceCounts)-Math.min(...perFaceCounts)<=1,'row slots are shared evenly across faces');
 });
 
-test('irregular roofs use bounded inferred gables while preserving explicit flat and hipped shapes',()=>{
+test('bounded irregular roofs preserve explicit shape and admit courtyard and large footprints',()=>{
   const eligible={ringVertexCount:6,hasHoles:false,roofHeight:1.8,roofShape:'gabled',footprintArea:120};
   assert.equal(shouldBuildIrregularGableRoof(eligible),true);
   assert.equal(shouldBuildIrregularGableRoof({...eligible,roofShape:'flat'}),false);
   assert.equal(shouldBuildIrregularGableRoof({...eligible,roofShape:'hipped'}),true,'an inferred hip may use the bounded gable visual fallback');
-  assert.equal(shouldBuildIrregularGableRoof({...eligible,roofShape:'hipped',explicitRoofShape:true}),false);
+  assert.equal(shouldBuildIrregularGableRoof({...eligible,roofShape:'hipped',explicitRoofShape:true}),true,'explicit hip gets a shape-appropriate bounded roof');
   assert.equal(shouldBuildIrregularGableRoof({...eligible,roofShape:'flat',explicitRoofShape:true}),false);
-  assert.equal(shouldBuildIrregularGableRoof({...eligible,hasHoles:true}),false);
-  assert.equal(shouldBuildIrregularGableRoof({...eligible,footprintArea:1601}),false);
-  assert.equal(shouldBuildIrregularGableRoof({...eligible,ringVertexCount:4}),false);
+  assert.equal(shouldBuildIrregularGableRoof({...eligible,hasHoles:true}),true,'courtyard roofs can triangulate around source holes');
+  assert.equal(shouldBuildIrregularGableRoof({...eligible,footprintArea:45000}),true);
+  assert.equal(shouldBuildIrregularGableRoof({...eligible,footprintArea:45001}),false,'large complexes remain behind a hard geometry bound');
+  assert.equal(shouldBuildIrregularGableRoof({...eligible,ringVertexCount:4}),true);
+  assert.equal(shouldBuildIrregularGableRoof({...eligible,roofShape:'round'}),true);
+  assert.equal(shouldBuildIrregularGableRoof({...eligible,roofShape:''}),true,'an untagged raised roof can receive a conservative inferred shape');
+  assert.equal(shouldBuildIrregularGableRoof({...eligible,ringVertexCount:16,footprintArea:11.57,roofHeight:2.04,roofShape:'gabled'}),true,'the tall Thom Tower roof receives a bounded cap despite its tiny footprint');
 });
 
 test('coverage accounting detects missing or misclassified source parts',()=>{

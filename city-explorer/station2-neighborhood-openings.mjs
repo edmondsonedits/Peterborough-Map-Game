@@ -1,12 +1,18 @@
 // Original shared opaque opening artwork. Each texture is reused city-block-wide.
 export function createStation2OpeningMaterials(THREE) {
   const result=new Map();
-  for(const kind of ['window','window-curtain','door','garage']) {
+  for(const kind of ['window','window-curtain','window-strip','door','garage']) {
     const canvas=document.createElement('canvas');canvas.width=128;canvas.height=256;
     const c=canvas.getContext('2d');
     c.fillStyle='#d7d1c3';c.fillRect(0,0,128,256);
     c.fillStyle='#666b66';c.fillRect(4,4,120,248);
-    if(kind.startsWith('window')) {
+    if(kind==='window-strip') {
+      c.clearRect(0,0,128,256);
+      c.fillStyle='#5f655f';c.fillRect(42,26,44,204);
+      const g=c.createLinearGradient(44,28,84,228);g.addColorStop(0,'#718b93');g.addColorStop(.5,'#364c56');g.addColorStop(1,'#25363e');c.fillStyle=g;c.fillRect(47,31,34,194);
+      c.fillStyle='rgba(180,203,206,.18)';c.beginPath();c.moveTo(49,33);c.lineTo(79,33);c.lineTo(49,91);c.fill();
+      c.fillStyle='#cfc9bb';c.fillRect(42,126,44,6);c.fillRect(62,31,5,194);c.fillRect(40,228,48,5);
+    } else if(kind.startsWith('window')) {
       const g=c.createLinearGradient(0,0,100,256);g.addColorStop(0,'#657e87');g.addColorStop(.48,'#354a55');g.addColorStop(1,'#23323b');c.fillStyle=g;c.fillRect(9,9,110,238);
       if(kind==='window-curtain'){c.fillStyle='#aaa99a';c.fillRect(10,12,22,226);c.fillRect(96,12,22,226);c.fillStyle='#858a81';for(let x of [15,23,102,110])c.fillRect(x,12,2,226);}
       c.fillStyle='rgba(180,203,206,.12)';c.beginPath();c.moveTo(12,12);c.lineTo(113,12);c.lineTo(12,93);c.fill();
@@ -22,7 +28,8 @@ export function createStation2OpeningMaterials(THREE) {
       c.fillStyle='#354a55';for(let x=17;x<115;x+=28)c.fillRect(x,48,19,24);
     }
     const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;texture.anisotropy=2;
-    const material=new THREE.MeshStandardMaterial({map:texture,roughness:kind.startsWith('window')?.55:.9,metalness:0});
+    if(kind==='window-strip'){texture.wrapS=THREE.RepeatWrapping;texture.wrapT=THREE.RepeatWrapping;}
+    const material=new THREE.MeshStandardMaterial({map:texture,roughness:kind.startsWith('window')?.55:.9,metalness:0,transparent:false,alphaTest:kind==='window-strip'?.05:0,depthWrite:true,side:kind==='window-strip'?THREE.DoubleSide:THREE.FrontSide});
     result.set('station2-'+kind,material);
   }
   return result;

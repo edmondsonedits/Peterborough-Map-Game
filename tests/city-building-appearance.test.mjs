@@ -80,7 +80,7 @@ test('industrial front entries fit a shared garage-door panel without extra geom
   const plan=facadeComponentPlan({appearance,edgeLength:18,wallHeight:6.3,front:true,featureId:'way/industrial'});
   const door=plan.find(panel=>panel.kind==='door');
   assert.ok(door);
-  assert.equal(door.width,3);
+  assert.equal(door.width,4.4);
   assert.ok(door.upperY<=6.3);
 });
 

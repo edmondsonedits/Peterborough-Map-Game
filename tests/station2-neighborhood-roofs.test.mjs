@@ -54,3 +54,46 @@ test('concave notch walls close the gap between eaves and the clipped ridge',()=
     assert.ok(normalY>=-1e-8,'roof faces must point upward');
   }
 });
+
+test('courtyard roof triangulation preserves the void while closing the inner roof edges',()=>{
+  const outer=[[0,0],[14,0],[14,12],[0,12]].map(([x,z])=>({x,z}));
+  const hole=[[4,3],[4,9],[10,9],[10,3]].map(([x,z])=>({x,z}));
+  const points=[...outer,...hole];
+  const indexed=[[0,1,7],[0,7,4],[1,2,6],[1,6,7],[2,3,5],[2,5,6],[3,0,4],[3,4,5]];
+  const result=buildStation2NeighborhoodGableRoof({ring:outer, boundaryRings:[outer,hole], triangles:indexed.map(t=>t.map(index=>points[index])), wallTop:5,roofTop:7});
+  assert.equal(result.valid,true);
+  const roof=vertices(result.roofTriangles);
+  assert.ok(roof.length>0);
+  assert.ok(roof.every(([x,,z])=>!(x>4+1e-7&&x<10-1e-7&&z>3+1e-7&&z<9-1e-7)), 'roof surface must not cover the courtyard');
+  assert.ok(result.gableTriangles.length>0,'outer and courtyard roof edges need finite end closure');
+  assert.ok(vertices(result.gableTriangles).every(([,y])=>y>=5-1e-7&&y<=7+1e-7));
+});
+
+test('hipped and round styles build bounded raised surfaces without gable walls',()=>{
+  for(const roofShape of ['hipped','round']) {
+    const result=buildStation2NeighborhoodGableRoof({ring:[[0,0],[12,0],[12,6],[0,6]],triangles:[[0,1,2],[0,2,3]],wallTop:4,roofTop:6,roofShape});
+    assert.equal(result.valid,true,roofShape);
+    assert.ok(result.roofTriangles.length>0);
+    assert.deepEqual(result.gableTriangles,[]);
+    assert.ok(vertices(result.roofTriangles).every(([,y])=>y>=4-1e-7&&y<=6+1e-7));
+  }
+});
+
+test('hip roof uses coherent clipped planes and preserves a courtyard opening',()=>{
+  const ring=[[0,0],[12,0],[12,6],[0,6]].map(([x,z])=>({x,z})),center={x:6,z:3};
+  const triangles=ring.map((point,index)=>[point,ring[(index+1)%ring.length],center]);
+  const result=buildStation2NeighborhoodGableRoof({ring,wallTop:4,roofTop:6,roofShape:'hipped',triangles});
+  assert.equal(result.valid,true);
+  const heights=vertices(result.roofTriangles).map(([,y])=>y);
+  assert.ok(Math.abs(Math.max(...heights)-6)<1e-7);
+  assert.ok(Math.abs(Math.min(...heights)-4)<1e-7);
+
+  const outer=[[0,0],[14,0],[14,12],[0,12]].map(([x,z])=>({x,z}));
+  const hole=[[4,3],[4,9],[10,9],[10,3]].map(([x,z])=>({x,z}));
+  const points=[...outer,...hole],indexed=[[0,1,7],[0,7,4],[1,2,6],[1,6,7],[2,3,5],[2,5,6],[3,0,4],[3,4,5]];
+  const courtyard=buildStation2NeighborhoodGableRoof({ring:outer,boundaryRings:[outer,hole],wallTop:5,roofTop:7,roofShape:'hipped',triangles:indexed.map(t=>t.map(index=>points[index]))});
+  assert.equal(courtyard.valid,true);
+  assert.ok(vertices(courtyard.roofTriangles).every(([x,,z])=>!(x>4+1e-7&&x<10-1e-7&&z>3+1e-7&&z<9-1e-7)));
+  const innerWall=vertices(courtyard.gableTriangles);
+  assert.ok(innerWall.some(([x,y,z])=>x===4&&z===3&&y>5),'a courtyard edge inside the oriented bounds is closed up to its roof plane');
+});

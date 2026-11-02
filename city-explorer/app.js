@@ -1,87 +1,87 @@
-import {buildWaterStreetPaint} from './water-street-paint.js?v=1.6.167';
-import {buildRoadMarkingLayout} from './road-marking-layout.js?v=1.6.167';
-import {projectMarkingTriangles,markingSurfaceAt} from './road-marking-projection.js?v=1.6.167';
-import { createIntersectionHologramLayer } from './intersection-holograms.js?v=1.6.167';
-import { createRoadsidePlacementResolver, sampleRoadsideRibbon } from './roadside-furniture-placement.js?v=1.6.167';
-import { createRoadsideFurnitureMeshes } from './roadside-furniture-geometry.js?v=1.6.167';
-import { createHunterBridgeSurface, isHunterBridgeLine } from './hunter-bridge-surface.js?v=1.6.167';
-import { createHunterBridgeAppearance } from './hunter-bridge-appearance.js?v=1.6.167';
-import { HUNTER_BRIDGE_FEATURE } from './hunter-bridge-source.js?v=1.6.167';
-import { applyReviewedPhotoAppearance } from './reviewed-photo-appearance.js?v=1.6.167';
-import { CITY_MATERIALS, CITY_PALETTE_SURFACES, installCityMaterialDetail, cloneCityMaterial } from './city-material-library.js?v=1.6.167';
-import { visualSettings, cityShadowSettings, CITY_DAYLIGHT, createCityGlazingEnvironment, glazingIntensity } from './city-visual-settings.js?v=1.6.167';
-import {mappedBuildingDimensions} from './mapped-building-dimensions.js?v=1.6.167';
-import {createBusinessSignLayer, loadBusinessDirectory} from './business-signs.js?v=1.6.167';
-import { recordSherbrookeBuilding, recordSherbrookeSidewalk, sherbrookeBuildings } from './sherbrooke-plan.js?v=1.6.167';
-import { installSherbrookeDetails } from './sherbrooke-details.js?v=1.6.167';
-import { FOOTAGE_PROFILES as BASE_FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js?v=1.6.167';
-import {applyRecordingAppearance, recordingReferencesEnabled} from './recording-appearance.js?v=1.6.167';
-import {applyRecordingSurfacePalette, recordingExpansionEnabled} from './recording-surface-appearance.js?v=1.6.167';
-import {addCricketRecordingProfiles} from './cricket-recording-appearances.js?v=1.6.167';
-import { createFootageFacade, frontageFrame } from './sherbrooke-footage.js?v=1.6.167';
-import { createGardenClearance } from './sherbrooke-garden-clearance.js?v=1.6.167';
+import {buildWaterStreetPaint} from './water-street-paint.js?v=1.6.168';
+import {buildRoadMarkingLayout} from './road-marking-layout.js?v=1.6.168';
+import {projectMarkingTriangles,markingSurfaceAt} from './road-marking-projection.js?v=1.6.168';
+import { createIntersectionHologramLayer } from './intersection-holograms.js?v=1.6.168';
+import { createRoadsidePlacementResolver, sampleRoadsideRibbon } from './roadside-furniture-placement.js?v=1.6.168';
+import { createRoadsideFurnitureMeshes } from './roadside-furniture-geometry.js?v=1.6.168';
+import { createHunterBridgeSurface, isHunterBridgeLine } from './hunter-bridge-surface.js?v=1.6.168';
+import { createHunterBridgeAppearance } from './hunter-bridge-appearance.js?v=1.6.168';
+import { HUNTER_BRIDGE_FEATURE } from './hunter-bridge-source.js?v=1.6.168';
+import { applyReviewedPhotoAppearance } from './reviewed-photo-appearance.js?v=1.6.168';
+import { CITY_MATERIALS, CITY_PALETTE_SURFACES, installCityMaterialDetail, cloneCityMaterial } from './city-material-library.js?v=1.6.168';
+import { visualSettings, cityShadowSettings, CITY_DAYLIGHT, createCityGlazingEnvironment, glazingIntensity } from './city-visual-settings.js?v=1.6.168';
+import {mappedBuildingDimensions} from './mapped-building-dimensions.js?v=1.6.168';
+import {createBusinessSignLayer, loadBusinessDirectory} from './business-signs.js?v=1.6.168';
+import { recordSherbrookeBuilding, recordSherbrookeSidewalk, sherbrookeBuildings } from './sherbrooke-plan.js?v=1.6.168';
+import { installSherbrookeDetails } from './sherbrooke-details.js?v=1.6.168';
+import { FOOTAGE_PROFILES as BASE_FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js?v=1.6.168';
+import {applyRecordingAppearance, recordingReferencesEnabled} from './recording-appearance.js?v=1.6.168';
+import {applyRecordingSurfacePalette, recordingExpansionEnabled} from './recording-surface-appearance.js?v=1.6.168';
+import {addCricketRecordingProfiles} from './cricket-recording-appearances.js?v=1.6.168';
+import { createFootageFacade, frontageFrame } from './sherbrooke-footage.js?v=1.6.168';
+import { createGardenClearance } from './sherbrooke-garden-clearance.js?v=1.6.168';
 import { appendFootageRoof } from './sherbrooke-footage-roofs.js?v=corridor-20261024';
 import { appendFootageMassing } from './footage-building-massing.js';
 import * as THREE from 'three';
-import stationOneLayout from './assets/station1/layout.json?v=1.6.167' with { type: 'json' };
-import stationTwoLayout from './assets/station2/layout.json?v=1.6.167' with { type: 'json' };
+import stationOneLayout from './assets/station1/layout.json?v=1.6.168' with { type: 'json' };
+import stationTwoLayout from './assets/station2/layout.json?v=1.6.168' with { type: 'json' };
 import { hideStationTwoReplacementRecords, stationCameraOffsetScale } from './station-two-core.mjs';
 import { hideStationOneReplacementRecords } from './station-one-core.mjs';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { createEmergencyFacilityLayer, suppressFacilitySource } from './emergency-facilities.js?v=1.6.167';
-import { emergencyFacilityEntries } from './emergency-facilities-catalog.js?v=1.6.167';
-import { createStationOneRuntime, stationOneRequested } from './station-one-runtime.js?v=1.6.167';
-import { createStationTwoRuntime, stationTwoRequested } from './station-two-runtime.js?v=1.6.167';
-import { attachStationThreeModel, createStationThreeDoorController, inspectStationThreeModel, loadStationThreeAsset, selectStationThreeSpawn, stationGameplayLabels, stationThreeLocalPosition, stationThreeThrottleInput, STATION_THREE_BAY_EXIT_LOCAL_Z, STATION_THREE_INITIAL_CAMERA_DISTANCE_SCALE, STATION_THREE_INTERIOR_DRIVE_CAMERA_HEIGHT } from './station-three-runtime.js?v=1.6.167';
+import { createEmergencyFacilityLayer, suppressFacilitySource } from './emergency-facilities.js?v=1.6.168';
+import { emergencyFacilityEntries } from './emergency-facilities-catalog.js?v=1.6.168';
+import { createStationOneRuntime, stationOneRequested } from './station-one-runtime.js?v=1.6.168';
+import { createStationTwoRuntime, stationTwoRequested } from './station-two-runtime.js?v=1.6.168';
+import { attachStationThreeModel, createStationThreeDoorController, inspectStationThreeModel, loadStationThreeAsset, selectStationThreeSpawn, stationGameplayLabels, stationThreeLocalPosition, stationThreeThrottleInput, STATION_THREE_BAY_EXIT_LOCAL_Z, STATION_THREE_INITIAL_CAMERA_DISTANCE_SCALE, STATION_THREE_INTERIOR_DRIVE_CAMERA_HEIGHT } from './station-three-runtime.js?v=1.6.168';
 import { reconcileStationPavement } from './station-pavement-layer.js?v=1.6.57';
 import { CURB_REVEAL, curbIsRaised, stationRoadWeight, splitRoadDetailSegment, pavementSupportBottom } from './station-road-detail.js?v=1.6.58';
 import { installQualityCapture } from './quality-capture.js?v=sherbrooke-20260915';
-import { buildingFacadePlan } from './building-archetypes.js?v=1.6.167';
-import { buildStation2NeighborhoodGableRoof } from './station2-neighborhood-roofs.mjs?v=1.6.167';
-import { classifyCitywideFacadeEligibility, cityFacadeAppearanceTags, cityFacadeCoverageInvariant, cityFacadeEdgeSegments, cityFacadePanelBudget, cityFacadeWindowMaterialKey, createCityRoadSegmentIndex, isOpenSidedRoofShell, selectCityFacadeEntranceEdge, selectFacadePanelsByBudget, shouldBuildIrregularGableRoof } from './citywide-building-facades.mjs?v=1.6.167';
-import { createStation2OpeningMaterials } from './station2-neighborhood-openings.mjs?v=1.6.167';
-import { createStation2WallMaterials, isStation2PilotBuilding, station2BoundaryContains, station2EdgeRoles, station2WallPattern, STATION2_PILOT } from './station2-neighborhood-facades.mjs?v=1.6.167';
+import { buildingFacadePlan } from './building-archetypes.js?v=1.6.168';
+import { buildStation2NeighborhoodGableRoof } from './station2-neighborhood-roofs.mjs?v=1.6.168';
+import { classifyCitywideFacadeEligibility, cityFacadeAppearanceTags, cityFacadeCoverageInvariant, cityFacadeEdgeSegments, cityFacadePanelBudget, cityFacadeWindowMaterialKey, cityFacadeUsesRepeatedWindowStrip, shouldFlattenInferredCommercialRoof, cityBuildingRoofGeometryPlan, isConvexCityFootprint, createCityRoadSegmentIndex, isOpenSidedRoofShell, selectCityFacadeEntranceEdge, selectFacadePanelsByBudget, shouldBuildIrregularGableRoof } from './citywide-building-facades.mjs?v=1.6.168';
+import { createStation2OpeningMaterials } from './station2-neighborhood-openings.mjs?v=1.6.168';
+import { createStation2WallMaterials, isStation2PilotBuilding, station2BoundaryContains, station2EdgeRoles, station2WallPattern, STATION2_PILOT } from './station2-neighborhood-facades.mjs?v=1.6.168';
 import { loadVegetationAssets } from './vegetation-assets.js?v=sherbrooke-20260915';
 import { createVegetationVariant, stationOneVegetationPalette } from './vegetation-variants.js?v=streetscape-1';
 import { installStationStreetscape } from './streetscape-assets.js?v=streetscape-2';
 import { installStationApron } from './site-surface-materials.js?v=1.6.56';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
-import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js?v=1.6.167';
+import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js?v=1.6.168';
 import { createCatalogObject } from './editor/asset-catalog.js';
 import { createCommandHistory } from './editor/command-history.js';
-import { createDraftStore } from './editor/draft-store.js?v=1.6.167';
-import { createCityEditor } from './editor/city-editor.js?v=1.6.167';
+import { createDraftStore } from './editor/draft-store.js?v=1.6.168';
+import { createCityEditor } from './editor/city-editor.js?v=1.6.168';
 import { createEmptySceneDocument, sanitizeRenderableSceneDocument } from './editor/scene-document.js';
 import { createGeneratedRegistry } from './editor/generated-registry.js?v=footage-20261020';
 import { applyOverrides } from './editor/override-runtime.js';
-import { captureBatchLengths, collectBatchRanges, createFeatureBatchBinding } from './editor/feature-batch-binding.js?v=1.6.167';
+import { captureBatchLengths, collectBatchRanges, createFeatureBatchBinding } from './editor/feature-batch-binding.js?v=1.6.168';
 import {
   LANDMARKS,
   LANDMARK_BUILDING_HEIGHT_OVERRIDES,
   createBuildingFootprintPlacement,
   createPeterboroughLandmarks,
 } from './landmark-models.js?v=corridor-20261024';
-import { ROAD_SURFACE_CLEARANCE, RoadSurfaceIndex, laneCountFor, reconcileRoadNetworkElevations, roadProfile, roadRibbonCrossSections, resampleRoadLine } from './road-network.js?v=1.6.167';
-import { createRoadMarkingContext, roadMarkingIntervals, roadCurbIntervals } from './road-appearance-rules.js?v=1.6.167';
+import { ROAD_SURFACE_CLEARANCE, RoadSurfaceIndex, laneCountFor, reconcileRoadNetworkElevations, roadProfile, roadRibbonCrossSections, resampleRoadLine } from './road-network.js?v=1.6.168';
+import { createRoadMarkingContext, roadMarkingIntervals, roadCurbIntervals } from './road-appearance-rules.js?v=1.6.168';
 import { solveFallbackJunctions, polygonArea as junctionPolygonArea } from './fallback-junction-geometry.js';
 import { officialRoadMeshEdgeLength, officialCurbDisplayMode, nearbyMunicipalRoadHeight, municipalCurbTop } from './citywide-road-quality.js';
 import { sampleTruckWheelContacts, truckIsOnRoad } from './road-wheel-contact.js';
-import { buildConnectedRoadSurface } from './connected-road-surface.js?v=1.6.167';
-import { paintArrowTriangles, paintCrossingTriangles } from './road-paint-geometry.js?v=1.6.167';
-import { createRoadTileLayer, loadRoadTileManifest } from './road-tile-layer.js?v=1.6.167';
-import { finishRoadSurfaces } from './road-surface-finish.js?v=1.6.167';
-import { exportRoadScene, collectRoadSourceRanges } from './road-pack-export.js?v=1.6.167';
-import { ROAD_PACK_ID } from './road-pack-version.js?v=1.6.167';
-import {createRoadRecovery,roadFallbackUrl,readRoadResume} from './road-recovery.js?v=1.6.167';
-import {resolveGraphicsQuality,readGraphicsPreference,installGraphicsQualityControl} from './graphics-quality.js?v=1.6.167';
-import { reviewedPaintTags, drapePaintStrip } from './street-paint.js?v=1.6.167';
+import { buildConnectedRoadSurface } from './connected-road-surface.js?v=1.6.168';
+import { paintArrowTriangles, paintCrossingTriangles } from './road-paint-geometry.js?v=1.6.168';
+import { createRoadTileLayer, loadRoadTileManifest } from './road-tile-layer.js?v=1.6.168';
+import { finishRoadSurfaces } from './road-surface-finish.js?v=1.6.168';
+import { exportRoadScene, collectRoadSourceRanges } from './road-pack-export.js?v=1.6.168';
+import { ROAD_PACK_ID } from './road-pack-version.js?v=1.6.168';
+import {createRoadRecovery,roadFallbackUrl,readRoadResume} from './road-recovery.js?v=1.6.168';
+import {resolveGraphicsQuality,readGraphicsPreference,installGraphicsQualityControl} from './graphics-quality.js?v=1.6.168';
+import { reviewedPaintTags, drapePaintStrip } from './street-paint.js?v=1.6.168';
 import { OfficialDrivableSurfaceIndex, RenderedPavementIndex, officialSurfaceStatusActive, officialBridgeIsVehicular } from './official-road-surfaces.js?v=1.6.101';
 import { FLY_TUNING, adjustFlySpeedScale, applyFlyLookDelta, dampingFactors, flyAxesFromKeys, flySpeedFor, flyYawToward, isFlyControlCode, wrapFlyYaw } from './fly-controls.js?v=1.5.5-fly4';
 import { clearLandCoverRaster, paintLandCoverPolygon } from './land-cover-raster.js?v=1.5.5-raster1';
 import { sampleOfficialTerrainElevation, validOfficialTerrainMetadata } from './terrain-heightmap.js?v=1.5.5-lidar1';
 import { sampleTriangulatedTerrainHeight } from './terrain-surface.js?v=1.5.5-terrain1';
 import { HydroSurfaceIndex, WATER_SURFACE_CLEARANCE, WATER_TERRAIN_RECESS, createWaterStageSampler, relativeWaterElevation, robustFallbackWaterHeight, subdivideWaterTriangle, watercourseWidth } from './water-system.js?v=1.5.5-hydro2';
-import { CitySplatLayer } from './city-splat-layer.js?v=1.6.167';
+import { CitySplatLayer } from './city-splat-layer.js?v=1.6.168';
 import {
   estimatedBuildingFloors,
   facadeDetailClass,
@@ -510,6 +510,7 @@ surveyMarkerGroup.visible = false;
 const verticalSliceBounds = projectedVerticalSliceBounds(project, 0);
 const verticalSliceShadowBounds = projectedVerticalSliceBounds(project, 600);
 const verticalSliceDetails = { built: false, rooftopUnits: [] };
+const CITYWIDE_ROOFTOP_UNIT_CAP=1000;
 
 const clock = new THREE.Clock();
 const velocity = new THREE.Vector3();
@@ -790,7 +791,7 @@ function releaseStationThreeGltf(gltf) {
 
 async function loadStationThreeModel() {
   const loader = new GLTFLoader();
-  const assetUrl = new URL('./assets/stations/station-3.glb?v=1.6.167', import.meta.url).href;
+  const assetUrl = new URL('./assets/stations/station-3.glb?v=1.6.168', import.meta.url).href;
   const result = await loadStationThreeAsset({
     url: assetUrl,
     timeoutMs: 8000,
@@ -1696,9 +1697,14 @@ function appendQuad(target, a, b, c, d) {
   appendTriangle(target, a, c, d);
 }
 
-function appendStation2IrregularRoof(roofPositions, outer, wallTop, roofTop, wallKey, featureId, batches, anchor) {
-  const roof=buildStation2NeighborhoodGableRoof({ring:outer,wallTop,roofTop,triangles:THREE.ShapeUtils.triangulateShape(outer,[])});
-  if(!roof.valid)return false;
+function appendStation2IrregularRoof(roofPositions, outer, holes, wallTop, roofTop, roofShape, wallKey, featureId, batches, anchor) {
+  cityComplexRoofDiagnostics.attempted++;
+  const all=[...outer,...holes.flat()];
+  const indexed=THREE.ShapeUtils.triangulateShape(outer,holes);
+  const triangles=indexed.map(triangle=>triangle.map(index=>all[index])).filter(triangle=>triangle.every(Boolean));
+  const roof=buildStation2NeighborhoodGableRoof({ring:outer,boundaryRings:[outer,...holes],wallTop,roofTop,roofShape,triangles,maxRoofTriangles:4096,maxGableTriangles:640});
+  if(!roof.valid){cityComplexRoofDiagnostics.invalid++;if(cityComplexRoofDiagnostics.invalidExamples.length<64)cityComplexRoofDiagnostics.invalidExamples.push({featureId,reason:roof.reason});return false;}
+  cityComplexRoofDiagnostics.built++;
   roofPositions.push(...roof.roofTriangles);
   const key=station2WallPattern(wallKey,featureId), batch=batchRecord(batches,key,anchor), repeat=station2WallMaterials.get(key).userData.station2RepeatMetres;
   const tint=new THREE.Color([0xffffff,0xe6ddd0,0xcbd8d3,0xd6c5ad,0xe5d0c3,0xc9d2dc][stableHash(featureId+':wall-tint')%6]);
@@ -1776,6 +1782,14 @@ function appendOpenRoofSupports(target, ring, bottomHeights, topY, {spacing=7,ma
   return posts.length;
 }
 
+function appendRoofChimney(target, x, z, bottom, {width=.48,height=.82}={}) {
+  const h=width/2,base=[[-h,-h],[h,-h],[h,h],[-h,h]].map(([dx,dz])=>new THREE.Vector3(x+dx,bottom,z+dz));
+  const top=base.map(point=>new THREE.Vector3(point.x,bottom+height,point.z));
+  for(let i=0;i<4;i++)appendQuad(target,base[i],base[(i+1)%4],top[(i+1)%4],top[i]);
+  appendQuad(target,top[0],top[3],top[2],top[1]);
+  return bottom+height;
+}
+
 function appendOpenSidedGableRoof(target, outer, wallTop, roofTop) {
   const roof=buildStation2NeighborhoodGableRoof({ring:outer,wallTop,roofTop,triangles:THREE.ShapeUtils.triangulateShape(outer,[]),maxRoofTriangles:2048});
   if(!roof.valid)return false;
@@ -1786,7 +1800,8 @@ function appendOpenSidedGableRoof(target, outer, wallTop, roofTop) {
 const FACADE_DETAIL_QUAD_LIMIT = lowPowerProfile ? 32000 : 132000;
 let facadeDetailQuads = 0;
 const cityAppearanceTileCounts = new Map();
-const cityAppearanceStats = {parts:0,panels:0,presets:{}};
+const cityAppearanceStats = {parts:0,panels:0,presets:{},details:{commercialTrim:0,loadingEntries:0,porchEntries:0,chimneys:0,unsafeChimneys:0,steps:0,unsafeSteps:0,yards:0,roofEquipment:0,flattenedCommercialRoofs:0,lowProfileWindowFaces:0}};
+const cityComplexRoofDiagnostics={attempted:0,built:0,invalid:0,invalidExamples:[]};
 let prototypeFacadeQuads = 0;
 let prototypeRoadContextReady = false;
 const prototypeFacadeQueue = [];
@@ -1886,7 +1901,7 @@ function appendFacadePanel(target, a, b, center, t, width, lowerY, upperY) {
 function appendCitywideReusableFacade(outer,tags,featureId,foundationTop,wallTop,batches,anchor,roadSegments) {
   const area=THREE.ShapeUtils.area(outer), edgeRoles=station2EdgeRoles(outer,featureId,roadSegments), roles=new Map(edgeRoles.map(edge=>[edge.index,edge.role]));
   const entranceEdge=selectCityFacadeEntranceEdge(edgeRoles,3.1,edge=>isCapturedFrontEdge(featureId,outer[edge.index],outer[(edge.index+1)%outer.length]));
-  const faces=[];
+  const faces=[],trims=[];
   let appearance, preset='residential';
   for(let edge=0;edge<outer.length;edge++) {
     const a=outer[edge],b=outer[(edge+1)%outer.length],length=a.distanceTo(b);
@@ -1900,11 +1915,24 @@ function appendCitywideReusableFacade(outer,tags,featureId,foundationTop,wallTop
       const openings=plan.panels.filter(panel=>panel.kind==='window'||panel.kind==='door')
         .map(panel=>({...panel,t:(segment.start+panel.t*segment.length)/length}));
       if(openings.length)faces.push({edge,role,panels:openings});
+      if(['storefront','industrial','civic'].includes(plan.archetype))for(const panel of plan.panels)if(panel.kind==='cornice'||panel.kind==='lintel')trims.push({edge,panel:{...panel,t:(segment.start+panel.t*segment.length)/length}});
     }
   }
   const selected=selectFacadePanelsByBudget(faces,cityFacadePanelBudget(graphicsQuality.name,faces));
-  const outwardSign=area>0?1:-1;let emitted=0;
+  const outwardSign=area>0?1:-1;let emitted=0,openingEmitted=0;
+  const repeatedWindows=cityFacadeUsesRepeatedWindowStrip(preset,graphicsQuality.name,wallTop-foundationTop);
+  if(repeatedWindows)for(let edge=0;edge<outer.length;edge++) {
+    const a=outer[edge],b=outer[(edge+1)%outer.length],length=a.distanceTo(b);
+    if(length<3.1||isCapturedFrontEdge(featureId,a,b))continue;
+    const ux=(b.x-a.x)/length,uz=(b.y-a.y)/length,nx=uz*outwardSign,nz=-ux*outwardSign;
+    const points=[new THREE.Vector3(a.x+nx*.022,foundationTop,a.y+nz*.022),new THREE.Vector3(b.x+nx*.022,foundationTop,b.y+nz*.022),new THREE.Vector3(b.x+nx*.022,wallTop,b.y+nz*.022),new THREE.Vector3(a.x+nx*.022,wallTop,a.y+nz*.022)];
+    const oriented=area>=0?[points[0],points[3],points[2],points[1]]:points;
+    const u=Math.max(1,Math.floor(length/3.15)),v=Math.max(1,Math.round((wallTop-foundationTop)/3.15));
+    appendUvQuad(batchRecord(batches,'station2-window-strip',anchor),oriented,area>=0?[[0,0],[0,v],[u,v],[u,0]]:[[0,0],[u,0],[u,v],[0,v]]);
+    emitted++;cityAppearanceStats.details.lowProfileWindowFaces++;
+  }
   for(const panel of selected) {
+    if(repeatedWindows&&panel.kind==='window')continue;
     const edge=panel.edge,a=outer[edge],b=outer[(edge+1)%outer.length],length=a.distanceTo(b);
     const ux=(b.x-a.x)/length,uz=(b.y-a.y)/length,nx=uz*outwardSign,nz=-ux*outwardSign;
     const mx=a.x+ux*length*panel.t+nx*panel.offset,mz=a.y+uz*length*panel.t+nz*panel.offset,half=panel.width/2;
@@ -1914,10 +1942,57 @@ function appendCitywideReusableFacade(outer,tags,featureId,foundationTop,wallTop
     const points=[new THREE.Vector3(mx-ux*half,bottom,mz-uz*half),new THREE.Vector3(mx+ux*half,bottom,mz+uz*half),new THREE.Vector3(mx+ux*half,top,mz+uz*half),new THREE.Vector3(mx-ux*half,top,mz-uz*half)];
     const oriented=area>=0?[points[0],points[3],points[2],points[1]]:points;
     appendUvQuad(batchRecord(batches,materialKey,anchor),oriented,area>=0?[[0,0],[0,1],[1,1],[1,0]]:[[0,0],[1,0],[1,1],[0,1]]);
+    openingEmitted++;
+    if(panel.kind==='door'&&preset==='industrial')cityAppearanceStats.details.loadingEntries++;
+    if(panel.kind==='door'&&preset==='residential') {
+      const detailVariant=stableHash(`${featureId}:residential-entry-details`)%100;
+      const trim=batchPositions(batches,'facadeTrim',anchor);
+      if(detailVariant<28) {
+      const hoodHalf=Math.min(1.05,half+.22),hoodY=top+.08;
+      const fascia=[new THREE.Vector3(mx-ux*hoodHalf,hoodY,mz-uz*hoodHalf),new THREE.Vector3(mx+ux*hoodHalf,hoodY,mz+uz*hoodHalf),new THREE.Vector3(mx+ux*hoodHalf,hoodY+.13,mz+uz*hoodHalf),new THREE.Vector3(mx-ux*hoodHalf,hoodY+.13,mz-uz*hoodHalf)];
+      appendQuad(trim,...(area>=0?[fascia[0],fascia[3],fascia[2],fascia[1]]:fascia));
+      for(const side of [-1,1]) {
+        const cx=mx+ux*side*(half+.08),cz=mz+uz*side*(half+.08),w=.075;
+        const post=[new THREE.Vector3(cx-ux*w/2,bottom,cz-uz*w/2),new THREE.Vector3(cx+ux*w/2,bottom,cz+uz*w/2),new THREE.Vector3(cx+ux*w/2,hoodY,cz+uz*w/2),new THREE.Vector3(cx-ux*w/2,hoodY,cz-uz*w/2)];
+        appendQuad(trim,...(area>=0?[post[0],post[3],post[2],post[1]]:post));
+      }
+      emitted+=3;
+      cityAppearanceStats.details.porchEntries++;
+      }
+      const plantersAllowed=stableHash(`${featureId}:residential-planters`)%100<24&&panel.t*length>.48&&panel.t*length<length-.48;
+      if(plantersAllowed)for(const side of [-1,1]) {
+        const px=mx+ux*side*(half+.31),pz=mz+uz*side*(half+.31),pw=.22;
+        const pot=[new THREE.Vector3(px-ux*pw/2,bottom+.08,pz-uz*pw/2),new THREE.Vector3(px+ux*pw/2,bottom+.08,pz+uz*pw/2),new THREE.Vector3(px+ux*pw/2,bottom+.31,pz+uz*pw/2),new THREE.Vector3(px-ux*pw/2,bottom+.31,pz-uz*pw/2)];
+        appendQuad(trim,...(area>=0?[pot[0],pot[3],pot[2],pot[1]]:pot));
+        const greenery=pot.map(point=>new THREE.Vector3(point.x+nx*.008,point.y+.1,point.z+nz*.008));
+        appendQuad(batchPositions(batches,'park',anchor),...(area>=0?[greenery[0],greenery[3],greenery[2],greenery[1]]:greenery));
+        emitted+=2;cityAppearanceStats.details.yards++;
+      }
+      if(stableHash(`${featureId}:entry-steps`)%100<20) {
+        const stepPositions=batchPositions(batches,'facadeTrim',anchor),stepOffset=.015,baseY=Math.max(foundationTop+.02,bottom-.12);
+        for(let index=0;index<3;index++) {
+          const width=Math.max(.65,panel.width+.42-index*.16),halfWidth=width/2,y=baseY+index*.035;
+          const band=[new THREE.Vector3(mx-ux*halfWidth,y,mz-uz*halfWidth),new THREE.Vector3(mx+ux*halfWidth,y,mz+uz*halfWidth),new THREE.Vector3(mx+ux*halfWidth,y+.022,mz+uz*halfWidth),new THREE.Vector3(mx-ux*halfWidth,y+.022,mz-uz*halfWidth)];
+          const raised=band.map(point=>new THREE.Vector3(point.x+nx*stepOffset,point.y,point.z+nz*stepOffset));
+          appendQuad(stepPositions,...(area>=0?[raised[0],raised[3],raised[2],raised[1]]:raised));
+        }
+        emitted+=3;cityAppearanceStats.details.steps++;
+      }
+    }
     emitted++;
   }
+  const trimBudget=Math.min(128,outer.length*2);
+  let trimEmitted=0;
+  for(const detail of trims) {
+    if(trimEmitted>=trimBudget)break;
+    const {edge,panel}=detail,a=outer[edge],b=outer[(edge+1)%outer.length],length=a.distanceTo(b);
+    const ux=(b.x-a.x)/length,uz=(b.y-a.y)/length,nx=uz*outwardSign,nz=-ux*outwardSign,mx=a.x+ux*length*panel.t+nx*panel.offset,mz=a.y+uz*length*panel.t+nz*panel.offset,half=panel.width/2;
+    const points=[new THREE.Vector3(mx-ux*half,foundationTop+panel.lowerY,mz-uz*half),new THREE.Vector3(mx+ux*half,foundationTop+panel.lowerY,mz+uz*half),new THREE.Vector3(mx+ux*half,foundationTop+panel.upperY,mz+uz*half),new THREE.Vector3(mx-ux*half,foundationTop+panel.upperY,mz-uz*half)];
+    appendQuad(batchPositions(batches,'facadeTrim',anchor),...(area>=0?[points[0],points[3],points[2],points[1]]:points));
+    emitted++;trimEmitted++;if(preset==='storefront')cityAppearanceStats.details.commercialTrim++;
+  }
   if(emitted){cityAppearanceStats.parts++;cityAppearanceStats.panels+=emitted;cityAppearanceStats.presets[preset]=(cityAppearanceStats.presets[preset]||0)+1;}
-  return emitted;
+  return openingEmitted;
 }
 
 function appendReusableCityFacade(outer, tags, featureId, foundationTop, wallTop, batches, anchor) {
@@ -1940,6 +2015,7 @@ function appendReusableCityFacade(outer, tags, featureId, foundationTop, wallTop
       const plan=buildingFacadePlan({tags,featureId,edgeIndex:edge+segment.index*outer.length,edgeLength:segment.length,wallHeight:wallTop-foundationTop,footprintArea:Math.abs(area),lite:station2Pilot?(lowPowerProfile||role!=='front'):true,visuals:cityVisuals.mode,front:station2Pilot&&role==='front'&&entranceSegment});
       if(!station2Pilot&&(facadeDetailQuads+plan.panels.length>FACADE_DETAIL_QUAD_LIMIT||used+plan.panels.length>tileBudget))break;
       for (const panel of plan.panels) {
+      if(['cornice','lintel'].includes(panel.kind)&&!['storefront','industrial','civic'].includes(plan.archetype))continue;
       if(!station2Pilot&&(facadeDetailQuads>=FACADE_DETAIL_QUAD_LIMIT||used>=tileBudget))break;
       const t=(segment.start+panel.t*segment.length)/length;
       const mx = a.x + ux*length*t + nx*panel.offset, mz = a.y + uz*length*t + nz*panel.offset, half = panel.width/2;
@@ -2057,11 +2133,13 @@ function appendBufferedBuilding(rings, tags, featureId, batches, sourceId = feat
   const cityPart=beginCityFacadePart(featureId);
   const holes = rings.slice(1).map(cleanRing).filter((ring) => ring.length);
   const dimensions = buildingDimensions(tags, featureId);
+  const explicitRoofShape=Boolean(tags['roof:shape']||tags['building:roof:shape']);
   const allVertices = outer.concat(...holes);
   const groundHeights = allVertices.map((point) => terrainHeightAtWorld(point.x, point.y) + dimensions.minHeight);
   const foundationTop = Math.max(...groundHeights);
   let wallTop = foundationTop + dimensions.height;
   let roofTop = wallTop + dimensions.roofHeight;
+  let visualRoofMaxY;
   const outerArea = Math.abs(THREE.ShapeUtils.area(outer));
   const anchor = polygonCentroid(outer);
   const openSidedRoof=isOpenSidedRoofShell(tags);
@@ -2100,6 +2178,11 @@ function appendBufferedBuilding(rings, tags, featureId, batches, sourceId = feat
   const footage = FOOTAGE_PROFILES[featureId];
   const massing = appendFootageMassing({THREE, wallPositions, roofPositions, outer, holes, foundationTop, profile: footage?.appearanceOnly ? undefined : footage, project, groundHeights});
   if (massing) { wallTop = foundationTop + massing.maxHeight; roofTop = wallTop + .2; }
+  let flattenedCommercialRoof=false;
+  if(!massing&&shouldFlattenInferredCommercialRoof({eligible:cityFacadeCandidate,wallKey,footprintArea:outerArea,wallHeight:wallTop-foundationTop,roofRise:dimensions.roofHeight,explicitRoofShape})) {
+    roofTop=wallTop;flattenedCommercialRoof=true;cityAppearanceStats.details.flattenedCommercialRoofs++;
+  }
+  visualRoofMaxY=roofTop;
   if(cityFacadeCandidate&&massing){excludeCityFacadePart(cityPart,'reviewed-custom-massing');cityFacadeExclusion='reviewed-custom-massing';}
   else if(cityFacadeCandidate)markCityFacadeEligible();
   else excludeCityFacadePart(cityPart,cityFacadeExclusion||'citywide-disabled');
@@ -2127,57 +2210,59 @@ function appendBufferedBuilding(rings, tags, featureId, batches, sourceId = feat
     }
   }
 
-  const buildingUse = `${tags.building || ''} ${tags.amenity || ''} ${tags.shop || ''} ${tags.office || ''}`.toLowerCase();
-  if (!lowPowerProfile
-    && worldPointInVerticalSlice(anchor.x, anchor.y, verticalSliceBounds)
-    && !landmarkBuildingReferences.has(featureId)
-    && outerArea >= 240
-    && dimensions.height >= 5.8
-    && /commercial|retail|office|industrial|warehouse|supermarket|civic|school|hospital|yes/.test(buildingUse)
-    && stableHash(`${featureId}:rooftop-unit`) % 100 < 68) {
-    const unitCount = outerArea > 1900 ? 2 : 1;
-    for (let index = 0; index < unitCount; index += 1) {
-      const width = THREE.MathUtils.clamp(Math.sqrt(outerArea) * 0.105, 2.4, 6.8);
-      const depth = width * deterministicNumber(`${featureId}:unit-depth:${index}`, 0.58, 0.88);
-      const offset = index === 0 ? 0 : width * 0.82;
-      const candidate = new THREE.Vector2(
-        anchor.x + Math.cos(deterministicNumber(`${featureId}:unit-angle`, 0, Math.PI * 2)) * offset,
-        anchor.y + Math.sin(deterministicNumber(`${featureId}:unit-angle`, 0, Math.PI * 2)) * offset,
-      );
-      const position = pointInPolygon(candidate, [outer, ...holes]) ? candidate : anchor;
-      verticalSliceDetails.rooftopUnits.push({
-        x: position.x,
-        z: position.y,
-        y: roofTop,
-        width,
-        depth,
-        height: deterministicNumber(`${featureId}:unit-height:${index}`, 0.65, 1.45),
-        yaw: deterministicNumber(`${featureId}:unit-yaw:${index}`, 0, Math.PI),
-        generatedFeatureKey,
+  const flatRoof=flattenedCommercialRoof||/flat/i.test(dimensions.roofShape)||dimensions.roofHeight<=.3;
+  const roofUnitUse=/commercial|industrial|civic/i.test(wallKey);
+  const inVerticalSlice=worldPointInVerticalSlice(anchor.x,anchor.y,verticalSliceBounds);
+  if (graphicsQuality.name!=='low'&&cityFacadeCandidate&&flatRoof&&!landmarkBuildingReferences.has(featureId)&&!holes.length&&isConvexCityFootprint(outer)&&outerArea>=320&&dimensions.height>=4.5&&roofUnitUse&&verticalSliceDetails.rooftopUnits.length<CITYWIDE_ROOFTOP_UNIT_CAP&&stableHash(`${featureId}:rooftop-unit`)%100<(inVerticalSlice?68:20)) {
+    const unitCount=outerArea>5200?2:1,placed=[];
+    for(let index=0;index<unitCount&&verticalSliceDetails.rooftopUnits.length<CITYWIDE_ROOFTOP_UNIT_CAP;index++) {
+      const width=THREE.MathUtils.clamp(Math.sqrt(outerArea)*.085,1.8,5.2),depth=width*deterministicNumber(`${featureId}:unit-depth:${index}`,.58,.82),yaw=deterministicNumber(`${featureId}:unit-yaw:${index}`,0,Math.PI);
+      const offset=index===0?0:width*1.28,angle=deterministicNumber(`${featureId}:unit-angle`,0,Math.PI*2),candidate={x:anchor.x+Math.cos(angle)*offset,z:anchor.y+Math.sin(angle)*offset};
+      const safeCorners=[[-1,-1],[1,-1],[1,1],[-1,1]].every(([sx,sz])=>{
+        const dx=sx*width/2,dz=sz*depth/2,rx=dx*Math.cos(yaw)-dz*Math.sin(yaw),rz=dx*Math.sin(yaw)+dz*Math.cos(yaw);
+        return pointInPolygon(new THREE.Vector2(candidate.x+rx,candidate.z+rz),[outer,...holes]);
       });
+      const safeCenter=pointInPolygon(new THREE.Vector2(candidate.x,candidate.z),[outer]);
+      if(!safeCenter||!safeCorners||placed.some(unit=>Math.hypot(candidate.x-unit.x,candidate.z-unit.z)<(width+unit.width)*.55))continue;
+      const unit={x:candidate.x,z:candidate.z,y:roofTop,width,depth,height:deterministicNumber(`${featureId}:unit-height:${index}`,.65,1.35),yaw,generatedFeatureKey};
+      verticalSliceDetails.rooftopUnits.push(unit);placed.push(unit);cityAppearanceStats.details.roofEquipment++;
     }
   }
   const roofGeometryStart=roofPositions.length;
   const openSidedGable=openSidedRoof&&dimensions.roofHeight>0.3&&!holes.length&&outerArea<=1600&&/gable/i.test(dimensions.roofShape)&&appendOpenSidedGableRoof(roofPositions,outer,wallTop,roofTop);
+  const roofPlan=cityBuildingRoofGeometryPlan({roofHeight:dimensions.roofHeight,flattenedCommercialRoof});
   let pitchedRoof=false;
-  if(dimensions.roofHeight>0.3&&!holes.length&&outerArea<=1600) {
+  if(roofPlan.tryPitched) {
     pitchedRoof=openSidedGable;
     if(!pitchedRoof&&FOOTAGE_PROFILES[featureId]&&!FOOTAGE_PROFILES[featureId].appearanceOnly&&FOOTAGE_PROFILES[featureId].confidence!=='inferred') {
       pitchedRoof=appendFootageRoof({THREE,roofPositions,wallPositions,outer,wallTop,roofTop,profile:FOOTAGE_PROFILES[featureId],project});
     }
-    if(!pitchedRoof&&!openSidedRoof&&(cityFacadeCandidate||station2Pilot)&&shouldBuildIrregularGableRoof({ringVertexCount:outer.length,hasHoles:holes.length>0,roofHeight:dimensions.roofHeight,roofShape:dimensions.roofShape,footprintArea:outerArea,explicitRoofShape:Boolean(tags['roof:shape'])})) {
-      pitchedRoof=appendStation2IrregularRoof(roofPositions,outer,wallTop,roofTop,wallKey,featureId,batches,anchor);
+    const explicitFlatRoof=/flat/i.test(dimensions.roofShape)&&Boolean(tags['roof:shape']);
+    const establishedFourCornerRoof=outer.length===4&&!holes.length&&outerArea<=1600&&!/round|dome/i.test(dimensions.roofShape)&&!explicitFlatRoof;
+    if(!pitchedRoof&&establishedFourCornerRoof&&(!openSidedRoof||/hip|pyramid/i.test(dimensions.roofShape))) {
+      pitchedRoof=appendPitchedRoof(roofPositions,outer,wallTop,roofTop,dimensions.roofShape);
     }
-    if(!pitchedRoof&&(!openSidedRoof||/hip|pyramid/i.test(dimensions.roofShape))) {
+    if(!pitchedRoof&&!openSidedRoof&&(cityFacadeCandidate||station2Pilot)&&shouldBuildIrregularGableRoof({ringVertexCount:outer.length,hasHoles:holes.length>0,roofHeight:dimensions.roofHeight,roofShape:dimensions.roofShape,footprintArea:outerArea,explicitRoofShape})) {
+      const complexRoofShape=/hip|pyramid/i.test(dimensions.roofShape)&&!explicitRoofShape?'gabled':dimensions.roofShape;
+      pitchedRoof=appendStation2IrregularRoof(roofPositions,outer,holes,wallTop,roofTop,complexRoofShape,wallKey,featureId,batches,anchor);
+    }
+    if(!pitchedRoof&&outer.length===4&&!holes.length&&outerArea<=1600&&!explicitFlatRoof&&!/round|dome/i.test(dimensions.roofShape)&&(!openSidedRoof||/hip|pyramid/i.test(dimensions.roofShape))) {
       pitchedRoof=appendPitchedRoof(roofPositions,outer,wallTop,roofTop,dimensions.roofShape);
     }
   }
 
   // Complex tagged roofs retain a simplified roof volume. Simple four-corner
   // homes receive actual gabled or hipped planes instead of flat dark slabs.
-  if (!pitchedRoof && dimensions.roofHeight > 0.05 && !openSidedRoof) {
+  if (!pitchedRoof && roofPlan.raisedRingWalls && !openSidedRoof) {
     appendRingWalls(roofPositions, outer, null, wallTop, roofTop);
     holes.forEach((hole) => appendRingWalls(roofPositions, hole, null, wallTop, roofTop));
+  }
+
+  const residentialChimney=cityFacadeCandidate&&!openSidedRoof&&/^(house|detached|semidetached_house|bungalow|terrace|residential)$/i.test(String(appearanceTags.building||tags.building||''))&&outerArea>=35&&outerArea<=420&&dimensions.roofHeight>.55&&stableHash(`${featureId}:chimney`)%100<18;
+  if(residentialChimney&&pointInPolygon(new THREE.Vector2(anchor.x,anchor.y),[outer,...holes])) {
+    const safeCorners=[[-.24,-.24],[.24,-.24],[.24,.24],[-.24,.24]].every(([dx,dz])=>pointInPolygon(new THREE.Vector2(anchor.x+dx,anchor.y+dz),[outer,...holes]));
+    if(safeCorners){visualRoofMaxY=appendRoofChimney(roofPositions,anchor.x,anchor.y,wallTop,{height:dimensions.roofHeight+.42});cityAppearanceStats.details.chimneys++;}
+    else cityAppearanceStats.details.unsafeChimneys++;
   }
 
   if (!pitchedRoof) try {
@@ -2244,7 +2329,7 @@ function appendBufferedBuilding(rings, tags, featureId, batches, sourceId = feat
     feature.maxZ = Math.max(feature.maxZ, vertex.y);
   });
   feature.minY = Math.min(feature.minY, foundationTop);
-  feature.maxY = Math.max(feature.maxY, roofTop);
+  feature.maxY = Math.max(feature.maxY, visualRoofMaxY);
   return true;
 }
 
@@ -2305,13 +2390,14 @@ function buildBufferedBuildingBatches(batches) {
     feature.registered = true;
   }
   document.documentElement.dataset.facadePanels = String(facadeDetailQuads);
+  document.documentElement.dataset.cityBuildingRefinements=JSON.stringify({roofs:{...cityComplexRoofDiagnostics},details:{...cityAppearanceStats.details}});
   document.documentElement.dataset.sherbrookeFootage = JSON.stringify({version: 1,
     profiles: Object.keys(FOOTAGE_PROFILES).length, facadeGroups: footageFacadeGroups.size,
     sourceIds: [...footageFacadeGroups.keys()], station: 'existing-reviewed-five-bay-facade'});
 }
 
 function buildVerticalSliceRooftopEquipment() {
-  if (verticalSliceDetails.built || !verticalSliceDetails.rooftopUnits.length || lowPowerProfile) return;
+  if (verticalSliceDetails.built || !verticalSliceDetails.rooftopUnits.length || graphicsQuality.name==='low') return;
   verticalSliceDetails.built = true;
   const units = verticalSliceDetails.rooftopUnits;
   const mesh = new THREE.InstancedMesh(new THREE.BoxGeometry(1, 1, 1), materials.roofEquipment, units.length);
@@ -6830,7 +6916,7 @@ function updateFps() {
 
 const FAR_BUILDING_DETAIL_MATERIALS = new Set([
   'facadeTrim', 'storefrontGlass', 'windowGlass', 'windowWarm',
-  'station2-window','station2-window-curtain','station2-door','station2-garage',
+  'station2-window','station2-window-curtain','station2-window-strip','station2-door','station2-garage',
 ]);
 const BUILDING_ROOF_MATERIALS = new Set(['roofDark', 'roofClay', 'roofMetal', 'stationRoof']);
 const NEAR_STREETSCAPE_TYPES = new Set([
@@ -7078,7 +7164,7 @@ function exposeCityQualityQa() {
           exclusionReasons:Object.fromEntries([...cityBuildingFacadeDiagnostics.exclusionsByReason].sort(([a],[b])=>a.localeCompare(b))),
           exclusionSamples:cityBuildingFacadeDiagnostics.detailPartIds.slice(0,100),
         },
-        visuals: { ...cityVisuals, recordingReferences, recordingExpansion, recordingSurfaceChanges, shaderPrograms: renderer.info.programs?.length, materialFamilies: Object.keys(CITY_MATERIALS).length, reflectionGpuBytesEstimate: cityGlassEnvironment?.estimatedGpuBytes || 0, appearanceParts: cityAppearanceStats.parts, appearancePanels: cityAppearanceStats.panels, appearanceTiles: cityAppearanceTileCounts.size, presets: {...cityAppearanceStats.presets} },
+        visuals: { ...cityVisuals, recordingReferences, recordingExpansion, recordingSurfaceChanges, shaderPrograms: renderer.info.programs?.length, materialFamilies: Object.keys(CITY_MATERIALS).length, reflectionGpuBytesEstimate: cityGlassEnvironment?.estimatedGpuBytes || 0, appearanceParts: cityAppearanceStats.parts, appearancePanels: cityAppearanceStats.panels, appearanceTiles: cityAppearanceTileCounts.size, presets: {...cityAppearanceStats.presets}, buildingRefinements:{roofs:{...cityComplexRoofDiagnostics},details:{...cityAppearanceStats.details}} },
         sourceBuildings: generatedBuildingFeatures.size,
         businessSigns: businessSignLayer?.stats() || null,
         drawCalls: renderer.info.render.calls,

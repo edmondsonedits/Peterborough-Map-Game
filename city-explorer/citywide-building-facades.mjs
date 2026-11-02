@@ -172,6 +172,43 @@ export function cityFacadeWindowMaterialKey(archetype,featureId='',edge=0,t=0) {
   return stableFacadeHash(`${featureId}:${edge}:${t}:curtain`)%3===0?'station2-window-curtain':'station2-window';
 }
 
+/** Low-power apartments use one repeated shared window strip per face. */
+export function cityFacadeUsesRepeatedWindowStrip(archetype,quality='balanced',wallHeight=0) {
+  return quality==='low'&&String(archetype)==='apartment'&&Number(wallHeight)>=10;
+}
+
+/** Flatten only inferred low-rise commercial roofs that can safely carry shared equipment. */
+export function shouldFlattenInferredCommercialRoof({eligible=false,wallKey='',footprintArea=0,wallHeight=0,roofRise=0,explicitRoofShape=false}={}) {
+  return Boolean(eligible)&&!explicitRoofShape&&/commercial|industrial|civic/i.test(String(wallKey))
+    &&Number(footprintArea)>=320&&Number(wallHeight)>=4.5&&Number(roofRise)>.3&&Number(roofRise)<=2.4;
+}
+
+/** Choose pitched geometry or a flat cap, keeping intentional flattening out of pitched fallbacks. */
+export function cityBuildingRoofGeometryPlan({roofHeight=0,flattenedCommercialRoof=false}={}) {
+  const rise=Number(roofHeight),hasRise=Number.isFinite(rise)&&rise>.3;
+  return {
+    tryPitched:!flattenedCommercialRoof&&hasRise,
+    raisedRingWalls:!flattenedCommercialRoof&&Number.isFinite(rise)&&rise>.05,
+    flatCap:Boolean(flattenedCommercialRoof)||!hasRise,
+  };
+}
+
+/** Equipment rectangles only use simple convex, hole-free footprints. */
+export function isConvexCityFootprint(ring=[]) {
+  if(!Array.isArray(ring)||ring.length<3)return false;
+  let orientation=0;
+  for(let i=0;i<ring.length;i++) {
+    const a=ring[i],b=ring[(i+1)%ring.length],c=ring[(i+2)%ring.length];
+    const cross=(b.x-a.x)*(c.y-b.y)-(b.y-a.y)*(c.x-b.x);
+    if(!Number.isFinite(cross))return false;
+    if(Math.abs(cross)<1e-8)continue;
+    const sign=Math.sign(cross);
+    if(orientation&&orientation!==sign)return false;
+    orientation=sign;
+  }
+  return orientation!==0;
+}
+
 /** Split long walls into metre-bounded planning spans, with a hard segment cap. */
 export function cityFacadeEdgeSegments(length, maxSegmentLength = 48, maxSegments = 32) {
   const edgeLength = Number(length), maxLength = Math.max(3.1, Number(maxSegmentLength) || 48);
@@ -198,16 +235,18 @@ export function isOpenSidedRoofShell(tags = {}) {
   return /^(roof|carport|canopy)$/.test(String(tags?.building||tags?.['building:part']||'').toLowerCase());
 }
 
-/** Irregular roof helper only supports simple, bounded gable footprints. */
+/** Irregular roof helper supports bounded gable, hip, and dome-like roofs. */
 export function shouldBuildIrregularGableRoof({
   ringVertexCount = 0, hasHoles = false, roofHeight = 0, roofShape = '', footprintArea = 0, explicitRoofShape = false,
 } = {}) {
   const shape=String(roofShape||'').toLowerCase();
-  return Number(ringVertexCount) > 4
-    && !hasHoles
-    && Number.isFinite(Number(roofHeight)) && Number(roofHeight) > 0.3
-    && Number.isFinite(Number(footprintArea)) && Number(footprintArea) > 18 && Number(footprintArea) <= 1600
-    && (/gable/.test(shape)||(!explicitRoofShape&&/hip/.test(shape)));
+  const supported=/gable|hip|pyramid|round|dome/.test(shape)||(!explicitRoofShape&&!shape);
+  const area=Number(footprintArea),vertices=Number(ringVertexCount),rise=Number(roofHeight);
+  const narrowTower=area>=8&&vertices>=8&&rise>=1.4;
+  return vertices >= 4 && vertices <= 128
+    && Number.isFinite(rise) && rise > 0.3
+    && Number.isFinite(area) && area >= (narrowTower?8:18) && area <= 45000
+    && supported;
 }
 
 /** Summarize per-source-part coverage so callers can assert no loading pass starved a part. */

@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "targetRelease": "1.6.168",
+  "scope": "Shared plausible refinements for all eligible ordinary buildings. Architectural guesses authorized by user; exact real-world likeness not claimed.",
+  "coverage": {
+    "sourceParts": 30564,
+    "eligible": 30494,
+    "covered": 30494,
+    "preserved": 70
+  },
+  "geometry": {
+    "baselineVertices": 6296655,
+    "finalVertices": 6750720,
+    "increasePercent": 7.211209761373305,
+    "roofEquipmentInstances": 8,
+    "equipmentTriangleCost": 96
+  },
+  "roofs": {
+    "attempted": 17970,
+    "built": 17970,
+    "invalid": 0,
+    "invalidExamples": [],
+    "remainingRaisedFlatFallbacks": 0,
+    "pitched": 29846,
+    "intentionalFlatCommercial": 130
+  },
+  "details": {
+    "commercialTrim": 4466,
+    "loadingEntries": 13,
+    "porchEntries": 8176,
+    "chimneys": 116,
+    "unsafeChimneys": 0,
+    "steps": 5923,
+    "unsafeSteps": 0,
+    "yards": 14298,
+    "roofEquipment": 8,
+    "flattenedCommercialRoofs": 130,
+    "lowProfileWindowFaces": 0
+  },
+  "balancedFacadeChecks": {
+    "blankPlannedFaces": 0,
+    "taggedHousesWithoutEntry": 0
+  },
+  "lowProfile": {
+    "verticesBeforeFinalRoofFix": 6166944,
+    "repeatedWindowFaces": 758,
+    "budgetOmittedFaces": 28,
+    "note": "28 planned faces on complex civic/industrial buildings omit openings at the low-profile cap. Wall materials remain textured; whole-building coverage is complete."
+  },
+  "validation": {
+    "focusedTests": 54,
+    "releaseTests": 30,
+    "reviewedViews": 18,
+    "station2DepartureMetres": 41.289372878998726,
+    "canopy": {
+      "id": "way/704352204",
+      "distance": 55.94916751851389,
+      "passed": true
+    },
+    "narrowDesktop": [
+      {
+        "name": "apartment",
+        "frameSamples": 301,
+        "medianMs": 16.699999999982538,
+        "p95Ms": 16.70000000001164,
+        "drawCalls": 160,
+        "triangles": 1396623,
+        "textures": 52
+      },
+      {
+        "name": "flat-roof-fallback",
+        "frameSamples": 301,
+        "medianMs": 16.699999999982538,
+        "p95Ms": 16.70000000001164,
+        "drawCalls": 120,
+        "triangles": 1340495,
+        "textures": 52
+      },
+      {
+        "name": "industrial",
+        "frameSamples": 301,
+        "medianMs": 16.699999999982538,
+        "p95Ms": 16.70000000001164,
+        "drawCalls": 403,
+        "triangles": 1307634,
+        "textures": 52
+      }
+    ],
+    "pageErrors": [],
+    "physicalPhone": "Not tested. User explicitly said no phone available and requested finishing the other work.",
+    "roadPack": {
+      "buildId": "87a9f923dd4e96b32a63",
+      "tiles": 669,
+      "integrityPassed": true,
+      "roadPaintPassed": true
+    }
+  },
+  "reviewCorrections": [
+    "Removed expensive generic residential trim bands after first visual review.",
+    "Coherent clipped hip roof planes with courtyard edge closures.",
+    "Flat commercial conversions receive valid triangulated caps and correct editor height.",
+    "Roof equipment restricted to convex hole-free roofs and checked rotated footprint."
+  ],
+  "limitations": [
+    "Porch, step and planter accents are lightweight facade details rather than accessible 3D porches or landscaped yards.",
+    "Narrow viewport timing uses desktop GPU and is not proof of phone performance.",
+    "No new generic building collision system: existing ordinary canopies were already driveable; preserved station collisions."
+  ]
+}

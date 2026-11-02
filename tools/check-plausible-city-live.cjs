@@ -3,6 +3,7 @@ const fs=require('node:fs'),path=require('node:path');
 const {chromium}=require('playwright');
 const base=process.env.CITY_QA_URL||'https://edmondsonedits.github.io/Peterborough-Map-Game';
 const quality=process.env.CITY_QA_QUALITY||'balanced';
+const expectedVersion=process.env.CITY_QA_VERSION||'1.6.168';
 const out=process.env.CITY_QA_OUT||path.resolve('artifacts/plausible-city/live');
 let browser;
 (async()=>{
@@ -13,12 +14,12 @@ let browser;
  page.on('response',response=>{if(response.url().startsWith(base+'/')&&response.status()>=400)failedRequests.push({url:response.url(),status:response.status()})});
  page.on('requestfailed',request=>{if(request.url().startsWith(base+'/'))failedRequests.push({url:request.url(),error:request.failure()?.errorText})});
  const start=Date.now();
- await page.goto(base+'/city-explorer/?station=2&qa=1&quality='+quality+'&v=1.6.167',{waitUntil:'domcontentloaded',timeout:90000});
+ await page.goto(base+'/city-explorer/?station=2&qa=1&quality='+quality+'&v='+expectedVersion,{waitUntil:'domcontentloaded',timeout:90000});
  await page.waitForFunction(()=>window.__PTBO_EXPLORER_BOOTSTRAP__?.failed||document.querySelector('#loading-screen')?.classList.contains('is-hidden'),null,{timeout:300000});
  const failure=await page.evaluate(()=>window.__PTBO_EXPLORER_BOOTSTRAP__?.failed?document.querySelector('#loading-screen')?.innerText:null);if(failure)throw Error(failure);
  const startupMs=Date.now()-start;
  const build=await page.evaluate(()=>({version:window.PTBO_BUILD?.version,metrics:__PTBO_CITY_QA__.metrics()}));
- if(build.version!=='1.6.167')throw Error('Wrong published version: '+build.version);
+ if(build.version!==expectedVersion)throw Error('Wrong published version: '+build.version);
  const cases=JSON.parse(fs.readFileSync('docs/building-reconstruction/plausible-city-review-cases.json'));
  for(const name of ['flat-roof-fallback','apartment','apartment-reverse']){await page.evaluate(view=>__PTBO_CITY_QA__.setView(view),cases.find(c=>c.name===name).view);await page.waitForTimeout(900);await page.screenshot({path:path.join(out,name+'.png')});}
  await page.evaluate(()=>__PTBO_GAMEPLAY__.reset());
