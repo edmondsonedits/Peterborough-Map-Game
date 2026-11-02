@@ -1,0 +1,65 @@
+{
+  "sourceId": "way/165360842",
+  "asset": "way-165360842.glb",
+  "sourceBlend": "H:\\ChatGPT\\Peterborough-Building-Reconstruction-20261101\\models\\way-165360842.blend",
+  "sha256": "82c18c409115e9d36bf4c65fab4b827d15ff45fd72798e6824e87a07bef6def1",
+  "units": "metres",
+  "stats": {
+    "fileBytes": 67696,
+    "triangleCount": 1308,
+    "materialCount": 6,
+    "embeddedImageCount": 0,
+    "meshCount": 6,
+    "nodeCount": 7
+  },
+  "bounds": {
+    "minX": -37.0094,
+    "maxX": 103.5721,
+    "minY": -4.0,
+    "maxY": 11.05,
+    "minZ": -44.9124,
+    "maxZ": 102.1058
+  },
+  "budget": {
+    "maxTriangles": 6000,
+    "maxMaterials": 6,
+    "maxBytes": 1000000
+  },
+  "packedOriginalTextures": [],
+  "foundationDepth": 4.0,
+  "evidenceRecord": "docs/building-reconstruction/batch-001/165360842.json",
+  "observedElements": [
+    "A location-specific photo directly shows one wall with pale gray-white horizontal ribbed cladding, large red COSTCO letters, blue WHOLESALE lettering and bars, and a dark brown base band.",
+    "No third-party photo was used as a texture. The colors and sign appearance are modeled as original geometry and materials."
+  ],
+  "estimatedElements": [
+    "11.05 m overall height and 2.3 m base-band height are modeling estimates; the source photo has no reliable scale.",
+    "The representative signed wall is placed on a long southwest-facing footprint edge selected as a plausible parking-facing edge; source photo bearing is unknown and this compass placement is unverified.",
+    "The observed cladding and base-band colors are extended around the footprint for a complete massing asset; only one wall was directly photographed.",
+    "Flat roof treatment and all unphotographed wall details are generic massing estimates. No entrance or loading-door count is modeled."
+  ],
+  "validation": {
+    "footprintContract": "all mesh bounds inside projected OSM-ring bounds plus configured tolerance",
+    "configuredBoundsToleranceM": 2.0,
+    "elevationRangeM": [
+      -4.0,
+      11.05
+    ],
+    "glbReimport": {
+      "rootName": "CityBuilding_way-165360842_Root.001",
+      "meshCount": 6,
+      "materialCount": 6,
+      "bounds": {
+        "minX": -37.0094,
+        "maxX": 103.5721,
+        "minY": -4.0,
+        "maxY": 11.05,
+        "minZ": -44.9124,
+        "maxZ": 102.1058
+      },
+      "maxAuthoredBoundsDeltaM": 0.0
+    },
+    "errors": 0,
+    "warnings": []
+  }
+}

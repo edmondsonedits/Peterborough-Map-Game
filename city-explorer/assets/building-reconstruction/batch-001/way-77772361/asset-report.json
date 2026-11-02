@@ -1,0 +1,67 @@
+{
+  "sourceId": "way/77772361",
+  "asset": "way-77772361.glb",
+  "sourceBlend": "H:\\ChatGPT\\Peterborough-Building-Reconstruction-20261101\\models\\way-77772361.blend",
+  "sha256": "52e51cf451ac8b9c270d707fea6db5b75d9dbbd664a55c9664fba891a3c9ee9e",
+  "units": "metres",
+  "stats": {
+    "fileBytes": 187032,
+    "triangleCount": 2632,
+    "materialCount": 6,
+    "embeddedImageCount": 2,
+    "meshCount": 6,
+    "nodeCount": 7
+  },
+  "bounds": {
+    "minX": -186.6798,
+    "maxX": 127.0554,
+    "minY": -4.0,
+    "maxY": 13.3,
+    "minZ": -236.1355,
+    "maxZ": 216.6916
+  },
+  "budget": {
+    "maxTriangles": 6000,
+    "maxMaterials": 6,
+    "maxBytes": 1000000
+  },
+  "packedOriginalTextures": [
+    "materials/brick-red.png",
+    "materials/stucco-light.png"
+  ],
+  "foundationDepth": 4.0,
+  "evidenceRecord": "docs/building-reconstruction/batch-001/77772361.json",
+  "observedElements": [
+    "Directly viewed location-specific entrance photo shows Entrance 2, a triangular projecting gable/portico, two tall pale rectangular concrete columns with block bases, taupe horizontal siding, circular gable logo/window, brown brick walls with pale horizontal bands, dark-framed entry glazing, and blue storefront fascia.",
+    "Original procedural brick and stucco tiles are generated for this asset; source photos are references only and are not shipped."
+  ],
+  "estimatedElements": [
+    "The portico and representative facade are placed on a long footprint edge because the reference photo has no compass bearing; this mapped side is unverified.",
+    "Overall roof height, mall wall bands, portal dimensions, gable projection, column spacing, circular window size, storefront mullion spacing, and all unseen elevations are approximate.",
+    "BMO signage seen on an adjacent wing is intentionally excluded and not treated as mall-wide branding."
+  ],
+  "validation": {
+    "footprintContract": "all mesh bounds inside projected OSM-ring bounds plus configured tolerance",
+    "configuredBoundsToleranceM": 2.0,
+    "elevationRangeM": [
+      -4.0,
+      13.3
+    ],
+    "glbReimport": {
+      "rootName": "CityBuilding_way-77772361_Root.001",
+      "meshCount": 6,
+      "materialCount": 6,
+      "bounds": {
+        "minX": -186.6798,
+        "maxX": 127.0554,
+        "minY": -4.0,
+        "maxY": 13.3,
+        "minZ": -236.1355,
+        "maxZ": 216.6916
+      },
+      "maxAuthoredBoundsDeltaM": 1e-05
+    },
+    "errors": 0,
+    "warnings": []
+  }
+}

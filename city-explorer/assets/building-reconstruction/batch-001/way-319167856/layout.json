@@ -1,0 +1,131 @@
+{
+  "id": "way-319167856",
+  "rootName": "CityBuilding_way-319167856_Root",
+  "assetUrl": "./assets/building-reconstruction/batch-001/way-319167856/way-319167856.glb",
+  "sourceIds": [
+    "way/319167856"
+  ],
+  "origin": {
+    "lat": 44.2882652,
+    "lon": -78.325475,
+    "yawDegrees": 0
+  },
+  "footprint": [
+    [
+      -57.9516,
+      -22.6828
+    ],
+    [
+      -49.7069,
+      -29.282
+    ],
+    [
+      -44.4256,
+      -22.7381
+    ],
+    [
+      -34.0222,
+      -31.0728
+    ],
+    [
+      -31.0668,
+      -27.4139
+    ],
+    [
+      -20.6634,
+      -35.7486
+    ],
+    [
+      -17.7081,
+      -32.0898
+    ],
+    [
+      -1.3223,
+      -45.233
+    ],
+    [
+      8.5713,
+      -48.5823
+    ],
+    [
+      7.5357,
+      -51.6222
+    ],
+    [
+      27.3309,
+      -58.343
+    ],
+    [
+      31.9909,
+      -44.6803
+    ],
+    [
+      27.1078,
+      -43.0332
+    ],
+    [
+      62.6355,
+      60.996
+    ],
+    [
+      56.4461,
+      63.0962
+    ],
+    [
+      64.3243,
+      86.177
+    ],
+    [
+      -0.6691,
+      108.2187
+    ],
+    [
+      -8.5474,
+      85.149
+    ],
+    [
+      -19.8191,
+      88.9736
+    ]
+  ],
+  "groundSampleBounds": {
+    "minX": -57.9516,
+    "maxX": 64.3243,
+    "frontZ": -58.343,
+    "rearZ": 108.2187
+  },
+  "floorOffset": 0.06,
+  "maxHeight": 25,
+  "boundsTolerance": 2.0,
+  "units": "metres",
+  "site": {
+    "name": "The Home Depot",
+    "address": "",
+    "sourceId": "way/319167856",
+    "areaM2": 12107.8,
+    "estimatedHeightM": 3.1,
+    "sourceTags": {
+      "alt_name": "Home Depot",
+      "brand": "The Home Depot",
+      "brand:wikidata": "Q864407",
+      "brand:wikipedia": "en:The Home Depot",
+      "building": "retail",
+      "building:levels": "1",
+      "name": "The Home Depot",
+      "shop": "doityourself"
+    },
+    "footprintSource": "batch-001-input.json OSM ring, locally projected from geographic coordinates"
+  },
+  "assetFile": "way-319167856.glb",
+  "evidenceRecord": "docs/building-reconstruction/batch-001/319167856.json",
+  "foundationDepth": 4.0,
+  "observedElements": [
+    "Directly viewed location-specific crop shows a cream high sign wall with a raised central gable, orange THE HOME DEPOT lettering, narrow orange trim and protective rail, gray horizontal fascia, and a broad dark glazed storefront divided by a metal grid.",
+    "The storefront includes a continuous orange accent band above the glazing; the reference image is a close upward crop and does not show an entrance."
+  ],
+  "estimatedElements": [
+    "The OSM footprint is retained exactly. This representative facade is placed on its 118 m edge as a modeling assumption; the photo has no compass reference, so facade bearing is unresolved.",
+    "One-storey warehouse height, roof form, sign-wall proportions, glazing extent, orange rail geometry, and all unpictured elevations are approximate. No customer entrance or service doors are invented.",
+    "Home Depot lettering is shown as one centered line to stay within the gabled sign wall; exact font, size and frontage bearing are estimated."
+  ]
+}

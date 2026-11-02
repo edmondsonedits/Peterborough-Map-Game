@@ -1,0 +1,572 @@
+{
+  "sourceId": "way/319167856",
+  "evidenceRecord": "docs/building-reconstruction/batch-001/319167856.json",
+  "reviewView": {
+    "centerX": -38.88535,
+    "centerZ": 33.1454,
+    "normalX": -0.9463344999108864,
+    "normalZ": 0.3231888214007605,
+    "targetY": 7.6,
+    "overview": true
+  },
+  "materials": [
+    {
+      "name": "Home Depot | warm cream stucco",
+      "color": [
+        0.76,
+        0.72,
+        0.63
+      ],
+      "roughness": 0.88,
+      "texture": "stucco-light"
+    },
+    {
+      "name": "Home Depot | charcoal roof fascia",
+      "color": [
+        0.19,
+        0.21,
+        0.21
+      ],
+      "roughness": 0.82
+    },
+    {
+      "name": "Home Depot | safety orange",
+      "color": [
+        0.86,
+        0.19,
+        0.045
+      ],
+      "roughness": 0.58
+    },
+    {
+      "name": "Home Depot | deep blue-gray storefront glass",
+      "color": [
+        0.075,
+        0.13,
+        0.16
+      ],
+      "roughness": 0.24,
+      "metallic": 0.16
+    },
+    {
+      "name": "Home Depot | pale aluminum trim",
+      "color": [
+        0.72,
+        0.73,
+        0.69
+      ],
+      "roughness": 0.46,
+      "metallic": 0.28
+    }
+  ],
+  "volumes": [
+    {
+      "name": "Estimated one-storey warehouse body",
+      "baseY": 0,
+      "topY": 9.25,
+      "material": "Home Depot | warm cream stucco"
+    },
+    {
+      "name": "Estimated flat roof edge and parapet cap",
+      "baseY": 9.25,
+      "topY": 9.68,
+      "material": "Home Depot | charcoal roof fascia"
+    }
+  ],
+  "gablePanels": [
+    {
+      "name": "Observed cream sign wall | gabled parapet estimate",
+      "x": -38.96105675999287,
+      "z": 33.17125510571206,
+      "bottomY": 8.8,
+      "eaveY": 12.7,
+      "peakY": 17,
+      "width": 71,
+      "depth": 0.18,
+      "material": "Home Depot | warm cream stucco",
+      "tangentX": -0.3231888214007605,
+      "tangentZ": -0.9463344999108864,
+      "normalX": -0.9463344999108864,
+      "normalZ": 0.3231888214007605
+    }
+  ],
+  "boxes": [
+    {
+      "name": "Observed orange storefront accent band | bearing estimated",
+      "x": -38.96105675999287,
+      "z": 33.17125510571206,
+      "y": 8.05,
+      "width": 103,
+      "height": 0.5,
+      "depth": 0.16,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | safety orange"
+    },
+    {
+      "name": "Estimated gray horizontal storefront fascia",
+      "x": -38.96105675999287,
+      "z": 33.17125510571206,
+      "y": 8.43,
+      "width": 103,
+      "height": 0.24,
+      "depth": 0.16,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | pale aluminum trim"
+    },
+    {
+      "name": "Observed storefront glass bay 1 | placement estimated",
+      "x": -26.599084341413786,
+      "z": 69.36854972730346,
+      "y": 4.3,
+      "width": 7,
+      "height": 5.15,
+      "depth": 0.13,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | deep blue-gray storefront glass"
+    },
+    {
+      "name": "Estimated storefront mullion 1",
+      "x": -25.442068360799066,
+      "z": 72.75642723698442,
+      "y": 4.3,
+      "width": 0.16,
+      "height": 5.4,
+      "depth": 0.12,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | pale aluminum trim"
+    },
+    {
+      "name": "Observed storefront glass bay 2 | placement estimated",
+      "x": -29.071478825129603,
+      "z": 62.12909080298519,
+      "y": 4.3,
+      "width": 7,
+      "height": 5.15,
+      "depth": 0.13,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | deep blue-gray storefront glass"
+    },
+    {
+      "name": "Estimated storefront mullion 2",
+      "x": -27.914462844514883,
+      "z": 65.51696831266615,
+      "y": 4.3,
+      "width": 0.16,
+      "height": 5.4,
+      "depth": 0.12,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | pale aluminum trim"
+    },
+    {
+      "name": "Observed storefront glass bay 3 | placement estimated",
+      "x": -31.54387330884542,
+      "z": 54.88963187866691,
+      "y": 4.3,
+      "width": 7,
+      "height": 5.15,
+      "depth": 0.13,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | deep blue-gray storefront glass"
+    },
+    {
+      "name": "Estimated storefront mullion 3",
+      "x": -30.3868573282307,
+      "z": 58.27750938834788,
+      "y": 4.3,
+      "width": 0.16,
+      "height": 5.4,
+      "depth": 0.12,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | pale aluminum trim"
+    },
+    {
+      "name": "Observed storefront glass bay 4 | placement estimated",
+      "x": -34.01626779256124,
+      "z": 47.650172954348626,
+      "y": 4.3,
+      "width": 7,
+      "height": 5.15,
+      "depth": 0.13,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | deep blue-gray storefront glass"
+    },
+    {
+      "name": "Estimated storefront mullion 4",
+      "x": -32.859251811946514,
+      "z": 51.038050464029595,
+      "y": 4.3,
+      "width": 0.16,
+      "height": 5.4,
+      "depth": 0.12,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | pale aluminum trim"
+    },
+    {
+      "name": "Observed storefront glass bay 5 | placement estimated",
+      "x": -36.488662276277054,
+      "z": 40.41071403003034,
+      "y": 4.3,
+      "width": 7,
+      "height": 5.15,
+      "depth": 0.13,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | deep blue-gray storefront glass"
+    },
+    {
+      "name": "Estimated storefront mullion 5",
+      "x": -35.33164629566233,
+      "z": 43.79859153971132,
+      "y": 4.3,
+      "width": 0.16,
+      "height": 5.4,
+      "depth": 0.12,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | pale aluminum trim"
+    },
+    {
+      "name": "Observed storefront glass bay 6 | placement estimated",
+      "x": -38.96105675999287,
+      "z": 33.17125510571206,
+      "y": 4.3,
+      "width": 7,
+      "height": 5.15,
+      "depth": 0.13,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | deep blue-gray storefront glass"
+    },
+    {
+      "name": "Estimated storefront mullion 6",
+      "x": -37.80404077937815,
+      "z": 36.55913261539304,
+      "y": 4.3,
+      "width": 0.16,
+      "height": 5.4,
+      "depth": 0.12,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | pale aluminum trim"
+    },
+    {
+      "name": "Observed storefront glass bay 7 | placement estimated",
+      "x": -41.43345124370869,
+      "z": 25.931796181393782,
+      "y": 4.3,
+      "width": 7,
+      "height": 5.15,
+      "depth": 0.13,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | deep blue-gray storefront glass"
+    },
+    {
+      "name": "Estimated storefront mullion 7",
+      "x": -40.276435263093965,
+      "z": 29.319673691074755,
+      "y": 4.3,
+      "width": 0.16,
+      "height": 5.4,
+      "depth": 0.12,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | pale aluminum trim"
+    },
+    {
+      "name": "Observed storefront glass bay 8 | placement estimated",
+      "x": -43.905845727424506,
+      "z": 18.6923372570755,
+      "y": 4.3,
+      "width": 7,
+      "height": 5.15,
+      "depth": 0.13,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | deep blue-gray storefront glass"
+    },
+    {
+      "name": "Estimated storefront mullion 8",
+      "x": -42.74882974680978,
+      "z": 22.080214766756477,
+      "y": 4.3,
+      "width": 0.16,
+      "height": 5.4,
+      "depth": 0.12,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | pale aluminum trim"
+    },
+    {
+      "name": "Observed storefront glass bay 9 | placement estimated",
+      "x": -46.37824021114032,
+      "z": 11.45287833275722,
+      "y": 4.3,
+      "width": 7,
+      "height": 5.15,
+      "depth": 0.13,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | deep blue-gray storefront glass"
+    },
+    {
+      "name": "Estimated storefront mullion 9",
+      "x": -45.22122423052561,
+      "z": 14.840755842438192,
+      "y": 4.3,
+      "width": 0.16,
+      "height": 5.4,
+      "depth": 0.12,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | pale aluminum trim"
+    },
+    {
+      "name": "Observed storefront glass bay 10 | placement estimated",
+      "x": -48.85063469485614,
+      "z": 4.213419408438937,
+      "y": 4.3,
+      "width": 7,
+      "height": 5.15,
+      "depth": 0.13,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | deep blue-gray storefront glass"
+    },
+    {
+      "name": "Estimated storefront mullion 10",
+      "x": -47.693618714241424,
+      "z": 7.6012969181199095,
+      "y": 4.3,
+      "width": 0.16,
+      "height": 5.4,
+      "depth": 0.12,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | pale aluminum trim"
+    },
+    {
+      "name": "Observed storefront glass bay 11 | placement estimated",
+      "x": -51.32302917857196,
+      "z": -3.0260395158793405,
+      "y": 4.3,
+      "width": 7,
+      "height": 5.15,
+      "depth": 0.13,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | deep blue-gray storefront glass"
+    },
+    {
+      "name": "Estimated storefront mullion 11",
+      "x": -50.16601319795724,
+      "z": 0.3618379938016285,
+      "y": 4.3,
+      "width": 0.16,
+      "height": 5.4,
+      "depth": 0.12,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | pale aluminum trim"
+    },
+    {
+      "name": "Estimated continuous storefront mid-rail",
+      "x": -38.96105675999287,
+      "z": 33.17125510571206,
+      "y": 4.35,
+      "width": 85,
+      "height": 0.13,
+      "depth": 0.12,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | pale aluminum trim"
+    },
+    {
+      "name": "Observed orange protective rail | lower rail",
+      "x": -38.96105675999287,
+      "z": 33.17125510571206,
+      "y": 9.68,
+      "width": 104,
+      "height": 0.1,
+      "depth": 0.2,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | safety orange"
+    },
+    {
+      "name": "Observed orange protective rail | upper rail",
+      "x": -38.96105675999287,
+      "z": 33.17125510571206,
+      "y": 10.26,
+      "width": 104,
+      "height": 0.1,
+      "depth": 0.2,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | safety orange"
+    },
+    {
+      "name": "Estimated orange railing post 1",
+      "x": -22.80161568995485,
+      "z": 80.48798010125637,
+      "y": 9.96,
+      "width": 0.12,
+      "height": 0.52,
+      "depth": 0.18,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | safety orange"
+    },
+    {
+      "name": "Estimated orange railing post 2",
+      "x": -25.287683546883777,
+      "z": 73.2084839480957,
+      "y": 9.96,
+      "width": 0.12,
+      "height": 0.52,
+      "depth": 0.18,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | safety orange"
+    },
+    {
+      "name": "Estimated orange railing post 3",
+      "x": -27.773751403812707,
+      "z": 65.92898779493504,
+      "y": 9.96,
+      "width": 0.12,
+      "height": 0.52,
+      "depth": 0.18,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | safety orange"
+    },
+    {
+      "name": "Estimated orange railing post 4",
+      "x": -30.259819260741633,
+      "z": 58.64949164177439,
+      "y": 9.96,
+      "width": 0.12,
+      "height": 0.52,
+      "depth": 0.18,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | safety orange"
+    },
+    {
+      "name": "Estimated orange railing post 5",
+      "x": -32.745887117670556,
+      "z": 51.369995488613725,
+      "y": 9.96,
+      "width": 0.12,
+      "height": 0.52,
+      "depth": 0.18,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | safety orange"
+    },
+    {
+      "name": "Estimated orange railing post 6",
+      "x": -35.23195497459948,
+      "z": 44.09049933545306,
+      "y": 9.96,
+      "width": 0.12,
+      "height": 0.52,
+      "depth": 0.18,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | safety orange"
+    },
+    {
+      "name": "Estimated orange railing post 7",
+      "x": -37.71802283152841,
+      "z": 36.811003182292396,
+      "y": 9.96,
+      "width": 0.12,
+      "height": 0.52,
+      "depth": 0.18,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | safety orange"
+    },
+    {
+      "name": "Estimated orange railing post 8",
+      "x": -40.204090688457335,
+      "z": 29.53150702913173,
+      "y": 9.96,
+      "width": 0.12,
+      "height": 0.52,
+      "depth": 0.18,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | safety orange"
+    },
+    {
+      "name": "Estimated orange railing post 9",
+      "x": -42.69015854538626,
+      "z": 22.252010875971067,
+      "y": 9.96,
+      "width": 0.12,
+      "height": 0.52,
+      "depth": 0.18,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | safety orange"
+    },
+    {
+      "name": "Estimated orange railing post 10",
+      "x": -45.17622640231519,
+      "z": 14.972514722810406,
+      "y": 9.96,
+      "width": 0.12,
+      "height": 0.52,
+      "depth": 0.18,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | safety orange"
+    },
+    {
+      "name": "Estimated orange railing post 11",
+      "x": -47.66229425924411,
+      "z": 7.69301856964974,
+      "y": 9.96,
+      "width": 0.12,
+      "height": 0.52,
+      "depth": 0.18,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | safety orange"
+    },
+    {
+      "name": "Estimated orange railing post 12",
+      "x": -50.14836211617304,
+      "z": 0.4135224164890725,
+      "y": 9.96,
+      "width": 0.12,
+      "height": 0.52,
+      "depth": 0.18,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | safety orange"
+    },
+    {
+      "name": "Estimated orange railing post 13",
+      "x": -52.63442997310197,
+      "z": -6.8659737366715925,
+      "y": 9.96,
+      "width": 0.12,
+      "height": 0.52,
+      "depth": 0.18,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | safety orange"
+    },
+    {
+      "name": "Estimated orange railing post 14",
+      "x": -55.1204978300309,
+      "z": -14.145469889832256,
+      "y": 9.96,
+      "width": 0.12,
+      "height": 0.52,
+      "depth": 0.18,
+      "rotationRad": 1.8998935394467502,
+      "material": "Home Depot | safety orange"
+    }
+  ],
+  "texts": [
+    {
+      "name": "Observed Home Depot wordmark | single-line readability estimate",
+      "text": "THE HOME DEPOT",
+      "x": -39.0935435899804,
+      "z": 33.21650154070817,
+      "y": 11.2,
+      "size": 3.8,
+      "offset": 0.08,
+      "extrude": 0.09,
+      "material": "Home Depot | safety orange",
+      "tangentX": -0.3231888214007605,
+      "tangentZ": -0.9463344999108864,
+      "normalX": -0.9463344999108864,
+      "normalZ": 0.3231888214007605
+    }
+  ],
+  "observedElements": [
+    "Directly viewed location-specific crop shows a cream high sign wall with a raised central gable, orange THE HOME DEPOT lettering, narrow orange trim and protective rail, gray horizontal fascia, and a broad dark glazed storefront divided by a metal grid.",
+    "The storefront includes a continuous orange accent band above the glazing; the reference image is a close upward crop and does not show an entrance."
+  ],
+  "estimatedElements": [
+    "The OSM footprint is retained exactly. This representative facade is placed on its 118 m edge as a modeling assumption; the photo has no compass reference, so facade bearing is unresolved.",
+    "One-storey warehouse height, roof form, sign-wall proportions, glazing extent, orange rail geometry, and all unpictured elevations are approximate. No customer entrance or service doors are invented.",
+    "Home Depot lettering is shown as one centered line to stay within the gabled sign wall; exact font, size and frontage bearing are estimated."
+  ]
+}

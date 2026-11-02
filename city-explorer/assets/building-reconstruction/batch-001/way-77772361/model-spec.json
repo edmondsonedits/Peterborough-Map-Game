@@ -1,0 +1,495 @@
+{
+  "sourceId": "way/77772361",
+  "evidenceRecord": "docs/building-reconstruction/batch-001/77772361.json",
+  "reviewView": {
+    "centerX": -58.9115,
+    "centerZ": 25.4629,
+    "normalX": -0.90817016,
+    "normalZ": -0.41860119,
+    "targetY": 6.5,
+    "orthoScaleFactor": 0.27
+  },
+  "materials": [
+    {
+      "name": "Lansdowne | brown brick",
+      "color": [
+        0.4,
+        0.18,
+        0.12
+      ],
+      "roughness": 0.87,
+      "texture": "brick-red"
+    },
+    {
+      "name": "Lansdowne | pale taupe siding",
+      "color": [
+        0.72,
+        0.69,
+        0.62
+      ],
+      "roughness": 0.83,
+      "texture": "stucco-light"
+    },
+    {
+      "name": "Lansdowne | charcoal roof metal",
+      "color": [
+        0.13,
+        0.15,
+        0.17
+      ],
+      "roughness": 0.76,
+      "metallic": 0.1
+    },
+    {
+      "name": "Lansdowne | pale concrete",
+      "color": [
+        0.76,
+        0.77,
+        0.74
+      ],
+      "roughness": 0.72
+    },
+    {
+      "name": "Lansdowne | reflective dark glazing",
+      "color": [
+        0.07,
+        0.13,
+        0.18
+      ],
+      "roughness": 0.24,
+      "metallic": 0.15
+    },
+    {
+      "name": "Lansdowne | blue fascia",
+      "color": [
+        0.015,
+        0.13,
+        0.43
+      ],
+      "roughness": 0.48
+    }
+  ],
+  "volumes": [
+    {
+      "name": "Lansdowne mall brick base",
+      "baseY": 0,
+      "topY": 4.4,
+      "material": "Lansdowne | brown brick"
+    },
+    {
+      "name": "Lansdowne mall taupe upper mass",
+      "baseY": 4.4,
+      "topY": 10.6,
+      "material": "Lansdowne | pale taupe siding"
+    },
+    {
+      "name": "Lansdowne estimated roof edge",
+      "baseY": 10.6,
+      "topY": 11,
+      "material": "Lansdowne | charcoal roof metal"
+    }
+  ],
+  "gablePanels": [
+    {
+      "name": "Observed Entrance 2 projecting gable",
+      "x": -58.9115,
+      "z": 25.4629,
+      "tangentX": -0.41860119,
+      "tangentZ": 0.90817016,
+      "normalX": -0.90817016,
+      "normalZ": -0.41860119,
+      "width": 32,
+      "depth": 3.5,
+      "bottomY": 7.7,
+      "eaveY": 10.4,
+      "peakY": 13,
+      "material": "Lansdowne | pale taupe siding"
+    }
+  ],
+  "roundPanels": [
+    {
+      "name": "Observed circular entrance logo window rim",
+      "x": -60.54621,
+      "z": 24.70942,
+      "y": 11.35,
+      "radius": 1.95,
+      "depth": 0.24,
+      "normalX": -0.90817016,
+      "normalZ": -0.41860119,
+      "material": "Lansdowne | pale concrete"
+    },
+    {
+      "name": "Observed circular entrance logo glazing",
+      "x": -60.61886,
+      "z": 24.67593,
+      "y": 11.35,
+      "radius": 1.55,
+      "depth": 0.18,
+      "normalX": -0.90817016,
+      "normalZ": -0.41860119,
+      "material": "Lansdowne | reflective dark glazing"
+    }
+  ],
+  "boxes": [
+    {
+      "name": "Observed storefront glass | entrance wing",
+      "x": -71.96079,
+      "z": 53.58269,
+      "y": 2.55,
+      "width": 38,
+      "depth": 0.08,
+      "height": 3.8,
+      "rotationRad": 1.13889181,
+      "material": "Lansdowne | reflective dark glazing"
+    },
+    {
+      "name": "Estimated storefront mullion 13",
+      "x": -64.5077,
+      "z": 37.19795,
+      "y": 2.55,
+      "width": 0.11,
+      "depth": 0.12,
+      "height": 3.8,
+      "rotationRad": 1.13889181,
+      "material": "Lansdowne | charcoal roof metal"
+    },
+    {
+      "name": "Estimated storefront mullion 22",
+      "x": -68.27512,
+      "z": 45.37148,
+      "y": 2.55,
+      "width": 0.11,
+      "depth": 0.12,
+      "height": 3.8,
+      "rotationRad": 1.13889181,
+      "material": "Lansdowne | charcoal roof metal"
+    },
+    {
+      "name": "Estimated storefront mullion 31",
+      "x": -72.04253,
+      "z": 53.54501,
+      "y": 2.55,
+      "width": 0.11,
+      "depth": 0.12,
+      "height": 3.8,
+      "rotationRad": 1.13889181,
+      "material": "Lansdowne | charcoal roof metal"
+    },
+    {
+      "name": "Estimated storefront mullion 40",
+      "x": -75.80994,
+      "z": 61.71854,
+      "y": 2.55,
+      "width": 0.11,
+      "depth": 0.12,
+      "height": 3.8,
+      "rotationRad": 1.13889181,
+      "material": "Lansdowne | charcoal roof metal"
+    },
+    {
+      "name": "Estimated storefront mullion 49",
+      "x": -79.57735,
+      "z": 69.89208,
+      "y": 2.55,
+      "width": 0.11,
+      "depth": 0.12,
+      "height": 3.8,
+      "rotationRad": 1.13889181,
+      "material": "Lansdowne | charcoal roof metal"
+    },
+    {
+      "name": "Observed blue storefront fascia",
+      "x": -72.06977,
+      "z": 53.53245,
+      "y": 5.15,
+      "width": 40,
+      "depth": 0.16,
+      "height": 0.72,
+      "rotationRad": 1.13889181,
+      "material": "Lansdowne | blue fascia"
+    },
+    {
+      "name": "Observed pale brick band lower -42",
+      "x": -41.42107,
+      "z": -12.72211,
+      "y": 2.2,
+      "width": 7,
+      "depth": 0.1,
+      "height": 0.16,
+      "rotationRad": 1.13889181,
+      "material": "Lansdowne | pale concrete"
+    },
+    {
+      "name": "Observed pale brick band upper -42",
+      "x": -41.42107,
+      "z": -12.72211,
+      "y": 5.15,
+      "width": 7,
+      "depth": 0.1,
+      "height": 0.16,
+      "rotationRad": 1.13889181,
+      "material": "Lansdowne | pale concrete"
+    },
+    {
+      "name": "Observed pale brick band lower -34",
+      "x": -44.76988,
+      "z": -5.45675,
+      "y": 2.2,
+      "width": 7,
+      "depth": 0.1,
+      "height": 0.16,
+      "rotationRad": 1.13889181,
+      "material": "Lansdowne | pale concrete"
+    },
+    {
+      "name": "Observed pale brick band upper -34",
+      "x": -44.76988,
+      "z": -5.45675,
+      "y": 5.15,
+      "width": 7,
+      "depth": 0.1,
+      "height": 0.16,
+      "rotationRad": 1.13889181,
+      "material": "Lansdowne | pale concrete"
+    },
+    {
+      "name": "Observed pale brick band lower -26",
+      "x": -48.11869,
+      "z": 1.80862,
+      "y": 2.2,
+      "width": 7,
+      "depth": 0.1,
+      "height": 0.16,
+      "rotationRad": 1.13889181,
+      "material": "Lansdowne | pale concrete"
+    },
+    {
+      "name": "Observed pale brick band upper -26",
+      "x": -48.11869,
+      "z": 1.80862,
+      "y": 5.15,
+      "width": 7,
+      "depth": 0.1,
+      "height": 0.16,
+      "rotationRad": 1.13889181,
+      "material": "Lansdowne | pale concrete"
+    },
+    {
+      "name": "Observed pale brick band lower -18",
+      "x": -51.4675,
+      "z": 9.07398,
+      "y": 2.2,
+      "width": 7,
+      "depth": 0.1,
+      "height": 0.16,
+      "rotationRad": 1.13889181,
+      "material": "Lansdowne | pale concrete"
+    },
+    {
+      "name": "Observed pale brick band upper -18",
+      "x": -51.4675,
+      "z": 9.07398,
+      "y": 5.15,
+      "width": 7,
+      "depth": 0.1,
+      "height": 0.16,
+      "rotationRad": 1.13889181,
+      "material": "Lansdowne | pale concrete"
+    },
+    {
+      "name": "Observed pale portico column -10",
+      "x": -55.49743,
+      "z": 16.02539,
+      "y": 4.2,
+      "width": 1.65,
+      "depth": 1.6,
+      "height": 8.4,
+      "rotationRad": 1.13889181,
+      "material": "Lansdowne | pale concrete"
+    },
+    {
+      "name": "Observed block column base -10",
+      "x": -55.54284,
+      "z": 16.00446,
+      "y": 1.05,
+      "width": 2.65,
+      "depth": 1.8,
+      "height": 2.1,
+      "rotationRad": 1.13889181,
+      "material": "Lansdowne | pale concrete"
+    },
+    {
+      "name": "Estimated portico column cap -10",
+      "x": -55.54284,
+      "z": 16.00446,
+      "y": 8.45,
+      "width": 2,
+      "depth": 1.8,
+      "height": 0.45,
+      "rotationRad": 1.13889181,
+      "material": "Lansdowne | pale concrete"
+    },
+    {
+      "name": "Observed pale portico column 10",
+      "x": -63.86946,
+      "z": 34.18879,
+      "y": 4.2,
+      "width": 1.65,
+      "depth": 1.6,
+      "height": 8.4,
+      "rotationRad": 1.13889181,
+      "material": "Lansdowne | pale concrete"
+    },
+    {
+      "name": "Observed block column base 10",
+      "x": -63.91487,
+      "z": 34.16786,
+      "y": 1.05,
+      "width": 2.65,
+      "depth": 1.8,
+      "height": 2.1,
+      "rotationRad": 1.13889181,
+      "material": "Lansdowne | pale concrete"
+    },
+    {
+      "name": "Estimated portico column cap 10",
+      "x": -63.91487,
+      "z": 34.16786,
+      "y": 8.45,
+      "width": 2,
+      "depth": 1.8,
+      "height": 0.45,
+      "rotationRad": 1.13889181,
+      "material": "Lansdowne | pale concrete"
+    },
+    {
+      "name": "Estimated portico underside",
+      "x": -60.22835,
+      "z": 24.85593,
+      "y": 8.05,
+      "width": 32,
+      "depth": 3.3,
+      "height": 0.4,
+      "rotationRad": 1.13889181,
+      "material": "Lansdowne | pale concrete"
+    },
+    {
+      "name": "Observed dark entrance glazing field",
+      "x": -59.07497,
+      "z": 25.38755,
+      "y": 2.5,
+      "width": 12,
+      "depth": 0.12,
+      "height": 4,
+      "rotationRad": 1.13889181,
+      "material": "Lansdowne | reflective dark glazing"
+    },
+    {
+      "name": "Estimated entrance glazing mullion left",
+      "x": -57.9100,
+      "z": 22.6219,
+      "y": 2.5,
+      "width": 0.14,
+      "depth": 0.22,
+      "height": 4,
+      "rotationRad": 1.13889181,
+      "material": "Lansdowne | charcoal roof metal"
+    },
+    {
+      "name": "Estimated entrance glazing mullion center-left",
+      "x": -58.5379,
+      "z": 23.9842,
+      "y": 2.5,
+      "width": 0.14,
+      "depth": 0.22,
+      "height": 4,
+      "rotationRad": 1.13889181,
+      "material": "Lansdowne | charcoal roof metal"
+    },
+    {
+      "name": "Estimated entrance glazing mullion center",
+      "x": -59.1658,
+      "z": 25.3457,
+      "y": 2.5,
+      "width": 0.14,
+      "depth": 0.22,
+      "height": 4,
+      "rotationRad": 1.13889181,
+      "material": "Lansdowne | charcoal roof metal"
+    },
+    {
+      "name": "Estimated entrance glazing mullion center-right",
+      "x": -59.7937,
+      "z": 26.7080,
+      "y": 2.5,
+      "width": 0.14,
+      "depth": 0.22,
+      "height": 4,
+      "rotationRad": 1.13889181,
+      "material": "Lansdowne | charcoal roof metal"
+    },
+    {
+      "name": "Estimated entrance glazing mullion right",
+      "x": -60.4216,
+      "z": 28.0695,
+      "y": 2.5,
+      "width": 0.14,
+      "depth": 0.22,
+      "height": 4,
+      "rotationRad": 1.13889181,
+      "material": "Lansdowne | charcoal roof metal"
+    },
+    {
+      "name": "Estimated entrance glazing transom",
+      "x": -59.1658,
+      "z": 25.3457,
+      "y": 3.35,
+      "width": 12,
+      "depth": 0.22,
+      "height": 0.14,
+      "rotationRad": 1.13889181,
+      "material": "Lansdowne | charcoal roof metal"
+    }
+  ],
+  "texts": [
+    {
+      "name": "Observed Lansdowne Place gable sign",
+      "text": "Lansdowne Place",
+      "x": -60.61886,
+      "z": 24.67593,
+      "y": 8.2,
+      "size": 0.82,
+      "offset": 0.025,
+      "extrude": 0.03,
+      "material": "Lansdowne | charcoal roof metal",
+      "tangentX": -0.41860119,
+      "tangentZ": 0.90817016,
+      "normalX": -0.90817016,
+      "normalZ": -0.41860119
+    },
+    {
+      "name": "Observed Entrance 2 marker",
+      "text": "2",
+      "x": -66.17958,
+      "z": 37.52845,
+      "y": 4,
+      "size": 1.05,
+      "offset": 0.02,
+      "extrude": 0.03,
+      "material": "Lansdowne | blue fascia",
+      "tangentX": -0.41860119,
+      "tangentZ": 0.90817016,
+      "normalX": -0.90817016,
+      "normalZ": -0.41860119
+    }
+  ],
+  "observedElements": [
+    "Directly viewed location-specific entrance photo shows Entrance 2, a triangular projecting gable/portico, two tall pale rectangular concrete columns with block bases, taupe horizontal siding, circular gable logo/window, brown brick walls with pale horizontal bands, dark-framed entry glazing, and blue storefront fascia.",
+    "Original procedural brick and stucco tiles are generated for this asset; source photos are references only and are not shipped."
+  ],
+  "estimatedElements": [
+    "The portico and representative facade are placed on a long footprint edge because the reference photo has no compass bearing; this mapped side is unverified.",
+    "Overall roof height, mall wall bands, portal dimensions, gable projection, column spacing, circular window size, storefront mullion spacing, and all unseen elevations are approximate.",
+    "BMO signage seen on an adjacent wing is intentionally excluded and not treated as mall-wide branding."
+  ]
+}

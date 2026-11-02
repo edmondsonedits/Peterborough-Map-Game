@@ -1,0 +1,146 @@
+{
+  "id": "way-176908280",
+  "rootName": "CityBuilding_way-176908280_Root",
+  "assetUrl": "./assets/building-reconstruction/batch-001/way-176908280/way-176908280.glb",
+  "sourceIds": [
+    "way/176908280"
+  ],
+  "origin": {
+    "lat": 44.3245122,
+    "lon": -78.3329859,
+    "yawDegrees": 0
+  },
+  "footprint": [
+    [
+      -93.2324,
+      -37.3073
+    ],
+    [
+      -43.151,
+      40.6566
+    ],
+    [
+      -32.5007,
+      33.8916
+    ],
+    [
+      -17.0708,
+      57.8345
+    ],
+    [
+      -25.4748,
+      63.1736
+    ],
+    [
+      -5.9186,
+      93.5058
+    ],
+    [
+      29.2188,
+      71.1767
+    ],
+    [
+      22.2247,
+      60.3438
+    ],
+    [
+      58.5092,
+      37.2851
+    ],
+    [
+      53.0446,
+      28.8178
+    ],
+    [
+      74.5763,
+      15.1329
+    ],
+    [
+      67.5027,
+      4.1674
+    ],
+    [
+      64.3323,
+      6.1792
+    ],
+    [
+      58.4853,
+      9.8933
+    ],
+    [
+      1.8242,
+      -77.9749
+    ],
+    [
+      -9.6865,
+      -96.214
+    ],
+    [
+      0.2708,
+      -101.4315
+    ],
+    [
+      -10.3158,
+      -116.2328
+    ],
+    [
+      -101.5248,
+      -53.6119
+    ],
+    [
+      -91.1374,
+      -39.297
+    ]
+  ],
+  "groundSampleBounds": {
+    "minX": -101.5248,
+    "maxX": 74.5763,
+    "frontZ": -116.2328,
+    "rearZ": 93.5058
+  },
+  "floorOffset": 0.06,
+  "maxHeight": 25,
+  "boundsTolerance": 2.0,
+  "units": "metres",
+  "site": {
+    "name": "Walmart Supercentre",
+    "address": "1002 Chemong Road",
+    "sourceId": "way/176908280",
+    "areaM2": 17020.3,
+    "estimatedHeightM": 3.1,
+    "sourceTags": {
+      "addr:city": "Peterborough",
+      "addr:housenumber": "1002",
+      "addr:postcode": "K9H 7E2",
+      "addr:province": "ON",
+      "addr:street": "Chemong Road",
+      "brand": "Walmart",
+      "brand:wikidata": "Q483551",
+      "brand:wikipedia": "en:Walmart",
+      "building": "retail",
+      "building:levels": "1",
+      "name": "Walmart Supercentre",
+      "opening_hours": "Mo-Su 07:00-22:00",
+      "phone": "+1-705-742-5090",
+      "ref:walmart": "3071",
+      "shop": "supermarket",
+      "source": "Bing",
+      "website": "https://www.walmart.ca/en/stores-near-me/peterborough-ontario-3071",
+      "website:en": "https://www.walmart.ca/en/stores-near-me/peterborough-ontario-3071",
+      "website:fr": "https://www.walmart.ca/fr/magasins-pres-de-chez-moi/peterborough-ontario-3071"
+    },
+    "footprintSource": "batch-001-input.json OSM ring, locally projected from geographic coordinates"
+  },
+  "assetFile": "way-176908280.glb",
+  "evidenceRecord": "docs/building-reconstruction/batch-001/176908280.json",
+  "foundationDepth": 4.0,
+  "observedElements": [
+    "Directly viewed nighttime location-specific photo shows a large blue Walmart sign panel with white Walmart lettering and yellow spark, a smaller Supercentre line, broad pale yellow-tan wall fields, a darker gray-brown base, and adjoining Food Centre frontage with entrance glazing.",
+    "The customer-facing wall photo also shows inset pedestrian/service doors and a neighboring George tenant sign; it does not establish the main entrance or compass side."
+  ],
+  "estimatedElements": [
+    "The OSM footprint is retained exactly. The pictured sign/frontage is assigned to the 111 m footprint edge as a representative modeling assumption; its compass bearing remains unresolved.",
+    "Store height, sign panel dimensions/top profile, frontage segmentation, Food Centre and George sign positions, door locations, and all unseen elevations are estimated from the partial nighttime view.",
+    "Dark rectangles represent observed glazing/door openings at approximate positions; no primary entrance bearing is asserted."
+  ]
+}

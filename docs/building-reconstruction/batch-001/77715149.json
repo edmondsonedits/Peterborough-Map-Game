@@ -1,0 +1,31 @@
+{
+  "osm_way": 77715149,
+  "name": "Portage Place",
+  "address": "1154 Chemong Road, Peterborough, ON K9H 7J6",
+  "viewed": "2026-11-01",
+  "readiness": "insufficient for facade; the exact-site listing image was not viewable because LoopNet CDN denied access, and no alternative directly viewable facade image was found in this bounded pass",
+  "sources": [
+    {
+      "url": "https://www.loopnet.ca/Listing/1154-Chemong-Road-Peterborough-ON/30077942/",
+      "type": "property listing",
+      "image_url": "https://images.loopnet.ca/i2/GOfQMgnbdZvjz_SvTnwKRatcroFlcARfsC704TDQMp4/112/1154-Chemong-Road-Peterborough-ON-Building-Photo-1-HighDefinition.jpg",
+      "notes": "Image search identifies this as an aerial view; CDN denied download. Caption describes white-roof plaza and large parking lot, not used as directly observed detail."
+    },
+    {
+      "url": "https://www.spacelist.ca/listings/897220/on/peterborough/for-lease/retail/1154_chemong_road",
+      "type": "leasing listing",
+      "notes": "Describes transition from interior mall toward traditional retail-plaza model and >150,000 sq ft of retail."
+    }
+  ],
+  "observed": [
+    "Address/place name and mall-to-plaza access transition are text confirmed."
+  ],
+  "estimates": [
+    "Aerial caption suggests a broad white roof, but image is not locally viewed; treat as unverified."
+  ],
+  "orientation_confidence": "low",
+  "unseen": "All facade details, storefront rhythm, materials, entrance placement and rear/service walls remain unverified.",
+  "license_note": "Do not use listing image as texture.",
+  "entrance_orientation_clue": "Unknown. Listing text says the site is transitioning from an interior mall to a traditional plaza model but provides no verified entrance frontage bearing.",
+  "follow_up": "The searched DocumentCloud candidate named Portage Place could not be tied confidently to the 1154 Chemong Road property and returned HTTP 403; excluded from evidence. No access control was bypassed."
+}

@@ -1,0 +1,37 @@
+{
+  "osm_way": 77772361,
+  "name": "Lansdowne Place",
+  "address": "645 Lansdowne Street West, Peterborough, ON (landlord source)",
+  "viewed": "2026-11-01",
+  "readiness": "partial; one entrance photo directly reviewed; other elevations unknown",
+  "sources": [
+    {
+      "url": "https://www.primarisreit.com/system/fact_sheets/47/original/02_-_Feb_2023_-_Lansdowne_Place_Fact_Sheet.pdf?1678137544=",
+      "type": "landlord fact sheet / plans",
+      "notes": "Text labels entrances 1-6 and includes site plan; does not provide facade elevations."
+    },
+    {
+      "url": "http://www.pdstudioinc.com/en/portfolio/commercial_projects/lansdowne_place/",
+      "type": "architect page",
+      "notes": "Pappas says exterior entrances and retail facades were redesigned."
+    },
+    {
+      "url": "https://www.ptbocanada.com/journal/peterborough-man-arrested-from-lansdowne-place-bomb-threat-on-feb-19",
+      "image_url": "https://images.squarespace-cdn.com/content/v1/50cca155e4b0c301a8212ad4/3c0da90b-432f-4352-a220-3cf381745999/IMG_2983.jpg?format=2500w",
+      "local_reference": "H:\\ChatGPT\\Peterborough-Building-Reconstruction-20261101\\references\\batch-001\\lansdowne-entrance.jpg",
+      "type": "local news entrance photo",
+      "directly_viewed": true
+    }
+  ],
+  "observed": [
+    "Visible entrance marker 2.",
+    "Large triangular gable/portico supported by two tall rectangular pale concrete columns with block bases.",
+    "Gable face has round window/logo; beige/taupe horizontal siding and light trim.",
+    "Adjacent wall has brown brick with pale horizontal bands; dark-framed glazed doors/storefront and blue fascia at right; door banners read LET'S GET SHOPPING.",
+    "BMO sign is on adjacent wing, not assumed to be mall-wide branding."
+  ],
+  "estimates": [],
+  "orientation_confidence": "low; photo bearing not tied to mapped north direction",
+  "unseen": "No other facade, loading/rear wall, full roof shape, or other entrance treatment verified.",
+  "license_note": "Reference only; do not ship third-party photo as texture."
+}

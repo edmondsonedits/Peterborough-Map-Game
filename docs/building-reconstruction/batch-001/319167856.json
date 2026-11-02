@@ -1,0 +1,29 @@
+{
+  "osm_way": 319167856,
+  "name": "The Home Depot",
+  "address": "500 Lansdowne Street West, Peterborough, ON K9J 8J7",
+  "viewed": "2026-11-01",
+  "readiness": "partial; close crop of sign/storefront reviewed; overall massing and entrance placement unknown",
+  "sources": [
+    {
+      "url": "https://stores.homedepot.ca/on/peterborough/home-improvement-peterborough-on-7116.html",
+      "type": "official store page"
+    },
+    {
+      "url": "https://www.mapquest.com/ca/ontario/the-home-depot-499598247",
+      "image_url": "https://ir.4sqi.net/img/general/original/26474292_MedoLdsq-KM7cpgY703EqVWwdkuM5xuhSds6emY7wCQ.jpg",
+      "local_reference": "H:\\ChatGPT\\Peterborough-Building-Reconstruction-20261101\\references\\batch-001\\home-depot-peterborough.jpg",
+      "type": "location-specific photo",
+      "directly_viewed": true
+    }
+  ],
+  "observed": [
+    "Tight upward crop shows cream/white high sign panel with large orange THE HOME DEPOT letters.",
+    "Orange/red narrow trim and protective railing below sign, gray horizontal fascia, glazed storefront with orange accent band.",
+    "No entire building corners or identifiable entrance doors shown."
+  ],
+  "estimates": [],
+  "orientation_confidence": "low; crop bearing unknown",
+  "unseen": "Full warehouse dimensions, roof, receiving bay and all non-sign elevations not established.",
+  "license_note": "Reference only; do not ship third-party photo as texture."
+}

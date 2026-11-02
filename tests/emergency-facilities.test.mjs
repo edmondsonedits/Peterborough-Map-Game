@@ -9,7 +9,7 @@ import { applyOverrides } from '../city-explorer/editor/override-runtime.js';
 const entry = { id: 'test', assetUrl: 'test.glb', rootName: 'Test_Root', sourceIds: ['way/123'], origin: { lat: 1, lon: 2, yawDegrees: 90 }, footprint: [[-5,0],[5,0],[5,10],[-5,10]], maxHeight: 12 };
 function fixture(loadAsync, entryOptions={}, surface=()=>({height:10})) {
   const scene = new THREE.Group();
-  const records = [{id:'station',sourceType:'building',sourceId:'way/123'}, {id:'neighbor',sourceType:'building',sourceId:'way/124'}, {id:'road',sourceType:'road',sourceId:'way/123'}];
+  const records = [{id:'station',sourceType:'building',sourceId:'way/123'}, {id:'neighbor',sourceType:'building',sourceId:'way/124'}, {id:'road',sourceType:'road',sourceId:'way/123'}, {id:'landmark',sourceType:'landmark',sourceId:'shopping-center'}, {id:'other-landmark',sourceType:'landmark',sourceId:'neighbor-center'}];
   const hidden = [], authoredObjects = new Map();
   const registry = {records:new Map(records.map(r=>[r.id,r])), appliedReplacementIds:new Set(), makeGeneratedId,
     hide:id=>hidden.push(id), restore:()=>{}, getEditableRecord:id=>records.find(r=>r.id===id)};
@@ -78,9 +78,41 @@ test('static station foundations reach sloped terrain without moving the model d
 });
 test('production Station 3 runtime owns its facade and fallback without a second static model', async () => {
   const {emergencyFacilityEntries}=await import('../city-explorer/emergency-facilities-catalog.js');
-  const entries=emergencyFacilityEntries({stationThreeManaged:true});
+  const facilities=options=>emergencyFacilityEntries(options).filter(e=>!e.id.startsWith('reconstruction-'));
+  const entries=facilities({stationThreeManaged:true});
   assert.deepEqual(entries.map(e=>e.id),['station1','station2','ems-armour','ems-clonsilla']);
   assert.ok(entries.every(e=>!e.sourceIds.includes('way/558402285')));
-  assert.equal(emergencyFacilityEntries({stationOneSelected:true,stationThreeManaged:true}).length,3);
-  assert.equal(emergencyFacilityEntries({stationTwoSelected:true,stationThreeManaged:true}).length,3);
+  assert.equal(facilities({stationOneSelected:true,stationThreeManaged:true}).length,3);
+  assert.equal(facilities({stationTwoSelected:true,stationThreeManaged:true}).length,3);
+});
+
+test('researched replacement hides its explicitly linked decorative landmark only after success', async () => {
+  let resolve; const f=fixture(()=>new Promise(r=>{resolve=r;}),{landmarkIds:['shopping-center']});
+  const pending=f.layer.load();assert.deepEqual(f.hidden,[]);
+  resolve(model());await pending;assert.deepEqual(f.hidden,['station','landmark']);
+  assert.equal(f.layer.getStatus().test.replacementCount,2);
+});
+test('failed researched replacement preserves linked landmark and existing shell', async () => {
+  const f=fixture(async()=>model('Wrong_Root'),{landmarkIds:['shopping-center']});
+  await f.layer.load();assert.deepEqual(f.hidden,[]);assert.equal(f.layer.getStatus().test.status,'error');
+});
+
+
+test('researched footprint datum excludes higher terrain outside a concave building', async()=>{
+  const footprint=[[-5,0],[0,0],[0,5],[5,5],[5,10],[-5,10]];
+  const f=fixture(async()=>model(),{origin:{lat:1,lon:2,yawDegrees:0},footprint,groundSampleBounds:{minX:-5,maxX:5,frontZ:0,rearZ:10},datumMode:'source-footprint'},(x,z)=>({height:x>100&&z<205?30:10}));
+  await f.layer.load();assert.equal(f.layer.getStatus().test.status,'ready');assert.equal(f.scene.children[0].position.y,10.06);
+});
+
+test('researched foundations follow a concave rotated footprint down steep terrain without moving the roof', async()=>{
+ const footprint=[[-5,0],[0,0],[0,5],[5,5],[5,10],[-5,10]];
+ const f=fixture(async()=>{const m=model();m.scene.children[0].material.name='Reviewed base';m.scene.children[0].material.color.set(0x614a31);return m;},{footprint,datumMode:'source-footprint',foundationDepth:4,foundationMaterialName:'Reviewed base'},(x,z)=>({height:x>104?25:10}));
+ await f.layer.load();const wrapper=f.scene.children[0],skirt=wrapper.getObjectByName('Facility_test_terrain_foundation');
+ assert.ok(skirt,'steep perimeter needs an extension below the authored skirt');assert.equal(skirt.material.name,'Reviewed base');assert.equal(skirt.material.color.getHex(),0x614a31);assert.equal(wrapper.position.y,25.06);
+ const pos=skirt.geometry.attributes.position;
+ for(let i=0;i<pos.count;i++){assert.ok(footprint.some(([x,z])=>Math.abs(x-pos.getX(i))<1e-5&&Math.abs(z-pos.getZ(i))<1e-5),'foundation must stay on exact boundary');assert.ok(pos.getY(i)<=-4);}
+ wrapper.updateMatrixWorld(true);assert.ok(new THREE.Box3().setFromObject(skirt).min.y<10);assert.equal(f.layer.getStatus().test.status,'ready');
+});
+test('flat researched sites use the existing authored foundation without extra geometry',async()=>{
+ const f=fixture(async()=>model(),{datumMode:'source-footprint',foundationDepth:4});await f.layer.load();assert.equal(f.scene.children[0].getObjectByName('Facility_test_terrain_foundation'),undefined);
 });

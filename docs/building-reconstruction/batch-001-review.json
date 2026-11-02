@@ -1,0 +1,449 @@
+{
+  "status": "reviewed-awaiting-publication",
+  "releaseTarget": "1.6.166",
+  "reviewedAt": "2026-11-02T04:10:05.112Z",
+  "scope": "Five location-specific low-poly approximations; not a completed city reconstruction or verified all-elevation survey.",
+  "assets": [
+    {
+      "id": "way/165360842",
+      "name": "Costco",
+      "sha256": "82c18c409115e9d36bf4c65fab4b827d15ff45fd72798e6824e87a07bef6def1",
+      "fileBytes": 67696,
+      "triangleCount": 1308,
+      "materialCount": 6,
+      "embeddedImageCount": 0,
+      "meshCount": 6,
+      "nodeCount": 7,
+      "estimatedElements": [
+        "11.05 m overall height and 2.3 m base-band height are modeling estimates; the source photo has no reliable scale.",
+        "The representative signed wall is placed on a long southwest-facing footprint edge selected as a plausible parking-facing edge; source photo bearing is unknown and this compass placement is unverified.",
+        "The observed cladding and base-band colors are extended around the footprint for a complete massing asset; only one wall was directly photographed.",
+        "Flat roof treatment and all unphotographed wall details are generic massing estimates. No entrance or loading-door count is modeled."
+      ]
+    },
+    {
+      "id": "way/176908280",
+      "name": "Walmart Supercentre",
+      "sha256": "50d485d8260844d290fb6fb3c1421c35e8cb187b0c18c59a780685de6b967644",
+      "fileBytes": 266892,
+      "triangleCount": 4452,
+      "materialCount": 6,
+      "embeddedImageCount": 1,
+      "meshCount": 6,
+      "nodeCount": 7,
+      "estimatedElements": [
+        "The OSM footprint is retained exactly. The pictured sign/frontage is assigned to the 111 m footprint edge as a representative modeling assumption; its compass bearing remains unresolved.",
+        "Store height, sign panel dimensions/top profile, frontage segmentation, Food Centre and George sign positions, door locations, and all unseen elevations are estimated from the partial nighttime view.",
+        "Dark rectangles represent observed glazing/door openings at approximate positions; no primary entrance bearing is asserted."
+      ]
+    },
+    {
+      "id": "way/254751834",
+      "name": "Canterbury Gardens Retirement Residence",
+      "sha256": "93523d80879b5a5349330cad972cebaaa4ed969d5413119e3f2232b358d807a3",
+      "fileBytes": 386216,
+      "triangleCount": 5596,
+      "materialCount": 6,
+      "embeddedImageCount": 2,
+      "meshCount": 6,
+      "nodeCount": 7,
+      "estimatedElements": [
+        "10.1 m overall height and floor/material transition heights are estimates based on three-storey description and photo proportions.",
+        "The chosen 89.7 m footprint edge hosts a representative photographed facade; the photos have no compass bearing, so this placement is unverified.",
+        "Atrium width, window positions and dimensions, door dimensions, canopy size, sign lettering size, and all unseen wall/roof details are approximate.",
+        "Repeated framed windows on five additional long boundary edges are estimated side treatments inspired by the second directly viewed wing photo; edge assignment, bay spacing and dimensions are not compass-verified.",
+        "No detached rear townhouse blocks or unverified service-side details are invented."
+      ]
+    },
+    {
+      "id": "way/319167856",
+      "name": "The Home Depot",
+      "sha256": "6a7b30bdc6eb0297c7cf9a00e8ea25d7a67b2159aa388399e84beaf18e413cca",
+      "fileBytes": 91872,
+      "triangleCount": 1316,
+      "materialCount": 5,
+      "embeddedImageCount": 1,
+      "meshCount": 5,
+      "nodeCount": 6,
+      "estimatedElements": [
+        "The OSM footprint is retained exactly. This representative facade is placed on its 118 m edge as a modeling assumption; the photo has no compass reference, so facade bearing is unresolved.",
+        "One-storey warehouse height, roof form, sign-wall proportions, glazing extent, orange rail geometry, and all unpictured elevations are approximate. No customer entrance or service doors are invented.",
+        "Home Depot lettering is shown as one centered line to stay within the gabled sign wall; exact font, size and frontage bearing are estimated."
+      ]
+    },
+    {
+      "id": "way/77772361",
+      "name": "Lansdowne Place",
+      "sha256": "52e51cf451ac8b9c270d707fea6db5b75d9dbbd664a55c9664fba891a3c9ee9e",
+      "fileBytes": 187032,
+      "triangleCount": 2632,
+      "materialCount": 6,
+      "embeddedImageCount": 2,
+      "meshCount": 6,
+      "nodeCount": 7,
+      "estimatedElements": [
+        "The portico and representative facade are placed on a long footprint edge because the reference photo has no compass bearing; this mapped side is unverified.",
+        "Overall roof height, mall wall bands, portal dimensions, gable projection, column spacing, circular window size, storefront mullion spacing, and all unseen elevations are approximate.",
+        "BMO signage seen on an adjacent wing is intentionally excluded and not treated as mall-wide branding."
+      ]
+    }
+  ],
+  "totalGlbBytes": 999708,
+  "checks": {
+    "gltfValidator": "All five: no errors or warnings; unused UV informational notices only",
+    "sourceFootprints": "Exact game projection, <=0.01m vertex tolerance",
+    "independentReview": "No remaining blocker after footprint terrain foundation fix",
+    "runtime": {
+      "checkedAt": "2026-11-02T04:08:47.776Z",
+      "preview": true,
+      "base": "http://127.0.0.1:4183",
+      "startupMs": 133722,
+      "build": "1.6.165",
+      "replacementStates": {
+        "station1": {
+          "status": "ready",
+          "error": null,
+          "position": {
+            "x": -204.33617019891793,
+            "y": -7.623246989570584,
+            "z": 907.3012660002382
+          },
+          "replacementCount": 1
+        },
+        "ems-armour": {
+          "status": "ready",
+          "error": null,
+          "position": {
+            "x": 1302.9632128754765,
+            "y": -7.281890529815057,
+            "z": 497.67318800050447
+          },
+          "replacementCount": 1
+        },
+        "ems-clonsilla": {
+          "status": "ready",
+          "error": null,
+          "position": {
+            "x": -2075.280889318617,
+            "y": 8.091690017189663,
+            "z": 2149.1905310002217
+          },
+          "replacementCount": 1
+        },
+        "reconstruction-way-165360842": {
+          "status": "ready",
+          "error": null,
+          "position": {
+            "x": -1634.442420031483,
+            "y": -12.363326647056844,
+            "z": 4093.683089999969
+          },
+          "replacementCount": 1
+        },
+        "reconstruction-way-176908280": {
+          "status": "ready",
+          "error": null,
+          "position": {
+            "x": -1058.3357400681143,
+            "y": 41.921866456518565,
+            "z": -1703.6645880000108
+          },
+          "replacementCount": 1
+        },
+        "reconstruction-way-254751834": {
+          "status": "ready",
+          "error": null,
+          "position": {
+            "x": -3288.3055984173775,
+            "y": 50.34046041804463,
+            "z": 1788.9019820001731
+          },
+          "replacementCount": 1
+        },
+        "reconstruction-way-319167856": {
+          "status": "ready",
+          "error": null,
+          "position": {
+            "x": -460.02821780183405,
+            "y": -11.541891528383774,
+            "z": 2303.0787920003236
+          },
+          "replacementCount": 1
+        },
+        "reconstruction-way-77772361": {
+          "status": "ready",
+          "error": null,
+          "position": {
+            "x": -947.6820262417455,
+            "y": -7.279904857662997,
+            "z": 2905.577061999762
+          },
+          "replacementCount": 2
+        }
+      },
+      "terrainClearances": [
+        {
+          "id": "reconstruction-way-165360842",
+          "maxBottomClearanceM": -3.158484963137335
+        },
+        {
+          "id": "reconstruction-way-176908280",
+          "maxBottomClearanceM": -0.3499996116536508
+        },
+        {
+          "id": "reconstruction-way-254751834",
+          "maxBottomClearanceM": -0.35000021182564467
+        },
+        {
+          "id": "reconstruction-way-319167856",
+          "maxBottomClearanceM": -3.364664072425084
+        },
+        {
+          "id": "reconstruction-way-77772361",
+          "maxBottomClearanceM": -0.349999880729321
+        }
+      ],
+      "hiddenSources": [
+        {
+          "id": "way/77772361",
+          "type": "building",
+          "visible": false
+        },
+        {
+          "id": "way/165360842",
+          "type": "building",
+          "visible": false
+        },
+        {
+          "id": "way/176908280",
+          "type": "building",
+          "visible": false
+        },
+        {
+          "id": "way/254751834",
+          "type": "building",
+          "visible": false
+        },
+        {
+          "id": "way/319167856",
+          "type": "building",
+          "visible": false
+        },
+        {
+          "id": "lansdowne-place",
+          "type": "landmark",
+          "visible": false
+        }
+      ],
+      "bounds": [
+        {
+          "name": "Facility_reconstruction-way-165360842",
+          "bounds": {
+            "min": [
+              -1671.4518194455454,
+              -16.363326647056844,
+              4048.770690707977
+            ],
+            "max": [
+              -1530.8703222531626,
+              -1.313326456321981,
+              4195.788886813934
+            ]
+          }
+        },
+        {
+          "name": "Facility_reconstruction-way-176908280",
+          "bounds": {
+            "min": [
+              -1159.8605432297354,
+              30.109792748938,
+              -1819.8973913447373
+            ],
+            "max": [
+              -983.7594384934073,
+              53.47186664725343,
+              -1610.158789660167
+            ]
+          }
+        },
+        {
+          "name": "Facility_reconstruction-way-254751834",
+          "bounds": {
+            "min": [
+              -3367.3986007367134,
+              39.96602499323994,
+              1740.5849806573997
+            ],
+            "max": [
+              -3220.2373992596627,
+              60.440460799514355,
+              1847.0238806512962
+            ]
+          }
+        },
+        {
+          "name": "Facility_reconstruction-way-319167856",
+          "bounds": {
+            "min": [
+              -517.9798169229277,
+              -15.541891528383774,
+              2244.735793495685
+            ],
+            "max": [
+              -395.7039151284942,
+              5.458108471616226,
+              2411.297488594562
+            ]
+          }
+        },
+        {
+          "name": "Facility_reconstruction-way-77772361",
+          "bounds": {
+            "min": [
+              -1134.361820553269,
+              -13.079103008297762,
+              2669.441563952887
+            ],
+            "max": [
+              -820.626629208054,
+              6.0200953330718665,
+              3122.26866661402
+            ]
+          }
+        }
+      ],
+      "captures": [
+        {
+          "id": "reconstruction-way-165360842",
+          "view": "front",
+          "drawCalls": 237,
+          "triangles": 1521952,
+          "textures": 51
+        },
+        {
+          "id": "reconstruction-way-165360842",
+          "view": "overview",
+          "drawCalls": 898,
+          "triangles": 1695239,
+          "textures": 51
+        },
+        {
+          "id": "reconstruction-way-165360842",
+          "view": "rear",
+          "drawCalls": 187,
+          "triangles": 981931,
+          "textures": 51
+        },
+        {
+          "id": "reconstruction-way-176908280",
+          "view": "front",
+          "drawCalls": 1076,
+          "triangles": 1891922,
+          "textures": 51
+        },
+        {
+          "id": "reconstruction-way-176908280",
+          "view": "overview",
+          "drawCalls": 124,
+          "triangles": 980983,
+          "textures": 51
+        },
+        {
+          "id": "reconstruction-way-176908280",
+          "view": "rear",
+          "drawCalls": 139,
+          "triangles": 1292730,
+          "textures": 51
+        },
+        {
+          "id": "reconstruction-way-254751834",
+          "view": "front",
+          "drawCalls": 1530,
+          "triangles": 1981734,
+          "textures": 51
+        },
+        {
+          "id": "reconstruction-way-254751834",
+          "view": "overview",
+          "drawCalls": 138,
+          "triangles": 1219966,
+          "textures": 51
+        },
+        {
+          "id": "reconstruction-way-254751834",
+          "view": "rear",
+          "drawCalls": 445,
+          "triangles": 1287833,
+          "textures": 51
+        },
+        {
+          "id": "reconstruction-way-319167856",
+          "view": "front",
+          "drawCalls": 244,
+          "triangles": 1796703,
+          "textures": 51
+        },
+        {
+          "id": "reconstruction-way-319167856",
+          "view": "overview",
+          "drawCalls": 738,
+          "triangles": 2014851,
+          "textures": 51
+        },
+        {
+          "id": "reconstruction-way-319167856",
+          "view": "rear",
+          "drawCalls": 782,
+          "triangles": 1858502,
+          "textures": 51
+        },
+        {
+          "id": "reconstruction-way-77772361",
+          "view": "front",
+          "drawCalls": 144,
+          "triangles": 1403743,
+          "textures": 51
+        },
+        {
+          "id": "reconstruction-way-77772361",
+          "view": "overview",
+          "drawCalls": 1070,
+          "triangles": 1616069,
+          "textures": 51
+        },
+        {
+          "id": "reconstruction-way-77772361",
+          "view": "rear",
+          "drawCalls": 904,
+          "triangles": 1735207,
+          "textures": 51
+        }
+      ],
+      "driveOutMetres": 40.68862250206245,
+      "errors": [],
+      "requests": []
+    },
+    "canterburyCloserCityView": {
+      "report": "H:/ChatGPT/Peterborough-Building-Reconstruction-20261101/qa-canterbury-close/report.json",
+      "build": "1.6.166",
+      "facadeVisible": true,
+      "driveOutMetres": 40.699047780439315
+    },
+    "relatedTests": {
+      "passed": 59,
+      "failed": 0
+    },
+    "roadPack": "Verified existing 908fa4f87befc7304606: 669 tiles, 4349747 triangles"
+  },
+  "held": [
+    {
+      "id": "way/77715149",
+      "name": "Portage Place",
+      "reason": "No usable directly viewed facade photo after two targeted research passes"
+    }
+  ],
+  "limitations": [
+    "Photo compass bearings, unseen elevations and measured heights remain estimated in per-asset records.",
+    "Desktop headless browser checks do not establish physical-phone performance."
+  ]
+}

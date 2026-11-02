@@ -1,0 +1,47 @@
+{
+  "osm_way": 254751834,
+  "name": "Canterbury Gardens Retirement Residence",
+  "address": "1414 Sherbrooke Street, Peterborough, ON",
+  "viewed": "2026-11-01",
+  "readiness": "strong massing/facade start; architect exterior photos directly reviewed; full site orientation and unseen elevations still unknown",
+  "sources": [
+    {
+      "url": "https://www.canterburygardens.ca/",
+      "type": "official residence page",
+      "notes": "Official address 1414 Sherbrooke Street."
+    },
+    {
+      "url": "https://www.unitydesignstudio.ca/canterbury-gardens",
+      "type": "architect project page",
+      "notes": "Architect states three-storey atrium with floor-to-ceiling glazing and shade arcade; main building with separate townhouse blocks behind."
+    },
+    {
+      "url": "https://www.unitydesignstudio.ca/our-work-old/canterbury-gardens",
+      "image_url": "https://images.squarespace-cdn.com/content/v1/63f77b6b468df56685ef6e72/1677163553761-25I0BTJ4WQIY76XG1H2M/CanterburyGardens-09-LOW.jpg",
+      "local_reference": "H:\\ChatGPT\\Peterborough-Building-Reconstruction-20261101\\references\\batch-001\\canterbury-gardens-09.jpg",
+      "type": "architect exterior photo",
+      "directly_viewed": true
+    },
+    {
+      "url": "https://www.unitydesignstudio.ca/our-work-old/canterbury-gardens",
+      "image_url": "https://images.squarespace-cdn.com/content/v1/63f77b6b468df56685ef6e72/1677163553797-PWSCL1LT8YWPA7RJB4UD/CanterburyGardens-16-LOW.jpg",
+      "local_reference": "H:\\ChatGPT\\Peterborough-Building-Reconstruction-20261101\\references\\batch-001\\canterbury-gardens-16.jpg",
+      "type": "architect exterior photo",
+      "directly_viewed": true
+    },
+    {
+      "url": "https://amrengineering.ca/project/canterbury-gardens-retirement-residence/",
+      "type": "structural engineer project page",
+      "notes": "Confirms project in Peterborough and steel/timber structure."
+    }
+  ],
+  "observed": [
+    "Atrium face: pale broad sign/header panel with Canterbury Gardens name, dark flat projecting canopy/roof, full-height dark-framed glazing, brick piers and brick side walls; landscaping in foreground.",
+    "Second view: long three-storey wing; red-brown brick lower levels, pale gray/tan upper finish, repeated tall white-framed windows, dark metal balconies, broad dark roof/eaves.",
+    "Architect states detached townhouse blocks are behind main building; exact outlines not visible in these two views."
+  ],
+  "estimates": [],
+  "orientation_confidence": "low for photographed faces relative to north; high only for architect-stated rear blocks",
+  "unseen": "Rear blocks, full site layout, exact entry door position, loading/service side, and all other elevations remain unverified.",
+  "license_note": "Architect's images are evidence references only; do not ship third-party photos as game textures."
+}

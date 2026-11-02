@@ -1,0 +1,332 @@
+{
+  "sourceId": "way/165360842",
+  "evidenceRecord": "docs/building-reconstruction/batch-001/165360842.json",
+  "reviewView": {
+    "centerX": -10.271955,
+    "centerZ": 50.2515,
+    "normalX": -0.9502,
+    "normalZ": 0.3115,
+    "targetY": 6.2
+  },
+  "materials": [
+    {
+      "name": "Costco | dark brown base",
+      "color": [
+        0.19,
+        0.14,
+        0.12
+      ]
+    },
+    {
+      "name": "Costco | pale gray ribbed cladding",
+      "color": [
+        0.72,
+        0.75,
+        0.74
+      ],
+      "roughness": 0.66,
+      "metallic": 0.12
+    },
+    {
+      "name": "Costco | raised cladding ribs",
+      "color": [
+        0.83,
+        0.85,
+        0.83
+      ],
+      "roughness": 0.62,
+      "metallic": 0.14
+    },
+    {
+      "name": "Costco | estimated roof cap",
+      "color": [
+        0.24,
+        0.27,
+        0.28
+      ],
+      "roughness": 0.85
+    },
+    {
+      "name": "Costco | logo red",
+      "color": [
+        0.72,
+        0.035,
+        0.055
+      ],
+      "roughness": 0.5,
+      "metallic": 0.08
+    },
+    {
+      "name": "Costco | logo blue",
+      "color": [
+        0.025,
+        0.12,
+        0.4
+      ],
+      "roughness": 0.5,
+      "metallic": 0.08
+    }
+  ],
+  "volumes": [
+    {
+      "name": "Costco warehouse lower wall",
+      "baseY": 0,
+      "topY": 2.3,
+      "material": "Costco | dark brown base"
+    },
+    {
+      "name": "Costco warehouse upper cladding",
+      "baseY": 2.3,
+      "topY": 10.8,
+      "material": "Costco | pale gray ribbed cladding"
+    },
+    {
+      "name": "Costco estimated flat roof cap",
+      "baseY": 10.8,
+      "topY": 11.05,
+      "material": "Costco | estimated roof cap"
+    }
+  ],
+  "boxes": [
+    {
+      "name": "Observed wall rib 01 | placement estimated",
+      "x": -10.357097,
+      "z": 50.279037,
+      "y": 2.75,
+      "width": 87.3,
+      "depth": 0.045,
+      "height": 0.045,
+      "rotationRad": -1.254,
+      "material": "Costco | raised cladding ribs"
+    },
+    {
+      "name": "Observed wall rib 02 | placement estimated",
+      "x": -10.357097,
+      "z": 50.279037,
+      "y": 3.25,
+      "width": 87.3,
+      "depth": 0.045,
+      "height": 0.045,
+      "rotationRad": -1.254,
+      "material": "Costco | raised cladding ribs"
+    },
+    {
+      "name": "Observed wall rib 03 | placement estimated",
+      "x": -10.357097,
+      "z": 50.279037,
+      "y": 3.75,
+      "width": 87.3,
+      "depth": 0.045,
+      "height": 0.045,
+      "rotationRad": -1.254,
+      "material": "Costco | raised cladding ribs"
+    },
+    {
+      "name": "Observed wall rib 04 | placement estimated",
+      "x": -10.357097,
+      "z": 50.279037,
+      "y": 4.25,
+      "width": 87.3,
+      "depth": 0.045,
+      "height": 0.045,
+      "rotationRad": -1.254,
+      "material": "Costco | raised cladding ribs"
+    },
+    {
+      "name": "Observed wall rib 05 | placement estimated",
+      "x": -10.357097,
+      "z": 50.279037,
+      "y": 4.75,
+      "width": 87.3,
+      "depth": 0.045,
+      "height": 0.045,
+      "rotationRad": -1.254,
+      "material": "Costco | raised cladding ribs"
+    },
+    {
+      "name": "Observed wall rib 06 | placement estimated",
+      "x": -10.357097,
+      "z": 50.279037,
+      "y": 5.25,
+      "width": 87.3,
+      "depth": 0.045,
+      "height": 0.045,
+      "rotationRad": -1.254,
+      "material": "Costco | raised cladding ribs"
+    },
+    {
+      "name": "Observed wall rib 07 | placement estimated",
+      "x": -10.357097,
+      "z": 50.279037,
+      "y": 5.75,
+      "width": 87.3,
+      "depth": 0.045,
+      "height": 0.045,
+      "rotationRad": -1.254,
+      "material": "Costco | raised cladding ribs"
+    },
+    {
+      "name": "Observed wall rib 08 | placement estimated",
+      "x": -10.357097,
+      "z": 50.279037,
+      "y": 6.25,
+      "width": 87.3,
+      "depth": 0.045,
+      "height": 0.045,
+      "rotationRad": -1.254,
+      "material": "Costco | raised cladding ribs"
+    },
+    {
+      "name": "Observed wall rib 09 | placement estimated",
+      "x": -10.357097,
+      "z": 50.279037,
+      "y": 6.75,
+      "width": 87.3,
+      "depth": 0.045,
+      "height": 0.045,
+      "rotationRad": -1.254,
+      "material": "Costco | raised cladding ribs"
+    },
+    {
+      "name": "Observed wall rib 10 | placement estimated",
+      "x": -10.357097,
+      "z": 50.279037,
+      "y": 7.25,
+      "width": 87.3,
+      "depth": 0.045,
+      "height": 0.045,
+      "rotationRad": -1.254,
+      "material": "Costco | raised cladding ribs"
+    },
+    {
+      "name": "Observed wall rib 11 | placement estimated",
+      "x": -10.357097,
+      "z": 50.279037,
+      "y": 7.75,
+      "width": 87.3,
+      "depth": 0.045,
+      "height": 0.045,
+      "rotationRad": -1.254,
+      "material": "Costco | raised cladding ribs"
+    },
+    {
+      "name": "Observed wall rib 12 | placement estimated",
+      "x": -10.357097,
+      "z": 50.279037,
+      "y": 8.25,
+      "width": 87.3,
+      "depth": 0.045,
+      "height": 0.045,
+      "rotationRad": -1.254,
+      "material": "Costco | raised cladding ribs"
+    },
+    {
+      "name": "Observed wall rib 13 | placement estimated",
+      "x": -10.357097,
+      "z": 50.279037,
+      "y": 8.75,
+      "width": 87.3,
+      "depth": 0.045,
+      "height": 0.045,
+      "rotationRad": -1.254,
+      "material": "Costco | raised cladding ribs"
+    },
+    {
+      "name": "Observed wall rib 14 | placement estimated",
+      "x": -10.357097,
+      "z": 50.279037,
+      "y": 9.25,
+      "width": 87.3,
+      "depth": 0.045,
+      "height": 0.045,
+      "rotationRad": -1.254,
+      "material": "Costco | raised cladding ribs"
+    },
+    {
+      "name": "Observed wall rib 15 | placement estimated",
+      "x": -10.357097,
+      "z": 50.279037,
+      "y": 9.75,
+      "width": 87.3,
+      "depth": 0.045,
+      "height": 0.045,
+      "rotationRad": -1.254,
+      "material": "Costco | raised cladding ribs"
+    },
+    {
+      "name": "Observed blue logo bar 1 | placement estimated",
+      "x": -11.93,
+      "z": 45.53,
+      "y": 4.72,
+      "width": 9,
+      "depth": 0.1,
+      "height": 0.12,
+      "rotationRad": -1.254,
+      "material": "Costco | logo blue"
+    },
+    {
+      "name": "Observed blue logo bar 2 | placement estimated",
+      "x": -11.93,
+      "z": 45.53,
+      "y": 4.42,
+      "width": 9,
+      "depth": 0.1,
+      "height": 0.12,
+      "rotationRad": -1.254,
+      "material": "Costco | logo blue"
+    },
+    {
+      "name": "Observed blue logo bar 3 | placement estimated",
+      "x": -11.93,
+      "z": 45.53,
+      "y": 4.12,
+      "width": 9,
+      "depth": 0.1,
+      "height": 0.12,
+      "rotationRad": -1.254,
+      "material": "Costco | logo blue"
+    }
+  ],
+  "texts": [
+    {
+      "name": "Observed COSTCO sign | side placement estimated",
+      "text": "COSTCO",
+      "x": -10.462149,
+      "z": 50.313831,
+      "y": 6.5,
+      "size": 5.2,
+      "offset": 0.14,
+      "extrude": 0.13,
+      "material": "Costco | logo red",
+      "tangentX": 0.3133182,
+      "tangentZ": 0.9496482,
+      "normalX": -0.9496482,
+      "normalZ": 0.3133182
+    },
+    {
+      "name": "Observed WHOLESALE sign | side placement estimated",
+      "text": "WHOLESALE",
+      "x": -7.66077,
+      "z": 58.815449,
+      "y": 4.0,
+      "size": 2.5,
+      "offset": 0.07,
+      "extrude": 0.1,
+      "material": "Costco | logo blue",
+      "tangentX": 0.3133182,
+      "tangentZ": 0.9496482,
+      "normalX": -0.9496482,
+      "normalZ": 0.3133182
+    }
+  ],
+  "observedElements": [
+    "A location-specific photo directly shows one wall with pale gray-white horizontal ribbed cladding, large red COSTCO letters, blue WHOLESALE lettering and bars, and a dark brown base band.",
+    "No third-party photo was used as a texture. The colors and sign appearance are modeled as original geometry and materials."
+  ],
+  "estimatedElements": [
+    "11.05 m overall height and 2.3 m base-band height are modeling estimates; the source photo has no reliable scale.",
+    "The representative signed wall is placed on a long southwest-facing footprint edge selected as a plausible parking-facing edge; source photo bearing is unknown and this compass placement is unverified.",
+    "The observed cladding and base-band colors are extended around the footprint for a complete massing asset; only one wall was directly photographed.",
+    "Flat roof treatment and all unphotographed wall details are generic massing estimates. No entrance or loading-door count is modeled."
+  ]
+}

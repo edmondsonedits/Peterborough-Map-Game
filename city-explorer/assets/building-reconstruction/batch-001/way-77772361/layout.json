@@ -1,0 +1,290 @@
+{
+  "id": "way-77772361",
+  "rootName": "CityBuilding_way-77772361_Root",
+  "assetUrl": "./assets/building-reconstruction/batch-001/way-77772361/way-77772361.glb",
+  "sourceIds": [
+    "way/77772361"
+  ],
+  "origin": {
+    "lat": 44.2828147,
+    "lon": -78.3315968,
+    "yawDegrees": 0
+  },
+  "footprint": [
+    [
+      44.7601,
+      -150.8429
+    ],
+    [
+      27.8327,
+      -144.2215
+    ],
+    [
+      9.5431,
+      -101.5752
+    ],
+    [
+      4.0228,
+      -103.8634
+    ],
+    [
+      -2.7084,
+      -88.0451
+    ],
+    [
+      -7.2967,
+      -77.4112
+    ],
+    [
+      -10.8336,
+      -78.196
+    ],
+    [
+      -35.2728,
+      -25.8221
+    ],
+    [
+      -82.5502,
+      76.7479
+    ],
+    [
+      -79.6426,
+      87.6361
+    ],
+    [
+      -75.7712,
+      90.1785
+    ],
+    [
+      -78.3681,
+      96.2803
+    ],
+    [
+      -81.1322,
+      102.7801
+    ],
+    [
+      -79.6745,
+      106.2179
+    ],
+    [
+      -118.8108,
+      118.9521
+    ],
+    [
+      -117.4406,
+      124.2138
+    ],
+    [
+      -186.6798,
+      146.3439
+    ],
+    [
+      -165.3871,
+      216.6916
+    ],
+    [
+      -98.4978,
+      195.6447
+    ],
+    [
+      -96.0842,
+      205.4607
+    ],
+    [
+      -73.3018,
+      197.2807
+    ],
+    [
+      -76.1536,
+      188.5149
+    ],
+    [
+      -55.0839,
+      180.9761
+    ],
+    [
+      -58.4774,
+      170.6738
+    ],
+    [
+      -44.3937,
+      166.4843
+    ],
+    [
+      -42.5536,
+      171.7349
+    ],
+    [
+      -39.9886,
+      172.5198
+    ],
+    [
+      -31.8475,
+      155.2092
+    ],
+    [
+      -25.1163,
+      157.7516
+    ],
+    [
+      -16.8717,
+      138.9819
+    ],
+    [
+      -15.5095,
+      135.2457
+    ],
+    [
+      -4.3494,
+      140.2753
+    ],
+    [
+      7.3764,
+      114.8179
+    ],
+    [
+      12.9127,
+      117.6367
+    ],
+    [
+      16.091,
+      110.8937
+    ],
+    [
+      -4.7317,
+      100.5803
+    ],
+    [
+      48.6156,
+      -16.0946
+    ],
+    [
+      67.3832,
+      -58.4867
+    ],
+    [
+      68.9286,
+      -62.1456
+    ],
+    [
+      74.0586,
+      -72.8459
+    ],
+    [
+      86.6367,
+      -100.315
+    ],
+    [
+      97.7968,
+      -94.9981
+    ],
+    [
+      100.5132,
+      -99.7734
+    ],
+    [
+      114.5172,
+      -93.4947
+    ],
+    [
+      127.0554,
+      -120.367
+    ],
+    [
+      99.8918,
+      -133.4218
+    ],
+    [
+      101.7877,
+      -137.5339
+    ],
+    [
+      109.6022,
+      -154.5349
+    ],
+    [
+      102.4887,
+      -171.3038
+    ],
+    [
+      110.6935,
+      -174.1226
+    ],
+    [
+      87.2899,
+      -236.1355
+    ],
+    [
+      61.1778,
+      -226.607
+    ],
+    [
+      58.2862,
+      -234.2895
+    ],
+    [
+      45.4213,
+      -230.2659
+    ],
+    [
+      48.7032,
+      -221.7432
+    ],
+    [
+      14.4182,
+      -210.2692
+    ],
+    [
+      23.2284,
+      -185.8951
+    ],
+    [
+      33.6398,
+      -181.8936
+    ]
+  ],
+  "groundSampleBounds": {
+    "minX": -186.6798,
+    "maxX": 127.0554,
+    "frontZ": -236.1355,
+    "rearZ": 216.6916
+  },
+  "floorOffset": 0.06,
+  "maxHeight": 25,
+  "boundsTolerance": 2.0,
+  "units": "metres",
+  "site": {
+    "name": "Lansdowne Place",
+    "address": "645 Lansdowne Street West",
+    "sourceId": "way/77772361",
+    "areaM2": 40946,
+    "estimatedHeightM": 12.2,
+    "sourceTags": {
+      "addr:city": "Peterborough",
+      "addr:housenumber": "645",
+      "addr:postcode": "K9J 7Y5",
+      "addr:street": "Lansdowne Street West",
+      "building": "retail",
+      "building:levels": "1",
+      "name": "Lansdowne Place",
+      "shop": "mall",
+      "source": "CanVec 6.0 - NRCan",
+      "website": "https://lansdowneplace.com/",
+      "wikidata": "Q110221214"
+    },
+    "footprintSource": "batch-001-input.json OSM ring, locally projected from geographic coordinates"
+  },
+  "assetFile": "way-77772361.glb",
+  "evidenceRecord": "docs/building-reconstruction/batch-001/77772361.json",
+  "foundationDepth": 4.0,
+  "observedElements": [
+    "Directly viewed location-specific entrance photo shows Entrance 2, a triangular projecting gable/portico, two tall pale rectangular concrete columns with block bases, taupe horizontal siding, circular gable logo/window, brown brick walls with pale horizontal bands, dark-framed entry glazing, and blue storefront fascia.",
+    "Original procedural brick and stucco tiles are generated for this asset; source photos are references only and are not shipped."
+  ],
+  "estimatedElements": [
+    "The portico and representative facade are placed on a long footprint edge because the reference photo has no compass bearing; this mapped side is unverified.",
+    "Overall roof height, mall wall bands, portal dimensions, gable projection, column spacing, circular window size, storefront mullion spacing, and all unseen elevations are approximate.",
+    "BMO signage seen on an adjacent wing is intentionally excluded and not treated as mall-wide branding."
+  ]
+}

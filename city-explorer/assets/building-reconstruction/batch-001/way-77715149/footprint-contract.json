@@ -1,0 +1,146 @@
+{
+  "id": "way-77715149",
+  "rootName": "CityBuilding_way-77715149_Root",
+  "assetUrl": "./assets/building-reconstruction/batch-001/way-77715149/way-77715149.glb",
+  "sourceIds": [
+    "way/77715149"
+  ],
+  "origin": {
+    "lat": 44.329648,
+    "lon": -78.3386172,
+    "yawDegrees": 0
+  },
+  "footprint": [
+    [
+      -28.3903,
+      172.7851
+    ],
+    [
+      -18.3454,
+      155.6072
+    ],
+    [
+      17.5727,
+      99.0991
+    ],
+    [
+      19.5163,
+      100.1492
+    ],
+    [
+      86.5968,
+      -6.6656
+    ],
+    [
+      39.5425,
+      -72.3374
+    ],
+    [
+      50.6151,
+      -80.2189
+    ],
+    [
+      51.9454,
+      -77.588
+    ],
+    [
+      61.6079,
+      -84.9168
+    ],
+    [
+      31.2501,
+      -127.0436
+    ],
+    [
+      7.4242,
+      -110.5732
+    ],
+    [
+      -9.6546,
+      -134.1845
+    ],
+    [
+      -17.3735,
+      -129.2544
+    ],
+    [
+      -28.3346,
+      -144.929
+    ],
+    [
+      -65.32,
+      -118.4547
+    ],
+    [
+      -8.4518,
+      -39.518
+    ],
+    [
+      -5.4805,
+      -41.6736
+    ],
+    [
+      20.5838,
+      -1.8681
+    ],
+    [
+      11.5505,
+      14.3813
+    ],
+    [
+      8.8819,
+      13.6296
+    ],
+    [
+      2.0632,
+      24.2083
+    ],
+    [
+      -0.8842,
+      22.2517
+    ],
+    [
+      -63.1772,
+      124.2249
+    ],
+    [
+      -59.1306,
+      127.6074
+    ],
+    [
+      -70.3067,
+      146.3881
+    ],
+    [
+      -34.2054,
+      168.8167
+    ]
+  ],
+  "groundSampleBounds": {
+    "minX": -70.3067,
+    "maxX": 86.5968,
+    "frontZ": -144.929,
+    "rearZ": 172.7851
+  },
+  "floorOffset": 0.06,
+  "maxHeight": 25,
+  "boundsTolerance": 2.0,
+  "units": "metres",
+  "site": {
+    "name": "Portage Place",
+    "address": "1154 Chemong Road",
+    "sourceId": "way/77715149",
+    "areaM2": 20832.8,
+    "estimatedHeightM": 4.8,
+    "sourceTags": {
+      "addr:housenumber": "1154",
+      "addr:street": "Chemong Road",
+      "building": "retail",
+      "building:levels": "1",
+      "name": "Portage Place",
+      "shop": "mall",
+      "source": "CanVec 6.0 - NRCan"
+    },
+    "footprintSource": "batch-001-input.json OSM ring, locally projected from geographic coordinates"
+  }
+}

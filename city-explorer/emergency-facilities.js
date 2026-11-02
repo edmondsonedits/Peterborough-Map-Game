@@ -15,9 +15,12 @@ export function createEmergencyFacilityLayer({ THREE, scene, loader, entries, pr
 
   function suppress(entry) {
     const sources = new Set(entry.sourceIds.map(canonicalSource));
+    const landmarks = new Set(entry.landmarkIds || []);
     let matched = 0;
     for (const record of records()) {
-      if (record.sourceType !== 'building' || !sources.has(canonicalSource(record.sourceId))) continue;
+      const sourceBuilding = record.sourceType === 'building' && sources.has(canonicalSource(record.sourceId));
+      const linkedLandmark = record.sourceType === 'landmark' && landmarks.has(record.sourceId);
+      if (!sourceBuilding && !linkedLandmark) continue;
       hide(record.id); matched++;
     }
     states.get(entry.id).replacementCount = matched;
@@ -37,7 +40,10 @@ export function createEmergencyFacilityLayer({ THREE, scene, loader, entries, pr
   function datum(entry, anchor, yaw) {
     const bounds = entry.groundSampleBounds;
     const samples = [];
-    if (bounds) {
+    if (entry.datumMode === 'source-footprint') {
+      // Match the original source shell's perimeter-based foundation datum.
+      samples.push(...entry.footprint);
+    } else if (bounds) {
       for (let i=0;i<=8;i++) for (let j=0;j<=8;j++) samples.push([bounds.minX+(bounds.maxX-bounds.minX)*i/8,bounds.frontZ+(bounds.rearZ-bounds.frontZ)*j/8]);
     } else {
       samples.push(...entry.footprint, [entry.footprint.reduce((n,p)=>n+p[0],0)/entry.footprint.length,entry.footprint.reduce((n,p)=>n+p[1],0)/entry.footprint.length]);
@@ -45,6 +51,33 @@ export function createEmergencyFacilityLayer({ THREE, scene, loader, entries, pr
     const heights = samples.map(([x,z])=>{const p=worldPoint(x,z,anchor,yaw);return baseSurface(p.x,p.z)?.height;}).filter(Number.isFinite);
     if (!heights.length) throw Error('No terrain height available for facility');
     return Math.max(...heights)+(entry.floorOffset ?? 0.06);
+  }
+  function addTerrainFoundation(entry, wrapper, anchor, yaw) {
+    if (entry.datumMode !== 'source-footprint' || !(entry.foundationDepth > 0)) return;
+    const ring=entry.footprint, top=-entry.foundationDepth, heights=[];
+    for(let i=0;i<ring.length;i++) {
+      const a=ring[i],b=ring[(i+1)%ring.length],steps=Math.max(1,Math.ceil(Math.hypot(b[0]-a[0],b[1]-a[1])/8));
+      for(let j=0;j<=steps;j++) {
+        const p=worldPoint(a[0]+(b[0]-a[0])*j/steps,a[1]+(b[1]-a[1])*j/steps,anchor,yaw);
+        const h=baseSurface(p.x,p.z)?.height;if(Number.isFinite(h)) heights.push(h);
+      }
+    }
+    if(!heights.length) throw Error('No terrain for researched foundation');
+    const bottom=Math.min(...heights)-wrapper.position.y-.35;
+    if(bottom>=top) return;
+    // Extend only the exact perimeter below the authored skirt. The roof datum,
+    // footprint, terrain and collision remain unchanged; flat sites add no mesh.
+    const positions=[],uv=[];
+    for(let i=0;i<ring.length;i++) {
+      const [ax,az]=ring[i],[bx,bz]=ring[(i+1)%ring.length],length=Math.hypot(bx-ax,bz-az);
+      positions.push(ax,top,az, bx,top,bz, bx,bottom,bz, ax,top,az, bx,bottom,bz, ax,bottom,az);
+      uv.push(0,top,length,top,length,bottom,0,top,length,bottom,0,bottom);
+    }
+    const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));geometry.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2));geometry.computeVertexNormals();
+    let material;
+    wrapper.traverse(node=>{for(const candidate of (Array.isArray(node.material)?node.material:[node.material])) if(candidate?.name===entry.foundationMaterialName) material=candidate;});
+    material=material?.clone() || new THREE.MeshStandardMaterial({color:0x6d7068,roughness:1});material.side=THREE.DoubleSide;
+    const skirt=new THREE.Mesh(geometry,material);skirt.name=`Facility_${entry.id}_terrain_foundation`;wrapper.add(skirt);
   }
   function addFoundations(entry, wrapper, anchor, yaw) {
     const volumes=entry.foundationVolumes || [];
@@ -77,6 +110,7 @@ export function createEmergencyFacilityLayer({ THREE, scene, loader, entries, pr
       wrapper.position.set(anchor.x,datum(entry,anchor,yaw),anchor.z);wrapper.rotation.y=yaw;
       wrapper.add(gltf.scene);
       addFoundations(entry,wrapper,anchor,yaw);
+      addTerrainFoundation(entry,wrapper,anchor,yaw);
       if (entry.terrainChild) {
         const child = gltf.scene.getObjectByName(entry.terrainChild.name);
         const p=worldPoint(entry.terrainChild.x,entry.terrainChild.z,anchor,yaw);

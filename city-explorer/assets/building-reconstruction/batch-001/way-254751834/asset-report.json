@@ -1,0 +1,70 @@
+{
+  "sourceId": "way/254751834",
+  "asset": "way-254751834.glb",
+  "sourceBlend": "H:\\ChatGPT\\Peterborough-Building-Reconstruction-20261101\\models\\way-254751834.blend",
+  "sha256": "93523d80879b5a5349330cad972cebaaa4ed969d5413119e3f2232b358d807a3",
+  "units": "metres",
+  "stats": {
+    "fileBytes": 386216,
+    "triangleCount": 5596,
+    "materialCount": 6,
+    "embeddedImageCount": 2,
+    "meshCount": 6,
+    "nodeCount": 7
+  },
+  "bounds": {
+    "minX": -79.093,
+    "maxX": 68.0682,
+    "minY": -4.0,
+    "maxY": 10.1,
+    "minZ": -48.317,
+    "maxZ": 58.1219
+  },
+  "budget": {
+    "maxTriangles": 6000,
+    "maxMaterials": 6,
+    "maxBytes": 1000000
+  },
+  "packedOriginalTextures": [
+    "materials/brick-red.png",
+    "materials/stucco-light.png"
+  ],
+  "foundationDepth": 4.0,
+  "evidenceRecord": "docs/building-reconstruction/batch-001/254751834.json",
+  "observedElements": [
+    "Directly viewed architect photos show red-brown brick lower floors, a pale upper finish, repeated white-framed windows, dark roof/eaves, metal balconies on a photographed corner, a full-height glazed atrium with dark mullions, a pale name panel and projecting canopy.",
+    "Architect project description identifies a three-storey atrium with floor-to-ceiling glazing and separate townhouse blocks behind the main building.",
+    "Original procedural brick and stucco tiles are generated for this asset; third-party photos are not shipped as textures."
+  ],
+  "estimatedElements": [
+    "10.1 m overall height and floor/material transition heights are estimates based on three-storey description and photo proportions.",
+    "The chosen 89.7 m footprint edge hosts a representative photographed facade; the photos have no compass bearing, so this placement is unverified.",
+    "Atrium width, window positions and dimensions, door dimensions, canopy size, sign lettering size, and all unseen wall/roof details are approximate.",
+    "Repeated framed windows on five additional long boundary edges are estimated side treatments inspired by the second directly viewed wing photo; edge assignment, bay spacing and dimensions are not compass-verified.",
+    "No detached rear townhouse blocks or unverified service-side details are invented."
+  ],
+  "validation": {
+    "footprintContract": "all mesh bounds inside projected OSM-ring bounds plus configured tolerance",
+    "configuredBoundsToleranceM": 2.0,
+    "elevationRangeM": [
+      -4.0,
+      10.1
+    ],
+    "glbReimport": {
+      "rootName": "CityBuilding_way-254751834_Root.001",
+      "meshCount": 6,
+      "materialCount": 6,
+      "bounds": {
+        "minX": -79.093,
+        "maxX": 68.0682,
+        "minY": -4.0,
+        "maxY": 10.1,
+        "minZ": -48.317,
+        "maxZ": 58.1219
+      },
+      "maxAuthoredBoundsDeltaM": 0.0
+    },
+    "errors": 0,
+    "warnings": []
+  }
+}

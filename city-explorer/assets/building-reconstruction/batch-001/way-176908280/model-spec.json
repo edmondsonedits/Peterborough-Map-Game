@@ -1,0 +1,462 @@
+{
+  "sourceId": "way/176908280",
+  "evidenceRecord": "docs/building-reconstruction/batch-001/176908280.json",
+  "reviewView": {
+    "centerX": -55.9203,
+    "centerZ": -84.92235,
+    "normalX": -0.5660052465932364,
+    "normalZ": -0.824401638055705,
+    "targetY": 6.1,
+    "overview": true
+  },
+  "materials": [
+    {
+      "name": "Walmart | warm sand stucco",
+      "color": [
+        0.74,
+        0.68,
+        0.55
+      ],
+      "roughness": 0.9,
+      "texture": "stucco-light"
+    },
+    {
+      "name": "Walmart | blue sign panel",
+      "color": [
+        0.025,
+        0.12,
+        0.39
+      ],
+      "roughness": 0.48
+    },
+    {
+      "name": "Walmart | white lettering and trim",
+      "color": [
+        0.9,
+        0.9,
+        0.83
+      ],
+      "roughness": 0.52
+    },
+    {
+      "name": "Walmart | yellow spark",
+      "color": [
+        1,
+        0.68,
+        0.02
+      ],
+      "roughness": 0.48
+    },
+    {
+      "name": "Walmart | gray-brown base and tenant panel",
+      "color": [
+        0.28,
+        0.25,
+        0.21
+      ],
+      "roughness": 0.85
+    },
+    {
+      "name": "Walmart | dark reflective glazing",
+      "color": [
+        0.055,
+        0.1,
+        0.13
+      ],
+      "roughness": 0.27,
+      "metallic": 0.12
+    }
+  ],
+  "volumes": [
+    {
+      "name": "Observed darker gray-brown base band | perimeter estimate",
+      "baseY": 0,
+      "topY": 1.35,
+      "material": "Walmart | gray-brown base and tenant panel"
+    },
+    {
+      "name": "Estimated one-storey Supercentre body above base band",
+      "baseY": 1.35,
+      "topY": 10.15,
+      "material": "Walmart | warm sand stucco"
+    }
+  ],
+  "gablePanels": [
+    {
+      "name": "Observed blue Walmart sign wall | shallow raised top estimate",
+      "x": -62.5607935241731,
+      "z": -80.46026015829855,
+      "bottomY": 5.6,
+      "eaveY": 10.45,
+      "peakY": 11.55,
+      "width": 48,
+      "depth": 0.2,
+      "material": "Walmart | blue sign panel",
+      "tangentX": -0.824401638055705,
+      "tangentZ": 0.5660052465932364,
+      "normalX": -0.5660052465932364,
+      "normalZ": -0.824401638055705
+    }
+  ],
+  "boxes": [
+    {
+      "name": "Observed Food Centre warm tenant fascia | position estimated",
+      "x": -25.46271981166637,
+      "z": -105.9304962549942,
+      "y": 7.4,
+      "width": 25,
+      "height": 2,
+      "depth": 0.18,
+      "rotationRad": 0.6016521090080027,
+      "material": "Walmart | gray-brown base and tenant panel"
+    },
+    {
+      "name": "Observed Food Centre entrance glazing | position estimated",
+      "x": -25.46271981166637,
+      "z": -105.9304962549942,
+      "y": 2.15,
+      "width": 9,
+      "height": 3.1,
+      "depth": 0.14,
+      "rotationRad": 0.6016521090080027,
+      "material": "Walmart | dark reflective glazing"
+    },
+    {
+      "name": "Estimated Food Centre entrance head trim",
+      "x": -25.46271981166637,
+      "z": -105.9304962549942,
+      "y": 3.78,
+      "width": 9.35,
+      "height": 0.15,
+      "depth": 0.16,
+      "rotationRad": 0.6016521090080027,
+      "material": "Walmart | white lettering and trim"
+    },
+    {
+      "name": "Estimated Food Centre door jamb -4.65",
+      "x": -21.629252194707345,
+      "z": -108.56242065165274,
+      "y": 2.15,
+      "width": 0.12,
+      "height": 3.35,
+      "depth": 0.16,
+      "rotationRad": 0.6016521090080027,
+      "material": "Walmart | white lettering and trim"
+    },
+    {
+      "name": "Estimated Food Centre door jamb 4.65",
+      "x": -29.296187428625398,
+      "z": -103.29857185833565,
+      "y": 2.15,
+      "width": 0.12,
+      "height": 3.35,
+      "depth": 0.16,
+      "rotationRad": 0.6016521090080027,
+      "material": "Walmart | white lettering and trim"
+    },
+    {
+      "name": "Observed George tenant sign panel | position estimated",
+      "x": -39.06534683958551,
+      "z": -96.5914096862058,
+      "y": 6.25,
+      "width": 7.2,
+      "height": 2.35,
+      "depth": 0.17,
+      "rotationRad": 0.6016521090080027,
+      "material": "Walmart | gray-brown base and tenant panel"
+    },
+    {
+      "name": "Observed pedestrian service door 1 | position estimated",
+      "x": -83.99523611362143,
+      "z": -65.74412374687441,
+      "y": 1.75,
+      "width": 1.55,
+      "height": 2.75,
+      "depth": 0.13,
+      "rotationRad": 0.6016521090080027,
+      "material": "Walmart | dark reflective glazing"
+    },
+    {
+      "name": "Estimated service door 1 jamb -0.86",
+      "x": -83.28625070489352,
+      "z": -66.2308882589446,
+      "y": 1.75,
+      "width": 0.1,
+      "height": 2.9,
+      "depth": 0.15,
+      "rotationRad": 0.6016521090080027,
+      "material": "Walmart | white lettering and trim"
+    },
+    {
+      "name": "Estimated service door 1 jamb 0.86",
+      "x": -84.70422152234933,
+      "z": -65.25735923480423,
+      "y": 1.75,
+      "width": 0.1,
+      "height": 2.9,
+      "depth": 0.15,
+      "rotationRad": 0.6016521090080027,
+      "material": "Walmart | white lettering and trim"
+    },
+    {
+      "name": "Estimated service door 1 head trim",
+      "x": -83.99523611362143,
+      "z": -65.74412374687441,
+      "y": 3.25,
+      "width": 1.8,
+      "height": 0.11,
+      "depth": 0.15,
+      "rotationRad": 0.6016521090080027,
+      "material": "Walmart | white lettering and trim"
+    },
+    {
+      "name": "Observed pedestrian service door 2 | position estimated",
+      "x": -94.7124574083456,
+      "z": -58.386055541162335,
+      "y": 1.75,
+      "width": 1.55,
+      "height": 2.75,
+      "depth": 0.13,
+      "rotationRad": 0.6016521090080027,
+      "material": "Walmart | dark reflective glazing"
+    },
+    {
+      "name": "Estimated service door 2 jamb -0.86",
+      "x": -94.00347199961769,
+      "z": -58.87282005323252,
+      "y": 1.75,
+      "width": 0.1,
+      "height": 2.9,
+      "depth": 0.15,
+      "rotationRad": 0.6016521090080027,
+      "material": "Walmart | white lettering and trim"
+    },
+    {
+      "name": "Estimated service door 2 jamb 0.86",
+      "x": -95.4214428170735,
+      "z": -57.899291029092154,
+      "y": 1.75,
+      "width": 0.1,
+      "height": 2.9,
+      "depth": 0.15,
+      "rotationRad": 0.6016521090080027,
+      "material": "Walmart | white lettering and trim"
+    },
+    {
+      "name": "Estimated service door 2 head trim",
+      "x": -94.7124574083456,
+      "z": -58.386055541162335,
+      "y": 3.25,
+      "width": 1.8,
+      "height": 0.11,
+      "depth": 0.15,
+      "rotationRad": 0.6016521090080027,
+      "material": "Walmart | white lettering and trim"
+    }
+  ],
+  "texts": [
+    {
+      "name": "Observed Food Centre lettering | position estimated",
+      "text": "Food Centre",
+      "x": -25.541960546189426,
+      "z": -106.045912484322,
+      "y": 7.25,
+      "size": 1.55,
+      "offset": 0.012,
+      "extrude": 0.035,
+      "material": "Walmart | white lettering and trim",
+      "tangentX": -0.824401638055705,
+      "tangentZ": 0.5660052465932364,
+      "normalX": -0.5660052465932364,
+      "normalZ": -0.824401638055705
+    },
+    {
+      "name": "Observed Walmart wordmark | size and position estimated",
+      "text": "Walmart",
+      "x": -59.58974819789004,
+      "z": -82.66989580002134,
+      "y": 8.45,
+      "size": 3.55,
+      "offset": 0.012,
+      "extrude": 0.035,
+      "material": "Walmart | white lettering and trim",
+      "tangentX": -0.824401638055705,
+      "tangentZ": 0.5660052465932364,
+      "normalX": -0.5660052465932364,
+      "normalZ": -0.824401638055705
+    },
+    {
+      "name": "Observed Supercentre subtitle | size and position estimated",
+      "text": "Supercentre",
+      "x": -59.58974819789004,
+      "z": -82.66989580002134,
+      "y": 6.95,
+      "size": 1.42,
+      "offset": 0.012,
+      "extrude": 0.035,
+      "material": "Walmart | yellow spark",
+      "tangentX": -0.824401638055705,
+      "tangentZ": 0.5660052465932364,
+      "normalX": -0.5660052465932364,
+      "normalZ": -0.824401638055705
+    },
+    {
+      "name": "Observed George tenant lettering | position estimated",
+      "text": "George",
+      "x": -39.144587574108556,
+      "z": -96.7068259155336,
+      "y": 6.15,
+      "size": 1.18,
+      "offset": 0.012,
+      "extrude": 0.035,
+      "material": "Walmart | white lettering and trim",
+      "tangentX": -0.824401638055705,
+      "tangentZ": 0.5660052465932364,
+      "normalX": -0.5660052465932364,
+      "normalZ": -0.824401638055705
+    }
+  ],
+  "roundPanels": [
+    {
+      "name": "Observed Walmart spark ray 1 segment 1 | stylized",
+      "x": -69.21457565182479,
+      "z": -76.15886696565238,
+      "y": 8.45,
+      "radius": 0.3,
+      "depth": 0.13,
+      "material": "Walmart | yellow spark",
+      "normalX": -0.5660052465932364,
+      "normalZ": -0.824401638055705
+    },
+    {
+      "name": "Observed Walmart spark ray 1 segment 2 | stylized",
+      "x": -69.67624056913598,
+      "z": -75.84190402756018,
+      "y": 8.45,
+      "radius": 0.3,
+      "depth": 0.13,
+      "material": "Walmart | yellow spark",
+      "normalX": -0.5660052465932364,
+      "normalZ": -0.824401638055705
+    },
+    {
+      "name": "Observed Walmart spark ray 2 segment 1 | stylized",
+      "x": -68.95901114402753,
+      "z": -76.33432859209628,
+      "y": 8.986935750346351,
+      "radius": 0.3,
+      "depth": 0.13,
+      "material": "Walmart | yellow spark",
+      "normalX": -0.5660052465932364,
+      "normalZ": -0.824401638055705
+    },
+    {
+      "name": "Observed Walmart spark ray 2 segment 2 | stylized",
+      "x": -69.18984360268313,
+      "z": -76.17584712305018,
+      "y": 9.471909976465637,
+      "radius": 0.3,
+      "depth": 0.13,
+      "material": "Walmart | yellow spark",
+      "normalX": -0.5660052465932364,
+      "normalZ": -0.824401638055705
+    },
+    {
+      "name": "Observed Walmart spark ray 3 segment 1 | stylized",
+      "x": -68.447882128433,
+      "z": -76.6852518449841,
+      "y": 8.986935750346351,
+      "radius": 0.3,
+      "depth": 0.13,
+      "material": "Walmart | yellow spark",
+      "normalX": -0.5660052465932364,
+      "normalZ": -0.824401638055705
+    },
+    {
+      "name": "Observed Walmart spark ray 3 segment 2 | stylized",
+      "x": -68.2170496697774,
+      "z": -76.8437333140302,
+      "y": 9.471909976465637,
+      "radius": 0.3,
+      "depth": 0.13,
+      "material": "Walmart | yellow spark",
+      "normalX": -0.5660052465932364,
+      "normalZ": -0.824401638055705
+    },
+    {
+      "name": "Observed Walmart spark ray 4 segment 1 | stylized",
+      "x": -68.19231762063572,
+      "z": -76.860713471428,
+      "y": 8.45,
+      "radius": 0.3,
+      "depth": 0.13,
+      "material": "Walmart | yellow spark",
+      "normalX": -0.5660052465932364,
+      "normalZ": -0.824401638055705
+    },
+    {
+      "name": "Observed Walmart spark ray 4 segment 2 | stylized",
+      "x": -67.73065270332452,
+      "z": -77.1776764095202,
+      "y": 8.45,
+      "radius": 0.3,
+      "depth": 0.13,
+      "material": "Walmart | yellow spark",
+      "normalX": -0.5660052465932364,
+      "normalZ": -0.824401638055705
+    },
+    {
+      "name": "Observed Walmart spark ray 5 segment 1 | stylized",
+      "x": -68.447882128433,
+      "z": -76.6852518449841,
+      "y": 7.913064249653647,
+      "radius": 0.3,
+      "depth": 0.13,
+      "material": "Walmart | yellow spark",
+      "normalX": -0.5660052465932364,
+      "normalZ": -0.824401638055705
+    },
+    {
+      "name": "Observed Walmart spark ray 5 segment 2 | stylized",
+      "x": -68.2170496697774,
+      "z": -76.8437333140302,
+      "y": 7.428090023534362,
+      "radius": 0.3,
+      "depth": 0.13,
+      "material": "Walmart | yellow spark",
+      "normalX": -0.5660052465932364,
+      "normalZ": -0.824401638055705
+    },
+    {
+      "name": "Observed Walmart spark ray 6 segment 1 | stylized",
+      "x": -68.95901114402753,
+      "z": -76.33432859209628,
+      "y": 7.913064249653647,
+      "radius": 0.3,
+      "depth": 0.13,
+      "material": "Walmart | yellow spark",
+      "normalX": -0.5660052465932364,
+      "normalZ": -0.824401638055705
+    },
+    {
+      "name": "Observed Walmart spark ray 6 segment 2 | stylized",
+      "x": -69.18984360268313,
+      "z": -76.17584712305018,
+      "y": 7.428090023534362,
+      "radius": 0.3,
+      "depth": 0.13,
+      "material": "Walmart | yellow spark",
+      "normalX": -0.5660052465932364,
+      "normalZ": -0.824401638055705
+    }
+  ],
+  "observedElements": [
+    "Directly viewed nighttime location-specific photo shows a large blue Walmart sign panel with white Walmart lettering and yellow spark, a smaller Supercentre line, broad pale yellow-tan wall fields, a darker gray-brown base, and adjoining Food Centre frontage with entrance glazing.",
+    "The customer-facing wall photo also shows inset pedestrian/service doors and a neighboring George tenant sign; it does not establish the main entrance or compass side."
+  ],
+  "estimatedElements": [
+    "The OSM footprint is retained exactly. The pictured sign/frontage is assigned to the 111 m footprint edge as a representative modeling assumption; its compass bearing remains unresolved.",
+    "Store height, sign panel dimensions/top profile, frontage segmentation, Food Centre and George sign positions, door locations, and all unseen elevations are estimated from the partial nighttime view.",
+    "Dark rectangles represent observed glazing/door openings at approximate positions; no primary entrance bearing is asserted."
+  ]
+}

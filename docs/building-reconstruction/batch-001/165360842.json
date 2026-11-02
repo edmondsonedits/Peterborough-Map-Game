@@ -1,0 +1,33 @@
+{
+  "osm_way": 165360842,
+  "name": "Costco Wholesale",
+  "address": "485 The Parkway, Peterborough, ON K9J 0B3",
+  "viewed": "2026-11-01",
+  "readiness": "partial; one wall/sign photo directly reviewed; entrance/front and remaining elevations unknown",
+  "sources": [
+    {
+      "url": "https://www.costco.com/w/-/on/peterborough/591",
+      "type": "official location"
+    },
+    {
+      "url": "https://maps.apple.com/place?place-id=IA7DF9D6C8A6A3BB1",
+      "type": "address cross-check"
+    },
+    {
+      "url": "https://www.loc8nearme.com/ontario/peterborough/costco-wholesale/6845955/",
+      "image_url": "https://cdn5.localdatacdn.com/on/peterborough/6845955/original/rtblBsNGg6.jpg",
+      "local_reference": "H:\\ChatGPT\\Peterborough-Building-Reconstruction-20261101\\references\\batch-001\\costco-peterborough.jpg",
+      "type": "location-specific photo",
+      "directly_viewed": true
+    }
+  ],
+  "observed": [
+    "Photographed wall has light gray/white horizontally ribbed metal cladding, large red COSTCO letters and blue WHOLESALE letters/bars.",
+    "Wall has a dark brown horizontal base band; several parked cars occlude the lower wall.",
+    "Photo is close-cropped oblique view of one long wall."
+  ],
+  "estimates": [],
+  "orientation_confidence": "low; photo bearing and which building side are unknown",
+  "unseen": "Entrance, front elevation, roof plan, loading doors and other sides not shown.",
+  "license_note": "Reference only; do not ship third-party photo as texture."
+}

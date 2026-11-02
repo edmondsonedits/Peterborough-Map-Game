@@ -1,0 +1,66 @@
+{
+  "sourceId": "way/176908280",
+  "asset": "way-176908280.glb",
+  "sourceBlend": "H:\\ChatGPT\\Peterborough-Building-Reconstruction-20261101\\models\\way-176908280.blend",
+  "sha256": "50d485d8260844d290fb6fb3c1421c35e8cb187b0c18c59a780685de6b967644",
+  "units": "metres",
+  "stats": {
+    "fileBytes": 266892,
+    "triangleCount": 4452,
+    "materialCount": 6,
+    "embeddedImageCount": 1,
+    "meshCount": 6,
+    "nodeCount": 7
+  },
+  "bounds": {
+    "minX": -101.5248,
+    "maxX": 74.5763,
+    "minY": -4.0,
+    "maxY": 11.55,
+    "minZ": -116.2328,
+    "maxZ": 93.5058
+  },
+  "budget": {
+    "maxTriangles": 6000,
+    "maxMaterials": 6,
+    "maxBytes": 1000000
+  },
+  "packedOriginalTextures": [
+    "materials/stucco-light.png"
+  ],
+  "foundationDepth": 4.0,
+  "evidenceRecord": "docs/building-reconstruction/batch-001/176908280.json",
+  "observedElements": [
+    "Directly viewed nighttime location-specific photo shows a large blue Walmart sign panel with white Walmart lettering and yellow spark, a smaller Supercentre line, broad pale yellow-tan wall fields, a darker gray-brown base, and adjoining Food Centre frontage with entrance glazing.",
+    "The customer-facing wall photo also shows inset pedestrian/service doors and a neighboring George tenant sign; it does not establish the main entrance or compass side."
+  ],
+  "estimatedElements": [
+    "The OSM footprint is retained exactly. The pictured sign/frontage is assigned to the 111 m footprint edge as a representative modeling assumption; its compass bearing remains unresolved.",
+    "Store height, sign panel dimensions/top profile, frontage segmentation, Food Centre and George sign positions, door locations, and all unseen elevations are estimated from the partial nighttime view.",
+    "Dark rectangles represent observed glazing/door openings at approximate positions; no primary entrance bearing is asserted."
+  ],
+  "validation": {
+    "footprintContract": "all mesh bounds inside projected OSM-ring bounds plus configured tolerance",
+    "configuredBoundsToleranceM": 2.0,
+    "elevationRangeM": [
+      -4.0,
+      11.55
+    ],
+    "glbReimport": {
+      "rootName": "CityBuilding_way-176908280_Root.001",
+      "meshCount": 6,
+      "materialCount": 6,
+      "bounds": {
+        "minX": -101.5248,
+        "maxX": 74.5763,
+        "minY": -4.0,
+        "maxY": 11.55,
+        "minZ": -116.2328,
+        "maxZ": 93.5058
+      },
+      "maxAuthoredBoundsDeltaM": 0.0
+    },
+    "errors": 0,
+    "warnings": []
+  }
+}

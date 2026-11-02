@@ -1,0 +1,1095 @@
+{
+  "schemaVersion": 1,
+  "entries": [
+    {
+      "id": "reconstruction-way-165360842",
+      "rootName": "CityBuilding_way-165360842_Root",
+      "assetUrl": "./assets/building-reconstruction/batch-001/way-165360842/way-165360842.glb",
+      "sourceIds": [
+        "way/165360842"
+      ],
+      "origin": {
+        "lat": 44.2720665,
+        "lon": -78.3402181,
+        "yawDegrees": 0
+      },
+      "footprint": [
+        [
+          -27.7371,
+          -24.562
+        ],
+        [
+          -29.5613,
+          -20.9363
+        ],
+        [
+          -31.6722,
+          -21.7653
+        ],
+        [
+          -34.2213,
+          -16.5699
+        ],
+        [
+          -37.0094,
+          -10.8882
+        ],
+        [
+          -34.9781,
+          -9.6501
+        ],
+        [
+          -36.9695,
+          -5.8476
+        ],
+        [
+          -31.5846,
+          10.4792
+        ],
+        [
+          -24.1923,
+          8.0694
+        ],
+        [
+          3.6484,
+          92.4335
+        ],
+        [
+          24.6623,
+          85.5801
+        ],
+        [
+          30.1189,
+          102.1058
+        ],
+        [
+          103.5721,
+          78.1739
+        ],
+        [
+          62.9462,
+          -44.9124
+        ],
+        [
+          34.9223,
+          -35.7818
+        ],
+        [
+          31.9829,
+          -44.7134
+        ],
+        [
+          18.3772,
+          -40.2808
+        ],
+        [
+          17.4771,
+          -42.989
+        ],
+        [
+          -20.4165,
+          -30.6417
+        ],
+        [
+          -19.3172,
+          -27.3034
+        ]
+      ],
+      "groundSampleBounds": {
+        "minX": -37.0094,
+        "maxX": 103.5721,
+        "frontZ": -44.9124,
+        "rearZ": 102.1058
+      },
+      "floorOffset": 0.06,
+      "maxHeight": 25,
+      "boundsTolerance": 2,
+      "units": "metres",
+      "site": {
+        "name": "Costco",
+        "address": "",
+        "sourceId": "way/165360842",
+        "areaM2": 13422.4,
+        "estimatedHeightM": 3.1,
+        "sourceTags": {
+          "brand": "Costco",
+          "brand:wikidata": "Q715583",
+          "brand:wikipedia": "en:Costco",
+          "building": "retail",
+          "building:levels": "1",
+          "handwashing:soap": "yes",
+          "internet_access": "wlan",
+          "internet_access:fee": "customers",
+          "internet_access:ssid": "Costco Member Wifi",
+          "membership": "yes",
+          "name": "Costco",
+          "opening_hours": "Mo-Fr 09:00-20:30; Sa,Su 09:00-19:00",
+          "operator": "Costco",
+          "payment:cards": "yes",
+          "payment:cash": "yes",
+          "payment:qr_code": "no",
+          "self_checkout": "yes",
+          "self_checkout:handheld": "no",
+          "self_checkout:self_scan": "yes",
+          "shop": "wholesale",
+          "source": "Bing",
+          "toilets": "yes",
+          "toilets:disposal": "flush",
+          "toilets:fee": "no",
+          "toilets:gender_segregated": "yes",
+          "toilets:handwashing": "yes",
+          "toilets:paper_supplied": "yes",
+          "website": "https://www.costco.ca/warehouse-locations/peterborough-on-591.html"
+        },
+        "footprintSource": "batch-001-input.json OSM ring, locally projected from geographic coordinates"
+      },
+      "assetFile": "way-165360842.glb",
+      "evidenceRecord": "docs/building-reconstruction/batch-001/165360842.json",
+      "foundationDepth": 4,
+      "observedElements": [
+        "A location-specific photo directly shows one wall with pale gray-white horizontal ribbed cladding, large red COSTCO letters, blue WHOLESALE lettering and bars, and a dark brown base band.",
+        "No third-party photo was used as a texture. The colors and sign appearance are modeled as original geometry and materials."
+      ],
+      "estimatedElements": [
+        "11.05 m overall height and 2.3 m base-band height are modeling estimates; the source photo has no reliable scale.",
+        "The representative signed wall is placed on a long southwest-facing footprint edge selected as a plausible parking-facing edge; source photo bearing is unknown and this compass placement is unverified.",
+        "The observed cladding and base-band colors are extended around the footprint for a complete massing asset; only one wall was directly photographed.",
+        "Flat roof treatment and all unphotographed wall details are generic massing estimates. No entrance or loading-door count is modeled."
+      ],
+      "asset": "./assets/building-reconstruction/batch-001/way-165360842/way-165360842.glb",
+      "status": "reviewed",
+      "datumMode": "source-footprint",
+      "foundationMaterialName": "Costco | dark brown base",
+      "landmarkIds": []
+    },
+    {
+      "id": "reconstruction-way-176908280",
+      "rootName": "CityBuilding_way-176908280_Root",
+      "assetUrl": "./assets/building-reconstruction/batch-001/way-176908280/way-176908280.glb",
+      "sourceIds": [
+        "way/176908280"
+      ],
+      "origin": {
+        "lat": 44.3245122,
+        "lon": -78.3329859,
+        "yawDegrees": 0
+      },
+      "footprint": [
+        [
+          -93.2324,
+          -37.3073
+        ],
+        [
+          -43.151,
+          40.6566
+        ],
+        [
+          -32.5007,
+          33.8916
+        ],
+        [
+          -17.0708,
+          57.8345
+        ],
+        [
+          -25.4748,
+          63.1736
+        ],
+        [
+          -5.9186,
+          93.5058
+        ],
+        [
+          29.2188,
+          71.1767
+        ],
+        [
+          22.2247,
+          60.3438
+        ],
+        [
+          58.5092,
+          37.2851
+        ],
+        [
+          53.0446,
+          28.8178
+        ],
+        [
+          74.5763,
+          15.1329
+        ],
+        [
+          67.5027,
+          4.1674
+        ],
+        [
+          64.3323,
+          6.1792
+        ],
+        [
+          58.4853,
+          9.8933
+        ],
+        [
+          1.8242,
+          -77.9749
+        ],
+        [
+          -9.6865,
+          -96.214
+        ],
+        [
+          0.2708,
+          -101.4315
+        ],
+        [
+          -10.3158,
+          -116.2328
+        ],
+        [
+          -101.5248,
+          -53.6119
+        ],
+        [
+          -91.1374,
+          -39.297
+        ]
+      ],
+      "groundSampleBounds": {
+        "minX": -101.5248,
+        "maxX": 74.5763,
+        "frontZ": -116.2328,
+        "rearZ": 93.5058
+      },
+      "floorOffset": 0.06,
+      "maxHeight": 25,
+      "boundsTolerance": 2,
+      "units": "metres",
+      "site": {
+        "name": "Walmart Supercentre",
+        "address": "1002 Chemong Road",
+        "sourceId": "way/176908280",
+        "areaM2": 17020.3,
+        "estimatedHeightM": 3.1,
+        "sourceTags": {
+          "addr:city": "Peterborough",
+          "addr:housenumber": "1002",
+          "addr:postcode": "K9H 7E2",
+          "addr:province": "ON",
+          "addr:street": "Chemong Road",
+          "brand": "Walmart",
+          "brand:wikidata": "Q483551",
+          "brand:wikipedia": "en:Walmart",
+          "building": "retail",
+          "building:levels": "1",
+          "name": "Walmart Supercentre",
+          "opening_hours": "Mo-Su 07:00-22:00",
+          "phone": "+1-705-742-5090",
+          "ref:walmart": "3071",
+          "shop": "supermarket",
+          "source": "Bing",
+          "website": "https://www.walmart.ca/en/stores-near-me/peterborough-ontario-3071",
+          "website:en": "https://www.walmart.ca/en/stores-near-me/peterborough-ontario-3071",
+          "website:fr": "https://www.walmart.ca/fr/magasins-pres-de-chez-moi/peterborough-ontario-3071"
+        },
+        "footprintSource": "batch-001-input.json OSM ring, locally projected from geographic coordinates"
+      },
+      "assetFile": "way-176908280.glb",
+      "evidenceRecord": "docs/building-reconstruction/batch-001/176908280.json",
+      "foundationDepth": 4,
+      "observedElements": [
+        "Directly viewed nighttime location-specific photo shows a large blue Walmart sign panel with white Walmart lettering and yellow spark, a smaller Supercentre line, broad pale yellow-tan wall fields, a darker gray-brown base, and adjoining Food Centre frontage with entrance glazing.",
+        "The customer-facing wall photo also shows inset pedestrian/service doors and a neighboring George tenant sign; it does not establish the main entrance or compass side."
+      ],
+      "estimatedElements": [
+        "The OSM footprint is retained exactly. The pictured sign/frontage is assigned to the 111 m footprint edge as a representative modeling assumption; its compass bearing remains unresolved.",
+        "Store height, sign panel dimensions/top profile, frontage segmentation, Food Centre and George sign positions, door locations, and all unseen elevations are estimated from the partial nighttime view.",
+        "Dark rectangles represent observed glazing/door openings at approximate positions; no primary entrance bearing is asserted."
+      ],
+      "asset": "./assets/building-reconstruction/batch-001/way-176908280/way-176908280.glb",
+      "status": "reviewed",
+      "datumMode": "source-footprint",
+      "foundationMaterialName": "Walmart | gray-brown base and tenant panel",
+      "landmarkIds": []
+    },
+    {
+      "id": "reconstruction-way-254751834",
+      "rootName": "CityBuilding_way-254751834_Root",
+      "assetUrl": "./assets/building-reconstruction/batch-001/way-254751834/way-254751834.glb",
+      "sourceIds": [
+        "way/254751834"
+      ],
+      "origin": {
+        "lat": 44.2929167,
+        "lon": -78.36098,
+        "yawDegrees": 0
+      },
+      "footprint": [
+        [
+          13.534,
+          41.6404
+        ],
+        [
+          10.1007,
+          42.7348
+        ],
+        [
+          -2.7482,
+          2.5756
+        ],
+        [
+          -3.0191,
+          1.7244
+        ],
+        [
+          -13.5101,
+          5.9692
+        ],
+        [
+          -3.2341,
+          37.8268
+        ],
+        [
+          -7.464,
+          39.1754
+        ],
+        [
+          -6.6595,
+          41.6625
+        ],
+        [
+          -18.1064,
+          45.3103
+        ],
+        [
+          -18.9109,
+          42.8232
+        ],
+        [
+          -23.1089,
+          44.1607
+        ],
+        [
+          -33.2256,
+          12.8005
+        ],
+        [
+          -42.3624,
+          15.7077
+        ],
+        [
+          -31.3377,
+          49.8867
+        ],
+        [
+          -35.8304,
+          51.3127
+        ],
+        [
+          -34.755,
+          54.662
+        ],
+        [
+          -45.6444,
+          58.1219
+        ],
+        [
+          -46.7277,
+          54.7836
+        ],
+        [
+          -51.555,
+          56.3201
+        ],
+        [
+          -79.093,
+          -29.061
+        ],
+        [
+          -74.4489,
+          -30.5422
+        ],
+        [
+          -75.3968,
+          -33.4715
+        ],
+        [
+          -64.2446,
+          -37.0198
+        ],
+        [
+          -63.2967,
+          -34.0905
+        ],
+        [
+          -58.8756,
+          -35.4944
+        ],
+        [
+          -44.0512,
+          10.4792
+        ],
+        [
+          -34.9143,
+          7.572
+        ],
+        [
+          -48.536,
+          -34.6875
+        ],
+        [
+          -43.8919,
+          -36.1576
+        ],
+        [
+          -44.8398,
+          -39.098
+        ],
+        [
+          -33.6876,
+          -42.6463
+        ],
+        [
+          -32.7397,
+          -39.706
+        ],
+        [
+          -28.6612,
+          -41.0103
+        ],
+        [
+          -14.8962,
+          1.6692
+        ],
+        [
+          -4.2378,
+          -2.056
+        ],
+        [
+          -10.9929,
+          -23.1692
+        ],
+        [
+          -7.5755,
+          -24.2746
+        ],
+        [
+          -8.8023,
+          -28.0882
+        ],
+        [
+          1.9198,
+          -31.5039
+        ],
+        [
+          3.1385,
+          -27.6792
+        ],
+        [
+          6.5718,
+          -28.7736
+        ],
+        [
+          10.4114,
+          -16.7689
+        ],
+        [
+          7.5835,
+          -15.8735
+        ],
+        [
+          8.396,
+          -13.3311
+        ],
+        [
+          37.328,
+          -22.5059
+        ],
+        [
+          36.5155,
+          -25.0594
+        ],
+        [
+          33.6,
+          -24.1309
+        ],
+        [
+          28.5178,
+          -39.9934
+        ],
+        [
+          31.9511,
+          -41.0877
+        ],
+        [
+          30.7243,
+          -44.9013
+        ],
+        [
+          41.4464,
+          -48.317
+        ],
+        [
+          42.6731,
+          -44.5034
+        ],
+        [
+          46.0984,
+          -45.5867
+        ],
+        [
+          46.7197,
+          -43.6522
+        ],
+        [
+          52.5747,
+          -45.3435
+        ],
+        [
+          68.0682,
+          0.6522
+        ],
+        [
+          61.7035,
+          3.1172
+        ],
+        [
+          65.9812,
+          16.4705
+        ],
+        [
+          63.2569,
+          17.3437
+        ],
+        [
+          62.5479,
+          17.5648
+        ],
+        [
+          63.7746,
+          21.3784
+        ],
+        [
+          53.0526,
+          24.7941
+        ],
+        [
+          51.8259,
+          20.9805
+        ],
+        [
+          48.4005,
+          22.0638
+        ],
+        [
+          47.0941,
+          17.9849
+        ],
+        [
+          23.9135,
+          25.3689
+        ],
+        [
+          27.6814,
+          37.1414
+        ],
+        [
+          24.256,
+          38.2358
+        ],
+        [
+          25.4748,
+          42.0494
+        ],
+        [
+          14.7607,
+          45.454
+        ]
+      ],
+      "groundSampleBounds": {
+        "minX": -79.093,
+        "maxX": 68.0682,
+        "frontZ": -48.317,
+        "rearZ": 58.1219
+      },
+      "floorOffset": 0.06,
+      "maxHeight": 25,
+      "boundsTolerance": 2,
+      "units": "metres",
+      "site": {
+        "name": "Canterbury Gardens Retirement Residence",
+        "address": "1414 Sherbrooke Street",
+        "sourceId": "way/254751834",
+        "areaM2": 7844.8,
+        "estimatedHeightM": 7.1,
+        "sourceTags": {
+          "addr:city": "Peterborough",
+          "addr:housenumber": "1414",
+          "addr:postcode": "K9J 0B1",
+          "addr:street": "Sherbrooke Street",
+          "amenity": "social_facility",
+          "building": "yes",
+          "building:levels": "3",
+          "name": "Canterbury Gardens Retirement Residence",
+          "social_facility": "group_home",
+          "social_facility:for": "senior"
+        },
+        "footprintSource": "batch-001-input.json OSM ring, locally projected from geographic coordinates"
+      },
+      "assetFile": "way-254751834.glb",
+      "evidenceRecord": "docs/building-reconstruction/batch-001/254751834.json",
+      "foundationDepth": 4,
+      "observedElements": [
+        "Directly viewed architect photos show red-brown brick lower floors, a pale upper finish, repeated white-framed windows, dark roof/eaves, metal balconies on a photographed corner, a full-height glazed atrium with dark mullions, a pale name panel and projecting canopy.",
+        "Architect project description identifies a three-storey atrium with floor-to-ceiling glazing and separate townhouse blocks behind the main building.",
+        "Original procedural brick and stucco tiles are generated for this asset; third-party photos are not shipped as textures."
+      ],
+      "estimatedElements": [
+        "10.1 m overall height and floor/material transition heights are estimates based on three-storey description and photo proportions.",
+        "The chosen 89.7 m footprint edge hosts a representative photographed facade; the photos have no compass bearing, so this placement is unverified.",
+        "Atrium width, window positions and dimensions, door dimensions, canopy size, sign lettering size, and all unseen wall/roof details are approximate.",
+        "Repeated framed windows on five additional long boundary edges are estimated side treatments inspired by the second directly viewed wing photo; edge assignment, bay spacing and dimensions are not compass-verified.",
+        "No detached rear townhouse blocks or unverified service-side details are invented."
+      ],
+      "asset": "./assets/building-reconstruction/batch-001/way-254751834/way-254751834.glb",
+      "status": "reviewed",
+      "datumMode": "source-footprint",
+      "foundationMaterialName": "Canterbury | red-brown brick",
+      "landmarkIds": []
+    },
+    {
+      "id": "reconstruction-way-319167856",
+      "rootName": "CityBuilding_way-319167856_Root",
+      "assetUrl": "./assets/building-reconstruction/batch-001/way-319167856/way-319167856.glb",
+      "sourceIds": [
+        "way/319167856"
+      ],
+      "origin": {
+        "lat": 44.2882652,
+        "lon": -78.325475,
+        "yawDegrees": 0
+      },
+      "footprint": [
+        [
+          -57.9516,
+          -22.6828
+        ],
+        [
+          -49.7069,
+          -29.282
+        ],
+        [
+          -44.4256,
+          -22.7381
+        ],
+        [
+          -34.0222,
+          -31.0728
+        ],
+        [
+          -31.0668,
+          -27.4139
+        ],
+        [
+          -20.6634,
+          -35.7486
+        ],
+        [
+          -17.7081,
+          -32.0898
+        ],
+        [
+          -1.3223,
+          -45.233
+        ],
+        [
+          8.5713,
+          -48.5823
+        ],
+        [
+          7.5357,
+          -51.6222
+        ],
+        [
+          27.3309,
+          -58.343
+        ],
+        [
+          31.9909,
+          -44.6803
+        ],
+        [
+          27.1078,
+          -43.0332
+        ],
+        [
+          62.6355,
+          60.996
+        ],
+        [
+          56.4461,
+          63.0962
+        ],
+        [
+          64.3243,
+          86.177
+        ],
+        [
+          -0.6691,
+          108.2187
+        ],
+        [
+          -8.5474,
+          85.149
+        ],
+        [
+          -19.8191,
+          88.9736
+        ]
+      ],
+      "groundSampleBounds": {
+        "minX": -57.9516,
+        "maxX": 64.3243,
+        "frontZ": -58.343,
+        "rearZ": 108.2187
+      },
+      "floorOffset": 0.06,
+      "maxHeight": 25,
+      "boundsTolerance": 2,
+      "units": "metres",
+      "site": {
+        "name": "The Home Depot",
+        "address": "",
+        "sourceId": "way/319167856",
+        "areaM2": 12107.8,
+        "estimatedHeightM": 3.1,
+        "sourceTags": {
+          "alt_name": "Home Depot",
+          "brand": "The Home Depot",
+          "brand:wikidata": "Q864407",
+          "brand:wikipedia": "en:The Home Depot",
+          "building": "retail",
+          "building:levels": "1",
+          "name": "The Home Depot",
+          "shop": "doityourself"
+        },
+        "footprintSource": "batch-001-input.json OSM ring, locally projected from geographic coordinates"
+      },
+      "assetFile": "way-319167856.glb",
+      "evidenceRecord": "docs/building-reconstruction/batch-001/319167856.json",
+      "foundationDepth": 4,
+      "observedElements": [
+        "Directly viewed location-specific crop shows a cream high sign wall with a raised central gable, orange THE HOME DEPOT lettering, narrow orange trim and protective rail, gray horizontal fascia, and a broad dark glazed storefront divided by a metal grid.",
+        "The storefront includes a continuous orange accent band above the glazing; the reference image is a close upward crop and does not show an entrance."
+      ],
+      "estimatedElements": [
+        "The OSM footprint is retained exactly. This representative facade is placed on its 118 m edge as a modeling assumption; the photo has no compass reference, so facade bearing is unresolved.",
+        "One-storey warehouse height, roof form, sign-wall proportions, glazing extent, orange rail geometry, and all unpictured elevations are approximate. No customer entrance or service doors are invented.",
+        "Home Depot lettering is shown as one centered line to stay within the gabled sign wall; exact font, size and frontage bearing are estimated."
+      ],
+      "asset": "./assets/building-reconstruction/batch-001/way-319167856/way-319167856.glb",
+      "status": "reviewed",
+      "datumMode": "source-footprint",
+      "foundationMaterialName": "Home Depot | warm cream stucco",
+      "landmarkIds": []
+    },
+    {
+      "id": "reconstruction-way-77772361",
+      "rootName": "CityBuilding_way-77772361_Root",
+      "assetUrl": "./assets/building-reconstruction/batch-001/way-77772361/way-77772361.glb",
+      "sourceIds": [
+        "way/77772361"
+      ],
+      "origin": {
+        "lat": 44.2828147,
+        "lon": -78.3315968,
+        "yawDegrees": 0
+      },
+      "footprint": [
+        [
+          44.7601,
+          -150.8429
+        ],
+        [
+          27.8327,
+          -144.2215
+        ],
+        [
+          9.5431,
+          -101.5752
+        ],
+        [
+          4.0228,
+          -103.8634
+        ],
+        [
+          -2.7084,
+          -88.0451
+        ],
+        [
+          -7.2967,
+          -77.4112
+        ],
+        [
+          -10.8336,
+          -78.196
+        ],
+        [
+          -35.2728,
+          -25.8221
+        ],
+        [
+          -82.5502,
+          76.7479
+        ],
+        [
+          -79.6426,
+          87.6361
+        ],
+        [
+          -75.7712,
+          90.1785
+        ],
+        [
+          -78.3681,
+          96.2803
+        ],
+        [
+          -81.1322,
+          102.7801
+        ],
+        [
+          -79.6745,
+          106.2179
+        ],
+        [
+          -118.8108,
+          118.9521
+        ],
+        [
+          -117.4406,
+          124.2138
+        ],
+        [
+          -186.6798,
+          146.3439
+        ],
+        [
+          -165.3871,
+          216.6916
+        ],
+        [
+          -98.4978,
+          195.6447
+        ],
+        [
+          -96.0842,
+          205.4607
+        ],
+        [
+          -73.3018,
+          197.2807
+        ],
+        [
+          -76.1536,
+          188.5149
+        ],
+        [
+          -55.0839,
+          180.9761
+        ],
+        [
+          -58.4774,
+          170.6738
+        ],
+        [
+          -44.3937,
+          166.4843
+        ],
+        [
+          -42.5536,
+          171.7349
+        ],
+        [
+          -39.9886,
+          172.5198
+        ],
+        [
+          -31.8475,
+          155.2092
+        ],
+        [
+          -25.1163,
+          157.7516
+        ],
+        [
+          -16.8717,
+          138.9819
+        ],
+        [
+          -15.5095,
+          135.2457
+        ],
+        [
+          -4.3494,
+          140.2753
+        ],
+        [
+          7.3764,
+          114.8179
+        ],
+        [
+          12.9127,
+          117.6367
+        ],
+        [
+          16.091,
+          110.8937
+        ],
+        [
+          -4.7317,
+          100.5803
+        ],
+        [
+          48.6156,
+          -16.0946
+        ],
+        [
+          67.3832,
+          -58.4867
+        ],
+        [
+          68.9286,
+          -62.1456
+        ],
+        [
+          74.0586,
+          -72.8459
+        ],
+        [
+          86.6367,
+          -100.315
+        ],
+        [
+          97.7968,
+          -94.9981
+        ],
+        [
+          100.5132,
+          -99.7734
+        ],
+        [
+          114.5172,
+          -93.4947
+        ],
+        [
+          127.0554,
+          -120.367
+        ],
+        [
+          99.8918,
+          -133.4218
+        ],
+        [
+          101.7877,
+          -137.5339
+        ],
+        [
+          109.6022,
+          -154.5349
+        ],
+        [
+          102.4887,
+          -171.3038
+        ],
+        [
+          110.6935,
+          -174.1226
+        ],
+        [
+          87.2899,
+          -236.1355
+        ],
+        [
+          61.1778,
+          -226.607
+        ],
+        [
+          58.2862,
+          -234.2895
+        ],
+        [
+          45.4213,
+          -230.2659
+        ],
+        [
+          48.7032,
+          -221.7432
+        ],
+        [
+          14.4182,
+          -210.2692
+        ],
+        [
+          23.2284,
+          -185.8951
+        ],
+        [
+          33.6398,
+          -181.8936
+        ]
+      ],
+      "groundSampleBounds": {
+        "minX": -186.6798,
+        "maxX": 127.0554,
+        "frontZ": -236.1355,
+        "rearZ": 216.6916
+      },
+      "floorOffset": 0.06,
+      "maxHeight": 25,
+      "boundsTolerance": 2,
+      "units": "metres",
+      "site": {
+        "name": "Lansdowne Place",
+        "address": "645 Lansdowne Street West",
+        "sourceId": "way/77772361",
+        "areaM2": 40946,
+        "estimatedHeightM": 12.2,
+        "sourceTags": {
+          "addr:city": "Peterborough",
+          "addr:housenumber": "645",
+          "addr:postcode": "K9J 7Y5",
+          "addr:street": "Lansdowne Street West",
+          "building": "retail",
+          "building:levels": "1",
+          "name": "Lansdowne Place",
+          "shop": "mall",
+          "source": "CanVec 6.0 - NRCan",
+          "website": "https://lansdowneplace.com/",
+          "wikidata": "Q110221214"
+        },
+        "footprintSource": "batch-001-input.json OSM ring, locally projected from geographic coordinates"
+      },
+      "assetFile": "way-77772361.glb",
+      "evidenceRecord": "docs/building-reconstruction/batch-001/77772361.json",
+      "foundationDepth": 4,
+      "observedElements": [
+        "Directly viewed location-specific entrance photo shows Entrance 2, a triangular projecting gable/portico, two tall pale rectangular concrete columns with block bases, taupe horizontal siding, circular gable logo/window, brown brick walls with pale horizontal bands, dark-framed entry glazing, and blue storefront fascia.",
+        "Original procedural brick and stucco tiles are generated for this asset; source photos are references only and are not shipped."
+      ],
+      "estimatedElements": [
+        "The portico and representative facade are placed on a long footprint edge because the reference photo has no compass bearing; this mapped side is unverified.",
+        "Overall roof height, mall wall bands, portal dimensions, gable projection, column spacing, circular window size, storefront mullion spacing, and all unseen elevations are approximate.",
+        "BMO signage seen on an adjacent wing is intentionally excluded and not treated as mall-wide branding."
+      ],
+      "asset": "./assets/building-reconstruction/batch-001/way-77772361/way-77772361.glb",
+      "status": "reviewed",
+      "datumMode": "source-footprint",
+      "foundationMaterialName": "Lansdowne | brown brick",
+      "landmarkIds": [
+        "lansdowne-place"
+      ]
+    }
+  ]
+}

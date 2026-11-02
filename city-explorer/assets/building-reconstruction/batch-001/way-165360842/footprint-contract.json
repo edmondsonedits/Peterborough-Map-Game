@@ -1,0 +1,143 @@
+{
+  "id": "way-165360842",
+  "rootName": "CityBuilding_way-165360842_Root",
+  "assetUrl": "./assets/building-reconstruction/batch-001/way-165360842/way-165360842.glb",
+  "sourceIds": [
+    "way/165360842"
+  ],
+  "origin": {
+    "lat": 44.2720665,
+    "lon": -78.3402181,
+    "yawDegrees": 0
+  },
+  "footprint": [
+    [
+      -27.7371,
+      -24.562
+    ],
+    [
+      -29.5613,
+      -20.9363
+    ],
+    [
+      -31.6722,
+      -21.7653
+    ],
+    [
+      -34.2213,
+      -16.5699
+    ],
+    [
+      -37.0094,
+      -10.8882
+    ],
+    [
+      -34.9781,
+      -9.6501
+    ],
+    [
+      -36.9695,
+      -5.8476
+    ],
+    [
+      -31.5846,
+      10.4792
+    ],
+    [
+      -24.1923,
+      8.0694
+    ],
+    [
+      3.6484,
+      92.4335
+    ],
+    [
+      24.6623,
+      85.5801
+    ],
+    [
+      30.1189,
+      102.1058
+    ],
+    [
+      103.5721,
+      78.1739
+    ],
+    [
+      62.9462,
+      -44.9124
+    ],
+    [
+      34.9223,
+      -35.7818
+    ],
+    [
+      31.9829,
+      -44.7134
+    ],
+    [
+      18.3772,
+      -40.2808
+    ],
+    [
+      17.4771,
+      -42.989
+    ],
+    [
+      -20.4165,
+      -30.6417
+    ],
+    [
+      -19.3172,
+      -27.3034
+    ]
+  ],
+  "groundSampleBounds": {
+    "minX": -37.0094,
+    "maxX": 103.5721,
+    "frontZ": -44.9124,
+    "rearZ": 102.1058
+  },
+  "floorOffset": 0.06,
+  "maxHeight": 25,
+  "boundsTolerance": 2.0,
+  "units": "metres",
+  "site": {
+    "name": "Costco",
+    "address": "",
+    "sourceId": "way/165360842",
+    "areaM2": 13422.4,
+    "estimatedHeightM": 3.1,
+    "sourceTags": {
+      "brand": "Costco",
+      "brand:wikidata": "Q715583",
+      "brand:wikipedia": "en:Costco",
+      "building": "retail",
+      "building:levels": "1",
+      "handwashing:soap": "yes",
+      "internet_access": "wlan",
+      "internet_access:fee": "customers",
+      "internet_access:ssid": "Costco Member Wifi",
+      "membership": "yes",
+      "name": "Costco",
+      "opening_hours": "Mo-Fr 09:00-20:30; Sa,Su 09:00-19:00",
+      "operator": "Costco",
+      "payment:cards": "yes",
+      "payment:cash": "yes",
+      "payment:qr_code": "no",
+      "self_checkout": "yes",
+      "self_checkout:handheld": "no",
+      "self_checkout:self_scan": "yes",
+      "shop": "wholesale",
+      "source": "Bing",
+      "toilets": "yes",
+      "toilets:disposal": "flush",
+      "toilets:fee": "no",
+      "toilets:gender_segregated": "yes",
+      "toilets:handwashing": "yes",
+      "toilets:paper_supplied": "yes",
+      "website": "https://www.costco.ca/warehouse-locations/peterborough-on-591.html"
+    },
+    "footprintSource": "batch-001-input.json OSM ring, locally projected from geographic coordinates"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "sourceId": "way/319167856",
+  "asset": "way-319167856.glb",
+  "sourceBlend": "H:\\ChatGPT\\Peterborough-Building-Reconstruction-20261101\\models\\way-319167856.blend",
+  "sha256": "6a7b30bdc6eb0297c7cf9a00e8ea25d7a67b2159aa388399e84beaf18e413cca",
+  "units": "metres",
+  "stats": {
+    "fileBytes": 91872,
+    "triangleCount": 1316,
+    "materialCount": 5,
+    "embeddedImageCount": 1,
+    "meshCount": 5,
+    "nodeCount": 6
+  },
+  "bounds": {
+    "minX": -57.9516,
+    "maxX": 64.3243,
+    "minY": -4.0,
+    "maxY": 17.0,
+    "minZ": -58.343,
+    "maxZ": 108.2187
+  },
+  "budget": {
+    "maxTriangles": 6000,
+    "maxMaterials": 6,
+    "maxBytes": 1000000
+  },
+  "packedOriginalTextures": [
+    "materials/stucco-light.png"
+  ],
+  "foundationDepth": 4.0,
+  "evidenceRecord": "docs/building-reconstruction/batch-001/319167856.json",
+  "observedElements": [
+    "Directly viewed location-specific crop shows a cream high sign wall with a raised central gable, orange THE HOME DEPOT lettering, narrow orange trim and protective rail, gray horizontal fascia, and a broad dark glazed storefront divided by a metal grid.",
+    "The storefront includes a continuous orange accent band above the glazing; the reference image is a close upward crop and does not show an entrance."
+  ],
+  "estimatedElements": [
+    "The OSM footprint is retained exactly. This representative facade is placed on its 118 m edge as a modeling assumption; the photo has no compass reference, so facade bearing is unresolved.",
+    "One-storey warehouse height, roof form, sign-wall proportions, glazing extent, orange rail geometry, and all unpictured elevations are approximate. No customer entrance or service doors are invented.",
+    "Home Depot lettering is shown as one centered line to stay within the gabled sign wall; exact font, size and frontage bearing are estimated."
+  ],
+  "validation": {
+    "footprintContract": "all mesh bounds inside projected OSM-ring bounds plus configured tolerance",
+    "configuredBoundsToleranceM": 2.0,
+    "elevationRangeM": [
+      -4.0,
+      17.0
+    ],
+    "glbReimport": {
+      "rootName": "CityBuilding_way-319167856_Root.001",
+      "meshCount": 5,
+      "materialCount": 5,
+      "bounds": {
+        "minX": -57.9516,
+        "maxX": 64.3243,
+        "minY": -4.0,
+        "maxY": 17.0,
+        "minZ": -58.343,
+        "maxZ": 108.2187
+      },
+      "maxAuthoredBoundsDeltaM": 0.0
+    },
+    "errors": 0,
+    "warnings": []
+  }
+}

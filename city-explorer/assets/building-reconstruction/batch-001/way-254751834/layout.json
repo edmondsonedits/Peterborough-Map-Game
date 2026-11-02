@@ -1,0 +1,340 @@
+{
+  "id": "way-254751834",
+  "rootName": "CityBuilding_way-254751834_Root",
+  "assetUrl": "./assets/building-reconstruction/batch-001/way-254751834/way-254751834.glb",
+  "sourceIds": [
+    "way/254751834"
+  ],
+  "origin": {
+    "lat": 44.2929167,
+    "lon": -78.36098,
+    "yawDegrees": 0
+  },
+  "footprint": [
+    [
+      13.534,
+      41.6404
+    ],
+    [
+      10.1007,
+      42.7348
+    ],
+    [
+      -2.7482,
+      2.5756
+    ],
+    [
+      -3.0191,
+      1.7244
+    ],
+    [
+      -13.5101,
+      5.9692
+    ],
+    [
+      -3.2341,
+      37.8268
+    ],
+    [
+      -7.464,
+      39.1754
+    ],
+    [
+      -6.6595,
+      41.6625
+    ],
+    [
+      -18.1064,
+      45.3103
+    ],
+    [
+      -18.9109,
+      42.8232
+    ],
+    [
+      -23.1089,
+      44.1607
+    ],
+    [
+      -33.2256,
+      12.8005
+    ],
+    [
+      -42.3624,
+      15.7077
+    ],
+    [
+      -31.3377,
+      49.8867
+    ],
+    [
+      -35.8304,
+      51.3127
+    ],
+    [
+      -34.755,
+      54.662
+    ],
+    [
+      -45.6444,
+      58.1219
+    ],
+    [
+      -46.7277,
+      54.7836
+    ],
+    [
+      -51.555,
+      56.3201
+    ],
+    [
+      -79.093,
+      -29.061
+    ],
+    [
+      -74.4489,
+      -30.5422
+    ],
+    [
+      -75.3968,
+      -33.4715
+    ],
+    [
+      -64.2446,
+      -37.0198
+    ],
+    [
+      -63.2967,
+      -34.0905
+    ],
+    [
+      -58.8756,
+      -35.4944
+    ],
+    [
+      -44.0512,
+      10.4792
+    ],
+    [
+      -34.9143,
+      7.572
+    ],
+    [
+      -48.536,
+      -34.6875
+    ],
+    [
+      -43.8919,
+      -36.1576
+    ],
+    [
+      -44.8398,
+      -39.098
+    ],
+    [
+      -33.6876,
+      -42.6463
+    ],
+    [
+      -32.7397,
+      -39.706
+    ],
+    [
+      -28.6612,
+      -41.0103
+    ],
+    [
+      -14.8962,
+      1.6692
+    ],
+    [
+      -4.2378,
+      -2.056
+    ],
+    [
+      -10.9929,
+      -23.1692
+    ],
+    [
+      -7.5755,
+      -24.2746
+    ],
+    [
+      -8.8023,
+      -28.0882
+    ],
+    [
+      1.9198,
+      -31.5039
+    ],
+    [
+      3.1385,
+      -27.6792
+    ],
+    [
+      6.5718,
+      -28.7736
+    ],
+    [
+      10.4114,
+      -16.7689
+    ],
+    [
+      7.5835,
+      -15.8735
+    ],
+    [
+      8.396,
+      -13.3311
+    ],
+    [
+      37.328,
+      -22.5059
+    ],
+    [
+      36.5155,
+      -25.0594
+    ],
+    [
+      33.6,
+      -24.1309
+    ],
+    [
+      28.5178,
+      -39.9934
+    ],
+    [
+      31.9511,
+      -41.0877
+    ],
+    [
+      30.7243,
+      -44.9013
+    ],
+    [
+      41.4464,
+      -48.317
+    ],
+    [
+      42.6731,
+      -44.5034
+    ],
+    [
+      46.0984,
+      -45.5867
+    ],
+    [
+      46.7197,
+      -43.6522
+    ],
+    [
+      52.5747,
+      -45.3435
+    ],
+    [
+      68.0682,
+      0.6522
+    ],
+    [
+      61.7035,
+      3.1172
+    ],
+    [
+      65.9812,
+      16.4705
+    ],
+    [
+      63.2569,
+      17.3437
+    ],
+    [
+      62.5479,
+      17.5648
+    ],
+    [
+      63.7746,
+      21.3784
+    ],
+    [
+      53.0526,
+      24.7941
+    ],
+    [
+      51.8259,
+      20.9805
+    ],
+    [
+      48.4005,
+      22.0638
+    ],
+    [
+      47.0941,
+      17.9849
+    ],
+    [
+      23.9135,
+      25.3689
+    ],
+    [
+      27.6814,
+      37.1414
+    ],
+    [
+      24.256,
+      38.2358
+    ],
+    [
+      25.4748,
+      42.0494
+    ],
+    [
+      14.7607,
+      45.454
+    ]
+  ],
+  "groundSampleBounds": {
+    "minX": -79.093,
+    "maxX": 68.0682,
+    "frontZ": -48.317,
+    "rearZ": 58.1219
+  },
+  "floorOffset": 0.06,
+  "maxHeight": 25,
+  "boundsTolerance": 2.0,
+  "units": "metres",
+  "site": {
+    "name": "Canterbury Gardens Retirement Residence",
+    "address": "1414 Sherbrooke Street",
+    "sourceId": "way/254751834",
+    "areaM2": 7844.8,
+    "estimatedHeightM": 7.1,
+    "sourceTags": {
+      "addr:city": "Peterborough",
+      "addr:housenumber": "1414",
+      "addr:postcode": "K9J 0B1",
+      "addr:street": "Sherbrooke Street",
+      "amenity": "social_facility",
+      "building": "yes",
+      "building:levels": "3",
+      "name": "Canterbury Gardens Retirement Residence",
+      "social_facility": "group_home",
+      "social_facility:for": "senior"
+    },
+    "footprintSource": "batch-001-input.json OSM ring, locally projected from geographic coordinates"
+  },
+  "assetFile": "way-254751834.glb",
+  "evidenceRecord": "docs/building-reconstruction/batch-001/254751834.json",
+  "foundationDepth": 4.0,
+  "observedElements": [
+    "Directly viewed architect photos show red-brown brick lower floors, a pale upper finish, repeated white-framed windows, dark roof/eaves, metal balconies on a photographed corner, a full-height glazed atrium with dark mullions, a pale name panel and projecting canopy.",
+    "Architect project description identifies a three-storey atrium with floor-to-ceiling glazing and separate townhouse blocks behind the main building.",
+    "Original procedural brick and stucco tiles are generated for this asset; third-party photos are not shipped as textures."
+  ],
+  "estimatedElements": [
+    "10.1 m overall height and floor/material transition heights are estimates based on three-storey description and photo proportions.",
+    "The chosen 89.7 m footprint edge hosts a representative photographed facade; the photos have no compass bearing, so this placement is unverified.",
+    "Atrium width, window positions and dimensions, door dimensions, canopy size, sign lettering size, and all unseen wall/roof details are approximate.",
+    "Repeated framed windows on five additional long boundary edges are estimated side treatments inspired by the second directly viewed wing photo; edge assignment, bay spacing and dimensions are not compass-verified.",
+    "No detached rear townhouse blocks or unverified service-side details are invented."
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "osm_way": 176908280,
+  "name": "Walmart Supercentre #3071",
+  "address": "1002 Chemong Road, Peterborough, ON K9H 7E2",
+  "viewed": "2026-11-01",
+  "readiness": "partial; one nighttime exterior photo directly reviewed, but it does not reveal the main entrance placement or compass side",
+  "sources": [
+    {
+      "url": "https://www.walmart.ca/en/store/3071",
+      "type": "official Walmart location",
+      "notes": "Official page gives Peterborough Supercentre #3071, 1002 Chemong Road."
+    },
+    {
+      "url": "https://mapdoor.ca/on/peterborough/walmart/peterborough-ontario",
+      "type": "address/intersection cross-check",
+      "notes": "Places the store at Chemong Road & Milroy Drive; Milroy is junction context, not mailing street."
+    },
+    {
+      "url": "https://www.loc8nearme.com/ontario/peterborough/walmart-supercentre/6826313/",
+      "type": "location-specific photo page",
+      "image_url": "https://cdn9.localdatacdn.com/on/peterborough/6826313/original/iDiwI2HsZS.jpg",
+      "notes": "Returned image is interior produce area, not an exterior reference."
+    },
+    {
+      "url": "https://www.mapquest.com/ca/ontario/walmart-supercentre-272858643",
+      "image_url": "https://ir.4sqi.net/img/general/original/75819501_uHZk7TxzC1D15_7BT0-e1uiTgvuPAwkaVvcAueH_6ks.jpg?w=750",
+      "local_reference": "H:\\ChatGPT\\Peterborough-Building-Reconstruction-20261101\\references\\batch-001\\walmart-peterborough-exterior.jpg",
+      "type": "location-specific exterior photo",
+      "directly_viewed": true
+    }
+  ],
+  "observed": [
+    "Official address and store identity verified; mapped Milroy Drive naming corresponds to nearby Chemong/Milroy intersection.",
+    "Photo shows a tall blue panel with Walmart wordmark and yellow spark above Walmart Supercentre text, set in broad pale yellow/tan wall field.",
+    "Visible adjoining wall has tan/brown sections and a small George sign; lower facade has darker gray-brown base band.",
+    "This nighttime image shows a fragment of the customer-facing exterior with snow-covered parking foreground; no clear main entrance is visible."
+  ],
+  "estimates": [],
+  "orientation_confidence": "high for address at Chemong Road/Milroy Drive; low/unknown for customer entrance frontage direction",
+  "unseen": "Full building outline, roof, main entrance doors, garden center and receiving/service elevations remain unverified; the viewed customer-facing sign wall is not enough to identify entrance bearing.",
+  "entrance_orientation_clue": "MapQuest photo shows the Walmart Supercentre sign wall facing a snowy parking area and adjacent tenant sign, likely a customer-facing retail frontage; image has no compass reference and no visible main doors, so do not assign a mapped side from it."
+}
