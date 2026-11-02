@@ -1,0 +1,882 @@
+{
+  "checkedAt": "2026-11-01T19:04:05.4391401-05:00",
+  "status": "local implementation; not published",
+  "preview": "http://127.0.0.1:4183/city-explorer/?station=2",
+  "method": "Standalone Playwright Chromium D3D11 desktop, 1280x800, 120 warm frame samples per view",
+  "customFrontages": {
+    "baselineCount": 50,
+    "changedInBalanced": 0,
+    "changedInLow": 0
+  },
+  "tests": {
+    "focusedPassed": 28,
+    "releaseConsistencyPassed": 18,
+    "editorOverrides": "passed",
+    "editorIntegration": "passed",
+    "syntax": "passed",
+    "diffWhitespace": "passed"
+  },
+  "limits": [
+    "Initial loading is heavier: baseline Balanced68s, expanded Balanced131s and Low100s in these runs.",
+    "Vsync-limited frame samples do not establish device-independent performance or GPU headroom.",
+    "Physical phones were not tested.",
+    "Facades are illustrative; custom buildings, source footprints and existing roofs are preserved."
+  ],
+  "runs": [
+    {
+      "mode": "baseline",
+      "startupMs": 68134,
+      "pageErrors": [],
+      "requestFailures": [],
+      "driveOutMetres": null,
+      "coverage": null,
+      "views": [
+        {
+          "name": "north",
+          "drawCalls": 110,
+          "triangles": 978399,
+          "textures": 41,
+          "geometries": 1031,
+          "frames": {
+            "medianMs": 16.69999999999709,
+            "p95Ms": 16.70000000001164,
+            "maxMs": 16.80000000000291
+          }
+        },
+        {
+          "name": "west",
+          "drawCalls": 98,
+          "triangles": 964655,
+          "textures": 41,
+          "geometries": 1029,
+          "frames": {
+            "medianMs": 16.69999999999709,
+            "p95Ms": 16.70000000001164,
+            "maxMs": 16.80000000000291
+          }
+        },
+        {
+          "name": "east",
+          "drawCalls": 1285,
+          "triangles": 1681740,
+          "textures": 42,
+          "geometries": 1107,
+          "frames": {
+            "medianMs": 16.69999999999709,
+            "p95Ms": 16.79999999998836,
+            "maxMs": 16.80000000000291
+          }
+        },
+        {
+          "name": "downtown",
+          "drawCalls": 571,
+          "triangles": 1774138,
+          "textures": 45,
+          "geometries": 1256,
+          "frames": {
+            "medianMs": 16.69999999999709,
+            "p95Ms": 16.70000000001164,
+            "maxMs": 16.80000000000291
+          }
+        },
+        {
+          "name": "south",
+          "drawCalls": 891,
+          "triangles": 1502096,
+          "textures": 45,
+          "geometries": 1176,
+          "frames": {
+            "medianMs": 16.69999999999709,
+            "p95Ms": 16.80000000000291,
+            "maxMs": 16.80000000000291
+          }
+        }
+      ]
+    },
+    {
+      "mode": "city",
+      "startupMs": 131171,
+      "pageErrors": [],
+      "requestFailures": [],
+      "driveOutMetres": 40.697709560144546,
+      "coverage": {
+        "mode": "all",
+        "station2FacadesEnabled": true,
+        "baselineSemantics": "?cityFacades=0 keeps the existing Station 2 pilot; ?station2Facades=0 disables that pilot region.",
+        "consideredParts": 30564,
+        "eligibleParts": 30513,
+        "coveredParts": 30513,
+        "excludedParts": 51,
+        "coverageInvariant": {
+          "sourcePartsAccounted": true,
+          "eligiblePartsCovered": true,
+          "unresolvedPartCount": 0,
+          "overaccountedPartCount": 0
+        },
+        "uncoveredPartCount": 0,
+        "uncoveredIds": [],
+        "consideredUniqueBuildings": 30564,
+        "coveredUniqueBuildings": 30513,
+        "wallFaces": 228058,
+        "openingQuads": 436376,
+        "existingRoofSurfaceParts": 30513,
+        "openingBudgetPerPart": {
+          "high": 16,
+          "balanced": 16,
+          "low": 8,
+          "active": 16,
+          "station2Pilot": "existing-rich-pilot"
+        },
+        "roadSegmentsIndexed": 53864,
+        "roadQueries": 30349,
+        "roadCandidateSegments": 381638,
+        "averageRoadCandidatesPerQuery": 12.574977758739992,
+        "exclusionReasons": {
+          "authored-glb-replacement": 1,
+          "captured-footage-facade": 48,
+          "reviewed-custom-facade": 1,
+          "reviewed-station-replacement": 1
+        },
+        "exclusionSamples": [
+          {
+            "id": "way/77774650",
+            "partId": "way/77774650#175",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/176908281",
+            "partId": "way/176908281#193",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/194192530",
+            "partId": "way/194192530#219",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/458496269",
+            "partId": "way/458496269#404",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/472446708",
+            "partId": "way/472446708#450",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/558402285",
+            "partId": "way/558402285#539",
+            "reason": "authored-glb-replacement"
+          },
+          {
+            "id": "way/755554888",
+            "partId": "way/755554888#1147",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/755554892",
+            "partId": "way/755554892#1148",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/846927296",
+            "partId": "way/846927296#1203",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/995887447",
+            "partId": "way/995887447#1303",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1005975361",
+            "partId": "way/1005975361#19955",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1005975362",
+            "partId": "way/1005975362#19956",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1005975373",
+            "partId": "way/1005975373#19962",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1005977973",
+            "partId": "way/1005977973#19996",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006243532",
+            "partId": "way/1006243532#20114",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006243540",
+            "partId": "way/1006243540#20118",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006243541",
+            "partId": "way/1006243541#20119",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006243552",
+            "partId": "way/1006243552#20126",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006243553",
+            "partId": "way/1006243553#20127",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006243554",
+            "partId": "way/1006243554#20128",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006243555",
+            "partId": "way/1006243555#20129",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006243558",
+            "partId": "way/1006243558#20130",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006243559",
+            "partId": "way/1006243559#20131",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006243562",
+            "partId": "way/1006243562#20134",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006243563",
+            "partId": "way/1006243563#20135",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006243570",
+            "partId": "way/1006243570#20142",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006575702",
+            "partId": "way/1006575702#20584",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006575703",
+            "partId": "way/1006575703#20585",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006575704",
+            "partId": "way/1006575704#20586",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006575705",
+            "partId": "way/1006575705#20587",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006575731",
+            "partId": "way/1006575731#20597",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006575733",
+            "partId": "way/1006575733#20599",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006575739",
+            "partId": "way/1006575739#20604",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006575740",
+            "partId": "way/1006575740#20605",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006575741",
+            "partId": "way/1006575741#20606",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006575743",
+            "partId": "way/1006575743#20608",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006575744",
+            "partId": "way/1006575744#20609",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006575745",
+            "partId": "way/1006575745#20610",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1009651229",
+            "partId": "way/1009651229#23569",
+            "reason": "reviewed-custom-facade"
+          },
+          {
+            "id": "way/1009651239",
+            "partId": "way/1009651239#23576",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1009651246",
+            "partId": "way/1009651246#23583",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1009651247",
+            "partId": "way/1009651247#23584",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1009651251",
+            "partId": "way/1009651251#23586",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1009651259",
+            "partId": "way/1009651259#23593",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1009651260",
+            "partId": "way/1009651260#23594",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1009651261",
+            "partId": "way/1009651261#23595",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1009651262",
+            "partId": "way/1009651262#23596",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1009651266",
+            "partId": "way/1009651266#23599",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1022083769",
+            "partId": "way/1022083769#26537",
+            "reason": "reviewed-station-replacement"
+          },
+          {
+            "id": "way/1031042883",
+            "partId": "way/1031042883#29528",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1031894168",
+            "partId": "way/1031894168#30013",
+            "reason": "captured-footage-facade"
+          }
+        ]
+      },
+      "views": [
+        {
+          "name": "north",
+          "drawCalls": 105,
+          "triangles": 1042371,
+          "textures": 42,
+          "geometries": 1061,
+          "frames": {
+            "medianMs": 16.699999999982538,
+            "p95Ms": 16.79999999998836,
+            "maxMs": 16.79999999998836
+          }
+        },
+        {
+          "name": "west-street",
+          "drawCalls": 100,
+          "triangles": 1074253,
+          "textures": 42,
+          "geometries": 1057,
+          "frames": {
+            "medianMs": 16.699999999982538,
+            "p95Ms": 16.79999999998836,
+            "maxMs": 16.800000000017462
+          }
+        },
+        {
+          "name": "custom",
+          "drawCalls": 846,
+          "triangles": 2104424,
+          "textures": 42,
+          "geometries": 1153,
+          "frames": {
+            "medianMs": 16.699999999982538,
+            "p95Ms": 16.79999999998836,
+            "maxMs": 16.800000000017462
+          }
+        },
+        {
+          "name": "west",
+          "drawCalls": 101,
+          "triangles": 1074673,
+          "textures": 42,
+          "geometries": 1144,
+          "frames": {
+            "medianMs": 16.699999999982538,
+            "p95Ms": 16.79999999998836,
+            "maxMs": 16.800000000017462
+          }
+        },
+        {
+          "name": "east",
+          "drawCalls": 1301,
+          "triangles": 1899684,
+          "textures": 43,
+          "geometries": 1228,
+          "frames": {
+            "medianMs": 16.699999999982538,
+            "p95Ms": 16.70000000001164,
+            "maxMs": 16.800000000017462
+          }
+        },
+        {
+          "name": "downtown",
+          "drawCalls": 569,
+          "triangles": 2025216,
+          "textures": 46,
+          "geometries": 1323,
+          "frames": {
+            "medianMs": 16.699999999982538,
+            "p95Ms": 16.70000000001164,
+            "maxMs": 16.800000000017462
+          }
+        },
+        {
+          "name": "south",
+          "drawCalls": 890,
+          "triangles": 1668326,
+          "textures": 46,
+          "geometries": 1208,
+          "frames": {
+            "medianMs": 16.699999999982538,
+            "p95Ms": 16.70000000001164,
+            "maxMs": 16.79999999998836
+          }
+        }
+      ]
+    },
+    {
+      "mode": "low",
+      "startupMs": 100144,
+      "pageErrors": [],
+      "requestFailures": [],
+      "driveOutMetres": null,
+      "coverage": {
+        "mode": "all",
+        "station2FacadesEnabled": true,
+        "baselineSemantics": "?cityFacades=0 keeps the existing Station 2 pilot; ?station2Facades=0 disables that pilot region.",
+        "consideredParts": 30564,
+        "eligibleParts": 30513,
+        "coveredParts": 30513,
+        "excludedParts": 51,
+        "coverageInvariant": {
+          "sourcePartsAccounted": true,
+          "eligiblePartsCovered": true,
+          "unresolvedPartCount": 0,
+          "overaccountedPartCount": 0
+        },
+        "uncoveredPartCount": 0,
+        "uncoveredIds": [],
+        "consideredUniqueBuildings": 30564,
+        "coveredUniqueBuildings": 30513,
+        "wallFaces": 228058,
+        "openingQuads": 247020,
+        "existingRoofSurfaceParts": 30513,
+        "openingBudgetPerPart": {
+          "high": 16,
+          "balanced": 16,
+          "low": 8,
+          "active": 8,
+          "station2Pilot": "existing-rich-pilot"
+        },
+        "roadSegmentsIndexed": 53864,
+        "roadQueries": 30349,
+        "roadCandidateSegments": 381638,
+        "averageRoadCandidatesPerQuery": 12.574977758739992,
+        "exclusionReasons": {
+          "authored-glb-replacement": 1,
+          "captured-footage-facade": 48,
+          "reviewed-custom-facade": 1,
+          "reviewed-station-replacement": 1
+        },
+        "exclusionSamples": [
+          {
+            "id": "way/77774650",
+            "partId": "way/77774650#175",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/176908281",
+            "partId": "way/176908281#193",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/194192530",
+            "partId": "way/194192530#219",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/458496269",
+            "partId": "way/458496269#404",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/472446708",
+            "partId": "way/472446708#450",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/558402285",
+            "partId": "way/558402285#539",
+            "reason": "authored-glb-replacement"
+          },
+          {
+            "id": "way/755554888",
+            "partId": "way/755554888#1147",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/755554892",
+            "partId": "way/755554892#1148",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/846927296",
+            "partId": "way/846927296#1203",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/995887447",
+            "partId": "way/995887447#1303",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1005975361",
+            "partId": "way/1005975361#19955",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1005975362",
+            "partId": "way/1005975362#19956",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1005975373",
+            "partId": "way/1005975373#19962",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1005977973",
+            "partId": "way/1005977973#19996",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006243532",
+            "partId": "way/1006243532#20114",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006243540",
+            "partId": "way/1006243540#20118",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006243541",
+            "partId": "way/1006243541#20119",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006243552",
+            "partId": "way/1006243552#20126",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006243553",
+            "partId": "way/1006243553#20127",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006243554",
+            "partId": "way/1006243554#20128",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006243555",
+            "partId": "way/1006243555#20129",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006243558",
+            "partId": "way/1006243558#20130",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006243559",
+            "partId": "way/1006243559#20131",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006243562",
+            "partId": "way/1006243562#20134",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006243563",
+            "partId": "way/1006243563#20135",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006243570",
+            "partId": "way/1006243570#20142",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006575702",
+            "partId": "way/1006575702#20584",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006575703",
+            "partId": "way/1006575703#20585",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006575704",
+            "partId": "way/1006575704#20586",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006575705",
+            "partId": "way/1006575705#20587",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006575731",
+            "partId": "way/1006575731#20597",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006575733",
+            "partId": "way/1006575733#20599",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006575739",
+            "partId": "way/1006575739#20604",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006575740",
+            "partId": "way/1006575740#20605",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006575741",
+            "partId": "way/1006575741#20606",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006575743",
+            "partId": "way/1006575743#20608",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006575744",
+            "partId": "way/1006575744#20609",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1006575745",
+            "partId": "way/1006575745#20610",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1009651229",
+            "partId": "way/1009651229#23569",
+            "reason": "reviewed-custom-facade"
+          },
+          {
+            "id": "way/1009651239",
+            "partId": "way/1009651239#23576",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1009651246",
+            "partId": "way/1009651246#23583",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1009651247",
+            "partId": "way/1009651247#23584",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1009651251",
+            "partId": "way/1009651251#23586",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1009651259",
+            "partId": "way/1009651259#23593",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1009651260",
+            "partId": "way/1009651260#23594",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1009651261",
+            "partId": "way/1009651261#23595",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1009651262",
+            "partId": "way/1009651262#23596",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1009651266",
+            "partId": "way/1009651266#23599",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1022083769",
+            "partId": "way/1022083769#26537",
+            "reason": "reviewed-station-replacement"
+          },
+          {
+            "id": "way/1031042883",
+            "partId": "way/1031042883#29528",
+            "reason": "captured-footage-facade"
+          },
+          {
+            "id": "way/1031894168",
+            "partId": "way/1031894168#30013",
+            "reason": "captured-footage-facade"
+          }
+        ]
+      },
+      "views": [
+        {
+          "name": "north",
+          "drawCalls": 89,
+          "triangles": 936008,
+          "textures": 42,
+          "geometries": 1048,
+          "frames": {
+            "medianMs": 16.69999999999709,
+            "p95Ms": 16.80000000000291,
+            "maxMs": 16.80000000000291
+          }
+        },
+        {
+          "name": "west-street",
+          "drawCalls": 72,
+          "triangles": 945183,
+          "textures": 42,
+          "geometries": 1025,
+          "frames": {
+            "medianMs": 16.69999999999709,
+            "p95Ms": 16.70000000001164,
+            "maxMs": 16.80000000000291
+          }
+        },
+        {
+          "name": "custom",
+          "drawCalls": 822,
+          "triangles": 1812872,
+          "textures": 42,
+          "geometries": 1141,
+          "frames": {
+            "medianMs": 16.69999999999709,
+            "p95Ms": 16.70000000001164,
+            "maxMs": 16.80000000000291
+          }
+        },
+        {
+          "name": "west",
+          "drawCalls": 72,
+          "triangles": 945183,
+          "textures": 42,
+          "geometries": 1093,
+          "frames": {
+            "medianMs": 16.69999999999709,
+            "p95Ms": 16.79999999998836,
+            "maxMs": 16.80000000000291
+          }
+        },
+        {
+          "name": "east",
+          "drawCalls": 1208,
+          "triangles": 1456222,
+          "textures": 43,
+          "geometries": 1122,
+          "frames": {
+            "medianMs": 16.69999999999709,
+            "p95Ms": 16.79999999998836,
+            "maxMs": 16.80000000000291
+          }
+        },
+        {
+          "name": "downtown",
+          "drawCalls": 549,
+          "triangles": 1875423,
+          "textures": 46,
+          "geometries": 1200,
+          "frames": {
+            "medianMs": 16.69999999999709,
+            "p95Ms": 16.70000000001164,
+            "maxMs": 16.80000000000291
+          }
+        },
+        {
+          "name": "south",
+          "drawCalls": 890,
+          "triangles": 1596130,
+          "textures": 46,
+          "geometries": 1169,
+          "frames": {
+            "medianMs": 16.69999999999709,
+            "p95Ms": 16.70000000001164,
+            "maxMs": 16.80000000000291
+          }
+        }
+      ]
+    }
+  ],
+  "screenshots": {
+    "baseline": "H:\\ChatGPT\\Peterborough-Facilities-20261027\\qa\\citywide-building-textures/baseline-south.png",
+    "expanded": "H:\\ChatGPT\\Peterborough-Facilities-20261027\\qa\\citywide-building-textures-final/city-south.png",
+    "closeup": "H:\\ChatGPT\\Peterborough-Facilities-20261027\\qa\\citywide-building-textures-final/city-west-street.png",
+    "custom": "H:\\ChatGPT\\Peterborough-Facilities-20261027\\qa\\citywide-building-textures-final/city-custom.png",
+    "low": "H:\\ChatGPT\\Peterborough-Facilities-20261027\\qa\\citywide-building-textures-final/low-south.png"
+  }
+}

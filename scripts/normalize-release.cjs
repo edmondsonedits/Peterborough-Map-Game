@@ -127,14 +127,14 @@ for (const file of ['city-explorer/app.js', 'city-explorer/business-signs.js', '
 // road module with the new app can otherwise mix incompatible release behavior.
 const visualModules = ["water-street-paint", "road-marking-pack-finish", "road-marking-layout", "road-marking-paths", "road-marking-projection", "street-paint", "road-pack-optimize", "connected-road-surface", "road-paint-geometry", "road-tile-pack", "road-tile-stream", "road-tile-layer", "road-pack-version", "road-pack-export", "road-pack-build", "road-surface-finish", "graphics-quality", "road-recovery", "editor/feature-batch-binding", "station-one-runtime", "station-two-runtime", "station-three-runtime", "emergency-facilities", "emergency-facilities-catalog", "building-appearance", "building-archetypes", "city-material-library", "city-visual-settings", "corridor-recording-appearances", "cricket-recording-appearances", "facade-components", "hunter-bridge-appearance", "hunter-bridge-source", "hunter-bridge-surface", "intersection-hologram-rules", "intersection-holograms", "recording-appearance", "recording-photo-profiles", "recording-reference-appearances", "recording-surface-appearance", "reviewed-photo-appearance", "road-appearance-rules", "road-network", "roadside-furniture-geometry", "roadside-furniture-placement", "sherbrooke-details", "sherbrooke-footage", "sherbrooke-footage-profiles", "sherbrooke-garden-clearance", "sherbrooke-plan", "sherbrooke-pole-placement", "web-building-profiles"];
 const visualImport = new RegExp('(\\./(?:' + visualModules.join('|') + ')\\.js)(?:\\?v=[^\"\']*)?(?=[\"\'])', 'g');
-for (const file of ['city-explorer/app.js', ...visualModules.map(name => `city-explorer/${name}.js`), 'city-explorer/material-preview.js']) {
+for (const file of ['city-explorer/app.js', ...visualModules.map(name => `city-explorer/${name}.js`), 'city-explorer/material-preview.js', 'city-explorer/station2-neighborhood-facades.mjs']) {
   write(file, read(file).replace(visualImport, `$1?v=${VERSION}`));
 }
 
 
 // Shared neighborhood textures and geometry follow the current app cache token.
 write('city-explorer/app.js', read('city-explorer/app.js').replace(
-  /(\.\/station2-neighborhood-(?:facades|openings|roofs)\.mjs)(?:\?v=[^"']*)?(?=["'])/g,
+  /(\.\/(?:station2-neighborhood-(?:facades|openings|roofs)|citywide-building-facades)\.mjs)(?:\?v=[^"']*)?(?=["'])/g,
   `$1?v=${VERSION}`,
 ));
 // Authored facility geometry and layout revisions must bypass earlier cached copies.

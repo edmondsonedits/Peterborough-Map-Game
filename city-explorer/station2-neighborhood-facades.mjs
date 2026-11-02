@@ -154,4 +154,4 @@ function station2SourceWallKey(tags,id){
   if(/grey|gray|blue|slate/.test(colour))return 'residentialSlate';
   const variant=stableHash(id)%10;return variant<4?'residentialBrick':variant<7?'residentialPale':variant===7?'residentialSlate':'residential';
 }
-import {buildingFacadePlan} from './building-archetypes.js?v=1.6.163';
+import {buildingFacadePlan} from './building-archetypes.js?v=1.6.165';
