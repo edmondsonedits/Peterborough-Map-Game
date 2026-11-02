@@ -7,6 +7,7 @@ import {
   createStationThreeDoorController,
   inspectStationThreeModel,
   loadStationThreeAsset,
+  hideStationThreeReplacementRecords,
   selectStationThreeSpawn,
   stationGameplayLabels,
   stationThreeLocalPosition,
@@ -14,6 +15,20 @@ import {
   STATION_THREE_INITIAL_CAMERA_DISTANCE_SCALE,
   STATION_THREE_BAY_EXIT_LOCAL_Z,
 } from '../city-explorer/station-three-runtime.js';
+
+test('successful Station 3 replacement suppresses only its mapped source and is safe to reapply', () => {
+  const records = [
+    { id: 'station-source-a', sourceType: 'building', sourceId: 'way/558402285' },
+    { id: 'station-source-b', sourceType: 'building', sourceId: 'way/558402285' },
+    { id: 'neighbor', sourceType: 'building', sourceId: 'way/558402286' },
+    { id: 'same-id-landmark', sourceType: 'landmark', sourceId: 'way/558402285' },
+  ];
+  const hidden = new Set();
+  const hide = id => { hidden.add(id); };
+  assert.equal(hideStationThreeReplacementRecords(records, hide), 2);
+  assert.equal(hideStationThreeReplacementRecords(records, hide), 2);
+  assert.deepEqual([...hidden].sort(), ['station-source-a', 'station-source-b']);
+});
 
 function modelWithDoors() {
   const root = { name: 'Station3', children: [] };

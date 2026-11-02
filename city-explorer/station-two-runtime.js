@@ -1,4 +1,5 @@
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { createPromiseCache } from './asset-request-cache.js';
 import { createStationTwoApron } from './station-two-apron.js';
 import {
   createDoorState, foldedInnerPivot, frontDoorForTruck as frontDoorForTruckCore, nearestStationDoor, sampleStationFloor, sectionalPanelPose, stationLocalToWorld,
@@ -6,7 +7,15 @@ import {
   stationCollision, stationDoorObstructed, sweepStationTruck,
 } from './station-two-core.mjs';
 
-const STATION_MODEL = './assets/station2/station2.glb?v=1.6.168';
+const STATION_MODEL = new URL('./assets/station2/station2.glb?v=1.6.169', import.meta.url);
+const cacheAssetRequest = createPromiseCache();
+export function preloadStationTwoAsset() {
+  return cacheAssetRequest(STATION_MODEL.href, async () => {
+    const response = await fetch(STATION_MODEL);
+    if (!response.ok) throw new Error(`Station 2 HTTP ${response.status}`);
+    return response.arrayBuffer();
+  });
+}
 const TRUCK_DIMENSIONS = Object.freeze({ length: 10.5, width: 3.2 });
 const FRONT_NODE = /^Door_F([1-3])_([LR])_(Outer|Inner)$/;
 const REAR_NODE = /^Door_R([1-2])_Panel([0-6])$/;
@@ -83,49 +92,49 @@ export function createStationTwoRuntime({ THREE, scene, layout, project, baseSur
   };
   let loaded = false;
 
-  async function load() {
-    return new Promise(resolve => {
-      new GLTFLoader().load(STATION_MODEL, gltf => {
-        try {
-          const contract = validateModel(gltf.scene, THREE, layout);
-          state.frontNodes = contract.front;
-          state.rearNodes = contract.rear;
-          state.bounds = contract.bounds;
-          for (const node of state.frontNodes.values()) { state.frontBaseRotations.set(node, node.rotation.y); state.frontBasePositions.set(node, node.position.clone()); }
-          for (const node of state.rearNodes.values()) state.rearBases.set(node, { position: node.position.clone(), rotation: node.rotation.clone() });
-          root.position.set(spawn.anchor.x, datum, spawn.anchor.z);
-          root.rotation.y = yaw;
-          root.add(gltf.scene);
-          const foundationMaterial = new THREE.MeshStandardMaterial({ color: 0x6d7068, roughness: 1 });
-          const foundationDepth = Math.max(0.5, datum - Math.min(...groundSamples) + 0.35);
-          for (const volume of [layout.bay, layout.wing, layout.tower, layout.sideAnnex].filter(Boolean)) {
-            const base = new THREE.Mesh(new THREE.BoxGeometry(volume.maxX - volume.minX, foundationDepth, volume.rearZ - volume.frontZ), foundationMaterial);
-            base.position.set((volume.minX + volume.maxX) / 2, -foundationDepth / 2 - 0.01, (volume.frontZ + volume.rearZ) / 2);
-            base.name = 'Station2_foundation'; root.add(base);
-          }
-          scene.add(root);
-          loaded = true;
-          state.status = 'ready';
-          root.add(createStationTwoApron({ THREE, layout, worldPoint, surfaceAt, baseSurface, datum }));
-          for (const z of [6, 17]) {
-            const light = new THREE.PointLight(0xffefd6, 68, 22, 2);
-            light.position.set(0, 5.3, z);
-            light.name = `Station2_bay_light_${z}`;
-            root.add(light);
-          }
-          onReady({ sourceId: layout.site.candidateReplacementOsmId, root });
-          resolve(true);
-        } catch (error) {
-          root.removeFromParent();
-          loaded = false;
-          state.status = 'error'; state.error = String(error?.message || error);
-          resolve(false);
+  let loadPromise = null;
+  function load() {
+    if (loadPromise) return loadPromise;
+    loadPromise = (async () => {
+      try {
+        const bytes = await preloadStationTwoAsset();
+        const gltf = await new GLTFLoader().parseAsync(bytes, new URL('.', STATION_MODEL).href);
+        const contract = validateModel(gltf.scene, THREE, layout);
+        state.frontNodes = contract.front;
+        state.rearNodes = contract.rear;
+        state.bounds = contract.bounds;
+        for (const node of state.frontNodes.values()) { state.frontBaseRotations.set(node, node.rotation.y); state.frontBasePositions.set(node, node.position.clone()); }
+        for (const node of state.rearNodes.values()) state.rearBases.set(node, { position: node.position.clone(), rotation: node.rotation.clone() });
+        root.position.set(spawn.anchor.x, datum, spawn.anchor.z);
+        root.rotation.y = yaw;
+        root.add(gltf.scene);
+        const foundationMaterial = new THREE.MeshStandardMaterial({ color: 0x6d7068, roughness: 1 });
+        const foundationDepth = Math.max(0.5, datum - Math.min(...groundSamples) + 0.35);
+        for (const volume of [layout.bay, layout.wing, layout.tower, layout.sideAnnex].filter(Boolean)) {
+          const base = new THREE.Mesh(new THREE.BoxGeometry(volume.maxX - volume.minX, foundationDepth, volume.rearZ - volume.frontZ), foundationMaterial);
+          base.position.set((volume.minX + volume.maxX) / 2, -foundationDepth / 2 - 0.01, (volume.frontZ + volume.rearZ) / 2);
+          base.name = 'Station2_foundation'; root.add(base);
         }
-      }, undefined, error => {
-        state.status = 'error'; state.error = String(error?.message || 'Station 2 GLB could not be loaded');
-        resolve(false);
-      });
-    });
+        scene.add(root);
+        loaded = true;
+        state.status = 'ready';
+        root.add(createStationTwoApron({ THREE, layout, worldPoint, surfaceAt, baseSurface, datum }));
+        for (const z of [6, 17]) {
+          const light = new THREE.PointLight(0xffefd6, 68, 22, 2);
+          light.position.set(0, 5.3, z);
+          light.name = `Station2_bay_light_${z}`;
+          root.add(light);
+        }
+        onReady({ sourceId: layout.site.candidateReplacementOsmId, root });
+        return true;
+      } catch (error) {
+        root.removeFromParent();
+        loaded = false;
+        state.status = 'error'; state.error = String(error?.message || error);
+        return false;
+      }
+    })();
+    return loadPromise;
   }
 
   function surfaceAt(x, z) {

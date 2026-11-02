@@ -15,6 +15,16 @@ export function stationGameplayLabels(station) {
   };
 }
 
+export function hideStationThreeReplacementRecords(records, hide) {
+  if (typeof hide !== 'function') return 0;
+  let hidden = 0;
+  for (const record of records || []) {
+    if (record?.sourceType !== 'building' || String(record.sourceId) !== 'way/558402285') continue;
+    if (hide(record.id) !== false) hidden += 1;
+  }
+  return hidden;
+}
+
 export function stationThreeLocalPosition({ x, z, anchorX, anchorZ, modelYaw }) {
   const dx = Number(x) - Number(anchorX);
   const dz = Number(z) - Number(anchorZ);

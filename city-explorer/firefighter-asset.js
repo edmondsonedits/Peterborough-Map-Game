@@ -1,5 +1,17 @@
 import * as THREE from 'three';
 import {GLTFLoader} from './vendor/three-r180/examples/jsm/loaders/GLTFLoader.js';
+import {createPromiseCache} from './asset-request-cache.js';
+
+const cacheAssetRequest=createPromiseCache();
+const FIREFIGHTER_URL=new URL('./assets/characters/firefighter.glb?v=4',import.meta.url);
+
+export function preloadFirefighterAsset() {
+  return cacheAssetRequest(FIREFIGHTER_URL.href,async()=>{
+    const response=await fetch(FIREFIGHTER_URL,{signal:AbortSignal.timeout(15000)});
+    if(!response.ok)throw Error(`Firefighter HTTP ${response.status}`);
+    return response.arrayBuffer();
+  });
+}
 
 export function prepareFirefighter(scene) {
   scene.updateMatrixWorld(true);
@@ -22,10 +34,7 @@ export function prepareFirefighter(scene) {
   return {scene,...rig};
 }
 export async function installFirefighter(root) {
-  const url=new URL('./assets/characters/firefighter.glb?v=4',import.meta.url);
-  const response=await fetch(url,{signal:AbortSignal.timeout(15000)});
-  if(!response.ok)throw Error(`Firefighter HTTP ${response.status}`);
-  const model=prepareFirefighter((await new GLTFLoader().parseAsync(await response.arrayBuffer(),new URL('.',url).href)).scene);
+  const model=prepareFirefighter((await new GLTFLoader().parseAsync(await preloadFirefighterAsset(),new URL('.',FIREFIGHTER_URL).href)).scene);
   const animation=root.userData.animation,old=[...animation.visual.children];
   animation.visual.clear();animation.visual.add(model.scene);
   for(const key of ['leftArm','rightArm','leftLeg','rightLeg'])animation[key]=model[key];

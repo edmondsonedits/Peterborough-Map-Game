@@ -1,5 +1,17 @@
 import * as THREE from 'three';
 import { GLTFLoader } from './vendor/three-r180/examples/jsm/loaders/GLTFLoader.js';
+import { createPromiseCache } from './asset-request-cache.js';
+
+const cacheAssetRequest = createPromiseCache();
+const PUMPER_URL = new URL('./assets/vehicles/generic-pumper.glb', import.meta.url);
+
+export function preloadPumperAsset() {
+  return cacheAssetRequest(PUMPER_URL.href, async () => {
+    const response = await fetch(PUMPER_URL, { signal: AbortSignal.timeout(15000) });
+    if (!response.ok) throw Error(`Pumper HTTP ${response.status}`);
+    return response.arrayBuffer();
+  });
+}
 
 export function preparePumper(scene) {
   scene.updateMatrixWorld(true);
@@ -23,10 +35,7 @@ export function preparePumper(scene) {
 
 export async function installPumper(root) {
   const truck=root.userData.truck;
-  const url=new URL('./assets/vehicles/generic-pumper.glb',import.meta.url);
-  const response=await fetch(url,{signal:AbortSignal.timeout(15000)});
-  if(!response.ok)throw Error(`Pumper HTTP ${response.status}`);
-  const gltf=await new GLTFLoader().parseAsync(await response.arrayBuffer(),new URL('.',url).href);
+  const gltf=await new GLTFLoader().parseAsync(await preloadPumperAsset(),new URL('.',PUMPER_URL).href);
   const model=preparePumper(gltf.scene);
   // Retain the procedural actor until the complete authored model has passed validation.
   const old=[...truck.visual.children];

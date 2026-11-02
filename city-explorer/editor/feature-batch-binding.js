@@ -31,7 +31,10 @@ export function createFeatureBatchBinding(ranges, resolveMesh) {
     return resolveMesh(range.key)?.geometry?.getAttribute?.(name) ?? null;
   }
 
-  function setVisible(visible) {
+  function setVisible(visible, force = false) {
+    const shouldHide = !visible;
+    if (hidden === shouldHide && !force) return;
+    const changedMeshes = new Set();
     for (const range of ranges) {
       const attribute = attributeFor(range, 'position');
       if (!attribute) continue;
@@ -39,12 +42,22 @@ export function createFeatureBatchBinding(ranges, resolveMesh) {
       const end = start + range.vertexCount * 3;
       const identity = rangeIdentity(range);
       if (!originals.has(identity)) originals.set(identity, attribute.array.slice(start, end));
-      if (visible) attribute.array.set(originals.get(identity), start);
-      else attribute.array.fill(0, start, end);
-      attribute.needsUpdate = true;
-      resolveMesh(range.key)?.geometry?.computeBoundingSphere?.();
+      const source = originals.get(identity);
+      let changed = false;
+      for (let offset = 0; offset < end - start; offset += 1) {
+        const next = visible ? source[offset] : 0;
+        if (attribute.array[start + offset] !== next) {
+          attribute.array[start + offset] = next;
+          changed = true;
+        }
+      }
+      if (changed) {
+        attribute.needsUpdate = true;
+        changedMeshes.add(range.key);
+      }
     }
-    hidden = !visible;
+    for (const key of changedMeshes) resolveMesh(key)?.geometry?.computeBoundingSphere?.();
+    hidden = shouldHide;
   }
 
   function setAppearance(appearance = {}) {
@@ -59,21 +72,40 @@ export function createFeatureBatchBinding(ranges, resolveMesh) {
       const end = start + range.vertexCount * 3;
       const identity = rangeIdentity(range);
       if (!sourceColors.has(identity)) sourceColors.set(identity, attribute.array.slice(start, end));
-      for (let offset = start; offset < end; offset += 3) attribute.array.set(color, offset);
-      attribute.needsUpdate = true;
+      let changed = false;
+      for (let offset = start; offset < end; offset += 3) {
+        for (let channel = 0; channel < 3; channel += 1) {
+          if (attribute.array[offset + channel] !== color[channel]) {
+            attribute.array[offset + channel] = color[channel];
+            changed = true;
+          }
+        }
+      }
+      if (changed) {
+        attribute.needsUpdate = true;
+      }
     }
     return true;
   }
 
   function restore() {
+    if (!hidden && requestedAppearance === null) return;
+    const wasHidden = hidden;
     requestedAppearance = null;
-    setVisible(true);
+    if (wasHidden) setVisible(true);
     for (const range of ranges) {
       const source = sourceColors.get(rangeIdentity(range));
       const attribute = attributeFor(range, 'color');
       if (source && attribute) {
-        attribute.array.set(source, range.startVertex * 3);
-        attribute.needsUpdate = true;
+        const start = range.startVertex * 3;
+        let changed = false;
+        for (let offset = 0; offset < source.length; offset += 1) {
+          if (attribute.array[start + offset] !== source[offset]) {
+            attribute.array[start + offset] = source[offset];
+            changed = true;
+          }
+        }
+        if (changed) attribute.needsUpdate = true;
       }
     }
   }
@@ -120,6 +152,6 @@ export function createFeatureBatchBinding(ranges, resolveMesh) {
     return root;
   }
 
-  function refresh() { if (hidden) setVisible(false); if (requestedAppearance) setAppearance(requestedAppearance); }
+  function refresh() { if (hidden) setVisible(false, true); if (requestedAppearance) setAppearance(requestedAppearance); }
   return { setVisible, setAppearance, restore, cloneGeometry, refresh };
 }

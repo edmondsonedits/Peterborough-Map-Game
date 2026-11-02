@@ -1,0 +1,145 @@
+{
+  "targetRelease": "1.6.169",
+  "scope": [
+    "Dirty-target-only editor restore",
+    "Early deduplicated spawn asset requests and deferred optional imagery/models"
+  ],
+  "baseline": {
+    "version": "1.6.168",
+    "origin": "public",
+    "startupMs": 135898,
+    "applyCityOverridesMs": 112461.09999999404
+  },
+  "localValidation": [
+    {
+      "station": 1,
+      "startupMs": 20146,
+      "timings": [
+        {
+          "name": "applyCityOverrides",
+          "start": 19964.79999998212,
+          "duration": 116.59999999403954
+        },
+        {
+          "name": "initializeCityEditor",
+          "start": 20081.399999976158,
+          "duration": 43.900000005960464
+        },
+        {
+          "name": "loadPublishedAuthoredDetails",
+          "start": 19677.19999998808,
+          "duration": 448.09999999403954
+        }
+      ],
+      "driveOutMetres": 41.141948478054196,
+      "errors": [],
+      "failedRequests": []
+    },
+    {
+      "station": 2,
+      "startupMs": 24011,
+      "timings": [
+        {
+          "name": "applyCityOverrides",
+          "start": 23780,
+          "duration": 147.5
+        },
+        {
+          "name": "initializeCityEditor",
+          "start": 23927.5,
+          "duration": 52.19999998807907
+        },
+        {
+          "name": "loadPublishedAuthoredDetails",
+          "start": 23434,
+          "duration": 545.7999999821186
+        }
+      ],
+      "driveOutMetres": 40.70312527603426,
+      "errors": [],
+      "failedRequests": []
+    }
+  ],
+  "specialCases": [
+    {
+      "station": 3,
+      "readyMs": 20643,
+      "delayedModel": false,
+      "delayedRequestFinishedMs": null,
+      "distance": 54.247792208021295,
+      "errors": []
+    },
+    {
+      "station": 1,
+      "readyMs": 30974,
+      "delayedModel": true,
+      "delayedRequestFinishedMs": 30368,
+      "distance": 41.13963405013887,
+      "errors": []
+    }
+  ],
+  "recoveryAndSurvey": {
+    "injectedPreload503": true,
+    "stationRequests": 2,
+    "selectedStationLoaded": true,
+    "orthophotoRequestsBeforeOpen": 0,
+    "orthophotoRequestsAfterOpen": 1,
+    "surveyVisible": true,
+    "errors": []
+  },
+  "focusedTests": 59,
+  "reviewCorrections": [
+    "Reapply previous/current override targets rather than memoize signatures, preserving replacement reload and shared appearance semantics.",
+    "Keep stable per-road range arrays for tiles arriving later.",
+    "Hide Station3 mapped shell only after authored model attaches; reapply after editor restore.",
+    "Evict failed warm requests to permit runtime retry; gate selected station readiness.",
+    "Versioned import map bypasses stale startup/editor/actor modules while preserving existing registry identities."
+  ],
+  "limits": [
+    "Desktop Chromium measurements, not physical-phone evidence.",
+    "Baseline used public assets; local timing comparison includes origin differences. Fresh public verification follows publication."
+  ],
+  "preserved": [
+    "Source footprints and heights",
+    "Building materials and detail rules",
+    "Station models and bay controls",
+    "Road geometry and collision surfaces",
+    "Editor undo and source replacement behavior"
+  ],
+  "finalLocalCacheCheck": {
+    "startupMs": 23453,
+    "timings": [
+      {
+        "name": "applyCityOverrides",
+        "start": 23242.40000000596,
+        "duration": 138
+      },
+      {
+        "name": "initializeCityEditor",
+        "start": 23380.40000000596,
+        "duration": 45.099999994039536
+      },
+      {
+        "name": "loadPublishedAuthoredDetails",
+        "start": 22927.80000001192,
+        "duration": 497.69999998807907
+      }
+    ],
+    "stationThreeSource": [
+      {
+        "sourceId": "way/558402285",
+        "visible": false
+      }
+    ],
+    "driveOutMetres": 40.451906572131286,
+    "errors": [],
+    "failedRequests": []
+  },
+  "roadPack": {
+    "buildId": "7831d7e9c91f4ecf6cc6",
+    "tiles": 669,
+    "verified": true,
+    "roadPaintVerified": true,
+    "changedGeometryTiles": 0
+  }
+}

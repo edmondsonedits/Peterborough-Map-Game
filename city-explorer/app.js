@@ -1,87 +1,87 @@
-import {buildWaterStreetPaint} from './water-street-paint.js?v=1.6.168';
-import {buildRoadMarkingLayout} from './road-marking-layout.js?v=1.6.168';
-import {projectMarkingTriangles,markingSurfaceAt} from './road-marking-projection.js?v=1.6.168';
-import { createIntersectionHologramLayer } from './intersection-holograms.js?v=1.6.168';
-import { createRoadsidePlacementResolver, sampleRoadsideRibbon } from './roadside-furniture-placement.js?v=1.6.168';
-import { createRoadsideFurnitureMeshes } from './roadside-furniture-geometry.js?v=1.6.168';
-import { createHunterBridgeSurface, isHunterBridgeLine } from './hunter-bridge-surface.js?v=1.6.168';
-import { createHunterBridgeAppearance } from './hunter-bridge-appearance.js?v=1.6.168';
-import { HUNTER_BRIDGE_FEATURE } from './hunter-bridge-source.js?v=1.6.168';
-import { applyReviewedPhotoAppearance } from './reviewed-photo-appearance.js?v=1.6.168';
-import { CITY_MATERIALS, CITY_PALETTE_SURFACES, installCityMaterialDetail, cloneCityMaterial } from './city-material-library.js?v=1.6.168';
-import { visualSettings, cityShadowSettings, CITY_DAYLIGHT, createCityGlazingEnvironment, glazingIntensity } from './city-visual-settings.js?v=1.6.168';
-import {mappedBuildingDimensions} from './mapped-building-dimensions.js?v=1.6.168';
-import {createBusinessSignLayer, loadBusinessDirectory} from './business-signs.js?v=1.6.168';
-import { recordSherbrookeBuilding, recordSherbrookeSidewalk, sherbrookeBuildings } from './sherbrooke-plan.js?v=1.6.168';
-import { installSherbrookeDetails } from './sherbrooke-details.js?v=1.6.168';
-import { FOOTAGE_PROFILES as BASE_FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js?v=1.6.168';
-import {applyRecordingAppearance, recordingReferencesEnabled} from './recording-appearance.js?v=1.6.168';
-import {applyRecordingSurfacePalette, recordingExpansionEnabled} from './recording-surface-appearance.js?v=1.6.168';
-import {addCricketRecordingProfiles} from './cricket-recording-appearances.js?v=1.6.168';
-import { createFootageFacade, frontageFrame } from './sherbrooke-footage.js?v=1.6.168';
-import { createGardenClearance } from './sherbrooke-garden-clearance.js?v=1.6.168';
+import {buildWaterStreetPaint} from './water-street-paint.js?v=1.6.169';
+import {buildRoadMarkingLayout} from './road-marking-layout.js?v=1.6.169';
+import {projectMarkingTriangles,markingSurfaceAt} from './road-marking-projection.js?v=1.6.169';
+import { createIntersectionHologramLayer } from './intersection-holograms.js?v=1.6.169';
+import { createRoadsidePlacementResolver, sampleRoadsideRibbon } from './roadside-furniture-placement.js?v=1.6.169';
+import { createRoadsideFurnitureMeshes } from './roadside-furniture-geometry.js?v=1.6.169';
+import { createHunterBridgeSurface, isHunterBridgeLine } from './hunter-bridge-surface.js?v=1.6.169';
+import { createHunterBridgeAppearance } from './hunter-bridge-appearance.js?v=1.6.169';
+import { HUNTER_BRIDGE_FEATURE } from './hunter-bridge-source.js?v=1.6.169';
+import { applyReviewedPhotoAppearance } from './reviewed-photo-appearance.js?v=1.6.169';
+import { CITY_MATERIALS, CITY_PALETTE_SURFACES, installCityMaterialDetail, cloneCityMaterial } from './city-material-library.js?v=1.6.169';
+import { visualSettings, cityShadowSettings, CITY_DAYLIGHT, createCityGlazingEnvironment, glazingIntensity } from './city-visual-settings.js?v=1.6.169';
+import {mappedBuildingDimensions} from './mapped-building-dimensions.js?v=1.6.169';
+import {createBusinessSignLayer, loadBusinessDirectory} from './business-signs.js?v=1.6.169';
+import { recordSherbrookeBuilding, recordSherbrookeSidewalk, sherbrookeBuildings } from './sherbrooke-plan.js?v=1.6.169';
+import { installSherbrookeDetails } from './sherbrooke-details.js?v=1.6.169';
+import { FOOTAGE_PROFILES as BASE_FOOTAGE_PROFILES } from './sherbrooke-footage-profiles.js?v=1.6.169';
+import {applyRecordingAppearance, recordingReferencesEnabled} from './recording-appearance.js?v=1.6.169';
+import {applyRecordingSurfacePalette, recordingExpansionEnabled} from './recording-surface-appearance.js?v=1.6.169';
+import {addCricketRecordingProfiles} from './cricket-recording-appearances.js?v=1.6.169';
+import { createFootageFacade, frontageFrame } from './sherbrooke-footage.js?v=1.6.169';
+import { createGardenClearance } from './sherbrooke-garden-clearance.js?v=1.6.169';
 import { appendFootageRoof } from './sherbrooke-footage-roofs.js?v=corridor-20261024';
 import { appendFootageMassing } from './footage-building-massing.js';
 import * as THREE from 'three';
-import stationOneLayout from './assets/station1/layout.json?v=1.6.168' with { type: 'json' };
-import stationTwoLayout from './assets/station2/layout.json?v=1.6.168' with { type: 'json' };
+import stationOneLayout from './assets/station1/layout.json?v=1.6.169' with { type: 'json' };
+import stationTwoLayout from './assets/station2/layout.json?v=1.6.169' with { type: 'json' };
 import { hideStationTwoReplacementRecords, stationCameraOffsetScale } from './station-two-core.mjs';
 import { hideStationOneReplacementRecords } from './station-one-core.mjs';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { createEmergencyFacilityLayer, suppressFacilitySource } from './emergency-facilities.js?v=1.6.168';
-import { emergencyFacilityEntries } from './emergency-facilities-catalog.js?v=1.6.168';
-import { createStationOneRuntime, stationOneRequested } from './station-one-runtime.js?v=1.6.168';
-import { createStationTwoRuntime, stationTwoRequested } from './station-two-runtime.js?v=1.6.168';
-import { attachStationThreeModel, createStationThreeDoorController, inspectStationThreeModel, loadStationThreeAsset, selectStationThreeSpawn, stationGameplayLabels, stationThreeLocalPosition, stationThreeThrottleInput, STATION_THREE_BAY_EXIT_LOCAL_Z, STATION_THREE_INITIAL_CAMERA_DISTANCE_SCALE, STATION_THREE_INTERIOR_DRIVE_CAMERA_HEIGHT } from './station-three-runtime.js?v=1.6.168';
+import { createEmergencyFacilityLayer, suppressFacilitySource } from './emergency-facilities.js?v=1.6.169';
+import { emergencyFacilityEntries } from './emergency-facilities-catalog.js?v=1.6.169';
+import { createStationOneRuntime, preloadStationOneAsset, stationOneRequested } from './station-one-runtime.js?v=1.6.169';
+import { createStationTwoRuntime, preloadStationTwoAsset, stationTwoRequested } from './station-two-runtime.js?v=1.6.169';
+import { attachStationThreeModel, createStationThreeDoorController, hideStationThreeReplacementRecords, inspectStationThreeModel, loadStationThreeAsset, selectStationThreeSpawn, stationGameplayLabels, stationThreeLocalPosition, stationThreeThrottleInput, STATION_THREE_BAY_EXIT_LOCAL_Z, STATION_THREE_INITIAL_CAMERA_DISTANCE_SCALE, STATION_THREE_INTERIOR_DRIVE_CAMERA_HEIGHT } from './station-three-runtime.js?v=1.6.169';
 import { reconcileStationPavement } from './station-pavement-layer.js?v=1.6.57';
 import { CURB_REVEAL, curbIsRaised, stationRoadWeight, splitRoadDetailSegment, pavementSupportBottom } from './station-road-detail.js?v=1.6.58';
 import { installQualityCapture } from './quality-capture.js?v=sherbrooke-20260915';
-import { buildingFacadePlan } from './building-archetypes.js?v=1.6.168';
-import { buildStation2NeighborhoodGableRoof } from './station2-neighborhood-roofs.mjs?v=1.6.168';
-import { classifyCitywideFacadeEligibility, cityFacadeAppearanceTags, cityFacadeCoverageInvariant, cityFacadeEdgeSegments, cityFacadePanelBudget, cityFacadeWindowMaterialKey, cityFacadeUsesRepeatedWindowStrip, shouldFlattenInferredCommercialRoof, cityBuildingRoofGeometryPlan, isConvexCityFootprint, createCityRoadSegmentIndex, isOpenSidedRoofShell, selectCityFacadeEntranceEdge, selectFacadePanelsByBudget, shouldBuildIrregularGableRoof } from './citywide-building-facades.mjs?v=1.6.168';
-import { createStation2OpeningMaterials } from './station2-neighborhood-openings.mjs?v=1.6.168';
-import { createStation2WallMaterials, isStation2PilotBuilding, station2BoundaryContains, station2EdgeRoles, station2WallPattern, STATION2_PILOT } from './station2-neighborhood-facades.mjs?v=1.6.168';
+import { buildingFacadePlan } from './building-archetypes.js?v=1.6.169';
+import { buildStation2NeighborhoodGableRoof } from './station2-neighborhood-roofs.mjs?v=1.6.169';
+import { classifyCitywideFacadeEligibility, cityFacadeAppearanceTags, cityFacadeCoverageInvariant, cityFacadeEdgeSegments, cityFacadePanelBudget, cityFacadeWindowMaterialKey, cityFacadeUsesRepeatedWindowStrip, shouldFlattenInferredCommercialRoof, cityBuildingRoofGeometryPlan, isConvexCityFootprint, createCityRoadSegmentIndex, isOpenSidedRoofShell, selectCityFacadeEntranceEdge, selectFacadePanelsByBudget, shouldBuildIrregularGableRoof } from './citywide-building-facades.mjs?v=1.6.169';
+import { createStation2OpeningMaterials } from './station2-neighborhood-openings.mjs?v=1.6.169';
+import { createStation2WallMaterials, isStation2PilotBuilding, station2BoundaryContains, station2EdgeRoles, station2WallPattern, STATION2_PILOT } from './station2-neighborhood-facades.mjs?v=1.6.169';
 import { loadVegetationAssets } from './vegetation-assets.js?v=sherbrooke-20260915';
 import { createVegetationVariant, stationOneVegetationPalette } from './vegetation-variants.js?v=streetscape-1';
 import { installStationStreetscape } from './streetscape-assets.js?v=streetscape-2';
 import { installStationApron } from './site-surface-materials.js?v=1.6.56';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
-import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js?v=1.6.168';
+import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js?v=1.6.169';
 import { createCatalogObject } from './editor/asset-catalog.js';
 import { createCommandHistory } from './editor/command-history.js';
-import { createDraftStore } from './editor/draft-store.js?v=1.6.168';
-import { createCityEditor } from './editor/city-editor.js?v=1.6.168';
+import { createDraftStore } from './editor/draft-store.js?v=1.6.169';
+import { createCityEditor } from './editor/city-editor.js?v=1.6.169';
 import { createEmptySceneDocument, sanitizeRenderableSceneDocument } from './editor/scene-document.js';
 import { createGeneratedRegistry } from './editor/generated-registry.js?v=footage-20261020';
 import { applyOverrides } from './editor/override-runtime.js';
-import { captureBatchLengths, collectBatchRanges, createFeatureBatchBinding } from './editor/feature-batch-binding.js?v=1.6.168';
+import { captureBatchLengths, collectBatchRanges, createFeatureBatchBinding } from './editor/feature-batch-binding.js?v=1.6.169';
 import {
   LANDMARKS,
   LANDMARK_BUILDING_HEIGHT_OVERRIDES,
   createBuildingFootprintPlacement,
   createPeterboroughLandmarks,
 } from './landmark-models.js?v=corridor-20261024';
-import { ROAD_SURFACE_CLEARANCE, RoadSurfaceIndex, laneCountFor, reconcileRoadNetworkElevations, roadProfile, roadRibbonCrossSections, resampleRoadLine } from './road-network.js?v=1.6.168';
-import { createRoadMarkingContext, roadMarkingIntervals, roadCurbIntervals } from './road-appearance-rules.js?v=1.6.168';
+import { ROAD_SURFACE_CLEARANCE, RoadSurfaceIndex, laneCountFor, reconcileRoadNetworkElevations, roadProfile, roadRibbonCrossSections, resampleRoadLine } from './road-network.js?v=1.6.169';
+import { createRoadMarkingContext, roadMarkingIntervals, roadCurbIntervals } from './road-appearance-rules.js?v=1.6.169';
 import { solveFallbackJunctions, polygonArea as junctionPolygonArea } from './fallback-junction-geometry.js';
 import { officialRoadMeshEdgeLength, officialCurbDisplayMode, nearbyMunicipalRoadHeight, municipalCurbTop } from './citywide-road-quality.js';
 import { sampleTruckWheelContacts, truckIsOnRoad } from './road-wheel-contact.js';
-import { buildConnectedRoadSurface } from './connected-road-surface.js?v=1.6.168';
-import { paintArrowTriangles, paintCrossingTriangles } from './road-paint-geometry.js?v=1.6.168';
-import { createRoadTileLayer, loadRoadTileManifest } from './road-tile-layer.js?v=1.6.168';
-import { finishRoadSurfaces } from './road-surface-finish.js?v=1.6.168';
-import { exportRoadScene, collectRoadSourceRanges } from './road-pack-export.js?v=1.6.168';
-import { ROAD_PACK_ID } from './road-pack-version.js?v=1.6.168';
-import {createRoadRecovery,roadFallbackUrl,readRoadResume} from './road-recovery.js?v=1.6.168';
-import {resolveGraphicsQuality,readGraphicsPreference,installGraphicsQualityControl} from './graphics-quality.js?v=1.6.168';
-import { reviewedPaintTags, drapePaintStrip } from './street-paint.js?v=1.6.168';
+import { buildConnectedRoadSurface } from './connected-road-surface.js?v=1.6.169';
+import { paintArrowTriangles, paintCrossingTriangles } from './road-paint-geometry.js?v=1.6.169';
+import { createRoadTileLayer, loadRoadTileManifest } from './road-tile-layer.js?v=1.6.169';
+import { finishRoadSurfaces } from './road-surface-finish.js?v=1.6.169';
+import { exportRoadScene, collectRoadSourceRanges } from './road-pack-export.js?v=1.6.169';
+import { ROAD_PACK_ID } from './road-pack-version.js?v=1.6.169';
+import {createRoadRecovery,roadFallbackUrl,readRoadResume} from './road-recovery.js?v=1.6.169';
+import {resolveGraphicsQuality,readGraphicsPreference,installGraphicsQualityControl} from './graphics-quality.js?v=1.6.169';
+import { reviewedPaintTags, drapePaintStrip } from './street-paint.js?v=1.6.169';
 import { OfficialDrivableSurfaceIndex, RenderedPavementIndex, officialSurfaceStatusActive, officialBridgeIsVehicular } from './official-road-surfaces.js?v=1.6.101';
 import { FLY_TUNING, adjustFlySpeedScale, applyFlyLookDelta, dampingFactors, flyAxesFromKeys, flySpeedFor, flyYawToward, isFlyControlCode, wrapFlyYaw } from './fly-controls.js?v=1.5.5-fly4';
 import { clearLandCoverRaster, paintLandCoverPolygon } from './land-cover-raster.js?v=1.5.5-raster1';
 import { sampleOfficialTerrainElevation, validOfficialTerrainMetadata } from './terrain-heightmap.js?v=1.5.5-lidar1';
 import { sampleTriangulatedTerrainHeight } from './terrain-surface.js?v=1.5.5-terrain1';
 import { HydroSurfaceIndex, WATER_SURFACE_CLEARANCE, WATER_TERRAIN_RECESS, createWaterStageSampler, relativeWaterElevation, robustFallbackWaterHeight, subdivideWaterTriangle, watercourseWidth } from './water-system.js?v=1.5.5-hydro2';
-import { CitySplatLayer } from './city-splat-layer.js?v=1.6.168';
+import { CitySplatLayer } from './city-splat-layer.js?v=1.6.169';
 import {
   estimatedBuildingFloors,
   facadeDetailClass,
@@ -537,10 +537,12 @@ let fireTruckActor = null;
 let fireStationDetail = null;
 let emergencyFacilityLayer = null;
 let stationOneRuntime = null;
+let stationOneReadyPromise = null;
 let stationOneReplacementReady = false;
 let stationOneReplacementDiagnostics = { matched: 0, hidden: 0, sourceIds: [] };
 let stationOneFallbackSpawn = null;
 let stationTwoRuntime = null;
+let stationTwoReadyPromise = null;
 let stationTwoReplacementReady = false;
 let stationTwoReplacementDiagnostics = { candidate: null, matched: 0, hidden: 0, sourceIds: [] };
 let stationTwoFallbackSpawn = null;
@@ -551,6 +553,7 @@ let stationThreeDoorController = null;
 let stationThreeRevealTimer = null;
 let semanticSurveyCollection = null;
 let semanticSurveyOverlay = null;
+let semanticSurveyOverlayDefinition = null;
 let semanticSurveyActive = false;
 let semanticSurveyPlacing = false;
 const semanticSurveyDrafts = [];
@@ -791,7 +794,7 @@ function releaseStationThreeGltf(gltf) {
 
 async function loadStationThreeModel() {
   const loader = new GLTFLoader();
-  const assetUrl = new URL('./assets/stations/station-3.glb?v=1.6.168', import.meta.url).href;
+  const assetUrl = new URL('./assets/stations/station-3.glb?v=1.6.169', import.meta.url).href;
   const result = await loadStationThreeAsset({
     url: assetUrl,
     timeoutMs: 8000,
@@ -851,6 +854,7 @@ function placeStationThreeModel() {
     });
     if (!placement.group) throw placement.error || new Error('Station 3 model placement failed');
     stationThreeModel = placement.group;
+    hideStationThreeReplacement();
     document.documentElement.dataset.stationThreeModel = 'ready';
   } catch (error) {
     console.info('Station 3 authored model could not be positioned; keeping the mapped shell and apron spawn.', error);
@@ -2767,7 +2771,9 @@ function finalizeRoadLines(roadLines, buckets, roadBatches) {
       appendConnected(rebuilt.surfacePositions, rebuilt.surfaceKey, line, 'surface');
       appendConnected(rebuilt.foundationPositions, rebuilt.edgeKey, line, 'foundation');
     } else if (!roadTileLayer) appendRoadRibbon(line, roadBatches);
-    line.generatedBatchRanges = roadTileLayer ? (compiledRoadRanges.get(String(line.id)) || []) : namespacedRanges(roadBatches, rangeStarts);
+    const roadRangeId = String(line.id);
+    if (roadTileLayer && !compiledRoadRanges.has(roadRangeId)) compiledRoadRanges.set(roadRangeId, []);
+    line.generatedBatchRanges = roadTileLayer ? compiledRoadRanges.get(roadRangeId) : namespacedRanges(roadBatches, rangeStarts);
     state.roadPaintRanges.set(String(line.id), line.generatedBatchRanges);
     for (let index = 1; index < line.samples.length; index += 1) {
       const a = line.samples[index - 1];
@@ -5308,8 +5314,18 @@ function installRoadBuildExport(){const buildRanges=collectRoadSourceRanges(gene
 
 async function buildCity() {
   setProgress(4, 'Reading the full Peterborough map extent…');
+  // Begin selected spawn and actor asset requests while geographic bounds,
+  // terrain, and city data are prepared. Runtime loaders reuse these promises.
+  if (!ROAD_PACK_BUILD) {
+    void Promise.all([
+      import('./pumper-asset.js').then(({ preloadPumperAsset }) => preloadPumperAsset()).catch(() => null),
+      import('./firefighter-asset.js?v=4').then(({ preloadFirefighterAsset }) => preloadFirefighterAsset()).catch(() => null),
+    ]);
+    if (STATION_ONE_SELECTED) void preloadStationOneAsset().catch(() => null);
+    if (STATION_TWO_SELECTED) void preloadStationTwoAsset().catch(() => null);
+  }
+  const stationThreeModelPromise = !ROAD_PACK_BUILD && FIRE_STATION_ONE.number === 3 ? loadStationThreeModel() : Promise.resolve(null);
   await hydrateWorldBounds();
-  const stationThreeModelPromise = loadStationThreeModel();
   setProgress(7, 'Loading official Peterborough lidar terrain and map geometry…');
   const terrainPromise = loadTerrain().catch((error) => {
     console.warn('Terrain data unavailable; continuing with flat terrain.', error);
@@ -5503,7 +5519,12 @@ async function buildCity() {
     records:()=>generatedRegistry.records.values(), hide:id=>suppressFacilitySource(generatedRegistry,authoredRuntime,id),
   });
   void emergencyFacilityLayer.load();
-  await Promise.all([fireTruckActor.userData.truck.ready, playerActor.userData.animation.ready]);
+  await Promise.all([
+    fireTruckActor.userData.truck.ready,
+    playerActor.userData.animation.ready,
+    stationOneReadyPromise,
+    stationTwoReadyPromise,
+  ]);
   cityVisualLod = '';
   updateCityVisualLod();
   freezeStaticCityTransforms();
@@ -5514,6 +5535,14 @@ async function buildCity() {
   setProgress(100, 'Peterborough is ready');
   setReadyStatus(summary);
   globalThis.__PTBO_EXPLORER_BOOTSTRAP__?.ready?.();
+  if (!ROAD_PACK_BUILD && FIRE_STATION_ONE.number !== 3) {
+    // Keep the authored Station 3 exterior in the city without making its
+    // GLB part of another station's spawn/readiness path.
+    setTimeout(() => {
+      void loadStationThreeModel().then(() => placeStationThreeModel())
+        .catch(error => console.info('Deferred Station 3 model is unavailable; keeping its mapped shell.', error));
+    }, 900);
+  }
   const qaParams = new URLSearchParams(location.search);
   if (qaParams.has('qaLat') && qaParams.has('qaLon')) {
     window.__PTBO_CITY_QA__?.setView({
@@ -5855,7 +5884,18 @@ function hideSelectedStationReplacement() {
     return stationOneReplacementDiagnostics;
   }
   if (STATION_TWO_SELECTED) return hideStationTwoReplacement();
+  if (stationThreeModel) return hideStationThreeReplacement();
   return null;
+}
+
+function hideStationThreeReplacement() {
+  if (!stationThreeModel) return 0;
+  const hidden = hideStationThreeReplacementRecords(
+    generatedRegistry.records.values(),
+    id => generatedRegistry.hide(id),
+  );
+  document.documentElement.dataset.stationThreeReplacement = String(hidden);
+  return hidden;
 }
 
 function hideStationTwoReplacement() {
@@ -5993,7 +6033,7 @@ function initializeGameplay() {
     els.stationOneControls.hidden = false;
     els.stationOneMobileStart.hidden = false;
     els.stationOneMobileDoor.hidden = false;
-    void stationOneRuntime.load().then(loaded => {
+    stationOneReadyPromise = stationOneRuntime.load().then(loaded => {
       document.documentElement.dataset.stationOneModel = loaded ? 'ready' : `error:${stationOneRuntime.getStatus().error}`;
       els.stationOneModelStatus.textContent = loaded ? '' : 'Station 1 model unavailable; using the existing apron start';
       if (!loaded) {
@@ -6002,13 +6042,15 @@ function initializeGameplay() {
         moveStationOneToFallbackSpawn();
         showToast('Station 1 model unavailable; returned to its existing apron start.');
       }
+      return loaded;
     });
+    void stationOneReadyPromise;
   }
   if (STATION_TWO_SELECTED) {
     els.stationTwoControls.hidden = false;
     els.stationTwoMobileStart.hidden = false;
     els.stationTwoMobileDoor.hidden = false;
-    void stationTwoRuntime.load().then(loaded => {
+    stationTwoReadyPromise = stationTwoRuntime.load().then(loaded => {
       document.documentElement.dataset.stationTwoModel = loaded ? 'ready' : `error:${stationTwoRuntime.getStatus().error}`;
       els.stationTwoModelStatus.textContent = loaded ? '' : 'Station model unavailable; starting at the approach';
       if (!loaded) {
@@ -6017,7 +6059,9 @@ function initializeGameplay() {
         moveStationTwoToFallbackSpawn();
         showToast('Station 2 model unavailable; starting from the Marina approach.');
       }
+      return loaded;
     });
+    void stationTwoReadyPromise;
   }
   if ((STATION_ONE_SELECTED || STATION_TWO_SELECTED) && new URLSearchParams(location.search).get('spawn') === 'truck') startDrivingFromBay();
   globalThis.__PTBO_GAMEPLAY__ = Object.freeze({
@@ -6766,13 +6810,8 @@ async function initializeSemanticSurvey() {
     })
       .catch(error=>{console.warn('Optional streetscape unavailable; base city remains active.',error);});
     if(captureRequested) await streetscapeReady;
-    semanticSurveyOverlay = createOrthophotoOverlay({
-      THREE,
-      definition: collection.metadata.reference_overlay,
-      project,
-      terrainHeightAtWorld,
-    });
-    if (semanticSurveyOverlay) world.add(semanticSurveyOverlay);
+    semanticSurveyOverlayDefinition = collection.metadata.reference_overlay;
+    if (captureRequested) createSemanticSurveyOverlay();
     state.objectCount += summary.rendered;
     collection.features.forEach((feature) => {
       if (feature.properties?.review_status === 'verified') createSurveyDraftMarker(feature);
@@ -6796,8 +6835,21 @@ async function initializeSemanticSurvey() {
   }
 }
 
+function createSemanticSurveyOverlay() {
+  if (semanticSurveyOverlay || !semanticSurveyCollection || !semanticSurveyOverlayDefinition) return semanticSurveyOverlay;
+  semanticSurveyOverlay = createOrthophotoOverlay({
+    THREE,
+    definition: semanticSurveyOverlayDefinition,
+    project,
+    terrainHeightAtWorld,
+  });
+  if (semanticSurveyOverlay) world.add(semanticSurveyOverlay);
+  return semanticSurveyOverlay;
+}
+
 function activateSemanticSurveyMode(force = true) {
   if (!semanticSurveyCollection || !els.surveyPanel) return false;
+  if (force) createSemanticSurveyOverlay();
   semanticSurveyActive = force;
   els.surveyPanel.hidden = !force;
   surveyMarkerGroup.visible = force;

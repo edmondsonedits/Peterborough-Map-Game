@@ -1,21 +1,36 @@
 import { generatedRegistry, makeGeneratedId } from './generated-registry.js';
 
 const VALID_OPERATIONS = new Set(['hide', 'appearance', 'replace']);
+const appliedTargetsByRegistry = new WeakMap();
 
 export function applyOverrides(document, adapter = {}) {
   if (!document || !Array.isArray(document.overrides)) throw new TypeError('A normalized scene document with overrides is required.');
   const registry = adapter.registry || generatedRegistry;
   const authoredRuntime = adapter.authoredRuntime;
+  let appliedTargets = appliedTargetsByRegistry.get(registry);
+  if (!appliedTargets) {
+    appliedTargets = new Set();
+    appliedTargetsByRegistry.set(registry, appliedTargets);
+  }
 
-  registry.resetOverrides?.();
-  for (const id of registry.records.keys()) registry.restore(id);
-  for (const id of registry.appliedReplacementIds) authoredRuntime?.remove?.(id);
-  registry.appliedReplacementIds.clear();
+  // AuthoredRuntime.load can rebuild replacement objects even for an unchanged
+  // override document. Restore only targets previously controlled here, then
+  // replay the current overrides so their replacements and source tags survive.
+  for (const id of appliedTargets) {
+    registry.restore(id);
+    const replacementId = makeGeneratedId({ sourceType: 'authored-replacement', sourceId: id });
+    if (registry.appliedReplacementIds.has(replacementId)) {
+      authoredRuntime?.remove?.(replacementId);
+      registry.appliedReplacementIds.delete(replacementId);
+    }
+  }
+  appliedTargets.clear();
 
   for (const override of document.overrides) {
     if (!VALID_OPERATIONS.has(override?.operation) || typeof override.id !== 'string') continue;
     const target = registry.getEditableRecord(override.id);
     if (!target) continue;
+    appliedTargets.add(override.id);
     if (override.operation === 'hide') {
       registry.hide(override.id);
       continue;

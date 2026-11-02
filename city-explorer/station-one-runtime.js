@@ -1,11 +1,20 @@
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { createPromiseCache } from './asset-request-cache.js';
 import {
   stationOneDoorState, stationOneTruckSpawn, stationOneLocalToWorld, stationOneWorldToLocal,
   stationOnePanelPose, stationOneCollision, sweepStationOneTruck, stationOneDoorObstructed,
   sampleStationOneFloor, stepStationOneDoors, toggleStationOneDoor,
 } from './station-one-core.mjs';
 
-const STATION_MODEL = './assets/station1/station1.glb?v=1.6.168';
+const STATION_MODEL = new URL('./assets/station1/station1.glb?v=1.6.169', import.meta.url);
+const cacheAssetRequest = createPromiseCache();
+export function preloadStationOneAsset() {
+  return cacheAssetRequest(STATION_MODEL.href, async () => {
+    const response = await fetch(STATION_MODEL);
+    if (!response.ok) throw new Error(`Station 1 HTTP ${response.status}`);
+    return response.arrayBuffer();
+  });
+}
 const TRUCK_DIMENSIONS = Object.freeze({ length: 10.5, width: 3.2 });
 const PANEL_NODE = /^Door_F([1-5])_Panel([0-7])$/;
 
@@ -77,41 +86,41 @@ export function createStationOneRuntime({ THREE, scene, layout, project, baseSur
   };
   const localPoint = point => stationOneWorldToLocal(point, spawn.anchor, yaw);
 
-  async function load() {
-    return new Promise(resolve => {
-      new GLTFLoader().load(STATION_MODEL, gltf => {
-        try {
-          const contract = validateModel(gltf.scene, THREE, layout);
-          state.panels = contract.panels;
-          state.bounds = contract.bounds;
-          for (const [name, node] of state.panels) state.panelBases.set(name, { position: node.position.clone(), rotation: node.rotation.clone() });
-          root.position.set(spawn.anchor.x, datum, spawn.anchor.z);
-          root.rotation.y = yaw;
-          root.add(gltf.scene);
-          const tower = gltf.scene.getObjectByName('Station1_TrainingTower');
-          if (tower) {
-            const x = (layout.trainingTower.minX + layout.trainingTower.maxX) / 2;
-            const z = (layout.trainingTower.frontZ + layout.trainingTower.rearZ) / 2;
-            const world = worldPoint({ x, z });
-            const terrain = baseSurface(world.x, world.z)?.height;
-            if (Number.isFinite(terrain)) tower.position.y += terrain - datum;
-          }
-          scene.add(root);
-          loaded = true;
-          state.status = 'ready';
-          onReady({ sourceIds: ['way/1009651229', 'city-building/6/3300'], root });
-          resolve(true);
-        } catch (error) {
-          root.removeFromParent();
-          loaded = false;
-          state.status = 'error'; state.error = String(error?.message || error);
-          resolve(false);
+  let loadPromise = null;
+  function load() {
+    if (loadPromise) return loadPromise;
+    loadPromise = (async () => {
+      try {
+        const bytes = await preloadStationOneAsset();
+        const gltf = await new GLTFLoader().parseAsync(bytes, new URL('.', STATION_MODEL).href);
+        const contract = validateModel(gltf.scene, THREE, layout);
+        state.panels = contract.panels;
+        state.bounds = contract.bounds;
+        for (const [name, node] of state.panels) state.panelBases.set(name, { position: node.position.clone(), rotation: node.rotation.clone() });
+        root.position.set(spawn.anchor.x, datum, spawn.anchor.z);
+        root.rotation.y = yaw;
+        root.add(gltf.scene);
+        const tower = gltf.scene.getObjectByName('Station1_TrainingTower');
+        if (tower) {
+          const x = (layout.trainingTower.minX + layout.trainingTower.maxX) / 2;
+          const z = (layout.trainingTower.frontZ + layout.trainingTower.rearZ) / 2;
+          const world = worldPoint({ x, z });
+          const terrain = baseSurface(world.x, world.z)?.height;
+          if (Number.isFinite(terrain)) tower.position.y += terrain - datum;
         }
-      }, undefined, error => {
-        state.status = 'error'; state.error = String(error?.message || 'Station 1 GLB could not be loaded');
-        resolve(false);
-      });
-    });
+        scene.add(root);
+        loaded = true;
+        state.status = 'ready';
+        onReady({ sourceIds: ['way/1009651229', 'city-building/6/3300'], root });
+        return true;
+      } catch (error) {
+        root.removeFromParent();
+        loaded = false;
+        state.status = 'error'; state.error = String(error?.message || error);
+        return false;
+      }
+    })();
+    return loadPromise;
   }
 
   function surfaceAt(x, z) {

@@ -253,10 +253,13 @@ export function createGeneratedRegistry(THREE = {}) {
   function restore(id) {
     const record = records.get(id);
     if (!record) return false;
+    hiddenTargets.delete(id);
     record.batchBinding?.restore?.();
     record.object.visible = record.sourceVisible;
     record.object.material = record.sourceMaterial;
     record.parts.forEach((part) => {
+      if (part.instanceIndex !== null && part.owners
+        && [...part.owners].some((owner) => owner !== id && hiddenTargets.has(owner))) return;
       if (part.instanceIndex === null) {
         part.object.visible = part.sourceVisible;
         part.sourceMaterials.forEach(([object, material]) => { object.material = material; });

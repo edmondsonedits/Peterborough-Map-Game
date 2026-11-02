@@ -135,7 +135,7 @@ realInstances.setColorAt = (index, color) => {
   setRealInstanceColorAt(index, color);
 };
 applyOverrides({ overrides: [{ id: realInstanceId, operation: 'appearance', appearance: { color: '#ff0000' } }] }, { registry: realInstanceRegistry, THREE });
-assert.deepEqual(initializedColorSlots, [0, 1, 0, 0], 'new instance-color buffers initialize every instance to white before applying the target color');
+assert.deepEqual(initializedColorSlots, [0, 1, 0], 'new instance-color buffers initialize each instance to white, then update only the target instance');
 const neighborColor = new THREE.Color();
 realInstances.getColorAt(1, neighborColor);
 assert.equal(neighborColor.getHex(), 0xffffff, 'first per-instance appearance preserves untouched white neighbors');
