@@ -13,15 +13,15 @@ export function facadeComponentPlan({appearance, edgeLength, wallHeight, floorCo
   if (!appearance || !Number.isFinite(edgeLength) || !Number.isFinite(wallHeight) || edgeLength < 2.3 || wallHeight < 2.4 || appearance.archetype === 'ancillary') return [];
   const components = appearance.components || {}, layout = appearance.layout || {};
   const archetype = appearance.archetype || 'residential';
-  const limit = lite ? 24 : 80;
+  const limit = lite ? (archetype==='apartment'?64:24) : archetype === 'apartment' ? 224 : 80;
   const margin = Math.min(0.9, edgeLength * 0.14), usable = edgeLength - margin * 2;
   const pitch = bounded(layout.pitchMetres, 3.1, 2, 8);
   const maxColumns = bounded(layout.maxColumns, 4, 1, 12);
-  const maxFloors = bounded(layout.maxFloors, 3, 1, 8);
-  const columns = Math.max(1, Math.min(lite ? 3 : maxColumns, Math.floor(usable / pitch)));
+  const maxFloors = bounded(layout.maxFloors, 3, 1, 16);
+  const columns = Math.max(1, Math.min(lite ? (archetype==='apartment'?2:3) : maxColumns, Math.floor(usable / pitch)));
   const floors = Math.max(1, Math.min(
     Number.isFinite(Number(floorCount)) && Number(floorCount) > 0 ? Math.round(Number(floorCount)) : Math.round(wallHeight / 3.15),
-    Math.floor(wallHeight / 2.4), maxFloors, lite ? 2 : maxFloors
+    Math.floor(wallHeight / 2.4), maxFloors, lite&&archetype!=='apartment' ? 2 : maxFloors
   ));
   const floorPitch = wallHeight / floors;
   const spacing = usable / columns;

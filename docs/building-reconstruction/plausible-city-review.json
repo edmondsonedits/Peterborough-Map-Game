@@ -1,0 +1,1475 @@
+{
+  "schemaVersion": 1,
+  "targetRelease": "1.6.167",
+  "scope": "Plausible shared procedural detail for all eligible ordinary city buildings; exact Peterborough likeness is not claimed.",
+  "preserves": [
+    "GIS footprints",
+    "source tags and heights",
+    "collision volumes",
+    "researched GLBs",
+    "Fire and EMS models",
+    "reviewed photo facades"
+  ],
+  "baselineCommit": "a9c346206662648b0e974f375841f1662353d91e",
+  "baseline": {
+    "version": "1.6.166",
+    "parts": 30506,
+    "pitchedRoofs": 11980,
+    "raisedFlatRoofFallbacks": {
+      "gabled": 14492,
+      "hipped": 3520,
+      "round": 1
+    },
+    "blankFaces": 1961,
+    "housesWithoutEntry": 55,
+    "totalVertices": 5683140,
+    "textures": 48,
+    "openingQuads": 436376
+  },
+  "balanced": {
+    "checkedAt": "2026-11-02T14:20:52.299Z",
+    "version": "1.6.166",
+    "quality": "balanced",
+    "startupMs": 128253,
+    "totalVertices": 6296655,
+    "coverage": {
+      "mode": "all",
+      "station2FacadesEnabled": true,
+      "baselineSemantics": "?cityFacades=0 keeps the existing Station 2 pilot; ?station2Facades=0 disables that pilot region.",
+      "consideredParts": 30564,
+      "eligibleParts": 30494,
+      "coveredParts": 30494,
+      "excludedParts": 70,
+      "coverageInvariant": {
+        "sourcePartsAccounted": true,
+        "eligiblePartsCovered": true,
+        "unresolvedPartCount": 0,
+        "overaccountedPartCount": 0
+      },
+      "uncoveredPartCount": 0,
+      "uncoveredIds": [],
+      "consideredUniqueBuildings": 30564,
+      "coveredUniqueBuildings": 30494,
+      "wallFaces": 227968,
+      "openingQuads": 457738,
+      "existingRoofSurfaceParts": 30494,
+      "openingBudgetPerPart": {
+        "high": 16,
+        "balanced": 16,
+        "low": 8,
+        "active": 16,
+        "station2Pilot": "existing-rich-pilot"
+      },
+      "roadSegmentsIndexed": 53864,
+      "roadQueries": 30330,
+      "roadCandidateSegments": 381034,
+      "averageRoadCandidatesPerQuery": 12.562940982525552,
+      "exclusionReasons": {
+        "authored-glb-replacement": 1,
+        "captured-footage-facade": 48,
+        "open-sided-roof": 19,
+        "reviewed-custom-facade": 1,
+        "reviewed-station-replacement": 1
+      },
+      "exclusionSamples": [
+        {
+          "id": "way/77774650",
+          "partId": "way/77774650#175",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/176908281",
+          "partId": "way/176908281#193",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/194192530",
+          "partId": "way/194192530#219",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/382158960",
+          "partId": "way/382158960#325",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/383369285",
+          "partId": "way/383369285#327",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/422810191",
+          "partId": "way/422810191#346",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/458496269",
+          "partId": "way/458496269#404",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/472431622",
+          "partId": "way/472431622#445",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/472446708",
+          "partId": "way/472446708#450",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/479865018",
+          "partId": "way/479865018#465",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/497284859",
+          "partId": "way/497284859#482",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/528467687",
+          "partId": "way/528467687#523",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/558402285",
+          "partId": "way/558402285#539",
+          "reason": "authored-glb-replacement"
+        },
+        {
+          "id": "way/690973742",
+          "partId": "way/690973742#1084",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/704352204",
+          "partId": "way/704352204#1102",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/755554888",
+          "partId": "way/755554888#1147",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/755554892",
+          "partId": "way/755554892#1148",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/841813539",
+          "partId": "way/841813539#1183",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/846927296",
+          "partId": "way/846927296#1203",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/914094122",
+          "partId": "way/914094122#1270",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/930494669",
+          "partId": "way/930494669#1272",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/945902121",
+          "partId": "way/945902121#1276",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/946074429",
+          "partId": "way/946074429#1278",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/946710761",
+          "partId": "way/946710761#1279",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/946710762",
+          "partId": "way/946710762#1280",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/995887447",
+          "partId": "way/995887447#1303",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1005975361",
+          "partId": "way/1005975361#19955",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1005975362",
+          "partId": "way/1005975362#19956",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1005975373",
+          "partId": "way/1005975373#19962",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1005977973",
+          "partId": "way/1005977973#19996",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243532",
+          "partId": "way/1006243532#20114",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243540",
+          "partId": "way/1006243540#20118",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243541",
+          "partId": "way/1006243541#20119",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243552",
+          "partId": "way/1006243552#20126",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243553",
+          "partId": "way/1006243553#20127",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243554",
+          "partId": "way/1006243554#20128",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243555",
+          "partId": "way/1006243555#20129",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243558",
+          "partId": "way/1006243558#20130",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243559",
+          "partId": "way/1006243559#20131",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243562",
+          "partId": "way/1006243562#20134",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243563",
+          "partId": "way/1006243563#20135",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243570",
+          "partId": "way/1006243570#20142",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575702",
+          "partId": "way/1006575702#20584",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575703",
+          "partId": "way/1006575703#20585",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575704",
+          "partId": "way/1006575704#20586",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575705",
+          "partId": "way/1006575705#20587",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575731",
+          "partId": "way/1006575731#20597",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575733",
+          "partId": "way/1006575733#20599",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575739",
+          "partId": "way/1006575739#20604",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575740",
+          "partId": "way/1006575740#20605",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575741",
+          "partId": "way/1006575741#20606",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575743",
+          "partId": "way/1006575743#20608",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575744",
+          "partId": "way/1006575744#20609",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575745",
+          "partId": "way/1006575745#20610",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1009651229",
+          "partId": "way/1009651229#23569",
+          "reason": "reviewed-custom-facade"
+        },
+        {
+          "id": "way/1009651239",
+          "partId": "way/1009651239#23576",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1009651246",
+          "partId": "way/1009651246#23583",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1009651247",
+          "partId": "way/1009651247#23584",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1009651251",
+          "partId": "way/1009651251#23586",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1009651259",
+          "partId": "way/1009651259#23593",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1009651260",
+          "partId": "way/1009651260#23594",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1009651261",
+          "partId": "way/1009651261#23595",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1009651262",
+          "partId": "way/1009651262#23596",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1009651266",
+          "partId": "way/1009651266#23599",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1022083769",
+          "partId": "way/1022083769#26537",
+          "reason": "reviewed-station-replacement"
+        },
+        {
+          "id": "way/1023467593",
+          "partId": "way/1023467593#27214",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/1030723259",
+          "partId": "way/1030723259#29527",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/1031042883",
+          "partId": "way/1031042883#29528",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1031894168",
+          "partId": "way/1031894168#30013",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1299170201",
+          "partId": "way/1299170201#30533",
+          "reason": "open-sided-roof"
+        }
+      ]
+    },
+    "activeParts": 30487,
+    "pitchedRoofs": 29757,
+    "flatRaisedRoofs": 217,
+    "blankFaces": 0,
+    "housesWithoutEntry": 0,
+    "captures": [
+      {
+        "name": "no-openings",
+        "id": "way/704352204",
+        "drawCalls": 802,
+        "triangles": 1630761,
+        "textures": 49
+      },
+      {
+        "name": "blank-faces",
+        "id": "way/77772058",
+        "drawCalls": 419,
+        "triangles": 1602105,
+        "textures": 49
+      },
+      {
+        "name": "long-walls",
+        "id": "way/989257664",
+        "drawCalls": 149,
+        "triangles": 764234,
+        "textures": 49
+      },
+      {
+        "name": "flat-roof-fallback",
+        "id": "way/1005415937",
+        "drawCalls": 173,
+        "triangles": 1718721,
+        "textures": 49
+      },
+      {
+        "name": "house-no-entry",
+        "id": "way/1005415645",
+        "drawCalls": 335,
+        "triangles": 1642962,
+        "textures": 50
+      },
+      {
+        "name": "apartment",
+        "id": "way/177046403",
+        "drawCalls": 278,
+        "triangles": 1964664,
+        "textures": 52
+      },
+      {
+        "name": "industrial",
+        "id": "way/422827183",
+        "drawCalls": 842,
+        "triangles": 1555811,
+        "textures": 52
+      },
+      {
+        "name": "storefront",
+        "id": "way/528467688",
+        "drawCalls": 41,
+        "triangles": 553109,
+        "textures": 52
+      },
+      {
+        "name": "residential",
+        "id": "way/857405757",
+        "drawCalls": 1965,
+        "triangles": 1827563,
+        "textures": 55
+      },
+      {
+        "name": "house-no-entry-reverse",
+        "id": "way/1005415645",
+        "drawCalls": 303,
+        "triangles": 1803666,
+        "textures": 55
+      },
+      {
+        "name": "apartment-reverse",
+        "id": "way/177046403",
+        "drawCalls": 650,
+        "triangles": 1580737,
+        "textures": 55
+      },
+      {
+        "name": "industrial-reverse",
+        "id": "way/422827183",
+        "drawCalls": 113,
+        "triangles": 994168,
+        "textures": 55
+      },
+      {
+        "name": "no-openings-reverse",
+        "id": "way/704352204",
+        "drawCalls": 168,
+        "triangles": 1514277,
+        "textures": 55
+      }
+    ],
+    "driveOutMetres": 40.712087517014496,
+    "errors": []
+  },
+  "changes": {
+    "additionalPitchedRoofs": 17777,
+    "vertexIncreasePercent": 10.8,
+    "newTextureAssets": 0,
+    "missingHouseEntriesResolved": 55
+  },
+  "verification": {
+    "focusedTests": 47,
+    "independentReview": "completed; known-use inference and captured-edge entry selection corrected",
+    "visualReview": "29 local fixed views over three critique iterations; final low profile has sparse but full-height columns and balanced has aligned floor grids.",
+    "lowProfile": "Passed full-city coverage and final front/reverse apartment visual review after evenly distributing rows through the full height; truck departed40.7m; zero page errors or first-party asset failures.",
+    "publication": "Prepared for authorized v1.6.167 publication; deployment and public-byte checks are recorded after push.",
+    "releaseTests": 30,
+    "roadPack": {
+      "buildId": "74a54d4fd741e24d1cb8",
+      "tiles": 669,
+      "rawGeometryChanged": 0,
+      "sourceIdentity": "passed",
+      "markings": "passed; zero unsupported-height failures"
+    }
+  },
+  "limitations": [
+    "Procedural architecture is a plausible estimate, not a surveyed reconstruction.",
+    "217 active complex or explicitly shaped raised roofs retain bounded simplified geometry.",
+    "Low-profile facade density is intentionally lower.",
+    "Open-sided structures keep their pre-existing collision behavior.",
+    "Physical-phone performance has not been tested."
+  ],
+  "lowInitial": {
+    "checkedAt": "2026-11-02T14:24:33.653Z",
+    "version": "1.6.166",
+    "quality": "low",
+    "startupMs": 117463,
+    "totalVertices": 5713077,
+    "coverage": {
+      "mode": "all",
+      "station2FacadesEnabled": true,
+      "baselineSemantics": "?cityFacades=0 keeps the existing Station 2 pilot; ?station2Facades=0 disables that pilot region.",
+      "consideredParts": 30564,
+      "eligibleParts": 30494,
+      "coveredParts": 30494,
+      "excludedParts": 70,
+      "coverageInvariant": {
+        "sourcePartsAccounted": true,
+        "eligiblePartsCovered": true,
+        "unresolvedPartCount": 0,
+        "overaccountedPartCount": 0
+      },
+      "uncoveredPartCount": 0,
+      "uncoveredIds": [],
+      "consideredUniqueBuildings": 30564,
+      "coveredUniqueBuildings": 30494,
+      "wallFaces": 227968,
+      "openingQuads": 360475,
+      "existingRoofSurfaceParts": 30494,
+      "openingBudgetPerPart": {
+        "strategy": "adaptive-by-faces-and-floor-bands",
+        "high": {
+          "base": 24,
+          "max": 384
+        },
+        "balanced": {
+          "base": 16,
+          "max": 256
+        },
+        "low": {
+          "base": 16,
+          "max": 64
+        },
+        "active": "low",
+        "station2Pilot": "existing-rich-pilot"
+      },
+      "roadSegmentsIndexed": 53864,
+      "roadQueries": 30330,
+      "roadCandidateSegments": 381034,
+      "averageRoadCandidatesPerQuery": 12.562940982525552,
+      "exclusionReasons": {
+        "authored-glb-replacement": 1,
+        "captured-footage-facade": 48,
+        "open-sided-roof": 19,
+        "reviewed-custom-facade": 1,
+        "reviewed-station-replacement": 1
+      },
+      "exclusionSamples": [
+        {
+          "id": "way/77774650",
+          "partId": "way/77774650#175",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/176908281",
+          "partId": "way/176908281#193",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/194192530",
+          "partId": "way/194192530#219",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/382158960",
+          "partId": "way/382158960#325",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/383369285",
+          "partId": "way/383369285#327",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/422810191",
+          "partId": "way/422810191#346",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/458496269",
+          "partId": "way/458496269#404",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/472431622",
+          "partId": "way/472431622#445",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/472446708",
+          "partId": "way/472446708#450",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/479865018",
+          "partId": "way/479865018#465",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/497284859",
+          "partId": "way/497284859#482",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/528467687",
+          "partId": "way/528467687#523",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/558402285",
+          "partId": "way/558402285#539",
+          "reason": "authored-glb-replacement"
+        },
+        {
+          "id": "way/690973742",
+          "partId": "way/690973742#1084",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/704352204",
+          "partId": "way/704352204#1102",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/755554888",
+          "partId": "way/755554888#1147",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/755554892",
+          "partId": "way/755554892#1148",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/841813539",
+          "partId": "way/841813539#1183",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/846927296",
+          "partId": "way/846927296#1203",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/914094122",
+          "partId": "way/914094122#1270",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/930494669",
+          "partId": "way/930494669#1272",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/945902121",
+          "partId": "way/945902121#1276",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/946074429",
+          "partId": "way/946074429#1278",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/946710761",
+          "partId": "way/946710761#1279",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/946710762",
+          "partId": "way/946710762#1280",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/995887447",
+          "partId": "way/995887447#1303",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1005975361",
+          "partId": "way/1005975361#19955",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1005975362",
+          "partId": "way/1005975362#19956",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1005975373",
+          "partId": "way/1005975373#19962",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1005977973",
+          "partId": "way/1005977973#19996",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243532",
+          "partId": "way/1006243532#20114",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243540",
+          "partId": "way/1006243540#20118",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243541",
+          "partId": "way/1006243541#20119",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243552",
+          "partId": "way/1006243552#20126",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243553",
+          "partId": "way/1006243553#20127",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243554",
+          "partId": "way/1006243554#20128",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243555",
+          "partId": "way/1006243555#20129",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243558",
+          "partId": "way/1006243558#20130",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243559",
+          "partId": "way/1006243559#20131",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243562",
+          "partId": "way/1006243562#20134",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243563",
+          "partId": "way/1006243563#20135",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243570",
+          "partId": "way/1006243570#20142",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575702",
+          "partId": "way/1006575702#20584",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575703",
+          "partId": "way/1006575703#20585",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575704",
+          "partId": "way/1006575704#20586",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575705",
+          "partId": "way/1006575705#20587",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575731",
+          "partId": "way/1006575731#20597",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575733",
+          "partId": "way/1006575733#20599",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575739",
+          "partId": "way/1006575739#20604",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575740",
+          "partId": "way/1006575740#20605",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575741",
+          "partId": "way/1006575741#20606",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575743",
+          "partId": "way/1006575743#20608",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575744",
+          "partId": "way/1006575744#20609",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575745",
+          "partId": "way/1006575745#20610",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1009651229",
+          "partId": "way/1009651229#23569",
+          "reason": "reviewed-custom-facade"
+        },
+        {
+          "id": "way/1009651239",
+          "partId": "way/1009651239#23576",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1009651246",
+          "partId": "way/1009651246#23583",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1009651247",
+          "partId": "way/1009651247#23584",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1009651251",
+          "partId": "way/1009651251#23586",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1009651259",
+          "partId": "way/1009651259#23593",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1009651260",
+          "partId": "way/1009651260#23594",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1009651261",
+          "partId": "way/1009651261#23595",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1009651262",
+          "partId": "way/1009651262#23596",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1009651266",
+          "partId": "way/1009651266#23599",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1022083769",
+          "partId": "way/1022083769#26537",
+          "reason": "reviewed-station-replacement"
+        },
+        {
+          "id": "way/1023467593",
+          "partId": "way/1023467593#27214",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/1030723259",
+          "partId": "way/1030723259#29527",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/1031042883",
+          "partId": "way/1031042883#29528",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1031894168",
+          "partId": "way/1031894168#30013",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1299170201",
+          "partId": "way/1299170201#30533",
+          "reason": "open-sided-roof"
+        }
+      ]
+    },
+    "activeParts": 30487,
+    "pitchedRoofs": 29757,
+    "flatRaisedRoofs": 217,
+    "blankFaces": 28,
+    "housesWithoutEntry": 0,
+    "captures": [
+      {
+        "name": "no-openings",
+        "id": "way/704352204",
+        "drawCalls": 776,
+        "triangles": 1424424,
+        "textures": 49
+      },
+      {
+        "name": "blank-faces",
+        "id": "way/77772058",
+        "drawCalls": 380,
+        "triangles": 1439797,
+        "textures": 49
+      },
+      {
+        "name": "long-walls",
+        "id": "way/989257664",
+        "drawCalls": 140,
+        "triangles": 755944,
+        "textures": 49
+      },
+      {
+        "name": "flat-roof-fallback",
+        "id": "way/1005415937",
+        "drawCalls": 156,
+        "triangles": 1568958,
+        "textures": 49
+      },
+      {
+        "name": "house-no-entry",
+        "id": "way/1005415645",
+        "drawCalls": 311,
+        "triangles": 1461392,
+        "textures": 50
+      },
+      {
+        "name": "apartment",
+        "id": "way/177046403",
+        "drawCalls": 206,
+        "triangles": 1514464,
+        "textures": 52
+      },
+      {
+        "name": "industrial",
+        "id": "way/422827183",
+        "drawCalls": 838,
+        "triangles": 1487423,
+        "textures": 52
+      },
+      {
+        "name": "storefront",
+        "id": "way/528467688",
+        "drawCalls": 38,
+        "triangles": 551378,
+        "textures": 52
+      },
+      {
+        "name": "residential",
+        "id": "way/857405757",
+        "drawCalls": 1948,
+        "triangles": 1715007,
+        "textures": 55
+      },
+      {
+        "name": "house-no-entry-reverse",
+        "id": "way/1005415645",
+        "drawCalls": 260,
+        "triangles": 1421252,
+        "textures": 55
+      },
+      {
+        "name": "apartment-reverse",
+        "id": "way/177046403",
+        "drawCalls": 639,
+        "triangles": 1489462,
+        "textures": 55
+      },
+      {
+        "name": "industrial-reverse",
+        "id": "way/422827183",
+        "drawCalls": 90,
+        "triangles": 897706,
+        "textures": 55
+      },
+      {
+        "name": "no-openings-reverse",
+        "id": "way/704352204",
+        "drawCalls": 117,
+        "triangles": 1193536,
+        "textures": 55
+      }
+    ],
+    "driveOutMetres": 40.70599921649783,
+    "errors": []
+  },
+  "lowFinal": {
+    "version": "1.6.167",
+    "quality": "low",
+    "startupMs": 118777,
+    "coverage": {
+      "mode": "all",
+      "station2FacadesEnabled": true,
+      "baselineSemantics": "?cityFacades=0 keeps the existing Station 2 pilot; ?station2Facades=0 disables that pilot region.",
+      "consideredParts": 30564,
+      "eligibleParts": 30494,
+      "coveredParts": 30494,
+      "excludedParts": 70,
+      "coverageInvariant": {
+        "sourcePartsAccounted": true,
+        "eligiblePartsCovered": true,
+        "unresolvedPartCount": 0,
+        "overaccountedPartCount": 0
+      },
+      "uncoveredPartCount": 0,
+      "uncoveredIds": [],
+      "consideredUniqueBuildings": 30564,
+      "coveredUniqueBuildings": 30494,
+      "wallFaces": 227968,
+      "openingQuads": 360450,
+      "existingRoofSurfaceParts": 30494,
+      "openingBudgetPerPart": {
+        "strategy": "adaptive-by-faces-and-floor-bands",
+        "high": {
+          "base": 24,
+          "max": 384
+        },
+        "balanced": {
+          "base": 16,
+          "max": 256
+        },
+        "low": {
+          "base": 16,
+          "max": 64
+        },
+        "active": "low",
+        "station2Pilot": "existing-rich-pilot"
+      },
+      "roadSegmentsIndexed": 53864,
+      "roadQueries": 30330,
+      "roadCandidateSegments": 381034,
+      "averageRoadCandidatesPerQuery": 12.562940982525552,
+      "exclusionReasons": {
+        "authored-glb-replacement": 1,
+        "captured-footage-facade": 48,
+        "open-sided-roof": 19,
+        "reviewed-custom-facade": 1,
+        "reviewed-station-replacement": 1
+      },
+      "exclusionSamples": [
+        {
+          "id": "way/77774650",
+          "partId": "way/77774650#175",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/176908281",
+          "partId": "way/176908281#193",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/194192530",
+          "partId": "way/194192530#219",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/382158960",
+          "partId": "way/382158960#325",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/383369285",
+          "partId": "way/383369285#327",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/422810191",
+          "partId": "way/422810191#346",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/458496269",
+          "partId": "way/458496269#404",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/472431622",
+          "partId": "way/472431622#445",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/472446708",
+          "partId": "way/472446708#450",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/479865018",
+          "partId": "way/479865018#465",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/497284859",
+          "partId": "way/497284859#482",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/528467687",
+          "partId": "way/528467687#523",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/558402285",
+          "partId": "way/558402285#539",
+          "reason": "authored-glb-replacement"
+        },
+        {
+          "id": "way/690973742",
+          "partId": "way/690973742#1084",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/704352204",
+          "partId": "way/704352204#1102",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/755554888",
+          "partId": "way/755554888#1147",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/755554892",
+          "partId": "way/755554892#1148",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/841813539",
+          "partId": "way/841813539#1183",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/846927296",
+          "partId": "way/846927296#1203",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/914094122",
+          "partId": "way/914094122#1270",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/930494669",
+          "partId": "way/930494669#1272",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/945902121",
+          "partId": "way/945902121#1276",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/946074429",
+          "partId": "way/946074429#1278",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/946710761",
+          "partId": "way/946710761#1279",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/946710762",
+          "partId": "way/946710762#1280",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/995887447",
+          "partId": "way/995887447#1303",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1005975361",
+          "partId": "way/1005975361#19955",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1005975362",
+          "partId": "way/1005975362#19956",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1005975373",
+          "partId": "way/1005975373#19962",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1005977973",
+          "partId": "way/1005977973#19996",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243532",
+          "partId": "way/1006243532#20114",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243540",
+          "partId": "way/1006243540#20118",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243541",
+          "partId": "way/1006243541#20119",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243552",
+          "partId": "way/1006243552#20126",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243553",
+          "partId": "way/1006243553#20127",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243554",
+          "partId": "way/1006243554#20128",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243555",
+          "partId": "way/1006243555#20129",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243558",
+          "partId": "way/1006243558#20130",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243559",
+          "partId": "way/1006243559#20131",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243562",
+          "partId": "way/1006243562#20134",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243563",
+          "partId": "way/1006243563#20135",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006243570",
+          "partId": "way/1006243570#20142",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575702",
+          "partId": "way/1006575702#20584",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575703",
+          "partId": "way/1006575703#20585",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575704",
+          "partId": "way/1006575704#20586",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575705",
+          "partId": "way/1006575705#20587",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575731",
+          "partId": "way/1006575731#20597",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575733",
+          "partId": "way/1006575733#20599",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575739",
+          "partId": "way/1006575739#20604",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575740",
+          "partId": "way/1006575740#20605",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575741",
+          "partId": "way/1006575741#20606",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575743",
+          "partId": "way/1006575743#20608",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575744",
+          "partId": "way/1006575744#20609",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1006575745",
+          "partId": "way/1006575745#20610",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1009651229",
+          "partId": "way/1009651229#23569",
+          "reason": "reviewed-custom-facade"
+        },
+        {
+          "id": "way/1009651239",
+          "partId": "way/1009651239#23576",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1009651246",
+          "partId": "way/1009651246#23583",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1009651247",
+          "partId": "way/1009651247#23584",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1009651251",
+          "partId": "way/1009651251#23586",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1009651259",
+          "partId": "way/1009651259#23593",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1009651260",
+          "partId": "way/1009651260#23594",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1009651261",
+          "partId": "way/1009651261#23595",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1009651262",
+          "partId": "way/1009651262#23596",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1009651266",
+          "partId": "way/1009651266#23599",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1022083769",
+          "partId": "way/1022083769#26537",
+          "reason": "reviewed-station-replacement"
+        },
+        {
+          "id": "way/1023467593",
+          "partId": "way/1023467593#27214",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/1030723259",
+          "partId": "way/1030723259#29527",
+          "reason": "open-sided-roof"
+        },
+        {
+          "id": "way/1031042883",
+          "partId": "way/1031042883#29528",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1031894168",
+          "partId": "way/1031894168#30013",
+          "reason": "captured-footage-facade"
+        },
+        {
+          "id": "way/1299170201",
+          "partId": "way/1299170201#30533",
+          "reason": "open-sided-roof"
+        }
+      ]
+    },
+    "driveOutMetres": 40.70440613295803,
+    "errors": [],
+    "failedRequests": []
+  }
+}

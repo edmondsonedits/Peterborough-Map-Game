@@ -59,6 +59,31 @@ test('lite component plans stay deterministic and use a smaller bounded detail b
   assert.deepEqual(lite, facadeComponentPlan({appearance, edgeLength: 30, wallHeight: 12, front: true, lite: true}));
 });
 
+test('tall apartment plans preserve all mapped floors within a bounded facade panel budget',()=>{
+  const appearance=resolveBuildingAppearance({tags:{building:'apartments'},featureId:'way/tall',wallHeight:44.1,footprintArea:914});
+  const plan=facadeComponentPlan({appearance,edgeLength:30,wallHeight:44.1,floorCount:14,front:true,featureId:'way/tall'});
+  const floors=new Set(plan.filter(panel=>panel.kind==='window').map(panel=>Math.round(panel.lowerY/3.1)));
+  assert.ok(plan.length<=224);
+  assert.equal(floors.size,14);
+});
+
+test('lite tall-apartment plans retain all mapped floor rows within the low-profile cap',()=>{
+  const appearance=resolveBuildingAppearance({tags:{building:'apartments'},featureId:'way/tall-lite',wallHeight:44.1,footprintArea:914});
+  const plan=facadeComponentPlan({appearance,edgeLength:30,wallHeight:44.1,floorCount:14,front:true,lite:true,featureId:'way/tall-lite'});
+  const floors=new Set(plan.filter(panel=>panel.kind==='window').map(panel=>Math.round(panel.lowerY/3.1)));
+  assert.ok(plan.length<=64);
+  assert.equal(floors.size,14);
+});
+
+test('industrial front entries fit a shared garage-door panel without extra geometry',()=>{
+  const appearance=resolveBuildingAppearance({tags:{building:'industrial'},featureId:'way/industrial',wallHeight:6.3,footprintArea:900});
+  const plan=facadeComponentPlan({appearance,edgeLength:18,wallHeight:6.3,front:true,featureId:'way/industrial'});
+  const door=plan.find(panel=>panel.kind==='door');
+  assert.ok(door);
+  assert.equal(door.width,3);
+  assert.ok(door.upperY<=6.3);
+});
+
 test('legacy archetype path stays explicit while improved mode accepts resolved appearance', () => {
   const args = {tags: {building: 'house'}, featureId: 'way/legacy', edgeLength: 12, wallHeight: 6.2, footprintArea: 85, front: true};
   const legacyDefault = buildingFacadePlan({...args, visuals: 'legacy'});

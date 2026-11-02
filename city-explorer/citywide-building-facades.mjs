@@ -80,27 +80,134 @@ export function selectFacadePanelsByBudget(edgePlans = [], budget = 16) {
     .map((face, order) => ({ ...face, order, panels:Array.isArray(face.panels) ? face.panels : [] }))
     .filter(face => face.panels.length)
     .sort((a,b) => (rank[a.role] ?? 3)-(rank[b.role] ?? 3) || a.order-b.order);
-  const perFaceTarget=Math.max(1,Math.ceil(cap/Math.max(1,faces.length)));
-  const sampled=faces.map(face=>{
-    const doors=face.panels.filter(panel=>panel.kind==='door');
-    const windows=face.panels.filter(panel=>panel.kind!=='door').slice().sort((a,b)=>(a.lowerY||0)-(b.lowerY||0)||(a.t||0)-(b.t||0));
-    const slots=Math.max(0,perFaceTarget-Math.min(doors.length,1));
-    const ordered=doors.slice(0,1);
-    if(slots>=windows.length) ordered.push(...windows);
-    else if(slots>0) for(let i=0;i<slots;i++) ordered.push(windows[Math.min(windows.length-1,Math.floor((i+.5)*windows.length/slots))]);
-    return {...face,panels:ordered};
-  });
   const selected=[];
-  for(let round=0;selected.length<cap;round++){
-    let added=false;
-    for(const face of sampled){
-      const panel=face.panels[round];if(!panel)continue;
-      selected.push({...panel,edge:face.edge});added=true;
-      if(selected.length>=cap)break;
+  const entranceFace=faces.find(face=>face.role==='front'&&face.panels.some(panel=>panel.kind==='door'))
+    || faces.find(face=>face.panels.some(panel=>panel.kind==='door'));
+  const entrancePanel=entranceFace?.panels.find(panel=>panel.kind==='door');
+  if(cap>0&&entranceFace&&entrancePanel) selected.push({...entrancePanel,edge:entranceFace.edge});
+  const windowFaces=faces.map(face=>{
+    const rowsByFloor=new Map();
+    for(const panel of face.panels) {
+      if(panel.kind==='door')continue;
+      const key=Number(panel.lowerY||0).toFixed(2),row=rowsByFloor.get(key)||[];
+      row.push(panel);rowsByFloor.set(key,row);
     }
-    if(!added)break;
+    const rows=[...rowsByFloor.values()].map(row=>row.sort((a,b)=>(a.t||0)-(b.t||0)))
+      .sort((a,b)=>(a[0]?.lowerY||0)-(b[0]?.lowerY||0));
+    return {...face,rows};
+  }).filter(face=>face.rows.length);
+  const rowCount=windowFaces.reduce((sum,face)=>sum+face.rows.length,0);
+  const columns=Math.min(4,Math.floor((cap-selected.length)/Math.max(1,rowCount)));
+  if(columns>0) {
+    for(const face of windowFaces) {
+      const anchor=face.rows[Math.floor(face.rows.length/2)];
+      const targets=Array.from({length:Math.min(columns,anchor.length)},(_,index)=>anchor[Math.min(anchor.length-1,Math.floor((index+.5)*anchor.length/columns))].t);
+      for(const row of face.rows) {
+        const used=new Set();
+        for(const target of targets) {
+          const panel=row.find(item=>!used.has(item)&&Math.abs(item.t-target)<1e-4);
+          if(!panel||selected.length>=cap)continue;
+          used.add(panel);selected.push({...panel,edge:face.edge});
+        }
+      }
+    }
+  } else {
+    const remaining=cap-selected.length;
+    const rowsPerFace=Math.floor(remaining/Math.max(1,windowFaces.length));
+    const extraRows=remaining%Math.max(1,windowFaces.length);
+    windowFaces.forEach((face,faceIndex)=>{
+      const quota=Math.min(face.rows.length,rowsPerFace+(faceIndex<extraRows?1:0));
+      if(!quota)return;
+      const anchor=face.rows[Math.floor(face.rows.length/2)];
+      const target=anchor[Math.floor((anchor.length-1)/2)]?.t;
+      if(!Number.isFinite(target))return;
+      const rowIndices=quota===1?[Math.floor((face.rows.length-1)/2)]:Array.from({length:quota},(_,index)=>Math.round(index*(face.rows.length-1)/(quota-1)));
+      for(const rowIndex of rowIndices) {
+        const panel=face.rows[rowIndex].find(item=>Math.abs(item.t-target)<1e-4);
+        if(!panel)continue;
+        selected.push({...panel,edge:face.edge});
+      }
+    });
   }
   return selected;
+}
+
+/** Use the existing front edge where possible; otherwise infer a usable side entry. */
+export function selectCityFacadeEntranceEdge(edges = [], minimumLength = 3.1, isBlocked = () => false) {
+  const usable=(edges||[]).filter(edge=>Number.isFinite(Number(edge.length))&&Number(edge.length)>=minimumLength&&!isBlocked(edge));
+  const front=usable.find(edge=>edge.role==='front');
+  if(front)return front.index;
+  const side=usable.filter(edge=>edge.role==='side').sort((a,b)=>Number(b.length)-Number(a.length)||Number(a.index)-Number(b.index));
+  if(side.length)return side[0].index;
+  const fallback=usable.sort((a,b)=>Number(b.length)-Number(a.length)||Number(a.index)-Number(b.index));
+  return fallback[0]?.index ?? -1;
+}
+
+/** Keep citywide surface detail proportional to the active renderer profile. */
+export function cityFacadePanelBudget(quality = 'balanced', edgePlans = []) {
+  const caps = quality === 'high' ? {small:24,large:384} : quality === 'low' ? {small:16,large:64} : {small:16,large:256};
+  const faces = Array.isArray(edgePlans) ? edgePlans : [];
+  const available = faces.reduce((sum, face) => sum + (Array.isArray(face.panels) ? face.panels.length : 0), 0);
+  const floorBands = new Set();
+  for (const face of faces) for (const panel of face.panels || []) {
+    if (panel.kind === 'door') continue;
+    const lower = Number(panel.lowerY);
+    if (Number.isFinite(lower)) floorBands.add(Math.round(lower / 1.5));
+  }
+  const floors = Math.max(1, floorBands.size);
+  const hasEntry=faces.some(face=>(face.panels||[]).some(panel=>panel.kind==='door'));
+  const columnsPerFloor=quality==='low'?1:floors>=6?4:2;
+  const adaptive = Math.max(caps.small, faces.length * floors * columnsPerFloor + (hasEntry?1:0));
+  return Math.min(available, Math.min(caps.large, adaptive));
+}
+
+function stableFacadeHash(value) {
+  let hash=2166136261;
+  for(const character of String(value))hash=Math.imul(hash^character.charCodeAt(0),16777619);
+  return hash>>>0;
+}
+
+export function cityFacadeWindowMaterialKey(archetype,featureId='',edge=0,t=0) {
+  if(!['residential','apartment'].includes(String(archetype)))return 'station2-window';
+  return stableFacadeHash(`${featureId}:${edge}:${t}:curtain`)%3===0?'station2-window-curtain':'station2-window';
+}
+
+/** Split long walls into metre-bounded planning spans, with a hard segment cap. */
+export function cityFacadeEdgeSegments(length, maxSegmentLength = 48, maxSegments = 32) {
+  const edgeLength = Number(length), maxLength = Math.max(3.1, Number(maxSegmentLength) || 48);
+  const segmentCap = Math.max(1, Math.floor(Number(maxSegments) || 32));
+  if (!Number.isFinite(edgeLength) || edgeLength < 3.1) return [];
+  const count = Math.min(segmentCap, Math.ceil(edgeLength / maxLength));
+  return Array.from({length:count},(_,index)=>{
+    const start=edgeLength*index/count,end=edgeLength*(index+1)/count;
+    return {index,count,start,end,length:end-start};
+  });
+}
+
+/** Infer only a facade archetype for unusually large anonymous mapped shells. */
+export function cityFacadeAppearanceTags(tags = {}, footprintArea = 0, wallHeight = 0) {
+  const type=String(tags?.building||'').toLowerCase();
+  const area=Number(footprintArea),height=Number(wallHeight);
+  const knownUse=['amenity','shop','office','tourism','leisure'].some(key=>tags?.[key]&&tags[key]!=='no');
+  if(type!=='yes'||knownUse||!Number.isFinite(area)||area<2000)return tags;
+  const inferred=area>=20000?(Number.isFinite(height)&&height>=12?'civic':'industrial'):'retail';
+  return {...tags,building:inferred};
+}
+
+export function isOpenSidedRoofShell(tags = {}) {
+  return /^(roof|carport|canopy)$/.test(String(tags?.building||tags?.['building:part']||'').toLowerCase());
+}
+
+/** Irregular roof helper only supports simple, bounded gable footprints. */
+export function shouldBuildIrregularGableRoof({
+  ringVertexCount = 0, hasHoles = false, roofHeight = 0, roofShape = '', footprintArea = 0, explicitRoofShape = false,
+} = {}) {
+  const shape=String(roofShape||'').toLowerCase();
+  return Number(ringVertexCount) > 4
+    && !hasHoles
+    && Number.isFinite(Number(roofHeight)) && Number(roofHeight) > 0.3
+    && Number.isFinite(Number(footprintArea)) && Number(footprintArea) > 18 && Number(footprintArea) <= 1600
+    && (/gable/.test(shape)||(!explicitRoofShape&&/hip/.test(shape)));
 }
 
 /** Summarize per-source-part coverage so callers can assert no loading pass starved a part. */

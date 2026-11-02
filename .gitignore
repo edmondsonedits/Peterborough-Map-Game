@@ -16,3 +16,4 @@ node_modules/
 
 # Local release browser evidence and temporary browser tooling
 artifacts/release-qa/
+artifacts/plausible-city/

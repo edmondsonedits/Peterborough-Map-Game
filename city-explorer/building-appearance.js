@@ -28,7 +28,7 @@ const DEFAULT_PRESETS = {
       cornice: {enabled: true, widthInsetMetres: 0.9, heightMetres: 0.2, offsetMetres: 0.065, materialKey: 'facadeTrim'},
       entry: {widthMetres: 1.1, heightMetres: 2.3, frameWidthMetres: 0.2, materialKey: 'facadeTrim', glassMaterialKey: 'windowGlass'}
     },
-    layout: {maxColumns: 7, maxFloors: 5, pitchMetres: 3.15, frameOffsetMetres: 0.03, glassOffsetMetres: 0.055}
+    layout: {maxColumns: 7, maxFloors: 16, pitchMetres: 3.15, frameOffsetMetres: 0.03, glassOffsetMetres: 0.055}
   },
   civic: {
     confidence: 'conservative',
@@ -46,7 +46,7 @@ const DEFAULT_PRESETS = {
       window: {widthMetres: 2, heightMetres: 1.3, frameWidthMetres: 0.16, frameMaterialKey: 'facadeTrim', glassMaterialKey: 'windowGlass'},
       sill: {enabled: false, widthExtraMetres: 0.2, heightMetres: 0.08, offsetMetres: 0.065, materialKey: 'facadeTrim'},
       cornice: {enabled: true, widthInsetMetres: 0.9, heightMetres: 0.2, offsetMetres: 0.065, materialKey: 'facadeTrim'},
-      entry: {widthMetres: 1.2, heightMetres: 2.3, frameWidthMetres: 0.2, materialKey: 'facadeTrim', glassMaterialKey: 'windowGlass'}
+      entry: {widthMetres: 3, heightMetres: 3.2, frameWidthMetres: 0.2, materialKey: 'facadeTrim', glassMaterialKey: 'windowGlass'}
     },
     layout: {maxColumns: 7, maxFloors: 1, pitchMetres: 5.8, frameOffsetMetres: 0.03, glassOffsetMetres: 0.055}
   },
